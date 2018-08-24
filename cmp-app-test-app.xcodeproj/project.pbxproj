@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		201111CA212B5CC000F2FB0D /* ConsentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201111C9212B5CC000F2FB0D /* ConsentWebView.swift */; };
 		205050BE212203D500085026 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205050BD212203D500085026 /* AppDelegate.swift */; };
 		205050C0212203D500085026 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205050BF212203D500085026 /* ViewController.swift */; };
 		205050C3212203D500085026 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 205050C1212203D500085026 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		201111C9212B5CC000F2FB0D /* ConsentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentWebView.swift; sourceTree = "<group>"; };
 		205050BA212203D500085026 /* cmp-app-test-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cmp-app-test-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		205050BD212203D500085026 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		205050BF212203D500085026 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				205050BD212203D500085026 /* AppDelegate.swift */,
 				205050BF212203D500085026 /* ViewController.swift */,
+				201111C9212B5CC000F2FB0D /* ConsentWebView.swift */,
 				205050C1212203D500085026 /* Main.storyboard */,
 				205050C4212203D600085026 /* Assets.xcassets */,
 				205050C6212203D600085026 /* LaunchScreen.storyboard */,
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				201111CA212B5CC000F2FB0D /* ConsentWebView.swift in Sources */,
 				205050C0212203D500085026 /* ViewController.swift in Sources */,
 				205050BE212203D500085026 /* AppDelegate.swift in Sources */,
 			);
@@ -433,6 +437,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				INFOPLIST_FILE = "cmp-app-test-app/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -451,6 +456,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				INFOPLIST_FILE = "cmp-app-test-app/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

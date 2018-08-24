@@ -7,19 +7,14 @@
 //
 
 import UIKit
-
 class ViewController: UIViewController {
-
+    var consentWebView: ConsentWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        print("creating consent web view controller")
+        consentWebView = ConsentWebView()
+        print("adding consent web view as subview")
+        view.addSubview(consentWebView.view)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
