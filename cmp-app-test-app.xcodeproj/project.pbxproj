@@ -102,6 +102,7 @@
 				205050BD212203D500085026 /* AppDelegate.swift */,
 				205050BF212203D500085026 /* ViewController.swift */,
 				201111C9212B5CC000F2FB0D /* ConsentWebView.swift */,
+				20753A442134956A008020E4 /* New Group */,
 				205050C1212203D500085026 /* Main.storyboard */,
 				205050C4212203D600085026 /* Assets.xcassets */,
 				205050C6212203D600085026 /* LaunchScreen.storyboard */,
@@ -126,6 +127,13 @@
 				205050DF212203D600085026 /* Info.plist */,
 			);
 			path = "cmp-app-test-appUITests";
+			sourceTree = "<group>";
+		};
+		20753A442134956A008020E4 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
