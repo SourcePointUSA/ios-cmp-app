@@ -88,7 +88,6 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        print("consent web view did load")
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         var characterSet = CharacterSet.alphanumerics
         characterSet.insert(charactersIn: "-_.!~*'()")
