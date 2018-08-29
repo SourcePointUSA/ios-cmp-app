@@ -13,15 +13,33 @@ import WebKit
 import JavaScriptCore
 public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
     
+    enum DebugLevel: String {
+        case DEBUG
+        case INFO
+        case TIME
+        case WARN
+        case ERROR
+        case OFF
+    }
+    
     static public let EU_CONSENT_KEY: String = "euconsent"
     static public let CONSENT_UUID_KEY: String = "consentUUID"
     
+    let accountId: Int
     let siteName: String
-    let page: String?
     
-    let onReceiveMessageData: Callback?
-    let onMessageChoiceSelect: Callback?
-    let onSendConsentData: Callback?
+    var page: String?
+    var isStage: Bool = false
+    var isInternalStage: Bool = false
+    var inAppMessagingPageUrl: String?
+    var mmsDomain: String?
+    var cmpDomain: String?
+    private var targetingParams: [String: Any] = [:]
+    var debugLevel: DebugLevel = .OFF
+    
+    var onReceiveMessageData: Callback?
+    var onMessageChoiceSelect: Callback?
+    var onInteractionComplete: Callback?
     
     var webView: WKWebView!
     var msgJSON: String? = nil
@@ -31,17 +49,11 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     var isFirstLoad = true
     
     init(
-        siteName: String,
-        page: String? = nil,
-        onReceiveMessageData: Callback? = nil,
-        onMessageChoiceSelect: Callback? = nil,
-        onSendConsentData: Callback? = nil
+        accountId: Int,
+        siteName: String
     ) {
+        self.accountId = accountId
         self.siteName = siteName
-        self.page = page
-        self.onReceiveMessageData = onReceiveMessageData
-        self.onMessageChoiceSelect = onMessageChoiceSelect
-        self.onSendConsentData = onSendConsentData
         
         self.euconsent = UserDefaults.standard.string(forKey: ConsentWebView.EU_CONSENT_KEY)
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY)
@@ -52,6 +64,14 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     // may need to implement this eventually
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func setTargetingParam(key: String, value: String) {
+        targetingParams[key] = value
+    }
+    
+    public func setTargetingParam(key: String, value: Int) {
+        targetingParams[key] = value
     }
     
     override public func loadView() {
@@ -68,7 +88,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
             + "window.JSReceiver = {\n"
             + "  onReceiveMessageData: function (willShowMessage, msgJSON) { postToWebView('onReceiveMessageData', { willShowMessage: willShowMessage, msgJSON: msgJSON }); },\n"
             + "  onMessageChoiceSelect: function (choiceType) { postToWebView('onMessageChoiceSelect', { choiceType: choiceType }); },\n"
-            + "  sendConsentData: function (euconsent, consentUUID) { postToWebView('sendConsentData', { euconsent: euconsent, consentUUID: consentUUID }); }\n"
+            + "  sendConsentData: function (euconsent, consentUUID) { postToWebView('interactionComplete', { euconsent: euconsent, consentUUID: consentUUID }); }\n"
             + "};\n"
             + "})();"
         
@@ -89,13 +109,58 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     override public func viewDidLoad() {
         super.viewDidLoad()
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        
+        let pageToLoad = inAppMessagingPageUrl ?? (isInternalStage ?
+            "http://in-app-messaging.pm.cmp.sp-stage.net/" :
+            "http://in-app-messaging.pm.sourcepoint.mgr.consensu.org/"
+        )
+        
+        let path = page == nil ? "" : page!
+        let siteHref = "http://" + siteName + "/" + path + "?"
+        
+        let mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
+            "mms.sp-stage.net" :
+            "mms.sp-prod.net"
+        )
+        
+        let cmpDomainToLoad = cmpDomain ?? (isInternalStage ?
+            "cmp.sp-stage.net" :
+            "sourcepoint.mgr.consensu.org"
+        )
+        
+        var params = [
+            "_sp_cmp_inApp=true",
+            "_sp_writeFirstPartyCookies=true",
+            "_sp_siteHref=" + encodeURIComponent(siteHref)!,
+            "_sp_accountId=" + String(accountId),
+            "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad)!,
+            "_sp_cmp_origin=" + encodeURIComponent("//" + cmpDomainToLoad)!,
+            "_sp_debug_level=" + debugLevel.rawValue,
+            "_sp_msg_stageCampaign=" + isStage.description
+        ]
+        
+        var targetingParamStr: String?
+        do {
+            let targetingParamData = try JSONSerialization.data(withJSONObject: self.targetingParams, options: [])
+            targetingParamStr = String(data: targetingParamData, encoding: String.Encoding.utf8)
+        } catch let error as NSError {
+            print("error serializing targeting params: " + error.localizedDescription)
+        }
+        
+        if targetingParamStr != nil {
+            params.append("_sp_msg_targetingParams=" + encodeURIComponent(targetingParamStr!)!)
+        }
+        
+        let myURL = URL(string: pageToLoad + "?" + params.joined(separator: "&"))
+        let myRequest = URLRequest(url: myURL!)
+        
+        webView.load(myRequest)
+    }
+    
+    private func encodeURIComponent(_ val: String) -> String? {
         var characterSet = CharacterSet.alphanumerics
         characterSet.insert(charactersIn: "-_.!~*'()")
-        let path = page == nil ? "" : page!
-        let siteHref = ("http://" + siteName + "/" + path).addingPercentEncoding(withAllowedCharacters: characterSet)
-        let myURL = URL(string: "http://in-app-messaging.pm.cmp.sp-stage.net/?_sp_cmp_inApp=true&_sp_writeFirstPartyCookies=true&_sp_siteHref=" + siteHref!)
-        let myRequest = URLRequest(url: myURL!)
-        webView.load(myRequest)
+        return val.addingPercentEncoding(withAllowedCharacters: characterSet)
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -103,15 +168,17 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
             if name == "onReceiveMessageData" {
                 let body = messageBody["body"] as? [String: Any?]
                 
-                if let willShowMessage = body?["willShowMessage"] as? Bool, willShowMessage {
-                    webView.frame = webView.superview!.frame
-                } else {
-                    webView.removeFromSuperview()
-                }
-                
                 if let msgJSON = body?["msgJSON"] as? String {
                     self.msgJSON = msgJSON
                     self.onReceiveMessageData?(self)
+                }
+                
+                if let willShowMessage = body?["willShowMessage"] as? Bool, willShowMessage {
+                    webView.frame = webView.superview!.frame
+                } else {
+                    self.onInteractionComplete?(self)
+                    
+                    webView.removeFromSuperview()
                 }
                 
             } else if name == "onMessageChoiceSelect" {
@@ -122,7 +189,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
                     self.onMessageChoiceSelect?(self)
                 }
                 
-            } else if name == "sendConsentData" {
+            } else if name == "interactionComplete" {
                 if let body = messageBody["body"] as? [String: String?], let euconsent = body["euconsent"], let consentUUID = body["consentUUID"] {
                     let userDefaults = UserDefaults.standard
                     if (euconsent != nil) {
@@ -139,8 +206,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
                         userDefaults.synchronize()
                     }
                 }
-                
-                self.onSendConsentData?(self)
+                self.onInteractionComplete?(self)
                 
                 webView.removeFromSuperview()
             }
