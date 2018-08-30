@@ -15,7 +15,7 @@ class ViewController: UIViewController {
             // required, must be set first used to find account
             accountId: 22,
             // required, must be set second used to find scenario
-            siteName: "dev.local"
+            siteName: "app.ios.cmp"
         )
         
         // optional, used for logging purposes for which page of the app the consent lib was
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         consentWebView.cmpDomain = nil
         
         // optional, set custom targeting parameters supports Strings and Integers
-        consentWebView.setTargetingParam(key: "a", value: 100)
+        consentWebView.setTargetingParam(key: "a", value: "b")
         consentWebView.setTargetingParam(key: "b", value: "c")
         
         // optional, sets debug level defaults to OFF
@@ -72,6 +72,8 @@ class ViewController: UIViewController {
                 UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY) as Any
             )
         }
+        
+        view.backgroundColor = UIColor.gray
         
         view.addSubview(consentWebView.view)
     }
