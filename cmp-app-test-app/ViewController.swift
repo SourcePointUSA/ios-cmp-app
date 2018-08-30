@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         
         // optional, set custom targeting parameters supports Strings and Integers
         consentWebView.setTargetingParam(key: "a", value: "b")
-        consentWebView.setTargetingParam(key: "b", value: "c")
+        consentWebView.setTargetingParam(key: "c", value: 100)
         
         // optional, sets debug level defaults to OFF
         consentWebView.debugLevel = ConsentWebView.DebugLevel.OFF
@@ -50,13 +50,13 @@ class ViewController: UIViewController {
         // optional, callback triggered when message data is loaded when called message data
         // will be available as String at cbw.msgJSON
         consentWebView.onReceiveMessageData = { cbw in
-            print(cbw.msgJSON as Any)
+            print("msgJSON from backend", cbw.msgJSON as Any)
         }
         
         // optional, callback triggered when message choice is selected when called choice
         // type will be available as Integer at cbw.choiceType
         consentWebView.onMessageChoiceSelect = { cbw in
-            print(cbw.choiceType as Any)
+            print("Choice type selected by user", cbw.choiceType as Any)
         }
         
         // optional, callback triggered when consent data is captured when called
@@ -66,9 +66,13 @@ class ViewController: UIViewController {
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(CONSENT_UUID_KEY null);
         consentWebView.onInteractionComplete = { cbw in
             print(
+                "eu consent prop",
                 cbw.euconsent as Any,
+                "consent uuid prop",
                 cbw.consentUUID as Any,
+                "eu consent in storage",
                 UserDefaults.standard.string(forKey: ConsentWebView.EU_CONSENT_KEY) as Any,
+                "consent uuid in storage",
                 UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY) as Any
             )
         }

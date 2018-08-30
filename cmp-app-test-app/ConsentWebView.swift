@@ -47,15 +47,16 @@ import JavaScriptCore
     var choiceType: Int? = nil
     var euconsent: String? = nil
     var consentUUID: String? = nil
-    var isFirstLoad = true
     
     init(
         accountId: Int,
         siteName: String
     ) {
+        // required parameters for construction
         self.accountId = accountId
         self.siteName = siteName
         
+        // read consent from/write consent data to UserDefaults.standard storage
         self.euconsent = UserDefaults.standard.string(forKey: ConsentWebView.EU_CONSENT_KEY)
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY)
         
@@ -82,6 +83,7 @@ import JavaScriptCore
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
         
+        // inject js so we have a consistent interface to messaging page as in android
         let scriptSource = "(function () {\n"
             + "function postToWebView (name, body) {\n"
             + "  window.webkit.messageHandlers.JSReceiver.postMessage({ name: name, body: body });\n"
@@ -111,6 +113,7 @@ import JavaScriptCore
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        // initially hide web view while loading
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         
         let pageToLoad = inAppMessagingPageUrl ?? (isInternalStage ?
@@ -168,6 +171,7 @@ import JavaScriptCore
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let messageBody = message.body as? [String: Any], let name = messageBody["name"] as? String {
+            // called when message loads
             if name == "onReceiveMessageData" {
                 let body = messageBody["body"] as? [String: Any?]
                 
@@ -177,6 +181,7 @@ import JavaScriptCore
                 }
                 
                 if let willShowMessage = body?["willShowMessage"] as? Bool, willShowMessage {
+                    // display web view once the message is ready to display
                     webView.frame = webView.superview!.frame
                 } else {
                     self.onInteractionComplete?(self)
@@ -184,6 +189,7 @@ import JavaScriptCore
                     webView.removeFromSuperview()
                 }
                 
+            // called when choice is selected
             } else if name == "onMessageChoiceSelect" {
                 let body = messageBody["body"] as? [String: Int?]
                 
@@ -192,6 +198,7 @@ import JavaScriptCore
                     self.onMessageChoiceSelect?(self)
                 }
                 
+            // called when interaction with message is complete
             } else if name == "interactionComplete" {
                 if let body = messageBody["body"] as? [String: String?], let euconsent = body["euconsent"], let consentUUID = body["consentUUID"] {
                     let userDefaults = UserDefaults.standard
