@@ -103,6 +103,8 @@ import JavaScriptCore
         webView = WKWebView(frame: .zero, configuration: config)
         webView.uiDelegate = self
         webView.navigationDelegate = self
+        webView.isOpaque = false
+        webView.backgroundColor = UIColor.clear
         
         view = webView
     }
