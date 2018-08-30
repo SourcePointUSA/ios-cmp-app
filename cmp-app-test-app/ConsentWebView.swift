@@ -11,7 +11,8 @@ public typealias Callback = (ConsentWebView) -> Void
 import UIKit
 import WebKit
 import JavaScriptCore
-public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+
+@objc public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
     
     enum DebugLevel: String {
         case DEBUG
