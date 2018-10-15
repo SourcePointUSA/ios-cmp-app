@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SourcePoint_iOS_SDK
+
+
 class ViewController: UIViewController {
     var consentWebView: ConsentWebView!
     override func viewDidLoad() {
@@ -15,7 +18,7 @@ class ViewController: UIViewController {
             // required, must be set first used to find account
             accountId: 22,
             // required, must be set second used to find scenario
-            siteName: "app.ios.cmp"
+            siteName: "sina.sp-stage.net"
         )
         
         // optional, used for logging purposes for which page of the app the consent lib was
@@ -49,7 +52,7 @@ class ViewController: UIViewController {
         
         // optional, callback triggered when message data is loaded when called message data
         // will be available as String at cbw.msgJSON
-        consentWebView.onReceiveMessageData = { cbw in
+        consentWebView.onReceiveMessageData = { (cbw: ConsentWebView) in
             print("msgJSON from backend", cbw.msgJSON as Any)
         }
         
@@ -64,7 +67,7 @@ class ViewController: UIViewController {
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(EU_CONSENT_KEY, null);
         // consentUUID will be available as String at cLib.consentUUID and under
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(CONSENT_UUID_KEY null);
-        consentWebView.onInteractionComplete = { cbw in
+        consentWebView.onInteractionComplete = { (cbw: ConsentWebView) in
             print(
                 "eu consent prop",
                 cbw.euconsent as Any,

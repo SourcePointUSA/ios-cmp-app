@@ -14,7 +14,7 @@ import JavaScriptCore
 
 @objc public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
     
-    enum DebugLevel: String {
+    public enum DebugLevel: String {
         case DEBUG
         case INFO
         case TIME
@@ -26,32 +26,32 @@ import JavaScriptCore
     static public let EU_CONSENT_KEY: String = "euconsent"
     static public let CONSENT_UUID_KEY: String = "consentUUID"
     
-    let accountId: Int
-    let siteName: String
+    public let accountId: Int
+    public let siteName: String
     
-    var page: String?
-    var isStage: Bool = false
-    var isInternalStage: Bool = false
-    var inAppMessagingPageUrl: String?
-    var mmsDomain: String?
-    var cmpDomain: String?
+    public var page: String?
+    public var isStage: Bool = false
+    public var isInternalStage: Bool = false
+    public var inAppMessagingPageUrl: String?
+    public var mmsDomain: String?
+    public var cmpDomain: String?
     private var targetingParams: [String: Any] = [:]
-    var debugLevel: DebugLevel = .OFF
+    public var debugLevel: DebugLevel = .OFF
     
-    var onReceiveMessageData: Callback?
-    var onMessageChoiceSelect: Callback?
-    var onInteractionComplete: Callback?
+    public var onReceiveMessageData: Callback?
+    public var onMessageChoiceSelect: Callback?
+    public var onInteractionComplete: Callback?
     
     var webView: WKWebView!
-    var msgJSON: String? = nil
-    var choiceType: Int? = nil
-    var euconsent: String? = nil
-    var consentUUID: String? = nil
+    public var msgJSON: String? = nil
+    public var choiceType: Int? = nil
+    public var euconsent: String? = nil
+    public var consentUUID: String? = nil
     
-    init(
+    public init(
         accountId: Int,
         siteName: String
-    ) {
+        ) {
         // required parameters for construction
         self.accountId = accountId
         self.siteName = siteName
@@ -161,6 +161,8 @@ import JavaScriptCore
         let myURL = URL(string: pageToLoad + "?" + params.joined(separator: "&"))
         let myRequest = URLRequest(url: myURL!)
         
+        print ("url: " + (myURL?.absoluteString)!)
+        
         webView.load(myRequest)
     }
     
@@ -190,7 +192,7 @@ import JavaScriptCore
                     webView.removeFromSuperview()
                 }
                 
-            // called when choice is selected
+                // called when choice is selected
             } else if name == "onMessageChoiceSelect" {
                 let body = messageBody["body"] as? [String: Int?]
                 
@@ -199,7 +201,7 @@ import JavaScriptCore
                     self.onMessageChoiceSelect?(self)
                 }
                 
-            // called when interaction with message is complete
+                // called when interaction with message is complete
             } else if name == "interactionComplete" {
                 if let body = messageBody["body"] as? [String: String?], let euconsent = body["euconsent"], let consentUUID = body["consentUUID"] {
                     let userDefaults = UserDefaults.standard
