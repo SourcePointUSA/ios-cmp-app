@@ -18,7 +18,7 @@ class ViewController: UIViewController {
             // required, must be set first used to find account
             accountId: 22,
             // required, must be set second used to find scenario
-            siteName: "sina.sp-stage.net"
+            siteName: "app.ios.cmp"
         )
         
         // optional, used for logging purposes for which page of the app the consent lib was
