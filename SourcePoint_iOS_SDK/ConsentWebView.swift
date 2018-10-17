@@ -186,7 +186,9 @@ import JavaScriptCore
     private func getSiteId() -> String? {
         let siteIdKey = ConsentWebView.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
         let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey)
-        if storedSiteId == nil {
+        if storedSiteId != nil {
+            return storedSiteId;
+         }
             return nil
         }
         
