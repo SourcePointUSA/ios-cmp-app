@@ -1,0 +1,11 @@
+framework module SourcePoint_iOS_SDK {
+  umbrella header "SourcePoint_iOS_SDK.h"
+
+  export *
+  module * { export * }
+}
+
+module SourcePoint_iOS_SDK.Swift {
+    header "SourcePoint_iOS_SDK-Swift.h"
+    requires objc
+}
