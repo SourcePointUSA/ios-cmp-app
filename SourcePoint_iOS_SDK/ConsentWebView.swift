@@ -28,6 +28,10 @@ import JavaScriptCore
     
     public let accountId: Int
     public let siteName: String
+
+    static public let SP_PREFIX: String = "_sp_"
+    static public let SP_SITE_ID: String = SP_PREFIX + "site_id"
+    
     
     public var page: String?
     public var isStage: Bool = false
@@ -48,7 +52,20 @@ import JavaScriptCore
     public var euconsent: String? = nil
     public var consentUUID: String? = nil
     
-    public init(
+    public var customConsent: [[String: Any]] = []
+    
+    private static func load(_ urlString: String) -> Data? {
+        let url = NSURL(string: urlString)
+        if url == nil {
+            print("invalid url string: " + urlString)
+            return nil
+        }
+        let request = URLRequest(url: url! as URL)
+        let response: AutoreleasingUnsafeMutablePointer<URLResponse?>? = nil
+        return try! NSURLConnection.sendSynchronousRequest(request, returning: response)
+    }
+    
+    init(
         accountId: Int,
         siteName: String
         ) {
@@ -164,6 +181,84 @@ import JavaScriptCore
         print ("url: " + (myURL?.absoluteString)!)
         
         webView.load(myRequest)
+    }
+    
+    private func getSiteId() -> String? {
+        let siteIdKey = ConsentWebView.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
+        let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey)
+        if storedSiteId == nil {
+            return nil
+        }
+        
+        let path = page == nil ? "" : page!
+        let siteHref = "http://" + siteName + "/" + path + "?"
+        
+        let result = ConsentWebView.load(siteHref)
+        let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String:String]
+        let siteId = parsedResult!["site_id"]
+        
+        UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
+        UserDefaults.standard.synchronize()
+        
+        return siteId
+    }
+    
+    public func getVendorConsent(_ customVendorId: String) -> Bool {
+        return getVendorConsents([customVendorId])[0]
+    }
+    
+    public func getVendorConsents(_ customVendorIds: [String]) -> [Bool] {
+        let CUSTOM_VENDOR_PREFIX = ConsentWebView.SP_PREFIX + "_custom_vendor_consent_"
+        var result = Array(repeating: false, count: customVendorIds.count)
+        
+        let siteId = getSiteId()
+        if siteId == nil {
+            return result
+        }
+        
+        var customVendorIdsToRequest: [String] = []
+        for index in 0..<customVendorIds.count {
+            let customVendorId = customVendorIds[index]
+            let storedConsentData = UserDefaults.standard.string(forKey: CUSTOM_VENDOR_PREFIX + customVendorId)
+            if storedConsentData == nil {
+                customVendorIdsToRequest.append(customVendorId)
+            } else {
+                result[index] = storedConsentData == "true"
+            }
+        }
+        
+        if customVendorIdsToRequest.count == 0 {
+            return result
+        }
+        
+        let consentParam = consentUUID == nil ? "[CONSENT_UUID]" : consentUUID!
+        let euconsentParam = euconsent == nil ? "[EUCONSENT]" : euconsent!
+        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ","))
+        
+        let origin = "https://" + (cmpDomain ?? (isInternalStage ?
+            "cmp.sp-stage.net" :
+            "sourcepoint.mgr.consensu.org"
+        ))!
+        let path = "/v2/consent/" + siteId! + "/custom-vendors"
+        let search = "?customVendorIds=" + customVendorIdString! + "&consent_uuid=" + consentParam + "&euconsent=" + euconsentParam
+        
+        let data = ConsentWebView.load(origin + path + search)
+        
+        let consentedCustomVendors = try! JSONSerialization.jsonObject(with: data!, options: []) as? [[String: String]]
+        for consentedCustomVendor in consentedCustomVendors! {
+            UserDefaults.standard.setValue("true", forKey: consentedCustomVendor["_id"]!)
+        }
+        UserDefaults.standard.synchronize()
+        
+        for index in 0..<customVendorIds.count {
+            let customVendorId = customVendorIds[index]
+            let storedConsentData = UserDefaults.standard.string(forKey: CUSTOM_VENDOR_PREFIX + customVendorId)
+            if storedConsentData != nil {
+                result[index] = storedConsentData == "true"
+            }
+        }
+        
+        return result
     }
     
     private func encodeURIComponent(_ val: String) -> String? {
