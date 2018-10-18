@@ -188,8 +188,6 @@ import JavaScriptCore
         let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey)
         if storedSiteId != nil {
             return storedSiteId;
-         }
-            return nil
         }
         
         let path = page == nil ? "" : page!
