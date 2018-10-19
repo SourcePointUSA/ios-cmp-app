@@ -38,6 +38,7 @@ import JavaScriptCore
     public var isInternalStage: Bool = false
     public var inAppMessagingPageUrl: String?
     public var mmsDomain: String?
+    var mmsDomainToLoad: String?
     public var cmpDomain: String?
     private var targetingParams: [String: Any] = [:]
     public var debugLevel: DebugLevel = .OFF
@@ -142,7 +143,7 @@ import JavaScriptCore
         let path = page == nil ? "" : page!
         let siteHref = "http://" + siteName + "/" + path + "?"
         
-        let mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
+        mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
             "mms.sp-stage.net" :
             "mms.sp-prod.net"
         )
@@ -157,7 +158,7 @@ import JavaScriptCore
             "_sp_writeFirstPartyCookies=true",
             "_sp_siteHref=" + encodeURIComponent(siteHref)!,
             "_sp_accountId=" + String(accountId),
-            "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad)!,
+            "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad!)!,
             "_sp_cmp_origin=" + encodeURIComponent("//" + cmpDomainToLoad)!,
             "_sp_debug_level=" + debugLevel.rawValue,
             "_sp_msg_stageCampaign=" + isStage.description
@@ -193,7 +194,9 @@ import JavaScriptCore
         let path = page == nil ? "" : page!
         let siteHref = "http://" + siteName + "/" + path + "?"
         
-        let result = ConsentWebView.load(siteHref)
+        let result = ConsentWebView.load(
+            "https://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
+        )
         let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String:String]
         let siteId = parsedResult!["site_id"]
         
