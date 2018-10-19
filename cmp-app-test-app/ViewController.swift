@@ -78,13 +78,22 @@ class ViewController: UIViewController {
                 "consent uuid in storage",
                 UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY) as Any,
                 "custom vendor consent",
-                cbw.getVendorConsents(["5bc76807196d3c5730cbab05", "5bc768d8196d3c5730cbab06"])
+                cbw.getVendorConsents(["5bc76807196d3c5730cbab05", "5bc768d8196d3c5730cbab06"]),
+                "IABConsent_ConsentString in storage",
+                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING) as Any
             )
         }
         
         view.backgroundColor = UIColor.gray
         
         view.addSubview(consentWebView.view)
+
+        // IABConsent_CMPPresent must be set immediately after loading the ConsentWebView
+        print(
+            "IABConsent_CMPPresent in storage",
+            UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CMP_PRESENT) as Any,
+            "IABConsent_SubjectToGDPR in storage",
+            UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_SUBJECT_TO_GDPR) as Any
+        )
     }
 }
-
