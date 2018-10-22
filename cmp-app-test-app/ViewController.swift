@@ -78,7 +78,7 @@ class ViewController: UIViewController {
                 "consent uuid in storage",
                 UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY) as Any,
                 "custom vendor consent",
-                cbw.getVendorConsents(["5bc76807196d3c5730cbab05"])
+                cbw.getVendorConsents(["5bc76807196d3c5730cbab05", "5bc768d8196d3c5730cbab06"])
             )
         }
         
