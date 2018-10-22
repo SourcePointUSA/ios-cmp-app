@@ -28,12 +28,17 @@ import JavaScriptCore
     
     public let accountId: Int
     public let siteName: String
+
+    static public let SP_PREFIX: String = "_sp_"
+    static public let SP_SITE_ID: String = SP_PREFIX + "site_id"
+    
     
     public var page: String?
     public var isStage: Bool = false
     public var isInternalStage: Bool = false
     public var inAppMessagingPageUrl: String?
     public var mmsDomain: String?
+    var mmsDomainToLoad: String?
     public var cmpDomain: String?
     private var targetingParams: [String: Any] = [:]
     public var debugLevel: DebugLevel = .OFF
@@ -48,7 +53,20 @@ import JavaScriptCore
     public var euconsent: String? = nil
     public var consentUUID: String? = nil
     
-    public init(
+    public var customConsent: [[String: Any]] = []
+    
+    private static func load(_ urlString: String) -> Data? {
+        let url = NSURL(string: urlString)
+        if url == nil {
+            print("invalid url string: " + urlString)
+            return nil
+        }
+        let request = URLRequest(url: url! as URL)
+        let response: AutoreleasingUnsafeMutablePointer<URLResponse?>? = nil
+        return try! NSURLConnection.sendSynchronousRequest(request, returning: response)
+    }
+    
+    init(
         accountId: Int,
         siteName: String
         ) {
@@ -125,7 +143,7 @@ import JavaScriptCore
         let path = page == nil ? "" : page!
         let siteHref = "http://" + siteName + "/" + path + "?"
         
-        let mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
+        mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
             "mms.sp-stage.net" :
             "mms.sp-prod.net"
         )
@@ -140,7 +158,7 @@ import JavaScriptCore
             "_sp_writeFirstPartyCookies=true",
             "_sp_siteHref=" + encodeURIComponent(siteHref)!,
             "_sp_accountId=" + String(accountId),
-            "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad)!,
+            "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad!)!,
             "_sp_cmp_origin=" + encodeURIComponent("//" + cmpDomainToLoad)!,
             "_sp_debug_level=" + debugLevel.rawValue,
             "_sp_msg_stageCampaign=" + isStage.description
@@ -164,6 +182,88 @@ import JavaScriptCore
         print ("url: " + (myURL?.absoluteString)!)
         
         webView.load(myRequest)
+    }
+    
+    private func getSiteId() -> String? {
+        let siteIdKey = ConsentWebView.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
+        let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey)
+        if storedSiteId != nil {
+            return storedSiteId;
+        }
+        
+        let path = page == nil ? "" : page!
+        let siteHref = "http://" + siteName + "/" + path + "?"
+        
+        let result = ConsentWebView.load(
+            "http://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
+        )
+        let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String:Int]
+        let siteId = parsedResult!["site_id"]
+        
+        UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
+        UserDefaults.standard.synchronize()
+        
+        return String(siteId!)
+    }
+    
+    public func getVendorConsent(_ customVendorId: String) -> Bool {
+        return getVendorConsents([customVendorId])[0]
+    }
+    
+    public func getVendorConsents(_ customVendorIds: [String]) -> [Bool] {
+        let CUSTOM_VENDOR_PREFIX = ConsentWebView.SP_PREFIX + "_custom_vendor_consent_"
+        var result = Array(repeating: false, count: customVendorIds.count)
+        
+        let siteId = getSiteId()
+        if siteId == nil {
+            return result
+        }
+        
+        var customVendorIdsToRequest: [String] = []
+        for index in 0..<customVendorIds.count {
+            let customVendorId = customVendorIds[index]
+            let storedConsentData = UserDefaults.standard.string(forKey: CUSTOM_VENDOR_PREFIX + customVendorId)
+            if storedConsentData == nil {
+                customVendorIdsToRequest.append(customVendorId)
+            } else {
+                result[index] = storedConsentData == "true"
+            }
+        }
+        
+        if customVendorIdsToRequest.count == 0 {
+            return result
+        }
+        
+        let consentParam = consentUUID == nil ? "[CONSENT_UUID]" : consentUUID!
+        let euconsentParam = euconsent == nil ? "[EUCONSENT]" : euconsent!
+        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ","))
+        
+        let origin = "https://" + (cmpDomain ?? (isInternalStage ?
+            "cmp.sp-stage.net" :
+            "sourcepoint.mgr.consensu.org"
+        ))!
+        let path = "/consent/v2/" + siteId! + "/custom-vendors"
+        let search = "?customVendorIds=" + customVendorIdString! + "&consentUUID=" + consentParam + "&euconsent=" + euconsentParam
+        let url = origin + path + search
+        let data = ConsentWebView.load(url)
+        
+        let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
+        let consentedCustomVendors = consents!["consentedVendors"]
+        for consentedCustomVendor in consentedCustomVendors! {
+            UserDefaults.standard.setValue("true", forKey: CUSTOM_VENDOR_PREFIX + consentedCustomVendor["_id"]!)
+        }
+        UserDefaults.standard.synchronize()
+        
+        for index in 0..<customVendorIds.count {
+            let customVendorId = customVendorIds[index]
+            let storedConsentData = UserDefaults.standard.string(forKey: CUSTOM_VENDOR_PREFIX + customVendorId)
+            
+            if storedConsentData != nil {
+                result[index] = storedConsentData == "true"
+            }
+        }
+        
+        return result
     }
     
     private func encodeURIComponent(_ val: String) -> String? {
