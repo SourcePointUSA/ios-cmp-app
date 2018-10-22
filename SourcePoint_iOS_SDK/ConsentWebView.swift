@@ -60,7 +60,8 @@ import JavaScriptCore
     public var customConsent: [[String: Any]] = []
 
     private var mmsDomainToLoad: String?
-    private var origin: String?
+    private var cmpDomainToLoad: String?
+    private var cmpUrl: String?
 
     private static func load(_ urlString: String) -> Data? {
         let url = NSURL(string: urlString)
@@ -147,28 +148,24 @@ import JavaScriptCore
         let path = page == nil ? "" : page!
         let siteHref = "http://" + siteName + "/" + path + "?"
 
-        origin = "https://" + (cmpDomain ?? (isInternalStage ?
-            "cmp.sp-stage.net" :
-            "sourcepoint.mgr.consensu.org"
-        ))!
-
         mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
             "mms.sp-stage.net" :
             "mms.sp-prod.net"
         )
 
-        let cmpDomainToLoad = cmpDomain ?? (isInternalStage ?
+        cmpDomainToLoad = cmpDomain ?? (isInternalStage ?
             "cmp.sp-stage.net" :
             "sourcepoint.mgr.consensu.org"
         )
-
+        cmpUrl = "https://" + cmpDomainToLoad!
+        
         var params = [
             "_sp_cmp_inApp=true",
             "_sp_writeFirstPartyCookies=true",
             "_sp_siteHref=" + encodeURIComponent(siteHref)!,
             "_sp_accountId=" + String(accountId),
             "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad!)!,
-            "_sp_cmp_origin=" + encodeURIComponent("//" + cmpDomainToLoad)!,
+            "_sp_cmp_origin=" + encodeURIComponent("//" + cmpDomainToLoad!)!,
             "_sp_debug_level=" + debugLevel.rawValue,
             "_sp_msg_stageCampaign=" + isStage.description
         ]
@@ -191,7 +188,10 @@ import JavaScriptCore
         print ("url: " + (myURL?.absoluteString)!)
 
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-        UserDefaults.standard.setValue(getGdprApplies(), forKey: ConsentWebView.IAB_CONSENT_SUBJECT_TO_GDPR)
+        let storedSubjectToGdpr = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_SUBJECT_TO_GDPR)
+        if storedSubjectToGdpr == nil {
+            UserDefaults.standard.setValue(getGdprApplies(), forKey: ConsentWebView.IAB_CONSENT_SUBJECT_TO_GDPR)
+        }
 
         webView.load(myRequest)
     }
@@ -221,7 +221,7 @@ import JavaScriptCore
 
     public func getGdprApplies() -> Bool {
         let path = "/consent/v2/gdpr-status"
-        let result = ConsentWebView.load(origin! + path)
+        let result = ConsentWebView.load(cmpUrl! + path)
         let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String: Int]
         return parsedResult!["gdprApplies"] == 1;
     }
@@ -258,13 +258,9 @@ import JavaScriptCore
         let euconsentParam = euconsent == nil ? "[EUCONSENT]" : euconsent!
         let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ","))
 
-        origin = "https://" + (cmpDomain ?? (isInternalStage ?
-            "cmp.sp-stage.net" :
-            "sourcepoint.mgr.consensu.org"
-        ))!
         let path = "/consent/v2/" + siteId! + "/custom-vendors"
         let search = "?customVendorIds=" + customVendorIdString! + "&consentUUID=" + consentParam + "&euconsent=" + euconsentParam
-        let url = origin! + path + search
+        let url = cmpUrl! + path + search
         let data = ConsentWebView.load(url)
         
         let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
