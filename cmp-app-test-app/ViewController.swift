@@ -69,18 +69,22 @@ class ViewController: UIViewController {
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(CONSENT_UUID_KEY null);
         consentWebView.onInteractionComplete = { (cbw: ConsentWebView) in
             print(
-                "eu consent prop",
+                "\neu consent prop",
                 cbw.euconsent as Any,
-                "consent uuid prop",
+                "\nconsent uuid prop",
                 cbw.consentUUID as Any,
-                "eu consent in storage",
+                "\neu consent in storage",
                 UserDefaults.standard.string(forKey: ConsentWebView.EU_CONSENT_KEY) as Any,
-                "consent uuid in storage",
+                "\nconsent uuid in storage",
                 UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY) as Any,
-                "custom vendor consent",
+                "\ncustom vendor consent",
                 cbw.getVendorConsents(["5bc76807196d3c5730cbab05", "5bc768d8196d3c5730cbab06"]),
-                "IABConsent_ConsentString in storage",
-                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING) as Any
+                "\nIABConsent_ConsentString in storage",
+                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING) as Any,
+                "\nIABConsent_ParsedPurposeConsents in storage",
+                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_PARSED_PURPOSE_CONSENTS) as Any,
+                "\nIABConsent_ParsedVendorConsents in storage",
+                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_PARSED_VENDOR_CONSENTS) as Any
             )
         }
         

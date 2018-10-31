@@ -11,6 +11,7 @@ public typealias Callback = (ConsentWebView) -> Void
 import UIKit
 import WebKit
 import JavaScriptCore
+import Consent_String_SDK_Swift
 
 @objc public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
 
@@ -30,13 +31,17 @@ import JavaScriptCore
     static public let IAB_CONSENT_CONSENT_STRING: String = "IABConsent_ConsentString"
     static public let IAB_CONSENT_PARSED_PURPOSE_CONSENTS: String = "IABConsent_ParsedPurposeConsents"
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
+    
 
+    
     public let accountId: Int
     public let siteName: String
 
     static public let SP_PREFIX: String = "_sp_"
     static public let SP_SITE_ID: String = SP_PREFIX + "site_id"
 
+    static private let MAX_VENDOR_ID: Int = 500
+    static private let MAX_PURPOSE_ID: Int = 24
 
     public var page: String?
     public var isStage: Bool = false
@@ -78,6 +83,7 @@ import JavaScriptCore
         accountId: Int,
         siteName: String
         ) {
+        
         // required parameters for construction
         self.accountId = accountId
         self.siteName = siteName
@@ -185,7 +191,7 @@ import JavaScriptCore
         let myURL = URL(string: pageToLoad + "?" + params.joined(separator: "&"))
         let myRequest = URLRequest(url: myURL!)
 
-        print ("url: " + (myURL?.absoluteString)!)
+        print ("url: \((myURL?.absoluteString)!)")
 
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
         let storedSubjectToGdpr = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_SUBJECT_TO_GDPR)
@@ -288,6 +294,39 @@ import JavaScriptCore
         return val.addingPercentEncoding(withAllowedCharacters: characterSet)
     }
 
+    let maxPurposes:Int64 = 24
+
+    private func storeIABVars(_ euconsentBase64Url: String) {
+        let userDefaults = UserDefaults.standard
+        // Set the standard IABConsent_ConsentString var in userDefaults
+        userDefaults.setValue(euconsentBase64Url, forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
+
+        //Convert base46URL to regular base64 encoding for Consent String SDK Swift
+        var euconsent = euconsentBase64Url
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        
+        let cstring = try! ConsentString(
+            consentString: euconsent
+        )
+
+        // Generate parsed vendor consents string
+        var parsedVendorConsents = [Character](repeating: "0", count: ConsentWebView.MAX_VENDOR_ID)
+        for i in 1...ConsentWebView.MAX_VENDOR_ID {
+            if cstring.isVendorAllowed(vendorId: i) {
+                parsedVendorConsents[i - 1] = "1"
+            }
+        }
+        userDefaults.setValue(String(parsedVendorConsents), forKey: ConsentWebView.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        
+        // Generate parsed purpose consents string
+        var parsedPurposeConsents = [Character](repeating: "0", count: ConsentWebView.MAX_PURPOSE_ID)
+        for pId in cstring.purposesAllowed {
+            parsedPurposeConsents[Int(pId) - 1] = "1"
+        }
+        userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentWebView.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+    }
+    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let messageBody = message.body as? [String: Any], let name = messageBody["name"] as? String {
             // called when message loads
@@ -324,8 +363,7 @@ import JavaScriptCore
                     if (euconsent != nil) {
                         self.euconsent = euconsent
                         userDefaults.setValue(euconsent, forKey: ConsentWebView.EU_CONSENT_KEY)
-                        // Also set the official IABConsent_ConsentString in userDefaults
-                        userDefaults.setValue(euconsent, forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
+                        storeIABVars(euconsent!)
                     }
 
                     if (consentUUID != nil) {

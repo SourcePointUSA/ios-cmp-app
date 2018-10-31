@@ -14,11 +14,12 @@
 		205050C8212203D600085026 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 205050C6212203D600085026 /* LaunchScreen.storyboard */; };
 		205050D3212203D600085026 /* cmp_app_test_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205050D2212203D600085026 /* cmp_app_test_appTests.swift */; };
 		205050DE212203D600085026 /* cmp_app_test_appUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205050DD212203D600085026 /* cmp_app_test_appUITests.swift */; };
+		27363EA02181168800F1413E /* SourcePoint_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27EDCD33217145B500CC5CE3 /* SourcePoint_iOS_SDK.framework */; };
+		27363EA12181168800F1413E /* SourcePoint_iOS_SDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27EDCD33217145B500CC5CE3 /* SourcePoint_iOS_SDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		27363EB0218A0E1900F1413E /* Consent_String_SDK_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27363EAA2181169A00F1413E /* Consent_String_SDK_Swift.framework */; };
 		27EDCD3C217145B600CC5CE3 /* SourcePoint_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27EDCD33217145B500CC5CE3 /* SourcePoint_iOS_SDK.framework */; };
 		27EDCD43217145B600CC5CE3 /* SourcePoint_iOS_SDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDCD42217145B600CC5CE3 /* SourcePoint_iOS_SDKTests.swift */; };
 		27EDCD45217145B600CC5CE3 /* SourcePoint_iOS_SDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EDCD35217145B500CC5CE3 /* SourcePoint_iOS_SDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27EDCD48217145B600CC5CE3 /* SourcePoint_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27EDCD33217145B500CC5CE3 /* SourcePoint_iOS_SDK.framework */; };
-		27EDCD49217145B600CC5CE3 /* SourcePoint_iOS_SDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27EDCD33217145B500CC5CE3 /* SourcePoint_iOS_SDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		27EDCD51217145F100CC5CE3 /* ConsentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDCD50217145F100CC5CE3 /* ConsentWebView.swift */; };
 		27EDCD52217145F100CC5CE3 /* ConsentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDCD50217145F100CC5CE3 /* ConsentWebView.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,27 @@
 			remoteGlobalIDString = 205050B9212203D500085026;
 			remoteInfo = "cmp-app-test-app";
 		};
+		27363EA22181168800F1413E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 205050B2212203D500085026 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27EDCD32217145B500CC5CE3;
+			remoteInfo = SourcePoint_iOS_SDK;
+		};
+		27363EA92181169A00F1413E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 27363EA42181169A00F1413E /* Consent String SDK Swift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F142B5202093A1C5001ABE60;
+			remoteInfo = "Consent String SDK Swift";
+		};
+		27363EAB2181169A00F1413E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 27363EA42181169A00F1413E /* Consent String SDK Swift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F142B5292093A1C5001ABE60;
+			remoteInfo = "Consent String SDK SwiftTests";
+		};
 		27EDCD3D217145B600CC5CE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 205050B2212203D500085026 /* Project object */;
@@ -52,13 +74,6 @@
 			remoteGlobalIDString = 205050B9212203D500085026;
 			remoteInfo = "cmp-app-test-app";
 		};
-		27EDCD46217145B600CC5CE3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 205050B2212203D500085026 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 27EDCD32217145B500CC5CE3;
-			remoteInfo = SourcePoint_iOS_SDK;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,7 +83,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				27EDCD49217145B600CC5CE3 /* SourcePoint_iOS_SDK.framework in Embed Frameworks */,
+				27363EA12181168800F1413E /* SourcePoint_iOS_SDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,6 +104,7 @@
 		205050D9212203D600085026 /* cmp-app-test-appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "cmp-app-test-appUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		205050DD212203D600085026 /* cmp_app_test_appUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cmp_app_test_appUITests.swift; sourceTree = "<group>"; };
 		205050DF212203D600085026 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27363EA42181169A00F1413E /* Consent String SDK Swift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Consent String SDK Swift.xcodeproj"; path = "Consent-String-SDK-Swift/Consent String SDK Swift.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		27EDCD33217145B500CC5CE3 /* SourcePoint_iOS_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SourcePoint_iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27EDCD35217145B500CC5CE3 /* SourcePoint_iOS_SDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SourcePoint_iOS_SDK.h; sourceTree = "<group>"; };
 		27EDCD36217145B500CC5CE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,7 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27EDCD48217145B600CC5CE3 /* SourcePoint_iOS_SDK.framework in Frameworks */,
+				27363EA02181168800F1413E /* SourcePoint_iOS_SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27363EB0218A0E1900F1413E /* Consent_String_SDK_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,9 +219,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		27363EA52181169A00F1413E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27363EAA2181169A00F1413E /* Consent_String_SDK_Swift.framework */,
+				27363EAC2181169A00F1413E /* Consent String SDK SwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		27EDCD34217145B500CC5CE3 /* SourcePoint_iOS_SDK */ = {
 			isa = PBXGroup;
 			children = (
+				27363EA42181169A00F1413E /* Consent String SDK Swift.xcodeproj */,
 				27EDCD35217145B500CC5CE3 /* SourcePoint_iOS_SDK.h */,
 				27EDCD36217145B500CC5CE3 /* Info.plist */,
 				27EDCD50217145F100CC5CE3 /* ConsentWebView.swift */,
@@ -247,7 +274,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				27EDCD47217145B600CC5CE3 /* PBXTargetDependency */,
+				27363EA32181168800F1413E /* PBXTargetDependency */,
 			);
 			name = "cmp-app-test-app";
 			productName = "cmp-app-test-app";
@@ -369,6 +396,12 @@
 			mainGroup = 205050B1212203D500085026;
 			productRefGroup = 205050BB212203D500085026 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 27363EA52181169A00F1413E /* Products */;
+					ProjectRef = 27363EA42181169A00F1413E /* Consent String SDK Swift.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				205050B9212203D500085026 /* cmp-app-test-app */,
@@ -379,6 +412,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		27363EAA2181169A00F1413E /* Consent_String_SDK_Swift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Consent_String_SDK_Swift.framework;
+			remoteRef = 27363EA92181169A00F1413E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27363EAC2181169A00F1413E /* Consent String SDK SwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Consent String SDK SwiftTests.xctest";
+			remoteRef = 27363EAB2181169A00F1413E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		205050B8212203D500085026 /* Resources */ = {
@@ -477,6 +527,11 @@
 			target = 205050B9212203D500085026 /* cmp-app-test-app */;
 			targetProxy = 205050DA212203D600085026 /* PBXContainerItemProxy */;
 		};
+		27363EA32181168800F1413E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 27EDCD32217145B500CC5CE3 /* SourcePoint_iOS_SDK */;
+			targetProxy = 27363EA22181168800F1413E /* PBXContainerItemProxy */;
+		};
 		27EDCD3E217145B600CC5CE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 27EDCD32217145B500CC5CE3 /* SourcePoint_iOS_SDK */;
@@ -486,11 +541,6 @@
 			isa = PBXTargetDependency;
 			target = 205050B9212203D500085026 /* cmp-app-test-app */;
 			targetProxy = 27EDCD3F217145B600CC5CE3 /* PBXContainerItemProxy */;
-		};
-		27EDCD47217145B600CC5CE3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 27EDCD32217145B500CC5CE3 /* SourcePoint_iOS_SDK */;
-			targetProxy = 27EDCD46217145B600CC5CE3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
