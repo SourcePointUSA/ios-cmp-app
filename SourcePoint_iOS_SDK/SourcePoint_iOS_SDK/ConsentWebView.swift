@@ -31,14 +31,15 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     static public let IAB_CONSENT_CONSENT_STRING: String = "IABConsent_ConsentString"
     static public let IAB_CONSENT_PARSED_PURPOSE_CONSENTS: String = "IABConsent_ParsedPurposeConsents"
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
-    
 
-    
     public let accountId: Int
     public let siteName: String
 
-    static public let SP_PREFIX: String = "_sp_"
-    static public let SP_SITE_ID: String = SP_PREFIX + "site_id"
+    static private let SP_PREFIX: String = "_sp_"
+    static private let SP_SITE_ID: String = SP_PREFIX + "site_id"
+    static private let CUSTOM_VENDOR_PREFIX = SP_PREFIX + "custom_vendor_consent_"
+    static private let SP_CUSTOM_PURPOSE_CONSENT_PREFIX = SP_PREFIX + "custom_purpose_consent_"
+    static private let SP_CUSTOM_PURPOSE_CONSENTS_JSON: String = SP_PREFIX + "custom_purpose_consents_json"
 
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
@@ -83,7 +84,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         accountId: Int,
         siteName: String
         ) {
-        
+
         // required parameters for construction
         self.accountId = accountId
         self.siteName = siteName
@@ -164,7 +165,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
             "sourcepoint.mgr.consensu.org"
         )
         cmpUrl = "https://" + cmpDomainToLoad!
-        
+
         var params = [
             "_sp_cmp_inApp=true",
             "_sp_writeFirstPartyCookies=true",
@@ -211,7 +212,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
 
         let path = page == nil ? "" : page!
         let siteHref = "http://" + siteName + "/" + path + "?"
-        
+
         let result = ConsentWebView.load(
             "http://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
         )
@@ -221,7 +222,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
 
         UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
         UserDefaults.standard.synchronize()
-        
+
         return String(siteId!)
     }
 
@@ -232,23 +233,17 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return parsedResult!["gdprApplies"] == 1;
     }
 
-    public func getVendorConsent(_ customVendorId: String) -> Bool {
-        return getVendorConsents([customVendorId])[0]
+    public func getCustomVendorConsent(forId customVendorId: String) -> Bool {
+        return getCustomVendorConsents(forIds: [customVendorId])[0]
     }
 
-    public func getVendorConsents(_ customVendorIds: [String]) -> [Bool] {
-        let CUSTOM_VENDOR_PREFIX = ConsentWebView.SP_PREFIX + "_custom_vendor_consent_"
+    public func getCustomVendorConsents(forIds customVendorIds: [String]) -> [Bool] {
         var result = Array(repeating: false, count: customVendorIds.count)
-
-        let siteId = getSiteId()
-        if siteId == nil {
-            return result
-        }
 
         var customVendorIdsToRequest: [String] = []
         for index in 0..<customVendorIds.count {
             let customVendorId = customVendorIds[index]
-            let storedConsentData = UserDefaults.standard.string(forKey: CUSTOM_VENDOR_PREFIX + customVendorId)
+            let storedConsentData = UserDefaults.standard.string(forKey: ConsentWebView.CUSTOM_VENDOR_PREFIX + customVendorId)
             if storedConsentData == nil {
                 customVendorIdsToRequest.append(customVendorId)
             } else {
@@ -256,36 +251,113 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
             }
         }
 
-        if customVendorIdsToRequest.count == 0 {
+        if customVendorIds.count > 0 && customVendorIdsToRequest.count == 0 {
             return result
         }
 
-        let consentParam = consentUUID == nil ? "[CONSENT_UUID]" : consentUUID!
-        let euconsentParam = euconsent == nil ? "[EUCONSENT]" : euconsent!
-        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ","))
-
-        let path = "/consent/v2/" + siteId! + "/custom-vendors"
-        let search = "?customVendorIds=" + customVendorIdString! + "&consentUUID=" + consentParam + "&euconsent=" + euconsentParam
-        let url = cmpUrl! + path + search
-        let data = ConsentWebView.load(url)
-        
-        let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
-        let consentedCustomVendors = consents!["consentedVendors"]
-        for consentedCustomVendor in consentedCustomVendors! {
-            UserDefaults.standard.setValue("true", forKey: CUSTOM_VENDOR_PREFIX + consentedCustomVendor["_id"]!)
-        }
-        UserDefaults.standard.synchronize()
+        loadAndStoreConsents(customVendorIdsToRequest)
 
         for index in 0..<customVendorIds.count {
             let customVendorId = customVendorIds[index]
-            let storedConsentData = UserDefaults.standard.string(forKey: CUSTOM_VENDOR_PREFIX + customVendorId)
-            
+            let storedConsentData = UserDefaults.standard.string(
+                forKey: ConsentWebView.CUSTOM_VENDOR_PREFIX + customVendorId
+            )
+
             if storedConsentData != nil {
                 result[index] = storedConsentData == "true"
             }
         }
 
         return result
+    }
+
+    public func getPurposeConsent(forId purposeId: String) -> Bool {
+        let PURPOSE_CONSENT_PREFIX = ConsentWebView.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + purposeId
+        var storedPurposeConsent = UserDefaults.standard.string(
+            forKey: PURPOSE_CONSENT_PREFIX
+        )
+        if (storedPurposeConsent == nil) {
+            loadAndStoreConsents([])
+            storedPurposeConsent = UserDefaults.standard.string(
+                forKey: PURPOSE_CONSENT_PREFIX
+            )
+        }
+        return storedPurposeConsent == "true"
+    }
+
+    public func getPurposeConsents(forIds purposeIds: [String] = []) -> [[String:String]?] {
+        var storedPurposeConsentsJson = UserDefaults.standard.string(
+            forKey: ConsentWebView.SP_CUSTOM_PURPOSE_CONSENTS_JSON
+        )
+        if (storedPurposeConsentsJson == nil) {
+            loadAndStoreConsents([])
+            storedPurposeConsentsJson = UserDefaults.standard.string(
+                forKey: ConsentWebView.SP_CUSTOM_PURPOSE_CONSENTS_JSON
+            )
+        }
+
+        let purposeConsents = try! JSONSerialization.jsonObject(
+            with: storedPurposeConsentsJson!.data(using: String.Encoding.utf8)!, options: []
+            ) as? [[String: String]]
+
+        if purposeIds.count == 0 {
+            return purposeConsents!
+        }
+
+        var results = [[String: String]?](repeating: nil, count: purposeIds.count)
+        for consentedPurpose in purposeConsents! {
+            if let i = purposeIds.index(of: consentedPurpose["_id"]!) {
+                results[i] = consentedPurpose
+            }
+        }
+        return results
+    }
+
+    private func loadAndStoreConsents(_ customVendorIdsToRequest: [String]) {
+        let consentParam = consentUUID == nil ? "[CONSENT_UUID]" : consentUUID!
+        let euconsentParam = euconsent == nil ? "[EUCONSENT]" : euconsent!
+        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ","))
+
+        let siteId = getSiteId()
+        if siteId == nil {
+            return
+        }
+
+        let path = "/consent/v2/" + siteId! + "/custom-vendors"
+        let search = "?customVendorIds=" + customVendorIdString! +
+            "&consentUUID=" + consentParam +
+            "&euconsent=" + euconsentParam
+        let url = cmpUrl! + path + search
+        let data = ConsentWebView.load(url)
+
+        let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
+
+        // Store consented vendors in UserDefaults one by one
+        let consentedCustomVendors = consents!["consentedVendors"]
+        for consentedCustomVendor in consentedCustomVendors! {
+            UserDefaults.standard.setValue(
+                "true",
+                forKey: ConsentWebView.CUSTOM_VENDOR_PREFIX + consentedCustomVendor["_id"]!
+            )
+        }
+
+        // Store consented purposes in UserDefaults as a JSON
+        let consentedPurposes = consents!["consentedPurposes"]
+        // Serialize consented purposes again
+        guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes, options: []) else {
+            return
+        }
+        UserDefaults.standard.setValue(
+            String(data: consentedPurposesJson, encoding: String.Encoding.utf8),
+            forKey: ConsentWebView.SP_CUSTOM_PURPOSE_CONSENTS_JSON
+        )
+        for consentedPurpose in consentedPurposes! {
+            UserDefaults.standard.setValue(
+                "true",
+                forKey: ConsentWebView.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + consentedPurpose["_id"]!
+            )
+        }
+        UserDefaults.standard.synchronize()
     }
 
     private func encodeURIComponent(_ val: String) -> String? {
@@ -305,7 +377,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         var euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
-        
+
         let cstring = try! ConsentString(
             consentString: euconsent
         )
@@ -318,7 +390,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
             }
         }
         userDefaults.setValue(String(parsedVendorConsents), forKey: ConsentWebView.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
-        
+
         // Generate parsed purpose consents string
         var parsedPurposeConsents = [Character](repeating: "0", count: ConsentWebView.MAX_PURPOSE_ID)
         for pId in cstring.purposesAllowed {
@@ -326,7 +398,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         }
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentWebView.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
-    
+
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let messageBody = message.body as? [String: Any], let name = messageBody["name"] as? String {
             // called when message loads
