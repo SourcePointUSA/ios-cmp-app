@@ -86,6 +86,14 @@ class ViewController: UIViewController {
                 "\n IABConsent_ParsedVendorConsents in storage",
                 UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_PARSED_VENDOR_CONSENTS) as Any,
 
+                // API for getting IAB Vendor Consents
+                "\n IAB vendor consent for Smaato Inc",
+                cbw.getIABVendorConsents([82]),
+ 
+                // API for getting IAB Purpose Consents
+                "\n IAB purpose consent for \"Ad selection, delivery, reporting\"",
+                cbw.getIABPurposeConsents([3]),
+
                 // Get custom vendor results:
                 "\n custom vendor consents",
                 cbw.getCustomVendorConsents(forIds: ["5bc76807196d3c5730cbab05", "5bc768d8196d3c5730cbab06"]),

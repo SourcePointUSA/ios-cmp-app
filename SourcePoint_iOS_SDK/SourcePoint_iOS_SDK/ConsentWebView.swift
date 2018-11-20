@@ -203,6 +203,28 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         webView.load(myRequest)
     }
 
+    public func getIABVendorConsents(_ forIds: [Int]) -> [Bool]{
+        var results = Array(repeating: false, count: forIds.count)
+        let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
+        let consentString:ConsentString = buildConsentString(storedConsentString!)
+        
+        for i in 0..<forIds.count {
+            results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
+        }
+        return results
+    }
+ 
+    public func getIABPurposeConsents(_ forIds: [Int8]) -> [Bool]{
+        var results = Array(repeating: false, count: forIds.count)
+        let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
+        let consentString:ConsentString = buildConsentString(storedConsentString!)
+        
+        for i in 0..<forIds.count {
+            results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
+        }
+        return results
+    }
+    
     private func getSiteId() -> String? {
         let siteIdKey = ConsentWebView.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
         let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey)
@@ -368,19 +390,24 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
 
     let maxPurposes:Int64 = 24
 
+    private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
+        //Convert base46URL to regular base64 encoding for Consent String SDK Swift
+
+        var euconsent = euconsentBase64Url
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+        
+        return try! ConsentString(
+            consentString: euconsent
+        )
+    }
+    
     private func storeIABVars(_ euconsentBase64Url: String) {
         let userDefaults = UserDefaults.standard
         // Set the standard IABConsent_ConsentString var in userDefaults
         userDefaults.setValue(euconsentBase64Url, forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
 
-        //Convert base46URL to regular base64 encoding for Consent String SDK Swift
-        var euconsent = euconsentBase64Url
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-
-        let cstring = try! ConsentString(
-            consentString: euconsent
-        )
+        let cstring = buildConsentString(euconsentBase64Url)
 
         // Generate parsed vendor consents string
         var parsedVendorConsents = [Character](repeating: "0", count: ConsentWebView.MAX_VENDOR_ID)
