@@ -121,3 +121,5 @@ class ViewController: UIViewController {
 * Clean and then build the project under Product menu.
 * Under the Products branch in Project Navigator on the left right click on `SourcePoint_iOS_SDK.framework` and select `Show in Finder`, it should point you to the location of a `SourcePoint_iOS_SDK.framework` file, that's you compiled framework you can import to other projects.
 
+# Complete Docs
+For the complete docs open the `./SourcePoint_iOS_SDK/docs/index.html` in the browser. 

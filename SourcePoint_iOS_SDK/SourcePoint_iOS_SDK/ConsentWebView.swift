@@ -6,6 +6,7 @@
 //  Copyright © 2018 Sourcepoint. All rights reserved.
 //
 
+/// :nodoc:
 public typealias Callback = (ConsentWebView) -> Void
 
 import UIKit
@@ -13,8 +14,34 @@ import WebKit
 import JavaScriptCore
 import Consent_String_SDK_Swift
 
+/**
+ SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
+ and offers ways to inspect the consents and purposes the user has chosen.
+ 
+ ```
+ var consentWebView: ConsentWebView!
+ override func viewDidLoad() {
+     super.viewDidLoad()
+     consentWebView = ConsentWebView(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME")
+     consentWebView.onMessageChoiceSelect = {
+        (cbw: ConsentWebView) in print("Choice selected by user", cbw.choiceType as Any)
+     }
+     consentWebView.onInteractionComplete = { (cbw: ConsentWebView) in
+         print(
+             cbw.euconsent as Any,
+             cbw.consentUUID as Any,
+             cbw.getIABVendorConsents(["VENDOR_ID"]),
+             cbw.getIABPurposeConsents([PURPOSE_ID]),
+             cbw.getCustomVendorConsents(forIds: ["VENDOR_ID"]),
+             cbw.getPurposeConsents()
+         )
+     }
+ view.addSubview(consentWebView.view)
+ ```
+*/
 public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
 
+    /// :nodoc:
     public enum DebugLevel: String {
         case DEBUG
         case INFO
@@ -24,15 +51,30 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         case OFF
     }
 
+    /// :nodoc:
     static public let EU_CONSENT_KEY: String = "euconsent"
+    /// :nodoc:
     static public let CONSENT_UUID_KEY: String = "consentUUID"
+    
+    /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
     static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
+    
+    /// If the user is subject to GDPR, reading for this key in the `UserDefaults` will return "1" otherwise "0"
     static public let IAB_CONSENT_SUBJECT_TO_GDPR: String = "IABConsent_SubjectToGDPR"
+    
+    /// They key used to store the IAB Consent string for the user in the `UserDefaults`
     static public let IAB_CONSENT_CONSENT_STRING: String = "IABConsent_ConsentString"
+    
+    /// They key used to read and write the parsed IAB Purposes consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_PURPOSE_CONSENTS: String = "IABConsent_ParsedPurposeConsents"
+    
+    /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
 
+    /// The id of your account can be found in the Publisher's portal -> Account menu
     public let accountId: Int
+    
+    /// The site name which the campaign and scenarios will be loaded from
     public let siteName: String
 
     static private let SP_PREFIX: String = "_sp_"
@@ -44,25 +86,69 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
+    /// Page is merely for logging purposes, eg. https://mysitename.example/page
     public var page: String?
+    
+    /// Indicates if the campaign is a stage campaign
     public var isStage: Bool = false
+    
+    /// indicates if the data should come from SourcePoint's staging environment. Most of the times that's not what you want.
     public var isInternalStage: Bool = false
+    
+    /// :nodoc:
     public var inAppMessagingPageUrl: String?
+    /// :nodoc:
     public var mmsDomain: String?
+    /// :nodoc:
     public var cmpDomain: String?
+    /// :nodoc:
     private var targetingParams: [String: Any] = [:]
+    /// :nodoc:
     public var debugLevel: DebugLevel = .OFF
 
+    // TODO: remove it, as in Android's SDK
+    /// :nodoc:
     public var onReceiveMessageData: Callback?
+    
+    /**
+      A `Callback` that will be called when the user selects an option on the WebView.
+      The selected choice will be available in the instance variable `choiceType`
+     */
     public var onMessageChoiceSelect: Callback?
+    
+    /**
+     A `Callback` to be called when the user finishes interacting with the WebView
+     either by closing it, canceling or accepting the terms.
+     At this point, the following keys will available populated in the `UserDefaults`:
+     * `EU_CONSENT_KEY`
+     * `CONSENT_UUID_KEY`
+     * `IAB_CONSENT_SUBJECT_TO_GDPR`
+     * `IAB_CONSENT_CONSENT_STRING`
+     * `IAB_CONSENT_PARSED_PURPOSE_CONSENTS`
+     * `IAB_CONSENT_PARSED_VENDOR_CONSENTS`
+     
+     Also at this point, the methods `getCustomVendorConsents()`,
+     `getPurposeConsents(forIds:)` and `getPurposeConsent(forId:)`
+     will also be able to be called from inside the callback
+     */
     public var onInteractionComplete: Callback?
 
     var webView: WKWebView!
+    
+    // TODO: remove it
+    /// :nodoc:
     public var msgJSON: String? = nil
+    
+    /// Holds the choice type the user has chosen after interacting with the ConsentWebView
     public var choiceType: Int? = nil
+    
+    /// The IAB consent string, set after the user has chosen after interacting with the ConsentWebView
     public var euconsent: String? = nil
+    
+    /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentWebView
     public var consentUUID: String? = nil
 
+    /// Holds a collection of strings representing the non-IAB consents
     public var customConsent: [[String: Any]] = []
 
     private var mmsDomainToLoad: String?
@@ -80,12 +166,10 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return try! NSURLConnection.sendSynchronousRequest(request, returning: response)
     }
 
-    public init(
-        accountId: Int,
-        siteName: String
-        ) {
-
-        // required parameters for construction
+    /**
+     Initialises the library with `accountId` and `siteName`.
+     */
+    public init(accountId: Int, siteName: String) {
         self.accountId = accountId
         self.siteName = siteName
 
@@ -96,19 +180,23 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         super.init(nibName: nil, bundle: nil)
     }
 
-    // may need to implement this eventually
+    // TODO: may need to implement this eventually
+    /// :nodoc:
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// :nodoc:
     public func setTargetingParam(key: String, value: String) {
         targetingParams[key] = value
     }
 
+    /// :nodoc:
     public func setTargetingParam(key: String, value: Int) {
         targetingParams[key] = value
     }
 
+    /// :nodoc:
     override public func loadView() {
         euconsent = UserDefaults.standard.string(forKey: ConsentWebView.EU_CONSENT_KEY)
         consentUUID = UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY)
@@ -142,6 +230,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         view = webView
     }
 
+    /// :nodoc:
     override public func viewDidLoad() {
         super.viewDidLoad()
         // initially hide web view while loading
@@ -203,6 +292,13 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         webView.load(myRequest)
     }
 
+    /**
+     Get the IAB consents given to each vendor id in the array passed as parameter
+     
+     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Parameter _: an `Array` of vendor ids
+     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
+    */
     public func getIABVendorConsents(_ forIds: [Int]) -> [Bool]{
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
@@ -214,6 +310,13 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return results
     }
  
+    /**
+     Checks if the IAB purposes passed as parameter were given consent or not.
+     
+     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Parameter _: an `Array` of purpose ids
+     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding purpose.
+     */
     public func getIABPurposeConsents(_ forIds: [Int8]) -> [Bool]{
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
@@ -248,6 +351,11 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return String(siteId!)
     }
 
+    /**
+     Checks if GDPR applies the user
+     
+     - Returns: a `Bool` indicating if GDPR applies that user.
+     */
     public func getGdprApplies() -> Bool {
         let path = "/consent/v2/gdpr-status"
         let result = ConsentWebView.load(cmpUrl! + path)
@@ -255,10 +363,25 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return parsedResult!["gdprApplies"] == 1;
     }
 
+    /**
+     Get the non-IAB consents given to a single vendor id
+     
+     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Parameter forId: the vendor id
+     - Returns: a `Bool` indicating if the user has given consent to that vendor.
+     */
     public func getCustomVendorConsent(forId customVendorId: String) -> Bool {
         return getCustomVendorConsents(forIds: [customVendorId])[0]
     }
 
+    /**
+     Checks if the non-IAB purposes passed as parameter were given consent or not.
+     Same as `getIabVendorConsents(forIds: )` but for non-IAB vendors.
+     
+     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Parameter forIds: an `Array` of vendor ids
+     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
+     */
     public func getCustomVendorConsents(forIds customVendorIds: [String]) -> [Bool] {
         var result = Array(repeating: false, count: customVendorIds.count)
 
@@ -293,6 +416,14 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return result
     }
 
+    /**
+     Checks if a non-IAB purpose was given consent.
+     Same as `getIabPurposeConsents(_) but for a single non-IAB purpose.
+     
+     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Parameter forId: the purpose id
+     - Returns: a `Bool` indicating if the user has given consent to that purpose.
+     */
     public func getPurposeConsent(forId purposeId: String) -> Bool {
         let PURPOSE_CONSENT_PREFIX = ConsentWebView.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + purposeId
         var storedPurposeConsent = UserDefaults.standard.string(
@@ -307,6 +438,14 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return storedPurposeConsent == "true"
     }
 
+    /**
+     Checks if a non-IAB purpose was given consent.
+     Same as `getIabPurposeConsents(_) but for non-IAB purposes.
+     
+     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Parameter forIds: the purpose id
+     - Returns: a `Bool` indicating if the user has given consent to that purpose.
+     */
     public func getPurposeConsents(forIds purposeIds: [String] = []) -> [[String:String]?] {
         var storedPurposeConsentsJson = UserDefaults.standard.string(
             forKey: ConsentWebView.SP_CUSTOM_PURPOSE_CONSENTS_JSON
@@ -426,6 +565,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentWebView.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
+    /// :nodoc:
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let messageBody = message.body as? [String: Any], let name = messageBody["name"] as? String {
             // called when message loads

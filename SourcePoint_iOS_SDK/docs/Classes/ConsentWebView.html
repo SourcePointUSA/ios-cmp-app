@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ConsentWebView Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/ConsentWebView" class="dashAnchor"></a>
+    <a title="ConsentWebView Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        ConsentWebView Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/ConsentWebView.html">ConsentWebView</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ConsentWebView</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ConsentWebView</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">WKUIDelegate</span><span class="p">,</span> <span class="kt">WKNavigationDelegate</span><span class="p">,</span> <span class="kt">WKScriptMessageHandler</span></code></pre>
+
+                </div>
+              </div>
+            <p>SourcePoint&rsquo;s Consent SDK is a WebView that loads SourcePoint&rsquo;s web consent managment tool
+and offers ways to inspect the consents and purposes the user has chosen.</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">consentWebView</span><span class="p">:</span> <span class="kt">ConsentWebView</span><span class="o">!</span>
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+    <span class="n">consentWebView</span> <span class="o">=</span> <span class="kt">ConsentWebView</span><span class="p">(</span><span class="nv">accountId</span><span class="p">:</span> <span class="o">&lt;</span><span class="kt">ACCOUNT_ID</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">siteName</span><span class="p">:</span> <span class="s">"SITE_NAME"</span><span class="p">)</span>
+    <span class="n">consentWebView</span><span class="o">.</span><span class="n">onMessageChoiceSelect</span> <span class="o">=</span> <span class="p">{</span>
+       <span class="p">(</span><span class="nv">cbw</span><span class="p">:</span> <span class="kt">ConsentWebView</span><span class="p">)</span> <span class="k">in</span> <span class="nf">print</span><span class="p">(</span><span class="s">"Choice selected by user"</span><span class="p">,</span> <span class="n">cbw</span><span class="o">.</span><span class="n">choiceType</span> <span class="k">as</span> <span class="kt">Any</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">consentWebView</span><span class="o">.</span><span class="n">onInteractionComplete</span> <span class="o">=</span> <span class="p">{</span> <span class="p">(</span><span class="nv">cbw</span><span class="p">:</span> <span class="kt">ConsentWebView</span><span class="p">)</span> <span class="k">in</span>
+        <span class="nf">print</span><span class="p">(</span>
+            <span class="n">cbw</span><span class="o">.</span><span class="n">euconsent</span> <span class="k">as</span> <span class="kt">Any</span><span class="p">,</span>
+            <span class="n">cbw</span><span class="o">.</span><span class="n">consentUUID</span> <span class="k">as</span> <span class="kt">Any</span><span class="p">,</span>
+            <span class="n">cbw</span><span class="o">.</span><span class="nf">getIABVendorConsents</span><span class="p">([</span><span class="s">"VENDOR_ID"</span><span class="p">]),</span>
+            <span class="n">cbw</span><span class="o">.</span><span class="nf">getIABPurposeConsents</span><span class="p">([</span><span class="kt">PURPOSE_ID</span><span class="p">]),</span>
+            <span class="n">cbw</span><span class="o">.</span><span class="nf">getCustomVendorConsents</span><span class="p">(</span><span class="nv">forIds</span><span class="p">:</span> <span class="p">[</span><span class="s">"VENDOR_ID"</span><span class="p">]),</span>
+            <span class="n">cbw</span><span class="o">.</span><span class="nf">getPurposeConsents</span><span class="p">()</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">consentWebView</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+</code></pre>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC23IAB_CONSENT_CMP_PRESENTSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/IAB_CONSENT_CMP_PRESENT" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC23IAB_CONSENT_CMP_PRESENTSSvpZ">IAB_CONSENT_CMP_PRESENT</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If the user has consent data stored, reading for this key in the <code>UserDefaults</code> will return <q>1</q></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">IAB_CONSENT_CMP_PRESENT</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC27IAB_CONSENT_SUBJECT_TO_GDPRSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/IAB_CONSENT_SUBJECT_TO_GDPR" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC27IAB_CONSENT_SUBJECT_TO_GDPRSSvpZ">IAB_CONSENT_SUBJECT_TO_GDPR</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If the user is subject to GDPR, reading for this key in the <code>UserDefaults</code> will return <q>1</q> otherwise <q>0</q></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">IAB_CONSENT_SUBJECT_TO_GDPR</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC012IAB_CONSENT_I7_STRINGSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/IAB_CONSENT_CONSENT_STRING" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC012IAB_CONSENT_I7_STRINGSSvpZ">IAB_CONSENT_CONSENT_STRING</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>They key used to store the IAB Consent string for the user in the <code>UserDefaults</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">IAB_CONSENT_CONSENT_STRING</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC35IAB_CONSENT_PARSED_PURPOSE_CONSENTSSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/IAB_CONSENT_PARSED_PURPOSE_CONSENTS" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC35IAB_CONSENT_PARSED_PURPOSE_CONSENTSSSvpZ">IAB_CONSENT_PARSED_PURPOSE_CONSENTS</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>They key used to read and write the parsed IAB Purposes consented by the user in the <code>UserDefaults</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">IAB_CONSENT_PARSED_PURPOSE_CONSENTS</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC34IAB_CONSENT_PARSED_VENDOR_CONSENTSSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/IAB_CONSENT_PARSED_VENDOR_CONSENTS" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC34IAB_CONSENT_PARSED_VENDOR_CONSENTSSSvpZ">IAB_CONSENT_PARSED_VENDOR_CONSENTS</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The key used to read and write the parsed IAB Vendor consented by the user in the <code>UserDefaults</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">IAB_CONSENT_PARSED_VENDOR_CONSENTS</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC9accountIdSivp"></a>
+                    <a name="//apple_ref/swift/Property/accountId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC9accountIdSivp">accountId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The id of your account can be found in the Publisher&rsquo;s portal -&gt; Account menu</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">accountId</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC8siteNameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/siteName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC8siteNameSSvp">siteName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The site name which the campaign and scenarios will be loaded from</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">siteName</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC4pageSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/page" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC4pageSSSgvp">page</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Page is merely for logging purposes, eg. <a href="https://mysitename.example/page">https://mysitename.example/page</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">page</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC7isStageSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isStage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC7isStageSbvp">isStage</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates if the campaign is a stage campaign</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isStage</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC15isInternalStageSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isInternalStage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC15isInternalStageSbvp">isInternalStage</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>indicates if the data should come from SourcePoint&rsquo;s staging environment. Most of the times that&rsquo;s not what you want.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isInternalStage</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onMessageChoiceSelectyACcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onMessageChoiceSelect" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onMessageChoiceSelectyACcSgvp">onMessageChoiceSelect</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A <code>Callback</code> that will be called when the user selects an option on the WebView.
+The selected choice will be available in the instance variable <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC10choiceTypeSiSgvp">choiceType</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onMessageChoiceSelect</span><span class="p">:</span> <span class="kt">Callback</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp"></a>
+                    <a name="//apple_ref/swift/Property/onInteractionComplete" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp">onInteractionComplete</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A <code>Callback</code> to be called when the user finishes interacting with the WebView
+either by closing it, canceling or accepting the terms.
+At this point, the following keys will available populated in the <code>UserDefaults</code>:</p>
+
+<ul>
+<li><code>EU_CONSENT_KEY</code></li>
+<li><code>CONSENT_UUID_KEY</code></li>
+<li><code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC27IAB_CONSENT_SUBJECT_TO_GDPRSSvpZ">IAB_CONSENT_SUBJECT_TO_GDPR</a></code></li>
+<li><code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC012IAB_CONSENT_I7_STRINGSSvpZ">IAB_CONSENT_CONSENT_STRING</a></code></li>
+<li><code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC35IAB_CONSENT_PARSED_PURPOSE_CONSENTSSSvpZ">IAB_CONSENT_PARSED_PURPOSE_CONSENTS</a></code></li>
+<li><code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC34IAB_CONSENT_PARSED_VENDOR_CONSENTSSSvpZ">IAB_CONSENT_PARSED_VENDOR_CONSENTS</a></code></li>
+</ul>
+
+<p>Also at this point, the methods <code>getCustomVendorConsents()</code>,
+<code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC18getPurposeConsents6forIdsSaySDyS2SGSgGSaySSG_tF">getPurposeConsents(forIds:)</a></code> and <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC010getPurposeE05forIdSbSS_tF">getPurposeConsent(forId:)</a></code>
+will also be able to be called from inside the callback</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">onInteractionComplete</span><span class="p">:</span> <span class="kt">Callback</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC10choiceTypeSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/choiceType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC10choiceTypeSiSgvp">choiceType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Holds the choice type the user has chosen after interacting with the ConsentWebView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">choiceType</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC9euconsentSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/euconsent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC9euconsentSSSgvp">euconsent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The IAB consent string, set after the user has chosen after interacting with the ConsentWebView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">euconsent</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC11consentUUIDSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/consentUUID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC11consentUUIDSSSgvp">consentUUID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The UUID assigned to the user, set after the user has chosen after interacting with the ConsentWebView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">consentUUID</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC06customE0SaySDySSypGGvp"></a>
+                    <a name="//apple_ref/swift/Property/customConsent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC06customE0SaySDySSypGGvp">customConsent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Holds a collection of strings representing the non-IAB consents</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">customConsent</span><span class="p">:</span> <span class="p">[[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC9accountId8siteNameACSi_SStcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(accountId:siteName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC9accountId8siteNameACSi_SStcfc">init(accountId:siteName:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialises the library with <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC9accountIdSivp">accountId</a></code> and <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC8siteNameSSvp">siteName</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">accountId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">siteName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC20getIABVendorConsentsySaySbGSaySiGF"></a>
+                    <a name="//apple_ref/swift/Method/getIABVendorConsents(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC20getIABVendorConsentsySaySbGSaySiGF">getIABVendorConsents(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the IAB consents given to each vendor id in the array passed as parameter</p>
+<div class="aside aside-precondition">
+    <p class="aside-title">Precondition</p>
+    this function should be called either during the <code>Callback</code> <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp">onInteractionComplete</a></code> or after it has returned.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getIABVendorConsents</span><span class="p">(</span><span class="n">_</span> <span class="nv">forIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Bool</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an <code>Array</code> of <code>Bool</code> indicating if the user has given consent to the corresponding vendor.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC21getIABPurposeConsentsySaySbGSays4Int8VGF"></a>
+                    <a name="//apple_ref/swift/Method/getIABPurposeConsents(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21getIABPurposeConsentsySaySbGSays4Int8VGF">getIABPurposeConsents(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks if the IAB purposes passed as parameter were given consent or not.</p>
+<div class="aside aside-precondition">
+    <p class="aside-title">Precondition</p>
+    this function should be called either during the <code>Callback</code> <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp">onInteractionComplete</a></code> or after it has returned.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getIABPurposeConsents</span><span class="p">(</span><span class="n">_</span> <span class="nv">forIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int8</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Bool</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an <code>Array</code> of <code>Bool</code> indicating if the user has given consent to the corresponding purpose.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC14getGdprAppliesSbyF"></a>
+                    <a name="//apple_ref/swift/Method/getGdprApplies()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC14getGdprAppliesSbyF">getGdprApplies()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks if GDPR applies the user</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getGdprApplies</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Bool</code> indicating if GDPR applies that user.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC015getCustomVendorE05forIdSbSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getCustomVendorConsent(forId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC015getCustomVendorE05forIdSbSS_tF">getCustomVendorConsent(forId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the non-IAB consents given to a single vendor id</p>
+<div class="aside aside-precondition">
+    <p class="aside-title">Precondition</p>
+    this function should be called either during the <code>Callback</code> <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp">onInteractionComplete</a></code> or after it has returned.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getCustomVendorConsent</span><span class="p">(</span><span class="n">forId</span> <span class="nv">customVendorId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the vendor id</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Bool</code> indicating if the user has given consent to that vendor.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC23getCustomVendorConsents6forIdsSaySbGSaySSG_tF"></a>
+                    <a name="//apple_ref/swift/Method/getCustomVendorConsents(forIds:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC23getCustomVendorConsents6forIdsSaySbGSaySSG_tF">getCustomVendorConsents(forIds:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks if the non-IAB purposes passed as parameter were given consent or not.
+Same as <code>getIabVendorConsents(forIds: )</code> but for non-IAB vendors.</p>
+<div class="aside aside-precondition">
+    <p class="aside-title">Precondition</p>
+    this function should be called either during the <code>Callback</code> <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp">onInteractionComplete</a></code> or after it has returned.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getCustomVendorConsents</span><span class="p">(</span><span class="n">forIds</span> <span class="nv">customVendorIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Bool</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forIds</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>an <code>Array</code> of vendor ids</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>an <code>Array</code> of <code>Bool</code> indicating if the user has given consent to the corresponding vendor.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC010getPurposeE05forIdSbSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getPurposeConsent(forId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC010getPurposeE05forIdSbSS_tF">getPurposeConsent(forId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks if a non-IAB purpose was given consent.
+Same as `getIabPurposeConsents(_) but for a single non-IAB purpose.</p>
+<div class="aside aside-precondition">
+    <p class="aside-title">Precondition</p>
+    this function should be called either during the <code>Callback</code> <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp">onInteractionComplete</a></code> or after it has returned.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getPurposeConsent</span><span class="p">(</span><span class="n">forId</span> <span class="nv">purposeId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the purpose id</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Bool</code> indicating if the user has given consent to that purpose.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SourcePoint_iOS_SDK14ConsentWebViewC18getPurposeConsents6forIdsSaySDyS2SGSgGSaySSG_tF"></a>
+                    <a name="//apple_ref/swift/Method/getPurposeConsents(forIds:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SourcePoint_iOS_SDK14ConsentWebViewC18getPurposeConsents6forIdsSaySDyS2SGSgGSaySSG_tF">getPurposeConsents(forIds:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks if a non-IAB purpose was given consent.
+Same as `getIabPurposeConsents(_) but for non-IAB purposes.</p>
+<div class="aside aside-precondition">
+    <p class="aside-title">Precondition</p>
+    this function should be called either during the <code>Callback</code> <code><a href="../Classes/ConsentWebView.html#/s:19SourcePoint_iOS_SDK14ConsentWebViewC21onInteractionCompleteyACcSgvp">onInteractionComplete</a></code> or after it has returned.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getPurposeConsents</span><span class="p">(</span><span class="n">forIds</span> <span class="nv">purposeIds</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[])</span> <span class="o">-&gt;</span> <span class="p">[[</span><span class="kt">String</span><span class="p">:</span><span class="kt">String</span><span class="p">]?]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>forIds</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the purpose id</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Bool</code> indicating if the user has given consent to that purpose.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-11-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
