@@ -18,7 +18,7 @@ class ViewController: UIViewController {
             // required, must be set first used to find account
             accountId: 22,
             // required, must be set second used to find scenario
-            siteName: "app.ios.cmp"
+            siteName: "mobile.demo"
         )
 
         // optional, used for logging purposes for which page of the app the consent lib was
@@ -26,26 +26,15 @@ class ViewController: UIViewController {
         consentWebView.page = "main"
 
         // optional, used for running stage campaigns
-        consentWebView.isStage = false
+        consentWebView.isStage = true
 
         // optional, used for running against our stage endpoints
-        consentWebView.isInternalStage = true
-
-        // optional, should not ever be needed provide a custom url for the messaging page
-        // (overrides internal stage)
-        consentWebView.inAppMessagingPageUrl = nil
-
-        // optional, should not ever be needed provide a custom domain for mms (overrides
-        // internal stage)
-        consentWebView.mmsDomain = nil
-
-        // optional, should not ever be needed provide a custom domain for cmp (overrides
-        // internal stage)
-        consentWebView.cmpDomain = nil
+        consentWebView.isInternalStage = false
 
         // optional, set custom targeting parameters supports Strings and Integers
         consentWebView.setTargetingParam(key: "a", value: "b")
         consentWebView.setTargetingParam(key: "c", value: 100)
+        consentWebView.setTargetingParam(key: "CMP", value: "true")
 
         // optional, sets debug level defaults to OFF
         consentWebView.debugLevel = ConsentWebView.DebugLevel.OFF
@@ -96,15 +85,15 @@ class ViewController: UIViewController {
 
                 // Get custom vendor results:
                 "\n custom vendor consents",
-                cbw.getCustomVendorConsents(forIds: ["5bc76807196d3c5730cbab05", "5bc768d8196d3c5730cbab06"]),
+                cbw.getCustomVendorConsents(forIds: ["5bf7f5c5461e09743fe190b3", "5b2adb86173375159f804c77"]),
 
                 // Get purpose results:
                 "\n all purpose consents ",
                 cbw.getPurposeConsents(),
                 "\n filtered purpose consents ",
-                cbw.getPurposeConsents(forIds: ["5bc4ac5c6fdabb0010940ab1", "5bc4ac5c6fdabb0010940aae", "invalid_id_returns_nil" ]),
+                cbw.getPurposeConsents(forIds: ["5c0e813175223430a50fe465"]),
                 "\n consented to measurement purpose ",
-                cbw.getPurposeConsent(forId: "5bc4ac5c6fdabb0010940ab1")
+                cbw.getPurposeConsent(forId: "5c0e813175223430a50fe465")
             )
         }
 
