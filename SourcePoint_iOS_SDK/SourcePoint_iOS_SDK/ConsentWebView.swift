@@ -410,17 +410,11 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
     public func getPurposeConsent(forId purposeId: String) -> Bool {
-        let PURPOSE_CONSENT_PREFIX = ConsentWebView.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + purposeId
-        var storedPurposeConsent = UserDefaults.standard.string(
-            forKey: PURPOSE_CONSENT_PREFIX
-        )
-        if (storedPurposeConsent == nil) {
-            loadAndStoreConsents([])
-            storedPurposeConsent = UserDefaults.standard.string(
-                forKey: PURPOSE_CONSENT_PREFIX
-            )
+        var consented = false
+        for purpose in getPurposeConsents(forIds: [purposeId]) {
+            if purposeId == purpose?["_id"] { consented = true }
         }
-        return storedPurposeConsent == "true"
+        return consented
     }
 
     /**

@@ -92,7 +92,7 @@ class ViewController: UIViewController {
                 cbw.getPurposeConsents(),
                 "\n filtered purpose consents ",
                 cbw.getPurposeConsents(forIds: ["5c0e813175223430a50fe465"]),
-                "\n consented to measurement purpose ",
+                "\n consented to My Custom Purpose ",
                 cbw.getPurposeConsent(forId: "5c0e813175223430a50fe465")
             )
         }
