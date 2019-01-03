@@ -229,6 +229,14 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
 
         view = webView
     }
+    /// :nodoc:
+    // handles links with "target=_blank", forcing them to open in the same view
+    func webView(_ webView: WKWebView!, createWebViewWith configuration: WKWebViewConfiguration!, for navigationAction: WKNavigationAction!, windowFeatures: WKWindowFeatures!) -> WKWebView! {
+        if navigationAction.targetFrame == nil {
+            webView.load(navigationAction.request)
+        }
+        return nil
+    }
 
     /// :nodoc:
     override public func viewDidLoad() {
@@ -290,6 +298,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         }
 
         webView.load(myRequest)
+        webView.allowsBackForwardNavigationGestures = true
     }
 
     /**
