@@ -226,6 +226,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         webView.navigationDelegate = self
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
+        webView.allowsBackForwardNavigationGestures = true
         
         // sets up a spiner for whenever the Webview is loading content
         // https://stackoverflow.com/questions/29372720/displaying-activity-indicator-on-wkwebview-using-swift
@@ -261,10 +262,17 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     }()
 
     /// :nodoc:
-    // handles links with "target=_blank", forcing them to open in the same view
-    func webView(_ webView: WKWebView!, createWebViewWith configuration: WKWebViewConfiguration!, for navigationAction: WKNavigationAction!, windowFeatures: WKWindowFeatures!) -> WKWebView! {
-        if navigationAction.targetFrame == nil {
-            webView.load(navigationAction.request)
+    // handles links with "target=_blank", forcing them to open in Safari
+    public func webView(_ webView: WKWebView!,
+                 createWebViewWith configuration: WKWebViewConfiguration!,
+                 for navigationAction: WKNavigationAction!,
+                 windowFeatures: WKWindowFeatures!) -> WKWebView! {
+        if navigationAction != nil && navigationAction!.request.url != nil {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(navigationAction!.request.url!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(navigationAction!.request.url!)
+            }
         }
         return nil
     }
@@ -329,7 +337,6 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         }
 
         webView.load(myRequest)
-        webView.allowsBackForwardNavigationGestures = true
     }
 
     /**
