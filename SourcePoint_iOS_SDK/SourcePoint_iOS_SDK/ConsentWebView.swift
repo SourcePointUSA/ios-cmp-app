@@ -348,8 +348,8 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     */
     public func getIABVendorConsents(_ forIds: [Int]) -> [Bool]{
         var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
-        let consentString:ConsentString = buildConsentString(storedConsentString!)
+        let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING) ?? ""
+        let consentString:ConsentString = buildConsentString(storedConsentString)
         
         for i in 0..<forIds.count {
             results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
@@ -366,8 +366,8 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
      */
     public func getIABPurposeConsents(_ forIds: [Int8]) -> [Bool]{
         var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING)
-        let consentString:ConsentString = buildConsentString(storedConsentString!)
+        let storedConsentString = UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING) ?? ""
+        let consentString:ConsentString = buildConsentString(storedConsentString)
         
         for i in 0..<forIds.count {
             results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
