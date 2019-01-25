@@ -1,0 +1,16 @@
+PODS:
+  - ConsentWebView (0.1.0)
+
+DEPENDENCIES:
+  - ConsentWebView (from `../`)
+
+EXTERNAL SOURCES:
+  ConsentWebView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ConsentWebView: c6cae7018cd2c7482a754ab3de8068697f0004e0
+
+PODFILE CHECKSUM: 1d3aa78e44f343be71d3a0c2a96ef61c05d43b08
+
+COCOAPODS: 1.5.3

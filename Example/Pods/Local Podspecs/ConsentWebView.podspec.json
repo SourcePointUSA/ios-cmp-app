@@ -1,0 +1,22 @@
+{
+  "name": "ConsentWebView",
+  "version": "0.1.0",
+  "summary": "A short description of ConsentWebView.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/andresilveirah/ConsentWebView",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "andresilveirah": "andresilveirah@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/andresilveirah/ConsentWebView.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "Classes/**/*"
+}
