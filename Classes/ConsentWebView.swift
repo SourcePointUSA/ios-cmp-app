@@ -283,8 +283,8 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
         let pageToLoad = inAppMessagingPageUrl ?? (isInternalStage ?
-            "http://in-app-messaging.pm.cmp.sp-stage.net/" :
-            "http://in-app-messaging.pm.sourcepoint.mgr.consensu.org/"
+            "https://in-app-messaging.pm.cmp.sp-stage.net/" :
+            "https://in-app-messaging.pm.sourcepoint.mgr.consensu.org/"
         )
 
         let path = page == nil ? "" : page!
