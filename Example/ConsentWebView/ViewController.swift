@@ -1,20 +1,9 @@
+//
+//  ViewController.swift
+//
+//  Created by SourcePoint
+//  Copyright (c) 2019 SourcePoint. All rights reserved.
 
-# iOS Setup guide
-
-We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to install our SDK.
-In your `Podfile` add the following line to your app target:
-
-```
-pod ConsentWebView
-```
-
-# How to use the ConsentWebView widget
-
-* Open your project’s info.plist file and make sure you have App Transport Security Settings/Allow Arbitrary Loads set to YES <img width="856" alt="screen shot 2018-11-01 at 11 36 50 am" src="https://user-images.githubusercontent.com/2576311/47862466-93a58d00-ddcb-11e8-99e8-2acaac6aef2b.png">
-
-* Instantiate a ConsentWebView object in your main ViewController, set configuration variables and a onInteractionComplete callback and add the ConsentWebView to your ViewController as a subview:
-
-```swift
 import UIKit
 import ConsentWebView
 
@@ -26,7 +15,7 @@ class ViewController: UIViewController {
             // required, must be set first used to find account
             accountId: 22,
             // required, must be set second used to find scenario
-            siteName: "app.ios.cmp"
+            siteName: "mobile.demo"
         )
 
         // optional, used for logging purposes for which page of the app the consent lib was
@@ -34,26 +23,15 @@ class ViewController: UIViewController {
         consentWebView.page = "main"
 
         // optional, used for running stage campaigns
-        consentWebView.isStage = false
+        consentWebView.isStage = true
 
         // optional, used for running against our stage endpoints
-        consentWebView.isInternalStage = true
-
-        // optional, should not ever be needed provide a custom url for the messaging page
-        // (overrides internal stage)
-        consentWebView.inAppMessagingPageUrl = nil
-
-        // optional, should not ever be needed provide a custom domain for mms (overrides
-        // internal stage)
-        consentWebView.mmsDomain = nil
-
-        // optional, should not ever be needed provide a custom domain for cmp (overrides
-        // internal stage)
-        consentWebView.cmpDomain = nil
+        consentWebView.isInternalStage = false
 
         // optional, set custom targeting parameters supports Strings and Integers
         consentWebView.setTargetingParam(key: "a", value: "b")
         consentWebView.setTargetingParam(key: "c", value: 100)
+        consentWebView.setTargetingParam(key: "CMP", value: "true")
 
         // optional, sets debug level defaults to OFF
         consentWebView.debugLevel = ConsentWebView.DebugLevel.OFF
@@ -104,15 +82,15 @@ class ViewController: UIViewController {
 
                 // Get custom vendor results:
                 "\n custom vendor consents",
-                cbw.getCustomVendorConsents(forIds: ["5bc76807196d3c5730cbab05", "5bc768d8196d3c5730cbab06"]),
+                cbw.getCustomVendorConsents(forIds: ["5bf7f5c5461e09743fe190b3", "5b2adb86173375159f804c77"]),
 
                 // Get purpose results:
                 "\n all purpose consents ",
                 cbw.getPurposeConsents(),
                 "\n filtered purpose consents ",
-                cbw.getPurposeConsents(forIds: ["5bc4ac5c6fdabb0010940ab1", "5bc4ac5c6fdabb0010940aae", "invalid_id_returns_nil" ]),
-                "\n consented to measurement purpose ",
-                cbw.getPurposeConsent(forId: "5bc4ac5c6fdabb0010940ab1")
+                cbw.getPurposeConsents(forIds: ["5c0e813175223430a50fe465"]),
+                "\n consented to My Custom Purpose ",
+                cbw.getPurposeConsent(forId: "5c0e813175223430a50fe465")
             )
         }
 
@@ -129,14 +107,3 @@ class ViewController: UIViewController {
         )
     }
 }
-```
-
-# Complete Docs
-For the complete docs open the `./SourcePoint_iOS_SDK/docs/index.html` in the browser.
-In order to generate the docs you'll need first to install the `jazzy` gem:
-
-    gem install jazzy
-
-Then, from the folder `./SourcePoint_iOS_SDK` run
-
-    jazzy
