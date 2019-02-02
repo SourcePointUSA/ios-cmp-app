@@ -290,7 +290,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         )
 
         let path = page == nil ? "" : page!
-        let siteHref = "http://" + siteName + "/" + path + "?"
+        let siteHref = "https://" + siteName + "/" + path + "?"
 
         mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
             "mms.sp-stage.net" :
@@ -384,7 +384,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         }
 
         let path = page == nil ? "" : page!
-        let siteHref = "http://" + siteName + "/" + path + "?"
+        let siteHref = "https://" + siteName + "/" + path + "?"
 
         let result = self.startLoad(
             "https://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
