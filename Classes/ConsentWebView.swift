@@ -543,7 +543,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         // Store consented purposes in UserDefaults as a JSON
         let consentedPurposes = consents!["consentedPurposes"]
         // Serialize consented purposes again
-        guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes, options: []) else {
+        guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes as Any, options: []) else {
             return
         }
         UserDefaults.standard.setValue(
@@ -570,7 +570,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
 
-        var euconsent = euconsentBase64Url
+        let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
         
