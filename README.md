@@ -10,8 +10,6 @@ pod ConsentWebView
 
 # How to use the ConsentWebView widget
 
-* Open your project’s info.plist file and make sure you have App Transport Security Settings/Allow Arbitrary Loads set to YES <img width="856" alt="screen shot 2018-11-01 at 11 36 50 am" src="https://user-images.githubusercontent.com/2576311/47862466-93a58d00-ddcb-11e8-99e8-2acaac6aef2b.png">
-
 * Instantiate a ConsentWebView object in your main ViewController, set configuration variables and a onInteractionComplete callback and add the ConsentWebView to your ViewController as a subview:
 
 ```swift
