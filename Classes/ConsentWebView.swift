@@ -154,15 +154,17 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     private var cmpDomainToLoad: String?
     private var cmpUrl: String?
 
-    private static func load(_ urlString: String) -> Data? {
-        let url = NSURL(string: urlString)
-        if url == nil {
-            print("invalid url string: " + urlString)
-            return nil
+    private func startLoad(_ urlString: String) -> Data? {
+        let url = URL(string: urlString)!
+        let semaphore = DispatchSemaphore( value: 0 )
+        var responseData: Data?
+        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
+            responseData = data
+            semaphore.signal()
         }
-        let request = URLRequest(url: url! as URL)
-        let response: AutoreleasingUnsafeMutablePointer<URLResponse?>? = nil
-        return try! NSURLConnection.sendSynchronousRequest(request, returning: response)
+        task.resume()
+        semaphore.wait()
+        return responseData
     }
 
     /**
@@ -384,8 +386,8 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         let path = page == nil ? "" : page!
         let siteHref = "http://" + siteName + "/" + path + "?"
 
-        let result = ConsentWebView.load(
-            "http://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
+        let result = self.startLoad(
+            "https://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
         )
         let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String:Int]
 
@@ -404,7 +406,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
      */
     public func getGdprApplies() -> Bool {
         let path = "/consent/v2/gdpr-status"
-        let result = ConsentWebView.load(cmpUrl! + path)
+        let result = self.startLoad(cmpUrl! + path)
         let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String: Int]
         return parsedResult!["gdprApplies"] == 1;
     }
@@ -526,7 +528,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
             "&consentUUID=" + consentParam +
             "&euconsent=" + euconsentParam
         let url = cmpUrl! + path + search
-        let data = ConsentWebView.load(url)
+        let data = self.startLoad(url)
 
         let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
 
