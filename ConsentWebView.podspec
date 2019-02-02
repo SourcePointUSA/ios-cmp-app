@@ -6,6 +6,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'SourcePoint' => 'contact@sourcepoint.com' }
   s.source           = { :git => 'https://github.com/SourcePointUSA/ios-cmp-app.git', :tag => s.version.to_s }
+  s.swift_version    = '4.2'
   s.ios.deployment_target = '9.0'
   s.source_files = 'Classes/**/*'
 end

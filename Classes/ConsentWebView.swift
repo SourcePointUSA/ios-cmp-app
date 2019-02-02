@@ -85,6 +85,10 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
+    static private let PM_MESSAGING_HOST = "pm.sourcepoint.mgr.consensu.org"
+    static private let IN_APP_MESSAGING_URL_STAGE = "https://in-app-messaging.pm.cmp.sp-stage.net/"
+    static private let IN_APP_MESSAGING_URL_PRODUCTION = "https://in-app-messaging.pm.sourcepoint.mgr.consensu.org/"
+
     /// Page is merely for logging purposes, eg. https://mysitename.example/page
     public var page: String?
     
@@ -95,7 +99,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     public var isInternalStage: Bool = false
     
     /// :nodoc:
-    public var inAppMessagingPageUrl: String?
+    private var inAppMessagingPageUrl: String?
     /// :nodoc:
     public var mmsDomain: String?
     /// :nodoc:
@@ -154,15 +158,17 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     private var cmpDomainToLoad: String?
     private var cmpUrl: String?
 
-    private static func load(_ urlString: String) -> Data? {
-        let url = NSURL(string: urlString)
-        if url == nil {
-            print("invalid url string: " + urlString)
-            return nil
+    private func startLoad(_ urlString: String) -> Data? {
+        let url = URL(string: urlString)!
+        let semaphore = DispatchSemaphore( value: 0 )
+        var responseData: Data?
+        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
+            responseData = data
+            semaphore.signal()
         }
-        let request = URLRequest(url: url! as URL)
-        let response: AutoreleasingUnsafeMutablePointer<URLResponse?>? = nil
-        return try! NSURLConnection.sendSynchronousRequest(request, returning: response)
+        task.resume()
+        semaphore.wait()
+        return responseData
     }
 
     /**
@@ -193,6 +199,17 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     /// :nodoc:
     public func setTargetingParam(key: String, value: Int) {
         targetingParams[key] = value
+    }
+
+    public func setInAppMessagingUrl(urlString: String) {
+        inAppMessagingPageUrl = urlString
+    }
+
+    public func getInAppMessagingUrl() -> String {
+        return inAppMessagingPageUrl ?? (isInternalStage ?
+            ConsentWebView.IN_APP_MESSAGING_URL_STAGE :
+            ConsentWebView.IN_APP_MESSAGING_URL_PRODUCTION
+        )
     }
 
     /// :nodoc:
@@ -260,19 +277,42 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         return spinner
     }()
 
+    private func openInBrowswerHelper(_ url:URL) -> Void {
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
+    }
+
+    private func urlDoesNotBelongToDialog(_ url: URL) -> Bool {
+        let allowedHosts : Set<String> = [
+            URL(string: getInAppMessagingUrl())!.host!,
+            siteName,
+            mmsDomainToLoad!,
+            cmpDomainToLoad!,
+            ConsentWebView.PM_MESSAGING_HOST,
+            "about:blank"
+        ]
+        return !allowedHosts.contains(url.host ?? "about:blank")
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url, urlDoesNotBelongToDialog(url) {
+            openInBrowswerHelper(url)
+            decisionHandler(WKNavigationActionPolicy.cancel)
+        } else {
+            decisionHandler(WKNavigationActionPolicy.allow)
+        }
+    }
+
     /// :nodoc:
     // handles links with "target=_blank", forcing them to open in Safari
-    public func webView(_ webView: WKWebView!,
-                 createWebViewWith configuration: WKWebViewConfiguration!,
-                 for navigationAction: WKNavigationAction!,
-                 windowFeatures: WKWindowFeatures!) -> WKWebView! {
-        if navigationAction != nil && navigationAction!.request.url != nil {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(navigationAction!.request.url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(navigationAction!.request.url!)
-            }
-        }
+    public func webView(_ webView: WKWebView,
+                        createWebViewWith configuration: WKWebViewConfiguration,
+                        for navigationAction: WKNavigationAction,
+                        windowFeatures: WKWindowFeatures) -> WKWebView? {
+        openInBrowswerHelper(navigationAction.request.url!)
         return nil
     }
 
@@ -282,13 +322,10 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         // initially hide web view while loading
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
-        let pageToLoad = inAppMessagingPageUrl ?? (isInternalStage ?
-            "https://in-app-messaging.pm.cmp.sp-stage.net/" :
-            "https://in-app-messaging.pm.sourcepoint.mgr.consensu.org/"
-        )
+        let pageToLoad = getInAppMessagingUrl()
 
         let path = page == nil ? "" : page!
-        let siteHref = "http://" + siteName + "/" + path + "?"
+        let siteHref = "https://" + siteName + "/" + path + "?"
 
         mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
             "mms.sp-stage.net" :
@@ -382,10 +419,10 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         }
 
         let path = page == nil ? "" : page!
-        let siteHref = "http://" + siteName + "/" + path + "?"
+        let siteHref = "https://" + siteName + "/" + path + "?"
 
-        let result = ConsentWebView.load(
-            "http://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
+        let result = self.startLoad(
+            "https://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
         )
         let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String:Int]
 
@@ -404,7 +441,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
      */
     public func getGdprApplies() -> Bool {
         let path = "/consent/v2/gdpr-status"
-        let result = ConsentWebView.load(cmpUrl! + path)
+        let result = self.startLoad(cmpUrl! + path)
         let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String: Int]
         return parsedResult!["gdprApplies"] == 1;
     }
@@ -526,7 +563,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
             "&consentUUID=" + consentParam +
             "&euconsent=" + euconsentParam
         let url = cmpUrl! + path + search
-        let data = ConsentWebView.load(url)
+        let data = self.startLoad(url)
 
         let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
 
@@ -543,7 +580,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         // Store consented purposes in UserDefaults as a JSON
         let consentedPurposes = consents!["consentedPurposes"]
         // Serialize consented purposes again
-        guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes, options: []) else {
+        guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes as Any, options: []) else {
             return
         }
         UserDefaults.standard.setValue(
@@ -570,7 +607,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
 
-        var euconsent = euconsentBase64Url
+        let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
         
