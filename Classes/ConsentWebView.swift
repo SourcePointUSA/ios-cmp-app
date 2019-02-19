@@ -243,39 +243,9 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
         webView.allowsBackForwardNavigationGestures = true
-        
-        // sets up a spiner for whenever the Webview is loading content
-        // https://stackoverflow.com/questions/29372720/displaying-activity-indicator-on-wkwebview-using-swift
-        loadingObservation = webView.observe(\.isLoading, options: [.new, .old]) { [weak self] (_, change) in
-            guard let strongSelf = self else { return }
-            
-            let new = change.newValue!
-            let old = change.oldValue!
-            
-            if new && !old {
-                strongSelf.view.addSubview(strongSelf.loadingIndicator)
-                strongSelf.loadingIndicator.startAnimating()
-                NSLayoutConstraint.activate([strongSelf.loadingIndicator.centerXAnchor.constraint(equalTo: strongSelf.view.centerXAnchor),
-                                             strongSelf.loadingIndicator.centerYAnchor.constraint(equalTo: strongSelf.view.centerYAnchor)])
-                strongSelf.view.bringSubviewToFront(strongSelf.loadingIndicator)
-            }
-            else if !new && old {
-                strongSelf.loadingIndicator.stopAnimating()
-                strongSelf.loadingIndicator.removeFromSuperview()
-            }
-        }
 
         view = webView
     }
-    
-    // loading spinner for when the webview is loading content
-    private var loadingObservation: NSKeyValueObservation?
-    private lazy var loadingIndicator: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView()
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.color = .black
-        return spinner
-    }()
 
     private func openInBrowswerHelper(_ url:URL) -> Void {
         if #available(iOS 10.0, *) {
