@@ -1,6 +1,6 @@
 {
   "name": "ConsentWebView",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "SourcePoint's ConsentWebView to handle privacy consents.",
   "homepage": "https://www.sourcepoint.com",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/SourcePointUSA/ios-cmp-app.git",
-    "tag": "0.1.1"
+    "tag": "0.1.2"
   },
   "swift_version": "4.2",
   "platforms": {
