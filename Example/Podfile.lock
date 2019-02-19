@@ -1,5 +1,5 @@
 PODS:
-  - ConsentWebView (0.1.0)
+  - ConsentWebView (0.1.1)
 
 DEPENDENCIES:
   - ConsentWebView (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentWebView: c6cae7018cd2c7482a754ab3de8068697f0004e0
+  ConsentWebView: a2dffcec76780be42be22604d4908633e917de38
 
 PODFILE CHECKSUM: 1d3aa78e44f343be71d3a0c2a96ef61c05d43b08
 

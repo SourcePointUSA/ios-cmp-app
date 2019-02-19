@@ -41,7 +41,7 @@
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		87B05BCA1D581C2C0CA7D12B /* Pods-ConsentWebView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentWebView_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentWebView_Example/Pods-ConsentWebView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A32DFC3799BD36A08392D5A5 /* Pods_ConsentWebView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentWebView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5AA36A7D29C1E427A75F8D4 /* ConsentWebView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConsentWebView.podspec; path = ../ConsentWebView.podspec; sourceTree = "<group>"; };
+		B5AA36A7D29C1E427A75F8D4 /* ConsentWebView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConsentWebView.podspec; path = ../ConsentWebView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		EB8C0D0D69E8DC276205D9C9 /* Pods-ConsentWebView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentWebView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentWebView_Example/Pods-ConsentWebView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		ED080B599B860DAE5BFF73AC /* Pods_ConsentWebView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentWebView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -395,7 +395,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -443,7 +443,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
