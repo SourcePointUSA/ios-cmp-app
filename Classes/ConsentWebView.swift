@@ -38,7 +38,7 @@ import JavaScriptCore
  view.addSubview(consentWebView.view)
  ```
 */
-public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+open class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
 
     /// :nodoc:
     public enum DebugLevel: String {
@@ -213,7 +213,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     }
 
     /// :nodoc:
-    override public func loadView() {
+    override open func loadView() {
         euconsent = UserDefaults.standard.string(forKey: ConsentWebView.EU_CONSENT_KEY)
         consentUUID = UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY)
 
@@ -287,7 +287,7 @@ public class ConsentWebView: UIViewController, WKUIDelegate, WKNavigationDelegat
     }
 
     /// :nodoc:
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         // initially hide web view while loading
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
