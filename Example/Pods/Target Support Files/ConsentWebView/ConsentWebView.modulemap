@@ -1,6 +1,0 @@
-framework module ConsentWebView {
-  umbrella header "ConsentWebView-umbrella.h"
-
-  export *
-  module * { export * }
-}
