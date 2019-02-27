@@ -1,16 +1,16 @@
 PODS:
-  - ConsentWebView (0.1.2)
+  - ConsentViewController (0.1.2)
 
 DEPENDENCIES:
-  - ConsentWebView (from `../`)
+  - ConsentViewController (from `../`)
 
 EXTERNAL SOURCES:
-  ConsentWebView:
+  ConsentViewController:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentWebView: 845c5b0c5a376ef8bc05bde1ef8574bf96808bcc
+  ConsentViewController: edaf5ada02edfb7ea01a5e1e106ff0be349eb92b
 
-PODFILE CHECKSUM: 1d3aa78e44f343be71d3a0c2a96ef61c05d43b08
+PODFILE CHECKSUM: 856801e8d31aff0cc151bbdea6722856ca373848
 
 COCOAPODS: 1.5.3

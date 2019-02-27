@@ -5,22 +5,22 @@ We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to 
 In your `Podfile` add the following line to your app target:
 
 ```
-pod ConsentWebView
+pod ConsentViewController
 ```
 
-# How to use the ConsentWebView widget
+# How to use the ConsentViewController widget
 
-* Instantiate a ConsentWebView object in your main ViewController, set configuration variables and a onInteractionComplete callback and add the ConsentWebView to your ViewController as a subview:
+* Instantiate a ConsentViewController object in your main ViewController, set configuration variables and a onInteractionComplete callback and add the ConsentViewController to your ViewController as a subview:
 
 ```swift
 import UIKit
-import ConsentWebView
+import ConsentViewController
 
 class ViewController: UIViewController {
-    var consentWebView: ConsentWebView!
+    var ConsentViewController: ConsentViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        consentWebView = ConsentWebView(
+        ConsentViewController = ConsentViewController(
             // required, must be set first used to find account
             accountId: 22,
             // required, must be set second used to find scenario
@@ -29,42 +29,42 @@ class ViewController: UIViewController {
 
         // optional, used for logging purposes for which page of the app the consent lib was
         // rendered on
-        consentWebView.page = "main"
+        ConsentViewController.page = "main"
 
         // optional, used for running stage campaigns
-        consentWebView.isStage = false
+        ConsentViewController.isStage = false
 
         // optional, used for running against our stage endpoints
-        consentWebView.isInternalStage = true
+        ConsentViewController.isInternalStage = true
 
         // optional, should not ever be needed provide a custom url for the messaging page
         // (overrides internal stage)
-        consentWebView.inAppMessagingPageUrl = nil
+        ConsentViewController.inAppMessagingPageUrl = nil
 
         // optional, should not ever be needed provide a custom domain for mms (overrides
         // internal stage)
-        consentWebView.mmsDomain = nil
+        ConsentViewController.mmsDomain = nil
 
         // optional, should not ever be needed provide a custom domain for cmp (overrides
         // internal stage)
-        consentWebView.cmpDomain = nil
+        ConsentViewController.cmpDomain = nil
 
         // optional, set custom targeting parameters supports Strings and Integers
-        consentWebView.setTargetingParam(key: "a", value: "b")
-        consentWebView.setTargetingParam(key: "c", value: 100)
+        ConsentViewController.setTargetingParam(key: "a", value: "b")
+        ConsentViewController.setTargetingParam(key: "c", value: 100)
 
         // optional, sets debug level defaults to OFF
-        consentWebView.debugLevel = ConsentWebView.DebugLevel.OFF
+        ConsentViewController.debugLevel = ConsentViewController.DebugLevel.OFF
 
         // optional, callback triggered when message data is loaded when called message data
         // will be available as String at cbw.msgJSON
-        consentWebView.onReceiveMessageData = { (cbw: ConsentWebView) in
+        ConsentViewController.onReceiveMessageData = { (cbw: ConsentViewController) in
             print("msgJSON from backend", cbw.msgJSON as Any)
         }
 
         // optional, callback triggered when message choice is selected when called choice
         // type will be available as Integer at cbw.choiceType
-        consentWebView.onMessageChoiceSelect = { cbw in
+        ConsentViewController.onMessageChoiceSelect = { cbw in
             print("Choice type selected by user", cbw.choiceType as Any)
         }
 
@@ -73,24 +73,24 @@ class ViewController: UIViewController {
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(EU_CONSENT_KEY, null);
         // consentUUID will be available as String at cLib.consentUUID and under
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(CONSENT_UUID_KEY null);
-        consentWebView.onInteractionComplete = { (cbw: ConsentWebView) in
+        ConsentViewController.onInteractionComplete = { (cbw: ConsentViewController) in
             print(
                 "\n eu consent prop",
                 cbw.euconsent as Any,
                 "\n consent uuid prop",
                 cbw.consentUUID as Any,
                 "\n eu consent in storage",
-                UserDefaults.standard.string(forKey: ConsentWebView.EU_CONSENT_KEY) as Any,
+                UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) as Any,
                 "\n consent uuid in storage",
-                UserDefaults.standard.string(forKey: ConsentWebView.CONSENT_UUID_KEY) as Any,
+                UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) as Any,
 
                 // Standard IAB values in UserDefaults
                 "\n IABConsent_ConsentString in storage",
-                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CONSENT_STRING) as Any,
+                UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) as Any,
                 "\n IABConsent_ParsedPurposeConsents in storage",
-                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_PARSED_PURPOSE_CONSENTS) as Any,
+                UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS) as Any,
                 "\n IABConsent_ParsedVendorConsents in storage",
-                UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_PARSED_VENDOR_CONSENTS) as Any,
+                UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS) as Any,
 
                 // API for getting IAB Vendor Consents
                 "\n IAB vendor consent for Smaato Inc",
@@ -116,14 +116,14 @@ class ViewController: UIViewController {
 
         view.backgroundColor = UIColor.gray
 
-        view.addSubview(consentWebView.view)
+        view.addSubview(ConsentViewController.view)
 
-        // IABConsent_CMPPresent must be set immediately after loading the ConsentWebView
+        // IABConsent_CMPPresent must be set immediately after loading the ConsentViewController
         print(
             "IABConsent_CMPPresent in storage",
-            UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_CMP_PRESENT) as Any,
+            UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT) as Any,
             "IABConsent_SubjectToGDPR in storage",
-            UserDefaults.standard.string(forKey: ConsentWebView.IAB_CONSENT_SUBJECT_TO_GDPR) as Any
+            UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) as Any
         )
     }
 }

@@ -1,5 +1,5 @@
 use_frameworks!
 
-target 'ConsentWebView_Example' do
-  pod 'ConsentWebView', :path => '../'
+target 'ConsentViewController_Example' do
+  pod 'ConsentViewController', :path => '../'
 end
