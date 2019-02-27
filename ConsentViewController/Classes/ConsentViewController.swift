@@ -112,6 +112,13 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
     // TODO: remove it, as in Android's SDK
     /// :nodoc:
     public var onReceiveMessageData: Callback?
+
+    /**
+     A `Callback` that will be called the message is about to be shown. Notice that,
+     sometimes, depending on how the scenario was set up, the message might not show
+     at all, thus this call back won't be called.
+     */
+    public var willShowMessage: Callback?
     
     /**
       A `Callback` that will be called when the user selects an option on the WebView.
@@ -613,35 +620,31 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
     /// :nodoc:
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let messageBody = message.body as? [String: Any], let name = messageBody["name"] as? String {
-            // called when message loads
-            if name == "onReceiveMessageData" {
+            switch name {
+            case "onReceiveMessageData": // when the message is first loaded
                 let body = messageBody["body"] as? [String: Any?]
 
                 if let msgJSON = body?["msgJSON"] as? String {
                     self.msgJSON = msgJSON
-                    self.onReceiveMessageData?(self)
+                    onReceiveMessageData?(self)
                 }
 
-                if let willShowMessage = body?["willShowMessage"] as? Bool, willShowMessage {
+                if let shouldShowMessage = body?["willShowMessage"] as? Bool, shouldShowMessage {
                     // display web view once the message is ready to display
                     webView.frame = webView.superview!.bounds
+                    willShowMessage?(self)
                 } else {
-                    self.onInteractionComplete?(self)
-
+                    onInteractionComplete?(self)
                     webView.removeFromSuperview()
                 }
-
-                // called when choice is selected
-            } else if name == "onMessageChoiceSelect" {
+            case "onMessageChoiceSelect": // when a choice is selected
                 let body = messageBody["body"] as? [String: Int?]
 
                 if let choiceType = body?["choiceType"] as? Int {
                     self.choiceType = choiceType
-                    self.onMessageChoiceSelect?(self)
+                    onMessageChoiceSelect?(self)
                 }
-
-                // called when interaction with message is complete
-            } else if name == "interactionComplete" {
+            case "interactionComplete": // when interaction with message is complete
                 if let body = messageBody["body"] as? [String: String?], let euconsent = body["euconsent"], let consentUUID = body["consentUUID"] {
                     let userDefaults = UserDefaults.standard
                     if (euconsent != nil) {
@@ -659,9 +662,10 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
                         userDefaults.synchronize()
                     }
                 }
-                self.onInteractionComplete?(self)
-
+                onInteractionComplete?(self)
                 webView.removeFromSuperview()
+            default:
+                print("userContentController was called but the message body: \(name) is unknown.")
             }
         }
     }

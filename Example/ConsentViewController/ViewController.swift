@@ -36,6 +36,10 @@ class ViewController: UIViewController {
         // optional, sets debug level defaults to OFF
         consentViewController.debugLevel = ConsentViewController.DebugLevel.OFF
 
+        consentViewController.willShowMessage = { (cvc: ConsentViewController) in
+            print("the message will show")
+        }
+
         // optional, callback triggered when message data is loaded when called message data
         // will be available as String at cbw.msgJSON
         consentViewController.onReceiveMessageData = { (cbw: ConsentViewController) in
