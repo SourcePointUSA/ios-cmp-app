@@ -9,13 +9,11 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     var consentViewController: ConsentViewController!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        consentViewController = ConsentViewController(
-            // required, must be set first used to find account
-            accountId: 630,
-            // required, must be set second used to find scenario
-            siteName: "test.skynews.ios"
+
+    private func buildConsentViewController(showPM: Bool) -> ConsentViewController {
+        let consentViewController = ConsentViewController(
+            accountId: 22,
+            siteName: "mobile.demo"
         )
 
         // optional, used for logging purposes for which page of the app the consent lib was
@@ -23,7 +21,7 @@ class ViewController: UIViewController {
         consentViewController.page = "main"
 
         // optional, used for running stage campaigns
-        consentViewController.isStage = true
+        consentViewController.isStage = false
 
         // optional, used for running against our stage endpoints
         consentViewController.isInternalStage = false
@@ -31,7 +29,7 @@ class ViewController: UIViewController {
         // optional, set custom targeting parameters supports Strings and Integers
         consentViewController.setTargetingParam(key: "a", value: "b")
         consentViewController.setTargetingParam(key: "c", value: 100)
-        consentViewController.setTargetingParam(key: "CMP", value: "true")
+        consentViewController.setTargetingParam(key: "CMP", value: String(showPM))
 
         // optional, sets debug level defaults to OFF
         consentViewController.debugLevel = ConsentViewController.DebugLevel.OFF
@@ -41,15 +39,15 @@ class ViewController: UIViewController {
         }
 
         // optional, callback triggered when message data is loaded when called message data
-        // will be available as String at cbw.msgJSON
-        consentViewController.onReceiveMessageData = { (cbw: ConsentViewController) in
-            print("msgJSON from backend", cbw.msgJSON as Any)
+        // will be available as String at cvc.msgJSON
+        consentViewController.onReceiveMessageData = { (cvc: ConsentViewController) in
+            print("msgJSON from backend", cvc.msgJSON as Any)
         }
 
         // optional, callback triggered when message choice is selected when called choice
-        // type will be available as Integer at cbw.choiceType
-        consentViewController.onMessageChoiceSelect = { cbw in
-            print("Choice type selected by user", cbw.choiceType as Any)
+        // type will be available as Integer at cvc.choiceType
+        consentViewController.onMessageChoiceSelect = { cvc in
+            print("Choice type selected by user", cvc.choiceType as Any)
         }
 
         // optional, callback triggered when consent data is captured when called
@@ -57,12 +55,12 @@ class ViewController: UIViewController {
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(EU_CONSENT_KEY, null);
         // consentUUID will be available as String at cLib.consentUUID and under
         // PreferenceManager.getDefaultSharedPreferences(activity).getString(CONSENT_UUID_KEY null);
-        consentViewController.onInteractionComplete = { (cbw: ConsentViewController) in
+        consentViewController.onInteractionComplete = { (cvc: ConsentViewController) in
             print(
                 "\n eu consent prop",
-                cbw.euconsent as Any,
+                cvc.euconsent as Any,
                 "\n consent uuid prop",
-                cbw.consentUUID as Any,
+                cvc.consentUUID as Any,
                 "\n eu consent in storage",
                 UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) as Any,
                 "\n consent uuid in storage",
@@ -78,29 +76,36 @@ class ViewController: UIViewController {
 
                 // API for getting IAB Vendor Consents
                 "\n IAB vendor consent for Smaato Inc",
-                cbw.getIABVendorConsents([82]),
+                cvc.getIABVendorConsents([82]),
 
                 // API for getting IAB Purpose Consents
                 "\n IAB purpose consent for \"Ad selection, delivery, reporting\"",
-                cbw.getIABPurposeConsents([3]),
+                cvc.getIABPurposeConsents([3]),
 
                 // Get custom vendor results:
                 "\n custom vendor consents",
-                cbw.getCustomVendorConsents(forIds: ["5bf7f5c5461e09743fe190b3", "5b2adb86173375159f804c77"]),
+                cvc.getCustomVendorConsents(forIds: ["5bf7f5c5461e09743fe190b3", "5b2adb86173375159f804c77"]),
 
                 // Get purpose results:
                 "\n all purpose consents ",
-                cbw.getPurposeConsents(),
+                cvc.getPurposeConsents(),
                 "\n filtered purpose consents ",
-                cbw.getPurposeConsents(forIds: ["5c0e813175223430a50fe465"]),
+                cvc.getPurposeConsents(forIds: ["5c0e813175223430a50fe465"]),
                 "\n consented to My Custom Purpose ",
-                cbw.getPurposeConsent(forId: "5c0e813175223430a50fe465")
+                cvc.getPurposeConsent(forId: "5c0e813175223430a50fe465")
             )
         }
 
-        view.backgroundColor = UIColor.gray
+        return consentViewController
+    }
 
-        view.addSubview(consentViewController.view)
+    @IBAction func showPrivacyManager(_ sender: Any) {
+        view.addSubview(buildConsentViewController(showPM: true).view)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(buildConsentViewController(showPM: false).view)
 
         // IABConsent_CMPPresent must be set immediately after loading the ConsentViewController
         print(
