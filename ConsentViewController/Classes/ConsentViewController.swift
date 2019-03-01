@@ -631,8 +631,10 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
 
                 if let shouldShowMessage = body?["willShowMessage"] as? Bool, shouldShowMessage {
                     // display web view once the message is ready to display
-                    webView.frame = webView.superview!.bounds
-                    willShowMessage?(self)
+                    if webView.superview != nil {
+                        webView.frame = webView.superview!.bounds
+                        willShowMessage?(self)
+                    }
                 } else {
                     onInteractionComplete?(self)
                     webView.removeFromSuperview()
