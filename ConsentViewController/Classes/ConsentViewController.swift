@@ -38,7 +38,7 @@ import JavaScriptCore
  view.addSubview(consentViewController.view)
  ```
 */
-open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+@objcMembers open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
 
     /// :nodoc:
     public enum DebugLevel: String {
@@ -199,11 +199,13 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
     }
 
     /// :nodoc:
+    @objc(setTargetingParamString:value:)
     public func setTargetingParam(key: String, value: String) {
         targetingParams[key] = value
     }
 
     /// :nodoc:
+    @objc(setTargetingParamInt:value:)
     public func setTargetingParam(key: String, value: Int) {
         targetingParams[key] = value
     }
@@ -486,15 +488,11 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
     public func getPurposeConsents(forIds purposeIds: [String] = []) -> [[String:String]?] {
-        var storedPurposeConsentsJson = UserDefaults.standard.string(
+        loadAndStoreConsents([])
+
+        let storedPurposeConsentsJson = UserDefaults.standard.string(
             forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
         )
-        if (storedPurposeConsentsJson == nil) {
-            loadAndStoreConsents([])
-            storedPurposeConsentsJson = UserDefaults.standard.string(
-                forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
-            )
-        }
 
         let purposeConsents = try! JSONSerialization.jsonObject(
             with: storedPurposeConsentsJson!.data(using: String.Encoding.utf8)!, options: []
