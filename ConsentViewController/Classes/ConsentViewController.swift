@@ -38,7 +38,7 @@ import JavaScriptCore
  view.addSubview(consentViewController.view)
  ```
 */
-open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+@objcMembers open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
 
     /// :nodoc:
     public enum DebugLevel: String {
@@ -199,11 +199,13 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
     }
 
     /// :nodoc:
+    @objc(setTargetingParamString:value:)
     public func setTargetingParam(key: String, value: String) {
         targetingParams[key] = value
     }
 
     /// :nodoc:
+    @objc(setTargetingParamInt:value:)
     public func setTargetingParam(key: String, value: Int) {
         targetingParams[key] = value
     }
