@@ -486,15 +486,11 @@ open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDe
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
     public func getPurposeConsents(forIds purposeIds: [String] = []) -> [[String:String]?] {
-        var storedPurposeConsentsJson = UserDefaults.standard.string(
+        loadAndStoreConsents([])
+
+        let storedPurposeConsentsJson = UserDefaults.standard.string(
             forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
         )
-        if (storedPurposeConsentsJson == nil) {
-            loadAndStoreConsents([])
-            storedPurposeConsentsJson = UserDefaults.standard.string(
-                forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
-            )
-        }
 
         let purposeConsents = try! JSONSerialization.jsonObject(
             with: storedPurposeConsentsJson!.data(using: String.Encoding.utf8)!, options: []
