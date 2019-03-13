@@ -86,8 +86,15 @@ import JavaScriptCore
     static private let MAX_PURPOSE_ID: Int = 24
 
     static private let PM_MESSAGING_HOST = "pm.sourcepoint.mgr.consensu.org"
-    static private let IN_APP_MESSAGING_URL_STAGE = "https://in-app-messaging.pm.cmp.sp-stage.net/"
-    static private let IN_APP_MESSAGING_URL_PRODUCTION = "https://in-app-messaging.pm.sourcepoint.mgr.consensu.org/"
+
+    static private let DEFAULT_STAGING_MMS_DOMAIN = "mms.sp-stage.net"
+    static private let DEFAULT_MMS_DOMAIN = "mms.sp-prod.net"
+
+    static private let DEFAULT_INTERNAL_CMP_DOMAIN = "cmp.sp-stage.net"
+    static private let DEFAULT_CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
+
+    static private let DEFAULT_INTERNAL_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net"
+    static private let DEFAULT_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org"
 
     /// Page is merely for logging purposes, eg. https://mysitename.example/page
     public var page: String?
@@ -163,7 +170,7 @@ import JavaScriptCore
 
     private var mmsDomainToLoad: String?
     private var cmpDomainToLoad: String?
-    private var cmpUrl: String?
+    private var cmpUrl: String
 
     private func startLoad(_ urlString: String) -> Data? {
         let url = URL(string: urlString)!
@@ -178,18 +185,67 @@ import JavaScriptCore
         return responseData
     }
 
+    private let sourcePoint: SourcePointClient
+
     /**
      Initialises the library with `accountId` and `siteName`.
      */
-    public init(accountId: Int, siteName: String) {
+    public init(
+        accountId: Int,
+        siteName: String,
+        stagingCampaign: Bool,
+        mmsDomain: String,
+        cmpDomain: String,
+        messageDomain: String
+    ) throws {
         self.accountId = accountId
         self.siteName = siteName
+
+        guard
+            let mmsUrl = URL(string: mmsDomain),
+            let cmpUrl = URL(string: cmpDomain),
+            let messageUrl = URL(string: messageDomain)
+        else {
+            throw ConsentViewControllerError.APIError(message: "Invalid URL.")
+        }
+
+        self.sourcePoint = try SourcePointClient(
+            accountId: accountId,
+            siteName: siteName,
+            stagingCampaign: stagingCampaign,
+            mmsUrl: mmsUrl,
+            cmpUrl: cmpUrl,
+            messageUrl: messageUrl
+        )
+
+        self.cmpUrl = cmpUrl.absoluteString
 
         // read consent from/write consent data to UserDefaults.standard storage
         // per gdpr framework: https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/852cf086fdac6d89097fdec7c948e14a2121ca0e/In-App%20Reference/iOS/CMPConsentTool/Storage/CMPDataStorageUserDefaults.m
         self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
+
         super.init(nibName: nil, bundle: nil)
+    }
+
+    public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool) throws {
+        try self.init(
+            accountId: accountId,
+            siteName: siteName,
+            stagingCampaign: stagingCampaign,
+            staging: false
+        )
+    }
+
+    public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool, staging: Bool) throws {
+        try self.init(
+            accountId: accountId,
+            siteName: siteName,
+            stagingCampaign: stagingCampaign,
+            mmsDomain: "https://" + (staging ? ConsentViewController.DEFAULT_STAGING_MMS_DOMAIN : ConsentViewController.DEFAULT_MMS_DOMAIN),
+            cmpDomain: "https://" + (staging ? ConsentViewController.DEFAULT_INTERNAL_CMP_DOMAIN : ConsentViewController.DEFAULT_CMP_DOMAIN),
+            messageDomain: "https://" + (staging ? ConsentViewController.DEFAULT_INTERNAL_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.DEFAULT_IN_APP_MESSAGING_PAGE_DOMAIN)
+        )
     }
 
     // TODO: may need to implement this eventually
@@ -215,9 +271,9 @@ import JavaScriptCore
     }
 
     public func getInAppMessagingUrl() -> String {
-        return inAppMessagingPageUrl ?? (isInternalStage ?
-            ConsentViewController.IN_APP_MESSAGING_URL_STAGE :
-            ConsentViewController.IN_APP_MESSAGING_URL_PRODUCTION
+        return "https://" + (isInternalStage ?
+            ConsentViewController.DEFAULT_INTERNAL_IN_APP_MESSAGING_PAGE_DOMAIN :
+            ConsentViewController.DEFAULT_IN_APP_MESSAGING_PAGE_DOMAIN
         )
     }
 
@@ -390,28 +446,16 @@ import JavaScriptCore
         return results
     }
     
-    private func getSiteId() -> String? {
+    private func getSiteId() throws -> String {
         let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
-        let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey)
-        if storedSiteId != nil {
-            return storedSiteId
+
+        guard let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey) else {
+            let siteId = try sourcePoint.getSiteId()
+            UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
+            UserDefaults.standard.synchronize()
+            return siteId
         }
 
-        let path = page == nil ? "" : page!
-        let siteHref = "https://" + siteName + "/" + path + "?"
-
-        let result = self.startLoad(
-            "https://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
-        )
-        let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String:Int]
-
-        let siteId = parsedResult!["site_id"]
-
-        UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
-        UserDefaults.standard.synchronize()
-
-        return String(siteId!)
-    }
 
     /**
      Checks if GDPR applies the user
@@ -432,8 +476,8 @@ import JavaScriptCore
      - Parameter forId: the vendor id
      - Returns: a `Bool` indicating if the user has given consent to that vendor.
      */
-    public func getCustomVendorConsent(forId customVendorId: String) -> Bool {
-        return getCustomVendorConsents(forIds: [customVendorId])[0]
+    public func getCustomVendorConsent(forId customVendorId: String) throws -> Bool {
+        return try getCustomVendorConsents(forIds: [customVendorId])[0]
     }
 
     /**
@@ -444,10 +488,10 @@ import JavaScriptCore
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
-    public func getCustomVendorConsents(forIds customVendorIds: [String]) -> [Bool] {
+    public func getCustomVendorConsents(forIds customVendorIds: [String]) throws -> [Bool] {
         var result = Array(repeating: false, count: customVendorIds.count)
 
-        loadAndStoreConsents(customVendorIds)
+        try loadAndStoreConsents(customVendorIds)
 
         for index in 0..<customVendorIds.count {
             let customVendorId = customVendorIds[index]
@@ -471,9 +515,9 @@ import JavaScriptCore
      - Parameter forId: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    public func getPurposeConsent(forId purposeId: String) -> Bool {
+    public func getPurposeConsent(forId purposeId: String) throws -> Bool {
         var consented = false
-        for purpose in getPurposeConsents(forIds: [purposeId]) {
+        for purpose in try getPurposeConsents(forIds: [purposeId]) {
             if purposeId == purpose?["_id"] { consented = true }
         }
         return consented
@@ -487,20 +531,21 @@ import JavaScriptCore
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    public func getPurposeConsents(forIds purposeIds: [String] = []) -> [[String:String]?] {
-        loadAndStoreConsents([])
+    public func getPurposeConsents(forIds purposeIds: [String] = []) throws -> [[String:String]?] {
+        try loadAndStoreConsents([])
 
-        let storedPurposeConsentsJson = UserDefaults.standard.string(
+        guard let storedPurposeConsentsJson = UserDefaults.standard.string(
             forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
         )
+        else {
+            return []
+        }
 
         let purposeConsents = try! JSONSerialization.jsonObject(
-            with: storedPurposeConsentsJson!.data(using: String.Encoding.utf8)!, options: []
-            ) as? [[String: String]]
+            with: storedPurposeConsentsJson.data(using: String.Encoding.utf8)!, options: []
+        ) as? [[String: String]]
 
-        if purposeIds.count == 0 {
-            return purposeConsents!
-        }
+        if purposeIds.count == 0 { return purposeConsents! }
 
         var results = [[String: String]?](repeating: nil, count: purposeIds.count)
         for consentedPurpose in purposeConsents! {
@@ -523,37 +568,45 @@ import JavaScriptCore
         }
     }
 
-    private func loadAndStoreConsents(_ customVendorIdsToRequest: [String]) {
-        let consentParam = consentUUID == nil ? "[CONSENT_UUID]" : consentUUID!
-        let euconsentParam = euconsent == nil ? "[EUCONSENT]" : euconsent!
-        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ","))
+    private func loadAndStoreConsents(_ customVendorIdsToRequest: [String]) throws {
+        let consentParam = consentUUID ?? "[CONSENT_UUID]"
+        let euconsentParam = euconsent ?? "[EUCONSENT]"
 
-        let siteId = getSiteId()
-        if siteId == nil {
+        let siteId = try getSiteId()
+        let path = "/consent/v2/" + siteId + "/custom-vendors"
+        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ",")) ?? ""
+        let search = "?customVendorIds=" + customVendorIdString +
+            "&consentUUID=" + consentParam +
+            "&euconsent=" + euconsentParam
+        let url = cmpUrl + path + search
+
+        guard
+            let data = self.startLoad(url),
+            let consentsJSON = try? JSONSerialization.jsonObject(with: data, options: []),
+            let consents = consentsJSON as? [String:[[String: String]]],
+            let consentedCustomVendors = consents["consentedVendors"],
+            let consentedPurposes = consents["consentedPurposes"]
+        else {
+            print("Could not get consents from the API.")
             return
         }
 
-        let path = "/consent/v2/" + siteId! + "/custom-vendors"
-        let search = "?customVendorIds=" + customVendorIdString! +
-            "&consentUUID=" + consentParam +
-            "&euconsent=" + euconsentParam
-        let url = cmpUrl! + path + search
-        let data = self.startLoad(url)
-
-        let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
-
         // Store consented vendors in UserDefaults one by one
-        let consentedCustomVendors = consents!["consentedVendors"]
         clearStoredVendorConsents(forIds: customVendorIdsToRequest)
-        for consentedCustomVendor in consentedCustomVendors! {
+        for consentedCustomVendor in consentedCustomVendors {
+            guard let id = consentedCustomVendor["_id"] else { return }
             UserDefaults.standard.setValue(
                 "true",
-                forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + consentedCustomVendor["_id"]!
+                forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + id
+            )
+            UserDefaults.standard.setValue(
+                "true",
+                forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + id
             )
         }
 
         // Store consented purposes in UserDefaults as a JSON
-        let consentedPurposes = consents!["consentedPurposes"]
+
         // Serialize consented purposes again
         guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes as Any, options: []) else {
             return
@@ -562,12 +615,7 @@ import JavaScriptCore
             String(data: consentedPurposesJson, encoding: String.Encoding.utf8),
             forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
         )
-        for consentedPurpose in consentedPurposes! {
-            UserDefaults.standard.setValue(
-                "true",
-                forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + consentedPurpose["_id"]!
-            )
-        }
+
         UserDefaults.standard.synchronize()
     }
 
