@@ -402,12 +402,20 @@ import JavaScriptCore
         print ("url: \((myURL?.absoluteString)!)")
 
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-        let storedSubjectToGdpr = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        if storedSubjectToGdpr == nil {
-            UserDefaults.standard.setValue(getGdprApplies(), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        }
+        setSubjectToGDPR()
 
         webView.load(myRequest)
+    }
+
+    private func setSubjectToGDPR() {
+        if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil) { return }
+
+        do {
+            let gdprStatus = try sourcePoint.getGdprStatus()
+            UserDefaults.standard.setValue(gdprStatus, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        } catch {
+            print(error)
+        }
     }
 
     /**
@@ -456,17 +464,7 @@ import JavaScriptCore
             return siteId
         }
 
-
-    /**
-     Checks if GDPR applies the user
-     
-     - Returns: a `Bool` indicating if GDPR applies that user.
-     */
-    public func getGdprApplies() -> Bool {
-        let path = "/consent/v2/gdpr-status"
-        let result = self.startLoad(cmpUrl! + path)
-        let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String: Int]
-        return parsedResult!["gdprApplies"] == 1;
+        return storedSiteId
     }
 
     /**

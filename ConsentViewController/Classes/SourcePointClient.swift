@@ -32,11 +32,13 @@ class SourcePointClient {
     private let siteName: String
 
     private let mmsUrl: URL
+    private let cmpUrl: URL
 
     init(accountId: Int, siteName: String, stagingCampaign: Bool, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
         self.accountId = String(accountId)
         self.siteName = siteName
         self.mmsUrl = mmsUrl
+        self.cmpUrl = cmpUrl
 
         self.client = SimpleClient()
     }
@@ -56,4 +58,17 @@ class SourcePointClient {
         return String(siteId)
     }
 
+    public func getGdprStatus() throws -> Bool {
+        guard
+            let getGdprStatusUrl = URL(string: "/consent/v2/gdpr-status", relativeTo: cmpUrl),
+            let result = client.get(url: getGdprStatusUrl),
+            let parsedResult = try JSONSerialization.jsonObject(with: result, options: []) as? [String: Int],
+            let gdprStatus = parsedResult["gdprApplies"]
+        else {
+            throw ConsentViewControllerError.APIError(
+                message: "Could not get GDPR status."
+            )
+        }
+        return gdprStatus == 1
+    }
 }
