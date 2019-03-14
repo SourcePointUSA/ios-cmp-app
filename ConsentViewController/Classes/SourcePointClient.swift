@@ -70,18 +70,16 @@ class SourcePointClient {
         return String(siteId)
     }
 
-    public func getGdprStatus() throws -> Bool {
+    public func getGdprStatus() throws -> Int {
         guard
             let getGdprStatusUrl = URL(string: "/consent/v2/gdpr-status", relativeTo: cmpUrl),
             let result = client.get(url: getGdprStatusUrl),
             let parsedResult = try JSONSerialization.jsonObject(with: result, options: []) as? [String: Int],
             let gdprStatus = parsedResult["gdprApplies"]
         else {
-            throw ConsentViewControllerError.APIError(
-                message: "Could not get GDPR status."
-            )
+            throw ConsentViewControllerError.APIError(message: "Could not get GDPR status.")
         }
-        return gdprStatus == 1
+        return gdprStatus
     }
 
     public func getCustomConsents(
