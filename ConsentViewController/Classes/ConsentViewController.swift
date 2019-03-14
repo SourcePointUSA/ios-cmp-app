@@ -468,17 +468,6 @@ import JavaScriptCore
     }
 
     /**
-     Get the non-IAB consents given to a single vendor id
-     
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
-     - Parameter forId: the vendor id
-     - Returns: a `Bool` indicating if the user has given consent to that vendor.
-     */
-    public func getCustomVendorConsent(forId customVendorId: String) throws -> Bool {
-        return try getCustomVendorConsents(forIds: [customVendorId])[0]
-    }
-
-    /**
      Checks if the non-IAB purposes passed as parameter were given consent or not.
      Same as `getIabVendorConsents(forIds: )` but for non-IAB vendors.
      
@@ -513,12 +502,7 @@ import JavaScriptCore
      - Parameter forId: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    public func getPurposeConsent(forId purposeId: String) throws -> Bool {
-        var consented = false
-        for purpose in try getPurposeConsents(forIds: [purposeId]) {
-            if purposeId == purpose?["_id"] { consented = true }
         }
-        return consented
     }
 
     /**
