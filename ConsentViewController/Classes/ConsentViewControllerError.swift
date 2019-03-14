@@ -9,4 +9,5 @@ import Foundation
 
 public enum ConsentViewControllerError: Error {
     case APIError(message: String)
+    case BuildError(message: String)
 }

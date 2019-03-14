@@ -21,7 +21,7 @@ import JavaScriptCore
  var consentViewController: ConsentViewController!
  override func viewDidLoad() {
      super.viewDidLoad()
-     consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME")
+     consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME", stagingCampaign: true|false)
      consentViewController.onMessageChoiceSelect = {
         (cbw: ConsentViewController) in print("Choice selected by user", cbw.choiceType as Any)
      }
@@ -30,7 +30,7 @@ import JavaScriptCore
              cbw.euconsent as Any,
              cbw.consentUUID as Any,
              cbw.getIABVendorConsents(["VENDOR_ID"]),
-             cbw.getIABPurposeConsents([PURPOSE_ID]),
+             cbw.getIABPurposeConsents(["PURPOSE_ID"]),
              cbw.getCustomVendorConsents(),
              cbw.getCustomPurposeConsents()
          )
@@ -155,7 +155,7 @@ import JavaScriptCore
             let cmpUrl = URL(string: cmpDomain),
             let messageUrl = URL(string: messageDomain)
         else {
-            throw ConsentViewControllerError.APIError(message: "Invalid URL.")
+            throw ConsentViewControllerError.BuildError(message: "Invalid URL found on ConsentViewController#init")
         }
 
         self.sourcePoint = try SourcePointClient(
@@ -276,7 +276,7 @@ import JavaScriptCore
 
         do {
             let gdprStatus = try sourcePoint.getGdprStatus()
-            UserDefaults.standard.setValue(gdprStatus, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+            UserDefaults.standard.setValue(String(gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         } catch {
             print(error)
         }
@@ -340,9 +340,7 @@ import JavaScriptCore
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
     public func getCustomVendorConsents() throws -> Array<VendorConsent> {
-        guard
-            let consents = try? loadAndStoreConsents()
-        else {
+        guard let consents = try? loadAndStoreConsents() else {
             return []
         }
         return consents.consentedVendors
@@ -357,9 +355,7 @@ import JavaScriptCore
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
     public func getCustomPurposeConsents() throws -> [PurposeConsent] {
-        guard
-            let consents = try? loadAndStoreConsents()
-        else {
+        guard let consents = try? loadAndStoreConsents() else {
             return []
         }
         return consents.consentedPurposes
@@ -414,53 +410,51 @@ import JavaScriptCore
 
     /// :nodoc:
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if let messageBody = message.body as? [String: Any], let name = messageBody["name"] as? String {
-            switch name {
-            case "onReceiveMessageData": // when the message is first loaded
-                let body = messageBody["body"] as? [String: Any?]
+        guard
+            let messageBody = message.body as? [String: Any],
+            let name = messageBody["name"] as? String,
+            let body = messageBody["body"] as? [String: Any?]
+        else { return }
 
-                if let shouldShowMessage = body?["willShowMessage"] as? Bool, shouldShowMessage {
-                    // display web view once the message is ready to display
-                    if webView.superview != nil {
-                        webView.frame = webView.superview!.bounds
-                        willShowMessage?(self)
-                    }
-                } else {
-                    onInteractionComplete?(self)
-                    webView.removeFromSuperview()
-                }
-            case "onMessageChoiceSelect": // when a choice is selected
-                let body = messageBody["body"] as? [String: Int?]
-
-                if let choiceType = body?["choiceType"] as? Int {
-                    self.choiceType = choiceType
-                    onMessageChoiceSelect?(self)
-                }
-            case "interactionComplete": // when interaction with message is complete
-                let userDefaults = UserDefaults.standard
-                guard
-                    let body = messageBody["body"] as? [String: String],
-                    let euconsent = body["euconsent"],
-                    let consentUUID = body["consentUUID"]
-                else {
-                    print("Could not get EUConsent and ConsentUUID")
-                    onInteractionComplete?(self)
-                    webView.removeFromSuperview()
-                    return
-                }
-
-                self.euconsent = euconsent
-                self.consentUUID = consentUUID
-                storeIABVars(euconsent)
-                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-                userDefaults.synchronize()
-                onInteractionComplete?(self)
-                webView.removeFromSuperview()
-            default:
-                print("userContentController was called but the message body: \(name) is unknown.")
+        switch name {
+        case "onReceiveMessageData": // when the message is first loaded
+            if(body["willShowMessage"] as! Int) == 1 {
+                webView.frame = webView.superview!.bounds
+                willShowMessage?(self)
+                return
             }
+            done()
+        case "onMessageChoiceSelect": // when a choice is selected
+            guard let choiceType = body["choiceType"] as? Int else { return }
+            self.choiceType = choiceType
+            onMessageChoiceSelect?(self)
+        case "interactionComplete": // when interaction with message is complete
+            let userDefaults = UserDefaults.standard
+            guard
+                let euconsent = body["euconsent"] as? String,
+                let consentUUID = body["consentUUID"] as? String
+            else {
+                print("Could not get EUConsent and ConsentUUID")
+                done()
+                return
+            }
+
+            self.euconsent = euconsent
+            self.consentUUID = consentUUID
+            storeIABVars(euconsent)
+            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+            userDefaults.synchronize()
+            done()
+        default:
+            print("userContentController was called but the message body: \(name) is unknown.")
+            done()
         }
+    }
+
+    private func done() {
+        onInteractionComplete?(self)
+        webView.removeFromSuperview()
     }
 }
 
