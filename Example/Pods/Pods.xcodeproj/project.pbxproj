@@ -17,6 +17,7 @@
 		80A8DA287D8F3601D77778B7DB8D6DB3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9306A985D34E277FE1BBBAB1C8CFB6D /* String.swift */; };
 		8264A9082238429900DAD264 /* ConsentViewControllerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8264A9072238429900DAD264 /* ConsentViewControllerError.swift */; };
 		8264A90A22390E3700DAD264 /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8264A90922390E3700DAD264 /* SourcePointClient.swift */; };
+		82AEC17922397CC2000A8ABE /* Consent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AEC17822397CC2000A8ABE /* Consent.swift */; };
 		890C7BC0578ED3009D362483D8B86DAB /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E281539FD42BA6EE6F5296E477C9A3 /* Data.swift */; };
 		9A71FFE6E75278CDDECAB3CAC1D6E051 /* Pods-ConsentViewController_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B00A31AC75B52969C5997C92C959322D /* Pods-ConsentViewController_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BFC641395CC5F8AEF73FF9E1701DE933 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DFF15000AFE2A371BF499E7AFDA808 /* Foundation.framework */; };
@@ -49,6 +50,7 @@
 		7D97377BBDF68F3D2CE7AC33B889A37F /* Pods-ConsentViewController_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ConsentViewController_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		8264A9072238429900DAD264 /* ConsentViewControllerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConsentViewControllerError.swift; path = ConsentViewController/Classes/ConsentViewControllerError.swift; sourceTree = "<group>"; };
 		8264A90922390E3700DAD264 /* SourcePointClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourcePointClient.swift; path = ConsentViewController/Classes/SourcePointClient.swift; sourceTree = "<group>"; };
+		82AEC17822397CC2000A8ABE /* Consent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consent.swift; sourceTree = "<group>"; };
 		82CDBDA390D8E519B248E18495067BEC /* ConsentViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ConsentViewController.xcconfig; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		967A65A98317FC9DF81F11E4F6676638 /* ConsentViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsentViewController.swift; path = ConsentViewController/Classes/ConsentViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				8703DD093AB3F605DF7454FD32FE5315 /* Pod */,
 				F896370DFE9DCC88D38DB34D757DD30C /* Support Files */,
 				8264A90922390E3700DAD264 /* SourcePointClient.swift */,
+				82AEC17822397CC2000A8ABE /* Consent.swift */,
 			);
 			name = ConsentViewController;
 			path = ../..;
@@ -315,6 +318,7 @@
 				4D1A07C3005572F82756E0142DF1399F /* ConsentViewController.swift in Sources */,
 				890C7BC0578ED3009D362483D8B86DAB /* Data.swift in Sources */,
 				80A8DA287D8F3601D77778B7DB8D6DB3 /* String.swift in Sources */,
+				82AEC17922397CC2000A8ABE /* Consent.swift in Sources */,
 				8264A90A22390E3700DAD264 /* SourcePointClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
