@@ -589,23 +589,23 @@ import JavaScriptCore
                     onMessageChoiceSelect?(self)
                 }
             case "interactionComplete": // when interaction with message is complete
-                if let body = messageBody["body"] as? [String: String?], let euconsent = body["euconsent"], let consentUUID = body["consentUUID"] {
-                    let userDefaults = UserDefaults.standard
-                    if (euconsent != nil) {
-                        self.euconsent = euconsent
-                        userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-                        storeIABVars(euconsent!)
-                    }
-
-                    if (consentUUID != nil) {
-                        self.consentUUID = consentUUID
-                        userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-                    }
-
-                    if (euconsent != nil || consentUUID != nil) {
-                        userDefaults.synchronize()
-                    }
+                let userDefaults = UserDefaults.standard
+                guard
+                    let body = messageBody["body"] as? [String: String],
+                    let euconsent = body["euconsent"],
+                    let consentUUID = body["consentUUID"]
+                else {
+                    print("Could not get EUConsent and ConsentUUID")
+                    onInteractionComplete?(self)
+                    webView.removeFromSuperview()
+                    return
                 }
+
+                self.euconsent = euconsent
+                self.consentUUID = consentUUID
+                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+                userDefaults.synchronize()
                 onInteractionComplete?(self)
                 webView.removeFromSuperview()
             default:
