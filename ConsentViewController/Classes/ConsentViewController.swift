@@ -31,8 +31,8 @@ import JavaScriptCore
              cbw.consentUUID as Any,
              cbw.getIABVendorConsents(["VENDOR_ID"]),
              cbw.getIABPurposeConsents([PURPOSE_ID]),
-             cbw.getCustomVendorConsents(forIds: ["VENDOR_ID"]),
-             cbw.getPurposeConsents()
+             cbw.getCustomVendorConsents(),
+             cbw.getCustomPurposeConsents()
          )
      }
  view.addSubview(consentViewController.view)
@@ -70,55 +70,24 @@ import JavaScriptCore
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
 
-    /// The id of your account can be found in the Publisher's portal -> Account menu
-    public let accountId: Int
-    
-    /// The site name which the campaign and scenarios will be loaded from
-    public let siteName: String
-
     static private let SP_PREFIX: String = "_sp_"
     static private let SP_SITE_ID: String = SP_PREFIX + "site_id"
-    static private let CUSTOM_VENDOR_PREFIX = SP_PREFIX + "custom_vendor_consent_"
-    static private let SP_CUSTOM_PURPOSE_CONSENT_PREFIX = SP_PREFIX + "custom_purpose_consent_"
-    static private let SP_CUSTOM_PURPOSE_CONSENTS_JSON: String = SP_PREFIX + "custom_purpose_consents_json"
 
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
-    static private let PM_MESSAGING_HOST = "pm.sourcepoint.mgr.consensu.org"
+    static public let STAGING_MMS_DOMAIN = "mms.sp-stage.net"
+    static public let MMS_DOMAIN = "mms.sp-prod.net"
 
-    static private let DEFAULT_STAGING_MMS_DOMAIN = "mms.sp-stage.net"
-    static private let DEFAULT_MMS_DOMAIN = "mms.sp-prod.net"
+    static public let STAGING_CMP_DOMAIN = "cmp.sp-stage.net"
+    static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
 
-    static private let DEFAULT_INTERNAL_CMP_DOMAIN = "cmp.sp-stage.net"
-    static private let DEFAULT_CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
+    static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net"
+    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org"
 
-    static private let DEFAULT_INTERNAL_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net"
-    static private let DEFAULT_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org"
-
-    /// Page is merely for logging purposes, eg. https://mysitename.example/page
-    public var page: String?
-    
-    /// Indicates if the campaign is a stage campaign
-    public var isStage: Bool = false
-    
-    /// indicates if the data should come from SourcePoint's staging environment. Most of the times that's not what you want.
-    public var isInternalStage: Bool = false
-    
-    /// :nodoc:
-    private var inAppMessagingPageUrl: String?
-    /// :nodoc:
-    public var mmsDomain: String?
-    /// :nodoc:
-    public var cmpDomain: String?
-    /// :nodoc:
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
     public var debugLevel: DebugLevel = .OFF
-
-    // TODO: remove it, as in Android's SDK
-    /// :nodoc:
-    public var onReceiveMessageData: Callback?
 
     /**
      A `Callback` that will be called the message is about to be shown. Notice that,
@@ -152,10 +121,6 @@ import JavaScriptCore
 
     var webView: WKWebView!
     
-    // TODO: remove it
-    /// :nodoc:
-    public var msgJSON: String? = nil
-    
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
     public var choiceType: Int? = nil
     
@@ -165,25 +130,8 @@ import JavaScriptCore
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
     public var consentUUID: String
 
-    /// Holds a collection of strings representing the non-IAB consents
-    public var customConsent: [[String: Any]] = []
-
-    private var mmsDomainToLoad: String?
-    private var cmpDomainToLoad: String?
-    private var cmpUrl: String
-
-    private func startLoad(_ urlString: String) -> Data? {
-        let url = URL(string: urlString)!
-        let semaphore = DispatchSemaphore( value: 0 )
-        var responseData: Data?
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            responseData = data
-            semaphore.signal()
-        }
-        task.resume()
-        semaphore.wait()
-        return responseData
-    }
+    private let accountId: Int
+    private let siteName: String
 
     private let sourcePoint: SourcePointClient
 
@@ -218,10 +166,6 @@ import JavaScriptCore
             messageUrl: messageUrl
         )
 
-        self.cmpUrl = cmpUrl.absoluteString
-
-        // read consent from/write consent data to UserDefaults.standard storage
-        // per gdpr framework: https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/852cf086fdac6d89097fdec7c948e14a2121ca0e/In-App%20Reference/iOS/CMPConsentTool/Storage/CMPDataStorageUserDefaults.m
         self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
 
@@ -242,13 +186,12 @@ import JavaScriptCore
             accountId: accountId,
             siteName: siteName,
             stagingCampaign: stagingCampaign,
-            mmsDomain: "https://" + (staging ? ConsentViewController.DEFAULT_STAGING_MMS_DOMAIN : ConsentViewController.DEFAULT_MMS_DOMAIN),
-            cmpDomain: "https://" + (staging ? ConsentViewController.DEFAULT_INTERNAL_CMP_DOMAIN : ConsentViewController.DEFAULT_CMP_DOMAIN),
-            messageDomain: "https://" + (staging ? ConsentViewController.DEFAULT_INTERNAL_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.DEFAULT_IN_APP_MESSAGING_PAGE_DOMAIN)
+            mmsDomain: "https://" + (staging ? ConsentViewController.STAGING_MMS_DOMAIN : ConsentViewController.MMS_DOMAIN),
+            cmpDomain: "https://" + (staging ? ConsentViewController.STAGING_CMP_DOMAIN : ConsentViewController.CMP_DOMAIN),
+            messageDomain: "https://" + (staging ? ConsentViewController.STAGING_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.IN_APP_MESSAGING_PAGE_DOMAIN)
         )
     }
 
-    // TODO: may need to implement this eventually
     /// :nodoc:
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -264,17 +207,6 @@ import JavaScriptCore
     @objc(setTargetingParamInt:value:)
     public func setTargetingParam(key: String, value: Int) {
         targetingParams[key] = value
-    }
-
-    public func setInAppMessagingUrl(urlString: String) {
-        inAppMessagingPageUrl = urlString
-    }
-
-    public func getInAppMessagingUrl() -> String {
-        return "https://" + (isInternalStage ?
-            ConsentViewController.DEFAULT_INTERNAL_IN_APP_MESSAGING_PAGE_DOMAIN :
-            ConsentViewController.DEFAULT_IN_APP_MESSAGING_PAGE_DOMAIN
-        )
     }
 
     /// :nodoc:
@@ -309,42 +241,17 @@ import JavaScriptCore
         view = webView
     }
 
-    private func openInBrowswerHelper(_ url:URL) -> Void {
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
-
-    private func urlDoesNotBelongToDialog(_ url: URL) -> Bool {
-        let allowedHosts : Set<String> = [
-            URL(string: getInAppMessagingUrl())!.host!,
-            siteName,
-            mmsDomainToLoad!,
-            cmpDomainToLoad!,
-            ConsentViewController.PM_MESSAGING_HOST,
-            "about:blank"
-        ]
-        return !allowedHosts.contains(url.host ?? "about:blank")
-    }
-
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let url = navigationAction.request.url, urlDoesNotBelongToDialog(url) {
-            openInBrowswerHelper(url)
-            decisionHandler(WKNavigationActionPolicy.cancel)
-        } else {
-            decisionHandler(WKNavigationActionPolicy.allow)
-        }
-    }
-
     /// :nodoc:
     // handles links with "target=_blank", forcing them to open in Safari
     public func webView(_ webView: WKWebView,
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        openInBrowswerHelper(navigationAction.request.url!)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(navigationAction.request.url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(navigationAction.request.url!)
+        }
         return nil
     }
 
@@ -512,24 +419,13 @@ import JavaScriptCore
         return consents
     }
 
-    private func encodeURIComponent(_ val: String) -> String? {
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.insert(charactersIn: "-_.!~*'()")
-        return val.addingPercentEncoding(withAllowedCharacters: characterSet)
-    }
-
-    let maxPurposes:Int64 = 24
-
     private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
-
         let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
         
-        return try! ConsentString(
-            consentString: euconsent
-        )
+        return try! ConsentString(consentString: euconsent)
     }
     
     private func storeIABVars(_ euconsentBase64Url: String) {
@@ -562,11 +458,6 @@ import JavaScriptCore
             switch name {
             case "onReceiveMessageData": // when the message is first loaded
                 let body = messageBody["body"] as? [String: Any?]
-
-                if let msgJSON = body?["msgJSON"] as? String {
-                    self.msgJSON = msgJSON
-                    onReceiveMessageData?(self)
-                }
 
                 if let shouldShowMessage = body?["willShowMessage"] as? Bool, shouldShowMessage {
                     // display web view once the message is ready to display
