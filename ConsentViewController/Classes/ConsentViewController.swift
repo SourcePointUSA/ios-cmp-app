@@ -150,6 +150,7 @@ import JavaScriptCore
         self.siteName = siteName
 
         guard
+            let siteUrl = URL(string: "https://"+siteName),
             let mmsUrl = URL(string: mmsDomain),
             let cmpUrl = URL(string: cmpDomain),
             let messageUrl = URL(string: messageDomain)
@@ -159,7 +160,7 @@ import JavaScriptCore
 
         self.sourcePoint = try SourcePointClient(
             accountId: accountId,
-            siteName: siteName,
+            siteUrl: siteUrl,
             stagingCampaign: stagingCampaign,
             mmsUrl: mmsUrl,
             cmpUrl: cmpUrl,
@@ -258,57 +259,16 @@ import JavaScriptCore
     /// :nodoc:
     override open func viewDidLoad() {
         super.viewDidLoad()
-        // initially hide web view while loading
-        webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
-        let pageToLoad = getInAppMessagingUrl()
+        guard let messageUrl = sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
+        else { return }
 
-        let path = page == nil ? "" : page!
-        let siteHref = "https://" + siteName + "/" + path + "?"
-
-        mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
-            "mms.sp-stage.net" :
-            "mms.sp-prod.net"
-        )
-
-        cmpDomainToLoad = cmpDomain ?? (isInternalStage ?
-            "cmp.sp-stage.net" :
-            "sourcepoint.mgr.consensu.org"
-        )
-        cmpUrl = "https://" + cmpDomainToLoad!
-
-        var params = [
-            "_sp_cmp_inApp=true",
-            "_sp_writeFirstPartyCookies=true",
-            "_sp_siteHref=" + encodeURIComponent(siteHref)!,
-            "_sp_accountId=" + String(accountId),
-            "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad!)!,
-            "_sp_cmp_origin=" + encodeURIComponent("//" + cmpDomainToLoad!)!,
-            "_sp_debug_level=" + debugLevel.rawValue,
-            "_sp_msg_stageCampaign=" + isStage.description
-        ]
-
-        var targetingParamStr: String?
-        do {
-            let targetingParamData = try JSONSerialization.data(withJSONObject: self.targetingParams, options: [])
-            targetingParamStr = String(data: targetingParamData, encoding: String.Encoding.utf8)
-        } catch let error as NSError {
-            print("error serializing targeting params: " + error.localizedDescription)
-        }
-
-        if targetingParamStr != nil {
-            params.append("_sp_msg_targetingParams=" + encodeURIComponent(targetingParamStr!)!)
-        }
-
-        let myURL = URL(string: pageToLoad + "?" + params.joined(separator: "&"))
-        let myRequest = URLRequest(url: myURL!)
-
-        print ("url: \((myURL?.absoluteString)!)")
-
+        print ("url: \((messageUrl.absoluteString))")
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
         setSubjectToGDPR()
 
-        webView.load(myRequest)
+        webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        webView.load(URLRequest(url: messageUrl))
     }
 
     private func setSubjectToGDPR() {
@@ -491,6 +451,7 @@ import JavaScriptCore
 
                 self.euconsent = euconsent
                 self.consentUUID = consentUUID
+                storeIABVars(euconsent)
                 userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
                 userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
                 userDefaults.synchronize()
