@@ -475,7 +475,6 @@ import JavaScriptCore
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
-    public func getCustomVendorConsents(forIds customVendorIds: [String]) throws -> [Bool] {
         var result = Array(repeating: false, count: customVendorIds.count)
 
         try loadAndStoreConsents(customVendorIds)
@@ -502,7 +501,9 @@ import JavaScriptCore
      - Parameter forId: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
+    public func getCustomVendorConsents() throws -> Array<VendorConsent> {
         }
+        return consents.consentedVendors
     }
 
     /**
