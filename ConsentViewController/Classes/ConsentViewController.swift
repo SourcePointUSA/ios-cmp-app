@@ -475,33 +475,11 @@ import JavaScriptCore
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
-        var result = Array(repeating: false, count: customVendorIds.count)
-
-        try loadAndStoreConsents(customVendorIds)
-
-        for index in 0..<customVendorIds.count {
-            let customVendorId = customVendorIds[index]
-            let storedConsentData = UserDefaults.standard.string(
-                forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + customVendorId
-            )
-
-            if storedConsentData != nil {
-                result[index] = storedConsentData == "true"
-            }
-        }
-
-        return result
-    }
-
-    /**
-     Checks if a non-IAB purpose was given consent.
-     Same as `getIabPurposeConsents(_) but for a single non-IAB purpose.
-     
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
-     - Parameter forId: the purpose id
-     - Returns: a `Bool` indicating if the user has given consent to that purpose.
-     */
     public func getCustomVendorConsents() throws -> Array<VendorConsent> {
+        guard
+            let consents = try? loadAndStoreConsents()
+        else {
+            return []
         }
         return consents.consentedVendors
     }
@@ -514,92 +492,27 @@ import JavaScriptCore
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    public func getPurposeConsents(forIds purposeIds: [String] = []) throws -> [[String:String]?] {
-        try loadAndStoreConsents([])
-
-        guard let storedPurposeConsentsJson = UserDefaults.standard.string(
-            forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
-        )
+    public func getCustomPurposeConsents() throws -> [PurposeConsent] {
+        guard
+            let consents = try? loadAndStoreConsents()
         else {
             return []
         }
-
-        let purposeConsents = try! JSONSerialization.jsonObject(
-            with: storedPurposeConsentsJson.data(using: String.Encoding.utf8)!, options: []
-        ) as? [[String: String]]
-
-        if purposeIds.count == 0 { return purposeConsents! }
-
-        var results = [[String: String]?](repeating: nil, count: purposeIds.count)
-        for consentedPurpose in purposeConsents! {
-            if let i = purposeIds.index(of: consentedPurpose["_id"]!) {
-                results[i] = consentedPurpose
-            }
-        }
-        return results
-    }
-    
-    
-    /**
-     * When we receive data from the server, if a given custom vendor is no longer given consent
-     * to, its information won't be present in the payload. Therefore we have to first clear the
-     * preferences then set each vendor to true based on the response.
-     */
-    private func clearStoredVendorConsents(forIds vendorIds: [String]) {
-        for id in vendorIds {
-            UserDefaults.standard.removeObject(forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + id)
-        }
+        return consents.consentedPurposes
     }
 
-    private func loadAndStoreConsents(_ customVendorIdsToRequest: [String]) throws {
-        let consentParam = consentUUID ?? "[CONSENT_UUID]"
-        let euconsentParam = euconsent ?? "[EUCONSENT]"
-
-        let siteId = try getSiteId()
-        let path = "/consent/v2/" + siteId + "/custom-vendors"
-        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ",")) ?? ""
-        let search = "?customVendorIds=" + customVendorIdString +
-            "&consentUUID=" + consentParam +
-            "&euconsent=" + euconsentParam
-        let url = cmpUrl + path + search
-
+    private func loadAndStoreConsents() throws -> ConsentsResponse {
         guard
-            let data = self.startLoad(url),
-            let consentsJSON = try? JSONSerialization.jsonObject(with: data, options: []),
-            let consents = consentsJSON as? [String:[[String: String]]],
-            let consentedCustomVendors = consents["consentedVendors"],
-            let consentedPurposes = consents["consentedPurposes"]
+            let siteId = try? getSiteId(),
+            let consents = try? sourcePoint.getCustomConsents(
+                    forSiteId: siteId,
+                    consentUUID: consentUUID,
+                    euConsent: euconsent)
         else {
-            print("Could not get consents from the API.")
-            return
+            return ConsentsResponse(consentedVendors: [], consentedPurposes: [])
         }
 
-        // Store consented vendors in UserDefaults one by one
-        clearStoredVendorConsents(forIds: customVendorIdsToRequest)
-        for consentedCustomVendor in consentedCustomVendors {
-            guard let id = consentedCustomVendor["_id"] else { return }
-            UserDefaults.standard.setValue(
-                "true",
-                forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + id
-            )
-            UserDefaults.standard.setValue(
-                "true",
-                forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + id
-            )
-        }
-
-        // Store consented purposes in UserDefaults as a JSON
-
-        // Serialize consented purposes again
-        guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes as Any, options: []) else {
-            return
-        }
-        UserDefaults.standard.setValue(
-            String(data: consentedPurposesJson, encoding: String.Encoding.utf8),
-            forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
-        )
-
-        UserDefaults.standard.synchronize()
+        return consents
     }
 
     private func encodeURIComponent(_ val: String) -> String? {
