@@ -21,13 +21,13 @@ public class Consent: Codable, CustomStringConvertible {
         case name
     }
 
-    public var description: String { return "Consent(id: \(id), name: \(name)" }
+    public var description: String { return "Consent(id: \(id), name: \(name))" }
 }
 
 public class VendorConsent: Consent {
-    public override var description: String { return "VendorConsent(id: \(id), name: \(name)" }
+    public override var description: String { return "VendorConsent(id: \(id), name: \(name))" }
 }
 
 public class PurposeConsent: Consent {
-    public override var description: String { return "PurposeConsent(id: \(id), name: \(name)" }
+    public override var description: String { return "PurposeConsent(id: \(id), name: \(name))" }
 }
