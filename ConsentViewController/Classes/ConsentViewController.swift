@@ -160,10 +160,10 @@ import JavaScriptCore
     public var choiceType: Int? = nil
     
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
-    public var euconsent: String? = nil
+    public var euconsent: String
     
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
-    public var consentUUID: String? = nil
+    public var consentUUID: String
 
     /// Holds a collection of strings representing the non-IAB consents
     public var customConsent: [[String: Any]] = []
@@ -222,8 +222,8 @@ import JavaScriptCore
 
         // read consent from/write consent data to UserDefaults.standard storage
         // per gdpr framework: https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/852cf086fdac6d89097fdec7c948e14a2121ca0e/In-App%20Reference/iOS/CMPConsentTool/Storage/CMPDataStorageUserDefaults.m
-        self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
-        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
+        self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
+        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -279,9 +279,6 @@ import JavaScriptCore
 
     /// :nodoc:
     override open func loadView() {
-        euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
-        consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
-
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
         // inject js so we have a consistent interface to messaging page as in android
