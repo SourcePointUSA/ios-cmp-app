@@ -30,27 +30,34 @@ struct ConsentsResponse : Codable {
     let consentedPurposes: [PurposeConsent]
 }
 
+typealias TargetingParams = [String:Any]
+
 class SourcePointClient {
     private let client: HttpClient
 
     private let accountId: String
-    private let siteName: String
 
+    private let siteUrl: URL
     private let mmsUrl: URL
     private let cmpUrl: URL
+    private let messageUrl: URL
 
-    init(accountId: Int, siteName: String, stagingCampaign: Bool, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+    private let stagingCampaign: Bool
+
+    init(accountId: Int, siteUrl: URL, stagingCampaign: Bool, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
         self.accountId = String(accountId)
-        self.siteName = siteName
+        self.siteUrl = siteUrl
         self.mmsUrl = mmsUrl
         self.cmpUrl = cmpUrl
+        self.messageUrl = messageUrl
+        self.stagingCampaign = stagingCampaign
 
         self.client = SimpleClient()
     }
 
     public func getSiteId() throws -> String {
         guard
-            let getIdUrl = URL(string: "/get_site_data?account_id=" + accountId + "&href=https://" + siteName, relativeTo: mmsUrl),
+            let getIdUrl = URL(string: "/get_site_data?account_id=" + accountId + "&href=" + siteUrl.absoluteString, relativeTo: mmsUrl),
             let result = client.get(url: getIdUrl),
             let parsedResult = try JSONSerialization.jsonObject(with: result, options: []) as? [String:Int],
             let siteId = parsedResult["site_id"]
@@ -95,5 +102,32 @@ class SourcePointClient {
         }
 
         return consents
+    }
+
+    private func encode(targetingParams params: TargetingParams) -> String {
+        guard
+            let data = try? JSONSerialization.data(withJSONObject: params),
+            let encodedParams = String(data: data, encoding: String.Encoding.utf8)
+        else {
+            return ""
+        }
+        return encodedParams
+    }
+
+    public func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String) -> URL? {
+        var components = URLComponents()
+        components.queryItems = [
+            "_sp_accountId": accountId,
+            "_sp_cmp_inApp": "true",
+            "_sp_writeFirstPartyCookies": "true",
+            "_sp_siteHref": siteUrl.absoluteString,
+            "_sp_msg_domain": mmsUrl.host!,
+            "_sp_cmp_origin": cmpUrl.host!,
+            "_sp_msg_targetingParams": encode(targetingParams: params),
+            "_sp_debug_level": debugLevel,
+            "_sp_msg_stageCampaign": String(stagingCampaign)
+        ].map { URLQueryItem(name: $0.key, value: $0.value) }
+
+        return components.url(relativeTo: messageUrl)
     }
 }
