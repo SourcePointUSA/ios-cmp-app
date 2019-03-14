@@ -25,6 +25,11 @@ class SimpleClient: HttpClient {
     }
 }
 
+struct ConsentsResponse : Codable {
+    let consentedVendors: [VendorConsent]
+    let consentedPurposes: [PurposeConsent]
+}
+
 class SourcePointClient {
     private let client: HttpClient
 
@@ -70,5 +75,25 @@ class SourcePointClient {
             )
         }
         return gdprStatus == 1
+    }
+
+    public func getCustomConsents(
+        forSiteId siteId: String,
+        consentUUID: String,
+        euConsent: String)
+    throws -> ConsentsResponse {
+        let path = "/consent/v2/\(siteId)/custom-vendors"
+        let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
+        let decoder = JSONDecoder()
+
+        guard
+            let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl),
+            let consentsResponse = client.get(url: getCustomConsentsUrl),
+            let consents = try? decoder.decode(ConsentsResponse.self, from: consentsResponse)
+        else {
+            throw ConsentViewControllerError.APIError(message: "Could not get consents from the API.")
+        }
+
+        return consents
     }
 }
