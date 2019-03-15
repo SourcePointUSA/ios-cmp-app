@@ -149,17 +149,13 @@ import JavaScriptCore
         self.accountId = accountId
         self.siteName = siteName
 
-        guard
-            let siteUrl = URL(string: "https://"+siteName),
-            let mmsUrl = URL(string: mmsDomain),
-            let cmpUrl = URL(string: cmpDomain),
-            let messageUrl = URL(string: messageDomain)
-        else {
-            throw ConsentViewControllerError.BuildError(message: "Invalid URL found on ConsentViewController#init")
-        }
+        let siteUrl = try Utils.validate(attributeName: "siteName", urlString: "https://"+siteName)
+        let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
+        let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
+        let messageUrl = try Utils.validate(attributeName: "messageUrl", urlString: messageDomain)
 
         self.sourcePoint = try SourcePointClient(
-            accountId: accountId,
+            accountId: String(accountId),
             siteUrl: siteUrl,
             stagingCampaign: stagingCampaign,
             mmsUrl: mmsUrl,
