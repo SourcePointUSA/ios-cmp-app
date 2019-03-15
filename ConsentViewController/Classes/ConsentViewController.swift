@@ -12,6 +12,7 @@ public typealias Callback = (ConsentViewController) -> Void
 import UIKit
 import WebKit
 import JavaScriptCore
+import Reachability
 
 /**
  SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
@@ -21,7 +22,7 @@ import JavaScriptCore
  var consentViewController: ConsentViewController!
  override func viewDidLoad() {
      super.viewDidLoad()
-     consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME")
+     consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME", stagingCampaign: true|false)
      consentViewController.onMessageChoiceSelect = {
         (cbw: ConsentViewController) in print("Choice selected by user", cbw.choiceType as Any)
      }
@@ -30,9 +31,9 @@ import JavaScriptCore
              cbw.euconsent as Any,
              cbw.consentUUID as Any,
              cbw.getIABVendorConsents(["VENDOR_ID"]),
-             cbw.getIABPurposeConsents([PURPOSE_ID]),
-             cbw.getCustomVendorConsents(forIds: ["VENDOR_ID"]),
-             cbw.getPurposeConsents()
+             cbw.getIABPurposeConsents(["PURPOSE_ID"]),
+             cbw.getCustomVendorConsents(),
+             cbw.getCustomPurposeConsents()
          )
      }
  view.addSubview(consentViewController.view)
@@ -70,48 +71,24 @@ import JavaScriptCore
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
 
-    /// The id of your account can be found in the Publisher's portal -> Account menu
-    public let accountId: Int
-    
-    /// The site name which the campaign and scenarios will be loaded from
-    public let siteName: String
-
     static private let SP_PREFIX: String = "_sp_"
     static private let SP_SITE_ID: String = SP_PREFIX + "site_id"
-    static private let CUSTOM_VENDOR_PREFIX = SP_PREFIX + "custom_vendor_consent_"
-    static private let SP_CUSTOM_PURPOSE_CONSENT_PREFIX = SP_PREFIX + "custom_purpose_consent_"
-    static private let SP_CUSTOM_PURPOSE_CONSENTS_JSON: String = SP_PREFIX + "custom_purpose_consents_json"
 
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
-    static private let PM_MESSAGING_HOST = "pm.sourcepoint.mgr.consensu.org"
-    static private let IN_APP_MESSAGING_URL_STAGE = "https://in-app-messaging.pm.cmp.sp-stage.net/"
-    static private let IN_APP_MESSAGING_URL_PRODUCTION = "https://in-app-messaging.pm.sourcepoint.mgr.consensu.org/"
+    static public let STAGING_MMS_DOMAIN = "mms.sp-stage.net"
+    static public let MMS_DOMAIN = "mms.sp-prod.net"
 
-    /// Page is merely for logging purposes, eg. https://mysitename.example/page
-    public var page: String?
-    
-    /// Indicates if the campaign is a stage campaign
-    public var isStage: Bool = false
-    
-    /// indicates if the data should come from SourcePoint's staging environment. Most of the times that's not what you want.
-    public var isInternalStage: Bool = false
-    
-    /// :nodoc:
-    private var inAppMessagingPageUrl: String?
-    /// :nodoc:
-    public var mmsDomain: String?
-    /// :nodoc:
-    public var cmpDomain: String?
-    /// :nodoc:
+    static public let STAGING_CMP_DOMAIN = "cmp.sp-stage.net"
+    static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
+
+    static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net"
+    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org"
+
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
     public var debugLevel: DebugLevel = .OFF
-
-    // TODO: remove it, as in Android's SDK
-    /// :nodoc:
-    public var onReceiveMessageData: Callback?
 
     /**
      A `Callback` that will be called the message is about to be shown. Notice that,
@@ -143,56 +120,82 @@ import JavaScriptCore
      */
     public var onInteractionComplete: Callback?
 
+    public var onErrorOccurred: Callback?
+
     var webView: WKWebView!
-    
-    // TODO: remove it
-    /// :nodoc:
-    public var msgJSON: String? = nil
     
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
     public var choiceType: Int? = nil
+
+    /// If an error occurs on the Javascript side of things, we'll set this property
+    public var error: ConsentViewControllerError?
     
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
-    public var euconsent: String? = nil
+    public var euconsent: String
     
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
-    public var consentUUID: String? = nil
+    public var consentUUID: String
 
-    /// Holds a collection of strings representing the non-IAB consents
-    public var customConsent: [[String: Any]] = []
+    private let accountId: Int
+    private let siteName: String
 
-    private var mmsDomainToLoad: String?
-    private var cmpDomainToLoad: String?
-    private var cmpUrl: String?
-
-    private func startLoad(_ urlString: String) -> Data? {
-        let url = URL(string: urlString)!
-        let semaphore = DispatchSemaphore( value: 0 )
-        var responseData: Data?
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            responseData = data
-            semaphore.signal()
-        }
-        task.resume()
-        semaphore.wait()
-        return responseData
-    }
+    private let sourcePoint: SourcePointClient
 
     /**
      Initialises the library with `accountId` and `siteName`.
      */
-    public init(accountId: Int, siteName: String) {
+    public init(
+        accountId: Int,
+        siteName: String,
+        stagingCampaign: Bool,
+        mmsDomain: String,
+        cmpDomain: String,
+        messageDomain: String
+    ) throws {
+
         self.accountId = accountId
         self.siteName = siteName
 
-        // read consent from/write consent data to UserDefaults.standard storage
-        // per gdpr framework: https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/852cf086fdac6d89097fdec7c948e14a2121ca0e/In-App%20Reference/iOS/CMPConsentTool/Storage/CMPDataStorageUserDefaults.m
-        self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
-        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
+        let siteUrl = try Utils.validate(attributeName: "siteName", urlString: "https://"+siteName)
+        let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
+        let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
+        let messageUrl = try Utils.validate(attributeName: "messageUrl", urlString: messageDomain)
+
+        self.sourcePoint = try SourcePointClient(
+            accountId: String(accountId),
+            siteUrl: siteUrl,
+            stagingCampaign: stagingCampaign,
+            mmsUrl: mmsUrl,
+            cmpUrl: cmpUrl,
+            messageUrl: messageUrl
+        )
+
+        self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
+        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
+
         super.init(nibName: nil, bundle: nil)
     }
 
-    // TODO: may need to implement this eventually
+    public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool) throws {
+        try self.init(
+            accountId: accountId,
+            siteName: siteName,
+            stagingCampaign: stagingCampaign,
+            staging: false
+        )
+    }
+
+    public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool, staging: Bool) throws {
+        try self.init(
+            accountId: accountId,
+            siteName: siteName,
+            stagingCampaign: stagingCampaign,
+            mmsDomain: "https://" + (staging ? ConsentViewController.STAGING_MMS_DOMAIN : ConsentViewController.MMS_DOMAIN),
+            cmpDomain: "https://" + (staging ? ConsentViewController.STAGING_CMP_DOMAIN : ConsentViewController.CMP_DOMAIN),
+            messageDomain: "https://" + (staging ? ConsentViewController.STAGING_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.IN_APP_MESSAGING_PAGE_DOMAIN)
+        )
+    }
+
     /// :nodoc:
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -210,22 +213,8 @@ import JavaScriptCore
         targetingParams[key] = value
     }
 
-    public func setInAppMessagingUrl(urlString: String) {
-        inAppMessagingPageUrl = urlString
-    }
-
-    public func getInAppMessagingUrl() -> String {
-        return inAppMessagingPageUrl ?? (isInternalStage ?
-            ConsentViewController.IN_APP_MESSAGING_URL_STAGE :
-            ConsentViewController.IN_APP_MESSAGING_URL_PRODUCTION
-        )
-    }
-
     /// :nodoc:
     override open func loadView() {
-        euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
-        consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
-
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
         // inject js so we have a consistent interface to messaging page as in android
@@ -236,6 +225,7 @@ import JavaScriptCore
             + "window.JSReceiver = {\n"
             + "  onReceiveMessageData: function (willShowMessage, msgJSON) { postToWebView('onReceiveMessageData', { willShowMessage: willShowMessage, msgJSON: msgJSON }); },\n"
             + "  onMessageChoiceSelect: function (choiceType) { postToWebView('onMessageChoiceSelect', { choiceType: choiceType }); },\n"
+            + "  onErrorOccurred: function (errorType) { postToWebView('onErrorOccurred', { errorType: errorType }); },\n"
             + "  sendConsentData: function (euconsent, consentUUID) { postToWebView('interactionComplete', { euconsent: euconsent, consentUUID: consentUUID }); }\n"
             + "};\n"
             + "})();"
@@ -256,33 +246,9 @@ import JavaScriptCore
         view = webView
     }
 
-    private func openInBrowswerHelper(_ url:URL) -> Void {
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
-
-    private func urlDoesNotBelongToDialog(_ url: URL) -> Bool {
-        let allowedHosts : Set<String> = [
-            URL(string: getInAppMessagingUrl())!.host!,
-            siteName,
-            mmsDomainToLoad!,
-            cmpDomainToLoad!,
-            ConsentViewController.PM_MESSAGING_HOST,
-            "about:blank"
-        ]
-        return !allowedHosts.contains(url.host ?? "about:blank")
-    }
-
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let url = navigationAction.request.url, urlDoesNotBelongToDialog(url) {
-            openInBrowswerHelper(url)
-            decisionHandler(WKNavigationActionPolicy.cancel)
-        } else {
-            decisionHandler(WKNavigationActionPolicy.allow)
-        }
+    private func errorOccurred(error: ConsentViewControllerError) {
+        self.error = error
+        onErrorOccurred?(self)
     }
 
     /// :nodoc:
@@ -291,67 +257,41 @@ import JavaScriptCore
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        openInBrowswerHelper(navigationAction.request.url!)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(navigationAction.request.url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(navigationAction.request.url!)
+        }
         return nil
     }
 
     /// :nodoc:
     override open func viewDidLoad() {
         super.viewDidLoad()
-        // initially hide web view while loading
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
-        let pageToLoad = getInAppMessagingUrl()
-
-        let path = page == nil ? "" : page!
-        let siteHref = "https://" + siteName + "/" + path + "?"
-
-        mmsDomainToLoad = mmsDomain ?? (isInternalStage ?
-            "mms.sp-stage.net" :
-            "mms.sp-prod.net"
-        )
-
-        cmpDomainToLoad = cmpDomain ?? (isInternalStage ?
-            "cmp.sp-stage.net" :
-            "sourcepoint.mgr.consensu.org"
-        )
-        cmpUrl = "https://" + cmpDomainToLoad!
-
-        var params = [
-            "_sp_cmp_inApp=true",
-            "_sp_writeFirstPartyCookies=true",
-            "_sp_siteHref=" + encodeURIComponent(siteHref)!,
-            "_sp_accountId=" + String(accountId),
-            "_sp_msg_domain=" + encodeURIComponent(mmsDomainToLoad!)!,
-            "_sp_cmp_origin=" + encodeURIComponent("//" + cmpDomainToLoad!)!,
-            "_sp_debug_level=" + debugLevel.rawValue,
-            "_sp_msg_stageCampaign=" + isStage.description
-        ]
-
-        var targetingParamStr: String?
-        do {
-            let targetingParamData = try JSONSerialization.data(withJSONObject: self.targetingParams, options: [])
-            targetingParamStr = String(data: targetingParamData, encoding: String.Encoding.utf8)
-        } catch let error as NSError {
-            print("error serializing targeting params: " + error.localizedDescription)
+        guard let messageUrl = sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
+        else { return }
+        guard Reachability()!.connection != .none else {
+            errorOccurred(error: NoInternetConnection())
+            return
         }
 
-        if targetingParamStr != nil {
-            params.append("_sp_msg_targetingParams=" + encodeURIComponent(targetingParamStr!)!)
-        }
-
-        let myURL = URL(string: pageToLoad + "?" + params.joined(separator: "&"))
-        let myRequest = URLRequest(url: myURL!)
-
-        print ("url: \((myURL?.absoluteString)!)")
-
+        print ("url: \((messageUrl.absoluteString))")
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-        let storedSubjectToGdpr = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        if storedSubjectToGdpr == nil {
-            UserDefaults.standard.setValue(getGdprApplies(), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        }
+        setSubjectToGDPR()
+        webView.load(URLRequest(url: messageUrl))
+    }
 
-        webView.load(myRequest)
+    private func setSubjectToGDPR() {
+        if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil) { return }
+
+        do {
+            let gdprStatus = try sourcePoint.getGdprStatus()
+            UserDefaults.standard.setValue(String(gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        } catch {
+            print(error)
+        }
     }
 
     /**
@@ -390,50 +330,17 @@ import JavaScriptCore
         return results
     }
     
-    private func getSiteId() -> String? {
+    private func getSiteId() throws -> String {
         let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
-        let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey)
-        if storedSiteId != nil {
-            return storedSiteId
+
+        guard let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey) else {
+            let siteId = try sourcePoint.getSiteId()
+            UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
+            UserDefaults.standard.synchronize()
+            return siteId
         }
 
-        let path = page == nil ? "" : page!
-        let siteHref = "https://" + siteName + "/" + path + "?"
-
-        let result = self.startLoad(
-            "https://" + mmsDomainToLoad! + "/get_site_data?account_id=" + String(accountId) + "&href=" + siteHref
-        )
-        let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String:Int]
-
-        let siteId = parsedResult!["site_id"]
-
-        UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
-        UserDefaults.standard.synchronize()
-
-        return String(siteId!)
-    }
-
-    /**
-     Checks if GDPR applies the user
-     
-     - Returns: a `Bool` indicating if GDPR applies that user.
-     */
-    public func getGdprApplies() -> Bool {
-        let path = "/consent/v2/gdpr-status"
-        let result = self.startLoad(cmpUrl! + path)
-        let parsedResult = try! JSONSerialization.jsonObject(with: result!, options: []) as? [String: Int]
-        return parsedResult!["gdprApplies"] == 1;
-    }
-
-    /**
-     Get the non-IAB consents given to a single vendor id
-     
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
-     - Parameter forId: the vendor id
-     - Returns: a `Bool` indicating if the user has given consent to that vendor.
-     */
-    public func getCustomVendorConsent(forId customVendorId: String) -> Bool {
-        return getCustomVendorConsents(forIds: [customVendorId])[0]
+        return storedSiteId
     }
 
     /**
@@ -444,39 +351,8 @@ import JavaScriptCore
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
-    public func getCustomVendorConsents(forIds customVendorIds: [String]) -> [Bool] {
-        var result = Array(repeating: false, count: customVendorIds.count)
-
-        loadAndStoreConsents(customVendorIds)
-
-        for index in 0..<customVendorIds.count {
-            let customVendorId = customVendorIds[index]
-            let storedConsentData = UserDefaults.standard.string(
-                forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + customVendorId
-            )
-
-            if storedConsentData != nil {
-                result[index] = storedConsentData == "true"
-            }
-        }
-
-        return result
-    }
-
-    /**
-     Checks if a non-IAB purpose was given consent.
-     Same as `getIabPurposeConsents(_) but for a single non-IAB purpose.
-     
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
-     - Parameter forId: the purpose id
-     - Returns: a `Bool` indicating if the user has given consent to that purpose.
-     */
-    public func getPurposeConsent(forId purposeId: String) -> Bool {
-        var consented = false
-        for purpose in getPurposeConsents(forIds: [purposeId]) {
-            if purposeId == purpose?["_id"] { consented = true }
-        }
-        return consented
+    public func getCustomVendorConsents() throws -> Array<VendorConsent> {
+       return (try loadAndStoreConsents()).consentedVendors
     }
 
     /**
@@ -487,108 +363,25 @@ import JavaScriptCore
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    public func getPurposeConsents(forIds purposeIds: [String] = []) -> [[String:String]?] {
-        loadAndStoreConsents([])
-
-        let storedPurposeConsentsJson = UserDefaults.standard.string(
-            forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
-        )
-
-        let purposeConsents = try! JSONSerialization.jsonObject(
-            with: storedPurposeConsentsJson!.data(using: String.Encoding.utf8)!, options: []
-            ) as? [[String: String]]
-
-        if purposeIds.count == 0 {
-            return purposeConsents!
-        }
-
-        var results = [[String: String]?](repeating: nil, count: purposeIds.count)
-        for consentedPurpose in purposeConsents! {
-            if let i = purposeIds.index(of: consentedPurpose["_id"]!) {
-                results[i] = consentedPurpose
-            }
-        }
-        return results
-    }
-    
-    
-    /**
-     * When we receive data from the server, if a given custom vendor is no longer given consent
-     * to, its information won't be present in the payload. Therefore we have to first clear the
-     * preferences then set each vendor to true based on the response.
-     */
-    private func clearStoredVendorConsents(forIds vendorIds: [String]) {
-        for id in vendorIds {
-            UserDefaults.standard.removeObject(forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + id)
-        }
+    public func getCustomPurposeConsents() throws -> [PurposeConsent] {
+        return (try loadAndStoreConsents()).consentedPurposes
     }
 
-    private func loadAndStoreConsents(_ customVendorIdsToRequest: [String]) {
-        let consentParam = consentUUID == nil ? "[CONSENT_UUID]" : consentUUID!
-        let euconsentParam = euconsent == nil ? "[EUCONSENT]" : euconsent!
-        let customVendorIdString = encodeURIComponent(customVendorIdsToRequest.joined(separator: ","))
-
-        let siteId = getSiteId()
-        if siteId == nil {
-            return
-        }
-
-        let path = "/consent/v2/" + siteId! + "/custom-vendors"
-        let search = "?customVendorIds=" + customVendorIdString! +
-            "&consentUUID=" + consentParam +
-            "&euconsent=" + euconsentParam
-        let url = cmpUrl! + path + search
-        let data = self.startLoad(url)
-
-        let consents = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String:[[String: String]]]
-
-        // Store consented vendors in UserDefaults one by one
-        let consentedCustomVendors = consents!["consentedVendors"]
-        clearStoredVendorConsents(forIds: customVendorIdsToRequest)
-        for consentedCustomVendor in consentedCustomVendors! {
-            UserDefaults.standard.setValue(
-                "true",
-                forKey: ConsentViewController.CUSTOM_VENDOR_PREFIX + consentedCustomVendor["_id"]!
-            )
-        }
-
-        // Store consented purposes in UserDefaults as a JSON
-        let consentedPurposes = consents!["consentedPurposes"]
-        // Serialize consented purposes again
-        guard let consentedPurposesJson = try? JSONSerialization.data(withJSONObject: consentedPurposes as Any, options: []) else {
-            return
-        }
-        UserDefaults.standard.setValue(
-            String(data: consentedPurposesJson, encoding: String.Encoding.utf8),
-            forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENTS_JSON
-        )
-        for consentedPurpose in consentedPurposes! {
-            UserDefaults.standard.setValue(
-                "true",
-                forKey: ConsentViewController.SP_CUSTOM_PURPOSE_CONSENT_PREFIX + consentedPurpose["_id"]!
-            )
-        }
-        UserDefaults.standard.synchronize()
+    private func loadAndStoreConsents() throws -> ConsentsResponse {
+        let siteId = try getSiteId()
+        return try sourcePoint.getCustomConsents(
+                forSiteId: siteId,
+                consentUUID: consentUUID,
+                euConsent: euconsent)
     }
-
-    private func encodeURIComponent(_ val: String) -> String? {
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.insert(charactersIn: "-_.!~*'()")
-        return val.addingPercentEncoding(withAllowedCharacters: characterSet)
-    }
-
-    let maxPurposes:Int64 = 24
 
     private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
-
         let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
         
-        return try! ConsentString(
-            consentString: euconsent
-        )
+        return try! ConsentString(consentString: euconsent)
     }
     
     private func storeIABVars(_ euconsentBase64Url: String) {
@@ -617,57 +410,61 @@ import JavaScriptCore
 
     /// :nodoc:
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if let messageBody = message.body as? [String: Any], let name = messageBody["name"] as? String {
-            switch name {
-            case "onReceiveMessageData": // when the message is first loaded
-                let body = messageBody["body"] as? [String: Any?]
+        guard
+            let messageBody = message.body as? [String: Any],
+            let name = messageBody["name"] as? String,
+            let body = messageBody["body"] as? [String: Any?]
+        else { return }
 
-                if let msgJSON = body?["msgJSON"] as? String {
-                    self.msgJSON = msgJSON
-                    onReceiveMessageData?(self)
-                }
-
-                if let shouldShowMessage = body?["willShowMessage"] as? Bool, shouldShowMessage {
-                    // display web view once the message is ready to display
-                    if webView.superview != nil {
-                        webView.frame = webView.superview!.bounds
-                        willShowMessage?(self)
-                    }
-                } else {
-                    onInteractionComplete?(self)
-                    webView.removeFromSuperview()
-                }
-            case "onMessageChoiceSelect": // when a choice is selected
-                let body = messageBody["body"] as? [String: Int?]
-
-                if let choiceType = body?["choiceType"] as? Int {
-                    self.choiceType = choiceType
-                    onMessageChoiceSelect?(self)
-                }
-            case "interactionComplete": // when interaction with message is complete
-                if let body = messageBody["body"] as? [String: String?], let euconsent = body["euconsent"], let consentUUID = body["consentUUID"] {
-                    let userDefaults = UserDefaults.standard
-                    if (euconsent != nil) {
-                        self.euconsent = euconsent
-                        userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-                        storeIABVars(euconsent!)
-                    }
-
-                    if (consentUUID != nil) {
-                        self.consentUUID = consentUUID
-                        userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-                    }
-
-                    if (euconsent != nil || consentUUID != nil) {
-                        userDefaults.synchronize()
-                    }
-                }
-                onInteractionComplete?(self)
-                webView.removeFromSuperview()
-            default:
-                print("userContentController was called but the message body: \(name) is unknown.")
+        switch name {
+        case "onReceiveMessageData": // when the message is first loaded
+            if(body["willShowMessage"] as! Int) == 1 {
+                webView.frame = webView.superview!.bounds
+                willShowMessage?(self)
+                return
             }
+            done()
+        case "onMessageChoiceSelect": // when a choice is selected
+            guard let choiceType = body["choiceType"] as? Int else { return }
+            guard Reachability()!.connection != .none else {
+                done()
+                errorOccurred(error: NoInternetConnection())
+                return
+            }
+            self.choiceType = choiceType
+            onMessageChoiceSelect?(self)
+
+        case "interactionComplete": // when interaction with message is complete
+            let userDefaults = UserDefaults.standard
+            guard
+                let euconsent = body["euconsent"] as? String,
+                let consentUUID = body["consentUUID"] as? String
+            else {
+                print("Could not get EUConsent and ConsentUUID")
+                done()
+                return
+            }
+
+            self.euconsent = euconsent
+            self.consentUUID = consentUUID
+            storeIABVars(euconsent)
+            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+            userDefaults.synchronize()
+            done()
+        case "onErrorOccurred":
+            let errorType = body["errorType"] as? String ?? ""
+            errorOccurred(error: WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
+            done()
+        default:
+            print("userContentController was called but the message body: \(name) is unknown.")
+            done()
         }
+    }
+
+    private func done() {
+        onInteractionComplete?(self)
+        webView.removeFromSuperview()
     }
 }
 

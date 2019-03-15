@@ -1,15 +1,22 @@
 PODS:
-  - ConsentViewController (1.0.1)
+  - ConsentViewController (1.0.2):
+    - ReachabilitySwift
+  - ReachabilitySwift (4.3.0)
 
 DEPENDENCIES:
   - ConsentViewController (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ReachabilitySwift
 
 EXTERNAL SOURCES:
   ConsentViewController:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: a8f538a2cbd34fca0906c6049391de1c02c8bcfc
+  ConsentViewController: f0046b10038a7ed25a4b1f35681b98bb02f9c2a0
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
 
 PODFILE CHECKSUM: 856801e8d31aff0cc151bbdea6722856ca373848
 

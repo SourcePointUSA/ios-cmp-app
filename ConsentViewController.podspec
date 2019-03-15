@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ConsentViewController'
-  s.version          = '1.0.2'
+  s.version          = '2.0.0'
   s.summary          = 'SourcePoint\'s ConsentViewController to handle privacy consents.'
   s.homepage         = 'https://www.sourcepoint.com'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -9,4 +9,6 @@ Pod::Spec.new do |s|
   s.swift_version    = '4.2'
   s.ios.deployment_target = '8.0'
   s.source_files = 'ConsentViewController/Classes/**/*'
+
+  s.dependency 'ReachabilitySwift'
 end
