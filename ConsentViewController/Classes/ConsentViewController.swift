@@ -119,10 +119,15 @@ import JavaScriptCore
      */
     public var onInteractionComplete: Callback?
 
+    public var onErrorOccurred: Callback?
+
     var webView: WKWebView!
     
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
     public var choiceType: Int? = nil
+
+    /// If an error occurs on the Javascript side of things, we'll set this property
+    public var error: ConsentViewControllerError?
     
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String
@@ -146,6 +151,7 @@ import JavaScriptCore
         cmpDomain: String,
         messageDomain: String
     ) throws {
+
         self.accountId = accountId
         self.siteName = siteName
 
@@ -218,6 +224,7 @@ import JavaScriptCore
             + "window.JSReceiver = {\n"
             + "  onReceiveMessageData: function (willShowMessage, msgJSON) { postToWebView('onReceiveMessageData', { willShowMessage: willShowMessage, msgJSON: msgJSON }); },\n"
             + "  onMessageChoiceSelect: function (choiceType) { postToWebView('onMessageChoiceSelect', { choiceType: choiceType }); },\n"
+            + "  onErrorOccurred: function (errorType) { postToWebView('onErrorOccurred', { errorType: errorType }); },\n"
             + "  sendConsentData: function (euconsent, consentUUID) { postToWebView('interactionComplete', { euconsent: euconsent, consentUUID: consentUUID }); }\n"
             + "};\n"
             + "})();"
@@ -236,6 +243,11 @@ import JavaScriptCore
         webView.allowsBackForwardNavigationGestures = true
 
         view = webView
+    }
+
+    private func errorOccurred(error: ConsentViewControllerError) {
+        self.error = error
+        onErrorOccurred?(self)
     }
 
     /// :nodoc:
@@ -258,6 +270,10 @@ import JavaScriptCore
 
         guard let messageUrl = sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
         else { return }
+        guard Reachability()!.connection != .none else {
+            errorOccurred(error: NoInternetConnection())
+            return
+        }
 
         print ("url: \((messageUrl.absoluteString))")
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
@@ -441,6 +457,10 @@ import JavaScriptCore
             userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
             userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
             userDefaults.synchronize()
+            done()
+        case "onErrorOccurred":
+            let errorType = body["errorType"] as? String ?? ""
+            errorOccurred(error: WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
             done()
         default:
             print("userContentController was called but the message body: \(name) is unknown.")
