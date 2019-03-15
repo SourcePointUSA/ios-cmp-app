@@ -12,6 +12,7 @@ public typealias Callback = (ConsentViewController) -> Void
 import UIKit
 import WebKit
 import JavaScriptCore
+import Reachability
 
 /**
  SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
@@ -267,6 +268,7 @@ import JavaScriptCore
     /// :nodoc:
     override open func viewDidLoad() {
         super.viewDidLoad()
+        webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
         guard let messageUrl = sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
         else { return }
@@ -278,8 +280,6 @@ import JavaScriptCore
         print ("url: \((messageUrl.absoluteString))")
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
         setSubjectToGDPR()
-
-        webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         webView.load(URLRequest(url: messageUrl))
     }
 
@@ -352,10 +352,7 @@ import JavaScriptCore
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
     public func getCustomVendorConsents() throws -> Array<VendorConsent> {
-        guard let consents = try? loadAndStoreConsents() else {
-            return []
-        }
-        return consents.consentedVendors
+       return (try loadAndStoreConsents()).consentedVendors
     }
 
     /**
@@ -367,24 +364,15 @@ import JavaScriptCore
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
     public func getCustomPurposeConsents() throws -> [PurposeConsent] {
-        guard let consents = try? loadAndStoreConsents() else {
-            return []
-        }
-        return consents.consentedPurposes
+        return (try loadAndStoreConsents()).consentedPurposes
     }
 
     private func loadAndStoreConsents() throws -> ConsentsResponse {
-        guard
-            let siteId = try? getSiteId(),
-            let consents = try? sourcePoint.getCustomConsents(
-                    forSiteId: siteId,
-                    consentUUID: consentUUID,
-                    euConsent: euconsent)
-        else {
-            return ConsentsResponse(consentedVendors: [], consentedPurposes: [])
-        }
-
-        return consents
+        let siteId = try getSiteId()
+        return try sourcePoint.getCustomConsents(
+                forSiteId: siteId,
+                consentUUID: consentUUID,
+                euConsent: euconsent)
     }
 
     private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
@@ -438,8 +426,14 @@ import JavaScriptCore
             done()
         case "onMessageChoiceSelect": // when a choice is selected
             guard let choiceType = body["choiceType"] as? Int else { return }
+            guard Reachability()!.connection != .none else {
+                done()
+                errorOccurred(error: NoInternetConnection())
+                return
+            }
             self.choiceType = choiceType
             onMessageChoiceSelect?(self)
+
         case "interactionComplete": // when interaction with message is complete
             let userDefaults = UserDefaults.standard
             guard
