@@ -30,7 +30,7 @@ class ViewController: UIViewController {
             print("Choice type selected by user", cvc.choiceType as Any)
         }
 
-        consentViewController.onErrorOccurred = { cvc in print(cvc.error!) }
+        consentViewController.onErrorOccurred = { error in print(error) }
 
         // optional, callback triggered when consent data is captured when called
         // euconsent will be available as String at cLib.euconsent and under

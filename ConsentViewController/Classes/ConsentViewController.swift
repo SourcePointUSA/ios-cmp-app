@@ -120,15 +120,12 @@ import Reachability
      */
     public var onInteractionComplete: Callback?
 
-    public var onErrorOccurred: Callback?
+    public var onErrorOccurred: ((ConsentViewControllerError) -> Void)?
 
     var webView: WKWebView!
     
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
     public var choiceType: Int? = nil
-
-    /// If an error occurs on the Javascript side of things, we'll set this property
-    public var error: ConsentViewControllerError?
     
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String
@@ -152,7 +149,6 @@ import Reachability
         cmpDomain: String,
         messageDomain: String
     ) throws {
-
         self.accountId = accountId
         self.siteName = siteName
 
@@ -246,11 +242,6 @@ import Reachability
         view = webView
     }
 
-    private func errorOccurred(error: ConsentViewControllerError) {
-        self.error = error
-        onErrorOccurred?(self)
-    }
-
     /// :nodoc:
     // handles links with "target=_blank", forcing them to open in Safari
     public func webView(_ webView: WKWebView,
@@ -275,20 +266,18 @@ import Reachability
 
         do {
             messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
+            print ("url: \((messageUrl.absoluteString))")
+            UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
+            setSubjectToGDPR()
+            guard Reachability()!.connection != .none else {
+                onErrorOccurred?(NoInternetConnection())
+                return
+            }
+            webView.load(URLRequest(url: messageUrl))
         } catch let error as ConsentViewControllerError {
             onErrorOccurred?(error)
             return
         } catch {}
-
-        guard Reachability()!.connection != .none else {
-            errorOccurred(error: NoInternetConnection())
-            return
-        }
-
-        print ("url: \((messageUrl.absoluteString))")
-        UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-        setSubjectToGDPR()
-        webView.load(URLRequest(url: messageUrl))
     }
 
     private func setSubjectToGDPR() {
@@ -435,7 +424,7 @@ import Reachability
             guard let choiceType = body["choiceType"] as? Int else { return }
             guard Reachability()!.connection != .none else {
                 done()
-                errorOccurred(error: NoInternetConnection())
+                onErrorOccurred?(NoInternetConnection())
                 return
             }
             self.choiceType = choiceType
@@ -461,7 +450,7 @@ import Reachability
             done()
         case "onErrorOccurred":
             let errorType = body["errorType"] as? String ?? ""
-            errorOccurred(error: WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
+            onErrorOccurred?(WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
             done()
         default:
             print("userContentController was called but the message body: \(name) is unknown.")
