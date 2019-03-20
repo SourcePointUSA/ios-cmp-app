@@ -298,10 +298,10 @@ import Reachability
      - Parameter _: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
     */
-    public func getIABVendorConsents(_ forIds: [Int]) -> [Bool]{
+    public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString:ConsentString = buildConsentString(storedConsentString)
+        let consentString = try buildConsentString(storedConsentString)
         
         for i in 0..<forIds.count {
             results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
@@ -316,10 +316,10 @@ import Reachability
      - Parameter _: an `Array` of purpose ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding purpose.
      */
-    public func getIABPurposeConsents(_ forIds: [Int8]) -> [Bool]{
+    public func getIABPurposeConsents(_ forIds: [Int8]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString:ConsentString = buildConsentString(storedConsentString)
+        let consentString = try buildConsentString(storedConsentString)
         
         for i in 0..<forIds.count {
             results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
@@ -371,21 +371,24 @@ import Reachability
                 euConsent: euconsent)
     }
 
-    private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
+    private func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
         let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
         
-        return try! ConsentString(consentString: euconsent)
+        guard let consentString = try? ConsentString(consentString: euconsent) else {
+            throw UnableToParseConsentStringError(euConsent: euconsentBase64Url)
+        }
+        return consentString
     }
     
-    private func storeIABVars(_ euconsentBase64Url: String) {
+    private func storeIABVars(_ euconsentBase64Url: String) throws {
         let userDefaults = UserDefaults.standard
         // Set the standard IABConsent_ConsentString var in userDefaults
         userDefaults.setValue(euconsentBase64Url, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
-        let cstring = buildConsentString(euconsentBase64Url)
+        let cstring = try buildConsentString(euconsentBase64Url)
 
         // Generate parsed vendor consents string
         var parsedVendorConsents = [Character](repeating: "0", count: ConsentViewController.MAX_VENDOR_ID)
@@ -402,6 +405,10 @@ import Reachability
             parsedPurposeConsents[Int(pId) - 1] = "1"
         }
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+    }
+
+    private func isDefined(_ string: String) -> Bool {
+        return string != "undefined"
     }
 
     /// :nodoc:
@@ -443,10 +450,14 @@ import Reachability
 
             self.euconsent = euconsent
             self.consentUUID = consentUUID
-            storeIABVars(euconsent)
-            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-            userDefaults.synchronize()
+            do {
+                try storeIABVars(euconsent)
+                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+                userDefaults.synchronize()
+            } catch let error as ConsentViewControllerError {
+                onErrorOccurred?(error)
+            } catch {}
             done()
         case "onErrorOccurred":
             let errorType = body["errorType"] as? String ?? ""

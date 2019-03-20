@@ -59,7 +59,7 @@ class ViewController: UIViewController {
 
                     // API for getting IAB Purpose Consents
                     "\n IAB purpose consent for \"Ad selection, delivery, reporting\"",
-                    cvc.getIABPurposeConsents([3])
+                    try cvc.getIABPurposeConsents([3])
                 )
                 print("Custom vendor consents")
                 for consent in try cvc.getCustomVendorConsents() {
