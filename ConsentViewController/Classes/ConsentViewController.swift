@@ -257,10 +257,12 @@ import Reachability
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let url = navigationAction.request.url else { return nil }
+
         if #available(iOS 10.0, *) {
-            UIApplication.shared.open(navigationAction.request.url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         } else {
-            UIApplication.shared.openURL(navigationAction.request.url!)
+            UIApplication.shared.openURL(url)
         }
         return nil
     }
@@ -269,9 +271,15 @@ import Reachability
     override open func viewDidLoad() {
         super.viewDidLoad()
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        let messageUrl: URL
 
-        guard let messageUrl = sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
-        else { return }
+        do {
+            messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
+        } catch let error as ConsentViewControllerError {
+            onErrorOccurred?(error)
+            return
+        } catch {}
+
         guard Reachability()!.connection != .none else {
             errorOccurred(error: NoInternetConnection())
             return
@@ -368,9 +376,8 @@ import Reachability
     }
 
     private func loadAndStoreConsents() throws -> ConsentsResponse {
-        let siteId = try getSiteId()
         return try sourcePoint.getCustomConsents(
-                forSiteId: siteId,
+                forSiteId: try getSiteId(),
                 consentUUID: consentUUID,
                 euConsent: euconsent)
     }

@@ -7,9 +7,7 @@
 
 import Foundation
 
-protocol HttpClient {
-    func get(url: URL) -> Data?
-}
+protocol HttpClient { func get(url: URL) -> Data? }
 
 class SimpleClient: HttpClient {
     func get(url: URL) -> Data? {
@@ -107,30 +105,32 @@ class SourcePointClient {
         return consents
     }
 
-    private func encode(targetingParams params: TargetingParams) -> String {
-        guard
-            let data = try? JSONSerialization.data(withJSONObject: params),
-            let encodedParams = String(data: data, encoding: String.Encoding.utf8)
-        else {
-            return ""
-        }
-        return encodedParams
+    private func encode(targetingParams params: TargetingParams) throws -> String {
+        let data = try JSONSerialization.data(withJSONObject: params)
+        return String(data: data, encoding: String.Encoding.utf8)!
     }
 
-    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String) -> URL? {
+    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String) throws -> URL {
+        var url: URL
         var components = URLComponents()
-        components.queryItems = [
-            "_sp_accountId": accountId,
-            "_sp_cmp_inApp": "true",
-            "_sp_writeFirstPartyCookies": "true",
-            "_sp_siteHref": siteUrl.absoluteString,
-            "_sp_msg_domain": mmsUrl.host!,
-            "_sp_cmp_origin": cmpUrl.host!,
-            "_sp_msg_targetingParams": encode(targetingParams: params),
-            "_sp_debug_level": debugLevel,
-            "_sp_msg_stageCampaign": String(stagingCampaign)
-        ].map { URLQueryItem(name: $0.key, value: $0.value) }
 
-        return components.url(relativeTo: messageUrl)
+        do {
+            components.queryItems = [
+                "_sp_accountId": accountId,
+                "_sp_cmp_inApp": "true",
+                "_sp_writeFirstPartyCookies": "true",
+                "_sp_siteHref": siteUrl.absoluteString,
+                "_sp_msg_domain": mmsUrl.host!,
+                "_sp_cmp_origin": cmpUrl.host!,
+                "_sp_msg_targetingParams": try encode(targetingParams: params),
+                "_sp_debug_level": debugLevel,
+                "_sp_msg_stageCampaign": String(stagingCampaign)
+                ].map { URLQueryItem(name: $0.key, value: $0.value) }
+            url = components.url(relativeTo: messageUrl)!
+        } catch {
+            throw InvalidMessageURLError(urlString: messageUrl.absoluteString)
+        }
+
+        return url
     }
 }
