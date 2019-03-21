@@ -1,3 +1,6 @@
+## 2.0.1 (March 21, 2019)
+* We now call `done()` always **after** `onErrorOccurred`
+
 ## 2.0.0 (March 15, 2019)
 Look at that, we barely released version 1.x and we're already launching v2.0 🎉
 
