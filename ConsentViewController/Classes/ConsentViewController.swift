@@ -120,15 +120,12 @@ import Reachability
      */
     public var onInteractionComplete: Callback?
 
-    public var onErrorOccurred: Callback?
+    public var onErrorOccurred: ((ConsentViewControllerError) -> Void)?
 
     var webView: WKWebView!
     
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
     public var choiceType: Int? = nil
-
-    /// If an error occurs on the Javascript side of things, we'll set this property
-    public var error: ConsentViewControllerError?
     
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String
@@ -152,7 +149,6 @@ import Reachability
         cmpDomain: String,
         messageDomain: String
     ) throws {
-
         self.accountId = accountId
         self.siteName = siteName
 
@@ -246,21 +242,18 @@ import Reachability
         view = webView
     }
 
-    private func errorOccurred(error: ConsentViewControllerError) {
-        self.error = error
-        onErrorOccurred?(self)
-    }
-
     /// :nodoc:
     // handles links with "target=_blank", forcing them to open in Safari
     public func webView(_ webView: WKWebView,
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let url = navigationAction.request.url else { return nil }
+
         if #available(iOS 10.0, *) {
-            UIApplication.shared.open(navigationAction.request.url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         } else {
-            UIApplication.shared.openURL(navigationAction.request.url!)
+            UIApplication.shared.openURL(url)
         }
         return nil
     }
@@ -269,18 +262,22 @@ import Reachability
     override open func viewDidLoad() {
         super.viewDidLoad()
         webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        let messageUrl: URL
 
-        guard let messageUrl = sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
-        else { return }
-        guard Reachability()!.connection != .none else {
-            errorOccurred(error: NoInternetConnection())
+        do {
+            messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
+            print ("url: \((messageUrl.absoluteString))")
+            UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
+            setSubjectToGDPR()
+            guard Reachability()!.connection != .none else {
+                onErrorOccurred?(NoInternetConnection())
+                return
+            }
+            webView.load(URLRequest(url: messageUrl))
+        } catch let error as ConsentViewControllerError {
+            onErrorOccurred?(error)
             return
-        }
-
-        print ("url: \((messageUrl.absoluteString))")
-        UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-        setSubjectToGDPR()
-        webView.load(URLRequest(url: messageUrl))
+        } catch {}
     }
 
     private func setSubjectToGDPR() {
@@ -301,10 +298,10 @@ import Reachability
      - Parameter _: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
     */
-    public func getIABVendorConsents(_ forIds: [Int]) -> [Bool]{
+    public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString:ConsentString = buildConsentString(storedConsentString)
+        let consentString = try buildConsentString(storedConsentString)
         
         for i in 0..<forIds.count {
             results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
@@ -319,10 +316,10 @@ import Reachability
      - Parameter _: an `Array` of purpose ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding purpose.
      */
-    public func getIABPurposeConsents(_ forIds: [Int8]) -> [Bool]{
+    public func getIABPurposeConsents(_ forIds: [Int8]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString:ConsentString = buildConsentString(storedConsentString)
+        let consentString = try buildConsentString(storedConsentString)
         
         for i in 0..<forIds.count {
             results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
@@ -368,28 +365,30 @@ import Reachability
     }
 
     private func loadAndStoreConsents() throws -> ConsentsResponse {
-        let siteId = try getSiteId()
         return try sourcePoint.getCustomConsents(
-                forSiteId: siteId,
+                forSiteId: try getSiteId(),
                 consentUUID: consentUUID,
                 euConsent: euconsent)
     }
 
-    private func buildConsentString(_ euconsentBase64Url: String) -> ConsentString {
+    private func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
         let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
         
-        return try! ConsentString(consentString: euconsent)
+        guard let consentString = try? ConsentString(consentString: euconsent) else {
+            throw UnableToParseConsentStringError(euConsent: euconsentBase64Url)
+        }
+        return consentString
     }
     
-    private func storeIABVars(_ euconsentBase64Url: String) {
+    private func storeIABVars(_ euconsentBase64Url: String) throws {
         let userDefaults = UserDefaults.standard
         // Set the standard IABConsent_ConsentString var in userDefaults
         userDefaults.setValue(euconsentBase64Url, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
-        let cstring = buildConsentString(euconsentBase64Url)
+        let cstring = try buildConsentString(euconsentBase64Url)
 
         // Generate parsed vendor consents string
         var parsedVendorConsents = [Character](repeating: "0", count: ConsentViewController.MAX_VENDOR_ID)
@@ -406,6 +405,10 @@ import Reachability
             parsedPurposeConsents[Int(pId) - 1] = "1"
         }
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+    }
+
+    private func isDefined(_ string: String) -> Bool {
+        return string != "undefined"
     }
 
     /// :nodoc:
@@ -428,7 +431,7 @@ import Reachability
             guard let choiceType = body["choiceType"] as? Int else { return }
             guard Reachability()!.connection != .none else {
                 done()
-                errorOccurred(error: NoInternetConnection())
+                onErrorOccurred?(NoInternetConnection())
                 return
             }
             self.choiceType = choiceType
@@ -447,14 +450,18 @@ import Reachability
 
             self.euconsent = euconsent
             self.consentUUID = consentUUID
-            storeIABVars(euconsent)
-            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-            userDefaults.synchronize()
+            do {
+                try storeIABVars(euconsent)
+                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+                userDefaults.synchronize()
+            } catch let error as ConsentViewControllerError {
+                onErrorOccurred?(error)
+            } catch {}
             done()
         case "onErrorOccurred":
             let errorType = body["errorType"] as? String ?? ""
-            errorOccurred(error: WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
+            onErrorOccurred?(WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
             done()
         default:
             print("userContentController was called but the message body: \(name) is unknown.")
