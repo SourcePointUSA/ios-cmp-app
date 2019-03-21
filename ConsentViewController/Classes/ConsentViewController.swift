@@ -430,8 +430,8 @@ import Reachability
         case "onMessageChoiceSelect": // when a choice is selected
             guard let choiceType = body["choiceType"] as? Int else { return }
             guard Reachability()!.connection != .none else {
-                done()
                 onErrorOccurred?(NoInternetConnection())
+                done()
                 return
             }
             self.choiceType = choiceType
