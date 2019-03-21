@@ -406,9 +406,66 @@ import Reachability
         }
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
+    
+    private func onReceiveMessage(willShow: Bool) {
+        if(willShow) {
+            webView.frame = webView.superview!.bounds
+            willShowMessage?(self)
+        } else { done() }
+    }
 
-    private func isDefined(_ string: String) -> Bool {
-        return string != "undefined"
+    private func onMessageChoiceSelect(choiceType: Int) {
+        guard Reachability()!.connection != .none else {
+            onErrorOccurred?(NoInternetConnection())
+            done()
+            return
+        }
+        self.choiceType = choiceType
+        onMessageChoiceSelect?(self)
+    }
+
+    private func onInteractionComplete(euconsent: String, consentUUID: String) {
+        self.euconsent = euconsent
+        self.consentUUID = consentUUID
+        do {
+            try storeIABVars(euconsent)
+            let userDefaults = UserDefaults.standard
+            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+            userDefaults.synchronize()
+        } catch let error as ConsentViewControllerError {
+            onErrorOccurred?(error)
+        } catch {}
+        done()
+    }
+
+    private func onErrorOccurred(errorType: String) {
+        onErrorOccurred?(WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
+        done()
+    }
+
+    private func handleMessage(withName name: String, andBody body: [String:Any?]) {
+        switch name {
+        case "onReceiveMessageData": // when the message is first loaded
+            onReceiveMessage(willShow: body["willShowMessage"] as! Int == 1)
+        case "onMessageChoiceSelect": // when a choice is selected
+            onMessageChoiceSelect(choiceType: body["choiceType"] as! Int)
+        case "interactionComplete": // when interaction with message is complete
+            guard
+                let euconsent = body["euconsent"] as? String,
+                let consentUUID = body["consentUUID"] as? String
+            else {
+                print("Could not get EUConsent and ConsentUUID")
+                done()
+                return
+            }
+            onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
+        case "onErrorOccurred":
+            onErrorOccurred(errorType: body["errorType"] as? String ?? "")
+        default:
+            print("userContentController was called but the message body: \(name) is unknown.")
+            done()
+        }
     }
 
     /// :nodoc:
@@ -418,55 +475,7 @@ import Reachability
             let name = messageBody["name"] as? String,
             let body = messageBody["body"] as? [String: Any?]
         else { return }
-
-        switch name {
-        case "onReceiveMessageData": // when the message is first loaded
-            if(body["willShowMessage"] as! Int) == 1 {
-                webView.frame = webView.superview!.bounds
-                willShowMessage?(self)
-                return
-            }
-            done()
-        case "onMessageChoiceSelect": // when a choice is selected
-            guard let choiceType = body["choiceType"] as? Int else { return }
-            guard Reachability()!.connection != .none else {
-                onErrorOccurred?(NoInternetConnection())
-                done()
-                return
-            }
-            self.choiceType = choiceType
-            onMessageChoiceSelect?(self)
-
-        case "interactionComplete": // when interaction with message is complete
-            let userDefaults = UserDefaults.standard
-            guard
-                let euconsent = body["euconsent"] as? String,
-                let consentUUID = body["consentUUID"] as? String
-            else {
-                print("Could not get EUConsent and ConsentUUID")
-                done()
-                return
-            }
-
-            self.euconsent = euconsent
-            self.consentUUID = consentUUID
-            do {
-                try storeIABVars(euconsent)
-                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-                userDefaults.synchronize()
-            } catch let error as ConsentViewControllerError {
-                onErrorOccurred?(error)
-            } catch {}
-            done()
-        case "onErrorOccurred":
-            let errorType = body["errorType"] as? String ?? ""
-            onErrorOccurred?(WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
-            done()
-        default:
-            print("userContentController was called but the message body: \(name) is unknown.")
-            done()
-        }
+        handleMessage(withName: name, andBody: body)
     }
 
     private func done() {
