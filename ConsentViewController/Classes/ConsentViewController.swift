@@ -95,7 +95,7 @@ import Reachability
      sometimes, depending on how the scenario was set up, the message might not show
      at all, thus this call back won't be called.
      */
-    public var willShowMessage: Callback?
+    public var onMessageReady: Callback?
     
     /**
       A `Callback` that will be called when the user selects an option on the WebView.
@@ -258,14 +258,15 @@ import Reachability
         return nil
     }
 
-    /// :nodoc:
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        webView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        let messageUrl: URL
+    private enum MessageStatus { case notStarted, loading, loaded }
+    private var messageStatus = MessageStatus.notStarted
+    public func loadMessage() {
+        if(messageStatus == .loading || messageStatus == .loaded) { return }
 
         do {
-            messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
+            messageStatus = .loading
+            loadView()
+            let messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
             print ("url: \((messageUrl.absoluteString))")
             UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
             setSubjectToGDPR()
@@ -274,10 +275,18 @@ import Reachability
                 return
             }
             webView.load(URLRequest(url: messageUrl))
+            messageStatus = .loaded
         } catch let error as ConsentViewControllerError {
+            messageStatus = .notStarted
             onErrorOccurred?(error)
             return
         } catch {}
+    }
+
+    /// :nodoc:
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        loadMessage()
     }
 
     private func setSubjectToGDPR() {
@@ -406,12 +415,9 @@ import Reachability
         }
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
-    
+
     private func onReceiveMessage(willShow: Bool) {
-        if(willShow) {
-            webView.frame = webView.superview!.bounds
-            willShowMessage?(self)
-        } else { done() }
+        willShow ? onMessageReady?(self) : done()
     }
 
     private func onMessageChoiceSelect(choiceType: Int) {
@@ -480,7 +486,6 @@ import Reachability
 
     private func done() {
         onInteractionComplete?(self)
-        webView.removeFromSuperview()
     }
 }
 
