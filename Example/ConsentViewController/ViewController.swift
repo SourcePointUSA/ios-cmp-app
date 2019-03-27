@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 
             consentViewController.onMessageReady = { controller in
                 parentView.addSubview(controller.view)
-                controller.view.frame = controller.view.superview!.bounds
+                controller.view.frame = parentView.bounds
             }
 
             // optional, set custom targeting parameters supports Strings and Integers
