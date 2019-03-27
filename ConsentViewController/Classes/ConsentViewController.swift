@@ -269,7 +269,7 @@ import Reachability
             let messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
             print ("url: \((messageUrl.absoluteString))")
             UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-            setSubjectToGDPR()
+            try setSubjectToGDPR()
             guard Reachability()!.connection != .none else {
                 onErrorOccurred?(NoInternetConnection())
                 return
@@ -289,15 +289,10 @@ import Reachability
         loadMessage()
     }
 
-    private func setSubjectToGDPR() {
+    private func setSubjectToGDPR() throws {
         if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil) { return }
-
-        do {
-            let gdprStatus = try sourcePoint.getGdprStatus()
-            UserDefaults.standard.setValue(String(gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        } catch {
-            print(error)
-        }
+        let gdprStatus = try sourcePoint.getGdprStatus()
+        UserDefaults.standard.setValue(String(gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
     }
 
     /**
