@@ -449,23 +449,21 @@ import Reachability
     private func handleMessage(withName name: String, andBody body: [String:Any?]) {
         switch name {
         case "onReceiveMessageData": // when the message is first loaded
-            onReceiveMessage(willShow: body["willShowMessage"] as! Int == 1)
+            guard let willShow = body["willShowMessage"] as? Int else { fallthrough }
+            onReceiveMessage(willShow: willShow == 1)
         case "onMessageChoiceSelect": // when a choice is selected
-            onMessageChoiceSelect(choiceType: body["choiceType"] as! Int)
+            guard let choiceType = body["choiceType"] as? Int else { fallthrough }
+            onMessageChoiceSelect(choiceType: choiceType)
         case "interactionComplete": // when interaction with message is complete
             guard
                 let euconsent = body["euconsent"] as? String,
                 let consentUUID = body["consentUUID"] as? String
-            else {
-                print("Could not get EUConsent and ConsentUUID")
-                done()
-                return
-            }
+            else { fallthrough }
             onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
         case "onErrorOccurred":
             onErrorOccurred(errorType: body["errorType"] as? String ?? "")
         default:
-            print("userContentController was called but the message body: \(name) is unknown.")
+            print("Couldn't parse message in userContentController. Called with name: \(name) and body: \(body)")
             done()
         }
     }
