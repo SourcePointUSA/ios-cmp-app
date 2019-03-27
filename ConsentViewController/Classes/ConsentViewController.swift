@@ -272,6 +272,7 @@ import Reachability
             try setSubjectToGDPR()
             guard Reachability()!.connection != .none else {
                 onErrorOccurred?(NoInternetConnection())
+                messageStatus = .notStarted
                 return
             }
             webView.load(URLRequest(url: messageUrl))
