@@ -441,8 +441,8 @@ import Reachability
         done()
     }
 
-    private func onErrorOccurred(errorType: String) {
-        onErrorOccurred?(WebViewErrors[errorType] ?? PrivacyManagerUnknownError())
+    private func onErrorOccurred(_ error: ConsentViewControllerError) {
+        onErrorOccurred?(error)
         done()
     }
 
@@ -461,10 +461,9 @@ import Reachability
             else { fallthrough }
             onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
         case "onErrorOccurred":
-            onErrorOccurred(errorType: body["errorType"] as? String ?? "")
+            onErrorOccurred(WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         default:
-            print("Couldn't parse message in userContentController. Called with name: \(name) and body: \(body)")
-            done()
+            onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
     }
 
@@ -474,7 +473,10 @@ import Reachability
             let messageBody = message.body as? [String: Any],
             let name = messageBody["name"] as? String,
             let body = messageBody["body"] as? [String: Any?]
-        else { return }
+        else {
+            onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
+            return
+        }
         handleMessage(withName: name, andBody: body)
     }
 
