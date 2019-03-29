@@ -1,3 +1,7 @@
+## 2.1.0 (March 29, 2019)
+* load the webview in a separate function and call onMessageReady when the message is ready to be shown.
+* no longer add/remove the view from the superview. it's up to the parent to decide if/when the view should be added (we recommend using onMessageReady to add it and onInteractionComplete to remove it)
+
 ## 2.0.1 (March 21, 2019)
 * We now call `done()` always **after** `onErrorOccurred`
 
