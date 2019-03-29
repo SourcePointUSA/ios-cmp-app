@@ -1,5 +1,5 @@
 PODS:
-  - ConsentViewController (2.0.1):
+  - ConsentViewController (2.1.0):
     - ReachabilitySwift (= 4.3.0)
   - ReachabilitySwift (4.3.0)
 
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: 80b25906233f1dd8094164b1b81e5593f579c4ad
+  ConsentViewController: e871383a7d775abc82ffce89e401c3f9e6187909
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
 
 PODFILE CHECKSUM: 856801e8d31aff0cc151bbdea6722856ca373848
