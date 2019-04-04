@@ -233,6 +233,9 @@ import Reachability
         config.userContentController = userContentController
 
         webView = WKWebView(frame: .zero, configuration: config)
+        if #available(iOS 11.0, *) {
+            webView.scrollView.contentInsetAdjustmentBehavior = .never;
+        }
         webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.isOpaque = false
