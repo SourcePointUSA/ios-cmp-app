@@ -133,8 +133,8 @@ import Reachability
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
     public var consentUUID: String
 
-    public let DEFAULT_MESSAGE_TIMEOUT = 5
-    public var messageTimeoutInSeconds = TimeInterval(DEFAULT_MESSAGE_TIMEOUT)
+    /// The timeout interval in seconds for the message being displayed
+    public var messageTimeoutInSeconds = TimeInterval(5)
 
     private let accountId: Int
     private let siteName: String
