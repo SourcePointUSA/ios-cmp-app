@@ -1,3 +1,6 @@
+## 2.1.2 (April 08, 2019)
+* fixed the interface for Objective-C, allowing the ConsentViewController to be used in Obj-c projects.
+
 ## 2.1.1 (April 04, 2019)
 * fixed in which on iOS >= 11 the message background veil wouldn't cover the entire screen 
 
