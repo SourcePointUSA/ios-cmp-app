@@ -13,20 +13,28 @@ class ViewController: UIViewController {
     private func buildConsentViewController(showPM: Bool, addToView parentView: UIView) {
         do {
             let consentViewController = try ConsentViewController(
-                accountId: 22,
-                siteName: "mobile.demo",
+                accountId: 630,
+                siteName: "test.skynews.ios",
                 stagingCampaign: false
             )
+
+            consentViewController.messageTimeoutInSeconds = TimeInterval(5)
 
             consentViewController.onMessageReady = { controller in
                 parentView.addSubview(controller.view)
                 controller.view.frame = parentView.bounds
+                self.stopSpinner()
             }
 
             // optional, set custom targeting parameters supports Strings and Integers
-            consentViewController.setTargetingParam(key: "CMP", value: String(showPM))
+//            consentViewController.setTargetingParam(key: "CMP", value: String(showPM))
+            consentViewController.setTargetingParam(key: "displayMode", value: showPM ? "userRequested" : "appLaunch")
 
-            consentViewController.onErrorOccurred = { error in print(error) }
+            consentViewController.onErrorOccurred = { error in
+                consentViewController.view.removeFromSuperview()
+                print(error)
+                self.stopSpinner()
+            }
             
             consentViewController.onInteractionComplete = { cvc in
                 do {
@@ -60,7 +68,22 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showPrivacyManager(_ sender: Any) {
+        startSpinner()
         buildConsentViewController(showPM: true, addToView: view)
+    }
+
+    func startSpinner() {
+        let alert = UIAlertController(title: nil, message: "Just a second...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = UIActivityIndicatorView.Style.gray
+        loadingIndicator.startAnimating();
+        alert.view.addSubview(loadingIndicator)
+        present(alert, animated: true, completion: nil)
+    }
+
+    func stopSpinner() {
+        dismiss(animated: false, completion: nil)
     }
 
     override func viewDidLoad() {

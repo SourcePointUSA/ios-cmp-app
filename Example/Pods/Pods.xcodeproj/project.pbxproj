@@ -7,37 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0365334CA54684FBA7FF5CA3815F9D5B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FF9DDA85972643E0795DB944CDC9FD /* String.swift */; };
-		09F80B6856CCB4A637195272246AB15D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6A08BD52B3CDCF68D830A608C3EB5FF /* SystemConfiguration.framework */; };
-		1423B10193EA9661464E8F78D1C80828 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4904C2121D407349697EEC458E7A2C0 /* Reachability.swift */; };
-		1585992ECC136F7A8438271241164D4B /* ConsentString.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0483382C6642D35632924E9DBB3EBB /* ConsentString.swift */; };
-		34836CDDE6D1695183FF59E1E3FED3BE /* ConsentViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A2495EAB92F6C7B87D050D8BBA334BCC /* ConsentViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3A4B18F52CA1FA9DF7646C94C64A7D6C /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC863E37AF7612EA2A1576709F8FB27 /* Reachability.framework */; };
-		4B05BD5876694520F0018F1570E47494 /* ConsentStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50FB69EAF330038440B30BA0DC3F8B4 /* ConsentStringProtocol.swift */; };
-		4F0982BE243A76EB9A1BA5C98AC19761 /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A04C9473423774492F4C2FF90176DD /* SourcePointClient.swift */; };
-		4F43AC641B94FD6637444BE107353EE9 /* Consent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8274608405B8E7C643A7A30F0155CFAE /* Consent.swift */; };
-		54DBD1E44CD12660B72B4135E0003833 /* ConsentViewControllerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0098E30A03A7DA19FC078C66D57F7 /* ConsentViewControllerError.swift */; };
-		551A870410F7E3F647865797582BA5D4 /* ReachabilitySwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DB674B68B432A02697EB1664B9CD4E /* ReachabilitySwift-dummy.m */; };
-		5BC230E35203E76E13212A25C6A82751 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F73DE3ECA7B59D23DB3FC047C0B07E6 /* Utils.swift */; };
-		5C8F4E665F23F43AD735F37BA05F661F /* ConsentStringError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D9EBEACEF176136BAFC84504CAFF7 /* ConsentStringError.swift */; };
-		772D00D9D400EFE1C2CC55B11F93FE3D /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE539A833D5231D8310582C35762C0C /* ConsentViewController.swift */; };
-		8F4AFC9F35871F13A490DF79B98028A6 /* ReachabilitySwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E1DDE56472C3C9DF16E4AD6EA2992448 /* ReachabilitySwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		013C8A8ACE6D4B1F5D40158628D46A9E /* ConsentViewControllerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81537FB961ACDCEAB61FC3F41D96C99D /* ConsentViewControllerError.swift */; };
+		014268D35D70AD88C1380AC9742A1BD3 /* ConsentViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 868EAE7B5BA59841A7D6B405B1473DC8 /* ConsentViewController-dummy.m */; };
+		0972B5B89A745CD36704B3416F08B8D6 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286F918E314E6A573C60CE7A97A1DB8B /* Data.swift */; };
+		0BA021DF4C385BFA160BAF1B00326912 /* ConsentViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 88900A3C3A1CE7B6532B45EFBE495664 /* ConsentViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FC3239AF48A2BCD085DB11DEFC46A6F /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F749873FA1B45787D94E0615B45D8C /* SourcePointClient.swift */; };
+		1DF8723F5F2A6F027A7BF2EA2122B7FB /* ConsentStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D8F3D5C2BF1BD5860ADB0D52D78A19 /* ConsentStringProtocol.swift */; };
+		27296AB008F82214FF042A79354C7B9D /* Consent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B866969304226A0C34DDDB14F915140E /* Consent.swift */; };
+		29EEA3ABB47A53A7553C937D74370674 /* JSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = D7B45447E924B3A37D6C773115DD19E7 /* JSReceiver.js */; };
+		57CCCA5B88ED92020A400F4140256D93 /* ConsentStringError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0915985F5C3036D1BA4B785E4EC62F /* ConsentStringError.swift */; };
+		59854CE25B7519C8C11D50C176BFEEA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */; };
+		5B4CE5A88D2D68020BFF2343EE499FD2 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FA29365040A6A0CF041779E7CDDF53 /* ConsentViewController.swift */; };
+		620BECBC2DE53CD5EC483F306E7651A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */; };
+		6BA5B3FB2B768C5D453EA5E5A09B2170 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4904C2121D407349697EEC458E7A2C0 /* Reachability.swift */; };
 		8FFC6D60E6019E84861AA0403D7ACFAA /* Pods-ConsentViewController_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 41F01F098657AA46A7D841323E637FAD /* Pods-ConsentViewController_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922BE1B29ED396E25A386D69867383AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */; };
 		9261C09F10F555AD03ED7FD8C7DD4B07 /* Pods-ConsentViewController_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8301007BAC6EBA321EB9BFA5E53E86 /* Pods-ConsentViewController_Example-dummy.m */; };
-		A22CB40C9D580D9EA13767DA954A46F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */; };
-		B65B864FB47E79052CAE6C48A0F5781B /* ConsentViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9965B35F6DF35AEE568253EB1873016F /* ConsentViewController-dummy.m */; };
-		C5AD294BCC15F0931960B366F6EB48AC /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17006123124DBC5051128E99F70B33F6 /* Data.swift */; };
-		F88B45CE3D365D7DFA03E9AEBF242552 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */; };
+		963DCE863CBD377977223690DC94A1F3 /* JSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = D7B45447E924B3A37D6C773115DD19E7 /* JSReceiver.js */; };
+		97298CA24919AB1B7FFAE97161550583 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC863E37AF7612EA2A1576709F8FB27 /* Reachability.framework */; };
+		A3F01E0D0AAE8FA1258C1557C0536FB1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB400B65ADB9AE0A647FDA2CDF48DD /* String.swift */; };
+		A8A51967ECB210BDC79E1521B284E207 /* ConsentString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5151C3BB4BF72D4EF0B53B10005C6BB /* ConsentString.swift */; };
+		A928602047A638DEB76FAC99DFB68EF8 /* ConsentViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 51EA3BB7F667E2C08D77810B926837A8 /* ConsentViewController.bundle */; };
+		B00FA226F8F2E7F38D0F1C00A9D49A48 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A97A0655D1CB29F9CD98DA66D380233 /* Utils.swift */; };
+		D4480BA752705CFA17426EE8C60DC7BC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6A08BD52B3CDCF68D830A608C3EB5FF /* SystemConfiguration.framework */; };
+		DF5799163B9730576424F2EAE2E01454 /* ReachabilitySwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E1DDE56472C3C9DF16E4AD6EA2992448 /* ReachabilitySwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EFC2ED22B276FB408E8400D995249A39 /* ReachabilitySwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DB674B68B432A02697EB1664B9CD4E /* ReachabilitySwift-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6231F5FE904EC0DB7AB719229EC1A002 /* PBXContainerItemProxy */ = {
+		18E86B660987573149D3220D483971E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0B00B2C167CD783351BD1D00BD5AD1F8;
 			remoteInfo = ReachabilitySwift;
+		};
+		2F07047415C3A5FDF750DF543EB55F07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 24B953A9F2400AE6A7F83694FA0BD49D;
+			remoteInfo = "ConsentViewController-ConsentViewController";
 		};
 		9C7846CC7036F62D69D37DEF9C35B195 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -56,66 +66,69 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0750D076E590ECA306AD836282BDDA4C /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ConsentViewController.framework; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		06D8F3D5C2BF1BD5860ADB0D52D78A19 /* ConsentStringProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsentStringProtocol.swift; sourceTree = "<group>"; };
 		097F9C02E25FAFB2E7C90D442D3A0D55 /* ReachabilitySwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReachabilitySwift-prefix.pch"; sourceTree = "<group>"; };
 		10DB674B68B432A02697EB1664B9CD4E /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
-		17006123124DBC5051128E99F70B33F6 /* Data.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		1750C70EA0C0E42D9619E3A2B65E48B4 /* ReachabilitySwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ReachabilitySwift.modulemap; sourceTree = "<group>"; };
-		1CC5D7E1A61A80331F98ABDDB985025D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		243916291A44CE9CE6B7B540A8374EE7 /* ReachabilitySwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReachabilitySwift.xcconfig; sourceTree = "<group>"; };
+		286F918E314E6A573C60CE7A97A1DB8B /* Data.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		2D8603ABB4AF2F1C21F59F44F5B00CB6 /* ResourceBundle-ConsentViewController-ConsentViewController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-ConsentViewController-ConsentViewController-Info.plist"; sourceTree = "<group>"; };
 		2DBBFBE77DEB37D9C491BE0338F34A80 /* Pods-ConsentViewController_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ConsentViewController_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		324B4BFE49EF456E028F4EB65C536901 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		3874C4DE910A141625C96B66AEE11A6C /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		3CC95E75B8CCFFEB4AA6598624F3C6D3 /* ConsentViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ConsentViewController.modulemap; sourceTree = "<group>"; };
 		41F01F098657AA46A7D841323E637FAD /* Pods-ConsentViewController_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ConsentViewController_Example-umbrella.h"; sourceTree = "<group>"; };
-		5B07720EF5004548BE68C3A504917C70 /* ConsentViewController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ConsentViewController-Info.plist"; sourceTree = "<group>"; };
+		4BDB400B65ADB9AE0A647FDA2CDF48DD /* String.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		51EA3BB7F667E2C08D77810B926837A8 /* ConsentViewController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		60DE6B2F48B6DD293B2E623D2BA0EE57 /* ReachabilitySwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ReachabilitySwift-Info.plist"; sourceTree = "<group>"; };
+		614CDC1F7903EEDBFEF347CA476D0E3E /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6194E453EB6B4C22933982CCA5C63F3B /* Pods-ConsentViewController_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ConsentViewController_Example-Info.plist"; sourceTree = "<group>"; };
 		6665E1577E7A19D888CDDC21A96A4FFB /* Pods-ConsentViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ConsentViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
-		698FC4EE39B2EEAA31CBB10D663C3557 /* ConsentViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ConsentViewController.xcconfig; sourceTree = "<group>"; };
-		742771CE2CA0101434009005A9C79F4A /* ConsentViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController-prefix.pch"; sourceTree = "<group>"; };
-		7F73DE3ECA7B59D23DB3FC047C0B07E6 /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = ConsentViewController/Classes/Utils.swift; sourceTree = "<group>"; };
-		8274608405B8E7C643A7A30F0155CFAE /* Consent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Consent.swift; path = ConsentViewController/Classes/Consent.swift; sourceTree = "<group>"; };
+		7A97A0655D1CB29F9CD98DA66D380233 /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = ConsentViewController/Classes/Utils.swift; sourceTree = "<group>"; };
+		81537FB961ACDCEAB61FC3F41D96C99D /* ConsentViewControllerError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsentViewControllerError.swift; path = ConsentViewController/Classes/ConsentViewControllerError.swift; sourceTree = "<group>"; };
 		85DE4B214B77D8C79EBF730DF17830E7 /* Pods-ConsentViewController_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ConsentViewController_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		868EAE7B5BA59841A7D6B405B1473DC8 /* ConsentViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ConsentViewController-dummy.m"; sourceTree = "<group>"; };
+		87810BDC6F783E5E0BC92B1697D46270 /* ConsentViewController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ConsentViewController-Info.plist"; sourceTree = "<group>"; };
+		87FD8C6FFA4C5D90EB6BF73859FB3854 /* ConsentViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ConsentViewController.modulemap; sourceTree = "<group>"; };
+		88900A3C3A1CE7B6532B45EFBE495664 /* ConsentViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController-umbrella.h"; sourceTree = "<group>"; };
 		9454D71811F35C9225CAB866B8C1839A /* Pods-ConsentViewController_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ConsentViewController_Example.modulemap"; sourceTree = "<group>"; };
-		9965B35F6DF35AEE568253EB1873016F /* ConsentViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ConsentViewController-dummy.m"; sourceTree = "<group>"; };
+		9A0915985F5C3036D1BA4B785E4EC62F /* ConsentStringError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsentStringError.swift; sourceTree = "<group>"; };
 		9A8301007BAC6EBA321EB9BFA5E53E86 /* Pods-ConsentViewController_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ConsentViewController_Example-dummy.m"; sourceTree = "<group>"; };
-		9BE539A833D5231D8310582C35762C0C /* ConsentViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsentViewController.swift; path = ConsentViewController/Classes/ConsentViewController.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A2495EAB92F6C7B87D050D8BBA334BCC /* ConsentViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController-umbrella.h"; sourceTree = "<group>"; };
+		9D6F3C64FAD3F16190D011D698FBAB8D /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A2E1C4AA97C6B0F70BBF6D3269DF69AB /* Pods-ConsentViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ConsentViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		A5151C3BB4BF72D4EF0B53B10005C6BB /* ConsentString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsentString.swift; sourceTree = "<group>"; };
 		A6A08BD52B3CDCF68D830A608C3EB5FF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		A6D71F231CD6D4C1E71A7515B9F6340D /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Reachability.framework; path = ReachabilitySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6FF9DDA85972643E0795DB944CDC9FD /* String.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		B866969304226A0C34DDDB14F915140E /* Consent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Consent.swift; path = ConsentViewController/Classes/Consent.swift; sourceTree = "<group>"; };
 		B8F9C91F7F545857D6542140EA00CE44 /* Pods-ConsentViewController_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ConsentViewController_Example-frameworks.sh"; sourceTree = "<group>"; };
-		C42D9EBEACEF176136BAFC84504CAFF7 /* ConsentStringError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsentStringError.swift; sourceTree = "<group>"; };
-		C6542EB41B60C34FA511E211B9459740 /* Pods_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ConsentViewController_Example.framework; path = "Pods-ConsentViewController_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB0137318D4EF96CDDEB0038110A9301 /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		D2A04C9473423774492F4C2FF90176DD /* SourcePointClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SourcePointClient.swift; path = ConsentViewController/Classes/SourcePointClient.swift; sourceTree = "<group>"; };
-		D50FB69EAF330038440B30BA0DC3F8B4 /* ConsentStringProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsentStringProtocol.swift; sourceTree = "<group>"; };
+		C1A07FD7CD0797137594561B66E6CDD3 /* ConsentViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ConsentViewController.xcconfig; sourceTree = "<group>"; };
+		C1FA29365040A6A0CF041779E7CDDF53 /* ConsentViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsentViewController.swift; path = ConsentViewController/Classes/ConsentViewController.swift; sourceTree = "<group>"; };
+		D387D1AD5555ABC46E1345DBB5A3D06C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D7B45447E924B3A37D6C773115DD19E7 /* JSReceiver.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = JSReceiver.js; path = ConsentViewController/Assets/JSReceiver.js; sourceTree = "<group>"; };
 		DAC863E37AF7612EA2A1576709F8FB27 /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1DDE56472C3C9DF16E4AD6EA2992448 /* ReachabilitySwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReachabilitySwift-umbrella.h"; sourceTree = "<group>"; };
-		ED0483382C6642D35632924E9DBB3EBB /* ConsentString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsentString.swift; sourceTree = "<group>"; };
+		E2F749873FA1B45787D94E0615B45D8C /* SourcePointClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SourcePointClient.swift; path = ConsentViewController/Classes/SourcePointClient.swift; sourceTree = "<group>"; };
+		ED16C32889B1CA2920E13AE35DA860E6 /* ConsentViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController-prefix.pch"; sourceTree = "<group>"; };
 		F4904C2121D407349697EEC458E7A2C0 /* Reachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Sources/Reachability.swift; sourceTree = "<group>"; };
-		FBE0098E30A03A7DA19FC078C66D57F7 /* ConsentViewControllerError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsentViewControllerError.swift; path = ConsentViewController/Classes/ConsentViewControllerError.swift; sourceTree = "<group>"; };
+		F7E93510BAB3839CA6D4F1C64E1DF97F /* Pods_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCDC2D8FDA6D9F091FA4F6E2F4AB973B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		50ADBCF1E3EEAB25FD708129FBE316CD /* Frameworks */ = {
+		40E02B83E023F45077477BD678949BA7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A22CB40C9D580D9EA13767DA954A46F7 /* Foundation.framework in Frameworks */,
-				3A4B18F52CA1FA9DF7646C94C64A7D6C /* Reachability.framework in Frameworks */,
+				59854CE25B7519C8C11D50C176BFEEA5 /* Foundation.framework in Frameworks */,
+				D4480BA752705CFA17426EE8C60DC7BC /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A1EF79A269E5BA60F4CA7A4BB8C675D7 /* Frameworks */ = {
+		7ED4813EE0B097DC552AE8061F7D1D82 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F88B45CE3D365D7DFA03E9AEBF242552 /* Foundation.framework in Frameworks */,
-				09F80B6856CCB4A637195272246AB15D /* SystemConfiguration.framework in Frameworks */,
+				620BECBC2DE53CD5EC483F306E7651A5 /* Foundation.framework in Frameworks */,
+				97298CA24919AB1B7FFAE97161550583 /* Reachability.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,9 +140,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FA345C387DA57DE6CF2C1033FE2EED7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BC89B9AC409C53976FC5089220CC7BF /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				87FD8C6FFA4C5D90EB6BF73859FB3854 /* ConsentViewController.modulemap */,
+				C1A07FD7CD0797137594561B66E6CDD3 /* ConsentViewController.xcconfig */,
+				868EAE7B5BA59841A7D6B405B1473DC8 /* ConsentViewController-dummy.m */,
+				87810BDC6F783E5E0BC92B1697D46270 /* ConsentViewController-Info.plist */,
+				ED16C32889B1CA2920E13AE35DA860E6 /* ConsentViewController-prefix.pch */,
+				88900A3C3A1CE7B6532B45EFBE495664 /* ConsentViewController-umbrella.h */,
+				2D8603ABB4AF2F1C21F59F44F5B00CB6 /* ResourceBundle-ConsentViewController-ConsentViewController-Info.plist */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/ConsentViewController";
+			sourceTree = "<group>";
+		};
 		0FCB6CE7DB6EFB58B198DED2649E588B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,24 +174,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4D07C3887C14F523D8701F5D7EB82E20 /* Pod */ = {
+		1EC7FB1C2AA59166913D30BB6D4D8CF9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CB0137318D4EF96CDDEB0038110A9301 /* ConsentViewController.podspec */,
-				324B4BFE49EF456E028F4EB65C536901 /* LICENSE */,
-				1CC5D7E1A61A80331F98ABDDB985025D /* README.md */,
+				D7B45447E924B3A37D6C773115DD19E7 /* JSReceiver.js */,
 			);
-			name = Pod;
+			name = Resources;
 			sourceTree = "<group>";
 		};
-		5ABE28738BD4219CE2EC75714C91F7F0 /* Products */ = {
+		368D3EE087A9D5E59D67E8158C17124E /* ConsentStringSDK */ = {
 			isa = PBXGroup;
 			children = (
-				0750D076E590ECA306AD836282BDDA4C /* ConsentViewController.framework */,
-				C6542EB41B60C34FA511E211B9459740 /* Pods_ConsentViewController_Example.framework */,
-				A6D71F231CD6D4C1E71A7515B9F6340D /* Reachability.framework */,
+				A5151C3BB4BF72D4EF0B53B10005C6BB /* ConsentString.swift */,
+				9A0915985F5C3036D1BA4B785E4EC62F /* ConsentStringError.swift */,
+				06D8F3D5C2BF1BD5860ADB0D52D78A19 /* ConsentStringProtocol.swift */,
+				286F918E314E6A573C60CE7A97A1DB8B /* Data.swift */,
+				4BDB400B65ADB9AE0A647FDA2CDF48DD /* String.swift */,
 			);
-			name = Products;
+			name = ConsentStringSDK;
+			path = ConsentViewController/Classes/ConsentStringSDK;
+			sourceTree = "<group>";
+		};
+		5462C06FA2FEDC3A01E58B46F92F241E /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7966194E5923DDBF2C3AD22A0E5AD511 /* ConsentViewController */,
+			);
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 		5C527084DB57A2631E5D6158D6A148C9 /* Targets Support Files */ = {
@@ -173,20 +217,6 @@
 				AB141DEEC5EED015062C5277880ECC86 /* ReachabilitySwift */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		622B867CB8ACD130AECB2D7999E3B5A5 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				3CC95E75B8CCFFEB4AA6598624F3C6D3 /* ConsentViewController.modulemap */,
-				698FC4EE39B2EEAA31CBB10D663C3557 /* ConsentViewController.xcconfig */,
-				9965B35F6DF35AEE568253EB1873016F /* ConsentViewController-dummy.m */,
-				5B07720EF5004548BE68C3A504917C70 /* ConsentViewController-Info.plist */,
-				742771CE2CA0101434009005A9C79F4A /* ConsentViewController-prefix.pch */,
-				A2495EAB92F6C7B87D050D8BBA334BCC /* ConsentViewController-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/ConsentViewController";
 			sourceTree = "<group>";
 		};
 		6C2BEA8A6E7EEED4CF1E12E4BA17AD1A /* Pods-ConsentViewController_Example */ = {
@@ -206,6 +236,34 @@
 			path = "Target Support Files/Pods-ConsentViewController_Example";
 			sourceTree = "<group>";
 		};
+		7966194E5923DDBF2C3AD22A0E5AD511 /* ConsentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B866969304226A0C34DDDB14F915140E /* Consent.swift */,
+				C1FA29365040A6A0CF041779E7CDDF53 /* ConsentViewController.swift */,
+				81537FB961ACDCEAB61FC3F41D96C99D /* ConsentViewControllerError.swift */,
+				E2F749873FA1B45787D94E0615B45D8C /* SourcePointClient.swift */,
+				7A97A0655D1CB29F9CD98DA66D380233 /* Utils.swift */,
+				368D3EE087A9D5E59D67E8158C17124E /* ConsentStringSDK */,
+				BC9225CD9F523EBF5CF541ED0FF45C20 /* Pod */,
+				1EC7FB1C2AA59166913D30BB6D4D8CF9 /* Resources */,
+				0BC89B9AC409C53976FC5089220CC7BF /* Support Files */,
+			);
+			name = ConsentViewController;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		89814F593DE6DEB59C27CE96669AE4DD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				51EA3BB7F667E2C08D77810B926837A8 /* ConsentViewController.bundle */,
+				9D6F3C64FAD3F16190D011D698FBAB8D /* ConsentViewController.framework */,
+				F7E93510BAB3839CA6D4F1C64E1DF97F /* Pods_ConsentViewController_Example.framework */,
+				614CDC1F7903EEDBFEF347CA476D0E3E /* Reachability.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8F3F68B3C039AAC6A565794AC383786B /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,43 +278,23 @@
 			path = "../Target Support Files/ReachabilitySwift";
 			sourceTree = "<group>";
 		};
-		92EB4C116E5D8F739D0B77C45C2D3177 /* ConsentViewController */ = {
-			isa = PBXGroup;
-			children = (
-				8274608405B8E7C643A7A30F0155CFAE /* Consent.swift */,
-				9BE539A833D5231D8310582C35762C0C /* ConsentViewController.swift */,
-				FBE0098E30A03A7DA19FC078C66D57F7 /* ConsentViewControllerError.swift */,
-				D2A04C9473423774492F4C2FF90176DD /* SourcePointClient.swift */,
-				7F73DE3ECA7B59D23DB3FC047C0B07E6 /* Utils.swift */,
-				BFE47DA0BBEA567DE3088316CD2147FB /* ConsentStringSDK */,
-				4D07C3887C14F523D8701F5D7EB82E20 /* Pod */,
-				622B867CB8ACD130AECB2D7999E3B5A5 /* Support Files */,
-			);
-			name = ConsentViewController;
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		AB141DEEC5EED015062C5277880ECC86 /* ReachabilitySwift */ = {
 			isa = PBXGroup;
 			children = (
 				F4904C2121D407349697EEC458E7A2C0 /* Reachability.swift */,
 				8F3F68B3C039AAC6A565794AC383786B /* Support Files */,
 			);
-			name = ReachabilitySwift;
 			path = ReachabilitySwift;
 			sourceTree = "<group>";
 		};
-		BFE47DA0BBEA567DE3088316CD2147FB /* ConsentStringSDK */ = {
+		BC9225CD9F523EBF5CF541ED0FF45C20 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				ED0483382C6642D35632924E9DBB3EBB /* ConsentString.swift */,
-				C42D9EBEACEF176136BAFC84504CAFF7 /* ConsentStringError.swift */,
-				D50FB69EAF330038440B30BA0DC3F8B4 /* ConsentStringProtocol.swift */,
-				17006123124DBC5051128E99F70B33F6 /* Data.swift */,
-				B6FF9DDA85972643E0795DB944CDC9FD /* String.swift */,
+				3874C4DE910A141625C96B66AEE11A6C /* ConsentViewController.podspec */,
+				D387D1AD5555ABC46E1345DBB5A3D06C /* LICENSE */,
+				FCDC2D8FDA6D9F091FA4F6E2F4AB973B /* README.md */,
 			);
-			name = ConsentStringSDK;
-			path = ConsentViewController/Classes/ConsentStringSDK;
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		C47D31179D0D1BEFBE24228970B3882C /* iOS */ = {
@@ -268,22 +306,14 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		C531496DC4101BCA6E1F3BE84E515A59 /* Development Pods */ = {
-			isa = PBXGroup;
-			children = (
-				92EB4C116E5D8F739D0B77C45C2D3177 /* ConsentViewController */,
-			);
-			name = "Development Pods";
-			sourceTree = "<group>";
-		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				C531496DC4101BCA6E1F3BE84E515A59 /* Development Pods */,
+				5462C06FA2FEDC3A01E58B46F92F241E /* Development Pods */,
 				0FCB6CE7DB6EFB58B198DED2649E588B /* Frameworks */,
 				5D0AA215FB49F5F6E11902E9E88FDB66 /* Pods */,
-				5ABE28738BD4219CE2EC75714C91F7F0 /* Products */,
+				89814F593DE6DEB59C27CE96669AE4DD /* Products */,
 				5C527084DB57A2631E5D6158D6A148C9 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -299,19 +329,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F34CA09EEA3638AB25659109FD1D633 /* Headers */ = {
+		D3236529C574FD6550B704A2110CD82F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34836CDDE6D1695183FF59E1E3FED3BE /* ConsentViewController-umbrella.h in Headers */,
+				DF5799163B9730576424F2EAE2E01454 /* ReachabilitySwift-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		99A971B458C1D911378AB6D65491588E /* Headers */ = {
+		F019E774CE6698027D0DE17F82468D21 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F4AFC9F35871F13A490DF79B98028A6 /* ReachabilitySwift-umbrella.h in Headers */,
+				0BA021DF4C385BFA160BAF1B00326912 /* ConsentViewController-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,12 +350,12 @@
 /* Begin PBXNativeTarget section */
 		0B00B2C167CD783351BD1D00BD5AD1F8 /* ReachabilitySwift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D82E083112064FBB334BFE2243C322F1 /* Build configuration list for PBXNativeTarget "ReachabilitySwift" */;
+			buildConfigurationList = F0AB4562A2077D0D02FA239B2E11C7E6 /* Build configuration list for PBXNativeTarget "ReachabilitySwift" */;
 			buildPhases = (
-				99A971B458C1D911378AB6D65491588E /* Headers */,
-				C5CEE29F4BE03662F16D24CD26D37A17 /* Sources */,
-				A1EF79A269E5BA60F4CA7A4BB8C675D7 /* Frameworks */,
-				FE8299FE8B282339D05C2FDEDDEE02F7 /* Resources */,
+				D3236529C574FD6550B704A2110CD82F /* Headers */,
+				55760BB8B8448FDC3EF1559C4EEBEF92 /* Sources */,
+				40E02B83E023F45077477BD678949BA7 /* Frameworks */,
+				7B2AECB90215FD6DD1511D6F517E7724 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -333,26 +363,44 @@
 			);
 			name = ReachabilitySwift;
 			productName = ReachabilitySwift;
-			productReference = A6D71F231CD6D4C1E71A7515B9F6340D /* Reachability.framework */;
+			productReference = 614CDC1F7903EEDBFEF347CA476D0E3E /* Reachability.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		374151914BA6B7C6A7C04A46512F48FA /* ConsentViewController */ = {
+		24B953A9F2400AE6A7F83694FA0BD49D /* ConsentViewController-ConsentViewController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7283F2BCB966FE1DF4309591E34C0A51 /* Build configuration list for PBXNativeTarget "ConsentViewController" */;
+			buildConfigurationList = 7F0E818CA8B7B8C03374C085CCCF945F /* Build configuration list for PBXNativeTarget "ConsentViewController-ConsentViewController" */;
 			buildPhases = (
-				4F34CA09EEA3638AB25659109FD1D633 /* Headers */,
-				88C91D1542E8CACDA72CF27CAAC94360 /* Sources */,
-				50ADBCF1E3EEAB25FD708129FBE316CD /* Frameworks */,
-				4794F5936126EB841E10423BC5D1BBB2 /* Resources */,
+				3194434969A64DDF93A038E980831FB7 /* Sources */,
+				FA345C387DA57DE6CF2C1033FE2EED7D /* Frameworks */,
+				786A3827093BC11A8FFAEE87BEFB701D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				171AAB42740FCA1D15B8E1A531612971 /* PBXTargetDependency */,
+			);
+			name = "ConsentViewController-ConsentViewController";
+			productName = "ConsentViewController-ConsentViewController";
+			productReference = 51EA3BB7F667E2C08D77810B926837A8 /* ConsentViewController.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		374151914BA6B7C6A7C04A46512F48FA /* ConsentViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4209411F3234BE688F8E1D9A2BC1FB90 /* Build configuration list for PBXNativeTarget "ConsentViewController" */;
+			buildPhases = (
+				F019E774CE6698027D0DE17F82468D21 /* Headers */,
+				3FD0094E7A98D074B9292673F1494E1F /* Sources */,
+				7ED4813EE0B097DC552AE8061F7D1D82 /* Frameworks */,
+				BB50EF77FEF1F2F4611606C43F8FCD46 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				54A8A8735FD83D11C295C89094518039 /* PBXTargetDependency */,
+				8719548C80FD9C74699485CCEADADB0C /* PBXTargetDependency */,
 			);
 			name = ConsentViewController;
 			productName = ConsentViewController;
-			productReference = 0750D076E590ECA306AD836282BDDA4C /* ConsentViewController.framework */;
+			productReference = 9D6F3C64FAD3F16190D011D698FBAB8D /* ConsentViewController.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		390A2182C5751DAD16CD725EF1D20E23 /* Pods-ConsentViewController_Example */ = {
@@ -372,7 +420,7 @@
 			);
 			name = "Pods-ConsentViewController_Example";
 			productName = "Pods-ConsentViewController_Example";
-			productReference = C6542EB41B60C34FA511E211B9459740 /* Pods_ConsentViewController_Example.framework */;
+			productReference = F7E93510BAB3839CA6D4F1C64E1DF97F /* Pods_ConsentViewController_Example.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -392,11 +440,12 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 5ABE28738BD4219CE2EC75714C91F7F0 /* Products */;
+			productRefGroup = 89814F593DE6DEB59C27CE96669AE4DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				374151914BA6B7C6A7C04A46512F48FA /* ConsentViewController */,
+				24B953A9F2400AE6A7F83694FA0BD49D /* ConsentViewController-ConsentViewController */,
 				390A2182C5751DAD16CD725EF1D20E23 /* Pods-ConsentViewController_Example */,
 				0B00B2C167CD783351BD1D00BD5AD1F8 /* ReachabilitySwift */,
 			);
@@ -404,21 +453,31 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4794F5936126EB841E10423BC5D1BBB2 /* Resources */ = {
+		786A3827093BC11A8FFAEE87BEFB701D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				963DCE863CBD377977223690DC94A1F3 /* JSReceiver.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7B2AECB90215FD6DD1511D6F517E7724 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB50EF77FEF1F2F4611606C43F8FCD46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A928602047A638DEB76FAC99DFB68EF8 /* ConsentViewController.bundle in Resources */,
+				29EEA3ABB47A53A7553C937D74370674 /* JSReceiver.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F8BE258F301139BC67624FE4B8E825F9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FE8299FE8B282339D05C2FDEDDEE02F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -436,30 +495,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		88C91D1542E8CACDA72CF27CAAC94360 /* Sources */ = {
+		3194434969A64DDF93A038E980831FB7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F43AC641B94FD6637444BE107353EE9 /* Consent.swift in Sources */,
-				1585992ECC136F7A8438271241164D4B /* ConsentString.swift in Sources */,
-				5C8F4E665F23F43AD735F37BA05F661F /* ConsentStringError.swift in Sources */,
-				4B05BD5876694520F0018F1570E47494 /* ConsentStringProtocol.swift in Sources */,
-				B65B864FB47E79052CAE6C48A0F5781B /* ConsentViewController-dummy.m in Sources */,
-				772D00D9D400EFE1C2CC55B11F93FE3D /* ConsentViewController.swift in Sources */,
-				54DBD1E44CD12660B72B4135E0003833 /* ConsentViewControllerError.swift in Sources */,
-				C5AD294BCC15F0931960B366F6EB48AC /* Data.swift in Sources */,
-				4F0982BE243A76EB9A1BA5C98AC19761 /* SourcePointClient.swift in Sources */,
-				0365334CA54684FBA7FF5CA3815F9D5B /* String.swift in Sources */,
-				5BC230E35203E76E13212A25C6A82751 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C5CEE29F4BE03662F16D24CD26D37A17 /* Sources */ = {
+		3FD0094E7A98D074B9292673F1494E1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1423B10193EA9661464E8F78D1C80828 /* Reachability.swift in Sources */,
-				551A870410F7E3F647865797582BA5D4 /* ReachabilitySwift-dummy.m in Sources */,
+				27296AB008F82214FF042A79354C7B9D /* Consent.swift in Sources */,
+				A8A51967ECB210BDC79E1521B284E207 /* ConsentString.swift in Sources */,
+				57CCCA5B88ED92020A400F4140256D93 /* ConsentStringError.swift in Sources */,
+				1DF8723F5F2A6F027A7BF2EA2122B7FB /* ConsentStringProtocol.swift in Sources */,
+				014268D35D70AD88C1380AC9742A1BD3 /* ConsentViewController-dummy.m in Sources */,
+				5B4CE5A88D2D68020BFF2343EE499FD2 /* ConsentViewController.swift in Sources */,
+				013C8A8ACE6D4B1F5D40158628D46A9E /* ConsentViewControllerError.swift in Sources */,
+				0972B5B89A745CD36704B3416F08B8D6 /* Data.swift in Sources */,
+				0FC3239AF48A2BCD085DB11DEFC46A6F /* SourcePointClient.swift in Sources */,
+				A3F01E0D0AAE8FA1258C1557C0536FB1 /* String.swift in Sources */,
+				B00FA226F8F2E7F38D0F1C00A9D49A48 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55760BB8B8448FDC3EF1559C4EEBEF92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BA5B3FB2B768C5D453EA5E5A09B2170 /* Reachability.swift in Sources */,
+				EFC2ED22B276FB408E8400D995249A39 /* ReachabilitySwift-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,21 +538,43 @@
 			target = 0B00B2C167CD783351BD1D00BD5AD1F8 /* ReachabilitySwift */;
 			targetProxy = D1832F2B290526853B8A2D1D21BFD668 /* PBXContainerItemProxy */;
 		};
-		171AAB42740FCA1D15B8E1A531612971 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ReachabilitySwift;
-			target = 0B00B2C167CD783351BD1D00BD5AD1F8 /* ReachabilitySwift */;
-			targetProxy = 6231F5FE904EC0DB7AB719229EC1A002 /* PBXContainerItemProxy */;
-		};
 		251C535C01117E95E7DDDA10CA4EFF7C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ConsentViewController;
 			target = 374151914BA6B7C6A7C04A46512F48FA /* ConsentViewController */;
 			targetProxy = 9C7846CC7036F62D69D37DEF9C35B195 /* PBXContainerItemProxy */;
 		};
+		54A8A8735FD83D11C295C89094518039 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ConsentViewController-ConsentViewController";
+			target = 24B953A9F2400AE6A7F83694FA0BD49D /* ConsentViewController-ConsentViewController */;
+			targetProxy = 2F07047415C3A5FDF750DF543EB55F07 /* PBXContainerItemProxy */;
+		};
+		8719548C80FD9C74699485CCEADADB0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ReachabilitySwift;
+			target = 0B00B2C167CD783351BD1D00BD5AD1F8 /* ReachabilitySwift */;
+			targetProxy = 18E86B660987573149D3220D483971E1 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		02C6662E67C7C3A5866A0429E7B4D332 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1A07FD7CD0797137594561B66E6CDD3 /* ConsentViewController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController";
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController/ResourceBundle-ConsentViewController-ConsentViewController-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = ConsentViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		05DF210AC65EBB0E593AAF976B2C2177 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -540,14 +628,45 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		1AE372436A3E1900C05BD1E9BDBB2D6E /* Release */ = {
+		178C33B090AF3DF389E0FA8EE26951DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1A07FD7CD0797137594561B66E6CDD3 /* ConsentViewController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ConsentViewController/ConsentViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController/ConsentViewController-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ConsentViewController/ConsentViewController.modulemap";
+				PRODUCT_MODULE_NAME = ConsentViewController;
+				PRODUCT_NAME = ConsentViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1B6D5F9924708565B94763409673C523 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 243916291A44CE9CE6B7B540A8374EE7 /* ReachabilitySwift.xcconfig */;
 			buildSettings = {
@@ -568,69 +687,6 @@
 				MODULEMAP_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift.modulemap";
 				PRODUCT_MODULE_NAME = Reachability;
 				PRODUCT_NAME = Reachability;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		1C380846501F9419DCD5C31207523FC3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 698FC4EE39B2EEAA31CBB10D663C3557 /* ConsentViewController.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ConsentViewController/ConsentViewController-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ConsentViewController/ConsentViewController-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ConsentViewController/ConsentViewController.modulemap";
-				PRODUCT_MODULE_NAME = ConsentViewController;
-				PRODUCT_NAME = ConsentViewController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		412665F77FAAFDDD79A8E2C938706D34 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 698FC4EE39B2EEAA31CBB10D663C3557 /* ConsentViewController.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ConsentViewController/ConsentViewController-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ConsentViewController/ConsentViewController-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ConsentViewController/ConsentViewController.modulemap";
-				PRODUCT_MODULE_NAME = ConsentViewController;
-				PRODUCT_NAME = ConsentViewController;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -706,6 +762,68 @@
 			};
 			name = Debug;
 		};
+		43911F5D0B0E2C60305F64D92C1F742E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 243916291A44CE9CE6B7B540A8374EE7 /* ReachabilitySwift.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ReachabilitySwift/ReachabilitySwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift.modulemap";
+				PRODUCT_MODULE_NAME = Reachability;
+				PRODUCT_NAME = Reachability;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		43C6A890A7E42A51617A9EA6F6992176 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1A07FD7CD0797137594561B66E6CDD3 /* ConsentViewController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ConsentViewController/ConsentViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController/ConsentViewController-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/ConsentViewController/ConsentViewController.modulemap";
+				PRODUCT_MODULE_NAME = ConsentViewController;
+				PRODUCT_NAME = ConsentViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		4778DD4BB08F8D74D61A8B2BCF427AAD /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6665E1577E7A19D888CDDC21A96A4FFB /* Pods-ConsentViewController_Example.release.xcconfig */;
@@ -740,36 +858,21 @@
 			};
 			name = Release;
 		};
-		8828DB19CA332107CB030ADFEE0920B8 /* Debug */ = {
+		6931F396BFB47343264B40C54CBBB437 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 243916291A44CE9CE6B7B540A8374EE7 /* ReachabilitySwift.xcconfig */;
+			baseConfigurationReference = C1A07FD7CD0797137594561B66E6CDD3 /* ConsentViewController.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ReachabilitySwift/ReachabilitySwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController";
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController/ResourceBundle-ConsentViewController-ConsentViewController-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift.modulemap";
-				PRODUCT_MODULE_NAME = Reachability;
-				PRODUCT_NAME = Reachability;
+				PRODUCT_NAME = ConsentViewController;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
+				WRAPPER_EXTENSION = bundle;
 			};
-			name = Debug;
+			name = Release;
 		};
 		B1A84FFFD839C65CB14E4E655E043F87 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -807,6 +910,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4209411F3234BE688F8E1D9A2BC1FB90 /* Build configuration list for PBXNativeTarget "ConsentViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43C6A890A7E42A51617A9EA6F6992176 /* Debug */,
+				178C33B090AF3DF389E0FA8EE26951DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -816,20 +928,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7283F2BCB966FE1DF4309591E34C0A51 /* Build configuration list for PBXNativeTarget "ConsentViewController" */ = {
+		7F0E818CA8B7B8C03374C085CCCF945F /* Build configuration list for PBXNativeTarget "ConsentViewController-ConsentViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C380846501F9419DCD5C31207523FC3 /* Debug */,
-				412665F77FAAFDDD79A8E2C938706D34 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D82E083112064FBB334BFE2243C322F1 /* Build configuration list for PBXNativeTarget "ReachabilitySwift" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8828DB19CA332107CB030ADFEE0920B8 /* Debug */,
-				1AE372436A3E1900C05BD1E9BDBB2D6E /* Release */,
+				02C6662E67C7C3A5866A0429E7B4D332 /* Debug */,
+				6931F396BFB47343264B40C54CBBB437 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -839,6 +942,15 @@
 			buildConfigurations = (
 				B1A84FFFD839C65CB14E4E655E043F87 /* Debug */,
 				4778DD4BB08F8D74D61A8B2BCF427AAD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0AB4562A2077D0D02FA239B2E11C7E6 /* Build configuration list for PBXNativeTarget "ReachabilitySwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43911F5D0B0E2C60305F64D92C1F742E /* Debug */,
+				1B6D5F9924708565B94763409673C523 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

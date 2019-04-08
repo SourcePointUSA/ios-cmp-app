@@ -19,6 +19,12 @@
     "ios": "8.0"
   },
   "source_files": "ConsentViewController/Classes/**/*",
+  "resource_bundles": {
+    "ConsentViewController": [
+      "ConsentViewController/Assets/**/*"
+    ]
+  },
+  "resources": "ConsentViewController/**/*{.js}",
   "dependencies": {
     "ReachabilitySwift": [
       "4.3.0"

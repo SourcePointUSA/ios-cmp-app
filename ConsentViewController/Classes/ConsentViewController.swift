@@ -133,8 +133,12 @@ import Reachability
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
     public var consentUUID: String
 
+    /// The timeout interval in seconds for the message being displayed
+    public var messageTimeoutInSeconds = TimeInterval(5)
+
     private let accountId: Int
     private let siteName: String
+    private var onMessageReadyCalled = false
 
     private let sourcePoint: SourcePointClient
 
@@ -215,25 +219,11 @@ import Reachability
     override open func loadView() {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        // inject js so we have a consistent interface to messaging page as in android
-        let scriptSource = "(function () {\n"
-            + "function postToWebView (name, body) {\n"
-            + "  window.webkit.messageHandlers.JSReceiver.postMessage({ name: name, body: body });\n"
-            + "}\n"
-            + "window.JSReceiver = {\n"
-            + "  onReceiveMessageData: function (willShowMessage, msgJSON) { postToWebView('onReceiveMessageData', { willShowMessage: willShowMessage, msgJSON: msgJSON }); },\n"
-            + "  onMessageChoiceSelect: function (choiceType) { postToWebView('onMessageChoiceSelect', { choiceType: choiceType }); },\n"
-            + "  onErrorOccurred: function (errorType) { postToWebView('onErrorOccurred', { errorType: errorType }); },\n"
-            + "  sendConsentData: function (euconsent, consentUUID) { postToWebView('interactionComplete', { euconsent: euconsent, consentUUID: consentUUID }); }\n"
-            + "};\n"
-            + "})();"
+        let scriptSource = try! String(contentsOfFile: Bundle(for: self.classForCoder).path(forResource: "JSReceiver", ofType: "js")!)
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         userContentController.addUserScript(script)
-
         userContentController.add(self, name: "JSReceiver")
-
         config.userContentController = userContentController
-
         webView = WKWebView(frame: .zero, configuration: config)
         if #available(iOS 11.0, *) {
             webView.scrollView.contentInsetAdjustmentBehavior = .never;
@@ -243,7 +233,6 @@ import Reachability
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
         webView.allowsBackForwardNavigationGestures = true
-
         view = webView
     }
 
@@ -261,6 +250,10 @@ import Reachability
             UIApplication.shared.openURL(url)
         }
         return nil
+    }
+
+    private func timeOut(inSeconds seconds: Double, callback: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: callback)
     }
 
     private enum MessageStatus { case notStarted, loading, loaded }
@@ -281,6 +274,11 @@ import Reachability
                 return
             }
             webView.load(URLRequest(url: messageUrl))
+            timeOut(inSeconds: messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
+                self.onMessageReady = nil
+                self.onErrorOccurred?(MessageTimeout())
+                self.messageStatus = .notStarted
+            }};
             messageStatus = .loaded
         } catch let error as ConsentViewControllerError {
             messageStatus = .notStarted
@@ -418,6 +416,7 @@ import Reachability
     }
 
     private func onReceiveMessage(willShow: Bool) {
+        onMessageReadyCalled = true
         willShow ? onMessageReady?(self) : done()
     }
 
@@ -467,6 +466,10 @@ import Reachability
             onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
         case "onErrorOccurred":
             onErrorOccurred(WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+        case "onPrivacyManagerChoiceSelect":
+            return
+        case "onMessageChoiceError":
+            onErrorOccurred(WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         default:
             onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
