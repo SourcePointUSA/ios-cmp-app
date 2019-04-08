@@ -1,3 +1,6 @@
+## 2.2.2 (April 08, 2019)
+* add the `ConsentViewController.messageTimeoutInSeconds` - used to controll the timeout between first load of the webview and `onMessageReady` callback
+
 ## 2.1.2 (April 08, 2019)
 * fixed the interface for Objective-C, allowing the ConsentViewController to be used in Obj-c projects.
 
