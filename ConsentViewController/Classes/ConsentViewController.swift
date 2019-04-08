@@ -172,6 +172,7 @@ import Reachability
         super.init(nibName: nil, bundle: nil)
     }
 
+    @objc(initWithAccountId:siteName:stagingCampaign:andReturnError:)
     public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool) throws {
         try self.init(
             accountId: accountId,
@@ -181,6 +182,7 @@ import Reachability
         )
     }
 
+    @objc(initWithAccountId:siteName:stagingCampaign:staging:andReturnError:)
     public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool, staging: Bool) throws {
         try self.init(
             accountId: accountId,
