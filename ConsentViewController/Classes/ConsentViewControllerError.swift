@@ -151,3 +151,8 @@ public let WebViewErrors: [String : ConsentViewControllerError] = [
     public var failureReason: String? { get { return "The device is not connected to the internet." } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
+
+@objcMembers public class MessageTimeout: ConsentViewControllerError {
+    public var failureReason: String? { get { return "The Message request has timed out." } }
+    override public var description: String { get { return "\(failureReason!)\n" } }
+}

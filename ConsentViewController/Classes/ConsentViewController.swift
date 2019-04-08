@@ -133,8 +133,12 @@ import Reachability
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
     public var consentUUID: String
 
+    public let DEFAULT_MESSAGE_TIMEOUT = 5
+    public var messageTimeoutInSeconds = TimeInterval(DEFAULT_MESSAGE_TIMEOUT)
+
     private let accountId: Int
     private let siteName: String
+    private var onMessageReadyCalled = false
 
     private let sourcePoint: SourcePointClient
 
@@ -248,6 +252,10 @@ import Reachability
         return nil
     }
 
+    private func timeOut(inSeconds seconds: Double, callback: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: callback)
+    }
+
     private enum MessageStatus { case notStarted, loading, loaded }
     private var messageStatus = MessageStatus.notStarted
     public func loadMessage() {
@@ -266,6 +274,11 @@ import Reachability
                 return
             }
             webView.load(URLRequest(url: messageUrl))
+            timeOut(inSeconds: messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
+                self.onMessageReady = nil
+                self.onErrorOccurred?(MessageTimeout())
+                self.messageStatus = .notStarted
+            }};
             messageStatus = .loaded
         } catch let error as ConsentViewControllerError {
             messageStatus = .notStarted
@@ -403,6 +416,7 @@ import Reachability
     }
 
     private func onReceiveMessage(willShow: Bool) {
+        onMessageReadyCalled = true
         willShow ? onMessageReady?(self) : done()
     }
 

@@ -18,6 +18,8 @@ class ViewController: UIViewController {
                 stagingCampaign: false
             )
 
+            consentViewController.messageTimeoutInSeconds = TimeInterval(5)
+
             consentViewController.onMessageReady = { controller in
                 parentView.addSubview(controller.view)
                 controller.view.frame = parentView.bounds
