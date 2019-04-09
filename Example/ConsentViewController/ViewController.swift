@@ -13,8 +13,8 @@ class ViewController: UIViewController {
     private func buildConsentViewController(showPM: Bool, addToView parentView: UIView) {
         do {
             let consentViewController = try ConsentViewController(
-                accountId: 630,
-                siteName: "test.skynews.ios",
+                accountId: 22,
+                siteName: "mobile.demo",
                 stagingCampaign: false
             )
 
@@ -27,8 +27,7 @@ class ViewController: UIViewController {
             }
 
             // optional, set custom targeting parameters supports Strings and Integers
-//            consentViewController.setTargetingParam(key: "CMP", value: String(showPM))
-            consentViewController.setTargetingParam(key: "displayMode", value: showPM ? "userRequested" : "appLaunch")
+            consentViewController.setTargetingParam(key: "CMP", value: String(showPM))
 
             consentViewController.onErrorOccurred = { error in
                 consentViewController.view.removeFromSuperview()
