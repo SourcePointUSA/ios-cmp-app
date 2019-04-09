@@ -219,7 +219,7 @@ import Reachability
     override open func loadView() {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: self.classForCoder).path(forResource: "JSReceiver", ofType: "js")!)
+        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!)
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         userContentController.addUserScript(script)
         userContentController.add(self, name: "JSReceiver")

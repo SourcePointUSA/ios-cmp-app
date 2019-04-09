@@ -1,3 +1,6 @@
+## 2.2.3 (April 09, 2019)
+* fix an issue that'd crash the client app if subclassing `ConsentViewController`
+
 ## 2.2.2 (April 08, 2019)
 * add the `ConsentViewController.messageTimeoutInSeconds` - used to controll the timeout between first load of the webview and `onMessageReady` callback
 
