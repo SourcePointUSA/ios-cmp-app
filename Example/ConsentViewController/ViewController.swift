@@ -9,7 +9,7 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     var consentViewController: ConsentViewController!
-
+    
     private func buildConsentViewController(showPM: Bool, addToView parentView: UIView) {
         do {
             let consentViewController = try ConsentViewController(
@@ -17,18 +17,18 @@ class ViewController: UIViewController {
                 siteName: "mobile.demo",
                 stagingCampaign: false
             )
-
-            consentViewController.messageTimeoutInSeconds = TimeInterval(5)
-
+            
+            consentViewController.messageTimeoutInSeconds = TimeInterval(30)
+            
             consentViewController.onMessageReady = { controller in
                 parentView.addSubview(controller.view)
                 controller.view.frame = parentView.bounds
                 self.stopSpinner()
             }
-
+            
             // optional, set custom targeting parameters supports Strings and Integers
             consentViewController.setTargetingParam(key: "CMP", value: String(showPM))
-
+            
             consentViewController.onErrorOccurred = { error in
                 consentViewController.view.removeFromSuperview()
                 print(error)
@@ -49,28 +49,50 @@ class ViewController: UIViewController {
                         "\n IAB purpose consent for \"Ad selection, delivery, reporting\"",
                         try cvc.getIABPurposeConsents([3])
                     )
-                    print("Custom vendor consents")
-                    for consent in try cvc.getCustomVendorConsents() {
-                        print("Custom Vendor Consent id: \(consent.id), name: \(consent.name)")
+                    
+                    var areCustomVendorsReceived = false
+                    var areCustomPurposeReceived = false
+                    let dismissContext = {
+                        if areCustomPurposeReceived == true && areCustomVendorsReceived == true {
+                            cvc.view.removeFromSuperview()
+                        }
                     }
-                    print("Custom purpose consents")
-                    for consent in try cvc.getCustomPurposeConsents() {
-                        print("Custom Purpose Consent id: \(consent.id), name: \(consent.name)")
+                    
+                    cvc.getCustomVendorConsents { (vendorConsents) in
+                        if let _vendorConsents = vendorConsents {
+                            for vendorConsent in _vendorConsents {
+                                print("Custom Vendor Consent id: \(vendorConsent.id), name: \(vendorConsent.name)")
+                            }
+                        }
+                        areCustomVendorsReceived = true
+                        dismissContext()
                     }
+                    
+                    cvc.getCustomPurposeConsents { (purposeConsents) in
+                        if let _purposeConsents = purposeConsents {
+                            for purposeConsent in _purposeConsents {
+                                print("Custom Purpose Consent id: \(purposeConsent.id), name: \(purposeConsent.name)")
+                            }
+                        }
+                        areCustomPurposeReceived = true
+                        dismissContext()
+                    }
+                } catch {
+                    print(error)
                 }
-                catch { print(error) }
-                cvc.view.removeFromSuperview()
             }
-
+            
             consentViewController.loadMessage()
-        } catch { print(error) }
+        } catch {
+            print(error)
+        }
     }
-
+    
     @IBAction func showPrivacyManager(_ sender: Any) {
         startSpinner()
         buildConsentViewController(showPM: true, addToView: view)
     }
-
+    
     func startSpinner() {
         let alert = UIAlertController(title: nil, message: "Just a second...", preferredStyle: .alert)
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
@@ -80,17 +102,17 @@ class ViewController: UIViewController {
         alert.view.addSubview(loadingIndicator)
         present(alert, animated: true, completion: nil)
     }
-
+    
     func stopSpinner() {
         dismiss(animated: false, completion: nil)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         buildConsentViewController(showPM: false, addToView: view)
-
-        // IABConsent_CMPPresent must be set immediately after loading the ConsentViewController
+        
+        //IABConsent_CMPPresent must be set immediately after loading the ConsentViewController
         print(
             "IABConsent_CMPPresent in storage",
             UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT) as Any,
