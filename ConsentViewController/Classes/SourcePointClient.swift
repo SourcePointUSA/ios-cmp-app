@@ -11,9 +11,7 @@ protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (
 
 class SimpleClient: HttpClient {
     func get(url: URL, completionHandler cHandler : @escaping (Data?) -> Void) {
-        
         let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            
             DispatchQueue.main.async {
                 cHandler(data)
             }
@@ -21,29 +19,6 @@ class SimpleClient: HttpClient {
         task.resume()
     }
 }
-
-//protocol HttpClient { func get(url: URL) -> Data? }
-//
-//class SimpleClient: HttpClient {
-//    func get(url: URL) -> Data? {
-//        let semaphore = DispatchSemaphore( value: 0 )
-//        var responseData: Data?
-//        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-//            print("Are we there yet?11000")
-////            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-////                print("Are we there yet?11")
-////                responseData = data
-////
-////            }
-//            responseData = data
-//            semaphore.signal()
-//        }
-//        print("Are we there yet? 2")
-//        task.resume()
-//        semaphore.wait()
-//        return responseData
-//    }
-//}
 
 struct ConsentsResponse : Codable {
     let consentedVendors: [VendorConsent]
@@ -54,17 +29,13 @@ typealias TargetingParams = [String:Any]
 
 class SourcePointClient {
     private let client: HttpClient
-    
     private let accountId: String
-    
     private let siteUrl: URL
     private let mmsUrl: URL
     private let cmpUrl: URL
     private let messageUrl: URL
-    
     private let siteIdUrl: URL
     private let statusGdprUrl: URL
-    
     private let stagingCampaign: Bool
     
     init(accountId: String, siteUrl: URL, stagingCampaign: Bool, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
@@ -86,18 +57,6 @@ class SourcePointClient {
         
         self.client = SimpleClient()
     }
-    
-    //    func getSiteId() throws -> String {
-    //        print("call to site id")
-    //        guard
-    //            let result = client.get(url: siteIdUrl),
-    //            let parsedResult = try? JSONSerialization.jsonObject(with: result, options: []) as? [String:Int],
-    //            let siteId = parsedResult?["site_id"]
-    //        else { throw SiteIDNotFound(accountId: accountId, siteName: siteUrl.host!) }
-    //
-    //        throw SiteIDNotFound(accountId: accountId, siteName: siteUrl.host!)
-    //        return String(siteId)
-    //    }
     
     func getSiteId(completionHandler cHandler : @escaping (String?,ConsentViewControllerError?) -> Void) {
         client.get(url: siteIdUrl) { (result) in
@@ -142,27 +101,6 @@ class SourcePointClient {
             }
         }
     }
-    
-    // TODO: validate customConsentsURL with Utils.validate
-    //    func getCustomConsents(
-    //        forSiteId siteId: String,
-    //        consentUUID: String,
-    //        euConsent: String)
-    //    throws -> ConsentsResponse {
-    //        print("call to custom consents")
-    //        let path = "/consent/v2/\(siteId)/custom-vendors"
-    //        let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
-    //        let decoder = JSONDecoder()
-    //
-    //        guard
-    //            let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl),
-    //            let consentsResponse = client.get(url: getCustomConsentsUrl),
-    //            let consents = try? decoder.decode(ConsentsResponse.self, from: consentsResponse)
-    //        else { throw ConsentsAPIError() }
-    //
-    //        throw ConsentsAPIError()
-    //        return consents
-    //    }
     
     private func encode(targetingParams params: TargetingParams) throws -> String {
         let data = try JSONSerialization.data(withJSONObject: params)

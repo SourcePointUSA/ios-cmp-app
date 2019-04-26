@@ -1,3 +1,6 @@
+## 2.2.4 (April 20, 2019)
+* Moved  the API calls on secondary thread to keep main thread independent and free for UI opertaion.
+
 ## 2.2.3 (April 09, 2019)
 * fix an issue that'd crash the client app if subclassing `ConsentViewController`
 

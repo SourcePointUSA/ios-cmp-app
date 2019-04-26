@@ -19,24 +19,25 @@ import Reachability
  and offers ways to inspect the consents and purposes the user has chosen.
  
  ```
- var consentViewController: ConsentViewController!
- override func viewDidLoad() {
- super.viewDidLoad()
- consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME", stagingCampaign: true|false)
- consentViewController.onMessageChoiceSelect = {
- (cbw: ConsentViewController) in print("Choice selected by user", cbw.choiceType as Any)
- }
- consentViewController.onInteractionComplete = { (cbw: ConsentViewController) in
- print(
- cbw.euconsent as Any,
- cbw.consentUUID as Any,
- cbw.getIABVendorConsents(["VENDOR_ID"]),
- cbw.getIABPurposeConsents(["PURPOSE_ID"]),
- cbw.getCustomVendorConsents(),
- cbw.getCustomPurposeConsents()
- )
- }
- view.addSubview(consentViewController.view)
+var consentViewController: ConsentViewController!
+override func viewDidLoad() {
+    super.viewDidLoad()
+    consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME", stagingCampaign: true|false)
+    consentViewController.onMessageChoiceSelect = {
+        (cbw: ConsentViewController) in print("Choice selected by user", cbw.choiceType as Any)
+    }
+}
+consentViewController.onInteractionComplete = { (cbw: ConsentViewController) in
+    print(
+        cbw.euconsent as Any,
+        cbw.consentUUID as Any,
+        cbw.getIABVendorConsents(["VENDOR_ID"]),
+        cbw.getIABPurposeConsents(["PURPOSE_ID"]),
+        cbw.getCustomVendorConsents(),
+        cbw.getCustomPurposeConsents()
+    )
+}
+view.addSubview(consentViewController.view)
  ```
  */
 @objcMembers open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
@@ -294,48 +295,12 @@ import Reachability
             return
         } catch {}
     }
-    
-//    public func loadMessage() {
-//        if(messageStatus == .loading || messageStatus == .loaded) { return }
-//
-//        do {
-//            messageStatus = .loading
-//            loadView()
-//            let messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
-//            print ("url: \((messageUrl.absoluteString))")
-//            UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-//            try setSubjectToGDPR()
-//            guard Reachability()!.connection != .none else {
-//                onErrorOccurred?(NoInternetConnection())
-//                messageStatus = .notStarted
-//                return
-//            }
-//            webView.load(URLRequest(url: messageUrl))
-//            timeOut(inSeconds: messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
-//                self.onMessageReady = nil
-//                self.onErrorOccurred?(MessageTimeout())
-//                self.messageStatus = .notStarted
-//                }};
-//            messageStatus = .loaded
-//        } catch let error as ConsentViewControllerError {
-//            messageStatus = .notStarted
-//            onErrorOccurred?(error)
-//            return
-//        } catch {}
-//    }
 
-    
     /// :nodoc:
     override open func viewDidLoad() {
         super.viewDidLoad()
         loadMessage()
     }
-    
-//    private func setSubjectToGDPR() throws {
-//        if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil) { return }
-//        let gdprStatus = try sourcePoint.getGdprStatus()
-//        UserDefaults.standard.setValue(String(gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-//    }
     
     private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {
         
@@ -343,17 +308,14 @@ import Reachability
             cHandler(nil)
             return
         }
-        //let gdprStatus = try sourcePoint.getGdprStatus()
         sourcePoint.getGdprStatus { (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
-                //Here we have error
                 cHandler(error)
                 return
             }
             cHandler(nil)
             UserDefaults.standard.setValue(String(_gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         }
-        
     }
     
     /**
@@ -392,27 +354,12 @@ import Reachability
         return results
     }
     
-    //    private func getSiteId() throws -> String {
-    //        let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
-    //
-    //        guard let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey) else {
-    //            let siteId = try sourcePoint.getSiteId()
-    //            UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
-    //            UserDefaults.standard.synchronize()
-    //            return siteId
-    //        }
-    //
-    //        return storedSiteId
-    //    }
-    
     private func getSiteId (completionHandler cHandler:@escaping (String?, ConsentViewControllerError?) -> Void) {
         
         let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
-        
         guard let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey) else {
             sourcePoint.getSiteId { (siteId, error) in
                 guard let _siteID = siteId else {
-                    //Here we have error
                     cHandler(nil, error)
                     return
                 }
@@ -433,10 +380,6 @@ import Reachability
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
-    //    public func getCustomVendorConsents() throws -> Array<VendorConsent> {
-    //       return (try loadAndStoreConsents()).consentedVendors
-    //    }
-    
     public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]?) -> Void) {
         loadAndStoreConsents { (optionalConsentResponse) in
             if let _optionalConsentResponse = optionalConsentResponse {
@@ -455,9 +398,6 @@ import Reachability
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    //    public func getCustomPurposeConsents() throws -> [PurposeConsent] {
-    //        return (try loadAndStoreConsents()).consentedPurposes
-    //    }
     public func getCustomPurposeConsents(completionHandler cHandler : @escaping ([PurposeConsent]?) -> Void) {
         loadAndStoreConsents { (optionalConsentResponse) in
             if let _optionalConsentResponse = optionalConsentResponse {
@@ -467,14 +407,6 @@ import Reachability
             }
         }
     }
-    
-    
-    //    private func loadAndStoreConsents() throws -> ConsentsResponse {
-    //        return try sourcePoint.getCustomConsents(
-    //                forSiteId: try getSiteId(),
-    //                consentUUID: consentUUID,
-    //                euConsent: euconsent)
-    //    }
     
     private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?) -> Void) {
         
@@ -490,7 +422,6 @@ import Reachability
             } else {
                 cHandler(nil)
             }
-            
         }
     }
     

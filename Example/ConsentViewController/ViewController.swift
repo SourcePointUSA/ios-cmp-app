@@ -9,7 +9,6 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     var consentViewController: ConsentViewController!
-    
     private func buildConsentViewController(showPM: Bool, addToView parentView: UIView) {
         do {
             let consentViewController = try ConsentViewController(
@@ -49,43 +48,14 @@ class ViewController: UIViewController {
                         "\n IAB purpose consent for \"Ad selection, delivery, reporting\"",
                         try cvc.getIABPurposeConsents([3])
                     )
-                    
-                    var areCustomVendorsReceived = false
-                    var areCustomPurposeReceived = false
-                    let dismissContext = {
-                        if areCustomPurposeReceived == true && areCustomVendorsReceived == true {
-                            cvc.view.removeFromSuperview()
-                        }
-                    }
-                    
-                    cvc.getCustomVendorConsents { (vendorConsents) in
-                        if let _vendorConsents = vendorConsents {
-                            for vendorConsent in _vendorConsents {
-                                print("Custom Vendor Consent id: \(vendorConsent.id), name: \(vendorConsent.name)")
-                            }
-                        }
-                        areCustomVendorsReceived = true
-                        dismissContext()
-                    }
-                    
-                    cvc.getCustomPurposeConsents { (purposeConsents) in
-                        if let _purposeConsents = purposeConsents {
-                            for purposeConsent in _purposeConsents {
-                                print("Custom Purpose Consent id: \(purposeConsent.id), name: \(purposeConsent.name)")
-                            }
-                        }
-                        areCustomPurposeReceived = true
-                        dismissContext()
-                    }
-                } catch {
-                    print(error)
+                    print("Custom vendor consents")
                 }
+                catch { print(error) }
+                cvc.view.removeFromSuperview()
             }
             
             consentViewController.loadMessage()
-        } catch {
-            print(error)
-        }
+        } catch { print(error) }
     }
     
     @IBAction func showPrivacyManager(_ sender: Any) {
@@ -112,7 +82,7 @@ class ViewController: UIViewController {
         
         buildConsentViewController(showPM: false, addToView: view)
         
-        //IABConsent_CMPPresent must be set immediately after loading the ConsentViewController
+        // IABConsent_CMPPresent must be set immediately after loading the ConsentViewController
         print(
             "IABConsent_CMPPresent in storage",
             UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT) as Any,
