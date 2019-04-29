@@ -267,19 +267,26 @@ import Reachability
             let messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
             print ("url: \((messageUrl.absoluteString))")
             UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-            try setSubjectToGDPR()
-            guard Reachability()!.connection != .none else {
-                onErrorOccurred?(NoInternetConnection())
-                messageStatus = .notStarted
-                return
+            setSubjectToGDPR { (optionalErrorObject) in
+                if let error = optionalErrorObject {
+                    self.messageStatus = .notStarted
+                    self.onErrorOccurred?(error)
+                    return
+                } else {
+                    guard Reachability()!.connection != .none else {
+                        self.onErrorOccurred?(NoInternetConnection())
+                        self.messageStatus = .notStarted
+                        return
+                    }
+                    self.webView.load(URLRequest(url: messageUrl))
+                    self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
+                        self.onMessageReady = nil
+                        self.onErrorOccurred?(MessageTimeout())
+                        self.messageStatus = .notStarted
+                        }};
+                    self.messageStatus = .loaded
+                }
             }
-            webView.load(URLRequest(url: messageUrl))
-            timeOut(inSeconds: messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
-                self.onMessageReady = nil
-                self.onErrorOccurred?(MessageTimeout())
-                self.messageStatus = .notStarted
-            }};
-            messageStatus = .loaded
         } catch let error as ConsentViewControllerError {
             messageStatus = .notStarted
             onErrorOccurred?(error)
@@ -293,12 +300,18 @@ import Reachability
         loadMessage()
     }
 
-    private func setSubjectToGDPR() throws {
+    private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {
         if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil) { return }
-        let gdprStatus = try sourcePoint.getGdprStatus()
-        UserDefaults.standard.setValue(String(gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        sourcePoint.getGdprStatus { (gdprStatus, error) in
+            guard let _gdprStatus = gdprStatus else {
+                cHandler(error)
+                return
+            }
+            cHandler(nil)
+            UserDefaults.standard.setValue(String(_gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        }
     }
-
+    
     /**
      Get the IAB consents given to each vendor id in the array passed as parameter
      
@@ -335,17 +348,21 @@ import Reachability
         return results
     }
     
-    private func getSiteId() throws -> String {
+    private func getSiteId (completionHandler cHandler:@escaping (String?, ConsentViewControllerError?) -> Void) {
         let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
-
         guard let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey) else {
-            let siteId = try sourcePoint.getSiteId()
-            UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
-            UserDefaults.standard.synchronize()
-            return siteId
+            sourcePoint.getSiteId { (siteId, error) in
+                guard let _siteID = siteId else {
+                    cHandler(nil, error)
+                    return
+                }
+                UserDefaults.standard.setValue(_siteID, forKey: siteIdKey)
+                UserDefaults.standard.synchronize()
+                cHandler(_siteID, nil)
+            }
+            return
         }
-
-        return storedSiteId
+        cHandler(storedSiteId, nil)
     }
 
     /**
@@ -356,8 +373,10 @@ import Reachability
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
-    public func getCustomVendorConsents() throws -> Array<VendorConsent> {
-       return (try loadAndStoreConsents()).consentedVendors
+    public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]?) -> Void) {
+        loadAndStoreConsents { (optionalConsentResponse) in
+            cHandler(optionalConsentResponse?.consentedVendors)
+        }
     }
 
     /**
@@ -368,15 +387,22 @@ import Reachability
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    public func getCustomPurposeConsents() throws -> [PurposeConsent] {
-        return (try loadAndStoreConsents()).consentedPurposes
+    public func getCustomPurposeConsents(completionHandler cHandler : @escaping ([PurposeConsent]?) -> Void) {
+        loadAndStoreConsents { (optionalConsentResponse) in
+            cHandler(optionalConsentResponse?.consentedPurposes)
+        }
     }
 
-    private func loadAndStoreConsents() throws -> ConsentsResponse {
-        return try sourcePoint.getCustomConsents(
-                forSiteId: try getSiteId(),
-                consentUUID: consentUUID,
-                euConsent: euconsent)
+    private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?) -> Void) {
+        var siteID : String?
+        getSiteId { (siteId, error) in
+            if let _siteID = siteId  {
+                siteID = _siteID
+            }
+        }
+        sourcePoint.getCustomConsents (forSiteId: siteID!, consentUUID: consentUUID, euConsent: euconsent, completionHandler: { (consents, error) in
+            cHandler(consents)
+        })
     }
 
     private func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {

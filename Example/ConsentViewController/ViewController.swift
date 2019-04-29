@@ -18,7 +18,7 @@ class ViewController: UIViewController {
                 stagingCampaign: false
             )
 
-            consentViewController.messageTimeoutInSeconds = TimeInterval(5)
+            consentViewController.messageTimeoutInSeconds = TimeInterval(20)
 
             consentViewController.onMessageReady = { controller in
                 parentView.addSubview(controller.view)
@@ -50,13 +50,6 @@ class ViewController: UIViewController {
                         try cvc.getIABPurposeConsents([3])
                     )
                     print("Custom vendor consents")
-                    for consent in try cvc.getCustomVendorConsents() {
-                        print("Custom Vendor Consent id: \(consent.id), name: \(consent.name)")
-                    }
-                    print("Custom purpose consents")
-                    for consent in try cvc.getCustomPurposeConsents() {
-                        print("Custom Purpose Consent id: \(consent.id), name: \(consent.name)")
-                    }
                 }
                 catch { print(error) }
                 cvc.view.removeFromSuperview()

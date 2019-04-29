@@ -7,19 +7,16 @@
 
 import Foundation
 
-protocol HttpClient { func get(url: URL) -> Data? }
+protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (Data?) -> Void) }
 
 class SimpleClient: HttpClient {
-    func get(url: URL) -> Data? {
-        let semaphore = DispatchSemaphore( value: 0 )
-        var responseData: Data?
+    func get(url: URL, completionHandler cHandler : @escaping (Data?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            responseData = data
-            semaphore.signal()
+            DispatchQueue.main.async {
+                cHandler(data)
+            }
         }
         task.resume()
-        semaphore.wait()
-        return responseData
     }
 }
 
@@ -65,44 +62,48 @@ class SourcePointClient {
         self.client = SimpleClient()
     }
 
-    func getSiteId() throws -> String {
-        guard
-            let result = client.get(url: siteIdUrl),
-            let parsedResult = try? JSONSerialization.jsonObject(with: result, options: []) as? [String:Int],
-            let siteId = parsedResult?["site_id"]
-        else { throw SiteIDNotFound(accountId: accountId, siteName: siteUrl.host!) }
-
-        return String(siteId)
+    func getSiteId(completionHandler cHandler : @escaping (String?,ConsentViewControllerError?) -> Void) {
+        client.get(url: siteIdUrl) { (result) in
+            if let _result = result, let parsedResult = try? JSONSerialization.jsonObject(with: _result, options: []) as? [String: Int] {
+                
+                if let siteId = parsedResult?["site_id"] {
+                    cHandler(String(siteId),nil)
+                }
+            } else {
+                cHandler(nil, SiteIDNotFound(accountId: self.accountId, siteName: self.siteUrl.host!))
+            }
+        }
     }
 
-    func getGdprStatus() throws -> Int {
-        guard
-            let result = client.get(url: statusGdprUrl),
-            let parsedResult = try? JSONSerialization.jsonObject(with: result, options: []) as? [String: Int],
-            let gdprStatus = parsedResult?["gdprApplies"]
-        else {
-            throw GdprStatusNotFound(gdprStatusUrl: statusGdprUrl)
+    func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
+        print("call to GDPR status")
+        client.get(url: statusGdprUrl) { (result) in
+            if let _result = result, let parsedResult = try? JSONSerialization.jsonObject(with: _result, options: []) as? [String: Int] {
+                
+                let gdprStatus = parsedResult?["gdprApplies"]
+                cHandler(gdprStatus,nil)
+            } else {
+                cHandler(nil, GdprStatusNotFound(gdprStatusUrl: self.statusGdprUrl))
+            }
         }
-        return gdprStatus
     }
 
     // TODO: validate customConsentsURL with Utils.validate
-    func getCustomConsents(
-        forSiteId siteId: String,
-        consentUUID: String,
-        euConsent: String)
-    throws -> ConsentsResponse {
+    func getCustomConsents(forSiteId siteId: String, consentUUID: String,euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
+        print("call to custom consents")
         let path = "/consent/v2/\(siteId)/custom-vendors"
         let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
         let decoder = JSONDecoder()
-
-        guard
-            let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl),
-            let consentsResponse = client.get(url: getCustomConsentsUrl),
-            let consents = try? decoder.decode(ConsentsResponse.self, from: consentsResponse)
-        else { throw ConsentsAPIError() }
-
-        return consents
+        
+        if let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl) {
+            client.get(url: getCustomConsentsUrl) { (result) in
+                if let _result = result, let consents = try? decoder.decode(ConsentsResponse.self, from: _result) {
+                    cHandler(consents, nil)
+                }else {
+                    cHandler(nil, ConsentsAPIError())
+                }
+            }
+        }
     }
 
     private func encode(targetingParams params: TargetingParams) throws -> String {
