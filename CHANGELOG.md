@@ -1,3 +1,6 @@
+## 2.2.5 (April 09, 2019)
+* updated  'ReachabilitySwift' version to '4.3.1'
+
 ## 2.2.3 (April 09, 2019)
 * fix an issue that'd crash the client app if subclassing `ConsentViewController`
 
