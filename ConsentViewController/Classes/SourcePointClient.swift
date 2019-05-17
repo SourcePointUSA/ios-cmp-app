@@ -12,9 +12,7 @@ protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (
 class SimpleClient: HttpClient {
     func get(url: URL, completionHandler cHandler : @escaping (Data?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            DispatchQueue.main.async {
-                cHandler(data)
-            }
+            DispatchQueue.main.async { cHandler(data) }
         }
         task.resume()
     }
@@ -65,7 +63,6 @@ class SourcePointClient {
     func getSiteId(completionHandler cHandler : @escaping (String?,ConsentViewControllerError?) -> Void) {
         client.get(url: siteIdUrl) { (result) in
             if let _result = result, let parsedResult = try? JSONSerialization.jsonObject(with: _result, options: []) as? [String: Int] {
-                
                 if let siteId = parsedResult?["site_id"] {
                     cHandler(String(siteId),nil)
                 }
@@ -76,10 +73,8 @@ class SourcePointClient {
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
-        print("call to GDPR status")
         client.get(url: statusGdprUrl) { (result) in
             if let _result = result, let parsedResult = try? JSONSerialization.jsonObject(with: _result, options: []) as? [String: Int] {
-                
                 let gdprStatus = parsedResult?["gdprApplies"]
                 cHandler(gdprStatus,nil)
             } else {
@@ -90,11 +85,11 @@ class SourcePointClient {
 
     // TODO: validate customConsentsURL with Utils.validate
     func getCustomConsents(forSiteId siteId: String, consentUUID: String,euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
-        print("call to custom consents")
+        
         let path = "/consent/v2/\(siteId)/custom-vendors"
         let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
         let decoder = JSONDecoder()
-        
+
         if let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl) {
             client.get(url: getCustomConsentsUrl) { (result) in
                 if let _result = result, let consents = try? decoder.decode(ConsentsResponse.self, from: _result) {

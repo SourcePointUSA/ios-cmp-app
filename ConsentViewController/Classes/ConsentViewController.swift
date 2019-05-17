@@ -17,7 +17,7 @@ import Reachability
 /**
  SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
  and offers ways to inspect the consents and purposes the user has chosen.
- 
+
  ```
  var consentViewController: ConsentViewController!
  override func viewDidLoad() {
@@ -55,19 +55,19 @@ import Reachability
     static public let EU_CONSENT_KEY: String = "euconsent"
     /// :nodoc:
     static public let CONSENT_UUID_KEY: String = "consentUUID"
-    
+
     /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
     static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
-    
+
     /// If the user is subject to GDPR, reading for this key in the `UserDefaults` will return "1" otherwise "0"
     static public let IAB_CONSENT_SUBJECT_TO_GDPR: String = "IABConsent_SubjectToGDPR"
-    
+
     /// They key used to store the IAB Consent string for the user in the `UserDefaults`
     static public let IAB_CONSENT_CONSENT_STRING: String = "IABConsent_ConsentString"
-    
+
     /// They key used to read and write the parsed IAB Purposes consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_PURPOSE_CONSENTS: String = "IABConsent_ParsedPurposeConsents"
-    
+
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
 
@@ -96,13 +96,13 @@ import Reachability
      at all, thus this call back won't be called.
      */
     public var onMessageReady: Callback?
-    
+
     /**
-      A `Callback` that will be called when the user selects an option on the WebView.
-      The selected choice will be available in the instance variable `choiceType`
+     A `Callback` that will be called when the user selects an option on the WebView.
+     The selected choice will be available in the instance variable `choiceType`
      */
     public var onMessageChoiceSelect: Callback?
-    
+
     /**
      A `Callback` to be called when the user finishes interacting with the WebView
      either by closing it, canceling or accepting the terms.
@@ -113,7 +113,7 @@ import Reachability
      * `IAB_CONSENT_CONSENT_STRING`
      * `IAB_CONSENT_PARSED_PURPOSE_CONSENTS`
      * `IAB_CONSENT_PARSED_VENDOR_CONSENTS`
-     
+
      Also at this point, the methods `getCustomVendorConsents()`,
      `getPurposeConsents(forIds:)` and `getPurposeConsent(forId:)`
      will also be able to be called from inside the callback
@@ -123,18 +123,18 @@ import Reachability
     public var onErrorOccurred: ((ConsentViewControllerError) -> Void)?
 
     var webView: WKWebView!
-    
+
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
     public var choiceType: Int? = nil
-    
+
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String
-    
+
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
     public var consentUUID: String
 
     /// The timeout interval in seconds for the message being displayed
-    public var messageTimeoutInSeconds = TimeInterval(5)
+    public var messageTimeoutInSeconds = TimeInterval(30)
 
     private let accountId: Int
     private let siteName: String
@@ -267,11 +267,11 @@ import Reachability
             let messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
             print ("url: \((messageUrl.absoluteString))")
             UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
+
             setSubjectToGDPR { (optionalErrorObject) in
                 if let error = optionalErrorObject {
                     self.messageStatus = .notStarted
                     self.onErrorOccurred?(error)
-                    return
                 } else {
                     guard Reachability()!.connection != .none else {
                         self.onErrorOccurred?(NoInternetConnection())
@@ -301,7 +301,11 @@ import Reachability
     }
 
     private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {
-        if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil) { return }
+        if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil){
+            cHandler(nil)
+            return
+        }
+
         sourcePoint.getGdprStatus { (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
                 cHandler(error)
@@ -311,28 +315,28 @@ import Reachability
             UserDefaults.standard.setValue(String(_gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         }
     }
-    
+
     /**
      Get the IAB consents given to each vendor id in the array passed as parameter
-     
+
      - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
      - Parameter _: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
-    */
+     */
     public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
         let consentString = try buildConsentString(storedConsentString)
-        
+
         for i in 0..<forIds.count {
             results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
         }
         return results
     }
- 
+
     /**
      Checks if the IAB purposes passed as parameter were given consent or not.
-     
+
      - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
      - Parameter _: an `Array` of purpose ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding purpose.
@@ -341,13 +345,13 @@ import Reachability
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
         let consentString = try buildConsentString(storedConsentString)
-        
+
         for i in 0..<forIds.count {
             results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
         }
         return results
     }
-    
+
     private func getSiteId (completionHandler cHandler:@escaping (String?, ConsentViewControllerError?) -> Void) {
         let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
         guard let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey) else {
@@ -368,41 +372,53 @@ import Reachability
     /**
      Checks if the non-IAB purposes passed as parameter were given consent or not.
      Same as `getIabVendorConsents(forIds: )` but for non-IAB vendors.
-     
+
      - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
     public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]?) -> Void) {
         loadAndStoreConsents { (optionalConsentResponse) in
-            cHandler(optionalConsentResponse?.consentedVendors)
+            if let _optionalConsentResponse = optionalConsentResponse {
+                cHandler(_optionalConsentResponse.consentedVendors)
+            } else {
+                cHandler(nil)
+            }
         }
     }
 
     /**
      Checks if a non-IAB purpose was given consent.
      Same as `getIabPurposeConsents(_) but for non-IAB purposes.
-     
+
      - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
     public func getCustomPurposeConsents(completionHandler cHandler : @escaping ([PurposeConsent]?) -> Void) {
         loadAndStoreConsents { (optionalConsentResponse) in
-            cHandler(optionalConsentResponse?.consentedPurposes)
+            if let _optionalConsentResponse = optionalConsentResponse {
+                cHandler(_optionalConsentResponse.consentedPurposes)
+            }else {
+                cHandler(nil)
+            }
         }
     }
 
     private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?) -> Void) {
-        var siteID : String?
-        getSiteId { (siteId, error) in
-            if let _siteID = siteId  {
-                siteID = _siteID
+        getSiteId { (optionalSiteID, error) in
+            if let _siteID = optionalSiteID {
+                self.sourcePoint.getCustomConsents(forSiteId: _siteID, consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, errror) in
+                    if let _consents = consents {
+                        cHandler(_consents)
+                    }else {
+                        cHandler(nil)
+                    }
+                })
+            } else {
+                cHandler(nil)
             }
         }
-        sourcePoint.getCustomConsents (forSiteId: siteID!, consentUUID: consentUUID, euConsent: euconsent, completionHandler: { (consents, error) in
-            cHandler(consents)
-        })
     }
 
     private func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
@@ -410,13 +426,13 @@ import Reachability
         let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
-        
+
         guard let consentString = try? ConsentString(consentString: euconsent) else {
             throw UnableToParseConsentStringError(euConsent: euconsentBase64Url)
         }
         return consentString
     }
-    
+
     private func storeIABVars(_ euconsentBase64Url: String) throws {
         let userDefaults = UserDefaults.standard
         // Set the standard IABConsent_ConsentString var in userDefaults
