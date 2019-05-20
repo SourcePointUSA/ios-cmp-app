@@ -62,8 +62,9 @@ class SourcePointClient {
 
     func getSiteId(completionHandler cHandler : @escaping (String?,ConsentViewControllerError?) -> Void) {
         client.get(url: siteIdUrl) { (result) in
-            if let _result = result, let parsedResult = try? JSONSerialization.jsonObject(with: _result, options: []) as? [String: Int] {
-                if let siteId = parsedResult?["site_id"] {
+            if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
+
+                if let siteId = parsedResult["site_id"] {
                     cHandler(String(siteId),nil)
                 }
             } else {
@@ -74,8 +75,9 @@ class SourcePointClient {
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
         client.get(url: statusGdprUrl) { (result) in
-            if let _result = result, let parsedResult = try? JSONSerialization.jsonObject(with: _result, options: []) as? [String: Int] {
-                let gdprStatus = parsedResult?["gdprApplies"]
+            if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
+                
+                let gdprStatus = parsedResult["gdprApplies"]
                 cHandler(gdprStatus,nil)
             } else {
                 cHandler(nil, GdprStatusNotFound(gdprStatusUrl: self.statusGdprUrl))
