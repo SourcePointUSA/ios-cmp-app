@@ -59,7 +59,6 @@ ConsentViewController *cvc = [[ConsentViewController alloc] initWithAccountId:22
 }];
 
 [cvc loadMessage];
-@end
 
 ```
 
