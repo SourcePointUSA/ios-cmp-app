@@ -228,6 +228,8 @@ import Reachability
         if #available(iOS 11.0, *) {
             webView.scrollView.contentInsetAdjustmentBehavior = .never;
         }
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webView.translatesAutoresizingMaskIntoConstraints = true
         webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.isOpaque = false
