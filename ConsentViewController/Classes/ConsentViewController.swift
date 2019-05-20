@@ -231,7 +231,8 @@ import Reachability
         webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.isOpaque = false
-        webView.backgroundColor = UIColor.clear
+        modalPresentationStyle = .overCurrentContext
+        webView.backgroundColor = .clear
         webView.allowsBackForwardNavigationGestures = true
         view = webView
     }
