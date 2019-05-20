@@ -1,3 +1,7 @@
+## 2.3.1 (May, 2o, 2019)
+* Fix an issue on iPads that when rotating the device would prevent the user from scrolling on the WebView
+* Added `ConsentViewController.enableNewPM`. When called passing `true`, will switch to the new (experimental) Privacy Manager.
+
 ## 2.3.0 (May, 2o, 2019)
 * `ConsentViewController.getCustom*Consents` now always return an collection of Consents rather than an `Optional`
 * Pod is able to be built on Swift 5 projects (thanks to @pwallrich)
