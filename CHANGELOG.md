@@ -1,5 +1,11 @@
+## 2.3.0 (May, 2o, 2019)
+* `ConsentViewController.getCustom*Consents` now always return an collection of Consents rather than an `Optional`
+* Pod is able to be built on Swift 5 projects (thanks to @pwallrich)
+* The example app is now simplied and the README has been updated
+
 ## 2.2.4 (April 20, 2019)
 * Moved  the API calls on secondary thread to keep main thread independent and free for UI opertaion.
+
 ## 2.2.3 (April 09, 2019)
 * fix an issue that'd crash the client app if subclassing `ConsentViewController`
 
