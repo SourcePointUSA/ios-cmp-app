@@ -142,6 +142,8 @@ import Reachability
 
     private let sourcePoint: SourcePointClient
 
+    private var newPM = false
+
     /**
      Initialises the library with `accountId` and `siteName`.
      */
@@ -215,6 +217,10 @@ import Reachability
         targetingParams[key] = value
     }
 
+    public func enableNewPM(_ newPM: Bool) {
+        self.newPM = newPM
+    }
+
     /// :nodoc:
     override open func loadView() {
         let config = WKWebViewConfiguration()
@@ -267,7 +273,11 @@ import Reachability
         do {
             messageStatus = .loading
             loadView()
-            let messageUrl = try sourcePoint.getMessageUrl(forTargetingParams:  targetingParams, debugLevel: debugLevel.rawValue)
+            let messageUrl = try sourcePoint.getMessageUrl(
+                forTargetingParams:  targetingParams,
+                debugLevel: debugLevel.rawValue,
+                newPM: newPM
+            )
             print ("url: \((messageUrl.absoluteString))")
             UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
 

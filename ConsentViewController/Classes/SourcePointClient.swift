@@ -108,7 +108,7 @@ class SourcePointClient {
         return String(data: data, encoding: String.Encoding.utf8)!
     }
 
-    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String) throws -> URL {
+    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool) throws -> URL {
         var url: URL
         var components = URLComponents()
 
@@ -122,8 +122,9 @@ class SourcePointClient {
                 "_sp_cmp_origin": cmpUrl.host!,
                 "_sp_msg_targetingParams": try encode(targetingParams: params),
                 "_sp_debug_level": debugLevel,
+                "_sp_pmOrigin": newPM ? "stage" : "prod",
                 "_sp_msg_stageCampaign": String(stagingCampaign)
-                ].map { URLQueryItem(name: $0.key, value: $0.value) }
+            ].map { URLQueryItem(name: $0.key, value: $0.value) }
             url = components.url(relativeTo: messageUrl)!
         } catch {
             throw InvalidMessageURLError(urlString: messageUrl.absoluteString)
