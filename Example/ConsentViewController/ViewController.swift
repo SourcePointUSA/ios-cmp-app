@@ -11,11 +11,9 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     func loadConsentManager(myPrivacyManager: Bool) {
-        let cvc = try! ConsentViewController(accountId: 630, siteName: "test.skynews.ios", stagingCampaign: false)
+        let cvc = try! ConsentViewController(accountId: 22, siteName: "mobile.demo", stagingCampaign: false)
 
-//        cvc.enableNewPM(true)
-
-        cvc.setTargetingParam(key: "displayMode", value: myPrivacyManager ? "userRequested" : "appLaunch")
+        cvc.setTargetingParam(key: "MyPrivacyManager", value: String(myPrivacyManager))
 
         cvc.onMessageReady = { controller in
             self.present(controller, animated: false, completion: nil)

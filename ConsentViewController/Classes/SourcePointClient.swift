@@ -108,23 +108,25 @@ class SourcePointClient {
         return String(data: data, encoding: String.Encoding.utf8)!
     }
 
-    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool) throws -> URL {
+    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
         var url: URL
         var components = URLComponents()
+        var queryItems: [String:String] = [:]
 
         do {
-            components.queryItems = [
+            queryItems = [
                 "_sp_accountId": accountId,
                 "_sp_cmp_inApp": "true",
                 "_sp_writeFirstPartyCookies": "true",
                 "_sp_siteHref": siteUrl.absoluteString,
                 "_sp_msg_domain": mmsUrl.host!,
-                "_sp_cmp_origin": cmpUrl.host!,
+                "_sp_cmp_origin": "//\(cmpUrl.host!)",
                 "_sp_msg_targetingParams": try encode(targetingParams: params),
                 "_sp_debug_level": debugLevel,
-                "_sp_pmOrigin": newPM ? "stage" : "prod",
                 "_sp_msg_stageCampaign": String(stagingCampaign)
-            ].map { URLQueryItem(name: $0.key, value: $0.value) }
+            ]
+            if(authId != nil) { queryItems["_sp_authId"] = authId }
+            components.queryItems = queryItems.map { URLQueryItem(name: $0.key, value: $0.value) }
             url = components.url(relativeTo: messageUrl)!
         } catch {
             throw InvalidMessageURLError(urlString: messageUrl.absoluteString)
