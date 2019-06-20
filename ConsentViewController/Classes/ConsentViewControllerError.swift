@@ -29,7 +29,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)" } }
+    override public var description: String { get { return "\(errorDescription!)" } }
 }
 
 @objcMembers public class InvalidMessageURLError: ConsentViewControllerError {
@@ -46,7 +46,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)\n\(helpAnchor!)" } }
+    override public var description: String { get { return "\(errorDescription!)" } }
 }
 
 @objcMembers public class InvalidURLError: ConsentViewControllerError {
@@ -64,7 +64,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)\n\(helpAnchor!)" } }
+    override public var description: String { get { return "\(errorDescription!)\n\(helpAnchor!)" } }
 }
 
 @objcMembers public class SiteIDNotFound: ConsentViewControllerError {
@@ -82,7 +82,8 @@ import Foundation
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)\n\(helpAnchor!)" } }
+    override public var description: String { get { return
+        "\(errorDescription!)" } }
 }
 
 @objcMembers public class GdprStatusNotFound: ConsentViewControllerError {
@@ -98,13 +99,15 @@ import Foundation
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)\n\(helpAnchor!)" } }
+    override public var description: String { get { return
+        "\(errorDescription!)"
+        } }
 }
 
 @objcMembers public class ConsentsAPIError: ConsentViewControllerError {
     public var failureReason: String? { get { return "Failed to get Custom Consents" } }
-    public var errorDescription: String? { get { return "Failed to either get custom consents or parse the endpoint's response" } }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)" } }
+    public var errorDescription: String? { get { return "Failed to either get custom consents or unable to parse the endpoint's response" } }
+    override public var description: String { get { return "\(errorDescription!)" } }
 }
 
 public let WebViewErrors: [String : ConsentViewControllerError] = [
@@ -113,17 +116,17 @@ public let WebViewErrors: [String : ConsentViewControllerError] = [
 ]
 
 @objcMembers public class PrivacyManagerLoadError: ConsentViewControllerError {
-    public var failureReason: String? { get { return "Failed start the Privacy Manager" } }
+    public var failureReason: String? { get { return "Failed to start the Privacy Manager" } }
     public var errorDescription: String? { get { return "Could not load the Privacy Manager due to a javascript error." } }
     override public var helpAnchor: String? { get { return "This is most probably happening due to a misconfiguration on the Publisher's portal." } }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)\n\(helpAnchor!)" } }
+    override public var description: String { get { return "\(errorDescription!)\n\(helpAnchor!)" } }
 }
 
 @objcMembers public class PrivacyManagerSaveError: ConsentViewControllerError {
     public var failureReason: String? { get { return "Failed to save user consents on Privacy Manager" } }
     public var errorDescription: String? { get { return "Something wrong happened while saving the privacy settings on the Privacy Manager" } }
     override public var helpAnchor: String? { get { return "This might have occurred due to faulty internet connection." } }
-    override public var description: String { get { return "\(failureReason!)\n\(errorDescription!)\n\(helpAnchor!)" } }
+    override public var description: String { get { return "\(errorDescription!)" } }
 }
 
 @objcMembers public class PrivacyManagerUnknownMessageResponse: ConsentViewControllerError {
