@@ -465,9 +465,11 @@ import Reachability
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
-    private func onReceiveMessage(willShow: Bool) {
+    private func onReceiveMessage(shouldShowMessage: Bool, consentUUID: String, euconsent: String) {
         onMessageReadyCalled = true
-        willShow ? onMessageReady?(self) : done()
+        shouldShowMessage ?
+            onMessageReady?(self) :
+            self.onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
     }
 
     private func onMessageChoiceSelect(choiceType: Int) {
@@ -503,8 +505,12 @@ import Reachability
     private func handleMessage(withName name: String, andBody body: [String:Any?]) {
         switch name {
         case "onReceiveMessageData": // when the message is first loaded
-            guard let willShow = body["willShowMessage"] as? Int else { fallthrough }
-            onReceiveMessage(willShow: willShow == 1)
+            guard
+                let shouldShowMessage = body["shouldShowMessage"] as? Bool,
+                let consentUUID = body["consentUUID"] as? String,
+                let euconsent = body["euconsent"] as? String
+            else { fallthrough }
+            onReceiveMessage(shouldShowMessage: shouldShowMessage, consentUUID: consentUUID, euconsent: euconsent)
         case "onMessageChoiceSelect": // when a choice is selected
             guard let choiceType = body["choiceType"] as? Int else { fallthrough }
             onMessageChoiceSelect(choiceType: choiceType)

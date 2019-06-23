@@ -3,8 +3,8 @@
         window.webkit.messageHandlers.JSReceiver.postMessage({ name: name, body: body });
     }
     window.JSReceiver = {
-        onReceiveMessageData: function (willShowMessage, msgJSON) {
-            postToWebView('onReceiveMessageData', { willShowMessage: willShowMessage, msgJSON: msgJSON });
+        onReceiveMessageData: function (messageData) {
+            postToWebView('onReceiveMessageData', JSON.parse(messageData));
         },
         onMessageChoiceSelect: function (choiceType) {
             postToWebView('onMessageChoiceSelect', { choiceType: choiceType });
