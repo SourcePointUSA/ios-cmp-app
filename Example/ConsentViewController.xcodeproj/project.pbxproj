@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21233A8E0B54976B198A3557 /* Pods_AuthExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */; };
 		4AF9FC55B8D5FF6D34DBFD5B /* Pods_ConsentViewController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -14,6 +15,13 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
+		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
+		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
+		8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14622BA5A6C00D2669B /* Assets.xcassets */; };
+		8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */; };
+		82494B5C22BCC71E001951AA /* ConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82494B5B22BCC71E001951AA /* ConsentManager.swift */; };
+		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +37,7 @@
 /* Begin PBXFileReference section */
 		326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C713B0FF3D9458F2FFA2EA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConsentViewController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,8 +50,20 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		7228B53CDDACE73BC4006A55 /* Pods-ConsentViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
+		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8231B14122BA5A6B00D2669B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8231B14422BA5A6B00D2669B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8231B14622BA5A6C00D2669B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8231B14922BA5A6C00D2669B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8231B14B22BA5A6C00D2669B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8231B15122BBC39900D2669B /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82494B5B22BCC71E001951AA /* ConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManager.swift; sourceTree = "<group>"; };
+		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AuthExample/Pods-AuthExample.release.xcconfig"; sourceTree = "<group>"; };
 		977885D1C020D8A587B1BC36 /* Pods-ConsentViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AA36A7D29C1E427A75F8D4 /* ConsentViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConsentViewController.podspec; path = ../ConsentViewController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D83BC135AFAA50BE83A3029B /* Pods-AuthExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AuthExample/Pods-AuthExample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +82,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8231B13A22BA5A6B00D2669B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21233A8E0B54976B198A3557 /* Pods_AuthExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -69,6 +98,8 @@
 			children = (
 				977885D1C020D8A587B1BC36 /* Pods-ConsentViewController_Example.debug.xcconfig */,
 				7228B53CDDACE73BC4006A55 /* Pods-ConsentViewController_Example.release.xcconfig */,
+				D83BC135AFAA50BE83A3029B /* Pods-AuthExample.debug.xcconfig */,
+				8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -79,6 +110,7 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ConsentViewController */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				8231B13E22BA5A6B00D2669B /* AuthExample */,
 				607FACD11AFB9204008FA782 /* Products */,
 				1CDEC261E0D620E46748CCE7 /* Pods */,
 				EEE3CDAB8AFE80647B1E565B /* Frameworks */,
@@ -90,6 +122,7 @@
 			children = (
 				607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */,
 				607FACE51AFB9204008FA782 /* ConsentViewController_Tests.xctest */,
+				8231B13D22BA5A6B00D2669B /* AuthExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,10 +176,27 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		8231B13E22BA5A6B00D2669B /* AuthExample */ = {
+			isa = PBXGroup;
+			children = (
+				8231B13F22BA5A6B00D2669B /* AppDelegate.swift */,
+				8231B14122BA5A6B00D2669B /* LoginViewController.swift */,
+				8277C33B22BBD22C00F1607F /* HomeViewController.swift */,
+				82494B5B22BCC71E001951AA /* ConsentManager.swift */,
+				8231B14322BA5A6B00D2669B /* Main.storyboard */,
+				8231B14622BA5A6C00D2669B /* Assets.xcassets */,
+				8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */,
+				8231B14B22BA5A6C00D2669B /* Info.plist */,
+			);
+			path = AuthExample;
+			sourceTree = "<group>";
+		};
 		EEE3CDAB8AFE80647B1E565B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8231B15122BBC39900D2669B /* ConsentViewController.framework */,
 				326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */,
+				494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -191,13 +241,32 @@
 			productReference = 607FACE51AFB9204008FA782 /* ConsentViewController_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		8231B13C22BA5A6B00D2669B /* AuthExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8231B14E22BA5A6C00D2669B /* Build configuration list for PBXNativeTarget "AuthExample" */;
+			buildPhases = (
+				A2035C8D26F2E866B8AB6E65 /* [CP] Check Pods Manifest.lock */,
+				8231B13922BA5A6B00D2669B /* Sources */,
+				8231B13A22BA5A6B00D2669B /* Frameworks */,
+				8231B13B22BA5A6B00D2669B /* Resources */,
+				C37AAE271C640BA5A5565499 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AuthExample;
+			productName = AuthExample;
+			productReference = 8231B13D22BA5A6B00D2669B /* AuthExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -211,6 +280,11 @@
 						DevelopmentTeam = 2JCN984334;
 						LastSwiftMigration = 1010;
 						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+					8231B13C22BA5A6B00D2669B = {
+						CreatedOnToolsVersion = 10.2.1;
+						DevelopmentTeam = 6KYEQLUC5A;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -229,6 +303,7 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* ConsentViewController_Example */,
 				607FACE41AFB9204008FA782 /* ConsentViewController_Tests */,
+				8231B13C22BA5A6B00D2669B /* AuthExample */,
 			);
 		};
 /* End PBXProject section */
@@ -251,9 +326,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8231B13B22BA5A6B00D2669B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */,
+				8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */,
+				8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A2035C8D26F2E866B8AB6E65 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AuthExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A67CB7FA9C1FE95629602085 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,8 +368,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS8.0/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS8.0/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -272,6 +379,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C37AAE271C640BA5A5565499 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AuthExample/Pods-AuthExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS12.2/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS12.2/Reachability.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ConsentViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AuthExample/Pods-AuthExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D3C4644E7628241810B1A916 /* [CP] Check Pods Manifest.lock */ = {
@@ -316,6 +443,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8231B13922BA5A6B00D2669B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */,
+				8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */,
+				82494B5C22BCC71E001951AA /* ConsentManager.swift in Sources */,
+				8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -341,6 +479,22 @@
 				607FACDF1AFB9204008FA782 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		8231B14322BA5A6B00D2669B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8231B14422BA5A6B00D2669B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8231B14922BA5A6C00D2669B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -524,6 +678,61 @@
 			};
 			name = Release;
 		};
+		8231B14C22BA5A6C00D2669B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D83BC135AFAA50BE83A3029B /* Pods-AuthExample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AuthExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sourcepoint.AuthExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8231B14D22BA5A6C00D2669B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AuthExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sourcepoint.AuthExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -550,6 +759,15 @@
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
 				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8231B14E22BA5A6C00D2669B /* Build configuration list for PBXNativeTarget "AuthExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8231B14C22BA5A6C00D2669B /* Debug */,
+				8231B14D22BA5A6C00D2669B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
