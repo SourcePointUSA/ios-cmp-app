@@ -1,3 +1,7 @@
+## 2.4.0 (June, 27, 2019)
+* Implement Identity feature
+* Versioning of in-app web page
+
 ## 2.3.1 (May, 20, 2019)
 * Fix an issue on iPads that when rotating the device would prevent the user from scrolling on the WebView
 * Added `ConsentViewController.enableNewPM`. When called passing `true`, will switch to the new (experimental) Privacy Manager.
