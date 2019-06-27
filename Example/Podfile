@@ -3,3 +3,7 @@ use_frameworks!
 target 'ConsentViewController_Example' do
   pod 'ConsentViewController', :path => '../'
 end
+
+target 'AuthExample' do
+  pod 'ConsentViewController', :path => '../'
+end

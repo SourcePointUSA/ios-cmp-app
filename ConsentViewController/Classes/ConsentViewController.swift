@@ -83,8 +83,8 @@ import Reachability
     static public let STAGING_CMP_DOMAIN = "cmp.sp-stage.net"
     static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
 
-    static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net"
-    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org"
+    static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net/v2.0.html"
+    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v2.0.html"
 
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
@@ -267,50 +267,57 @@ import Reachability
 
     private enum MessageStatus { case notStarted, loading, loaded }
     private var messageStatus = MessageStatus.notStarted
-    public func loadMessage() {
+    private func loadMessage(withMessageUrl messageUrl: URL) {
         if(messageStatus == .loading || messageStatus == .loaded) { return }
 
-        do {
-            messageStatus = .loading
-            loadView()
-            let messageUrl = try sourcePoint.getMessageUrl(
-                forTargetingParams:  targetingParams,
-                debugLevel: debugLevel.rawValue,
-                newPM: newPM
-            )
-            print ("url: \((messageUrl.absoluteString))")
-            UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
+        messageStatus = .loading
+        loadView()
+        print ("url: \((messageUrl.absoluteString))")
+        UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
 
-            setSubjectToGDPR { (optionalErrorObject) in
-                if let error = optionalErrorObject {
+        setSubjectToGDPR { (optionalErrorObject) in
+            if let error = optionalErrorObject {
+                self.messageStatus = .notStarted
+                self.onErrorOccurred?(error)
+            } else {
+                guard Reachability()!.connection != .none else {
+                    self.onErrorOccurred?(NoInternetConnection())
                     self.messageStatus = .notStarted
-                    self.onErrorOccurred?(error)
-                } else {
-                    guard Reachability()!.connection != .none else {
-                        self.onErrorOccurred?(NoInternetConnection())
-                        self.messageStatus = .notStarted
-                        return
-                    }
-                    self.webView.load(URLRequest(url: messageUrl))
-                    self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
-                        self.onMessageReady = nil
-                        self.onErrorOccurred?(MessageTimeout())
-                        self.messageStatus = .notStarted
-                        }};
-                    self.messageStatus = .loaded
+                    return
                 }
+                self.webView.load(URLRequest(url: messageUrl))
+                self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
+                    self.onMessageReady = nil
+                    self.onErrorOccurred?(MessageTimeout())
+                    self.messageStatus = .notStarted
+                    }};
+                self.messageStatus = .loaded
             }
-        } catch let error as ConsentViewControllerError {
-            messageStatus = .notStarted
-            onErrorOccurred?(error)
-            return
-        } catch {}
+        }
     }
 
-    /// :nodoc:
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        loadMessage()
+    private func getMessageUrl(authId: String?) -> URL? {
+        do {
+           return try sourcePoint.getMessageUrl(
+                forTargetingParams:  targetingParams,
+                debugLevel: debugLevel.rawValue,
+                newPM: newPM,
+                authId: authId
+            )
+        } catch let error as ConsentViewControllerError {
+            onErrorOccurred?(error)
+        } catch {}
+        return nil
+    }
+
+    public func loadMessage(forAuthId authId: String) {
+        guard let url = getMessageUrl(authId: authId) else { return }
+        loadMessage(withMessageUrl: url)
+    }
+
+    public func loadMessage() {
+        guard let url = getMessageUrl(authId: nil) else { return }
+        loadMessage(withMessageUrl: url)
     }
 
     private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {
@@ -458,9 +465,11 @@ import Reachability
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
-    private func onReceiveMessage(willShow: Bool) {
+    private func onReceiveMessage(shouldShowMessage: Bool, consentUUID: String, euconsent: String) {
         onMessageReadyCalled = true
-        willShow ? onMessageReady?(self) : done()
+        shouldShowMessage ?
+            onMessageReady?(self) :
+            self.onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
     }
 
     private func onMessageChoiceSelect(choiceType: Int) {
@@ -496,8 +505,12 @@ import Reachability
     private func handleMessage(withName name: String, andBody body: [String:Any?]) {
         switch name {
         case "onReceiveMessageData": // when the message is first loaded
-            guard let willShow = body["willShowMessage"] as? Int else { fallthrough }
-            onReceiveMessage(willShow: willShow == 1)
+            guard
+                let shouldShowMessage = body["shouldShowMessage"] as? Bool,
+                let consentUUID = body["consentUUID"] as? String,
+                let euconsent = body["euconsent"] as? String
+            else { fallthrough }
+            onReceiveMessage(shouldShowMessage: shouldShowMessage, consentUUID: consentUUID, euconsent: euconsent)
         case "onMessageChoiceSelect": // when a choice is selected
             guard let choiceType = body["choiceType"] as? Int else { fallthrough }
             onMessageChoiceSelect(choiceType: choiceType)
@@ -535,7 +548,6 @@ import Reachability
         onInteractionComplete?(self)
     }
 }
-
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
