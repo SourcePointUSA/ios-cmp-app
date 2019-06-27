@@ -33,25 +33,29 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4Fs-bT-EQr">
                                                 <rect key="frame" x="0.0" y="30.5" width="374" height="30"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" restorationIdentifier="authId" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wwN-uc-vVW">
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" restorationIdentifier="authId" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="JohnSnow" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wwN-uc-vVW">
                                                         <rect key="frame" x="0.0" y="0.0" width="312" height="30"/>
                                                         <accessibility key="accessibilityConfiguration" hint="Auth Id" label="Auth Id"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="username"/>
+                                                        <connections>
+                                                            <action selector="onUserNameChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="bGS-iX-seF"/>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="vur-Tt-05p"/>
+                                                        </connections>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTh-CO-AwZ">
+                                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTh-CO-AwZ">
                                                         <rect key="frame" x="332" y="0.0" width="42" height="30"/>
                                                         <state key="normal" title="Log in"/>
                                                         <connections>
-                                                            <segue destination="NMY-Rp-tLC" kind="show" id="kGS-Eu-SBm"/>
+                                                            <segue destination="NMY-Rp-tLC" kind="show" identifier="LoginSegue" id="kGS-Eu-SBm"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="5mz-Qp-Zwh">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="5mz-Qp-Zwh">
                                         <rect key="frame" x="0.0" y="80.5" width="374" height="653.5"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
@@ -86,6 +90,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="LL0-nH-Q92">
+                        <barButtonItem key="backBarButtonItem" title="Log Out" id="uO2-eP-yqs"/>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="B5C-Pc-UTS">
                             <connections>
                                 <action selector="onSettingsPress:" destination="BYZ-38-t0r" id="d7B-PX-p7S"/>
@@ -95,6 +100,7 @@
                     <connections>
                         <outlet property="authIdField" destination="wwN-uc-vVW" id="hwp-E7-PRj"/>
                         <outlet property="consentTableView" destination="5mz-Qp-Zwh" id="CSu-p4-BdK"/>
+                        <outlet property="loginButton" destination="QTh-CO-AwZ" id="umL-j1-TeK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -9,13 +9,29 @@
 import UIKit
 import ConsentViewController
 
-class LoginViewController: UIViewController, UITableViewDataSource {
+class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate {
+    @IBOutlet var loginButton: UIButton!
     @IBOutlet var authIdField: UITextField!
     @IBOutlet var consentTableView: UITableView!
 
-    let tableSections = ["cookies", "consents"]
-    var cookies: [String] = []
-    var consents:[Consent] = []
+    @IBAction func onUserNameChanged(_ sender: UITextField) {
+        let userName = sender.text ?? ""
+        loginButton.isEnabled = userName.trimmingCharacters(in: .whitespacesAndNewlines) != ""
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        let userName = textField.text ?? ""
+        if(userName.trimmingCharacters(in: .whitespacesAndNewlines) != "") {
+            loginButton.sendActions(for: .touchUpInside)
+            return true
+        }
+        return false
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
     func loadConsents(myPrivacyManager: Bool) {
         ConsentManager(viewController: self, myPrivacyManager: myPrivacyManager)
@@ -49,13 +65,21 @@ class LoginViewController: UIViewController, UITableViewDataSource {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is HomeViewController {
-            let homeController = segue.destination as? HomeViewController
-            guard let authId = authIdField.text else { return }
-            authIdField.text = ""
-            homeController?.authId = authId
-        }
+        let homeController = segue.destination as? HomeViewController
+        homeController?.authId = authIdField.text!
+        resetView()
     }
+
+    func resetView() {
+        authIdField.text = nil
+        loginButton.isEnabled = false
+    }
+
+    // MARK: ConsentTableView related
+
+    let tableSections = ["cookies", "consents"]
+    var cookies: [String] = []
+    var consents:[Consent] = []
 
     func initData() {
         self.cookies = [
