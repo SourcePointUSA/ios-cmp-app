@@ -16,7 +16,7 @@
   },
   "swift_versions": "4.2",
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "source_files": "ConsentViewController/Classes/**/*",
   "resource_bundles": {

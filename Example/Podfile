@@ -1,9 +1,11 @@
 use_frameworks!
 
 target 'ConsentViewController_Example' do
+  platform :ios, '9.0'
   pod 'ConsentViewController', :path => '../'
 end
 
 target 'AuthExample' do
+  platform :ios, '9.0'
   pod 'ConsentViewController', :path => '../'
 end
