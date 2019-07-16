@@ -221,15 +221,18 @@ import Reachability
         self.newPM = newPM
     }
 
+    private func getJSScript() -> WKUserScript {
+        return WKUserScript(
+            source: try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!),
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: false)
+    }
+
     /// :nodoc:
     override open func loadView() {
         let config = WKWebViewConfiguration()
-        let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!)
-        let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-        userContentController.addUserScript(script)
-        userContentController.add(self, name: "JSReceiver")
-        config.userContentController = userContentController
+        config.userContentController.addUserScript(getJSScript())
+        config.userContentController.add(self, name: "JSReceiver")
         webView = WKWebView(frame: .zero, configuration: config)
         if #available(iOS 11.0, *) {
             webView.scrollView.contentInsetAdjustmentBehavior = .never;
@@ -526,6 +529,8 @@ import Reachability
             return
         case "onMessageChoiceError":
             onErrorOccurred(WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+        case "xhrLog":
+            print(body)
         default:
             onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }

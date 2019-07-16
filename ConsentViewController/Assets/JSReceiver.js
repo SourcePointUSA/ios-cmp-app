@@ -20,6 +20,9 @@
         },
         onMessageChoiceError: function (errorObj) {
             postToWebView('onMessageChoiceError', { error: errorObj.error });
+        },
+        xhrLog: function (logPayload) {
+            postToWebView('xhrLog', JSON.parse(logPayload));
         }
     };
 })();
