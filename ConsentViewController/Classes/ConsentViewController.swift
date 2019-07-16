@@ -321,11 +321,6 @@ import Reachability
     }
 
     private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {
-        if(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR) != nil){
-            cHandler(nil)
-            return
-        }
-
         sourcePoint.getGdprStatus { (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
                 cHandler(error)
@@ -374,19 +369,16 @@ import Reachability
 
     private func getSiteId (completionHandler cHandler:@escaping (String?, ConsentViewControllerError?) -> Void) {
         let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
-        guard let storedSiteId = UserDefaults.standard.string(forKey: siteIdKey) else {
-            sourcePoint.getSiteId { (siteId, error) in
-                guard let _siteID = siteId else {
-                    cHandler(nil, error)
-                    return
-                }
-                UserDefaults.standard.setValue(_siteID, forKey: siteIdKey)
-                UserDefaults.standard.synchronize()
-                cHandler(_siteID, nil)
+        sourcePoint.getSiteId { (siteId, error) in
+            guard let siteId = siteId else {
+                cHandler(nil, error)
+                return
             }
-            return
+
+            UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
+            UserDefaults.standard.synchronize()
+            cHandler(siteId, nil)
         }
-        cHandler(storedSiteId, nil)
     }
 
     /**
