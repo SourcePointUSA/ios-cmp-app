@@ -505,6 +505,23 @@ import Reachability
         done()
     }
 
+    private func handleXhrLog(_ body: [String:Any?]) {
+        guard
+            let type = body["type"] as? String,
+            let url = body["url"] as? String,
+            let cookies = body["cookies"] as? String
+        else { return }
+        if(type == "request"){
+            print("{ type: \(type), url: \(url), cookies: \(cookies)}")
+        } else {
+            guard
+                let status = body["status"] as? String,
+                let response = body["response"] as? [String:String]
+            else { return }
+            print("{ type: \(type), url: \(url), cookies: \(cookies), status: \(status), response: \(response)}")
+        }
+    }
+
     private func handleMessage(withName name: String, andBody body: [String:Any?]) {
         switch name {
         case "onReceiveMessageData": // when the message is first loaded
@@ -530,7 +547,7 @@ import Reachability
         case "onMessageChoiceError":
             onErrorOccurred(WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "xhrLog":
-            print(body)
+            handleXhrLog(body)
         default:
             onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
@@ -557,4 +574,12 @@ import Reachability
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+extension Optional {
+    func or(_ other: Optional) -> Optional {
+        switch self {
+        case .none: return other
+        case .some: return self
+        }
+    }
 }
