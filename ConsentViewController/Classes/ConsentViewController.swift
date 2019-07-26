@@ -512,13 +512,13 @@ import Reachability
             let cookies = body["cookies"] as? String
         else { return }
         if(type == "request"){
-            print("{ type: \(type), url: \(url), cookies: \(cookies)}")
+            print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\" }")
         } else {
             guard
                 let status = body["status"] as? String,
                 let response = body["response"] as? [String:String]
             else { return }
-            print("{ type: \(type), url: \(url), cookies: \(cookies), status: \(status), response: \(response)}")
+            print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\", \"status\": \"\(status)\", \"response\": \"\(response)\" }")
         }
     }
 
