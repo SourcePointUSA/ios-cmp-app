@@ -515,10 +515,11 @@ import Reachability
             print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\" }")
         } else {
             guard
-                let status = body["status"] as? String,
-                let response = body["response"] as? [String:String]
+                let status = body["status"] as? Int,
+                let response = body["response"] as? String,
+                let headers = body["headers"] as? String
             else { return }
-            print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\", \"status\": \"\(status)\", \"response\": \"\(response)\" }")
+            print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\", \"status\": \"\(status)\", \"response\": \(response), \"headers\": \"\(headers)\" }")
         }
     }
 
