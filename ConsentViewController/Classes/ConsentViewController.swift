@@ -10,8 +10,8 @@
 public typealias Callback = (ConsentViewController) -> Void
 
 import UIKit
-import WebKit
-import JavaScriptCore
+//import WebKit
+//import JavaScriptCore
 import Reachability
 
 /**
@@ -39,7 +39,7 @@ import Reachability
  view.addSubview(consentViewController.view)
  ```
 */
-@objcMembers open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+@objcMembers open class ConsentViewController: UIViewController, ConsentWebViewHandler  {
 
     /// :nodoc:
     public enum DebugLevel: String {
@@ -122,8 +122,6 @@ import Reachability
 
     public var onErrorOccurred: ((ConsentViewControllerError) -> Void)?
 
-    var webView: WKWebView!
-
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
     public var choiceType: Int? = nil
 
@@ -143,6 +141,9 @@ import Reachability
     private let sourcePoint: SourcePointClient
 
     private var newPM = false
+    
+    public var sendURL: URL?
+    public var webview: WebView?
 
     /**
      Initialises the library with `accountId` and `siteName`.
@@ -220,45 +221,26 @@ import Reachability
     public func enableNewPM(_ newPM: Bool) {
         self.newPM = newPM
     }
-
-    /// :nodoc:
-    override open func loadView() {
-        let config = WKWebViewConfiguration()
-        let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!)
-        let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-        userContentController.addUserScript(script)
-        userContentController.add(self, name: "JSReceiver")
-        config.userContentController = userContentController
-        webView = WKWebView(frame: .zero, configuration: config)
-        if #available(iOS 11.0, *) {
-            webView.scrollView.contentInsetAdjustmentBehavior = .never;
-        }
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.translatesAutoresizingMaskIntoConstraints = true
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        webView.isOpaque = false
-        modalPresentationStyle = .overCurrentContext
-        webView.backgroundColor = .clear
-        webView.allowsBackForwardNavigationGestures = true
-        view = webView
+    
+    public func willShowMessage() {
+        onMessageReadyCalled = true
+        onMessageReady?(self)
     }
-
-    /// :nodoc:
-    // handles links with "target=_blank", forcing them to open in Safari
-    public func webView(_ webView: WKWebView,
-                        createWebViewWith configuration: WKWebViewConfiguration,
-                        for navigationAction: WKNavigationAction,
-                        windowFeatures: WKWindowFeatures) -> WKWebView? {
-        guard let url = navigationAction.request.url else { return nil }
-
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-        return nil
+    
+    public func didGetConsentData(euconsent: String, consentUUID: String) {
+        onMessageReadyCalled = true // TODO: change this variable to onConsentLoaded
+        self.euconsent = euconsent
+        self.consentUUID = consentUUID
+        do {
+            try storeIABVars(euconsent)
+            let userDefaults = UserDefaults.standard
+            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+            userDefaults.synchronize()
+        } catch let error as ConsentViewControllerError {
+            onErrorOccurred?(error)
+        } catch {}
+        done()
     }
 
     private func timeOut(inSeconds seconds: Double, callback: @escaping () -> ()) {
@@ -271,29 +253,32 @@ import Reachability
         if(messageStatus == .loading || messageStatus == .loaded) { return }
 
         messageStatus = .loading
-        loadView()
+//        loadView()
         print ("url: \((messageUrl.absoluteString))")
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
+        self.sendURL = messageUrl
+        self.webview?.consentWebViewHandler = self
+        return
 
-        setSubjectToGDPR { (optionalErrorObject) in
-            if let error = optionalErrorObject {
-                self.messageStatus = .notStarted
-                self.onErrorOccurred?(error)
-            } else {
-                guard Reachability()!.connection != .none else {
-                    self.onErrorOccurred?(NoInternetConnection())
-                    self.messageStatus = .notStarted
-                    return
-                }
-                self.webView.load(URLRequest(url: messageUrl))
-                self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
-                    self.onMessageReady = nil
-                    self.onErrorOccurred?(MessageTimeout())
-                    self.messageStatus = .notStarted
-                    }};
-                self.messageStatus = .loaded
-            }
-        }
+//        setSubjectToGDPR { (optionalErrorObject) in
+//            if let error = optionalErrorObject {
+//                self.messageStatus = .notStarted
+//                self.onErrorOccurred?(error)
+//            } else {
+//                guard Reachability()!.connection != .none else {
+//                    self.onErrorOccurred?(NoInternetConnection())
+//                    self.messageStatus = .notStarted
+//                    return
+//                }
+////                self.webView.load(URLRequest(url: messageUrl))
+//                self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
+//                    self.onMessageReady = nil
+//                    self.onErrorOccurred?(MessageTimeout())
+//                    self.messageStatus = .notStarted
+//                    }};
+//                self.messageStatus = .loaded
+//            }
+//        }
     }
 
     private func getMessageUrl(authId: String?) -> URL? {
@@ -310,14 +295,16 @@ import Reachability
         return nil
     }
 
-    public func loadMessage(forAuthId authId: String) {
-        guard let url = getMessageUrl(authId: authId) else { return }
+    public func loadMessage(forAuthId authId: String) -> URL? {
+        guard let url = getMessageUrl(authId: authId) else { return nil }
         loadMessage(withMessageUrl: url)
+        return sendURL
     }
 
-    public func loadMessage() {
-        guard let url = getMessageUrl(authId: nil) else { return }
+    public func loadMessage() -> URL? {
+        guard let url = getMessageUrl(authId: nil) else { return nil}
         loadMessage(withMessageUrl: url)
+        return sendURL
     }
 
     private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {
@@ -457,13 +444,6 @@ import Reachability
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
-    private func onReceiveMessage(shouldShowMessage: Bool, consentUUID: String, euconsent: String) {
-        onMessageReadyCalled = true
-        shouldShowMessage ?
-            onMessageReady?(self) :
-            self.onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
-    }
-
     private func onMessageChoiceSelect(choiceType: Int) {
         guard Reachability()!.connection != .none else {
             onErrorOccurred?(NoInternetConnection())
@@ -474,66 +454,9 @@ import Reachability
         onMessageChoiceSelect?(self)
     }
 
-    private func onInteractionComplete(euconsent: String, consentUUID: String) {
-        self.euconsent = euconsent
-        self.consentUUID = consentUUID
-        do {
-            try storeIABVars(euconsent)
-            let userDefaults = UserDefaults.standard
-            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-            userDefaults.synchronize()
-        } catch let error as ConsentViewControllerError {
-            onErrorOccurred?(error)
-        } catch {}
-        done()
-    }
-
     private func onErrorOccurred(_ error: ConsentViewControllerError) {
         onErrorOccurred?(error)
         done()
-    }
-
-    private func handleMessage(withName name: String, andBody body: [String:Any?]) {
-        switch name {
-        case "onReceiveMessageData": // when the message is first loaded
-            guard
-                let shouldShowMessage = body["shouldShowMessage"] as? Bool,
-                let consentUUID = body["consentUUID"] as? String,
-                let euconsent = body["euconsent"] as? String
-            else { fallthrough }
-            onReceiveMessage(shouldShowMessage: shouldShowMessage, consentUUID: consentUUID, euconsent: euconsent)
-        case "onMessageChoiceSelect": // when a choice is selected
-            guard let choiceType = body["choiceType"] as? Int else { fallthrough }
-            onMessageChoiceSelect(choiceType: choiceType)
-        case "interactionComplete": // when interaction with message is complete
-            guard
-                let euconsent = body["euconsent"] as? String,
-                let consentUUID = body["consentUUID"] as? String
-            else { fallthrough }
-            onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
-        case "onErrorOccurred":
-            onErrorOccurred(WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
-        case "onPrivacyManagerChoiceSelect":
-            return
-        case "onMessageChoiceError":
-            onErrorOccurred(WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
-        default:
-            onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: name, body: body))
-        }
-    }
-
-    /// :nodoc:
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard
-            let messageBody = message.body as? [String: Any],
-            let name = messageBody["name"] as? String,
-            let body = messageBody["body"] as? [String: Any?]
-        else {
-            onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
-            return
-        }
-        handleMessage(withName: name, andBody: body)
     }
 
     private func done() {
@@ -541,7 +464,3 @@ import Reachability
     }
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
-}

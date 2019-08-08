@@ -10,32 +10,41 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
-    func loadConsentManager(myPrivacyManager: Bool) {
+    
+    func loadConsentManager() {
         let cvc = try! ConsentViewController(accountId: 22, siteName: "mobile.demo", stagingCampaign: false)
-
-        cvc.setTargetingParam(key: "MyPrivacyManager", value: String(myPrivacyManager))
-
-        cvc.onMessageReady = { controller in
-            self.present(controller, animated: false, completion: nil)
+        
+        cvc.setTargetingParam(key: "MyPrivacyManager", value: "true")
+        
+        let webview = WebView(frame: self.view.frame)
+        cvc.webview = webview
+        
+        cvc.onErrorOccurred = { error in
+            print(error)
+            webview.removeFromSuperview()
         }
-
+        
         cvc.onInteractionComplete = { controller in
             controller.getCustomVendorConsents(completionHandler: { vendorConsents in
                 vendorConsents.forEach({ consent in print("Consented to \(consent)") })
             })
-            self.dismiss(animated: false, completion: nil)
+            webview.removeFromSuperview()
         }
-
-        cvc.loadMessage()
+        
+        
+        if let url = cvc.loadMessage() {
+            webview.loadWebContent(url: url)
+            self.view.addSubview(webview)
+        }
     }
-
+    
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        loadConsentManager(myPrivacyManager: true)
+        loadConsentManager()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadConsentManager(myPrivacyManager: false)
+        loadConsentManager()
     }
 }
 
