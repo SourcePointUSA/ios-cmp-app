@@ -1,3 +1,7 @@
+## 2.4.1 (August, 16, 2019)
+* Check for the GDPR status on every message load
+* Raise iOS min version support from 8 to 9
+
 ## 2.4.0 (June, 27, 2019)
 * Implement Identity feature
 * Versioning of in-app web page
