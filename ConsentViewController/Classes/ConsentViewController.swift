@@ -10,8 +10,6 @@
 public typealias Callback = (ConsentViewController) -> Void
 
 import UIKit
-//import WebKit
-//import JavaScriptCore
 import Reachability
 
 /**
@@ -142,8 +140,8 @@ import Reachability
 
     private var newPM = false
     
-    public var sendURL: URL?
-    public var webview: WebView?
+    public var inAppURL: URL?
+    public var webview: ConsentWebView?
 
     /**
      Initialises the library with `accountId` and `siteName`.
@@ -253,10 +251,9 @@ import Reachability
         if(messageStatus == .loading || messageStatus == .loaded) { return }
 
         messageStatus = .loading
-//        loadView()
         print ("url: \((messageUrl.absoluteString))")
         UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-        self.sendURL = messageUrl
+        self.inAppURL = messageUrl
         self.webview?.consentWebViewHandler = self
         return
 
@@ -298,13 +295,13 @@ import Reachability
     public func loadMessage(forAuthId authId: String) -> URL? {
         guard let url = getMessageUrl(authId: authId) else { return nil }
         loadMessage(withMessageUrl: url)
-        return sendURL
+        return inAppURL
     }
 
     public func loadMessage() -> URL? {
         guard let url = getMessageUrl(authId: nil) else { return nil}
         loadMessage(withMessageUrl: url)
-        return sendURL
+        return inAppURL
     }
 
     private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {

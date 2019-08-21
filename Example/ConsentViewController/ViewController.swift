@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         
         cvc.setTargetingParam(key: "MyPrivacyManager", value: "true")
         
-        let webview = WebView(frame: self.view.frame)
+        let webview = ConsentWebView(frame: self.view.frame)
         cvc.webview = webview
         
         cvc.onErrorOccurred = { error in

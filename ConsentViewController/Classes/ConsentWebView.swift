@@ -14,7 +14,7 @@ public protocol ConsentWebViewHandler {
     func didGetConsentData(euconsent: String, consentUUID: String)
 }
 
-@objcMembers open class WebView: UIView, UIWebViewDelegate , WKNavigationDelegate, WKScriptMessageHandler {
+@objcMembers open class ConsentWebView: UIView, UIWebViewDelegate , WKNavigationDelegate, WKScriptMessageHandler {
     
     /**
      Reference to WKWebView
@@ -33,14 +33,13 @@ public protocol ConsentWebViewHandler {
         webCfg.requiresUserActionForMediaPlayback = false
         webCfg.preferences = WKPreferences()
         webCfg.preferences.javaScriptEnabled = true
-        webCfg.userContentController.addUserScript(WebView.getJSReceiverScript())
+        webCfg.userContentController.addUserScript(ConsentWebView.getJSReceiverScript())
         webCfg.userContentController.add(self, name: "JSReceiver")
         return webCfg
     }()
     
     static func getJSReceiverScript() -> WKUserScript {
-        let scriptSource = try! String(contentsOfFile: Bundle(for: WebView.self).path(forResource: "JSReceiver", ofType: "js")!)
-        //        print(scriptSource)
+        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentWebView.self).path(forResource: "JSReceiver", ofType: "js")!)
         return WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: false)
     }
     
