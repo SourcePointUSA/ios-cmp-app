@@ -273,27 +273,23 @@ import Reachability
         messageStatus = .loading
         loadView()
         print ("url: \((messageUrl.absoluteString))")
-        UserDefaults.standard.setValue(true, forKey: "IABConsent_CMPPresent")
-
-        setSubjectToGDPR { (optionalErrorObject) in
-            if let error = optionalErrorObject {
-                self.messageStatus = .notStarted
-                self.onErrorOccurred?(error)
-            } else {
-                guard Reachability()!.connection != .none else {
-                    self.onErrorOccurred?(NoInternetConnection())
-                    self.messageStatus = .notStarted
-                    return
-                }
-                self.webView.load(URLRequest(url: messageUrl))
-                self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
-                    self.onMessageReady = nil
-                    self.onErrorOccurred?(MessageTimeout())
-                    self.messageStatus = .notStarted
-                    }};
-                self.messageStatus = .loaded
-            }
+        UserDefaults.standard.setValue(true, forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
+        UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        setSubjectToGDPR()
+        
+        guard Reachability()!.connection != .none else {
+            self.onErrorOccurred?(NoInternetConnection())
+            self.messageStatus = .notStarted
+            return
         }
+        self.webView.load(URLRequest(url: messageUrl))
+        self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
+            self.onMessageReady = nil
+            self.onErrorOccurred?(MessageTimeout())
+            self.messageStatus = .notStarted
+            }};
+        self.messageStatus = .loaded
+        
     }
 
     private func getMessageUrl(authId: String?) -> URL? {
@@ -320,14 +316,15 @@ import Reachability
         loadMessage(withMessageUrl: url)
     }
 
-    private func setSubjectToGDPR(completionHandler cHandler:@escaping (ConsentViewControllerError?) -> Void) {
+    private func setSubjectToGDPR() {
         sourcePoint.getGdprStatus { (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
-                cHandler(error)
+                if let gdprError = error{
+                print ("GDPR Status Error: \(gdprError)")
+                }
                 return
             }
-            cHandler(nil)
-            UserDefaults.standard.setValue(String(_gdprStatus), forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+            UserDefaults.standard.setValue(_gdprStatus, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         }
     }
 
