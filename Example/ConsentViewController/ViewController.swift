@@ -20,8 +20,12 @@ class ViewController: UIViewController {
         }
 
         cvc.onInteractionComplete = { controller in
-            controller.getCustomVendorConsents(completionHandler: { vendorConsents in
-                vendorConsents.forEach({ consent in print("Consented to \(consent)") })
+            controller.getCustomVendorConsents(completionHandler: { (vendorConsents, error) in
+                if let vendorConsents = vendorConsents {
+                    vendorConsents.forEach({ consent in print("Consented to \(consent)") })
+                }else {
+                     print(String(describing: error))
+                }
             })
             self.dismiss(animated: false, completion: nil)
         }

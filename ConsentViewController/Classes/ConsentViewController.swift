@@ -389,8 +389,14 @@ import Reachability
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
-    public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]) -> Void) {
-        loadAndStoreConsents { (consentsResponse) in cHandler(consentsResponse.consentedVendors) }
+    public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]?, ConsentViewControllerError?) -> Void) {
+        loadAndStoreConsents { (consentsResponse, error) in
+            if let purposeConsents = consentsResponse?.consentedVendors {
+                cHandler(purposeConsents, nil)
+            }else {
+                cHandler(nil, error)
+            }
+        }
     }
 
     /**
@@ -401,22 +407,28 @@ import Reachability
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
-    public func getCustomPurposeConsents(completionHandler cHandler : @escaping ([PurposeConsent]) -> Void) {
-        loadAndStoreConsents { (consentsResponse) in cHandler(consentsResponse.consentedPurposes) }
+    public func getCustomPurposeConsents(completionHandler cHandler : @escaping ([PurposeConsent]?,ConsentViewControllerError?) -> Void) {
+        loadAndStoreConsents { (consentsResponse, error) in
+            if let purposeConsents = consentsResponse?.consentedPurposes {
+                cHandler(purposeConsents, nil)
+            }else {
+                cHandler(nil, error)
+            }
+        }
     }
 
-    private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse) -> Void) {
+    private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
         getSiteId { (optionalSiteID, error) in
             if let _siteID = optionalSiteID {
                 self.sourcePoint.getCustomConsents(forSiteId: _siteID, consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, errror) in
                     if let _consents = consents {
-                        cHandler(_consents)
+                        cHandler(_consents, nil)
                     }else {
-                        cHandler(ConsentsResponse(consentedVendors: [], consentedPurposes: []))
+                        cHandler(nil, error)
                     }
                 })
             } else {
-                cHandler(ConsentsResponse(consentedVendors: [], consentedPurposes: []))
+                cHandler(nil, error)
             }
         }
     }
