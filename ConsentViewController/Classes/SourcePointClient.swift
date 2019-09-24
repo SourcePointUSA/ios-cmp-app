@@ -28,49 +28,36 @@ typealias TargetingParams = [String:Any]
 class SourcePointClient {
     private let client: HttpClient
 
-    private let accountId: String
-
+    private let accountId: Int
+    private let siteId: Int
+    private let pmId: String
+    private let showPM: Bool
+    private let runMessaging: Bool
     private let siteUrl: URL
     private let mmsUrl: URL
     private let cmpUrl: URL
     private let messageUrl: URL
-
-    private let siteIdUrl: URL
     private let statusGdprUrl: URL
+    private let campaign: String
 
-    private let stagingCampaign: Bool
-
-    init(accountId: String, siteUrl: URL, stagingCampaign: Bool, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+    init(accountId: Int, siteId:Int, pmId:String, showPM:Bool, siteUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
         self.accountId = accountId
+        self.siteId = siteId
+        self.pmId = pmId
+        self.showPM = showPM
+        self.runMessaging = !showPM
         self.siteUrl = siteUrl
         self.mmsUrl = mmsUrl
         self.cmpUrl = cmpUrl
         self.messageUrl = messageUrl
-        self.stagingCampaign = stagingCampaign
+        self.campaign = campaign
 
-        siteIdUrl = try Utils.validate(
-            attributeName: "siteIdUrl",
-            urlString: mmsUrl.absoluteString+"/get_site_data?account_id=" + accountId + "&href=" + siteUrl.absoluteString
-        )
         statusGdprUrl = try Utils.validate(
             attributeName: "statusGDPRUrl",
             urlString: cmpUrl.absoluteString + "/consent/v2/gdpr-status"
         )
 
         self.client = SimpleClient()
-    }
-
-    func getSiteId(completionHandler cHandler : @escaping (String?,ConsentViewControllerError?) -> Void) {
-        client.get(url: siteIdUrl) { (result) in
-            if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
-
-                if let siteId = parsedResult["site_id"] {
-                    cHandler(String(siteId),nil)
-                }
-            } else {
-                cHandler(nil, SiteIDNotFound(accountId: self.accountId, siteName: self.siteUrl.host!))
-            }
-        }
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
@@ -115,15 +102,17 @@ class SourcePointClient {
 
         do {
             queryItems = [
-                "_sp_accountId": accountId,
-                "_sp_cmp_inApp": "true",
-                "_sp_writeFirstPartyCookies": "true",
+                "_sp_accountId": String(accountId),
+                "_sp_PMId": pmId,
+                "_sp_siteId": String(siteId),
                 "_sp_siteHref": siteUrl.absoluteString,
-                "_sp_msg_domain": mmsUrl.host!,
-                "_sp_cmp_origin": "//\(cmpUrl.host!)",
-                "_sp_msg_targetingParams": try encode(targetingParams: params),
-                "_sp_debug_level": debugLevel,
-                "_sp_msg_stageCampaign": String(stagingCampaign)
+                "_sp_runMessaging" : String(runMessaging),
+                "_sp_showPM": String(showPM),
+                "_sp_mms_domain": "\(mmsUrl)",
+                "_sp_cmp_origin": "\(cmpUrl)",
+                "_sp_targetingParams": try encode(targetingParams: params),
+                //                "_sp_debug_level": debugLevel,
+                "_sp_env": campaign
             ]
             if(authId != nil) { queryItems["_sp_authId"] = authId }
             components.queryItems = queryItems.map { URLQueryItem(name: $0.key, value: $0.value) }

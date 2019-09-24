@@ -84,7 +84,7 @@ import Reachability
     static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
 
     static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net/v2.0.html"
-    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v2.0.html"
+    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging-v2.pm.sourcepoint.mgr.consensu.org/"
 
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
@@ -125,7 +125,7 @@ import Reachability
     var webView: WKWebView!
 
     /// Holds the choice type the user has chosen after interacting with the ConsentViewController
-    public var choiceType: Int? = nil
+    public var choiceId: Int? = nil
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String
@@ -138,6 +138,8 @@ import Reachability
 
     private let accountId: Int
     private let siteName: String
+    private let siteId: Int
+    private let showPM: Bool
     private var onMessageReadyCalled = false
 
     private let sourcePoint: SourcePointClient
@@ -145,55 +147,69 @@ import Reachability
     private var newPM = false
 
     /**
-     Initialises the library with `accountId` and `siteName`.
+     Initialises the library with `accountId`, `siteId`,`PMId`,`campaign`, `showPM` and siteName`.
      */
     public init(
         accountId: Int,
+        siteId: Int,
         siteName: String,
-        stagingCampaign: Bool,
+        PMId: String,
+        campaign: String,
+        showPM: Bool,
         mmsDomain: String,
         cmpDomain: String,
         messageDomain: String
-    ) throws {
+        ) throws {
         self.accountId = accountId
         self.siteName = siteName
-
+        self.siteId = siteId
+        self.showPM = showPM
+        
         let siteUrl = try Utils.validate(attributeName: "siteName", urlString: "https://"+siteName)
         let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
         let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
         let messageUrl = try Utils.validate(attributeName: "messageUrl", urlString: messageDomain)
-
+        
         self.sourcePoint = try SourcePointClient(
-            accountId: String(accountId),
+            accountId: accountId,
+            siteId: siteId,
+            pmId: PMId,
+            showPM: showPM,
             siteUrl: siteUrl,
-            stagingCampaign: stagingCampaign,
+            campaign: campaign,
             mmsUrl: mmsUrl,
             cmpUrl: cmpUrl,
             messageUrl: messageUrl
         )
-
+        
         self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
-
+        
         super.init(nibName: nil, bundle: nil)
     }
 
-    @objc(initWithAccountId:siteName:stagingCampaign:andReturnError:)
-    public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool) throws {
+    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:andReturnError:)
+    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool) throws {
         try self.init(
             accountId: accountId,
+            siteId: siteId,
             siteName: siteName,
-            stagingCampaign: stagingCampaign,
+            PMId: PMId,
+            campaign: campaign,
+            showPM: showPM,
             staging: false
         )
     }
 
-    @objc(initWithAccountId:siteName:stagingCampaign:staging:andReturnError:)
-    public convenience init(accountId: Int, siteName: String, stagingCampaign: Bool, staging: Bool) throws {
+    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:staging:andReturnError:)
+    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool, staging: Bool) throws {
         try self.init(
             accountId: accountId,
+            siteId: siteId,
             siteName: siteName,
-            stagingCampaign: stagingCampaign,
+            PMId: PMId,
+            campaign: campaign,
+            showPM: showPM,
             mmsDomain: "https://" + (staging ? ConsentViewController.STAGING_MMS_DOMAIN : ConsentViewController.MMS_DOMAIN),
             cmpDomain: "https://" + (staging ? ConsentViewController.STAGING_CMP_DOMAIN : ConsentViewController.CMP_DOMAIN),
             messageDomain: "https://" + (staging ? ConsentViewController.STAGING_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.IN_APP_MESSAGING_PAGE_DOMAIN)
@@ -364,20 +380,6 @@ import Reachability
         return results
     }
 
-    private func getSiteId (completionHandler cHandler:@escaping (String?, ConsentViewControllerError?) -> Void) {
-        let siteIdKey = ConsentViewController.SP_SITE_ID + "_" + String(accountId) + "_" + siteName
-        sourcePoint.getSiteId { (siteId, error) in
-            guard let siteId = siteId else {
-                cHandler(nil, error)
-                return
-            }
-
-            UserDefaults.standard.setValue(siteId, forKey: siteIdKey)
-            UserDefaults.standard.synchronize()
-            cHandler(siteId, nil)
-        }
-    }
-
     /**
      Checks if the non-IAB purposes passed as parameter were given consent or not.
      Same as `getIabVendorConsents(forIds: )` but for non-IAB vendors.
@@ -388,8 +390,8 @@ import Reachability
      */
     public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]?, ConsentViewControllerError?) -> Void) {
         loadAndStoreConsents { (consentsResponse, error) in
-            if let purposeConsents = consentsResponse?.consentedVendors {
-                cHandler(purposeConsents, nil)
+            if let vendorConsents = consentsResponse?.consentedVendors {
+                cHandler(vendorConsents, nil)
             }else {
                 cHandler(nil, error)
             }
@@ -415,19 +417,13 @@ import Reachability
     }
 
     private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
-        getSiteId { (optionalSiteID, error) in
-            if let _siteID = optionalSiteID {
-                self.sourcePoint.getCustomConsents(forSiteId: _siteID, consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, errror) in
-                    if let _consents = consents {
-                        cHandler(_consents, nil)
-                    }else {
-                        cHandler(nil, error)
-                    }
-                })
-            } else {
+        self.sourcePoint.getCustomConsents(forSiteId: String(self.siteId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
+            if let _consents = consents {
+                cHandler(_consents, nil)
+            }else {
                 cHandler(nil, error)
             }
-        }
+        })
     }
 
     private func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
@@ -466,20 +462,13 @@ import Reachability
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
-    private func onReceiveMessage(shouldShowMessage: Bool, consentUUID: String, euconsent: String) {
-        onMessageReadyCalled = true
-        shouldShowMessage ?
-            onMessageReady?(self) :
-            self.onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
-    }
-
-    private func onMessageChoiceSelect(choiceType: Int) {
+    private func onMessageChoiceSelect(choiceId: Int) {
         guard Reachability()!.connection != .none else {
             onErrorOccurred?(NoInternetConnection())
             done()
             return
         }
-        self.choiceType = choiceType
+        self.choiceId = choiceId
         onMessageChoiceSelect?(self)
     }
 
@@ -502,29 +491,35 @@ import Reachability
         onErrorOccurred?(error)
         done()
     }
+    
+    private func showMessage() {
+        onMessageReadyCalled = true
+        onMessageReady?(self)
+    }
 
     private func handleMessage(withName name: String, andBody body: [String:Any?]) {
         switch name {
-        case "onReceiveMessageData": // when the message is first loaded
-            guard
-                let shouldShowMessage = body["shouldShowMessage"] as? Bool,
-                let consentUUID = body["consentUUID"] as? String,
-                let euconsent = body["euconsent"] as? String
-            else { fallthrough }
-            onReceiveMessage(shouldShowMessage: shouldShowMessage, consentUUID: consentUUID, euconsent: euconsent)
+        case "onMessageReady": // when the message is first loaded
+            showMessage()
+        case "onSPPMObjectReady":
+            if self.showPM { showMessage()}
+        case "onPMCancel":
+            print("onPMCancel  event is triggered")
+            if self.showPM { done()}
         case "onMessageChoiceSelect": // when a choice is selected
-            guard let choiceType = body["choiceType"] as? Int else { fallthrough }
-            onMessageChoiceSelect(choiceType: choiceType)
-        case "interactionComplete": // when interaction with message is complete
+            guard let choiceId = body["choice_id"] as? Int else { fallthrough }
+            onMessageChoiceSelect(choiceId: choiceId)
+        case "onConsentReady": // when interaction with message is complete
             guard
                 let euconsent = body["euconsent"] as? String,
                 let consentUUID = body["consentUUID"] as? String
             else { fallthrough }
             onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
+        case "onPrivacyManagerAction":
+            print("onPrivacyManagerAction event is triggered")
+            return
         case "onErrorOccurred":
             onErrorOccurred(WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
-        case "onPrivacyManagerChoiceSelect":
-            return
         case "onMessageChoiceError":
             onErrorOccurred(WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         default:
@@ -536,13 +531,16 @@ import Reachability
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard
             let messageBody = message.body as? [String: Any],
-            let name = messageBody["name"] as? String,
-            let body = messageBody["body"] as? [String: Any?]
+            let name = messageBody["name"] as? String
         else {
             onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
             return
         }
-        handleMessage(withName: name, andBody: body)
+        if let body = messageBody["body"] as? [String: Any?] {
+            handleMessage(withName: name, andBody: body)
+        } else {
+            handleMessage(withName: name, andBody: ["":""])
+        }
     }
 
     private func done() {
