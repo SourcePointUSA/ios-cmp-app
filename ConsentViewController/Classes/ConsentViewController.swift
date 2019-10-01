@@ -91,13 +91,6 @@ import Reachability
     public var debugLevel: DebugLevel = .OFF
 
     /**
-     A `Callback` that will be called the message is about to be shown. Notice that,
-     sometimes, depending on how the scenario was set up, the message might not show
-     at all, thus this call back won't be called.
-     */
-    public var onMessageReady: Callback?
-
-    /**
      A `Callback` that will be called when the user selects an option on the WebView.
      The selected choice will be available in the instance variable `choiceType`
      */
@@ -118,9 +111,6 @@ import Reachability
      `getPurposeConsents(forIds:)` and `getPurposeConsent(forId:)`
      will also be able to be called from inside the callback
      */
-    public var onConsentReady: Callback?
-
-    public var onErrorOccurred: ((ConsentViewControllerError) -> Void)?
 
     var webView: WKWebView!
 
@@ -143,6 +133,7 @@ import Reachability
     private var onMessageReadyCalled = false
 
     private let sourcePoint: SourcePointClient
+    private let consentDelegate: ConsentDelegate
 
     private var newPM = false
 
@@ -158,12 +149,14 @@ import Reachability
         showPM: Bool,
         mmsDomain: String,
         cmpDomain: String,
-        messageDomain: String
+        messageDomain: String,
+        consentDelegate: ConsentDelegate
         ) throws {
         self.accountId = accountId
         self.siteName = siteName
         self.siteId = siteId
         self.showPM = showPM
+        self.consentDelegate = consentDelegate
         
         let siteUrl = try Utils.validate(attributeName: "siteName", urlString: "https://"+siteName)
         let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
@@ -188,8 +181,8 @@ import Reachability
         super.init(nibName: nil, bundle: nil)
     }
 
-    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:andReturnError:)
-    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool) throws {
+    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:consentDelegate:andReturnError:)
+    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool, consentDelegate: ConsentDelegate) throws {
         try self.init(
             accountId: accountId,
             siteId: siteId,
@@ -197,12 +190,13 @@ import Reachability
             PMId: PMId,
             campaign: campaign,
             showPM: showPM,
-            staging: false
+            staging: false,
+            consentDelegate: consentDelegate
         )
     }
 
-    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:staging:andReturnError:)
-    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool, staging: Bool) throws {
+    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:staging:consentDelegate:andReturnError:)
+    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool, staging: Bool, consentDelegate: ConsentDelegate) throws {
         try self.init(
             accountId: accountId,
             siteId: siteId,
@@ -212,7 +206,8 @@ import Reachability
             showPM: showPM,
             mmsDomain: "https://" + (staging ? ConsentViewController.STAGING_MMS_DOMAIN : ConsentViewController.MMS_DOMAIN),
             cmpDomain: "https://" + (staging ? ConsentViewController.STAGING_CMP_DOMAIN : ConsentViewController.CMP_DOMAIN),
-            messageDomain: "https://" + (staging ? ConsentViewController.STAGING_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.IN_APP_MESSAGING_PAGE_DOMAIN)
+            messageDomain: "https://" + (staging ? ConsentViewController.STAGING_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.IN_APP_MESSAGING_PAGE_DOMAIN),
+            consentDelegate: consentDelegate
         )
     }
 
@@ -281,7 +276,7 @@ import Reachability
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: callback)
     }
 
-    private enum MessageStatus { case notStarted, loading, loaded }
+    private enum MessageStatus { case notStarted, loading, loaded, timedout }
     private var messageStatus = MessageStatus.notStarted
     private func loadMessage(withMessageUrl messageUrl: URL) {
         if(messageStatus == .loading || messageStatus == .loaded) { return }
@@ -294,18 +289,18 @@ import Reachability
         setSubjectToGDPR()
         
         guard Reachability()!.connection != .none else {
-            self.onErrorOccurred?(NoInternetConnection())
+            consentDelegate.onErrorOccurred(error: NoInternetConnection())
             self.messageStatus = .notStarted
             return
         }
         self.webView.load(URLRequest(url: messageUrl))
-        self.timeOut(inSeconds: self.messageTimeoutInSeconds) { if(!self.onMessageReadyCalled) {
-            self.onMessageReady = nil
-            self.onErrorOccurred?(MessageTimeout())
-            self.messageStatus = .notStarted
-            }};
+        self.timeOut(inSeconds: self.messageTimeoutInSeconds) {
+            if(!self.onMessageReadyCalled) {
+                self.consentDelegate.onErrorOccurred(error: MessageTimeout())
+                self.messageStatus = .notStarted
+            }
+        };
         self.messageStatus = .loaded
-        
     }
 
     private func getMessageUrl(authId: String?) -> URL? {
@@ -317,7 +312,7 @@ import Reachability
                 authId: authId
             )
         } catch let error as ConsentViewControllerError {
-            onErrorOccurred?(error)
+            consentDelegate.onErrorOccurred(error: error)
         } catch {}
         return nil
     }
@@ -336,7 +331,7 @@ import Reachability
         sourcePoint.getGdprStatus { (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
                 if let gdprError = error{
-                print ("GDPR Status Error: \(gdprError)")
+                    print ("GDPR Status Error: \(gdprError)")
                 }
                 return
             }
@@ -464,8 +459,7 @@ import Reachability
 
     private func onMessageChoiceSelect(choiceId: Int) {
         guard Reachability()!.connection != .none else {
-            onErrorOccurred?(NoInternetConnection())
-            done()
+            consentDelegate.onErrorOccurred(error: NoInternetConnection())
             return
         }
         self.choiceId = choiceId
@@ -482,19 +476,16 @@ import Reachability
             userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
             userDefaults.synchronize()
         } catch let error as ConsentViewControllerError {
-            onErrorOccurred?(error)
+            consentDelegate.onErrorOccurred(error: error)
         } catch {}
-        done()
-    }
-
-    private func onErrorOccurred(_ error: ConsentViewControllerError) {
-        onErrorOccurred?(error)
-        done()
+        consentDelegate.onConsentReady(controller: self)
     }
     
     private func showMessage() {
+        if(messageStatus == .timedout) { return }
+
         onMessageReadyCalled = true
-        onMessageReady?(self)
+        consentDelegate.onMessageReady(controller: self)
     }
     
     private func handleXhrLog(_ body: [String:Any?]) {
@@ -536,15 +527,15 @@ import Reachability
             print("onPrivacyManagerAction event is triggered")
             return
         case "onErrorOccurred":
-            onErrorOccurred(WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            consentDelegate.onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
-            onErrorOccurred(WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            consentDelegate.onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "xhrLog":
             if debugLevel == .DEBUG {
                 handleXhrLog(body)
             }
         default:
-            onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: name, body: body))
+            consentDelegate.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
     }
 
@@ -554,7 +545,7 @@ import Reachability
             let messageBody = message.body as? [String: Any],
             let name = messageBody["name"] as? String
         else {
-            onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
+            consentDelegate.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
             return
         }
         if let body = messageBody["body"] as? [String: Any?] {
@@ -562,10 +553,6 @@ import Reachability
         } else {
             handleMessage(withName: name, andBody: ["":""])
         }
-    }
-
-    private func done() {
-        onConsentReady?(self)
     }
 }
 

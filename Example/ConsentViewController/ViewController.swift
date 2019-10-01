@@ -9,38 +9,35 @@
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController {
-    func loadConsentManager(myPrivacyManager: Bool) {
-
-         let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: false)
-                
-        cvc.debugLevel = .DEBUG
-
-        cvc.onMessageReady = { controller in
-            self.present(controller, animated: false, completion: nil)
-        }
-
-        cvc.onConsentReady = { controller in
-            controller.getCustomVendorConsents(completionHandler: { (vendorConsents, error) in
-                if let vendorConsents = vendorConsents {
-                    vendorConsents.forEach({ consent in print("Consented to \(consent)") })
-                }else {
-                     print(String(describing: error))
-                }
-            })
-            self.dismiss(animated: false, completion: nil)
-        }
-
+class ViewController: UIViewController, ConsentDelegate {
+    func loadConsentManager(showPM: Bool) {
+        let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
         cvc.loadMessage()
     }
 
+    func onMessageReady(controller: ConsentViewController) {
+        print("ON MESSAGE READY")
+        self.present(controller, animated: false, completion: nil)
+    }
+
+    func onConsentReady(controller: ConsentViewController) {
+        // get consents here
+        print("ON CONSENT READY")
+        self.dismiss(animated: false, completion: nil)
+    }
+
+    func onErrorOccurred(error: ConsentViewControllerError) {
+        print(error)
+        self.dismiss(animated: false, completion: nil)
+    }
+
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        loadConsentManager(myPrivacyManager: true)
+        loadConsentManager(showPM: true)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadConsentManager(myPrivacyManager: false)
+        loadConsentManager(showPM: false)
     }
 }
 
