@@ -130,7 +130,7 @@ import Reachability
     private let siteName: String
     private let siteId: Int
     private let showPM: Bool
-    private var onMessageReadyCalled = false
+    private var didMessageScriptLoad = false
 
     private let sourcePoint: SourcePointClient
     private let consentDelegate: ConsentDelegate
@@ -295,9 +295,9 @@ import Reachability
         }
         self.webView.load(URLRequest(url: messageUrl))
         self.timeOut(inSeconds: self.messageTimeoutInSeconds) {
-            if(!self.onMessageReadyCalled) {
+            if(!self.didMessageScriptLoad) {
                 self.consentDelegate.onErrorOccurred(error: MessageTimeout())
-                self.messageStatus = .notStarted
+                self.messageStatus = .timedout
             }
         };
         self.messageStatus = .loaded
@@ -466,7 +466,8 @@ import Reachability
         onMessageChoiceSelect?(self)
     }
 
-    private func onConsentReady(euconsent: String, consentUUID: String) {
+    private func done(euconsent: String, consentUUID: String) {
+        didMessageScriptLoad = true
         self.euconsent = euconsent
         self.consentUUID = consentUUID
         do {
@@ -484,7 +485,7 @@ import Reachability
     private func showMessage() {
         if(messageStatus == .timedout) { return }
 
-        onMessageReadyCalled = true
+        didMessageScriptLoad = true
         consentDelegate.onMessageReady(controller: self)
     }
     
@@ -522,7 +523,7 @@ import Reachability
         case "onConsentReady": // when interaction with message is complete
             let euconsent = body["euconsent"] as? String ?? ""
             let consentUUID = body["consentUUID"] as? String ?? ""
-            onConsentReady(euconsent: euconsent, consentUUID: consentUUID)
+            done(euconsent: euconsent, consentUUID: consentUUID)
         case "onPrivacyManagerAction":
             print("onPrivacyManagerAction event is triggered")
             return
