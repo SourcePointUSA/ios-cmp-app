@@ -84,7 +84,7 @@ import Reachability
     static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
 
     static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net/v2.0.html"
-    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging-v2.pm.sourcepoint.mgr.consensu.org/"
+    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
 
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
