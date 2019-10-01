@@ -108,7 +108,7 @@ class SourcePointClient {
                 "_sp_siteHref": siteUrl.absoluteString,
                 "_sp_runMessaging" : String(runMessaging),
                 "_sp_showPM": String(showPM),
-                "_sp_mms_domain": "\(mmsUrl)",
+                "_sp_mms_domain": mmsUrl.host!,
                 "_sp_cmp_origin": "\(cmpUrl)",
                 "_sp_targetingParams": try encode(targetingParams: params),
                 //                "_sp_debug_level": debugLevel,

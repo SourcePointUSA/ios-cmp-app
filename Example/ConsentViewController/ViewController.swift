@@ -11,15 +11,16 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     func loadConsentManager(myPrivacyManager: Bool) {
-        let cvc = try! ConsentViewController(accountId: 808, siteId: 4601, siteName: "sourcepointnewscript.com", PMId: "5cacf7321b980a7ca04947c6", campaign: "public", showPM: myPrivacyManager)
 
-//        cvc.setTargetingParam(key: "dispalyMode", value: "appLaunch")
+         let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: false)
+                
+        cvc.debugLevel = .DEBUG
 
         cvc.onMessageReady = { controller in
             self.present(controller, animated: false, completion: nil)
         }
 
-        cvc.onInteractionComplete = { controller in
+        cvc.onConsentReady = { controller in
             controller.getCustomVendorConsents(completionHandler: { (vendorConsents, error) in
                 if let vendorConsents = vendorConsents {
                     vendorConsents.forEach({ consent in print("Consented to \(consent)") })

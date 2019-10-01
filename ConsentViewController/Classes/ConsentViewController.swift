@@ -118,7 +118,7 @@ import Reachability
      `getPurposeConsents(forIds:)` and `getPurposeConsent(forId:)`
      will also be able to be called from inside the callback
      */
-    public var onInteractionComplete: Callback?
+    public var onConsentReady: Callback?
 
     public var onErrorOccurred: ((ConsentViewControllerError) -> Void)?
 
@@ -347,7 +347,7 @@ import Reachability
     /**
      Get the IAB consents given to each vendor id in the array passed as parameter
 
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
      - Parameter _: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
@@ -365,7 +365,7 @@ import Reachability
     /**
      Checks if the IAB purposes passed as parameter were given consent or not.
 
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
      - Parameter _: an `Array` of purpose ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding purpose.
      */
@@ -384,7 +384,7 @@ import Reachability
      Checks if the non-IAB purposes passed as parameter were given consent or not.
      Same as `getIabVendorConsents(forIds: )` but for non-IAB vendors.
 
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
      - Parameter forIds: an `Array` of vendor ids
      - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
      */
@@ -402,7 +402,7 @@ import Reachability
      Checks if a non-IAB purpose was given consent.
      Same as `getIabPurposeConsents(_) but for non-IAB purposes.
 
-     - Precondition: this function should be called either during the `Callback` `onInteractionComplete` or after it has returned.
+     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
      - Parameter forIds: the purpose id
      - Returns: a `Bool` indicating if the user has given consent to that purpose.
      */
@@ -472,7 +472,7 @@ import Reachability
         onMessageChoiceSelect?(self)
     }
 
-    private func onInteractionComplete(euconsent: String, consentUUID: String) {
+    private func onConsentReady(euconsent: String, consentUUID: String) {
         self.euconsent = euconsent
         self.consentUUID = consentUUID
         do {
@@ -496,6 +496,26 @@ import Reachability
         onMessageReadyCalled = true
         onMessageReady?(self)
     }
+    
+    private func handleXhrLog(_ body: [String:Any?]) {
+        let type = body["type"] as! String
+        let url = body["url"] as! String
+        if(type == "request"){
+            if let cookies = body["cookies"] as? String {
+                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\" }")
+            }else {
+                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\"}")
+            }
+        } else {
+            let status = body["status"] as? String
+            let response = body["response"] as! String
+            if let cookies = body["cookies"] as? String {
+                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\", \"status\": \"\(String(describing: status))\", \"response\": \"\(response)\" }")
+            }else {
+                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"status\": \"\(String(describing: status))\", \"response\": \"\(response)\" }")
+            }
+        }
+    }
 
     private func handleMessage(withName name: String, andBody body: [String:Any?]) {
         switch name {
@@ -505,16 +525,13 @@ import Reachability
             if self.showPM { showMessage()}
         case "onPMCancel":
             print("onPMCancel  event is triggered")
-            if self.showPM { done()}
         case "onMessageChoiceSelect": // when a choice is selected
             guard let choiceId = body["choice_id"] as? Int else { fallthrough }
             onMessageChoiceSelect(choiceId: choiceId)
         case "onConsentReady": // when interaction with message is complete
-            guard
-                let euconsent = body["euconsent"] as? String,
-                let consentUUID = body["consentUUID"] as? String
-            else { fallthrough }
-            onInteractionComplete(euconsent: euconsent, consentUUID: consentUUID)
+            let euconsent = body["euconsent"] as? String ?? ""
+            let consentUUID = body["consentUUID"] as? String ?? ""
+            onConsentReady(euconsent: euconsent, consentUUID: consentUUID)
         case "onPrivacyManagerAction":
             print("onPrivacyManagerAction event is triggered")
             return
@@ -522,6 +539,10 @@ import Reachability
             onErrorOccurred(WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
             onErrorOccurred(WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+        case "xhrLog":
+            if debugLevel == .DEBUG {
+                handleXhrLog(body)
+            }
         default:
             onErrorOccurred(PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
@@ -544,7 +565,7 @@ import Reachability
     }
 
     private func done() {
-        onInteractionComplete?(self)
+        onConsentReady?(self)
     }
 }
 

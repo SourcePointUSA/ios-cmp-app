@@ -26,6 +26,9 @@
         },
         onSPPMObjectReady: function () {
             postToWebView('onSPPMObjectReady');
+        },
+        xhrLog: function (logPayload) {
+            postToWebView('xhrLog', JSON.parse(logPayload));
         }
     };
 })();
