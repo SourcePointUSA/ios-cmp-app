@@ -124,7 +124,7 @@ import Reachability
     public var consentUUID: String
 
     /// The timeout interval in seconds for the message being displayed
-    public var messageTimeoutInSeconds = TimeInterval(30)
+    public var messageTimeoutInSeconds = TimeInterval(60)
 
     private let accountId: Int
     private let siteName: String
