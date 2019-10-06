@@ -63,7 +63,6 @@ class SourcePointClient {
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
         client.get(url: statusGdprUrl) { (result) in
             if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
-                
                 let gdprStatus = parsedResult["gdprApplies"]
                 cHandler(gdprStatus,nil)
             } else {
@@ -74,7 +73,7 @@ class SourcePointClient {
 
     // TODO: validate customConsentsURL with Utils.validate
     func getCustomConsents(forSiteId siteId: String, consentUUID: String,euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
-        
+
         let path = "/consent/v2/\(siteId)/custom-vendors"
         let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
         let decoder = JSONDecoder()
@@ -108,10 +107,9 @@ class SourcePointClient {
                 "_sp_siteHref": siteUrl.absoluteString,
                 "_sp_runMessaging" : String(runMessaging),
                 "_sp_showPM": String(showPM),
-                "_sp_mms_domain": mmsUrl.host!,
+                "_sp_mms_Domain": mmsUrl.host!,
                 "_sp_cmp_origin": "\(cmpUrl)",
                 "_sp_targetingParams": try encode(targetingParams: params),
-                //                "_sp_debug_level": debugLevel,
                 "_sp_env": campaign
             ]
             if(authId != nil) { queryItems["_sp_authId"] = authId }

@@ -151,7 +151,7 @@ import Reachability
         cmpDomain: String,
         messageDomain: String,
         consentDelegate: ConsentDelegate
-        ) throws {
+    ) throws {
         self.accountId = accountId
         self.siteName = siteName
         self.siteId = siteId
@@ -162,7 +162,7 @@ import Reachability
         let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
         let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
         let messageUrl = try Utils.validate(attributeName: "messageUrl", urlString: messageDomain)
-        
+
         self.sourcePoint = try SourcePointClient(
             accountId: accountId,
             siteId: siteId,
@@ -174,10 +174,10 @@ import Reachability
             cmpUrl: cmpUrl,
             messageUrl: messageUrl
         )
-        
+
         self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
-        
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -287,7 +287,7 @@ import Reachability
         UserDefaults.standard.setValue(true, forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
         UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         setSubjectToGDPR()
-        
+
         guard Reachability()!.connection != .none else {
             consentDelegate.onErrorOccurred(error: NoInternetConnection())
             self.messageStatus = .notStarted
@@ -405,7 +405,7 @@ import Reachability
         loadAndStoreConsents { (consentsResponse, error) in
             if let purposeConsents = consentsResponse?.consentedPurposes {
                 cHandler(purposeConsents, nil)
-            }else {
+            } else {
                 cHandler(nil, error)
             }
         }
@@ -415,7 +415,7 @@ import Reachability
         self.sourcePoint.getCustomConsents(forSiteId: String(self.siteId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
             if let _consents = consents {
                 cHandler(_consents, nil)
-            }else {
+            } else {
                 cHandler(nil, error)
             }
         })
@@ -481,21 +481,21 @@ import Reachability
         } catch {}
         consentDelegate.onConsentReady(controller: self)
     }
-    
+
     private func showMessage() {
         if(messageStatus == .timedout) { return }
 
         didMessageScriptLoad = true
         consentDelegate.onMessageReady(controller: self)
     }
-    
+
     private func handleXhrLog(_ body: [String:Any?]) {
         let type = body["type"] as! String
         let url = body["url"] as! String
         if(type == "request"){
             if let cookies = body["cookies"] as? String {
                 print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\" }")
-            }else {
+            } else {
                 print("{ \"type\": \"\(type)\", \"url\": \"\(url)\"}")
             }
         } else {
