@@ -518,7 +518,7 @@ import Reachability
         case "onPMCancel":
             print("onPMCancel  event is triggered")
         case "onMessageChoiceSelect": // when a choice is selected
-            guard let choiceId = body["choice_id"] as? Int else { fallthrough }
+            guard let choiceId = body["choiceId"] as? Int else { fallthrough }
             onMessageChoiceSelect(choiceId: choiceId)
         case "onConsentReady": // when interaction with message is complete
             let euconsent = body["euconsent"] as? String ?? ""

@@ -6,14 +6,14 @@
         onMessageReady: function () {
             postToWebView('onMessageReady');
         },
-        onMessageChoiceSelect: function (choice_id) {
-            postToWebView('onMessageChoiceSelect', { choice_id: choice_id });
+        onMessageChoiceSelect: function (choiceId) {
+            postToWebView('onMessageChoiceSelect', { choiceId: choiceId });
         },
         onPrivacyManagerAction: function (pmData) {
             postToWebView('onPrivacyManagerAction', { pmData: pmData });
         },
         onMessageChoiceError: function (errorObj) {
-            postToWebView('onMessageChoiceError', { error: errorObj});
+            postToWebView('onMessageChoiceError', { error: errorObj });
         },
         onConsentReady: function (consentUUID, euconsent) {
             postToWebView('onConsentReady', { consentUUID: consentUUID, euconsent: euconsent });
