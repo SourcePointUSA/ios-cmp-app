@@ -21,6 +21,7 @@
 		5B4CE5A88D2D68020BFF2343EE499FD2 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FA29365040A6A0CF041779E7CDDF53 /* ConsentViewController.swift */; };
 		620BECBC2DE53CD5EC483F306E7651A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */; };
 		6BA5B3FB2B768C5D453EA5E5A09B2170 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4904C2121D407349697EEC458E7A2C0 /* Reachability.swift */; };
+		8239B167234A20A700FFC7AA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239B166234A20A700FFC7AA /* Logger.swift */; };
 		82F9410E234382070078FE7B /* ConsentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9410D234382070078FE7B /* ConsentDelegate.swift */; };
 		8FFC6D60E6019E84861AA0403D7ACFAA /* Pods-ConsentViewController_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CA6A4B9907254FFDABD7056AC3901610 /* Pods-ConsentViewController_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922BE1B29ED396E25A386D69867383AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396C4B67371295EEB2DD7406FFE070AD /* Foundation.framework */; };
@@ -105,6 +106,7 @@
 		8111504FB3B18656AEF0D13AFFB7F36E /* ConsentViewController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		81537FB961ACDCEAB61FC3F41D96C99D /* ConsentViewControllerError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsentViewControllerError.swift; path = ConsentViewController/Classes/ConsentViewControllerError.swift; sourceTree = "<group>"; };
 		818295BA9BFC0F7979366BA04E91C909 /* Pods-AuthExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AuthExample.debug.xcconfig"; sourceTree = "<group>"; };
+		8239B166234A20A700FFC7AA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = ConsentViewController/Classes/Logger.swift; sourceTree = "<group>"; };
 		82F9410D234382070078FE7B /* ConsentDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConsentDelegate.swift; path = ConsentViewController/Classes/ConsentDelegate.swift; sourceTree = "<group>"; };
 		8658A5C587D3F2FC149099DDD6B8DD34 /* Reachability.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reachability.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		868EAE7B5BA59841A7D6B405B1473DC8 /* ConsentViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ConsentViewController-dummy.m"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				81537FB961ACDCEAB61FC3F41D96C99D /* ConsentViewControllerError.swift */,
 				E2F749873FA1B45787D94E0615B45D8C /* SourcePointClient.swift */,
 				7A97A0655D1CB29F9CD98DA66D380233 /* Utils.swift */,
+				8239B166234A20A700FFC7AA /* Logger.swift */,
 				368D3EE087A9D5E59D67E8158C17124E /* ConsentStringSDK */,
 				BC9225CD9F523EBF5CF541ED0FF45C20 /* Pod */,
 				1EC7FB1C2AA59166913D30BB6D4D8CF9 /* Resources */,
@@ -609,6 +612,7 @@
 				5B4CE5A88D2D68020BFF2343EE499FD2 /* ConsentViewController.swift in Sources */,
 				013C8A8ACE6D4B1F5D40158628D46A9E /* ConsentViewControllerError.swift in Sources */,
 				0972B5B89A745CD36704B3416F08B8D6 /* Data.swift in Sources */,
+				8239B167234A20A700FFC7AA /* Logger.swift in Sources */,
 				0FC3239AF48A2BCD085DB11DEFC46A6F /* SourcePointClient.swift in Sources */,
 				A3F01E0D0AAE8FA1258C1557C0536FB1 /* String.swift in Sources */,
 				B00FA226F8F2E7F38D0F1C00A9D49A48 /* Utils.swift in Sources */,

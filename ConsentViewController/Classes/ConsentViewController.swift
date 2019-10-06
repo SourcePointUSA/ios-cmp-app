@@ -134,6 +134,7 @@ import Reachability
 
     private let sourcePoint: SourcePointClient
     private let consentDelegate: ConsentDelegate
+    private let logger: Logger
 
     private var newPM = false
 
@@ -177,6 +178,7 @@ import Reachability
 
         self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
+        self.logger = Logger()
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -283,7 +285,7 @@ import Reachability
 
         messageStatus = .loading
         loadView()
-        print ("url: \((messageUrl.absoluteString))")
+        logger.log("url: %{public}@", [messageUrl.absoluteString])
         UserDefaults.standard.setValue(true, forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
         UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         setSubjectToGDPR()
@@ -330,8 +332,8 @@ import Reachability
     private func setSubjectToGDPR() {
         sourcePoint.getGdprStatus { (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
-                if let gdprError = error{
-                    print ("GDPR Status Error: \(gdprError)")
+                if let gdprError = error {
+                    self.logger.log("GDPR Status Error: %{public}@", [gdprError])
                 }
                 return
             }
@@ -494,17 +496,17 @@ import Reachability
         let url = body["url"] as! String
         if(type == "request"){
             if let cookies = body["cookies"] as? String {
-                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\" }")
+                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\", \"cookies\": \"%{public}@\" }", [type, url, cookies])
             } else {
-                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\"}")
+                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\"}", [type, url])
             }
         } else {
             let status = body["status"] as? String
             let response = body["response"] as! String
             if let cookies = body["cookies"] as? String {
-                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"cookies\": \"\(cookies)\", \"status\": \"\(String(describing: status))\", \"response\": \"\(response)\" }")
-            }else {
-                print("{ \"type\": \"\(type)\", \"url\": \"\(url)\", \"status\": \"\(String(describing: status))\", \"response\": \"\(response)\" }")
+                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\", \"cookies\": \"%{public}@\", \"status\": \"%{public}@\", \"response\": \"%{public}@\" }", [type, url, cookies, status ?? "", response])
+            } else {
+                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\", \"status\": \"%{public}@\", \"response\": \"%{public}@\" }", [type, url, status ?? "", response])
             }
         }
     }
@@ -516,7 +518,7 @@ import Reachability
         case "onSPPMObjectReady":
             if self.showPM { showMessage()}
         case "onPMCancel":
-            print("onPMCancel  event is triggered")
+            logger.log("onPMCancel  event is triggered", [])
         case "onMessageChoiceSelect": // when a choice is selected
             guard let choiceId = body["choiceId"] as? Int else { fallthrough }
             onMessageChoiceSelect(choiceId: choiceId)
@@ -525,7 +527,7 @@ import Reachability
             let consentUUID = body["consentUUID"] as? String ?? ""
             done(euconsent: euconsent, consentUUID: consentUUID)
         case "onPrivacyManagerAction":
-            print("onPrivacyManagerAction event is triggered")
+            logger.log("onPrivacyManagerAction event is triggered", [])
             return
         case "onErrorOccurred":
             consentDelegate.onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
