@@ -10,24 +10,30 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController, ConsentDelegate {
+    let logger = Logger()
+
     func loadConsentManager(showPM: Bool) {
         let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
         cvc.loadMessage()
     }
 
     func onMessageReady(controller: ConsentViewController) {
-        print("ON MESSAGE READY")
         self.present(controller, animated: false, completion: nil)
     }
 
     func onConsentReady(controller: ConsentViewController) {
-        // get consents here
-        print("ON CONSENT READY")
+        controller.getCustomVendorConsents { (vendors, error) in
+            if let vendors = vendors {
+                vendors.forEach({ vendor in self.logger.log("Consented to: %{vendor})", [vendors]) })
+            } else {
+                self.onErrorOccurred(error: error!)
+            }
+        }
         self.dismiss(animated: false, completion: nil)
     }
 
     func onErrorOccurred(error: ConsentViewControllerError) {
-        print(error)
+        logger.log("Error: %{public}@", [error])
         self.dismiss(animated: false, completion: nil)
     }
 
