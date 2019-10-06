@@ -3,23 +3,32 @@
         window.webkit.messageHandlers.JSReceiver.postMessage({ name: name, body: body });
     }
     window.JSReceiver = {
-        onReceiveMessageData: function (messageData) {
-            postToWebView('onReceiveMessageData', JSON.parse(messageData));
+        onMessageReady: function () {
+            postToWebView('onMessageReady');
         },
-        onMessageChoiceSelect: function (choiceType) {
-            postToWebView('onMessageChoiceSelect', { choiceType: choiceType });
+        onMessageChoiceSelect: function (choiceId) {
+            postToWebView('onMessageChoiceSelect', { choiceId: choiceId });
+        },
+        onPrivacyManagerAction: function (pmData) {
+            postToWebView('onPrivacyManagerAction', { pmData: pmData });
+        },
+        onMessageChoiceError: function (errorObj) {
+            postToWebView('onMessageChoiceError', { error: errorObj });
+        },
+        onConsentReady: function (consentUUID, euconsent) {
+            postToWebView('onConsentReady', { consentUUID: consentUUID, euconsent: euconsent });
         },
         onErrorOccurred: function (errorType) {
             postToWebView('onErrorOccurred', { errorType: errorType });
         },
-        sendConsentData: function (euconsent, consentUUID) {
-            postToWebView('interactionComplete', { euconsent: euconsent, consentUUID: consentUUID });
+        onPMCancel: function () {
+            postToWebView('onPMCancel');
         },
-        onPrivacyManagerChoiceSelect: function (choiceData) {
-            postToWebView('onPrivacyManagerChoiceSelect', { choiceData: choiceData });
+        onSPPMObjectReady: function () {
+            postToWebView('onSPPMObjectReady');
         },
-        onMessageChoiceError: function (errorObj) {
-            postToWebView('onMessageChoiceError', { error: errorObj.error });
+        xhrLog: function (logPayload) {
+            postToWebView('xhrLog', JSON.parse(logPayload));
         }
     };
 })();

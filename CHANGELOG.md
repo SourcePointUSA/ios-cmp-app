@@ -1,3 +1,36 @@
+## 3.0.0 (October, 4, 2019)
+Oh wow, time flies when we're having fun huh? This is a major release and, with major releases comes major ~~responsibilities~~ changes.
+
+### New Message script
+Our Web Team worked pretty hard to slim down our consent message platform and improve its perfomance. In this release we make use of the new message script.
+
+**It's important to notice, SDK version 3 onwards will only be compatible with messages built using the new message builder.**
+
+### Consent message lifecycle
+* Moved the main message lifecycle callbacks (`onMessageReady`, `onInteractionComplete` and `onErrorOccurred`)to the `ConsentDelegate` protocol.
+* Renamed `onInteractionComplete` to `onConsentReady` to better reflect the meaning of that callback.
+
+TODO: Add a flowchart on how the lifecycle callbacks work (order and conditions)
+
+### Plug & Play Privacy Manager
+Prior to this release, there was no way to show the Privacy Manager programmatically, without relying on setting up a tricky scenario on our Dashboard.
+
+We've changed that (keep reading).
+
+### Constructor changes
+In order to support the Plug & Play Privacy Manager and the `ConsentDelegate` protocol, we needed to add extra parameters to the constructor. The additional parameters are:
+* `siteId`: a `Number` representing the property id - available on the dashboard
+* `privacyManagerId`: a `String` representing the id of the Privacy Manager you wish to show - available on the dashboard
+* `consentDelegate`: a `ConsentDelegate` compliant object.
+* `showPM`: a boolean indicating if you wish to load the consent message or the Privacy Manager.
+
+### Other improvements
+* Reduced the amount of network calls
+* Improved our timeout mechanism
+* Simplified the Javascript Interface
+
+---
+
 ## 2.4.1 (August, 16, 2019)
 * Check for the GDPR status on every message load
 * Raise iOS min version support from 8 to 9
@@ -28,7 +61,7 @@
 * fixed the interface for Objective-C, allowing the ConsentViewController to be used in Obj-c projects.
 
 ## 2.1.1 (April 04, 2019)
-* fixed in which on iOS >= 11 the message background veil wouldn't cover the entire screen 
+* fixed in which on iOS >= 11 the message background veil wouldn't cover the entire screen
 
 ## 2.1.0 (March 29, 2019)
 * load the webview in a separate function and call onMessageReady when the message is ready to be shown.
