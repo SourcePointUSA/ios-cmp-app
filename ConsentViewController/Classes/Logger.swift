@@ -11,7 +11,15 @@ import os
 @objcMembers public class Logger {
     static let TOO_MANY_ARGS_ERROR = StaticString("Cannot log messages with more than 5 argumetns")
 
-    public init() {}
+    let consentLog: OSLog?
+
+    public init() {
+        if #available(iOS 10.0, *) {
+            consentLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Consent")
+        } else {
+            consentLog = nil
+        }
+    }
 
     public func log(_ message: StaticString, _ args: [CVarArg]) {
         if #available(iOS 10.0, *) {
@@ -33,19 +41,27 @@ import os
 
     //  It's not possible to forward variadic parameters in Swift so this is a gross workaround
     @available(iOS 10.0, *)
-    private func log(_ message: StaticString) { os_log(message) }
+    private func log(_ message: StaticString) {
+        os_log(message, log: consentLog!, type: .default)
+    }
     @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg) { os_log(message, a) }
+    private func log(_ message: StaticString, _ a: CVarArg) {
+        os_log(message, log: consentLog!, type: .default, a)
+    }
     @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg) { os_log(message, a, b) }
+    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg) {
+        os_log(message, log: consentLog!, type: .default, a, b)
+    }
     @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg, _ c: CVarArg) { os_log(message, a, b, c) }
+    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg, _ c: CVarArg) {
+        os_log(message, log: consentLog!, type: .default, a, b, c)
+    }
     @available(iOS 10.0, *)
     private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg, _ c: CVarArg, _ d: CVarArg) {
-        os_log(message, a, b, c, d)
+        os_log(message, log: consentLog!, type: .default, a, b, c, d)
     }
     @available(iOS 10.0, *)
     private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg, _ c: CVarArg, _ d: CVarArg, _ e: CVarArg) {
-        os_log(message, a, b, c, d, e)
+        os_log(message, log: consentLog!, type: .default, a, b, c, d, e)
     }
 }

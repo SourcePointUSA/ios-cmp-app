@@ -24,7 +24,7 @@ class ViewController: UIViewController, ConsentDelegate {
     func onConsentReady(controller: ConsentViewController) {
         controller.getCustomVendorConsents { (vendors, error) in
             if let vendors = vendors {
-                vendors.forEach({ vendor in self.logger.log("Consented to: %{vendor})", [vendors]) })
+                vendors.forEach({ vendor in self.logger.log("Consented to: %{public}@)", [vendor]) })
             } else {
                 self.onErrorOccurred(error: error!)
             }
