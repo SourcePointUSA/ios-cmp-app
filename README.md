@@ -1,14 +1,18 @@
 
 # iOS Setup guide
 
-**Important** if you're not using the new message builder, make sure to use pod version < 3. The README for the older version can be found [here](https://github.com/SourcePointUSA/ios-cmp-app/blob/d3c999a2245d2e5660806321c3979eaa32838642/README.md).
+:heavy_exclamation_mark: **IMPORTANT** if you're not yet using the new message builder, make sure to use pod version < 3.
+```
+pod 'ConsentViewController', '< 3.0.0'
+```
+The README for the older version can be found [here](https://github.com/SourcePointUSA/ios-cmp-app/blob/d3c999a2245d2e5660806321c3979eaa32838642/README.md).
 
 
 We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to install our SDK.
 In your `Podfile` add the following line to your app target:
 
 ```
-pod ConsentViewController
+pod 'ConsentViewController', '>= 3.0.0'
 ```
 
 # Usage
