@@ -66,24 +66,43 @@ class ViewController: UIViewController, ConsentDelegate {
 
 ## Objective-C
 ```obj-c
-// don't forget to @import ConsentViewController;
 
-ConsentViewController *cvc = [[ConsentViewController alloc] initWithAccountId:22 siteName:@"mobile.demo" stagingCampaign:false andReturnError:nil];
+#import "ViewController.h"
+@import ConsentViewController;
 
-[cvc setTargetingParamString:@"MyPrivacyManager" value:@"true"];
+@interface ViewController ()<ConsentDelegate>
+@end
 
-[cvc setOnMessageReady:^(ConsentViewController * consentSDK) {
-    [self presentViewController:consentSDK animated:false completion:NULL];
-}];
+@implementation ViewController
+- (void)viewDidLoad {
+    [super viewDidLoad];
 
-[cvc setOnInteractionComplete:^(ConsentViewController * consentSDK) {
-    [consentSDK getCustomPurposeConsentsWithCompletionHandler:^(NSArray<PurposeConsent *>* purposeConsents) {
-        NSLog(@"User has given consent to the purposes: %@", purposeConsents);
+    ConsentViewController *cvc = [[ConsentViewController alloc] initWithAccountId:22 siteId:2372 siteName:@"mobile.demo" PMId:@"5c0e81b7d74b3c30c6852301" campaign:@"stage" showPM:false consentDelegate:self andReturnError:nil];
+
+    [cvc loadMessage];
+}
+
+- (void)onConsentReadyWithController:(ConsentViewController * _Nonnull)controller {
+    [controller getCustomVendorConsentsWithCompletionHandler:^(NSArray<VendorConsent *> * vendors, ConsentViewControllerError * error) {
+        if (error != nil) {
+            [self onErrorOccurredWithError:error];
+        } else {
+            for (id vendor in vendors) {
+                NSLog(@"Consented to: %@", vendor);
+            }
+        }
     }];
+    [controller dismissViewControllerAnimated:false completion:NULL];
+}
 
-    [consentSDK dismissViewControllerAnimated:false completion:NULL];
-}];
+- (void)onErrorOccurredWithError:(ConsentViewControllerError * _Nonnull)error {
+    NSLog(@"Error: %@", error);
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
 
-[cvc loadMessage];
+- (void)onMessageReadyWithController:(ConsentViewController * _Nonnull)controller {
+    [self presentViewController:controller animated:false completion:NULL];
+}
+@end
 
 ```
