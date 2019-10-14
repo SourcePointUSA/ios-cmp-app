@@ -116,59 +116,59 @@ class AddWebsiteViewModel {
     
     /// It will call the sourcepoint SDK.
     ///
-    func buildConsentViewController(websiteDetails : WebsiteDetailsModel,targetingParams: [TargetingParamModel], completionHandler: @escaping (ConsentViewControllerError?, ConsentViewController?, Bool?, [VendorConsent]?, [PurposeConsent]?) -> Void) {
-        do {
-            
-            let consentViewController = try ConsentViewController (
-                accountId: Int(websiteDetails.accountID),
-                siteName: websiteDetails.websiteName ?? "",
-                stagingCampaign: websiteDetails.isStaging
-            )
-            // optional, set custom targeting parameters supports Strings and Integers
-            for targetingParam in targetingParams {
-                if let targetingKey = targetingParam.targetingKey, let targetingValue = targetingParam.targetingValue {
-                    consentViewController.setTargetingParam(key: targetingKey, value: targetingValue)
-                }
-            }
-            
-            consentViewController.messageTimeoutInSeconds = TimeInterval(30)
-            consentViewController.onMessageReady = { controller in
-                completionHandler(nil, controller,nil, nil, nil)
-            }
-            
-            consentViewController.onErrorOccurred = { error in
-                consentViewController.view.removeFromSuperview()
-                print(error)
-                completionHandler(error, nil, nil, nil, nil)
-            }
-            
-            consentViewController.onInteractionComplete = { cvc in
-                do {
-                    var vendorConsents = [VendorConsent]()
-                    var purposeConsents = [PurposeConsent]()
-                    for consent in try cvc.getCustomVendorConsents() {
-                        print("Custom Vendor Consent id: \(consent.id), name: \(consent.name)")
-                        vendorConsents.append(consent)
-                    }
-                    for consent in try cvc.getCustomPurposeConsents() {
-                        print("Custom Purpose Consent id: \(consent.id), name: \(consent.name)")
-                        purposeConsents.append(consent)
-                    }
-                    completionHandler(nil, nil, true, vendorConsents, purposeConsents)
-                }
-                catch {
-                    print(error)
-                    completionHandler(error as? ConsentViewControllerError, nil, nil, nil, nil)
-                }
-                cvc.view.removeFromSuperview()
-            }
-            consentViewController.loadMessage()
-            
-        } catch {
-            print(error)
-            completionHandler(error as? ConsentViewControllerError, nil, nil, nil, nil)
-        }
-    }
+//    func buildConsentViewController(websiteDetails : WebsiteDetailsModel,targetingParams: [TargetingParamModel], completionHandler: @escaping (ConsentViewControllerError?, ConsentViewController?, Bool?, [VendorConsent]?, [PurposeConsent]?) -> Void) {
+//        do {
+//            
+//            let consentViewController = try ConsentViewController (
+//                accountId: Int(websiteDetails.accountID),
+//                siteName: websiteDetails.websiteName ?? "",
+//                stagingCampaign: websiteDetails.isStaging
+//            )
+//            // optional, set custom targeting parameters supports Strings and Integers
+//            for targetingParam in targetingParams {
+//                if let targetingKey = targetingParam.targetingKey, let targetingValue = targetingParam.targetingValue {
+//                    consentViewController.setTargetingParam(key: targetingKey, value: targetingValue)
+//                }
+//            }
+//            
+//            consentViewController.messageTimeoutInSeconds = TimeInterval(30)
+//            consentViewController.onMessageReady = { controller in
+//                completionHandler(nil, controller,nil, nil, nil)
+//            }
+//            
+//            consentViewController.onErrorOccurred = { error in
+//                consentViewController.view.removeFromSuperview()
+//                print(error)
+//                completionHandler(error, nil, nil, nil, nil)
+//            }
+//            
+//            consentViewController.onInteractionComplete = { cvc in
+//                do {
+//                    var vendorConsents = [VendorConsent]()
+//                    var purposeConsents = [PurposeConsent]()
+//                    for consent in try cvc.getCustomVendorConsents() {
+//                        print("Custom Vendor Consent id: \(consent.id), name: \(consent.name)")
+//                        vendorConsents.append(consent)
+//                    }
+//                    for consent in try cvc.getCustomPurposeConsents() {
+//                        print("Custom Purpose Consent id: \(consent.id), name: \(consent.name)")
+//                        purposeConsents.append(consent)
+//                    }
+//                    completionHandler(nil, nil, true, vendorConsents, purposeConsents)
+//                }
+//                catch {
+//                    print(error)
+//                    completionHandler(error as? ConsentViewControllerError, nil, nil, nil, nil)
+//                }
+//                cvc.view.removeFromSuperview()
+//            }
+//            consentViewController.loadMessage()
+//            
+//        } catch {
+//            print(error)
+//            completionHandler(error as? ConsentViewControllerError, nil, nil, nil, nil)
+//        }
+//    }
     
     
     /// MARK: Validate website details

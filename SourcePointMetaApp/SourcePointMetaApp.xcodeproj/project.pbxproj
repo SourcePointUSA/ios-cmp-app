@@ -58,6 +58,7 @@
 		19FFFC0923019E1D00045350 /* WebsiteListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0823019E1D00045350 /* WebsiteListViewModelTest.swift */; };
 		19FFFC0B23019E2300045350 /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0A23019E2300045350 /* XCUIElement+Extensions.swift */; };
 		6CF65A8640D294ADBDF02028 /* Pods_SourcePointMetaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA57F0B94E487C4A062BE5E /* Pods_SourcePointMetaApp.framework */; };
+		A031AAB89210899021105B14 /* Pods_SourcePointMetaAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104B2AAB03E394A62B354BF /* Pods_SourcePointMetaAppTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A031AAB89210899021105B14 /* Pods_SourcePointMetaAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,9 +588,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 19FFFBFF23019B4000045350 /* Build configuration list for PBXNativeTarget "SourcePointMetaAppTests" */;
 			buildPhases = (
+				27EFA752DBD53ADE217B532B /* [CP] Check Pods Manifest.lock */,
 				19FFFBF423019B4000045350 /* Sources */,
 				19FFFBF523019B4000045350 /* Frameworks */,
 				19FFFBF623019B4000045350 /* Resources */,
+				DE665C50CB48023B0882ECCF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -672,6 +676,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		27EFA752DBD53ADE217B532B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SourcePointMetaAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		52843492F00068E1601BF533 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -709,6 +735,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE665C50CB48023B0882ECCF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -958,6 +1001,7 @@
 		};
 		19FFFC0023019B4000045350 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD1CB1C4C9FD848B714FE027 /* Pods-SourcePointMetaAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "";
@@ -981,6 +1025,7 @@
 		};
 		19FFFC0123019B4000045350 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DAE6EEF59453A44A5B5049AC /* Pods-SourcePointMetaAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "";
