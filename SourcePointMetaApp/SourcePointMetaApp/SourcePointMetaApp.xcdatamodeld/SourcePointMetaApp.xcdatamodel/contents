@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="TargetingParams" representedClassName=".TargetingParams" syncable="YES">
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="websiteDetails" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WebsiteDetails" inverseName="manyTargetingParams" inverseEntity="WebsiteDetails" syncable="YES"/>
+    </entity>
+    <entity name="WebsiteDetails" representedClassName=".WebsiteDetails" syncable="YES">
+        <attribute name="accountID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="creationTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isStaging" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="websiteName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="manyTargetingParams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TargetingParams" inverseName="websiteDetails" inverseEntity="TargetingParams" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="WebsiteDetails" positionX="-89.44921875" positionY="18.1328125" width="128" height="118"/>
+        <element name="TargetingParams" positionX="144.8046875" positionY="-21.734375" width="128" height="88"/>
+    </elements>
+</model>
