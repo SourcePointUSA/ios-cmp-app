@@ -158,104 +158,104 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     
     // save website details to database and show SP messages
     @IBAction func saveWebsiteDetailsAction(_ sender: Any) {
-        
-        view.endEditing(true)
-        self.showIndicator()
-        
-        let accountIDString = accountIDTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
-        let siteName = websiteTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
-        
-        if addWebsiteViewModel.validateWebsiteDetails(accountID: accountIDString, websiteName: siteName) {
-            guard let accountIDText = accountIDString, let accountID = Int64(accountIDText) else {
-                
-                let okHandler = {
-                }
-                self.hideIndicator()
-                AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForInvalidError, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-                return
-            }
-            
-            let websiteDataModel = WebsiteDetailsModel(websiteName: siteName, accountID: accountID, creationTimestamp: NSDate(), isStaging: isStagingSwitchOn)
-            
-            addWebsiteViewModel.checkExitanceOfData(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { [weak self] (isStored) in
-                if isStored {
-                    let okHandler = {
-                    }
-                    self?.hideIndicator()
-                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageForSiteDataStored, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-                } else {
-                    self?.addWebsiteViewModel.buildConsentViewController(websiteDetails: websiteDataModel, targetingParams: self!.targetingParamsArray, completionHandler: { [weak self] (error, consentViewController, dismissControllerStatus, vendorConsents, purposeConsents) in
-                        if let _error = error {
-                            self?.consentViewControllerErrorStatus = true
-                            let okHandler = {
-                                if self?.consentViewControllerStatus == true && self?.consentViewControllerErrorStatus == true {
-                                    if let viewControllers = (self?.navigationController?.viewControllers) {
-                                        DispatchQueue.main.async { self?.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
-                                        }
-                                    }
-                                }
-                            }
-                            self?.hideIndicator()
-                            AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-                        } else if let _consentViewController = consentViewController {
-                            
-                            self?.hideIndicator()
-                            self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
-                            self?.consentViewControllerStatus = true
-                            
-                            if let consentSubViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentSubViewController") as? ConsentSubViewController {
-                                consentSubViewController.consentSubViewController = _consentViewController
-                                
-                                self?.navigationController!.pushViewController(consentSubViewController, animated: true)
-                            }
-                        } else if dismissControllerStatus != nil {
-                            self?.hideIndicator()
-                            if self?.consentViewControllerStatus == true {
-                                DispatchQueue.main.async {
-                                    self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
-                                }
-                            } else {
-                                let showSiteInfotHandler = {
-                                    DispatchQueue.main.async {
-                                        self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
-                                        self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
-                                    }
-                                }
-                                let clearCookiesHandler = {
-                                    let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
-                                    
-                                    alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
-                                    let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-                                        DispatchQueue.main.async {
-                                            self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
-                                            self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
-                                        }
-                                    })
-                                    let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-                                        self?.showIndicator()
-                                        self?.addWebsiteViewModel.clearUserDefaultsData()
-                                        self?.clearCookies()
-                                        self?.saveWebsiteDetailsAction(sender)
-                                        self?.hideIndicator()
-                                    })
-                                    alertController.addAction(noAction)
-                                    alertController.addAction(yesAction)
-                                    self?.present(alertController, animated: true, completion: nil)
-                                }
-                                        AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showSiteInfotHandler, clearCookiesHandler], titles: [Alert.showSiteInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
-                                    self?.consentViewControllerErrorStatus = nil
-                                
-                            }
-                        }
-                    })
-                }
-            })
-        }else {
-            let okHandler = {
-            }
-            self.hideIndicator()
-            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWebsiteNameUnavailability, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-        }
+//
+//        view.endEditing(true)
+//        self.showIndicator()
+//
+//        let accountIDString = accountIDTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
+//        let siteName = websiteTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
+//
+//        if addWebsiteViewModel.validateWebsiteDetails(accountID: accountIDString, websiteName: siteName) {
+//            guard let accountIDText = accountIDString, let accountID = Int64(accountIDText) else {
+//
+//                let okHandler = {
+//                }
+//                self.hideIndicator()
+//                AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForInvalidError, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+//                return
+//            }
+//
+//            let websiteDataModel = WebsiteDetailsModel(websiteName: siteName, accountID: accountID, creationTimestamp: NSDate(), isStaging: isStagingSwitchOn)
+//
+//            addWebsiteViewModel.checkExitanceOfData(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { [weak self] (isStored) in
+//                if isStored {
+//                    let okHandler = {
+//                    }
+//                    self?.hideIndicator()
+//                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageForSiteDataStored, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+//                } else {
+//                    self?.addWebsiteViewModel.buildConsentViewController(websiteDetails: websiteDataModel, targetingParams: self!.targetingParamsArray, completionHandler: { [weak self] (error, consentViewController, dismissControllerStatus, vendorConsents, purposeConsents) in
+//                        if let _error = error {
+//                            self?.consentViewControllerErrorStatus = true
+//                            let okHandler = {
+//                                if self?.consentViewControllerStatus == true && self?.consentViewControllerErrorStatus == true {
+//                                    if let viewControllers = (self?.navigationController?.viewControllers) {
+//                                        DispatchQueue.main.async { self?.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                            self?.hideIndicator()
+//                            AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+//                        } else if let _consentViewController = consentViewController {
+//
+//                            self?.hideIndicator()
+//                            self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
+//                            self?.consentViewControllerStatus = true
+//
+//                            if let consentSubViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentSubViewController") as? ConsentSubViewController {
+//                                consentSubViewController.consentSubViewController = _consentViewController
+//
+//                                self?.navigationController!.pushViewController(consentSubViewController, animated: true)
+//                            }
+//                        } else if dismissControllerStatus != nil {
+//                            self?.hideIndicator()
+//                            if self?.consentViewControllerStatus == true {
+//                                DispatchQueue.main.async {
+//                                    self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
+//                                }
+//                            } else {
+//                                let showSiteInfotHandler = {
+//                                    DispatchQueue.main.async {
+//                                        self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
+//                                        self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
+//                                    }
+//                                }
+//                                let clearCookiesHandler = {
+//                                    let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
+//
+//                                    alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
+//                                    let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
+//                                        DispatchQueue.main.async {
+//                                            self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
+//                                            self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
+//                                        }
+//                                    })
+//                                    let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
+//                                        self?.showIndicator()
+//                                        self?.addWebsiteViewModel.clearUserDefaultsData()
+//                                        self?.clearCookies()
+//                                        self?.saveWebsiteDetailsAction(sender)
+//                                        self?.hideIndicator()
+//                                    })
+//                                    alertController.addAction(noAction)
+//                                    alertController.addAction(yesAction)
+//                                    self?.present(alertController, animated: true, completion: nil)
+//                                }
+//                                        AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showSiteInfotHandler, clearCookiesHandler], titles: [Alert.showSiteInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
+//                                    self?.consentViewControllerErrorStatus = nil
+//
+//                            }
+//                        }
+//                    })
+//                }
+//            })
+//        }else {
+//            let okHandler = {
+//            }
+//            self.hideIndicator()
+//            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWebsiteNameUnavailability, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+//        }
     }
     
     func loadConsentInfoController(vendorConsents : [VendorConsent]?, purposeConsents : [PurposeConsent]? ) {

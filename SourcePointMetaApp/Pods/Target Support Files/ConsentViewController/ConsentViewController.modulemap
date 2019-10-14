@@ -1,0 +1,6 @@
+framework module ConsentViewController {
+  umbrella header "ConsentViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}
