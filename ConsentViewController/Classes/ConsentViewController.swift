@@ -77,8 +77,8 @@ import Reachability
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
-    static public let STAGING_MMS_DOMAIN = "mms.sp-stage.net"
-    static public let MMS_DOMAIN = "mms.sp-prod.net"
+    static public let STAGING_MMS_DOMAIN = "message.sp-stage.net"
+    static public let MMS_DOMAIN = "message.sp-prod.net"
 
     static public let STAGING_CMP_DOMAIN = "cmp.sp-stage.net"
     static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
