@@ -19,7 +19,7 @@ class AddWebsiteViewModel {
     private var websiteManagedObjectID : NSManagedObjectID?
     
     /// It is reference to Website entity.
-    var websiteEntity : WebsiteDetails?
+    var websiteEntity : SiteDetails?
     
     // MARK: - Initializers
     
@@ -59,7 +59,7 @@ class AddWebsiteViewModel {
     /// - Parameters:
     ///   - websiteManagedObjectID: website Managed Object ID.
     ///   - handler: Callback for the completion event.
-    func fetch(website websiteManagedObjectID : NSManagedObjectID, completionHandler handler: @escaping (WebsiteDetails) -> Void) {
+    func fetch(website websiteManagedObjectID : NSManagedObjectID, completionHandler handler: @escaping (SiteDetails) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             self?.storageCoordinator.fetch(website: websiteManagedObjectID, completionHandler: { (optionalWebsiteManagedObject) in
                 if let websiteManagedObject = optionalWebsiteManagedObject {

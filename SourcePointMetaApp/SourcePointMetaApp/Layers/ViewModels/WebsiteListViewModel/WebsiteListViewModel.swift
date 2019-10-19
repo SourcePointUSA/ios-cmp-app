@@ -13,7 +13,7 @@ class WebsiteListViewModel {
     
     // MARK: - Properties and iVars
     
-    private var websites : [WebsiteDetails]?
+    private var websites : [SiteDetails]?
     
     var storageCoordinator : WebsiteDetailsStorageCoordinator = WebsiteDetailsStorageCoordinator()
     
@@ -22,7 +22,7 @@ class WebsiteListViewModel {
     /// It initialize and create WebsiteListViewModel with list of website item.
     ///
     /// - Parameter executionCompletionHandler: Callback for completion event. paramter indicates about execution status(success/failure).
-    func importAllWebsites(executionCompletionHandler: @escaping([WebsiteDetails]?) -> Void) {
+    func importAllWebsites(executionCompletionHandler: @escaping([SiteDetails]?) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             self?.websites?.removeAll()
             self?.storageCoordinator.fetchAllWebsites(executionCompletionHandler: { (_allWebsites) in

@@ -15,15 +15,15 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
     // It Fetches all Website details from the database
     // -Parameters:
     //  - executionCompletionHandler: Completion handler; it takes array of all websites to caller.
-    func fetchAllWebsites(executionCompletionHandler: @escaping([WebsiteDetails]?) -> Void) {
+    func fetchAllWebsites(executionCompletionHandler: @escaping([SiteDetails]?) -> Void) {
         let managedObjectContext = self.managedObjectContext
         
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
             
             let timestampDescriptor = NSSortDescriptor(key: "creationTimestamp", ascending: false)
-            dbManager.fetchEntities(WebsiteDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: managedObjectContext, completion: { (WebsiteDetails) in
-                if let allWebsites = WebsiteDetails as? [WebsiteDetails] {
+            dbManager.fetchEntities(SiteDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: managedObjectContext, completion: { (WebsiteDetails) in
+                if let allWebsites = WebsiteDetails as? [SiteDetails] {
                     executionCompletionHandler(allWebsites)
                 } else {
                     executionCompletionHandler(nil)
@@ -37,13 +37,13 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
     /// - Parameters:
     ///   - websiteManagedObjectID: Valid managed object id.
     ///   - handler: Callback for completion event.
-    func fetch(website websiteManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (WebsiteDetails?) -> Void) {
+    func fetch(website websiteManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (SiteDetails?) -> Void) {
         
         let managedObjectContext = self.managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
             dbManager.fetchEntity(withManagedObjectID: websiteManagedObjectID, managedObjectContext: managedObjectContext) { (optionalManagedObject) in
-                if let websiteManagedObject = optionalManagedObject as? WebsiteDetails {
+                if let websiteManagedObject = optionalManagedObject as? SiteDetails {
                     handler(websiteManagedObject)
                 } else {
                     handler(nil)
@@ -56,7 +56,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         let managedObjectContext = self.managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
-            dbManager.fetchEntity(WebsiteDetails.entityName, sortDescriptors: nil, predicate: nil, managedObjectContext: managedObjectContext, completion: { (optionalManagedObject) in
+            dbManager.fetchEntity(SiteDetails.entityName, sortDescriptors: nil, predicate: nil, managedObjectContext: managedObjectContext, completion: { (optionalManagedObject) in
                 handler((optionalManagedObject?.objectID)!)
             })
         }
@@ -67,17 +67,16 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
     /// - Parameters:
     ///   - websiteDataModel: website Data Model.
     ///   - handler: Callback for the completion event.
-    func add(websiteDetails websiteDataModel : WebsiteDetailsModel,targetingParams:[TargetingParamModel], completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func add(websiteDetails websiteDataModel : SiteDetailsModel,targetingParams:[TargetingParamModel], completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
         
         
         let managedObjectContext = self.managedObjectContext
         let creationTimestamp = NSDate()
         
-        if let websiteEntity = NSEntityDescription.insertNewObject(forEntityName: WebsiteDetails.entityName, into: managedObjectContext) as? WebsiteDetails {
-            websiteEntity.websiteName = websiteDataModel.websiteName
-            websiteEntity.accountID = websiteDataModel.accountID
-            websiteEntity.creationTimestamp = creationTimestamp
-            websiteEntity.isStaging = websiteDataModel.isStaging
+        if let websiteEntity = NSEntityDescription.insertNewObject(forEntityName: SiteDetails.entityName, into: managedObjectContext) as? SiteDetails {
+            websiteEntity.siteName = websiteDataModel.siteName
+//            websiteEntity.accountId = websiteDataModel.accountId
+            websiteEntity.creationTimestamp = creationTimestamp as Date
             
             for targetingParam in targetingParams {
                 if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
@@ -107,7 +106,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
     ///   - websiteDataModel: Website Data Model.
     ///   - managedObjectID: managedObjectID of existing website entity.
     ///   - handler: Callback for the completion event.
-    func update(websiteDetails websiteDataModel : WebsiteDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func update(websiteDetails websiteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
         
         fetch(website: managedObjectID) { (optionalWebsiteEntity) in
             if let websiteEntity = optionalWebsiteEntity {
@@ -116,10 +115,9 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
                 let creationTimestamp = NSDate()
                 
                 //Updating website entity
-                websiteEntity.websiteName = websiteDataModel.websiteName
-                websiteEntity.accountID = websiteDataModel.accountID
-                websiteEntity.creationTimestamp = creationTimestamp
-                websiteEntity.isStaging = websiteDataModel.isStaging
+                websiteEntity.siteName = websiteDataModel.siteName
+//                websiteEntity.accountID = websiteDataModel.accountID
+                websiteEntity.creationTimestamp = creationTimestamp as Date
                 if let targetingparamsSet = websiteEntity.manyTargetingParams {
                     websiteEntity.removeFromManyTargetingParams(targetingparamsSet)
                 }
@@ -174,20 +172,21 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
     /// - Parameters:
     ///   - websiteDataModel: Website Data Model.
     ///   - handler: Callback for the completion event.
-    func  checkExitanceOfData(websiteDetails websiteDataModel : WebsiteDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
+    func  checkExitanceOfData(websiteDetails websiteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
         
         var subPredicates : [NSPredicate] = []
-        let subPredicate = NSPredicate(format: "accountID == \(websiteDataModel.accountID) AND websiteName == %@ AND isStaging == \(NSNumber(value: websiteDataModel.isStaging))", websiteDataModel.websiteName!)
+//        let subPredicate = NSPredicate(format: "accountID == \(websiteDataModel.accountId) AND websiteName == %@ AND isStaging == \(NSNumber(value: websiteDataModel.isStaging))", websiteDataModel.siteName!)
+         let subPredicate = NSPredicate(format: "accountID == \(websiteDataModel.accountId)")
         
         subPredicates.append(subPredicate)
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: WebsiteDetails.entityName)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: SiteDetails.entityName)
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: subPredicates)
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
             if results.count > 0 {
                 var storedTargetingParamArray = [TargetingParamModel]()
                 var isSiteDataStored = false
-                for result in results as! [WebsiteDetails] {
+                for result in results as! [SiteDetails] {
                     if let targetingParamItem = result.manyTargetingParams?.allObjects as! [TargetingParams]?, targetingParamItem.count > 0 {
                         for targetingParam in targetingParamItem {
                             let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
