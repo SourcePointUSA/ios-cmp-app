@@ -5,13 +5,13 @@
 //  Created by Vilas on 3/25/19.
 //  Copyright © 2019 Cybage. All rights reserved.
 //
-
+ 
 import UIKit
 import ConsentViewController
 import CoreData
 import WebKit
 
-class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, UITextFieldDelegate, WKNavigationDelegate {
+class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, UITextFieldDelegate, WKNavigationDelegate, ConsentDelegate {
     
     //// MARK: - IBOutlet
     /** UITextField outlet for account ID textField.
@@ -62,9 +62,13 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     */
     @IBOutlet weak var noTargetingParamDataLabel: UILabel!
     
-    /** stage/public compaign
+    /** Default campaign value is public
      */
-    var isStagingSwitchOn = false
+    var campaign = "public"
+    
+    /** show PM directly or not
+     */
+    var showPM = false
     
     /** consentViewController is loaded or not
      */
@@ -75,7 +79,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     var consentViewControllerErrorStatus : Bool?
     
     // Reference to the selected website managed object ID
-    var websiteManagedObjectID : NSManagedObjectID?
+    var siteManagedObjectID : NSManagedObjectID?
     
     //// MARK: - Instance properties
     private let cellIdentifier = "targetingParamCell"
@@ -83,25 +87,36 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     // Will add all the targeting params to this array
     var targetingParamsArray = [TargetingParamModel]()
     
+    // this variable holds the site details entered by user
+    var siteDetailsModel: SiteDetailsModel?
+    
     // MARK: - Initializer
     let addWebsiteViewModel: AddWebsiteViewModel = AddWebsiteViewModel()
+    
+    let logger = Logger()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        accountIDTextFieldOutlet.delegate = self
-//        websiteTextFieldOutlet.delegate = self
-//        targetingParamTableview.tableFooterView = UIView(frame: .zero)
-//        setTableViewHidden()
+        accountIDTextFieldOutlet.delegate = self
+        siteIdTextFieldOutlet.delegate = self
+        siteNameTextField.delegate = self
+        authIdTextField.delegate = self
+        privacyManagerTextField.delegate = self
+        keyTextFieldOutlet.delegate = self
+        valueTextFieldOutlet.delegate = self
+        
+        targetingParamTableview.tableFooterView = UIView(frame: .zero)
+        setTableViewHidden()
                 
-        if let _websiteManagedObjectID = websiteManagedObjectID {
+        if let _siteManagedObjectID = siteManagedObjectID {
             self.title = "Edit Site"
-            self.addWebsiteViewModel.fetch(website: _websiteManagedObjectID, completionHandler: { [weak self] ( siteDataDetailsModel) in
+            self.addWebsiteViewModel.fetch(website: _siteManagedObjectID, completionHandler: { [weak self] ( siteDataDetailsModel) in
                 
-                self?.accountIDTextFieldOutlet.text = String(siteDataDetailsModel.accountID)
+//                self?.accountIDTextFieldOutlet.text = String(siteDataDetailsModel.accountID)
 //                self?.siteTextFieldOutlet.text = siteDataDetailsModel.websiteName
-                self?.isStagingSwitchOutlet.isOn = siteDataDetailsModel.isStaging
-                self?.isStagingSwitchOn = siteDataDetailsModel.isStaging
+//                self?.isStagingSwitchOutlet.isOn = siteDataDetailsModel.isStaging
+//                self?.isStagingSwitchOn = siteDataDetailsModel.isStaging
                 if let targetingParams = siteDataDetailsModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                     for targetingParam in targetingParams {
                         let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
@@ -121,16 +136,17 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     
     // Set value of staging switch
     @IBAction func campaignSwitchButtonAction(_ sender: UISwitch) {
-        
-        isStagingSwitchOn = sender.isOn
-    }
-    @IBAction func showPMSwitchButtonAction(_ sender: Any) {
+        campaign = sender.isOn ? "stage" : "public"
     }
     
-//    func setTableViewHidden() {
-//        targetingParamTableview.isHidden = !(targetingParamsArray.count > 0)
-//        noTargetingParamDataLabel.isHidden = targetingParamsArray.count > 0
-//    }
+    @IBAction func showPMSwitchButtonAction(_ sender: UISwitch) {
+        showPM = sender.isOn
+    }
+    
+    func setTableViewHidden() {
+        targetingParamTableview.isHidden = !(targetingParamsArray.count > 0)
+        noTargetingParamDataLabel.isHidden = targetingParamsArray.count > 0
+    }
     
     func clearCookies() {
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
@@ -142,10 +158,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     
     // add targeting param value to the tableview
     @IBAction func addTargetingParamAction(_ sender: Any) {
-        view.endEditing(true)
-        if view.frame.origin.y < 0 {
-            self.setViewMovedUp(false)
-        }
+
         let targetingKeyString = keyTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
         let targetingValueString = valueTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
         
@@ -183,106 +196,93 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
         }
     }
     
-    // save website details to database and show SP messages
-    @IBAction func saveWebsiteDetailsAction(_ sender: Any) {
-//
-//        view.endEditing(true)
-//        self.showIndicator()
-//
-//        let accountIDString = accountIDTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
-//        let siteName = websiteTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
-//
-//        if addWebsiteViewModel.validateWebsiteDetails(accountID: accountIDString, websiteName: siteName) {
-//            guard let accountIDText = accountIDString, let accountID = Int64(accountIDText) else {
-//
-//                let okHandler = {
-//                }
-//                self.hideIndicator()
-//                AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForInvalidError, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-//                return
-//            }
-//
-//            let websiteDataModel = WebsiteDetailsModel(websiteName: siteName, accountID: accountID, creationTimestamp: NSDate(), isStaging: isStagingSwitchOn)
-//
-//            addWebsiteViewModel.checkExitanceOfData(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { [weak self] (isStored) in
-//                if isStored {
-//                    let okHandler = {
-//                    }
-//                    self?.hideIndicator()
-//                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageForSiteDataStored, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-//                } else {
-//                    self?.addWebsiteViewModel.buildConsentViewController(websiteDetails: websiteDataModel, targetingParams: self!.targetingParamsArray, completionHandler: { [weak self] (error, consentViewController, dismissControllerStatus, vendorConsents, purposeConsents) in
-//                        if let _error = error {
-//                            self?.consentViewControllerErrorStatus = true
-//                            let okHandler = {
-//                                if self?.consentViewControllerStatus == true && self?.consentViewControllerErrorStatus == true {
-//                                    if let viewControllers = (self?.navigationController?.viewControllers) {
-//                                        DispatchQueue.main.async { self?.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                            self?.hideIndicator()
-//                            AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-//                        } else if let _consentViewController = consentViewController {
-//
-//                            self?.hideIndicator()
-//                            self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
-//                            self?.consentViewControllerStatus = true
-//
-//                            if let consentSubViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentSubViewController") as? ConsentSubViewController {
-//                                consentSubViewController.consentSubViewController = _consentViewController
-//
-//                                self?.navigationController!.pushViewController(consentSubViewController, animated: true)
-//                            }
-//                        } else if dismissControllerStatus != nil {
-//                            self?.hideIndicator()
-//                            if self?.consentViewControllerStatus == true {
-//                                DispatchQueue.main.async {
-//                                    self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
-//                                }
-//                            } else {
-//                                let showSiteInfotHandler = {
-//                                    DispatchQueue.main.async {
-//                                        self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
-//                                        self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
-//                                    }
-//                                }
-//                                let clearCookiesHandler = {
-//                                    let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
-//
-//                                    alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
-//                                    let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-//                                        DispatchQueue.main.async {
-//                                            self?.saveSitDataToDatabase(websiteDataModel: websiteDataModel)
-//                                            self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
-//                                        }
-//                                    })
-//                                    let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-//                                        self?.showIndicator()
-//                                        self?.addWebsiteViewModel.clearUserDefaultsData()
-//                                        self?.clearCookies()
-//                                        self?.saveWebsiteDetailsAction(sender)
-//                                        self?.hideIndicator()
-//                                    })
-//                                    alertController.addAction(noAction)
-//                                    alertController.addAction(yesAction)
-//                                    self?.present(alertController, animated: true, completion: nil)
-//                                }
-//                                        AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showSiteInfotHandler, clearCookiesHandler], titles: [Alert.showSiteInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
-//                                    self?.consentViewControllerErrorStatus = nil
-//
-//                            }
-//                        }
-//                    })
-//                }
-//            })
-//        }else {
-//            let okHandler = {
-//            }
-//            self.hideIndicator()
-//            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWebsiteNameUnavailability, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-//        }
+    // save site details to database and show SP messages/PM
+     @IBAction func saveSiteDetailsAction(_ sender: Any) {
+        self.showIndicator()
+        let accountIDString = accountIDTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
+        let siteId = siteIdTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
+        let siteName = siteNameTextField.text?.trimmingCharacters(in: .whitespaces)
+        let privacyManagerId = privacyManagerTextField.text?.trimmingCharacters(in: .whitespaces)
+        let authId = authIdTextField.text?.trimmingCharacters(in: .whitespaces)
+        
+        if addWebsiteViewModel.validateSiteDetails(accountID: accountIDString, siteId: siteId, siteName: siteName, privacyManagerId: privacyManagerId) {
+            guard let accountIDText = accountIDString, let accountID = Int(accountIDText),
+                let siteIDText = siteId, let siteID = Int(siteIDText) else {
+                    let okHandler = {
+                    }
+                    self.hideIndicator()
+                    AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForInvalidError, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+                    return
+            }
+            siteDetailsModel = SiteDetailsModel(accountId: accountID, siteId: siteID, siteName: siteName, campaign: campaign, privacyManagerId: privacyManagerId, showPM: showPM, creationTimestamp: NSDate(),authId: authId)
+            loadConsentManager(siteDetails: siteDetailsModel!)
+        } else {
+            let okHandler = {
+            }
+            self.hideIndicator()
+            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWebsiteNameUnavailability, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+        }
+    }
+    
+    func loadConsentManager(siteDetails : SiteDetailsModel) {
+        do {
+            let consentViewController = try ConsentViewController (accountId: siteDetails.accountId, siteId: siteDetails.siteId, siteName: siteDetails.siteName!, PMId: siteDetails.privacyManagerId!, campaign: campaign, showPM: showPM, consentDelegate: self)
+            // optional, set custom targeting parameters supports Strings and Integers
+            for targetingParam in self.targetingParamsArray {
+                           if let targetingKey = targetingParam.targetingKey, let targetingValue = targetingParam.targetingValue {
+                               consentViewController.setTargetingParam(key: targetingKey, value: targetingValue)
+                           }
+                       }
+                       
+            consentViewController.messageTimeoutInSeconds = TimeInterval(30)
+            siteDetails.authId!.count > 0 ? consentViewController.loadMessage(forAuthId: siteDetails.authId!) : consentViewController.loadMessage()
+        }catch {
+            print(error)
+        }
+    }
+    
+    func onMessageReady(controller: ConsentViewController) {
+        self.hideIndicator()
+//        self.saveSitDataToDatabase(siteDetailsModel: siteDetailsModel!)
+        if let consentSubViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentSubViewController") as? ConsentSubViewController {
+            consentSubViewController.consentSubViewController = controller
+            self.navigationController!.pushViewController(consentSubViewController, animated: true)
+        }
+    }
+
+    func onConsentReady(controller: ConsentViewController) {
+        var vendorConsents = [VendorConsent]()
+        var purposeConsents = [PurposeConsent]()
+        controller.getCustomVendorConsents { (vendors, error) in
+            if error != nil {
+                self.onErrorOccurred(error: error!)
+            }else {
+                if let vendors = vendors {
+                    for consent in vendors {
+                        print("Custom Vendor Consent id: \(consent.id), name: \(consent.name)")
+                        vendorConsents.append(consent)
+                    }
+                }
+            }
+        }
+        controller.getCustomPurposeConsents { (purposes, error) in
+            if error != nil {
+                self.onErrorOccurred(error: error!)
+            }else {
+                if let purposes = purposes {
+                    for consent in purposes {
+                        print("Custom Purpose Consent id: \(consent.id), name: \(consent.name)")
+                        purposeConsents.append(consent)
+                    }
+                }
+            }
+        }
+        self.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
+    }
+
+    func onErrorOccurred(error: ConsentViewControllerError) {
+        logger.log("Error: %{public}@", [error])
+        self.dismiss(animated: false, completion: nil)
     }
     
     func loadConsentInfoController(vendorConsents : [VendorConsent]?, purposeConsents : [PurposeConsent]? ) {
@@ -298,114 +298,80 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     }
     
     // save website details to database
-    func saveSitDataToDatabase(websiteDataModel: WebsiteDetailsModel) {
-        
-        if let _websiteManagedObjectID = websiteManagedObjectID {
-            addWebsiteViewModel.update(websiteDetails: websiteDataModel, targetingParams:targetingParamsArray, whereManagedObjectID: _websiteManagedObjectID, completionHandler: {(optionalWebsiteManagedObjectID, executionStatus) in
-                if executionStatus {
-                    Log.sharedLog.DLog(message:"website Details are updated")
-                }else {
-                    Log.sharedLog.DLog(message:"Failed to update website Details")
-                }
-            })
-        } else {
-            addWebsiteViewModel.addWebsite(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { (error, _,websiteManagedObjectID) in
-                
-                if let _error = error {
-                    let okHandler = {
-                    }
-                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-                } else {
-                    Log.sharedLog.DLog(message:"website Details saved")
-                }
-            })
-        }
-    }
+//    func saveSitDataToDatabase(siteDetailsModel: SiteDetailsModel) {
+//
+//        if let _websiteManagedObjectID = siteManagedObjectID {
+//            addWebsiteViewModel.update(websiteDetails: siteDetailsModel, targetingParams:targetingParamsArray, whereManagedObjectID: _websiteManagedObjectID, completionHandler: {(optionalWebsiteManagedObjectID, executionStatus) in
+//                if executionStatus {
+//                    Log.sharedLog.DLog(message:"website Details are updated")
+//                }else {
+//                    Log.sharedLog.DLog(message:"Failed to update website Details")
+//                }
+//            })
+//        } else {
+//            addWebsiteViewModel.addWebsite(websiteDetails: siteDetailsModel, targetingParams: targetingParamsArray, completionHandler: { (error, _,websiteManagedObjectID) in
+//
+//                if let _error = error {
+//                    let okHandler = {
+//                    }
+//                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+//                } else {
+//                    Log.sharedLog.DLog(message:"website Details saved")
+//                }
+//            })
+//        }
+//    }
     
-    //method to move the view up/down whenever the keyboard is shown/dismissed
-    func setViewMovedUp(_ movedUp: Bool) {
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(0.3)
-        // if you want to slide up the view
-        var rect: CGRect = view.frame
-        if movedUp {
-            // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
-            // 2. increase the size of the view so that the area behind the keyboard is covered up.
-            rect.origin.y -= 80
-            rect.size.height += 80
-        }
-        else {
-            // revert back to the normal state.
-            rect.origin.y += 80
-            rect.size.height -= 80
-        }
-        view.frame = rect
-        UIView.commitAnimations()
-    }
+    
     
     //MARK: UITextField delegate methods
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == valueTextFieldOutlet {
-            //move the main view, so that the keyboard does not hide it.
-            if view.frame.origin.y >= 0 {
-                setViewMovedUp(true)
-            }
-        }
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        if textField == accountIDTextFieldOutlet { // Switch focus to website text field
+        if textField == accountIDTextFieldOutlet { // Switch focus to site text field
             siteIdTextFieldOutlet.becomeFirstResponder()
         } else if textField == siteIdTextFieldOutlet {
+            siteNameTextField.becomeFirstResponder()
+        } else if textField == siteNameTextField {
+            authIdTextField.becomeFirstResponder()
+        } else if textField == authIdTextField {
+            privacyManagerTextField.becomeFirstResponder()
+        } else if textField == privacyManagerTextField {
             keyTextFieldOutlet.becomeFirstResponder()
         } else if textField == keyTextFieldOutlet {
             valueTextFieldOutlet.becomeFirstResponder()
         } else {
             addTargetingParamAction(textField)
             textField.resignFirstResponder()
-            if view.frame.origin.y < 0 {
-                self.setViewMovedUp(false)
-            }
         }
         return true
-    }
-    
-    //MARK: hiding keyboard when touch outside of textfields
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if view.frame.origin.y < 0 {
-            self.setViewMovedUp(false)
-        }
-        view.endEditing(true)
     }
 }
 
 //// MARK: UITableViewDataSource
-//extension AddWebsiteViewController : UITableViewDataSource {
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        setTableViewHidden()
-//        return targetingParamsArray.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TargetingParamCell {
-//            cell.delegate = self
-//            let targetingParamName = targetingParamsArray[indexPath.row].targetingKey! + " : " + targetingParamsArray[indexPath.row].targetingValue!
-//            cell.targetingParamLabel.text = targetingParamName
-//            return cell
-//        }
-//        return UITableViewCell()
-//    }
-//}
-//
+extension AddWebsiteViewController : UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        setTableViewHidden()
+        return targetingParamsArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TargetingParamCell {
+            cell.delegate = self
+            let targetingParamName = targetingParamsArray[indexPath.row].targetingKey! + " : " + targetingParamsArray[indexPath.row].targetingValue!
+            cell.targetingParamLabel.text = targetingParamName
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
+
 ////// MARK: - UITableViewDelegate
-//extension AddWebsiteViewController : UITableViewDelegate {
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        targetingParamTableview.deselectRow(at: indexPath, animated: false)
-//    }
-//}
+extension AddWebsiteViewController : UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        targetingParamTableview.deselectRow(at: indexPath, animated: false)
+    }
+}
 

@@ -89,19 +89,19 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
         }
     }
     
-    func fetchDataFromDatabase(siteManagedObjectID : NSManagedObjectID, completionHandler: @escaping (WebsiteDetailsModel, [TargetingParamModel]) -> Void)  {
-        self.addWebsiteViewModel.fetch(website: siteManagedObjectID, completionHandler: {( siteDataModel) in
-            let siteDetail = WebsiteDetailsModel(websiteName: siteDataModel.websiteName, accountID: siteDataModel.accountID, creationTimestamp: siteDataModel.creationTimestamp, isStaging: siteDataModel.isStaging)
-            var targetingParamsArray = [TargetingParamModel]()
-            if let targetingParams = siteDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
-                for targetingParam in targetingParams {
-                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
-                    targetingParamsArray.append(targetingParamModel)
-                }
-            }
-            completionHandler(siteDetail, targetingParamsArray)
-        })
-    }
+//    func fetchDataFromDatabase(siteManagedObjectID : NSManagedObjectID, completionHandler: @escaping (SiteDetailsModel, [TargetingParamModel]) -> Void)  {
+//        self.addWebsiteViewModel.fetch(website: siteManagedObjectID, completionHandler: {( siteDataModel) in
+//            let siteDetail = SiteDetailsModel(websiteName: siteDataModel.websiteName, accountID: siteDataModel.accountID, creationTimestamp: siteDataModel.creationTimestamp, isStaging: siteDataModel.isStaging)
+//            var targetingParamsArray = [TargetingParamModel]()
+//            if let targetingParams = siteDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
+//                for targetingParam in targetingParams {
+//                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
+//                    targetingParamsArray.append(targetingParamModel)
+//                }
+//            }
+//            completionHandler(siteDetail, targetingParamsArray)
+//        })
+//    }
     
 //    func buildConsentViewController(siteDetailsObject : WebsiteDetailsModel,targetingParamsArray: [TargetingParamModel]) {
 //        addWebsiteViewModel.buildConsentViewController(websiteDetails: siteDetailsObject, targetingParams: targetingParamsArray, completionHandler: { [weak self] (error, consentViewController,onInteractionCompleteStatus,vendorConsents, purposeConsents) in

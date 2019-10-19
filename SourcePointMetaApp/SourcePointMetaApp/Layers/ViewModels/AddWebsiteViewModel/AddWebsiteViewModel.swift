@@ -30,29 +30,29 @@ class AddWebsiteViewModel {
     /// It add website item.
     ///
     /// - Parameter completionHandler: Completion handler
-    func addWebsite(websiteDetails : WebsiteDetailsModel,targetingParams:[TargetingParamModel], completionHandler: @escaping (SPError?, Bool, NSManagedObjectID?) -> Void) {
-        
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            
-            //Callback for storage coordinator
-            let storageCoordinatorCallback : ((NSManagedObjectID?, Bool) -> Void) = { (managedObjectID, executionStatus) in
-                
-                if executionStatus == true {
-                    DispatchQueue.main.async {
-                        completionHandler(nil, true, managedObjectID)
-                    }
-                } else {
-                    let error = SPError(code: 0, description: SPLiteral.emptyString, message: Alert.messageForUnknownError)
-                    DispatchQueue.main.async {
-                        completionHandler(error, false, managedObjectID)
-                    }
-                }
-            }
-            
-            // Adding new website item in the storage.
-            self?.storageCoordinator.add(websiteDetails: websiteDetails, targetingParams: targetingParams, completionHandler: storageCoordinatorCallback)
-        }
-    }
+//    func addWebsite(websiteDetails : SiteDetailsModel,targetingParams:[TargetingParamModel], completionHandler: @escaping (SPError?, Bool, NSManagedObjectID?) -> Void) {
+//
+//        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+//
+//            //Callback for storage coordinator
+//            let storageCoordinatorCallback : ((NSManagedObjectID?, Bool) -> Void) = { (managedObjectID, executionStatus) in
+//
+//                if executionStatus == true {
+//                    DispatchQueue.main.async {
+//                        completionHandler(nil, true, managedObjectID)
+//                    }
+//                } else {
+//                    let error = SPError(code: 0, description: SPLiteral.emptyString, message: Alert.messageForUnknownError)
+//                    DispatchQueue.main.async {
+//                        completionHandler(error, false, managedObjectID)
+//                    }
+//                }
+//            }
+//
+//            // Adding new website item in the storage.
+//            self?.storageCoordinator.add(websiteDetails: websiteDetails, targetingParams: targetingParams, completionHandler: storageCoordinatorCallback)
+//        }
+//    }
     
     /// It fetch website of specific ManagedObjectID.
     ///
@@ -77,35 +77,35 @@ class AddWebsiteViewModel {
     ///   - websiteDataModel: Website Data Model.
     ///   - managedObjectID: managedObjectID of existing website entity.
     ///   - handler: Callback for the completion event.
-    func update(websiteDetails websiteDataModel : WebsiteDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            self?.storageCoordinator.update(websiteDetails: websiteDataModel,targetingParams: targetingParams, whereManagedObjectID: managedObjectID, completionHandler:{ (optionalWebsiteManagedObjectID, executionStatus) in
-                if let websiteManagedObjectID = optionalWebsiteManagedObjectID {
-                    DispatchQueue.main.async {
-                        handler(websiteManagedObjectID, true)
-                    }
-                } else {
-                    handler(nil, false)
-                }
-            })
-        }
-    }
+//    func update(websiteDetails websiteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
+//        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+//            self?.storageCoordinator.update(websiteDetails: websiteDataModel,targetingParams: targetingParams, whereManagedObjectID: managedObjectID, completionHandler:{ (optionalWebsiteManagedObjectID, executionStatus) in
+//                if let websiteManagedObjectID = optionalWebsiteManagedObjectID {
+//                    DispatchQueue.main.async {
+//                        handler(websiteManagedObjectID, true)
+//                    }
+//                } else {
+//                    handler(nil, false)
+//                }
+//            })
+//        }
+//    }
     
     /// It check whether website details are stored in database or not.
     ///
     /// - Parameters:
     ///   - websiteDataModel: Website Data Model.
     ///   - handler: Callback for the completion event.
-    func  checkExitanceOfData(websiteDetails websiteDataModel : WebsiteDetailsModel,targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
-        
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            self?.storageCoordinator.checkExitanceOfData(websiteDetails: websiteDataModel, targetingParams: targetingParams, completionHandler: { (optionalWebsiteManagedObject) in
-                DispatchQueue.main.async {
-                    handler(optionalWebsiteManagedObject)
-                }
-            })
-        }
-    }
+//    func  checkExitanceOfData(websiteDetails websiteDataModel : SiteDetailsModel,targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
+//        
+//        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+//            self?.storageCoordinator.checkExitanceOfData(websiteDetails: websiteDataModel, targetingParams: targetingParams, completionHandler: { (optionalWebsiteManagedObject) in
+//                DispatchQueue.main.async {
+//                    handler(optionalWebsiteManagedObject)
+//                }
+//            })
+//        }
+//    }
     
     /// It will clear all the userDefaultData
     func clearUserDefaultsData() {
@@ -171,12 +171,12 @@ class AddWebsiteViewModel {
 //    }
     
     
-    /// MARK: Validate website details
+    /// MARK: Validate site details
     ///
     /// - Parameter
-    func validateWebsiteDetails (accountID : String?, websiteName: String?) -> Bool {
+    func validateSiteDetails (accountID : String?, siteId:String?, siteName: String?, privacyManagerId: String?) -> Bool {
         
-        if (accountID?.count)! > 0 && (websiteName?.count)! > 0 {
+        if accountID!.count > 0 && siteId!.count > 0 && siteName!.count > 0 && privacyManagerId!.count > 0 {
             return true
         }else {
             return false

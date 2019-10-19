@@ -81,20 +81,20 @@ class WebsiteListViewModel {
     ///
     /// - Parameter index: Index.
     /// - Returns: Website name.
-    func websiteDetails(atIndex index: Int) -> (WebsiteDetailsModel?, String?) {
-        if let _websites = websites, _websites.count > index {
-            var targetingParamString = ""
-            let websiteDataModel = WebsiteDetailsModel(websiteName: _websites[index].websiteName, accountID: _websites[index].accountID, creationTimestamp: _websites[index].creationTimestamp, isStaging: _websites[index].isStaging)
-            if let targetingParams = _websites[index].manyTargetingParams?.allObjects as! [TargetingParams]? {
-                for targetingParam in targetingParams {
-                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
-                    targetingParamString += "\(targetingParamModel.targetingKey!) : \(targetingParamModel.targetingValue!)\n"
-                }
-            }
-            return (websiteDataModel,targetingParamString)
-        }
-        return (nil, nil)
-    }
+//    func websiteDetails(atIndex index: Int) -> (SiteDetailsModel?, String?) {
+//        if let _websites = websites, _websites.count > index {
+//            var targetingParamString = ""
+//            let websiteDataModel = SiteDetailsModel(websiteName: _websites[index].websiteName, accountID: _websites[index].accountID, creationTimestamp: _websites[index].creationTimestamp, isStaging: _websites[index].isStaging)
+//            if let targetingParams = _websites[index].manyTargetingParams?.allObjects as! [TargetingParams]? {
+//                for targetingParam in targetingParams {
+//                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
+//                    targetingParamString += "\(targetingParamModel.targetingKey!) : \(targetingParamModel.targetingValue!)\n"
+//                }
+//            }
+//            return (websiteDataModel,targetingParamString)
+//        }
+//        return (nil, nil)
+//    }
     
     /// It fetch and return ManagedObjectID of the website managed object. It could be useful for other managed object context.
     ///
