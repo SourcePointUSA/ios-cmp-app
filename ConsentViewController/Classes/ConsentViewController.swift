@@ -77,13 +77,13 @@ import Reachability
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
-    static public let STAGING_MMS_DOMAIN = "message.sp-stage.net"
+    static public let STAGING_MMS_DOMAIN = "mms.sp-stage.net"
     static public let MMS_DOMAIN = "message.sp-prod.net"
 
     static public let STAGING_CMP_DOMAIN = "cmp.sp-stage.net"
     static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
 
-    static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.cmp.sp-stage.net/v2.0.html"
+    static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
     static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
 
     private var targetingParams: [String: Any] = [:]
