@@ -18,12 +18,28 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
      */
     @IBOutlet weak var accountIDTextFieldOutlet: UITextField!
     
-    /** UITextField outlet for website textField.
+    /** UIScrollView outlet for scrollView.
+    */
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    /** UITextField outlet for site ID textField.
      */
-    @IBOutlet weak var websiteTextFieldOutlet: UITextField!
+    @IBOutlet weak var siteIdTextFieldOutlet: UITextField!
+    
+    /** UITextField outlet for site Name textField.
+    */
+    @IBOutlet weak var siteNameTextField: UITextField!
+    
+    /** UITextField outlet for auth Id textField.
+     */
+    @IBOutlet weak var authIdTextField: UITextField!
+    
+    /** UITextField outlet for Privacy Manager textField.
+        */
+    @IBOutlet weak var privacyManagerTextField: UITextField!
     
     /** UITextField outlet for targeting param key textField.
-     */
+        */
     @IBOutlet weak var keyTextFieldOutlet: UITextField!
     
     /** UITextField outlet for targeting param value textField.
@@ -34,10 +50,19 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
      */
     @IBOutlet weak var targetingParamTableview: UITableView!
     
+    /** UISwitch outlet for camapign switch.
+        */
     @IBOutlet weak var isStagingSwitchOutlet: UISwitch!
     
+    /** UISwitch outlet for show PM switch.
+           */
+    @IBOutlet weak var showPMSwitchOutlet: UISwitch!
+    
+    /** UILabel outlet for showing No targeting param data.
+    */
     @IBOutlet weak var noTargetingParamDataLabel: UILabel!
-    /** staging/public compaign
+    
+    /** stage/public compaign
      */
     var isStagingSwitchOn = false
     
@@ -64,17 +89,17 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        accountIDTextFieldOutlet.delegate = self
-        websiteTextFieldOutlet.delegate = self
-        targetingParamTableview.tableFooterView = UIView(frame: .zero)
-        setTableViewHidden()
-        
+//        accountIDTextFieldOutlet.delegate = self
+//        websiteTextFieldOutlet.delegate = self
+//        targetingParamTableview.tableFooterView = UIView(frame: .zero)
+//        setTableViewHidden()
+                
         if let _websiteManagedObjectID = websiteManagedObjectID {
             self.title = "Edit Site"
             self.addWebsiteViewModel.fetch(website: _websiteManagedObjectID, completionHandler: { [weak self] ( siteDataDetailsModel) in
                 
                 self?.accountIDTextFieldOutlet.text = String(siteDataDetailsModel.accountID)
-                self?.websiteTextFieldOutlet.text = siteDataDetailsModel.websiteName
+//                self?.siteTextFieldOutlet.text = siteDataDetailsModel.websiteName
                 self?.isStagingSwitchOutlet.isOn = siteDataDetailsModel.isStaging
                 self?.isStagingSwitchOn = siteDataDetailsModel.isStaging
                 if let targetingParams = siteDataDetailsModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
@@ -95,15 +120,17 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     }
     
     // Set value of staging switch
-    @IBAction func switchButtonAction(_ sender: UISwitch) {
+    @IBAction func campaignSwitchButtonAction(_ sender: UISwitch) {
         
         isStagingSwitchOn = sender.isOn
     }
-    
-    func setTableViewHidden() {
-        targetingParamTableview.isHidden = !(targetingParamsArray.count > 0)
-        noTargetingParamDataLabel.isHidden = targetingParamsArray.count > 0
+    @IBAction func showPMSwitchButtonAction(_ sender: Any) {
     }
+    
+//    func setTableViewHidden() {
+//        targetingParamTableview.isHidden = !(targetingParamsArray.count > 0)
+//        noTargetingParamDataLabel.isHidden = targetingParamsArray.count > 0
+//    }
     
     func clearCookies() {
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
@@ -329,8 +356,8 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == accountIDTextFieldOutlet { // Switch focus to website text field
-            websiteTextFieldOutlet.becomeFirstResponder()
-        } else if textField == websiteTextFieldOutlet {
+            siteIdTextFieldOutlet.becomeFirstResponder()
+        } else if textField == siteIdTextFieldOutlet {
             keyTextFieldOutlet.becomeFirstResponder()
         } else if textField == keyTextFieldOutlet {
             valueTextFieldOutlet.becomeFirstResponder()
@@ -354,31 +381,31 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
 }
 
 //// MARK: UITableViewDataSource
-extension AddWebsiteViewController : UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        setTableViewHidden()
-        return targetingParamsArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TargetingParamCell {
-            cell.delegate = self
-            let targetingParamName = targetingParamsArray[indexPath.row].targetingKey! + " : " + targetingParamsArray[indexPath.row].targetingValue!
-            cell.targetingParamLabel.text = targetingParamName
-            return cell
-        }
-        return UITableViewCell()
-    }
-}
-
-//// MARK: - UITableViewDelegate
-extension AddWebsiteViewController : UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        targetingParamTableview.deselectRow(at: indexPath, animated: false)
-    }
-}
+//extension AddWebsiteViewController : UITableViewDataSource {
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        setTableViewHidden()
+//        return targetingParamsArray.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TargetingParamCell {
+//            cell.delegate = self
+//            let targetingParamName = targetingParamsArray[indexPath.row].targetingKey! + " : " + targetingParamsArray[indexPath.row].targetingValue!
+//            cell.targetingParamLabel.text = targetingParamName
+//            return cell
+//        }
+//        return UITableViewCell()
+//    }
+//}
+//
+////// MARK: - UITableViewDelegate
+//extension AddWebsiteViewController : UITableViewDelegate {
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//        targetingParamTableview.deselectRow(at: indexPath, animated: false)
+//    }
+//}
 
