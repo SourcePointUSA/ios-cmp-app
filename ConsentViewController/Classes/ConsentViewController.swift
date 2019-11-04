@@ -490,6 +490,19 @@ import Reachability
         didMessageScriptLoad = true
         consentDelegate.onMessageReady(controller: self)
     }
+    
+    /// It will clear all the stored userDefaults Data
+    public func clearAllConsnetData() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.removeObject(forKey: ConsentViewController.EU_CONSENT_KEY)
+        userDefaults.removeObject(forKey: ConsentViewController.CONSENT_UUID_KEY)
+        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
+        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
+        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        userDefaults.synchronize()
+    }
 
     private func handleXhrLog(_ body: [String:Any?]) {
         let type = body["type"] as! String
@@ -530,6 +543,7 @@ import Reachability
             logger.log("onPrivacyManagerAction event is triggered", [])
             return
         case "onErrorOccurred":
+            clearAllConsnetData()
             consentDelegate.onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
             consentDelegate.onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
