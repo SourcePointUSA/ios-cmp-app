@@ -9,53 +9,67 @@
 import UIKit
 import ConsentViewController
 
-class HomeViewController: UIViewController, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDataSource, ConsentDelegate {
     var authId = ""
     var consentUUID: String?
 
     @IBOutlet var authIdLabel: UILabel!
     @IBOutlet var consentTableView: UITableView!
     
-    let tableSections = ["cookies", "consents"]
-    var cookies: [String] = []
+    let tableSections = ["userData", "consents"]
+    var userData: [String] = []
     var consents:[Consent] = []
 
-    func loadConsents(forAuthId authId: String, myPrivacyManager: Bool) {
-        ConsentManager(viewController: self, myPrivacyManager: myPrivacyManager)
-            .onConsentsReady({ controller in
-                self.cookies = []
-                self.consents = []
-                self.cookies.append("consentUUID: \(controller.consentUUID)")
-                self.cookies.append("euconsent: \(controller.euconsent)")
-                controller.getCustomVendorConsents(completionHandler: { vendorConsents in
-                    self.consents.append(contentsOf: vendorConsents)
-                    self.consentTableView.reloadData()
-                })
-                controller.getCustomPurposeConsents(completionHandler: {
-                    purposeConsents in self.consents.append(contentsOf: purposeConsents)
-                    self.consentTableView.reloadData()
-                })
-                self.consentTableView.reloadData()
-            })
-            .loadConsents(forAuthId: authId)
+    func loadConsents(forAuthId authId: String, showPM: Bool) {
+        let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
+        cvc.loadMessage(forAuthId: authId)
+    }
+
+    func onMessageReady(controller: ConsentViewController) {
+        self.present(controller, animated: false, completion: nil)
+    }
+
+    func getConsentsCompletionHandler(_ newConsents: [Consent]?, _ error: ConsentViewControllerError?) -> Void {
+        guard let newConsents = newConsents else {
+            onErrorOccurred(error: error!)
+            return
+        }
+        consents.append(contentsOf: newConsents)
+        self.consentTableView.reloadData()
+    }
+
+    func onConsentReady(controller: ConsentViewController) {
+        self.userData = []
+        self.consents = []
+        self.userData.append("consentUUID: \(controller.consentUUID)")
+        self.userData.append("euconsent: \(controller.euconsent)")
+        controller.getCustomVendorConsents(completionHandler: getConsentsCompletionHandler)
+        controller.getCustomPurposeConsents(completionHandler: getConsentsCompletionHandler)
+        self.consentTableView.reloadData()
+        self.dismiss(animated: false, completion: nil)
+    }
+
+    func onErrorOccurred(error: ConsentViewControllerError) {
+        print(error)
+        self.dismiss(animated: false, completion: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         authIdLabel.text = authId
         initData()
-        loadConsents(forAuthId: authId, myPrivacyManager: false)
+        loadConsents(forAuthId: authId, showPM: false)
     }
 
     @IBAction func onSettingsPress(_ sender: Any) {
         initData()
-        loadConsents(forAuthId: authId, myPrivacyManager: true)
+        loadConsents(forAuthId: authId, showPM: true)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return cookies.count
+            return userData.count
         case 1:
             return consents.count
         default:
@@ -64,7 +78,7 @@ class HomeViewController: UIViewController, UITableViewDataSource {
     }
 
     func initData() {
-        self.cookies = [
+        self.userData = [
             "consentUUID: loading...",
             "euconsent: loading..."
         ]
@@ -83,7 +97,7 @@ class HomeViewController: UIViewController, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlainCell", for: indexPath)
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = cookies[indexPath.row]
+            cell.textLabel?.text = userData[indexPath.row]
             cell.textLabel?.adjustsFontSizeToFitWidth = true
             break
         case 1:

@@ -19,7 +19,6 @@
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
 		8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14622BA5A6C00D2669B /* Assets.xcassets */; };
 		8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */; };
-		82494B5C22BCC71E001951AA /* ConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82494B5B22BCC71E001951AA /* ConsentManager.swift */; };
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +45,6 @@
 		8231B14922BA5A6C00D2669B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8231B14B22BA5A6C00D2669B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8231B15122BBC39900D2669B /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82494B5B22BCC71E001951AA /* ConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManager.swift; sourceTree = "<group>"; };
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AuthExample/Pods-AuthExample.release.xcconfig"; sourceTree = "<group>"; };
 		977885D1C020D8A587B1BC36 /* Pods-ConsentViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,7 +160,6 @@
 				8231B13F22BA5A6B00D2669B /* AppDelegate.swift */,
 				8231B14122BA5A6B00D2669B /* LoginViewController.swift */,
 				8277C33B22BBD22C00F1607F /* HomeViewController.swift */,
-				82494B5B22BCC71E001951AA /* ConsentManager.swift */,
 				8231B14322BA5A6B00D2669B /* Main.storyboard */,
 				8231B14622BA5A6C00D2669B /* Assets.xcassets */,
 				8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */,
@@ -390,7 +387,6 @@
 			files = (
 				8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */,
 				8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */,
-				82494B5C22BCC71E001951AA /* ConsentManager.swift in Sources */,
 				8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
