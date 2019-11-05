@@ -13,6 +13,7 @@
 		0972B5B89A745CD36704B3416F08B8D6 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286F918E314E6A573C60CE7A97A1DB8B /* Data.swift */; };
 		0BA021DF4C385BFA160BAF1B00326912 /* ConsentViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 88900A3C3A1CE7B6532B45EFBE495664 /* ConsentViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FC3239AF48A2BCD085DB11DEFC46A6F /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F749873FA1B45787D94E0615B45D8C /* SourcePointClient.swift */; };
+		19B6BE0A23714C8F008BF991 /* ConsentWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B6BE0923714C8F008BF991 /* ConsentWebView.swift */; };
 		1DF8723F5F2A6F027A7BF2EA2122B7FB /* ConsentStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D8F3D5C2BF1BD5860ADB0D52D78A19 /* ConsentStringProtocol.swift */; };
 		27296AB008F82214FF042A79354C7B9D /* Consent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B866969304226A0C34DDDB14F915140E /* Consent.swift */; };
 		29EEA3ABB47A53A7553C937D74370674 /* JSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = D7B45447E924B3A37D6C773115DD19E7 /* JSReceiver.js */; };
@@ -90,6 +91,7 @@
 		0CFF58880B1DDE933A4794C39B4CDA02 /* Pods-AuthExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AuthExample-dummy.m"; sourceTree = "<group>"; };
 		10DB674B68B432A02697EB1664B9CD4E /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
 		1750C70EA0C0E42D9619E3A2B65E48B4 /* ReachabilitySwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ReachabilitySwift.modulemap; sourceTree = "<group>"; };
+		19B6BE0923714C8F008BF991 /* ConsentWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentWebView.swift; sourceTree = "<group>"; };
 		243916291A44CE9CE6B7B540A8374EE7 /* ReachabilitySwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReachabilitySwift.xcconfig; sourceTree = "<group>"; };
 		286F918E314E6A573C60CE7A97A1DB8B /* Data.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		2A66437DED6E118859ACC686DEDEDD97 /* Pods-AuthExample-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AuthExample-Info.plist"; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 		7966194E5923DDBF2C3AD22A0E5AD511 /* ConsentViewController */ = {
 			isa = PBXGroup;
 			children = (
+				19B6BE0923714C8F008BF991 /* ConsentWebView.swift */,
 				82F9410D234382070078FE7B /* ConsentDelegate.swift */,
 				B866969304226A0C34DDDB14F915140E /* Consent.swift */,
 				C1FA29365040A6A0CF041779E7CDDF53 /* ConsentViewController.swift */,
@@ -605,6 +608,7 @@
 			files = (
 				27296AB008F82214FF042A79354C7B9D /* Consent.swift in Sources */,
 				A8A51967ECB210BDC79E1521B284E207 /* ConsentString.swift in Sources */,
+				19B6BE0A23714C8F008BF991 /* ConsentWebView.swift in Sources */,
 				57CCCA5B88ED92020A400F4140256D93 /* ConsentStringError.swift in Sources */,
 				1DF8723F5F2A6F027A7BF2EA2122B7FB /* ConsentStringProtocol.swift in Sources */,
 				014268D35D70AD88C1380AC9742A1BD3 /* ConsentViewController-dummy.m in Sources */,

@@ -11,14 +11,20 @@ import ConsentViewController
 
 class ViewController: UIViewController, ConsentDelegate {
     let logger = Logger()
+    var webview: ConsentWebView?
 
     func loadConsentManager(showPM: Bool) {
-        let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: true, consentDelegate: self)
-        cvc.loadMessage()
+        let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
+        cvc.webview = webview
+        if let url = cvc.loadMessage() {
+            webview?.loadWebContent(url: url, showPM: showPM)
+            self.view.addSubview(webview!)
+            self.webview?.isHidden = true
+        }
     }
 
     func onMessageReady(controller: ConsentViewController) {
-        self.present(controller, animated: false, completion: nil)
+        self.webview?.isHidden = false
     }
 
     func onConsentReady(controller: ConsentViewController) {
@@ -29,12 +35,12 @@ class ViewController: UIViewController, ConsentDelegate {
                 self.onErrorOccurred(error: error!)
             }
         }
-        self.dismiss(animated: false, completion: nil)
+        webview?.removeFromSuperview()
     }
 
     func onErrorOccurred(error: ConsentViewControllerError) {
         logger.log("Error: %{public}@", [error])
-        self.dismiss(animated: false, completion: nil)
+        webview?.removeFromSuperview()
     }
 
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
@@ -43,6 +49,7 @@ class ViewController: UIViewController, ConsentDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        webview = ConsentWebView(frame: self.view.frame)
         loadConsentManager(showPM: false)
     }
 }
