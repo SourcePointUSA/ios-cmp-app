@@ -1,8 +1,8 @@
 //
-//  WebsiteDetails+CoreDataProperties.swift
+//  SiteDetails+CoreDataProperties.swift
 //  
 //
-//  Created by Vilas on 5/27/19.
+//  Created by Vilas on 10/19/19.
 //
 //
 
@@ -10,22 +10,26 @@ import Foundation
 import CoreData
 
 
-extension WebsiteDetails {
+extension SiteDetails {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<WebsiteDetails> {
-        return NSFetchRequest<WebsiteDetails>(entityName: "WebsiteDetails")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<SiteDetails> {
+        return NSFetchRequest<SiteDetails>(entityName: "SiteDetails")
     }
 
-    @NSManaged public var accountID: Int64
-    @NSManaged public var creationTimestamp: NSDate?
-    @NSManaged public var isStaging: Bool
-    @NSManaged public var websiteName: String?
+    @NSManaged public var siteName: String?
+    @NSManaged public var accountId: Int64
+    @NSManaged public var siteId: Int64
+    @NSManaged public var campaign: String?
+    @NSManaged public var privacyManagerId: String?
+    @NSManaged public var showPM: Bool
+    @NSManaged public var creationTimestamp: Date?
+    @NSManaged public var authId: String?
     @NSManaged public var manyTargetingParams: NSSet?
 
 }
 
 // MARK: Generated accessors for manyTargetingParams
-extension WebsiteDetails {
+extension SiteDetails {
 
     @objc(addManyTargetingParamsObject:)
     @NSManaged public func addToManyTargetingParams(_ value: TargetingParams)

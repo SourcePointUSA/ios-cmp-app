@@ -1,5 +1,5 @@
 //
-//  TargetingParams+CoreDataClass.swift
+//  SiteDetails+CoreDataClass.swift
 //  
 //
 //  Created by Vilas on 10/19/19.
@@ -9,9 +9,9 @@
 import Foundation
 import CoreData
 
-
-public class TargetingParams: NSManagedObject {
+@objc(SiteDetails)
+public class SiteDetails: NSManagedObject {
     class var entityName : String {
-        return "TargetingParams"
+        return "SiteDetails"
     }
 }

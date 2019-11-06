@@ -2,7 +2,7 @@
 //  TargetingParams+CoreDataProperties.swift
 //  
 //
-//  Created by Vilas on 5/27/19.
+//  Created by Vilas on 10/19/19.
 //
 //
 
@@ -18,6 +18,6 @@ extension TargetingParams {
 
     @NSManaged public var key: String?
     @NSManaged public var value: String?
-    @NSManaged public var websiteDetails: WebsiteDetails?
+    @NSManaged public var siteDetails: SiteDetails?
 
 }
