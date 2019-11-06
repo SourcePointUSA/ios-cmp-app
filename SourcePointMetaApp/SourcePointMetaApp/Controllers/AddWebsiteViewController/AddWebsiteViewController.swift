@@ -215,8 +215,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
                     AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountIdAndSiteId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     return
             }
-            print("\(String(describing: authId)),\(accountID),\(siteID)")
-            siteDetailsModel = SiteDetailsModel(accountId: accountID, siteId: siteID, siteName: siteName, campaign: campaign, privacyManagerId: privacyManagerId, showPM: showPM, creationTimestamp: NSDate(),authId: authId)
+            siteDetailsModel = SiteDetailsModel(accountId: accountID, siteId: siteID, siteName: siteName, campaign: campaign, privacyManagerId: privacyManagerId, showPM: showPM, creationTimestamp: Date(),authId: authId)
             
             if let siteDetails = siteDetailsModel {
                 checkExitanceOfSiteData(siteDetails: siteDetails)

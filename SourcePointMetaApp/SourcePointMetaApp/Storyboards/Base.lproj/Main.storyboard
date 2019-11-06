@@ -30,7 +30,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="mhW-Wn-4Ou" customClass="tpav">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="mhW-Wn-4Ou">
                                 <rect key="frame" x="0.0" y="44" width="375" height="956"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hS7-WV-dXy" userLabel="contentView">
@@ -59,7 +59,7 @@
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Site Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYc-TX-xHH">
                                                 <rect key="frame" x="20" y="81" width="56" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="siteNameLabel" label="siteNameLabel"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="siteIdLabel" label="siteIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="wrz-rX-8ML"/>
                                                 </constraints>
@@ -69,7 +69,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Site Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HoB-pj-18x" userLabel="SiteIdTextfiled">
                                                 <rect key="frame" x="125" y="79" width="230" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="websiteTextFieldOutlet" label="websiteTextFieldOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="siteNameTextFieldOutlet" label="siteNameTextFieldOutlet"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -89,7 +89,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Site Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xLh-rs-wyR" userLabel="SiteNameTextfiled">
                                                 <rect key="frame" x="125" y="128" width="230" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="websiteTextFieldOutlet" label="websiteTextFieldOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="siteTextFieldOutlet" label="siteTextFieldOutlet"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -99,7 +99,7 @@
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auth Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnx-Kc-2mw">
                                                 <rect key="frame" x="20" y="179" width="62.5" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="siteNameLabel" label="siteNameLabel"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="x3l-RW-w5J"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="xay-TC-9yj"/>
@@ -110,7 +110,7 @@
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Auth Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T1z-3i-XRG" userLabel="AuthIdTextfield">
                                                 <rect key="frame" x="125" y="177" width="230" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="websiteTextFieldOutlet" label="websiteTextFieldOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="authIdTextFieldOutlet" label="authIdTextFieldOutlet"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
@@ -120,7 +120,7 @@
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Privacy Manager Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ILg-hD-20L" userLabel="PrivacyManagerId">
                                                 <rect key="frame" x="20" y="231" width="335" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="websiteTextFieldOutlet" label="websiteTextFieldOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -147,7 +147,7 @@
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show PM: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0MW-hK-XvT">
                                                 <rect key="frame" x="20" y="326" width="273" height="31"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="stagingCampaignLabel" label="stagingCampaignLabel"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="showPMLabel" label="showPMLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="31" id="jBr-jg-LbP"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="v4i-av-QdI"/>
@@ -158,7 +158,7 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2sx-3z-BdR">
                                                 <rect key="frame" x="301" y="326" width="51" height="31"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="isStagingSwitchOutlet" label="isStagingSwitchOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="showPMSwitchOutlet" label="showPMSwitchOutlet"/>
                                                 <connections>
                                                     <action selector="showPMSwitchButtonAction:" destination="cyC-sw-8W2" eventType="valueChanged" id="400-yN-cfK"/>
                                                 </connections>

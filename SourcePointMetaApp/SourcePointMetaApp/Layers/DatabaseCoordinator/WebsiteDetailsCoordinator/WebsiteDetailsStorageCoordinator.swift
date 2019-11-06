@@ -118,7 +118,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
             if let siteEntity = optionalSiteEntity {
                 
                 let managedObjectContext = self.managedObjectContext
-                let creationTimestamp = NSDate()
+                let creationTimestamp = Date()
                 
                 //Updating site entity
                 siteEntity.accountId = siteDataModel.accountId
@@ -127,7 +127,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
                 siteEntity.campaign = siteDataModel.campaign
                 siteEntity.privacyManagerId = siteDataModel.privacyManagerId
                 siteEntity.showPM = siteDataModel.showPM
-                siteEntity.creationTimestamp = creationTimestamp as Date
+                siteEntity.creationTimestamp = creationTimestamp
                 if let authId = siteDataModel.authId {
                     siteEntity.authId = authId
                 }
