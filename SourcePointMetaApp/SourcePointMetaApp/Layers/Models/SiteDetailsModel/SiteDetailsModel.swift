@@ -16,10 +16,10 @@ struct SiteDetailsModel {
     let siteName : String?
     
     /// It holds account Id.
-    let accountId: Int
+    let accountId: Int64
     
     /// It holds siteId Id.
-    let siteId: Int
+    let siteId: Int64
     
     /// It holds campaign value
     let campaign : String
@@ -31,7 +31,7 @@ struct SiteDetailsModel {
     let showPM : Bool
     
     /// It holds site addded timestamp
-    let creationTimestamp : NSDate
+    let creationTimestamp : Date
     
     /// It holds site name
     let authId : String?
@@ -48,7 +48,7 @@ struct SiteDetailsModel {
     ///   - privacyManagerId: privacyManagerId which is associated with the site
     ///   - creationTimestamp: site added in database time
     ///   - showPM: whether we have to show message or PM
-    init(accountId:Int, siteId: Int, siteName: String?, campaign: String, privacyManagerId:String?, showPM: Bool, creationTimestamp:NSDate, authId: String? ) {
+    init(accountId:Int64, siteId: Int64, siteName: String?, campaign: String, privacyManagerId:String?, showPM: Bool, creationTimestamp: Date, authId: String? ) {
         self.accountId = accountId
         self.siteId = siteId
         self.siteName = siteName

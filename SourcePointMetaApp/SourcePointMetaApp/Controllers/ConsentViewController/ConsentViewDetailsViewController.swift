@@ -11,7 +11,7 @@ import ConsentViewController
 import CoreData
 import WebKit
 
-class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate {
+class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate, ConsentDelegate {
     
     @IBOutlet weak var euConsentLabel: UILabel!
     @IBOutlet weak var consentUUIDLabel: UILabel!
@@ -23,21 +23,19 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
     
     /** consentViewController is loaded or not
      */
-    var consentViewControllerStatus : Bool?
+    var consentViewControllerStatus = false
     
-    /** onInteraction method is called or not
-     */
-    var onInteractionCompleteStatus : Bool?
-    
-    // Reference to the selected website managed object ID
-    var websiteManagedObjectID : NSManagedObjectID?
+    // Reference to the selected site managed object ID
+    var siteManagedObjectID : NSManagedObjectID?
     
     var vendorConsents = [VendorConsent]()
     var purposeConsents = [PurposeConsent]()
     let sections = ["Vendor Consents", "Purpose Consents"]
     
     // MARK: - Initializer
-    let addWebsiteViewModel: AddWebsiteViewModel = AddWebsiteViewModel()
+    let addSiteViewModel: AddWebsiteViewModel = AddWebsiteViewModel()
+    
+    let logger = Logger()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,19 +43,19 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
         self.navigationItem.hidesBackButton = true
         navigationSetup()
         setTableViewHidden()
-        setconsentIDFromUserDefaults()
+        setconsentIdFromUserDefaults()
         
-//        if let _websiteManagedObjectID = websiteManagedObjectID {
-//            self.showIndicator()
-//            fetchDataFromDatabase(siteManagedObjectID: _websiteManagedObjectID, completionHandler: {(siteDetail, targetingParamsArray) in
-//                self.buildConsentViewController(siteDetailsObject: siteDetail, targetingParamsArray: targetingParamsArray)
-//            })
-//        }
+        if let _siteManagedObjectID = siteManagedObjectID {
+            self.showIndicator()
+            fetchDataFromDatabase(siteManagedObjectID: _siteManagedObjectID, completionHandler: {(siteDetails, targetingParamsArray) in
+                self.loadConsentManager(siteDetails: siteDetails, targetingParamsArray: targetingParamsArray)
+            })
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setconsentIDFromUserDefaults()
+        setconsentIdFromUserDefaults()
     }
     
     func navigationSetup() {
@@ -79,105 +77,165 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
         noDataLabel.isHidden = vendorConsents.count > 0 || purposeConsents.count > 0
     }
     
-    func setconsentIDFromUserDefaults() {
+    func setconsentIdFromUserDefaults() {
         if let consentID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY),consentID.count > 0 {
-        consentUUIDLabel.text = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
-        euConsentLabel.text = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
+            consentUUIDLabel.text = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
+            euConsentLabel.text = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
         }else {
             consentUUIDLabel.text = SPLiteral.consentUUID
             euConsentLabel.text = SPLiteral.euConsentID
         }
     }
     
-//    func fetchDataFromDatabase(siteManagedObjectID : NSManagedObjectID, completionHandler: @escaping (SiteDetailsModel, [TargetingParamModel]) -> Void)  {
-//        self.addWebsiteViewModel.fetch(website: siteManagedObjectID, completionHandler: {( siteDataModel) in
-//            let siteDetail = SiteDetailsModel(websiteName: siteDataModel.websiteName, accountID: siteDataModel.accountID, creationTimestamp: siteDataModel.creationTimestamp, isStaging: siteDataModel.isStaging)
-//            var targetingParamsArray = [TargetingParamModel]()
-//            if let targetingParams = siteDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
-//                for targetingParam in targetingParams {
-//                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
-//                    targetingParamsArray.append(targetingParamModel)
-//                }
-//            }
-//            completionHandler(siteDetail, targetingParamsArray)
-//        })
-//    }
+    func fetchDataFromDatabase(siteManagedObjectID : NSManagedObjectID, completionHandler: @escaping (SiteDetailsModel, [TargetingParamModel]) -> Void)  {
+        self.addSiteViewModel.fetch(site: siteManagedObjectID, completionHandler: {( siteDataModel) in
+            let siteDetail = SiteDetailsModel(accountId: siteDataModel.accountId, siteId: siteDataModel.siteId, siteName: siteDataModel.siteName, campaign: siteDataModel.campaign!, privacyManagerId: siteDataModel.privacyManagerId, showPM: siteDataModel.showPM, creationTimestamp: siteDataModel.creationTimestamp! ,authId: siteDataModel.authId)
+            var targetingParamsArray = [TargetingParamModel]()
+            if let targetingParams = siteDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
+                for targetingParam in targetingParams {
+                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
+                    targetingParamsArray.append(targetingParamModel)
+                }
+            }
+            completionHandler(siteDetail, targetingParamsArray)
+        })
+    }
     
-//    func buildConsentViewController(siteDetailsObject : WebsiteDetailsModel,targetingParamsArray: [TargetingParamModel]) {
-//        addWebsiteViewModel.buildConsentViewController(websiteDetails: siteDetailsObject, targetingParams: targetingParamsArray, completionHandler: { [weak self] (error, consentViewController,onInteractionCompleteStatus,vendorConsents, purposeConsents) in
-//            
-//            if let _error = error {
-//                self?.hideIndicator()
-//                let okHandler = { () -> Void in
-//                    self?.navigationController?.popViewController(animated: false)
-//                }
-//                AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-//            } else if let _consentViewController = consentViewController {
-//                self?.hideIndicator()
-//                self?.consentViewControllerStatus = true
-//                if let consentSubViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentSubViewController") as? ConsentSubViewController {
-//                    consentSubViewController.consentSubViewController = _consentViewController
-//                    
-//                    self?.navigationController!.pushViewController(consentSubViewController, animated: true)
-//                }
-//            } else if onInteractionCompleteStatus != nil {
-//                self?.hideIndicator()
-//                self?.onInteractionCompleteStatus = onInteractionCompleteStatus
-//                if self?.consentViewControllerStatus == true {
-//                    if let _vendorConsents = vendorConsents {
-//                        self?.vendorConsents = _vendorConsents
-//                    }
-//                    if let _purposeConsents = purposeConsents {
-//                        self?.purposeConsents = _purposeConsents
-//                    }
-//                    self?.consentTableView.reloadData()
-//                    
-//                } else if self?.consentViewControllerStatus == nil || self?.consentViewControllerStatus == false {
-//                    let showSiteInfotHandler = {
-//                        if let _vendorConsents = vendorConsents {
-//                            self?.vendorConsents = _vendorConsents
-//                        }
-//                        if let _purposeConsents = purposeConsents {
-//                            self?.purposeConsents = _purposeConsents
-//                        }
-//                        self?.consentTableView.reloadData()
-//                    }
-//                    let clearCookiesHandler = {
-//                        let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
-//                        
-//                        alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
-//                        let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-//                            if let _vendorConsents = vendorConsents {
-//                                self?.vendorConsents = _vendorConsents
-//                            }
-//                            if let _purposeConsents = purposeConsents {
-//                                self?.purposeConsents = _purposeConsents
-//                            }
-//                            self?.consentTableView.reloadData()
-//                        })
-//                        let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-//                            self?.showIndicator()
-//                            self?.addWebsiteViewModel.clearUserDefaultsData()
-//                            self?.clearCookies()
-//                            if let _websiteManagedObjectID = self?.websiteManagedObjectID {
-//                                self?.showIndicator()
-//                                self?.fetchDataFromDatabase(siteManagedObjectID: _websiteManagedObjectID, completionHandler: {(siteDetail, targetingParamsArray) in
-//                                    self?.buildConsentViewController(siteDetailsObject: siteDetail, targetingParamsArray: targetingParamsArray)
-//                                })
-//                            }
-//                            self?.hideIndicator()
-//                        })
-//                        alertController.addAction(noAction)
-//                        alertController.addAction(yesAction)
-//                        self?.present(alertController, animated: true, completion: nil)
-//                    }
-//                    
-//                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showSiteInfotHandler, clearCookiesHandler], titles: [Alert.showSiteInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
-//                }
-//                self?.navigationController?.popViewController(animated: false)
-//            }
-//        })
-//    }
+    func loadConsentManager(siteDetails : SiteDetailsModel, targetingParamsArray:[TargetingParamModel]) {
+        do {
+            let consentViewController = try ConsentViewController (accountId: Int(siteDetails.accountId), siteId: Int(siteDetails.siteId), siteName: siteDetails.siteName!, PMId: siteDetails.privacyManagerId!, campaign: siteDetails.campaign, showPM: siteDetails.showPM, consentDelegate: self)
+            // optional, set custom targeting parameters supports Strings and Integers
+            for targetingParam in targetingParamsArray {
+                if let targetingKey = targetingParam.targetingKey, let targetingValue = targetingParam.targetingValue {
+                    consentViewController.setTargetingParam(key: targetingKey, value: targetingValue)
+                }
+            }
+            consentViewController.messageTimeoutInSeconds = TimeInterval(60)
+            if let authId = siteDetails.authId {
+                consentViewController.loadMessage(forAuthId: authId)
+            }else {
+                consentViewController.loadMessage()
+            }
+        }catch {
+            let okHandler = {
+            }
+            self.hideIndicator()
+            AlertView.sharedInstance.showAlertView(title: Alert.message, message: error as! String, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+        }
+    }
+    
+    func onMessageReady(controller: ConsentViewController) {
+        self.hideIndicator()
+        self.consentViewControllerStatus = true
+        if let consentSubViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentSubViewController") as? ConsentSubViewController {
+            consentSubViewController.consentSubViewController = controller
+            self.navigationController!.pushViewController(consentSubViewController, animated: true)
+        }
+    }
+    
+    func onConsentReady(controller: ConsentViewController) {
+        if consentViewControllerStatus {
+            fetchConsentInfo(consentViewController: controller, completionHandler: { [weak self] (vendorConsents, purposeConsents) in
+                self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
+            })
+        }else {
+            let showSiteInfotHandler = {
+                self.fetchConsentInfo(consentViewController: controller, completionHandler: { [weak self] (vendorConsents, purposeConsents) in
+                    self?.refreshTableViewWithConsentInfo(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
+                })
+            }
+            let clearCookiesHandler = {
+                let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
+                
+                alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
+                let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
+                    self.fetchConsentInfo(consentViewController: controller, completionHandler: { [weak self] (vendorConsents, purposeConsents) in
+                         self?.refreshTableViewWithConsentInfo(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
+                    })
+                })
+                let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: { [weak self] (alert: UIAlertAction!) in
+                    self?.addSiteViewModel.clearUserDefaultsData()
+                    self?.clearCookies()
+                    if let _siteManagedObjectID = self?.siteManagedObjectID {
+                        self?.showIndicator()
+                        self?.fetchDataFromDatabase(siteManagedObjectID: _siteManagedObjectID, completionHandler: {(siteDetails, targetingParamsArray) in
+                            self?.loadConsentManager(siteDetails: siteDetails, targetingParamsArray: targetingParamsArray)
+                        })
+                    }
+                    self?.hideIndicator()
+                })
+                alertController.addAction(noAction)
+                alertController.addAction(yesAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+            AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showSiteInfotHandler, clearCookiesHandler], titles: [Alert.showSiteInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
+            
+        }
+    }
+    
+    func onErrorOccurred(error: ConsentViewControllerError) {
+        logger.log("Error: %{public}@", [error])
+        self.hideIndicator()
+        let okHandler = {
+            self.dismiss(animated: false, completion: nil)
+        }
+        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+    }
+    
+    func fetchConsentInfo(consentViewController: ConsentViewController, completionHandler: @escaping ([VendorConsent]?, [PurposeConsent]?) -> Void) {
+           var vendorConsents = [VendorConsent]()
+           var purposeConsents = [PurposeConsent]()
+           consentViewController.getCustomVendorConsents { [weak self] (vendors, error) in
+               if let _error = error {
+                   self?.onErrorOccurred(error: _error)
+               }else {
+                   if let vendors = vendors {
+                       for consent in vendors {
+                           print("Custom Vendor Consent id: \(consent.id), name: \(consent.name)")
+                           vendorConsents.append(consent)
+                       }
+                   }
+                   consentViewController.getCustomPurposeConsents { (purposes, error) in
+                       if let _error = error {
+                           self?.onErrorOccurred(error: _error)
+                       }else {
+                           if let purposes = purposes {
+                               for consent in purposes {
+                                   print("Custom Purpose Consent id: \(consent.id), name: \(consent.name)")
+                                   purposeConsents.append(consent)
+                               }
+                           }
+                           completionHandler(vendorConsents,purposeConsents)
+                           self?.hideIndicator()
+                       }
+                   }
+               }
+           }
+       }
+    
+    func loadConsentInfoController(vendorConsents : [VendorConsent]?, purposeConsents : [PurposeConsent]? ) {
+        self.hideIndicator()
+        
+        if let consentViewDetailsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentViewDetailsViewController") as? ConsentViewDetailsViewController {
+            if let _vendorConsents = vendorConsents {
+                consentViewDetailsController.vendorConsents = _vendorConsents
+            }
+            if let _purposeConsents = purposeConsents {
+                consentViewDetailsController.purposeConsents = _purposeConsents
+            }
+            self.navigationController?.pushViewController(consentViewDetailsController, animated: true)
+        }
+    }
+    
+    func refreshTableViewWithConsentInfo(vendorConsents : [VendorConsent]?, purposeConsents : [PurposeConsent]?) {
+        if let _vendorConsents = vendorConsents {
+            self.vendorConsents = _vendorConsents
+        }
+        if let _purposeConsents = purposeConsents {
+            self.purposeConsents = _purposeConsents
+        }
+        self.consentTableView.reloadData()
+    }
     
     func clearCookies() {
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)

@@ -12,19 +12,19 @@ import CoreData
 class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
     
     //// MARK: - Instance Methods
-    // It Fetches all Website details from the database
+    // It Fetches all site details from the database
     // -Parameters:
-    //  - executionCompletionHandler: Completion handler; it takes array of all websites to caller.
-    func fetchAllWebsites(executionCompletionHandler: @escaping([SiteDetails]?) -> Void) {
+    //  - executionCompletionHandler: Completion handler; it takes array of all sites to caller.
+    func fetchAllSites(executionCompletionHandler: @escaping([SiteDetails]?) -> Void) {
         let managedObjectContext = self.managedObjectContext
         
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
             
             let timestampDescriptor = NSSortDescriptor(key: "creationTimestamp", ascending: false)
-            dbManager.fetchEntities(SiteDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: managedObjectContext, completion: { (WebsiteDetails) in
-                if let allWebsites = WebsiteDetails as? [SiteDetails] {
-                    executionCompletionHandler(allWebsites)
+            dbManager.fetchEntities(SiteDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: managedObjectContext, completion: { (siteDetails) in
+                if let allSites = siteDetails as? [SiteDetails] {
+                    executionCompletionHandler(allSites)
                 } else {
                     executionCompletionHandler(nil)
                 }
@@ -32,19 +32,19 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It fetch website entity from the database for provided managed object id.
+   /// It fetch site entity from the database for provided managed object id.
     ///
     /// - Parameters:
-    ///   - websiteManagedObjectID: Valid managed object id.
+    ///   - siteManagedObjectID: Valid managed object id.
     ///   - handler: Callback for completion event.
-    func fetch(website websiteManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (SiteDetails?) -> Void) {
+    func fetch(site siteManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (SiteDetails?) -> Void) {
         
         let managedObjectContext = self.managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
-            dbManager.fetchEntity(withManagedObjectID: websiteManagedObjectID, managedObjectContext: managedObjectContext) { (optionalManagedObject) in
-                if let websiteManagedObject = optionalManagedObject as? SiteDetails {
-                    handler(websiteManagedObject)
+            dbManager.fetchEntity(withManagedObjectID: siteManagedObjectID, managedObjectContext: managedObjectContext) { (optionalManagedObject) in
+                if let siteManagedObject = optionalManagedObject as? SiteDetails {
+                    handler(siteManagedObject)
                 } else {
                     handler(nil)
                 }
@@ -62,27 +62,33 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It add new website in the storage.
+    /// It add new site in the storage.
     ///
     /// - Parameters:
-    ///   - websiteDataModel: website Data Model.
+    ///   - siteDataModel: SiteData Model.
     ///   - handler: Callback for the completion event.
-    func add(websiteDetails websiteDataModel : SiteDetailsModel,targetingParams:[TargetingParamModel], completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
-        
+    func add(siteDetails siteDataModel : SiteDetailsModel,targetingParams:[TargetingParamModel], completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
         
         let managedObjectContext = self.managedObjectContext
-        let creationTimestamp = NSDate()
+        let creationTimestamp = Date()
         
-        if let websiteEntity = NSEntityDescription.insertNewObject(forEntityName: SiteDetails.entityName, into: managedObjectContext) as? SiteDetails {
-            websiteEntity.siteName = websiteDataModel.siteName
-//            websiteEntity.accountId = websiteDataModel.accountId
-            websiteEntity.creationTimestamp = creationTimestamp as Date
+        if let siteEntity = NSEntityDescription.insertNewObject(forEntityName: SiteDetails.entityName, into: managedObjectContext) as? SiteDetails {
+            siteEntity.accountId = siteDataModel.accountId
+            siteEntity.siteId = siteDataModel.siteId
+            siteEntity.siteName = siteDataModel.siteName
+            siteEntity.campaign = siteDataModel.campaign
+            siteEntity.privacyManagerId = siteDataModel.privacyManagerId
+            siteEntity.showPM = siteDataModel.showPM
+            siteEntity.creationTimestamp = creationTimestamp
+            if let authId = siteDataModel.authId {
+                siteEntity.authId = authId
+            }
             
             for targetingParam in targetingParams {
                 if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
                     targteingParamEntity.key = targetingParam.targetingKey
                     targteingParamEntity.value = targetingParam.targetingValue
-                    websiteEntity.addToManyTargetingParams(targteingParamEntity)
+                    siteEntity.addToManyTargetingParams(targteingParamEntity)
                 }
             }
             
@@ -90,7 +96,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
             // Pushing managed object context changes in database.
             dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                 if executionStatus == wasMOCChanged {
-                    handler(websiteEntity.objectID,true)
+                    handler(siteEntity.objectID,true)
                 } else {
                     handler(nil,false)
                 }
@@ -100,33 +106,40 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It updates existing website details.
+    /// It updates existing site details.
     ///
     /// - Parameters:
-    ///   - websiteDataModel: Website Data Model.
-    ///   - managedObjectID: managedObjectID of existing website entity.
+    ///   - siteDataModel: site Data Model.
+    ///   - managedObjectID: managedObjectID of existing site entity.
     ///   - handler: Callback for the completion event.
-    func update(websiteDetails websiteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func update(siteDetails siteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
         
-        fetch(website: managedObjectID) { (optionalWebsiteEntity) in
-            if let websiteEntity = optionalWebsiteEntity {
+        fetch(site: managedObjectID) { (optionalSiteEntity) in
+            if let siteEntity = optionalSiteEntity {
                 
                 let managedObjectContext = self.managedObjectContext
                 let creationTimestamp = NSDate()
                 
-                //Updating website entity
-                websiteEntity.siteName = websiteDataModel.siteName
-//                websiteEntity.accountID = websiteDataModel.accountID
-                websiteEntity.creationTimestamp = creationTimestamp as Date
-                if let targetingparamsSet = websiteEntity.manyTargetingParams {
-                    websiteEntity.removeFromManyTargetingParams(targetingparamsSet)
+                //Updating site entity
+                siteEntity.accountId = siteDataModel.accountId
+                siteEntity.siteId = siteDataModel.siteId
+                siteEntity.siteName = siteDataModel.siteName
+                siteEntity.campaign = siteDataModel.campaign
+                siteEntity.privacyManagerId = siteDataModel.privacyManagerId
+                siteEntity.showPM = siteDataModel.showPM
+                siteEntity.creationTimestamp = creationTimestamp as Date
+                if let authId = siteDataModel.authId {
+                    siteEntity.authId = authId
+                }
+                if let targetingparamsSet = siteEntity.manyTargetingParams {
+                    siteEntity.removeFromManyTargetingParams(targetingparamsSet)
                 }
                 
                 for targetingParam in targetingParams {
                     if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
                         targteingParamEntity.key = targetingParam.targetingKey
                         targteingParamEntity.value = targetingParam.targetingValue
-                        websiteEntity.addToManyTargetingParams(targteingParamEntity)
+                        siteEntity.addToManyTargetingParams(targteingParamEntity)
                     }
                 }
                 
@@ -134,7 +147,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
                 // Pushing managed object context changes in database.
                 dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                     if executionStatus == wasMOCChanged {
-                        handler(websiteEntity.objectID, true)
+                        handler(siteEntity.objectID, true)
                     } else {
                         
                         handler(nil, false)
@@ -146,17 +159,17 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It deletes website from the database permanently.
+    /// It deletes site from the database permanently.
     ///
     /// - Parameters:
-    ///   - websiteManagedObject: website ManagedObject.
+    ///   - siteManagedObject: site ManagedObject.
     ///   - handler: Callback for the completion event. Callback has execution status(success/failure) as argument.
-    func delete(website websiteManagedObject: NSManagedObject, completionHandler handler : @escaping (Bool) -> Void) {
+    func delete(site siteManagedObject: NSManagedObject, completionHandler handler : @escaping (Bool) -> Void) {
         
         let managedObjectContext = self.managedObjectContext
         let dbManager = DBManager.sharedManager
         managedObjectContext.perform {
-            dbManager.deleteEntity(websiteManagedObject, usingMOC: managedObjectContext)
+            dbManager.deleteEntity(siteManagedObject, usingMOC: managedObjectContext)
             dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                 if executionStatus == wasMOCChanged {
                     handler(true)
@@ -167,16 +180,20 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It check whether website details are stored in database or not.
+    /// It check whether site details are stored in database or not.
     ///
     /// - Parameters:
-    ///   - websiteDataModel: Website Data Model.
+    ///   - siteDataModel: site Data Model.
     ///   - handler: Callback for the completion event.
-    func  checkExitanceOfData(websiteDetails websiteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
+    func  checkExitanceOfData(siteDetails siteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
         
         var subPredicates : [NSPredicate] = []
-//        let subPredicate = NSPredicate(format: "accountID == \(websiteDataModel.accountId) AND websiteName == %@ AND isStaging == \(NSNumber(value: websiteDataModel.isStaging))", websiteDataModel.siteName!)
-         let subPredicate = NSPredicate(format: "accountID == \(websiteDataModel.accountId)")
+        var subPredicate : NSPredicate
+        if let authId = siteDataModel.authId {
+            subPredicate = NSPredicate(format: "accountId == \(siteDataModel.accountId) AND siteId == \(siteDataModel.siteId) AND campaign == %@ AND privacyManagerId == %@ AND authId == %@ AND showPM == \(NSNumber(value: siteDataModel.showPM))", siteDataModel.campaign, siteDataModel.privacyManagerId!,authId)
+        } else {
+            subPredicate = NSPredicate(format: "accountId == \(siteDataModel.accountId) AND siteId == \(siteDataModel.siteId) AND campaign == %@ AND privacyManagerId == %@ AND showPM == \(NSNumber(value: siteDataModel.showPM))", siteDataModel.campaign, siteDataModel.privacyManagerId!)
+        }
         
         subPredicates.append(subPredicate)
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: SiteDetails.entityName)
@@ -212,7 +229,6 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
             }else {
                 handler(false)
             }
-            
         } catch {
             print(error)
         }

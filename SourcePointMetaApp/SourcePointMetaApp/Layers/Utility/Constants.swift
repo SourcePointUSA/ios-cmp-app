@@ -25,9 +25,8 @@ struct SPError {
 
 struct SPLiteral {
     static let emptyString = ""
-    static let accountID = "Account ID"
-    static let stagingCampaign = "Campaign: Staging"
-    static let publicCampaign = "Campaign: Public"
+    static let accountID = "Account ID: "
+    static let campaign = "Campaign: "
     static let consentUUID = "ConsentUUID not available"
     static let euConsentID = "EUConsent not available"
     
@@ -46,7 +45,7 @@ struct Alert
     
     static let messageForWebsiteNameUnavailability = NSLocalizedString("Please enter site details", comment: "")
     static let messageForUnknownError = NSLocalizedString("Something went wrong, please try again", comment: "")
-    static let messageForInvalidError = NSLocalizedString("Please enter site details", comment: "")
+    static let messageForWrongAccountIdAndSiteId = NSLocalizedString("Please enter correct Account Id/Site Id or both", comment: "")
     static let consentMessageShown = NSLocalizedString("Consent message is already shown", comment: "")
     static let messageForSiteDataStored = NSLocalizedString("Site details are already stored", comment: "")
     static let messageStagingCompaignIncorrectData  = NSLocalizedString("Staging compaign data is incorrect", comment: "")
