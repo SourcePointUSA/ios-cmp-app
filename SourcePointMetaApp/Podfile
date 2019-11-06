@@ -7,6 +7,7 @@ target 'SourcePointMetaApp' do
 
   # Pods for SourcePointMetaApp
   pod 'ConsentViewController', :path => '../'
+  pod 'IQKeyboardManagerSwift'
   target 'SourcePointMetaAppTests' do
     inherit! :search_paths
     # Pods for testing
