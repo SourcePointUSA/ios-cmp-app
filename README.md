@@ -1,6 +1,9 @@
 
 # iOS Setup guide
 
+## How to install
+
+### CocoaPods
 :heavy_exclamation_mark: **IMPORTANT** if you're not yet using the new message builder, make sure to use pod version < 3.
 ```
 pod 'ConsentViewController', '< 3.0.0'
@@ -14,8 +17,11 @@ In your `Podfile` add the following line to your app target:
 ```
 pod 'ConsentViewController', '>= 3.0.0'
 ```
+### Carthage
+We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Step-by-step-guide-for-Carthage) for it.
+Let us know if we missed any step.
 
-# Usage
+## How to use it
 
 It's pretty simple, here are 5 easy steps for you:
 
@@ -25,7 +31,7 @@ It's pretty simple, here are 5 easy steps for you:
 4. present the controller when the message is ready to be displayed
 5. profit!
 
-## Swift
+### Swift
 ```swift
 import UIKit
 import ConsentViewController
@@ -68,7 +74,7 @@ class ViewController: UIViewController, ConsentDelegate {
 }
 ```
 
-## Objective-C
+### Objective-C
 ```obj-c
 
 #import "ViewController.h"
