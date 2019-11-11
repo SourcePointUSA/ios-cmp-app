@@ -492,7 +492,7 @@ import Reachability
     }
     
     /// It will clear all the stored userDefaults Data
-    public func clearAllConsnetData() {
+    public func clearAllConsentData() {
         let userDefaults = UserDefaults.standard
         userDefaults.removeObject(forKey: ConsentViewController.EU_CONSENT_KEY)
         userDefaults.removeObject(forKey: ConsentViewController.CONSENT_UUID_KEY)
