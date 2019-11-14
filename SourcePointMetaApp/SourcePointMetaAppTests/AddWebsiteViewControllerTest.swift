@@ -13,15 +13,15 @@ import ConsentViewController
 
 class AddWebsiteViewControllerTest: XCTestCase {
 
-    var addWebsiteViewController: AddWebsiteViewController?
+    var addSiteViewController: AddWebsiteViewController?
     
     override func setUp() {
         super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        addWebsiteViewController = storyboard.instantiateViewController(withIdentifier: "AddWebsiteViewController") as? AddWebsiteViewController
+        addSiteViewController = storyboard.instantiateViewController(withIdentifier: "AddWebsiteViewController") as? AddWebsiteViewController
         
-        addWebsiteViewController?.loadView()
-        addWebsiteViewController?.viewDidLoad()
+        addSiteViewController?.loadView()
+        addSiteViewController?.viewDidLoad()
     }
     
     override func tearDown() {
@@ -30,15 +30,15 @@ class AddWebsiteViewControllerTest: XCTestCase {
     
     // This method is used to check controller has tableview or not
     func testControllerHasTableView() {
-        addWebsiteViewController?.loadViewIfNeeded()
-        XCTAssertNotNil(addWebsiteViewController?.targetingParamTableview ,
+        addSiteViewController?.loadViewIfNeeded()
+        XCTAssertNotNil(addSiteViewController?.targetingParamTableview ,
                         "Controller should have a tableview")
     }
     
     // This method is used to check numberOfRows method is implemented or not for tablview.
     func testNumberOfRows() {
-        if let siteTableView = addWebsiteViewController?.targetingParamTableview {
-            let numberOfRows = addWebsiteViewController?.tableView(siteTableView, numberOfRowsInSection: 0)
+        if let siteTableView = addSiteViewController?.targetingParamTableview {
+            let numberOfRows = addSiteViewController?.tableView(siteTableView, numberOfRowsInSection: 0)
             XCTAssertEqual(numberOfRows, 0,
                            "Number of rows in table should match number of siteName")
         }
@@ -46,24 +46,24 @@ class AddWebsiteViewControllerTest: XCTestCase {
     
     // This method is used to check delegate of tableview method is implemented or not.
     func testTableViewHasDelegate() {
-        XCTAssertNotNil(addWebsiteViewController?.targetingParamTableview.delegate)
+        XCTAssertNotNil(addSiteViewController?.targetingParamTableview.delegate)
     }
     
     // This method is used to check wheteher the list controller confroms the delegate method.
     func testTableViewConfromsToTableViewDelegateProtocol() {
-        XCTAssertTrue((addWebsiteViewController?.conforms(to: UITableViewDelegate.self))!)
-        XCTAssertTrue((addWebsiteViewController?.responds(to: #selector(addWebsiteViewController?.tableView(_:didSelectRowAt:))))!)
+        XCTAssertTrue((addSiteViewController?.conforms(to: UITableViewDelegate.self))!)
+        XCTAssertTrue((addSiteViewController?.responds(to: #selector(addSiteViewController?.tableView(_:didSelectRowAt:))))!)
     }
     
     // This method is used to check tableview datasource is implemented or not.
     func testTableViewHasDataSource() {
-        XCTAssertNotNil(addWebsiteViewController?.targetingParamTableview.dataSource)
+        XCTAssertNotNil(addSiteViewController?.targetingParamTableview.dataSource)
     }
     
     // This method is used to check wheteher the list controller confroms the datasource method.
     func testTableViewConformsToTableViewDataSourceProtocol() {
-        XCTAssertTrue((addWebsiteViewController?.conforms(to: UITableViewDataSource.self))!)
-        XCTAssertTrue((addWebsiteViewController?.responds(to: #selector(addWebsiteViewController?.tableView(_:numberOfRowsInSection:))))!)
-        XCTAssertTrue((addWebsiteViewController?.responds(to: #selector(addWebsiteViewController?.tableView(_:cellForRowAt:))))!)
+        XCTAssertTrue((addSiteViewController?.conforms(to: UITableViewDataSource.self))!)
+        XCTAssertTrue((addSiteViewController?.responds(to: #selector(addSiteViewController?.tableView(_:numberOfRowsInSection:))))!)
+        XCTAssertTrue((addSiteViewController?.responds(to: #selector(addSiteViewController?.tableView(_:cellForRowAt:))))!)
     }
 }

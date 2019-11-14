@@ -23,40 +23,40 @@ class WebsiteListViewModelTest: XCTestCase {
     
     // This method is used to test whether all site data can be fetched from database or not.
     func testFetchAllSitData() {
-        siteListViewModel?.importAllWebsites(executionCompletionHandler: { (sites) in
+        siteListViewModel?.importAllSites(executionCompletionHandler: {(sites) in
             XCTAssertNotNil(sites, "unable to fetch the site data")
         })
     }
     
     // This method checks how many site data is stored in database
     func testNumberOfSiteDataStored() {
-        siteListViewModel?.importAllWebsites(executionCompletionHandler: { (sites) in
-            let siteCount = self.siteListViewModel?.numberOfWebsites()
+        siteListViewModel?.importAllSites(executionCompletionHandler: { (sites) in
+            let siteCount = self.siteListViewModel?.numberOfSites()
             XCTAssertNotNil(siteCount, "unable to find out stored data")
         })
     }
     
-    // This method check the website name
-    func testwebsiteName() {
-        siteListViewModel?.importAllWebsites(executionCompletionHandler: { (sites) in
-            if let _websites = sites, _websites.count > 0 {
-                XCTAssertNotNil(_websites[0].websiteName, "Error site name is not available")
+    // This method check the site name
+    func testsiteName() {
+        siteListViewModel?.importAllSites(executionCompletionHandler: { (sites) in
+            if let _sites = sites, _sites.count > 0 {
+                XCTAssertNotNil(_sites[0].siteName, "Error site name is not available")
             }
         })
     }
     
     // This method checks whether the managedObject ID is available or not.
-    func testwebsiteManagedObjectID() {
-        siteListViewModel?.importAllWebsites(executionCompletionHandler: { (sites) in
-            if let _websites = sites, _websites.count > 0 {
-                XCTAssertNotNil(_websites[0].objectID, "Error managedObject ID is not available")
+    func testsiteManagedObjectID() {
+        siteListViewModel?.importAllSites(executionCompletionHandler: { (sites) in
+            if let _sites = sites, _sites.count > 0 {
+                XCTAssertNotNil(_sites[0].objectID, "Error managedObject ID is not available")
             }
         })
     }
     
     // This test method checks whether the site will be deleted or not.
     func testDeleteSite() {
-        siteListViewModel?.importAllWebsites(executionCompletionHandler: { (sites) in
+        siteListViewModel?.importAllSites(executionCompletionHandler: { (sites) in
             self.siteListViewModel?.delete(atIndex: 0, completionHandler: { (deleteStatus, error) in
                 if error != nil {
                     XCTAssert(false, "failed to delete site data from database")
@@ -79,9 +79,9 @@ class WebsiteListViewModelTest: XCTestCase {
     }
     
     func testSiteDetails() {
-        siteListViewModel?.importAllWebsites(executionCompletionHandler: { (sites) in
-            let siteDetails = self.siteListViewModel?.websiteDetails(atIndex: 0)
-            if ((siteDetails?.0?.accountID) != nil) {
+        siteListViewModel?.importAllSites(executionCompletionHandler: { (sites) in
+            let siteDetails = self.siteListViewModel?.siteDetails(atIndex: 0)
+            if ((siteDetails?.0?.accountId) != nil) {
                 XCTAssert(true, "site details are present")
             }else {
                  XCTAssert(false, "site details are not present")

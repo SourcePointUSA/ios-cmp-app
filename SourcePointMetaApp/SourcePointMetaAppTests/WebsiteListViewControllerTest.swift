@@ -100,7 +100,6 @@ class WebsiteListViewControllerTest: XCTestCase {
         let indexPath = NSIndexPath(row: 0, section: 0)
         if let siteTableView = siteListViewController?.websiteTableView {
             let configuration = siteListViewController?.tableView(siteTableView, trailingSwipeActionsConfigurationForRowAt: indexPath as IndexPath)
-            
             if configuration?.actions.count ?? 0 > 0 {
                 XCTAssert(true, "TrailingSwipeActionsConfiguration is implemented")
             } else {

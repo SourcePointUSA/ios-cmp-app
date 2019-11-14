@@ -26,13 +26,10 @@ class AddWebsiteViewModelTest: XCTestCase {
         super.tearDown()
     }
     
-    // This test method is used to test whether the website data added or not to database.
-    func testAddWebsite() {
-        let websiteDataModel = WebsiteDetailsModel(websiteName: "mobile.demo", accountID: 22, creationTimestamp: NSDate(), isStaging: false)
-        let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "false")
-        targetingParamsArray.append(targetingParamModel)
-        addSiteViewModel?.addWebsite(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { (error, _,websiteManagedObjectID) in
-            
+    // This test method is used to test whether the site data added or not to database.
+    func testAddSite() {
+        let siteDataModel = SiteDetailsModel(accountId: 22, siteId: 2372, siteName: "mobile.demo", campaign: "stage", privacyManagerId: "5c0e81b7d74b3c30c6852301", showPM: false, creationTimestamp: Date(), authId: nil)
+        addSiteViewModel?.addSite(siteDetails: siteDataModel, targetingParams: targetingParamsArray, completionHandler: { (error, _,siteManagedObjectID) in
             if error != nil {
                 XCTAssert(false, "failed to store data to database")
             } else {
@@ -43,10 +40,8 @@ class AddWebsiteViewModelTest: XCTestCase {
     
     // This method is used to test whether the site data already exist in database or not
     func testcheckExitanceOfData() {
-        let websiteDataModel = WebsiteDetailsModel(websiteName: "mobile.demo", accountID: 22, creationTimestamp: NSDate(), isStaging: false)
-        let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "false")
-        targetingParamsArray.append(targetingParamModel)
-        addSiteViewModel?.checkExitanceOfData(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray , completionHandler: { (isStored) in
+        let siteDataModel = SiteDetailsModel(accountId: 22, siteId: 2372, siteName: "mobile.demo", campaign: "stage", privacyManagerId: "5c0e81b7d74b3c30c6852301", showPM: false, creationTimestamp: Date(), authId: nil)
+        addSiteViewModel?.checkExitanceOfData(siteDetails: siteDataModel, targetingParams: targetingParamsArray , completionHandler: { (isStored) in
             if isStored {
                 XCTAssert(true, "Site data present in database")
             }else {
@@ -55,30 +50,27 @@ class AddWebsiteViewModelTest: XCTestCase {
         })
     }
     
-    // This method is used to test whether the webview is loaded or not
-    func testBuildConsentViewController() {
-        let websiteDataModel = WebsiteDetailsModel(websiteName: "mobile.demo", accountID: 22, creationTimestamp: NSDate(), isStaging: false)
-        let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "false")
-        targetingParamsArray.append(targetingParamModel)
-        
-        addSiteViewModel?.buildConsentViewController(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: {(error, consentViewController, dismissControllerStatus, vendorConsent, purposeConsents)  in
-            
-            if error != nil {
-                XCTAssert(false, "failed to load webview")
-            } else {
-                XCTAssert(true, "webview is loaded successfully")
-            }
-        })
-    }
+//    // This method is used to test whether the webview is loaded or not
+//    func testBuildConsentViewController() {
+//        let siteDataModel = SiteDetailsModel(accountId: 22, siteId: 2372, siteName: "mobile.demo", campaign: "stage", privacyManagerId: "5c0e81b7d74b3c30c6852301", showPM: false, creationTimestamp: Date(), authId: nil)
+//        addSiteViewModel?.buildConsentViewController(websiteDetails: siteDataModel, targetingParams: targetingParamsArray, completionHandler: {(error, consentViewController, dismissControllerStatus, vendorConsent, purposeConsents)  in
+//
+//            if error != nil {
+//                XCTAssert(false, "failed to load webview")
+//            } else {
+//                XCTAssert(true, "webview is loaded successfully")
+//            }
+//        })
+//    }
     
     // This method is used to test whether all site data can be fetched from database or not.
     func testfetchSitData() {
         let siteListViewModel = WebsiteListViewModel()
-        siteListViewModel.importAllWebsites(executionCompletionHandler: { sites in
+        siteListViewModel.importAllSites(executionCompletionHandler: { sites in
             if sites!.count > 0 {
-                let managedObjectID = siteListViewModel.websiteManagedObjectID(atIndex: 0)
+                let managedObjectID = siteListViewModel.siteManagedObjectID(atIndex: 0)
                 if (managedObjectID != nil) {
-                    self.addSiteViewModel?.fetch(website: managedObjectID!, completionHandler: { ( siteDataDetailsModel) in
+                    self.addSiteViewModel?.fetch(site: managedObjectID!, completionHandler: { ( siteDataDetailsModel) in
                         XCTAssertNotNil(siteDataDetailsModel, "unable to find out stored data")
                     })
                 }else {
@@ -91,19 +83,17 @@ class AddWebsiteViewModelTest: XCTestCase {
     
     // This method is used to test whether the site data updated or not in database
     func testUpdateSiteData() {
-        let websiteDataModel = WebsiteDetailsModel(websiteName: "mobile.demo", accountID: 22, creationTimestamp: NSDate(), isStaging: false)
-        let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "true")
-        targetingParamsArray.append(targetingParamModel)
+        let siteDataModel = SiteDetailsModel(accountId: 22, siteId: 2372, siteName: "mobile.demo", campaign: "stage", privacyManagerId: "5c0e81b7d74b3c30c6852301", showPM: false, creationTimestamp: Date(), authId: nil)
         let siteListViewModel = WebsiteListViewModel()
-        siteListViewModel.importAllWebsites(executionCompletionHandler: { sites in
+        siteListViewModel.importAllSites(executionCompletionHandler: { sites in
             if sites!.count > 0 {
-                let managedObjectID = siteListViewModel.websiteManagedObjectID(atIndex: 0)
+                let managedObjectID = siteListViewModel.siteManagedObjectID(atIndex: 0)
                 if (managedObjectID != nil) {
-                    self.addSiteViewModel?.update(websiteDetails: websiteDataModel, targetingParams: self.targetingParamsArray, whereManagedObjectID: managedObjectID!, completionHandler: { (optionalWebsiteManagedObjectID, executionStatus) in
+                    self.addSiteViewModel?.update(siteDetails: siteDataModel, targetingParams: self.targetingParamsArray, whereManagedObjectID: managedObjectID!, completionHandler: { (optionalSiteManagedObjectID, executionStatus) in
                         if executionStatus {
                             XCTAssert(true, "webview data updated successfully")
                         } else {
-                            XCTAssert(false, "failed to update website data")
+                            XCTAssert(false, "failed to update site data")
                         }
                     })
                 }
@@ -111,23 +101,23 @@ class AddWebsiteViewModelTest: XCTestCase {
         })
     }
     
-    // This method is used to validate the website details
-    func testValidateWebsiteDetails() {
-        let validationResult = addSiteViewModel?.validateWebsiteDetails(accountID: "22", websiteName: "mobile.demo")
+    // This method is used to validate the site details
+    func testValidateSiteDetails() {
+        let validationResult = addSiteViewModel?.validateSiteDetails(accountID: "22", siteId: "2372", siteName: "mobile.demo", privacyManagerId: "5c0e81b7d74b3c30c6852301")
         if validationResult! {
-            XCTAssert(true, "website data validated successfully")
+            XCTAssert(true, "site data validated successfully")
         } else {
-            XCTAssert(false, "failed to validate website")
+            XCTAssert(false, "failed to validate site")
         }
     }
     
     // This method is used to validate the empty the site data case
-    func testValidatWithEmptyeWebsiteDetails() {
-        let validationResult = addSiteViewModel?.validateWebsiteDetails(accountID: "", websiteName: "")
+    func testValidatWithEmptyeSiteDetails() {
+        let validationResult = addSiteViewModel?.validateSiteDetails(accountID: "", siteId: "", siteName: "", privacyManagerId: "")
         if validationResult! {
-            XCTAssert(false, "failed to validate website")
+            XCTAssert(false, "failed to validate site")
         } else {
-            XCTAssert(true, "website data validated successfully")
+            XCTAssert(true, "site data validated successfully")
         }
     }
     
