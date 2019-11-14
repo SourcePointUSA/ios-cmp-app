@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		192A364A229BEDE500249BDE /* TargetingParamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192A3649229BEDE500249BDE /* TargetingParamModel.swift */; };
+		1933B4B4237C03F700888D47 /* ConsentViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4B3237C03F700888D47 /* ConsentViewControllerTest.swift */; };
+		1933B4B6237C040800888D47 /* SourcePointClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4B5237C040800888D47 /* SourcePointClientTest.swift */; };
+		1933B4B8237C040F00888D47 /* ConsentViewControllerErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4B7237C040F00888D47 /* ConsentViewControllerErrorTest.swift */; };
+		1933B4BA237C041900888D47 /* ConsentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4B9237C041900888D47 /* ConsentTest.swift */; };
+		1933B4BC237D3ABB00888D47 /* TestData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1933B4BB237D3ABB00888D47 /* TestData.plist */; };
 		193B9F4122AF7BB200A343EE /* ConsentViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193B9F4022AF7BB200A343EE /* ConsentViewDetailsViewController.swift */; };
 		193B9F4422B0003500A343EE /* ConsentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193B9F4322B0003500A343EE /* ConsentTableViewCell.swift */; };
 		1978CFD32282DF35008E464F /* ConsentSubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1978CFD22282DF34008E464F /* ConsentSubViewController.swift */; };
@@ -73,6 +78,11 @@
 
 /* Begin PBXFileReference section */
 		192A3649229BEDE500249BDE /* TargetingParamModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetingParamModel.swift; sourceTree = "<group>"; };
+		1933B4B3237C03F700888D47 /* ConsentViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerTest.swift; sourceTree = "<group>"; };
+		1933B4B5237C040800888D47 /* SourcePointClientTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointClientTest.swift; sourceTree = "<group>"; };
+		1933B4B7237C040F00888D47 /* ConsentViewControllerErrorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerErrorTest.swift; sourceTree = "<group>"; };
+		1933B4B9237C041900888D47 /* ConsentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTest.swift; sourceTree = "<group>"; };
+		1933B4BB237D3ABB00888D47 /* TestData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestData.plist; sourceTree = "<group>"; };
 		193B9F4022AF7BB200A343EE /* ConsentViewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewController.swift; sourceTree = "<group>"; };
 		193B9F4322B0003500A343EE /* ConsentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentTableViewCell.swift; sourceTree = "<group>"; };
 		1978CFD22282DF34008E464F /* ConsentSubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentSubViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +205,18 @@
 				192A3649229BEDE500249BDE /* TargetingParamModel.swift */,
 			);
 			path = TargetingParamModel;
+			sourceTree = "<group>";
+		};
+		1933B4B2237C033F00888D47 /* ConsentViewControllerTests */ = {
+			isa = PBXGroup;
+			children = (
+				1933B4B3237C03F700888D47 /* ConsentViewControllerTest.swift */,
+				1933B4B7237C040F00888D47 /* ConsentViewControllerErrorTest.swift */,
+				1933B4B5237C040800888D47 /* SourcePointClientTest.swift */,
+				1933B4B9237C041900888D47 /* ConsentTest.swift */,
+				1933B4BB237D3ABB00888D47 /* TestData.plist */,
+			);
+			path = ConsentViewControllerTests;
 			sourceTree = "<group>";
 		};
 		193B9F4222B0000300A343EE /* ConsentCell */ = {
@@ -550,6 +572,7 @@
 		19FFFBF923019B4000045350 /* SourcePointMetaAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				1933B4B2237C033F00888D47 /* ConsentViewControllerTests */,
 				19FFFC0223019DFA00045350 /* AddWebsiteViewModelTest.swift */,
 				19E7CC40230D854200574AD0 /* AddWebsiteViewControllerTest.swift */,
 				19FFFC0823019E1D00045350 /* WebsiteListViewModelTest.swift */,
@@ -670,6 +693,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1933B4BC237D3ABB00888D47 /* TestData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,8 +822,12 @@
 				19FFFC0723019E1600045350 /* WebsiteListViewControllerTest.swift in Sources */,
 				19E7CC3F230D7D2B00574AD0 /* ConsentViewDetailsViewControllerTest.swift in Sources */,
 				19FFFC0523019E0F00045350 /* WebsiteDetailsStorageCoordinatorTest.swift in Sources */,
+				1933B4B4237C03F700888D47 /* ConsentViewControllerTest.swift in Sources */,
+				1933B4B8237C040F00888D47 /* ConsentViewControllerErrorTest.swift in Sources */,
 				19FFFC0323019DFA00045350 /* AddWebsiteViewModelTest.swift in Sources */,
 				19E7CC41230D854200574AD0 /* AddWebsiteViewControllerTest.swift in Sources */,
+				1933B4B6237C040800888D47 /* SourcePointClientTest.swift in Sources */,
+				1933B4BA237C041900888D47 /* ConsentTest.swift in Sources */,
 				19FFFC0B23019E2300045350 /* XCUIElement+Extensions.swift in Sources */,
 				19FFFC0923019E1D00045350 /* WebsiteListViewModelTest.swift in Sources */,
 			);
@@ -1008,7 +1036,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SourcePointMetaAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1032,7 +1060,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SourcePointMetaAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -305,7 +305,7 @@ import Reachability
         self.messageStatus = .loaded
     }
 
-    private func getMessageUrl(authId: String?) -> URL? {
+    internal func getMessageUrl(authId: String?) -> URL? {
         do {
            return try sourcePoint.getMessageUrl(
                 forTargetingParams:  targetingParams,
@@ -329,7 +329,7 @@ import Reachability
         loadMessage(withMessageUrl: url)
     }
 
-    private func setSubjectToGDPR() {
+    internal func setSubjectToGDPR() {
         sourcePoint.getGdprStatus { (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
                 if let gdprError = error {
@@ -413,7 +413,7 @@ import Reachability
         }
     }
 
-    private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
+    internal func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
         self.sourcePoint.getCustomConsents(forSiteId: String(self.siteId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
             if let _consents = consents {
                 cHandler(_consents, nil)
@@ -423,7 +423,7 @@ import Reachability
         })
     }
 
-    private func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
+    internal func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
         let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
@@ -435,7 +435,7 @@ import Reachability
         return consentString
     }
 
-    private func storeIABVars(_ euconsentBase64Url: String) throws {
+    internal func storeIABVars(_ euconsentBase64Url: String) throws {
         let userDefaults = UserDefaults.standard
         // Set the standard IABConsent_ConsentString var in userDefaults
         userDefaults.setValue(euconsentBase64Url, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
