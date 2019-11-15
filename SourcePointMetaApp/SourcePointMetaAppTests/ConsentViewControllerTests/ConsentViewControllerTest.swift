@@ -195,6 +195,83 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
         }
     }
     
+    /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
+    func testClearAllConsentDataMethodForEuConsent() {
+        consentViewController?.clearAllConsentData()
+        let euConsentKey = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY)
+        if euConsentKey == nil {
+            XCTAssert(true, "succeed to remove the euConsentKey from Userdefaults")
+        } else {
+            XCTAssert(false, "failed to remove the euConsentKey from Userdefaults")
+        }
+    }
+    
+    /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
+       func testClearAllConsentDataMethodForConsentUUID() {
+           consentViewController?.clearAllConsentData()
+           let consentUUIDKey = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
+           if consentUUIDKey == nil {
+               XCTAssert(true, "succeed to remove the consentUUIDKey from Userdefaults")
+           } else {
+               XCTAssert(false, "failed to remove the consentUUIDKey from Userdefaults")
+           }
+       }
+    
+    /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
+       func testClearAllConsentDataMethodForIABConsentParsedPurposeConsents() {
+           consentViewController?.clearAllConsentData()
+           let iABConsentParsedPurposeConsents = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+           if iABConsentParsedPurposeConsents == nil {
+               XCTAssert(true, "succeed to remove the iABConsentParsedPurposeConsents from Userdefaults")
+           } else {
+               XCTAssert(false, "failed to remove the iABConsentParsedPurposeConsents from Userdefaults")
+           }
+       }
+    
+    /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
+       func testClearAllConsentDataMethodForIABConsentParsedVendorConsents() {
+           consentViewController?.clearAllConsentData()
+           let iABConsentParsedVendorConsents = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+           if iABConsentParsedVendorConsents == nil {
+               XCTAssert(true, "succeed to remove the iABConsentParsedVendorConsents from Userdefaults")
+           } else {
+               XCTAssert(false, "failed to remove the iABConsentParsedVendorConsents from Userdefaults")
+           }
+       }
+    
+    /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
+       func testClearAllConsentDataMethodForIABConsentCMPPresent() {
+           consentViewController?.clearAllConsentData()
+           let iABConsentCMPPresent = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
+           if iABConsentCMPPresent == nil {
+               XCTAssert(true, "succeed to remove the iABConsentCMPPresent from Userdefaults")
+           } else {
+               XCTAssert(false, "failed to remove the iABConsentCMPPresent from Userdefaults")
+           }
+       }
+    
+    /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
+       func testClearAllConsentDataMethodForIABConsentSubjectToGDPR() {
+           consentViewController?.clearAllConsentData()
+           let iABConsentSubjectToGDPR = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+           if iABConsentSubjectToGDPR == nil {
+               XCTAssert(true, "succeed to remove the iABConsentSubjectToGDPR from Userdefaults")
+           } else {
+               XCTAssert(false, "failed to remove the iABConsentSubjectToGDPR from Userdefaults")
+           }
+       }
+    
+    /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
+       func testClearAllConsentDataMethodForIABConsentConsentString() {
+           consentViewController?.clearAllConsentData()
+           let iABConsentConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
+           if iABConsentConsentString == nil {
+               XCTAssert(true, "succeed to remove the iABConsentConsentString from Userdefaults")
+           } else {
+               XCTAssert(false, "failed to remove the iABConsentConsentString from Userdefaults")
+           }
+       }
+    
     func onMessageReady(controller: ConsentViewController) {
         print("onMessageReady")
     }

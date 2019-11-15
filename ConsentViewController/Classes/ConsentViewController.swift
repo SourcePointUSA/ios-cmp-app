@@ -543,7 +543,7 @@ import Reachability
             logger.log("onPrivacyManagerAction event is triggered", [])
             return
         case "onErrorOccurred":
-            clearAllConsnetData()
+            clearAllConsentData()
             consentDelegate.onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
             consentDelegate.onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
