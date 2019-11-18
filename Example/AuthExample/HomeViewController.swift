@@ -21,7 +21,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, ConsentDelega
     var consents:[Consent] = []
 
     func loadConsents(forAuthId authId: String, showPM: Bool) {
-        let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
+        let cvc = try! ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
         cvc.loadMessage(forAuthId: authId)
     }
 

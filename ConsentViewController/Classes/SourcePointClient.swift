@@ -29,24 +29,24 @@ class SourcePointClient {
     private let client: HttpClient
 
     private let accountId: Int
-    private let siteId: Int
+    private let propertyId: Int
     private let pmId: String
     private let showPM: Bool
     private let runMessaging: Bool
-    private let siteUrl: URL
+    private let propertyUrl: URL
     private let mmsUrl: URL
     private let cmpUrl: URL
     private let messageUrl: URL
     private let statusGdprUrl: URL
     private let campaign: String
 
-    init(accountId: Int, siteId:Int, pmId:String, showPM:Bool, siteUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+    init(accountId: Int, propertyId:Int, pmId:String, showPM:Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
         self.accountId = accountId
-        self.siteId = siteId
+        self.propertyId = propertyId
         self.pmId = pmId
         self.showPM = showPM
         self.runMessaging = !showPM
-        self.siteUrl = siteUrl
+        self.propertyUrl = propertyUrl
         self.mmsUrl = mmsUrl
         self.cmpUrl = cmpUrl
         self.messageUrl = messageUrl
@@ -72,9 +72,9 @@ class SourcePointClient {
     }
 
     // TODO: validate customConsentsURL with Utils.validate
-    func getCustomConsents(forSiteId siteId: String, consentUUID: String,euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
+    func getCustomConsents(forPropertyId propertyId: String, consentUUID: String,euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
 
-        let path = "/consent/v2/\(siteId)/custom-vendors"
+        let path = "/consent/v2/\(propertyId)/custom-vendors"
         let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
         let decoder = JSONDecoder()
 
@@ -103,8 +103,8 @@ class SourcePointClient {
             queryItems = [
                 "_sp_accountId": String(accountId),
                 "_sp_PMId": pmId,
-                "_sp_siteId": String(siteId),
-                "_sp_siteHref": siteUrl.absoluteString,
+                "_sp_siteId": String(propertyId),
+                "_sp_siteHref": propertyUrl.absoluteString,
                 "_sp_runMessaging" : String(runMessaging),
                 "_sp_showPM": String(showPM),
                 "_sp_mms_Domain": mmsUrl.absoluteString,

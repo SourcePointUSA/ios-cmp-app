@@ -124,8 +124,8 @@ import Reachability
     public var messageTimeoutInSeconds = TimeInterval(300)
 
     private let accountId: Int
-    private let siteName: String
-    private let siteId: Int
+    private let property: String
+    private let propertyId: Int
     private let showPM: Bool
     private var didMessageScriptLoad = false
 
@@ -136,12 +136,12 @@ import Reachability
     private var newPM = false
 
     /**
-     Initialises the library with `accountId`, `siteId`,`PMId`,`campaign`, `showPM` and siteName`.
+     Initialises the library with `accountId`, `propertyId`,`PMId`,`campaign`, `showPM` and property`.
      */
     public init(
         accountId: Int,
-        siteId: Int,
-        siteName: String,
+        propertyId: Int,
+        property: String,
         PMId: String,
         campaign: String,
         showPM: Bool,
@@ -151,22 +151,22 @@ import Reachability
         consentDelegate: ConsentDelegate
     ) throws {
         self.accountId = accountId
-        self.siteName = siteName
-        self.siteId = siteId
+        self.property = property
+        self.propertyId = propertyId
         self.showPM = showPM
         self.consentDelegate = consentDelegate
         
-        let siteUrl = try Utils.validate(attributeName: "siteName", urlString: "https://"+siteName)
+        let propertyUrl = try Utils.validate(attributeName: "propertyUrl", urlString: "https://"+property)
         let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
         let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
         let messageUrl = try Utils.validate(attributeName: "messageUrl", urlString: messageDomain)
 
         self.sourcePoint = try SourcePointClient(
             accountId: accountId,
-            siteId: siteId,
+            propertyId: propertyId,
             pmId: PMId,
             showPM: showPM,
-            siteUrl: siteUrl,
+            propertyUrl: propertyUrl,
             campaign: campaign,
             mmsUrl: mmsUrl,
             cmpUrl: cmpUrl,
@@ -180,12 +180,12 @@ import Reachability
         super.init(nibName: nil, bundle: nil)
     }
 
-    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:consentDelegate:andReturnError:)
-    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool, consentDelegate: ConsentDelegate) throws {
+    @objc(initWithAccountId:propertyId:property:PMId:campaign:showPM:consentDelegate:andReturnError:)
+    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, consentDelegate: ConsentDelegate) throws {
         try self.init(
             accountId: accountId,
-            siteId: siteId,
-            siteName: siteName,
+            propertyId: propertyId,
+            property: property,
             PMId: PMId,
             campaign: campaign,
             showPM: showPM,
@@ -194,12 +194,12 @@ import Reachability
         )
     }
 
-    @objc(initWithAccountId:siteId:siteName:PMId:campaign:showPM:staging:consentDelegate:andReturnError:)
-    public convenience init(accountId: Int, siteId: Int, siteName: String, PMId: String, campaign: String, showPM: Bool, staging: Bool, consentDelegate: ConsentDelegate) throws {
+    @objc(initWithAccountId:propertyId:property:PMId:campaign:showPM:staging:consentDelegate:andReturnError:)
+    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, staging: Bool, consentDelegate: ConsentDelegate) throws {
         try self.init(
             accountId: accountId,
-            siteId: siteId,
-            siteName: siteName,
+            propertyId: propertyId,
+            property: property,
             PMId: PMId,
             campaign: campaign,
             showPM: showPM,
@@ -411,7 +411,7 @@ import Reachability
     }
 
     internal func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
-        self.sourcePoint.getCustomConsents(forSiteId: String(self.siteId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
+        self.sourcePoint.getCustomConsents(forPropertyId: String(self.propertyId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
             if let _consents = consents {
                 cHandler(_consents, nil)
             } else {
