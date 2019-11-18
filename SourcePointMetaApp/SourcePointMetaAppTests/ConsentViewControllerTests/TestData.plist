@@ -22,5 +22,13 @@
 	<string>https://sourcepoint.mgr.consensu.org</string>
 	<key>MessageUrl</key>
 	<string>https://in-app-messaging.pm.sourcepoint.mgr.consensu.org</string>
+	<key>AuthId</key>
+	<string>sourcepoint@123</string>
+	<key>ConsentString</key>
+	<string>BOmW7qdOmW7qdAGABCENCj-AAAAqKADABUADQAUg</string>
+	<key>ConsentUUID</key>
+	<string>f645bb5b-f190-4eb7-a588-2e3d6e1886e1</string>
+	<key>EUConsent</key>
+	<string>BOmUHleOmUHleAGABBENCj-AAAAqKADABUADQAUg</string>
 </dict>
 </plist>

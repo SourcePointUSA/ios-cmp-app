@@ -71,9 +71,6 @@ import Reachability
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
 
-    static private let SP_PREFIX: String = "_sp_"
-    static private let SP_SITE_ID: String = SP_PREFIX + "site_id"
-
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 

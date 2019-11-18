@@ -56,15 +56,22 @@ class WebsiteListViewModelTest: XCTestCase {
     
     // This test method checks whether the site will be deleted or not.
     func testDeleteSite() {
+        let siteDeletionExpectation = expectation(description: "successfully deleted site data from database")
         siteListViewModel?.importAllSites(executionCompletionHandler: { (sites) in
-            self.siteListViewModel?.delete(atIndex: 0, completionHandler: { (deleteStatus, error) in
-                if error != nil {
-                    XCTAssert(false, "failed to delete site data from database")
-                } else {
-                    XCTAssert(true, "successfully deleted site data from database")
-                }
-            })
+            if sites?.count ?? 0 > 0 {
+                self.siteListViewModel?.delete(atIndex: 0, completionHandler: { (deleteStatus, error) in
+                    if error != nil {
+                        XCTAssert(false, "failed to delete site data from database")
+                    } else {
+                        XCTAssert(true, "successfully deleted site data from database")
+                    }
+                })
+            }else{
+                XCTAssert(false, "failed to delete site data from database")
+                siteDeletionExpectation.fulfill()
+            }
         })
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testClearUserDefaultsData() {
@@ -79,13 +86,20 @@ class WebsiteListViewModelTest: XCTestCase {
     }
     
     func testSiteDetails() {
+        let siteDetailsExpectation = expectation(description: "site details are present")
         siteListViewModel?.importAllSites(executionCompletionHandler: { (sites) in
+            if sites?.count ?? 0 > 0 {
             let siteDetails = self.siteListViewModel?.siteDetails(atIndex: 0)
             if ((siteDetails?.0?.accountId) != nil) {
                 XCTAssert(true, "site details are present")
             }else {
                  XCTAssert(false, "site details are not present")
             }
+            }else {
+                XCTAssert(false, "site details are not present")
+                siteDetailsExpectation.fulfill()
+            }
         })
+        waitForExpectations(timeout: 1, handler: nil)
     }
 }

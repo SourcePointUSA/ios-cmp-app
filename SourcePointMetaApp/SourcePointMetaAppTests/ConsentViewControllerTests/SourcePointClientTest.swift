@@ -11,28 +11,41 @@ import XCTest
 class SourcePointClientTest: XCTestCase {
     
     var sourcepointClient: SourcePointClient?
+    var accountId: Int = 0
+    var siteId: Int = 0
+    var siteUrl: String = ""
+    var campaign: String = ""
+    var pmId: String = ""
+    var showPM: Bool = false
+    var authId: String = ""
+    var mmsUrl: String = ""
+    var cmpUrl: String = ""
+    var messageUrl: String = ""
+    var consentUUID: String = ""
+    var euConsent: String = ""
+    
     
     override func setUp() {
-        let testData = readDataFromPlist()
-        let accountId = testData?.value(forKey: "AccountId") as! Int
-        let siteId = testData?.value(forKey: "SiteId") as! Int
-        let showPM = testData?.value(forKey: "ShowPM") as! Bool
-        let PMId = testData?.value(forKey: "PMId") as! String
-        let campaign = testData?.value(forKey: "Campaign") as! String
-        let siteUrl = testData?.value(forKey: "SiteUrl") as! String
-        let mmsUrl = testData?.value(forKey: "MmsUrl") as! String
-        let cmpUrl = testData?.value(forKey: "CmpUrl") as! String
-        let messageUrl = testData?.value(forKey: "MessageUrl") as! String
-        sourcepointClient = try! SourcePointClient(accountId: accountId, siteId: siteId, pmId: PMId, showPM: showPM, siteUrl: URL(string: siteUrl)!, campaign: campaign, mmsUrl: URL(string: mmsUrl)!, cmpUrl: URL(string: cmpUrl)!, messageUrl: URL(string: messageUrl)!)
+        readDataFromPlist()
+        sourcepointClient = try! SourcePointClient(accountId: accountId, siteId: siteId, pmId: pmId, showPM: showPM, siteUrl: URL(string: siteUrl)!, campaign: campaign, mmsUrl: URL(string: mmsUrl)!, cmpUrl: URL(string: cmpUrl)!, messageUrl: URL(string: messageUrl)!)
     }
     
     /// this method is used to read test data from plist
-    func readDataFromPlist()-> NSDictionary? {
+    func readDataFromPlist() {
         if let path = Bundle(for: type(of: self)).path(forResource: "TestData", ofType: "plist") {
             let testData = NSDictionary(contentsOfFile: path)
-            return testData
+            accountId = testData?.value(forKey: "AccountId") as! Int
+            siteId = testData?.value(forKey: "SiteId") as! Int
+            showPM = testData?.value(forKey: "ShowPM") as! Bool
+            pmId = testData?.value(forKey: "PMId") as! String
+            campaign = testData?.value(forKey: "Campaign") as! String
+            siteUrl = testData?.value(forKey: "SiteUrl") as! String
+            mmsUrl = testData?.value(forKey: "MmsUrl") as! String
+            cmpUrl = testData?.value(forKey: "CmpUrl") as! String
+            messageUrl = testData?.value(forKey: "MessageUrl") as! String
+            consentUUID = testData?.value(forKey: "ConsentUUID") as! String
+            euConsent = testData?.value(forKey: "EUConsent") as! String
         }
-        return nil
     }
     
     override func tearDown() {
@@ -57,7 +70,7 @@ class SourcePointClientTest: XCTestCase {
         }
     }
     
-     /// this test method is used to test getMessageUrl method working as expected or not
+    /// this test method is used to test getMessageUrl method working as expected or not
     func testGetMessageUrlWithAuthID() {
         let targetingParamModel = ["TargetingParamModel": "false"]
         let url = try! sourcepointClient?.getMessageUrl(forTargetingParams: targetingParamModel, debugLevel: "OFF", newPM: false, authId: "sourcepointtest")
@@ -70,7 +83,7 @@ class SourcePointClientTest: XCTestCase {
         }
     }
     
-     /// this test method is used to test getMessageUrl method working as expected or not
+    /// this test method is used to test getMessageUrl method working as expected or not
     func testGetMessageUrlWithoutAuthID() {
         let targetingParamModel = ["TargetingParamModel": "false"]
         let url = try! sourcepointClient?.getMessageUrl(forTargetingParams: targetingParamModel, debugLevel: "OFF", newPM: false, authId: nil)
@@ -83,10 +96,10 @@ class SourcePointClientTest: XCTestCase {
         }
     }
     
-     /// this test method is used to test getCustomConsents method working as expected or not
+    /// this test method is used to test getCustomConsents method working as expected or not
     func testgetCustomConsents() {
         var finished = false
-        sourcepointClient?.getCustomConsents(forSiteId: "2372", consentUUID: "f645bb5b-f190-4eb7-a588-2e3d6e1886e1", euConsent: "BOmUHleOmUHleAGABBENCj-AAAAqKADABUADQAUg", completionHandler: { (consents, error) in
+        sourcepointClient?.getCustomConsents(forSiteId: "\(siteId)", consentUUID: consentUUID, euConsent: euConsent, completionHandler: { (consents, error) in
             
             print("consents", consents ?? "Not found")
             if error != nil {
@@ -103,9 +116,6 @@ class SourcePointClientTest: XCTestCase {
     
     /// this test method is used to test validate method working as expected or not
     func testValidateURLMethodTest() {
-        let testData = readDataFromPlist()
-        let siteUrl = testData?.value(forKey: "SiteUrl") as! String
-        let mmsUrl = testData?.value(forKey: "MmsUrl") as! String
         let siteIdUrl = try! Utils.validate(
             attributeName: "siteIdUrl",
             urlString: mmsUrl+"/get_site_data?account_id=" + "22" + "&href=" + siteUrl
@@ -117,10 +127,10 @@ class SourcePointClientTest: XCTestCase {
         }
     }
     
-     /// this test method is used to test get method working as expected or not
+    /// this test method is used to test get method working as expected or not
     func testDataTaskMethodTest() {
         let client = SimpleClient()
-           var finished = false
+        var finished = false
         let getSiteIdUrl = URL(string: "https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.demo")
         client.get(url: getSiteIdUrl!, completionHandler: {(data) in
             if data != nil {

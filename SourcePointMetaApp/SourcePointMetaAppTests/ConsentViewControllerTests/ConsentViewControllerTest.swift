@@ -11,15 +11,18 @@ import XCTest
 class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     var consentViewController: ConsentViewController?
     
+    var accountId: Int = 0
+    var siteId: Int = 0
+    var siteName: String = ""
+    var campaign: String = ""
+    var pmId: String = ""
+    var showPM: Bool = false
+    var authId: String = ""
+    var consentString: String = ""
+    
     override func setUp() {
-        let testData = readDataFromPlist()
-        let accountId = testData?.value(forKey: "AccountId") as! Int
-        let siteId = testData?.value(forKey: "SiteId") as! Int
-        let siteName = testData?.value(forKey: "SiteName") as! String
-        let showPM = testData?.value(forKey: "ShowPM") as! Bool
-        let PMId = testData?.value(forKey: "PMId") as! String
-        let campaign = testData?.value(forKey: "Campaign") as! String
-        consentViewController = try! ConsentViewController(accountId: accountId, siteId: siteId, siteName: siteName, PMId: PMId, campaign: campaign, showPM: showPM,consentDelegate: self)
+        readDataFromPlist()
+        consentViewController = try! ConsentViewController(accountId: accountId, siteId: siteId, siteName: siteName, PMId: pmId, campaign: campaign, showPM: showPM,consentDelegate: self)
     }
     
     override func tearDown() {
@@ -27,12 +30,18 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     }
     
     /// this method is used to read the data from plist
-    func readDataFromPlist()-> NSDictionary? {
+    func readDataFromPlist() {
         if let path = Bundle(for: type(of: self)).path(forResource: "TestData", ofType: "plist") {
             let testData = NSDictionary(contentsOfFile: path)
-            return testData
+            accountId = testData?.value(forKey: "AccountId") as! Int
+            siteId = testData?.value(forKey: "SiteId") as! Int
+            siteName = testData?.value(forKey: "SiteName") as! String
+            showPM = testData?.value(forKey: "ShowPM") as! Bool
+            pmId = testData?.value(forKey: "PMId") as! String
+            campaign = testData?.value(forKey: "Campaign") as! String
+            authId = testData?.value(forKey: "AuthId") as! String
+            consentString = testData?.value(forKey: "ConsentString") as! String
         }
-        return nil
     }
     
     /// this method is used to test whether webview is loaded or not
@@ -47,7 +56,7 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     
     /// this method is used to test whether message url is created or not successfully
     func testGetMessageUrlWithAuthId() {
-        let messageUrl = consentViewController!.getMessageUrl(authId: "sourcepoint@123")
+        let messageUrl = consentViewController!.getMessageUrl(authId: authId)
         if messageUrl != nil {
             XCTAssert(true, "Message URL created successfully")
         } else {
@@ -67,7 +76,7 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     
     /// this method is used to test whether message is loaded or not successfully
     func testLoadMessageWithAuthId() {
-        consentViewController?.loadMessage(forAuthId: "sourcepoint@123")
+        consentViewController?.loadMessage(forAuthId: authId)
         if consentViewController?.webView != nil {
             XCTAssert(true, "Webview initialized successfully")
         } else {
@@ -175,7 +184,7 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     
     /// This is method is used to test the consentString is formed successfully or not
     func testBuildConsentString() {
-        let consentString = try! consentViewController?.buildConsentString("BOmW7qdOmW7qdAGABCENCj-AAAAqKADABUADQAUg")
+        let consentString = try! consentViewController?.buildConsentString(self.consentString )
         
         if consentString != nil {
             XCTAssert(true, "succeed to get consentString")
@@ -186,7 +195,7 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     
     /// This method is used to test the IAB vars are stored or not using storeIABVars method
     func testStoreIABVars() {
-        try! consentViewController?.storeIABVars("BOmW7qdOmW7qdAGABCENCj-AAAAqKADABUADQAUg")
+        try! consentViewController?.storeIABVars(consentString)
         let iABvar = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
         if iABvar != nil {
             XCTAssert(true, "succeed to store iab variabales")
@@ -207,70 +216,70 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     }
     
     /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
-       func testClearAllConsentDataMethodForConsentUUID() {
-           consentViewController?.clearAllConsentData()
-           let consentUUIDKey = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
-           if consentUUIDKey == nil {
-               XCTAssert(true, "succeed to remove the consentUUIDKey from Userdefaults")
-           } else {
-               XCTAssert(false, "failed to remove the consentUUIDKey from Userdefaults")
-           }
-       }
+    func testClearAllConsentDataMethodForConsentUUID() {
+        consentViewController?.clearAllConsentData()
+        let consentUUIDKey = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
+        if consentUUIDKey == nil {
+            XCTAssert(true, "succeed to remove the consentUUIDKey from Userdefaults")
+        } else {
+            XCTAssert(false, "failed to remove the consentUUIDKey from Userdefaults")
+        }
+    }
     
     /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
-       func testClearAllConsentDataMethodForIABConsentParsedPurposeConsents() {
-           consentViewController?.clearAllConsentData()
-           let iABConsentParsedPurposeConsents = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
-           if iABConsentParsedPurposeConsents == nil {
-               XCTAssert(true, "succeed to remove the iABConsentParsedPurposeConsents from Userdefaults")
-           } else {
-               XCTAssert(false, "failed to remove the iABConsentParsedPurposeConsents from Userdefaults")
-           }
-       }
+    func testClearAllConsentDataMethodForIABConsentParsedPurposeConsents() {
+        consentViewController?.clearAllConsentData()
+        let iABConsentParsedPurposeConsents = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+        if iABConsentParsedPurposeConsents == nil {
+            XCTAssert(true, "succeed to remove the iABConsentParsedPurposeConsents from Userdefaults")
+        } else {
+            XCTAssert(false, "failed to remove the iABConsentParsedPurposeConsents from Userdefaults")
+        }
+    }
     
     /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
-       func testClearAllConsentDataMethodForIABConsentParsedVendorConsents() {
-           consentViewController?.clearAllConsentData()
-           let iABConsentParsedVendorConsents = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
-           if iABConsentParsedVendorConsents == nil {
-               XCTAssert(true, "succeed to remove the iABConsentParsedVendorConsents from Userdefaults")
-           } else {
-               XCTAssert(false, "failed to remove the iABConsentParsedVendorConsents from Userdefaults")
-           }
-       }
+    func testClearAllConsentDataMethodForIABConsentParsedVendorConsents() {
+        consentViewController?.clearAllConsentData()
+        let iABConsentParsedVendorConsents = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        if iABConsentParsedVendorConsents == nil {
+            XCTAssert(true, "succeed to remove the iABConsentParsedVendorConsents from Userdefaults")
+        } else {
+            XCTAssert(false, "failed to remove the iABConsentParsedVendorConsents from Userdefaults")
+        }
+    }
     
     /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
-       func testClearAllConsentDataMethodForIABConsentCMPPresent() {
-           consentViewController?.clearAllConsentData()
-           let iABConsentCMPPresent = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
-           if iABConsentCMPPresent == nil {
-               XCTAssert(true, "succeed to remove the iABConsentCMPPresent from Userdefaults")
-           } else {
-               XCTAssert(false, "failed to remove the iABConsentCMPPresent from Userdefaults")
-           }
-       }
+    func testClearAllConsentDataMethodForIABConsentCMPPresent() {
+        consentViewController?.clearAllConsentData()
+        let iABConsentCMPPresent = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
+        if iABConsentCMPPresent == nil {
+            XCTAssert(true, "succeed to remove the iABConsentCMPPresent from Userdefaults")
+        } else {
+            XCTAssert(false, "failed to remove the iABConsentCMPPresent from Userdefaults")
+        }
+    }
     
     /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
-       func testClearAllConsentDataMethodForIABConsentSubjectToGDPR() {
-           consentViewController?.clearAllConsentData()
-           let iABConsentSubjectToGDPR = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-           if iABConsentSubjectToGDPR == nil {
-               XCTAssert(true, "succeed to remove the iABConsentSubjectToGDPR from Userdefaults")
-           } else {
-               XCTAssert(false, "failed to remove the iABConsentSubjectToGDPR from Userdefaults")
-           }
-       }
+    func testClearAllConsentDataMethodForIABConsentSubjectToGDPR() {
+        consentViewController?.clearAllConsentData()
+        let iABConsentSubjectToGDPR = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        if iABConsentSubjectToGDPR == nil {
+            XCTAssert(true, "succeed to remove the iABConsentSubjectToGDPR from Userdefaults")
+        } else {
+            XCTAssert(false, "failed to remove the iABConsentSubjectToGDPR from Userdefaults")
+        }
+    }
     
     /// This method is used to test ClearAllConsentData method removes data from Userdefaults or not.
-       func testClearAllConsentDataMethodForIABConsentConsentString() {
-           consentViewController?.clearAllConsentData()
-           let iABConsentConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
-           if iABConsentConsentString == nil {
-               XCTAssert(true, "succeed to remove the iABConsentConsentString from Userdefaults")
-           } else {
-               XCTAssert(false, "failed to remove the iABConsentConsentString from Userdefaults")
-           }
-       }
+    func testClearAllConsentDataMethodForIABConsentConsentString() {
+        consentViewController?.clearAllConsentData()
+        let iABConsentConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
+        if iABConsentConsentString == nil {
+            XCTAssert(true, "succeed to remove the iABConsentConsentString from Userdefaults")
+        } else {
+            XCTAssert(false, "failed to remove the iABConsentConsentString from Userdefaults")
+        }
+    }
     
     func onMessageReady(controller: ConsentViewController) {
         print("onMessageReady")
