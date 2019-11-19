@@ -12,8 +12,8 @@ class SourcePointClientTest: XCTestCase {
     
     var sourcepointClient: SourcePointClient?
     var accountId: Int = 0
-    var siteId: Int = 0
-    var siteUrl: String = ""
+    var propertyId: Int = 0
+    var propertyUrl: String = ""
     var campaign: String = ""
     var pmId: String = ""
     var showPM: Bool = false
@@ -27,7 +27,7 @@ class SourcePointClientTest: XCTestCase {
     
     override func setUp() {
         readDataFromPlist()
-        sourcepointClient = try! SourcePointClient(accountId: accountId, siteId: siteId, pmId: pmId, showPM: showPM, siteUrl: URL(string: siteUrl)!, campaign: campaign, mmsUrl: URL(string: mmsUrl)!, cmpUrl: URL(string: cmpUrl)!, messageUrl: URL(string: messageUrl)!)
+        sourcepointClient = try! SourcePointClient(accountId: accountId, propertyId: propertyId, pmId: pmId, showPM: showPM, propertyUrl: URL(string: propertyUrl)!, campaign: campaign, mmsUrl: URL(string: mmsUrl)!, cmpUrl: URL(string: cmpUrl)!, messageUrl: URL(string: messageUrl)!)
     }
     
     /// this method is used to read test data from plist
@@ -35,11 +35,11 @@ class SourcePointClientTest: XCTestCase {
         if let path = Bundle(for: type(of: self)).path(forResource: "TestData", ofType: "plist") {
             let testData = NSDictionary(contentsOfFile: path)
             accountId = testData?.value(forKey: "AccountId") as! Int
-            siteId = testData?.value(forKey: "SiteId") as! Int
+            propertyId = testData?.value(forKey: "PropertyId") as! Int
             showPM = testData?.value(forKey: "ShowPM") as! Bool
             pmId = testData?.value(forKey: "PMId") as! String
             campaign = testData?.value(forKey: "Campaign") as! String
-            siteUrl = testData?.value(forKey: "SiteUrl") as! String
+            propertyUrl = testData?.value(forKey: "PropertyUrl") as! String
             mmsUrl = testData?.value(forKey: "MmsUrl") as! String
             cmpUrl = testData?.value(forKey: "CmpUrl") as! String
             messageUrl = testData?.value(forKey: "MessageUrl") as! String
@@ -99,7 +99,7 @@ class SourcePointClientTest: XCTestCase {
     /// this test method is used to test getCustomConsents method working as expected or not
     func testgetCustomConsents() {
         var finished = false
-        sourcepointClient?.getCustomConsents(forSiteId: "\(siteId)", consentUUID: consentUUID, euConsent: euConsent, completionHandler: { (consents, error) in
+        sourcepointClient?.getCustomConsents(forPropertyId: "\(propertyId)", consentUUID: consentUUID, euConsent: euConsent, completionHandler: { (consents, error) in
             
             print("consents", consents ?? "Not found")
             if error != nil {
@@ -116,11 +116,11 @@ class SourcePointClientTest: XCTestCase {
     
     /// this test method is used to test validate method working as expected or not
     func testValidateURLMethodTest() {
-        let siteIdUrl = try! Utils.validate(
-            attributeName: "siteIdUrl",
-            urlString: mmsUrl+"/get_site_data?account_id=" + "22" + "&href=" + siteUrl
+        let propertyUrl = try! Utils.validate(
+            attributeName: "propertyUrl",
+            urlString: mmsUrl+"/get_site_data?account_id=" + "22" + "&href=" + self.propertyUrl
         )
-        if siteIdUrl.absoluteString.isEmpty {
+        if propertyUrl.absoluteString.isEmpty {
             XCTAssert(false, "failed to create the url")
         }else {
             XCTAssert(true, "succeed to create the url")
@@ -131,8 +131,8 @@ class SourcePointClientTest: XCTestCase {
     func testDataTaskMethodTest() {
         let client = SimpleClient()
         var finished = false
-        let getSiteIdUrl = URL(string: "https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.demo")
-        client.get(url: getSiteIdUrl!, completionHandler: {(data) in
+        let getPropertyUrl = URL(string: "https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.demo")
+        client.get(url: getPropertyUrl!, completionHandler: {(data) in
             if data != nil {
                 XCTAssert(true, "succeed to receive the data from endpoint")
             }else {
