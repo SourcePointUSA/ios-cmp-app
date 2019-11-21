@@ -258,6 +258,12 @@ import Reachability
         view = webView
     }
 
+    private func releaseWebViewHandlers() {
+        let contentController = webView.configuration.userContentController
+        contentController.removeScriptMessageHandler(forName: "JSReceiver")
+        contentController.removeAllUserScripts()
+    }
+
     /// :nodoc:
     // handles links with "target=_blank", forcing them to open in Safari
     public func webView(_ webView: WKWebView,
@@ -483,7 +489,13 @@ import Reachability
         } catch let error as ConsentViewControllerError {
             consentDelegate?.onErrorOccurred(error: error)
         } catch {}
+        releaseWebViewHandlers()
         consentDelegate?.onConsentReady(controller: self)
+    }
+
+    private func onErrorOccurred(error: ConsentViewControllerError) {
+        releaseWebViewHandlers()
+        consentDelegate?.onErrorOccurred(error: error)
     }
 
     private func showMessage() {
