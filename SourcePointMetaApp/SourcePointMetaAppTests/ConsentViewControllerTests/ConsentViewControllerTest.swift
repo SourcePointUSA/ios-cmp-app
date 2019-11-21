@@ -54,26 +54,6 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
         }
     }
     
-    /// this method is used to test whether message url is created or not successfully
-    func testGetMessageUrlWithAuthId() {
-        let messageUrl = consentViewController!.getMessageUrl(authId: authId)
-        if messageUrl != nil {
-            XCTAssert(true, "Message URL created successfully")
-        } else {
-            XCTAssert(false, "Unable to create Message URL")
-        }
-    }
-    
-    /// this method is used to test whether message url is created or not successfully
-    func testGetMessageUrlWithoutAuthId() {
-        let messageUrl = consentViewController!.getMessageUrl(authId: nil)
-        if messageUrl != nil {
-            XCTAssert(true, "Message URL created successfully")
-        } else {
-            XCTAssert(false, "Unable to create Message URL")
-        }
-    }
-    
     /// this method is used to test whether message is loaded or not successfully
     func testLoadMessageWithAuthId() {
         consentViewController?.loadMessage(forAuthId: authId)
@@ -111,23 +91,23 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
         }
     }
     
-    /// this method is used to test whether getIABVendorConsents method is able to get vendors or not from server
+    /// this method is used to test whether getIABVendorConsents method is able to get vendors or not from UserDefaults
     func testGetIABVendorConsents() {
         let vendorIdArray = [1,2,3]
         let vendorConsents = try! consentViewController?.getIABVendorConsents(vendorIdArray)
-        if vendorConsents != nil {
+        if vendorConsents?.first == true || vendorConsents?.first == false {
             XCTAssert(true, "succeed to get vendor consents for IAB vendors")
         } else {
             XCTAssert(false, "failed to get  vendor consents for IAB vendors")
         }
     }
     
-    /// this method is used to test whether getIABPurposeConsents method is able to get purposes or not from server
+    /// this method is used to test whether getIABPurposeConsents method is able to get purposes or not from UserDefaults
     func testGetIABPurposeConsents() {
         var purposeIdArray = [Int8]()
         purposeIdArray = [1,2,3]
         let purposeConsents = try! consentViewController?.getIABPurposeConsents(purposeIdArray)
-        if purposeConsents != nil {
+        if purposeConsents?.first == false || purposeConsents?.first == true {
             XCTAssert(true, "succeed to get purpose consents for IAB vendors")
         } else {
             XCTAssert(false, "failed to get purpose consents for IAB vendors")

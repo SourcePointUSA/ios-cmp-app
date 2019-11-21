@@ -21,7 +21,7 @@ class ConsentTest: XCTestCase {
     
     /// this test method is used to test consent string method
     func testConsentDescription() {
-        if !(consent?.description.isEmpty)! {
+        if consent?.description == "Consent(id: 5b76ebcd5582409726cdd85, name: Facebook)" {
             XCTAssert(true, "Successfully received the consent id and consent name")
         } else {
            XCTAssert(false, "Error to get the consent id and consent name")
