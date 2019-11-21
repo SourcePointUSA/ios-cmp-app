@@ -130,7 +130,7 @@ import Reachability
     private var didMessageScriptLoad = false
 
     private let sourcePoint: SourcePointClient
-    private let consentDelegate: ConsentDelegate
+    private weak var consentDelegate: ConsentDelegate?
     private let logger: Logger
 
     private var newPM = false
@@ -288,14 +288,16 @@ import Reachability
         setSubjectToGDPR()
 
         guard Reachability()!.connection != .none else {
-            consentDelegate.onErrorOccurred(error: NoInternetConnection())
+            consentDelegate?.onErrorOccurred(error: NoInternetConnection())
             self.messageStatus = .notStarted
             return
         }
         self.webView.load(URLRequest(url: messageUrl))
-        self.timeOut(inSeconds: self.messageTimeoutInSeconds) {
-            if(!self.didMessageScriptLoad) {
-                self.consentDelegate.onErrorOccurred(error: MessageTimeout())
+        self.timeOut(inSeconds: self.messageTimeoutInSeconds) { [weak self] in
+            guard let self = self else { return }
+
+            if(!(self.didMessageScriptLoad)) {
+                self.consentDelegate?.onErrorOccurred(error: MessageTimeout())
                 self.messageStatus = .timedout
             }
         };
@@ -311,7 +313,7 @@ import Reachability
                 authId: authId
             )
         } catch let error as ConsentViewControllerError {
-            consentDelegate.onErrorOccurred(error: error)
+            consentDelegate?.onErrorOccurred(error: error)
         } catch {}
         return nil
     }
@@ -326,11 +328,11 @@ import Reachability
         loadMessage(withMessageUrl: url)
     }
 
-    internal func setSubjectToGDPR() {
-        sourcePoint.getGdprStatus { (gdprStatus, error) in
+    private func setSubjectToGDPR() {
+        sourcePoint.getGdprStatus { [weak self] (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
                 if let gdprError = error {
-                    self.logger.log("GDPR Status Error: %{public}@", [gdprError])
+                    self?.logger.log("GDPR Status Error: %{public}@", [gdprError])
                 }
                 return
             }
@@ -458,7 +460,7 @@ import Reachability
 
     private func onMessageChoiceSelect(choiceId: Int) {
         guard Reachability()!.connection != .none else {
-            consentDelegate.onErrorOccurred(error: NoInternetConnection())
+            consentDelegate?.onErrorOccurred(error: NoInternetConnection())
             return
         }
         self.choiceId = choiceId
@@ -476,16 +478,16 @@ import Reachability
             userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
             userDefaults.synchronize()
         } catch let error as ConsentViewControllerError {
-            consentDelegate.onErrorOccurred(error: error)
+            consentDelegate?.onErrorOccurred(error: error)
         } catch {}
-        consentDelegate.onConsentReady(controller: self)
+        consentDelegate?.onConsentReady(controller: self)
     }
 
     private func showMessage() {
         if(messageStatus == .timedout) { return }
 
         didMessageScriptLoad = true
-        consentDelegate.onMessageReady(controller: self)
+        consentDelegate?.onMessageReady(controller: self)
     }
     
     /// It will clear all the stored userDefaults Data
@@ -541,15 +543,15 @@ import Reachability
             return
         case "onErrorOccurred":
             clearAllConsentData()
-            consentDelegate.onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            consentDelegate?.onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
-            consentDelegate.onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            consentDelegate?.onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "xhrLog":
             if debugLevel == .DEBUG {
                 handleXhrLog(body)
             }
         default:
-            consentDelegate.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
+            consentDelegate?.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
     }
 
@@ -559,7 +561,7 @@ import Reachability
             let messageBody = message.body as? [String: Any],
             let name = messageBody["name"] as? String
         else {
-            consentDelegate.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
+            consentDelegate?.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
             return
         }
         if let body = messageBody["body"] as? [String: Any?] {
