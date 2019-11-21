@@ -71,9 +71,6 @@ import Reachability
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
 
-    static private let SP_PREFIX: String = "_sp_"
-    static private let SP_SITE_ID: String = SP_PREFIX + "site_id"
-
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
@@ -307,7 +304,7 @@ import Reachability
         self.messageStatus = .loaded
     }
 
-    private func getMessageUrl(authId: String?) -> URL? {
+    internal func getMessageUrl(authId: String?) -> URL? {
         do {
            return try sourcePoint.getMessageUrl(
                 forTargetingParams:  targetingParams,
@@ -415,7 +412,7 @@ import Reachability
         }
     }
 
-    private func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
+    internal func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
         self.sourcePoint.getCustomConsents(forSiteId: String(self.siteId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
             if let _consents = consents {
                 cHandler(_consents, nil)
@@ -425,7 +422,7 @@ import Reachability
         })
     }
 
-    private func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
+    internal func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
         let euconsent = euconsentBase64Url
             .replacingOccurrences(of: "-", with: "+")
@@ -437,7 +434,7 @@ import Reachability
         return consentString
     }
 
-    private func storeIABVars(_ euconsentBase64Url: String) throws {
+    internal func storeIABVars(_ euconsentBase64Url: String) throws {
         let userDefaults = UserDefaults.standard
         // Set the standard IABConsent_ConsentString var in userDefaults
         userDefaults.setValue(euconsentBase64Url, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)

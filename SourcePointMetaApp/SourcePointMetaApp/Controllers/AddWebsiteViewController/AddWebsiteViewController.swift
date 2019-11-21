@@ -243,7 +243,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     
     func loadConsentManager(siteDetails : SiteDetailsModel) {
         do {
-            let consentViewController = try ConsentViewController (accountId: Int(siteDetails.accountId), siteId: Int(siteDetails.siteId), siteName: siteDetails.siteName!, PMId: siteDetails.privacyManagerId!, campaign: campaign, showPM: showPM, consentDelegate: self)
+            let consentViewController = try ConsentViewController(accountId: Int(siteDetails.accountId), siteId: Int(siteDetails.siteId), siteName: siteDetails.siteName!, PMId: siteDetails.privacyManagerId!, campaign: campaign, showPM: showPM, consentDelegate: self)
             // optional, set custom targeting parameters supports Strings and Integers
             for targetingParam in self.targetingParamsArray {
                 if let targetingKey = targetingParam.targetingKey, let targetingValue = targetingParam.targetingValue {

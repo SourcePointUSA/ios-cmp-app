@@ -12,7 +12,7 @@ import CoreData
 
 class WebsiteDetailsStorageCoordinatorTest: XCTestCase {
     
-    var websiteDetailsStorageCoordinator = WebsiteDetailsStorageCoordinator()
+    var siteDetailsStorageCoordinator = WebsiteDetailsStorageCoordinator()
     // Will add all the targeting params to this array
     var targetingParamsArray = [TargetingParamModel]()
     
@@ -26,16 +26,16 @@ class WebsiteDetailsStorageCoordinatorTest: XCTestCase {
     
     // This method is used to test whether all site data can be fetched from database or not.
     func testFetchAllWebsites() {
-        websiteDetailsStorageCoordinator.fetchAllWebsites(executionCompletionHandler: { (_allWebsites) in
-            XCTAssertNotNil(_allWebsites, "unable to fetch the site data")
+        siteDetailsStorageCoordinator.fetchAllSites(executionCompletionHandler: { (_allSites) in
+            XCTAssertNotNil(_allSites, "unable to fetch the site data")
         })
     }
     
     // This method is used to test whether site data can be fetched from database or not.
     func testfetchSiteData() {
-        websiteDetailsStorageCoordinator.managedObjectID(completionHandler: {(managedObjectID) in
+        siteDetailsStorageCoordinator.managedObjectID(completionHandler: {(managedObjectID) in
             if (managedObjectID.entity.name != nil) {
-                self.websiteDetailsStorageCoordinator.fetch(website: managedObjectID, completionHandler: { ( siteDataDetailsModel) in
+                self.siteDetailsStorageCoordinator.fetch(site: managedObjectID, completionHandler: { ( siteDataDetailsModel) in
                     XCTAssertNotNil(siteDataDetailsModel, "unable to find out stored data")
                 })
             }
@@ -44,7 +44,7 @@ class WebsiteDetailsStorageCoordinatorTest: XCTestCase {
     
     // This method is used to test whether managed object ID can be fetched from database or not.
     func testfetchManagedObjectID() {
-        websiteDetailsStorageCoordinator.managedObjectID(completionHandler: {(managedObjectID) in
+        siteDetailsStorageCoordinator.managedObjectID(completionHandler: {(managedObjectID) in
             XCTAssertNotNil(managedObjectID, "unable to find out stored managedObjectID data")
         })
     }
@@ -52,10 +52,8 @@ class WebsiteDetailsStorageCoordinatorTest: XCTestCase {
     
     // This test method is used to test whether the website data added or not to database.
     func testAddWebsite() {
-        let websiteDataModel = WebsiteDetailsModel(websiteName: "mobile.demo", accountID: 22, creationTimestamp: NSDate(), isStaging: false)
-        let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "false")
-        targetingParamsArray.append(targetingParamModel)
-        websiteDetailsStorageCoordinator.add(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { (websiteManagedObjectID, siteStoredStatus) in
+        let siteDataModel = SiteDetailsModel(accountId: 22, siteId: 2372, siteName: "mobile.demo", campaign: "stage", privacyManagerId: "5c0e81b7d74b3c30c6852301", showPM: false, creationTimestamp: Date(), authId: nil)
+        siteDetailsStorageCoordinator.add(siteDetails: siteDataModel, targetingParams: targetingParamsArray, completionHandler: { (siteManagedObjectID, siteStoredStatus) in
             
             if siteStoredStatus {
                 XCTAssert(true, "successfully stored data to database")
@@ -67,15 +65,13 @@ class WebsiteDetailsStorageCoordinatorTest: XCTestCase {
     
     // This test method is used to test whether the website data updated or not to database.
     func testUpdateSiteData() {
-        let websiteDataModel = WebsiteDetailsModel(websiteName: "mobile.demo", accountID: 22, creationTimestamp: NSDate(), isStaging: false)
-        let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "false")
-        targetingParamsArray.append(targetingParamModel)
-        websiteDetailsStorageCoordinator.add(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { (websiteManagedObjectID, siteStoredStatus) in
-            if let managedObjectID = websiteManagedObjectID {
+        let siteDataModel = SiteDetailsModel(accountId: 22, siteId: 2372, siteName: "mobile.demo", campaign: "stage", privacyManagerId: "5c0e81b7d74b3c30c6852301", showPM: false, creationTimestamp: Date(), authId: nil)
+        siteDetailsStorageCoordinator.add(siteDetails: siteDataModel, targetingParams: targetingParamsArray, completionHandler: { (siteManagedObjectID, siteStoredStatus) in
+            if let managedObjectID = siteManagedObjectID {
                 self.targetingParamsArray.removeAll()
                 let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "true")
                 self.targetingParamsArray.append(targetingParamModel)
-                self.websiteDetailsStorageCoordinator.update(websiteDetails: websiteDataModel, targetingParams: self.targetingParamsArray, whereManagedObjectID: managedObjectID, completionHandler: {(managedObject, updateStatus) in
+                self.siteDetailsStorageCoordinator.update(siteDetails: siteDataModel, targetingParams: self.targetingParamsArray, whereManagedObjectID: managedObjectID, completionHandler: {(managedObject, updateStatus) in
                     if updateStatus {
                         XCTAssert(true, "successfully updated the site data to database")
                     } else {
@@ -88,7 +84,7 @@ class WebsiteDetailsStorageCoordinatorTest: XCTestCase {
     
     // This test method is used to test whether the website data deleted from database or not.
     func testDeleteSiteData() {
-        websiteDetailsStorageCoordinator.delete(website: NSManagedObject.init(), completionHandler: {(deleteStatus) in
+        siteDetailsStorageCoordinator.delete(site: NSManagedObject.init(), completionHandler: {(deleteStatus) in
             if deleteStatus {
                 XCTAssert(true, "successfully deleted the site data from database")
             } else {
@@ -99,12 +95,10 @@ class WebsiteDetailsStorageCoordinatorTest: XCTestCase {
     
     // This method is used to test whether the site data already exist in database or not
     func testcheckExitanceOfData() {
-        let websiteDataModel = WebsiteDetailsModel(websiteName: "mobile.demo", accountID: 22, creationTimestamp: NSDate(), isStaging: false)
-        let targetingParamModel = TargetingParamModel(targetingParamKey: "MyPrivacyManager", targetingParamValue: "false")
-        targetingParamsArray.append(targetingParamModel)
-        websiteDetailsStorageCoordinator.add(websiteDetails: websiteDataModel, targetingParams: targetingParamsArray, completionHandler: { (websiteManagedObjectID, siteStoredStatus) in
+        let siteDataModel = SiteDetailsModel(accountId: 22, siteId: 2372, siteName: "mobile.demo", campaign: "stage", privacyManagerId: "5c0e81b7d74b3c30c6852301", showPM: false, creationTimestamp: Date(), authId: nil)
+        siteDetailsStorageCoordinator.add(siteDetails: siteDataModel, targetingParams: targetingParamsArray, completionHandler: { (siteManagedObjectID, siteStoredStatus) in
             
-            self.websiteDetailsStorageCoordinator.checkExitanceOfData(websiteDetails: websiteDataModel, targetingParams: self.targetingParamsArray , completionHandler: { (isStored) in
+            self.siteDetailsStorageCoordinator.checkExitanceOfData(siteDetails: siteDataModel, targetingParams: self.targetingParamsArray , completionHandler: { (isStored) in
                 print(isStored)
                 if isStored {
                     XCTAssert(true, "Site data present in database")
