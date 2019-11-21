@@ -1,6 +1,6 @@
 {
   "name": "ConsentViewController",
-  "version": "2.4.1",
+  "version": "3.0.0",
   "summary": "SourcePoint's ConsentViewController to handle privacy consents.",
   "homepage": "https://www.sourcepoint.com",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/SourcePointUSA/ios-cmp-app.git",
-    "tag": "2.4.1"
+    "tag": "3.0.0"
   },
   "swift_versions": "4.2",
   "platforms": {
@@ -29,5 +29,6 @@
     "ReachabilitySwift": [
       "4.3.0"
     ]
-  }
+  },
+  "swift_version": "4.2"
 }
