@@ -328,7 +328,7 @@ import Reachability
         loadMessage(withMessageUrl: url)
     }
 
-    private func setSubjectToGDPR() {
+    internal func setSubjectToGDPR() {
         sourcePoint.getGdprStatus { [weak self] (gdprStatus, error) in
             guard let _gdprStatus = gdprStatus else {
                 if let gdprError = error {

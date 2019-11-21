@@ -118,7 +118,7 @@ class SourcePointClientTest: XCTestCase {
             urlString: mmsUrl+"/get_site_data?account_id=" + "22" + "&href=" + self.propertyUrl
         )
 
-        if propertyUrl.absoluteString == "https://mms.sp-prod.net/get_site_data?account_id=22&href=\(siteUrl)"{
+        if propertyUrl.absoluteString == "https://mms.sp-prod.net/get_site_data?account_id=22&href=\(self.propertyUrl)"{
             XCTAssert(true, "succeed to create the url")
         }else {
             XCTAssert(false, "failed to create the url")
