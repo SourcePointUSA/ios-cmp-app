@@ -297,7 +297,7 @@ import Reachability
         setSubjectToGDPR()
 
         guard Reachability()!.connection != .none else {
-            consentDelegate?.onErrorOccurred(error: NoInternetConnection())
+            onErrorOccurred(error: NoInternetConnection())
             self.messageStatus = .notStarted
             return
         }
@@ -306,7 +306,7 @@ import Reachability
             guard let self = self else { return }
 
             if(!(self.didMessageScriptLoad)) {
-                self.consentDelegate?.onErrorOccurred(error: MessageTimeout())
+                self.onErrorOccurred(error: MessageTimeout())
                 self.messageStatus = .timedout
             }
         };
@@ -322,7 +322,7 @@ import Reachability
                 authId: authId
             )
         } catch let error as ConsentViewControllerError {
-            consentDelegate?.onErrorOccurred(error: error)
+            onErrorOccurred(error: error)
         } catch {}
         return nil
     }
@@ -469,7 +469,7 @@ import Reachability
 
     private func onMessageChoiceSelect(choiceId: Int) {
         guard Reachability()!.connection != .none else {
-            consentDelegate?.onErrorOccurred(error: NoInternetConnection())
+            onErrorOccurred(error: NoInternetConnection())
             return
         }
         self.choiceId = choiceId
@@ -487,7 +487,7 @@ import Reachability
             userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
             userDefaults.synchronize()
         } catch let error as ConsentViewControllerError {
-            consentDelegate?.onErrorOccurred(error: error)
+            onErrorOccurred(error: error)
         } catch {}
         releaseWebViewHandlers()
         consentDelegate?.onConsentReady(controller: self)
@@ -558,15 +558,15 @@ import Reachability
             return
         case "onErrorOccurred":
             clearAllConsentData()
-            consentDelegate?.onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
-            consentDelegate?.onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "xhrLog":
             if debugLevel == .DEBUG {
                 handleXhrLog(body)
             }
         default:
-            consentDelegate?.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
+            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
     }
 
@@ -576,7 +576,7 @@ import Reachability
             let messageBody = message.body as? [String: Any],
             let name = messageBody["name"] as? String
         else {
-            consentDelegate?.onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
+            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
             return
         }
         if let body = messageBody["body"] as? [String: Any?] {
