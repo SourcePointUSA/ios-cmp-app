@@ -1,5 +1,5 @@
 //
-//  WebsiteListViewController.swift
+//  PropertyListViewController.swift
 //  SourcepointMetaApp
 //
 //  Created by Vilas on 23/03/19.
@@ -11,26 +11,25 @@ import CoreData
 import ConsentViewController
 import WebKit
 
-class WebsiteListViewController: BaseViewController, WKNavigationDelegate, UITextViewDelegate {
+class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITextViewDelegate {
     
     //// MARK: - IBOutlet
-    @IBOutlet weak var websiteTableView: SourcePointUITableView!
-    
-    @IBOutlet weak var noSiteDataLabel: UILabel!
+    @IBOutlet weak var propertyTableView: SourcePointUITableView!
+    @IBOutlet weak var nopropertyDataLabel: UILabel!
     
     //// MARK: - Instance properties
-    var siteListViewModel : WebsiteListViewModel = WebsiteListViewModel()
+    var propertyListViewModel : PropertyListViewModel = PropertyListViewModel()
     
-    private let cellIdentifier = "websiteCell"
+    private let cellIdentifier = "propertyCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        websiteTableView.tableFooterView = UIView(frame: .zero)
+        propertyTableView.tableFooterView = UIView(frame: .zero)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        fetchAllSitesData()
+        fetchAllpropertiesData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -39,21 +38,21 @@ class WebsiteListViewController: BaseViewController, WKNavigationDelegate, UITex
         navigationItem.backBarButtonItem = backItem
     }
     
-    // This method will fetch all the sites data
-    func fetchAllSitesData() {
+    // This method will fetch all the properties data
+    func fetchAllpropertiesData() {
         showIndicator()
-        siteListViewModel.importAllSites(executionCompletionHandler: { (_) in
-            self.websiteTableView.reloadData()
+        propertyListViewModel.importAllproperties(executionCompletionHandler: { (_) in
+            self.propertyTableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: { [weak self] in
-                self?.websiteTableView.reloadData()
+                self?.propertyTableView.reloadData()
                 self?.hideIndicator()
             })
         })
     }
     
     func setTableViewHidden() {
-        websiteTableView.isHidden = !(siteListViewModel.numberOfSites() > 0)
-        noSiteDataLabel.isHidden = siteListViewModel.numberOfSites() > 0
+        propertyTableView.isHidden = !(propertyListViewModel.numberOfproperties() > 0)
+        nopropertyDataLabel.isHidden = propertyListViewModel.numberOfproperties() > 0
     }
     
     func clearCookies() {
@@ -66,18 +65,18 @@ class WebsiteListViewController: BaseViewController, WKNavigationDelegate, UITex
     
     func loadConsentDetailsViewController(atIndex index: Int) {
         if let consentDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentViewDetailsViewController") as? ConsentViewDetailsViewController {
-            consentDetailsViewController.siteManagedObjectID = self.siteListViewModel.siteManagedObjectID(atIndex: index)
+            consentDetailsViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: index)
             self.navigationController!.pushViewController(consentDetailsViewController, animated: true)
         }
     }
 }
 
 //// MARK: UITableViewDataSource
-extension WebsiteListViewController : UITableViewDataSource {
+extension PropertyListViewController : UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         setTableViewHidden()
-        return siteListViewModel.numberOfSites()
+        return propertyListViewModel.numberOfproperties()
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -86,14 +85,14 @@ extension WebsiteListViewController : UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? WebsiteCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PropertyCell {
 
-            if let siteDetails = siteListViewModel.siteDetails(atIndex: indexPath.row).0 {
-                cell.websiteNameLabel.text = siteDetails.siteName
-                cell.accountIDLabel.text = "\(SPLiteral.accountID) \(siteDetails.accountId)"
-                cell.campaignLabel.text = "\(SPLiteral.campaign) \(siteDetails.campaign)"
+            if let propertyDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).0 {
+                cell.propertyLabel.text = propertyDetails.property
+                cell.accountIDLabel.text = "\(SPLiteral.accountID) \(propertyDetails.accountId)"
+                cell.campaignLabel.text = "\(SPLiteral.campaign) \(propertyDetails.campaign)"
             }
-            if let targetingDetails = siteListViewModel.siteDetails(atIndex: indexPath.row).1 {
+            if let targetingDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).1 {
                 cell.targetingParamTextView.text = targetingDetails
             }
             return cell
@@ -103,10 +102,10 @@ extension WebsiteListViewController : UITableViewDataSource {
 }
 
 //// MARK: - UITableViewDelegate
-extension WebsiteListViewController : UITableViewDelegate {
+extension PropertyListViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        websiteTableView.deselectRow(at: indexPath, animated: false)
+        propertyTableView.deselectRow(at: indexPath, animated: false)
         loadConsentDetailsViewController(atIndex: indexPath.row)
     }
     
@@ -115,10 +114,10 @@ extension WebsiteListViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
         let editAction = UIContextualAction(style: .destructive, title: nil) { (action, view, handler) in
-            if let editSiteViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddWebsiteViewController") as? AddWebsiteViewController {
-                editSiteViewController.siteManagedObjectID = self.siteListViewModel.siteManagedObjectID(atIndex: indexPath.row)
+            if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
+                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
                 
-                self.navigationController!.pushViewController(editSiteViewController, animated: true)
+                self.navigationController!.pushViewController(editpropertyViewController, animated: true)
             }
         }
         let resetAction = UIContextualAction(style: .destructive, title: nil) { (action, view, handler) in
@@ -128,11 +127,11 @@ extension WebsiteListViewController : UITableViewDelegate {
             
             alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
             let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-                self.websiteTableView.reloadData()
+                self.propertyTableView.reloadData()
             })
             let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
                 self.showIndicator()
-                self.siteListViewModel.clearUserDefaultsData()
+                self.propertyListViewModel.clearUserDefaultsData()
                 self.clearCookies()
                 self.loadConsentDetailsViewController(atIndex: indexPath.row)
                 self.hideIndicator()
@@ -145,22 +144,22 @@ extension WebsiteListViewController : UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, handler) in
             let yesHandler = { [weak self]() -> Void in
                 self?.showIndicator()
-                self?.siteListViewModel.delete(atIndex: indexPath.row, completionHandler: {[weak self] (_, error) in
+                self?.propertyListViewModel.delete(atIndex: indexPath.row, completionHandler: {[weak self] (_, error) in
                     self?.hideIndicator()
                     if let _error = error {
                         let okHandler = {}
                         AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     } else {
                         self?.hideIndicator()
-                        self?.fetchAllSitesData()
+                        self?.fetchAllpropertiesData()
                     }
                 })
             }
             let noHandler = {
-                self.websiteTableView.reloadData()
+                self.propertyTableView.reloadData()
             }
             self.hideIndicator()
-            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForDeletingSiteData, actions: [yesHandler, noHandler], titles: [Alert.yes, Alert.no], actionStyle: UIAlertController.Style.alert)
+            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForDeletingPropertyData, actions: [yesHandler, noHandler], titles: [Alert.yes, Alert.no], actionStyle: UIAlertController.Style.alert)
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.2841853499, green: 0.822665453, blue: 0.653732717, alpha: 1)
         deleteAction.image = UIImage(named: "Trash")
@@ -177,10 +176,10 @@ extension WebsiteListViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
     {
         let editAction = UITableViewRowAction(style: .destructive, title: "Edit") { (action, indexpath) in
-            if let editSiteViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddWebsiteViewController") as? AddWebsiteViewController {
-                editSiteViewController.siteManagedObjectID = self.siteListViewModel.siteManagedObjectID(atIndex: indexPath.row)
+            if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
+                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
                 
-                self.navigationController!.pushViewController(editSiteViewController, animated: true)
+                self.navigationController!.pushViewController(editpropertyViewController, animated: true)
             }
         }
         
@@ -190,11 +189,11 @@ extension WebsiteListViewController : UITableViewDelegate {
             
             alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
             let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-                self.websiteTableView.reloadData()
+                self.propertyTableView.reloadData()
             })
             let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
                 self.showIndicator()
-                self.siteListViewModel.clearUserDefaultsData()
+                self.propertyListViewModel.clearUserDefaultsData()
                 self.clearCookies()
                 self.loadConsentDetailsViewController(atIndex: indexPath.row)
                 self.hideIndicator()
@@ -207,22 +206,22 @@ extension WebsiteListViewController : UITableViewDelegate {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexpath) in
             let yesHandler = { [weak self]() -> Void in
                 self?.showIndicator()
-                self?.siteListViewModel.delete(atIndex: indexPath.row, completionHandler: {[weak self] (_, error) in
+                self?.propertyListViewModel.delete(atIndex: indexPath.row, completionHandler: {[weak self] (_, error) in
                     self?.hideIndicator()
                     if let _error = error {
                         let okHandler = {}
                         AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     } else {
                         self?.hideIndicator()
-                        self?.fetchAllSitesData()
+                        self?.fetchAllpropertiesData()
                     }
                 })
             }
             let noHandler = {
-                self.websiteTableView.reloadData()
+                self.propertyTableView.reloadData()
             }
             self.hideIndicator()
-            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForDeletingSiteData, actions: [yesHandler, noHandler], titles: [Alert.yes, Alert.no], actionStyle: UIAlertController.Style.alert)
+            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForDeletingPropertyData, actions: [yesHandler, noHandler], titles: [Alert.yes, Alert.no], actionStyle: UIAlertController.Style.alert)
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.822665453, green: 0.07812128419, blue: 0.1612752695, alpha: 0.9916923415)
         editAction.backgroundColor = #colorLiteral(red: 0.2841853499, green: 0.822665453, blue: 0.653732717, alpha: 1)

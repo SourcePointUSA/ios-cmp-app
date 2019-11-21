@@ -1,5 +1,5 @@
 //
-//  AddWebsiteViewController.swift
+//  AddPropertyViewController.swift
 //  SourcePointMetaApp
 //
 //  Created by Vilas on 3/25/19.
@@ -11,7 +11,7 @@ import ConsentViewController
 import CoreData
 import WebKit
 
-class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, UITextFieldDelegate, WKNavigationDelegate, ConsentDelegate {
+class AddPropertyViewController: BaseViewController,TargetingParamCellDelegate, UITextFieldDelegate, WKNavigationDelegate, ConsentDelegate {
     
     //// MARK: - IBOutlet
     /** UITextField outlet for account ID textField.
@@ -22,13 +22,13 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     */
     @IBOutlet weak var scrollView: UIScrollView!
     
-    /** UITextField outlet for site ID textField.
+    /** UITextField outlet for property ID textField.
      */
-    @IBOutlet weak var siteIdTextFieldOutlet: UITextField!
+    @IBOutlet weak var propertyIdTextFieldOutlet: UITextField!
     
-    /** UITextField outlet for site Name textField.
+    /** UITextField outlet for property Name textField.
     */
-    @IBOutlet weak var siteNameTextField: UITextField!
+    @IBOutlet weak var propertyNameTextField: UITextField!
     
     /** UITextField outlet for auth Id textField.
      */
@@ -74,8 +74,8 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
      */
     var consentViewControllerStatus = false
     
-    // Reference to the selected site managed object ID
-    var siteManagedObjectID : NSManagedObjectID?
+    // Reference to the selected property managed object ID
+    var propertyManagedObjectID : NSManagedObjectID?
     
     //// MARK: - Instance properties
     private let cellIdentifier = "targetingParamCell"
@@ -83,11 +83,11 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     // Will add all the targeting params to this array
     var targetingParamsArray = [TargetingParamModel]()
     
-    // this variable holds the site details entered by user
-    var siteDetailsModel: SiteDetailsModel?
+    // this variable holds the property details entered by user
+    var propertyDetailsModel: PropertyDetailsModel?
     
     // MARK: - Initializer
-    let addSiteViewModel: AddWebsiteViewModel = AddWebsiteViewModel()
+    let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
     
     let logger = Logger()
     
@@ -95,8 +95,8 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
         super.viewDidLoad()
         
         accountIDTextFieldOutlet.delegate = self
-        siteIdTextFieldOutlet.delegate = self
-        siteNameTextField.delegate = self
+        propertyIdTextFieldOutlet.delegate = self
+        propertyNameTextField.delegate = self
         authIdTextField.delegate = self
         privacyManagerTextField.delegate = self
         keyTextFieldOutlet.delegate = self
@@ -105,20 +105,20 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
         targetingParamTableview.tableFooterView = UIView(frame: .zero)
         setTableViewHidden()
                 
-        if let _siteManagedObjectID = siteManagedObjectID {
-            self.title = "Edit Site"
-            self.addSiteViewModel.fetch(site: _siteManagedObjectID, completionHandler: { [weak self] ( siteDetailsModel) in
+        if let _propertyManagedObjectID = propertyManagedObjectID {
+            self.title = "Edit Property"
+            self.addpropertyViewModel.fetch(property: _propertyManagedObjectID, completionHandler: { [weak self] ( propertyDetailsModel) in
                 
-                self?.accountIDTextFieldOutlet.text = String(siteDetailsModel.accountId)
-                self?.siteIdTextFieldOutlet.text = String(siteDetailsModel.siteId)
-                self?.siteNameTextField.text = siteDetailsModel.siteName
-                self?.privacyManagerTextField.text = siteDetailsModel.privacyManagerId
-                if let authId = siteDetailsModel.authId {
+                self?.accountIDTextFieldOutlet.text = String(propertyDetailsModel.accountId)
+                self?.propertyIdTextFieldOutlet.text = String(propertyDetailsModel.propertyId)
+                self?.propertyNameTextField.text = propertyDetailsModel.property
+                self?.privacyManagerTextField.text = propertyDetailsModel.privacyManagerId
+                if let authId = propertyDetailsModel.authId {
                     self?.authIdTextField.text = authId
                 }
-                self?.showPMSwitchOutlet.isOn = siteDetailsModel.showPM
-                self?.isStagingSwitchOutlet.isOn = siteDetailsModel.campaign == "stage" ? true : false
-                if let targetingParams = siteDetailsModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
+                self?.showPMSwitchOutlet.isOn = propertyDetailsModel.showPM
+                self?.isStagingSwitchOutlet.isOn = propertyDetailsModel.campaign == "stage" ? true : false
+                if let targetingParams = propertyDetailsModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                     for targetingParam in targetingParams {
                         let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
                         self?.targetingParamsArray.append(targetingParamModel)
@@ -197,53 +197,53 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
         }
     }
     
-    // save site details to database and show SP messages/PM
-    @IBAction func saveSiteDetailsAction(_ sender: Any) {
+    // save property details to database and show SP messages/PM
+    @IBAction func savepropertyDetailsAction(_ sender: Any) {
         self.showIndicator()
         let accountIDString = accountIDTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
-        let siteId = siteIdTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
-        let siteName = siteNameTextField.text?.trimmingCharacters(in: .whitespaces)
+        let propertyId = propertyIdTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
+        let property = propertyNameTextField.text?.trimmingCharacters(in: .whitespaces)
         let privacyManagerId = privacyManagerTextField.text?.trimmingCharacters(in: .whitespaces)
         let authId = authIdTextField.text?.trimmingCharacters(in: .whitespaces)
         
-        if addSiteViewModel.validateSiteDetails(accountID: accountIDString, siteId: siteId, siteName: siteName, privacyManagerId: privacyManagerId) {
+        if addpropertyViewModel.validatepropertyDetails(accountID: accountIDString, propertyId: propertyId, property: property, privacyManagerId: privacyManagerId) {
             guard let accountIDText = accountIDString, let accountID = Int64(accountIDText),
-                let siteIDText = siteId, let siteID = Int64(siteIDText) else {
+                let propertyIDText = propertyId, let propertyID = Int64(propertyIDText) else {
                     let okHandler = {
                     }
                     self.hideIndicator()
-                    AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountIdAndSiteId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+                    AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountIdAndPropertyId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     return
             }
-            siteDetailsModel = SiteDetailsModel(accountId: accountID, siteId: siteID, siteName: siteName, campaign: campaign, privacyManagerId: privacyManagerId, showPM: showPM, creationTimestamp: Date(),authId: authId)
+            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, property: property, campaign: campaign, privacyManagerId: privacyManagerId, showPM: showPM, creationTimestamp: Date(),authId: authId)
             
-            if let siteDetails = siteDetailsModel {
-                checkExitanceOfSiteData(siteDetails: siteDetails)
+            if let propertyDetails = propertyDetailsModel {
+                checkExitanceOfpropertyData(propertyDetails: propertyDetails)
             }
         } else {
             let okHandler = {
             }
             self.hideIndicator()
-            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWebsiteNameUnavailability, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+            AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForPropertyUnavailability, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
         }
     }
     
-    func checkExitanceOfSiteData(siteDetails : SiteDetailsModel) {
-        addSiteViewModel.checkExitanceOfData(siteDetails: siteDetails, targetingParams: targetingParamsArray, completionHandler: { [weak self] (isStored) in
+    func checkExitanceOfpropertyData(propertyDetails : PropertyDetailsModel) {
+        addpropertyViewModel.checkExitanceOfData(propertyDetails: propertyDetails, targetingParams: targetingParamsArray, completionHandler: { [weak self] (isStored) in
             if isStored {
                 let okHandler = {
                 }
                 self?.hideIndicator()
-                AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageForSiteDataStored, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+                AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageForPropertyDataStored, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
             } else {
-                self?.loadConsentManager(siteDetails: siteDetails)
+                self?.loadConsentManager(propertyDetails: propertyDetails)
             }
         })
     }
     
-    func loadConsentManager(siteDetails : SiteDetailsModel) {
+    func loadConsentManager(propertyDetails : PropertyDetailsModel) {
         do {
-            let consentViewController = try ConsentViewController(accountId: Int(siteDetails.accountId), propertyId: Int(siteDetails.siteId), property: siteDetails.siteName!, PMId: siteDetails.privacyManagerId!, campaign: campaign, showPM: showPM, consentDelegate: self)
+            let consentViewController = try ConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), property: propertyDetails.property!, PMId: propertyDetails.privacyManagerId!, campaign: campaign, showPM: showPM, consentDelegate: self)
             // optional, set custom targeting parameters supports Strings and Integers
             for targetingParam in self.targetingParamsArray {
                 if let targetingKey = targetingParam.targetingKey, let targetingValue = targetingParam.targetingValue {
@@ -251,7 +251,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
                 }
             }
             consentViewController.messageTimeoutInSeconds = TimeInterval(60)
-            if let authId = siteDetails.authId {
+            if let authId = propertyDetails.authId {
                 consentViewController.loadMessage(forAuthId: authId)
             }else {
                 consentViewController.loadMessage()
@@ -266,7 +266,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     
     func onMessageReady(controller: ConsentViewController) {
         hideIndicator()
-        saveSitDataToDatabase(siteDetailsModel: siteDetailsModel!)
+        saveSitDataToDatabase(propertyDetailsModel: propertyDetailsModel!)
         self.consentViewControllerStatus = true
         if let consentSubViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentSubViewController") as? ConsentSubViewController {
             consentSubViewController.consentSubViewController = controller
@@ -281,7 +281,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
                 self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
             })
         }else {
-            let showSiteInfotHandler = {
+            let showpropertyInfotHandler = {
                 self.fetchConsentInfo(consentViewController: controller, completionHandler: { [weak self] (vendorConsents, purposeConsents) in
                     self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
                 })
@@ -296,16 +296,16 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
                     })
                 })
                 let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: { [weak self] (alert: UIAlertAction!) in
-                    self?.addSiteViewModel.clearUserDefaultsData()
+                    self?.addpropertyViewModel.clearUserDefaultsData()
                     self?.clearCookies()
-                    self?.saveSiteDetailsAction(AnyObject.self)
+                    self?.savepropertyDetailsAction(AnyObject.self)
                     self?.hideIndicator()
                 })
                 alertController.addAction(noAction)
                 alertController.addAction(yesAction)
                 self.present(alertController, animated: true, completion: nil)
             }
-            AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showSiteInfotHandler, clearCookiesHandler], titles: [Alert.showSiteInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
+            AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showpropertyInfotHandler, clearCookiesHandler], titles: [Alert.showPropertyInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
             
         }
     }
@@ -364,26 +364,26 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
         self.hideIndicator()
     }
     
-    // save site details to database
-    func saveSitDataToDatabase(siteDetailsModel: SiteDetailsModel) {
+    // save property details to database
+    func saveSitDataToDatabase(propertyDetailsModel: PropertyDetailsModel) {
 
-        if let _siteManagedObjectID = siteManagedObjectID {
-            addSiteViewModel.update(siteDetails: siteDetailsModel, targetingParams:targetingParamsArray, whereManagedObjectID: _siteManagedObjectID, completionHandler: {(optionalSiteManagedObjectID, executionStatus) in
+        if let _propertyManagedObjectID = propertyManagedObjectID {
+            addpropertyViewModel.update(propertyDetails: propertyDetailsModel, targetingParams:targetingParamsArray, whereManagedObjectID: _propertyManagedObjectID, completionHandler: {(optionalpropertyManagedObjectID, executionStatus) in
                 if executionStatus {
-                    Log.sharedLog.DLog(message:"Site details are updated")
+                    Log.sharedLog.DLog(message:"property details are updated")
                 }else {
-                    Log.sharedLog.DLog(message:"Failed to update site details")
+                    Log.sharedLog.DLog(message:"Failed to update property details")
                 }
             })
         } else {
-            addSiteViewModel.addSite(siteDetails: siteDetailsModel, targetingParams: targetingParamsArray, completionHandler: { (error, _,siteManagedObjectID) in
+            addpropertyViewModel.addproperty(propertyDetails: propertyDetailsModel, targetingParams: targetingParamsArray, completionHandler: { (error, _,propertyManagedObjectID) in
 
                 if let _error = error {
                     let okHandler = {
                     }
                     AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                 } else {
-                    Log.sharedLog.DLog(message:"Site details are saved")
+                    Log.sharedLog.DLog(message:"property details are saved")
                 }
             })
         }
@@ -392,11 +392,11 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
     //MARK: UITextField delegate methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        if textField == accountIDTextFieldOutlet { // Switch focus to site text field
-            siteIdTextFieldOutlet.becomeFirstResponder()
-        } else if textField == siteIdTextFieldOutlet {
-            siteNameTextField.becomeFirstResponder()
-        } else if textField == siteNameTextField {
+        if textField == accountIDTextFieldOutlet { // Switch focus to property text field
+            propertyIdTextFieldOutlet.becomeFirstResponder()
+        } else if textField == propertyIdTextFieldOutlet {
+            propertyNameTextField.becomeFirstResponder()
+        } else if textField == propertyNameTextField {
             authIdTextField.becomeFirstResponder()
         } else if textField == authIdTextField {
             privacyManagerTextField.becomeFirstResponder()
@@ -413,7 +413,7 @@ class AddWebsiteViewController: BaseViewController,TargetingParamCellDelegate, U
 }
 
 //// MARK: UITableViewDataSource
-extension AddWebsiteViewController : UITableViewDataSource {
+extension AddPropertyViewController : UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         setTableViewHidden()
@@ -433,7 +433,7 @@ extension AddWebsiteViewController : UITableViewDataSource {
 }
 
 ////// MARK: - UITableViewDelegate
-extension AddWebsiteViewController : UITableViewDelegate {
+extension AddPropertyViewController : UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         targetingParamTableview.deselectRow(at: indexPath, animated: false)

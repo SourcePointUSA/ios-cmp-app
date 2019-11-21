@@ -1,5 +1,5 @@
 //
-//  WebsiteDetails.swift
+//  PropertyDetailsModel.swift
 //  SourcepointMetaApp
 //
 //  Created by Vilas on 23/03/19.
@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct SiteDetailsModel {
+struct PropertyDetailsModel {
     
     //// MARK: - Instance properties
     
-    /// It holds site name
-    let siteName : String?
+    /// It holds property name
+    let property : String?
     
     /// It holds account Id.
     let accountId: Int64
     
-    /// It holds siteId Id.
-    let siteId: Int64
+    /// It holds property Id.
+    let propertyId: Int64
     
     /// It holds campaign value
     let campaign : String
@@ -30,10 +30,10 @@ struct SiteDetailsModel {
     /// It holds show PM value
     let showPM : Bool
     
-    /// It holds site addded timestamp
+    /// It holds property addded timestamp
     let creationTimestamp : Date
     
-    /// It holds site name
+    /// It holds auth Id value
     let authId : String?
     
     //// MARK: - Initializers
@@ -42,16 +42,16 @@ struct SiteDetailsModel {
     ///
     /// - Parameters:
     ///   - accountId : Customer accountId
-    ///   - siteId : siteId
-    ///   - siteName: site name.
+    ///   - propertyId : propertyId
+    ///   - property: property.
     ///   - campaign: stage/public.
-    ///   - privacyManagerId: privacyManagerId which is associated with the site
-    ///   - creationTimestamp: site added in database time
+    ///   - privacyManagerId: privacyManagerId which is associated with the property
+    ///   - creationTimestamp: property added in database time
     ///   - showPM: whether we have to show message or PM
-    init(accountId:Int64, siteId: Int64, siteName: String?, campaign: String, privacyManagerId:String?, showPM: Bool, creationTimestamp: Date, authId: String? ) {
+    init(accountId:Int64, propertyId: Int64, property: String?, campaign: String, privacyManagerId:String?, showPM: Bool, creationTimestamp: Date, authId: String? ) {
         self.accountId = accountId
-        self.siteId = siteId
-        self.siteName = siteName
+        self.propertyId = propertyId
+        self.property = property
         self.campaign = campaign
         self.privacyManagerId = privacyManagerId
         self.showPM = showPM

@@ -1,5 +1,5 @@
 //
-//  WebsiteListViewControllerTest.swift
+//  PropertyListViewControllerTest.swift
 //  SourcePointMetaAppTests
 //
 //  Created by Vilas on 4/25/19.

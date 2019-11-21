@@ -39,7 +39,7 @@ class ConsentViewDetailsViewControllerTest: XCTestCase {
         if let consentTableView = consentDetailsViewController?.consentTableView {
             let numberOfRows = consentDetailsViewController?.tableView(consentTableView, numberOfRowsInSection: 0)
             XCTAssertEqual(numberOfRows, 0,
-                           "Number of rows in table should match number of siteName")
+                           "Number of rows in table should match number of property name")
         }
     }
     

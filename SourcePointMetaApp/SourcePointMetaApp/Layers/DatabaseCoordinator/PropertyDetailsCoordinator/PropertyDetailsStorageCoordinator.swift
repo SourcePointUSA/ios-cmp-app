@@ -1,5 +1,5 @@
 //
-//  WebsiteDetailsCoordinator.swift
+//  PropertyDetailsCoordinator.swift
 //  SourcepointMetaApp
 //
 //  Created by Vilas on 3/22/19.
@@ -9,22 +9,22 @@
 import Foundation
 import CoreData
 
-class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
+class PropertyDetailsStorageCoordinator : BaseStorageCoordinator {
     
     //// MARK: - Instance Methods
-    // It Fetches all site details from the database
+    // It Fetches all property details from the database
     // -Parameters:
-    //  - executionCompletionHandler: Completion handler; it takes array of all sites to caller.
-    func fetchAllSites(executionCompletionHandler: @escaping([SiteDetails]?) -> Void) {
+    //  - executionCompletionHandler: Completion handler; it takes array of all properties to caller.
+    func fetchAllproperties(executionCompletionHandler: @escaping([PropertyDetails]?) -> Void) {
         let managedObjectContext = self.managedObjectContext
         
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
             
             let timestampDescriptor = NSSortDescriptor(key: "creationTimestamp", ascending: false)
-            dbManager.fetchEntities(SiteDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: managedObjectContext, completion: { (siteDetails) in
-                if let allSites = siteDetails as? [SiteDetails] {
-                    executionCompletionHandler(allSites)
+            dbManager.fetchEntities(PropertyDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: managedObjectContext, completion: { (propertyDetails) in
+                if let allproperties = propertyDetails as? [PropertyDetails] {
+                    executionCompletionHandler(allproperties)
                 } else {
                     executionCompletionHandler(nil)
                 }
@@ -32,19 +32,19 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-   /// It fetch site entity from the database for provided managed object id.
+   /// It fetch property entity from the database for provided managed object id.
     ///
     /// - Parameters:
-    ///   - siteManagedObjectID: Valid managed object id.
+    ///   - propertyManagedObjectID: Valid managed object id.
     ///   - handler: Callback for completion event.
-    func fetch(site siteManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (SiteDetails?) -> Void) {
+    func fetch(property propertyManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (PropertyDetails?) -> Void) {
         
         let managedObjectContext = self.managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
-            dbManager.fetchEntity(withManagedObjectID: siteManagedObjectID, managedObjectContext: managedObjectContext) { (optionalManagedObject) in
-                if let siteManagedObject = optionalManagedObject as? SiteDetails {
-                    handler(siteManagedObject)
+            dbManager.fetchEntity(withManagedObjectID: propertyManagedObjectID, managedObjectContext: managedObjectContext) { (optionalManagedObject) in
+                if let propertyManagedObject = optionalManagedObject as? PropertyDetails {
+                    handler(propertyManagedObject)
                 } else {
                     handler(nil)
                 }
@@ -56,39 +56,39 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         let managedObjectContext = self.managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
-            dbManager.fetchEntity(SiteDetails.entityName, sortDescriptors: nil, predicate: nil, managedObjectContext: managedObjectContext, completion: { (optionalManagedObject) in
+            dbManager.fetchEntity(PropertyDetails.entityName, sortDescriptors: nil, predicate: nil, managedObjectContext: managedObjectContext, completion: { (optionalManagedObject) in
                 handler((optionalManagedObject?.objectID)!)
             })
         }
     }
     
-    /// It add new site in the storage.
+    /// It add new property in the storage.
     ///
     /// - Parameters:
-    ///   - siteDataModel: SiteData Model.
+    ///   - propertyDataModel: propertyData Model.
     ///   - handler: Callback for the completion event.
-    func add(siteDetails siteDataModel : SiteDetailsModel,targetingParams:[TargetingParamModel], completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func add(propertyDetails propertyDataModel : PropertyDetailsModel,targetingParams:[TargetingParamModel], completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
         
         let managedObjectContext = self.managedObjectContext
         let creationTimestamp = Date()
         
-        if let siteEntity = NSEntityDescription.insertNewObject(forEntityName: SiteDetails.entityName, into: managedObjectContext) as? SiteDetails {
-            siteEntity.accountId = siteDataModel.accountId
-            siteEntity.siteId = siteDataModel.siteId
-            siteEntity.siteName = siteDataModel.siteName
-            siteEntity.campaign = siteDataModel.campaign
-            siteEntity.privacyManagerId = siteDataModel.privacyManagerId
-            siteEntity.showPM = siteDataModel.showPM
-            siteEntity.creationTimestamp = creationTimestamp
-            if let authId = siteDataModel.authId {
-                siteEntity.authId = authId
+        if let propertyEntity = NSEntityDescription.insertNewObject(forEntityName: PropertyDetails.entityName, into: managedObjectContext) as? PropertyDetails {
+            propertyEntity.accountId = propertyDataModel.accountId
+            propertyEntity.propertyId = propertyDataModel.propertyId
+            propertyEntity.property = propertyDataModel.property
+            propertyEntity.campaign = propertyDataModel.campaign
+            propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
+            propertyEntity.showPM = propertyDataModel.showPM
+            propertyEntity.creationTimestamp = creationTimestamp
+            if let authId = propertyDataModel.authId {
+                propertyEntity.authId = authId
             }
             
             for targetingParam in targetingParams {
                 if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
                     targteingParamEntity.key = targetingParam.targetingKey
                     targteingParamEntity.value = targetingParam.targetingValue
-                    siteEntity.addToManyTargetingParams(targteingParamEntity)
+                    propertyEntity.addToManyTargetingParams(targteingParamEntity)
                 }
             }
             
@@ -96,7 +96,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
             // Pushing managed object context changes in database.
             dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                 if executionStatus == wasMOCChanged {
-                    handler(siteEntity.objectID,true)
+                    handler(propertyEntity.objectID,true)
                 } else {
                     handler(nil,false)
                 }
@@ -106,40 +106,40 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It updates existing site details.
+    /// It updates existing property details.
     ///
     /// - Parameters:
-    ///   - siteDataModel: site Data Model.
-    ///   - managedObjectID: managedObjectID of existing site entity.
+    ///   - propertyDataModel: property Data Model.
+    ///   - managedObjectID: managedObjectID of existing property entity.
     ///   - handler: Callback for the completion event.
-    func update(siteDetails siteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func update(propertyDetails propertyDataModel : PropertyDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID : NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
         
-        fetch(site: managedObjectID) { (optionalSiteEntity) in
-            if let siteEntity = optionalSiteEntity {
+        fetch(property: managedObjectID) { (optionalpropertyEntity) in
+            if let propertyEntity = optionalpropertyEntity {
                 
                 let managedObjectContext = self.managedObjectContext
                 let creationTimestamp = Date()
                 
-                //Updating site entity
-                siteEntity.accountId = siteDataModel.accountId
-                siteEntity.siteId = siteDataModel.siteId
-                siteEntity.siteName = siteDataModel.siteName
-                siteEntity.campaign = siteDataModel.campaign
-                siteEntity.privacyManagerId = siteDataModel.privacyManagerId
-                siteEntity.showPM = siteDataModel.showPM
-                siteEntity.creationTimestamp = creationTimestamp
-                if let authId = siteDataModel.authId {
-                    siteEntity.authId = authId
+                //Updating property entity
+                propertyEntity.accountId = propertyDataModel.accountId
+                propertyEntity.propertyId = propertyDataModel.propertyId
+                propertyEntity.property = propertyDataModel.property
+                propertyEntity.campaign = propertyDataModel.campaign
+                propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
+                propertyEntity.showPM = propertyDataModel.showPM
+                propertyEntity.creationTimestamp = creationTimestamp
+                if let authId = propertyDataModel.authId {
+                    propertyEntity.authId = authId
                 }
-                if let targetingparamsSet = siteEntity.manyTargetingParams {
-                    siteEntity.removeFromManyTargetingParams(targetingparamsSet)
+                if let targetingparamsSet = propertyEntity.manyTargetingParams {
+                    propertyEntity.removeFromManyTargetingParams(targetingparamsSet)
                 }
                 
                 for targetingParam in targetingParams {
                     if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
                         targteingParamEntity.key = targetingParam.targetingKey
                         targteingParamEntity.value = targetingParam.targetingValue
-                        siteEntity.addToManyTargetingParams(targteingParamEntity)
+                        propertyEntity.addToManyTargetingParams(targteingParamEntity)
                     }
                 }
                 
@@ -147,7 +147,7 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
                 // Pushing managed object context changes in database.
                 dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                     if executionStatus == wasMOCChanged {
-                        handler(siteEntity.objectID, true)
+                        handler(propertyEntity.objectID, true)
                     } else {
                         
                         handler(nil, false)
@@ -159,17 +159,17 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It deletes site from the database permanently.
+    /// It deletes property from the database permanently.
     ///
     /// - Parameters:
-    ///   - siteManagedObject: site ManagedObject.
+    ///   - propertyManagedObject: property ManagedObject.
     ///   - handler: Callback for the completion event. Callback has execution status(success/failure) as argument.
-    func delete(site siteManagedObject: NSManagedObject, completionHandler handler : @escaping (Bool) -> Void) {
+    func delete(property propertyManagedObject: NSManagedObject, completionHandler handler : @escaping (Bool) -> Void) {
         
         let managedObjectContext = self.managedObjectContext
         let dbManager = DBManager.sharedManager
         managedObjectContext.perform {
-            dbManager.deleteEntity(siteManagedObject, usingMOC: managedObjectContext)
+            dbManager.deleteEntity(propertyManagedObject, usingMOC: managedObjectContext)
             dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                 if executionStatus == wasMOCChanged {
                     handler(true)
@@ -180,52 +180,52 @@ class WebsiteDetailsStorageCoordinator : BaseStorageCoordinator {
         }
     }
     
-    /// It check whether site details are stored in database or not.
+    /// It check whether property details are stored in database or not.
     ///
     /// - Parameters:
-    ///   - siteDataModel: site Data Model.
+    ///   - propertyDataModel: property Data Model.
     ///   - handler: Callback for the completion event.
-    func  checkExitanceOfData(siteDetails siteDataModel : SiteDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
+    func  checkExitanceOfData(propertyDetails propertyDataModel : PropertyDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
         
         var subPredicates : [NSPredicate] = []
         var subPredicate : NSPredicate
-        if let authId = siteDataModel.authId {
-            subPredicate = NSPredicate(format: "accountId == \(siteDataModel.accountId) AND siteId == \(siteDataModel.siteId) AND campaign == %@ AND privacyManagerId == %@ AND authId == %@ AND showPM == \(NSNumber(value: siteDataModel.showPM))", siteDataModel.campaign, siteDataModel.privacyManagerId!,authId)
+        if let authId = propertyDataModel.authId {
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == %@ AND privacyManagerId == %@ AND authId == %@ AND showPM == \(NSNumber(value: propertyDataModel.showPM))", propertyDataModel.campaign, propertyDataModel.privacyManagerId!,authId)
         } else {
-            subPredicate = NSPredicate(format: "accountId == \(siteDataModel.accountId) AND siteId == \(siteDataModel.siteId) AND campaign == %@ AND privacyManagerId == %@ AND showPM == \(NSNumber(value: siteDataModel.showPM))", siteDataModel.campaign, siteDataModel.privacyManagerId!)
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == %@ AND privacyManagerId == %@ AND showPM == \(NSNumber(value: propertyDataModel.showPM))", propertyDataModel.campaign, propertyDataModel.privacyManagerId!)
         }
         
         subPredicates.append(subPredicate)
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: SiteDetails.entityName)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: PropertyDetails.entityName)
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: subPredicates)
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
             if results.count > 0 {
                 var storedTargetingParamArray = [TargetingParamModel]()
-                var isSiteDataStored = false
-                for result in results as! [SiteDetails] {
+                var ispropertyDataStored = false
+                for result in results as! [PropertyDetails] {
                     if let targetingParamItem = result.manyTargetingParams?.allObjects as! [TargetingParams]?, targetingParamItem.count > 0 {
                         for targetingParam in targetingParamItem {
                             let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
                             storedTargetingParamArray.append(targetingParamModel)
                         }
                         if storedTargetingParamArray.count == targetingParams.count {
-                            isSiteDataStored = storedTargetingParamArray.sorted {$0.targetingKey! < $1.targetingKey!} == targetingParams.sorted{$0.targetingKey! < $1.targetingKey!}
+                            ispropertyDataStored = storedTargetingParamArray.sorted {$0.targetingKey! < $1.targetingKey!} == targetingParams.sorted{$0.targetingKey! < $1.targetingKey!}
                             storedTargetingParamArray.removeAll()
-                            if isSiteDataStored {
+                            if ispropertyDataStored {
                                 break
                             }
                         } else {
-                            isSiteDataStored = false
+                            ispropertyDataStored = false
                             storedTargetingParamArray.removeAll()
                         }
                     } else if let storedTargetingParamItem = result.manyTargetingParams?.allObjects as! [TargetingParams]?, storedTargetingParamItem.count == 0, targetingParams.count == 0 {
-                        isSiteDataStored = true
+                        ispropertyDataStored = true
                         storedTargetingParamArray.removeAll()
                         break
                     }
                 }
-                handler(isSiteDataStored)
+                handler(ispropertyDataStored)
             }else {
                 handler(false)
             }

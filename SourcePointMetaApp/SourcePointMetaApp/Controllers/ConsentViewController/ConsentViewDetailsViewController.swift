@@ -25,15 +25,15 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
      */
     var consentViewControllerStatus = false
     
-    // Reference to the selected site managed object ID
-    var siteManagedObjectID : NSManagedObjectID?
+    // Reference to the selected property managed object ID
+    var propertyManagedObjectID : NSManagedObjectID?
     
     var vendorConsents = [VendorConsent]()
     var purposeConsents = [PurposeConsent]()
     let sections = ["Vendor Consents", "Purpose Consents"]
     
     // MARK: - Initializer
-    let addSiteViewModel: AddWebsiteViewModel = AddWebsiteViewModel()
+    let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
     
     let logger = Logger()
     
@@ -45,10 +45,10 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
         setTableViewHidden()
         setconsentIdFromUserDefaults()
         
-        if let _siteManagedObjectID = siteManagedObjectID {
+        if let _propertyManagedObjectID = propertyManagedObjectID {
             self.showIndicator()
-            fetchDataFromDatabase(siteManagedObjectID: _siteManagedObjectID, completionHandler: {(siteDetails, targetingParamsArray) in
-                self.loadConsentManager(siteDetails: siteDetails, targetingParamsArray: targetingParamsArray)
+            fetchDataFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: {(propertyDetails, targetingParamsArray) in
+                self.loadConsentManager(propertyDetails: propertyDetails, targetingParamsArray: targetingParamsArray)
             })
         }
     }
@@ -87,23 +87,23 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
         }
     }
     
-    func fetchDataFromDatabase(siteManagedObjectID : NSManagedObjectID, completionHandler: @escaping (SiteDetailsModel, [TargetingParamModel]) -> Void)  {
-        self.addSiteViewModel.fetch(site: siteManagedObjectID, completionHandler: {( siteDataModel) in
-            let siteDetail = SiteDetailsModel(accountId: siteDataModel.accountId, siteId: siteDataModel.siteId, siteName: siteDataModel.siteName, campaign: siteDataModel.campaign!, privacyManagerId: siteDataModel.privacyManagerId, showPM: siteDataModel.showPM, creationTimestamp: siteDataModel.creationTimestamp! ,authId: siteDataModel.authId)
+    func fetchDataFromDatabase(propertyManagedObjectID : NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void)  {
+        self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
+            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, property: propertyDataModel.property, campaign: propertyDataModel.campaign!, privacyManagerId: propertyDataModel.privacyManagerId, showPM: propertyDataModel.showPM, creationTimestamp: propertyDataModel.creationTimestamp! ,authId: propertyDataModel.authId)
             var targetingParamsArray = [TargetingParamModel]()
-            if let targetingParams = siteDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
+            if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                 for targetingParam in targetingParams {
                     let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
                     targetingParamsArray.append(targetingParamModel)
                 }
             }
-            completionHandler(siteDetail, targetingParamsArray)
+            completionHandler(propertyDetail, targetingParamsArray)
         })
     }
     
-    func loadConsentManager(siteDetails : SiteDetailsModel, targetingParamsArray:[TargetingParamModel]) {
+    func loadConsentManager(propertyDetails : PropertyDetailsModel, targetingParamsArray:[TargetingParamModel]) {
         do {
-            let consentViewController = try ConsentViewController (accountId: Int(siteDetails.accountId), propertyId: Int(siteDetails.siteId), property: siteDetails.siteName!, PMId: siteDetails.privacyManagerId!, campaign: siteDetails.campaign, showPM: siteDetails.showPM, consentDelegate: self)
+            let consentViewController = try ConsentViewController (accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), property: propertyDetails.property!, PMId: propertyDetails.privacyManagerId!, campaign: propertyDetails.campaign, showPM: propertyDetails.showPM, consentDelegate: self)
             // optional, set custom targeting parameters supports Strings and Integers
             for targetingParam in targetingParamsArray {
                 if let targetingKey = targetingParam.targetingKey, let targetingValue = targetingParam.targetingValue {
@@ -111,7 +111,7 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
                 }
             }
             consentViewController.messageTimeoutInSeconds = TimeInterval(60)
-            if let authId = siteDetails.authId {
+            if let authId = propertyDetails.authId {
                 consentViewController.loadMessage(forAuthId: authId)
             }else {
                 consentViewController.loadMessage()
@@ -139,7 +139,7 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
                 self?.loadConsentInfoController(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
             })
         }else {
-            let showSiteInfotHandler = {
+            let showpropertyInfotHandler = {
                 self.fetchConsentInfo(consentViewController: controller, completionHandler: { [weak self] (vendorConsents, purposeConsents) in
                     self?.refreshTableViewWithConsentInfo(vendorConsents: vendorConsents, purposeConsents: purposeConsents)
                 })
@@ -154,12 +154,12 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
                     })
                 })
                 let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: { [weak self] (alert: UIAlertAction!) in
-                    self?.addSiteViewModel.clearUserDefaultsData()
+                    self?.addpropertyViewModel.clearUserDefaultsData()
                     self?.clearCookies()
-                    if let _siteManagedObjectID = self?.siteManagedObjectID {
+                    if let _propertyManagedObjectID = self?.propertyManagedObjectID {
                         self?.showIndicator()
-                        self?.fetchDataFromDatabase(siteManagedObjectID: _siteManagedObjectID, completionHandler: {(siteDetails, targetingParamsArray) in
-                            self?.loadConsentManager(siteDetails: siteDetails, targetingParamsArray: targetingParamsArray)
+                        self?.fetchDataFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: {(propertyDetails, targetingParamsArray) in
+                            self?.loadConsentManager(propertyDetails: propertyDetails, targetingParamsArray: targetingParamsArray)
                         })
                     }
                     self?.hideIndicator()
@@ -168,7 +168,7 @@ class ConsentViewDetailsViewController: BaseViewController, WKNavigationDelegate
                 alertController.addAction(yesAction)
                 self.present(alertController, animated: true, completion: nil)
             }
-            AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showSiteInfotHandler, clearCookiesHandler], titles: [Alert.showSiteInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
+            AlertView.sharedInstance.showAlertView(title: Alert.message, message: Alert.messageAlreadyShown, actions: [showpropertyInfotHandler, clearCookiesHandler], titles: [Alert.showPropertyInfo, Alert.clearCookies], actionStyle: UIAlertController.Style.alert)
             
         }
     }

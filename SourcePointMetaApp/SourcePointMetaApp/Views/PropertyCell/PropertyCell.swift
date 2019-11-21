@@ -1,5 +1,5 @@
 //
-//  WebsiteCell.swift
+//  PropertyCell.swift
 //  SourcePointMetaApp
 //
 //  Created by Vilas on 3/25/19.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class WebsiteCell: SourcePointUItablewViewCell {
+class PropertyCell: SourcePointUItablewViewCell {
     
     
-    @IBOutlet weak var websiteNameLabel: UILabel!
+    @IBOutlet weak var propertyLabel: UILabel!
     @IBOutlet weak var targetingParamTextView: UITextView!
     @IBOutlet weak var campaignLabel: UILabel!
     @IBOutlet weak var accountIDLabel: UILabel!

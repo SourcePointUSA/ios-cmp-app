@@ -22,10 +22,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--New Site-->
+        <!--New Property-->
         <scene sceneID="sbr-vP-gOd">
             <objects>
-                <viewController storyboardIdentifier="AddWebsiteViewController" id="cyC-sw-8W2" customClass="AddWebsiteViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPropertyViewController" id="cyC-sw-8W2" customClass="AddPropertyViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ARi-0k-eP1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -57,9 +57,9 @@
                                                     <outlet property="delegate" destination="cyC-sw-8W2" id="lNq-WO-usy"/>
                                                 </connections>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Site Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYc-TX-xHH">
-                                                <rect key="frame" x="20" y="81" width="56" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="siteIdLabel" label="siteIdLabel"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYc-TX-xHH" userLabel="PropertyId:">
+                                                <rect key="frame" x="20" y="81" width="94.5" height="30"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="propertyIdLabel" label="propertyIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="wrz-rX-8ML"/>
                                                 </constraints>
@@ -67,9 +67,9 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Site Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HoB-pj-18x" userLabel="SiteIdTextfiled">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Property Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HoB-pj-18x" userLabel="PropertyIdTextfiled">
                                                 <rect key="frame" x="125" y="79" width="230" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="siteNameTextFieldOutlet" label="siteNameTextFieldOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="propertyIdTextFieldOutlet" label="propertyIdTextFieldOutlet"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -77,9 +77,9 @@
                                                     <outlet property="delegate" destination="cyC-sw-8W2" id="e4b-My-CdZ"/>
                                                 </connections>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Site Name:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGV-0o-HrB">
-                                                <rect key="frame" x="20" y="130" width="87.5" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="siteNameLabel" label="siteNameLabel"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGV-0o-HrB" userLabel="Property:">
+                                                <rect key="frame" x="20" y="130" width="75" height="30"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="propertyLabel" label="propertyLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="B94-C3-Bh5"/>
                                                 </constraints>
@@ -87,9 +87,9 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Site Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xLh-rs-wyR" userLabel="SiteNameTextfiled">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Property Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xLh-rs-wyR" userLabel="PropertyTextfiled">
                                                 <rect key="frame" x="125" y="128" width="230" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="siteTextFieldOutlet" label="siteTextFieldOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="propertyTextFieldOutlet" label="propertyTextFieldOutlet"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -108,6 +108,17 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-Gx-AGf">
+                                                <rect key="frame" x="20" y="233" width="50.5" height="30"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="981-1H-W8v"/>
+                                                    <constraint firstAttribute="height" constant="30" id="9Dm-d6-TJn"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Auth Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T1z-3i-XRG" userLabel="AuthIdTextfield">
                                                 <rect key="frame" x="125" y="177" width="230" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="authIdTextFieldOutlet" label="authIdTextFieldOutlet"/>
@@ -119,7 +130,7 @@
                                                 </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Privacy Manager Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ILg-hD-20L" userLabel="PrivacyManagerId">
-                                                <rect key="frame" x="20" y="231" width="335" height="34"/>
+                                                <rect key="frame" x="125" y="231" width="230" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -316,7 +327,6 @@
                                             <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="leading" secondItem="0Yc-bl-D6Y" secondAttribute="trailing" constant="8" symbolic="YES" id="0fD-cK-HX4"/>
                                             <constraint firstItem="QN6-iP-uvT" firstAttribute="top" secondItem="0MW-hK-XvT" secondAttribute="bottom" constant="20" id="29a-cr-BS3"/>
                                             <constraint firstItem="2sx-3z-BdR" firstAttribute="centerY" secondItem="0MW-hK-XvT" secondAttribute="centerY" id="3e5-d5-UMh"/>
-                                            <constraint firstItem="ILg-hD-20L" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="4Nc-lq-BwB"/>
                                             <constraint firstAttribute="trailing" secondItem="HoB-pj-18x" secondAttribute="trailing" constant="20" id="62Q-GM-7rk"/>
                                             <constraint firstAttribute="trailing" secondItem="ZdE-5Q-Bgq" secondAttribute="trailing" constant="25" id="6WS-nS-blX"/>
                                             <constraint firstItem="pAT-eK-kxm" firstAttribute="top" secondItem="QN6-iP-uvT" secondAttribute="bottom" constant="15" id="6n9-YB-Hc3"/>
@@ -345,6 +355,7 @@
                                             <constraint firstAttribute="trailing" secondItem="V8G-su-8BI" secondAttribute="trailing" constant="20" id="XOV-zy-ebr"/>
                                             <constraint firstItem="I8k-6P-4hr" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="ZKL-l1-cnM"/>
                                             <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="top" secondItem="ILg-hD-20L" secondAttribute="bottom" constant="15" id="asY-a1-oUk"/>
+                                            <constraint firstItem="lJg-Gx-AGf" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="b3U-oA-vQR"/>
                                             <constraint firstAttribute="trailing" secondItem="IC5-sE-xTQ" secondAttribute="trailing" constant="20" id="dQz-gS-loS"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="top" secondItem="HoB-pj-18x" secondAttribute="bottom" constant="15" id="eJl-xz-uHM"/>
                                             <constraint firstItem="V8G-su-8BI" firstAttribute="centerY" secondItem="c67-NQ-pCu" secondAttribute="centerY" id="fHf-Lg-fsQ"/>
@@ -359,6 +370,7 @@
                                             <constraint firstItem="V8G-su-8BI" firstAttribute="top" secondItem="9xQ-qp-kCe" secondAttribute="bottom" constant="10" id="okk-ok-6ef"/>
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="top" secondItem="VeY-YI-wzN" secondAttribute="bottom" constant="15" id="p5i-hd-HiR"/>
                                             <constraint firstItem="yGV-0o-HrB" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="qAQ-WI-OxH"/>
+                                            <constraint firstItem="ILg-hD-20L" firstAttribute="leading" secondItem="T1z-3i-XRG" secondAttribute="leading" id="qFd-Gf-SBL"/>
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="leading" secondItem="VeY-YI-wzN" secondAttribute="leading" id="rr2-4X-ZtL"/>
                                             <constraint firstAttribute="bottom" secondItem="qxB-D1-vpN" secondAttribute="bottom" id="s4J-es-8Xe"/>
                                             <constraint firstAttribute="trailing" secondItem="ILg-hD-20L" secondAttribute="trailing" constant="20" id="sY0-Yu-2Wg"/>
@@ -366,6 +378,7 @@
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="top" secondItem="VeY-YI-wzN" secondAttribute="bottom" constant="15" id="sy1-Pm-iCD"/>
                                             <constraint firstItem="T1z-3i-XRG" firstAttribute="leading" secondItem="xLh-rs-wyR" secondAttribute="leading" id="tmW-2U-ZTP"/>
                                             <constraint firstItem="2sx-3z-BdR" firstAttribute="leading" secondItem="0MW-hK-XvT" secondAttribute="trailing" constant="8" symbolic="YES" id="v8H-jU-sgn"/>
+                                            <constraint firstItem="lJg-Gx-AGf" firstAttribute="centerY" secondItem="ILg-hD-20L" secondAttribute="centerY" id="vtN-WW-r4i"/>
                                             <constraint firstAttribute="trailing" secondItem="VeY-YI-wzN" secondAttribute="trailing" constant="20" id="woA-TH-FRQ"/>
                                             <constraint firstItem="QN6-iP-uvT" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="wvU-xr-iNt"/>
                                             <constraint firstItem="fa1-sV-qzO" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="xfS-FY-UuS"/>
@@ -394,10 +407,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iop-RE-7IJ"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New Site" id="NVd-st-3cs">
+                    <navigationItem key="navigationItem" title="New Property" id="NVd-st-3cs">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="EAq-5D-BhP">
                             <connections>
-                                <action selector="saveSiteDetailsAction:" destination="cyC-sw-8W2" id="JdF-yK-3Q0"/>
+                                <action selector="savepropertyDetailsAction:" destination="cyC-sw-8W2" id="92J-YW-u56"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -409,19 +422,19 @@
                         <outlet property="keyTextFieldOutlet" destination="9xQ-qp-kCe" id="atJ-Um-9Tq"/>
                         <outlet property="noTargetingParamDataLabel" destination="nUc-zL-t7J" id="E0k-Wx-xbY"/>
                         <outlet property="privacyManagerTextField" destination="ILg-hD-20L" id="sN7-SN-yyd"/>
+                        <outlet property="propertyIdTextFieldOutlet" destination="HoB-pj-18x" id="7jS-ZP-6jb"/>
+                        <outlet property="propertyNameTextField" destination="xLh-rs-wyR" id="79b-8S-Goc"/>
                         <outlet property="scrollView" destination="mhW-Wn-4Ou" id="u2A-Pj-VBm"/>
                         <outlet property="showPMSwitchOutlet" destination="2sx-3z-BdR" id="XKe-vs-9Sm"/>
-                        <outlet property="siteIdTextFieldOutlet" destination="HoB-pj-18x" id="cta-nX-sqi"/>
-                        <outlet property="siteNameTextField" destination="xLh-rs-wyR" id="xB1-td-jsd"/>
                         <outlet property="targetingParamTableview" destination="JeP-tI-auQ" id="hba-Fw-sFB"/>
                         <outlet property="valueTextFieldOutlet" destination="V8G-su-8BI" id="ejc-au-VRn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tg6-aQ-6x7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2594" y="855"/>
+            <point key="canvasLocation" x="2538" y="457"/>
         </scene>
-        <!--Site Debug Info-->
+        <!--Property Debug Info-->
         <scene sceneID="5ca-lh-QwF">
             <objects>
                 <viewController storyboardIdentifier="ConsentViewDetailsViewController" id="Lyi-Xh-6dq" customClass="ConsentViewDetailsViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -604,7 +617,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JPT-Vh-gpO"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Site Debug Info" id="1Mn-Sb-edJ"/>
+                    <navigationItem key="navigationItem" title="Property Debug Info" id="1Mn-Sb-edJ"/>
                     <connections>
                         <outlet property="consentTableView" destination="hNV-ao-Wfg" id="TPh-cs-u4W"/>
                         <outlet property="consentUUIDLabel" destination="b7c-ec-m48" id="M5Y-Dx-8xP"/>
@@ -632,28 +645,28 @@
             </objects>
             <point key="canvasLocation" x="3602" y="801"/>
         </scene>
-        <!--Site List-->
+        <!--Property List-->
         <scene sceneID="zDA-pX-BuF">
             <objects>
-                <viewController storyboardIdentifier="WebsiteListViewController" id="nwW-9M-3Wu" customClass="WebsiteListViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PropertyListViewController" id="nwW-9M-3Wu" customClass="PropertyListViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="POH-Ao-l0L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7F7-Gu-WQr" userLabel="websiteTableView">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7F7-Gu-WQr" userLabel="propertyTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="websiteCell" rowHeight="70" id="oya-4T-sTe" customClass="WebsiteCell" customModule="SourcePointMetaApp" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="70" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="SourcePointMetaApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oya-4T-sTe" id="BDy-AV-b9J">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Cybage.sp-demo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bch-vL-bwc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Cybage.sp-demo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bch-vL-bwc" userLabel="Property Name">
                                                     <rect key="frame" x="20" y="3" width="185" height="20"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="websiteName">
+                                                    <accessibility key="accessibilityConfiguration" identifier="propertyName">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
@@ -724,25 +737,25 @@
                                                 <constraint firstItem="Bch-vL-bwc" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="20" id="sep-eq-JdB"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <accessibility key="accessibilityConfiguration" identifier="websiteCell">
+                                        <accessibility key="accessibilityConfiguration" identifier="propertyCell">
                                             <accessibilityTraits key="traits" staticText="YES"/>
                                             <bool key="isElement" value="NO"/>
                                         </accessibility>
                                         <connections>
-                                            <outlet property="accountIDLabel" destination="Lah-ue-N1c" id="dQ3-nq-5Id"/>
-                                            <outlet property="campaignLabel" destination="tAJ-BW-CMH" id="Y7Y-fJ-UBJ"/>
-                                            <outlet property="targetingParamTextView" destination="X1C-pm-DTM" id="4ri-BT-QXU"/>
-                                            <outlet property="websiteNameLabel" destination="Bch-vL-bwc" id="G8E-1z-Tj7"/>
+                                            <outlet property="accountIDLabel" destination="Lah-ue-N1c" id="Iym-Zk-3Tb"/>
+                                            <outlet property="campaignLabel" destination="tAJ-BW-CMH" id="rAA-1g-P2E"/>
+                                            <outlet property="propertyLabel" destination="Bch-vL-bwc" id="PKe-Y8-q12"/>
+                                            <outlet property="targetingParamTextView" destination="X1C-pm-DTM" id="OPT-3Y-66W"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="nwW-9M-3Wu" id="t69-mE-qvC"/>
-                                    <outlet property="delegate" destination="nwW-9M-3Wu" id="zyo-UF-1uG"/>
+                                    <outlet property="dataSource" destination="nwW-9M-3Wu" id="ElQ-jd-7AU"/>
+                                    <outlet property="delegate" destination="nwW-9M-3Wu" id="8rP-5x-prk"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on + button to add new site" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXj-NC-2l4" userLabel="NoDataLabel">
-                                <rect key="frame" x="51" y="324.5" width="273" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on + button to add new property" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXj-NC-2l4" userLabel="NoDataLabel">
+                                <rect key="frame" x="33.5" y="324.5" width="308" height="18"/>
                                 <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                 <nil key="highlightedColor"/>
@@ -759,7 +772,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="K6h-ib-ESP"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Site List" id="6WE-Xa-SSc">
+                    <navigationItem key="navigationItem" title="Property List" id="6WE-Xa-SSc">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1PT-WR-BtS">
                             <connections>
                                 <segue destination="cyC-sw-8W2" kind="show" id="bX3-un-fGZ"/>
@@ -767,8 +780,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="noSiteDataLabel" destination="DXj-NC-2l4" id="JTB-tK-5UQ"/>
-                        <outlet property="websiteTableView" destination="7F7-Gu-WQr" id="zkn-7f-KLl"/>
+                        <outlet property="nopropertyDataLabel" destination="DXj-NC-2l4" id="D6M-82-U7h"/>
+                        <outlet property="propertyTableView" destination="7F7-Gu-WQr" id="h1M-nh-x2t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2c-ee-wAM" userLabel="First Responder" sceneMemberID="firstResponder"/>

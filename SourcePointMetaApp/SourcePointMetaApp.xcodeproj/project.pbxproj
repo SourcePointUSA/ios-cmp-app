@@ -13,6 +13,10 @@
 		1933B4B8237C040F00888D47 /* ConsentViewControllerErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4B7237C040F00888D47 /* ConsentViewControllerErrorTest.swift */; };
 		1933B4BA237C041900888D47 /* ConsentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4B9237C041900888D47 /* ConsentTest.swift */; };
 		1933B4BC237D3ABB00888D47 /* TestData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1933B4BB237D3ABB00888D47 /* TestData.plist */; };
+		1933B4C323841D5500888D47 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4C123841D5500888D47 /* PropertyDetails+CoreDataClass.swift */; };
+		1933B4C423841D5500888D47 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4C223841D5500888D47 /* PropertyDetails+CoreDataProperties.swift */; };
+		1933B4C723841F0B00888D47 /* TargetingParams+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4C523841F0B00888D47 /* TargetingParams+CoreDataClass.swift */; };
+		1933B4C823841F0B00888D47 /* TargetingParams+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933B4C623841F0B00888D47 /* TargetingParams+CoreDataProperties.swift */; };
 		193B9F4122AF7BB200A343EE /* ConsentViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193B9F4022AF7BB200A343EE /* ConsentViewDetailsViewController.swift */; };
 		193B9F4422B0003500A343EE /* ConsentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193B9F4322B0003500A343EE /* ConsentTableViewCell.swift */; };
 		1978CFD32282DF35008E464F /* ConsentSubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1978CFD22282DF34008E464F /* ConsentSubViewController.swift */; };
@@ -37,30 +41,26 @@
 		1983F50A2248A10100473F4C /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5082248A10100473F4C /* Debug.swift */; };
 		1983F50B2248A10100473F4C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5092248A10100473F4C /* Constants.swift */; };
 		1983F50F2248A15800473F4C /* BaseStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F50E2248A15800473F4C /* BaseStorageCoordinator.swift */; };
-		1983F5112248A16700473F4C /* WebsiteDetailsStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5102248A16700473F4C /* WebsiteDetailsStorageCoordinator.swift */; };
-		1983F5182248A1B700473F4C /* WebsiteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5172248A1B700473F4C /* WebsiteListViewModel.swift */; };
-		1983F51B2248A1CB00473F4C /* AddWebsiteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F51A2248A1CB00473F4C /* AddWebsiteViewModel.swift */; };
+		1983F5112248A16700473F4C /* PropertyDetailsStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5102248A16700473F4C /* PropertyDetailsStorageCoordinator.swift */; };
+		1983F5182248A1B700473F4C /* PropertyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5172248A1B700473F4C /* PropertyListViewModel.swift */; };
+		1983F51B2248A1CB00473F4C /* AddPropertyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F51A2248A1CB00473F4C /* AddPropertyViewModel.swift */; };
 		1983F51E2248A1E200473F4C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F51D2248A1E200473F4C /* BaseViewController.swift */; };
-		1983F5212248A1F300473F4C /* WebsiteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5202248A1F300473F4C /* WebsiteListViewController.swift */; };
+		1983F5212248A1F300473F4C /* PropertyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5202248A1F300473F4C /* PropertyListViewController.swift */; };
 		1983F5242248A21700473F4C /* SourcePointMetaApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1983F5222248A21700473F4C /* SourcePointMetaApp.xcdatamodeld */; };
-		1983F52F2248B04600473F4C /* AddWebsiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F52E2248B04600473F4C /* AddWebsiteViewController.swift */; };
+		1983F52F2248B04600473F4C /* AddPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F52E2248B04600473F4C /* AddPropertyViewController.swift */; };
 		1983F541224925FF00473F4C /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F540224925FE00473F4C /* AlertView.swift */; };
 		1983F54722492F4100473F4C /* SourcePointUITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F54622492F4100473F4C /* SourcePointUITableView.swift */; };
-		1983F54922492FBB00473F4C /* WebsiteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F54822492FBB00473F4C /* WebsiteCell.swift */; };
+		1983F54922492FBB00473F4C /* PropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F54822492FBB00473F4C /* PropertyCell.swift */; };
 		1983F54C2249E94800473F4C /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F54B2249E94800473F4C /* BaseWindow.swift */; };
 		1983F54F2249E9D900473F4C /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1983F54E2249E9D900473F4C /* LoaderView.swift */; };
 		1983F5522249ED7800473F4C /* LoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1983F5512249ED7800473F4C /* LoaderView.xib */; };
-		19DEB4CA235B47FE00B547D2 /* SiteDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEB4C9235B47FE00B547D2 /* SiteDetailsModel.swift */; };
-		19DEB4D5235B511F00B547D2 /* TargetingParams+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEB4D3235B511F00B547D2 /* TargetingParams+CoreDataClass.swift */; };
-		19DEB4D6235B511F00B547D2 /* TargetingParams+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEB4D4235B511F00B547D2 /* TargetingParams+CoreDataProperties.swift */; };
-		19DEB4D9235B512700B547D2 /* SiteDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEB4D7235B512600B547D2 /* SiteDetails+CoreDataProperties.swift */; };
-		19DEB4DA235B512700B547D2 /* SiteDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEB4D8235B512700B547D2 /* SiteDetails+CoreDataClass.swift */; };
+		19DEB4CA235B47FE00B547D2 /* PropertyDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DEB4C9235B47FE00B547D2 /* PropertyDetailsModel.swift */; };
 		19E7CC3F230D7D2B00574AD0 /* ConsentViewDetailsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E7CC3E230D7D2B00574AD0 /* ConsentViewDetailsViewControllerTest.swift */; };
-		19E7CC41230D854200574AD0 /* AddWebsiteViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E7CC40230D854200574AD0 /* AddWebsiteViewControllerTest.swift */; };
-		19FFFC0323019DFA00045350 /* AddWebsiteViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0223019DFA00045350 /* AddWebsiteViewModelTest.swift */; };
-		19FFFC0523019E0F00045350 /* WebsiteDetailsStorageCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0423019E0E00045350 /* WebsiteDetailsStorageCoordinatorTest.swift */; };
-		19FFFC0723019E1600045350 /* WebsiteListViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0623019E1600045350 /* WebsiteListViewControllerTest.swift */; };
-		19FFFC0923019E1D00045350 /* WebsiteListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0823019E1D00045350 /* WebsiteListViewModelTest.swift */; };
+		19E7CC41230D854200574AD0 /* AddPropertyViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E7CC40230D854200574AD0 /* AddPropertyViewControllerTest.swift */; };
+		19FFFC0323019DFA00045350 /* AddPropertyViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0223019DFA00045350 /* AddPropertyViewModelTest.swift */; };
+		19FFFC0523019E0F00045350 /* PropertyDetailsStorageCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0423019E0E00045350 /* PropertyDetailsStorageCoordinatorTest.swift */; };
+		19FFFC0723019E1600045350 /* PropertyListViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0623019E1600045350 /* PropertyListViewControllerTest.swift */; };
+		19FFFC0923019E1D00045350 /* PropertyListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0823019E1D00045350 /* PropertyListViewModelTest.swift */; };
 		19FFFC0B23019E2300045350 /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFFC0A23019E2300045350 /* XCUIElement+Extensions.swift */; };
 		6CF65A8640D294ADBDF02028 /* Pods_SourcePointMetaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA57F0B94E487C4A062BE5E /* Pods_SourcePointMetaApp.framework */; };
 		A031AAB89210899021105B14 /* Pods_SourcePointMetaAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104B2AAB03E394A62B354BF /* Pods_SourcePointMetaAppTests.framework */; };
@@ -83,6 +83,10 @@
 		1933B4B7237C040F00888D47 /* ConsentViewControllerErrorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerErrorTest.swift; sourceTree = "<group>"; };
 		1933B4B9237C041900888D47 /* ConsentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTest.swift; sourceTree = "<group>"; };
 		1933B4BB237D3ABB00888D47 /* TestData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestData.plist; sourceTree = "<group>"; };
+		1933B4C123841D5500888D47 /* PropertyDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1933B4C223841D5500888D47 /* PropertyDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1933B4C523841F0B00888D47 /* TargetingParams+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1933B4C623841F0B00888D47 /* TargetingParams+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		193B9F4022AF7BB200A343EE /* ConsentViewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewController.swift; sourceTree = "<group>"; };
 		193B9F4322B0003500A343EE /* ConsentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentTableViewCell.swift; sourceTree = "<group>"; };
 		1978CFD22282DF34008E464F /* ConsentSubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentSubViewController.swift; sourceTree = "<group>"; };
@@ -109,32 +113,28 @@
 		1983F5082248A10100473F4C /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		1983F5092248A10100473F4C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1983F50E2248A15800473F4C /* BaseStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStorageCoordinator.swift; sourceTree = "<group>"; };
-		1983F5102248A16700473F4C /* WebsiteDetailsStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteDetailsStorageCoordinator.swift; sourceTree = "<group>"; };
-		1983F5172248A1B700473F4C /* WebsiteListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewModel.swift; sourceTree = "<group>"; };
-		1983F51A2248A1CB00473F4C /* AddWebsiteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewModel.swift; sourceTree = "<group>"; };
+		1983F5102248A16700473F4C /* PropertyDetailsStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsStorageCoordinator.swift; sourceTree = "<group>"; };
+		1983F5172248A1B700473F4C /* PropertyListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewModel.swift; sourceTree = "<group>"; };
+		1983F51A2248A1CB00473F4C /* AddPropertyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewModel.swift; sourceTree = "<group>"; };
 		1983F51D2248A1E200473F4C /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		1983F5202248A1F300473F4C /* WebsiteListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewController.swift; sourceTree = "<group>"; };
+		1983F5202248A1F300473F4C /* PropertyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewController.swift; sourceTree = "<group>"; };
 		1983F5232248A21700473F4C /* SourcePointMetaApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SourcePointMetaApp.xcdatamodel; sourceTree = "<group>"; };
-		1983F52E2248B04600473F4C /* AddWebsiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewController.swift; sourceTree = "<group>"; };
+		1983F52E2248B04600473F4C /* AddPropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyViewController.swift; sourceTree = "<group>"; };
 		1983F540224925FE00473F4C /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		1983F54622492F4100473F4C /* SourcePointUITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcePointUITableView.swift; sourceTree = "<group>"; };
-		1983F54822492FBB00473F4C /* WebsiteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteCell.swift; sourceTree = "<group>"; };
+		1983F54822492FBB00473F4C /* PropertyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyCell.swift; sourceTree = "<group>"; };
 		1983F54B2249E94800473F4C /* BaseWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindow.swift; sourceTree = "<group>"; };
 		1983F54E2249E9D900473F4C /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		1983F5512249ED7800473F4C /* LoaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoaderView.xib; sourceTree = "<group>"; };
-		19DEB4C9235B47FE00B547D2 /* SiteDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteDetailsModel.swift; sourceTree = "<group>"; };
-		19DEB4D3235B511F00B547D2 /* TargetingParams+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataClass.swift"; sourceTree = "<group>"; };
-		19DEB4D4235B511F00B547D2 /* TargetingParams+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		19DEB4D7235B512600B547D2 /* SiteDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SiteDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		19DEB4D8235B512700B547D2 /* SiteDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SiteDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		19DEB4C9235B47FE00B547D2 /* PropertyDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsModel.swift; sourceTree = "<group>"; };
 		19E7CC3E230D7D2B00574AD0 /* ConsentViewDetailsViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewControllerTest.swift; sourceTree = "<group>"; };
-		19E7CC40230D854200574AD0 /* AddWebsiteViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewControllerTest.swift; sourceTree = "<group>"; };
+		19E7CC40230D854200574AD0 /* AddPropertyViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPropertyViewControllerTest.swift; sourceTree = "<group>"; };
 		19FFFBF823019B4000045350 /* SourcePointMetaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourcePointMetaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		19FFFBFC23019B4000045350 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		19FFFC0223019DFA00045350 /* AddWebsiteViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewModelTest.swift; sourceTree = "<group>"; };
-		19FFFC0423019E0E00045350 /* WebsiteDetailsStorageCoordinatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteDetailsStorageCoordinatorTest.swift; sourceTree = "<group>"; };
-		19FFFC0623019E1600045350 /* WebsiteListViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewControllerTest.swift; sourceTree = "<group>"; };
-		19FFFC0823019E1D00045350 /* WebsiteListViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewModelTest.swift; sourceTree = "<group>"; };
+		19FFFC0223019DFA00045350 /* AddPropertyViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewModelTest.swift; sourceTree = "<group>"; };
+		19FFFC0423019E0E00045350 /* PropertyDetailsStorageCoordinatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsStorageCoordinatorTest.swift; sourceTree = "<group>"; };
+		19FFFC0623019E1600045350 /* PropertyListViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewControllerTest.swift; sourceTree = "<group>"; };
+		19FFFC0823019E1D00045350 /* PropertyListViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewModelTest.swift; sourceTree = "<group>"; };
 		19FFFC0A23019E2300045350 /* XCUIElement+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Extensions.swift"; sourceTree = "<group>"; };
 		2D2CC6EAE2D22D10960228F5 /* Pods-SourcePointMetaAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaAppUITests/Pods-SourcePointMetaAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4CCE695512000FFD927998E6 /* Pods-SourcePointMetaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -193,8 +193,8 @@
 		192A362F229BB89400249BDE /* TargetingParamsModel */ = {
 			isa = PBXGroup;
 			children = (
-				19DEB4D3235B511F00B547D2 /* TargetingParams+CoreDataClass.swift */,
-				19DEB4D4235B511F00B547D2 /* TargetingParams+CoreDataProperties.swift */,
+				1933B4C523841F0B00888D47 /* TargetingParams+CoreDataClass.swift */,
+				1933B4C623841F0B00888D47 /* TargetingParams+CoreDataProperties.swift */,
 			);
 			path = TargetingParamsModel;
 			sourceTree = "<group>";
@@ -348,7 +348,7 @@
 				197B9F462296DBC300691CF0 /* TargetingParamCell */,
 				1983F53F224925C500473F4C /* AlertView */,
 				1983F5502249ED7800473F4C /* LoaderView */,
-				1983F54222492E8300473F4C /* WebsiteCell */,
+				1983F54222492E8300473F4C /* PropertyCell */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -379,8 +379,8 @@
 			children = (
 				1978CFD12282DEC2008E464F /* ConsentViewController */,
 				1983F54A2249E92500473F4C /* BaseWindow */,
-				1983F51F2248A1E600473F4C /* WebsiteListViewController */,
-				1983F52D2248B01300473F4C /* AddWebsiteViewController */,
+				1983F51F2248A1E600473F4C /* PropertyListViewController */,
+				1983F52D2248B01300473F4C /* AddPropertyViewController */,
 				1983F51C2248A1D500473F4C /* BaseViewController */,
 			);
 			path = Controllers;
@@ -415,7 +415,7 @@
 		1983F5032248A0BD00473F4C /* DatabaseCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				1983F50D2248A13800473F4C /* WebsiteDetailsCoordinator */,
+				1983F50D2248A13800473F4C /* PropertyDetailsCoordinator */,
 				1983F50C2248A12800473F4C /* BaseStorageCoordinator */,
 			);
 			path = DatabaseCoordinator;
@@ -425,7 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				192A362F229BB89400249BDE /* TargetingParamsModel */,
-				1983F5122248A17500473F4C /* SiteDetailsModel */,
+				1983F5122248A17500473F4C /* PropertyDetailsModel */,
 			);
 			path = CoreDataModels;
 			sourceTree = "<group>";
@@ -440,7 +440,7 @@
 		1983F5062248A0E300473F4C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				19DEB4C8235B47FE00B547D2 /* SiteDetailsModel */,
+				19DEB4C8235B47FE00B547D2 /* PropertyDetailsModel */,
 				192A3648229BEDCA00249BDE /* TargetingParamModel */,
 			);
 			path = Models;
@@ -449,8 +449,8 @@
 		1983F5072248A0E900473F4C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				1983F5192248A1BB00473F4C /* AddWebsiteViewModel */,
-				1983F5162248A1A500473F4C /* WebsiteListViewModel */,
+				1983F5192248A1BB00473F4C /* AddPropertyViewModel */,
+				1983F5162248A1A500473F4C /* PropertyListViewModel */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -463,37 +463,37 @@
 			path = BaseStorageCoordinator;
 			sourceTree = "<group>";
 		};
-		1983F50D2248A13800473F4C /* WebsiteDetailsCoordinator */ = {
+		1983F50D2248A13800473F4C /* PropertyDetailsCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				1983F5102248A16700473F4C /* WebsiteDetailsStorageCoordinator.swift */,
+				1983F5102248A16700473F4C /* PropertyDetailsStorageCoordinator.swift */,
 			);
-			path = WebsiteDetailsCoordinator;
+			path = PropertyDetailsCoordinator;
 			sourceTree = "<group>";
 		};
-		1983F5122248A17500473F4C /* SiteDetailsModel */ = {
+		1983F5122248A17500473F4C /* PropertyDetailsModel */ = {
 			isa = PBXGroup;
 			children = (
-				19DEB4D8235B512700B547D2 /* SiteDetails+CoreDataClass.swift */,
-				19DEB4D7235B512600B547D2 /* SiteDetails+CoreDataProperties.swift */,
+				1933B4C123841D5500888D47 /* PropertyDetails+CoreDataClass.swift */,
+				1933B4C223841D5500888D47 /* PropertyDetails+CoreDataProperties.swift */,
 			);
-			path = SiteDetailsModel;
+			path = PropertyDetailsModel;
 			sourceTree = "<group>";
 		};
-		1983F5162248A1A500473F4C /* WebsiteListViewModel */ = {
+		1983F5162248A1A500473F4C /* PropertyListViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				1983F5172248A1B700473F4C /* WebsiteListViewModel.swift */,
+				1983F5172248A1B700473F4C /* PropertyListViewModel.swift */,
 			);
-			path = WebsiteListViewModel;
+			path = PropertyListViewModel;
 			sourceTree = "<group>";
 		};
-		1983F5192248A1BB00473F4C /* AddWebsiteViewModel */ = {
+		1983F5192248A1BB00473F4C /* AddPropertyViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				1983F51A2248A1CB00473F4C /* AddWebsiteViewModel.swift */,
+				1983F51A2248A1CB00473F4C /* AddPropertyViewModel.swift */,
 			);
-			path = AddWebsiteViewModel;
+			path = AddPropertyViewModel;
 			sourceTree = "<group>";
 		};
 		1983F51C2248A1D500473F4C /* BaseViewController */ = {
@@ -504,20 +504,20 @@
 			path = BaseViewController;
 			sourceTree = "<group>";
 		};
-		1983F51F2248A1E600473F4C /* WebsiteListViewController */ = {
+		1983F51F2248A1E600473F4C /* PropertyListViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1983F5202248A1F300473F4C /* WebsiteListViewController.swift */,
+				1983F5202248A1F300473F4C /* PropertyListViewController.swift */,
 			);
-			path = WebsiteListViewController;
+			path = PropertyListViewController;
 			sourceTree = "<group>";
 		};
-		1983F52D2248B01300473F4C /* AddWebsiteViewController */ = {
+		1983F52D2248B01300473F4C /* AddPropertyViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1983F52E2248B04600473F4C /* AddWebsiteViewController.swift */,
+				1983F52E2248B04600473F4C /* AddPropertyViewController.swift */,
 			);
-			path = AddWebsiteViewController;
+			path = AddPropertyViewController;
 			sourceTree = "<group>";
 		};
 		1983F53F224925C500473F4C /* AlertView */ = {
@@ -528,12 +528,12 @@
 			path = AlertView;
 			sourceTree = "<group>";
 		};
-		1983F54222492E8300473F4C /* WebsiteCell */ = {
+		1983F54222492E8300473F4C /* PropertyCell */ = {
 			isa = PBXGroup;
 			children = (
-				1983F54822492FBB00473F4C /* WebsiteCell.swift */,
+				1983F54822492FBB00473F4C /* PropertyCell.swift */,
 			);
-			path = WebsiteCell;
+			path = PropertyCell;
 			sourceTree = "<group>";
 		};
 		1983F54322492EE300473F4C /* SourcepointUITableView */ = {
@@ -561,24 +561,24 @@
 			path = LoaderView;
 			sourceTree = "<group>";
 		};
-		19DEB4C8235B47FE00B547D2 /* SiteDetailsModel */ = {
+		19DEB4C8235B47FE00B547D2 /* PropertyDetailsModel */ = {
 			isa = PBXGroup;
 			children = (
-				19DEB4C9235B47FE00B547D2 /* SiteDetailsModel.swift */,
+				19DEB4C9235B47FE00B547D2 /* PropertyDetailsModel.swift */,
 			);
-			path = SiteDetailsModel;
+			path = PropertyDetailsModel;
 			sourceTree = "<group>";
 		};
 		19FFFBF923019B4000045350 /* SourcePointMetaAppTests */ = {
 			isa = PBXGroup;
 			children = (
 				1933B4B2237C033F00888D47 /* ConsentViewControllerTests */,
-				19FFFC0223019DFA00045350 /* AddWebsiteViewModelTest.swift */,
-				19E7CC40230D854200574AD0 /* AddWebsiteViewControllerTest.swift */,
-				19FFFC0823019E1D00045350 /* WebsiteListViewModelTest.swift */,
-				19FFFC0623019E1600045350 /* WebsiteListViewControllerTest.swift */,
+				19FFFC0223019DFA00045350 /* AddPropertyViewModelTest.swift */,
+				19E7CC40230D854200574AD0 /* AddPropertyViewControllerTest.swift */,
+				19FFFC0823019E1D00045350 /* PropertyListViewModelTest.swift */,
+				19FFFC0623019E1600045350 /* PropertyListViewControllerTest.swift */,
 				19E7CC3E230D7D2B00574AD0 /* ConsentViewDetailsViewControllerTest.swift */,
-				19FFFC0423019E0E00045350 /* WebsiteDetailsStorageCoordinatorTest.swift */,
+				19FFFC0423019E0E00045350 /* PropertyDetailsStorageCoordinatorTest.swift */,
 				19FFFC0A23019E2300045350 /* XCUIElement+Extensions.swift */,
 				19FFFBFC23019B4000045350 /* Info.plist */,
 			);
@@ -785,33 +785,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1983F5182248A1B700473F4C /* WebsiteListViewModel.swift in Sources */,
+				1983F5182248A1B700473F4C /* PropertyListViewModel.swift in Sources */,
+				1933B4C323841D5500888D47 /* PropertyDetails+CoreDataClass.swift in Sources */,
+				1933B4C823841F0B00888D47 /* TargetingParams+CoreDataProperties.swift in Sources */,
 				1983F4C822489E8500473F4C /* AppDelegate.swift in Sources */,
 				1983F54C2249E94800473F4C /* BaseWindow.swift in Sources */,
-				19DEB4D5235B511F00B547D2 /* TargetingParams+CoreDataClass.swift in Sources */,
-				1983F5112248A16700473F4C /* WebsiteDetailsStorageCoordinator.swift in Sources */,
+				1983F5112248A16700473F4C /* PropertyDetailsStorageCoordinator.swift in Sources */,
+				1933B4C423841D5500888D47 /* PropertyDetails+CoreDataProperties.swift in Sources */,
 				193B9F4422B0003500A343EE /* ConsentTableViewCell.swift in Sources */,
-				19DEB4CA235B47FE00B547D2 /* SiteDetailsModel.swift in Sources */,
+				19DEB4CA235B47FE00B547D2 /* PropertyDetailsModel.swift in Sources */,
 				1978CFD32282DF35008E464F /* ConsentSubViewController.swift in Sources */,
 				1983F50A2248A10100473F4C /* Debug.swift in Sources */,
 				1983F50F2248A15800473F4C /* BaseStorageCoordinator.swift in Sources */,
 				1983F51E2248A1E200473F4C /* BaseViewController.swift in Sources */,
 				193B9F4122AF7BB200A343EE /* ConsentViewDetailsViewController.swift in Sources */,
-				19DEB4DA235B512700B547D2 /* SiteDetails+CoreDataClass.swift in Sources */,
 				1983F5012248A03A00473F4C /* DBManager.swift in Sources */,
-				1983F54922492FBB00473F4C /* WebsiteCell.swift in Sources */,
-				1983F5212248A1F300473F4C /* WebsiteListViewController.swift in Sources */,
+				1983F54922492FBB00473F4C /* PropertyCell.swift in Sources */,
+				1983F5212248A1F300473F4C /* PropertyListViewController.swift in Sources */,
 				1983F50B2248A10100473F4C /* Constants.swift in Sources */,
 				192A364A229BEDE500249BDE /* TargetingParamModel.swift in Sources */,
-				19DEB4D9235B512700B547D2 /* SiteDetails+CoreDataProperties.swift in Sources */,
-				1983F52F2248B04600473F4C /* AddWebsiteViewController.swift in Sources */,
+				1983F52F2248B04600473F4C /* AddPropertyViewController.swift in Sources */,
 				197B9F482296DC0900691CF0 /* TargetingparamCell.swift in Sources */,
 				1983F5242248A21700473F4C /* SourcePointMetaApp.xcdatamodeld in Sources */,
 				1983F541224925FF00473F4C /* AlertView.swift in Sources */,
-				1983F51B2248A1CB00473F4C /* AddWebsiteViewModel.swift in Sources */,
+				1983F51B2248A1CB00473F4C /* AddPropertyViewModel.swift in Sources */,
 				1983F54F2249E9D900473F4C /* LoaderView.swift in Sources */,
 				1983F54722492F4100473F4C /* SourcePointUITableView.swift in Sources */,
-				19DEB4D6235B511F00B547D2 /* TargetingParams+CoreDataProperties.swift in Sources */,
+				1933B4C723841F0B00888D47 /* TargetingParams+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,17 +819,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19FFFC0723019E1600045350 /* WebsiteListViewControllerTest.swift in Sources */,
+				19FFFC0723019E1600045350 /* PropertyListViewControllerTest.swift in Sources */,
 				19E7CC3F230D7D2B00574AD0 /* ConsentViewDetailsViewControllerTest.swift in Sources */,
-				19FFFC0523019E0F00045350 /* WebsiteDetailsStorageCoordinatorTest.swift in Sources */,
+				19FFFC0523019E0F00045350 /* PropertyDetailsStorageCoordinatorTest.swift in Sources */,
 				1933B4B4237C03F700888D47 /* ConsentViewControllerTest.swift in Sources */,
 				1933B4B8237C040F00888D47 /* ConsentViewControllerErrorTest.swift in Sources */,
-				19FFFC0323019DFA00045350 /* AddWebsiteViewModelTest.swift in Sources */,
-				19E7CC41230D854200574AD0 /* AddWebsiteViewControllerTest.swift in Sources */,
+				19FFFC0323019DFA00045350 /* AddPropertyViewModelTest.swift in Sources */,
+				19E7CC41230D854200574AD0 /* AddPropertyViewControllerTest.swift in Sources */,
 				1933B4B6237C040800888D47 /* SourcePointClientTest.swift in Sources */,
 				1933B4BA237C041900888D47 /* ConsentTest.swift in Sources */,
 				19FFFC0B23019E2300045350 /* XCUIElement+Extensions.swift in Sources */,
-				19FFFC0923019E1D00045350 /* WebsiteListViewModelTest.swift in Sources */,
+				19FFFC0923019E1D00045350 /* PropertyListViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
