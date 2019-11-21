@@ -86,6 +86,8 @@ import Reachability
     static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
     static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
 
+    static private let MESSAGE_HANDLER_NAME = "JSReceiver"
+
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
     public var debugLevel: DebugLevel = .OFF
@@ -241,7 +243,7 @@ import Reachability
         let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!)
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         userContentController.addUserScript(script)
-        userContentController.add(self, name: "JSReceiver")
+        userContentController.add(self, name: ConsentViewController.MESSAGE_HANDLER_NAME)
         config.userContentController = userContentController
         webView = WKWebView(frame: .zero, configuration: config)
         if #available(iOS 11.0, *) {
@@ -260,7 +262,7 @@ import Reachability
 
     private func releaseWebViewHandlers() {
         let contentController = webView.configuration.userContentController
-        contentController.removeScriptMessageHandler(forName: "JSReceiver")
+        contentController.removeScriptMessageHandler(forName: ConsentViewController.MESSAGE_HANDLER_NAME)
         contentController.removeAllUserScripts()
     }
 
