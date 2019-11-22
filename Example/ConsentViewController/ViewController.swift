@@ -18,23 +18,23 @@ class ViewController: UIViewController, ConsentDelegate {
     }
 
     func onMessageReady(controller: ConsentViewController) {
-        self.present(controller, animated: false, completion: nil)
+        present(controller, animated: false, completion: nil)
     }
 
     func onConsentReady(controller: ConsentViewController) {
-        controller.getCustomVendorConsents { (vendors, error) in
+        controller.getCustomVendorConsents { [weak self] (vendors, error) in
             if let vendors = vendors {
-                vendors.forEach({ vendor in self.logger.log("Consented to: %{public}@)", [vendor]) })
+                vendors.forEach({ vendor in self?.logger.log("Consented to: %{public}@)", [vendor]) })
             } else {
-                self.onErrorOccurred(error: error!)
+                self?.onErrorOccurred(error: error!)
             }
         }
-        self.dismiss(animated: false, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
 
     func onErrorOccurred(error: ConsentViewControllerError) {
         logger.log("Error: %{public}@", [error])
-        self.dismiss(animated: false, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
 
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
