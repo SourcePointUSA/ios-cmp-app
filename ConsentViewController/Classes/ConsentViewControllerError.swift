@@ -67,16 +67,16 @@ import Foundation
     override public var description: String { get { return "\(errorDescription!)\n\(helpAnchor!)" } }
 }
 
-@objcMembers public class SiteIDNotFound: ConsentViewControllerError {
-    private let accountId: String, siteName: String
+@objcMembers public class PropertyIDNotFound: ConsentViewControllerError {
+    private let accountId: String, property: String
 
-    public var failureReason: String? { get { return "Could not find site ID." } }
-    public var errorDescription: String? { get { return "Could not find a site with name \(siteName) for the account id \(accountId)" } }
-    override public var helpAnchor: String? { get { return "Double check your account id and the site name." } }
+    public var failureReason: String? { get { return "Could not find property ID." } }
+    public var errorDescription: String? { get { return "Could not find a property with name \(property) for the account id \(accountId)" } }
+    override public var helpAnchor: String? { get { return "Double check your account id and the property name." } }
 
-    init(accountId: String, siteName: String) {
+    init(accountId: String, property: String) {
         self.accountId = accountId
-        self.siteName = siteName
+        self.property = property
         super.init()
     }
     required init?(coder aDecoder: NSCoder) {

@@ -30,13 +30,13 @@ class ConsentViewControllerErrorTest: XCTestCase {
         }
     }
     
-    /// this test method is used to test siteId not found error method
-    func testSiteIDNotFound() {
-        let errorObject = SiteIDNotFound(accountId: "212", siteName: "mobile.demo")
-        if errorObject.description == "Could not find a site with name mobile.demo for the account id 212" {
+    /// this test method is used to test property Id not found error method
+    func testPropertyIDNotFound() {
+        let errorObject = PropertyIDNotFound(accountId: "212", property: "mobile.demo")
+        if errorObject.description == "Could not find a property with name mobile.demo for the account id 212" {
             XCTAssert(true, "Error handling for the site ID failure is successfully handled")
         } else {
-            XCTAssert(false, "Error handling for the site ID failure is not handled properly")
+            XCTAssert(false, "Error handling for the property ID failure is not handled properly")
         }
     }
     
@@ -52,8 +52,8 @@ class ConsentViewControllerErrorTest: XCTestCase {
     
     /// this test method is used to test invalid url error method
     func testInvalidURLError() {
-        let errorObject = InvalidURLError(urlName: "siteIdUrl", urlString: "https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.dem")
-        if errorObject.description == "Could not convert https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.dem into URL.\nMake sure siteIdUrl has the correct value." {
+        let errorObject = InvalidURLError(urlName: "PropertyUrl", urlString: "https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.dem")
+        if errorObject.description == "Could not convert https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.dem into URL.\nMake sure PropertyUrl has the correct value." {
             XCTAssert(true, "Error handling for the Invalid URL failure is successfully handled")
         } else {
             XCTAssert(false, "Error handling for the Invalid URL failure is not handled properly")

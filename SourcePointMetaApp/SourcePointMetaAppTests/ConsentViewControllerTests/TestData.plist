@@ -4,9 +4,9 @@
 <dict>
 	<key>AccountId</key>
 	<integer>22</integer>
-	<key>SiteName</key>
+	<key>Property</key>
 	<string>mobile.demo</string>
-	<key>SiteId</key>
+	<key>PropertyId</key>
 	<integer>2372</integer>
 	<key>ShowPM</key>
 	<false/>
@@ -14,7 +14,7 @@
 	<string>5c0e81b7d74b3c30c6852301</string>
 	<key>Campaign</key>
 	<string>stage</string>
-	<key>SiteUrl</key>
+	<key>PropertyUrl</key>
 	<string>https://mobile.demo</string>
 	<key>MmsUrl</key>
 	<string>https://mms.sp-prod.net</string>

@@ -12,8 +12,8 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     var consentViewController: ConsentViewController?
     
     var accountId: Int = 0
-    var siteId: Int = 0
-    var siteName: String = ""
+    var propertyId: Int = 0
+    var property: String = ""
     var campaign: String = ""
     var pmId: String = ""
     var showPM: Bool = false
@@ -22,7 +22,7 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
     
     override func setUp() {
         readDataFromPlist()
-        consentViewController = try! ConsentViewController(accountId: accountId, siteId: siteId, siteName: siteName, PMId: pmId, campaign: campaign, showPM: showPM,consentDelegate: self)
+        consentViewController = try! ConsentViewController(accountId: accountId, propertyId: propertyId, property: property, PMId: pmId, campaign: campaign, showPM: showPM,consentDelegate: self)
     }
     
     override func tearDown() {
@@ -34,8 +34,8 @@ class ConsentViewControllerTest: XCTestCase, ConsentDelegate {
         if let path = Bundle(for: type(of: self)).path(forResource: "TestData", ofType: "plist") {
             let testData = NSDictionary(contentsOfFile: path)
             accountId = testData?.value(forKey: "AccountId") as! Int
-            siteId = testData?.value(forKey: "SiteId") as! Int
-            siteName = testData?.value(forKey: "SiteName") as! String
+            propertyId = testData?.value(forKey: "PropertyId") as! Int
+            property = testData?.value(forKey: "Property") as! String
             showPM = testData?.value(forKey: "ShowPM") as! Bool
             pmId = testData?.value(forKey: "PMId") as! String
             campaign = testData?.value(forKey: "Campaign") as! String

@@ -26,7 +26,7 @@ Let us know if we missed any step.
 It's pretty simple, here are 5 easy steps for you:
 
 1. implement the `ConsentDelegate` protocol
-2. instantiate the `ConsentViewController` with your Account ID, site id, site name, privacy manager id, campaign environment, a flag to show the privacy manager directly or not and the consent delegate
+2. instantiate the `ConsentViewController` with your Account ID, property id, property, privacy manager id, campaign environment, a flag to show the privacy manager directly or not and the consent delegate
 3. call `.loadMessage()`
 4. present the controller when the message is ready to be displayed
 5. profit!
@@ -40,7 +40,7 @@ class ViewController: UIViewController, ConsentDelegate {
     let logger = Logger()
 
     func loadConsentManager(showPM: Bool) {
-        let cvc = try! ConsentViewController(accountId: 22, siteId: 2372, siteName: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
+        let cvc = try! ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
         cvc.loadMessage()
     }
 
@@ -87,7 +87,7 @@ class ViewController: UIViewController, ConsentDelegate {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    ConsentViewController *cvc = [[ConsentViewController alloc] initWithAccountId:22 siteId:2372 siteName:@"mobile.demo" PMId:@"5c0e81b7d74b3c30c6852301" campaign:@"stage" showPM:false consentDelegate:self andReturnError:nil];
+    ConsentViewController *cvc = [[ConsentViewController alloc] initWithAccountId:22 propertyId:2372 property:@"mobile.demo" PMId:@"5c0e81b7d74b3c30c6852301" campaign:@"stage" showPM:false consentDelegate:self andReturnError:nil];
 
     [cvc loadMessage];
 }
