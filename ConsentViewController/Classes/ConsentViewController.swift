@@ -13,6 +13,7 @@ import UIKit
 import WebKit
 import JavaScriptCore
 import Reachability
+import Rollbar
 
 /**
  SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
@@ -123,7 +124,7 @@ import Reachability
     public var consentUUID: String
 
     /// The timeout interval in seconds for the message being displayed
-    public var messageTimeoutInSeconds = TimeInterval(300)
+    public var messageTimeoutInSeconds = TimeInterval(30)
 
     private let accountId: Int
     private let property: String
@@ -492,8 +493,13 @@ import Reachability
         consentDelegate?.onConsentReady(controller: self)
     }
 
-    private func onErrorOccurred(error: ConsentViewControllerError) {
+    internal func onErrorOccurred(error: ConsentViewControllerError) {
         releaseWebViewHandlers()
+        let configuration = RollbarConfiguration()
+        configuration.crashLevel = "critical"
+        configuration.environment = "production"
+        Rollbar.initWithAccessToken("8c9341f5b0cd4701b43fd06237b0b660", configuration: configuration)
+        Rollbar.error(error.description)
         consentDelegate?.onErrorOccurred(error: error)
     }
 

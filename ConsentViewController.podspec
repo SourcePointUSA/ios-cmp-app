@@ -13,4 +13,5 @@ Pod::Spec.new do |s|
   s.resources = "ConsentViewController/**/*{.js}"
 
   s.dependency 'ReachabilitySwift', '4.3.0'
+  s.dependency 'Rollbar', '1.8.1'
 end
