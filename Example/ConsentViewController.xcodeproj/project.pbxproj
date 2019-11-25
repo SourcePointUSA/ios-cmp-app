@@ -19,8 +19,19 @@
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
 		8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14622BA5A6C00D2669B /* Assets.xcassets */; };
 		8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */; };
+		82680573238C10C9003A1699 /* ConsentViewController_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82680572238C10C9003A1699 /* ConsentViewController_ExampleTests.swift */; };
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		82680575238C10C9003A1699 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
+			remoteInfo = ConsentViewController_Example;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,8 +44,6 @@
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		7228B53CDDACE73BC4006A55 /* Pods-ConsentViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +54,9 @@
 		8231B14922BA5A6C00D2669B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8231B14B22BA5A6C00D2669B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8231B15122BBC39900D2669B /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82680570238C10C9003A1699 /* ConsentViewController_ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController_ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		82680572238C10C9003A1699 /* ConsentViewController_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentViewController_ExampleTests.swift; sourceTree = "<group>"; };
+		82680574238C10C9003A1699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AuthExample/Pods-AuthExample.release.xcconfig"; sourceTree = "<group>"; };
 		977885D1C020D8A587B1BC36 /* Pods-ConsentViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +81,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8268056D238C10C9003A1699 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -88,8 +107,8 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ConsentViewController */,
-				607FACE81AFB9204008FA782 /* Tests */,
 				8231B13E22BA5A6B00D2669B /* AuthExample */,
+				82680571238C10C9003A1699 /* ConsentViewController_ExampleTests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				1CDEC261E0D620E46748CCE7 /* Pods */,
 				EEE3CDAB8AFE80647B1E565B /* Frameworks */,
@@ -101,6 +120,7 @@
 			children = (
 				607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */,
 				8231B13D22BA5A6B00D2669B /* AuthExample.app */,
+				82680570238C10C9003A1699 /* ConsentViewController_ExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,23 +147,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		607FACE81AFB9204008FA782 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
-				607FACE91AFB9204008FA782 /* Supporting Files */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		607FACE91AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEA1AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +169,15 @@
 				8231B14B22BA5A6C00D2669B /* Info.plist */,
 			);
 			path = AuthExample;
+			sourceTree = "<group>";
+		};
+		82680571238C10C9003A1699 /* ConsentViewController_ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				82680572238C10C9003A1699 /* ConsentViewController_ExampleTests.swift */,
+				82680574238C10C9003A1699 /* Info.plist */,
+			);
+			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
 		};
 		EEE3CDAB8AFE80647B1E565B /* Frameworks */ = {
@@ -219,13 +231,31 @@
 			productReference = 8231B13D22BA5A6B00D2669B /* AuthExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8268056F238C10C9003A1699 /* ConsentViewController_ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82680579238C10C9003A1699 /* Build configuration list for PBXNativeTarget "ConsentViewController_ExampleTests" */;
+			buildPhases = (
+				8268056C238C10C9003A1699 /* Sources */,
+				8268056D238C10C9003A1699 /* Frameworks */,
+				8268056E238C10C9003A1699 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82680576238C10C9003A1699 /* PBXTargetDependency */,
+			);
+			name = ConsentViewController_ExampleTests;
+			productName = ConsentViewController_ExampleTests;
+			productReference = 82680570238C10C9003A1699 /* ConsentViewController_ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -239,6 +269,12 @@
 						CreatedOnToolsVersion = 10.2.1;
 						DevelopmentTeam = 6KYEQLUC5A;
 						ProvisioningStyle = Automatic;
+					};
+					8268056F238C10C9003A1699 = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = 6KYEQLUC5A;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
@@ -257,6 +293,7 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* ConsentViewController_Example */,
 				8231B13C22BA5A6B00D2669B /* AuthExample */,
+				8268056F238C10C9003A1699 /* ConsentViewController_ExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -279,6 +316,13 @@
 				8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */,
 				8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */,
 				8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8268056E238C10C9003A1699 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +435,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8268056C238C10C9003A1699 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82680573238C10C9003A1699 /* ConsentViewController_ExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		82680576238C10C9003A1699 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 607FACCF1AFB9204008FA782 /* ConsentViewController_Example */;
+			targetProxy = 82680575238C10C9003A1699 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
@@ -630,6 +690,59 @@
 			};
 			name = Release;
 		};
+		82680577238C10C9003A1699 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ConsentViewController_ExampleTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sourcepoint.ConsentViewController-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsentViewController_Example.app/ConsentViewController_Example";
+			};
+			name = Debug;
+		};
+		82680578238C10C9003A1699 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ConsentViewController_ExampleTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sourcepoint.ConsentViewController-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsentViewController_Example.app/ConsentViewController_Example";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -656,6 +769,15 @@
 			buildConfigurations = (
 				8231B14C22BA5A6C00D2669B /* Debug */,
 				8231B14D22BA5A6C00D2669B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82680579238C10C9003A1699 /* Build configuration list for PBXNativeTarget "ConsentViewController_ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82680577238C10C9003A1699 /* Debug */,
+				82680578238C10C9003A1699 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
