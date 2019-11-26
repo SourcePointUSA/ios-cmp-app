@@ -63,10 +63,10 @@ import Rollbar
     /// If the user is subject to GDPR, reading for this key in the `UserDefaults` will return "1" otherwise "0"
     static public let IAB_CONSENT_SUBJECT_TO_GDPR: String = "IABConsent_SubjectToGDPR"
 
-    /// They key used to store the IAB Consent string for the user in the `UserDefaults`
+    /// The key used to store the IAB Consent string for the user in the `UserDefaults`
     static public let IAB_CONSENT_CONSENT_STRING: String = "IABConsent_ConsentString"
 
-    /// They key used to read and write the parsed IAB Purposes consented by the user in the `UserDefaults`
+    /// The key used to read and write the parsed IAB Purposes consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_PURPOSE_CONSENTS: String = "IABConsent_ParsedPurposeConsents"
 
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
@@ -85,6 +85,9 @@ import Rollbar
     static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
 
     static private let MESSAGE_HANDLER_NAME = "JSReceiver"
+    
+    /// The variable is used to store the current SDK version which is used for analytics.
+    static private let CONSENTVIEWCONTROLLER_SDK_VERSION = "3.0.0"
 
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
@@ -129,6 +132,7 @@ import Rollbar
     private let accountId: Int
     private let property: String
     private let propertyId: Int
+    private let campaign: String
     private let showPM: Bool
     private var didMessageScriptLoad = false
 
@@ -157,6 +161,7 @@ import Rollbar
         self.property = property
         self.propertyId = propertyId
         self.showPM = showPM
+        self.campaign = campaign
         self.consentDelegate = consentDelegate
         
         let propertyUrl = try Utils.validate(attributeName: "propertyUrl", urlString: "https://"+property)
@@ -495,14 +500,26 @@ import Rollbar
 
     internal func onErrorOccurred(error: ConsentViewControllerError) {
         releaseWebViewHandlers()
+        rollBarAnalytics(error: error.description)
+        consentDelegate?.onErrorOccurred(error: error)
+    }
+    
+     /// This method is used to send the details to rollbar analytics about the error message with other deatils.
+    internal func rollBarAnalytics(error: String) {
         let configuration = RollbarConfiguration()
         configuration.crashLevel = "critical"
         configuration.environment = "production"
         Rollbar.initWithAccessToken("8c9341f5b0cd4701b43fd06237b0b660", configuration: configuration)
-        Rollbar.error(error.description)
-        consentDelegate?.onErrorOccurred(error: error)
+        Rollbar.critical(withMessage: error, data: [
+            "SDK_VERSION": ConsentViewController.CONSENTVIEWCONTROLLER_SDK_VERSION,
+            "accountId": accountId,
+            "propertyId": propertyId,
+            "campaign": campaign,
+            "showPM": showPM,
+            "messageTimeoutInSeconds": messageTimeoutInSeconds
+        ])
     }
-
+        
     private func showMessage() {
         if(messageStatus == .timedout) { return }
 
