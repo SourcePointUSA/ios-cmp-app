@@ -88,6 +88,9 @@ import Rollbar
     
     /// The variable is used to store the current SDK version which is used for analytics.
     static private let CONSENTVIEWCONTROLLER_SDK_VERSION = "3.0.0"
+    
+    /// The varibale used to set the flag to use Rollbar analytics
+    public var isDisableRollbar = false
 
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
@@ -506,6 +509,7 @@ import Rollbar
     
      /// This method is used to send the details to rollbar analytics about the error message with other deatils.
     internal func rollBarAnalytics(error: String) {
+        if !isDisableRollbar {
         let configuration = RollbarConfiguration()
         configuration.crashLevel = "critical"
         configuration.environment = "production"
@@ -518,6 +522,9 @@ import Rollbar
             "showPM": showPM,
             "messageTimeoutInSeconds": messageTimeoutInSeconds
         ])
+        }else {
+            logger.log("Rollbar is disabled by client application", [])
+        }
     }
         
     private func showMessage() {
