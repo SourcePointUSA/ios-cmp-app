@@ -1,6 +1,0 @@
-framework module Pods_SourcePointMetaApp {
-  umbrella header "Pods-SourcePointMetaApp-umbrella.h"
-
-  export *
-  module * { export * }
-}

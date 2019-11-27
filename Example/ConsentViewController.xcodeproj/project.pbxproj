@@ -7,7 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1997B57C238EA7510079AF34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1997B52B238EA7500079AF34 /* LaunchScreen.storyboard */; };
+		1997B57D238EA7510079AF34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1997B52D238EA7500079AF34 /* Main.storyboard */; };
+		1997B57E238EA7510079AF34 /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B532238EA7500079AF34 /* SF-Pro-Text-Heavy.otf */; };
+		1997B57F238EA7510079AF34 /* SF-Pro-Text-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B533238EA7500079AF34 /* SF-Pro-Text-MediumItalic.otf */; };
+		1997B580238EA7510079AF34 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B534238EA7500079AF34 /* SF-Pro-Text-Light.otf */; };
+		1997B581238EA7510079AF34 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B535238EA7500079AF34 /* SF-Pro-Text-Regular.otf */; };
+		1997B582238EA7510079AF34 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B536238EA7500079AF34 /* SF-Pro-Text-Bold.otf */; };
+		1997B583238EA7510079AF34 /* SF-Pro-Text-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B537238EA7500079AF34 /* SF-Pro-Text-BoldItalic.otf */; };
+		1997B584238EA7510079AF34 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B538238EA7500079AF34 /* SF-Pro-Text-RegularItalic.otf */; };
+		1997B585238EA7510079AF34 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B539238EA7500079AF34 /* SF-Pro-Text-Semibold.otf */; };
+		1997B586238EA7510079AF34 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B53A238EA7500079AF34 /* SF-Pro-Text-HeavyItalic.otf */; };
+		1997B587238EA7510079AF34 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B53B238EA7500079AF34 /* SF-Pro-Text-LightItalic.otf */; };
+		1997B588238EA7510079AF34 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B53C238EA7500079AF34 /* SF-Pro-Text-Medium.otf */; };
+		1997B589238EA7510079AF34 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B53D238EA7500079AF34 /* SF-Pro-Text-SemiboldItalic.otf */; };
+		1997B58B238EA7510079AF34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1997B540238EA7500079AF34 /* Assets.xcassets */; };
+		1997B5F2238EAC8C0079AF34 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5C6238EAC8C0079AF34 /* DBManager.swift */; };
+		1997B5F3238EAC8C0079AF34 /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5C9238EAC8C0079AF34 /* BaseWindow.swift */; };
+		1997B5F4238EAC8C0079AF34 /* AddWebsiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5CB238EAC8C0079AF34 /* AddWebsiteViewController.swift */; };
+		1997B5F5238EAC8C0079AF34 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5CD238EAC8C0079AF34 /* BaseViewController.swift */; };
+		1997B5F6238EAC8C0079AF34 /* ConsentViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5CF238EAC8C0079AF34 /* ConsentViewDetailsViewController.swift */; };
+		1997B5F7238EAC8C0079AF34 /* ConsentSubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5D0238EAC8C0079AF34 /* ConsentSubViewController.swift */; };
+		1997B5F8238EAC8C0079AF34 /* WebsiteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5D2238EAC8C0079AF34 /* WebsiteListViewController.swift */; };
+		1997B5F9238EAC8C0079AF34 /* AddWebsiteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5D6238EAC8C0079AF34 /* AddWebsiteViewModel.swift */; };
+		1997B5FA238EAC8C0079AF34 /* WebsiteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5D8238EAC8C0079AF34 /* WebsiteListViewModel.swift */; };
+		1997B5FB238EAC8C0079AF34 /* TargetingParamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5DB238EAC8C0079AF34 /* TargetingParamModel.swift */; };
+		1997B5FC238EAC8C0079AF34 /* SiteDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5DD238EAC8C0079AF34 /* SiteDetailsModel.swift */; };
+		1997B5FD238EAC8C0079AF34 /* BaseStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5E0238EAC8C0079AF34 /* BaseStorageCoordinator.swift */; };
+		1997B5FE238EAC8C0079AF34 /* WebsiteDetailsStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5E2238EAC8C0079AF34 /* WebsiteDetailsStorageCoordinator.swift */; };
+		1997B5FF238EAC8C0079AF34 /* SiteDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5E5238EAC8C0079AF34 /* SiteDetails+CoreDataProperties.swift */; };
+		1997B600238EAC8C0079AF34 /* SiteDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5E6238EAC8C0079AF34 /* SiteDetails+CoreDataClass.swift */; };
+		1997B601238EAC8C0079AF34 /* TargetingParams+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5E8238EAC8C0079AF34 /* TargetingParams+CoreDataClass.swift */; };
+		1997B602238EAC8C0079AF34 /* TargetingParams+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5E9238EAC8C0079AF34 /* TargetingParams+CoreDataProperties.swift */; };
+		1997B603238EAC8C0079AF34 /* SourcePointUITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5EC238EAC8C0079AF34 /* SourcePointUITableView.swift */; };
+		1997B605238EAC8C0079AF34 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5EE238EAC8C0079AF34 /* Constants.swift */; };
+		1997B606238EAC8C0079AF34 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5EF238EAC8C0079AF34 /* Debug.swift */; };
+		1997B607238EAC8C0079AF34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B5F1238EAC8C0079AF34 /* AppDelegate.swift */; };
+		1997B614238EACC80079AF34 /* ConsentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B60A238EACC80079AF34 /* ConsentTableViewCell.swift */; };
+		1997B615238EACC80079AF34 /* TargetingparamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B60C238EACC80079AF34 /* TargetingparamCell.swift */; };
+		1997B616238EACC80079AF34 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B60E238EACC80079AF34 /* AlertView.swift */; };
+		1997B617238EACC80079AF34 /* LoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1997B610238EACC80079AF34 /* LoaderView.xib */; };
+		1997B618238EACC80079AF34 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B611238EACC80079AF34 /* LoaderView.swift */; };
+		1997B619238EACC80079AF34 /* WebsiteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B613238EACC80079AF34 /* WebsiteCell.swift */; };
+		1997B623238EADA80079AF34 /* ConsentViewDetailsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B61A238EADA80079AF34 /* ConsentViewDetailsViewControllerTest.swift */; };
+		1997B624238EADA80079AF34 /* AddWebsiteViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B61B238EADA80079AF34 /* AddWebsiteViewControllerTest.swift */; };
+		1997B625238EADA80079AF34 /* ConsentViewControllerErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B61D238EADA80079AF34 /* ConsentViewControllerErrorTest.swift */; };
+		1997B626238EADA80079AF34 /* ConsentViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B61E238EADA80079AF34 /* ConsentViewControllerTest.swift */; };
+		1997B627238EADA80079AF34 /* SourcePointClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B61F238EADA80079AF34 /* SourcePointClientTest.swift */; };
+		1997B628238EADA80079AF34 /* ConsentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B620238EADA80079AF34 /* ConsentTest.swift */; };
+		1997B629238EADA80079AF34 /* TestData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1997B621238EADA80079AF34 /* TestData.plist */; };
+		1997B62A238EADA80079AF34 /* AddWebsiteViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B622238EADA80079AF34 /* AddWebsiteViewModelTest.swift */; };
+		1997B62F238EADB40079AF34 /* WebsiteDetailsStorageCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B62B238EADB40079AF34 /* WebsiteDetailsStorageCoordinatorTest.swift */; };
+		1997B630238EADB40079AF34 /* WebsiteListViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B62C238EADB40079AF34 /* WebsiteListViewControllerTest.swift */; };
+		1997B631238EADB40079AF34 /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B62D238EADB40079AF34 /* XCUIElement+Extensions.swift */; };
+		1997B632238EADB40079AF34 /* WebsiteListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B62E238EADB40079AF34 /* WebsiteListViewModelTest.swift */; };
+		1997B635238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1997B633238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodeld */; };
 		21233A8E0B54976B198A3557 /* Pods_AuthExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */; };
+		3AC4E23D08EFBE488257B06E /* Pods_SourcePointMetaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F15F334D5E2EAD21AEDC70 /* Pods_SourcePointMetaApp.framework */; };
 		4AF9FC55B8D5FF6D34DBFD5B /* Pods_ConsentViewController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -20,9 +76,82 @@
 		8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14622BA5A6C00D2669B /* Assets.xcassets */; };
 		8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */; };
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
+		C9BD6F61E3A388D55262E203 /* Pods_SourcePointMetaAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCDDECCCB94F4C55A8785D5 /* Pods_SourcePointMetaAppTests.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1997B510238EA4600079AF34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1997B4F9238EA45E0079AF34;
+			remoteInfo = SourcePointMetaApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		10DED85094D7BF87FCBF6C4C /* Pods-SourcePointMetaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp.release.xcconfig"; sourceTree = "<group>"; };
+		16808A007C3576942EB50647 /* Pods-SourcePointMetaAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1997B4FA238EA45E0079AF34 /* SourcePointMetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourcePointMetaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1997B50A238EA45F0079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1997B50F238EA4600079AF34 /* SourcePointMetaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourcePointMetaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1997B515238EA4600079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1997B52C238EA7500079AF34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1997B52E238EA7500079AF34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1997B532238EA7500079AF34 /* SF-Pro-Text-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Heavy.otf"; sourceTree = "<group>"; };
+		1997B533238EA7500079AF34 /* SF-Pro-Text-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-MediumItalic.otf"; sourceTree = "<group>"; };
+		1997B534238EA7500079AF34 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
+		1997B535238EA7500079AF34 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		1997B536238EA7500079AF34 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		1997B537238EA7500079AF34 /* SF-Pro-Text-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-BoldItalic.otf"; sourceTree = "<group>"; };
+		1997B538238EA7500079AF34 /* SF-Pro-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-RegularItalic.otf"; sourceTree = "<group>"; };
+		1997B539238EA7500079AF34 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		1997B53A238EA7500079AF34 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
+		1997B53B238EA7500079AF34 /* SF-Pro-Text-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-LightItalic.otf"; sourceTree = "<group>"; };
+		1997B53C238EA7500079AF34 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		1997B53D238EA7500079AF34 /* SF-Pro-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		1997B540238EA7500079AF34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1997B5C6238EAC8C0079AF34 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		1997B5C9238EAC8C0079AF34 /* BaseWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWindow.swift; sourceTree = "<group>"; };
+		1997B5CB238EAC8C0079AF34 /* AddWebsiteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewController.swift; sourceTree = "<group>"; };
+		1997B5CD238EAC8C0079AF34 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		1997B5CF238EAC8C0079AF34 /* ConsentViewDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewController.swift; sourceTree = "<group>"; };
+		1997B5D0238EAC8C0079AF34 /* ConsentSubViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentSubViewController.swift; sourceTree = "<group>"; };
+		1997B5D2238EAC8C0079AF34 /* WebsiteListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewController.swift; sourceTree = "<group>"; };
+		1997B5D6238EAC8C0079AF34 /* AddWebsiteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewModel.swift; sourceTree = "<group>"; };
+		1997B5D8238EAC8C0079AF34 /* WebsiteListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewModel.swift; sourceTree = "<group>"; };
+		1997B5DB238EAC8C0079AF34 /* TargetingParamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetingParamModel.swift; sourceTree = "<group>"; };
+		1997B5DD238EAC8C0079AF34 /* SiteDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteDetailsModel.swift; sourceTree = "<group>"; };
+		1997B5E0238EAC8C0079AF34 /* BaseStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStorageCoordinator.swift; sourceTree = "<group>"; };
+		1997B5E2238EAC8C0079AF34 /* WebsiteDetailsStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteDetailsStorageCoordinator.swift; sourceTree = "<group>"; };
+		1997B5E5238EAC8C0079AF34 /* SiteDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SiteDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1997B5E6238EAC8C0079AF34 /* SiteDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SiteDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1997B5E8238EAC8C0079AF34 /* TargetingParams+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1997B5E9238EAC8C0079AF34 /* TargetingParams+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1997B5EC238EAC8C0079AF34 /* SourcePointUITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointUITableView.swift; sourceTree = "<group>"; };
+		1997B5EE238EAC8C0079AF34 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1997B5EF238EAC8C0079AF34 /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		1997B5F1238EAC8C0079AF34 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1997B60A238EACC80079AF34 /* ConsentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTableViewCell.swift; sourceTree = "<group>"; };
+		1997B60C238EACC80079AF34 /* TargetingparamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetingparamCell.swift; sourceTree = "<group>"; };
+		1997B60E238EACC80079AF34 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		1997B610238EACC80079AF34 /* LoaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoaderView.xib; sourceTree = "<group>"; };
+		1997B611238EACC80079AF34 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		1997B613238EACC80079AF34 /* WebsiteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteCell.swift; sourceTree = "<group>"; };
+		1997B61A238EADA80079AF34 /* ConsentViewDetailsViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B61B238EADA80079AF34 /* AddWebsiteViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B61D238EADA80079AF34 /* ConsentViewControllerErrorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerErrorTest.swift; sourceTree = "<group>"; };
+		1997B61E238EADA80079AF34 /* ConsentViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B61F238EADA80079AF34 /* SourcePointClientTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointClientTest.swift; sourceTree = "<group>"; };
+		1997B620238EADA80079AF34 /* ConsentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTest.swift; sourceTree = "<group>"; };
+		1997B621238EADA80079AF34 /* TestData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestData.plist; sourceTree = "<group>"; };
+		1997B622238EADA80079AF34 /* AddWebsiteViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWebsiteViewModelTest.swift; sourceTree = "<group>"; };
+		1997B62B238EADB40079AF34 /* WebsiteDetailsStorageCoordinatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteDetailsStorageCoordinatorTest.swift; sourceTree = "<group>"; };
+		1997B62C238EADB40079AF34 /* WebsiteListViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B62D238EADB40079AF34 /* XCUIElement+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Extensions.swift"; sourceTree = "<group>"; };
+		1997B62E238EADB40079AF34 /* WebsiteListViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteListViewModelTest.swift; sourceTree = "<group>"; };
+		1997B634238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SourcePointMetaApp.xcdatamodel; sourceTree = "<group>"; };
+		25F15F334D5E2EAD21AEDC70 /* Pods_SourcePointMetaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C713B0FF3D9458F2FFA2EA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,7 +165,9 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		6BCDDECCCB94F4C55A8785D5 /* Pods_SourcePointMetaAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7228B53CDDACE73BC4006A55 /* Pods-ConsentViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
+		81E70E5D69EDED1D091D217D /* Pods-SourcePointMetaAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8231B14122BA5A6B00D2669B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -46,6 +177,7 @@
 		8231B14B22BA5A6C00D2669B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8231B15122BBC39900D2669B /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		89196DBAD29967A64D8F30AF /* Pods-SourcePointMetaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp.debug.xcconfig"; sourceTree = "<group>"; };
 		8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AuthExample/Pods-AuthExample.release.xcconfig"; sourceTree = "<group>"; };
 		977885D1C020D8A587B1BC36 /* Pods-ConsentViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AA36A7D29C1E427A75F8D4 /* ConsentViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConsentViewController.podspec; path = ../ConsentViewController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -53,6 +185,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1997B4F7238EA45E0079AF34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AC4E23D08EFBE488257B06E /* Pods_SourcePointMetaApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1997B50C238EA4600079AF34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BD6F61E3A388D55262E203 /* Pods_SourcePointMetaAppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCD1AFB9204008FA782 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +220,357 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1997B4FB238EA45E0079AF34 /* SourcePointMetaApp */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5F0238EAC8C0079AF34 /* AppDelegate */,
+				1997B608238EACC80079AF34 /* Views */,
+				1997B5C7238EAC8C0079AF34 /* Controllers */,
+				1997B5D3238EAC8C0079AF34 /* Layers */,
+				1997B5C4238EAC8C0079AF34 /* Managers */,
+				1997B50A238EA45F0079AF34 /* Info.plist */,
+				1997B52F238EA7500079AF34 /* Resources */,
+				1997B540238EA7500079AF34 /* Assets.xcassets */,
+				1997B633238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodeld */,
+				1997B52A238EA7500079AF34 /* Storyboards */,
+			);
+			path = SourcePointMetaApp;
+			sourceTree = "<group>";
+		};
+		1997B512238EA4600079AF34 /* SourcePointMetaAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				1997B61C238EADA80079AF34 /* ConsentViewControllerTests */,
+				1997B61B238EADA80079AF34 /* AddWebsiteViewControllerTest.swift */,
+				1997B62B238EADB40079AF34 /* WebsiteDetailsStorageCoordinatorTest.swift */,
+				1997B62C238EADB40079AF34 /* WebsiteListViewControllerTest.swift */,
+				1997B62E238EADB40079AF34 /* WebsiteListViewModelTest.swift */,
+				1997B62D238EADB40079AF34 /* XCUIElement+Extensions.swift */,
+				1997B622238EADA80079AF34 /* AddWebsiteViewModelTest.swift */,
+				1997B61A238EADA80079AF34 /* ConsentViewDetailsViewControllerTest.swift */,
+				1997B515238EA4600079AF34 /* Info.plist */,
+			);
+			path = SourcePointMetaAppTests;
+			sourceTree = "<group>";
+		};
+		1997B52A238EA7500079AF34 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				1997B52B238EA7500079AF34 /* LaunchScreen.storyboard */,
+				1997B52D238EA7500079AF34 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		1997B52F238EA7500079AF34 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1997B530238EA7500079AF34 /* Font */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1997B530238EA7500079AF34 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				1997B531238EA7500079AF34 /* SF Pro */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		1997B531238EA7500079AF34 /* SF Pro */ = {
+			isa = PBXGroup;
+			children = (
+				1997B532238EA7500079AF34 /* SF-Pro-Text-Heavy.otf */,
+				1997B533238EA7500079AF34 /* SF-Pro-Text-MediumItalic.otf */,
+				1997B534238EA7500079AF34 /* SF-Pro-Text-Light.otf */,
+				1997B535238EA7500079AF34 /* SF-Pro-Text-Regular.otf */,
+				1997B536238EA7500079AF34 /* SF-Pro-Text-Bold.otf */,
+				1997B537238EA7500079AF34 /* SF-Pro-Text-BoldItalic.otf */,
+				1997B538238EA7500079AF34 /* SF-Pro-Text-RegularItalic.otf */,
+				1997B539238EA7500079AF34 /* SF-Pro-Text-Semibold.otf */,
+				1997B53A238EA7500079AF34 /* SF-Pro-Text-HeavyItalic.otf */,
+				1997B53B238EA7500079AF34 /* SF-Pro-Text-LightItalic.otf */,
+				1997B53C238EA7500079AF34 /* SF-Pro-Text-Medium.otf */,
+				1997B53D238EA7500079AF34 /* SF-Pro-Text-SemiboldItalic.otf */,
+			);
+			path = "SF Pro";
+			sourceTree = "<group>";
+		};
+		1997B5C4238EAC8C0079AF34 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5C5238EAC8C0079AF34 /* DatabaseManager */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		1997B5C5238EAC8C0079AF34 /* DatabaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5C6238EAC8C0079AF34 /* DBManager.swift */,
+			);
+			path = DatabaseManager;
+			sourceTree = "<group>";
+		};
+		1997B5C7238EAC8C0079AF34 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5C8238EAC8C0079AF34 /* BaseWindow */,
+				1997B5CA238EAC8C0079AF34 /* AddWebsiteViewController */,
+				1997B5CC238EAC8C0079AF34 /* BaseViewController */,
+				1997B5CE238EAC8C0079AF34 /* ConsentViewController */,
+				1997B5D1238EAC8C0079AF34 /* WebsiteListViewController */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		1997B5C8238EAC8C0079AF34 /* BaseWindow */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5C9238EAC8C0079AF34 /* BaseWindow.swift */,
+			);
+			path = BaseWindow;
+			sourceTree = "<group>";
+		};
+		1997B5CA238EAC8C0079AF34 /* AddWebsiteViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5CB238EAC8C0079AF34 /* AddWebsiteViewController.swift */,
+			);
+			path = AddWebsiteViewController;
+			sourceTree = "<group>";
+		};
+		1997B5CC238EAC8C0079AF34 /* BaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5CD238EAC8C0079AF34 /* BaseViewController.swift */,
+			);
+			path = BaseViewController;
+			sourceTree = "<group>";
+		};
+		1997B5CE238EAC8C0079AF34 /* ConsentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5CF238EAC8C0079AF34 /* ConsentViewDetailsViewController.swift */,
+				1997B5D0238EAC8C0079AF34 /* ConsentSubViewController.swift */,
+			);
+			path = ConsentViewController;
+			sourceTree = "<group>";
+		};
+		1997B5D1238EAC8C0079AF34 /* WebsiteListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5D2238EAC8C0079AF34 /* WebsiteListViewController.swift */,
+			);
+			path = WebsiteListViewController;
+			sourceTree = "<group>";
+		};
+		1997B5D3238EAC8C0079AF34 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5D4238EAC8C0079AF34 /* ViewModels */,
+				1997B5D9238EAC8C0079AF34 /* Models */,
+				1997B5DE238EAC8C0079AF34 /* DatabaseCoordinator */,
+				1997B5E3238EAC8C0079AF34 /* CoreDataModels */,
+				1997B5EA238EAC8C0079AF34 /* Utility */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
+		1997B5D4238EAC8C0079AF34 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5D5238EAC8C0079AF34 /* AddWebsiteViewModel */,
+				1997B5D7238EAC8C0079AF34 /* WebsiteListViewModel */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1997B5D5238EAC8C0079AF34 /* AddWebsiteViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5D6238EAC8C0079AF34 /* AddWebsiteViewModel.swift */,
+			);
+			path = AddWebsiteViewModel;
+			sourceTree = "<group>";
+		};
+		1997B5D7238EAC8C0079AF34 /* WebsiteListViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5D8238EAC8C0079AF34 /* WebsiteListViewModel.swift */,
+			);
+			path = WebsiteListViewModel;
+			sourceTree = "<group>";
+		};
+		1997B5D9238EAC8C0079AF34 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5DA238EAC8C0079AF34 /* TargetingParamModel */,
+				1997B5DC238EAC8C0079AF34 /* SiteDetailsModel */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1997B5DA238EAC8C0079AF34 /* TargetingParamModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5DB238EAC8C0079AF34 /* TargetingParamModel.swift */,
+			);
+			path = TargetingParamModel;
+			sourceTree = "<group>";
+		};
+		1997B5DC238EAC8C0079AF34 /* SiteDetailsModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5DD238EAC8C0079AF34 /* SiteDetailsModel.swift */,
+			);
+			path = SiteDetailsModel;
+			sourceTree = "<group>";
+		};
+		1997B5DE238EAC8C0079AF34 /* DatabaseCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5DF238EAC8C0079AF34 /* BaseStorageCoordinator */,
+				1997B5E1238EAC8C0079AF34 /* WebsiteDetailsCoordinator */,
+			);
+			path = DatabaseCoordinator;
+			sourceTree = "<group>";
+		};
+		1997B5DF238EAC8C0079AF34 /* BaseStorageCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5E0238EAC8C0079AF34 /* BaseStorageCoordinator.swift */,
+			);
+			path = BaseStorageCoordinator;
+			sourceTree = "<group>";
+		};
+		1997B5E1238EAC8C0079AF34 /* WebsiteDetailsCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5E2238EAC8C0079AF34 /* WebsiteDetailsStorageCoordinator.swift */,
+			);
+			path = WebsiteDetailsCoordinator;
+			sourceTree = "<group>";
+		};
+		1997B5E3238EAC8C0079AF34 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5E4238EAC8C0079AF34 /* SiteDetailsModel */,
+				1997B5E7238EAC8C0079AF34 /* TargetingParamsModel */,
+			);
+			path = CoreDataModels;
+			sourceTree = "<group>";
+		};
+		1997B5E4238EAC8C0079AF34 /* SiteDetailsModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5E5238EAC8C0079AF34 /* SiteDetails+CoreDataProperties.swift */,
+				1997B5E6238EAC8C0079AF34 /* SiteDetails+CoreDataClass.swift */,
+			);
+			path = SiteDetailsModel;
+			sourceTree = "<group>";
+		};
+		1997B5E7238EAC8C0079AF34 /* TargetingParamsModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5E8238EAC8C0079AF34 /* TargetingParams+CoreDataClass.swift */,
+				1997B5E9238EAC8C0079AF34 /* TargetingParams+CoreDataProperties.swift */,
+			);
+			path = TargetingParamsModel;
+			sourceTree = "<group>";
+		};
+		1997B5EA238EAC8C0079AF34 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5EB238EAC8C0079AF34 /* SourcepointUITableView */,
+				1997B5EE238EAC8C0079AF34 /* Constants.swift */,
+				1997B5EF238EAC8C0079AF34 /* Debug.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		1997B5EB238EAC8C0079AF34 /* SourcepointUITableView */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5EC238EAC8C0079AF34 /* SourcePointUITableView.swift */,
+			);
+			path = SourcepointUITableView;
+			sourceTree = "<group>";
+		};
+		1997B5F0238EAC8C0079AF34 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				1997B5F1238EAC8C0079AF34 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		1997B608238EACC80079AF34 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1997B609238EACC80079AF34 /* ConsentCell */,
+				1997B60B238EACC80079AF34 /* TargetingParamCell */,
+				1997B60D238EACC80079AF34 /* AlertView */,
+				1997B60F238EACC80079AF34 /* LoaderView */,
+				1997B612238EACC80079AF34 /* WebsiteCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1997B609238EACC80079AF34 /* ConsentCell */ = {
+			isa = PBXGroup;
+			children = (
+				1997B60A238EACC80079AF34 /* ConsentTableViewCell.swift */,
+			);
+			path = ConsentCell;
+			sourceTree = "<group>";
+		};
+		1997B60B238EACC80079AF34 /* TargetingParamCell */ = {
+			isa = PBXGroup;
+			children = (
+				1997B60C238EACC80079AF34 /* TargetingparamCell.swift */,
+			);
+			path = TargetingParamCell;
+			sourceTree = "<group>";
+		};
+		1997B60D238EACC80079AF34 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				1997B60E238EACC80079AF34 /* AlertView.swift */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
+		1997B60F238EACC80079AF34 /* LoaderView */ = {
+			isa = PBXGroup;
+			children = (
+				1997B610238EACC80079AF34 /* LoaderView.xib */,
+				1997B611238EACC80079AF34 /* LoaderView.swift */,
+			);
+			path = LoaderView;
+			sourceTree = "<group>";
+		};
+		1997B612238EACC80079AF34 /* WebsiteCell */ = {
+			isa = PBXGroup;
+			children = (
+				1997B613238EACC80079AF34 /* WebsiteCell.swift */,
+			);
+			path = WebsiteCell;
+			sourceTree = "<group>";
+		};
+		1997B61C238EADA80079AF34 /* ConsentViewControllerTests */ = {
+			isa = PBXGroup;
+			children = (
+				1997B61D238EADA80079AF34 /* ConsentViewControllerErrorTest.swift */,
+				1997B61E238EADA80079AF34 /* ConsentViewControllerTest.swift */,
+				1997B61F238EADA80079AF34 /* SourcePointClientTest.swift */,
+				1997B620238EADA80079AF34 /* ConsentTest.swift */,
+				1997B621238EADA80079AF34 /* TestData.plist */,
+			);
+			path = ConsentViewControllerTests;
+			sourceTree = "<group>";
+		};
 		1CDEC261E0D620E46748CCE7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +578,10 @@
 				7228B53CDDACE73BC4006A55 /* Pods-ConsentViewController_Example.release.xcconfig */,
 				D83BC135AFAA50BE83A3029B /* Pods-AuthExample.debug.xcconfig */,
 				8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */,
+				89196DBAD29967A64D8F30AF /* Pods-SourcePointMetaApp.debug.xcconfig */,
+				10DED85094D7BF87FCBF6C4C /* Pods-SourcePointMetaApp.release.xcconfig */,
+				16808A007C3576942EB50647 /* Pods-SourcePointMetaAppTests.debug.xcconfig */,
+				81E70E5D69EDED1D091D217D /* Pods-SourcePointMetaAppTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -90,6 +593,8 @@
 				607FACD21AFB9204008FA782 /* Example for ConsentViewController */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				8231B13E22BA5A6B00D2669B /* AuthExample */,
+				1997B4FB238EA45E0079AF34 /* SourcePointMetaApp */,
+				1997B512238EA4600079AF34 /* SourcePointMetaAppTests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				1CDEC261E0D620E46748CCE7 /* Pods */,
 				EEE3CDAB8AFE80647B1E565B /* Frameworks */,
@@ -101,6 +606,8 @@
 			children = (
 				607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */,
 				8231B13D22BA5A6B00D2669B /* AuthExample.app */,
+				1997B4FA238EA45E0079AF34 /* SourcePointMetaApp.app */,
+				1997B50F238EA4600079AF34 /* SourcePointMetaAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -174,6 +681,8 @@
 				8231B15122BBC39900D2669B /* ConsentViewController.framework */,
 				326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */,
 				494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */,
+				25F15F334D5E2EAD21AEDC70 /* Pods_SourcePointMetaApp.framework */,
+				6BCDDECCCB94F4C55A8785D5 /* Pods_SourcePointMetaAppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,6 +690,45 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1997B4F9238EA45E0079AF34 /* SourcePointMetaApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1997B527238EA4600079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaApp" */;
+			buildPhases = (
+				95EABD80B72252C25BDA2FD2 /* [CP] Check Pods Manifest.lock */,
+				1997B4F6238EA45E0079AF34 /* Sources */,
+				1997B4F7238EA45E0079AF34 /* Frameworks */,
+				1997B4F8238EA45E0079AF34 /* Resources */,
+				49E3B641BBBF3CE3F08324D3 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SourcePointMetaApp;
+			productName = SourcePointMetaApp;
+			productReference = 1997B4FA238EA45E0079AF34 /* SourcePointMetaApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1997B50E238EA4600079AF34 /* SourcePointMetaAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1997B528238EA4600079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaAppTests" */;
+			buildPhases = (
+				52C178927B130759D80CAF9F /* [CP] Check Pods Manifest.lock */,
+				1997B50B238EA4600079AF34 /* Sources */,
+				1997B50C238EA4600079AF34 /* Frameworks */,
+				1997B50D238EA4600079AF34 /* Resources */,
+				A1D88BCCAA7A9025DE103911 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1997B511238EA4600079AF34 /* PBXTargetDependency */,
+			);
+			name = SourcePointMetaAppTests;
+			productName = SourcePointMetaAppTests;
+			productReference = 1997B50F238EA4600079AF34 /* SourcePointMetaAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		607FACCF1AFB9204008FA782 /* ConsentViewController_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ConsentViewController_Example" */;
@@ -225,10 +773,22 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
+					1997B4F9238EA45E0079AF34 = {
+						CreatedOnToolsVersion = 11.1;
+						DevelopmentTeam = 6KYEQLUC5A;
+						ProvisioningStyle = Automatic;
+					};
+					1997B50E238EA4600079AF34 = {
+						CreatedOnToolsVersion = 11.1;
+						DevelopmentTeam = 6KYEQLUC5A;
+						LastSwiftMigration = 1110;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 1997B4F9238EA45E0079AF34;
+					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 6KYEQLUC5A;
@@ -257,11 +817,44 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* ConsentViewController_Example */,
 				8231B13C22BA5A6B00D2669B /* AuthExample */,
+				1997B4F9238EA45E0079AF34 /* SourcePointMetaApp */,
+				1997B50E238EA4600079AF34 /* SourcePointMetaAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1997B4F8238EA45E0079AF34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B588238EA7510079AF34 /* SF-Pro-Text-Medium.otf in Resources */,
+				1997B617238EACC80079AF34 /* LoaderView.xib in Resources */,
+				1997B581238EA7510079AF34 /* SF-Pro-Text-Regular.otf in Resources */,
+				1997B582238EA7510079AF34 /* SF-Pro-Text-Bold.otf in Resources */,
+				1997B585238EA7510079AF34 /* SF-Pro-Text-Semibold.otf in Resources */,
+				1997B58B238EA7510079AF34 /* Assets.xcassets in Resources */,
+				1997B589238EA7510079AF34 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
+				1997B57F238EA7510079AF34 /* SF-Pro-Text-MediumItalic.otf in Resources */,
+				1997B586238EA7510079AF34 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
+				1997B57C238EA7510079AF34 /* LaunchScreen.storyboard in Resources */,
+				1997B57E238EA7510079AF34 /* SF-Pro-Text-Heavy.otf in Resources */,
+				1997B57D238EA7510079AF34 /* Main.storyboard in Resources */,
+				1997B583238EA7510079AF34 /* SF-Pro-Text-BoldItalic.otf in Resources */,
+				1997B584238EA7510079AF34 /* SF-Pro-Text-RegularItalic.otf in Resources */,
+				1997B587238EA7510079AF34 /* SF-Pro-Text-LightItalic.otf in Resources */,
+				1997B580238EA7510079AF34 /* SF-Pro-Text-Light.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1997B50D238EA4600079AF34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B629238EADA80079AF34 /* TestData.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCE1AFB9204008FA782 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -285,6 +878,90 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		49E3B641BBBF3CE3F08324D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ConsentViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		52C178927B130759D80CAF9F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SourcePointMetaAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95EABD80B72252C25BDA2FD2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SourcePointMetaApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A1D88BCCAA7A9025DE103911 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ConsentViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A2035C8D26F2E866B8AB6E65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -372,6 +1049,58 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1997B4F6238EA45E0079AF34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B5F8238EAC8C0079AF34 /* WebsiteListViewController.swift in Sources */,
+				1997B5F5238EAC8C0079AF34 /* BaseViewController.swift in Sources */,
+				1997B614238EACC80079AF34 /* ConsentTableViewCell.swift in Sources */,
+				1997B5F6238EAC8C0079AF34 /* ConsentViewDetailsViewController.swift in Sources */,
+				1997B5FD238EAC8C0079AF34 /* BaseStorageCoordinator.swift in Sources */,
+				1997B615238EACC80079AF34 /* TargetingparamCell.swift in Sources */,
+				1997B5FB238EAC8C0079AF34 /* TargetingParamModel.swift in Sources */,
+				1997B602238EAC8C0079AF34 /* TargetingParams+CoreDataProperties.swift in Sources */,
+				1997B5F4238EAC8C0079AF34 /* AddWebsiteViewController.swift in Sources */,
+				1997B635238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */,
+				1997B5FC238EAC8C0079AF34 /* SiteDetailsModel.swift in Sources */,
+				1997B5F7238EAC8C0079AF34 /* ConsentSubViewController.swift in Sources */,
+				1997B605238EAC8C0079AF34 /* Constants.swift in Sources */,
+				1997B600238EAC8C0079AF34 /* SiteDetails+CoreDataClass.swift in Sources */,
+				1997B606238EAC8C0079AF34 /* Debug.swift in Sources */,
+				1997B5FE238EAC8C0079AF34 /* WebsiteDetailsStorageCoordinator.swift in Sources */,
+				1997B618238EACC80079AF34 /* LoaderView.swift in Sources */,
+				1997B5FA238EAC8C0079AF34 /* WebsiteListViewModel.swift in Sources */,
+				1997B5F3238EAC8C0079AF34 /* BaseWindow.swift in Sources */,
+				1997B5FF238EAC8C0079AF34 /* SiteDetails+CoreDataProperties.swift in Sources */,
+				1997B5F2238EAC8C0079AF34 /* DBManager.swift in Sources */,
+				1997B616238EACC80079AF34 /* AlertView.swift in Sources */,
+				1997B619238EACC80079AF34 /* WebsiteCell.swift in Sources */,
+				1997B601238EAC8C0079AF34 /* TargetingParams+CoreDataClass.swift in Sources */,
+				1997B603238EAC8C0079AF34 /* SourcePointUITableView.swift in Sources */,
+				1997B5F9238EAC8C0079AF34 /* AddWebsiteViewModel.swift in Sources */,
+				1997B607238EAC8C0079AF34 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1997B50B238EA4600079AF34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B628238EADA80079AF34 /* ConsentTest.swift in Sources */,
+				1997B624238EADA80079AF34 /* AddWebsiteViewControllerTest.swift in Sources */,
+				1997B62A238EADA80079AF34 /* AddWebsiteViewModelTest.swift in Sources */,
+				1997B632238EADB40079AF34 /* WebsiteListViewModelTest.swift in Sources */,
+				1997B630238EADB40079AF34 /* WebsiteListViewControllerTest.swift in Sources */,
+				1997B627238EADA80079AF34 /* SourcePointClientTest.swift in Sources */,
+				1997B623238EADA80079AF34 /* ConsentViewDetailsViewControllerTest.swift in Sources */,
+				1997B625238EADA80079AF34 /* ConsentViewControllerErrorTest.swift in Sources */,
+				1997B626238EADA80079AF34 /* ConsentViewControllerTest.swift in Sources */,
+				1997B62F238EADB40079AF34 /* WebsiteDetailsStorageCoordinatorTest.swift in Sources */,
+				1997B631238EADB40079AF34 /* XCUIElement+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCC1AFB9204008FA782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -393,7 +1122,31 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		1997B511238EA4600079AF34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1997B4F9238EA45E0079AF34 /* SourcePointMetaApp */;
+			targetProxy = 1997B510238EA4600079AF34 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		1997B52B238EA7500079AF34 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1997B52C238EA7500079AF34 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		1997B52D238EA7500079AF34 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1997B52E238EA7500079AF34 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -429,6 +1182,119 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1997B521238EA4600079AF34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89196DBAD29967A64D8F30AF /* Pods-SourcePointMetaApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1997B522238EA4600079AF34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10DED85094D7BF87FCBF6C4C /* Pods-SourcePointMetaApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1997B523238EA4600079AF34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16808A007C3576942EB50647 /* Pods-SourcePointMetaAppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SourcePointMetaApp.app/SourcePointMetaApp";
+			};
+			name = Debug;
+		};
+		1997B524238EA4600079AF34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81E70E5D69EDED1D091D217D /* Pods-SourcePointMetaAppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SourcePointMetaApp.app/SourcePointMetaApp";
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -633,6 +1499,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1997B527238EA4600079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1997B521238EA4600079AF34 /* Debug */,
+				1997B522238EA4600079AF34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1997B528238EA4600079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1997B523238EA4600079AF34 /* Debug */,
+				1997B524238EA4600079AF34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "ConsentViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -661,6 +1545,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1997B633238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1997B634238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodel */,
+			);
+			currentVersion = 1997B634238EBFE10079AF34 /* SourcePointMetaApp.xcdatamodel */;
+			path = SourcePointMetaApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
 }
