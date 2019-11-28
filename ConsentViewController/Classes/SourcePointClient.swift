@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (Data?) -> Void) }
+protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (Data?, Error?) -> Void) }
 
 class SimpleClient: HttpClient {
-    func get(url: URL, completionHandler cHandler : @escaping (Data?) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            DispatchQueue.main.async { cHandler(data) }
+    func get(url: URL, completionHandler cHandler : @escaping (Data?, Error?) -> Void) {
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async { cHandler(data, error) }
         }
         task.resume()
     }
@@ -65,7 +65,7 @@ class SourcePointClient {
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
-        client.get(url: statusGdprUrl) { (result) in
+        client.get(url: statusGdprUrl) { (result, _error) in
             if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
                 let gdprStatus = parsedResult["gdprApplies"]
                 cHandler(gdprStatus,nil)
@@ -83,7 +83,7 @@ class SourcePointClient {
         let decoder = JSONDecoder()
 
         if let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl) {
-            client.get(url: getCustomConsentsUrl) { (result) in
+            client.get(url: getCustomConsentsUrl) { (result, _error) in
                 if let _result = result, let consents = try? decoder.decode(ConsentsResponse.self, from: _result) {
                     cHandler(consents, nil)
                 }else {
