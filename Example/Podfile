@@ -3,6 +3,13 @@ use_frameworks!
 target 'ConsentViewController_Example' do
   platform :ios, '9.0'
   pod 'ConsentViewController', :path => '../'
+  
+  abstract_target 'Tests' do
+    target "ConsentViewController_ExampleTests"
+
+    pod 'Quick'
+    pod 'Nimble'
+  end
 end
 
 target 'AuthExample' do

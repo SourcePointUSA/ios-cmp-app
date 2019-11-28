@@ -1,0 +1,6 @@
+framework module Pods_ConsentViewController_Example_Tests_ConsentViewController_ExampleTests {
+  umbrella header "Pods-ConsentViewController_Example-Tests-ConsentViewController_ExampleTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

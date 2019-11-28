@@ -1,13 +1,19 @@
 PODS:
   - ConsentViewController (3.0.0):
     - ReachabilitySwift (= 4.3.0)
+  - Nimble (8.0.4)
+  - Quick (2.2.0)
   - ReachabilitySwift (4.3.0)
 
 DEPENDENCIES:
   - ConsentViewController (from `../`)
+  - Nimble
+  - Quick
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
+    - Nimble
+    - Quick
     - ReachabilitySwift
 
 EXTERNAL SOURCES:
@@ -16,8 +22,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   ConsentViewController: 044e1ead2849db3aeb86e1d612e22c64cb852e80
+  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
 
-PODFILE CHECKSUM: c858d2a75fc0f92aa2975c24ebe55673840c66b4
+PODFILE CHECKSUM: 38729f59f6fe5549935a8627b6cd404baea43740
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4
