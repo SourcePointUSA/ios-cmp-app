@@ -94,7 +94,7 @@ class SourcePointClient {
         return String(data: data, encoding: String.Encoding.utf8)!
     }
 
-    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
+    func getSDKWebURL(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
         var url: URL
         var components = URLComponents()
         var queryItems: [String:String] = [:]

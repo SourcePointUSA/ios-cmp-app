@@ -314,7 +314,7 @@ import Reachability
 
     internal func getMessageUrl(authId: String?) -> URL? {
         do {
-           return try sourcePoint.getMessageUrl(
+           return try sourcePoint.getSDKWebURL(
                 forTargetingParams:  targetingParams,
                 debugLevel: debugLevel.rawValue,
                 newPM: newPM,
