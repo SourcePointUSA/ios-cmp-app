@@ -7,6 +7,61 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1997B669238FDE7C0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65C238FDE7B0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift */; };
+		1997B66A238FDE7C0079AF34 /* PropertyListViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65D238FDE7B0079AF34 /* PropertyListViewControllerTest.swift */; };
+		1997B66B238FDE7C0079AF34 /* AddPropertyViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65E238FDE7C0079AF34 /* AddPropertyViewModelTest.swift */; };
+		1997B66C238FDE7C0079AF34 /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65F238FDE7C0079AF34 /* XCUIElement+Extensions.swift */; };
+		1997B66D238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B661238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift */; };
+		1997B66E238FDE7C0079AF34 /* ConsentViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B662238FDE7C0079AF34 /* ConsentViewControllerTest.swift */; };
+		1997B66F238FDE7C0079AF34 /* SourcePointClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B663238FDE7C0079AF34 /* SourcePointClientTest.swift */; };
+		1997B670238FDE7C0079AF34 /* ConsentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B664238FDE7C0079AF34 /* ConsentTest.swift */; };
+		1997B671238FDE7C0079AF34 /* TestData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1997B665238FDE7C0079AF34 /* TestData.plist */; };
+		1997B672238FDE7C0079AF34 /* PropertyListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B666238FDE7C0079AF34 /* PropertyListViewModelTest.swift */; };
+		1997B673238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B667238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift */; };
+		1997B674238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B668238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift */; };
+		1997B6C6238FDEA10079AF34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1997B675238FDEA00079AF34 /* Assets.xcassets */; };
+		1997B6C7238FDEA10079AF34 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B678238FDEA10079AF34 /* DBManager.swift */; };
+		1997B6C8238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1997B679238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld */; };
+		1997B6C9238FDEA10079AF34 /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B67E238FDEA10079AF34 /* SF-Pro-Text-Heavy.otf */; };
+		1997B6CA238FDEA10079AF34 /* SF-Pro-Text-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B67F238FDEA10079AF34 /* SF-Pro-Text-MediumItalic.otf */; };
+		1997B6CB238FDEA10079AF34 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B680238FDEA10079AF34 /* SF-Pro-Text-Light.otf */; };
+		1997B6CC238FDEA10079AF34 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B681238FDEA10079AF34 /* SF-Pro-Text-Regular.otf */; };
+		1997B6CD238FDEA10079AF34 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B682238FDEA10079AF34 /* SF-Pro-Text-Bold.otf */; };
+		1997B6CE238FDEA10079AF34 /* SF-Pro-Text-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B683238FDEA10079AF34 /* SF-Pro-Text-BoldItalic.otf */; };
+		1997B6CF238FDEA10079AF34 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B684238FDEA10079AF34 /* SF-Pro-Text-RegularItalic.otf */; };
+		1997B6D0238FDEA10079AF34 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B685238FDEA10079AF34 /* SF-Pro-Text-Semibold.otf */; };
+		1997B6D1238FDEA10079AF34 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B686238FDEA10079AF34 /* SF-Pro-Text-HeavyItalic.otf */; };
+		1997B6D2238FDEA10079AF34 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B687238FDEA10079AF34 /* SF-Pro-Text-LightItalic.otf */; };
+		1997B6D3238FDEA10079AF34 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B688238FDEA10079AF34 /* SF-Pro-Text-Medium.otf */; };
+		1997B6D4238FDEA10079AF34 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1997B689238FDEA10079AF34 /* SF-Pro-Text-SemiboldItalic.otf */; };
+		1997B6D5238FDEA10079AF34 /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B68C238FDEA10079AF34 /* BaseWindow.swift */; };
+		1997B6D6238FDEA10079AF34 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B68E238FDEA10079AF34 /* BaseViewController.swift */; };
+		1997B6D7238FDEA10079AF34 /* AddPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B690238FDEA10079AF34 /* AddPropertyViewController.swift */; };
+		1997B6D8238FDEA10079AF34 /* ConsentViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B692238FDEA10079AF34 /* ConsentViewDetailsViewController.swift */; };
+		1997B6D9238FDEA10079AF34 /* ConsentSubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B693238FDEA10079AF34 /* ConsentSubViewController.swift */; };
+		1997B6DA238FDEA10079AF34 /* PropertyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B695238FDEA10079AF34 /* PropertyListViewController.swift */; };
+		1997B6DB238FDEA10079AF34 /* PropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B698238FDEA10079AF34 /* PropertyCell.swift */; };
+		1997B6DC238FDEA10079AF34 /* ConsentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B69A238FDEA10079AF34 /* ConsentTableViewCell.swift */; };
+		1997B6DD238FDEA10079AF34 /* TargetingparamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B69C238FDEA10079AF34 /* TargetingparamCell.swift */; };
+		1997B6DE238FDEA10079AF34 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B69E238FDEA10079AF34 /* AlertView.swift */; };
+		1997B6DF238FDEA10079AF34 /* LoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1997B6A0238FDEA10079AF34 /* LoaderView.xib */; };
+		1997B6E0238FDEA10079AF34 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6A1238FDEA10079AF34 /* LoaderView.swift */; };
+		1997B6E1238FDEA10079AF34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1997B6A3238FDEA10079AF34 /* LaunchScreen.storyboard */; };
+		1997B6E2238FDEA10079AF34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1997B6A5238FDEA10079AF34 /* Main.storyboard */; };
+		1997B6E3238FDEA10079AF34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6A8238FDEA10079AF34 /* AppDelegate.swift */; };
+		1997B6E4238FDEA10079AF34 /* AddPropertyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6AC238FDEA10079AF34 /* AddPropertyViewModel.swift */; };
+		1997B6E5238FDEA10079AF34 /* PropertyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6AE238FDEA10079AF34 /* PropertyListViewModel.swift */; };
+		1997B6E6238FDEA10079AF34 /* PropertyDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6B1238FDEA10079AF34 /* PropertyDetailsModel.swift */; };
+		1997B6E7238FDEA10079AF34 /* TargetingParamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6B3238FDEA10079AF34 /* TargetingParamModel.swift */; };
+		1997B6E8238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6B6238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift */; };
+		1997B6E9238FDEA10079AF34 /* BaseStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6B8238FDEA10079AF34 /* BaseStorageCoordinator.swift */; };
+		1997B6EA238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BB238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift */; };
+		1997B6EB238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BC238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift */; };
+		1997B6EC238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BE238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift */; };
+		1997B6ED238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BF238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift */; };
+		1997B6EE238FDEA10079AF34 /* SourcePointUITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6C2238FDEA10079AF34 /* SourcePointUITableView.swift */; };
+		1997B6F0238FDEA10079AF34 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6C4238FDEA10079AF34 /* Constants.swift */; };
+		1997B6F1238FDEA10079AF34 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6C5238FDEA10079AF34 /* Debug.swift */; };
 		21233A8E0B54976B198A3557 /* Pods_AuthExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */; };
 		4AF9FC55B8D5FF6D34DBFD5B /* Pods_ConsentViewController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -14,6 +69,8 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		7EBE9977D610B6567B824775 /* Pods_SourcePointMetaApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1807886202444AABBDC3DE51 /* Pods_SourcePointMetaApp.framework */; };
+		80B8A6927819465D0A66B097 /* Pods_SourcePointMetaAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A6FC655AAEC7938808ADC8 /* Pods_SourcePointMetaAppTests.framework */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
@@ -22,8 +79,79 @@
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1997B650238FDCF30079AF34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1997B639238FDCE80079AF34;
+			remoteInfo = SourcePointMetaApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1807886202444AABBDC3DE51 /* Pods_SourcePointMetaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1997B63A238FDCE80079AF34 /* SourcePointMetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourcePointMetaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1997B64A238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourcePointMetaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1997B655238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1997B65C238FDE7B0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsStorageCoordinatorTest.swift; sourceTree = "<group>"; };
+		1997B65D238FDE7B0079AF34 /* PropertyListViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B65E238FDE7C0079AF34 /* AddPropertyViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewModelTest.swift; sourceTree = "<group>"; };
+		1997B65F238FDE7C0079AF34 /* XCUIElement+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Extensions.swift"; sourceTree = "<group>"; };
+		1997B661238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerErrorTest.swift; sourceTree = "<group>"; };
+		1997B662238FDE7C0079AF34 /* ConsentViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B663238FDE7C0079AF34 /* SourcePointClientTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointClientTest.swift; sourceTree = "<group>"; };
+		1997B664238FDE7C0079AF34 /* ConsentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTest.swift; sourceTree = "<group>"; };
+		1997B665238FDE7C0079AF34 /* TestData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestData.plist; sourceTree = "<group>"; };
+		1997B666238FDE7C0079AF34 /* PropertyListViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewModelTest.swift; sourceTree = "<group>"; };
+		1997B667238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B668238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewControllerTest.swift; sourceTree = "<group>"; };
+		1997B675238FDEA00079AF34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1997B678238FDEA10079AF34 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		1997B67A238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SourcePointMetaApp.xcdatamodel; sourceTree = "<group>"; };
+		1997B67E238FDEA10079AF34 /* SF-Pro-Text-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Heavy.otf"; sourceTree = "<group>"; };
+		1997B67F238FDEA10079AF34 /* SF-Pro-Text-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-MediumItalic.otf"; sourceTree = "<group>"; };
+		1997B680238FDEA10079AF34 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
+		1997B681238FDEA10079AF34 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		1997B682238FDEA10079AF34 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		1997B683238FDEA10079AF34 /* SF-Pro-Text-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-BoldItalic.otf"; sourceTree = "<group>"; };
+		1997B684238FDEA10079AF34 /* SF-Pro-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-RegularItalic.otf"; sourceTree = "<group>"; };
+		1997B685238FDEA10079AF34 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		1997B686238FDEA10079AF34 /* SF-Pro-Text-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-HeavyItalic.otf"; sourceTree = "<group>"; };
+		1997B687238FDEA10079AF34 /* SF-Pro-Text-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-LightItalic.otf"; sourceTree = "<group>"; };
+		1997B688238FDEA10079AF34 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		1997B689238FDEA10079AF34 /* SF-Pro-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		1997B68C238FDEA10079AF34 /* BaseWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWindow.swift; sourceTree = "<group>"; };
+		1997B68E238FDEA10079AF34 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		1997B690238FDEA10079AF34 /* AddPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewController.swift; sourceTree = "<group>"; };
+		1997B692238FDEA10079AF34 /* ConsentViewDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewController.swift; sourceTree = "<group>"; };
+		1997B693238FDEA10079AF34 /* ConsentSubViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentSubViewController.swift; sourceTree = "<group>"; };
+		1997B695238FDEA10079AF34 /* PropertyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewController.swift; sourceTree = "<group>"; };
+		1997B698238FDEA10079AF34 /* PropertyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyCell.swift; sourceTree = "<group>"; };
+		1997B69A238FDEA10079AF34 /* ConsentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTableViewCell.swift; sourceTree = "<group>"; };
+		1997B69C238FDEA10079AF34 /* TargetingparamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetingparamCell.swift; sourceTree = "<group>"; };
+		1997B69E238FDEA10079AF34 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		1997B6A0238FDEA10079AF34 /* LoaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoaderView.xib; sourceTree = "<group>"; };
+		1997B6A1238FDEA10079AF34 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		1997B6A4238FDEA10079AF34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1997B6A6238FDEA10079AF34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1997B6A8238FDEA10079AF34 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1997B6AC238FDEA10079AF34 /* AddPropertyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewModel.swift; sourceTree = "<group>"; };
+		1997B6AE238FDEA10079AF34 /* PropertyListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewModel.swift; sourceTree = "<group>"; };
+		1997B6B1238FDEA10079AF34 /* PropertyDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsModel.swift; sourceTree = "<group>"; };
+		1997B6B3238FDEA10079AF34 /* TargetingParamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetingParamModel.swift; sourceTree = "<group>"; };
+		1997B6B6238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsStorageCoordinator.swift; sourceTree = "<group>"; };
+		1997B6B8238FDEA10079AF34 /* BaseStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStorageCoordinator.swift; sourceTree = "<group>"; };
+		1997B6BB238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1997B6BC238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1997B6BE238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1997B6BF238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1997B6C2238FDEA10079AF34 /* SourcePointUITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointUITableView.swift; sourceTree = "<group>"; };
+		1997B6C4238FDEA10079AF34 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1997B6C5238FDEA10079AF34 /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		34A6FC655AAEC7938808ADC8 /* Pods_SourcePointMetaAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C713B0FF3D9458F2FFA2EA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConsentViewController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,6 +164,8 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		678A7DE8E11D4215D10B5E20 /* Pods-SourcePointMetaAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		69E90BB3C3B8E150E7C3D7A9 /* Pods-SourcePointMetaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7228B53CDDACE73BC4006A55 /* Pods-ConsentViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,9 +180,27 @@
 		977885D1C020D8A587B1BC36 /* Pods-ConsentViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B5AA36A7D29C1E427A75F8D4 /* ConsentViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConsentViewController.podspec; path = ../ConsentViewController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D83BC135AFAA50BE83A3029B /* Pods-AuthExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AuthExample/Pods-AuthExample.debug.xcconfig"; sourceTree = "<group>"; };
+		EDBA3E48D8A5843C899E708B /* Pods-SourcePointMetaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp.release.xcconfig"; sourceTree = "<group>"; };
+		F10DCDCC5648E6FBF71D76CA /* Pods-SourcePointMetaAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1997B637238FDCE80079AF34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EBE9977D610B6567B824775 /* Pods_SourcePointMetaApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1997B64C238FDCF30079AF34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80B8A6927819465D0A66B097 /* Pods_SourcePointMetaAppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCD1AFB9204008FA782 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +220,357 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1997B63B238FDCE80079AF34 /* SourcePointMetaApp */ = {
+			isa = PBXGroup;
+			children = (
+				1997B68A238FDEA10079AF34 /* Controllers */,
+				1997B6A7238FDEA10079AF34 /* AppDelegate */,
+				1997B6A9238FDEA10079AF34 /* Layers */,
+				1997B676238FDEA10079AF34 /* Managers */,
+				1997B696238FDEA10079AF34 /* Views */,
+				1997B679238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld */,
+				1997B675238FDEA00079AF34 /* Assets.xcassets */,
+				1997B64A238FDCF30079AF34 /* Info.plist */,
+				1997B6A2238FDEA10079AF34 /* Storyboards */,
+				1997B67B238FDEA10079AF34 /* Resources */,
+			);
+			path = SourcePointMetaApp;
+			sourceTree = "<group>";
+		};
+		1997B652238FDCF30079AF34 /* SourcePointMetaAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				1997B668238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift */,
+				1997B65E238FDE7C0079AF34 /* AddPropertyViewModelTest.swift */,
+				1997B660238FDE7C0079AF34 /* ConsentViewControllerTests */,
+				1997B667238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift */,
+				1997B65C238FDE7B0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift */,
+				1997B65D238FDE7B0079AF34 /* PropertyListViewControllerTest.swift */,
+				1997B666238FDE7C0079AF34 /* PropertyListViewModelTest.swift */,
+				1997B65F238FDE7C0079AF34 /* XCUIElement+Extensions.swift */,
+				1997B655238FDCF30079AF34 /* Info.plist */,
+			);
+			path = SourcePointMetaAppTests;
+			sourceTree = "<group>";
+		};
+		1997B660238FDE7C0079AF34 /* ConsentViewControllerTests */ = {
+			isa = PBXGroup;
+			children = (
+				1997B661238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift */,
+				1997B662238FDE7C0079AF34 /* ConsentViewControllerTest.swift */,
+				1997B663238FDE7C0079AF34 /* SourcePointClientTest.swift */,
+				1997B664238FDE7C0079AF34 /* ConsentTest.swift */,
+				1997B665238FDE7C0079AF34 /* TestData.plist */,
+			);
+			path = ConsentViewControllerTests;
+			sourceTree = "<group>";
+		};
+		1997B676238FDEA10079AF34 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1997B677238FDEA10079AF34 /* DatabaseManager */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		1997B677238FDEA10079AF34 /* DatabaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				1997B678238FDEA10079AF34 /* DBManager.swift */,
+			);
+			path = DatabaseManager;
+			sourceTree = "<group>";
+		};
+		1997B67B238FDEA10079AF34 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1997B67C238FDEA10079AF34 /* Font */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1997B67C238FDEA10079AF34 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				1997B67D238FDEA10079AF34 /* SF Pro */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		1997B67D238FDEA10079AF34 /* SF Pro */ = {
+			isa = PBXGroup;
+			children = (
+				1997B67E238FDEA10079AF34 /* SF-Pro-Text-Heavy.otf */,
+				1997B67F238FDEA10079AF34 /* SF-Pro-Text-MediumItalic.otf */,
+				1997B680238FDEA10079AF34 /* SF-Pro-Text-Light.otf */,
+				1997B681238FDEA10079AF34 /* SF-Pro-Text-Regular.otf */,
+				1997B682238FDEA10079AF34 /* SF-Pro-Text-Bold.otf */,
+				1997B683238FDEA10079AF34 /* SF-Pro-Text-BoldItalic.otf */,
+				1997B684238FDEA10079AF34 /* SF-Pro-Text-RegularItalic.otf */,
+				1997B685238FDEA10079AF34 /* SF-Pro-Text-Semibold.otf */,
+				1997B686238FDEA10079AF34 /* SF-Pro-Text-HeavyItalic.otf */,
+				1997B687238FDEA10079AF34 /* SF-Pro-Text-LightItalic.otf */,
+				1997B688238FDEA10079AF34 /* SF-Pro-Text-Medium.otf */,
+				1997B689238FDEA10079AF34 /* SF-Pro-Text-SemiboldItalic.otf */,
+			);
+			path = "SF Pro";
+			sourceTree = "<group>";
+		};
+		1997B68A238FDEA10079AF34 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1997B68B238FDEA10079AF34 /* BaseWindow */,
+				1997B68D238FDEA10079AF34 /* BaseViewController */,
+				1997B68F238FDEA10079AF34 /* AddPropertyViewController */,
+				1997B691238FDEA10079AF34 /* ConsentViewController */,
+				1997B694238FDEA10079AF34 /* PropertyListViewController */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		1997B68B238FDEA10079AF34 /* BaseWindow */ = {
+			isa = PBXGroup;
+			children = (
+				1997B68C238FDEA10079AF34 /* BaseWindow.swift */,
+			);
+			path = BaseWindow;
+			sourceTree = "<group>";
+		};
+		1997B68D238FDEA10079AF34 /* BaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B68E238FDEA10079AF34 /* BaseViewController.swift */,
+			);
+			path = BaseViewController;
+			sourceTree = "<group>";
+		};
+		1997B68F238FDEA10079AF34 /* AddPropertyViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B690238FDEA10079AF34 /* AddPropertyViewController.swift */,
+			);
+			path = AddPropertyViewController;
+			sourceTree = "<group>";
+		};
+		1997B691238FDEA10079AF34 /* ConsentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B692238FDEA10079AF34 /* ConsentViewDetailsViewController.swift */,
+				1997B693238FDEA10079AF34 /* ConsentSubViewController.swift */,
+			);
+			path = ConsentViewController;
+			sourceTree = "<group>";
+		};
+		1997B694238FDEA10079AF34 /* PropertyListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1997B695238FDEA10079AF34 /* PropertyListViewController.swift */,
+			);
+			path = PropertyListViewController;
+			sourceTree = "<group>";
+		};
+		1997B696238FDEA10079AF34 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1997B697238FDEA10079AF34 /* PropertyCell */,
+				1997B699238FDEA10079AF34 /* ConsentCell */,
+				1997B69B238FDEA10079AF34 /* TargetingParamCell */,
+				1997B69D238FDEA10079AF34 /* AlertView */,
+				1997B69F238FDEA10079AF34 /* LoaderView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1997B697238FDEA10079AF34 /* PropertyCell */ = {
+			isa = PBXGroup;
+			children = (
+				1997B698238FDEA10079AF34 /* PropertyCell.swift */,
+			);
+			path = PropertyCell;
+			sourceTree = "<group>";
+		};
+		1997B699238FDEA10079AF34 /* ConsentCell */ = {
+			isa = PBXGroup;
+			children = (
+				1997B69A238FDEA10079AF34 /* ConsentTableViewCell.swift */,
+			);
+			path = ConsentCell;
+			sourceTree = "<group>";
+		};
+		1997B69B238FDEA10079AF34 /* TargetingParamCell */ = {
+			isa = PBXGroup;
+			children = (
+				1997B69C238FDEA10079AF34 /* TargetingparamCell.swift */,
+			);
+			path = TargetingParamCell;
+			sourceTree = "<group>";
+		};
+		1997B69D238FDEA10079AF34 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				1997B69E238FDEA10079AF34 /* AlertView.swift */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
+		1997B69F238FDEA10079AF34 /* LoaderView */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6A0238FDEA10079AF34 /* LoaderView.xib */,
+				1997B6A1238FDEA10079AF34 /* LoaderView.swift */,
+			);
+			path = LoaderView;
+			sourceTree = "<group>";
+		};
+		1997B6A2238FDEA10079AF34 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6A3238FDEA10079AF34 /* LaunchScreen.storyboard */,
+				1997B6A5238FDEA10079AF34 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		1997B6A7238FDEA10079AF34 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6A8238FDEA10079AF34 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		1997B6A9238FDEA10079AF34 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6AA238FDEA10079AF34 /* ViewModels */,
+				1997B6AF238FDEA10079AF34 /* Models */,
+				1997B6B4238FDEA10079AF34 /* DatabaseCoordinator */,
+				1997B6B9238FDEA10079AF34 /* CoreDataModels */,
+				1997B6C0238FDEA10079AF34 /* Utility */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
+		1997B6AA238FDEA10079AF34 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6AB238FDEA10079AF34 /* AddPropertyViewModel */,
+				1997B6AD238FDEA10079AF34 /* PropertyListViewModel */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1997B6AB238FDEA10079AF34 /* AddPropertyViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6AC238FDEA10079AF34 /* AddPropertyViewModel.swift */,
+			);
+			path = AddPropertyViewModel;
+			sourceTree = "<group>";
+		};
+		1997B6AD238FDEA10079AF34 /* PropertyListViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6AE238FDEA10079AF34 /* PropertyListViewModel.swift */,
+			);
+			path = PropertyListViewModel;
+			sourceTree = "<group>";
+		};
+		1997B6AF238FDEA10079AF34 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6B0238FDEA10079AF34 /* PropertyDetailsModel */,
+				1997B6B2238FDEA10079AF34 /* TargetingParamModel */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1997B6B0238FDEA10079AF34 /* PropertyDetailsModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6B1238FDEA10079AF34 /* PropertyDetailsModel.swift */,
+			);
+			path = PropertyDetailsModel;
+			sourceTree = "<group>";
+		};
+		1997B6B2238FDEA10079AF34 /* TargetingParamModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6B3238FDEA10079AF34 /* TargetingParamModel.swift */,
+			);
+			path = TargetingParamModel;
+			sourceTree = "<group>";
+		};
+		1997B6B4238FDEA10079AF34 /* DatabaseCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6B5238FDEA10079AF34 /* PropertyDetailsCoordinator */,
+				1997B6B7238FDEA10079AF34 /* BaseStorageCoordinator */,
+			);
+			path = DatabaseCoordinator;
+			sourceTree = "<group>";
+		};
+		1997B6B5238FDEA10079AF34 /* PropertyDetailsCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6B6238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift */,
+			);
+			path = PropertyDetailsCoordinator;
+			sourceTree = "<group>";
+		};
+		1997B6B7238FDEA10079AF34 /* BaseStorageCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6B8238FDEA10079AF34 /* BaseStorageCoordinator.swift */,
+			);
+			path = BaseStorageCoordinator;
+			sourceTree = "<group>";
+		};
+		1997B6B9238FDEA10079AF34 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6BA238FDEA10079AF34 /* PropertyDetailsModel */,
+				1997B6BD238FDEA10079AF34 /* TargetingParamsModel */,
+			);
+			path = CoreDataModels;
+			sourceTree = "<group>";
+		};
+		1997B6BA238FDEA10079AF34 /* PropertyDetailsModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6BB238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift */,
+				1997B6BC238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift */,
+			);
+			path = PropertyDetailsModel;
+			sourceTree = "<group>";
+		};
+		1997B6BD238FDEA10079AF34 /* TargetingParamsModel */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6BE238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift */,
+				1997B6BF238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift */,
+			);
+			path = TargetingParamsModel;
+			sourceTree = "<group>";
+		};
+		1997B6C0238FDEA10079AF34 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6C1238FDEA10079AF34 /* SourcepointUITableView */,
+				1997B6C4238FDEA10079AF34 /* Constants.swift */,
+				1997B6C5238FDEA10079AF34 /* Debug.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		1997B6C1238FDEA10079AF34 /* SourcepointUITableView */ = {
+			isa = PBXGroup;
+			children = (
+				1997B6C2238FDEA10079AF34 /* SourcePointUITableView.swift */,
+			);
+			path = SourcepointUITableView;
+			sourceTree = "<group>";
+		};
 		1CDEC261E0D620E46748CCE7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +578,10 @@
 				7228B53CDDACE73BC4006A55 /* Pods-ConsentViewController_Example.release.xcconfig */,
 				D83BC135AFAA50BE83A3029B /* Pods-AuthExample.debug.xcconfig */,
 				8C18F0EB26383E1C2B90DBA1 /* Pods-AuthExample.release.xcconfig */,
+				69E90BB3C3B8E150E7C3D7A9 /* Pods-SourcePointMetaApp.debug.xcconfig */,
+				EDBA3E48D8A5843C899E708B /* Pods-SourcePointMetaApp.release.xcconfig */,
+				678A7DE8E11D4215D10B5E20 /* Pods-SourcePointMetaAppTests.debug.xcconfig */,
+				F10DCDCC5648E6FBF71D76CA /* Pods-SourcePointMetaAppTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -90,6 +593,8 @@
 				607FACD21AFB9204008FA782 /* Example for ConsentViewController */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				8231B13E22BA5A6B00D2669B /* AuthExample */,
+				1997B63B238FDCE80079AF34 /* SourcePointMetaApp */,
+				1997B652238FDCF30079AF34 /* SourcePointMetaAppTests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				1CDEC261E0D620E46748CCE7 /* Pods */,
 				EEE3CDAB8AFE80647B1E565B /* Frameworks */,
@@ -101,6 +606,8 @@
 			children = (
 				607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */,
 				8231B13D22BA5A6B00D2669B /* AuthExample.app */,
+				1997B63A238FDCE80079AF34 /* SourcePointMetaApp.app */,
+				1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -174,6 +681,8 @@
 				8231B15122BBC39900D2669B /* ConsentViewController.framework */,
 				326821F8B380A0A8C204BFAF /* Pods_ConsentViewController_Example.framework */,
 				494630160A7B5E04BA940F5C /* Pods_AuthExample.framework */,
+				1807886202444AABBDC3DE51 /* Pods_SourcePointMetaApp.framework */,
+				34A6FC655AAEC7938808ADC8 /* Pods_SourcePointMetaAppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,6 +690,45 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1997B639238FDCE80079AF34 /* SourcePointMetaApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1997B65A238FDCF30079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaApp" */;
+			buildPhases = (
+				FF653B57EFCF40B36F75C658 /* [CP] Check Pods Manifest.lock */,
+				1997B636238FDCE80079AF34 /* Sources */,
+				1997B637238FDCE80079AF34 /* Frameworks */,
+				1997B638238FDCE80079AF34 /* Resources */,
+				AA88C24F2547C1633D9A6AFB /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SourcePointMetaApp;
+			productName = SourcePointMetaApp;
+			productReference = 1997B63A238FDCE80079AF34 /* SourcePointMetaApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1997B64E238FDCF30079AF34 /* SourcePointMetaAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1997B65B238FDCF30079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaAppTests" */;
+			buildPhases = (
+				AC23FE3AA5672BDBD03CA5C3 /* [CP] Check Pods Manifest.lock */,
+				1997B64B238FDCF30079AF34 /* Sources */,
+				1997B64C238FDCF30079AF34 /* Frameworks */,
+				1997B64D238FDCF30079AF34 /* Resources */,
+				DD5367849251E9BA35AF55C4 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1997B651238FDCF30079AF34 /* PBXTargetDependency */,
+			);
+			name = SourcePointMetaAppTests;
+			productName = SourcePointMetaAppTests;
+			productReference = 1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		607FACCF1AFB9204008FA782 /* ConsentViewController_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ConsentViewController_Example" */;
@@ -225,10 +773,22 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
+					1997B639238FDCE80079AF34 = {
+						CreatedOnToolsVersion = 11.1;
+						DevelopmentTeam = 6KYEQLUC5A;
+						ProvisioningStyle = Automatic;
+					};
+					1997B64E238FDCF30079AF34 = {
+						CreatedOnToolsVersion = 11.1;
+						DevelopmentTeam = 6KYEQLUC5A;
+						LastSwiftMigration = 1110;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 1997B639238FDCE80079AF34;
+					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 6KYEQLUC5A;
@@ -257,11 +817,44 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* ConsentViewController_Example */,
 				8231B13C22BA5A6B00D2669B /* AuthExample */,
+				1997B639238FDCE80079AF34 /* SourcePointMetaApp */,
+				1997B64E238FDCF30079AF34 /* SourcePointMetaAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1997B638238FDCE80079AF34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B6CA238FDEA10079AF34 /* SF-Pro-Text-MediumItalic.otf in Resources */,
+				1997B6D2238FDEA10079AF34 /* SF-Pro-Text-LightItalic.otf in Resources */,
+				1997B6D4238FDEA10079AF34 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
+				1997B6E1238FDEA10079AF34 /* LaunchScreen.storyboard in Resources */,
+				1997B6CE238FDEA10079AF34 /* SF-Pro-Text-BoldItalic.otf in Resources */,
+				1997B6CF238FDEA10079AF34 /* SF-Pro-Text-RegularItalic.otf in Resources */,
+				1997B6D1238FDEA10079AF34 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
+				1997B6CC238FDEA10079AF34 /* SF-Pro-Text-Regular.otf in Resources */,
+				1997B6DF238FDEA10079AF34 /* LoaderView.xib in Resources */,
+				1997B6CD238FDEA10079AF34 /* SF-Pro-Text-Bold.otf in Resources */,
+				1997B6C6238FDEA10079AF34 /* Assets.xcassets in Resources */,
+				1997B6E2238FDEA10079AF34 /* Main.storyboard in Resources */,
+				1997B6D3238FDEA10079AF34 /* SF-Pro-Text-Medium.otf in Resources */,
+				1997B6D0238FDEA10079AF34 /* SF-Pro-Text-Semibold.otf in Resources */,
+				1997B6CB238FDEA10079AF34 /* SF-Pro-Text-Light.otf in Resources */,
+				1997B6C9238FDEA10079AF34 /* SF-Pro-Text-Heavy.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1997B64D238FDCF30079AF34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B671238FDE7C0079AF34 /* TestData.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCE1AFB9204008FA782 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -314,8 +907,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS9.0/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS9.0/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -327,6 +920,50 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AA88C24F2547C1633D9A6AFB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS10.0/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS10.0/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ConsentViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC23FE3AA5672BDBD03CA5C3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SourcePointMetaAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C37AAE271C640BA5A5565499 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -334,8 +971,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AuthExample/Pods-AuthExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS9.0/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS9.0/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -369,9 +1006,103 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DD5367849251E9BA35AF55C4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS13.1/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS13.1/Reachability.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ConsentViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF653B57EFCF40B36F75C658 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SourcePointMetaApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1997B636238FDCE80079AF34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B6E4238FDEA10079AF34 /* AddPropertyViewModel.swift in Sources */,
+				1997B6C8238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */,
+				1997B6D8238FDEA10079AF34 /* ConsentViewDetailsViewController.swift in Sources */,
+				1997B6EC238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift in Sources */,
+				1997B6E5238FDEA10079AF34 /* PropertyListViewModel.swift in Sources */,
+				1997B6F1238FDEA10079AF34 /* Debug.swift in Sources */,
+				1997B6DB238FDEA10079AF34 /* PropertyCell.swift in Sources */,
+				1997B6E0238FDEA10079AF34 /* LoaderView.swift in Sources */,
+				1997B6E3238FDEA10079AF34 /* AppDelegate.swift in Sources */,
+				1997B6EA238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift in Sources */,
+				1997B6E9238FDEA10079AF34 /* BaseStorageCoordinator.swift in Sources */,
+				1997B6E8238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift in Sources */,
+				1997B6D6238FDEA10079AF34 /* BaseViewController.swift in Sources */,
+				1997B6DD238FDEA10079AF34 /* TargetingparamCell.swift in Sources */,
+				1997B6DE238FDEA10079AF34 /* AlertView.swift in Sources */,
+				1997B6EE238FDEA10079AF34 /* SourcePointUITableView.swift in Sources */,
+				1997B6DC238FDEA10079AF34 /* ConsentTableViewCell.swift in Sources */,
+				1997B6E7238FDEA10079AF34 /* TargetingParamModel.swift in Sources */,
+				1997B6EB238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift in Sources */,
+				1997B6E6238FDEA10079AF34 /* PropertyDetailsModel.swift in Sources */,
+				1997B6D5238FDEA10079AF34 /* BaseWindow.swift in Sources */,
+				1997B6D9238FDEA10079AF34 /* ConsentSubViewController.swift in Sources */,
+				1997B6D7238FDEA10079AF34 /* AddPropertyViewController.swift in Sources */,
+				1997B6DA238FDEA10079AF34 /* PropertyListViewController.swift in Sources */,
+				1997B6C7238FDEA10079AF34 /* DBManager.swift in Sources */,
+				1997B6ED238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift in Sources */,
+				1997B6F0238FDEA10079AF34 /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1997B64B238FDCF30079AF34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1997B66B238FDE7C0079AF34 /* AddPropertyViewModelTest.swift in Sources */,
+				1997B672238FDE7C0079AF34 /* PropertyListViewModelTest.swift in Sources */,
+				1997B66C238FDE7C0079AF34 /* XCUIElement+Extensions.swift in Sources */,
+				1997B66F238FDE7C0079AF34 /* SourcePointClientTest.swift in Sources */,
+				1997B669238FDE7C0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift in Sources */,
+				1997B66E238FDE7C0079AF34 /* ConsentViewControllerTest.swift in Sources */,
+				1997B66A238FDE7C0079AF34 /* PropertyListViewControllerTest.swift in Sources */,
+				1997B673238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift in Sources */,
+				1997B670238FDE7C0079AF34 /* ConsentTest.swift in Sources */,
+				1997B674238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift in Sources */,
+				1997B66D238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCC1AFB9204008FA782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -393,7 +1124,31 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		1997B651238FDCF30079AF34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1997B639238FDCE80079AF34 /* SourcePointMetaApp */;
+			targetProxy = 1997B650238FDCF30079AF34 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		1997B6A3238FDEA10079AF34 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1997B6A4238FDEA10079AF34 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		1997B6A5238FDEA10079AF34 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1997B6A6238FDEA10079AF34 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -429,6 +1184,119 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1997B656238FDCF30079AF34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 69E90BB3C3B8E150E7C3D7A9 /* Pods-SourcePointMetaApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1997B657238FDCF30079AF34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EDBA3E48D8A5843C899E708B /* Pods-SourcePointMetaApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1997B658238FDCF30079AF34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 678A7DE8E11D4215D10B5E20 /* Pods-SourcePointMetaAppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SourcePointMetaApp.app/SourcePointMetaApp";
+			};
+			name = Debug;
+		};
+		1997B659238FDCF30079AF34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F10DCDCC5648E6FBF71D76CA /* Pods-SourcePointMetaAppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SourcePointMetaAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SourcePointMetaApp.app/SourcePointMetaApp";
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -633,6 +1501,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1997B65A238FDCF30079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1997B656238FDCF30079AF34 /* Debug */,
+				1997B657238FDCF30079AF34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1997B65B238FDCF30079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1997B658238FDCF30079AF34 /* Debug */,
+				1997B659238FDCF30079AF34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "ConsentViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -661,6 +1547,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1997B679238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1997B67A238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodel */,
+			);
+			currentVersion = 1997B67A238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodel */;
+			path = SourcePointMetaApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
 }
