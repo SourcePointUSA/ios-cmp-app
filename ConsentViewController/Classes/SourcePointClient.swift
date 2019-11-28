@@ -40,7 +40,7 @@ class SourcePointClient {
     private let statusGdprUrl: URL
     private let campaign: String
 
-    init(accountId: Int, propertyId:Int, pmId:String, showPM:Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+    init(accountId: Int, propertyId:Int, pmId:String, showPM:Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL, client: HttpClient) throws {
         self.accountId = accountId
         self.propertyId = propertyId
         self.pmId = pmId
@@ -57,7 +57,11 @@ class SourcePointClient {
             urlString: cmpUrl.absoluteString + "/consent/v2/gdpr-status"
         )
 
-        self.client = SimpleClient()
+        self.client = client
+    }
+    
+    convenience init(accountId: Int, propertyId: Int, pmId: String, showPM: Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+        try self.init(accountId: accountId, propertyId: propertyId, pmId: pmId, showPM: showPM, propertyUrl: propertyUrl, campaign: campaign, mmsUrl: mmsUrl, cmpUrl: cmpUrl, messageUrl: messageUrl, client: SimpleClient())
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
