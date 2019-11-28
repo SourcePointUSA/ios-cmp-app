@@ -26,6 +26,8 @@ struct ConsentsResponse : Codable {
 typealias TargetingParams = [String:Any]
 
 class SourcePointClient {
+    static let GET_MESSAGE_URL = URL(string: "https://fake_wrapper_api.com")!
+    
     private let client: HttpClient
 
     private let accountId: Int
@@ -124,5 +126,12 @@ class SourcePointClient {
         }
 
         return url
+    }
+    
+    func getMessageUrl(accountId: Int, propertyId: Int, completionHandler cHandler : @escaping (URL?, ConsentViewControllerError?) -> Void) {
+        client.get(url: URL(string: "getMessageUrl", relativeTo: SourcePointClient.GET_MESSAGE_URL)!) { response, error in
+            let urlResponse = try! JSONSerialization.jsonObject(with: response!, options: .allowFragments) as! String
+            cHandler(URL(string: urlResponse), nil)
+        }
     }
 }
