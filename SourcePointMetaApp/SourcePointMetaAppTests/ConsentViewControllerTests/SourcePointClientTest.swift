@@ -55,21 +55,19 @@ class SourcePointClientTest: XCTestCase {
     func testGetGdprStatus() {
         var finished = false
         sourcepointClient?.getGdprStatus { (gdprStatus, error) in
-            
-            print("Gdpr Status", gdprStatus ?? "Not found")
-            if error != nil {
-                XCTAssert(false, "failed to get GDPR status from endpoint")
-            } else {
+            if gdprStatus == 0 || gdprStatus == 1 {
                 XCTAssert(true, "succeed to get GDPR status from endpoint")
+            } else {
+                XCTAssert(false, "failed to get GDPR status from endpoint")
             }
             finished = true
         }
-        
         while !finished {
             RunLoop.current.run(mode: .default, before: Date.distantFuture)
         }
     }
     
+    ///"https://in-app-messaging.pm.sourcepoint.mgr.consensu.org?_sp_authId=sourcepointtest&_sp_mms_Domain=https://mms.sp-prod.net&_sp_siteHref=https://mobile.demo&_sp_cmp_origin=https://sourcepoint.mgr.consensu.org&_sp_accountId=22&_sp_showPM=false&_sp_PMId=5c0e81b7d74b3c30c6852301&_sp_siteId=2372&_sp_targetingParams=%7B%22TargetingParamModel%22:%22false%22%7D&_sp_runMessaging=true&_sp_env=stage"
     /// this test method is used to test getMessageUrl method working as expected or not
     func testGetMessageUrlWithAuthID() {
         let targetingParamModel = ["TargetingParamModel": "false"]
@@ -82,7 +80,7 @@ class SourcePointClientTest: XCTestCase {
             }
         }
     }
-    
+    ///"https://in-app-messaging.pm.sourcepoint.mgr.consensu.org?_sp_env=stage&_sp_siteId=2372&_sp_mms_Domain=https://mms.sp-prod.net&_sp_showPM=false&_sp_cmp_origin=https://sourcepoint.mgr.consensu.org&_sp_runMessaging=true&_sp_accountId=22&_sp_PMId=5c0e81b7d74b3c30c6852301&_sp_siteHref=https://mobile.demo&_sp_targetingParams=%7B%22TargetingParamModel%22:%22false%22%7D"
     /// this test method is used to test getMessageUrl method working as expected or not
     func testGetMessageUrlWithoutAuthID() {
         let targetingParamModel = ["TargetingParamModel": "false"]
@@ -95,17 +93,16 @@ class SourcePointClientTest: XCTestCase {
             }
         }
     }
-    
+
     /// this test method is used to test getCustomConsents method working as expected or not
     func testgetCustomConsents() {
         var finished = false
         sourcepointClient?.getCustomConsents(forPropertyId: "\(propertyId)", consentUUID: consentUUID, euConsent: euConsent, completionHandler: { (consents, error) in
             
-            print("consents", consents ?? "Not found")
-            if error != nil {
-                XCTAssert(false, "failed to get consents from endpoint")
-            } else {
+            if consents?.consentedVendors.first?.description == "VendorConsent(id: 5b07836aecb3fe2955eba270, name: Google Ad Manager)"  {
                 XCTAssert(true, "succeed to get consents from endpoint")
+            } else {
+                XCTAssert(false, "failed to get consents from endpoint")
             }
             finished = true
         })
@@ -120,10 +117,11 @@ class SourcePointClientTest: XCTestCase {
             attributeName: "propertyUrl",
             urlString: mmsUrl+"/get_site_data?account_id=" + "22" + "&href=" + self.propertyUrl
         )
-        if propertyUrl.absoluteString.isEmpty {
-            XCTAssert(false, "failed to create the url")
-        }else {
+
+        if propertyUrl.absoluteString == "https://mms.sp-prod.net/get_site_data?account_id=22&href=\(self.propertyUrl)"{
             XCTAssert(true, "succeed to create the url")
+        }else {
+            XCTAssert(false, "failed to create the url")
         }
     }
     
