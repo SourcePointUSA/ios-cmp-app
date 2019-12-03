@@ -14,7 +14,7 @@ class ViewController: UIViewController, ConsentDelegate {
 
     func loadConsentManager(showPM: Bool) {
         let cvc = try! ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
-        cvc.isDisableRollbar = true
+        cvc.isTelemetryEnabled = false
         cvc.loadMessage()
     }
 

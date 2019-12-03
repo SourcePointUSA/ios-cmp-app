@@ -13,7 +13,6 @@ import UIKit
 import WebKit
 import JavaScriptCore
 import Reachability
-import Rollbar
 
 /**
  SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
@@ -90,7 +89,7 @@ import Rollbar
     static private let CONSENTVIEWCONTROLLER_SDK_VERSION = "3.0.0"
     
     /// The varibale used to set the flag to use Rollbar analytics
-    public var isDisableRollbar = false
+    public var isTelemetryEnabled = true
 
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
@@ -503,30 +502,11 @@ import Rollbar
 
     internal func onErrorOccurred(error: ConsentViewControllerError) {
         releaseWebViewHandlers()
-        rollBarAnalytics(error: error.description)
+        let rollBarLogger = RollBarLogger(accountId: accountId, propertyId: propertyId, showPM: showPM, isTelemetryEnabled: isTelemetryEnabled, campaign: campaign, sdkVersion: ConsentViewController.CONSENTVIEWCONTROLLER_SDK_VERSION, messageTimeoutInSeconds: messageTimeoutInSeconds)
+        rollBarLogger.rollBarAnalytics(error: error)
         consentDelegate?.onErrorOccurred(error: error)
     }
     
-     /// This method is used to send the details to rollbar analytics about the error message with other deatils.
-    internal func rollBarAnalytics(error: String) {
-        if !isDisableRollbar {
-        let configuration = RollbarConfiguration()
-        configuration.crashLevel = "critical"
-        configuration.environment = "production"
-        Rollbar.initWithAccessToken("8c9341f5b0cd4701b43fd06237b0b660", configuration: configuration)
-        Rollbar.critical(withMessage: error, data: [
-            "SDK_VERSION": ConsentViewController.CONSENTVIEWCONTROLLER_SDK_VERSION,
-            "accountId": accountId,
-            "propertyId": propertyId,
-            "campaign": campaign,
-            "showPM": showPM,
-            "messageTimeoutInSeconds": messageTimeoutInSeconds
-        ])
-        }else {
-            logger.log("Rollbar is disabled by client application", [])
-        }
-    }
-        
     private func showMessage() {
         if(messageStatus == .timedout) { return }
 
