@@ -1013,8 +1013,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS13.1/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS13.1/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS10.0/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS10.0/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
