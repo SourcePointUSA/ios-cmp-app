@@ -907,8 +907,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS9.0/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS9.0/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -927,8 +927,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS10.0/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS10.0/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -971,8 +971,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AuthExample/Pods-AuthExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS9.0/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS9.0/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1013,8 +1013,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SourcePointMetaAppTests/Pods-SourcePointMetaAppTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS10.0/ConsentViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS10.0/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1241,7 +1241,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 678A7DE8E11D4215D10B5E20 /* Pods-SourcePointMetaAppTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1273,7 +1272,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F10DCDCC5648E6FBF71D76CA /* Pods-SourcePointMetaAppTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

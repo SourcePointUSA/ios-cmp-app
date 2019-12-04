@@ -11,11 +11,13 @@ target 'AuthExample' do
 end
 
 target 'SourcePointMetaApp' do
+  platform :ios, '9.0'
   pod 'ConsentViewController', :path => '../'
   pod 'IQKeyboardManagerSwift'
 end
 
 target 'SourcePointMetaAppTests' do
+  platform :ios, '9.0'
   inherit! :search_paths
   # Pods for testing
   pod 'ConsentViewController', :path => '../'
