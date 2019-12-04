@@ -1,23 +1,26 @@
 use_frameworks!
+platform :ios, '9.0'
 
 target 'ConsentViewController_Example' do
-  platform :ios, '9.0'
   pod 'ConsentViewController', :path => '../'
 end
 
+target 'ConsentViewController_ExampleTests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
 target 'AuthExample' do
-  platform :ios, '9.0'
   pod 'ConsentViewController', :path => '../'
 end
 
 target 'SourcePointMetaApp' do
-  platform :ios, '9.0'
   pod 'ConsentViewController', :path => '../'
   pod 'IQKeyboardManagerSwift'
 end
 
 target 'SourcePointMetaAppTests' do
-  platform :ios, '9.0'
   inherit! :search_paths
   # Pods for testing
   pod 'ConsentViewController', :path => '../'
