@@ -8,5 +8,5 @@
 import Foundation
 
 @objc protocol TelemetryProtocol {
-    func rollBarAnalytics(error: ConsentViewControllerError)
+    func telemetryAnalytics(error: ConsentViewControllerError)
 }

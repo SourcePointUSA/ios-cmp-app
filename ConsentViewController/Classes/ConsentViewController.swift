@@ -502,8 +502,8 @@ import Reachability
 
     internal func onErrorOccurred(error: ConsentViewControllerError) {
         releaseWebViewHandlers()
-        let rollBarLogger = RollBarLogger(accountId: accountId, propertyId: propertyId, showPM: showPM, isTelemetryEnabled: isTelemetryEnabled, campaign: campaign, sdkVersion: ConsentViewController.CONSENTVIEWCONTROLLER_SDK_VERSION, messageTimeoutInSeconds: messageTimeoutInSeconds)
-        rollBarLogger.rollBarAnalytics(error: error)
+        let telemetryLogger = TelemetryLogger(accountId: accountId, propertyId: propertyId, showPM: showPM, isTelemetryEnabled: isTelemetryEnabled, campaign: campaign, sdkVersion: ConsentViewController.CONSENTVIEWCONTROLLER_SDK_VERSION, messageTimeoutInSeconds: messageTimeoutInSeconds)
+        telemetryLogger.telemetryAnalytics(error: error)
         consentDelegate?.onErrorOccurred(error: error)
     }
     

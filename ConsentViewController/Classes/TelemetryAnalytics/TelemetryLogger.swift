@@ -8,7 +8,7 @@
 import Foundation
 import Rollbar
 
-public class RollBarLogger: TelemetryProtocol {
+public class TelemetryLogger: TelemetryProtocol {
     
     private let accountId: Int
     private let propertyId: Int
@@ -30,8 +30,8 @@ public class RollBarLogger: TelemetryProtocol {
         self.logger = Logger()
     }
     
-    /// This method is used to send the details to rollbar analytics about the error message with other deatils.
-    internal func rollBarAnalytics(error: ConsentViewControllerError) {
+    /// This method is used to send the details to telemetry analytics about the error message with other deatils.
+    internal func telemetryAnalytics(error: ConsentViewControllerError) {
         if isTelemetryEnabled {
             let configuration = RollbarConfiguration()
             configuration.crashLevel = "critical"
@@ -46,7 +46,7 @@ public class RollBarLogger: TelemetryProtocol {
                 "messageTimeoutInSeconds": messageTimeoutInSeconds
             ])
         }else {
-            logger.log("Rollbar is disabled by client application", [])
+            logger.log("Telemetry is disabled by client application", [])
         }
     }
 }
