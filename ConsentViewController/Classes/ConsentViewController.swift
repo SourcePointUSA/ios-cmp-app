@@ -143,6 +143,9 @@ import Reachability
     private let logger: Logger
 
     private var newPM = false
+    
+    /// will instruct the SDK to clean consent data if an error occurs
+    public var shouldCleanConsentOnError = true
 
     /**
      Initialises the library with `accountId`, `propertyId`,`PMId`,`campaign`, `showPM` and property`.
@@ -501,6 +504,9 @@ import Reachability
     }
 
     internal func onErrorOccurred(error: ConsentViewControllerError) {
+        if(shouldCleanConsentOnError) {
+            clearAllConsentData()
+        }
         releaseWebViewHandlers()
         let telemetryLogger = TelemetryLogger(accountId: accountId, propertyId: propertyId, showPM: showPM, isTelemetryEnabled: isTelemetryEnabled, campaign: campaign, sdkVersion: ConsentViewController.CONSENTVIEWCONTROLLER_SDK_VERSION, messageTimeoutInSeconds: messageTimeoutInSeconds)
         telemetryLogger.telemetryAnalytics(error: error)
@@ -566,7 +572,6 @@ import Reachability
             logger.log("onPrivacyManagerAction event is triggered", [])
             return
         case "onErrorOccurred":
-            clearAllConsentData()
             onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
             onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
