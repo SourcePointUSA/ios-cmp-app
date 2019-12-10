@@ -7,14 +7,31 @@
 
 import Foundation
 
-protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (Data?) -> Void) }
+typealias OnSuccess = (Data) -> Void
+typealias OnError = (Error?) -> Void
+
+protocol HttpClient {
+    func get(url: URL, completionHandler handler : @escaping (Data?, Error?) -> Void)
+    func get(url: URL, onSuccess: @escaping OnSuccess, onError: OnError?)
+}
 
 class SimpleClient: HttpClient {
-    func get(url: URL, completionHandler cHandler : @escaping (Data?) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            DispatchQueue.main.async { cHandler(data) }
-        }
-        task.resume()
+    func get(url: URL, onSuccess: @escaping (Data) -> Void, onError: OnError?) {
+        URLSession.shared.dataTask(with: url) { data, _response, error in
+            DispatchQueue.main.async {
+                guard let data = data else {
+                    onError?(error)
+                    return
+                }
+                onSuccess(data)
+            }
+        }.resume()
+    }
+    
+    func get(url: URL, completionHandler cHandler : @escaping (Data?, Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async { cHandler(data, error) }
+        }.resume()
     }
 }
 
@@ -23,9 +40,15 @@ struct ConsentsResponse : Codable {
     let consentedPurposes: [PurposeConsent]
 }
 
+struct MessageResponse: Codable, Equatable {
+    let url: URL?
+}
+
 typealias TargetingParams = [String:Any]
 
 class SourcePointClient {
+    static let GET_MESSAGE_URL = URL(string: "https://fake_wrapper_api.com")!
+    
     private let client: HttpClient
 
     private let accountId: Int
@@ -40,7 +63,7 @@ class SourcePointClient {
     private let statusGdprUrl: URL
     private let campaign: String
 
-    init(accountId: Int, propertyId:Int, pmId:String, showPM:Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+    init(accountId: Int, propertyId:Int, pmId:String, showPM:Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL, client: HttpClient) throws {
         self.accountId = accountId
         self.propertyId = propertyId
         self.pmId = pmId
@@ -57,11 +80,15 @@ class SourcePointClient {
             urlString: cmpUrl.absoluteString + "/consent/v2/gdpr-status"
         )
 
-        self.client = SimpleClient()
+        self.client = client
+    }
+    
+    convenience init(accountId: Int, propertyId: Int, pmId: String, showPM: Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+        try self.init(accountId: accountId, propertyId: propertyId, pmId: pmId, showPM: showPM, propertyUrl: propertyUrl, campaign: campaign, mmsUrl: mmsUrl, cmpUrl: cmpUrl, messageUrl: messageUrl, client: SimpleClient())
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
-        client.get(url: statusGdprUrl) { (result) in
+        client.get(url: statusGdprUrl) { (result, _error) in
             if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
                 let gdprStatus = parsedResult["gdprApplies"]
                 cHandler(gdprStatus,nil)
@@ -79,7 +106,7 @@ class SourcePointClient {
         let decoder = JSONDecoder()
 
         if let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl) {
-            client.get(url: getCustomConsentsUrl) { (result) in
+            client.get(url: getCustomConsentsUrl) { (result, _error) in
                 if let _result = result, let consents = try? decoder.decode(ConsentsResponse.self, from: _result) {
                     cHandler(consents, nil)
                 }else {
@@ -94,7 +121,7 @@ class SourcePointClient {
         return String(data: data, encoding: String.Encoding.utf8)!
     }
 
-    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
+    func getSDKWebURL(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
         var url: URL
         var components = URLComponents()
         var queryItems: [String:String] = [:]
@@ -120,5 +147,19 @@ class SourcePointClient {
         }
 
         return url
+    }
+    
+    func getMessageUrl(accountId: Int, propertyId: Int, onSuccess: @escaping (MessageResponse) -> Void, onError: OnError?) {
+        let _onError: OnError = { error in onError?(GetMessageAPIError(parsingError: error)) }
+        let _onSuccess: OnSuccess = { data in
+            do { onSuccess(try JSONDecoder().decode(MessageResponse.self, from: data))
+            } catch { _onError(error) }
+        }
+        
+        client.get(
+            url: URL(string: "getMessageUrl", relativeTo: SourcePointClient.GET_MESSAGE_URL)!,
+            onSuccess: _onSuccess,
+            onError: _onError
+        )
     }
 }
