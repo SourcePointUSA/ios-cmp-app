@@ -38,7 +38,26 @@ import JavaScriptCore
  view.addSubview(consentViewController.view)
  ```
 */
-@objcMembers open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+@objcMembers open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, MessageDelegate {
+    func onMessageReady() {
+        add(asChildViewController: messageWebViewController)
+        consentDelegate?.onMessageReady(controller: self)
+    }
+
+    func onConsentReady() {
+        releaseWebViewHandlers()
+        remove(asChildViewController: messageWebViewController)
+        consentDelegate?.onConsentReady(controller: self)
+    }
+
+    func onError(error: ConsentViewControllerError?) {
+        remove(asChildViewController: messageWebViewController)
+        if(shouldCleanConsentOnError) {
+            clearAllConsentData()
+        }
+        releaseWebViewHandlers()
+        consentDelegate?.onErrorOccurred(error: error!)
+    }
 
     /// :nodoc:
     public enum DebugLevel: String {
@@ -135,9 +154,27 @@ import JavaScriptCore
     private let logger: Logger
 
     private var newPM = false
-    
+
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
+
+    private lazy var messageWebViewController: MessageWebViewController = {
+        return MessageWebViewController()
+    }()
+
+    private func remove(asChildViewController viewController: UIViewController) {
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
+    }
+
+    private func add(asChildViewController viewController: UIViewController) {
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+    }
 
     /**
      Initialises the library with `accountId`, `propertyId`,`PMId`,`campaign`, `showPM` and property`.
@@ -159,7 +196,7 @@ import JavaScriptCore
         self.propertyId = propertyId
         self.showPM = showPM
         self.consentDelegate = consentDelegate
-        
+
         let propertyUrl = try Utils.validate(attributeName: "propertyUrl", urlString: "https://"+property)
         let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
         let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
@@ -182,6 +219,9 @@ import JavaScriptCore
         self.logger = Logger()
 
         super.init(nibName: nil, bundle: nil)
+
+        self.messageWebViewController.loadMessage(fromUrl: URL(string: "https://notice.sp-prod.net/?message_id=66281"))
+        self.messageWebViewController.messageDelegate = self
     }
 
     @objc(initWithAccountId:propertyId:property:PMId:campaign:showPM:consentDelegate:andReturnError:)
@@ -235,34 +275,10 @@ import JavaScriptCore
         self.newPM = newPM
     }
 
-    /// :nodoc:
-    override open func loadView() {
-        let config = WKWebViewConfiguration()
-        let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!)
-        let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-        userContentController.addUserScript(script)
-        userContentController.add(self, name: ConsentViewController.MESSAGE_HANDLER_NAME)
-        config.userContentController = userContentController
-        webView = WKWebView(frame: .zero, configuration: config)
-        if #available(iOS 11.0, *) {
-            webView.scrollView.contentInsetAdjustmentBehavior = .never;
-        }
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.translatesAutoresizingMaskIntoConstraints = true
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        webView.isOpaque = false
-        modalPresentationStyle = .overCurrentContext
-        webView.backgroundColor = .clear
-        webView.allowsBackForwardNavigationGestures = true
-        view = webView
-    }
-
     private func releaseWebViewHandlers() {
-        let contentController = webView.configuration.userContentController
-        contentController.removeScriptMessageHandler(forName: ConsentViewController.MESSAGE_HANDLER_NAME)
-        contentController.removeAllUserScripts()
+//        let contentController = webView.configuration.userContentController
+//        contentController.removeScriptMessageHandler(forName: ConsentViewController.MESSAGE_HANDLER_NAME)
+//        contentController.removeAllUserScripts()
     }
 
     /// :nodoc:
@@ -288,42 +304,42 @@ import JavaScriptCore
     private enum MessageStatus { case notStarted, loading, loaded, timedout }
     private var messageStatus = MessageStatus.notStarted
     private func loadMessage(withMessageUrl messageUrl: URL) {
-        if(messageStatus == .loading || messageStatus == .loaded) { return }
-
-        messageStatus = .loading
-        loadView()
-        logger.log("url: %{public}@", [messageUrl.absoluteString])
-        UserDefaults.standard.setValue(true, forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
-        UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        setSubjectToGDPR()
-
-        guard ConnectivityManager.shared.isConnectedToNetwork() else {
-            onErrorOccurred(error: NoInternetConnection())
-            self.messageStatus = .notStarted
-            return
-        }
-        self.webView.load(URLRequest(url: messageUrl))
-        self.timeOut(inSeconds: self.messageTimeoutInSeconds) { [weak self] in
-            guard let self = self else { return }
-
-            if(!(self.didMessageScriptLoad)) {
-                self.onErrorOccurred(error: MessageTimeout())
-                self.messageStatus = .timedout
-            }
-        };
-        self.messageStatus = .loaded
+//        if(messageStatus == .loading || messageStatus == .loaded) { return }
+//
+//        messageStatus = .loading
+//        loadView()
+//        logger.log("url: %{public}@", [messageUrl.absoluteString])
+//        UserDefaults.standard.setValue(true, forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
+//        UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+//        setSubjectToGDPR()
+//
+//        guard Reachability()!.connection != .none else {
+//            onErrorOccurred(error: NoInternetConnection())
+//            self.messageStatus = .notStarted
+//            return
+//        }
+//        self.webView.load(URLRequest(url: messageUrl))
+//        self.timeOut(inSeconds: self.messageTimeoutInSeconds) { [weak self] in
+//            guard let self = self else { return }
+//
+//            if(!(self.didMessageScriptLoad)) {
+//                self.onErrorOccurred(error: MessageTimeout())
+//                self.messageStatus = .timedout
+//            }
+//        };
+//        self.messageStatus = .loaded
     }
 
     internal func getMessageUrl(authId: String?) -> URL? {
         do {
-           return try sourcePoint.getMessageUrl(
+           return try sourcePoint.getSDKWebURL(
                 forTargetingParams:  targetingParams,
                 debugLevel: debugLevel.rawValue,
                 newPM: newPM,
                 authId: authId
             )
         } catch let error as ConsentViewControllerError {
-            onErrorOccurred(error: error)
+            onError(error: error)
         } catch {}
         return nil
     }
@@ -488,18 +504,10 @@ import JavaScriptCore
             userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
             userDefaults.synchronize()
         } catch let error as ConsentViewControllerError {
-            onErrorOccurred(error: error)
+            onError(error: error)
         } catch {}
         releaseWebViewHandlers()
         consentDelegate?.onConsentReady(controller: self)
-    }
-
-    private func onErrorOccurred(error: ConsentViewControllerError) {
-        if(shouldCleanConsentOnError) {
-            clearAllConsentData()
-        }
-        releaseWebViewHandlers()
-        consentDelegate?.onErrorOccurred(error: error)
     }
 
     private func showMessage() {
@@ -508,7 +516,7 @@ import JavaScriptCore
         didMessageScriptLoad = true
         consentDelegate?.onMessageReady(controller: self)
     }
-    
+
     /// It will clear all the stored userDefaults Data
     public func clearAllConsentData() {
         let userDefaults = UserDefaults.standard
@@ -561,15 +569,15 @@ import JavaScriptCore
             logger.log("onPrivacyManagerAction event is triggered", [])
             return
         case "onErrorOccurred":
-            onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            onError(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "onMessageChoiceError":
-            onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            onError(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
         case "xhrLog":
             if debugLevel == .DEBUG {
                 handleXhrLog(body)
             }
         default:
-            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
+            onError(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
     }
 
@@ -579,7 +587,7 @@ import JavaScriptCore
             let messageBody = message.body as? [String: Any],
             let name = messageBody["name"] as? String
         else {
-            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
+            onError(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
             return
         }
         if let body = messageBody["body"] as? [String: Any?] {
