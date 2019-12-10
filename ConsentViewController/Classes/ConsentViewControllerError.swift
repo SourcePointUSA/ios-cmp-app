@@ -110,6 +110,24 @@ import Foundation
     override public var description: String { get { return "\(errorDescription!)" } }
 }
 
+@objcMembers public class GetMessageAPIError: ConsentViewControllerError {
+    private let parsingError: Error?
+
+    init(parsingError: Error?) {
+        self.parsingError = parsingError
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public var failureReason: String? { get { return "Failed to parse MessageResponse" } }
+    public var errorDescription: String? { get { return "Failed to parse MessageResponse due to: \(parsingError?.localizedDescription ?? "<unknown>")" } }
+    override public var description: String { get { return "\(errorDescription!)" } }
+}
+
+
 public let WebViewErrors: [String : ConsentViewControllerError] = [
     "app.loadError": PrivacyManagerLoadError(),
     "app.saveError": PrivacyManagerSaveError()
@@ -159,3 +177,4 @@ public let WebViewErrors: [String : ConsentViewControllerError] = [
     public var failureReason: String? { get { return "The Message request has timed out." } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
+
