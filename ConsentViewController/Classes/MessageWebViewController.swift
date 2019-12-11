@@ -22,18 +22,13 @@ let Actions: [Int: Action] = [
     99: .PMAction
 ]
 
-protocol MessageDelegate {
-    func onMessageReady()
-    func onConsentReady()
-    func onError(error: ConsentViewControllerError?)
-}
-
 protocol MessageUIDelegate {
     func loadMessage(fromUrl url: URL?)
     func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int)
 }
 
 class MessageWebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, MessageUIDelegate, MessageDelegate {
+class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, ConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "JSReceiver"
 
     lazy var webview: WKWebView = {
@@ -68,17 +63,17 @@ class MessageWebViewController: UIViewController, WKUIDelegate, WKNavigationDele
     
     func onMessageReady() {
         print("onMessageReady: MessageWebView")
-        messageDelegate?.onMessageReady()
+        consentDelegate?.onMessageReady()
     }
     
     func onConsentReady() {
         print("onConsentReady: MessageWebView")
-        messageDelegate?.onConsentReady()
+        consentDelegate?.onConsentReady()
     }
     
     func onError(error: ConsentViewControllerError?) {
         print("onError: MessageWebView - \(error?.localizedDescription ?? "<unknown>")")
-        messageDelegate?.onError(error: error)
+        consentDelegate?.onError(error: error)
     }
     
     func onAction(_ action: Action) {
@@ -147,7 +142,7 @@ class MessageWebViewController: UIViewController, WKUIDelegate, WKNavigationDele
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        messageDelegate = nil
+        consentDelegate = nil
         let contentController = webview.configuration.userContentController
         contentController.removeScriptMessageHandler(forName: MessageWebViewController.MESSAGE_HANDLER_NAME)
         contentController.removeAllUserScripts()
