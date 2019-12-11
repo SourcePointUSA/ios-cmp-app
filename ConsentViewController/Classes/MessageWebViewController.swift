@@ -114,6 +114,18 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         webview.goBack()
     }
     
+    /// :nodoc:
+    // handles links with "target=_blank", forcing them to open in Safari
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        guard let url = navigationAction.request.url else { return nil }
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
+        return nil
+    }
+    
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         onError(error: ConsentsAPIError())
     }
