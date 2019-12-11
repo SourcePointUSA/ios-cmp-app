@@ -1,14 +1,14 @@
 //
-//  ConsentMessageDelegate.swift
+//  ConsentDelegate.swift
 //  ConsentViewController
 //
-//  Created by Andre Herculano on 01.10.19.
+//  Created by Andre Herculano on 11.12.19.
 //
 
 import Foundation
 
 @objc public protocol ConsentDelegate {
-    func onMessageReady(controller: ConsentViewController)
-    func onConsentReady(controller: ConsentViewController)
-    func onErrorOccurred(error: ConsentViewControllerError)
+    func onMessageReady()
+    func onConsentReady()
+    func onError(error: ConsentViewControllerError?)
 }
