@@ -82,6 +82,7 @@ import JavaScriptCore
     private let accountId: Int
     private let property: String
     private let propertyId: Int
+    private let pmId: String
 
     typealias TargetingParams = [String:String]
     private let targetingParams: TargetingParams = [:]
@@ -92,7 +93,7 @@ import JavaScriptCore
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
-    private weak var messageDelegate: ConsentDelegate?
+    private weak var consentDelegate: ConsentDelegate?
     private var messageViewController: MessageViewController?
 
     private func remove(asChildViewController viewController: UIViewController?) {
@@ -119,12 +120,13 @@ import JavaScriptCore
         property: String,
         PMId: String,
         campaign: String,
-        messageDelegate: ConsentDelegate
+        consentDelegate: ConsentDelegate
     ){
         self.accountId = accountId
         self.property = property
         self.propertyId = propertyId
-        self.messageDelegate = messageDelegate
+        self.pmId = PMId
+        self.consentDelegate = consentDelegate
 
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
@@ -146,27 +148,33 @@ import JavaScriptCore
     }
 
     public func loadMessage() {
-        messageViewController = MessageWebViewController()
+        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: URL(string: "https://notice.sp-prod.net/?message_id=66281"))
     }
 
     public func loadPrivacyManager() {
-        messageViewController = MessageWebViewController()
+        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
         messageViewController?.consentDelegate = self
-        messageViewController?.loadPrivacyManager(withId: "5c0e81b7d74b3c30c6852301", andPropertyId: 2372)
+        messageViewController?.loadPrivacyManager()
     }
 
     public func onMessageReady() {
         guard let viewController = messageViewController else { return }
         add(asChildViewController: viewController)
-        messageDelegate?.onMessageReady()
+        consentDelegate?.onMessageReady()
+    }
+
+    public func onPMReady() {
+        guard let viewController = messageViewController else { return }
+        add(asChildViewController: viewController)
+        consentDelegate?.onMessageReady()
     }
 
     public func onConsentReady() {
         remove(asChildViewController: messageViewController)
         messageViewController = nil
-        messageDelegate?.onConsentReady()
+        consentDelegate?.onConsentReady()
 
         /*  perform all IAB related on consent ready
             self.euconsent = euconsent
@@ -191,7 +199,7 @@ import JavaScriptCore
         if(shouldCleanConsentOnError) {
             clearAllConsentData()
         }
-        messageDelegate?.onError(error: error)
+        consentDelegate?.onError(error: error)
     }
 
     internal func setSubjectToGDPR() {

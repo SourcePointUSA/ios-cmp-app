@@ -24,13 +24,13 @@ let Actions: [Int: Action] = [
 
 protocol MessageUIDelegate {
     func loadMessage(fromUrl url: URL?)
-    func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int)
+    func loadPrivacyManager()
 }
 
 class MessageViewController: UIViewController, MessageUIDelegate {
     var consentDelegate: ConsentDelegate?
     func loadMessage(fromUrl url: URL?) {}
-    func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int) {}
+    func loadPrivacyManager() {}
 }
 
 class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, ConsentDelegate {
@@ -58,37 +58,45 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         return wv
     }()
     
+    private let propertyId: Int
+    private let pmId: String
+    
+    init(propertyId: Int, pmId: String) {
+        self.propertyId = propertyId
+        self.pmId = pmId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         view = webview
     }
     
     func onMessageReady() {
-        print("onMessageReady: MessageWebView")
         consentDelegate?.onMessageReady()
     }
     
+    func onPMReady() {
+        consentDelegate?.onPMReady()
+    }
+    
     func onConsentReady() {
-        print("onConsentReady: MessageWebView")
         consentDelegate?.onConsentReady()
     }
     
     func onError(error: ConsentViewControllerError?) {
-        print("onError: MessageWebView - \(error?.localizedDescription ?? "<unknown>")")
         consentDelegate?.onError(error: error)
     }
     
     func onAction(_ action: Action) {
         switch action{
         case .ShowPrivacyManager:
-            // TODO: get pmId and propId from somewhere else
-            loadPrivacyManager(withId: "5c0e81b7d74b3c30c6852301", andPropertyId: 2372)
+            loadPrivacyManager()
         case .PMCancel:
-            webview.backForwardList.backList.forEach { item in
-                print(item)
-            }
-            webview.canGoBack ?
-                navigateBackToMessage() :
-                onConsentReady()
+            webview.canGoBack ? navigateBackToMessage() : onConsentReady()
         default:
             onConsentReady()
         }
@@ -99,14 +107,15 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
             onConsentReady()
             return
         }
-        print("loading: \(url)")
         webview.load(URLRequest(url: url))
     }
     
-    
-//    TODO: treat action = "sp.pmLoaded" when loading the PM directly
-    override func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int) {
-        let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)")!
+    override func loadPrivacyManager() {
+        guard let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)")
+        else {
+            return
+        }
+        
         webview.load(URLRequest(url: pmUrl))
     }
     
@@ -142,6 +151,8 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         switch name {
             case "onMessageReady":
                 onMessageReady()
+            case "onPMReady":
+                onPMReady()
             case "onAction":
                 guard
                     let payload = message["body"] as? [String: Any],

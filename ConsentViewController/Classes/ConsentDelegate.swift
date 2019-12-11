@@ -9,6 +9,7 @@ import Foundation
 
 @objc public protocol ConsentDelegate {
     func onMessageReady()
+    func onPMReady()
     func onConsentReady()
     func onError(error: ConsentViewControllerError?)
 }

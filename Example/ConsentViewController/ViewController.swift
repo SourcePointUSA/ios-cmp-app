@@ -13,8 +13,12 @@ class ViewController: UIViewController {
     let logger = Logger()
 
     lazy var consentViewController: ConsentViewController = {
-        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", messageDelegate: self)
+        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", consentDelegate: self)
     }()
+    
+    func onPMReady() {
+        present(consentViewController, animated: false, completion: nil)
+    }
 
     func onMessageReady() {
         consentViewController.modalPresentationStyle = .overFullScreen
