@@ -27,7 +27,12 @@ protocol MessageUIDelegate {
     func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int)
 }
 
-class MessageWebViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, MessageUIDelegate, MessageDelegate {
+class MessageViewController: UIViewController, MessageUIDelegate {
+    var consentDelegate: ConsentDelegate?
+    func loadMessage(fromUrl url: URL?) {}
+    func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int) {}
+}
+
 class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, ConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "JSReceiver"
 
@@ -52,10 +57,6 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         wv.allowsBackForwardNavigationGestures = true
         return wv
     }()
-    
-    var messageDelegate: MessageDelegate? = nil
-    
-    var hasOpenedPMDirectly = false
     
     override func loadView() {
         view = webview
@@ -90,7 +91,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         }
     }
     
-    func loadMessage(fromUrl url: URL?) {
+    override func loadMessage(fromUrl url: URL?) {
         guard let url = url else {
             onConsentReady()
             return
@@ -99,7 +100,9 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         webview.load(URLRequest(url: url))
     }
     
-    func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int) {
+    
+//    TODO: treat action = "sp.pmLoaded" when loading the PM directly
+    override func loadPrivacyManager(withId pmId: String, andPropertyId propertyId: Int) {
         let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)")!
         webview.load(URLRequest(url: pmUrl))
     }

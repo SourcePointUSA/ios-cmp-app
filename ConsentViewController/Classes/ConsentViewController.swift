@@ -158,9 +158,8 @@ import JavaScriptCore
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
-    private lazy var messageWebViewController: MessageWebViewController = {
-        return MessageWebViewController()
-    }()
+    private weak var messageDelegate: ConsentDelegate?
+    private var messageViewController: MessageViewController?
 
     private func remove(asChildViewController viewController: UIViewController) {
         viewController.willMove(toParent: nil)
