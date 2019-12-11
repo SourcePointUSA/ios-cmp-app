@@ -83,9 +83,12 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
             // TODO: get pmId and propId from somewhere else
             loadPrivacyManager(withId: "5c0e81b7d74b3c30c6852301", andPropertyId: 2372)
         case .PMCancel:
-            hasOpenedPMDirectly ?
-                onConsentReady() :
-                navigateBackToMessage()
+            webview.backForwardList.backList.forEach { item in
+                print(item)
+            }
+            webview.canGoBack ?
+                navigateBackToMessage() :
+                onConsentReady()
         default:
             onConsentReady()
         }
