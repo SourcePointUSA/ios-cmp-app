@@ -47,67 +47,54 @@ struct MessageResponse: Codable, Equatable {
 typealias TargetingParams = [String:Any]
 
 class SourcePointClient {
-    static let GET_MESSAGE_URL = URL(string: "https://fake_wrapper_api.com")!
+    static let WRAPPER_API = URL(string: "https://fake_wrapper_api.com")!
+    static let CMP_URL = URL(string: "https://sourcepoint.mgr.consensu.org")!
+    static let GET_GDPR_STATUS_URL = URL(string: "consent/v2/gdpr-status", relativeTo: CMP_URL)!
+    static let GET_MESSAGE_URL = URL(string: "getMessageUrl", relativeTo: SourcePointClient.WRAPPER_API)!
     
     private let client: HttpClient
-
+    private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
+    
     private let accountId: Int
     private let propertyId: Int
     private let pmId: String
-    private let showPM: Bool
-    private let runMessaging: Bool
-    private let propertyUrl: URL
-    private let mmsUrl: URL
-    private let cmpUrl: URL
-    private let messageUrl: URL
-    private let statusGdprUrl: URL
     private let campaign: String
 
-    init(accountId: Int, propertyId:Int, pmId:String, showPM:Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL, client: HttpClient) throws {
+    init(accountId: Int, propertyId:Int, pmId:String, campaign: String, client: HttpClient) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.pmId = pmId
-        self.showPM = showPM
-        self.runMessaging = !showPM
-        self.propertyUrl = propertyUrl
-        self.mmsUrl = mmsUrl
-        self.cmpUrl = cmpUrl
-        self.messageUrl = messageUrl
         self.campaign = campaign
-
-        statusGdprUrl = try Utils.validate(
-            attributeName: "statusGDPRUrl",
-            urlString: cmpUrl.absoluteString + "/consent/v2/gdpr-status"
-        )
-
         self.client = client
     }
     
-    convenience init(accountId: Int, propertyId: Int, pmId: String, showPM: Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
-        try self.init(accountId: accountId, propertyId: propertyId, pmId: pmId, showPM: showPM, propertyUrl: propertyUrl, campaign: campaign, mmsUrl: mmsUrl, cmpUrl: cmpUrl, messageUrl: messageUrl, client: SimpleClient())
+    convenience init(accountId: Int, propertyId: Int, pmId: String, campaign: String) {
+        self.init(accountId: accountId, propertyId: propertyId, pmId: pmId, campaign: campaign, client: SimpleClient())
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
-        client.get(url: statusGdprUrl) { (result, _error) in
+        client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { (result, _error) in
             if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
                 let gdprStatus = parsedResult["gdprApplies"]
                 cHandler(gdprStatus,nil)
             } else {
-                cHandler(nil, GdprStatusNotFound(gdprStatusUrl: self.statusGdprUrl))
+                cHandler(nil, GdprStatusNotFound(gdprStatusUrl: SourcePointClient.GET_GDPR_STATUS_URL))
             }
         }
     }
+    
+    func getCustomConsentsUrl(propertyId id: String, consentUUID uuid: String, euconsent: String) -> URL? {
+        return URL(
+            string: "/consent/v2/\(id)/custom-vendors?consentUUID=\(uuid)&euconsent=\(euconsent)",
+            relativeTo: SourcePointClient.CMP_URL
+        )
+    }
 
     // TODO: validate customConsentsURL with Utils.validate
-    func getCustomConsents(forPropertyId propertyId: String, consentUUID: String,euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
-
-        let path = "/consent/v2/\(propertyId)/custom-vendors"
-        let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
-        let decoder = JSONDecoder()
-
-        if let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl) {
-            client.get(url: getCustomConsentsUrl) { (result, _error) in
-                if let _result = result, let consents = try? decoder.decode(ConsentsResponse.self, from: _result) {
+    func getCustomConsents(forPropertyId propertyId: String, consentUUID: String, euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
+        if let customConsentsUrl = getCustomConsentsUrl(propertyId: propertyId, consentUUID: consentUUID, euconsent: euConsent) {
+            client.get(url: customConsentsUrl) { [weak self] (result, _error) in
+                if let _result = result, let consents = try? self?.jsonDecoder.decode(ConsentsResponse.self, from: _result) {
                     cHandler(consents, nil)
                 }else {
                     cHandler(nil, ConsentsAPIError())
@@ -116,50 +103,15 @@ class SourcePointClient {
         }
     }
 
-    private func encode(targetingParams params: TargetingParams) throws -> String {
-        let data = try JSONSerialization.data(withJSONObject: params)
-        return String(data: data, encoding: String.Encoding.utf8)!
-    }
-
-    func getSDKWebURL(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
-        var url: URL
-        var components = URLComponents()
-        var queryItems: [String:String] = [:]
-
-        do {
-            queryItems = [
-                "_sp_accountId": String(accountId),
-                "_sp_PMId": pmId,
-                "_sp_siteId": String(propertyId),
-                "_sp_siteHref": propertyUrl.absoluteString,
-                "_sp_runMessaging" : String(runMessaging),
-                "_sp_showPM": String(showPM),
-                "_sp_mms_Domain": mmsUrl.absoluteString,
-                "_sp_cmp_origin": "\(cmpUrl)",
-                "_sp_targetingParams": try encode(targetingParams: params),
-                "_sp_env": campaign
-            ]
-            if(authId != nil) { queryItems["_sp_authId"] = authId }
-            components.queryItems = queryItems.map { URLQueryItem(name: $0.key, value: $0.value) }
-            url = components.url(relativeTo: messageUrl)!
-        } catch {
-            throw InvalidMessageURLError(urlString: messageUrl.absoluteString)
-        }
-
-        return url
-    }
-    
     func getMessageUrl(accountId: Int, propertyId: Int, onSuccess: @escaping (MessageResponse) -> Void, onError: OnError?) {
         let _onError: OnError = { error in onError?(GetMessageAPIError(parsingError: error)) }
-        let _onSuccess: OnSuccess = { data in
-            do { onSuccess(try JSONDecoder().decode(MessageResponse.self, from: data))
-            } catch { _onError(error) }
+        let _onSuccess: OnSuccess = { [weak self] data in
+            do {
+                onSuccess(try (self?.jsonDecoder.decode(MessageResponse.self, from: data))!)
+            } catch {
+                _onError(error)
+            }
         }
-        
-        client.get(
-            url: URL(string: "getMessageUrl", relativeTo: SourcePointClient.GET_MESSAGE_URL)!,
-            onSuccess: _onSuccess,
-            onError: _onError
-        )
+        client.get(url: SourcePointClient.GET_MESSAGE_URL, onSuccess: _onSuccess, onError: _onError)
     }
 }
