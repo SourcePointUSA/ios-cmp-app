@@ -22,17 +22,6 @@ let Actions: [Int: Action] = [
     99: .PMAction
 ]
 
-protocol MessageUIDelegate {
-    func loadMessage(fromUrl url: URL?)
-    func loadPrivacyManager()
-}
-
-class MessageViewController: UIViewController, MessageUIDelegate {
-    var consentDelegate: ConsentDelegate?
-    func loadMessage(fromUrl url: URL?) {}
-    func loadPrivacyManager() {}
-}
-
 class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, ConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "JSReceiver"
 
