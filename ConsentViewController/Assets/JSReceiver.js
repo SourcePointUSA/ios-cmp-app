@@ -17,7 +17,7 @@
         postToWebView("onAction", action);
       },
       onError: function(error) {
-        postToWebView("onError", error);
+        postToWebView("onError", { error: error });
       },
       onMessageEvent: function(payload) {
         postToWebView("onMessageEvent", payload);
@@ -44,6 +44,9 @@
           break;
         case "sp.pmLoaded":
           SDK.onPMReady();
+          break;
+        case "sp.error":
+          SDK.onError();
           break;
         default:
           payload.action = eventName;

@@ -193,15 +193,6 @@ import JavaScriptCore
         */
     }
 
-    public func onError(error: ConsentViewControllerError?) {
-        remove(asChildViewController: messageViewController)
-        messageViewController = nil
-        if(shouldCleanConsentOnError) {
-            clearAllConsentData()
-        }
-        consentDelegate?.onError(error: error)
-    }
-
     internal func setSubjectToGDPR() {
         sourcePoint.getGdprStatus { [weak self] (gdprStatus, error) in
             guard let gdprStatus = gdprStatus else {
@@ -343,3 +334,9 @@ import JavaScriptCore
         userDefaults.synchronize()
     }
 }
+    public func onError(error: ConsentViewControllerError?) {
+        if(shouldCleanConsentOnError) {
+            clearAllConsentData()
+        }
+        consentDelegate?.onError?(error: error)
+    }
