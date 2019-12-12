@@ -8,13 +8,30 @@
 
 import Foundation
 
-public class ConsentString:ConsentStringProtocol {
+// TODO: follow-up on https://github.com/InteractiveAdvertisingBureau/Consent-String-SDK-Swift/issues/11
+
+public class ConsentString: ConsentStringProtocol, Equatable {
+    public static func == (lhs: ConsentString, rhs: ConsentString) -> Bool {
+        return lhs.consentData == rhs.consentData
+    }
     
+    required public init(from decoder: Decoder) throws {
+        self.consentString = try decoder.singleValueContainer().decode(String.self).fromWebSafe()
+        guard let dataValue = Data(base64Encoded: self.consentString.base64Padded) else {
+            throw ConsentStringError.base64DecodingFailed
+        }
+        consentData = dataValue
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(consentString.toWebSafe())
+    }
+
     /**
      The current Consent String.  Setting will allow replacement of the curr
  */
     public var consentString: String {
-        
         //error correction in didSet resets old value if base64decoding fails
         didSet {
             guard let dataValue = Data(base64Encoded: consentString.base64Padded) else {
@@ -24,7 +41,6 @@ public class ConsentString:ConsentStringProtocol {
             }
             consentData = dataValue
         }
-        
     }
     
     var consentData:Data
@@ -41,8 +57,7 @@ public class ConsentString:ConsentStringProtocol {
         }
         consentData = dataValue
     }
-    
-    
+
     public var cmpId: Int {
         return Int(consentData.intValue(fromBit: 78, toBit: 89))
     }
