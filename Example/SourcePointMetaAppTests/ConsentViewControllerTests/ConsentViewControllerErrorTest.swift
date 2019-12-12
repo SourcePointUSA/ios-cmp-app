@@ -40,16 +40,6 @@ class ConsentViewControllerErrorTest: XCTestCase {
         }
     }
     
-    /// this test method is used to test invalid message url error method
-    func testInvalidMessageURLError() {
-        let errorObject = InvalidMessageURLError(urlString: "https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.dem")
-        if errorObject.description == "Could not parse https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.dem with its query params into URL." {
-            XCTAssert(true, "Error handling for the Invalid Message URL failure is successfully handled")
-        } else {
-            XCTAssert(false, "Error handling for the Invalid Message URL failure is not handled properly")
-        }
-    }
-    
     /// this test method is used to test invalid url error method
     func testInvalidURLError() {
         let errorObject = InvalidURLError(urlName: "PropertyUrl", urlString: "https://mms.sp-prod.net/get_site_data?account_id=22&href=https://mobile.dem")

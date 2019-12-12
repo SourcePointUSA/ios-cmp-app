@@ -32,60 +32,6 @@ import Foundation
     override public var description: String { get { return "\(errorDescription!)" } }
 }
 
-@objcMembers public class InvalidMessageURLError: ConsentViewControllerError {
-    private var urlString: String
-
-    public var failureReason: String? { get { return "Failed to parse Message URL." } }
-    public var errorDescription: String? { get { return "Could not parse \(urlString) with its query params into URL." } }
-    override public var helpAnchor: String? { get { return "Please make sure the query params are URL encodable." } }
-
-    init(urlString: String) {
-        self.urlString = urlString
-        super.init()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    override public var description: String { get { return "\(errorDescription!)" } }
-}
-
-@objcMembers public class InvalidURLError: ConsentViewControllerError {
-    private let urlName: String, urlString: String
-
-    public var failureReason: String? { get { return "Failed to parse \(urlName)." } }
-    public var errorDescription: String? { get { return "Could not convert \(urlString) into URL." } }
-    override public var helpAnchor: String? { get { return "Make sure \(urlName) has the correct value." } }
-
-    init(urlName: String, urlString: String) {
-        self.urlName = urlName
-        self.urlString = urlString
-        super.init()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    override public var description: String { get { return "\(errorDescription!)\n\(helpAnchor!)" } }
-}
-
-@objcMembers public class PropertyIDNotFound: ConsentViewControllerError {
-    private let accountId: String, property: String
-
-    public var failureReason: String? { get { return "Could not find property ID." } }
-    public var errorDescription: String? { get { return "Could not find a property with name \(property) for the account id \(accountId)" } }
-    override public var helpAnchor: String? { get { return "Double check your account id and the property name." } }
-
-    init(accountId: String, property: String) {
-        self.accountId = accountId
-        self.property = property
-        super.init()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    override public var description: String { get { return
-        "\(errorDescription!)" } }
-}
-
 @objcMembers public class GdprStatusNotFound: ConsentViewControllerError {
     private let gdprStatusUrl: URL
     public var failureReason: String? { get { return "Could not get the GDPR status for this user." } }
@@ -177,4 +123,3 @@ public let WebViewErrors: [String : ConsentViewControllerError] = [
     public var failureReason: String? { get { return "The Message request has timed out." } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
-
