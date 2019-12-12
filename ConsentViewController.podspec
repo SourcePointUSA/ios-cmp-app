@@ -12,5 +12,4 @@ Pod::Spec.new do |s|
   s.resource_bundles = { 'ConsentViewController' => ['ConsentViewController/Assets/**/*'] }
   s.resources = "ConsentViewController/**/*{.js}"
 
-  s.dependency 'ReachabilitySwift', '4.3.0'
 end
