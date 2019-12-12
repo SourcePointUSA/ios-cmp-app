@@ -8,20 +8,6 @@
 import UIKit
 import WebKit
 
-enum Action {
-    case ShowPrivacyManager, AcceptAll, RejectAll, Dismiss
-    case PMCancel, PMAction // TODO: Change PM actions according to new PM
-}
-
-let Actions: [Int: Action] = [
-    11: .AcceptAll,
-    12: .ShowPrivacyManager,
-    13: .RejectAll,
-    15: .Dismiss,
-    98: .PMCancel, // TODO: Change PM actions according to new PM
-    99: .PMAction
-]
-
 class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, ConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "JSReceiver"
 
@@ -146,7 +132,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
                 guard
                     let payload = message["body"] as? [String: Any],
                     let actionType = payload["type"] as? Int,
-                    let action = Actions[actionType]
+                    let action = Action(rawValue: actionType)
                 else {
                     onError(error: ConsentsAPIError())
                     return
