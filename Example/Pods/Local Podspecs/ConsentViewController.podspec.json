@@ -25,10 +25,5 @@
     ]
   },
   "resources": "ConsentViewController/**/*{.js}",
-  "dependencies": {
-    "ReachabilitySwift": [
-      "4.3.0"
-    ]
-  },
   "swift_version": "4.2"
 }

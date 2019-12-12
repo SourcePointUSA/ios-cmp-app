@@ -12,7 +12,6 @@ public typealias Callback = (ConsentViewController) -> Void
 import UIKit
 import WebKit
 import JavaScriptCore
-import Reachability
 
 /**
  SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
@@ -298,7 +297,7 @@ import Reachability
         UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         setSubjectToGDPR()
 
-        guard Reachability()!.connection != .none else {
+        guard ConnectivityManager.shared.isConnectedToNetwork() else {
             onErrorOccurred(error: NoInternetConnection())
             self.messageStatus = .notStarted
             return
@@ -470,7 +469,7 @@ import Reachability
     }
 
     private func onMessageChoiceSelect(choiceId: Int) {
-        guard Reachability()!.connection != .none else {
+        guard ConnectivityManager.shared.isConnectedToNetwork() else {
             onErrorOccurred(error: NoInternetConnection())
             return
         }
