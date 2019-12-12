@@ -36,6 +36,8 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     private let propertyId: Int
     private let pmId: String
     
+    private var consentUILoaded = false
+    
     init(propertyId: Int, pmId: String) {
         self.propertyId = propertyId
         self.pmId = pmId
@@ -50,52 +52,73 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         view = webview
     }
     
+    func consentUIWillShow() {
+        if(!consentUILoaded) {
+            consentUILoaded = true
+            consentDelegate?.consentUIWillShow()
+        }
+    }
+    
     func onMessageReady() {
-        consentDelegate?.onMessageReady()
+        consentUIWillShow()
+        consentDelegate?.messageWillShow?()
     }
     
     func onPMReady() {
-        consentDelegate?.onPMReady()
+        consentUIWillShow()
+        consentDelegate?.pmWillShow?()
     }
     
-    func onConsentReady() {
-        consentDelegate?.onConsentReady()
+    func closeConsentUI() {
+        if(consentUILoaded) { consentUIDidDisappear() }
+    }
+
+    func consentUIDidDisappear() {
+        consentDelegate?.consentUIDidDisappear()
     }
     
     func onError(error: ConsentViewControllerError?) {
-        consentDelegate?.onError(error: error)
+        closeConsentUI()
+        consentDelegate?.onError?(error: error)
+    }
+    
+    func showPrivacyManagerFromMessageAction() {
+        consentDelegate?.messageDidDisappear?()
+        loadPrivacyManager()
+    }
+    
+    func cancelPMAction() {
+        webview.canGoBack ?
+            navigateBackToMessage():
+            closeConsentUI()
+    }
+    
+    func navigateBackToMessage() {
+        webview.goBack()
+        consentDelegate?.pmDidDisappear?()
     }
     
     func onAction(_ action: Action) {
-        switch action{
-        case .ShowPrivacyManager:
-            loadPrivacyManager()
-        case .PMCancel:
-            webview.canGoBack ? navigateBackToMessage() : onConsentReady()
-        default:
-            onConsentReady()
+        consentDelegate?.onAction?(action)
+        switch action {
+            case .ShowPrivacyManager:
+                showPrivacyManagerFromMessageAction()
+            case .PMCancel:
+                cancelPMAction()
+            default:
+                closeConsentUI()
         }
     }
     
     override func loadMessage(fromUrl url: URL?) {
-        guard let url = url else {
-            onConsentReady()
-            return
-        }
+        guard let url = url else { return }
         webview.load(URLRequest(url: url))
     }
     
     override func loadPrivacyManager() {
         guard let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)")
-        else {
-            return
-        }
-        
+        else { return }
         webview.load(URLRequest(url: pmUrl))
-    }
-    
-    func navigateBackToMessage() {
-        webview.goBack()
     }
     
     /// :nodoc:
@@ -111,6 +134,10 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        onError(error: ConsentsAPIError())
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         onError(error: ConsentsAPIError())
     }
     
@@ -140,6 +167,8 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
                 onAction(action)
             case "onMessageEvent":
                 print(message)
+            case "onError":
+                onError(error: ConsentsAPIError())
             default:
                 onError(error: ConsentsAPIError())
         }

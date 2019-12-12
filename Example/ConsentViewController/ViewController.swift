@@ -13,27 +13,19 @@ class ViewController: UIViewController {
     let logger = Logger()
 
     lazy var consentViewController: ConsentViewController = {
-        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", consentDelegate: self)
+        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", messageDelegate: self)
     }()
     
-    func onPMReady() {
+    func consentUIWillShow() {
         present(consentViewController, animated: false, completion: nil)
     }
 
-    func onMessageReady() {
-        consentViewController.modalPresentationStyle = .overFullScreen
-        present(consentViewController, animated: true, completion: nil)
+    func consentUIDidDisappear() {
+        dismiss(animated: false, completion: nil)
     }
-
-    func onConsentReady() {
-        consentViewController.getCustomVendorConsents { [weak self] (vendors, error) in
-            if let vendors = vendors {
-                vendors.forEach({ vendor in self?.logger.log("Consented to: %{public}@)", [vendor]) })
-            } else {
-                self?.onError(error: error)
-            }
-        }
-        dismiss(animated: true, completion: nil)
+    
+    func onConsentReady(consents: [Consent]) {
+        consents.forEach({ [weak self] consent in self?.logger.log("Consented to: %{public}@)", [consent]) })
     }
 
     func onError(error: ConsentViewControllerError?) {

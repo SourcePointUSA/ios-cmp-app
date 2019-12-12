@@ -38,7 +38,7 @@ import JavaScriptCore
  view.addSubview(consentViewController.view)
  ```
 */
-@objcMembers open class ConsentViewController: UIViewController, ConsentDelegate {
+@objcMembers open class ConsentViewController: UIViewController {
     /// :nodoc:
     public enum DebugLevel: String {
         case DEBUG, INFO, TIME, WARN, ERROR, OFF
@@ -157,40 +157,6 @@ import JavaScriptCore
         messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
         messageViewController?.consentDelegate = self
         messageViewController?.loadPrivacyManager()
-    }
-
-    public func onMessageReady() {
-        guard let viewController = messageViewController else { return }
-        add(asChildViewController: viewController)
-        consentDelegate?.onMessageReady()
-    }
-
-    public func onPMReady() {
-        guard let viewController = messageViewController else { return }
-        add(asChildViewController: viewController)
-        consentDelegate?.onMessageReady()
-    }
-
-    public func onConsentReady() {
-        remove(asChildViewController: messageViewController)
-        messageViewController = nil
-        consentDelegate?.onConsentReady()
-
-        /*  perform all IAB related on consent ready
-            self.euconsent = euconsent
-            self.consentUUID = consentUUID
-            do {
-                try storeIABVars(euconsent)
-                let userDefaults = UserDefaults.standard
-                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-                userDefaults.synchronize()
-            } catch let error as ConsentViewControllerError {
-                onError(error: error)
-            } catch {
-                print(error)
-            }
-        */
     }
 
     internal func setSubjectToGDPR() {
@@ -334,9 +300,55 @@ import JavaScriptCore
         userDefaults.synchronize()
     }
 }
+
+extension ConsentViewController: ConsentDelegate {
+    public func consentUIWillShow() {
+        guard let viewController = messageViewController else { return }
+        add(asChildViewController: viewController)
+        consentDelegate?.consentUIWillShow()
+    }
+
+    public func consentUIDidDisappear() {
+        remove(asChildViewController: messageViewController)
+        messageViewController = nil
+        consentDelegate?.consentUIDidDisappear()
+    }
+
     public func onError(error: ConsentViewControllerError?) {
         if(shouldCleanConsentOnError) {
             clearAllConsentData()
         }
         consentDelegate?.onError?(error: error)
     }
+
+    public func onAction(_ action: Action) {
+        if(action == .AcceptAll || action == .RejectAll || action == .PMAction) {
+            // report action to Wrapper api and on its response pass the consents to onConsentReady
+            onConsentReady(consents: [VendorConsent(id: "abcd", name: "Example Vendor")])
+        }
+    }
+
+    public func onConsentReady(consents: [Consent]) {
+        /*  perform all IAB related on consent ready
+            self.euconsent = euconsent
+            self.consentUUID = consentUUID
+            do {
+                try storeIABVars(euconsent)
+                let userDefaults = UserDefaults.standard
+                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
+                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+                userDefaults.synchronize()
+            } catch let error as ConsentViewControllerError {
+                onError(error: error)
+            } catch {
+                print(error)
+            }
+        */
+        consentDelegate?.onConsentReady?(consents: consents)
+    }
+
+    public func messageWillShow() { consentDelegate?.messageWillShow?() }
+    public func messageDidDisappear() { consentDelegate?.messageDidDisappear?() }
+    public func pmWillShow() { consentDelegate?.pmWillShow?() }
+    public func pmDidDisappear() { consentDelegate?.pmDidDisappear?() }
+}
