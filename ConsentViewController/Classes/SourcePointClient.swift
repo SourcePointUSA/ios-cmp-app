@@ -41,7 +41,13 @@ struct ConsentsResponse : Codable {
 }
 
 struct MessageResponse: Codable, Equatable {
+    static func == (lhs: MessageResponse, rhs: MessageResponse) -> Bool {
+        return (lhs.uuid == rhs.uuid) && (lhs.euconsent == rhs.euconsent)
+    }
+    
     let url: URL?
+    let uuid: UUID
+    let euconsent: ConsentString?
 }
 
 typealias TargetingParams = [String:Any]
