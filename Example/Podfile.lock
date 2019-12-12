@@ -1,14 +1,20 @@
 PODS:
   - ConsentViewController (3.1.0)
   - IQKeyboardManagerSwift (6.5.4)
+  - Nimble (8.0.4)
+  - Quick (2.2.0)
 
 DEPENDENCIES:
   - ConsentViewController (from `../`)
   - IQKeyboardManagerSwift
+  - Nimble
+  - Quick
 
 SPEC REPOS:
   trunk:
     - IQKeyboardManagerSwift
+    - Nimble
+    - Quick
 
 EXTERNAL SOURCES:
   ConsentViewController:
@@ -17,7 +23,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ConsentViewController: 3a62eea63117a4505e82b49c5b0e2727fe90147d
   IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
+  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
 
-PODFILE CHECKSUM: 4fb8d8f838fdf1182e56c20d13fd3977f8f05b18
+PODFILE CHECKSUM: e597b4f48d46fd9f7205405ad04c92283411feb5
 
 COCOAPODS: 1.8.4
