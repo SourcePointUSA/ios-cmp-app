@@ -8,9 +8,7 @@
 
 import Foundation
 
-// TODO: follow-up on https://github.com/InteractiveAdvertisingBureau/Consent-String-SDK-Swift/issues/11
-
-public class ConsentString: ConsentStringProtocol, Equatable {
+@objcMembers public class ConsentString: NSObject, ConsentStringProtocol {
     public static func == (lhs: ConsentString, rhs: ConsentString) -> Bool {
         return lhs.consentData == rhs.consentData
     }
