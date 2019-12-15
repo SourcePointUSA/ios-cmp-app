@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         dismiss(animated: false, completion: nil)
     }
     
-    func onConsentReady(consents: [Consent]) {
+    func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
         consents.forEach({ [weak self] consent in self?.logger.log("Consented to: %{public}@)", [consent]) })
     }
 
