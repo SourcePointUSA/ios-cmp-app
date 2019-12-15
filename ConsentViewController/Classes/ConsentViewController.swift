@@ -71,7 +71,7 @@ import JavaScriptCore
     public var debugLevel: DebugLevel = .OFF
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
-    public var euconsent: String
+    public var euconsent: ConsentString?
 
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
     public var consentUUID: String
@@ -135,8 +135,8 @@ import JavaScriptCore
             campaign: campaign
         )
 
-        self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
+        self.euconsent = try? ConsentString(consentString: UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? "")
         self.logger = Logger()
 
         super.init(nibName: nil, bundle: nil)
@@ -179,7 +179,7 @@ import JavaScriptCore
     public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try buildConsentString(storedConsentString)
+        let consentString = try ConsentString(consentString: storedConsentString)
 
         for i in 0..<forIds.count {
             results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
@@ -197,7 +197,7 @@ import JavaScriptCore
     public func getIABPurposeConsents(_ forIds: [Int8]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try buildConsentString(storedConsentString)
+        let consentString = try ConsentString(consentString: storedConsentString)
 
         for i in 0..<forIds.count {
             results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
@@ -205,29 +205,15 @@ import JavaScriptCore
         return results
     }
 
-    internal func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
-        //Convert base46URL to regular base64 encoding for Consent String SDK Swift
-        let euconsent = euconsentBase64Url
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-
-        guard let consentString = try? ConsentString(consentString: euconsent) else {
-            throw UnableToParseConsentStringError(euConsent: euconsentBase64Url)
-        }
-        return consentString
-    }
-
-    internal func storeIABVars(_ euconsentBase64Url: String) throws {
+    internal func storeIABVars(consentString: ConsentString) {
         let userDefaults = UserDefaults.standard
-        // Set the standard IABConsent_ConsentString var in userDefaults
-        userDefaults.setValue(euconsentBase64Url, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
-        let cstring = try buildConsentString(euconsentBase64Url)
+        userDefaults.setValue(consentString.consentString, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
         // Generate parsed vendor consents string
         var parsedVendorConsents = [Character](repeating: "0", count: ConsentViewController.MAX_VENDOR_ID)
         for i in 1...ConsentViewController.MAX_VENDOR_ID {
-            if cstring.isVendorAllowed(vendorId: i) {
+            if consentString.isVendorAllowed(vendorId: i) {
                 parsedVendorConsents[i - 1] = "1"
             }
         }
@@ -235,8 +221,8 @@ import JavaScriptCore
 
         // Generate parsed purpose consents string
         var parsedPurposeConsents = [Character](repeating: "0", count: ConsentViewController.MAX_PURPOSE_ID)
-        for pId in cstring.purposesAllowed {
-            parsedPurposeConsents[Int(pId) - 1] = "1"
+        for i in consentString.purposesAllowed {
+            parsedPurposeConsents[Int(i) - 1] = "1"
         }
         userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
