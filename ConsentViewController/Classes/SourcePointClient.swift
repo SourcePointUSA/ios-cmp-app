@@ -8,19 +8,23 @@
 import Foundation
 
 typealias OnSuccess = (Data) -> Void
-typealias OnError = (Error?) -> Void
+typealias OnError = (ConsentViewControllerError?) -> Void
 
 protocol HttpClient {
-    func get(url: URL, completionHandler handler : @escaping (Data?, Error?) -> Void)
-    func get(url: URL, onSuccess: @escaping OnSuccess, onError: OnError?)
+    var defaultOnError: OnError? { get set }
+    
+    func get(url: URL?, onSuccess: @escaping OnSuccess)
+    func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess)
 }
 
 class SimpleClient: HttpClient {
-    func get(url: URL, onSuccess: @escaping (Data) -> Void, onError: OnError?) {
-        URLSession.shared.dataTask(with: url) { data, _response, error in
-            DispatchQueue.main.async {
+    var defaultOnError: OnError?
+    
+    func request(_ request: URLRequest, _ onSuccess: @escaping OnSuccess) {
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async { [weak self] in
                 guard let data = data else {
-                    onError?(error)
+                    self?.defaultOnError?(GeneralRequestError(request.url, response))
                     return
                 }
                 onSuccess(data)
@@ -28,96 +32,152 @@ class SimpleClient: HttpClient {
         }.resume()
     }
     
-    func get(url: URL, completionHandler cHandler : @escaping (Data?, Error?) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async { cHandler(data, error) }
-        }.resume()
-    }
-}
-
-struct ConsentsResponse : Codable {
-    let consentedVendors: [VendorConsent]
-    let consentedPurposes: [PurposeConsent]
-}
-
-struct MessageResponse: Codable, Equatable {
-    static func == (lhs: MessageResponse, rhs: MessageResponse) -> Bool {
-        return (lhs.uuid == rhs.uuid) && (lhs.euconsent == rhs.euconsent)
+    func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
+        guard let _url = url else {
+            defaultOnError?(GeneralRequestError(url, nil))
+            return
+        }
+        var urlRequest = URLRequest(url: _url)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = body
+        request(urlRequest, onSuccess)
     }
     
-    let url: URL?
-    let uuid: UUID
-    let euconsent: ConsentString?
+    func get(url: URL?, onSuccess: @escaping OnSuccess) {
+        guard let _url = url else {
+            defaultOnError?(GeneralRequestError(url, nil))
+            return
+        }
+        request(URLRequest(url: _url), onSuccess)
+    }
 }
 
-typealias TargetingParams = [String:Any]
+typealias TargetingParams = [String:Codable]
+
+struct JSON {
+    private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
+    private lazy var jsonEncoder: JSONEncoder = { return JSONEncoder() }()
+    
+    mutating func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
+        return try jsonDecoder.decode(decodable, from: data)
+    }
+    
+    mutating func encode<T: Encodable>(_ encodable: T) throws -> Data {
+        return try jsonEncoder.encode(encodable)
+    }
+}
 
 class SourcePointClient {
-    static let WRAPPER_API = URL(string: "https://fake_wrapper_api.com")!
+    static let WRAPPER_API = URL(string: "https://fake-wrapper-api.herokuapp.com")!
     static let CMP_URL = URL(string: "https://sourcepoint.mgr.consensu.org")!
     static let GET_GDPR_STATUS_URL = URL(string: "consent/v2/gdpr-status", relativeTo: CMP_URL)!
-    static let GET_MESSAGE_URL = URL(string: "getMessageUrl", relativeTo: SourcePointClient.WRAPPER_API)!
     
     private let client: HttpClient
-    private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
+    private lazy var json: JSON = { return JSON() }()
+    
+    let requestUUID = UUID()
     
     private let accountId: Int
     private let propertyId: Int
     private let pmId: String
     private let campaign: String
+    
+    private let onError: OnError?
 
-    init(accountId: Int, propertyId:Int, pmId:String, campaign: String, client: HttpClient) {
+    init(accountId: Int, propertyId:Int, pmId:String, campaign: String, client: HttpClient, onError: OnError?) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.pmId = pmId
         self.campaign = campaign
+        self.onError = onError
         self.client = client
     }
     
-    convenience init(accountId: Int, propertyId: Int, pmId: String, campaign: String) {
-        self.init(accountId: accountId, propertyId: propertyId, pmId: pmId, campaign: campaign, client: SimpleClient())
+    convenience init(accountId: Int, propertyId: Int, pmId: String, campaign: String, onError: OnError?) {
+        let client = SimpleClient()
+        client.defaultOnError = onError
+        self.init(accountId: accountId, propertyId: propertyId, pmId: pmId, campaign: campaign, client: client, onError: onError)
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
-        client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { (result, _error) in
-            if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
-                let gdprStatus = parsedResult["gdprApplies"]
-                cHandler(gdprStatus,nil)
-            } else {
-                cHandler(nil, GdprStatusNotFound(gdprStatusUrl: SourcePointClient.GET_GDPR_STATUS_URL))
-            }
-        }
+//        client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { (result, _error) in
+//            if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
+//                let gdprStatus = parsedResult["gdprApplies"]
+//                cHandler(gdprStatus,nil)
+//            } else {
+//                cHandler(nil, GdprStatusNotFound(gdprStatusUrl: SourcePointClient.GET_GDPR_STATUS_URL))
+//            }
+//        }
     }
     
-    func getCustomConsentsUrl(propertyId id: String, consentUUID uuid: String, euconsent: String) -> URL? {
+    func getCustomConsentsUrl(uuid: UUID) -> URL? {
         return URL(
-            string: "/consent/v2/\(id)/custom-vendors?consentUUID=\(uuid)&euconsent=\(euconsent)",
+            string: "consent/v2/\(propertyId)/custom-vendors?consentUUID=\(uuid.uuidString.lowercased()))",
             relativeTo: SourcePointClient.CMP_URL
         )
     }
 
-    // TODO: validate customConsentsURL with Utils.validate
-    func getCustomConsents(forPropertyId propertyId: String, consentUUID: String, euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
-        if let customConsentsUrl = getCustomConsentsUrl(propertyId: propertyId, consentUUID: consentUUID, euconsent: euConsent) {
-            client.get(url: customConsentsUrl) { [weak self] (result, _error) in
-                if let _result = result, let consents = try? self?.jsonDecoder.decode(ConsentsResponse.self, from: _result) {
-                    cHandler(consents, nil)
-                }else {
-                    cHandler(nil, ConsentsAPIError())
-                }
+    func getCustomConsents(consentUUID: UUID, onSuccess: @escaping (ConsentsResponse) -> Void) {
+        let url = getCustomConsentsUrl(uuid: consentUUID)
+        client.get(url: getCustomConsentsUrl(uuid: consentUUID)) { [weak self] data in
+            do {
+                onSuccess(try (self?.json.decode(ConsentsResponse.self, from: data))!)
+            } catch {
+                self?.onError?(APIParsingError(url?.absoluteString ?? "getCustomConsents", error))
             }
         }
     }
+    
+//    propertyId: Int -> The id of the property
+//    accountId: Int -> The id of the account to which that property belongs
+//    requestUUID: UUID -> A UUID used to identify a request. Once generated, the same UUID should be used across all calls to SP's endpoint during the lifecycle of the SDK.
+//    propertyHref: String
+    
+    func getMessageUrl() -> URL? {
+        var components = URLComponents(url: SourcePointClient.WRAPPER_API, resolvingAgainstBaseURL: true)
+        components?.path = "/message"
+        components?.queryItems = [
+            URLQueryItem(name: "propertyId", value: String(propertyId)),
+            URLQueryItem(name: "accountId", value: String(accountId)),
+            URLQueryItem(name: "requestUUID", value: requestUUID.uuidString)
+//            TODO: add propertyHref
+//            URLQueryItem(name: "propertyHref", value: String(),
+        ]
+        return components?.url
+    }
 
-    func getMessageUrl(accountId: Int, propertyId: Int, onSuccess: @escaping (MessageResponse) -> Void, onError: OnError?) {
-        let _onError: OnError = { error in onError?(GetMessageAPIError(parsingError: error)) }
-        let _onSuccess: OnSuccess = { [weak self] data in
+    func getMessage(accountId: Int, propertyId: Int, onSuccess: @escaping (MessageResponse) -> Void) {
+        let url = getMessageUrl()
+        client.get(url: url) { [weak self] data in
             do {
-                onSuccess(try (self?.jsonDecoder.decode(MessageResponse.self, from: data))!)
+                onSuccess(try (self?.json.decode(MessageResponse.self, from: data))!)
             } catch {
-                _onError(error)
+                self?.onError?(APIParsingError(url?.absoluteString ?? "getMessage", error))
             }
         }
-        client.get(url: SourcePointClient.GET_MESSAGE_URL, onSuccess: _onSuccess, onError: _onError)
+    }
+    
+    func postActionUrl(_ actionType: Int) -> URL? {
+        return URL(
+            string: "action/\(actionType)",
+            relativeTo: SourcePointClient.WRAPPER_API
+        )
+    }
+    
+    func postAction(action: Action, consentUUID: UUID?, onSuccess: @escaping (ActionResponse) -> Void) {
+        let url = postActionUrl(action.rawValue)
+        guard let body = try? json.encode(ActionRequest(propertyId: propertyId, accountId: accountId, actionType: action.rawValue, privacyManagerId: pmId, uuid: consentUUID, requestUUID: requestUUID)) else {
+            self.onError?(APIParsingError(url?.absoluteString ?? "postAction", nil))
+            return
+        }
+        
+        client.post(url: url, body: body) { [weak self] data in
+            do {
+                onSuccess(try (self?.json.decode(ActionResponse.self, from: data))!)
+            } catch {
+                self?.onError?(APIParsingError(url?.absoluteString ?? "postAction", error))
+            }
+        }
     }
 }
