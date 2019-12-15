@@ -289,24 +289,18 @@ extension ConsentViewController: ConsentDelegate {
             }
         }
     }
-
-    public func onConsentReady(consents: [Consent]) {
-        /*  perform all IAB related on consent ready
-            self.euconsent = euconsent
-            self.consentUUID = consentUUID
-            do {
-                try storeIABVars(euconsent)
-                let userDefaults = UserDefaults.standard
-                userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-                userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-                userDefaults.synchronize()
-            } catch let error as ConsentViewControllerError {
-                onError(error: error)
-            } catch {
-                print(error)
-            }
-        */
-        consentDelegate?.onConsentReady?(consents: consents)
+    
+    public func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
+        guard let consentString = consentString else {
+            return
+        }
+        self.consentUUID = consentUUID
+        euconsent = consentString
+        storeIABVars(consentString: consentString)
+        UserDefaults.standard.setValue(consentString.consentString, forKey: ConsentViewController.EU_CONSENT_KEY)
+        UserDefaults.standard.setValue(consentUUID.uuidString, forKey: ConsentViewController.CONSENT_UUID_KEY)
+        UserDefaults.standard.synchronize()
+        consentDelegate?.onConsentReady?(consentUUID: consentUUID, consents: consents, consentString: consentString)
     }
 
     public func messageWillShow() { consentDelegate?.messageWillShow?() }
