@@ -205,52 +205,6 @@ import JavaScriptCore
         return results
     }
 
-    /**
-     Checks if the non-IAB purposes passed as parameter were given consent or not.
-     Same as `getIabVendorConsents(forIds: )` but for non-IAB vendors.
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter forIds: an `Array` of vendor ids
-     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
-     */
-    public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]?, ConsentViewControllerError?) -> Void) {
-        loadAndStoreConsents { (consentsResponse, error) in
-            if let vendorConsents = consentsResponse?.consentedVendors {
-                cHandler(vendorConsents, nil)
-            }else {
-                cHandler(nil, error)
-            }
-        }
-    }
-
-    /**
-     Checks if a non-IAB purpose was given consent.
-     Same as `getIabPurposeConsents(_) but for non-IAB purposes.
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter forIds: the purpose id
-     - Returns: a `Bool` indicating if the user has given consent to that purpose.
-     */
-    public func getCustomPurposeConsents(completionHandler cHandler : @escaping ([PurposeConsent]?,ConsentViewControllerError?) -> Void) {
-        loadAndStoreConsents { (consentsResponse, error) in
-            if let purposeConsents = consentsResponse?.consentedPurposes {
-                cHandler(purposeConsents, nil)
-            } else {
-                cHandler(nil, error)
-            }
-        }
-    }
-
-    internal func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
-        self.sourcePoint.getCustomConsents(forPropertyId: String(self.propertyId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
-            if let _consents = consents {
-                cHandler(_consents, nil)
-            } else {
-                cHandler(nil, error)
-            }
-        })
-    }
-
     internal func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
         //Convert base46URL to regular base64 encoding for Consent String SDK Swift
         let euconsent = euconsentBase64Url
