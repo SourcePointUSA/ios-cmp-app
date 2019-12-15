@@ -74,7 +74,7 @@ import JavaScriptCore
     public var euconsent: ConsentString?
 
     /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
-    public var consentUUID: String
+    public var consentUUID: UUID?
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = TimeInterval(300)
@@ -135,8 +135,8 @@ import JavaScriptCore
             campaign: campaign
         )
 
-        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
         self.euconsent = try? ConsentString(consentString: UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? "")
+        self.consentUUID = UUID(uuidString: UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? "")
         self.logger = Logger()
 
         super.init(nibName: nil, bundle: nil)
