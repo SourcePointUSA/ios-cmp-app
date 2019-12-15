@@ -110,15 +110,22 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         }
     }
     
-    override func loadMessage(fromUrl url: URL?) {
-        guard let url = url else { return }
-        webview.load(URLRequest(url: url))
+    private func load(url: URL) {
+        if ConnectivityManager.shared.isConnectedToNetwork() {
+            webview.load(URLRequest(url: url))
+        } else {
+            consentDelegate?.onError?(error: NoInternetConnection())
+        }
+    }
+    
+    override func loadMessage(fromUrl url: URL) {
+        load(url: url)
     }
     
     override func loadPrivacyManager() {
         guard let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)")
         else { return }
-        webview.load(URLRequest(url: pmUrl))
+        load(url: pmUrl)
     }
     
     /// :nodoc:
