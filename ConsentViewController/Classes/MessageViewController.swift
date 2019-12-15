@@ -9,12 +9,12 @@ import UIKit
 import WebKit
 
 protocol MessageUIDelegate {
-    func loadMessage(fromUrl url: URL?)
+    func loadMessage(fromUrl url: URL)
     func loadPrivacyManager()
 }
 
 class MessageViewController: UIViewController, MessageUIDelegate {
     var consentDelegate: ConsentDelegate?
-    func loadMessage(fromUrl url: URL?) {}
+    func loadMessage(fromUrl url: URL) {}
     func loadPrivacyManager() {}
 }
