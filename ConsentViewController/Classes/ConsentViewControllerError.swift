@@ -16,6 +16,24 @@ import Foundation
     }
 }
 
+@objcMembers public class GeneralRequestError: ConsentViewControllerError {
+    public let urlDescription: String
+    public let responseDescription: String
+
+    public var failureReason: String? { get { return "The request to: \(urlDescription) failed with response: \(responseDescription)" } }
+    public var errorDescription: String? { get { return "Error while requesting from: \(urlDescription)" } }
+
+    init(_ url: URL?, _ response: URLResponse?) {
+        self.urlDescription = url?.absoluteString ?? "<Unknown Url>"
+        self.responseDescription = response?.description ?? "<Unknown Response>"
+        super.init()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override public var description: String { get { return "\(failureReason!)" } }
+}
+
 @objcMembers public class UnableToParseConsentStringError: ConsentViewControllerError {
     private var euConsent: String
 
@@ -56,21 +74,21 @@ import Foundation
     override public var description: String { get { return "\(errorDescription!)" } }
 }
 
-@objcMembers public class GetMessageAPIError: ConsentViewControllerError {
+@objcMembers public class APIParsingError: ConsentViewControllerError {
     private let parsingError: Error?
+    private let endpoint: String
 
-    init(parsingError: Error?) {
-        self.parsingError = parsingError
+    init(_ endpoint: String, _ error: Error?) {
+        self.endpoint = endpoint
+        self.parsingError = error
         super.init()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    public var failureReason: String? { get { return "Failed to parse MessageResponse" } }
-    public var errorDescription: String? { get { return "Failed to parse MessageResponse due to: \(parsingError?.localizedDescription ?? "<unknown>")" } }
-    override public var description: String { get { return "\(errorDescription!)" } }
+    override public var description: String { get { return "Error parsing response from \(endpoint): \(parsingError.debugDescription)" } }
+    public var errorDescription: String? { get { return description } }
+    public var failureReason: String? { get { return description } }
 }
 
 
