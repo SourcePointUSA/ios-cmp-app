@@ -149,6 +149,26 @@ import JavaScriptCore
     }
 
     public func loadMessage() {
+        sourcePoint.getMessage(accountId: accountId, propertyId: propertyId) { [weak self] message in
+            if let url = message.url {
+                self?.loadMessage(fromUrl: url)
+            } else {
+                self?.getConsents(forUUID: message.uuid, consentString: message.euconsent)
+            }
+        }
+    }
+    
+    private func getConsents(forUUID uuid: UUID, consentString: ConsentString?) {
+        sourcePoint.getCustomConsents(consentUUID: uuid) { [weak self] consents in
+            self?.onConsentReady(
+                consentUUID: uuid,
+                consents: consents.consentedPurposes + consents.consentedVendors,
+                consentString: consentString
+            )
+        }
+    }
+    
+    private func loadMessage(fromUrl url: URL) {
         messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
