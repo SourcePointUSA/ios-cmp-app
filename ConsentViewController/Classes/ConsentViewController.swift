@@ -132,7 +132,8 @@ import JavaScriptCore
             accountId: accountId,
             propertyId: propertyId,
             pmId: PMId,
-            campaign: campaign
+            campaign: campaign,
+            onError: consentDelegate.onError(error:)
         )
 
         self.euconsent = try? ConsentString(consentString: UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? "")
@@ -150,7 +151,7 @@ import JavaScriptCore
     public func loadMessage() {
         messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
         messageViewController?.consentDelegate = self
-        messageViewController?.loadMessage(fromUrl: URL(string: "https://notice.sp-prod.net/?message_id=66281"))
+        messageViewController?.loadMessage(fromUrl: url)
     }
 
     public func loadPrivacyManager() {
@@ -263,8 +264,9 @@ extension ConsentViewController: ConsentDelegate {
 
     public func onAction(_ action: Action) {
         if(action == .AcceptAll || action == .RejectAll || action == .PMAction) {
-            // report action to Wrapper api and on its response pass the consents to onConsentReady
-            onConsentReady(consents: [VendorConsent(id: "abcd", name: "Example Vendor")])
+            sourcePoint.postAction(action: action, consentUUID: consentUUID) { [weak self] response in
+                self?.getConsents(forUUID: response.uuid, consentString: response.euconsent)
+            }
         }
     }
 
