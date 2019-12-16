@@ -24,8 +24,8 @@ class SimpleClient: HttpClient {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async { [weak self] in
                 guard let data = data else {
-                    self?.defaultOnError?(GeneralRequestError(request.url, response))
                     return
+                        self?.defaultOnError?(GeneralRequestError(request.url, response, error))
                 }
                 onSuccess(data)
             }
@@ -34,7 +34,7 @@ class SimpleClient: HttpClient {
     
     func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
         guard let _url = url else {
-            defaultOnError?(GeneralRequestError(url, nil))
+            defaultOnError?(GeneralRequestError(url, nil, nil))
             return
         }
         var urlRequest = URLRequest(url: _url)
@@ -46,7 +46,7 @@ class SimpleClient: HttpClient {
     
     func get(url: URL?, onSuccess: @escaping OnSuccess) {
         guard let _url = url else {
-            defaultOnError?(GeneralRequestError(url, nil))
+            defaultOnError?(GeneralRequestError(url, nil, nil))
             return
         }
         request(URLRequest(url: _url), onSuccess)

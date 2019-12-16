@@ -17,15 +17,15 @@ import Foundation
 }
 
 @objcMembers public class GeneralRequestError: ConsentViewControllerError {
-    public let urlDescription: String
-    public let responseDescription: String
+    public let url, response, error: String
 
-    public var failureReason: String? { get { return "The request to: \(urlDescription) failed with response: \(responseDescription)" } }
-    public var errorDescription: String? { get { return "Error while requesting from: \(urlDescription)" } }
+    public var failureReason: String? { get { return "The request to: \(url) failed with response: \(response) and error: \(error)" } }
+    public var errorDescription: String? { get { return "Error while requesting from: \(url)" } }
 
-    init(_ url: URL?, _ response: URLResponse?) {
-        self.urlDescription = url?.absoluteString ?? "<Unknown Url>"
-        self.responseDescription = response?.description ?? "<Unknown Response>"
+    init(_ url: URL?, _ response: URLResponse?, _ error: Error?) {
+        self.url = url?.absoluteString ?? "<Unknown Url>"
+        self.response = response?.description ?? "<Unknown Response>"
+        self.error = error?.localizedDescription ?? "<Unknown Error>"
         super.init()
     }
     required init?(coder aDecoder: NSCoder) {
