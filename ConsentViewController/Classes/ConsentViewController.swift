@@ -58,7 +58,7 @@ import UIKit
     private let targetingParams: TargetingParams = [:]
 
     private let sourcePoint: SourcePointClient
-    private let logger: Logger
+    private lazy var logger = { return Logger() }()
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
@@ -108,7 +108,6 @@ import UIKit
 
         self.euconsent = try? ConsentString(consentString: UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? "")
         self.consentUUID = UUID(uuidString: UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? "")
-        self.logger = Logger()
 
         super.init(nibName: nil, bundle: nil)
     }
