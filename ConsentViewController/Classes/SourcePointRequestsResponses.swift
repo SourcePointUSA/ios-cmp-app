@@ -12,6 +12,10 @@ struct ConsentsResponse: Codable {
     let consentedPurposes: [PurposeConsent]
 }
 
+class GdprStatus: Codable {
+    let gdprApplies: Bool
+}
+
 protocol WrapperApiRequest: Codable, Equatable {
     var requestUUID: UUID { get }
 }

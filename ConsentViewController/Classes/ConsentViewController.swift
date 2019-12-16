@@ -180,16 +180,6 @@ import JavaScriptCore
         messageViewController?.loadPrivacyManager()
     }
 
-    internal func setSubjectToGDPR() {
-        sourcePoint.getGdprStatus { [weak self] (gdprStatus, error) in
-            guard let gdprStatus = gdprStatus else {
-                self?.logger.log("GDPR Status Error: %{public}@", [error ?? ""])
-                return
-            }
-            UserDefaults.standard.setValue(gdprStatus, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        }
-    }
-
     /**
      Get the IAB consents given to each vendor id in the array passed as parameter
 
@@ -227,9 +217,11 @@ import JavaScriptCore
     }
 
     internal func storeIABVars(consentString: ConsentString) {
-        let userDefaults = UserDefaults.standard
+        sourcePoint.getGdprStatus { gdprApplies in
+            UserDefaults.standard.setValue(gdprApplies ? "1" : "0", forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        }
 
-        userDefaults.setValue(consentString.consentString, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
+        UserDefaults.standard.setValue(consentString.consentString, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
         // Generate parsed vendor consents string
         var parsedVendorConsents = [Character](repeating: "0", count: ConsentViewController.MAX_VENDOR_ID)
@@ -238,14 +230,14 @@ import JavaScriptCore
                 parsedVendorConsents[i - 1] = "1"
             }
         }
-        userDefaults.setValue(String(parsedVendorConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        UserDefaults.standard.setValue(String(parsedVendorConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
 
         // Generate parsed purpose consents string
         var parsedPurposeConsents = [Character](repeating: "0", count: ConsentViewController.MAX_PURPOSE_ID)
         for i in consentString.purposesAllowed {
             parsedPurposeConsents[Int(i) - 1] = "1"
         }
-        userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+        UserDefaults.standard.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
     /// It will clear all the stored userDefaults Data

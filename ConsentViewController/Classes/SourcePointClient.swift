@@ -100,15 +100,14 @@ class SourcePointClient {
         self.init(accountId: accountId, propertyId: propertyId, pmId: pmId, campaign: campaign, client: client, onError: onError)
     }
 
-    func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
-//        client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { (result, _error) in
-//            if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
-//                let gdprStatus = parsedResult["gdprApplies"]
-//                cHandler(gdprStatus,nil)
-//            } else {
-//                cHandler(nil, GdprStatusNotFound(gdprStatusUrl: SourcePointClient.GET_GDPR_STATUS_URL))
-//            }
-//        }
+    func getGdprStatus(onSuccess: @escaping (Bool) -> Void) {
+        client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { [weak self] data in
+            do {
+                onSuccess(try (self?.json.decode(GdprStatus.self, from: data))!.gdprApplies)
+            } catch {
+                self?.onError?(APIParsingError(SourcePointClient.GET_GDPR_STATUS_URL.absoluteString, error))
+            }
+        }
     }
     
     func getCustomConsentsUrl(uuid: UUID) -> URL? {
@@ -128,11 +127,6 @@ class SourcePointClient {
             }
         }
     }
-    
-//    propertyId: Int -> The id of the property
-//    accountId: Int -> The id of the account to which that property belongs
-//    requestUUID: UUID -> A UUID used to identify a request. Once generated, the same UUID should be used across all calls to SP's endpoint during the lifecycle of the SDK.
-//    propertyHref: String
     
     func getMessageUrl() -> URL? {
         var components = URLComponents(url: SourcePointClient.WRAPPER_API, resolvingAgainstBaseURL: true)
