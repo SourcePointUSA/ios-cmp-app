@@ -118,6 +118,7 @@ import UIKit
         self.consentUUID = UUID(uuidString: UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? "")
 
         super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .overFullScreen
     }
 
     /// :nodoc:
