@@ -65,6 +65,14 @@ import UIKit
 
     private weak var consentDelegate: ConsentDelegate?
     private var messageViewController: MessageViewController?
+    
+    enum LoadingStatus: String {
+        case Ready = "Ready"
+        case Presenting = "Presenting"
+        case Loading = "Loading"
+    }
+    /// used in order not to load the message ui multiple times
+    private var loading: LoadingStatus = .Ready
 
     private func remove(asChildViewController viewController: UIViewController?) {
         guard let viewController = viewController else { return }
@@ -116,16 +124,6 @@ import UIKit
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    public func loadMessage() {
-        sourcePoint.getMessage(accountId: accountId, propertyId: propertyId) { [weak self] message in
-            if let url = message.url {
-                self?.loadMessage(fromUrl: url)
-            } else {
-                self?.getConsents(forUUID: message.uuid, consentString: message.euconsent)
-            }
-        }
-    }
     
     private func getConsents(forUUID uuid: UUID, consentString: ConsentString?) {
         sourcePoint.getCustomConsents(consentUUID: uuid) { [weak self] consents in
@@ -142,11 +140,27 @@ import UIKit
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
     }
+    
+    public func loadMessage() {
+        if loading == .Ready {
+            loading = .Loading
+            sourcePoint.getMessage(accountId: accountId, propertyId: propertyId) { [weak self] message in
+                if let url = message.url {
+                    self?.loadMessage(fromUrl: url)
+                } else {
+                    self?.getConsents(forUUID: message.uuid, consentString: message.euconsent)
+                }
+            }
+        }
+    }
 
     public func loadPrivacyManager() {
-        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
-        messageViewController?.consentDelegate = self
-        messageViewController?.loadPrivacyManager()
+        if loading == .Ready {
+            loading = .Loading
+            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
+            messageViewController?.consentDelegate = self
+            messageViewController?.loadPrivacyManager()
+        }
     }
 
     /**
@@ -231,12 +245,14 @@ extension ConsentViewController: ConsentDelegate {
     }
 
     public func consentUIDidDisappear() {
+        loading = .Ready
         remove(asChildViewController: messageViewController)
         messageViewController = nil
         consentDelegate?.consentUIDidDisappear()
     }
 
     public func onError(error: ConsentViewControllerError?) {
+        loading = .Ready
         if(shouldCleanConsentOnError) {
             clearAllConsentData()
         }
