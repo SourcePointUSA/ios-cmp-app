@@ -8,7 +8,11 @@
 import Foundation
 import SystemConfiguration
 
-final class ConnectivityManager {
+protocol Connectivity {
+    func isConnectedToNetwork() -> Bool
+}
+
+final class ConnectivityManager: Connectivity {
     
     /// Shared Instance of Connectivity manager
     static let shared = ConnectivityManager()

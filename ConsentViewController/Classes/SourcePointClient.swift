@@ -19,17 +19,30 @@ protocol HttpClient {
 
 class SimpleClient: HttpClient {
     var defaultOnError: OnError?
+    let connectivityManager: Connectivity
+    
+    init(connectivityManager: Connectivity) {
+        self.connectivityManager = connectivityManager
+    }
+    
+    convenience init() {
+        self.init(connectivityManager: ConnectivityManager.shared)
+    }
     
     func request(_ request: URLRequest, _ onSuccess: @escaping OnSuccess) {
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async { [weak self] in
-                guard let data = data else {
-                    return
+        if(connectivityManager.isConnectedToNetwork()) {
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                DispatchQueue.main.async { [weak self] in
+                    guard let data = data else {
                         self?.defaultOnError?(GeneralRequestError(request.url, response, error))
+                        return
+                    }
+                    onSuccess(data)
                 }
-                onSuccess(data)
-            }
-        }.resume()
+            }.resume()
+        } else {
+            defaultOnError?(NoInternetConnection())
+        }
     }
     
     func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
