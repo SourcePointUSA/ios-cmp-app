@@ -17,15 +17,17 @@ class ViewController: UIViewController {
     }()
     
     func consentUIWillShow() {
-        present(consentViewController, animated: false, completion: nil)
+        present(consentViewController, animated: true, completion: nil)
     }
 
     func consentUIDidDisappear() {
-        dismiss(animated: false, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
-        consents.forEach({ [weak self] consent in self?.logger.log("Consented to: %{public}@)", [consent]) })
+        consents.forEach({ [weak self] consent in
+            self?.logger.log("Consented to: %{public}@)", [consent])
+        })
     }
 
     func onError(error: ConsentViewControllerError?) {
