@@ -2,42 +2,12 @@
 //  ConsentViewController.swift
 //  cmp-app-test-app
 //
-//  Created by Dmitri Rabinowitz on 8/13/18.
-//  Copyright © 2018 Sourcepoint. All rights reserved.
+//  Created by Andre Herculano on 12/16/19.
+//  Copyright © 2019 Sourcepoint. All rights reserved.
 //
 
-/// :nodoc:
-public typealias Callback = (ConsentViewController) -> Void
-
 import UIKit
-import WebKit
-import JavaScriptCore
 
-/**
- SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
- and offers ways to inspect the consents and purposes the user has chosen.
-
- ```
- var consentViewController: ConsentViewController!
- override func viewDidLoad() {
-     super.viewDidLoad()
-     consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME", stagingCampaign: true|false)
-     consentViewController.onMessageChoiceSelect = {
-        (cbw: ConsentViewController) in print("Choice selected by user", cbw.choiceType as Any)
-     }
-     consentViewController.onInteractionComplete = { (cbw: ConsentViewController) in
-         print(
-             cbw.euconsent as Any,
-             cbw.consentUUID as Any,
-             cbw.getIABVendorConsents(["VENDOR_ID"]),
-             cbw.getIABPurposeConsents(["PURPOSE_ID"]),
-             cbw.getCustomVendorConsents(),
-             cbw.getCustomPurposeConsents()
-         )
-     }
- view.addSubview(consentViewController.view)
- ```
-*/
 @objcMembers open class ConsentViewController: UIViewController {
     /// :nodoc:
     public enum DebugLevel: String {
