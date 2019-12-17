@@ -29,12 +29,12 @@ class SimpleClient: HttpClient {
         self.init(connectivityManager: ConnectivityManager.shared)
     }
     
-    func request(_ request: URLRequest, _ onSuccess: @escaping OnSuccess) {
+    func request(_ urlRequest: URLRequest, _ onSuccess: @escaping OnSuccess) {
         if(connectivityManager.isConnectedToNetwork()) {
-            URLSession.shared.dataTask(with: request) { data, response, error in
+            URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 DispatchQueue.main.async { [weak self] in
                     guard let data = data else {
-                        self?.defaultOnError?(GeneralRequestError(request.url, response, error))
+                        self?.defaultOnError?(GeneralRequestError(urlRequest.url, response, error))
                         return
                     }
                     onSuccess(data)
@@ -125,14 +125,14 @@ class SourcePointClient {
     
     func getCustomConsentsUrl(uuid: UUID) -> URL? {
         return URL(
-            string: "consent/v2/\(propertyId)/custom-vendors?consentUUID=\(uuid.uuidString.lowercased()))",
+            string: "consent/v2/\(propertyId)/custom-vendors?consentUUID=\(uuid.uuidString.lowercased())",
             relativeTo: SourcePointClient.CMP_URL
         )
     }
 
     func getCustomConsents(consentUUID: UUID, onSuccess: @escaping (ConsentsResponse) -> Void) {
         let url = getCustomConsentsUrl(uuid: consentUUID)
-        client.get(url: getCustomConsentsUrl(uuid: consentUUID)) { [weak self] data in
+        client.get(url: url) { [weak self] data in
             do {
                 onSuccess(try (self?.json.decode(ConsentsResponse.self, from: data))!)
             } catch {
