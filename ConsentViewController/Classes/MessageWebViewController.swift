@@ -71,7 +71,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         consentDelegate?.pmWillShow?()
     }
     
-    func closeConsentUI() {
+    func closeConsentUIIfOpen() {
         if(consentUILoaded) { consentUIDidDisappear() }
     }
 
@@ -80,7 +80,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     }
     
     func onError(error: ConsentViewControllerError?) {
-        closeConsentUI()
+        closeConsentUIIfOpen()
         consentDelegate?.onError?(error: error)
     }
     
@@ -92,7 +92,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     func cancelPMAction() {
         webview.canGoBack ?
             navigateBackToMessage():
-            closeConsentUI()
+            closeConsentUIIfOpen()
     }
     
     func navigateBackToMessage() {
@@ -108,7 +108,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
             case .PMCancel:
                 cancelPMAction()
             default:
-                closeConsentUI()
+                closeConsentUIIfOpen()
         }
     }
     
@@ -116,7 +116,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         if ConnectivityManager.shared.isConnectedToNetwork() {
             webview.load(URLRequest(url: url))
         } else {
-            consentDelegate?.onError?(error: NoInternetConnection())
+            onError(error: NoInternetConnection())
         }
     }
     
@@ -124,10 +124,18 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         load(url: url)
     }
     
+    func pmUrl() -> URL? {
+        let uuid = consentUUID?.uuidString.lowercased() ?? ""
+        return URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(uuid)"
+        )
+    }
+    
     override func loadPrivacyManager() {
-        guard let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID?.uuidString.lowercased() ?? "")")
-        else { return }
-        load(url: pmUrl)
+        guard let url = pmUrl() else {
+            onError(error: URLParsingError(urlString: "PMUrl"))
+            return
+        }
+        load(url: url)
     }
     
     /// :nodoc:
@@ -142,20 +150,12 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         return nil
     }
     
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        onError(error: ConsentsAPIError())
-    }
-    
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        onError(error: ConsentsAPIError())
-    }
-    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard
-            let message = message.body as? [String: Any?],
-            let name = message["name"] as? String
+            let body = message.body as? [String: Any?],
+            let name = body["name"] as? String
         else {
-            onError(error: ConsentsAPIError())
+            onError(error: MessageEventParsingError(message: message.description))
             return
         }
         
@@ -166,20 +166,18 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
                 onPMReady()
             case "onAction":
                 guard
-                    let payload = message["body"] as? [String: Any],
+                    let payload = body["body"] as? [String: Any],
                     let actionType = payload["type"] as? Int,
                     let action = Action(rawValue: actionType)
                 else {
-                    onError(error: ConsentsAPIError())
+                    onError(error: MessageEventParsingError(message: message.description))
                     return
                 }
                 onAction(action)
-            case "onMessageEvent":
-                print(message)
             case "onError":
-                onError(error: ConsentsAPIError())
+                onError(error: WebViewError())
             default:
-                onError(error: ConsentsAPIError())
+                print(message)
         }
     }
     
