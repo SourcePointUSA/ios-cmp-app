@@ -35,12 +35,14 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     
     private let propertyId: Int
     private let pmId: String
+    private let consentUUID: UUID?
     
     private var consentUILoaded = false
     
-    init(propertyId: Int, pmId: String) {
+    init(propertyId: Int, pmId: String, consentUUID: UUID?) {
         self.propertyId = propertyId
         self.pmId = pmId
+        self.consentUUID = consentUUID
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -123,7 +125,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     }
     
     override func loadPrivacyManager() {
-        guard let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)")
+        guard let pmUrl = URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID?.uuidString.lowercased() ?? "")")
         else { return }
         load(url: pmUrl)
     }

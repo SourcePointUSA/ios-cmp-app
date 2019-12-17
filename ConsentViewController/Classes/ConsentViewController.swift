@@ -137,7 +137,7 @@ import UIKit
     }
     
     private func loadMessage(fromUrl url: URL) {
-        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
+        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: consentUUID)
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
     }
@@ -158,7 +158,7 @@ import UIKit
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading
-            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId)
+            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: consentUUID)
             messageViewController?.consentDelegate = self
             messageViewController?.loadPrivacyManager()
         }
