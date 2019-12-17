@@ -270,6 +270,7 @@ extension ConsentViewController: ConsentDelegate {
     
     public func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
         guard let consentString = consentString else {
+            consentDelegate?.onConsentReady?(consentUUID: consentUUID, consents: consents, consentString: nil)
             return
         }
         self.consentUUID = consentUUID
