@@ -21,12 +21,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, ConsentDelega
     var consents:[Consent] = []
 
     func loadConsents(forAuthId authId: String, showPM: Bool) {
-        let cvc = try! ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
-        cvc.loadMessage(forAuthId: authId)
+        try! ConsentViewController(
+            accountId: 22,
+            propertyId: 2372,
+            property: "mobile.demo",
+            PMId: "5c0e81b7d74b3c30c6852301",
+            campaign: "stage",
+            showPM: showPM,
+            consentDelegate: self
+        ).loadMessage(forAuthId: authId)
     }
 
     func onMessageReady(controller: ConsentViewController) {
-        self.present(controller, animated: false, completion: nil)
+        controller.modalPresentationStyle = .overFullScreen
+        self.present(controller, animated: true, completion: nil)
     }
 
     func getConsentsCompletionHandler(_ newConsents: [Consent]?, _ error: ConsentViewControllerError?) -> Void {
@@ -46,12 +54,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, ConsentDelega
         controller.getCustomVendorConsents(completionHandler: getConsentsCompletionHandler)
         controller.getCustomPurposeConsents(completionHandler: getConsentsCompletionHandler)
         self.consentTableView.reloadData()
-        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
     func onErrorOccurred(error: ConsentViewControllerError) {
-        print(error)
-        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
