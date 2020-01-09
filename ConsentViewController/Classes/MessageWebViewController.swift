@@ -8,6 +8,11 @@
 import UIKit
 import WebKit
 
+/**
+ MessageWebViewController is responsible for loading the consent message and privacy manager through a webview.
+ 
+ It not only knows how to render the message and pm but also understands how to react to their different events (showing, user action, etc)
+ */
 class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, ConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "JSReceiver"
 
@@ -35,11 +40,11 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     
     private let propertyId: Int
     private let pmId: String
-    private let consentUUID: UUID?
+    private let consentUUID: ConsentUUID?
     
     private var consentUILoaded = false
     
-    init(propertyId: Int, pmId: String, consentUUID: UUID?) {
+    init(propertyId: Int, pmId: String, consentUUID: ConsentUUID?) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
@@ -80,8 +85,8 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     }
     
     func onError(error: ConsentViewControllerError?) {
-        closeConsentUIIfOpen()
         consentDelegate?.onError?(error: error)
+        closeConsentUIIfOpen()
     }
     
     func showPrivacyManagerFromMessageAction() {
@@ -100,12 +105,12 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         consentDelegate?.pmDidDisappear?()
     }
     
-    func onAction(_ action: Action) {
-        consentDelegate?.onAction?(action)
+    func onAction(_ action: Action, consents: PMConsents?) {
+        consentDelegate?.onAction?(action, consents: consents)
         switch action {
             case .ShowPrivacyManager:
                 showPrivacyManagerFromMessageAction()
-            case .PMCancel:
+            case .Dismiss:
                 cancelPMAction()
             default:
                 closeConsentUIIfOpen()
@@ -124,10 +129,9 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         load(url: url)
     }
     
+    /// - TODO: replace the CCPA PM with GDPR's PM
     func pmUrl() -> URL? {
-        let uuid = consentUUID?.uuidString.lowercased() ?? ""
-        return URL(string: "https://pm.sourcepoint.mgr.consensu.org/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(uuid)"
-        )
+        return URL(string: "https://ccpa-inapp-pm.sp-prod.net/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&ccpa_origin=https://ccpa-service.sp-prod.net&ccpaUUID=\(consentUUID ?? "")")
     }
     
     override func loadPrivacyManager() {
@@ -150,12 +154,33 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         return nil
     }
     
+    private func getPMConsentsIfAny(_ payload: [String: Any]) -> PMConsents {
+        guard
+            let consents = payload["consents"] as? [String: Any],
+            let vendors = consents["vendors"] as? [String: Any],
+            let purposes = consents["categories"] as? [String: Any],
+            let acceptedVendors = vendors["accepted"] as? [String],
+            let rejectedVendors = vendors["rejected"] as? [String],
+            let acceptedPurposes = purposes["accepted"] as? [String],
+            let rejectedPurposes = purposes["rejected"] as? [String]
+        else {
+            return PMConsents(
+                vendors: PMConsent(accepted: [], rejected: []),
+                categories: PMConsent(accepted: [], rejected: [])
+            )
+        }
+        return PMConsents(
+            vendors: PMConsent(accepted: acceptedVendors, rejected: rejectedVendors),
+            categories: PMConsent(accepted: acceptedPurposes, rejected: rejectedPurposes)
+        )
+    }
+    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard
             let body = message.body as? [String: Any?],
             let name = body["name"] as? String
         else {
-            onError(error: MessageEventParsingError(message: message.description))
+            onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
             return
         }
         
@@ -170,14 +195,14 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
                     let actionType = payload["type"] as? Int,
                     let action = Action(rawValue: actionType)
                 else {
-                    onError(error: MessageEventParsingError(message: message.description))
+                    onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                     return
                 }
-                onAction(action)
+                onAction(action, consents: getPMConsentsIfAny(payload))
             case "onError":
                 onError(error: WebViewError())
             default:
-                print(message)
+                print(message.body)
         }
     }
     

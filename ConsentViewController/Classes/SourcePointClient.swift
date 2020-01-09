@@ -166,8 +166,8 @@ class SourcePointClient {
     func postAction(action: Action, consentUUID: ConsentUUID?, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {
         let url = postActionUrl(action.rawValue)
         let meta = UserDefaults.standard.string(forKey: ConsentViewController.META_KEY) ?? "{}"
-        let ccpaConsents = CPPAPMConsents(rejectedVendors: consents?.vendors.rejected ?? [], rejectedCategories: consents?.categories.rejected ?? [])
-        guard let body = try? json.encode(ActionRequest(propertyId: propertyId, accountId: accountId, privacyManagerId: pmId, uuid: consentUUID, requestUUID: requestUUID, consents: ccpaConsents, meta: meta)) else {
+        let gdprConsents = GDPRPMConsents(acceptedVendors: consents?.vendors.accepted ?? [], acceptedCategories: consents?.categories.accepted ?? [])
+        guard let body = try? json.encode(ActionRequest(propertyId: propertyId, accountId: accountId, privacyManagerId: pmId, uuid: consentUUID, requestUUID: requestUUID, consents: gdprConsents, meta: meta)) else {
             self.onError?(APIParsingError(url?.absoluteString ?? "POST consent", nil))
             return
         }

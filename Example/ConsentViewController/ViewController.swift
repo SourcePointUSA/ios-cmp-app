@@ -9,12 +9,18 @@
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ConsentDelegate {
     let logger = Logger()
 
-    lazy var consentViewController: ConsentViewController = {
-        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", consentDelegate: self)
-    }()
+    /// - TODO: change from ccpa property to gdpr
+    lazy var consentViewController: ConsentViewController = { return ConsentViewController(
+        accountId: 22,
+        propertyId: 6099,
+        propertyName: try! PropertyName("ccpa.mobile.demo"),
+        PMId: "5c0e81b7d74b3c30c6852301",
+        campaignEnv: .Stage,
+        consentDelegate: self
+    )}()
     
     func consentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)

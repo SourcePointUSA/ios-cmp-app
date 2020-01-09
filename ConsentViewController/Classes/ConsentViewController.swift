@@ -9,15 +9,11 @@
 import UIKit
 
 @objcMembers open class ConsentViewController: UIViewController {
+    static public let META_KEY: String = "sp_gdpr_meta"
     /// :nodoc:
-    public enum DebugLevel: String {
-        case DEBUG, INFO, TIME, WARN, ERROR, OFF
-    }
-
+    static public let EU_CONSENT_KEY: String = "sp_gdpr_euconsent"
     /// :nodoc:
-    static public let EU_CONSENT_KEY: String = "euconsent"
-    /// :nodoc:
-    static public let CONSENT_UUID_KEY: String = "consentUUID"
+    static public let CONSENT_UUID_KEY: String = "sp_gdpr_consentUUID"
 
     /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
     static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
@@ -37,20 +33,17 @@ import UIKit
     static private let MAX_VENDOR_ID: Int = 500
     static private let MAX_PURPOSE_ID: Int = 24
 
-    /// :nodoc:
-    public var debugLevel: DebugLevel = .OFF
-
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: ConsentString?
 
-    /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
-    public var consentUUID: UUID?
+    /// The UUID assigned to a user, available after calling `loadMessage`
+    public var consentUUID: ConsentUUID?
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = TimeInterval(300)
 
     private let accountId: Int
-    private let property: String
+    private let propertyName: PropertyName
     private let propertyId: Int
     private let pmId: String
 
@@ -71,7 +64,8 @@ import UIKit
         case Presenting = "Presenting"
         case Loading = "Loading"
     }
-    /// used in order not to load the message ui multiple times
+
+    // used in order not to load the message ui multiple times
     private var loading: LoadingStatus = .Ready
 
     private func remove(asChildViewController viewController: UIViewController?) {
@@ -90,50 +84,49 @@ import UIKit
     }
 
     /**
-     Initialises the library with `accountId`, `propertyId`, `property`, `PMId`,`campaign` and `messageDelegate`.
+        - Parameters:
+            - accountId: the id of your account, can be found in the Account section of SourcePoint's dashboard
+            - propertyId: the id of your property, can be found in the property page of SourcePoint's dashboard
+            - propertyName: the exact name of your property,
+            -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
+            -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
+            -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
+        - SeeAlso: ConsentDelegate
      */
     public init(
         accountId: Int,
         propertyId: Int,
-        property: String,
+        propertyName: PropertyName,
         PMId: String,
-        campaign: String,
+        campaignEnv: CampaignEnv,
         consentDelegate: ConsentDelegate
     ){
         self.accountId = accountId
-        self.property = property
+        self.propertyName = propertyName
         self.propertyId = propertyId
         self.pmId = PMId
         self.consentDelegate = consentDelegate
 
+        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY)
+        
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
             propertyId: propertyId,
+            propertyName: propertyName,
             pmId: PMId,
-            campaign: campaign,
-            onError: consentDelegate.onError(error:)
+            campaignEnv: campaignEnv
         )
 
-        self.euconsent = try? ConsentString(consentString: UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? "")
-        self.consentUUID = UUID(uuidString: UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? "")
-
         super.init(nibName: nil, bundle: nil)
+        
+        sourcePoint.onError = onError
+        
         modalPresentationStyle = .overFullScreen
     }
 
     /// :nodoc:
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func getConsents(forUUID uuid: UUID, consentString: ConsentString?) {
-        sourcePoint.getCustomConsents(consentUUID: uuid) { [weak self] consents in
-            self?.onConsentReady(
-                consentUUID: uuid,
-                consents: consents.consentedPurposes + consents.consentedVendors,
-                consentString: consentString
-            )
-        }
     }
     
     private func loadMessage(fromUrl url: URL) {
@@ -145,16 +138,16 @@ import UIKit
     public func loadMessage() {
         if loading == .Ready {
             loading = .Loading
-            sourcePoint.getMessage(accountId: accountId, propertyId: propertyId) { [weak self] message in
+            sourcePoint.getMessage(consentUUID: consentUUID) { [weak self] message in
                 if let url = message.url {
                     self?.loadMessage(fromUrl: url)
                 } else {
-                    self?.getConsents(forUUID: message.uuid, consentString: message.euconsent)
+                    self?.loading = .Ready
+                    self?.onConsentReady(consentUUID: message.uuid, userConsent: message.userConsent)
                 }
             }
         }
     }
-
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading
@@ -234,6 +227,7 @@ import UIKit
         userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
         userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
         userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        userDefaults.removeObject(forKey: ConsentViewController.META_KEY)
         userDefaults.synchronize()
     }
 }
@@ -260,26 +254,23 @@ extension ConsentViewController: ConsentDelegate {
         consentDelegate?.onError?(error: error)
     }
 
-    public func onAction(_ action: Action) {
-        if(action == .AcceptAll || action == .RejectAll || action == .PMAction) {
-            sourcePoint.postAction(action: action, consentUUID: consentUUID) { [weak self] response in
-                self?.getConsents(forUUID: response.uuid, consentString: response.euconsent)
+    public func onAction(_ action: Action, consents: PMConsents?) {
+        if(action == .AcceptAll || action == .RejectAll || action == .SaveAndExit) {
+            sourcePoint.postAction(action: action, consentUUID: consentUUID, consents: consents) { [weak self] response in
+                self?.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
             }
         }
     }
-    
-    public func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
-        guard let consentString = consentString else {
-            consentDelegate?.onConsentReady?(consentUUID: consentUUID, consents: consents, consentString: nil)
-            return
-        }
+
+    /// - TODO: store consent string
+    public func onConsentReady(consentUUID: ConsentUUID, userConsent: UserConsent) {
         self.consentUUID = consentUUID
-        euconsent = consentString
-        storeIABVars(consentString: consentString)
-        UserDefaults.standard.setValue(consentString.consentString, forKey: ConsentViewController.EU_CONSENT_KEY)
-        UserDefaults.standard.setValue(consentUUID.uuidString, forKey: ConsentViewController.CONSENT_UUID_KEY)
+//        euconsent = userConsent.consentString
+//        storeIABVars(consentString: consentString)
+//        UserDefaults.standard.setValue(consentString, forKey: ConsentViewController.EU_CONSENT_KEY)
+        UserDefaults.standard.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
         UserDefaults.standard.synchronize()
-        consentDelegate?.onConsentReady?(consentUUID: consentUUID, consents: consents, consentString: consentString)
+        consentDelegate?.onConsentReady?(consentUUID: consentUUID, userConsent: userConsent)
     }
 
     public func messageWillShow() { consentDelegate?.messageWillShow?() }

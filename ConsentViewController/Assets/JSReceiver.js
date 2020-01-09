@@ -25,48 +25,35 @@
     }
   }(postToWebView);
 
-  var getActionFrom = function (payload) {
-    var actions = payload.actions || [];
+  var getActionFromMessage = function (actions) {
     var choiceAction = actions.filter(function (action) { return action.type === 'choice'; })[0] || {};
     var choiceData = choiceAction.data || {};
     return { id: choiceData.choice_id, type: choiceData.type };
   };
- 
-  var handlePMEvent = function(SDK) {
-    return function(eventName, eventPayload) {
-      var payload = eventPayload || {};
-      switch(eventName) {
-        case "sp.pmComplete":
-          SDK.onAction({ id: 99, type: 99 }); // TODO: change to real id/type when the new PM is implemented
-          break;
-        case "sp.cancel":
-          SDK.onAction({ id: 98, type: 98 }); // TODO: change to real id/type when the new PM is implemented
-          break;
-        case "sp.pmLoaded":
-          SDK.onPMReady();
-          break;
-        case "sp.error":
-          SDK.onError();
-          break;
-        default:
-          payload.action = eventName;
-          SDK.onMessageEvent(payload);
+
+  var getActionFromPM = function (payload) {
+    return {
+      type: payload.actionType,
+      consents: payload.consents || {
+        vendors: { rejected: [], accepted: [] },
+        categories: { rejected: [], accepted: [] }
       }
-    }
-  };
+    };
+  }
 
   var handleMessageEvent = function(SDK) {
-    return function(eventName, eventPayload) {
-      var payload = eventPayload || {}
-      switch(eventName) {
+    return function(name, payload) {
+      switch(name) {
         case "sp.showMessage":
           SDK.onMessageReady();
           break;
         case "sp.hideMessage":
-          SDK.onAction(getActionFrom(payload));
+          payload.actionType ?
+            SDK.onAction(getActionFromPM(payload)) :
+            SDK.onAction(getActionFromMessage(payload));
           break;
         default:
-          payload.action = eventName;
+          payload.action = name;
           SDK.onMessageEvent(payload);
       }
     }
@@ -75,14 +62,12 @@
   var handleMessageOrPMEvent = function (SDK) {
     return function (event) {
       try {
-        var payload = event.data || {};
-        var eventName = payload.name;
-        payload.action ?
-          handlePMEvent(SDK)(payload.action, payload.data) :
-          handleMessageEvent(SDK)(eventName, payload);
-      } catch (error) { SDK.onError(error); }
+        handleMessageEvent(SDK)(event.name, event.payload || event.actions || {});
+      } catch (error) {
+        SDK.onError(error);
+      }
     }
   }(window.SDK);
 
-  window.addEventListener('message', handleMessageOrPMEvent);
+  window.postMessage = handleMessageOrPMEvent
 })();

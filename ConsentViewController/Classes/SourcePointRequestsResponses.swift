@@ -7,33 +7,62 @@
 
 import Foundation
 
-struct ConsentsResponse: Codable {
-    let consentedVendors: [VendorConsent]
-    let consentedPurposes: [PurposeConsent]
-}
+public typealias Meta = String
+public typealias ConsentUUID = String
 
-class GdprStatus: Codable {
+struct GdprStatus: Codable {
     let gdprApplies: Bool
 }
 
 protocol WrapperApiRequest: Codable, Equatable {
     var requestUUID: UUID { get }
+    var meta: Meta { get }
 }
 
-struct MessageResponse: WrapperApiRequest {
+struct MessageResponse: Codable {
     let url: URL?
-    let euconsent: ConsentString?
-    let uuid, requestUUID: UUID
+    let uuid: ConsentUUID
+    let userConsent: UserConsent
+    var meta: Meta
 }
 
-struct ActionResponse: WrapperApiRequest {
-    let euconsent: ConsentString
-    let uuid, requestUUID: UUID
+struct ActionResponse: Codable {
+    let uuid: ConsentUUID
+    let userConsent: UserConsent
+    var meta: Meta
 }
 
 struct ActionRequest: WrapperApiRequest {
-    let propertyId, accountId, actionType: Int
+    static func == (lhs: ActionRequest, rhs: ActionRequest) -> Bool {
+        lhs.requestUUID == rhs.requestUUID
+    }
+
+    let propertyId, accountId: Int
     let privacyManagerId: String
-    let uuid: UUID?
+    let uuid: ConsentUUID?
     let requestUUID: UUID
+    let consents: GDPRPMConsents
+    let meta: Meta
+}
+
+@objc public class PMConsents: NSObject, Codable {
+    let vendors, categories: PMConsent
+    
+    public init(vendors: PMConsent, categories: PMConsent) {
+        self.vendors = vendors
+        self.categories = categories
+    }
+}
+
+@objc public class PMConsent: NSObject, Codable {
+    let accepted, rejected: [String]
+    
+    public init(accepted: [String], rejected: [String]) {
+        self.accepted = accepted
+        self.rejected = rejected
+    }
+}
+
+struct GDPRPMConsents: Codable {
+    let acceptedVendors, acceptedCategories: [String]
 }
