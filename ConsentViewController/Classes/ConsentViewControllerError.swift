@@ -16,7 +16,7 @@ import Foundation
     }
 }
 
-@objcMembers public class UnableToParseConsentStringError: ConsentViewControllerError {
+@objcMembers public class GDPRUnableToParseConsentStringError: ConsentViewControllerError {
     private var euConsent: String
 
     public var failureReason: String? { get { return "Unable to parse consent string" } }
@@ -32,7 +32,7 @@ import Foundation
     override public var description: String { get { return "\(errorDescription!)" } }
 }
 
-@objcMembers public class InvalidMessageURLError: ConsentViewControllerError {
+@objcMembers public class GDPRInvalidMessageURLError: ConsentViewControllerError {
     private var urlString: String
 
     public var failureReason: String? { get { return "Failed to parse Message URL." } }
@@ -49,7 +49,7 @@ import Foundation
     override public var description: String { get { return "\(errorDescription!)" } }
 }
 
-@objcMembers public class InvalidURLError: ConsentViewControllerError {
+@objcMembers public class GDPRInvalidURLError: ConsentViewControllerError {
     private let urlName: String, urlString: String
 
     public var failureReason: String? { get { return "Failed to parse \(urlName)." } }
@@ -67,7 +67,7 @@ import Foundation
     override public var description: String { get { return "\(errorDescription!)\n\(helpAnchor!)" } }
 }
 
-@objcMembers public class PropertyIDNotFound: ConsentViewControllerError {
+@objcMembers public class GDPRPropertyIDNotFound: ConsentViewControllerError {
     private let accountId: String, property: String
 
     public var failureReason: String? { get { return "Could not find property ID." } }
@@ -104,32 +104,32 @@ import Foundation
         } }
 }
 
-@objcMembers public class ConsentsAPIError: ConsentViewControllerError {
+@objcMembers public class GDPRConsentsAPIError: ConsentViewControllerError {
     public var failureReason: String? { get { return "Failed to get Custom Consents" } }
     public var errorDescription: String? { get { return "Failed to either get custom consents or unable to parse the endpoint's response" } }
     override public var description: String { get { return "\(errorDescription!)" } }
 }
 
-public let WebViewErrors: [String : ConsentViewControllerError] = [
-    "app.loadError": PrivacyManagerLoadError(),
-    "app.saveError": PrivacyManagerSaveError()
+public let GDPRWebViewErrors: [String : ConsentViewControllerError] = [
+    "app.loadError": GDPRPrivacyManagerLoadError(),
+    "app.saveError": GDPRPrivacyManagerSaveError()
 ]
 
-@objcMembers public class PrivacyManagerLoadError: ConsentViewControllerError {
+@objcMembers public class GDPRPrivacyManagerLoadError: ConsentViewControllerError {
     public var failureReason: String? { get { return "Failed to start the Privacy Manager" } }
     public var errorDescription: String? { get { return "Could not load the Privacy Manager due to a javascript error." } }
     override public var helpAnchor: String? { get { return "This is most probably happening due to a misconfiguration on the Publisher's portal." } }
     override public var description: String { get { return "\(errorDescription!)\n\(helpAnchor!)" } }
 }
 
-@objcMembers public class PrivacyManagerSaveError: ConsentViewControllerError {
+@objcMembers public class GDPRPrivacyManagerSaveError: ConsentViewControllerError {
     public var failureReason: String? { get { return "Failed to save user consents on Privacy Manager" } }
     public var errorDescription: String? { get { return "Something wrong happened while saving the privacy settings on the Privacy Manager" } }
     override public var helpAnchor: String? { get { return "This might have occurred due to faulty internet connection." } }
     override public var description: String { get { return "\(errorDescription!)" } }
 }
 
-@objcMembers public class PrivacyManagerUnknownMessageResponse: ConsentViewControllerError {
+@objcMembers public class GDPRPrivacyManagerUnknownMessageResponse: ConsentViewControllerError {
     private let name: String, body: [String:Any?]
     init(name: String, body: [String:Any?]) {
         self.name = name
@@ -145,17 +145,17 @@ public let WebViewErrors: [String : ConsentViewControllerError] = [
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
-@objcMembers public class PrivacyManagerUnknownError: ConsentViewControllerError {
+@objcMembers public class GDPRPrivacyManagerUnknownError: ConsentViewControllerError {
     public var failureReason: String? { get { return "Something bad happened in the javascript world." } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
-@objcMembers public class NoInternetConnection: ConsentViewControllerError {
+@objcMembers public class GDPRNoInternetConnection: ConsentViewControllerError {
     public var failureReason: String? { get { return "The device is not connected to the internet." } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
-@objcMembers public class MessageTimeout: ConsentViewControllerError {
+@objcMembers public class GDPRMessageTimeout: ConsentViewControllerError {
     public var failureReason: String? { get { return "The Message request has timed out." } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }

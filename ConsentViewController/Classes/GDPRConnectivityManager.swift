@@ -8,10 +8,10 @@
 import Foundation
 import SystemConfiguration
 
-final class ConnectivityManager {
+final class GDPRConnectivityManager {
     
     /// Shared Instance of Connectivity manager
-    static let shared = ConnectivityManager()
+    static let shared = GDPRConnectivityManager()
     
     /// Private Initializer support for Shared Instance.
     private init(){}

@@ -1,8 +1,8 @@
 (function () {
     function postToWebView (name, body) {
-        window.webkit.messageHandlers.JSReceiver.postMessage({ name: name, body: body });
+        window.webkit.messageHandlers.GDPRJSReceiver.postMessage({ name: name, body: body });
     }
-    window.JSReceiver = {
+    window.GDPRJSReceiver = {
         onMessageReady: function () {
             postToWebView('onMessageReady');
         },

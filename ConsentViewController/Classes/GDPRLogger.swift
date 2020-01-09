@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-@objcMembers public class Logger {
+@objcMembers public class GDPRLogger {
     static let TOO_MANY_ARGS_ERROR = StaticString("Cannot log messages with more than 5 argumetns")
 
     let consentLog: OSLog?
@@ -31,8 +31,8 @@ import os
                 case 4: log(message, args[0], args[1], args[2], args[3])
                 case 5: log(message, args[0], args[1], args[2], args[3], args[4])
                 default:
-                    print(Logger.TOO_MANY_ARGS_ERROR)
-                    os_log(Logger.TOO_MANY_ARGS_ERROR)
+                    print(GDPRLogger.TOO_MANY_ARGS_ERROR)
+                    os_log(GDPRLogger.TOO_MANY_ARGS_ERROR)
             }
         } else {
             print(message)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc public protocol ConsentDelegate {
+@objc public protocol GDPRConsentDelegate {
     func onMessageReady(controller: ConsentViewController)
     func onConsentReady(controller: ConsentViewController)
     func onErrorOccurred(error: ConsentViewControllerError)

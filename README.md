@@ -25,7 +25,7 @@ Let us know if we missed any step.
 
 It's pretty simple, here are 5 easy steps for you:
 
-1. implement the `ConsentDelegate` protocol
+1. implement the `GDPRConsentDelegate` protocol
 2. instantiate the `ConsentViewController` with your Account ID, property id, property, privacy manager id, campaign environment, a flag to show the privacy manager directly or not and the consent delegate
 3. call `.loadMessage()`
 4. present the controller when the message is ready to be displayed
@@ -36,8 +36,8 @@ It's pretty simple, here are 5 easy steps for you:
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController, ConsentDelegate {
-    let logger = Logger()
+class ViewController: UIViewController, GDPRConsentDelegate {
+    let logger = GDPRLogger()
 
     func loadConsentManager(showPM: Bool) {
         let cvc = try! ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
@@ -80,7 +80,7 @@ class ViewController: UIViewController, ConsentDelegate {
 #import "ViewController.h"
 @import ConsentViewController;
 
-@interface ViewController ()<ConsentDelegate>
+@interface ViewController ()<GDPRConsentDelegate>
 @end
 
 @implementation ViewController

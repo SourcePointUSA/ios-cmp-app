@@ -82,7 +82,7 @@ import JavaScriptCore
     static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
     static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
 
-    static private let MESSAGE_HANDLER_NAME = "JSReceiver"
+    static private let MESSAGE_HANDLER_NAME = "GDPRJSReceiver"
 
     private var targetingParams: [String: Any] = [:]
     /// :nodoc:
@@ -122,7 +122,7 @@ import JavaScriptCore
     public var consentUUID: String
 
     /// The timeout interval in seconds for the message being displayed
-    public var messageTimeoutInSeconds = TimeInterval(300)
+    public var messageTimeoutInSeconds = TimeInterval(30)
 
     private let accountId: Int
     private let property: String
@@ -130,9 +130,9 @@ import JavaScriptCore
     private let showPM: Bool
     private var didMessageScriptLoad = false
 
-    private let sourcePoint: SourcePointClient
-    private weak var consentDelegate: ConsentDelegate?
-    private let logger: Logger
+    private let sourcePoint: GDPRSourcePointClient
+    private weak var consentDelegate: GDPRConsentDelegate?
+    private let logger: GDPRLogger
 
     private var newPM = false
     
@@ -152,7 +152,7 @@ import JavaScriptCore
         mmsDomain: String,
         cmpDomain: String,
         messageDomain: String,
-        consentDelegate: ConsentDelegate
+        consentDelegate: GDPRConsentDelegate
     ) throws {
         self.accountId = accountId
         self.property = property
@@ -165,7 +165,7 @@ import JavaScriptCore
         let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
         let messageUrl = try Utils.validate(attributeName: "messageUrl", urlString: messageDomain)
 
-        self.sourcePoint = try SourcePointClient(
+        self.sourcePoint = try GDPRSourcePointClient(
             accountId: accountId,
             propertyId: propertyId,
             pmId: PMId,
@@ -179,13 +179,13 @@ import JavaScriptCore
 
         self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
         self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
-        self.logger = Logger()
+        self.logger = GDPRLogger()
 
         super.init(nibName: nil, bundle: nil)
     }
 
     @objc(initWithAccountId:propertyId:property:PMId:campaign:showPM:consentDelegate:andReturnError:)
-    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, consentDelegate: ConsentDelegate) throws {
+    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, consentDelegate: GDPRConsentDelegate) throws {
         try self.init(
             accountId: accountId,
             propertyId: propertyId,
@@ -199,7 +199,7 @@ import JavaScriptCore
     }
 
     @objc(initWithAccountId:propertyId:property:PMId:campaign:showPM:staging:consentDelegate:andReturnError:)
-    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, staging: Bool, consentDelegate: ConsentDelegate) throws {
+    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, staging: Bool, consentDelegate: GDPRConsentDelegate) throws {
         try self.init(
             accountId: accountId,
             propertyId: propertyId,
@@ -239,7 +239,7 @@ import JavaScriptCore
     override open func loadView() {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!)
+        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "GDPRJSReceiver", ofType: "js")!)
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         userContentController.addUserScript(script)
         userContentController.add(self, name: ConsentViewController.MESSAGE_HANDLER_NAME)
@@ -297,8 +297,8 @@ import JavaScriptCore
         UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         setSubjectToGDPR()
 
-        guard ConnectivityManager.shared.isConnectedToNetwork() else {
-            onErrorOccurred(error: NoInternetConnection())
+        guard GDPRConnectivityManager.shared.isConnectedToNetwork() else {
+            onErrorOccurred(error: GDPRNoInternetConnection())
             self.messageStatus = .notStarted
             return
         }
@@ -307,7 +307,7 @@ import JavaScriptCore
             guard let self = self else { return }
 
             if(!(self.didMessageScriptLoad)) {
-                self.onErrorOccurred(error: MessageTimeout())
+                self.onErrorOccurred(error: GDPRMessageTimeout())
                 self.messageStatus = .timedout
             }
         };
@@ -439,7 +439,7 @@ import JavaScriptCore
             .replacingOccurrences(of: "_", with: "/")
 
         guard let consentString = try? ConsentString(consentString: euconsent) else {
-            throw UnableToParseConsentStringError(euConsent: euconsentBase64Url)
+            throw GDPRUnableToParseConsentStringError(euConsent: euconsentBase64Url)
         }
         return consentString
     }
@@ -469,8 +469,8 @@ import JavaScriptCore
     }
 
     private func onMessageChoiceSelect(choiceId: Int) {
-        guard ConnectivityManager.shared.isConnectedToNetwork() else {
-            onErrorOccurred(error: NoInternetConnection())
+        guard GDPRConnectivityManager.shared.isConnectedToNetwork() else {
+            onErrorOccurred(error: GDPRNoInternetConnection())
             return
         }
         self.choiceId = choiceId
@@ -561,15 +561,15 @@ import JavaScriptCore
             logger.log("onPrivacyManagerAction event is triggered", [])
             return
         case "onErrorOccurred":
-            onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            onErrorOccurred(error: GDPRWebViewErrors[body["errorType"] as? String ?? ""] ?? GDPRPrivacyManagerUnknownError())
         case "onMessageChoiceError":
-            onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
+            onErrorOccurred(error: GDPRWebViewErrors[body["error"] as? String ?? ""] ?? GDPRPrivacyManagerUnknownError())
         case "xhrLog":
             if debugLevel == .DEBUG {
                 handleXhrLog(body)
             }
         default:
-            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
+            onErrorOccurred(error: GDPRPrivacyManagerUnknownMessageResponse(name: name, body: body))
         }
     }
 
@@ -579,7 +579,7 @@ import JavaScriptCore
             let messageBody = message.body as? [String: Any],
             let name = messageBody["name"] as? String
         else {
-            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
+            onErrorOccurred(error: GDPRPrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
             return
         }
         if let body = messageBody["body"] as? [String: Any?] {

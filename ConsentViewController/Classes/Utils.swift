@@ -10,7 +10,7 @@ import Foundation
 struct Utils {
     static func validate(attributeName: String, urlString: String) throws -> URL{
         guard let url = URL(string: urlString) else {
-            throw InvalidURLError(urlName: attributeName, urlString: urlString)
+            throw GDPRInvalidURLError(urlName: attributeName, urlString: urlString)
         }
         return url
     }

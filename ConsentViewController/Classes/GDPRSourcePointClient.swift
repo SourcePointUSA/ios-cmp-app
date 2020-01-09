@@ -7,9 +7,9 @@
 
 import Foundation
 
-protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (Data?) -> Void) }
+protocol GDPRHttpClient { func get(url: URL, completionHandler handler : @escaping (Data?) -> Void) }
 
-class SimpleClient: HttpClient {
+class GDPRSimpleClient: GDPRHttpClient {
     func get(url: URL, completionHandler cHandler : @escaping (Data?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
             DispatchQueue.main.async { cHandler(data) }
@@ -23,10 +23,10 @@ struct ConsentsResponse : Codable {
     let consentedPurposes: [PurposeConsent]
 }
 
-typealias TargetingParams = [String:Any]
+typealias GDPRTargetingParams = [String:Any]
 
-class SourcePointClient {
-    private let client: HttpClient
+class GDPRSourcePointClient {
+    private let client: GDPRHttpClient
 
     private let accountId: Int
     private let propertyId: Int
@@ -57,7 +57,7 @@ class SourcePointClient {
             urlString: cmpUrl.absoluteString + "/consent/v2/gdpr-status"
         )
 
-        self.client = SimpleClient()
+        self.client = GDPRSimpleClient()
     }
 
     func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
@@ -83,18 +83,18 @@ class SourcePointClient {
                 if let _result = result, let consents = try? decoder.decode(ConsentsResponse.self, from: _result) {
                     cHandler(consents, nil)
                 }else {
-                    cHandler(nil, ConsentsAPIError())
+                    cHandler(nil, GDPRConsentsAPIError())
                 }
             }
         }
     }
 
-    private func encode(targetingParams params: TargetingParams) throws -> String {
+    private func encode(targetingParams params: GDPRTargetingParams) throws -> String {
         let data = try JSONSerialization.data(withJSONObject: params)
         return String(data: data, encoding: String.Encoding.utf8)!
     }
 
-    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
+    func getMessageUrl(forTargetingParams params: GDPRTargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
         var url: URL
         var components = URLComponents()
         var queryItems: [String:String] = [:]
@@ -116,7 +116,7 @@ class SourcePointClient {
             components.queryItems = queryItems.map { URLQueryItem(name: $0.key, value: $0.value) }
             url = components.url(relativeTo: messageUrl)!
         } catch {
-            throw InvalidMessageURLError(urlString: messageUrl.absoluteString)
+            throw GDPRInvalidMessageURLError(urlString: messageUrl.absoluteString)
         }
 
         return url

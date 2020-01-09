@@ -10,7 +10,7 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
-    let logger = Logger()
+    let logger = GDPRLogger()
 
     func loadConsentManager(showPM: Bool) {
         try! ConsentViewController(
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
 
 // MARK: ConsentDelegate
 
-extension ViewController: ConsentDelegate {
+extension ViewController: GDPRConsentDelegate {
     func onMessageReady(controller: ConsentViewController) {
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true, completion: nil)
