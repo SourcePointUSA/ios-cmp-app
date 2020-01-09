@@ -88,3 +88,17 @@ import Foundation
     public var failureReason: String? { get { return "Could not parse URL: \(urlString)" } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
+
+@objcMembers public class InvalidArgumentError: ConsentViewControllerError {
+    let message: String
+    
+    init(message: String) {
+        self.message = message
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    public var failureReason: String? { get { return message } }
+    override public var description: String { get { return message } }
+}
