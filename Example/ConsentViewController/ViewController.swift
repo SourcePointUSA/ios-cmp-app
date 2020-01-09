@@ -12,12 +12,12 @@ import ConsentViewController
 class ViewController: UIViewController, ConsentDelegate {
     let logger = Logger()
 
-    /// - TODO: change from ccpa property to gdpr
+    /// - TODO: change from ccpa property and PM id to GDPR ones
     lazy var consentViewController: ConsentViewController = { return ConsentViewController(
         accountId: 22,
         propertyId: 6099,
         propertyName: try! PropertyName("ccpa.mobile.demo"),
-        PMId: "5c0e81b7d74b3c30c6852301",
+        PMId: "5df9105bcf42027ce707bb43",
         campaignEnv: .Stage,
         consentDelegate: self
     )}()
