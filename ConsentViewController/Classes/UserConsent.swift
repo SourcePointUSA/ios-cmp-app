@@ -7,59 +7,23 @@
 
 import Foundation
 
-/// Indicates the consent status of a given user.
-@objc public enum ConsentStatus: Int, Codable {
-    /// Indicates the user has accepted none of the vendors or purposes (categories)
-    case AcceptedNone
-    
-    /// Indicates the user has accepted none of the vendors or purposes (categories)
-    case AcceptedSome
-    
-    /// Indicates the user has accepted none of the vendors or purposes (categories)
-    case AcceptedAll
-}
-
 /**
-    The UserConsent class encapsulates the consent status, accepted vendor ids and accepted categories (purposes) ids.
-    - Important: The `acceptedVendors` and `acceptedCategories` arrays will only be populated if the `status` is `.Some`. That is, if the user has accepted `.All` or `.None` vendors/categories, those arrays will be empty.
+    UserConsent encapsulates all consent data from a user.
  */
 @objc public class UserConsent: NSObject, Codable {
-    /// Indicates if the user has accepted `.All`, `.Some` or `.None` of the vendors **and** categories.
-    public let status: ConsentStatus
     /// The ids of the accepted vendors and categories. These can be found in SourcePoint's dashboard
+    ///
+    /// - Important: All ids are related to non-iAB vendors/purposes. For iAB related consent refer to `euconsent`
     public let acceptedVendors, acceptedCategories: [String]
     
+    /// The iAB consent string.
     public let euconsent: ConsentString
     
-    public static func acceptedNone () -> UserConsent {
-        return UserConsent(status: ConsentStatus.AcceptedNone, acceptedVendors: [], acceptedCategories: [], euconsent: try! ConsentString(consentString: ""))
-    }
-    
-    public init(status: ConsentStatus, acceptedVendors: [String], acceptedCategories: [String], euconsent: ConsentString) {
-        self.status = status
+    public init(acceptedVendors: [String], acceptedCategories: [String], euconsent: ConsentString) {
         self.acceptedVendors = acceptedVendors
         self.acceptedCategories = acceptedCategories
         self.euconsent = euconsent
     }
     
-    open override var description: String { return "Status: \(status.rawValue), acceptedVendors: \(acceptedVendors), acceptedCategories: \(acceptedCategories)" }
-    
-    enum CodingKeys: String, CodingKey {
-       case status, acceptedVendors, acceptedCategories, euconsent
-    }
-    
-    required public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        acceptedVendors = try values.decode([String].self, forKey: .acceptedVendors)
-        acceptedCategories = try values.decode([String].self, forKey: .acceptedCategories)
-        euconsent = try values.decode(ConsentString.self, forKey: .euconsent)
-        
-        let statusString = try values.decode(String.self, forKey: .status)
-        switch statusString {
-            case "acceptedNone": status = .AcceptedNone
-            case "acceptedSome": status = .AcceptedSome
-            case "acceptedAll": status = .AcceptedAll
-            default: throw MessageEventParsingError(message: "Unknown status string: \(statusString)")
-        }
-    }
+    open override var description: String { return "acceptedVendors: \(acceptedVendors), acceptedCategories: \(acceptedCategories), euconsent: \(euconsent.consentString)" }
 }
