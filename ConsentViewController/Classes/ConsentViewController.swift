@@ -255,7 +255,7 @@ extension ConsentViewController: ConsentDelegate {
     }
 
     public func onAction(_ action: Action, consents: PMConsents?) {
-        if(action == .AcceptAll || action == .RejectAll || action == .SaveAndExit) {
+        if(action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit) {
             sourcePoint.postAction(action: action, consentUUID: consentUUID, consents: consents) { [weak self] response in
                 self?.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
             }
