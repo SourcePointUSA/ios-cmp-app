@@ -88,7 +88,9 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient {
-    static let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net")!
+    /// - TODO: change the fake api to the real one
+//    static let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net")!
+    static let WRAPPER_API = URL(string: "https://fake-wrapper-api.herokuapp.com")!
     static let CMP_URL = URL(string: "https://sourcepoint.mgr.consensu.org")!
     static let GET_GDPR_STATUS_URL = URL(string: "consent/v2/gdpr-status", relativeTo: CMP_URL)!
     
@@ -130,7 +132,7 @@ class SourcePointClient {
 
     func getMessageUrl(_ consentUUID: ConsentUUID?, propertyName: PropertyName) -> URL? {
         var components = URLComponents(url: SourcePointClient.WRAPPER_API, resolvingAgainstBaseURL: true)
-        components?.path = "/ccpa/message-url"
+        components?.path = "/gdpr/message-url"
         components?.queryItems = [
             URLQueryItem(name: "uuid", value: consentUUID),
             URLQueryItem(name: "propertyId", value: String(propertyId)),
@@ -138,6 +140,7 @@ class SourcePointClient {
             URLQueryItem(name: "requestUUID", value: requestUUID.uuidString),
             URLQueryItem(name: "propertyHref", value: propertyName.rawValue),
             URLQueryItem(name: "campaignEnv", value: campaignEnv == .Stage ? "stage" : "prod"),
+            URLQueryItem(name: "env", value: "prod"),
             URLQueryItem(name: "meta", value: UserDefaults.standard.string(forKey: ConsentViewController.META_KEY)),
         ]
         return components?.url
@@ -158,16 +161,28 @@ class SourcePointClient {
     
     func postActionUrl(_ actionType: Int) -> URL? {
         return URL(
-            string: "ccpa/consent/\(actionType)",
+            string: "gdpr/consent/\(actionType)",
             relativeTo: SourcePointClient.WRAPPER_API
         )
     }
     
+    /// - TODO: receive choiceId and replace the 999 with it
     func postAction(action: Action, consentUUID: ConsentUUID?, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {
         let url = postActionUrl(action.rawValue)
         let meta = UserDefaults.standard.string(forKey: ConsentViewController.META_KEY) ?? "{}"
         let gdprConsents = GDPRPMConsents(acceptedVendors: consents?.vendors.accepted ?? [], acceptedCategories: consents?.categories.accepted ?? [])
-        guard let body = try? json.encode(ActionRequest(propertyId: propertyId, accountId: accountId, privacyManagerId: pmId, uuid: consentUUID, requestUUID: requestUUID, consents: gdprConsents, meta: meta)) else {
+        guard let body = try? json.encode(ActionRequest(
+            propertyId: propertyId,
+            accountId: accountId,
+            choiceType: action.rawValue,
+            choiceId: 999,
+            privacyManagerId: pmId,
+            env: "prod",
+            uuid: consentUUID,
+            requestUUID: requestUUID,
+            consents: gdprConsents,
+            meta: meta
+        )) else {
             self.onError?(APIParsingError(url?.absoluteString ?? "POST consent", nil))
             return
         }
