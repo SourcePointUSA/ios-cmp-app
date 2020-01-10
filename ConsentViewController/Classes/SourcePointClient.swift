@@ -81,8 +81,6 @@ struct JSON {
     }
 }
 
-/// - TODO: Replace all CCPA with GDPR
-
 /**
 A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
@@ -159,23 +157,19 @@ class SourcePointClient {
         }
     }
     
-    func postActionUrl(_ actionType: Int) -> URL? {
-        return URL(
-            string: "gdpr/consent/\(actionType)",
-            relativeTo: SourcePointClient.WRAPPER_API
-        )
+    func postActionUrl() -> URL {
+        return URL(string: "gdpr/consent", relativeTo: SourcePointClient.WRAPPER_API)!
     }
     
-    /// - TODO: receive choiceId and replace the 999 with it
     func postAction(action: Action, consentUUID: ConsentUUID?, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {
-        let url = postActionUrl(action.rawValue)
+        let url = postActionUrl()
         let meta = UserDefaults.standard.string(forKey: ConsentViewController.META_KEY) ?? "{}"
         let gdprConsents = GDPRPMConsents(acceptedVendors: consents?.vendors.accepted ?? [], acceptedCategories: consents?.categories.accepted ?? [])
         guard let body = try? json.encode(ActionRequest(
             propertyId: propertyId,
             accountId: accountId,
-            choiceType: action.rawValue,
-            choiceId: 999,
+            choiceType: action.type.rawValue,
+            choiceId: action.id,
             privacyManagerId: pmId,
             env: "prod",
             uuid: consentUUID,
@@ -183,17 +177,17 @@ class SourcePointClient {
             consents: gdprConsents,
             meta: meta
         )) else {
-            self.onError?(APIParsingError(url?.absoluteString ?? "POST consent", nil))
+            self.onError?(APIParsingError(url.absoluteString, nil))
             return
         }
         
-        client.post(url: url, body: body) { [weak self] data in
+        client.post(url: postActionUrl(), body: body) { [weak self] data in
             do {
                 let actionResponse = try (self?.json.decode(ActionResponse.self, from: data))!
                 UserDefaults.standard.setValue(actionResponse.meta, forKey: ConsentViewController.META_KEY)
                 onSuccess(actionResponse)
             } catch {
-                self?.onError?(APIParsingError(url?.absoluteString ?? "POST consent", error))
+                self?.onError?(APIParsingError(url.absoluteString, error))
             }
         }
     }
