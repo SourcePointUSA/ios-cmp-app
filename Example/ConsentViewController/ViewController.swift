@@ -29,10 +29,15 @@ class ViewController: UIViewController, ConsentDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
-        consents.forEach({ [weak self] consent in
-            self?.logger.log("Consented to: %{public}@)", [consent])
+    public func onConsentReady(consentUUID: ConsentUUID, userConsent: UserConsent) {
+        self.logger.log("ConsentUUID: %{public}@", [consentUUID])
+        userConsent.acceptedVendors.forEach({ [weak self] vendorId in
+            self?.logger.log("Vendor(%{public}@)", [vendorId])
         })
+        userConsent.acceptedCategories.forEach({ [weak self] purposeId in
+            self?.logger.log("Purpose(%{public}@)", [purposeId])
+        })
+        self.logger.log("Consent String: %{public}@", [(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>")])
     }
 
     func onError(error: ConsentViewControllerError?) {
