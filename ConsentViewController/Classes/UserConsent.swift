@@ -29,26 +29,31 @@ import Foundation
     /// The ids of the accepted vendors and categories. These can be found in SourcePoint's dashboard
     public let acceptedVendors, acceptedCategories: [String]
     
+    public let euconsent: ConsentString
+    
     public static func acceptedNone () -> UserConsent {
-        return UserConsent(status: ConsentStatus.AcceptedNone, acceptedVendors: [], acceptedCategories: [])
+        return UserConsent(status: ConsentStatus.AcceptedNone, acceptedVendors: [], acceptedCategories: [], euconsent: try! ConsentString(consentString: ""))
     }
     
-    public init(status: ConsentStatus, acceptedVendors: [String], acceptedCategories: [String]) {
+    public init(status: ConsentStatus, acceptedVendors: [String], acceptedCategories: [String], euconsent: ConsentString) {
         self.status = status
         self.acceptedVendors = acceptedVendors
         self.acceptedCategories = acceptedCategories
+        self.euconsent = euconsent
     }
     
     open override var description: String { return "Status: \(status.rawValue), acceptedVendors: \(acceptedVendors), acceptedCategories: \(acceptedCategories)" }
     
     enum CodingKeys: String, CodingKey {
-       case status, acceptedVendors, acceptedCategories
+       case status, acceptedVendors, acceptedCategories, euconsent
     }
     
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         acceptedVendors = try values.decode([String].self, forKey: .acceptedVendors)
         acceptedCategories = try values.decode([String].self, forKey: .acceptedCategories)
+        euconsent = try values.decode(ConsentString.self, forKey: .euconsent)
+        
         let statusString = try values.decode(String.self, forKey: .status)
         switch statusString {
             case "acceptedNone": status = .AcceptedNone
