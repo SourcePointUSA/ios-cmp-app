@@ -262,12 +262,11 @@ extension ConsentViewController: ConsentDelegate {
         }
     }
 
-    /// - TODO: store consent string
     public func onConsentReady(consentUUID: ConsentUUID, userConsent: UserConsent) {
         self.consentUUID = consentUUID
-//        euconsent = userConsent.consentString
-//        storeIABVars(consentString: consentString)
-//        UserDefaults.standard.setValue(consentString, forKey: ConsentViewController.EU_CONSENT_KEY)
+        self.euconsent = userConsent.euconsent
+        storeIABVars(consentString: userConsent.euconsent)
+        UserDefaults.standard.setValue(userConsent.euconsent.consentString, forKey: ConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
         UserDefaults.standard.synchronize()
         consentDelegate?.onConsentReady?(consentUUID: consentUUID, userConsent: userConsent)
