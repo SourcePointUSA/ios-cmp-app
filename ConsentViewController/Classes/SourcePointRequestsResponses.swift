@@ -37,8 +37,12 @@ struct ActionRequest: WrapperApiRequest {
         lhs.requestUUID == rhs.requestUUID
     }
 
-    let propertyId, accountId: Int
+    let propertyId: Int
+    let accountId: Int
+    let choiceType: Int
+    let choiceId: Int
     let privacyManagerId: String
+    let env: String
     let uuid: ConsentUUID?
     let requestUUID: UUID
     let consents: GDPRPMConsents
