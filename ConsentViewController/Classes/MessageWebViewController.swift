@@ -129,9 +129,8 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         load(url: url)
     }
     
-    /// - TODO: replace the CCPA PM with GDPR's PM
     func pmUrl() -> URL? {
-        return URL(string: "https://ccpa-inapp-pm.sp-prod.net/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&ccpa_origin=https://ccpa-service.sp-prod.net&ccpaUUID=\(consentUUID ?? "")")
+        return URL(string: "https://gdpr-inapp-pm.sp-prod.net/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID ?? "")")
     }
     
     override func loadPrivacyManager() {
