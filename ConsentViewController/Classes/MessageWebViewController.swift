@@ -43,6 +43,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     private let consentUUID: ConsentUUID?
     
     private var consentUILoaded = false
+    private var lastChoiceId: Int?
     
     init(propertyId: Int, pmId: String, consentUUID: ConsentUUID?) {
         self.propertyId = propertyId
@@ -174,6 +175,15 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         )
     }
     
+    private func getChoiceId (_ payload: [String: Any]) -> Int? {
+        // Actions coming from the PM do not have a choiceId.
+        // since we store the last non-null choiceId, the lastChoiceId
+        // will be either the choiceId of "Show Options" action when coming from the message
+        // or null if coming from the PM opened directly
+        lastChoiceId = payload["id"] as? Int? ?? lastChoiceId
+        return lastChoiceId
+    }
+    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard
             let body = message.body as? [String: Any?],
@@ -191,14 +201,13 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
             case "onAction":
                 guard
                     let payload = body["body"] as? [String: Any],
-                    let actionId = payload["id"] as? Int,
                     let actionTypeRaw = payload["type"] as? Int,
                     let actionType = ActionType(rawValue: actionTypeRaw)
                 else {
                     onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                     return
                 }
-                onAction(Action(type: actionType, id: actionId), consents: getPMConsentsIfAny(payload))
+                onAction(Action(type: actionType, id: getChoiceId(payload)), consents: getPMConsentsIfAny(payload))
             case "onError":
                 onError(error: WebViewError())
             default:

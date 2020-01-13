@@ -40,7 +40,7 @@ struct ActionRequest: WrapperApiRequest {
     let propertyId: Int
     let accountId: Int
     let choiceType: Int
-    let choiceId: Int
+    let choiceId: Int?
     let privacyManagerId: String
     let env: String
     let uuid: ConsentUUID?
