@@ -9,6 +9,8 @@
 import Foundation
 
 @objcMembers public class ConsentString: NSObject, ConsentStringProtocol {
+    public static let empty = ConsentString()
+    
     public static func == (lhs: ConsentString, rhs: ConsentString) -> Bool {
         return lhs.consentData == rhs.consentData
     }
@@ -54,6 +56,11 @@ import Foundation
             throw ConsentStringError.base64DecodingFailed
         }
         consentData = dataValue
+    }
+    
+    private override init() {
+        self.consentString = ""
+        self.consentData = Data(base64Encoded: "".base64Padded)!
     }
 
     public var cmpId: Int {
