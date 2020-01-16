@@ -157,9 +157,11 @@ class SourcePointClient {
             self.onError?(APIParsingError(url.absoluteString, nil))
             return
         }
+        /// - TODO: remove/hide print message
         print("MESSAGE-URL REQUEST: ", String(data: body, encoding: .utf8)!)
         client.post(url: url, body: body) { [weak self] data in
             do {
+                /// - TODO: remove/hide print message
                 print("MESSAGE-URL RESPONSE: ", String(data: data, encoding: .utf8)!)
                 let messageResponse = try (self?.json.decode(MessageResponse.self, from: data))!
                 UserDefaults.standard.setValue(messageResponse.meta, forKey: ConsentViewController.META_KEY)
@@ -191,9 +193,11 @@ class SourcePointClient {
             self.onError?(APIParsingError(url.absoluteString, nil))
             return
         }
+        /// - TODO: remove/hide print message
         print("CONSENT REQUEST: ", String(data: body, encoding: .utf8)!)
         client.post(url: url, body: body) { [weak self] data in
             do {
+                /// - TODO: remove/hide print message
                 print("CONSENT RESPONSE: ", String(data: data, encoding: .utf8)!)
                 let actionResponse = try (self?.json.decode(ActionResponse.self, from: data))!
                 UserDefaults.standard.setValue(actionResponse.meta, forKey: ConsentViewController.META_KEY)
