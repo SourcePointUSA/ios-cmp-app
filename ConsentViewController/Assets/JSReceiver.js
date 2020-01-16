@@ -28,7 +28,7 @@
   var getActionFromMessage = function (actions) {
     var choiceAction = actions.filter(function (action) { return action.type === 'choice'; })[0] || {};
     var choiceData = choiceAction.data || {};
-    return { id: choiceData.choice_id, type: choiceData.type };
+    return { id: String(choiceData.choice_id), type: choiceData.type };
   };
 
   var getActionFromPM = function (payload) {
