@@ -10,6 +10,7 @@ import Foundation
 /// User actions. Its integer representation matches with what SourcePoint's endpoints expect.
 @objc public enum ActionType: Int {
     case SaveAndExit = 1
+    case PMCancel = 2
     case AcceptAll = 11
     case ShowPrivacyManager = 12
     case RejectAll = 13
