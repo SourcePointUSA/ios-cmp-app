@@ -107,7 +107,7 @@ import Foundation
     }
     
     //Used to determine whether we need to check for a vendor ID at all if it's greater than this value
-    private var maxVendorId : Int {
+    public var maxVendorId : Int {
         get {
             return Int(consentData.intValue(fromBit: 156, toBit: 171))
         }

@@ -201,16 +201,18 @@ import UIKit
         UserDefaults.standard.setValue(consentString.consentString, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
         // Generate parsed vendor consents string
-        var parsedVendorConsents = [Character](repeating: "0", count: ConsentViewController.MAX_VENDOR_ID)
-        for i in 1...ConsentViewController.MAX_VENDOR_ID {
-            if consentString.isVendorAllowed(vendorId: i) {
-                parsedVendorConsents[i - 1] = "1"
+        var parsedVendorConsents = [Character](repeating: "0", count: consentString.maxVendorId)
+        if(parsedVendorConsents.count > 0) {
+            for i in 1...consentString.maxVendorId {
+                if consentString.isVendorAllowed(vendorId: i) {
+                    parsedVendorConsents[i - 1] = "1"
+                }
             }
         }
         UserDefaults.standard.setValue(String(parsedVendorConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
 
         // Generate parsed purpose consents string
-        var parsedPurposeConsents = [Character](repeating: "0", count: ConsentViewController.MAX_PURPOSE_ID)
+        var parsedPurposeConsents = [Character](repeating: "0", count: Int(consentString.maxPurposes))
         for i in consentString.purposesAllowed {
             parsedPurposeConsents[Int(i) - 1] = "1"
         }
