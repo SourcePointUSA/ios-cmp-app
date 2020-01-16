@@ -43,7 +43,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     private let consentUUID: ConsentUUID?
     
     private var consentUILoaded = false
-    private var lastChoiceId: Int?
+    private var lastChoiceId: String?
     
     init(propertyId: Int, pmId: String, consentUUID: ConsentUUID?) {
         self.propertyId = propertyId
@@ -111,7 +111,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         switch action.type {
             case .ShowPrivacyManager:
                 showPrivacyManagerFromMessageAction()
-            case .Dismiss:
+            case .PMCancel:
                 cancelPMAction()
             default:
                 closeConsentUIIfOpen()
@@ -175,12 +175,12 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         )
     }
     
-    private func getChoiceId (_ payload: [String: Any]) -> Int? {
+    private func getChoiceId (_ payload: [String: Any]) -> String? {
         // Actions coming from the PM do not have a choiceId.
         // since we store the last non-null choiceId, the lastChoiceId
         // will be either the choiceId of "Show Options" action when coming from the message
         // or null if coming from the PM opened directly
-        lastChoiceId = payload["id"] as? Int? ?? lastChoiceId
+        lastChoiceId = payload["id"] as? String? ?? lastChoiceId
         return lastChoiceId
     }
     
