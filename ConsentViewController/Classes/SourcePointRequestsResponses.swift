@@ -14,39 +14,43 @@ struct GdprStatus: Codable {
     let gdprApplies: Bool
 }
 
-protocol WrapperApiRequest: Codable, Equatable {
-    var requestUUID: UUID { get }
-    var meta: Meta { get }
+struct MessageRequest: Encodable {
+    let uuid: ConsentUUID?
+    let euconsent: ConsentString?
+    let accountId: Int
+    let propertyId: Int
+    let propertyHref: PropertyName
+    let campaignEnv: CampaignEnv
+    let targetingParams: String?
+    let requestUUID: UUID
+    let meta: Meta
 }
 
-struct MessageResponse: Codable {
+struct MessageResponse: Decodable {
     let url: URL?
     let uuid: ConsentUUID
     let userConsent: UserConsent
     var meta: Meta
 }
 
-struct ActionResponse: Codable {
-    let uuid: ConsentUUID
-    let userConsent: UserConsent
-    var meta: Meta
-}
-
-struct ActionRequest: WrapperApiRequest {
-    static func == (lhs: ActionRequest, rhs: ActionRequest) -> Bool {
-        lhs.requestUUID == rhs.requestUUID
-    }
-
+struct ActionRequest: Encodable {
     let propertyId: Int
+    let propertyHref: PropertyName
     let accountId: Int
-    let choiceType: Int
-    let choiceId: Int?
+    let actionType: Int
+    let choiceId: String?
     let privacyManagerId: String
-    let env: String
-    let uuid: ConsentUUID?
+    let requestFromPM: Bool
+    let uuid: ConsentUUID
     let requestUUID: UUID
     let consents: GDPRPMConsents
     let meta: Meta
+}
+
+struct ActionResponse: Decodable {
+    let uuid: ConsentUUID
+    let userConsent: UserConsent
+    var meta: Meta
 }
 
 @objc public class PMConsents: NSObject, Codable {
