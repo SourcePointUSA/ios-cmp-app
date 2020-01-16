@@ -29,12 +29,12 @@ import Foundation
     }
     
     required public init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
+        let container = try decoder.singleValueContainer()
         self.rawValue = try PropertyName.validate(try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.unkeyedContainer()
+        var container = encoder.singleValueContainer()
         try container.encode(self.rawValue)
     }
 }
