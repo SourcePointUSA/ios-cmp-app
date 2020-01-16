@@ -19,9 +19,9 @@ import Foundation
 /// Action consists of `ActionType` and an id. Those come from each action the user can take in the ConsentUI
 @objcMembers public class Action: NSObject {
     public let type: ActionType
-    public let id: Int?
+    public let id: String?
     
-    public init(type: ActionType, id: Int?) {
+    public init(type: ActionType, id: String?) {
         self.type = type
         self.id = id
     }
