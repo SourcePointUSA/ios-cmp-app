@@ -7,118 +7,204 @@
 
 import Foundation
 
-protocol HttpClient { func get(url: URL, completionHandler handler : @escaping (Data?) -> Void) }
+typealias OnSuccess = (Data) -> Void
+typealias OnError = (ConsentViewControllerError?) -> Void
+
+protocol HttpClient {
+    var defaultOnError: OnError? { get set }
+    
+    func get(url: URL?, onSuccess: @escaping OnSuccess)
+    func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess)
+}
 
 class SimpleClient: HttpClient {
-    func get(url: URL, completionHandler cHandler : @escaping (Data?) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, reponse, error in
-            DispatchQueue.main.async { cHandler(data) }
+    var defaultOnError: OnError?
+    let connectivityManager: Connectivity
+    
+    init(connectivityManager: Connectivity) {
+        self.connectivityManager = connectivityManager
+    }
+    
+    convenience init() {
+        self.init(connectivityManager: ConnectivityManager.shared)
+    }
+    
+    func request(_ urlRequest: URLRequest, _ onSuccess: @escaping OnSuccess) {
+        if(connectivityManager.isConnectedToNetwork()) {
+            URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                DispatchQueue.main.async { [weak self] in
+                    guard let data = data else {
+                        self?.defaultOnError?(GeneralRequestError(urlRequest.url, response, error))
+                        return
+                    }
+                    onSuccess(data)
+                }
+            }.resume()
+        } else {
+            defaultOnError?(NoInternetConnection())
         }
-        task.resume()
+    }
+    
+    func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
+        guard let _url = url else {
+            defaultOnError?(GeneralRequestError(url, nil, nil))
+            return
+        }
+        var urlRequest = URLRequest(url: _url)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = body
+        request(urlRequest, onSuccess)
+    }
+    
+    func get(url: URL?, onSuccess: @escaping OnSuccess) {
+        guard let _url = url else {
+            defaultOnError?(GeneralRequestError(url, nil, nil))
+            return
+        }
+        request(URLRequest(url: _url), onSuccess)
     }
 }
 
-struct ConsentsResponse : Codable {
-    let consentedVendors: [VendorConsent]
-    let consentedPurposes: [PurposeConsent]
+struct JSON {
+    private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
+    private lazy var jsonEncoder: JSONEncoder = { return JSONEncoder() }()
+    
+    mutating func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
+        return try jsonDecoder.decode(decodable, from: data)
+    }
+    
+    mutating func encode<T: Encodable>(_ encodable: T) throws -> Data {
+        return try jsonEncoder.encode(encodable)
+    }
 }
 
-typealias TargetingParams = [String:Any]
-
+/**
+A Http client for SourcePoint's endpoints
+ - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
+ */
 class SourcePointClient {
-    private let client: HttpClient
-
+    static let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net")!
+    static let GET_MESSAGE_URL = URL(string: "gdpr/message-url", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let CONSENT_URL = URL(string: "gdpr/consent", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_GDPR_STATUS_URL = URL(string: "https://sourcepoint.mgr.consensu.org/consent/v2/gdpr-status")!
+    
+    private var client: HttpClient
+    private lazy var json: JSON = { return JSON() }()
+    
+    let requestUUID = UUID()
+    
     private let accountId: Int
     private let propertyId: Int
+    private let propertyName: PropertyName
     private let pmId: String
-    private let showPM: Bool
-    private let runMessaging: Bool
-    private let propertyUrl: URL
-    private let mmsUrl: URL
-    private let cmpUrl: URL
-    private let messageUrl: URL
-    private let statusGdprUrl: URL
-    private let campaign: String
+    private let campaignEnv: CampaignEnv
+    private let targetingParams: TargetingParams?
+    
+    public var onError: OnError? { didSet { client.defaultOnError = onError } }
 
-    init(accountId: Int, propertyId:Int, pmId:String, showPM:Bool, propertyUrl: URL, campaign: String, mmsUrl: URL, cmpUrl: URL, messageUrl: URL) throws {
+    init(accountId: Int, propertyId:Int, propertyName: PropertyName, pmId:String, campaignEnv: CampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
         self.accountId = accountId
         self.propertyId = propertyId
+        self.propertyName = propertyName
         self.pmId = pmId
-        self.showPM = showPM
-        self.runMessaging = !showPM
-        self.propertyUrl = propertyUrl
-        self.mmsUrl = mmsUrl
-        self.cmpUrl = cmpUrl
-        self.messageUrl = messageUrl
-        self.campaign = campaign
-
-        statusGdprUrl = try Utils.validate(
-            attributeName: "statusGDPRUrl",
-            urlString: cmpUrl.absoluteString + "/consent/v2/gdpr-status"
-        )
-
-        self.client = SimpleClient()
+        self.campaignEnv = campaignEnv
+        self.targetingParams = targetingParams
+        self.client = client
     }
-
-    func getGdprStatus(completionHandler cHandler : @escaping (Int?,ConsentViewControllerError?) -> Void) {
-        client.get(url: statusGdprUrl) { (result) in
-            if let _result = result, let parsedResult = (try? JSONSerialization.jsonObject(with: _result, options: [])) as? [String: Int] {
-                let gdprStatus = parsedResult["gdprApplies"]
-                cHandler(gdprStatus,nil)
-            } else {
-                cHandler(nil, GdprStatusNotFound(gdprStatusUrl: self.statusGdprUrl))
+    
+    convenience init(accountId: Int, propertyId: Int, propertyName: PropertyName, pmId: String, campaignEnv: CampaignEnv) {
+        self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: nil, client: SimpleClient())
+    }
+    
+    convenience init(accountId: Int, propertyId: Int, propertyName: PropertyName, pmId: String, campaignEnv: CampaignEnv, targetingParams: TargetingParams) {
+        self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: targetingParams, client: SimpleClient())
+    }
+    
+    func getGdprStatus(onSuccess: @escaping (Bool) -> Void) {
+        client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { [weak self] data in
+            do {
+                onSuccess(try (self?.json.decode(GdprStatus.self, from: data))!.gdprApplies)
+            } catch {
+                self?.onError?(APIParsingError(SourcePointClient.GET_GDPR_STATUS_URL.absoluteString, error))
             }
         }
     }
-
-    // TODO: validate customConsentsURL with Utils.validate
-    func getCustomConsents(forPropertyId propertyId: String, consentUUID: String,euConsent: String, completionHandler cHandler : @escaping (ConsentsResponse?, ConsentViewControllerError?) -> Void) {
-
-        let path = "/consent/v2/\(propertyId)/custom-vendors"
-        let search = "?consentUUID=\(consentUUID)&euconsent=\(euConsent)"
-        let decoder = JSONDecoder()
-
-        if let getCustomConsentsUrl = URL(string: path + search, relativeTo: cmpUrl) {
-            client.get(url: getCustomConsentsUrl) { (result) in
-                if let _result = result, let consents = try? decoder.decode(ConsentsResponse.self, from: _result) {
-                    cHandler(consents, nil)
-                }else {
-                    cHandler(nil, ConsentsAPIError())
-                }
-            }
-        }
-    }
-
-    private func encode(targetingParams params: TargetingParams) throws -> String {
-        let data = try JSONSerialization.data(withJSONObject: params)
-        return String(data: data, encoding: String.Encoding.utf8)!
-    }
-
-    func getMessageUrl(forTargetingParams params: TargetingParams, debugLevel: String, newPM: Bool, authId: String?) throws -> URL {
-        var url: URL
-        var components = URLComponents()
-        var queryItems: [String:String] = [:]
-
+    
+    private func targetingParamsToString(_ params: TargetingParams?) -> String {
+        let emptyParams = "{}"
         do {
-            queryItems = [
-                "_sp_accountId": String(accountId),
-                "_sp_PMId": pmId,
-                "_sp_siteId": String(propertyId),
-                "_sp_siteHref": propertyUrl.absoluteString,
-                "_sp_runMessaging" : String(runMessaging),
-                "_sp_showPM": String(showPM),
-                "_sp_mms_Domain": mmsUrl.absoluteString,
-                "_sp_cmp_origin": "\(cmpUrl)",
-                "_sp_targetingParams": try encode(targetingParams: params),
-                "_sp_env": campaign
-            ]
-            if(authId != nil) { queryItems["_sp_authId"] = authId }
-            components.queryItems = queryItems.map { URLQueryItem(name: $0.key, value: $0.value) }
-            url = components.url(relativeTo: messageUrl)!
+            let data = try JSONSerialization.data(withJSONObject: params!)
+            return String(data: data, encoding: .utf8) ?? emptyParams
         } catch {
-            throw InvalidMessageURLError(urlString: messageUrl.absoluteString)
+            return emptyParams
         }
+    }
 
-        return url
+    func getMessage(consentUUID: ConsentUUID?, euconsent: ConsentString?, onSuccess: @escaping (MessageResponse) -> Void) {
+        let url = SourcePointClient.GET_MESSAGE_URL
+        guard let body = try? json.encode(MessageRequest(
+            uuid: consentUUID,
+            euconsent: euconsent,
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyHref: propertyName,
+            campaignEnv: campaignEnv,
+            targetingParams: targetingParamsToString(targetingParams),
+            requestUUID: requestUUID,
+            meta: UserDefaults.standard.string(forKey: ConsentViewController.META_KEY) ?? "{}"
+        )) else {
+            self.onError?(APIParsingError(url.absoluteString, nil))
+            return
+        }
+        /// - TODO: remove/hide print message
+        print("MESSAGE-URL REQUEST: ", String(data: body, encoding: .utf8)!)
+        client.post(url: url, body: body) { [weak self] data in
+            do {
+                /// - TODO: remove/hide print message
+                print("MESSAGE-URL RESPONSE: ", String(data: data, encoding: .utf8)!)
+                let messageResponse = try (self?.json.decode(MessageResponse.self, from: data))!
+                UserDefaults.standard.setValue(messageResponse.meta, forKey: ConsentViewController.META_KEY)
+                onSuccess(messageResponse)
+            } catch {
+                self?.onError?(APIParsingError(url.absoluteString, error))
+            }
+        }
+    }
+
+    func postAction(action: Action, consentUUID: ConsentUUID, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {
+        let url = SourcePointClient.CONSENT_URL
+        guard let body = try? json.encode(ActionRequest(
+            propertyId: propertyId,
+            propertyHref: propertyName,
+            accountId: accountId,
+            actionType: action.type.rawValue,
+            choiceId: action.id,
+            privacyManagerId: pmId,
+            requestFromPM: action.id == nil,
+            uuid: consentUUID,
+            requestUUID: requestUUID,
+            consents: GDPRPMConsents(
+                acceptedVendors: consents?.vendors.accepted ?? [],
+                acceptedCategories: consents?.categories.accepted ?? []
+            ),
+            meta: UserDefaults.standard.string(forKey: ConsentViewController.META_KEY) ?? "{}"
+        )) else {
+            self.onError?(APIParsingError(url.absoluteString, nil))
+            return
+        }
+        /// - TODO: remove/hide print message
+        print("CONSENT REQUEST: ", String(data: body, encoding: .utf8)!)
+        client.post(url: url, body: body) { [weak self] data in
+            do {
+                /// - TODO: remove/hide print message
+                print("CONSENT RESPONSE: ", String(data: data, encoding: .utf8)!)
+                let actionResponse = try (self?.json.decode(ActionResponse.self, from: data))!
+                UserDefaults.standard.setValue(actionResponse.meta, forKey: ConsentViewController.META_KEY)
+                onSuccess(actionResponse)
+            } catch {
+                self?.onError?(APIParsingError(url.absoluteString, error))
+            }
+        }
     }
 }

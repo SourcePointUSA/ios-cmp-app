@@ -9,7 +9,11 @@
 import UIKit
 import ConsentViewController
 
-class HomeViewController: UIViewController, UITableViewDataSource, ConsentDelegate {
+class HomeViewController: UIViewController, ConsentDelegate {
+    lazy var consentViewController = {
+        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", consentDelegate: self)
+    }()
+
     var authId = ""
     var consentUUID: String?
 
@@ -20,39 +24,21 @@ class HomeViewController: UIViewController, UITableViewDataSource, ConsentDelega
     var userData: [String] = []
     var consents:[Consent] = []
 
-    func loadConsents(forAuthId authId: String, showPM: Bool) {
-        try! ConsentViewController(
-            accountId: 22,
-            propertyId: 2372,
-            property: "mobile.demo",
-            PMId: "5c0e81b7d74b3c30c6852301",
-            campaign: "stage",
-            showPM: showPM,
-            consentDelegate: self
-        ).loadMessage(forAuthId: authId)
+    
+    func consentUIWillShow() {
+        self.present(consentViewController, animated: true, completion: nil)
+    }
+    
+    func consentUIDidDisappear() {
+        self.dismiss(animated: true, completion: nil)
     }
 
-    func onMessageReady(controller: ConsentViewController) {
-        controller.modalPresentationStyle = .overFullScreen
-        self.present(controller, animated: true, completion: nil)
-    }
-
-    func getConsentsCompletionHandler(_ newConsents: [Consent]?, _ error: ConsentViewControllerError?) -> Void {
-        guard let newConsents = newConsents else {
-            onErrorOccurred(error: error!)
-            return
-        }
-        consents.append(contentsOf: newConsents)
-        self.consentTableView.reloadData()
-    }
-
-    func onConsentReady(controller: ConsentViewController) {
-        self.userData = []
-        self.consents = []
-        self.userData.append("consentUUID: \(controller.consentUUID)")
-        self.userData.append("euconsent: \(controller.euconsent)")
-        controller.getCustomVendorConsents(completionHandler: getConsentsCompletionHandler)
-        controller.getCustomPurposeConsents(completionHandler: getConsentsCompletionHandler)
+    func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
+        self.userData = [
+            "consentUUID: \(consentUUID.uuidString)",
+            "euconsent: \(consentString?.consentString ?? "<unknown>")"
+        ]
+        self.consents = consents
         self.consentTableView.reloadData()
         self.dismiss(animated: true, completion: nil)
     }
@@ -65,14 +51,16 @@ class HomeViewController: UIViewController, UITableViewDataSource, ConsentDelega
         super.viewDidLoad()
         authIdLabel.text = authId
         initData()
-        loadConsents(forAuthId: authId, showPM: false)
+        consentViewController.loadMessage() // TODO: implement authID
     }
 
     @IBAction func onSettingsPress(_ sender: Any) {
         initData()
-        loadConsents(forAuthId: authId, showPM: true)
+        consentViewController.loadPrivacyManager() // TODO: implement authID
     }
+}
 
+extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:

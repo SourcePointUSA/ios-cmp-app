@@ -8,8 +8,7 @@
 
 import Foundation
 
-protocol ConsentStringProtocol {
-    
+protocol ConsentStringProtocol: Codable {
     init(consentString: String) throws
     var consentString:String {get set}
     var cmpId:Int {get}
@@ -18,5 +17,4 @@ protocol ConsentStringProtocol {
     var purposesAllowed:[Int8] {get}
     func purposeAllowed(forPurposeId purposeId:Int8) -> Bool
     func isVendorAllowed(vendorId:Int) -> Bool
-    
 }

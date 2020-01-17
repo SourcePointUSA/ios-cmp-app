@@ -2,58 +2,20 @@
 //  ConsentViewController.swift
 //  cmp-app-test-app
 //
-//  Created by Dmitri Rabinowitz on 8/13/18.
-//  Copyright © 2018 Sourcepoint. All rights reserved.
+//  Created by Andre Herculano on 12/16/19.
+//  Copyright © 2019 Sourcepoint. All rights reserved.
 //
 
-/// :nodoc:
-public typealias Callback = (ConsentViewController) -> Void
-
 import UIKit
-import WebKit
-import JavaScriptCore
 
-/**
- SourcePoint's Consent SDK is a WebView that loads SourcePoint's web consent managment tool
- and offers ways to inspect the consents and purposes the user has chosen.
+public typealias TargetingParams = [String:String]
 
- ```
- var consentViewController: ConsentViewController!
- override func viewDidLoad() {
-     super.viewDidLoad()
-     consentViewController = ConsentViewController(accountId: <ACCOUNT_ID>, siteName: "SITE_NAME", stagingCampaign: true|false)
-     consentViewController.onMessageChoiceSelect = {
-        (cbw: ConsentViewController) in print("Choice selected by user", cbw.choiceType as Any)
-     }
-     consentViewController.onInteractionComplete = { (cbw: ConsentViewController) in
-         print(
-             cbw.euconsent as Any,
-             cbw.consentUUID as Any,
-             cbw.getIABVendorConsents(["VENDOR_ID"]),
-             cbw.getIABPurposeConsents(["PURPOSE_ID"]),
-             cbw.getCustomVendorConsents(),
-             cbw.getCustomPurposeConsents()
-         )
-     }
- view.addSubview(consentViewController.view)
- ```
-*/
-@objcMembers open class ConsentViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
-
+@objcMembers open class ConsentViewController: UIViewController {
+    static let META_KEY: String = "sp_gdpr_meta"
     /// :nodoc:
-    public enum DebugLevel: String {
-        case DEBUG
-        case INFO
-        case TIME
-        case WARN
-        case ERROR
-        case OFF
-    }
-
+    static let EU_CONSENT_KEY: String = "sp_gdpr_euconsent"
     /// :nodoc:
-    static public let EU_CONSENT_KEY: String = "euconsent"
-    /// :nodoc:
-    static public let CONSENT_UUID_KEY: String = "consentUUID"
+    static let CONSENT_UUID_KEY: String = "sp_gdpr_consentUUID"
 
     /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
     static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
@@ -70,283 +32,140 @@ import JavaScriptCore
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
 
-    static private let MAX_VENDOR_ID: Int = 500
-    static private let MAX_PURPOSE_ID: Int = 24
-
-    static public let STAGING_MMS_DOMAIN = "mms.sp-stage.net"
-    static public let MMS_DOMAIN = "message.sp-prod.net"
-
-    static public let STAGING_CMP_DOMAIN = "cmp.sp-stage.net"
-    static public let CMP_DOMAIN = "sourcepoint.mgr.consensu.org"
-
-    static public let STAGING_IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
-    static public let IN_APP_MESSAGING_PAGE_DOMAIN = "in-app-messaging.pm.sourcepoint.mgr.consensu.org/v3/index.html"
-
-    static private let MESSAGE_HANDLER_NAME = "JSReceiver"
-
-    private var targetingParams: [String: Any] = [:]
-    /// :nodoc:
-    public var debugLevel: DebugLevel = .OFF
-
-    /**
-     A `Callback` that will be called when the user selects an option on the WebView.
-     The selected choice will be available in the instance variable `choiceType`
-     */
-    public var onMessageChoiceSelect: Callback?
-
-    /**
-     A `Callback` to be called when the user finishes interacting with the WebView
-     either by closing it, canceling or accepting the terms.
-     At this point, the following keys will available populated in the `UserDefaults`:
-     * `EU_CONSENT_KEY`
-     * `CONSENT_UUID_KEY`
-     * `IAB_CONSENT_SUBJECT_TO_GDPR`
-     * `IAB_CONSENT_CONSENT_STRING`
-     * `IAB_CONSENT_PARSED_PURPOSE_CONSENTS`
-     * `IAB_CONSENT_PARSED_VENDOR_CONSENTS`
-
-     Also at this point, the methods `getCustomVendorConsents()`,
-     `getPurposeConsents(forIds:)` and `getPurposeConsent(forId:)`
-     will also be able to be called from inside the callback
-     */
-
-    var webView: WKWebView!
-
-    /// Holds the choice type the user has chosen after interacting with the ConsentViewController
-    public var choiceId: Int? = nil
-
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
-    public var euconsent: String
+    public var euconsent: ConsentString
 
-    /// The UUID assigned to the user, set after the user has chosen after interacting with the ConsentViewController
-    public var consentUUID: String
+    /// The UUID assigned to a user, available after calling `loadMessage`
+    public var consentUUID: ConsentUUID
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = TimeInterval(300)
 
     private let accountId: Int
-    private let property: String
+    private let propertyName: PropertyName
     private let propertyId: Int
-    private let showPM: Bool
-    private var didMessageScriptLoad = false
+    private let pmId: String
+    
+    private let targetingParams: TargetingParams
 
     private let sourcePoint: SourcePointClient
-    private weak var consentDelegate: ConsentDelegate?
-    private let logger: Logger
+    private lazy var logger = { return Logger() }()
 
-    private var newPM = false
-    
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
+    private weak var consentDelegate: ConsentDelegate?
+    private var messageViewController: MessageViewController?
+    
+    enum LoadingStatus: String {
+        case Ready = "Ready"
+        case Presenting = "Presenting"
+        case Loading = "Loading"
+    }
+
+    // used in order not to load the message ui multiple times
+    private var loading: LoadingStatus = .Ready
+
+    private func remove(asChildViewController viewController: UIViewController?) {
+        guard let viewController = viewController else { return }
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
+    }
+
+    private func add(asChildViewController viewController: UIViewController) {
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+    }
+
     /**
-     Initialises the library with `accountId`, `propertyId`,`PMId`,`campaign`, `showPM` and property`.
+        - Parameters:
+            - accountId: the id of your account, can be found in the Account section of SourcePoint's dashboard
+            - propertyId: the id of your property, can be found in the property page of SourcePoint's dashboard
+            - propertyName: the exact name of your property,
+            -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
+            -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
+            -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
+        - SeeAlso: ConsentDelegate
      */
     public init(
         accountId: Int,
         propertyId: Int,
-        property: String,
+        propertyName: PropertyName,
         PMId: String,
-        campaign: String,
-        showPM: Bool,
-        mmsDomain: String,
-        cmpDomain: String,
-        messageDomain: String,
+        campaignEnv: CampaignEnv,
+        targetingParams: TargetingParams,
         consentDelegate: ConsentDelegate
-    ) throws {
+    ){
         self.accountId = accountId
-        self.property = property
+        self.propertyName = propertyName
         self.propertyId = propertyId
-        self.showPM = showPM
+        self.pmId = PMId
+        self.targetingParams = targetingParams
         self.consentDelegate = consentDelegate
-        
-        let propertyUrl = try Utils.validate(attributeName: "propertyUrl", urlString: "https://"+property)
-        let mmsUrl = try Utils.validate(attributeName: "mmsUrl", urlString: mmsDomain)
-        let cmpUrl = try Utils.validate(attributeName: "cmpUrl", urlString: cmpDomain)
-        let messageUrl = try Utils.validate(attributeName: "messageUrl", urlString: messageDomain)
 
-        self.sourcePoint = try SourcePointClient(
+        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ??
+            UUID().uuidString
+        self.euconsent = (try? ConsentString(consentString: UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
+        
+        self.sourcePoint = SourcePointClient(
             accountId: accountId,
             propertyId: propertyId,
+            propertyName: propertyName,
             pmId: PMId,
-            showPM: showPM,
-            propertyUrl: propertyUrl,
-            campaign: campaign,
-            mmsUrl: mmsUrl,
-            cmpUrl: cmpUrl,
-            messageUrl: messageUrl
+            campaignEnv: campaignEnv,
+            targetingParams: targetingParams
         )
-
-        self.euconsent = UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? ""
-        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ?? ""
-        self.logger = Logger()
 
         super.init(nibName: nil, bundle: nil)
+        sourcePoint.onError = onError
+        modalPresentationStyle = .overFullScreen
     }
-
-    @objc(initWithAccountId:propertyId:property:PMId:campaign:showPM:consentDelegate:andReturnError:)
-    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, consentDelegate: ConsentDelegate) throws {
-        try self.init(
-            accountId: accountId,
-            propertyId: propertyId,
-            property: property,
-            PMId: PMId,
-            campaign: campaign,
-            showPM: showPM,
-            staging: false,
-            consentDelegate: consentDelegate
-        )
-    }
-
-    @objc(initWithAccountId:propertyId:property:PMId:campaign:showPM:staging:consentDelegate:andReturnError:)
-    public convenience init(accountId: Int, propertyId: Int, property: String, PMId: String, campaign: String, showPM: Bool, staging: Bool, consentDelegate: ConsentDelegate) throws {
-        try self.init(
-            accountId: accountId,
-            propertyId: propertyId,
-            property: property,
-            PMId: PMId,
-            campaign: campaign,
-            showPM: showPM,
-            mmsDomain: "https://" + (staging ? ConsentViewController.STAGING_MMS_DOMAIN : ConsentViewController.MMS_DOMAIN),
-            cmpDomain: "https://" + (staging ? ConsentViewController.STAGING_CMP_DOMAIN : ConsentViewController.CMP_DOMAIN),
-            messageDomain: "https://" + (staging ? ConsentViewController.STAGING_IN_APP_MESSAGING_PAGE_DOMAIN : ConsentViewController.IN_APP_MESSAGING_PAGE_DOMAIN),
-            consentDelegate: consentDelegate
-        )
+    
+    public convenience init(
+        accountId: Int,
+        propertyId: Int,
+        propertyName: PropertyName,
+        PMId: String,
+        campaignEnv: CampaignEnv,
+        consentDelegate: ConsentDelegate) {
+        self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, PMId: PMId, campaignEnv: campaignEnv, targetingParams: [:], consentDelegate: consentDelegate)
     }
 
     /// :nodoc:
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    /// :nodoc:
-    @objc(setTargetingParamString:value:)
-    public func setTargetingParam(key: String, value: String) {
-        targetingParams[key] = value
+    
+    private func loadMessage(fromUrl url: URL) {
+        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: consentUUID)
+        messageViewController?.consentDelegate = self
+        messageViewController?.loadMessage(fromUrl: url)
     }
-
-    /// :nodoc:
-    @objc(setTargetingParamInt:value:)
-    public func setTargetingParam(key: String, value: Int) {
-        targetingParams[key] = value
-    }
-
-    public func enableNewPM(_ newPM: Bool) {
-        self.newPM = newPM
-    }
-
-    /// :nodoc:
-    override open func loadView() {
-        let config = WKWebViewConfiguration()
-        let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: "JSReceiver", ofType: "js")!)
-        let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-        userContentController.addUserScript(script)
-        userContentController.add(self, name: ConsentViewController.MESSAGE_HANDLER_NAME)
-        config.userContentController = userContentController
-        webView = WKWebView(frame: .zero, configuration: config)
-        if #available(iOS 11.0, *) {
-            webView.scrollView.contentInsetAdjustmentBehavior = .never;
-        }
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.translatesAutoresizingMaskIntoConstraints = true
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        webView.isOpaque = false
-        modalPresentationStyle = .overCurrentContext
-        webView.backgroundColor = .clear
-        webView.allowsBackForwardNavigationGestures = true
-        view = webView
-    }
-
-    private func releaseWebViewHandlers() {
-        let contentController = webView.configuration.userContentController
-        contentController.removeScriptMessageHandler(forName: ConsentViewController.MESSAGE_HANDLER_NAME)
-        contentController.removeAllUserScripts()
-    }
-
-    /// :nodoc:
-    // handles links with "target=_blank", forcing them to open in Safari
-    public func webView(_ webView: WKWebView,
-                        createWebViewWith configuration: WKWebViewConfiguration,
-                        for navigationAction: WKNavigationAction,
-                        windowFeatures: WKWindowFeatures) -> WKWebView? {
-        guard let url = navigationAction.request.url else { return nil }
-
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-        return nil
-    }
-
-    private func timeOut(inSeconds seconds: Double, callback: @escaping () -> ()) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: callback)
-    }
-
-    private enum MessageStatus { case notStarted, loading, loaded, timedout }
-    private var messageStatus = MessageStatus.notStarted
-    private func loadMessage(withMessageUrl messageUrl: URL) {
-        if(messageStatus == .loading || messageStatus == .loaded) { return }
-
-        messageStatus = .loading
-        loadView()
-        logger.log("url: %{public}@", [messageUrl.absoluteString])
-        UserDefaults.standard.setValue(true, forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
-        UserDefaults.standard.setValue(1, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        setSubjectToGDPR()
-
-        guard ConnectivityManager.shared.isConnectedToNetwork() else {
-            onErrorOccurred(error: NoInternetConnection())
-            self.messageStatus = .notStarted
-            return
-        }
-        self.webView.load(URLRequest(url: messageUrl))
-        self.timeOut(inSeconds: self.messageTimeoutInSeconds) { [weak self] in
-            guard let self = self else { return }
-
-            if(!(self.didMessageScriptLoad)) {
-                self.onErrorOccurred(error: MessageTimeout())
-                self.messageStatus = .timedout
-            }
-        };
-        self.messageStatus = .loaded
-    }
-
-    internal func getMessageUrl(authId: String?) -> URL? {
-        do {
-           return try sourcePoint.getMessageUrl(
-                forTargetingParams:  targetingParams,
-                debugLevel: debugLevel.rawValue,
-                newPM: newPM,
-                authId: authId
-            )
-        } catch let error as ConsentViewControllerError {
-            onErrorOccurred(error: error)
-        } catch {}
-        return nil
-    }
-
-    public func loadMessage(forAuthId authId: String) {
-        guard let url = getMessageUrl(authId: authId) else { return }
-        loadMessage(withMessageUrl: url)
-    }
-
+    
     public func loadMessage() {
-        guard let url = getMessageUrl(authId: nil) else { return }
-        loadMessage(withMessageUrl: url)
-    }
-
-    internal func setSubjectToGDPR() {
-        sourcePoint.getGdprStatus { [weak self] (gdprStatus, error) in
-            guard let _gdprStatus = gdprStatus else {
-                if let gdprError = error {
-                    self?.logger.log("GDPR Status Error: %{public}@", [gdprError])
+        if loading == .Ready {
+            loading = .Loading
+            sourcePoint.getMessage(consentUUID: consentUUID, euconsent: euconsent) { [weak self] message in
+                self?.consentUUID = message.uuid
+                if let url = message.url {
+                    self?.loadMessage(fromUrl: url)
+                } else {
+                    self?.loading = .Ready
+                    self?.onConsentReady(consentUUID: message.uuid, userConsent: message.userConsent)
                 }
-                return
             }
-            UserDefaults.standard.setValue(_gdprStatus, forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        }
+    }
+    public func loadPrivacyManager() {
+        if loading == .Ready {
+            loading = .Loading
+            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: consentUUID)
+            messageViewController?.consentDelegate = self
+            messageViewController?.loadPrivacyManager()
         }
     }
 
@@ -360,7 +179,7 @@ import JavaScriptCore
     public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try buildConsentString(storedConsentString)
+        let consentString = try ConsentString(consentString: storedConsentString)
 
         for i in 0..<forIds.count {
             results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
@@ -378,7 +197,7 @@ import JavaScriptCore
     public func getIABPurposeConsents(_ forIds: [Int8]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
         let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try buildConsentString(storedConsentString)
+        let consentString = try ConsentString(consentString: storedConsentString)
 
         for i in 0..<forIds.count {
             results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
@@ -386,134 +205,35 @@ import JavaScriptCore
         return results
     }
 
-    /**
-     Checks if the non-IAB purposes passed as parameter were given consent or not.
-     Same as `getIabVendorConsents(forIds: )` but for non-IAB vendors.
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter forIds: an `Array` of vendor ids
-     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
-     */
-    public func getCustomVendorConsents(completionHandler cHandler : @escaping ([VendorConsent]?, ConsentViewControllerError?) -> Void) {
-        loadAndStoreConsents { (consentsResponse, error) in
-            if let vendorConsents = consentsResponse?.consentedVendors {
-                cHandler(vendorConsents, nil)
-            }else {
-                cHandler(nil, error)
-            }
+    internal func storeIABVars(consentString: ConsentString) {
+        sourcePoint.getGdprStatus { gdprApplies in
+            UserDefaults.standard.setValue(gdprApplies ? "1" : "0", forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         }
-    }
 
-    /**
-     Checks if a non-IAB purpose was given consent.
-     Same as `getIabPurposeConsents(_) but for non-IAB purposes.
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter forIds: the purpose id
-     - Returns: a `Bool` indicating if the user has given consent to that purpose.
-     */
-    public func getCustomPurposeConsents(completionHandler cHandler : @escaping ([PurposeConsent]?,ConsentViewControllerError?) -> Void) {
-        loadAndStoreConsents { (consentsResponse, error) in
-            if let purposeConsents = consentsResponse?.consentedPurposes {
-                cHandler(purposeConsents, nil)
-            } else {
-                cHandler(nil, error)
-            }
-        }
-    }
-
-    internal func loadAndStoreConsents(completionHandler cHandler:@escaping (ConsentsResponse?,ConsentViewControllerError?) -> Void) {
-        self.sourcePoint.getCustomConsents(forPropertyId: String(self.propertyId), consentUUID: self.consentUUID, euConsent: self.euconsent, completionHandler: { (consents, error) in
-            if let _consents = consents {
-                cHandler(_consents, nil)
-            } else {
-                cHandler(nil, error)
-            }
-        })
-    }
-
-    internal func buildConsentString(_ euconsentBase64Url: String) throws -> ConsentString {
-        //Convert base46URL to regular base64 encoding for Consent String SDK Swift
-        let euconsent = euconsentBase64Url
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-
-        guard let consentString = try? ConsentString(consentString: euconsent) else {
-            throw UnableToParseConsentStringError(euConsent: euconsentBase64Url)
-        }
-        return consentString
-    }
-
-    internal func storeIABVars(_ euconsentBase64Url: String) throws {
-        let userDefaults = UserDefaults.standard
-        // Set the standard IABConsent_ConsentString var in userDefaults
-        userDefaults.setValue(euconsentBase64Url, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
-
-        let cstring = try buildConsentString(euconsentBase64Url)
+        UserDefaults.standard.setValue(consentString.consentString, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
         // Generate parsed vendor consents string
-        var parsedVendorConsents = [Character](repeating: "0", count: ConsentViewController.MAX_VENDOR_ID)
-        for i in 1...ConsentViewController.MAX_VENDOR_ID {
-            if cstring.isVendorAllowed(vendorId: i) {
-                parsedVendorConsents[i - 1] = "1"
+        var parsedVendorConsents = [Character](repeating: "0", count: consentString.maxVendorId)
+        if(parsedVendorConsents.count > 0) {
+            for i in 1...consentString.maxVendorId {
+                if consentString.isVendorAllowed(vendorId: i) {
+                    parsedVendorConsents[i - 1] = "1"
+                }
             }
         }
-        userDefaults.setValue(String(parsedVendorConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        UserDefaults.standard.setValue(String(parsedVendorConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
 
         // Generate parsed purpose consents string
-        var parsedPurposeConsents = [Character](repeating: "0", count: ConsentViewController.MAX_PURPOSE_ID)
-        for pId in cstring.purposesAllowed {
-            parsedPurposeConsents[Int(pId) - 1] = "1"
+        var parsedPurposeConsents = [Character](repeating: "0", count: Int(consentString.maxPurposes))
+        for i in consentString.purposesAllowed {
+            parsedPurposeConsents[Int(i) - 1] = "1"
         }
-        userDefaults.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+        UserDefaults.standard.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
-    private func onMessageChoiceSelect(choiceId: Int) {
-        guard ConnectivityManager.shared.isConnectedToNetwork() else {
-            onErrorOccurred(error: NoInternetConnection())
-            return
-        }
-        self.choiceId = choiceId
-        onMessageChoiceSelect?(self)
-    }
-
-    private func done(euconsent: String, consentUUID: String) {
-        didMessageScriptLoad = true
-        self.euconsent = euconsent
-        self.consentUUID = consentUUID
-        do {
-            try storeIABVars(euconsent)
-            let userDefaults = UserDefaults.standard
-            userDefaults.setValue(euconsent, forKey: ConsentViewController.EU_CONSENT_KEY)
-            userDefaults.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
-            userDefaults.synchronize()
-        } catch let error as ConsentViewControllerError {
-            onErrorOccurred(error: error)
-        } catch {}
-        releaseWebViewHandlers()
-        consentDelegate?.onConsentReady(controller: self)
-    }
-
-    private func onErrorOccurred(error: ConsentViewControllerError) {
-        if(shouldCleanConsentOnError) {
-            clearAllConsentData()
-        }
-        releaseWebViewHandlers()
-        consentDelegate?.onErrorOccurred(error: error)
-    }
-
-    private func showMessage() {
-        if(messageStatus == .timedout) { return }
-
-        didMessageScriptLoad = true
-        consentDelegate?.onMessageReady(controller: self)
-    }
-    
     /// It will clear all the stored userDefaults Data
-    public func clearAllConsentData() {
+    public func clearIABConsentData() {
         let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: ConsentViewController.EU_CONSENT_KEY)
-        userDefaults.removeObject(forKey: ConsentViewController.CONSENT_UUID_KEY)
         userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
         userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
@@ -521,76 +241,57 @@ import JavaScriptCore
         userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
         userDefaults.synchronize()
     }
-
-    private func handleXhrLog(_ body: [String:Any?]) {
-        let type = body["type"] as! String
-        let url = body["url"] as! String
-        if(type == "request"){
-            if let cookies = body["cookies"] as? String {
-                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\", \"cookies\": \"%{public}@\" }", [type, url, cookies])
-            } else {
-                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\"}", [type, url])
-            }
-        } else {
-            let status = body["status"] as? String
-            let response = body["response"] as! String
-            if let cookies = body["cookies"] as? String {
-                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\", \"cookies\": \"%{public}@\", \"status\": \"%{public}@\", \"response\": \"%{public}@\" }", [type, url, cookies, status ?? "", response])
-            } else {
-                logger.log("{ \"type\": \"%{public}@\", \"url\": \"%{public}@\", \"status\": \"%{public}@\", \"response\": \"%{public}@\" }", [type, url, status ?? "", response])
-            }
-        }
-    }
-
-    private func handleMessage(withName name: String, andBody body: [String:Any?]) {
-        switch name {
-        case "onMessageReady": // when the message is first loaded
-            showMessage()
-        case "onSPPMObjectReady":
-            if self.showPM { showMessage()}
-        case "onPMCancel":
-            logger.log("onPMCancel  event is triggered", [])
-        case "onMessageChoiceSelect": // when a choice is selected
-            guard let choiceId = body["choiceId"] as? Int else { fallthrough }
-            onMessageChoiceSelect(choiceId: choiceId)
-        case "onConsentReady": // when interaction with message is complete
-            let euconsent = body["euconsent"] as? String ?? ""
-            let consentUUID = body["consentUUID"] as? String ?? ""
-            done(euconsent: euconsent, consentUUID: consentUUID)
-        case "onPrivacyManagerAction":
-            logger.log("onPrivacyManagerAction event is triggered", [])
-            return
-        case "onErrorOccurred":
-            onErrorOccurred(error: WebViewErrors[body["errorType"] as? String ?? ""] ?? PrivacyManagerUnknownError())
-        case "onMessageChoiceError":
-            onErrorOccurred(error: WebViewErrors[body["error"] as? String ?? ""] ?? PrivacyManagerUnknownError())
-        case "xhrLog":
-            if debugLevel == .DEBUG {
-                handleXhrLog(body)
-            }
-        default:
-            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: name, body: body))
-        }
-    }
-
-    /// :nodoc:
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard
-            let messageBody = message.body as? [String: Any],
-            let name = messageBody["name"] as? String
-        else {
-            onErrorOccurred(error: PrivacyManagerUnknownMessageResponse(name: "", body: ["":""]))
-            return
-        }
-        if let body = messageBody["body"] as? [String: Any?] {
-            handleMessage(withName: name, andBody: body)
-        } else {
-            handleMessage(withName: name, andBody: ["":""])
-        }
-    }
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+extension ConsentViewController: ConsentDelegate {
+    public func consentUIWillShow() {
+        guard let viewController = messageViewController else { return }
+        add(asChildViewController: viewController)
+        consentDelegate?.consentUIWillShow()
+    }
+
+    public func consentUIDidDisappear() {
+        loading = .Ready
+        remove(asChildViewController: messageViewController)
+        messageViewController = nil
+        consentDelegate?.consentUIDidDisappear()
+    }
+
+    public func onError(error: ConsentViewControllerError?) {
+        loading = .Ready
+        if(shouldCleanConsentOnError) { clearIABConsentData() }
+        consentDelegate?.onError?(error: error)
+    }
+
+    public func onAction(_ action: Action, consents: PMConsents?) {
+        if(action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit) {
+            sourcePoint.postAction(action: action, consentUUID: consentUUID, consents: consents) { [weak self] response in
+                self?.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
+            }
+        } else if (action.type == .Dismiss) {
+            self.onConsentReady(
+                consentUUID: consentUUID,
+                userConsent: UserConsent(
+                    acceptedVendors: consents?.vendors.accepted ?? [],
+                    acceptedCategories: consents?.categories.accepted ?? [],
+                    euconsent: euconsent
+                )
+            )
+        }
+    }
+
+    public func onConsentReady(consentUUID: ConsentUUID, userConsent: UserConsent) {
+        self.consentUUID = consentUUID
+        self.euconsent = userConsent.euconsent
+        storeIABVars(consentString: euconsent)
+        UserDefaults.standard.setValue(euconsent.consentString, forKey: ConsentViewController.EU_CONSENT_KEY)
+        UserDefaults.standard.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+        UserDefaults.standard.synchronize()
+        consentDelegate?.onConsentReady?(consentUUID: consentUUID, userConsent: userConsent)
+    }
+
+    public func messageWillShow() { consentDelegate?.messageWillShow?() }
+    public func messageDidDisappear() { consentDelegate?.messageDidDisappear?() }
+    public func pmWillShow() { consentDelegate?.pmWillShow?() }
+    public func pmDidDisappear() { consentDelegate?.pmDidDisappear?() }
 }

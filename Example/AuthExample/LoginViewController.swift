@@ -9,10 +9,15 @@
 import UIKit
 import ConsentViewController
 
-class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate {
+
+class LoginViewController: UIViewController, UITextFieldDelegate, ConsentDelegate {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var authIdField: UITextField!
     @IBOutlet var consentTableView: UITableView!
+    
+    lazy var consentViewController = {
+        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", consentDelegate: self)
+    }()
     
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
@@ -36,28 +41,33 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldD
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    func consentUIWillShow() {
+        self.present(consentViewController, animated: true, completion: nil)
+    }
+    
+    func consentUIDidDisappear() {
+        self.dismiss(animated: true, completion: nil)
+    }
 
-    func loadConsents(showPM: Bool) {
-        try! ConsentViewController(
-            accountId: 22,
-            propertyId: 2372,
-            property: "mobile.demo",
-            PMId: "5c0e81b7d74b3c30c6852301",
-            campaign: "stage",
-            showPM: showPM,
-            consentDelegate: self
-        ).loadMessage()
+    func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
+        self.userData = [
+            "consentUUID: \(consentUUID.uuidString)",
+            "euconsent: \(consentString?.consentString ?? "<unknown>")"
+        ]
+        self.consents = consents
+        self.consentTableView.reloadData()
     }
 
     @IBAction func onSettingsPress(_ sender: Any) {
         initData()
-        loadConsents(showPM: true)
+        consentViewController.loadPrivacyManager()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         initData()
-        loadConsents(showPM: false)
+        consentViewController.loadMessage()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -72,38 +82,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldD
     }
 }
 
-extension LoginViewController: ConsentDelegate {
-    func onMessageReady(controller: ConsentViewController) {
-        controller.modalPresentationStyle = .overFullScreen
-        self.present(controller, animated: true, completion: nil)
-    }
-
-    func getConsentsCompletionHandler(_ newConsents: [Consent]?, _ error: ConsentViewControllerError?) -> Void {
-        guard let newConsents = newConsents else {
-            onErrorOccurred(error: error!)
-            return
-        }
-        consents.append(contentsOf: newConsents)
-        self.consentTableView.reloadData()
-    }
-
-    func onConsentReady(controller: ConsentViewController) {
-        self.userData = []
-        self.consents = []
-        self.userData.append("consentUUID: \(controller.consentUUID)")
-        self.userData.append("euconsent: \(controller.euconsent)")
-        controller.getCustomVendorConsents(completionHandler: getConsentsCompletionHandler)
-        controller.getCustomPurposeConsents(completionHandler: getConsentsCompletionHandler)
-        self.consentTableView.reloadData()
-        self.dismiss(animated: true, completion: nil)
-    }
-
-    func onErrorOccurred(error: ConsentViewControllerError) {
-        self.dismiss(animated: false, completion: nil)
-    }
-}
-
-extension LoginViewController: UITableViewDelegate {
+extension LoginViewController: UITableViewDataSource {
     func initData() {
         self.userData = [
             "consentUUID: loading...",

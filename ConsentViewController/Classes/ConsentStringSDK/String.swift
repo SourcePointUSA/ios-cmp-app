@@ -16,5 +16,15 @@ extension String {
         }
     }
 
+    public func fromWebSafe() -> String {
+        return self
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+    }
     
+    public func toWebSafe() -> String {
+        return self
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+    }
 }
