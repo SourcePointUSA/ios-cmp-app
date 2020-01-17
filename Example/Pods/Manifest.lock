@@ -1,10 +1,8 @@
 PODS:
-  - ConsentViewController (3.1.0):
-    - ReachabilitySwift (= 4.3.0)
+  - ConsentViewController (4.0.0)
   - IQKeyboardManagerSwift (6.5.4)
-  - Nimble (8.0.4)
+  - Nimble (8.0.5)
   - Quick (2.2.0)
-  - ReachabilitySwift (4.3.0)
 
 DEPENDENCIES:
   - ConsentViewController (from `../`)
@@ -17,18 +15,16 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Nimble
     - Quick
-    - ReachabilitySwift
 
 EXTERNAL SOURCES:
   ConsentViewController:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: efa2bdff631cf23bdb0af2070c838ee426a82c69
+  ConsentViewController: 6d84c95cbeaafc68bd2c05799150b0b77c58627e
   IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
-  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
+  Nimble: 4ab1aeb9b45553c75b9687196b0fa0713170a332
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
 
 PODFILE CHECKSUM: e597b4f48d46fd9f7205405ad04c92283411feb5
 

@@ -9,41 +9,42 @@
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController, ConsentDelegate {
-    let logger = Logger()
-
-    func loadConsentManager(showPM: Bool) {
-        let cvc = try! ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
-        cvc.loadMessage()
+class ViewController: UIViewController, GDPRConsentDelegate {
+    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
+        accountId: 22,
+        propertyId: 2372,
+        propertyName: try! GDPRPropertyName("mobile.demo"),
+        PMId: "5c0e81b7d74b3c30c6852301",
+        campaignEnv: .Stage,
+        consentDelegate: self
+    )}()
+    
+    func consentUIWillShow() {
+        present(consentViewController, animated: true, completion: nil)
     }
 
-    func onMessageReady(controller: ConsentViewController) {
-        present(controller, animated: false, completion: nil)
+    func consentUIDidDisappear() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+        print("ConsentUUID: \(gdprUUID)")
+        userConsent.acceptedVendors.forEach({ vendorId in print("Vendor: \(vendorId)") })
+        userConsent.acceptedCategories.forEach({ purposeId in print("Purpose: \(purposeId)") })
+        print("Consent String: \(UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>")")
     }
 
-    func onConsentReady(controller: ConsentViewController) {
-        controller.getCustomVendorConsents { [weak self] (vendors, error) in
-            if let vendors = vendors {
-                vendors.forEach({ vendor in self?.logger.log("Consented to: %{public}@)", [vendor]) })
-            } else {
-                self?.onErrorOccurred(error: error!)
-            }
-        }
-        dismiss(animated: false, completion: nil)
-    }
-
-    func onErrorOccurred(error: ConsentViewControllerError) {
-        logger.log("Error: %{public}@", [error])
-        dismiss(animated: false, completion: nil)
+    func onError(error: GDPRConsentViewControllerError?) {
+        print("Error: \(error.debugDescription)")
     }
 
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        loadConsentManager(showPM: true)
+        consentViewController.loadPrivacyManager()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadConsentManager(showPM: false)
+        consentViewController.loadMessage()
     }
 }
 

@@ -9,10 +9,24 @@
 import UIKit
 import ConsentViewController
 
-class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate, ConsentDelegate {
+
+class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDelegate {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var authIdField: UITextField!
     @IBOutlet var consentTableView: UITableView!
+    
+    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
+        accountId: 22,
+        propertyId: 2372,
+        propertyName: try! GDPRPropertyName("mobile.demo"),
+        PMId: "5c0e81b7d74b3c30c6852301",
+        campaignEnv: .Stage,
+        consentDelegate: self
+    )}()
+    
+    let tableSections = ["userData", "consents"]
+    var userData: [String] = []
+    var consents: [String] = []
 
     @IBAction func onUserNameChanged(_ sender: UITextField) {
         let userName = sender.text ?? ""
@@ -32,49 +46,39 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldD
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
-    func onMessageReady(controller: ConsentViewController) {
-        self.present(controller, animated: false, completion: nil)
+    
+    func consentUIWillShow() {
+        self.present(consentViewController, animated: true, completion: nil)
+    }
+    
+    func consentUIDidDisappear() {
+        self.dismiss(animated: true, completion: nil)
     }
 
-    func getConsentsCompletionHandler(_ newConsents: [Consent]?, _ error: ConsentViewControllerError?) -> Void {
-        guard let newConsents = newConsents else {
-            onErrorOccurred(error: error!)
-            return
-        }
-        consents.append(contentsOf: newConsents)
+    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+        self.userData = [
+            "gdprUUID: \(gdprUUID)",
+            "consent string: \(userConsent.euconsent.consentString)"
+        ]
+        self.consents =
+            userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
+            userConsent.acceptedCategories.map({ c in return "Purpose: \(c)"})
         self.consentTableView.reloadData()
     }
 
-    func onConsentReady(controller: ConsentViewController) {
-        self.userData = []
-        self.consents = []
-        self.userData.append("consentUUID: \(controller.consentUUID)")
-        self.userData.append("euconsent: \(controller.euconsent)")
-        controller.getCustomVendorConsents(completionHandler: getConsentsCompletionHandler)
-        controller.getCustomPurposeConsents(completionHandler: getConsentsCompletionHandler)
-        self.consentTableView.reloadData()
-        self.dismiss(animated: false, completion: nil)
-    }
-
-    func onErrorOccurred(error: ConsentViewControllerError) {
-        self.dismiss(animated: false, completion: nil)
-    }
-
-    func loadConsents(showPM: Bool) {
-        let cvc = try! ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", showPM: showPM, consentDelegate: self)
-        cvc.loadMessage()
+    func onError(error: GDPRConsentViewControllerError?) {
+        print(error.debugDescription)
     }
 
     @IBAction func onSettingsPress(_ sender: Any) {
         initData()
-        loadConsents(showPM: true)
+        consentViewController.loadPrivacyManager()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         initData()
-        loadConsents(showPM: false)
+        consentViewController.loadMessage()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -87,13 +91,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldD
         authIdField.text = nil
         loginButton.isEnabled = false
     }
+}
 
-    // MARK: ConsentTableView related
-
-    let tableSections = ["userData", "consents"]
-    var userData: [String] = []
-    var consents:[Consent] = []
-
+extension LoginViewController: UITableViewDataSource {
     func initData() {
         self.userData = [
             "consentUUID: loading...",
@@ -125,13 +125,13 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITextFieldD
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlainCell", for: indexPath)
         switch indexPath.section {
         case 0:
+            cell.textLabel?.adjustsFontSizeToFitWidth = true
             cell.textLabel?.text = userData[indexPath.row]
             break
         case 1:
             let consent = consents[indexPath.row]
             cell.textLabel?.adjustsFontSizeToFitWidth = false
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 8)
-            cell.textLabel?.text = "\(type(of: consent)) \(consent.name)"
+            cell.textLabel?.text = consent
             break
         default:
             break

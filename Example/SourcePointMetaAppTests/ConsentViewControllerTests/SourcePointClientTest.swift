@@ -111,20 +111,6 @@ class SourcePointClientTest: XCTestCase {
         }
     }
     
-    /// this test method is used to test validate method working as expected or not
-    func testValidateURLMethodTest() {
-        let propertyUrl = try! Utils.validate(
-            attributeName: "propertyUrl",
-            urlString: mmsUrl+"/get_site_data?account_id=" + "22" + "&href=" + self.propertyUrl
-        )
-
-        if propertyUrl.absoluteString == "https://mms.sp-prod.net/get_site_data?account_id=22&href=\(self.propertyUrl)"{
-            XCTAssert(true, "succeed to create the url")
-        }else {
-            XCTAssert(false, "failed to create the url")
-        }
-    }
-    
     /// this test method is used to test get method working as expected or not
     func testDataTaskMethodTest() {
         let client = SimpleClient()
