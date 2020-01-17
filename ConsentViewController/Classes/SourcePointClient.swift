@@ -141,11 +141,12 @@ class SourcePointClient {
         }
     }
 
-    func getMessage(consentUUID: GDPRUUID?, euconsent: ConsentString?, onSuccess: @escaping (MessageResponse) -> Void) {
+    func getMessage(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         let url = SourcePointClient.GET_MESSAGE_URL
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
             euconsent: euconsent,
+            authId: authId,
             accountId: accountId,
             propertyId: propertyId,
             propertyHref: propertyName,
