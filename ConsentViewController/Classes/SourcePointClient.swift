@@ -141,11 +141,12 @@ class SourcePointClient {
         }
     }
 
-    func getMessage(consentUUID: GDPRUUID?, euconsent: ConsentString?, onSuccess: @escaping (MessageResponse) -> Void) {
+    func getMessage(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         let url = SourcePointClient.GET_MESSAGE_URL
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
             euconsent: euconsent,
+            authId: authId,
             accountId: accountId,
             propertyId: propertyId,
             propertyHref: propertyName,
@@ -157,12 +158,8 @@ class SourcePointClient {
             self.onError?(APIParsingError(url.absoluteString, nil))
             return
         }
-        /// - TODO: remove/hide print message
-        print("MESSAGE-URL REQUEST: ", String(data: body, encoding: .utf8)!)
         client.post(url: url, body: body) { [weak self] data in
             do {
-                /// - TODO: remove/hide print message
-                print("MESSAGE-URL RESPONSE: ", String(data: data, encoding: .utf8)!)
                 let messageResponse = try (self?.json.decode(MessageResponse.self, from: data))!
                 UserDefaults.standard.setValue(messageResponse.meta, forKey: GDPRConsentViewController.META_KEY)
                 onSuccess(messageResponse)
@@ -193,12 +190,8 @@ class SourcePointClient {
             self.onError?(APIParsingError(url.absoluteString, nil))
             return
         }
-        /// - TODO: remove/hide print message
-        print("CONSENT REQUEST: ", String(data: body, encoding: .utf8)!)
         client.post(url: url, body: body) { [weak self] data in
             do {
-                /// - TODO: remove/hide print message
-                print("CONSENT RESPONSE: ", String(data: data, encoding: .utf8)!)
                 let actionResponse = try (self?.json.decode(ActionResponse.self, from: data))!
                 UserDefaults.standard.setValue(actionResponse.meta, forKey: GDPRConsentViewController.META_KEY)
                 onSuccess(actionResponse)

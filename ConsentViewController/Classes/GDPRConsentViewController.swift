@@ -147,9 +147,13 @@ public typealias TargetingParams = [String:String]
     }
     
     public func loadMessage() {
+        loadMessage(forAuthId: nil)
+    }
+    
+    public func loadMessage(forAuthId authId: String?) {
         if loading == .Ready {
             loading = .Loading
-            sourcePoint.getMessage(consentUUID: gdprUUID, euconsent: euconsent) { [weak self] message in
+            sourcePoint.getMessage(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] message in
                 self?.gdprUUID = message.uuid
                 if let url = message.url {
                     self?.loadMessage(fromUrl: url)
@@ -160,6 +164,7 @@ public typealias TargetingParams = [String:String]
             }
         }
     }
+
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading

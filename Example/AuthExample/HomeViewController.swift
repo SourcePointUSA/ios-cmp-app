@@ -9,21 +9,24 @@
 import UIKit
 import ConsentViewController
 
-class HomeViewController: UIViewController, ConsentDelegate {
-    lazy var consentViewController = {
-        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", consentDelegate: self)
-    }()
+class HomeViewController: UIViewController, GDPRConsentDelegate {
+    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
+        accountId: 22,
+        propertyId: 2372,
+        propertyName: try! GDPRPropertyName("mobile.demo"),
+        PMId: "5c0e81b7d74b3c30c6852301",
+        campaignEnv: .Stage,
+        consentDelegate: self
+    )}()
 
     var authId = ""
-    var consentUUID: String?
 
     @IBOutlet var authIdLabel: UILabel!
     @IBOutlet var consentTableView: UITableView!
     
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
-    var consents:[Consent] = []
-
+    var consents: [String] = []
     
     func consentUIWillShow() {
         self.present(consentViewController, animated: true, completion: nil)
@@ -33,30 +36,31 @@ class HomeViewController: UIViewController, ConsentDelegate {
         self.dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
+    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.userData = [
-            "consentUUID: \(consentUUID.uuidString)",
-            "euconsent: \(consentString?.consentString ?? "<unknown>")"
+            "gdprUUID: \(gdprUUID)",
+            "consent string: \(userConsent.euconsent.consentString)"
         ]
-        self.consents = consents
+        self.consents =
+            userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
+            userConsent.acceptedCategories.map({ c in return "Purpose: \(c)"})
         self.consentTableView.reloadData()
-        self.dismiss(animated: true, completion: nil)
     }
 
-    func onErrorOccurred(error: ConsentViewControllerError) {
-        self.dismiss(animated: true, completion: nil)
+    func onError(error: GDPRConsentViewControllerError?) {
+        print(error.debugDescription)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         authIdLabel.text = authId
         initData()
-        consentViewController.loadMessage() // TODO: implement authID
+        consentViewController.loadMessage(forAuthId: authId)
     }
 
     @IBAction func onSettingsPress(_ sender: Any) {
         initData()
-        consentViewController.loadPrivacyManager() // TODO: implement authID
+        consentViewController.loadPrivacyManager()
     }
 }
 
@@ -74,8 +78,8 @@ extension HomeViewController: UITableViewDataSource {
 
     func initData() {
         self.userData = [
-            "consentUUID: loading...",
-            "euconsent: loading..."
+            "gdprUUID: loading...",
+            "consent string: loading..."
         ]
         consentTableView.reloadData()
     }
@@ -98,8 +102,7 @@ extension HomeViewController: UITableViewDataSource {
         case 1:
             let consent = consents[indexPath.row]
             cell.textLabel?.adjustsFontSizeToFitWidth = false
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 10)
-            cell.textLabel?.text = "\(type(of: consent)) \(consent.name)"
+            cell.textLabel?.text = consent
             break
         default:
             break

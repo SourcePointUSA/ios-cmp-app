@@ -40,12 +40,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     
     private let propertyId: Int
     private let pmId: String
-    private let consentUUID: GDPRUUID?
+    private let consentUUID: GDPRUUID
     
     private var consentUILoaded = false
     private var lastChoiceId: String?
     
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID?) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
@@ -131,7 +131,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
     
     func pmUrl() -> URL? {
-        return URL(string: "https://gdpr-inapp-pm.sp-prod.net/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID ?? "")")
+        return URL(string: "https://gdpr-inapp-pm.sp-prod.net/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID)")
     }
     
     override func loadPrivacyManager() {

@@ -17,6 +17,7 @@ struct GdprStatus: Codable {
 struct MessageRequest: Encodable {
     let uuid: GDPRUUID?
     let euconsent: ConsentString?
+    let authId: String?
     let accountId: Int
     let propertyId: Int
     let propertyHref: GDPRPropertyName

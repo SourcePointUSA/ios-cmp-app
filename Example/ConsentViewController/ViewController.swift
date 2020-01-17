@@ -27,7 +27,7 @@ class ViewController: UIViewController, GDPRConsentDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
         userConsent.acceptedVendors.forEach({ vendorId in print("Vendor: \(vendorId)") })
         userConsent.acceptedCategories.forEach({ purposeId in print("Purpose: \(purposeId)") })
