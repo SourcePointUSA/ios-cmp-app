@@ -10,18 +10,23 @@ import UIKit
 import ConsentViewController
 
 
-class LoginViewController: UIViewController, UITextFieldDelegate, ConsentDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDelegate {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var authIdField: UITextField!
     @IBOutlet var consentTableView: UITableView!
     
-    lazy var consentViewController = {
-        return ConsentViewController(accountId: 22, propertyId: 2372, property: "mobile.demo", PMId: "5c0e81b7d74b3c30c6852301", campaign: "stage", consentDelegate: self)
-    }()
+    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
+        accountId: 22,
+        propertyId: 2372,
+        propertyName: try! GDPRPropertyName("mobile.demo"),
+        PMId: "5c0e81b7d74b3c30c6852301",
+        campaignEnv: .Stage,
+        consentDelegate: self
+    )}()
     
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
-    var consents:[Consent] = []
+    var consents: [String] = []
 
     @IBAction func onUserNameChanged(_ sender: UITextField) {
         let userName = sender.text ?? ""
@@ -50,13 +55,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ConsentDelegat
         self.dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(consentUUID: UUID, consents: [Consent], consentString: ConsentString?) {
+    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.userData = [
-            "consentUUID: \(consentUUID.uuidString)",
-            "euconsent: \(consentString?.consentString ?? "<unknown>")"
+            "gdprUUID: \(gdprUUID)",
+            "consent string: \(userConsent.euconsent.consentString)"
         ]
-        self.consents = consents
+        self.consents =
+            userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
+            userConsent.acceptedCategories.map({ c in return "Purpose: \(c)"})
         self.consentTableView.reloadData()
+    }
+
+    func onError(error: GDPRConsentViewControllerError?) {
+        print(error.debugDescription)
     }
 
     @IBAction func onSettingsPress(_ sender: Any) {
@@ -114,13 +125,13 @@ extension LoginViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlainCell", for: indexPath)
         switch indexPath.section {
         case 0:
+            cell.textLabel?.adjustsFontSizeToFitWidth = true
             cell.textLabel?.text = userData[indexPath.row]
             break
         case 1:
             let consent = consents[indexPath.row]
             cell.textLabel?.adjustsFontSizeToFitWidth = false
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 8)
-            cell.textLabel?.text = "\(type(of: consent)) \(consent.name)"
+            cell.textLabel?.text = consent
             break
         default:
             break
