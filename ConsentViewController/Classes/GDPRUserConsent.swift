@@ -10,7 +10,7 @@ import Foundation
 /**
     GDPRUserConsent encapsulates all consent data from a user.
  */
-@objc public class GDPRUserConsent: NSObject, Codable {
+@objcMembers public class GDPRUserConsent: NSObject, Codable {
     /// The ids of the accepted vendors and categories. These can be found in SourcePoint's dashboard
     ///
     /// - Important: All ids are related to non-iAB vendors/purposes. For iAB related consent refer to `euconsent`
