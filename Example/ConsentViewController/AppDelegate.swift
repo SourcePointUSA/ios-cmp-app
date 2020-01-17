@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ConsentViewController
+//  GDPRConsentViewController
 //
 //  Created by SourcePoint
 //  Copyright (c) 2019 SourcePoint. All rights reserved.

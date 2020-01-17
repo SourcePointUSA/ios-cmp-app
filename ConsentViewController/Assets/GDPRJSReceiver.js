@@ -3,7 +3,7 @@
     return function(name, body) {
       webview.postMessage({ name: name, body: body || {} });
     }
-  }(window.webkit.messageHandlers.JSReceiver);
+  }(window.webkit.messageHandlers.GDPRJSReceiver);
 
   window.SDK = function (postToWebView) {
     return {
