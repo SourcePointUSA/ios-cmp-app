@@ -1,6 +1,6 @@
 //
 //  Action.swift
-//  ConsentViewController
+//  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 11.12.19.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 /// User actions. Its integer representation matches with what SourcePoint's endpoints expect.
-@objc public enum ActionType: Int {
+@objc public enum GDPRActionType: Int {
     case SaveAndExit = 1
     case PMCancel = 2
     case AcceptAll = 11
@@ -17,12 +17,12 @@ import Foundation
     case Dismiss = 15
 }
 
-/// Action consists of `ActionType` and an id. Those come from each action the user can take in the ConsentUI
-@objcMembers public class Action: NSObject {
-    public let type: ActionType
+/// Action consists of `GDPRActionType` and an id. Those come from each action the user can take in the ConsentUI
+@objcMembers public class GDPRAction: NSObject {
+    public let type: GDPRActionType
     public let id: String?
     
-    public init(type: ActionType, id: String?) {
+    public init(type: GDPRActionType, id: String?) {
         self.type = type
         self.id = id
     }

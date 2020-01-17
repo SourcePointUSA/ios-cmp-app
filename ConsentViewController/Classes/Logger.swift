@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  ConsentViewController
+//  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 06.10.19.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-@objcMembers public class Logger {
+@objcMembers class Logger {
     static let TOO_MANY_ARGS_ERROR = StaticString("Cannot log messages with more than 5 argumetns")
 
     let consentLog: OSLog?

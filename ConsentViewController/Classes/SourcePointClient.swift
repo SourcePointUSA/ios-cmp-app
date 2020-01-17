@@ -1,6 +1,6 @@
 //
 //  SourcePointClient.swift
-//  ConsentViewController
+//  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 13.03.19.
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 typealias OnSuccess = (Data) -> Void
-typealias OnError = (ConsentViewControllerError?) -> Void
+typealias OnError = (GDPRConsentViewControllerError?) -> Void
 
 protocol HttpClient {
     var defaultOnError: OnError? { get set }
@@ -96,14 +96,14 @@ class SourcePointClient {
     
     private let accountId: Int
     private let propertyId: Int
-    private let propertyName: PropertyName
+    private let propertyName: GDPRPropertyName
     private let pmId: String
-    private let campaignEnv: CampaignEnv
+    private let campaignEnv: GDPRCampaignEnv
     private let targetingParams: TargetingParams?
     
     public var onError: OnError? { didSet { client.defaultOnError = onError } }
 
-    init(accountId: Int, propertyId:Int, propertyName: PropertyName, pmId:String, campaignEnv: CampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
+    init(accountId: Int, propertyId:Int, propertyName: GDPRPropertyName, pmId:String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.propertyName = propertyName
@@ -113,11 +113,11 @@ class SourcePointClient {
         self.client = client
     }
     
-    convenience init(accountId: Int, propertyId: Int, propertyName: PropertyName, pmId: String, campaignEnv: CampaignEnv) {
+    convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: nil, client: SimpleClient())
     }
     
-    convenience init(accountId: Int, propertyId: Int, propertyName: PropertyName, pmId: String, campaignEnv: CampaignEnv, targetingParams: TargetingParams) {
+    convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: targetingParams, client: SimpleClient())
     }
     
@@ -141,7 +141,7 @@ class SourcePointClient {
         }
     }
 
-    func getMessage(consentUUID: ConsentUUID?, euconsent: ConsentString?, onSuccess: @escaping (MessageResponse) -> Void) {
+    func getMessage(consentUUID: GDPRUUID?, euconsent: ConsentString?, onSuccess: @escaping (MessageResponse) -> Void) {
         let url = SourcePointClient.GET_MESSAGE_URL
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
@@ -152,7 +152,7 @@ class SourcePointClient {
             campaignEnv: campaignEnv,
             targetingParams: targetingParamsToString(targetingParams),
             requestUUID: requestUUID,
-            meta: UserDefaults.standard.string(forKey: ConsentViewController.META_KEY) ?? "{}"
+            meta: UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY) ?? "{}"
         )) else {
             self.onError?(APIParsingError(url.absoluteString, nil))
             return
@@ -164,7 +164,7 @@ class SourcePointClient {
                 /// - TODO: remove/hide print message
                 print("MESSAGE-URL RESPONSE: ", String(data: data, encoding: .utf8)!)
                 let messageResponse = try (self?.json.decode(MessageResponse.self, from: data))!
-                UserDefaults.standard.setValue(messageResponse.meta, forKey: ConsentViewController.META_KEY)
+                UserDefaults.standard.setValue(messageResponse.meta, forKey: GDPRConsentViewController.META_KEY)
                 onSuccess(messageResponse)
             } catch {
                 self?.onError?(APIParsingError(url.absoluteString, error))
@@ -172,7 +172,7 @@ class SourcePointClient {
         }
     }
 
-    func postAction(action: Action, consentUUID: ConsentUUID, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: GDPRUUID, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {
         let url = SourcePointClient.CONSENT_URL
         guard let body = try? json.encode(ActionRequest(
             propertyId: propertyId,
@@ -188,7 +188,7 @@ class SourcePointClient {
                 acceptedVendors: consents?.vendors.accepted ?? [],
                 acceptedCategories: consents?.categories.accepted ?? []
             ),
-            meta: UserDefaults.standard.string(forKey: ConsentViewController.META_KEY) ?? "{}"
+            meta: UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY) ?? "{}"
         )) else {
             self.onError?(APIParsingError(url.absoluteString, nil))
             return
@@ -200,7 +200,7 @@ class SourcePointClient {
                 /// - TODO: remove/hide print message
                 print("CONSENT RESPONSE: ", String(data: data, encoding: .utf8)!)
                 let actionResponse = try (self?.json.decode(ActionResponse.self, from: data))!
-                UserDefaults.standard.setValue(actionResponse.meta, forKey: ConsentViewController.META_KEY)
+                UserDefaults.standard.setValue(actionResponse.meta, forKey: GDPRConsentViewController.META_KEY)
                 onSuccess(actionResponse)
             } catch {
                 self?.onError?(APIParsingError(url.absoluteString, error))

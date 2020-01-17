@@ -1,6 +1,6 @@
 //
-//  UserConsent.swift
-//  ConsentViewController
+//  GDPRUserConsent.swift
+//  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 19.12.19.
 //
@@ -8,9 +8,9 @@
 import Foundation
 
 /**
-    UserConsent encapsulates all consent data from a user.
+    GDPRUserConsent encapsulates all consent data from a user.
  */
-@objc public class UserConsent: NSObject, Codable {
+@objc public class GDPRUserConsent: NSObject, Codable {
     /// The ids of the accepted vendors and categories. These can be found in SourcePoint's dashboard
     ///
     /// - Important: All ids are related to non-iAB vendors/purposes. For iAB related consent refer to `euconsent`

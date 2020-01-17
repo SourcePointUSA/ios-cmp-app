@@ -1,6 +1,6 @@
 //
 //  MessageWebViewController.swift
-//  ConsentViewController
+//  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 05.12.19.
 //
@@ -13,13 +13,13 @@ import WebKit
  
  It not only knows how to render the message and pm but also understands how to react to their different events (showing, user action, etc)
  */
-class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, ConsentDelegate {
+class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, GDPRConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "JSReceiver"
 
     lazy var webview: WKWebView = {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: ConsentViewController.self).path(forResource: MessageWebViewController.MESSAGE_HANDLER_NAME, ofType: "js")!)
+        let scriptSource = try! String(contentsOfFile: Bundle(for: GDPRConsentViewController.self).path(forResource: MessageWebViewController.MESSAGE_HANDLER_NAME, ofType: "js")!)
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         userContentController.addUserScript(script)
         userContentController.add(self, name: MessageWebViewController.MESSAGE_HANDLER_NAME)
@@ -40,12 +40,12 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
     
     private let propertyId: Int
     private let pmId: String
-    private let consentUUID: ConsentUUID?
+    private let consentUUID: GDPRUUID?
     
     private var consentUILoaded = false
     private var lastChoiceId: String?
     
-    init(propertyId: Int, pmId: String, consentUUID: ConsentUUID?) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID?) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
@@ -85,7 +85,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         consentDelegate?.consentUIDidDisappear()
     }
     
-    func onError(error: ConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError?) {
         consentDelegate?.onError?(error: error)
         closeConsentUIIfOpen()
     }
@@ -106,7 +106,7 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
         consentDelegate?.pmDidDisappear?()
     }
     
-    func onAction(_ action: Action, consents: PMConsents?) {
+    func onAction(_ action: GDPRAction, consents: PMConsents?) {
         consentDelegate?.onAction?(action, consents: consents)
         switch action.type {
             case .ShowPrivacyManager:
@@ -202,12 +202,12 @@ class MessageWebViewController: MessageViewController, WKUIDelegate, WKNavigatio
                 guard
                     let payload = body["body"] as? [String: Any],
                     let actionTypeRaw = payload["type"] as? Int,
-                    let actionType = ActionType(rawValue: actionTypeRaw)
+                    let actionType = GDPRActionType(rawValue: actionTypeRaw)
                 else {
                     onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                     return
                 }
-                onAction(Action(type: actionType, id: getChoiceId(payload)), consents: getPMConsentsIfAny(payload))
+                onAction(GDPRAction(type: actionType, id: getChoiceId(payload)), consents: getPMConsentsIfAny(payload))
             case "onError":
                 onError(error: WebViewError())
             default:

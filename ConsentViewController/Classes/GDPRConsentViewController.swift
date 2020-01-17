@@ -1,5 +1,5 @@
 //
-//  ConsentViewController.swift
+//  GDPRConsentViewController.swift
 //  cmp-app-test-app
 //
 //  Created by Andre Herculano on 12/16/19.
@@ -10,12 +10,12 @@ import UIKit
 
 public typealias TargetingParams = [String:String]
 
-@objcMembers open class ConsentViewController: UIViewController {
+@objcMembers open class GDPRConsentViewController: UIViewController {
     static let META_KEY: String = "sp_gdpr_meta"
     /// :nodoc:
     static let EU_CONSENT_KEY: String = "sp_gdpr_euconsent"
     /// :nodoc:
-    static let CONSENT_UUID_KEY: String = "sp_gdpr_consentUUID"
+    static let GDPR_UUID_KEY: String = "sp_gdpr_consentUUID"
 
     /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
     static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
@@ -36,13 +36,13 @@ public typealias TargetingParams = [String:String]
     public var euconsent: ConsentString
 
     /// The UUID assigned to a user, available after calling `loadMessage`
-    public var consentUUID: ConsentUUID
+    public var gdprUUID: GDPRUUID
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = TimeInterval(300)
 
     private let accountId: Int
-    private let propertyName: PropertyName
+    private let propertyName: GDPRPropertyName
     private let propertyId: Int
     private let pmId: String
     
@@ -54,8 +54,8 @@ public typealias TargetingParams = [String:String]
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
-    private weak var consentDelegate: ConsentDelegate?
-    private var messageViewController: MessageViewController?
+    private weak var consentDelegate: GDPRConsentDelegate?
+    private var messageViewController: GDPRMessageViewController?
     
     enum LoadingStatus: String {
         case Ready = "Ready"
@@ -94,11 +94,11 @@ public typealias TargetingParams = [String:String]
     public init(
         accountId: Int,
         propertyId: Int,
-        propertyName: PropertyName,
+        propertyName: GDPRPropertyName,
         PMId: String,
-        campaignEnv: CampaignEnv,
+        campaignEnv: GDPRCampaignEnv,
         targetingParams: TargetingParams,
-        consentDelegate: ConsentDelegate
+        consentDelegate: GDPRConsentDelegate
     ){
         self.accountId = accountId
         self.propertyName = propertyName
@@ -107,9 +107,9 @@ public typealias TargetingParams = [String:String]
         self.targetingParams = targetingParams
         self.consentDelegate = consentDelegate
 
-        self.consentUUID = UserDefaults.standard.string(forKey: ConsentViewController.CONSENT_UUID_KEY) ??
+        self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ??
             UUID().uuidString
-        self.euconsent = (try? ConsentString(consentString: UserDefaults.standard.string(forKey: ConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
+        self.euconsent = (try? ConsentString(consentString: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
         
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
@@ -128,10 +128,10 @@ public typealias TargetingParams = [String:String]
     public convenience init(
         accountId: Int,
         propertyId: Int,
-        propertyName: PropertyName,
+        propertyName: GDPRPropertyName,
         PMId: String,
-        campaignEnv: CampaignEnv,
-        consentDelegate: ConsentDelegate) {
+        campaignEnv: GDPRCampaignEnv,
+        consentDelegate: GDPRConsentDelegate) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, PMId: PMId, campaignEnv: campaignEnv, targetingParams: [:], consentDelegate: consentDelegate)
     }
 
@@ -141,7 +141,7 @@ public typealias TargetingParams = [String:String]
     }
     
     private func loadMessage(fromUrl url: URL) {
-        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: consentUUID)
+        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID)
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
     }
@@ -149,13 +149,13 @@ public typealias TargetingParams = [String:String]
     public func loadMessage() {
         if loading == .Ready {
             loading = .Loading
-            sourcePoint.getMessage(consentUUID: consentUUID, euconsent: euconsent) { [weak self] message in
-                self?.consentUUID = message.uuid
+            sourcePoint.getMessage(consentUUID: gdprUUID, euconsent: euconsent) { [weak self] message in
+                self?.gdprUUID = message.uuid
                 if let url = message.url {
                     self?.loadMessage(fromUrl: url)
                 } else {
                     self?.loading = .Ready
-                    self?.onConsentReady(consentUUID: message.uuid, userConsent: message.userConsent)
+                    self?.onConsentReady(gdprUUID: message.uuid, userConsent: message.userConsent)
                 }
             }
         }
@@ -163,7 +163,7 @@ public typealias TargetingParams = [String:String]
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading
-            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: consentUUID)
+            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID)
             messageViewController?.consentDelegate = self
             messageViewController?.loadPrivacyManager()
         }
@@ -178,7 +178,7 @@ public typealias TargetingParams = [String:String]
      */
     public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
+        let storedConsentString = UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
         let consentString = try ConsentString(consentString: storedConsentString)
 
         for i in 0..<forIds.count {
@@ -196,7 +196,7 @@ public typealias TargetingParams = [String:String]
      */
     public func getIABPurposeConsents(_ forIds: [Int8]) throws -> [Bool] {
         var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
+        let storedConsentString = UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
         let consentString = try ConsentString(consentString: storedConsentString)
 
         for i in 0..<forIds.count {
@@ -207,10 +207,10 @@ public typealias TargetingParams = [String:String]
 
     internal func storeIABVars(consentString: ConsentString) {
         sourcePoint.getGdprStatus { gdprApplies in
-            UserDefaults.standard.setValue(gdprApplies ? "1" : "0", forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+            UserDefaults.standard.setValue(gdprApplies ? "1" : "0", forKey: GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
         }
 
-        UserDefaults.standard.setValue(consentString.consentString, forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
+        UserDefaults.standard.setValue(consentString.consentString, forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
 
         // Generate parsed vendor consents string
         var parsedVendorConsents = [Character](repeating: "0", count: consentString.maxVendorId)
@@ -221,29 +221,29 @@ public typealias TargetingParams = [String:String]
                 }
             }
         }
-        UserDefaults.standard.setValue(String(parsedVendorConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        UserDefaults.standard.setValue(String(parsedVendorConsents), forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
 
         // Generate parsed purpose consents string
         var parsedPurposeConsents = [Character](repeating: "0", count: Int(consentString.maxPurposes))
         for i in consentString.purposesAllowed {
             parsedPurposeConsents[Int(i) - 1] = "1"
         }
-        UserDefaults.standard.setValue(String(parsedPurposeConsents), forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+        UserDefaults.standard.setValue(String(parsedPurposeConsents), forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
     /// It will clear all the stored userDefaults Data
     public func clearIABConsentData() {
         let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_CMP_PRESENT)
-        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING)
-        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
-        userDefaults.removeObject(forKey: ConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
         userDefaults.synchronize()
     }
 }
 
-extension ConsentViewController: ConsentDelegate {
+extension GDPRConsentViewController: GDPRConsentDelegate {
     public func consentUIWillShow() {
         guard let viewController = messageViewController else { return }
         add(asChildViewController: viewController)
@@ -257,21 +257,21 @@ extension ConsentViewController: ConsentDelegate {
         consentDelegate?.consentUIDidDisappear()
     }
 
-    public func onError(error: ConsentViewControllerError?) {
+    public func onError(error: GDPRConsentViewControllerError?) {
         loading = .Ready
         if(shouldCleanConsentOnError) { clearIABConsentData() }
         consentDelegate?.onError?(error: error)
     }
 
-    public func onAction(_ action: Action, consents: PMConsents?) {
+    public func onAction(_ action: GDPRAction, consents: PMConsents?) {
         if(action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit) {
-            sourcePoint.postAction(action: action, consentUUID: consentUUID, consents: consents) { [weak self] response in
-                self?.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
+            sourcePoint.postAction(action: action, consentUUID: gdprUUID, consents: consents) { [weak self] response in
+                self?.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
             }
         } else if (action.type == .Dismiss) {
             self.onConsentReady(
-                consentUUID: consentUUID,
-                userConsent: UserConsent(
+                gdprUUID: gdprUUID,
+                userConsent: GDPRUserConsent(
                     acceptedVendors: consents?.vendors.accepted ?? [],
                     acceptedCategories: consents?.categories.accepted ?? [],
                     euconsent: euconsent
@@ -280,14 +280,14 @@ extension ConsentViewController: ConsentDelegate {
         }
     }
 
-    public func onConsentReady(consentUUID: ConsentUUID, userConsent: UserConsent) {
-        self.consentUUID = consentUUID
+    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+        self.gdprUUID = gdprUUID
         self.euconsent = userConsent.euconsent
         storeIABVars(consentString: euconsent)
-        UserDefaults.standard.setValue(euconsent.consentString, forKey: ConsentViewController.EU_CONSENT_KEY)
-        UserDefaults.standard.setValue(consentUUID, forKey: ConsentViewController.CONSENT_UUID_KEY)
+        UserDefaults.standard.setValue(euconsent.consentString, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
+        UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
         UserDefaults.standard.synchronize()
-        consentDelegate?.onConsentReady?(consentUUID: consentUUID, userConsent: userConsent)
+        consentDelegate?.onConsentReady?(gdprUUID: gdprUUID, userConsent: userConsent)
     }
 
     public func messageWillShow() { consentDelegate?.messageWillShow?() }

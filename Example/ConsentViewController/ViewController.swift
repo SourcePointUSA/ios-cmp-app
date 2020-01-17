@@ -9,13 +9,11 @@
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController, ConsentDelegate {
-    let logger = Logger()
-
-    lazy var consentViewController: ConsentViewController = { return ConsentViewController(
+class ViewController: UIViewController, GDPRConsentDelegate {
+    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 2372,
-        propertyName: try! PropertyName("mobile.demo"),
+        propertyName: try! GDPRPropertyName("mobile.demo"),
         PMId: "5c0e81b7d74b3c30c6852301",
         campaignEnv: .Stage,
         consentDelegate: self
@@ -29,19 +27,15 @@ class ViewController: UIViewController, ConsentDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    public func onConsentReady(consentUUID: ConsentUUID, userConsent: UserConsent) {
-        self.logger.log("ConsentUUID: %{public}@", [consentUUID])
-        userConsent.acceptedVendors.forEach({ [weak self] vendorId in
-            self?.logger.log("Vendor(%{public}@)", [vendorId])
-        })
-        userConsent.acceptedCategories.forEach({ [weak self] purposeId in
-            self?.logger.log("Purpose(%{public}@)", [purposeId])
-        })
-        self.logger.log("Consent String: %{public}@", [(UserDefaults.standard.string(forKey: ConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>")])
+    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+        print("ConsentUUID: \(gdprUUID)")
+        userConsent.acceptedVendors.forEach({ vendorId in print("Vendor: \(vendorId)") })
+        userConsent.acceptedCategories.forEach({ purposeId in print("Purpose: \(purposeId)") })
+        print("Consent String: \(UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>")")
     }
 
-    func onError(error: ConsentViewControllerError?) {
-        logger.log("Error: %{public}@", [error ?? ""])
+    func onError(error: GDPRConsentViewControllerError?) {
+        print("Error: \(error.debugDescription)")
         dismiss(animated: true, completion: nil)
     }
 

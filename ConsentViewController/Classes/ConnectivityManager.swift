@@ -1,6 +1,6 @@
 //
 //  ConnectivityManager.swift
-//  ConsentViewController
+//  GDPRConsentViewController
 //
 //  Created by Vilas on 12/12/19.
 //
