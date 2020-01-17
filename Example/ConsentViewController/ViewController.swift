@@ -36,7 +36,6 @@ class ViewController: UIViewController, GDPRConsentDelegate {
 
     func onError(error: GDPRConsentViewControllerError?) {
         print("Error: \(error.debugDescription)")
-        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
