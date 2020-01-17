@@ -1,3 +1,14 @@
+## 4.0.0 (January, 17, 2020)
+Alright ladies and gentlemen, what your're that's not a regular release... THAT'S A FULL-ON REWRITE 🔥
+There are many small changes in the public API so instead of listing them here we kindly ask you to check the [README](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/README.md). It should provide you with everything you need to get up and running with the changes.
+
+Long story short we have:
+* Fixed a naming conflict issue uncovered when using both GPDR and [CCPA](https://github.com/SourcePointUSA/CCPA_iOS_SDK) SDKs
+* Got rid of Reachability dependency
+* Completely re-wrote the way we load the consent message and Privacy Manager. I don't mean to brag but we have seen an huge performance boost!
+
+As usual, if you see something wrong or have a question feel free to create an issue in our repo or contact us via slack directly.
+
 ## 3.1.0 (December, 4, 2019)
 * Added support to Carthage
 * In order to maintain compliance even in the event of an outage on our side, we’re now clearing all local consent information of a user on onErrorOccurred. This behaviour is opt-in be default but can be opted-out by setting flag .shouldCleanConsentOnError = false
