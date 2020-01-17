@@ -129,3 +129,5 @@ In Obj-C that'd be:
 ```objc
 [consentViewController loadMessage forAuthId: @"JohnDoe"]
 ```
+
+This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
