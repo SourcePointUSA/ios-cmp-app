@@ -116,3 +116,16 @@ class ViewController: UIViewController, ConsentDelegate {
 @end
 
 ```
+
+### Authenticated Consent
+
+In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
+
+```swift
+  consentViewController.loadMessage(forAuthId: "JohnDoe")
+```
+
+In Obj-C that'd be: 
+```objc
+[consentViewController loadMessage forAuthId: @"JohnDoe"]
+```
