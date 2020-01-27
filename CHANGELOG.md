@@ -1,3 +1,6 @@
+## 4.0.1 (January, 27, 2020)
+* expanded `GDPRPropertyName` to accept property names with dashes (-)
+
 ## 4.0.0 (January, 17, 2020)
 Alright ladies and gentlemen, what your're that's not a regular release... THAT'S A FULL-ON REWRITE 🔥
 There are many small changes in the public API so instead of listing them here we kindly ask you to check the [README](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/README.md). It should provide you with everything you need to get up and running with the changes.
