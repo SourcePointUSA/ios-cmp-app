@@ -8,7 +8,7 @@
 import Foundation
 
 /// GDPRPropertyName is the exact name of your property as created in SourcePoint's dashboard.
-/// - Important: notice that it can only contain letters, numbers, . (dots), : (semicolons) and / (slashes). The constructor will validate upon that and throw an error otherwise.
+/// - Important: notice that it can only contain letters, numbers, . (dots), : (semicolons), - (dashes) and / (slashes). The constructor will validate upon that and throw an error otherwise.
 @objcMembers open class GDPRPropertyName: NSObject, Codable {
     
     /// Up and lowercase letters, dots, semicollons, numbers and dashes
