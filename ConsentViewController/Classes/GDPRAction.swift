@@ -8,7 +8,7 @@
 import Foundation
 
 /// User actions. Its integer representation matches with what SourcePoint's endpoints expect.
-@objc public enum GDPRActionType: Int {
+@objc public enum GDPRActionType: Int, Codable {
     case SaveAndExit = 1
     case PMCancel = 2
     case AcceptAll = 11
