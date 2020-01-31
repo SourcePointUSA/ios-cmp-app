@@ -15,7 +15,7 @@ class ViewController: UIViewController, GDPRConsentDelegate {
         propertyId: 2372,
         propertyName: try! GDPRPropertyName("mobile.demo"),
         PMId: "5c0e81b7d74b3c30c6852301",
-        campaignEnv: .Stage,
+        campaignEnv: .Public,
         consentDelegate: self
     )}()
     

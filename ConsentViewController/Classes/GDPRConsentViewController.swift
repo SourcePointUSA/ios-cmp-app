@@ -153,6 +153,21 @@ public typealias TargetingParams = [String:String]
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func loadNativeMessage(forAuthId authId: String?) {
+        if loading == .Ready {
+            loading = .Loading
+            sourcePoint.getMessageContents(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
+                self?.gdprUUID = messageResponse.uuid
+                self?.loading = .Ready
+                if let message = messageResponse.msgJSON {
+                    self?.consentDelegate?.consentUIWillShow?(message: message)
+                } else {
+                    self?.onConsentReady(gdprUUID: messageResponse.uuid, userConsent: messageResponse.userConsent)
+                }
+            }
+        }
+    }
+    
     private func loadMessage(fromUrl url: URL) {
         messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID)
         messageViewController?.consentDelegate = self
@@ -174,7 +189,7 @@ public typealias TargetingParams = [String:String]
     public func loadMessage(forAuthId authId: String?) {
         if loading == .Ready {
             loading = .Loading
-            sourcePoint.getMessage(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] message in
+            sourcePoint.getMessageUrl(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] message in
                 self?.gdprUUID = message.uuid
                 if let url = message.url {
                     self?.loadMessage(fromUrl: url)
@@ -267,7 +282,6 @@ public typealias TargetingParams = [String:String]
         userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
         userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
         userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
-        userDefaults.synchronize()
     }
 }
 
@@ -290,8 +304,8 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         if(shouldCleanConsentOnError) { clearIABConsentData() }
         consentDelegate?.onError?(error: error)
     }
-
-    public func onAction(_ action: GDPRAction, consents: PMConsents?) {
+    
+    public func reportAction(_ action: GDPRAction, consents: PMConsents?) {
         if(action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit) {
             sourcePoint.postAction(action: action, consentUUID: gdprUUID, consents: consents) { [weak self] response in
                 self?.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
@@ -306,6 +320,11 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
                 )
             )
         }
+    }
+
+    public func onAction(_ action: GDPRAction, consents: PMConsents?) {
+        reportAction(action, consents: consents)
+        consentDelegate?.onAction?(action, consents: consents)
     }
 
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {

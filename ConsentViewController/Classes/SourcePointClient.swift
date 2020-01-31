@@ -85,7 +85,9 @@ A Http client for SourcePoint's endpoints
  */
 class SourcePointClient {
     static let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net")!
-    static let GET_MESSAGE_URL = URL(string: "gdpr/message-url", relativeTo: SourcePointClient.WRAPPER_API)!
+    /// - TODO: Change to real wrapper api
+    static let GET_MESSAGE_CONTENTS_URL = URL(string: "https://fake-wrapper-api.herokuapp.com/gdpr/native-message")!
+    static let GET_MESSAGE_URL_URL = URL(string: "gdpr/message-url", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CONSENT_URL = URL(string: "gdpr/consent", relativeTo: SourcePointClient.WRAPPER_API)!
     static let GET_GDPR_STATUS_URL = URL(string: "https://sourcepoint.mgr.consensu.org/consent/v2/gdpr-status")!
     
@@ -140,9 +142,8 @@ class SourcePointClient {
             return emptyParams
         }
     }
-
-    func getMessage(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
-        let url = SourcePointClient.GET_MESSAGE_URL
+    
+    private func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
             euconsent: euconsent,
@@ -167,6 +168,26 @@ class SourcePointClient {
                 self?.onError?(APIParsingError(url.absoluteString, error))
             }
         }
+    }
+
+    func getMessageUrl(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
+        getMessage(
+            url: SourcePointClient.GET_MESSAGE_URL_URL,
+            consentUUID: consentUUID,
+            euconsent: euconsent,
+            authId: authId,
+            onSuccess: onSuccess
+        )
+    }
+    
+    func getMessageContents(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
+        getMessage(
+            url: SourcePointClient.GET_MESSAGE_CONTENTS_URL,
+            consentUUID: consentUUID,
+            euconsent: euconsent,
+            authId: authId,
+            onSuccess: onSuccess
+        )
     }
 
     func postAction(action: GDPRAction, consentUUID: GDPRUUID, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {

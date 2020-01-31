@@ -29,6 +29,7 @@ struct MessageRequest: Encodable {
 
 struct MessageResponse: Decodable {
     let url: URL?
+    let msgJSON: GDPRMessage?
     let uuid: GDPRUUID
     let userConsent: GDPRUserConsent
     var meta: Meta
