@@ -124,6 +124,8 @@ public typealias TargetingParams = [String:String]
         super.init(nibName: nil, bundle: nil)
         sourcePoint.onError = onError
         modalPresentationStyle = .overFullScreen
+        
+        UserDefaults.standard.setValue(true, forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
     }
     
     /**
