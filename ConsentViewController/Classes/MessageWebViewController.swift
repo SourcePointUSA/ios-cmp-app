@@ -63,7 +63,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     func consentUIWillShow() {
         if(!consentUILoaded) {
             consentUILoaded = true
-            consentDelegate?.consentUIWillShow()
+            consentDelegate?.consentUIWillShow?()
         }
     }
     
@@ -82,7 +82,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func consentUIDidDisappear() {
-        consentDelegate?.consentUIDidDisappear()
+        consentDelegate?.consentUIDidDisappear?()
     }
     
     func onError(error: GDPRConsentViewControllerError?) {
