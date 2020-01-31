@@ -88,6 +88,7 @@ public typealias TargetingParams = [String:String]
             - propertyName: the exact name of your property,
             -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
             -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
+            - targetingParams: an arbitrary collection of key/value pairs made available to the Scenario built on SourcePoint's dashboard
             -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
         - SeeAlso: ConsentDelegate
      */
@@ -125,6 +126,16 @@ public typealias TargetingParams = [String:String]
         modalPresentationStyle = .overFullScreen
     }
     
+    /**
+       - Parameters:
+           - accountId: the id of your account, can be found in the Account section of SourcePoint's dashboard
+           - propertyId: the id of your property, can be found in the property page of SourcePoint's dashboard
+           - propertyName: the exact name of your property,
+           -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
+           -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
+           -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
+       - SeeAlso: ConsentDelegate
+    */
     public convenience init(
         accountId: Int,
         propertyId: Int,
@@ -146,10 +157,18 @@ public typealias TargetingParams = [String:String]
         messageViewController?.loadMessage(fromUrl: url)
     }
     
+    /// Will first check if there's a message to show according to the scenario
+    /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
+    /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
     public func loadMessage() {
         loadMessage(forAuthId: nil)
     }
     
+    /// Will first check if there's a message to show according to the scenario, for the `authId` provided.
+    /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
+    /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
+    ///
+    /// - Parameter forAuthId: any arbitrary token that uniquely identifies an user in your system.
     public func loadMessage(forAuthId authId: String?) {
         if loading == .Ready {
             loading = .Loading
@@ -165,6 +184,8 @@ public typealias TargetingParams = [String:String]
         }
     }
 
+    /// Loads the PrivacyManager (that popup with the toggles) in a WebView
+    /// If the user changes her consents we call `ConsentDelegate.onConsentReady`
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading
@@ -236,7 +257,7 @@ public typealias TargetingParams = [String:String]
         UserDefaults.standard.setValue(String(parsedPurposeConsents), forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
     }
 
-    /// It will clear all the stored userDefaults Data
+    /// Clears all IAB related data from the UserDefaults
     public func clearIABConsentData() {
         let userDefaults = UserDefaults.standard
         userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
