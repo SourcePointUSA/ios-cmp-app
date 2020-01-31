@@ -15,6 +15,10 @@ target 'AuthExample' do
   pod 'ConsentViewController', :path => '../'
 end
 
+target 'NativeMessageExample' do
+  pod 'ConsentViewController', :path => '../'
+end
+
 target 'SourcePointMetaApp' do
   pod 'ConsentViewController', :path => '../'
   pod 'IQKeyboardManagerSwift'
