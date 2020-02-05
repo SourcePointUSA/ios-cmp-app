@@ -15,7 +15,7 @@ We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to 
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '4.0.0'
+pod 'ConsentViewController', '4.1.0'
 ```
 ### Carthage
 We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Step-by-step-guide-for-Carthage) for it.
@@ -140,3 +140,7 @@ In Obj-C that'd be:
 ```
 
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
+
+### Rendering the message natively
+
+Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together. 
