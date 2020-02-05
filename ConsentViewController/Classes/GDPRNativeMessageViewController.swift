@@ -19,6 +19,7 @@ import UIKit
     
     @IBAction func onShowOptionsTap(_ sender: Any) {
         showPrivacyManager()
+        action(.ShowPrivacyManager)
     }
     @IBAction func onRejectTap(_ sender: Any) {
         action(.RejectAll)
@@ -28,20 +29,11 @@ import UIKit
     }
     
     let message: GDPRMessage
-    weak var consentDelegate: GDPRConsentDelegate?
-    
-    lazy var consentViewController = { return GDPRConsentViewController(
-        accountId: 22,
-        propertyId: 2372,
-        propertyName: try! GDPRPropertyName("mobile.demo"),
-        PMId: "5c0e81b7d74b3c30c6852301",
-        campaignEnv: .Public,
-        consentDelegate: self
-    )}()
-    
-    public init(messageContents: GDPRMessage, delegate: GDPRConsentDelegate) {
+    let consentViewController: GDPRConsentViewController
+
+    public init(messageContents: GDPRMessage, consentViewController: GDPRConsentViewController) {
         message = messageContents
-        consentDelegate = delegate
+        self.consentViewController = consentViewController
         super.init(nibName: "GDPRNativeMessageViewController", bundle: Bundle.init(for: GDPRNativeMessageViewController.self))
     }
     
@@ -95,9 +87,8 @@ import UIKit
     func action(_ action: GDPRActionType) {
         if let messageAction = message.actions.first(where: { message in message.choiceType == action }) {
             let action = GDPRAction(type: messageAction.choiceType, id: String(messageAction.choiceId))
-            consentDelegate?.onAction?(action, consents: nil)
+            consentViewController.consentDelegate?.onAction?(action, consents: nil)
         }
-        consentDelegate?.consentUIDidDisappear?()
     }
     
     func showPrivacyManager() {
@@ -131,29 +122,5 @@ import UIKit
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
             alpha: CGFloat(1.0)
         )
-    }
-}
-
-extension GDPRNativeMessageViewController: GDPRConsentDelegate {
-    public func consentUIWillShow() {
-        present(consentViewController, animated: true, completion: nil)
-    }
-    
-    public func consentUIDidDisappear() {
-        dismiss(animated: true, completion: nil)
-        if(shouldCallUIDisappearOnDelegate) {
-            consentDelegate?.consentUIDidDisappear?()
-        }
-    }
-    
-    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        consentDelegate?.onConsentReady?(gdprUUID: gdprUUID, userConsent: userConsent)
-    }
-    
-    public func onAction(_ action: GDPRAction, consents: PMConsents?) {
-        // If the user taps on `Cancel` via PM we don't want to close the consent message.
-        // We set the flag shouldCallUIDisappearOnDelegate to `true` in that case
-        // and make sure we don't call consentDelegate.consentUIDidDisappear()
-        shouldCallUIDisappearOnDelegate = action.type != .PMCancel
     }
 }
