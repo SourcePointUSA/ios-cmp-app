@@ -54,7 +54,7 @@ public typealias TargetingParams = [String:String]
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
-    private weak var consentDelegate: GDPRConsentDelegate?
+    public weak var consentDelegate: GDPRConsentDelegate?
     private var messageViewController: GDPRMessageViewController?
     
     enum LoadingStatus: String {
@@ -287,6 +287,7 @@ public typealias TargetingParams = [String:String]
 
 extension GDPRConsentViewController: GDPRConsentDelegate {
     public func consentUIWillShow() {
+        loading = .Ready
         guard let viewController = messageViewController else { return }
         add(asChildViewController: viewController)
         consentDelegate?.consentUIWillShow?()
