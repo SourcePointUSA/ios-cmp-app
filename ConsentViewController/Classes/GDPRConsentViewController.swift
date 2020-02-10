@@ -191,7 +191,7 @@ public typealias TargetingParams = [String:String]
     public func loadMessage(forAuthId authId: String?) {
         if loading == .Ready {
             loading = .Loading
-            if hasAuthIdChanged(newAuthId: (authId)){
+            if didAuthIdChange(newAuthId: (authId)){
                 resetConsentData()
                 UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
             }
@@ -207,9 +207,8 @@ public typealias TargetingParams = [String:String]
         }
     }
     
-    private func hasAuthIdChanged(newAuthId: String?) -> Bool {
-        let oldAuthId  = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY) ?? nil
-        return newAuthId != oldAuthId;
+    private func didAuthIdChange(newAuthId: String?) -> Bool {
+        return newAuthId != UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY);
     }
     
     private func resetConsentData(){
