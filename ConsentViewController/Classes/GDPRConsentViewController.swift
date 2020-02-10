@@ -16,6 +16,8 @@ public typealias TargetingParams = [String:String]
     static let EU_CONSENT_KEY: String = "sp_gdpr_euconsent"
     /// :nodoc:
     static let GDPR_UUID_KEY: String = "sp_gdpr_consentUUID"
+    
+    static let GDPR_AUTH_ID_KEY: String = "sp_gdpr_authId"
 
     /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
     static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
@@ -189,6 +191,10 @@ public typealias TargetingParams = [String:String]
     public func loadMessage(forAuthId authId: String?) {
         if loading == .Ready {
             loading = .Loading
+            if didAuthIdChange(newAuthId: (authId)){
+                resetConsentData()
+                UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+            }
             sourcePoint.getMessageUrl(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] message in
                 self?.gdprUUID = message.uuid
                 if let url = message.url {
@@ -199,6 +205,16 @@ public typealias TargetingParams = [String:String]
                 }
             }
         }
+    }
+    
+    private func didAuthIdChange(newAuthId: String?) -> Bool {
+        return newAuthId != UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY);
+    }
+    
+    private func resetConsentData(){
+        self.euconsent = ConsentString.empty
+        self.gdprUUID = UUID().uuidString
+        clearAllData()
     }
 
     /// Loads the PrivacyManager (that popup with the toggles) in a WebView
@@ -282,6 +298,19 @@ public typealias TargetingParams = [String:String]
         userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
         userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
         userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+    }
+    
+    public func clearInternalData(){
+        let userDefaults = UserDefaults.standard
+        userDefaults.removeObject(forKey: GDPRConsentViewController.META_KEY)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.GDPR_UUID_KEY)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+        userDefaults.removeObject(forKey: GDPRConsentViewController.EU_CONSENT_KEY)
+    }
+    
+    public func clearAllData(){
+        clearInternalData()
+        clearIABConsentData()
     }
 }
 
