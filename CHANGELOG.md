@@ -1,3 +1,6 @@
+## 4.1.0 (January, 11, 2020)
+* clearAllData() public method added to ConsentViewControler
+
 ## 4.1.0 (January, 05, 2020)
 Wow, that's huge! Behold the native message!
 Now you are be able to build your own consent message using naive elements and layout. It's a lot to cover in one CHANGELOG entry so please refer to the this nice [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) our team put together.
