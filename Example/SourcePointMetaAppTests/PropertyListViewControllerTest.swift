@@ -96,17 +96,17 @@ class PropertyListViewControllerTest: XCTestCase {
         }
     }
     
-    func testTrailingSwipeActionsConfiguration() {
-        let indexPath = NSIndexPath(row: 0, section: 0)
-        if let propertyTableView = propertyListViewController?.propertyTableView {
-            let configuration = propertyListViewController?.tableView(propertyTableView, trailingSwipeActionsConfigurationForRowAt: indexPath as IndexPath)
-            if configuration?.actions.count ?? 0 > 0 {
-                XCTAssert(true, "TrailingSwipeActionsConfiguration is implemented")
-            } else {
-                XCTAssert(false, "TrailingSwipeActionsConfiguration is not implemented")
-            }
-        }
-    }
+//    func testTrailingSwipeActionsConfiguration() {
+//        let indexPath = NSIndexPath(row: 0, section: 0)
+//        if let propertyTableView = propertyListViewController?.propertyTableView {
+//            let configuration = propertyListViewController?.tableView(propertyTableView, trailingSwipeActionsConfigurationForRowAt: indexPath as IndexPath)
+//            if configuration?.actions.count ?? 0 > 0 {
+//                XCTAssert(true, "TrailingSwipeActionsConfiguration is implemented")
+//            } else {
+//                XCTAssert(false, "TrailingSwipeActionsConfiguration is not implemented")
+//            }
+//        }
+//    }
     
     func testEditActions() {
         let indexPath = NSIndexPath(row: 0, section: 0)
