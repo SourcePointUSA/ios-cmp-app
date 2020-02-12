@@ -75,7 +75,7 @@ import UIKit
         )
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         loadTitle(forAttribute: message.title, label: titleLabel)
         loadBody(forAttribute: message.body, textView: descriptionTextView)
