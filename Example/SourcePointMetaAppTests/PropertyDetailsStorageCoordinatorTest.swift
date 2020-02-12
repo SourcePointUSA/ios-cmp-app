@@ -8,7 +8,7 @@
 
 import XCTest
 import CoreData
-@testable import SourcePointMetaApp
+@testable import GDPR_MetaApp
 
 class PropertyDetailsStorageCoordinatorTest: XCTestCase {
     

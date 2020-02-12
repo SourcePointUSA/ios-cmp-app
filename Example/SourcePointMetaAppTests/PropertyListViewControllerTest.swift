@@ -8,7 +8,7 @@
 
 import XCTest
 import WebKit
-@testable import SourcePointMetaApp
+@testable import GDPR_MetaApp
 
 class PropertyListViewControllerTest: XCTestCase {
     
