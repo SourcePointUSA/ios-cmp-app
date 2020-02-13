@@ -1,5 +1,8 @@
-## 4.1.0 (January, 11, 2020)
-* clearAllData() public method added to ConsentViewControler
+## 4.1.2 (January, 13, 2020)
+* Fixed compatibility with Xcode 10.x
+
+## 4.1.1 (January, 10, 2020)
+* Fixed authId message 
 
 ## 4.1.0 (January, 05, 2020)
 Wow, that's huge! Behold the native message!
