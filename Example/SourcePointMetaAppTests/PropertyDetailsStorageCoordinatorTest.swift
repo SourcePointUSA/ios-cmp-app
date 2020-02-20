@@ -93,19 +93,20 @@ class PropertyDetailsStorageCoordinatorTest: XCTestCase {
 //        })
 //    }
     
-    // This method is used to test whether the property data already exist in database or not
-    func testcheckExitanceOfData() {
-        let propertyDataModel = PropertyDetailsModel(accountId: 22, propertyId: 2372, propertyName: "mobile.demo", campaign: 0, privacyManagerId: "5c0e81b7d74b3c30c6852301", creationTimestamp: Date(), authId: nil)
-        propertyDetailsStorageCoordinator.add(propertyDetails: propertyDataModel, targetingParams: targetingParamsArray, completionHandler: { (propertyManagedObjectID, propertiestoredStatus) in
-            
-            self.propertyDetailsStorageCoordinator.checkExitanceOfData(propertyDetails: propertyDataModel, targetingParams: self.targetingParamsArray , completionHandler: { (isStored) in
-                print(isStored)
-                if isStored {
-                    XCTAssert(true, "property data present in database")
-                } else {
-                    XCTAssert(false, "property data is not present in database")
-                }
-            })
-        })
-    }
-}
+/// TODO - update for quick/nimble frameworks
+//    // This method is used to test whether the property data already exist in database or not
+//    func testcheckExitanceOfData() {
+//        let propertyDataModel = PropertyDetailsModel(accountId: 22, propertyId: 2372, propertyName: "mobile.demo", campaign: 0, privacyManagerId: "5c0e81b7d74b3c30c6852301", creationTimestamp: Date(), authId: nil)
+//        propertyDetailsStorageCoordinator.add(propertyDetails: propertyDataModel, targetingParams: targetingParamsArray, completionHandler: { (propertyManagedObjectID, propertiestoredStatus) in
+//
+//            self.propertyDetailsStorageCoordinator.checkExitanceOfData(propertyDetails: propertyDataModel, targetingParams: self.targetingParamsArray , completionHandler: { (isStored) in
+//                print(isStored)
+//                if isStored {
+//                    XCTAssert(true, "property data present in database")
+//                } else {
+//                    XCTAssert(false, "property data is not present in database")
+//                }
+//            })
+//        })
+//    }
+//}
