@@ -9,7 +9,7 @@
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController, GDPRConsentDelegate {
+class ViewController: UIViewController {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7094,
@@ -18,7 +18,18 @@ class ViewController: UIViewController, GDPRConsentDelegate {
         campaignEnv: .Public,
         consentDelegate: self
     )}()
-    
+
+    @IBAction func onPrivacySettingsTap(_ sender: Any) {
+        consentViewController.loadPrivacyManager()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        consentViewController.loadMessage()
+    }
+}
+
+extension ViewController: GDPRConsentDelegate {
     func consentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
@@ -38,15 +49,6 @@ class ViewController: UIViewController, GDPRConsentDelegate {
 
     func onError(error: GDPRConsentViewControllerError?) {
         print("Error: \(error.debugDescription)")
-    }
-
-    @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        consentViewController.loadPrivacyManager()
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        consentViewController.loadMessage()
     }
 }
 
