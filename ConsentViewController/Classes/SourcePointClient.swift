@@ -103,7 +103,7 @@ class SourcePointClient {
     
     public var onError: OnError? { didSet { client.defaultOnError = onError } }
 
-    init(accountId: Int, propertyId:Int, propertyName: GDPRPropertyName, pmId:String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
+    init(accountId: Int, propertyId:Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.propertyName = propertyName
@@ -119,16 +119,6 @@ class SourcePointClient {
     
     convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: targetingParams, client: SimpleClient())
-    }
-    
-    func getGdprStatus(onSuccess: @escaping (Bool) -> Void) {
-        client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { [weak self] data in
-            do {
-                onSuccess(try (self?.json.decode(GdprStatus.self, from: data))!.gdprApplies)
-            } catch {
-                self?.onError?(APIParsingError(SourcePointClient.GET_GDPR_STATUS_URL.absoluteString, error))
-            }
-        }
     }
     
     private func targetingParamsToString(_ params: TargetingParams?) -> String {
@@ -167,20 +157,12 @@ class SourcePointClient {
             }
         }
     }
-
-    func getMessageUrl(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
-        getMessage(
-            url: SourcePointClient.GET_MESSAGE_URL_URL,
-            consentUUID: consentUUID,
-            euconsent: euconsent,
-            authId: authId,
-            onSuccess: onSuccess
-        )
-    }
     
-    func getMessageContents(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
+    func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         getMessage(
-            url: SourcePointClient.GET_MESSAGE_CONTENTS_URL,
+            url: native ?
+                SourcePointClient.GET_MESSAGE_CONTENTS_URL :
+                SourcePointClient.GET_MESSAGE_URL_URL,
             consentUUID: consentUUID,
             euconsent: euconsent,
             authId: authId,
