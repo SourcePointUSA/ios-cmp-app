@@ -12,9 +12,9 @@ import ConsentViewController
 class ViewController: UIViewController, GDPRConsentDelegate {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 2372,
-        propertyName: try! GDPRPropertyName("mobile.demo"),
-        PMId: "5c0e81b7d74b3c30c6852301",
+        propertyId: 7094,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+        PMId: "100699",
         campaignEnv: .Public,
         consentDelegate: self
     )}()
@@ -29,9 +29,11 @@ class ViewController: UIViewController, GDPRConsentDelegate {
     
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
-        userConsent.acceptedVendors.forEach({ vendorId in print("Vendor: \(vendorId)") })
-        userConsent.acceptedCategories.forEach({ purposeId in print("Purpose: \(purposeId)") })
-        print("Consent String: \(UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>")")
+        userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
+        userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
+        
+        // IAB Related Data
+        print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.keys.sorted()))
     }
 
     func onError(error: GDPRConsentViewControllerError?) {
