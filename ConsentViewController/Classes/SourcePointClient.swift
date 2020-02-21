@@ -142,7 +142,7 @@ class SourcePointClient {
         }
     }
     
-    private func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
+    private func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
             euconsent: euconsent,
