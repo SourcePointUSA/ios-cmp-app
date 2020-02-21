@@ -98,6 +98,10 @@ public typealias TargetingParams = [String:String]
             UUID().uuidString
         self.euconsent = UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? ""
         
+        self.tcfData = UserDefaults.standard.dictionaryRepresentation()
+            .filter { (key, _) in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
+            .mapValues { item in StringOrInt(value: item) }
+
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
             propertyId: propertyId,
@@ -111,6 +115,8 @@ public typealias TargetingParams = [String:String]
         sourcePoint.onError = onError
         modalPresentationStyle = .overFullScreen
         
+        /// - note: according to the IAB this value needs to be initialised as early as possible to signal to vendors, the app has a CMP
+        UserDefaults.standard.setValue(GDPRConsentViewController.IAB_CMP_SDK_ID, forKey: GDPRConsentViewController.IAB_CMP_SDK_ID_KEY)
     }
     
     /**
@@ -222,6 +228,10 @@ public typealias TargetingParams = [String:String]
 
     /// Clears all IAB related data from the UserDefaults
     public func clearIABConsentData() {
+        UserDefaults.standard.dictionaryRepresentation()
+            .keys
+            .filter { key in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
+            .forEach { key in UserDefaults.standard.removeObject(forKey: key) }
     }
     
     /// Clears meta data used by the SDK. If you're using this method in your app, something is weird...
