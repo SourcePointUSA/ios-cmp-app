@@ -24,34 +24,33 @@ public typealias TargetingParams = [String:String]
 
     /// The UUID assigned to a user, available after calling `loadMessage`
     public var gdprUUID: GDPRUUID
+    
+    /// All data related to TCFv2
+    public var tcfData: GDPRTcfData
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = TimeInterval(300)
+    
+    /// will instruct the SDK to clean consent data if an error occurs
+    public var shouldCleanConsentOnError = true
+
+    /// the instance of `GDPRConsentDelegate` which the `GDPRConsentViewController` will use to perform the lifecycle methods
+    public weak var consentDelegate: GDPRConsentDelegate?
 
     private let accountId: Int
     private let propertyName: GDPRPropertyName
     private let propertyId: Int
     private let pmId: String
-    
     private let targetingParams: TargetingParams
-
     private let sourcePoint: SourcePointClient
     private lazy var logger = { return Logger() }()
-
-    /// will instruct the SDK to clean consent data if an error occurs
-    public var shouldCleanConsentOnError = true
-
-    public weak var consentDelegate: GDPRConsentDelegate?
     private var messageViewController: GDPRMessageViewController?
-    
+    private var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
     enum LoadingStatus: String {
         case Ready = "Ready"
         case Presenting = "Presenting"
         case Loading = "Loading"
     }
-
-    // used in order not to load the message ui multiple times
-    private var loading: LoadingStatus = .Ready
 
     private func remove(asChildViewController viewController: UIViewController?) {
         guard let viewController = viewController else { return }
@@ -139,19 +138,43 @@ public typealias TargetingParams = [String:String]
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func loadNativeMessage(forAuthId authId: String?) {
+    private func handleNativeMessageResponse(_ response: MessageResponse) {
+        self.loading = .Ready
+        if let message = response.msgJSON {
+            self.consentDelegate?.consentUIWillShow?(message: message)
+        } else {
+            self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+        }
+    }
+    
+    private func handleWebMessageResponse(_ response: MessageResponse) {
+       if let url = response.url {
+           self.loadMessage(fromUrl: url)
+       } else {
+           self.loading = .Ready
+           self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+       }
+   }
+    
+    private func loadGDPRMessage(native: Bool, authId: String?) {
         if loading == .Ready {
             loading = .Loading
-            sourcePoint.getMessageContents(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
+            if didAuthIdChange(newAuthId: (authId)){
+                resetConsentData()
+                UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+            }
+            sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
                 self?.gdprUUID = messageResponse.uuid
-                self?.loading = .Ready
-                if let message = messageResponse.msgJSON {
-                    self?.consentDelegate?.consentUIWillShow?(message: message)
-                } else {
-                    self?.onConsentReady(gdprUUID: messageResponse.uuid, userConsent: messageResponse.userConsent)
-                }
+                
+                native ?
+                    self?.handleNativeMessageResponse(messageResponse) :
+                    self?.handleWebMessageResponse(messageResponse)
             }
         }
+    }
+    
+    public func loadNativeMessage(forAuthId authId: String?) {
+       loadGDPRMessage(native: true, authId: authId)
     }
     
     private func loadMessage(fromUrl url: URL) {
@@ -164,7 +187,7 @@ public typealias TargetingParams = [String:String]
     /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
     /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
     public func loadMessage() {
-        loadMessage(forAuthId: nil)
+        loadGDPRMessage(native: false, authId: nil)
     }
     
     /// Will first check if there's a message to show according to the scenario, for the `authId` provided.
@@ -173,22 +196,7 @@ public typealias TargetingParams = [String:String]
     ///
     /// - Parameter forAuthId: any arbitrary token that uniquely identifies an user in your system.
     public func loadMessage(forAuthId authId: String?) {
-        if loading == .Ready {
-            loading = .Loading
-            if didAuthIdChange(newAuthId: (authId)){
-                resetConsentData()
-                UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
-            }
-            sourcePoint.getMessageUrl(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] message in
-                self?.gdprUUID = message.uuid
-                if let url = message.url {
-                    self?.loadMessage(fromUrl: url)
-                } else {
-                    self?.loading = .Ready
-                    self?.onConsentReady(gdprUUID: message.uuid, userConsent: message.userConsent)
-                }
-            }
-        }
+        loadGDPRMessage(native: false, authId: authId)
     }
     
     private func didAuthIdChange(newAuthId: String?) -> Bool {
@@ -216,6 +224,7 @@ public typealias TargetingParams = [String:String]
     public func clearIABConsentData() {
     }
     
+    /// Clears meta data used by the SDK. If you're using this method in your app, something is weird...
     public func clearInternalData(){
         let userDefaults = UserDefaults.standard
         userDefaults.removeObject(forKey: GDPRConsentViewController.META_KEY)
@@ -224,6 +233,7 @@ public typealias TargetingParams = [String:String]
         userDefaults.removeObject(forKey: GDPRConsentViewController.EU_CONSENT_KEY)
     }
     
+    /// Clears all consent data from the UserDefaults. Use this method if you want to **completely** wipe the user's consent data from the device.
     public func clearAllData(){
         clearInternalData()
         clearIABConsentData()
@@ -262,7 +272,8 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
                 userConsent: GDPRUserConsent(
                     acceptedVendors: consents?.vendors.accepted ?? [],
                     acceptedCategories: consents?.categories.accepted ?? [],
-                    euconsent: euconsent
+                    euconsent: euconsent,
+                    tcfData: tcfData
                 )
             )
         }
@@ -276,6 +287,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.gdprUUID = gdprUUID
         self.euconsent = userConsent.euconsent
+        UserDefaults.standard.setValuesForKeys(userConsent.tcfData.mapValues{ item in item.value })
         UserDefaults.standard.setValue(euconsent, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
         UserDefaults.standard.synchronize()
