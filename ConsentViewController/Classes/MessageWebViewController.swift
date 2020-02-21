@@ -129,9 +129,9 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     override func loadMessage(fromUrl url: URL) {
         load(url: url)
     }
-    
+
     func pmUrl() -> URL? {
-        return URL(string: "https://gdpr-inapp-pm.sp-prod.net/?privacy_manager_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID)")
+        return URL(string: "https://notice.sp-prod.net/privacy-manager/index.html?message_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID)")
     }
     
     override func loadPrivacyManager() {
@@ -160,18 +160,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             let vendors = consents["vendors"] as? [String: Any],
             let purposes = consents["categories"] as? [String: Any],
             let acceptedVendors = vendors["accepted"] as? [String],
-            let rejectedVendors = vendors["rejected"] as? [String],
-            let acceptedPurposes = purposes["accepted"] as? [String],
-            let rejectedPurposes = purposes["rejected"] as? [String]
+            let acceptedPurposes = purposes["accepted"] as? [String]
         else {
             return PMConsents(
-                vendors: PMConsent(accepted: [], rejected: []),
-                categories: PMConsent(accepted: [], rejected: [])
+                vendors: PMConsent(accepted: []),
+                categories: PMConsent(accepted: [])
             )
         }
         return PMConsents(
-            vendors: PMConsent(accepted: acceptedVendors, rejected: rejectedVendors),
-            categories: PMConsent(accepted: acceptedPurposes, rejected: rejectedPurposes)
+            vendors: PMConsent(accepted: acceptedVendors),
+            categories: PMConsent(accepted: acceptedPurposes)
         )
     }
     
