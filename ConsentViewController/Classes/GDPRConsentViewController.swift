@@ -20,7 +20,7 @@ public typealias TargetingParams = [String:String]
     static let IAB_CMP_SDK_ID = 6
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
-    public var euconsent: ConsentString
+    public var euconsent: String
 
     /// The UUID assigned to a user, available after calling `loadMessage`
     public var gdprUUID: GDPRUUID
@@ -97,7 +97,7 @@ public typealias TargetingParams = [String:String]
 
         self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ??
             UUID().uuidString
-        self.euconsent = (try? ConsentString(consentString: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
+        self.euconsent = UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? ""
         
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
@@ -196,7 +196,7 @@ public typealias TargetingParams = [String:String]
     }
     
     private func resetConsentData(){
-        self.euconsent = ConsentString.empty
+        self.euconsent = ""
         self.gdprUUID = UUID().uuidString
         clearAllData()
     }
@@ -276,8 +276,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.gdprUUID = gdprUUID
         self.euconsent = userConsent.euconsent
-        storeIABVars(consentString: euconsent)
-        UserDefaults.standard.setValue(euconsent.consentString, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
+        UserDefaults.standard.setValue(euconsent, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
         UserDefaults.standard.synchronize()
         consentDelegate?.onConsentReady?(gdprUUID: gdprUUID, userConsent: userConsent)

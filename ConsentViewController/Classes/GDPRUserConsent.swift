@@ -17,7 +17,7 @@ import Foundation
     public let acceptedVendors, acceptedCategories: [String]
     
     /// The iAB consent string.
-    public let euconsent: ConsentString
+    public let euconsent: String
     
     public init(acceptedVendors: [String], acceptedCategories: [String], euconsent: ConsentString) {
         self.acceptedVendors = acceptedVendors
@@ -25,5 +25,5 @@ import Foundation
         self.euconsent = euconsent
     }
     
-    open override var description: String { return "acceptedVendors: \(acceptedVendors), acceptedCategories: \(acceptedCategories), euconsent: \(euconsent.consentString)" }
+    open override var description: String { return "acceptedVendors: \(acceptedVendors), acceptedCategories: \(acceptedCategories), euconsent: \(euconsent)" }
 }
