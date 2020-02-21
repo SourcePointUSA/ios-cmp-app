@@ -11,28 +11,13 @@ import UIKit
 public typealias TargetingParams = [String:String]
 
 @objcMembers open class GDPRConsentViewController: UIViewController {
-    static let META_KEY: String = "sp_gdpr_meta"
-    /// :nodoc:
-    static let EU_CONSENT_KEY: String = "sp_gdpr_euconsent"
-    /// :nodoc:
-    static let GDPR_UUID_KEY: String = "sp_gdpr_consentUUID"
-    
-    static let GDPR_AUTH_ID_KEY: String = "sp_gdpr_authId"
-
-    /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
-    static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
-
-    /// If the user is subject to GDPR, reading for this key in the `UserDefaults` will return "1" otherwise "0"
-    static public let IAB_CONSENT_SUBJECT_TO_GDPR: String = "IABConsent_SubjectToGDPR"
-
-    /// They key used to store the IAB Consent string for the user in the `UserDefaults`
-    static public let IAB_CONSENT_CONSENT_STRING: String = "IABConsent_ConsentString"
-
-    /// They key used to read and write the parsed IAB Purposes consented by the user in the `UserDefaults`
-    static public let IAB_CONSENT_PARSED_PURPOSE_CONSENTS: String = "IABConsent_ParsedPurposeConsents"
-
-    /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
-    static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
+    static let META_KEY = "sp_gdpr_meta"
+    static let EU_CONSENT_KEY = "sp_gdpr_euconsent"
+    static let GDPR_UUID_KEY = "sp_gdpr_consentUUID"
+    static let GDPR_AUTH_ID_KEY = "sp_gdpr_authId"
+    static let IAB_KEY_PREFIX = "IABTCF_"
+    static let IAB_CMP_SDK_ID_KEY = "IABTCF_CmpSdkID"
+    static let IAB_CMP_SDK_ID = 6
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: ConsentString
@@ -127,7 +112,6 @@ public typealias TargetingParams = [String:String]
         sourcePoint.onError = onError
         modalPresentationStyle = .overFullScreen
         
-        UserDefaults.standard.setValue(true, forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
     }
     
     /**
@@ -228,76 +212,8 @@ public typealias TargetingParams = [String:String]
         }
     }
 
-    /**
-     Get the IAB consents given to each vendor id in the array passed as parameter
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter _: an `Array` of vendor ids
-     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
-     */
-    public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
-        var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try ConsentString(consentString: storedConsentString)
-
-        for i in 0..<forIds.count {
-            results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
-        }
-        return results
-    }
-
-    /**
-     Checks if the IAB purposes passed as parameter were given consent or not.
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter _: an `Array` of purpose ids
-     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding purpose.
-     */
-    public func getIABPurposeConsents(_ forIds: [Int8]) throws -> [Bool] {
-        var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try ConsentString(consentString: storedConsentString)
-
-        for i in 0..<forIds.count {
-            results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
-        }
-        return results
-    }
-
-    internal func storeIABVars(consentString: ConsentString) {
-        sourcePoint.getGdprStatus { gdprApplies in
-            UserDefaults.standard.setValue(gdprApplies ? "1" : "0", forKey: GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        }
-
-        UserDefaults.standard.setValue(consentString.consentString, forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
-
-        // Generate parsed vendor consents string
-        var parsedVendorConsents = [Character](repeating: "0", count: consentString.maxVendorId)
-        if(parsedVendorConsents.count > 0) {
-            for i in 1...consentString.maxVendorId {
-                if consentString.isVendorAllowed(vendorId: i) {
-                    parsedVendorConsents[i - 1] = "1"
-                }
-            }
-        }
-        UserDefaults.standard.setValue(String(parsedVendorConsents), forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
-
-        // Generate parsed purpose consents string
-        var parsedPurposeConsents = [Character](repeating: "0", count: Int(consentString.maxPurposes))
-        for i in consentString.purposesAllowed {
-            parsedPurposeConsents[Int(i) - 1] = "1"
-        }
-        UserDefaults.standard.setValue(String(parsedPurposeConsents), forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
-    }
-
     /// Clears all IAB related data from the UserDefaults
     public func clearIABConsentData() {
-        let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
     }
     
     public func clearInternalData(){
