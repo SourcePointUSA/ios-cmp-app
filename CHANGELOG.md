@@ -1,3 +1,6 @@
+## 5.0.0 (January, 11, 2020)
+* added support to [TCFv2](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details). The public API remained the same and the upgrade from v4 to v5 should require no development effort.
+
 ## 4.1.0 (January, 11, 2020)
 * clearAllData() public method added to ConsentViewControler
 
