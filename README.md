@@ -4,18 +4,18 @@
 ## How to install
 
 ### CocoaPods
-:heavy_exclamation_mark: **IMPORTANT** if you're not yet using the new message builder, make sure to use pod version < 3.
+:heavy_exclamation_mark: **IMPORTANT** if you still haven't moved to TCFv2, use `v4.x`.
 ```
-pod 'ConsentViewController', '< 3.0.0'
+pod 'ConsentViewController', '< 5.0.0'
 ```
-The README for the older version can be found [here](https://github.com/SourcePointUSA/ios-cmp-app/blob/d3c999a2245d2e5660806321c3979eaa32838642/README.md).
+Refer to its [README](https://github.com/SourcePointUSA/ios-cmp-app/blob/163683c76513c61a7892c722014b5b2e45864ee8/README.md) for more information.
 
 
 We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to install our SDK.
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '4.1.0'
+pod 'ConsentViewController', '5.0.0'
 ```
 ### Carthage
 We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Step-by-step-guide-for-Carthage) for it.
@@ -33,19 +33,29 @@ It's pretty simple, here are 5 easy steps for you:
 
 ### Swift
 ```swift
-import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController, GDPRConsentDelegate {
+class ViewController: UIViewController {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 2372,
-        propertyName: try! GDPRPropertyName("mobile.demo"),
-        PMId: "5c0e81b7d74b3c30c6852301",
-        campaignEnv: .Stage,
+        propertyId: 7094,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+        PMId: "100699",
+        campaignEnv: .Public,
         consentDelegate: self
     )}()
-    
+
+    @IBAction func onPrivacySettingsTap(_ sender: Any) {
+        consentViewController.loadPrivacyManager()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        consentViewController.loadMessage()
+    }
+}
+
+extension ViewController: GDPRConsentDelegate {
     func consentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
@@ -56,22 +66,15 @@ class ViewController: UIViewController, GDPRConsentDelegate {
     
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
-        userConsent.acceptedVendors.forEach({ vendorId in print("Vendor: \(vendorId)") })
-        userConsent.acceptedCategories.forEach({ purposeId in print("Purpose: \(purposeId)") })
-        print("Consent String: \(UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>")")
+        userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
+        userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
+        
+        // IAB Related Data
+        print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.keys.sorted()))
     }
 
     func onError(error: GDPRConsentViewControllerError?) {
         print("Error: \(error.debugDescription)")
-    }
-
-    @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        consentViewController.loadPrivacyManager()
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        consentViewController.loadMessage()
     }
 }
 ```
@@ -92,15 +95,15 @@ class ViewController: UIViewController, GDPRConsentDelegate {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    GDPRPropertyName *propertyName = [[GDPRPropertyName alloc] init:@"mobile.demo" error:NULL];
+    GDPRPropertyName *propertyName = [[GDPRPropertyName alloc] init:@"tcfv2.mobile.demo" error:NULL];
 
     cvc = [[GDPRConsentViewController alloc]
-           initWithAccountId:22
-           propertyId:2372
-           propertyName:propertyName
-           PMId:@"5c0e81b7d74b3c30c6852301"
-           campaignEnv:GDPRCampaignEnvStage
-           consentDelegate:self];
+           initWithAccountId: 22
+           propertyId: 7094
+           propertyName: propertyName
+           PMId: @"100699"
+           campaignEnv: GDPRCampaignEnvPublic
+           consentDelegate: self];
 
     [cvc loadMessage];
 }
