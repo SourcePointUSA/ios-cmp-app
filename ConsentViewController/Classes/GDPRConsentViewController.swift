@@ -11,62 +11,46 @@ import UIKit
 public typealias TargetingParams = [String:String]
 
 @objcMembers open class GDPRConsentViewController: UIViewController {
-    static let META_KEY: String = "sp_gdpr_meta"
-    /// :nodoc:
-    static let EU_CONSENT_KEY: String = "sp_gdpr_euconsent"
-    /// :nodoc:
-    static let GDPR_UUID_KEY: String = "sp_gdpr_consentUUID"
-    
-    static let GDPR_AUTH_ID_KEY: String = "sp_gdpr_authId"
-
-    /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
-    static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
-
-    /// If the user is subject to GDPR, reading for this key in the `UserDefaults` will return "1" otherwise "0"
-    static public let IAB_CONSENT_SUBJECT_TO_GDPR: String = "IABConsent_SubjectToGDPR"
-
-    /// They key used to store the IAB Consent string for the user in the `UserDefaults`
-    static public let IAB_CONSENT_CONSENT_STRING: String = "IABConsent_ConsentString"
-
-    /// They key used to read and write the parsed IAB Purposes consented by the user in the `UserDefaults`
-    static public let IAB_CONSENT_PARSED_PURPOSE_CONSENTS: String = "IABConsent_ParsedPurposeConsents"
-
-    /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
-    static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
+    static let META_KEY = "sp_gdpr_meta"
+    static let EU_CONSENT_KEY = "sp_gdpr_euconsent"
+    static let GDPR_UUID_KEY = "sp_gdpr_consentUUID"
+    static let GDPR_AUTH_ID_KEY = "sp_gdpr_authId"
+    static let IAB_KEY_PREFIX = "IABTCF_"
+    static let IAB_CMP_SDK_ID_KEY = "IABTCF_CmpSdkID"
+    static let IAB_CMP_SDK_ID = 6
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
-    public var euconsent: ConsentString
+    public var euconsent: String
 
     /// The UUID assigned to a user, available after calling `loadMessage`
     public var gdprUUID: GDPRUUID
+    
+    /// All data related to TCFv2
+    public var tcfData: GDPRTcfData
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = TimeInterval(300)
+    
+    /// will instruct the SDK to clean consent data if an error occurs
+    public var shouldCleanConsentOnError = true
+
+    /// the instance of `GDPRConsentDelegate` which the `GDPRConsentViewController` will use to perform the lifecycle methods
+    public weak var consentDelegate: GDPRConsentDelegate?
 
     private let accountId: Int
     private let propertyName: GDPRPropertyName
     private let propertyId: Int
     private let pmId: String
-    
     private let targetingParams: TargetingParams
-
     private let sourcePoint: SourcePointClient
     private lazy var logger = { return Logger() }()
-
-    /// will instruct the SDK to clean consent data if an error occurs
-    public var shouldCleanConsentOnError = true
-
-    public weak var consentDelegate: GDPRConsentDelegate?
     private var messageViewController: GDPRMessageViewController?
-    
+    private var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
     enum LoadingStatus: String {
         case Ready = "Ready"
         case Presenting = "Presenting"
         case Loading = "Loading"
     }
-
-    // used in order not to load the message ui multiple times
-    private var loading: LoadingStatus = .Ready
 
     private func remove(asChildViewController viewController: UIViewController?) {
         guard let viewController = viewController else { return }
@@ -112,8 +96,12 @@ public typealias TargetingParams = [String:String]
 
         self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ??
             UUID().uuidString
-        self.euconsent = (try? ConsentString(consentString: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
+        self.euconsent = UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? ""
         
+        self.tcfData = UserDefaults.standard.dictionaryRepresentation()
+            .filter { (key, _) in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
+            .mapValues { item in StringOrInt(value: item) }
+
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
             propertyId: propertyId,
@@ -127,7 +115,8 @@ public typealias TargetingParams = [String:String]
         sourcePoint.onError = onError
         modalPresentationStyle = .overFullScreen
         
-        UserDefaults.standard.setValue(true, forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
+        /// - note: according to the IAB this value needs to be initialised as early as possible to signal to vendors, the app has a CMP
+        UserDefaults.standard.setValue(GDPRConsentViewController.IAB_CMP_SDK_ID, forKey: GDPRConsentViewController.IAB_CMP_SDK_ID_KEY)
     }
     
     /**
@@ -155,19 +144,43 @@ public typealias TargetingParams = [String:String]
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func loadNativeMessage(forAuthId authId: String?) {
+    private func handleNativeMessageResponse(_ response: MessageResponse) {
+        self.loading = .Ready
+        if let message = response.msgJSON {
+            self.consentDelegate?.consentUIWillShow?(message: message)
+        } else {
+            self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+        }
+    }
+    
+    private func handleWebMessageResponse(_ response: MessageResponse) {
+       if let url = response.url {
+           self.loadMessage(fromUrl: url)
+       } else {
+           self.loading = .Ready
+           self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+       }
+   }
+    
+    private func loadGDPRMessage(native: Bool, authId: String?) {
         if loading == .Ready {
             loading = .Loading
-            sourcePoint.getMessageContents(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
+            if didAuthIdChange(newAuthId: (authId)){
+                resetConsentData()
+                UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+            }
+            sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
                 self?.gdprUUID = messageResponse.uuid
-                self?.loading = .Ready
-                if let message = messageResponse.msgJSON {
-                    self?.consentDelegate?.consentUIWillShow?(message: message)
-                } else {
-                    self?.onConsentReady(gdprUUID: messageResponse.uuid, userConsent: messageResponse.userConsent)
-                }
+                
+                native ?
+                    self?.handleNativeMessageResponse(messageResponse) :
+                    self?.handleWebMessageResponse(messageResponse)
             }
         }
+    }
+    
+    public func loadNativeMessage(forAuthId authId: String?) {
+       loadGDPRMessage(native: true, authId: authId)
     }
     
     private func loadMessage(fromUrl url: URL) {
@@ -180,7 +193,7 @@ public typealias TargetingParams = [String:String]
     /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
     /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
     public func loadMessage() {
-        loadMessage(forAuthId: nil)
+        loadGDPRMessage(native: false, authId: nil)
     }
     
     /// Will first check if there's a message to show according to the scenario, for the `authId` provided.
@@ -189,22 +202,7 @@ public typealias TargetingParams = [String:String]
     ///
     /// - Parameter forAuthId: any arbitrary token that uniquely identifies an user in your system.
     public func loadMessage(forAuthId authId: String?) {
-        if loading == .Ready {
-            loading = .Loading
-            if didAuthIdChange(newAuthId: (authId)){
-                resetConsentData()
-                UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
-            }
-            sourcePoint.getMessageUrl(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] message in
-                self?.gdprUUID = message.uuid
-                if let url = message.url {
-                    self?.loadMessage(fromUrl: url)
-                } else {
-                    self?.loading = .Ready
-                    self?.onConsentReady(gdprUUID: message.uuid, userConsent: message.userConsent)
-                }
-            }
-        }
+        loadGDPRMessage(native: false, authId: authId)
     }
     
     private func didAuthIdChange(newAuthId: String?) -> Bool {
@@ -212,7 +210,7 @@ public typealias TargetingParams = [String:String]
     }
     
     private func resetConsentData(){
-        self.euconsent = ConsentString.empty
+        self.euconsent = ""
         self.gdprUUID = UUID().uuidString
         clearAllData()
     }
@@ -228,78 +226,15 @@ public typealias TargetingParams = [String:String]
         }
     }
 
-    /**
-     Get the IAB consents given to each vendor id in the array passed as parameter
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter _: an `Array` of vendor ids
-     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding vendor.
-     */
-    public func getIABVendorConsents(_ forIds: [Int]) throws -> [Bool] {
-        var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try ConsentString(consentString: storedConsentString)
-
-        for i in 0..<forIds.count {
-            results[i] = consentString.isVendorAllowed(vendorId: forIds[i])
-        }
-        return results
-    }
-
-    /**
-     Checks if the IAB purposes passed as parameter were given consent or not.
-
-     - Precondition: this function should be called either during the `Callback` `onConsentReady` or after it has returned.
-     - Parameter _: an `Array` of purpose ids
-     - Returns: an `Array` of `Bool` indicating if the user has given consent to the corresponding purpose.
-     */
-    public func getIABPurposeConsents(_ forIds: [Int8]) throws -> [Bool] {
-        var results = Array(repeating: false, count: forIds.count)
-        let storedConsentString = UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? ""
-        let consentString = try ConsentString(consentString: storedConsentString)
-
-        for i in 0..<forIds.count {
-            results[i] = consentString.purposeAllowed(forPurposeId: forIds[i])
-        }
-        return results
-    }
-
-    internal func storeIABVars(consentString: ConsentString) {
-        sourcePoint.getGdprStatus { gdprApplies in
-            UserDefaults.standard.setValue(gdprApplies ? "1" : "0", forKey: GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        }
-
-        UserDefaults.standard.setValue(consentString.consentString, forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
-
-        // Generate parsed vendor consents string
-        var parsedVendorConsents = [Character](repeating: "0", count: consentString.maxVendorId)
-        if(parsedVendorConsents.count > 0) {
-            for i in 1...consentString.maxVendorId {
-                if consentString.isVendorAllowed(vendorId: i) {
-                    parsedVendorConsents[i - 1] = "1"
-                }
-            }
-        }
-        UserDefaults.standard.setValue(String(parsedVendorConsents), forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
-
-        // Generate parsed purpose consents string
-        var parsedPurposeConsents = [Character](repeating: "0", count: Int(consentString.maxPurposes))
-        for i in consentString.purposesAllowed {
-            parsedPurposeConsents[Int(i) - 1] = "1"
-        }
-        UserDefaults.standard.setValue(String(parsedPurposeConsents), forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
-    }
-
     /// Clears all IAB related data from the UserDefaults
     public func clearIABConsentData() {
-        let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS)
+        UserDefaults.standard.dictionaryRepresentation()
+            .keys
+            .filter { key in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
+            .forEach { key in UserDefaults.standard.removeObject(forKey: key) }
     }
     
+    /// Clears meta data used by the SDK. If you're using this method in your app, something is weird...
     public func clearInternalData(){
         let userDefaults = UserDefaults.standard
         userDefaults.removeObject(forKey: GDPRConsentViewController.META_KEY)
@@ -308,6 +243,7 @@ public typealias TargetingParams = [String:String]
         userDefaults.removeObject(forKey: GDPRConsentViewController.EU_CONSENT_KEY)
     }
     
+    /// Clears all consent data from the UserDefaults. Use this method if you want to **completely** wipe the user's consent data from the device.
     public func clearAllData(){
         clearInternalData()
         clearIABConsentData()
@@ -346,7 +282,8 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
                 userConsent: GDPRUserConsent(
                     acceptedVendors: consents?.vendors.accepted ?? [],
                     acceptedCategories: consents?.categories.accepted ?? [],
-                    euconsent: euconsent
+                    euconsent: euconsent,
+                    tcfData: tcfData
                 )
             )
         }
@@ -360,8 +297,8 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.gdprUUID = gdprUUID
         self.euconsent = userConsent.euconsent
-        storeIABVars(consentString: euconsent)
-        UserDefaults.standard.setValue(euconsent.consentString, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
+        UserDefaults.standard.setValuesForKeys(userConsent.tcfData.mapValues{ item in item.value })
+        UserDefaults.standard.setValue(euconsent, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
         UserDefaults.standard.synchronize()
         consentDelegate?.onConsentReady?(gdprUUID: gdprUUID, userConsent: userConsent)

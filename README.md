@@ -107,7 +107,7 @@ class ViewController: UIViewController, GDPRConsentDelegate {
 
 - (void)onConsentReadyWithGdprUUID:(NSString *)gdprUUID userConsent:(GDPRUserConsent *)userConsent {
     NSLog(@"ConsentUUID: %@", gdprUUID);
-    NSLog(@"ConsentString: %@", userConsent.euconsent.consentString);
+    NSLog(@"ConsentString: %@", userConsent.euconsent);
     for (id vendorId in userConsent.acceptedVendors) {
         NSLog(@"Consented to Vendor(id: %@)", vendorId);
     }

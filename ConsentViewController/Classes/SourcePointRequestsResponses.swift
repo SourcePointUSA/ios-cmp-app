@@ -10,13 +10,9 @@ import Foundation
 typealias Meta = String
 public typealias GDPRUUID = String
 
-struct GdprStatus: Codable {
-    let gdprApplies: Bool
-}
-
 struct MessageRequest: Encodable {
     let uuid: GDPRUUID?
-    let euconsent: ConsentString?
+    let euconsent: String
     let authId: String?
     let accountId: Int
     let propertyId: Int
@@ -65,11 +61,10 @@ struct ActionResponse: Decodable {
 }
 
 @objc public class PMConsent: NSObject, Codable {
-    let accepted, rejected: [String]
+    let accepted: [String]
     
-    public init(accepted: [String], rejected: [String]) {
+    public init(accepted: [String]) {
         self.accepted = accepted
-        self.rejected = rejected
     }
 }
 

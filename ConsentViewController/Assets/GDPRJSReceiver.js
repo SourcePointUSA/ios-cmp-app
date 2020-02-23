@@ -2,7 +2,7 @@
   var postToWebView = function (webview) {
     return function(name, body) {
       webview.postMessage({ name: name, body: body || {} });
-    }
+    };
   }(window.webkit.messageHandlers.GDPRJSReceiver);
 
   window.SDK = function (postToWebView) {
@@ -13,7 +13,7 @@
       onPMReady: function() {
         postToWebView("onPMReady");
       },
-      onAction: function(action) { // action: { id: Int, type: Int }
+      onAction: function(action) {
         postToWebView("onAction", action);
       },
       onError: function(error) {
@@ -22,7 +22,7 @@
       onMessageEvent: function(payload) {
         postToWebView("onMessageEvent", payload);
       }
-    }
+    };
   }(postToWebView);
 
   var getActionFromMessage = function (actions) {
@@ -31,43 +31,58 @@
     return { id: String(choiceData.choice_id), type: choiceData.type };
   };
 
-  var getActionFromPM = function (payload) {
+  var getActionFromPM = function (payload, actionType) {
+    var _id = function(consent) { return consent._id; };
+    var consents = payload.consents && {
+        vendors: {
+            accepted: payload.vendors.map(_id)
+        },
+        categories: {
+            accepted: payload.categories.map(_id)
+        }
+    };
     return {
-      type: payload.actionType,
-      consents: payload.consents || {
-        vendors: { rejected: [], accepted: [] },
-        categories: { rejected: [], accepted: [] }
+      type: actionType,
+      consents: consents || {
+        vendors: { accepted: [] },
+        categories: { accepted: [] }
       }
     };
-  }
+  };
 
   var handleMessageEvent = function(SDK) {
-    return function(name, payload) {
-      switch(name) {
+    return function(eventData) {
+        debugger
+      switch(eventData.name) {
         case "sp.showMessage":
           SDK.onMessageReady();
           break;
         case "sp.hideMessage":
-          payload.actionType ?
-            SDK.onAction(getActionFromPM(payload)) :
-            SDK.onAction(getActionFromMessage(payload));
+          eventData.fromPM ?
+            SDK.onAction(getActionFromPM(eventData.payload, eventData.actionType)) :
+            SDK.onAction(getActionFromMessage(eventData.payload));
           break;
         default:
-          payload.action = name;
-          SDK.onMessageEvent(payload);
+          eventData.payload.action = eventData.name;
+          SDK.onMessageEvent(eventData.payload);
       }
-    }
+    };
   };
 
   var handleMessageOrPMEvent = function (SDK) {
     return function (event) {
       try {
-        handleMessageEvent(SDK)(event.name, event.payload || event.actions || {});
+        handleMessageEvent(SDK)({
+          name: event.name,
+          fromPM: event.fromPM,
+          actionType: event.actionType,
+          payload: event.payload || event.actions || {}
+        });
       } catch (error) {
         SDK.onError(error);
       }
-    }
+    };
   }(window.SDK);
 
-  window.postMessage = handleMessageOrPMEvent
+  window.postMessage = handleMessageOrPMEvent;
 })();
