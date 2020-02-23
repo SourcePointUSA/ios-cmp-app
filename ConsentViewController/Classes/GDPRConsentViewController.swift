@@ -15,7 +15,7 @@ public typealias TargetingParams = [String:String]
     static let EU_CONSENT_KEY = "sp_gdpr_euconsent"
     static let GDPR_UUID_KEY = "sp_gdpr_consentUUID"
     static let GDPR_AUTH_ID_KEY = "sp_gdpr_authId"
-    static let IAB_KEY_PREFIX = "IABTCF_"
+    static public let IAB_KEY_PREFIX = "IABTCF_"
     static let IAB_CMP_SDK_ID_KEY = "IABTCF_CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
 

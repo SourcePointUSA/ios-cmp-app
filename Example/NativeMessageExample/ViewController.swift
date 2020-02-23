@@ -15,11 +15,11 @@ class ViewController: UIViewController {
 
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 2372,
-        propertyName: try! GDPRPropertyName("mobile.demo"),
-        PMId: "5c0e81b7d74b3c30c6852301",
+        propertyId: 7094,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+        PMId: "100699",
         campaignEnv: .Public,
-        targetingParams: ["native": "true"], // this is only necessary due to our own scenario
+        targetingParams: ["native": "true"], // this is only necessary because of our own scenario
         consentDelegate: self
     )}()
 
@@ -54,7 +54,7 @@ extension ViewController: GDPRConsentDelegate {
 
     /// called after an action is taken by the user and the consent info is returned by SourcePoint's endpoints
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        inspectData("onConsentReady")
+        print("onConsentReady: ", storedSDKData())
         print("onConsentReady: ", gdprUUID, userConsent)
     }
 
@@ -87,17 +87,10 @@ extension ViewController {
         }
     }
 
-    func inspectData(_ tag: String) {
-        print(tag, UserDefaults.standard.dictionaryWithValues(forKeys: [
-            "sp_gdpr_meta",
-            "sp_gdpr_euconsent",
-            "sp_gdpr_consentUUID",
-            GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT,
-            GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR,
-            GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING,
-            GDPRConsentViewController.IAB_CONSENT_PARSED_PURPOSE_CONSENTS,
-            GDPRConsentViewController.IAB_CONSENT_PARSED_VENDOR_CONSENTS
-        ]))
+    func storedSDKData() -> [String: Any] {
+        UserDefaults.standard.dictionaryRepresentation().filter { (key, _) in
+            key.starts(with: "sp_gdpr_") || key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX)
+        }
     }
 
     func showActivityIndicator(on parentView: UIView?) {
