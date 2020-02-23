@@ -17,10 +17,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
     
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 2372,
-        propertyName: try! GDPRPropertyName("mobile.demo"),
-        PMId: "5c0e81b7d74b3c30c6852301",
-        campaignEnv: .Stage,
+        propertyId: 7094,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+        PMId: "100699",
+        campaignEnv: .Public,
         consentDelegate: self
     )}()
     
@@ -58,7 +58,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.userData = [
             "gdprUUID: \(gdprUUID)",
-            "consent string: \(userConsent.euconsent.consentString)"
+            "consent string: \(userConsent.euconsent)"
         ]
         self.consents =
             userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
