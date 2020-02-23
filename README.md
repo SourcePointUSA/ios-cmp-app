@@ -17,6 +17,7 @@ In your `Podfile` add the following line to your app target:
 ```
 pod 'ConsentViewController', '5.0.0'
 ```
+
 ### Carthage
 We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Step-by-step-guide-for-Carthage) for it.
 Let us know if we missed any step.
