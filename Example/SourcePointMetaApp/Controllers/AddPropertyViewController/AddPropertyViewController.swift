@@ -220,14 +220,17 @@ class AddPropertyViewController: BaseViewController,TargetingParamCellDelegate, 
     }
     
     func loadConsentManager(propertyDetails : PropertyDetailsModel) {
-        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign,consentDelegate: self)
-            
-//            if let authId = propertyDetails.authId {
-//                consentViewController.loadMessage(forAuthId: authId)
-//            }else {
-//                consentViewController.loadMessage()
-//            }
-        consentViewController!.loadMessage()
+        // optional, set custom targeting parameters supports Strings and Integers
+        var targetingParameters = [String:String]()
+        for targetingParam in targetingParams {
+            targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
+        }
+        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        if let authId = propertyDetails.authId {
+            consentViewController?.loadMessage(forAuthId: authId)
+        }else {
+            consentViewController?.loadMessage()
+        }
     }
     
     func consentUIWillShow() {
