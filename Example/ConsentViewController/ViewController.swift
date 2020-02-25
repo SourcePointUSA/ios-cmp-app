@@ -31,7 +31,11 @@ class ViewController: UIViewController, GDPRConsentDelegate {
         print("ConsentUUID: \(gdprUUID)")
         userConsent.acceptedVendors.forEach({ vendorId in print("Vendor: \(vendorId)") })
         userConsent.acceptedCategories.forEach({ purposeId in print("Purpose: \(purposeId)") })
-        print("Consent String: \(UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>")")
+        print(UserDefaults.standard.dictionaryRepresentation().filter { (key, _) in
+            key.starts(with: "sp_") || key.starts(with: "IAB")
+        })
+        let consentString = UserDefaults.standard.string(forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING) ?? "<empty>"
+        print("Consent String: \(consentString)")
     }
 
     func onError(error: GDPRConsentViewControllerError?) {
