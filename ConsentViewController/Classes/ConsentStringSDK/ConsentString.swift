@@ -15,12 +15,16 @@ import Foundation
         return lhs.consentData == rhs.consentData
     }
     
-    required public init(from decoder: Decoder) throws {
-        self.consentString = try decoder.singleValueContainer().decode(String.self).fromWebSafe()
-        guard let dataValue = Data(base64Encoded: self.consentString.base64Padded) else {
+    static func encodedData(_ consentString: String) throws -> Data {
+        guard let dataValue = Data(base64Encoded: consentString.fromWebSafe().base64Padded) else {
             throw ConsentStringError.base64DecodingFailed
         }
-        consentData = dataValue
+        return dataValue
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        self.consentString = try decoder.singleValueContainer().decode(String.self)
+        consentData = try ConsentString.encodedData(consentString)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -34,7 +38,7 @@ import Foundation
     public var consentString: String {
         //error correction in didSet resets old value if base64decoding fails
         didSet {
-            guard let dataValue = Data(base64Encoded: consentString.base64Padded) else {
+            guard let dataValue = try? ConsentString.encodedData(consentString) else {
                 print("New Consent String Value is not base64 decodable. Throwing away changes.")
                 consentString = oldValue
                 return
@@ -52,10 +56,7 @@ import Foundation
     */
     public required init(consentString: String) throws {
         self.consentString = consentString
-        guard let dataValue = Data(base64Encoded: self.consentString.base64Padded) else {
-            throw ConsentStringError.base64DecodingFailed
-        }
-        consentData = dataValue
+        consentData = try ConsentString.encodedData(self.consentString)
     }
     
     private override init() {
