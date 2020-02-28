@@ -19,7 +19,7 @@ pod 'ConsentViewController', '5.0.0'
 ```
 
 ### Carthage
-We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Step-by-step-guide-for-Carthage) for it.
+We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Carthage-SDK-integration-guide) for it.
 Let us know if we missed any step.
 
 ## How to use it
