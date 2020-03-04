@@ -874,6 +874,7 @@
 					1997B639238FDCE80079AF34 = {
 						CreatedOnToolsVersion = 11.1;
 						DevelopmentTeam = 6KYEQLUC5A;
+						LastSwiftMigration = 1110;
 						ProvisioningStyle = Manual;
 					};
 					1997B64E238FDCF30079AF34 = {
@@ -886,12 +887,13 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 6KYEQLUC5A;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1110;
 						ProvisioningStyle = Automatic;
 					};
 					8231B13C22BA5A6B00D2669B = {
 						CreatedOnToolsVersion = 10.2.1;
 						DevelopmentTeam = 6KYEQLUC5A;
+						LastSwiftMigration = 1110;
 						ProvisioningStyle = Automatic;
 					};
 					82D8FEDB23DC753400F28D74 = {
@@ -902,6 +904,7 @@
 					82FC4D3923983231002F08E5 = {
 						CreatedOnToolsVersion = 11.2.1;
 						DevelopmentTeam = 6KYEQLUC5A;
+						LastSwiftMigration = 1110;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -1439,7 +1442,7 @@
 				PRODUCT_NAME = "GDPR-MetaApp";
 				PROVISIONING_PROFILE_SPECIFIER = MetaAppDevProfile;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1466,7 +1469,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.metaapp;
 				PRODUCT_NAME = "GDPR-MetaApp";
 				PROVISIONING_PROFILE_SPECIFIER = MetaAppDevProfile;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1500,7 +1503,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GDPR-MetaApp.app/GDPR-MetaApp";
 			};
@@ -1531,7 +1534,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GDPR-MetaApp.app/GDPR-MetaApp";
 			};
@@ -1658,7 +1661,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1678,7 +1681,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1707,7 +1710,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.AuthExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1733,7 +1736,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.AuthExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1814,7 +1817,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sourcepoint.ConsentViewController-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsentViewController_Example.app/ConsentViewController_Example";
 			};
@@ -1840,7 +1843,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sourcepoint.ConsentViewController-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsentViewController_Example.app/ConsentViewController_Example";
 			};
