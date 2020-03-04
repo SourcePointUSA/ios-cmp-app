@@ -146,7 +146,7 @@ class AddPropertyViewController: BaseViewController,TargetingParamCellDelegate, 
             if targetingParams.count == 0 {
                 targetingParams.append(targetingParamModel)
             } else if targetingParams.count > 0 {
-                if let targetingIndex = targetingParams.index(where: { $0.targetingKey == targetingKeyString}) {
+                if let targetingIndex = targetingParams.firstIndex(where: { $0.targetingKey == targetingKeyString}) {
                     var targetingParamModelLocal = targetingParams[targetingIndex]
                     targetingParamModelLocal.targetingValue = targetingValueString
                     targetingParams.remove(at: targetingIndex)
