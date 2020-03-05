@@ -145,6 +145,20 @@ In Obj-C that'd be:
 
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
 
+## Setting Targeting Parameters
+
+In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example: 
+
+```swift
+lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
+       //other parametters here...
+        targetingParams:["language":"fr"]
+    )}()
+```
+
+In this example a key/value pair "language":"fr" is passed to the sp scenario and can be useded, wiht the proper scenario setup, to show a french message instead of a english one.
+
+
 ### Rendering the message natively
 
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together. 
