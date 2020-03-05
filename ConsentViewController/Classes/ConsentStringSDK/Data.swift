@@ -92,7 +92,7 @@ extension Data {
      */
     func data(fromBit startBit:Int64, toBit endBit:Int64) -> Data {
         let byteArray = bytes(fromBit: startBit, toBit: endBit)
-        return Data(bytes: byteArray)
+        return Data(_: byteArray)
     }
     
     /**
