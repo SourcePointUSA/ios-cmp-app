@@ -25,7 +25,7 @@
         <!--New Property-->
         <scene sceneID="sbr-vP-gOd">
             <objects>
-                <viewController storyboardIdentifier="AddPropertyViewController" id="cyC-sw-8W2" customClass="AddPropertyViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPropertyViewController" id="cyC-sw-8W2" customClass="AddPropertyViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ARi-0k-eP1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,7 +40,7 @@
                                                 <rect key="frame" x="20" y="32" width="100" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="accountIDLabel" label="accountIDLabel"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="100" id="fa7-11-glj"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="fa7-11-glj"/>
                                                     <constraint firstAttribute="height" constant="30" id="fdm-vV-zVo"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
@@ -58,7 +58,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYc-TX-xHH" userLabel="PropertyId:">
-                                                <rect key="frame" x="20" y="81" width="94.5" height="30"/>
+                                                <rect key="frame" x="20" y="81" width="97" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="propertyIdLabel" label="propertyIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="wrz-rX-8ML"/>
@@ -78,7 +78,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGV-0o-HrB" userLabel="Property:">
-                                                <rect key="frame" x="20" y="130" width="75" height="30"/>
+                                                <rect key="frame" x="20" y="130" width="97" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="propertyLabel" label="propertyLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="B94-C3-Bh5"/>
@@ -98,7 +98,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auth Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnx-Kc-2mw">
-                                                <rect key="frame" x="20" y="179" width="62.5" height="30"/>
+                                                <rect key="frame" x="20" y="179" width="97" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="x3l-RW-w5J"/>
@@ -109,7 +109,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-Gx-AGf">
-                                                <rect key="frame" x="20" y="233" width="50.5" height="30"/>
+                                                <rect key="frame" x="20" y="233" width="97" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="981-1H-W8v"/>
@@ -164,7 +164,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAT-eK-kxm" userLabel="TargetingKeyLabel">
-                                                <rect key="frame" x="20" y="366" width="39.5" height="30"/>
+                                                <rect key="frame" x="20" y="366" width="49" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingKey" label="targetingKey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="hWr-eL-2u6"/>
@@ -210,11 +210,11 @@
                                                 <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IC5-sE-xTQ" userLabel="AddButton">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IC5-sE-xTQ" userLabel="AddButton">
                                                 <rect key="frame" x="295" y="467" width="60" height="20"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="60" id="xCE-tU-Nj1"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="xCE-tU-Nj1"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Heavy" family="SF Pro Text" pointSize="14"/>
                                                 <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -245,7 +245,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="465"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="targetingParamCell" id="P4G-ju-zL2" customClass="TargetingParamCell" customModule="SourcePointMetaApp" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="targetingParamCell" id="P4G-ju-zL2" customClass="TargetingParamCell" customModule="GDPR_MetaApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P4G-ju-zL2" id="ea8-m7-aEF">
@@ -307,6 +307,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="leading" secondItem="0Yc-bl-D6Y" secondAttribute="trailing" constant="8" symbolic="YES" id="0fD-cK-HX4"/>
+                                            <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="yGV-0o-HrB" secondAttribute="trailing" constant="8" symbolic="YES" id="4Bt-8u-xgX"/>
                                             <constraint firstAttribute="trailing" secondItem="HoB-pj-18x" secondAttribute="trailing" constant="20" id="62Q-GM-7rk"/>
                                             <constraint firstAttribute="trailing" secondItem="ZdE-5Q-Bgq" secondAttribute="trailing" constant="25" id="6WS-nS-blX"/>
                                             <constraint firstItem="pAT-eK-kxm" firstAttribute="top" secondItem="QN6-iP-uvT" secondAttribute="bottom" constant="15" id="6n9-YB-Hc3"/>
@@ -323,10 +324,12 @@
                                             <constraint firstItem="0Yc-bl-D6Y" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="HEN-V1-XKm"/>
                                             <constraint firstAttribute="trailing" secondItem="QN6-iP-uvT" secondAttribute="trailing" constant="20" symbolic="YES" id="I3D-TQ-gmq"/>
                                             <constraint firstItem="qxB-D1-vpN" firstAttribute="top" secondItem="0iU-bH-K9k" secondAttribute="bottom" constant="1" id="Jew-DO-hcL"/>
+                                            <constraint firstItem="9xQ-qp-kCe" firstAttribute="leading" secondItem="pAT-eK-kxm" secondAttribute="trailing" constant="8" symbolic="YES" id="Kf9-pQ-B1K"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="HoB-pj-18x" secondAttribute="leading" id="MCh-oF-Uob"/>
                                             <constraint firstItem="0iU-bH-K9k" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="MhH-z5-yAG"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="centerY" secondItem="yGV-0o-HrB" secondAttribute="centerY" id="NAF-yd-ozu"/>
                                             <constraint firstItem="NYc-TX-xHH" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="NG1-eX-sdJ"/>
+                                            <constraint firstItem="T1z-3i-XRG" firstAttribute="leading" secondItem="fnx-Kc-2mw" secondAttribute="trailing" constant="8" symbolic="YES" id="RLR-3A-lMh"/>
                                             <constraint firstItem="IC5-sE-xTQ" firstAttribute="top" secondItem="V8G-su-8BI" secondAttribute="bottom" constant="25" id="Syd-Wj-hBg"/>
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="centerY" secondItem="NYc-TX-xHH" secondAttribute="centerY" id="VmF-OX-rYM"/>
                                             <constraint firstItem="qxB-D1-vpN" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" id="WPy-h2-nl2"/>
@@ -340,6 +343,7 @@
                                             <constraint firstItem="V8G-su-8BI" firstAttribute="centerY" secondItem="c67-NQ-pCu" secondAttribute="centerY" id="fHf-Lg-fsQ"/>
                                             <constraint firstItem="c67-NQ-pCu" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="gfY-7a-waR"/>
                                             <constraint firstItem="IC5-sE-xTQ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="I8k-6P-4hr" secondAttribute="trailing" constant="8" symbolic="YES" id="gkt-2w-Kc6"/>
+                                            <constraint firstItem="ILg-hD-20L" firstAttribute="leading" secondItem="lJg-Gx-AGf" secondAttribute="trailing" constant="8" symbolic="YES" id="gwu-Ys-OUl"/>
                                             <constraint firstItem="0iU-bH-K9k" firstAttribute="top" secondItem="IC5-sE-xTQ" secondAttribute="bottom" constant="2" id="hYh-7J-uhx"/>
                                             <constraint firstItem="VeY-YI-wzN" firstAttribute="leading" secondItem="fa1-sV-qzO" secondAttribute="trailing" constant="5" id="i7w-6W-ONS"/>
                                             <constraint firstAttribute="trailing" secondItem="T1z-3i-XRG" secondAttribute="trailing" constant="20" id="jfJ-P1-3OM"/>
@@ -355,6 +359,7 @@
                                             <constraint firstAttribute="trailing" secondItem="ILg-hD-20L" secondAttribute="trailing" constant="20" id="sY0-Yu-2Wg"/>
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="top" secondItem="VeY-YI-wzN" secondAttribute="bottom" constant="15" id="sy1-Pm-iCD"/>
                                             <constraint firstItem="T1z-3i-XRG" firstAttribute="leading" secondItem="xLh-rs-wyR" secondAttribute="leading" id="tmW-2U-ZTP"/>
+                                            <constraint firstItem="HoB-pj-18x" firstAttribute="leading" secondItem="NYc-TX-xHH" secondAttribute="trailing" constant="8" symbolic="YES" id="uay-sk-rY1"/>
                                             <constraint firstItem="lJg-Gx-AGf" firstAttribute="centerY" secondItem="ILg-hD-20L" secondAttribute="centerY" id="vtN-WW-r4i"/>
                                             <constraint firstAttribute="trailing" secondItem="VeY-YI-wzN" secondAttribute="trailing" constant="20" id="woA-TH-FRQ"/>
                                             <constraint firstItem="QN6-iP-uvT" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="wvU-xr-iNt"/>
@@ -413,7 +418,7 @@
         <!--Property Debug Info-->
         <scene sceneID="5ca-lh-QwF">
             <objects>
-                <viewController storyboardIdentifier="ConsentDetailsViewController" id="Lyi-Xh-6dq" customClass="ConsentDetailsViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConsentDetailsViewController" id="Lyi-Xh-6dq" customClass="ConsentDetailsViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GBV-7x-oY4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -460,14 +465,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose Consents List" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="huu-nZ-kKX">
-                                <rect key="frame" x="15" y="170" width="271" height="20"/>
+                                <rect key="frame" x="15" y="170" width="271" height="19"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Vendor and Purpose Consents List" label="Vendor and Purpose Consents List"/>
                                 <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
                                 <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7M-iD-n1O" userLabel="LineViewForList">
-                                <rect key="frame" x="15" y="191" width="350" height="1"/>
+                                <rect key="frame" x="15" y="190" width="350" height="1"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="BwJ-Fi-p6w"/>
@@ -475,37 +480,37 @@
                                 <viewLayoutGuide key="safeArea" id="7cB-Ea-PZ1"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocf-eS-t5u" userLabel="ConsentTableView">
-                                <rect key="frame" x="0.0" y="193" width="375" height="474"/>
+                                <rect key="frame" x="0.0" y="192" width="375" height="475"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose consents are not available" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0L-qg-gaa">
-                                        <rect key="frame" x="10.5" y="227.5" width="354" height="19.5"/>
+                                        <rect key="frame" x="10.5" y="228" width="354" height="19.5"/>
                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNV-ao-Wfg">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="474"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="475"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" rowHeight="60" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="SourcePointMetaApp" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" rowHeight="60" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="GDPR_MetaApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dbp-dA-FSM" id="x2W-Ep-CTP">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-K3-8B7">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="ID : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-K3-8B7">
                                                             <rect key="frame" x="15" y="21" width="35" height="18"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="ID" label="ID"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="35" id="1xk-Xg-mE3"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="vCt-KV-XW3"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
                                                             <rect key="frame" x="58" y="21" width="317" height="18"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="consentID" label="consentID"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -589,7 +594,7 @@
         <!--Property List-->
         <scene sceneID="zDA-pX-BuF">
             <objects>
-                <viewController storyboardIdentifier="PropertyListViewController" id="nwW-9M-3Wu" customClass="PropertyListViewController" customModule="SourcePointMetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PropertyListViewController" id="nwW-9M-3Wu" customClass="PropertyListViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="POH-Ao-l0L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -598,7 +603,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="70" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="SourcePointMetaApp" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="70" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="GDPR_MetaApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oya-4T-sTe" id="BDy-AV-b9J">
@@ -638,7 +643,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1C-pm-DTM">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1C-pm-DTM">
                                                     <rect key="frame" x="18" y="47" width="332" height="21"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="targetingParamTextView">
@@ -732,7 +737,7 @@
         <!--Navigation Controller-->
         <scene sceneID="X6Y-0i-yxh">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hcy-kf-t7M" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RootNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hcy-kf-t7M" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DnQ-IN-rkO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -751,7 +756,7 @@
         <!--Navigation Controller-->
         <scene sceneID="MAc-PQ-9aH">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cVI-3x-jZL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ConsentNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="cVI-3x-jZL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="azz-Kx-7Pt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
