@@ -114,7 +114,7 @@ extension Data {
         while dataValue.count < 8 {
             dataValue.insert(0, at: 0)
         }
-        let value = UInt64(bigEndian: dataValue.withUnsafeBytes { $0.pointee })
+        let value = UInt64(bigEndian: dataValue.withUnsafeBytes { $0.load(as: UInt64.self) })
         return Int64(value)
     }
   
