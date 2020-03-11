@@ -30,7 +30,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: GDPRConsentDelegate {
-    func gdprConsentUIWillShow() {
+    func consentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
 
