@@ -320,6 +320,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         guard let viewController = messageViewController else { return }
         add(asChildViewController: viewController)
         consentDelegate?.consentUIWillShow?()
+        consentDelegate?.gdprConsentUIWillShow?()
     }
 
     public func consentUIDidDisappear() {

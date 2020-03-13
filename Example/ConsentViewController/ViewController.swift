@@ -19,7 +19,7 @@ class ViewController: UIViewController, GDPRConsentDelegate {
         consentDelegate: self
     )}()
     
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
 
