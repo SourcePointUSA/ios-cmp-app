@@ -13,7 +13,7 @@ struct PropertyDetailsModel {
     //// MARK: - Instance properties
     
     /// It holds property name
-    let property : String?
+    let propertyName : String?
     
     /// It holds account Id.
     let accountId: Int64
@@ -22,13 +22,10 @@ struct PropertyDetailsModel {
     let propertyId: Int64
     
     /// It holds campaign value
-    let campaign : String
+    let campaign : Int64
     
     /// It holds privacy manager Id
     let privacyManagerId : String?
-    
-    /// It holds show PM value
-    let showPM : Bool
     
     /// It holds property addded timestamp
     let creationTimestamp : Date
@@ -43,18 +40,16 @@ struct PropertyDetailsModel {
     /// - Parameters:
     ///   - accountId : Customer accountId
     ///   - propertyId : propertyId
-    ///   - property: property.
+    ///   - propertyName: propertyName.
     ///   - campaign: stage/public.
     ///   - privacyManagerId: privacyManagerId which is associated with the property
     ///   - creationTimestamp: property added in database time
-    ///   - showPM: whether we have to show message or PM
-    init(accountId:Int64, propertyId: Int64, property: String?, campaign: String, privacyManagerId:String?, showPM: Bool, creationTimestamp: Date, authId: String? ) {
+    init(accountId:Int64, propertyId: Int64, propertyName: String?, campaign: Int64, privacyManagerId:String?,creationTimestamp: Date, authId: String? ) {
         self.accountId = accountId
         self.propertyId = propertyId
-        self.property = property
+        self.propertyName = propertyName
         self.campaign = campaign
         self.privacyManagerId = privacyManagerId
-        self.showPM = showPM
         self.creationTimestamp = creationTimestamp
         self.authId = authId
     }

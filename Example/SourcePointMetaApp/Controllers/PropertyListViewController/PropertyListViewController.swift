@@ -55,16 +55,8 @@ class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITe
         nopropertyDataLabel.isHidden = propertyListViewModel.numberOfproperties() > 0
     }
     
-    func clearCookies() {
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-            }
-        }
-    }
-    
     func loadConsentDetailsViewController(atIndex index: Int) {
-        if let consentDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentViewDetailsViewController") as? ConsentViewDetailsViewController {
+        if let consentDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentDetailsViewController") as? ConsentDetailsViewController {
             consentDetailsViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: index)
             self.navigationController!.pushViewController(consentDetailsViewController, animated: true)
         }
@@ -88,9 +80,13 @@ extension PropertyListViewController : UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PropertyCell {
 
             if let propertyDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).0 {
-                cell.propertyLabel.text = propertyDetails.property
+                cell.propertyLabel.text = propertyDetails.propertyName
                 cell.accountIDLabel.text = "\(SPLiteral.accountID) \(propertyDetails.accountId)"
-                cell.campaignLabel.text = "\(SPLiteral.campaign) \(propertyDetails.campaign)"
+                if propertyDetails.campaign == Int64(0) {
+                    cell.campaignLabel.text = "\(SPLiteral.campaign) \(SPLiteral.stageEnv)"
+                }else {
+                    cell.campaignLabel.text = "\(SPLiteral.campaign) \(SPLiteral.publicEnv)"
+                }
             }
             if let targetingDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).1 {
                 cell.targetingParamTextView.text = targetingDetails
@@ -132,7 +128,6 @@ extension PropertyListViewController : UITableViewDelegate {
             let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
                 self.showIndicator()
                 self.propertyListViewModel.clearUserDefaultsData()
-                self.clearCookies()
                 self.loadConsentDetailsViewController(atIndex: indexPath.row)
                 self.hideIndicator()
             })
@@ -194,7 +189,6 @@ extension PropertyListViewController : UITableViewDelegate {
             let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
                 self.showIndicator()
                 self.propertyListViewModel.clearUserDefaultsData()
-                self.clearCookies()
                 self.loadConsentDetailsViewController(atIndex: indexPath.row)
                 self.hideIndicator()
             })

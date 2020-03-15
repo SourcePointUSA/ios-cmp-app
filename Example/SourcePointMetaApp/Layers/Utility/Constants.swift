@@ -29,6 +29,8 @@ struct SPLiteral {
     static let campaign = "Campaign: "
     static let consentUUID = "ConsentUUID not available"
     static let euConsentID = "EUConsent not available"
+    static let stageEnv = "Stage"
+    static let publicEnv = "Public"
     
     static func attributedString() -> NSMutableAttributedString {
         let attributedText = NSMutableAttributedString(string: "Cookies for ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
