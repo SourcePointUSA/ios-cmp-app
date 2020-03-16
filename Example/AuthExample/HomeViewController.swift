@@ -28,7 +28,7 @@ class HomeViewController: UIViewController, GDPRConsentDelegate {
     var userData: [String] = []
     var consents: [String] = []
     
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         self.present(consentViewController, animated: true, completion: nil)
     }
     

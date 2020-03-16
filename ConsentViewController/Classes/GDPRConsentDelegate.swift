@@ -13,11 +13,17 @@ import Foundation
  Have a look at [SDKs Lifecycle](https://github.com/SourcePointUSA/CCPA_iOS_SDK/wiki/SDKs-Lifecycle-methods)
 */
 @objc public protocol GDPRConsentDelegate {
-    /// called when there's a consent Message to be shown or before the PM is shown
+    /// called when there's a consent Message to be shown or before the PM is shown **deprected**
     @objc optional func consentUIWillShow()
     
     /// called when there's a consent Message to be shown or before the PM is shown
+    @objc optional func gdprConsentUIWillShow()
+    
+    /// called when there's a consent Message to be shown or before the PM is shown ***deprecated***
     @objc optional func consentUIWillShow(message: GDPRMessage)
+    
+    /// called when there's a consent Message to be shown or before the PM is shown
+    @objc optional func gdprConsentUIWillShow(message: GDPRMessage)
     
     /// called when the consent message is about to show
     @objc optional func messageWillShow()
