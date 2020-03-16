@@ -1,3 +1,6 @@
+## 4.1.3 (January, 16, 2020)
+* consentUIWillShow deprecated and substituted for gdprConsentUIWillShow to enable integration with ccpa SDK.
+
 ## 4.1.2 (January, 13, 2020)
 * Fixed compatibility with Xcode 10.x
 
