@@ -75,10 +75,9 @@ class PropertyDetailsStorageCoordinator : BaseStorageCoordinator {
         if let propertyEntity = NSEntityDescription.insertNewObject(forEntityName: PropertyDetails.entityName, into: managedObjectContext) as? PropertyDetails {
             propertyEntity.accountId = propertyDataModel.accountId
             propertyEntity.propertyId = propertyDataModel.propertyId
-            propertyEntity.property = propertyDataModel.property
+            propertyEntity.propertyName = propertyDataModel.propertyName
             propertyEntity.campaign = propertyDataModel.campaign
             propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
-            propertyEntity.showPM = propertyDataModel.showPM
             propertyEntity.creationTimestamp = creationTimestamp
             if let authId = propertyDataModel.authId {
                 propertyEntity.authId = authId
@@ -123,10 +122,9 @@ class PropertyDetailsStorageCoordinator : BaseStorageCoordinator {
                 //Updating property entity
                 propertyEntity.accountId = propertyDataModel.accountId
                 propertyEntity.propertyId = propertyDataModel.propertyId
-                propertyEntity.property = propertyDataModel.property
+                propertyEntity.propertyName = propertyDataModel.propertyName
                 propertyEntity.campaign = propertyDataModel.campaign
                 propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
-                propertyEntity.showPM = propertyDataModel.showPM
                 propertyEntity.creationTimestamp = creationTimestamp
                 if let authId = propertyDataModel.authId {
                     propertyEntity.authId = authId
@@ -190,9 +188,9 @@ class PropertyDetailsStorageCoordinator : BaseStorageCoordinator {
         var subPredicates : [NSPredicate] = []
         var subPredicate : NSPredicate
         if let authId = propertyDataModel.authId {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == %@ AND privacyManagerId == %@ AND authId == %@ AND showPM == \(NSNumber(value: propertyDataModel.showPM))", propertyDataModel.campaign, propertyDataModel.privacyManagerId!,authId)
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND privacyManagerId == %@ AND authId == %@", propertyDataModel.privacyManagerId!,authId)
         } else {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == %@ AND privacyManagerId == %@ AND showPM == \(NSNumber(value: propertyDataModel.showPM))", propertyDataModel.campaign, propertyDataModel.privacyManagerId!)
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND privacyManagerId == %@", propertyDataModel.privacyManagerId!)
         }
         
         subPredicates.append(subPredicate)

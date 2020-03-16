@@ -111,9 +111,9 @@ class AddPropertyViewModel {
     /// MARK: Validate property details
     ///
     /// - Parameter
-    func validatepropertyDetails (accountID : String?, propertyId:String?, property: String?, privacyManagerId: String?) -> Bool {
+    func validatepropertyDetails (accountID : String?, propertyId:String?, propertyName: String?, privacyManagerId: String?) -> Bool {
         
-        if accountID!.count > 0 && propertyId!.count > 0 && property!.count > 0 && privacyManagerId!.count > 0 {
+        if accountID!.count > 0 && propertyId!.count > 0 && propertyName!.count > 0 && privacyManagerId!.count > 0 {
             return true
         }else {
             return false
