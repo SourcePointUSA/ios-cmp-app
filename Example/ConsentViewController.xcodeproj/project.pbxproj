@@ -37,8 +37,7 @@
 		1997B6D5238FDEA10079AF34 /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B68C238FDEA10079AF34 /* BaseWindow.swift */; };
 		1997B6D6238FDEA10079AF34 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B68E238FDEA10079AF34 /* BaseViewController.swift */; };
 		1997B6D7238FDEA10079AF34 /* AddPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B690238FDEA10079AF34 /* AddPropertyViewController.swift */; };
-		1997B6D8238FDEA10079AF34 /* ConsentViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B692238FDEA10079AF34 /* ConsentViewDetailsViewController.swift */; };
-		1997B6D9238FDEA10079AF34 /* ConsentSubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B693238FDEA10079AF34 /* ConsentSubViewController.swift */; };
+		1997B6D8238FDEA10079AF34 /* ConsentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B692238FDEA10079AF34 /* ConsentDetailsViewController.swift */; };
 		1997B6DA238FDEA10079AF34 /* PropertyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B695238FDEA10079AF34 /* PropertyListViewController.swift */; };
 		1997B6DB238FDEA10079AF34 /* PropertyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B698238FDEA10079AF34 /* PropertyCell.swift */; };
 		1997B6DC238FDEA10079AF34 /* ConsentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B69A238FDEA10079AF34 /* ConsentTableViewCell.swift */; };
@@ -47,7 +46,6 @@
 		1997B6DF238FDEA10079AF34 /* LoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1997B6A0238FDEA10079AF34 /* LoaderView.xib */; };
 		1997B6E0238FDEA10079AF34 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6A1238FDEA10079AF34 /* LoaderView.swift */; };
 		1997B6E1238FDEA10079AF34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1997B6A3238FDEA10079AF34 /* LaunchScreen.storyboard */; };
-		1997B6E2238FDEA10079AF34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1997B6A5238FDEA10079AF34 /* Main.storyboard */; };
 		1997B6E3238FDEA10079AF34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6A8238FDEA10079AF34 /* AppDelegate.swift */; };
 		1997B6E4238FDEA10079AF34 /* AddPropertyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6AC238FDEA10079AF34 /* AddPropertyViewModel.swift */; };
 		1997B6E5238FDEA10079AF34 /* PropertyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6AE238FDEA10079AF34 /* PropertyListViewModel.swift */; };
@@ -55,8 +53,6 @@
 		1997B6E7238FDEA10079AF34 /* TargetingParamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6B3238FDEA10079AF34 /* TargetingParamModel.swift */; };
 		1997B6E8238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6B6238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift */; };
 		1997B6E9238FDEA10079AF34 /* BaseStorageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6B8238FDEA10079AF34 /* BaseStorageCoordinator.swift */; };
-		1997B6EA238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BB238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift */; };
-		1997B6EB238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BC238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift */; };
 		1997B6EC238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BE238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift */; };
 		1997B6ED238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6BF238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift */; };
 		1997B6EE238FDEA10079AF34 /* SourcePointUITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6C2238FDEA10079AF34 /* SourcePointUITableView.swift */; };
@@ -73,6 +69,9 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		6DF24C31241E90EB00F757F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DF24C2F241E90EB00F757F6 /* Main.storyboard */; };
+		6DF24C38241E979300F757F6 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF24C36241E979300F757F6 /* PropertyDetails+CoreDataClass.swift */; };
+		6DF24C39241E979300F757F6 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF24C37241E979300F757F6 /* PropertyDetails+CoreDataProperties.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
@@ -106,7 +105,7 @@
 
 /* Begin PBXFileReference section */
 		0A406661B1D883EC0E146AF0 /* Pods_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ConsentViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1997B63A238FDCE80079AF34 /* SourcePointMetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourcePointMetaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1997B63A238FDCE80079AF34 /* GDPR-MetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GDPR-MetaApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1997B64A238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourcePointMetaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1997B655238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -140,8 +139,7 @@
 		1997B68C238FDEA10079AF34 /* BaseWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseWindow.swift; sourceTree = "<group>"; };
 		1997B68E238FDEA10079AF34 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1997B690238FDEA10079AF34 /* AddPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewController.swift; sourceTree = "<group>"; };
-		1997B692238FDEA10079AF34 /* ConsentViewDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewController.swift; sourceTree = "<group>"; };
-		1997B693238FDEA10079AF34 /* ConsentSubViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentSubViewController.swift; sourceTree = "<group>"; };
+		1997B692238FDEA10079AF34 /* ConsentDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentDetailsViewController.swift; sourceTree = "<group>"; };
 		1997B695238FDEA10079AF34 /* PropertyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewController.swift; sourceTree = "<group>"; };
 		1997B698238FDEA10079AF34 /* PropertyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyCell.swift; sourceTree = "<group>"; };
 		1997B69A238FDEA10079AF34 /* ConsentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTableViewCell.swift; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 		1997B6A0238FDEA10079AF34 /* LoaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoaderView.xib; sourceTree = "<group>"; };
 		1997B6A1238FDEA10079AF34 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		1997B6A4238FDEA10079AF34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1997B6A6238FDEA10079AF34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1997B6A8238FDEA10079AF34 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1997B6AC238FDEA10079AF34 /* AddPropertyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewModel.swift; sourceTree = "<group>"; };
 		1997B6AE238FDEA10079AF34 /* PropertyListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewModel.swift; sourceTree = "<group>"; };
@@ -158,8 +155,6 @@
 		1997B6B3238FDEA10079AF34 /* TargetingParamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetingParamModel.swift; sourceTree = "<group>"; };
 		1997B6B6238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsStorageCoordinator.swift; sourceTree = "<group>"; };
 		1997B6B8238FDEA10079AF34 /* BaseStorageCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStorageCoordinator.swift; sourceTree = "<group>"; };
-		1997B6BB238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1997B6BC238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1997B6BE238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1997B6BF238FDEA10079AF34 /* TargetingParams+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TargetingParams+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1997B6C2238FDEA10079AF34 /* SourcePointUITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointUITableView.swift; sourceTree = "<group>"; };
@@ -182,6 +177,9 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		6DF24C30241E90EB00F757F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6DF24C36241E979300F757F6 /* PropertyDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		6DF24C37241E979300F757F6 /* PropertyDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8231B14122BA5A6B00D2669B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -369,7 +367,7 @@
 				1997B68B238FDEA10079AF34 /* BaseWindow */,
 				1997B68D238FDEA10079AF34 /* BaseViewController */,
 				1997B68F238FDEA10079AF34 /* AddPropertyViewController */,
-				1997B691238FDEA10079AF34 /* ConsentViewController */,
+				1997B691238FDEA10079AF34 /* GDPRConsentViewController */,
 				1997B694238FDEA10079AF34 /* PropertyListViewController */,
 			);
 			path = Controllers;
@@ -399,13 +397,12 @@
 			path = AddPropertyViewController;
 			sourceTree = "<group>";
 		};
-		1997B691238FDEA10079AF34 /* ConsentViewController */ = {
+		1997B691238FDEA10079AF34 /* GDPRConsentViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1997B692238FDEA10079AF34 /* ConsentViewDetailsViewController.swift */,
-				1997B693238FDEA10079AF34 /* ConsentSubViewController.swift */,
+				1997B692238FDEA10079AF34 /* ConsentDetailsViewController.swift */,
 			);
-			path = ConsentViewController;
+			path = GDPRConsentViewController;
 			sourceTree = "<group>";
 		};
 		1997B694238FDEA10079AF34 /* PropertyListViewController */ = {
@@ -472,8 +469,8 @@
 		1997B6A2238FDEA10079AF34 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				6DF24C2F241E90EB00F757F6 /* Main.storyboard */,
 				1997B6A3238FDEA10079AF34 /* LaunchScreen.storyboard */,
-				1997B6A5238FDEA10079AF34 /* Main.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -585,8 +582,8 @@
 		1997B6BA238FDEA10079AF34 /* PropertyDetailsModel */ = {
 			isa = PBXGroup;
 			children = (
-				1997B6BB238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift */,
-				1997B6BC238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift */,
+				6DF24C36241E979300F757F6 /* PropertyDetails+CoreDataClass.swift */,
+				6DF24C37241E979300F757F6 /* PropertyDetails+CoreDataProperties.swift */,
 			);
 			path = PropertyDetailsModel;
 			sourceTree = "<group>";
@@ -640,7 +637,7 @@
 			children = (
 				607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */,
 				8231B13D22BA5A6B00D2669B /* AuthExample.app */,
-				1997B63A238FDCE80079AF34 /* SourcePointMetaApp.app */,
+				1997B63A238FDCE80079AF34 /* GDPR-MetaApp.app */,
 				1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */,
 				82FC4D3A23983231002F08E5 /* ConsentViewController_ExampleTests.xctest */,
 				82D8FEDC23DC753400F28D74 /* NativeMessageExample.app */,
@@ -785,7 +782,7 @@
 			);
 			name = SourcePointMetaApp;
 			productName = SourcePointMetaApp;
-			productReference = 1997B63A238FDCE80079AF34 /* SourcePointMetaApp.app */;
+			productReference = 1997B63A238FDCE80079AF34 /* GDPR-MetaApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1997B64E238FDCF30079AF34 /* SourcePointMetaAppTests */ = {
@@ -898,7 +895,7 @@
 					1997B639238FDCE80079AF34 = {
 						CreatedOnToolsVersion = 11.1;
 						DevelopmentTeam = 6KYEQLUC5A;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					1997B64E238FDCF30079AF34 = {
 						CreatedOnToolsVersion = 11.1;
@@ -970,7 +967,7 @@
 				1997B6DF238FDEA10079AF34 /* LoaderView.xib in Resources */,
 				1997B6CD238FDEA10079AF34 /* SF-Pro-Text-Bold.otf in Resources */,
 				1997B6C6238FDEA10079AF34 /* Assets.xcassets in Resources */,
-				1997B6E2238FDEA10079AF34 /* Main.storyboard in Resources */,
+				6DF24C31241E90EB00F757F6 /* Main.storyboard in Resources */,
 				1997B6D3238FDEA10079AF34 /* SF-Pro-Text-Medium.otf in Resources */,
 				1997B6D0238FDEA10079AF34 /* SF-Pro-Text-Semibold.otf in Resources */,
 				1997B6CB238FDEA10079AF34 /* SF-Pro-Text-Light.otf in Resources */,
@@ -1280,15 +1277,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				1997B6E4238FDEA10079AF34 /* AddPropertyViewModel.swift in Sources */,
+				6DF24C38241E979300F757F6 /* PropertyDetails+CoreDataClass.swift in Sources */,
 				1997B6C8238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */,
-				1997B6D8238FDEA10079AF34 /* ConsentViewDetailsViewController.swift in Sources */,
+				1997B6D8238FDEA10079AF34 /* ConsentDetailsViewController.swift in Sources */,
 				1997B6EC238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift in Sources */,
+				6DF24C39241E979300F757F6 /* PropertyDetails+CoreDataProperties.swift in Sources */,
 				1997B6E5238FDEA10079AF34 /* PropertyListViewModel.swift in Sources */,
 				1997B6F1238FDEA10079AF34 /* Debug.swift in Sources */,
 				1997B6DB238FDEA10079AF34 /* PropertyCell.swift in Sources */,
 				1997B6E0238FDEA10079AF34 /* LoaderView.swift in Sources */,
 				1997B6E3238FDEA10079AF34 /* AppDelegate.swift in Sources */,
-				1997B6EA238FDEA10079AF34 /* PropertyDetails+CoreDataClass.swift in Sources */,
 				1997B6E9238FDEA10079AF34 /* BaseStorageCoordinator.swift in Sources */,
 				1997B6E8238FDEA10079AF34 /* PropertyDetailsStorageCoordinator.swift in Sources */,
 				1997B6D6238FDEA10079AF34 /* BaseViewController.swift in Sources */,
@@ -1297,10 +1295,8 @@
 				1997B6EE238FDEA10079AF34 /* SourcePointUITableView.swift in Sources */,
 				1997B6DC238FDEA10079AF34 /* ConsentTableViewCell.swift in Sources */,
 				1997B6E7238FDEA10079AF34 /* TargetingParamModel.swift in Sources */,
-				1997B6EB238FDEA10079AF34 /* PropertyDetails+CoreDataProperties.swift in Sources */,
 				1997B6E6238FDEA10079AF34 /* PropertyDetailsModel.swift in Sources */,
 				1997B6D5238FDEA10079AF34 /* BaseWindow.swift in Sources */,
-				1997B6D9238FDEA10079AF34 /* ConsentSubViewController.swift in Sources */,
 				1997B6D7238FDEA10079AF34 /* AddPropertyViewController.swift in Sources */,
 				1997B6DA238FDEA10079AF34 /* PropertyListViewController.swift in Sources */,
 				1997B6C7238FDEA10079AF34 /* DBManager.swift in Sources */,
@@ -1387,14 +1383,6 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		1997B6A5238FDEA10079AF34 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1997B6A6238FDEA10079AF34 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1409,6 +1397,14 @@
 				607FACDF1AFB9204008FA782 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		6DF24C2F241E90EB00F757F6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6DF24C30241E90EB00F757F6 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		8231B14322BA5A6B00D2669B /* Main.storyboard */ = {
@@ -1457,7 +1453,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vilas Mane (MRXLYP9499)";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1466,8 +1463,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdprmetaapp;
+				PRODUCT_NAME = "GDPR-MetaApp";
+				PROVISIONING_PROFILE_SPECIFIER = WildCardProfile;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1485,15 +1483,17 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vilas Mane (MRXLYP9499)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = SourcePointMetaApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.SourcePointMetaApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdprmetaapp;
+				PRODUCT_NAME = "GDPR-MetaApp";
+				PROVISIONING_PROFILE_SPECIFIER = WildCardProfile;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

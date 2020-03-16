@@ -12,11 +12,6 @@ class LoaderView: UIView {
 
     // MARK: - Instance Properties
     
-    /**
-     *  Identifier to track how much strongly refered these LoaderView in App and how many relinquished ownership for this loader.
-     */
-    var retainCountValue : Int = 0
-    
     var dummyView = UIView()
     
     // MARK: - IBoutlets
@@ -62,21 +57,17 @@ class LoaderView: UIView {
      */
     func show (inView view : UIView) {
         
-        if retainCountValue == 0 {
-            activity.startAnimating()
-            
-            let leadingConstraint = NSLayoutConstraint(item: self, attribute: .leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
-            let topConstraint = NSLayoutConstraint(item: self, attribute: .top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .top, multiplier: 1, constant: 0)
-            let trailingConstraint = NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
-            let bottomConstraint = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-            view.addSubview(self)
-            view.addConstraints([leadingConstraint, topConstraint, trailingConstraint,bottomConstraint])
-        }
+        activity.startAnimating()
+        
+        let leadingConstraint = NSLayoutConstraint(item: self, attribute: .leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: self, attribute: .top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .top, multiplier: 1, constant: 0)
+        let trailingConstraint = NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        view.addSubview(self)
+        view.addConstraints([leadingConstraint, topConstraint, trailingConstraint,bottomConstraint])
         DispatchQueue.main.async {
             view.bringSubviewToFront(self)
         }
-        
-        retainCountValue += 1
     }
     
     /**
@@ -84,13 +75,8 @@ class LoaderView: UIView {
      */
     func hide() {
         
-        if retainCountValue > 0 {
-            retainCountValue -=  1
-            if retainCountValue == 0 {
-                activity.stopAnimating()
-                removeFromSuperview()
-            }
-        }
+        activity.stopAnimating()
+        removeFromSuperview()
     }
 }
 

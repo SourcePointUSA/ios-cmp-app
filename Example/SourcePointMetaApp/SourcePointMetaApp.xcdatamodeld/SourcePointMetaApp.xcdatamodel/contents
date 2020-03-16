@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PropertyDetails" representedClassName="PropertyDetails" syncable="YES">
         <attribute name="accountId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="authId" optional="YES" attributeType="String"/>
-        <attribute name="campaign" optional="YES" attributeType="String"/>
+        <attribute name="campaign" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="creationTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="privacyManagerId" optional="YES" attributeType="String"/>
-        <attribute name="property" optional="YES" attributeType="String"/>
         <attribute name="propertyId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="showPM" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="propertyName" optional="YES" attributeType="String"/>
         <relationship name="manyTargetingParams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TargetingParams" inverseName="propertyDetails" inverseEntity="TargetingParams"/>
     </entity>
     <entity name="TargetingParams" representedClassName=".TargetingParams" syncable="YES">
@@ -17,7 +16,7 @@
         <relationship name="propertyDetails" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PropertyDetails" inverseName="manyTargetingParams" inverseEntity="PropertyDetails"/>
     </entity>
     <elements>
-        <element name="PropertyDetails" positionX="180" positionY="18" width="128" height="178"/>
+        <element name="PropertyDetails" positionX="180" positionY="18" width="128" height="163"/>
         <element name="TargetingParams" positionX="139.01171875" positionY="-143.92578125" width="128" height="88"/>
     </elements>
 </model>
