@@ -162,7 +162,7 @@ public typealias TargetingParams = [String:String]
                 self?.gdprUUID = messageResponse.uuid
                 self?.loading = .Ready
                 if let message = messageResponse.msgJSON {
-                    self?.consentDelegate?.consentUIWillShow?(message: message)
+                    self?.consentDelegate?.gdprConsentUIWillShow?(message: message)
                 } else {
                     self?.onConsentReady(gdprUUID: messageResponse.uuid, userConsent: messageResponse.userConsent)
                 }
@@ -177,14 +177,14 @@ public typealias TargetingParams = [String:String]
     }
     
     /// Will first check if there's a message to show according to the scenario
-    /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
+    /// If there is, we'll load the message in a WebView and call `ConsentDelegate.gdprConsentUIWillShow`
     /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
     public func loadMessage() {
         loadMessage(forAuthId: nil)
     }
     
     /// Will first check if there's a message to show according to the scenario, for the `authId` provided.
-    /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
+    /// If there is, we'll load the message in a WebView and call `ConsentDelegate.gdprConsentUIWillShow`
     /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
     ///
     /// - Parameter forAuthId: any arbitrary token that uniquely identifies an user in your system.
@@ -315,7 +315,7 @@ public typealias TargetingParams = [String:String]
 }
 
 extension GDPRConsentViewController: GDPRConsentDelegate {
-    public func consentUIWillShow() {
+    public func gdprConsentUIWillShow() {
         loading = .Ready
         guard let viewController = messageViewController else { return }
         add(asChildViewController: viewController)

@@ -47,7 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
         self.view.endEditing(true)
     }
     
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         self.present(consentViewController, animated: true, completion: nil)
     }
     

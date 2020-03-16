@@ -36,14 +36,14 @@ class ViewController: UIViewController {
 
 extension ViewController: GDPRConsentDelegate {
     /// called when there's a message to show and its content (`GDPRMessage`) is ready
-    func consentUIWillShow(message: GDPRMessage) {
+    func gdprConsentUIWillShow(message: GDPRMessage) {
         messageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
         messageController!.modalPresentationStyle = .popover
         present(messageController!, animated: true, completion: nil)
     }
 
     /// called when the web consent UI is ready (in this case the Privacy Manager)
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         if messageController?.viewIfLoaded?.window != nil {
             messageController?.present(consentViewController, animated: true, completion: nil)
         } else {

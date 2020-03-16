@@ -19,8 +19,11 @@ import Foundation
     /// called when there's a consent Message to be shown or before the PM is shown
     @objc optional func gdprConsentUIWillShow()
     
-    /// called when there's a consent Message to be shown or before the PM is shown
+    /// called when there's a consent Message to be shown or before the PM is shown ***deprecated***
     @objc optional func consentUIWillShow(message: GDPRMessage)
+    
+    /// called when there's a consent Message to be shown or before the PM is shown
+    @objc optional func gdprConsentUIWillShow(message: GDPRMessage)
     
     /// called when the consent message is about to show
     @objc optional func messageWillShow()

@@ -46,7 +46,7 @@ class ViewController: UIViewController, GDPRConsentDelegate {
         consentDelegate: self
     )}()
     
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
 
@@ -116,7 +116,7 @@ class ViewController: UIViewController, GDPRConsentDelegate {
     }
 }
                                   
-- (void)consentUIWillShow {
+- (void)gdprConsentUIWillShow {
     [self presentViewController:cvc animated:true completion:NULL];
 }
 
