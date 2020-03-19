@@ -1,13 +1,13 @@
-## 4.1.3 (January, 16, 2020)
+## 4.1.3 (March, 16, 2020)
 * consentUIWillShow deprecated and substituted for gdprConsentUIWillShow to enable integration with ccpa SDK.
 
-## 4.1.2 (January, 13, 2020)
+## 4.1.2 (February, 13, 2020)
 * Fixed compatibility with Xcode 10.x
 
-## 4.1.1 (January, 10, 2020)
+## 4.1.1 (February, 10, 2020)
 * Fixed authId message 
 
-## 4.1.0 (January, 05, 2020)
+## 4.1.0 (February, 05, 2020)
 Wow, that's huge! Behold the native message!
 Now you are be able to build your own consent message using naive elements and layout. It's a lot to cover in one CHANGELOG entry so please refer to the this nice [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) our team put together.
 
