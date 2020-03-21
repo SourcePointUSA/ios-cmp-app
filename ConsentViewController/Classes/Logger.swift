@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-@objcMembers class Logger {
+@objcMembers public class Logger {
     static let TOO_MANY_ARGS_ERROR = StaticString("Cannot log messages with more than 5 argumetns")
 
     let consentLog: OSLog?
