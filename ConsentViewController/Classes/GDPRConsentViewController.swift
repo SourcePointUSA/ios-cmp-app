@@ -44,22 +44,22 @@ public typealias TargetingParams = [String: String]
     private let targetingParams: TargetingParams
     private let sourcePoint: SourcePointClient
     private lazy var logger = { return Logger() }()
-    private var messageViewController: GDPRMessageViewController?
-    private var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
+    internal var messageViewController: GDPRMessageViewController?
+    internal var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
     enum LoadingStatus: String {
         case Ready
         case Presenting
         case Loading
     }
 
-    private func remove(asChildViewController viewController: UIViewController?) {
+    internal func remove(asChildViewController viewController: UIViewController?) {
         guard let viewController = viewController else { return }
         viewController.willMove(toParent: nil)
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
     }
 
-    private func add(asChildViewController viewController: UIViewController) {
+    internal func add(asChildViewController viewController: UIViewController) {
         addChild(viewController)
         view.addSubview(viewController.view)
         viewController.view.frame = view.bounds
