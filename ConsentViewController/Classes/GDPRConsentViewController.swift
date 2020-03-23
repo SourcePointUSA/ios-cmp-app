@@ -251,11 +251,13 @@ public typealias TargetingParams = [String:String]
 }
 
 extension GDPRConsentViewController: GDPRConsentDelegate {
-    public func consentUIWillShow() {
+    
+    public func gdprConsentUIWillShow() {
         loading = .Ready
         guard let viewController = messageViewController else { return }
         add(asChildViewController: viewController)
         consentDelegate?.consentUIWillShow?()
+        consentDelegate?.gdprConsentUIWillShow?()
     }
 
     public func consentUIDidDisappear() {

@@ -16,6 +16,7 @@ class ViewController: UIViewController {
         propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
         PMId: "100699",
         campaignEnv: .Public,
+        targetingParams: ["native":"false"],
         consentDelegate: self
     )}()
 
@@ -30,7 +31,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: GDPRConsentDelegate {
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
 

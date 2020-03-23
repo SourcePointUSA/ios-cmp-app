@@ -1438,9 +1438,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.metaapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdprmetaapp;
 				PRODUCT_NAME = "GDPR-MetaApp";
-				PROVISIONING_PROFILE_SPECIFIER = MetaAppDevProfile;
+				PROVISIONING_PROFILE_SPECIFIER = WildCardProfile;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1466,9 +1466,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.metaapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdprmetaapp;
 				PRODUCT_NAME = "GDPR-MetaApp";
-				PROVISIONING_PROFILE_SPECIFIER = MetaAppDevProfile;
+				PROVISIONING_PROFILE_SPECIFIER = WildCardProfile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

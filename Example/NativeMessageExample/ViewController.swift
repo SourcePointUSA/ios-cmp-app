@@ -43,7 +43,7 @@ extension ViewController: GDPRConsentDelegate {
     }
 
     /// called when the web consent UI is ready (in this case the Privacy Manager)
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         if messageController?.viewIfLoaded?.window != nil {
             messageController?.present(consentViewController, animated: true, completion: nil)
         } else {
