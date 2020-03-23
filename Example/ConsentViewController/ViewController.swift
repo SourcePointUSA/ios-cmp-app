@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
         PMId: "100699",
         campaignEnv: .Public,
-        targetingParams: ["native":"false"],
+        targetingParams: ["native":"true"],
         consentDelegate: self
     )}()
 
