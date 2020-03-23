@@ -119,7 +119,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         }
     }
     
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
            hideIndicator()
            present(self.consentViewController!, animated: true, completion: nil)
        }

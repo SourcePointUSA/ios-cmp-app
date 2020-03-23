@@ -233,7 +233,7 @@ class AddPropertyViewController: BaseViewController,TargetingParamCellDelegate, 
         }
     }
     
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         hideIndicator()
         present(self.consentViewController!, animated: true, completion: nil)
     }

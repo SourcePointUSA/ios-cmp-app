@@ -60,21 +60,20 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         view = webview
     }
     
-    func consentUIWillShow() {
+    func gdprConsentUIWillShow() {
         if(!consentUILoaded) {
             consentUILoaded = true
-            consentDelegate?.consentUIWillShow?() //**deprecated**
             consentDelegate?.gdprConsentUIWillShow?()
         }
     }
     
     func onMessageReady() {
-        consentUIWillShow()
+        gdprConsentUIWillShow()
         consentDelegate?.messageWillShow?()
     }
     
     func onPMReady() {
-        consentUIWillShow()
+        gdprConsentUIWillShow()
         consentDelegate?.pmWillShow?()
     }
     
