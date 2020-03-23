@@ -1,3 +1,9 @@
+## 5.0.1 (March, 23, 2020)
+* added support to [TCFv2](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details) for native message
+* updated swift version to 5.0
+* removed all warnings during build time
+* deprecated `consentUIWillShow` in favor of `gdprConsentUIWillShow`
+
 ## 5.0.0 (January, 11, 2020)
 * added support to [TCFv2](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details). The public API remained the same and the upgrade from v4 to v5 should require no development effort.
 
@@ -5,7 +11,7 @@
 * Fixed compatibility with Xcode 10.x
 
 ## 4.1.1 (January, 10, 2020)
-* Fixed authId message 
+* Fixed authId message
 
 ## 4.1.0 (January, 05, 2020)
 Wow, that's huge! Behold the native message!

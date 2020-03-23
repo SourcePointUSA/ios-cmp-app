@@ -15,7 +15,7 @@ We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to 
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.0.0'
+pod 'ConsentViewController', '5.0.1'
 ```
 
 ### Carthage
@@ -64,12 +64,12 @@ extension ViewController: GDPRConsentDelegate {
     func consentUIDidDisappear() {
         dismiss(animated: true, completion: nil)
     }
-    
+
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
         userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
-        
+
         // IAB Related Data
         print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.keys.sorted()))
     }
@@ -119,7 +119,7 @@ extension ViewController: GDPRConsentDelegate {
         NSLog(@"Consented to Purpose(id: %@)", purposeId);
     }
 }
-                                  
+
 - (void)gdprConsentUIWillShow {
     [self presentViewController:cvc animated:true completion:NULL];
 }
@@ -138,7 +138,7 @@ In order to use the authenticated consent all you need to do is replace `.loadMe
   consentViewController.loadMessage(forAuthId: "JohnDoe")
 ```
 
-In Obj-C that'd be: 
+In Obj-C that'd be:
 ```objc
   [consentViewController loadMessage forAuthId: @"JohnDoe"]
 ```
@@ -147,7 +147,7 @@ This way, if we already have consent for that token (`"JohDoe"`) we'll bring the
 
 ## Setting Targeting Parameters
 
-In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example: 
+In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example:
 
 ```swift
 lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
@@ -161,4 +161,4 @@ In this example a key/value pair "language":"fr" is passed to the sp scenario an
 
 ### Rendering the message natively
 
-Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together. 
+Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.
