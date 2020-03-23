@@ -71,6 +71,8 @@
 		6D605DF62423B96C00BB3E5F /* GDPRConsentViewControllerErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D605DF52423B96C00BB3E5F /* GDPRConsentViewControllerErrorSpec.swift */; };
 		6DB2B2222424C52A008F9226 /* ConnectivityManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */; };
 		6DB2B2242424E92E008F9226 /* ConsentStringSDKSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2B2232424E92E008F9226 /* ConsentStringSDKSpec.swift */; };
+		6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB561ED24269470008501AC /* GDPRMessageSpec.swift */; };
+		6DC1CD412427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
@@ -178,6 +180,8 @@
 		6D605DF52423B96C00BB3E5F /* GDPRConsentViewControllerErrorSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRConsentViewControllerErrorSpec.swift; sourceTree = "<group>"; };
 		6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityManagerSpec.swift; sourceTree = "<group>"; };
 		6DB2B2232424E92E008F9226 /* ConsentStringSDKSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentStringSDKSpec.swift; sourceTree = "<group>"; };
+		6DB561ED24269470008501AC /* GDPRMessageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRMessageSpec.swift; sourceTree = "<group>"; };
+		6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRNativeMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8231B14122BA5A6B00D2669B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -741,6 +745,8 @@
 				6D605DF52423B96C00BB3E5F /* GDPRConsentViewControllerErrorSpec.swift */,
 				6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */,
 				6DB2B2232424E92E008F9226 /* ConsentStringSDKSpec.swift */,
+				6DB561ED24269470008501AC /* GDPRMessageSpec.swift */,
+				6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */,
 				82FC4D3E23983231002F08E5 /* Info.plist */,
 			);
 			path = ConsentViewController_ExampleTests;
@@ -1371,7 +1377,9 @@
 				6D605DF22423523700BB3E5F /* GDPRConsentViewControllerSpec.swift in Sources */,
 				6DB2B2222424C52A008F9226 /* ConnectivityManagerSpec.swift in Sources */,
 				6DB2B2242424E92E008F9226 /* ConsentStringSDKSpec.swift in Sources */,
+				6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */,
 				82FC4D3D23983231002F08E5 /* ConsentViewController_ExampleTests.swift in Sources */,
+				6DC1CD412427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift in Sources */,
 				6D605DF42423523700BB3E5F /* GDPRMessageViewControllerSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
