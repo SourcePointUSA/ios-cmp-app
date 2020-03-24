@@ -29,7 +29,7 @@ final class ConnectivityManager: Connectivity {
     }
 
     /// It returns flags that indicate the connectivity of a network node name or address, including whether a connection is required or not.
-    internal func getConnectivityFlags() -> SCNetworkReachabilityFlags? {
+    func getConnectivityFlags() -> SCNetworkReachabilityFlags? {
         guard let connectivity = ipv4Connectivity() ?? ipv6Connectivity() else {
             return nil
         }
@@ -41,7 +41,7 @@ final class ConnectivityManager: Connectivity {
     }
 
     /// It determines the status of a system's current network configuration and the connectivity of a target host for IPv6.
-    internal func ipv6Connectivity() -> SCNetworkReachability? {
+    func ipv6Connectivity() -> SCNetworkReachability? {
         var zeroAddress = sockaddr_in6()
         zeroAddress.sin6_len = UInt8(MemoryLayout<sockaddr_in>.size)
         zeroAddress.sin6_family = sa_family_t(AF_INET6)
@@ -54,7 +54,7 @@ final class ConnectivityManager: Connectivity {
     }
 
     /// It determines the status of a system's current network configuration and the connectivity of a target host for IPv4.
-    internal func ipv4Connectivity() -> SCNetworkReachability? {
+    func ipv4Connectivity() -> SCNetworkReachability? {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
         zeroAddress.sin_family = sa_family_t(AF_INET)

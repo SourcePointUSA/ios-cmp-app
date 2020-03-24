@@ -156,7 +156,7 @@ class SourcePointClient {
         )
     }
 
-    private func targetingParamsToString(_ params: TargetingParams?) -> String {
+    func targetingParamsToString(_ params: TargetingParams?) -> String {
         let emptyParams = "{}"
         do {
             let data = try JSONSerialization.data(withJSONObject: params!)
@@ -166,7 +166,7 @@ class SourcePointClient {
         }
     }
 
-    private func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
+    func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
             euconsent: euconsent,

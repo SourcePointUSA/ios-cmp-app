@@ -168,11 +168,11 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             let purposes = consents["categories"] as? [String: Any],
             let acceptedVendors = vendors["accepted"] as? [String],
             let acceptedPurposes = purposes["accepted"] as? [String]
-        else {
-            return PMConsents(
-                vendors: PMConsent(accepted: []),
-                categories: PMConsent(accepted: [])
-            )
+            else {
+                return PMConsents(
+                    vendors: PMConsent(accepted: []),
+                    categories: PMConsent(accepted: [])
+                )
         }
         return PMConsents(
             vendors: PMConsent(accepted: acceptedVendors),

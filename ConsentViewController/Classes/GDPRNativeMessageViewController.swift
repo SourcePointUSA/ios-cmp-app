@@ -100,7 +100,7 @@ import UIKit
     ///   - hex: `String` in the format of `#ffffff` (Hexeximal color representation)
     ///
     /// Taken from https://stackoverflow.com/a/27203691/1244883)
-    internal func hexStringToUIColor(hex: String) -> UIColor? {
+    func hexStringToUIColor(hex: String) -> UIColor? {
         let colorString = String(hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased().dropFirst())
 
         if colorString.count != 6 { return nil }
