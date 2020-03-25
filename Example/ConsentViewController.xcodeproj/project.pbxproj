@@ -164,7 +164,7 @@
 		4F328390C54666FBE7A369F2 /* Pods-ConsentViewController_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ConsentViewController_ExampleTests/Pods-ConsentViewController_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		52A295DEC4498509ABAA9D67 /* Pods-AuthExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.release.xcconfig"; path = "Target Support Files/Pods-AuthExample/Pods-AuthExample.release.xcconfig"; sourceTree = "<group>"; };
 		5DD13E110AF4E98FE752FC22 /* Pods-AuthExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.debug.xcconfig"; path = "Target Support Files/Pods-AuthExample/Pods-AuthExample.debug.xcconfig"; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConsentViewController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* SPGDPRExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPGDPRExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -630,7 +630,7 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */,
+				607FACD01AFB9204008FA782 /* SPGDPRExampleApp.app */,
 				8231B13D22BA5A6B00D2669B /* AuthExample.app */,
 				1997B63A238FDCE80079AF34 /* GDPR-MetaApp.app */,
 				1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */,
@@ -825,7 +825,7 @@
 			);
 			name = ConsentViewController_Example;
 			productName = ConsentViewController;
-			productReference = 607FACD01AFB9204008FA782 /* ConsentViewController_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* SPGDPRExampleApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8231B13C22BA5A6B00D2669B /* AuthExample */ = {
@@ -1708,7 +1708,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdpr.exampleapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SPGDPRExampleApp;
 				PROVISIONING_PROFILE_SPECIFIER = WildCardProfile;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
@@ -1729,7 +1729,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdpr.exampleapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SPGDPRExampleApp;
 				PROVISIONING_PROFILE_SPECIFIER = WildCardProfile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1869,7 +1869,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsentViewController_Example.app/ConsentViewController_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SPGDPRExampleApp.app/SPGDPRExampleApp";
 			};
 			name = Debug;
 		};
@@ -1895,7 +1895,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConsentViewController_Example.app/ConsentViewController_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SPGDPRExampleApp.app/SPGDPRExampleApp";
 			};
 			name = Release;
 		};

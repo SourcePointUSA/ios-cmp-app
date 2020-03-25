@@ -154,7 +154,7 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
             }
             context("Test consentUIWillShow delegate method") {
                 it("Test GDPRConsentViewController calls consentUIWillShow delegate method") {
-                    consentViewController.consentUIWillShow()
+                    consentViewController.gdprConsentUIWillShow()
                     if consentViewController.messageViewController == nil {
                         expect(consentViewController.messageViewController).to(beNil())
                     }else {

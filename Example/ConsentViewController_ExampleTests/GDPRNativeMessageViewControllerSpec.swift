@@ -20,7 +20,7 @@ class GDPRNativeMessageViewControllerSpec: QuickSpec, GDPRConsentDelegate {
         
         describe("Test GDPRNativeMessageViewController methods") {
             let customFileds = ["Custom": "Fileds"]
-            let attributeStyle = AttributeStyle(fontFamily: "System-Font", fontSize: "14", color: "#00FA9A", backgroundColor: "#944488")
+            let attributeStyle = AttributeStyle(fontFamily: "System-Font", fontSize: 14, color: "#00FA9A", backgroundColor: "#944488")
             let messageAttribute = MessageAttribute(text: "Test GDPR Message", style: attributeStyle, customFields: customFileds)
             let messageAction = MessageAction(text: "Test GDPR Message", style: attributeStyle, customFields: customFileds, choiceId: 12, choiceType: GDPRActionType.AcceptAll)
             let gdprMessage = GDPRMessage(title: messageAttribute, body: messageAttribute, actions: [messageAction], customFields: customFileds)

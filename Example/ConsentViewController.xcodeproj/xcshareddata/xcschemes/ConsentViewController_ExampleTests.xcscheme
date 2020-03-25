@@ -39,7 +39,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "ConsentViewController_Example.app"
+            BuildableName = "SPGDPRExampleApp.app"
             BlueprintName = "ConsentViewController_Example"
             ReferencedContainer = "container:ConsentViewController.xcodeproj">
          </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "ConsentViewController_Example.app"
+            BuildableName = "SPGDPRExampleApp.app"
             BlueprintName = "ConsentViewController_Example"
             ReferencedContainer = "container:ConsentViewController.xcodeproj">
          </BuildableReference>

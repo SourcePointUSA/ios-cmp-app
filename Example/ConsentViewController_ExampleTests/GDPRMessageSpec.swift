@@ -23,7 +23,7 @@ class GDPRMessageSpec: QuickSpec {
             let customFileds = ["Custom": "Fileds"]
             
             beforeEach {
-                attributeStyle = AttributeStyle(fontFamily: "System-Font", fontSize: "14", color: "#00FA9A", backgroundColor: "#944488")
+                attributeStyle = AttributeStyle(fontFamily: "System-Font", fontSize: 14, color: "#00FA9A", backgroundColor: "#944488")
                 messageAttribute = MessageAttribute(text: "Test GDPR Message", style: attributeStyle!, customFields: customFileds)
                 messageAction = MessageAction(text: "Test GDPR Message", style: attributeStyle!, customFields: customFileds, choiceId: 12, choiceType: GDPRActionType.AcceptAll)
                 gdprMessage = GDPRMessage(title: messageAttribute!, body: messageAttribute!, actions: [messageAction!], customFields: customFileds)
