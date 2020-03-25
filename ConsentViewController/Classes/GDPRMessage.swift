@@ -11,11 +11,11 @@ public typealias CustomFields = [String:String]
 
 @objc public class AttributeStyle: NSObject, Codable {
     public let fontFamily: String
-    public let fontSize: String
+    public let fontSize: Int
     public let color: String
     public let backgroundColor: String
     
-    public init(fontFamily: String, fontSize: String, color: String, backgroundColor: String) {
+    public init(fontFamily: String, fontSize: Int, color: String, backgroundColor: String) {
         self.fontFamily = fontFamily
         self.fontSize = fontSize
         self.color = color
