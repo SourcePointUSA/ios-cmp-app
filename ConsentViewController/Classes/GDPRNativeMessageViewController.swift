@@ -48,7 +48,7 @@ import UIKit
             button.backgroundColor = hexStringToUIColor(hex: action.style.backgroundColor)
             button.titleLabel?.font = UIFont(
                 name: action.style.fontFamily,
-                size: pixelStringToCGFloat(pxString: action.style.fontSize) ?? 14
+                size: (CGFloat)(action.style.fontSize)
             )
         } else {
             button.isHidden = true
@@ -61,7 +61,7 @@ import UIKit
         label.backgroundColor = hexStringToUIColor(hex: attr.style.backgroundColor)
         label.font = UIFont(
             name: attr.style.fontFamily,
-            size: pixelStringToCGFloat(pxString: attr.style.fontSize) ?? 14
+            size: (CGFloat)(attr.style.fontSize)
         )
     }
     
@@ -71,7 +71,7 @@ import UIKit
         textView.backgroundColor = hexStringToUIColor(hex: attr.style.backgroundColor)
         textView.font = UIFont(
             name: attr.style.fontFamily,
-            size: pixelStringToCGFloat(pxString: attr.style.fontSize) ?? 14
+            size: (CGFloat)(attr.style.fontSize)
         )
     }
     
