@@ -1,3 +1,6 @@
+## 5.0.2 (March, 26, 2020)
+* support type changes in nativeMessageJSON
+
 ## 5.0.1 (March, 23, 2020)
 * added support to [TCFv2](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details) for native message
 * updated swift version to 5.0
