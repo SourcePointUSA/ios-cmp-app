@@ -38,7 +38,7 @@ extension ViewController: GDPRConsentDelegate {
     /// called when there's a message to show and its content (`GDPRMessage`) is ready
     func consentUIWillShow(message: GDPRMessage) {
         messageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
-        messageController!.modalPresentationStyle = .popover
+        messageController!.modalPresentationStyle = .overFullScreen
         present(messageController!, animated: true, completion: nil)
     }
 
