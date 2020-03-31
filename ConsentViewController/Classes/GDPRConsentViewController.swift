@@ -200,7 +200,7 @@ public typealias TargetingParams = [String:String]
     /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
     /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
     ///
-    /// - Parameter forAuthId: any arbitrary token that uniquely identifies an user in your system.
+    /// - Parameter authId: any arbitrary token that uniquely identifies an user in your system.
     public func loadMessage(forAuthId authId: String?) {
         loadGDPRMessage(native: false, authId: authId)
     }
