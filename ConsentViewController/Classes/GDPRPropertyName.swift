@@ -25,7 +25,7 @@ import Foundation
     
     let rawValue: String
     
-    /// - Parameter _: the exact name of your property as created in SourcePoint's dashboard.
+    /// - Parameter rawValue: the exact name of your property as created in SourcePoint's dashboard.
     /// - Throws: `InvalidArgumentError` if the property name contain anything other than letters, numbers, . (dots), : (semicolons) and / (slashes).
     public init(_ rawValue: String) throws {
         let validRawValue = try GDPRPropertyName.validate(rawValue)
