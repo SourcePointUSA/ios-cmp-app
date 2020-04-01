@@ -12,7 +12,7 @@ typealias OnError = (GDPRConsentViewControllerError?) -> Void
 
 protocol HttpClient {
     var defaultOnError: OnError? { get set }
-    
+
     func get(url: URL?, onSuccess: @escaping OnSuccess)
     func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess)
 }
@@ -20,17 +20,17 @@ protocol HttpClient {
 class SimpleClient: HttpClient {
     var defaultOnError: OnError?
     let connectivityManager: Connectivity
-    
+
     init(connectivityManager: Connectivity) {
         self.connectivityManager = connectivityManager
     }
-    
+
     convenience init() {
         self.init(connectivityManager: ConnectivityManager.shared)
     }
-    
+
     func request(_ urlRequest: URLRequest, _ onSuccess: @escaping OnSuccess) {
-        if(connectivityManager.isConnectedToNetwork()) {
+        if connectivityManager.isConnectedToNetwork() {
             URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 DispatchQueue.main.async { [weak self] in
                     guard let data = data else {
@@ -44,7 +44,7 @@ class SimpleClient: HttpClient {
             defaultOnError?(NoInternetConnection())
         }
     }
-    
+
     func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
         guard let _url = url else {
             defaultOnError?(GeneralRequestError(url, nil, nil))
@@ -56,7 +56,7 @@ class SimpleClient: HttpClient {
         urlRequest.httpBody = body
         request(urlRequest, onSuccess)
     }
-    
+
     func get(url: URL?, onSuccess: @escaping OnSuccess) {
         guard let _url = url else {
             defaultOnError?(GeneralRequestError(url, nil, nil))
@@ -69,11 +69,11 @@ class SimpleClient: HttpClient {
 struct JSON {
     private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
     private lazy var jsonEncoder: JSONEncoder = { return JSONEncoder() }()
-    
+
     mutating func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
         return try jsonDecoder.decode(decodable, from: data)
     }
-    
+
     mutating func encode<T: Encodable>(_ encodable: T) throws -> Data {
         return try jsonEncoder.encode(encodable)
     }
@@ -88,22 +88,22 @@ class SourcePointClient {
     static let GET_MESSAGE_CONTENTS_URL = URL(string: "native-message?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
     static let GET_MESSAGE_URL_URL = URL(string: "message-url?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CONSENT_URL = URL(string: "consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    
+
     private var client: HttpClient
     private lazy var json: JSON = { return JSON() }()
-    
+
     let requestUUID = UUID()
-    
+
     private let accountId: Int
     private let propertyId: Int
     private let propertyName: GDPRPropertyName
     private let pmId: String
     private let campaignEnv: GDPRCampaignEnv
     private let targetingParams: TargetingParams?
-    
+
     public var onError: OnError? { didSet { client.defaultOnError = onError } }
 
-    init(accountId: Int, propertyId:Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
+    init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.propertyName = propertyName
@@ -112,15 +112,15 @@ class SourcePointClient {
         self.targetingParams = targetingParams
         self.client = client
     }
-    
+
     convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: nil, client: SimpleClient())
     }
-    
+
     convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: targetingParams, client: SimpleClient())
     }
-    
+
     private func targetingParamsToString(_ params: TargetingParams?) -> String {
         let emptyParams = "{}"
         do {
@@ -130,7 +130,7 @@ class SourcePointClient {
             return emptyParams
         }
     }
-    
+
     private func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
@@ -157,7 +157,7 @@ class SourcePointClient {
             }
         }
     }
-    
+
     func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, onSuccess: @escaping (MessageResponse) -> Void) {
         getMessage(
             url: native ?

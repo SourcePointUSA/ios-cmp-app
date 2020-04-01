@@ -10,11 +10,11 @@ import Foundation
 
 @objcMembers public class ConsentString: NSObject, ConsentStringProtocol {
     public static let empty = ConsentString()
-    
+
     public static func == (lhs: ConsentString, rhs: ConsentString) -> Bool {
         return lhs.consentData == rhs.consentData
     }
-    
+
     required public init(from decoder: Decoder) throws {
         self.consentString = try decoder.singleValueContainer().decode(String.self).fromWebSafe()
         guard let dataValue = Data(base64Encoded: self.consentString.base64Padded) else {
@@ -22,7 +22,7 @@ import Foundation
         }
         consentData = dataValue
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(consentString.toWebSafe())
@@ -42,9 +42,9 @@ import Foundation
             consentData = dataValue
         }
     }
-    
-    var consentData:Data
-    
+
+    var consentData: Data
+
     /**
      Creates new instance of a ConsentString object
      
@@ -57,7 +57,7 @@ import Foundation
         }
         consentData = dataValue
     }
-    
+
     private override init() {
         self.consentString = ""
         self.consentData = Data(base64Encoded: "".base64Padded)!
@@ -66,21 +66,21 @@ import Foundation
     public var cmpId: Int {
         return Int(consentData.intValue(fromBit: 78, toBit: 89))
     }
-    
+
     public var consentScreen: Int {
         return Int(consentData.intValue(fromBit: 102, toBit: 107))
     }
-    
+
     public var consentLanguage: String {
         var data = consentData.data(fromBit: 108, toBit: 119)
         data.insert(0, at: 0)
         let string = data.base64EncodedString()
         return String(string[string.index(string.startIndex, offsetBy: 2)...])
     }
-    
-    let purposesStart:Int64 = 132
-    let maxPurposes:Int64 = 24
-    
+
+    let purposesStart: Int64 = 132
+    let maxPurposes: Int64 = 24
+
     public var purposesAllowed: [Int8] {
         var resultsArray = [Int8]()
         for purposeId in 1...maxPurposes {
@@ -92,8 +92,7 @@ import Foundation
         }
         return resultsArray
     }
-    
-    
+
     public func purposeAllowed(forPurposeId purposeId: Int8) -> Bool {
         if purposeId > 24 || purposeId < 1 {
             return false
@@ -105,30 +104,30 @@ import Foundation
         }
         return false
     }
-    
+
     //Used to determine whether we need to check for a vendor ID at all if it's greater than this value
-    public var maxVendorId : Int {
+    public var maxVendorId: Int {
         get {
             return Int(consentData.intValue(fromBit: 156, toBit: 171))
         }
     }
-    
-    private var isBitField:Bool {
+
+    private var isBitField: Bool {
         get {
             let value = consentData.intValue(fromBit: 172, toBit: 172)
             return value == 0
         }
     }
-    
-    private var isRange:Bool {
+
+    private var isRange: Bool {
         get {
             return !isBitField
         }
     }
-    
-    private let bitFieldVendorStart:Int64 = 173
-    private let rangeDefaultConsent:Int64 = 173
-    
+
+    private let bitFieldVendorStart: Int64 = 173
+    private let rangeDefaultConsent: Int64 = 173
+
     public func isVendorAllowed(vendorId: Int) -> Bool {
         if vendorId > maxVendorId {
             return false
@@ -175,5 +174,5 @@ import Foundation
             return defaultConsent == 0 ? false : true
         }
     }
-    
+
 }

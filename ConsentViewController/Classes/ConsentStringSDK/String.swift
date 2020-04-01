@@ -9,10 +9,10 @@
 import Foundation
 
 extension String {
-    
-    var base64Padded:String {
+
+    var base64Padded: String {
         get {
-            return self.padding(toLength: ((self.count + 3) / 4) * 4,withPad: "=",startingAt: 0)
+            return self.padding(toLength: ((self.count + 3) / 4) * 4, withPad: "=", startingAt: 0)
         }
     }
 
@@ -21,7 +21,7 @@ extension String {
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
     }
-    
+
     public func toWebSafe() -> String {
         return self
             .replacingOccurrences(of: "+", with: "-")

@@ -8,6 +8,6 @@
 
 import Foundation
 
-public enum ConsentStringError :  Error {
+public enum ConsentStringError: Error {
     case base64DecodingFailed
 }

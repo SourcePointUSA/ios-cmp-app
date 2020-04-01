@@ -10,11 +10,11 @@ import Foundation
 
 protocol ConsentStringProtocol: Codable {
     init(consentString: String) throws
-    var consentString:String {get set}
-    var cmpId:Int {get}
-    var consentScreen:Int {get}
-    var consentLanguage:String {get}
-    var purposesAllowed:[Int8] {get}
-    func purposeAllowed(forPurposeId purposeId:Int8) -> Bool
-    func isVendorAllowed(vendorId:Int) -> Bool
+    var consentString: String {get set}
+    var cmpId: Int {get}
+    var consentScreen: Int {get}
+    var consentLanguage: String {get}
+    var purposesAllowed: [Int8] {get}
+    func purposeAllowed(forPurposeId purposeId: Int8) -> Bool
+    func isVendorAllowed(vendorId: Int) -> Bool
 }

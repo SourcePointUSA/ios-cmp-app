@@ -26,7 +26,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         config.userContentController = userContentController
         let wv = WKWebView(frame: .zero, configuration: config)
         if #available(iOS 11.0, *) {
-            wv.scrollView.contentInsetAdjustmentBehavior = .never;
+            wv.scrollView.contentInsetAdjustmentBehavior = .never
         }
         wv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         wv.translatesAutoresizingMaskIntoConstraints = true
@@ -37,75 +37,75 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         wv.allowsBackForwardNavigationGestures = true
         return wv
     }()
-    
+
     private let propertyId: Int
     private let pmId: String
     private let consentUUID: GDPRUUID
-    
+
     private var consentUILoaded = false
     private var lastChoiceId: String?
-    
+
     init(propertyId: Int, pmId: String, consentUUID: GDPRUUID) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         view = webview
     }
-    
+
     func gdprConsentUIWillShow() {
-        if(!consentUILoaded) {
+        if !consentUILoaded {
             consentUILoaded = true
             consentDelegate?.gdprConsentUIWillShow?()
         }
     }
-    
+
     func onMessageReady() {
         gdprConsentUIWillShow()
         consentDelegate?.messageWillShow?()
     }
-    
+
     func onPMReady() {
         gdprConsentUIWillShow()
         consentDelegate?.pmWillShow?()
     }
-    
+
     func closeConsentUIIfOpen() {
-        if(consentUILoaded) { consentUIDidDisappear() }
+        if consentUILoaded { consentUIDidDisappear() }
     }
 
     func consentUIDidDisappear() {
         consentDelegate?.consentUIDidDisappear?()
     }
-    
+
     func onError(error: GDPRConsentViewControllerError?) {
         consentDelegate?.onError?(error: error)
         closeConsentUIIfOpen()
     }
-    
+
     func showPrivacyManagerFromMessageAction() {
         consentDelegate?.messageDidDisappear?()
         loadPrivacyManager()
     }
-    
+
     func cancelPMAction() {
         webview.canGoBack ?
             navigateBackToMessage():
             closeConsentUIIfOpen()
     }
-    
+
     func navigateBackToMessage() {
         webview.goBack()
         consentDelegate?.pmDidDisappear?()
     }
-    
+
     func onAction(_ action: GDPRAction, consents: PMConsents?) {
         consentDelegate?.onAction?(action, consents: consents)
         switch action.type {
@@ -117,7 +117,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 closeConsentUIIfOpen()
         }
     }
-    
+
     private func load(url: URL) {
         if ConnectivityManager.shared.isConnectedToNetwork() {
             webview.load(URLRequest(url: url))
@@ -125,7 +125,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             onError(error: NoInternetConnection())
         }
     }
-    
+
     override func loadMessage(fromUrl url: URL) {
         load(url: url)
     }
@@ -133,7 +133,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     func pmUrl() -> URL? {
         return URL(string: "https://notice.sp-prod.net/privacy-manager/index.html?message_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID)")
     }
-    
+
     override func loadPrivacyManager() {
         guard let url = pmUrl() else {
             onError(error: URLParsingError(urlString: "PMUrl"))
@@ -141,7 +141,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
         load(url: url)
     }
-    
+
     /// :nodoc:
     // handles links with "target=_blank", forcing them to open in Safari
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -153,7 +153,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
         return nil
     }
-    
+
     private func getPMConsentsIfAny(_ payload: [String: Any]) -> PMConsents {
         guard
             let consents = payload["consents"] as? [String: Any],
@@ -172,7 +172,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             categories: PMConsent(accepted: acceptedPurposes)
         )
     }
-    
+
     private func getChoiceId (_ payload: [String: Any]) -> String? {
         // Actions coming from the PM do not have a choiceId.
         // since we store the last non-null choiceId, the lastChoiceId
@@ -181,7 +181,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         lastChoiceId = payload["id"] as? String? ?? lastChoiceId
         return lastChoiceId
     }
-    
+
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard
             let body = message.body as? [String: Any?],
@@ -190,7 +190,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
             return
         }
-        
+
         switch name {
             case "onMessageReady":
                 onMessageReady()
@@ -212,7 +212,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 print(message.body)
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         consentDelegate = nil
         let contentController = webview.configuration.userContentController

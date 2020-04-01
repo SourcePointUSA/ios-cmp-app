@@ -43,9 +43,9 @@ import Foundation
         self.parsingError = error
         super.init()
     }
-    
+
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+
     override public var description: String { get { return "Error parsing response from \(endpoint): \(parsingError.debugDescription)" } }
     public var errorDescription: String? { get { return description } }
     public var failureReason: String? { get { return description } }
@@ -58,14 +58,14 @@ import Foundation
 
 @objcMembers public class MessageEventParsingError: GDPRConsentViewControllerError {
     let message: String
-    
+
     init(message: String) {
         self.message = message
         super.init()
     }
-    
+
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+
     public var failureReason: String? { get { return "Could not parse message coming from the WebView \(message)" } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
@@ -77,28 +77,28 @@ import Foundation
 
 @objcMembers public class URLParsingError: GDPRConsentViewControllerError {
     let urlString: String
-    
+
     init(urlString: String) {
         self.urlString = urlString
         super.init()
     }
-    
+
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+
     public var failureReason: String? { get { return "Could not parse URL: \(urlString)" } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
 @objcMembers public class InvalidArgumentError: GDPRConsentViewControllerError {
     let message: String
-    
+
     init(message: String) {
         self.message = message
         super.init()
     }
-    
+
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
+
     public var failureReason: String? { get { return message } }
     override public var description: String { get { return message } }
 }
