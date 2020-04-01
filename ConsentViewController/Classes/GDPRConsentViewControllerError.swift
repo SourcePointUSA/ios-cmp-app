@@ -51,6 +51,11 @@ import Foundation
     public var failureReason: String? { return description }
 }
 
+@objcMembers public class UnableToLoadJSReceiver: GDPRConsentViewControllerError {
+    public var failureReason: String? { return "Unable to load the JSReceiver.js resource." }
+    override public var description: String { return "\(failureReason!)\n" }
+}
+
 @objcMembers public class NoInternetConnection: GDPRConsentViewControllerError {
     public var failureReason: String? { return "The device is not connected to the internet." }
     override public var description: String { return "\(failureReason!)\n" }

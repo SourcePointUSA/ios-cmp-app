@@ -16,27 +16,7 @@ import WebKit
 class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, GDPRConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "GDPRJSReceiver"
 
-    lazy var webview: WKWebView = {
-        let config = WKWebViewConfiguration()
-        let userContentController = WKUserContentController()
-        let scriptSource = try! String(contentsOfFile: Bundle(for: GDPRConsentViewController.self).path(forResource: MessageWebViewController.MESSAGE_HANDLER_NAME, ofType: "js")!)
-        let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-        userContentController.addUserScript(script)
-        userContentController.add(self, name: MessageWebViewController.MESSAGE_HANDLER_NAME)
-        config.userContentController = userContentController
-        let wv = WKWebView(frame: .zero, configuration: config)
-        if #available(iOS 11.0, *) {
-            wv.scrollView.contentInsetAdjustmentBehavior = .never
-        }
-        wv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        wv.translatesAutoresizingMaskIntoConstraints = true
-        wv.uiDelegate = self
-        wv.navigationDelegate = self
-        wv.isOpaque = false
-        wv.backgroundColor = .clear
-        wv.allowsBackForwardNavigationGestures = true
-        return wv
-    }()
+    var webview: WKWebView?
 
     private let propertyId: Int
     private let pmId: String
@@ -57,6 +37,30 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadView() {
+        let config = WKWebViewConfiguration()
+        let userContentController = WKUserContentController()
+        guard let scriptSource = try? String(
+            contentsOfFile: Bundle(for: GDPRConsentViewController.self).path(forResource:
+                MessageWebViewController.MESSAGE_HANDLER_NAME, ofType: "js")!)
+            else {
+            consentDelegate?.onError?(error: UnableToLoadJSReceiver())
+            return
+        }
+        let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+        userContentController.addUserScript(script)
+        userContentController.add(self, name: MessageWebViewController.MESSAGE_HANDLER_NAME)
+        config.userContentController = userContentController
+        let wv = WKWebView(frame: .zero, configuration: config)
+        if #available(iOS 11.0, *) {
+            wv.scrollView.contentInsetAdjustmentBehavior = .never
+        }
+        webview?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webview?.translatesAutoresizingMaskIntoConstraints = true
+        webview?.uiDelegate = self
+        webview?.navigationDelegate = self
+        webview?.isOpaque = false
+        webview?.backgroundColor = .clear
+        webview?.allowsBackForwardNavigationGestures = true
         view = webview
     }
 
@@ -96,13 +100,13 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func cancelPMAction() {
-        webview.canGoBack ?
+        (webview?.canGoBack ?? false) ?
             navigateBackToMessage():
             closeConsentUIIfOpen()
     }
 
     func navigateBackToMessage() {
-        webview.goBack()
+        webview?.goBack()
         consentDelegate?.pmDidDisappear?()
     }
 
@@ -120,7 +124,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     private func load(url: URL) {
         if ConnectivityManager.shared.isConnectedToNetwork() {
-            webview.load(URLRequest(url: url))
+            webview?.load(URLRequest(url: url))
         } else {
             onError(error: NoInternetConnection())
         }
@@ -216,8 +220,9 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     override func viewWillDisappear(_ animated: Bool) {
         consentDelegate = nil
-        let contentController = webview.configuration.userContentController
-        contentController.removeScriptMessageHandler(forName: MessageWebViewController.MESSAGE_HANDLER_NAME)
-        contentController.removeAllUserScripts()
+        if let contentController = webview?.configuration.userContentController {
+            contentController.removeScriptMessageHandler(forName: MessageWebViewController.MESSAGE_HANDLER_NAME)
+            contentController.removeAllUserScripts()
+        }
     }
 }
