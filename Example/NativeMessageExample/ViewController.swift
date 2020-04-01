@@ -100,7 +100,7 @@ extension ViewController {
             containerView.addSubview(activityIndicator)
             NSLayoutConstraint.activate([
                 activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-                activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
             ])
         }
     }
@@ -110,4 +110,3 @@ extension ViewController {
         activityIndicator.removeFromSuperview()
     }
 }
-
