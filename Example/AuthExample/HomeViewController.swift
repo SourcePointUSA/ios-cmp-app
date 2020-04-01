@@ -23,15 +23,15 @@ class HomeViewController: UIViewController, GDPRConsentDelegate {
 
     @IBOutlet var authIdLabel: UILabel!
     @IBOutlet var consentTableView: UITableView!
-    
+
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
     var consents: [String] = []
-    
+
     func gdprConsentUIWillShow() {
         self.present(consentViewController, animated: true, completion: nil)
     }
-    
+
     func consentUIDidDisappear() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -110,4 +110,3 @@ extension HomeViewController: UITableViewDataSource {
         return cell
     }
 }
-
