@@ -12,11 +12,10 @@ import ConsentViewController
 class ViewController: UIViewController {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 7094,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
-        PMId: "100699",
+        propertyId: 7639,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
+        PMId: "122058",
         campaignEnv: .Public,
-        targetingParams: ["native":"true"],
         consentDelegate: self
     )}()
 
