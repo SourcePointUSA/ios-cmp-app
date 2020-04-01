@@ -1,4 +1,3 @@
-
 //
 //  SourcePointClient.swift
 //  ConsentViewController_ExampleTests
@@ -18,7 +17,7 @@ public class MockHttp: HttpClient {
     init(response: Data?) {
         self.response = response
     }
-    
+
     public func get(url: URL, completionHandler handler: @escaping (Data?, Error?) -> Void) {
         getCalledWith = url.absoluteURL
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
@@ -42,19 +41,19 @@ class SourcePointClientSpec: QuickSpec {
             client: client
         )
     }
-    
+
     override func spec() {
         var client: SourcePointClient!
         var httpClient: MockHttp?
         var mockedResponse: Data?
-        
+
         describe("getMessageUrl") {
             beforeEach {
                 mockedResponse = "\"https://notice.sp-prod.net/?message_id=59706\"".data(using: .utf8)
                 httpClient = MockHttp(response: mockedResponse)
                 client = self.getClient(httpClient!)
             }
-            
+
             it("calls get on the http client with the right url") {
                 client.getMessageUrl(accountId: 123, propertyId: 123) { _, _ in }
                 expect(httpClient?.getCalledWith).to(equal(URL(string: "https://fake_wrapper_api.com/getMessageUrl")))
@@ -62,7 +61,7 @@ class SourcePointClientSpec: QuickSpec {
 
             it("returns the url of a message") {
                 var messageUrl: URL?
-                client.getMessageUrl(accountId: 123, propertyId: 123) { url, _error in messageUrl = url }
+                client.getMessageUrl(accountId: 123, propertyId: 123) { url, _ in messageUrl = url }
                 expect(messageUrl).toEventually(equal(URL(string: "https://notice.sp-prod.net/?message_id=59706")), timeout: 5)
             }
         }

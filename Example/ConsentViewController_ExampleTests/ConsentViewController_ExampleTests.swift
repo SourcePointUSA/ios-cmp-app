@@ -15,22 +15,22 @@ public class MockHttp: HttpClient {
     var getCalledWith: URL?
     var success: Data?
     var error: Error?
-    
+
     init(success: Data?) {
         self.success = success
     }
-    
+
     init(error: Error?) {
         self.error = error
     }
-    
+
     public func get(url: URL?, onSuccess: @escaping OnSuccess) {
         getCalledWith = url?.absoluteURL
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
             onSuccess(self.success!)
         })
     }
-    
+
     public func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
         getCalledWith = url?.absoluteURL
         var urlRequest = URLRequest(url: getCalledWith!)
@@ -47,12 +47,12 @@ class SourcePointClientSpec: QuickSpec {
     func getClient(_ client: MockHttp) -> SourcePointClient {
         return SourcePointClient(accountId: 123, propertyId: 123, propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"), pmId: "123", campaignEnv: .Public, targetingParams: [:], client: client)
     }
-    
+
     override func spec() {
         var client: SourcePointClient!
         var httpClient: MockHttp?
         var mockedResponse: Data?
-        
+
         describe("getMessageUrl") {
             describe("with a valid MessageResponse") {
                 beforeEach {
@@ -60,7 +60,7 @@ class SourcePointClientSpec: QuickSpec {
                     httpClient = MockHttp(success: mockedResponse)
                     client = self.getClient(httpClient!)
                 }
-                
+
 //                it("calls get on the http client with the right url") {
 //                    client.getMessageUrl(accountId: 123, propertyId: 123, onSuccess: {_ in}, onError: nil)
 //                    expect(httpClient?.getCalledWith).to(equal(URL(string: "https://fake_wrapper_api.com/getMessageUrl")))
