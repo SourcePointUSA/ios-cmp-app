@@ -9,11 +9,11 @@
 import UIKit
 
 protocol TargetingParamCellDelegate: class {
-    func deleteButton(sender:TargetingParamCell)
+    func deleteButton(sender: TargetingParamCell)
 }
 
 class TargetingParamCell: SourcePointUItablewViewCell {
-    
+
     @IBOutlet weak var targetingParamLabel: UILabel!
     weak var delegate: TargetingParamCellDelegate?
 

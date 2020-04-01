@@ -11,7 +11,7 @@ import UIKit
 class ConsentTableViewCell: SourcePointUItablewViewCell {
 
     @IBOutlet weak var consentIDString: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

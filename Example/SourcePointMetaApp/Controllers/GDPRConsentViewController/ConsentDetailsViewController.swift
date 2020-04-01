@@ -11,33 +11,33 @@ import ConsentViewController
 import CoreData
 import WebKit
 
-class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GDPRConsentDelegate{
-    
+class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GDPRConsentDelegate {
+
     @IBOutlet weak var euConsentLabel: UILabel!
     @IBOutlet weak var consentUUIDLabel: UILabel!
     @IBOutlet weak var consentTableView: UITableView!
     @IBOutlet weak var noDataLabel: UILabel!
-    
-    //// MARK: - Instance properties
+
+    // MARK: - Instance properties
     private let cellIdentifier = "ConsentCell"
-    
+
     // Reference to the selected property managed object ID
-    var propertyManagedObjectID : NSManagedObjectID?
-    
+    var propertyManagedObjectID: NSManagedObjectID?
+
     /** PM is loaded or not
      */
     var pmloadedStatus = false
     var userConsents: GDPRUserConsent?
     var gdprUUID: String = ""
     let sections = ["Vendor Consents", "Purpose Consents"]
-    
+
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
     var consentViewController: GDPRConsentViewController?
     var propertyDetails: PropertyDetailsModel?
     var targetingParams = [TargetingParamModel]()
 //    let logger = Logger()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         consentTableView.tableFooterView = UIView(frame: .zero)
@@ -45,7 +45,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         navigationSetup()
         setTableViewHidden()
         setconsentUUId()
-        
+
         if let _propertyManagedObjectID = propertyManagedObjectID {
             self.showIndicator()
             fetchDataFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: {(propertyDetails, targetingParams) in
@@ -55,44 +55,44 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             })
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setconsentUUId()
     }
-    
+
     func navigationSetup() {
-        
+
         let backIcon = UIButton(frame: CGRect.zero)
         backIcon.setImage(UIImage(named: "Back"), for: UIControl.State())
         backIcon.addTarget(self, action: #selector(back), for: UIControl.Event.touchUpInside)
-        let backIconBarButton : UIBarButtonItem = UIBarButtonItem(customView: backIcon)
+        let backIconBarButton: UIBarButtonItem = UIBarButtonItem(customView: backIcon)
         backIcon.sizeToFit()
         self.navigationItem.leftBarButtonItem = backIconBarButton
     }
-    
+
     @objc func back() {
         _ = self.navigationController?.popToRootViewController(animated: true)
     }
-    
+
     func setTableViewHidden() {
         consentTableView.isHidden = !(userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0)
         noDataLabel.isHidden = userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0
     }
-    
+
     func setconsentUUId() {
         if gdprUUID.count > 0 {
             consentUUIDLabel.text = gdprUUID
             euConsentLabel.text = userConsents?.euconsent
-        }else {
+        } else {
             consentUUIDLabel.text = SPLiteral.consentUUID
             euConsentLabel.text = SPLiteral.euConsentID
         }
     }
-    
-    func fetchDataFromDatabase(propertyManagedObjectID : NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void)  {
+
+    func fetchDataFromDatabase(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void) {
         self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
-            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp! ,authId: propertyDataModel.authId)
+            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId)
             var targetingParamsArray = [TargetingParamModel]()
             if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                 for targetingParam in targetingParams {
@@ -103,31 +103,31 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             completionHandler(propertyDetail, targetingParamsArray)
         })
     }
-    
-    func loadConsentManager(propertyDetails : PropertyDetailsModel, targetingParams:[TargetingParamModel]) {
+
+    func loadConsentManager(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel]) {
         let campaign: GDPRCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
-        var targetingParameters = [String:String]()
+        var targetingParameters = [String: String]()
         for targetingParam in targetingParams {
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
-        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign,targetingParams: targetingParameters, consentDelegate: self)
+        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
         if let authId = propertyDetails.authId {
             consentViewController?.loadMessage(forAuthId: authId)
-        }else {
+        } else {
             consentViewController?.loadMessage()
         }
     }
-    
+
     func gdprConsentUIWillShow() {
            hideIndicator()
            present(self.consentViewController!, animated: true, completion: nil)
        }
-       
+
        func consentUIDidDisappear() {
            dismiss(animated: true, completion: nil)
        }
-       
+
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.showIndicator()
         self.userConsents = userConsent
@@ -136,7 +136,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         consentTableView.reloadData()
         self.hideIndicator()
     }
-       
+
     func onError(error: GDPRConsentViewControllerError?) {
         //           logger.log("Error: %{public}@", [error?.description ?? "Something Went Wrong"])
         let okHandler = {
@@ -145,51 +145,51 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         }
         AlertView.sharedInstance.showAlertView(title: Alert.message, message: error?.description ?? "Something Went Wrong", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
-    
+
     @IBAction func showPMAction(_ sender: Any) {
         self.showIndicator()
         let campaign: GDPRCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
-        var targetingParameters = [String:String]()
+        var targetingParameters = [String: String]()
         for targetingParam in targetingParams {
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
-        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! GDPRPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign,targetingParams: targetingParameters, consentDelegate: self)
+        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! GDPRPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
         consentViewController?.loadPrivacyManager()
     }
 }
 
-//// MARK: UITableViewDataSource
-extension ConsentDetailsViewController : UITableViewDataSource {
-    
+// MARK: UITableViewDataSource
+extension ConsentDetailsViewController: UITableViewDataSource {
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.textLabel?.textColor = #colorLiteral(red: 0.2841853499, green: 0.822665453, blue: 0.653732717, alpha: 1)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         setTableViewHidden()
         if section == 0 {
             return userConsents?.acceptedVendors.count ?? 0
-        }else {
+        } else {
             return userConsents?.acceptedCategories.count ?? 0
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConsentTableViewCell {
             if indexPath.section == 0 {
                 cell.consentIDString.text = userConsents?.acceptedVendors[indexPath.row]
@@ -202,11 +202,11 @@ extension ConsentDetailsViewController : UITableViewDataSource {
     }
 }
 
-//// MARK: - UITableViewDelegate
-extension ConsentDetailsViewController : UITableViewDelegate {
-    
+// MARK: - UITableViewDelegate
+extension ConsentDetailsViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         consentTableView.deselectRow(at: indexPath, animated: false)
     }
 }

@@ -11,7 +11,7 @@ import CoreData
 
 @objc(PropertyDetails)
 public class PropertyDetails: NSManagedObject {
-    class var entityName : String {
+    class var entityName: String {
         return "PropertyDetails"
     }
 }

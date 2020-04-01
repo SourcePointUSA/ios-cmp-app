@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension PropertyDetails {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<PropertyDetails> {

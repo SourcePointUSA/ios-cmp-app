@@ -10,15 +10,15 @@ import Foundation
 import CoreData
 
 class PropertyListViewModel {
-    
+
     // MARK: - Properties and iVars
-    
-    private var properties : [PropertyDetails]?
-    
-    var storageCoordinator : PropertyDetailsStorageCoordinator = PropertyDetailsStorageCoordinator()
-    
-    //// MARK: - Initializers
-  
+
+    private var properties: [PropertyDetails]?
+
+    var storageCoordinator: PropertyDetailsStorageCoordinator = PropertyDetailsStorageCoordinator()
+
+    // MARK: - Initializers
+
     /// It initialize and create PropertyListViewModel with list of property item.
     ///
     /// - Parameter executionCompletionHandler: Callback for completion event. paramter indicates about execution status(success/failure).
@@ -33,7 +33,7 @@ class PropertyListViewModel {
             })
         }
     }
-    
+
     /// It deletes property from the database permanently.
     ///
     /// - Parameters:
@@ -59,14 +59,14 @@ class PropertyListViewModel {
             }
         }
     }
-    
+
     /// It will clear all the userDefault Data
     func clearUserDefaultsData() {
         let domain = Bundle.main.bundleIdentifier!
         UserDefaults.standard.removePersistentDomain(forName: domain)
         UserDefaults.standard.synchronize()
     }
-    
+
     /// It tells about the count of property stored in the database.
     ///
     /// - Returns: property count.
@@ -76,7 +76,7 @@ class PropertyListViewModel {
         }
         return 0
     }
-    
+
     /// It tells about the property details at particular index.
     ///
     /// - Parameter index: Index.
@@ -91,11 +91,11 @@ class PropertyListViewModel {
                     targetingParamString += "\(targetingParamModel.targetingKey!) : \(targetingParamModel.targetingValue!)\n"
                 }
             }
-            return (propertyDataModel,targetingParamString)
+            return (propertyDataModel, targetingParamString)
         }
         return (nil, nil)
     }
-    
+
     /// It fetch and return ManagedObjectID of the property managed object. It could be useful for other managed object context.
     ///
     /// - Parameter index: property Item Index.
