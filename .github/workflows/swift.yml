@@ -7,19 +7,11 @@ on:
     branches: [ develop ]
 
 jobs:
-  cocoapods:
-    name: Setup Cocoapods
+  lint: 
     runs-on: macos-latest
     steps:
-    - name: setup-cocoapods
-      uses: maxim-lobanov/setup-cocoapods@v1.1
-      with:
-        podfile-path: Example/Podfile.lock
-  build: 
-    runs-on: macos-latest
-    needs: [cocoapods]
-    steps:
-      - name: installing pods
-        run: cd Example && pod install
-      - name: building
-        run: xcodebuild -workspace ConsentViewController.xcworkspace -scheme ConsentViewController_Example SYMROOT=$(PWD)/build
+      - uses: actions/checkout@v2
+      - name: installing swiftlint
+        run: brew install swiftlint
+      - name: linting
+        run: cd Example && swiftlint lint
