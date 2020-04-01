@@ -1,0 +1,25 @@
+name: SwiftLint
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  cocoapods:
+    name: Setup Cocoapods
+    runs-on: macos-latest
+    steps:
+    - name: setup-cocoapods
+      uses: maxim-lobanov/setup-cocoapods@v1.1
+      with:
+        podfile-path: Example/Podfile.lock
+  build: 
+    runs-on: macos-latest
+    needs: [cocoapods]
+    steps:
+      - name: installing pods
+        run: cd Example && pod install
+      - name: building
+        run: xcodebuild -workspace ConsentViewController.xcworkspace -scheme ConsentViewController_Example SYMROOT=$(PWD)/build
