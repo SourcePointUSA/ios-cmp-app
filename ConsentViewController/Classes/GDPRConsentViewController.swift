@@ -47,9 +47,9 @@ public typealias TargetingParams = [String: String]
     private var messageViewController: GDPRMessageViewController?
     private var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
     enum LoadingStatus: String {
-        case Ready = "Ready"
-        case Presenting = "Presenting"
-        case Loading = "Loading"
+        case Ready
+        case Presenting
+        case Loading
     }
 
     private func remove(asChildViewController viewController: UIViewController?) {
@@ -136,7 +136,15 @@ public typealias TargetingParams = [String: String]
         PMId: String,
         campaignEnv: GDPRCampaignEnv,
         consentDelegate: GDPRConsentDelegate) {
-        self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, PMId: PMId, campaignEnv: campaignEnv, targetingParams: [:], consentDelegate: consentDelegate)
+        self.init(
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyName: propertyName,
+            PMId: PMId,
+            campaignEnv: campaignEnv,
+            targetingParams: [:],
+            consentDelegate: consentDelegate
+        )
     }
 
     /// :nodoc:

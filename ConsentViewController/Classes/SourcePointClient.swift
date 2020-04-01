@@ -103,7 +103,15 @@ class SourcePointClient {
 
     public var onError: OnError? { didSet { client.defaultOnError = onError } }
 
-    init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams?, client: HttpClient) {
+    init(
+        accountId: Int,
+        propertyId: Int,
+        propertyName: GDPRPropertyName,
+        pmId: String,
+        campaignEnv: GDPRCampaignEnv,
+        targetingParams: TargetingParams?,
+        client: HttpClient
+    ) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.propertyName = propertyName
@@ -113,12 +121,39 @@ class SourcePointClient {
         self.client = client
     }
 
-    convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv) {
-        self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: nil, client: SimpleClient())
+    convenience init(accountId: Int,
+                     propertyId: Int,
+                     propertyName: GDPRPropertyName,
+                     pmId: String,
+                     campaignEnv: GDPRCampaignEnv
+    ) {
+        self.init(accountId: accountId,
+                  propertyId: propertyId,
+                  propertyName: propertyName,
+                  pmId: pmId,
+                  campaignEnv: campaignEnv,
+                  targetingParams: nil,
+                  client: SimpleClient()
+        )
     }
 
-    convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams) {
-        self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: targetingParams, client: SimpleClient())
+    convenience init(
+        accountId: Int,
+        propertyId: Int,
+        propertyName: GDPRPropertyName,
+        pmId: String,
+        campaignEnv: GDPRCampaignEnv,
+        targetingParams: TargetingParams
+    ) {
+        self.init(
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyName: propertyName,
+            pmId: pmId,
+            campaignEnv: campaignEnv,
+            targetingParams: targetingParams,
+            client: SimpleClient()
+        )
     }
 
     private func targetingParamsToString(_ params: TargetingParams?) -> String {

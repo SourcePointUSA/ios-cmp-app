@@ -109,12 +109,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     func onAction(_ action: GDPRAction, consents: PMConsents?) {
         consentDelegate?.onAction?(action, consents: consents)
         switch action.type {
-            case .ShowPrivacyManager:
-                showPrivacyManagerFromMessageAction()
-            case .PMCancel:
-                cancelPMAction()
-            default:
-                closeConsentUIIfOpen()
+        case .ShowPrivacyManager:
+            showPrivacyManagerFromMessageAction()
+        case .PMCancel:
+            cancelPMAction()
+        default:
+            closeConsentUIIfOpen()
         }
     }
 
@@ -144,6 +144,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     /// :nodoc:
     // handles links with "target=_blank", forcing them to open in Safari
+    // swiftlint:disable:next line_length
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         guard let url = navigationAction.request.url else { return nil }
         if #available(iOS 10.0, *) {
@@ -192,24 +193,24 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
 
         switch name {
-            case "onMessageReady":
-                onMessageReady()
-            case "onPMReady":
-                onPMReady()
-            case "onAction":
-                guard
-                    let payload = body["body"] as? [String: Any],
-                    let actionTypeRaw = payload["type"] as? Int,
-                    let actionType = GDPRActionType(rawValue: actionTypeRaw)
-                else {
-                    onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
-                    return
-                }
-                onAction(GDPRAction(type: actionType, id: getChoiceId(payload)), consents: getPMConsentsIfAny(payload))
-            case "onError":
-                onError(error: WebViewError())
-            default:
-                print(message.body)
+        case "onMessageReady":
+            onMessageReady()
+        case "onPMReady":
+            onPMReady()
+        case "onAction":
+            guard
+                let payload = body["body"] as? [String: Any],
+                let actionTypeRaw = payload["type"] as? Int,
+                let actionType = GDPRActionType(rawValue: actionTypeRaw)
+            else {
+                onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
+                return
+            }
+            onAction(GDPRAction(type: actionType, id: getChoiceId(payload)), consents: getPMConsentsIfAny(payload))
+        case "onError":
+            onError(error: WebViewError())
+        default:
+            print(message.body)
         }
     }
 

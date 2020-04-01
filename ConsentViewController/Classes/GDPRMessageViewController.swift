@@ -13,8 +13,12 @@ import WebKit
     func loadPrivacyManager()
 }
 
-/// The `GDPRMessageViewController` is the class responsible for rendering the consent message and privacy manager.
-/// - Note: at the moment we only have one child of `MessageViewController` (`MessageWebViewController`) but the idea is to be able to swap the webview with any other class that knows how to render a consent message and a privacy manager. Eg. a native message view controller
+/// The `GDPRMessageViewController` is the class responsible for rendering the consent
+/// message and privacy manager.
+/// - Note: at the moment we only have one child of `MessageViewController`
+///  (`MessageWebViewController`) but the idea is to be able to swap the webview
+///  with any other class that knows how to render a consent message and a privacy manager.
+///  Eg. a native message view controller
 @objcMembers open class GDPRMessageViewController: UIViewController, GDPRMessageUIDelegate {
     weak var consentDelegate: GDPRConsentDelegate?
     public func loadMessage(fromUrl url: URL) {}

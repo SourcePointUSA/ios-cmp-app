@@ -15,7 +15,7 @@ import UIKit
     @IBOutlet weak var rejectButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
 
-    weak var shouldCallUIDisappearOnDelegate = true
+    var shouldCallUIDisappearOnDelegate = true // swiftlint:disable:this weak_delegate
 
     @IBAction func onShowOptionsTap(_ sender: Any) {
         showPrivacyManager()
