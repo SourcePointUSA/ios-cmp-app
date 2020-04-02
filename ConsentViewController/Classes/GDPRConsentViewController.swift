@@ -94,8 +94,7 @@ public typealias TargetingParams = [String: String]
         self.targetingParams = targetingParams
         self.consentDelegate = consentDelegate
 
-        self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ??
-            UUID().uuidString
+        self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ?? ""
         self.euconsent = UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? ""
 
         self.tcfData = UserDefaults.standard.dictionaryRepresentation()
@@ -219,7 +218,7 @@ public typealias TargetingParams = [String: String]
 
     private func resetConsentData() {
         self.euconsent = ""
-        self.gdprUUID = UUID().uuidString
+        self.gdprUUID = ""
         clearAllData()
     }
 
