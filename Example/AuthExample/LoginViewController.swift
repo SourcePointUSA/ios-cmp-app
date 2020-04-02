@@ -9,12 +9,11 @@
 import UIKit
 import ConsentViewController
 
-
 class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDelegate {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var authIdField: UITextField!
     @IBOutlet var consentTableView: UITableView!
-    
+
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7094,
@@ -23,7 +22,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
         campaignEnv: .Public,
         consentDelegate: self
     )}()
-    
+
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
     var consents: [String] = []
@@ -36,7 +35,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         let userName = textField.text ?? ""
-        if(userName.trimmingCharacters(in: .whitespacesAndNewlines) != "") {
+        if userName.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
             loginButton.sendActions(for: .touchUpInside)
             return true
         }
@@ -46,11 +45,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
+
     func gdprConsentUIWillShow() {
         self.present(consentViewController, animated: true, completion: nil)
     }
-    
+
     func consentUIDidDisappear() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -140,4 +139,3 @@ extension LoginViewController: UITableViewDataSource {
         return cell
     }
 }
-

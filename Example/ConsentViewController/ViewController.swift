@@ -37,12 +37,12 @@ extension ViewController: GDPRConsentDelegate {
     func consentUIDidDisappear() {
         dismiss(animated: true, completion: nil)
     }
-    
+
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
         userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
-        
+
         // IAB Related Data
         print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.keys.sorted()))
     }
@@ -51,4 +51,3 @@ extension ViewController: GDPRConsentDelegate {
         print("Error: \(error.debugDescription)")
     }
 }
-

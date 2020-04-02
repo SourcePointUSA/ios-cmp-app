@@ -3,6 +3,7 @@ platform :ios, '9.0'
 
 target 'ConsentViewController_Example' do
   pod 'ConsentViewController', :path => '../'
+  pod 'SwiftLint'
 end
 
 target 'ConsentViewController_ExampleTests' do

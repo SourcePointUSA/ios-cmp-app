@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension TargetingParams {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<TargetingParams> {

@@ -9,16 +9,16 @@
 import Foundation
 
 class Log {
-    
+
     // shared manager instance
     static let sharedLog = Log()
-    
-    var intFor : Int
-    
+
+    var intFor: Int
+
     init() {
         intFor = 42
     }
-    
+
     func DLog(message: String, function: String = #function) {
         #if DEBUG
         print("\(function): \(message)")

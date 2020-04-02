@@ -14,7 +14,7 @@ extension XCUIElement {
      Removes any current text in the field before typing in the new value
      - Parameter text: the text to enter into the field
      */
-    func clearAndTypeText(text: String) -> Void {
+    func clearAndTypeText(text: String) {
         guard let stringValue = self.value as? String else {
             XCTFail("Tried to clear and enter text into a non string value")
             return
@@ -30,7 +30,7 @@ extension XCUIElement {
         }
         self.typeText(text)
     }
-    
+
     func scrollTo(element: XCUIElement) {
         // Account tabBar for offscreen element
         let tabBar = XCUIApplication().tabBars.element(boundBy: 0)
@@ -38,7 +38,7 @@ extension XCUIElement {
             swipeUp()
         }
     }
-   
+
     /**
      Allows tap on element even if it is not hittable
     */
@@ -46,7 +46,7 @@ extension XCUIElement {
         if self.isHittable {
             self.tap()
         } else {
-            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx:0.0, dy:0.0))
+            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx: 0.0, dy: 0.0))
             coordinate.tap()
         }
     }

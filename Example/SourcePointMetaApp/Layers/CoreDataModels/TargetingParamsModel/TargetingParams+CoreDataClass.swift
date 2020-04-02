@@ -9,9 +9,8 @@
 import Foundation
 import CoreData
 
-
 public class TargetingParams: NSManagedObject {
-    class var entityName : String {
+    class var entityName: String {
         return "TargetingParams"
     }
 }

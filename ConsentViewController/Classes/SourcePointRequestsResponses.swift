@@ -53,7 +53,7 @@ struct ActionResponse: Decodable {
 
 @objc public class PMConsents: NSObject, Codable {
     let vendors, categories: PMConsent
-    
+
     public init(vendors: PMConsent, categories: PMConsent) {
         self.vendors = vendors
         self.categories = categories
@@ -62,7 +62,7 @@ struct ActionResponse: Decodable {
 
 @objc public class PMConsent: NSObject, Codable {
     let accepted: [String]
-    
+
     public init(accepted: [String]) {
         self.accepted = accepted
     }

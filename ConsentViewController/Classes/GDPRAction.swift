@@ -21,7 +21,7 @@ import Foundation
 @objcMembers public class GDPRAction: NSObject {
     public let type: GDPRActionType
     public let id: String?
-    
+
     public init(type: GDPRActionType, id: String?) {
         self.type = type
         self.id = id

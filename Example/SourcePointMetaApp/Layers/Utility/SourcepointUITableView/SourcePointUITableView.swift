@@ -12,9 +12,9 @@ class SourcePointUITableView: UITableView {
 
     override func dequeueReusableCell(withIdentifier identifier: String, for indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = super.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        
+
         var cellFrame: CGRect = cell.frame
-        
+
         cellFrame.size.width = frame.size.width
         cell.frame = cellFrame
         cell.layoutIfNeeded()
@@ -23,13 +23,13 @@ class SourcePointUITableView: UITableView {
 
 }
 
-class SourcePointUItablewViewCell : UITableViewCell {
+class SourcePointUItablewViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         contentView.setNeedsLayout()

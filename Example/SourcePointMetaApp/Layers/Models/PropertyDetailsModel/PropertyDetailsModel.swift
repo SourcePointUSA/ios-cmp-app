@@ -9,32 +9,32 @@
 import Foundation
 
 struct PropertyDetailsModel {
-    
-    //// MARK: - Instance properties
-    
+
+    // MARK: - Instance properties
+
     /// It holds property name
-    let propertyName : String?
-    
+    let propertyName: String?
+
     /// It holds account Id.
     let accountId: Int64
-    
+
     /// It holds property Id.
     let propertyId: Int64
-    
+
     /// It holds campaign value
-    let campaign : Int64
-    
+    let campaign: Int64
+
     /// It holds privacy manager Id
-    let privacyManagerId : String?
-    
+    let privacyManagerId: String?
+
     /// It holds property addded timestamp
-    let creationTimestamp : Date
-    
+    let creationTimestamp: Date
+
     /// It holds auth Id value
-    let authId : String?
-    
-    //// MARK: - Initializers
-    
+    let authId: String?
+
+    // MARK: - Initializers
+
     /// Data Model creation.
     ///
     /// - Parameters:
@@ -44,7 +44,7 @@ struct PropertyDetailsModel {
     ///   - campaign: stage/public.
     ///   - privacyManagerId: privacyManagerId which is associated with the property
     ///   - creationTimestamp: property added in database time
-    init(accountId:Int64, propertyId: Int64, propertyName: String?, campaign: Int64, privacyManagerId:String?, creationTimestamp: Date, authId: String? ) {
+    init(accountId: Int64, propertyId: Int64, propertyName: String?, campaign: Int64, privacyManagerId: String?, creationTimestamp: Date, authId: String? ) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.propertyName = propertyName

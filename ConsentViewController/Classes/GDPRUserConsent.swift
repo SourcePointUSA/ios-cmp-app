@@ -17,22 +17,22 @@ public typealias GDPRTcfData = [String: StringOrInt]
     ///
     /// - Important: All ids are related to non-iAB vendors/purposes. For iAB related consent refer to `euconsent`
     public let acceptedVendors, acceptedCategories: [String]
-    
+
     /// The iAB consent string.
     public let euconsent: String
-    
+
     /// A dictionary with all TCFv2 related data
     public let tcfData: GDPRTcfData
-    
+
     public init(acceptedVendors: [String], acceptedCategories: [String], euconsent: String, tcfData: GDPRTcfData) {
         self.acceptedVendors = acceptedVendors
         self.acceptedCategories = acceptedCategories
         self.euconsent = euconsent
         self.tcfData = tcfData
     }
-    
+
     open override var description: String { return "acceptedVendors: \(acceptedVendors), acceptedCategories: \(acceptedCategories), euconsent: \(euconsent)" }
-    
+
     enum CodingKeys: String, CodingKey {
         case acceptedVendors, acceptedCategories, euconsent
         case tcfData = "TCData"

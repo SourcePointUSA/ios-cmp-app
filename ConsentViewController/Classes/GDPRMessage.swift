@@ -7,14 +7,14 @@
 
 import Foundation
 
-public typealias CustomFields = [String:String]
+public typealias CustomFields = [String: String]
 
 @objc public class AttributeStyle: NSObject, Codable {
     public let fontFamily: String
     public let fontSize: Int
     public let color: String
     public let backgroundColor: String
-    
+
     public init(fontFamily: String, fontSize: Int, color: String, backgroundColor: String) {
         self.fontFamily = fontFamily
         self.fontSize = fontSize
@@ -27,7 +27,7 @@ public typealias CustomFields = [String:String]
     public let text: String
     public let style: AttributeStyle
     public let customFields: CustomFields
-    
+
     public init(text: String, style: AttributeStyle, customFields: CustomFields) {
         self.text = text
         self.style = style
@@ -38,13 +38,13 @@ public typealias CustomFields = [String:String]
 @objc public class MessageAction: MessageAttribute {
     public let choiceId: Int
     public let choiceType: GDPRActionType
-    
+
     public init(text: String, style: AttributeStyle, customFields: CustomFields, choiceId: Int, choiceType: GDPRActionType) {
         self.choiceId = choiceId
         self.choiceType = choiceType
         super.init(text: text, style: style, customFields: customFields)
     }
-    
+
     required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(
@@ -55,7 +55,7 @@ public typealias CustomFields = [String:String]
             choiceType: container.decode(GDPRActionType.self, forKey: .choiceType)
         )
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case text, style, customFields, choiceId, choiceType
     }
@@ -66,7 +66,7 @@ public typealias CustomFields = [String:String]
     public let body: MessageAttribute
     public let actions: [MessageAction]
     public let customFields: CustomFields
-    
+
     public init(title: MessageAttribute, body: MessageAttribute, actions: [MessageAction], customFields: CustomFields) {
         self.title = title
         self.body = body

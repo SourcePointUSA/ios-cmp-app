@@ -10,16 +10,16 @@ import UIKit
 
 class BaseWindow: UIWindow {
 
-    //// MARK: - Instance Properties
-    
+    // MARK: - Instance Properties
+
     /// It is indicator view, which will appears on top of window.
     let loaderView = LoaderView(frame: CGRect.zero)
-    
-    //// MARK: - Instance Methods
-    
+
+    // MARK: - Instance Methods
+
     /// Show the indicator view, and make user unable to interact.
     func showIndicator() {
-        
+
         guard loaderView.superview != nil else {
             if let keyView = rootViewController?.view {
                 loaderView.show(inView: keyView)
@@ -29,12 +29,11 @@ class BaseWindow: UIWindow {
             return
         }
     }
-    
+
     /// Hide the indicator view, and make user able to interact with the system.
     func hideIndicator() {
-        
+
             loaderView.hide()
             sendSubviewToBack(loaderView)
     }
 }
-

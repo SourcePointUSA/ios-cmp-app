@@ -14,9 +14,9 @@ import UIKit
     @IBOutlet weak var showOptionsButton: UIButton!
     @IBOutlet weak var rejectButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
-    
-    var shouldCallUIDisappearOnDelegate = true
-    
+
+    var shouldCallUIDisappearOnDelegate = true // swiftlint:disable:this weak_delegate
+
     @IBAction func onShowOptionsTap(_ sender: Any) {
         showPrivacyManager()
         action(.ShowPrivacyManager)
@@ -27,7 +27,7 @@ import UIKit
     @IBAction func onAcceptTap(_ sender: Any) {
         action(.AcceptAll)
     }
-    
+
     let message: GDPRMessage
     let consentViewController: GDPRConsentViewController
 
@@ -36,11 +36,11 @@ import UIKit
         self.consentViewController = consentViewController
         super.init(nibName: "GDPRNativeMessageViewController", bundle: Bundle.init(for: GDPRNativeMessageViewController.self))
     }
-    
+
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func loadOrHideActionButton(actionType: GDPRActionType, button: UIButton) {
         if let action =  message.actions.first(where: { message in message.choiceType == actionType }) {
             button.titleLabel?.text = action.text
@@ -54,7 +54,7 @@ import UIKit
             button.isHidden = true
         }
     }
-    
+
     private func loadTitle(forAttribute attr: MessageAttribute, label: UILabel) {
         label.text = attr.text
         label.textColor = hexStringToUIColor(hex: attr.style.color)
@@ -64,7 +64,7 @@ import UIKit
             size: (CGFloat)(attr.style.fontSize)
         )
     }
-    
+
     private func loadBody(forAttribute attr: MessageAttribute, textView: UITextView) {
         textView.text = attr.text
         textView.textColor = hexStringToUIColor(hex: attr.style.color)
@@ -74,7 +74,7 @@ import UIKit
             size: (CGFloat)(attr.style.fontSize)
         )
     }
-    
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         loadTitle(forAttribute: message.title, label: titleLabel)
@@ -83,18 +83,18 @@ import UIKit
         loadOrHideActionButton(actionType: .RejectAll, button: rejectButton)
         loadOrHideActionButton(actionType: .ShowPrivacyManager, button: showOptionsButton)
     }
-    
+
     func action(_ action: GDPRActionType) {
         if let messageAction = message.actions.first(where: { message in message.choiceType == action }) {
             let action = GDPRAction(type: messageAction.choiceType, id: String(messageAction.choiceId))
             consentViewController.consentDelegate?.onAction?(action, consents: nil)
         }
     }
-    
+
     func showPrivacyManager() {
         consentViewController.loadPrivacyManager()
     }
-    
+
     private func pixelStringToCGFloat(pxString: String) -> CGFloat? {
         var stringWithoutPx = String(pxString)
         stringWithoutPx.removeLast(2)
@@ -111,8 +111,8 @@ import UIKit
     /// Taken from https://stackoverflow.com/a/27203691/1244883)
     private func hexStringToUIColor(hex: String) -> UIColor? {
         let colorString = String(hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased().dropFirst())
-        
-        if (colorString.count != 6) { return nil }
+
+        if colorString.count != 6 { return nil }
 
         var rgbValue: UInt64 = 0
         Scanner(string: colorString).scanHexInt64(&rgbValue)

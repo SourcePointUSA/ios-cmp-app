@@ -9,7 +9,7 @@ import Foundation
 
 public struct StringOrInt: Codable {
     var value: Any
-    
+
     struct CodingKeys: CodingKey {
         var stringValue: String
         var intValue: Int?
@@ -19,11 +19,11 @@ public struct StringOrInt: Codable {
         }
         init?(stringValue: String) { self.stringValue = stringValue }
     }
-    
+
     init(value: Any) {
         self.value = value
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         if let intVal = value as? Int {
@@ -34,7 +34,7 @@ public struct StringOrInt: Codable {
             throw EncodingError.invalidValue(value, EncodingError.Context.init(codingPath: [], debugDescription: "The value is not encodable"))
         }
     }
-    
+
     public init(from decoder: Decoder) throws {
         if let container = try? decoder.singleValueContainer() {
             if let intVal = try? container.decode(Int.self) {

@@ -9,28 +9,25 @@
 import Foundation
 
 struct TargetingParamModel {
-    
-    //// MARK: - Instance properties
-    
+
+    // MARK: - Instance properties
+
     /// It holds targeting key
-    let targetingKey : String?
-    
+    let targetingKey: String?
+
     /// It holds targeting value
-    var targetingValue : String?
-    
-    //// MARK: - Initializers
-    
+    var targetingValue: String?
+
+    // MARK: - Initializers
+
     /// Data Model creation.
     ///
     /// - Parameters:
     ///   - targetingKey: targeting key name.
     ///   - targetingValue: targeting value.
-    
-    init(targetingParamKey key : String?, targetingParamValue value : String?) {
+
+    init(targetingParamKey key: String?, targetingParamValue value: String?) {
         targetingKey = key
         targetingValue = value
     }
 }
-
-
-

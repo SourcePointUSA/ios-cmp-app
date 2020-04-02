@@ -18,9 +18,9 @@ struct SourcepointNotificationIdentifier {
 }
 
 struct SPError {
-    var code : Int = 0
-    let description : String
-    let message : String
+    var code: Int = 0
+    let description: String
+    let message: String
 }
 
 struct SPLiteral {
@@ -31,7 +31,7 @@ struct SPLiteral {
     static let euConsentID = "EUConsent not available"
     static let stageEnv = "Stage"
     static let publicEnv = "Public"
-    
+
     static func attributedString() -> NSMutableAttributedString {
         let attributedText = NSMutableAttributedString(string: "Cookies for ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
         attributedText.append(NSAttributedString(string: "all properties", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.black]))
@@ -40,11 +40,9 @@ struct SPLiteral {
     }
 }
 
+// MARK: - Alert Constants
+struct Alert {
 
-//// MARK: -  Alert Constants
-struct Alert
-{
-    
     static let messageForPropertyUnavailability = NSLocalizedString("Please enter property details", comment: "")
     static let messageForUnknownError = NSLocalizedString("Something went wrong, please try again", comment: "")
     static let messageForWrongAccountIdAndPropertyId = NSLocalizedString("Please enter correct Account Id/Property Id or both", comment: "")
@@ -55,7 +53,7 @@ struct Alert
     static let messageAlreadyShownOrIncorrectCampaign  = NSLocalizedString("Message will not be shown.\nEither the scenario decided that no message should be displayed or \n the property you're creating has a public|staging campaign and you set it as staging|public", comment: "")
     static let messageForEmptyTargetingParamError = NSLocalizedString("Please enter targeting parameter key and value", comment: "")
     static let messageForDeletingPropertyData = NSLocalizedString("Are you sur you want to delete this property?", comment: "")
-    
+
     // Alert actions
     static let alert = NSLocalizedString("Alert", comment: "")
     static let ok = NSLocalizedString("Ok".uppercased(), comment: "")
@@ -65,6 +63,5 @@ struct Alert
     static let message = NSLocalizedString("Message".uppercased(), comment: "")
     static let showPropertyInfo = NSLocalizedString("Show Property Info".uppercased(), comment: "")
     static let clearCookies = NSLocalizedString("Clear Cookies".uppercased(), comment: "")
-    
-}
 
+}
