@@ -178,7 +178,7 @@ public typealias TargetingParams = [String: String]
             }
             sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
                 self?.gdprUUID = messageResponse.uuid
-
+                self?.storeIABData(messageResponse.userConsent.tcfData)
                 native ?
                     self?.handleNativeMessageResponse(messageResponse) :
                     self?.handleWebMessageResponse(messageResponse)
@@ -255,6 +255,10 @@ public typealias TargetingParams = [String: String]
         clearInternalData()
         clearIABConsentData()
     }
+
+    private func storeIABData(_ iabData: GDPRTcfData) {
+        UserDefaults.standard.setValuesForKeys(iabData.mapValues { item in item.value })
+    }
 }
 
 extension GDPRConsentViewController: GDPRConsentDelegate {
@@ -306,7 +310,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.gdprUUID = gdprUUID
         self.euconsent = userConsent.euconsent
-        UserDefaults.standard.setValuesForKeys(userConsent.tcfData.mapValues { item in item.value })
+        storeIABData(userConsent.tcfData)
         UserDefaults.standard.setValue(euconsent, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
         UserDefaults.standard.synchronize()
