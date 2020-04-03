@@ -1,3 +1,9 @@
+## 5.0.3 (April, 03, 2020)
+* Storing IAB consent data ealier by persisting it at the very first http call #109
+* Added Swiftlint pod and to GitHub workflow #107
+* Fixed a ton of lint issues including one forced unwrap #107
+* Fixed an issue that was causing the Example app to crash on iPad 75e5472
+
 ## 5.0.2 (March, 26, 2020)
 * support type changes in nativeMessageJSON
 
