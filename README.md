@@ -15,7 +15,7 @@ We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to 
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.0.2'
+pod 'ConsentViewController', '5.0.3'
 ```
 
 ### Carthage
@@ -39,9 +39,9 @@ import ConsentViewController
 class ViewController: UIViewController {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 7094,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
-        PMId: "100699",
+        propertyId: 7639,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
+        PMId: "122058",
         campaignEnv: .Public,
         consentDelegate: self
     )}()
@@ -96,13 +96,13 @@ extension ViewController: GDPRConsentDelegate {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    GDPRPropertyName *propertyName = [[GDPRPropertyName alloc] init:@"tcfv2.mobile.demo" error:NULL];
+    GDPRPropertyName *propertyName = [[GDPRPropertyName alloc] init:@"tcfv2.mobile.webview" error:NULL];
 
     cvc = [[GDPRConsentViewController alloc]
            initWithAccountId: 22
-           propertyId: 7094
+           propertyId: 7639
            propertyName: propertyName
-           PMId: @"100699"
+           PMId: @"122058"
            campaignEnv: GDPRCampaignEnvPublic
            consentDelegate: self];
 
