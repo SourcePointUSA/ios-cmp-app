@@ -80,12 +80,6 @@ class GDPRNativeMessageViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                 expect(gdprConsentViewController.loading).to(equal(.Loading), description: "loadPrivacyManager method works as expected")
             }
             
-            
-            it("Test pixelStringToCGFloat method") {
-                let cgFloatValue = gdprNativeMessageViewController?.pixelStringToCGFloat(pxString: "14.6")
-                expect(cgFloatValue).to(equal(14.0), description: "Pixel value converted to CGFloat value")
-            }
-            
             it("Test hexStringToUIColor method") {
                 let rgbColor = gdprNativeMessageViewController?.hexStringToUIColor(hex: "#757575")
                 expect(rgbColor?.cgColor.components).to(equal([0.4588235294117647, 0.4588235294117647, 0.4588235294117647, 1.0]), description: "Hex string converted to UIColor")
