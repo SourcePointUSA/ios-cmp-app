@@ -1,17 +1,15 @@
-name: SwiftLint
-
+name: Swift
 on:
   push:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
-
 jobs:
   lint:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: installing swiftlint
+      - name: Installing SwiftLint
         run: brew install swiftlint
       - name: linting
         run: cd Example && swiftlint lint
