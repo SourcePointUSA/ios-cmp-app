@@ -95,15 +95,6 @@ import UIKit
         consentViewController.loadPrivacyManager()
     }
 
-    private func pixelStringToCGFloat(pxString: String) -> CGFloat? {
-        var stringWithoutPx = String(pxString)
-        stringWithoutPx.removeLast(2)
-        guard let double = Double(stringWithoutPx) else {
-            return nil
-        }
-        return CGFloat(double)
-    }
-
     /// It transforms a Hexadecimal color string to UIColor
     /// - Parameters:
     ///   - hex: `String` in the format of `#ffffff` (Hexeximal color representation)
