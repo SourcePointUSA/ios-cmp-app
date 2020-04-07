@@ -14,9 +14,9 @@ class GDPRMessageViewControllerSpec: QuickSpec {
 
     override func spec() {
         let messageViewController = GDPRMessageViewController()
-        
+
         describe("Test GDPRMessageUIDelegate methods") {
-          
+
             context("Test loadMessage delegate method") {
                 it("Test GDPRMessageViewController calls loadMessage delegate method") {
                     let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/")!
