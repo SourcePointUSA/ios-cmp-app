@@ -38,6 +38,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         wv.translatesAutoresizingMaskIntoConstraints = true
         wv.uiDelegate = self
         wv.navigationDelegate = self
+        wv.scrollView.delegate = self
         wv.isOpaque = false
         wv.backgroundColor = .clear
         wv.allowsBackForwardNavigationGestures = true
@@ -56,6 +57,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         self.pmId = pmId
         self.consentUUID = consentUUID
         super.init(nibName: nil, bundle: nil)
+    }
+
+    deinit {
+        webview?.uiDelegate = nil
+        webview?.navigationDelegate = nil
+        webview?.scrollView.delegate = nil
     }
 
     required init?(coder: NSCoder) {
@@ -226,5 +233,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             contentController.removeScriptMessageHandler(forName: MessageWebViewController.MESSAGE_HANDLER_NAME)
             contentController.removeAllUserScripts()
         }
+    }
+}
+
+// we implement this protocol to disable the zoom when the user taps twice on the screen
+extension MessageWebViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        scrollView.pinchGestureRecognizer?.isEnabled = false
+    }
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return nil
     }
 }
