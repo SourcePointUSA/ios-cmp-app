@@ -16,13 +16,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
 
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 7094,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
-        PMId: "100699",
+        propertyId: 7639,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
+        PMId: "122058",
         campaignEnv: .Public,
-        consentDelegate: self
+        consentDelegate: self 
     )}()
-
+    
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
     var consents: [String] = []
@@ -125,6 +125,9 @@ extension LoginViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             cell.textLabel?.adjustsFontSizeToFitWidth = true
+            if indexPath.row == 1 {
+                cell.textLabel?.numberOfLines = 5
+            }
             cell.textLabel?.text = userData[indexPath.row]
             break
         case 1:

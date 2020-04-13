@@ -12,9 +12,9 @@ import ConsentViewController
 class HomeViewController: UIViewController, GDPRConsentDelegate {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
-        propertyId: 7094,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
-        PMId: "100699",
+        propertyId: 7639,
+        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
+        PMId: "122058",
         campaignEnv: .Public,
         consentDelegate: self
     )}()
@@ -96,8 +96,11 @@ extension HomeViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlainCell", for: indexPath)
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = userData[indexPath.row]
             cell.textLabel?.adjustsFontSizeToFitWidth = true
+            if indexPath.row == 1 {
+                cell.textLabel?.numberOfLines = 5
+            }
+            cell.textLabel?.text = userData[indexPath.row]
             break
         case 1:
             let consent = consents[indexPath.row]
