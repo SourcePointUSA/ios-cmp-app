@@ -1,17 +1,25 @@
-name: SwiftLint
-
+name: Swift
 on:
   push:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
-
 jobs:
-  lint: 
+  lint:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: installing swiftlint
+      - name: Installing SwiftLint
         run: brew install swiftlint
       - name: linting
         run: cd Example && swiftlint lint
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: CocoaPod Install
+        run: cd Example && pod install
+      - name: iOS build
+        run: xcodebuild build-for-testing -scheme ConsentViewController_Example -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
+      - name: testing -> iPhone 11 (iOS 13.3)
+        run: xcodebuild test-without-building -scheme ConsentViewController_Example -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
