@@ -20,13 +20,20 @@ public typealias TargetingParams = [String: String]
     static let IAB_CMP_SDK_ID = 6
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
-    public var euconsent: String
+    public var euconsent: String {
+        return userConsents.euconsent
+    }
 
     /// The UUID assigned to a user, available after calling `loadMessage`
     public var gdprUUID: GDPRUUID
 
     /// All data related to TCFv2
-    public var tcfData: GDPRTcfData
+    public var tcfData: GDPRTcfData {
+        return userConsents.tcfData
+    }
+
+    /// All consent data we have in memory and stored on UserDefaults
+    public var userConsents: GDPRUserConsent
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = TimeInterval(300)
@@ -95,11 +102,14 @@ public typealias TargetingParams = [String: String]
         self.consentDelegate = consentDelegate
 
         self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ?? ""
-        self.euconsent = UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? ""
-
-        self.tcfData = UserDefaults.standard.dictionaryRepresentation()
-            .filter { (key, _) in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
-            .mapValues { item in StringOrInt(value: item) }
+        self.userConsents = GDPRUserConsent(
+            acceptedVendors: [],
+            acceptedCategories: [],
+            euconsent: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "",
+            tcfData: UserDefaults.standard.dictionaryRepresentation()
+                .filter { (key, _) in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
+                .mapValues { item in StringOrInt(value: item) }
+        )
 
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
@@ -217,7 +227,7 @@ public typealias TargetingParams = [String: String]
     }
 
     private func resetConsentData() {
-        self.euconsent = ""
+        self.userConsents = GDPRUserConsent.empty()
         self.gdprUUID = ""
         clearAllData()
     }
@@ -285,21 +295,15 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     }
 
     public func reportAction(_ action: GDPRAction) {
-        if action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit {
+        if action.type == .AcceptAll ||
+            action.type == .RejectAll ||
+            action.type == .SaveAndExit {
             sourcePoint.postAction(action: action, consentUUID: gdprUUID) { [weak self] response in
+                self?.userConsents = response.userConsent
                 self?.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
             }
         } else if action.type == .Dismiss {
-            // TODO: fix consents for dismiss action
-            self.onConsentReady(
-                gdprUUID: gdprUUID,
-                userConsent: GDPRUserConsent(
-                    acceptedVendors: [],
-                    acceptedCategories: [],
-                    euconsent: euconsent,
-                    tcfData: tcfData
-                )
-            )
+            self.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
         }
     }
 
@@ -310,7 +314,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
 
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.gdprUUID = gdprUUID
-        self.euconsent = userConsent.euconsent
+        self.userConsents = userConsent
         storeIABData(userConsent.tcfData)
         UserDefaults.standard.setValue(euconsent, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
