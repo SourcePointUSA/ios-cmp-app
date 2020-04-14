@@ -284,17 +284,18 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         consentDelegate?.onError?(error: error)
     }
 
-    public func reportAction(_ action: GDPRAction, consents: PMConsents?) {
+    public func reportAction(_ action: GDPRAction) {
         if action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit {
-            sourcePoint.postAction(action: action, consentUUID: gdprUUID, consents: consents) { [weak self] response in
+            sourcePoint.postAction(action: action, consentUUID: gdprUUID) { [weak self] response in
                 self?.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
             }
         } else if action.type == .Dismiss {
+            // TODO: fix consents for dismiss action
             self.onConsentReady(
                 gdprUUID: gdprUUID,
                 userConsent: GDPRUserConsent(
-                    acceptedVendors: consents?.vendors.accepted ?? [],
-                    acceptedCategories: consents?.categories.accepted ?? [],
+                    acceptedVendors: [],
+                    acceptedCategories: [],
                     euconsent: euconsent,
                     tcfData: tcfData
                 )
@@ -302,9 +303,9 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         }
     }
 
-    public func onAction(_ action: GDPRAction, consents: PMConsents?) {
-        reportAction(action, consents: consents)
-        consentDelegate?.onAction?(action, consents: consents)
+    public func onAction(_ action: GDPRAction) {
+        reportAction(action)
+        consentDelegate?.onAction?(action)
     }
 
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
