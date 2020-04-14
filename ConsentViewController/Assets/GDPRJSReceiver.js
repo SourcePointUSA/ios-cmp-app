@@ -26,27 +26,14 @@
   }(postToWebView);
 
   var getActionFromMessage = function (actions) {
-    var choiceAction = actions.filter(function (action) { return action.type === 'choice'; })[0] || {};
+    var choiceAction = actions.filter(function (action) {
+      return action.type === 'choice';
+    })[0] || {};
     var choiceData = choiceAction.data || {};
-    return { id: String(choiceData.choice_id), type: choiceData.type };
-  };
-
-  var getActionFromPM = function (payload, actionType) {
-    var _id = function(consent) { return consent._id; };
-    var consents = payload.consents && {
-        vendors: {
-            accepted: payload.vendors.map(_id)
-        },
-        categories: {
-            accepted: payload.categories.map(_id)
-        }
-    };
     return {
-      type: actionType,
-      consents: consents || {
-        vendors: { accepted: [] },
-        categories: { accepted: [] }
-      }
+      id: String(choiceData.choice_id),
+      type: choiceData.type,
+      payload: {}
     };
   };
 
@@ -59,7 +46,7 @@
           break;
         case "sp.hideMessage":
           eventData.fromPM ?
-            SDK.onAction(getActionFromPM(eventData.payload, eventData.actionType)) :
+            SDK.onAction({ type: eventData.actionType, payload: eventData.payload }) :
             SDK.onAction(getActionFromMessage(eventData.payload));
           break;
         default:

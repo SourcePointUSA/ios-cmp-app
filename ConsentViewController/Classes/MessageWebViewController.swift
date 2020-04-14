@@ -119,8 +119,8 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         consentDelegate?.pmDidDisappear?()
     }
 
-    func onAction(_ action: GDPRAction, consents: PMConsents?) {
-        consentDelegate?.onAction?(action, consents: consents)
+    func onAction(_ action: GDPRAction) {
+        consentDelegate?.onAction?(action)
         switch action.type {
         case .ShowPrivacyManager:
             showPrivacyManagerFromMessageAction()
@@ -168,25 +168,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         return nil
     }
 
-    private func getPMConsentsIfAny(_ payload: [String: Any]) -> PMConsents {
-        guard
-            let consents = payload["consents"] as? [String: Any],
-            let vendors = consents["vendors"] as? [String: Any],
-            let purposes = consents["categories"] as? [String: Any],
-            let acceptedVendors = vendors["accepted"] as? [String],
-            let acceptedPurposes = purposes["accepted"] as? [String]
-        else {
-            return PMConsents(
-                vendors: PMConsent(accepted: []),
-                categories: PMConsent(accepted: [])
-            )
-        }
-        return PMConsents(
-            vendors: PMConsent(accepted: acceptedVendors),
-            categories: PMConsent(accepted: acceptedPurposes)
-        )
-    }
-
     private func getChoiceId (_ payload: [String: Any]) -> String? {
         // Actions coming from the PM do not have a choiceId.
         // since we store the last non-null choiceId, the lastChoiceId
@@ -213,13 +194,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         case "onAction":
             guard
                 let payload = body["body"] as? [String: Any],
-                let actionTypeRaw = payload["type"] as? Int,
-                let actionType = GDPRActionType(rawValue: actionTypeRaw)
+                let typeString = payload["type"] as? Int,
+                let actionPayload = payload["payload"] as? [String: Any],
+                let actionJson = try? SPGDPRArbitraryJson(actionPayload),
+                let payloadData = try? JSONEncoder().encode(actionJson),
+                let actionType = GDPRActionType(rawValue: typeString)
             else {
                 onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                 return
             }
-            onAction(GDPRAction(type: actionType, id: getChoiceId(payload)), consents: getPMConsentsIfAny(payload))
+            onAction(GDPRAction(type: actionType, id: getChoiceId(payload), payload: payloadData))
         case "onError":
             onError(error: WebViewError())
         default:
