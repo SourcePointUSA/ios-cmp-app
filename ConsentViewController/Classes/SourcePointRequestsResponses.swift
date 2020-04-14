@@ -41,7 +41,7 @@ struct ActionRequest: Encodable {
     let requestFromPM: Bool
     let uuid: GDPRUUID
     let requestUUID: UUID
-    let consents: GDPRPMConsents
+    let pmSaveAndExitVariables: SPGDPRArbitraryJson
     let meta: Meta
 }
 
@@ -51,22 +51,7 @@ struct ActionResponse: Decodable {
     var meta: Meta
 }
 
-@objc public class PMConsents: NSObject, Codable {
-    let vendors, categories: PMConsent
-
-    public init(vendors: PMConsent, categories: PMConsent) {
-        self.vendors = vendors
-        self.categories = categories
-    }
-}
-
-@objc public class PMConsent: NSObject, Codable {
-    let accepted: [String]
-
-    public init(accepted: [String]) {
-        self.accepted = accepted
-    }
-}
+typealias PMConsents = SPGDPRArbitraryJson
 
 struct GDPRPMConsents: Codable {
     let acceptedVendors, acceptedCategories: [String]
