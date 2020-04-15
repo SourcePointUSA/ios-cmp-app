@@ -209,8 +209,7 @@ class SourcePointClient {
         let url = SourcePointClient.CONSENT_URL
 
         guard
-            let payload = action.payload ?? "{}".data(using: .utf8),
-            let consents = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: payload),
+            let consents = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
             let body = try? json.encode(ActionRequest(
                 propertyId: propertyId,
                 propertyHref: propertyName,
