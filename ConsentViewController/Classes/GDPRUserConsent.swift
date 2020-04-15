@@ -7,8 +7,6 @@
 
 import Foundation
 
-public typealias GDPRTcfData = [String: StringOrInt]
-
 /**
     GDPRUserConsent encapsulates all consent data from a user.
  */
@@ -35,7 +33,7 @@ public typealias GDPRTcfData = [String: StringOrInt]
     public let euconsent: String
 
     /// A dictionary with all TCFv2 related data
-    public let tcfData: GDPRTcfData
+    public let tcfData: SPGDPRArbitraryJson
 
     public init(
         acceptedVendors: [String],

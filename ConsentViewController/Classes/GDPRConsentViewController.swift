@@ -28,7 +28,7 @@ public typealias TargetingParams = [String: String]
     public var gdprUUID: GDPRUUID
 
     /// All data related to TCFv2
-    public var tcfData: GDPRTcfData {
+    public var tcfData: SPGDPRArbitraryJson {
         return userConsents.tcfData
     }
 
@@ -102,13 +102,17 @@ public typealias TargetingParams = [String: String]
         self.consentDelegate = consentDelegate
 
         self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ?? ""
+        let tcfData = try? SPGDPRArbitraryJson(
+            UserDefaults.standard.dictionaryRepresentation().filter { (key, _) in
+                key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX)
+        })
         self.userConsents = GDPRUserConsent(
             acceptedVendors: [],
             acceptedCategories: [],
+            legitimateInterestCategories: [],
+            specialFeatures: [],
             euconsent: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "",
-            tcfData: UserDefaults.standard.dictionaryRepresentation()
-                .filter { (key, _) in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
-                .mapValues { item in StringOrInt(value: item) }
+            tcfData: tcfData ?? SPGDPRArbitraryJson()
         )
 
         self.sourcePoint = SourcePointClient(
@@ -266,8 +270,10 @@ public typealias TargetingParams = [String: String]
         clearIABConsentData()
     }
 
-    private func storeIABData(_ iabData: GDPRTcfData) {
-        UserDefaults.standard.setValuesForKeys(iabData.mapValues { item in item.value })
+    private func storeIABData(_ iabData: SPGDPRArbitraryJson) {
+        if let iabDataDictionary = iabData.dictionaryValue {
+            UserDefaults.standard.setValuesForKeys(iabDataDictionary)
+        }
     }
 }
 

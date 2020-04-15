@@ -71,7 +71,7 @@ extension ViewController: GDPRConsentDelegate {
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
 
         // IAB Related Data
-        print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.keys.sorted()))
+        print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.dictionaryValue?.keys.sorted() ?? []))
     }
 
     func onError(error: GDPRConsentViewControllerError?) {

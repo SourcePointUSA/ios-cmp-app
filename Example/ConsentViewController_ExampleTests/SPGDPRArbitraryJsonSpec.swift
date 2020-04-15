@@ -59,6 +59,11 @@ class SPGDPRArbitraryJsonSpec: QuickSpec {
                 expect(decoded["arr"]?.arrayValue?[2].nullValue).to(beNil())
                 expect(decoded["null"]?.nullValue).to(beNil())
             }
+            
+            it("empty constructor instantiates an equivalent to empty object") {
+                expect(SPGDPRArbitraryJson().dictionaryValue!).to(beAKindOf([String: Any].self))
+                expect(SPGDPRArbitraryJson().dictionaryValue!).to(beEmpty())
+            }
         }
     }
 }
