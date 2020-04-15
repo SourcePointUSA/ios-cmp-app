@@ -35,7 +35,9 @@ import Foundation
     @objc optional func messageDidDisappear()
 
     /// called when the user takes an action in the consent ui (message/PM)
-    @objc optional func onAction(_ action: GDPRAction, consents: PMConsents?)
+    /// - Parameters:
+    ///   - action: the user action
+    @objc optional func onAction(_ action: GDPRAction)
 
     /// called when the consent ui is closed
     @objc optional func consentUIDidDisappear()

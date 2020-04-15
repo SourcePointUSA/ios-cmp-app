@@ -38,6 +38,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         wv.translatesAutoresizingMaskIntoConstraints = true
         wv.uiDelegate = self
         wv.navigationDelegate = self
+        wv.scrollView.delegate = self
         wv.isOpaque = false
         wv.backgroundColor = .clear
         wv.allowsBackForwardNavigationGestures = true
@@ -56,6 +57,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         self.pmId = pmId
         self.consentUUID = consentUUID
         super.init(nibName: nil, bundle: nil)
+    }
+
+    deinit {
+        webview?.uiDelegate = nil
+        webview?.navigationDelegate = nil
+        webview?.scrollView.delegate = nil
     }
 
     required init?(coder: NSCoder) {
@@ -112,8 +119,8 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         consentDelegate?.pmDidDisappear?()
     }
 
-    func onAction(_ action: GDPRAction, consents: PMConsents?) {
-        consentDelegate?.onAction?(action, consents: consents)
+    func onAction(_ action: GDPRAction) {
+        consentDelegate?.onAction?(action)
         switch action.type {
         case .ShowPrivacyManager:
             showPrivacyManagerFromMessageAction()
@@ -161,26 +168,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         return nil
     }
 
-    func getPMConsentsIfAny(_ payload: [String: Any]) -> PMConsents {
-        guard
-            let consents = payload["consents"] as? [String: Any],
-            let vendors = consents["vendors"] as? [String: Any],
-            let purposes = consents["categories"] as? [String: Any],
-            let acceptedVendors = vendors["accepted"] as? [String],
-            let acceptedPurposes = purposes["accepted"] as? [String]
-            else {
-                return PMConsents(
-                    vendors: PMConsent(accepted: []),
-                    categories: PMConsent(accepted: [])
-                )
-        }
-        return PMConsents(
-            vendors: PMConsent(accepted: acceptedVendors),
-            categories: PMConsent(accepted: acceptedPurposes)
-        )
-    }
-
-    func getChoiceId (_ payload: [String: Any]) -> String? {
+    private func getChoiceId (_ payload: [String: Any]) -> String? {
         // Actions coming from the PM do not have a choiceId.
         // since we store the last non-null choiceId, the lastChoiceId
         // will be either the choiceId of "Show Options" action when coming from the message
@@ -206,13 +194,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         case "onAction":
             guard
                 let payload = body["body"] as? [String: Any],
-                let actionTypeRaw = payload["type"] as? Int,
-                let actionType = GDPRActionType(rawValue: actionTypeRaw)
+                let typeString = payload["type"] as? Int,
+                let actionPayload = payload["payload"] as? [String: Any],
+                let actionJson = try? SPGDPRArbitraryJson(actionPayload),
+                let payloadData = try? JSONEncoder().encode(actionJson),
+                let actionType = GDPRActionType(rawValue: typeString)
             else {
                 onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                 return
             }
-            onAction(GDPRAction(type: actionType, id: getChoiceId(payload)), consents: getPMConsentsIfAny(payload))
+            onAction(GDPRAction(type: actionType, id: getChoiceId(payload), payload: payloadData))
         case "onError":
             onError(error: WebViewError())
         default:
@@ -226,5 +217,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             contentController.removeScriptMessageHandler(forName: MessageWebViewController.MESSAGE_HANDLER_NAME)
             contentController.removeAllUserScripts()
         }
+    }
+}
+
+// we implement this protocol to disable the zoom when the user taps twice on the screen
+extension MessageWebViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        scrollView.pinchGestureRecognizer?.isEnabled = false
+    }
+
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return nil
     }
 }
