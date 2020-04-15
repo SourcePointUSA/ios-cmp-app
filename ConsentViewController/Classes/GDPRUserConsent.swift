@@ -13,6 +13,10 @@ public typealias GDPRTcfData = [String: StringOrInt]
     GDPRUserConsent encapsulates all consent data from a user.
  */
 @objcMembers public class GDPRUserConsent: NSObject, Codable {
+    static func empty() -> GDPRUserConsent {
+        return GDPRUserConsent(acceptedVendors: [], acceptedCategories: [], euconsent: "", tcfData: [:])
+    }
+
     /// The ids of the accepted vendors and categories. These can be found in SourcePoint's dashboard
     ///
     /// - Important: All ids are related to non-iAB vendors/purposes. For iAB related consent refer to `euconsent`

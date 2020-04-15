@@ -205,23 +205,23 @@ class SourcePointClient {
         )
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, consents: PMConsents?, onSuccess: @escaping (ActionResponse) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: GDPRUUID, onSuccess: @escaping (ActionResponse) -> Void) {
         let url = SourcePointClient.CONSENT_URL
-        guard let body = try? json.encode(ActionRequest(
-            propertyId: propertyId,
-            propertyHref: propertyName,
-            accountId: accountId,
-            actionType: action.type.rawValue,
-            choiceId: action.id,
-            privacyManagerId: pmId,
-            requestFromPM: action.id == nil,
-            uuid: consentUUID,
-            requestUUID: requestUUID,
-            consents: GDPRPMConsents(
-                acceptedVendors: consents?.vendors.accepted ?? [],
-                acceptedCategories: consents?.categories.accepted ?? []
-            ),
-            meta: UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY) ?? "{}"
+
+        guard
+            let pmPayload = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
+            let body = try? json.encode(ActionRequest(
+                propertyId: propertyId,
+                propertyHref: propertyName,
+                accountId: accountId,
+                actionType: action.type.rawValue,
+                choiceId: action.id,
+                privacyManagerId: pmId,
+                requestFromPM: action.id == nil,
+                uuid: consentUUID,
+                requestUUID: requestUUID,
+                pmSaveAndExitVariables: pmPayload,
+                meta: UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY) ?? "{}"
         )) else {
             self.onError?(APIParsingError(url.absoluteString, nil))
             return
