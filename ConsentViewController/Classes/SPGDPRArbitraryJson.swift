@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
-    var description: String {
+public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
+    public var description: String {
         switch self {
         case .string(let string): return "\"\(string)\""
         case .number(let double):
@@ -31,16 +31,16 @@ enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
         }
     }
 
-    struct Key: CodingKey, Hashable, CustomStringConvertible {
-        var description: String {
+    public struct Key: CodingKey, Hashable, CustomStringConvertible {
+        public var description: String {
             return stringValue
         }
 
-        let stringValue: String
-        init(_ string: String) { self.stringValue = string }
-        init?(stringValue: String) { self.init(stringValue) }
-        var intValue: Int? { return nil }
-        init?(intValue: Int) { return nil }
+        public let stringValue: String
+        public init(_ string: String) { self.stringValue = string }
+        public init?(stringValue: String) { self.init(stringValue) }
+        public var intValue: Int? { return nil }
+        public init?(intValue: Int) { return nil }
     }
 
     case string(String)
@@ -50,7 +50,13 @@ enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
     case bool(Bool)
     case null
 
-    init(from decoder: Decoder) throws {
+    /// Creates the equivalent of an empty object JSON
+    public init() {
+        // swiftlint:disable:next force_try
+        self = .object([:])
+    }
+
+    public init(from decoder: Decoder) throws {
         if let string = try? decoder.singleValueContainer().decode(String.self) {
             self = .string(string)
         } else if let number = try? decoder.singleValueContainer().decode(Double.self) { self = .number(number) } else if let object = try? decoder.container(keyedBy: Key.self) {
@@ -72,7 +78,7 @@ enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
                                                                        debugDescription: "Unknown SPGDPRArbitraryJson type")) }
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         switch self {
         case .string(let string):
             var container = encoder.singleValueContainer()
@@ -99,7 +105,7 @@ enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
         }
     }
 
-    var objectValue: [String: SPGDPRArbitraryJson]? {
+    public var objectValue: [String: SPGDPRArbitraryJson]? {
         switch self {
         case .object(let object):
             let mapped: [String: SPGDPRArbitraryJson] = Dictionary(uniqueKeysWithValues:
@@ -109,14 +115,14 @@ enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
         }
     }
 
-    var arrayValue: [SPGDPRArbitraryJson]? {
+    public var arrayValue: [SPGDPRArbitraryJson]? {
         switch self {
         case .array(let array): return array
         default: return nil
         }
     }
 
-    subscript(key: String) -> SPGDPRArbitraryJson? {
+    public subscript(key: String) -> SPGDPRArbitraryJson? {
         guard let jsonKey = Key(stringValue: key),
             case .object(let object) = self,
             let value = object[jsonKey]
@@ -124,46 +130,46 @@ enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
         return value
     }
 
-    var stringValue: String? {
+    public var stringValue: String? {
         switch self {
         case .string(let string): return string
         default: return nil
         }
     }
 
-    var nullValue: Any? {
+    public var nullValue: Any? {
         return nil
     }
 
-    var doubleValue: Double? {
+    public var doubleValue: Double? {
         switch self {
         case .number(let number): return number
         default: return nil
         }
     }
 
-    var intValue: Int? {
+    public var intValue: Int? {
         switch self {
         case .number(let number): return Int(number)
         default: return nil
         }
     }
 
-    subscript(index: Int) -> SPGDPRArbitraryJson? {
+    public subscript(index: Int) -> SPGDPRArbitraryJson? {
         switch self {
         case .array(let array): return array[index]
         default: return nil
         }
     }
 
-    var boolValue: Bool? {
+    public var boolValue: Bool? {
         switch self {
         case .bool(let bool): return bool
         default: return nil
         }
     }
 
-    var anyValue: Any? {
+    public var anyValue: Any? {
         switch self {
         case .string(let string): return string
         case .number(let number):
@@ -183,11 +189,11 @@ enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
         }
     }
 
-    var dictionaryValue: [String: Any]? {
+    public var dictionaryValue: [String: Any]? {
         return anyValue as? [String: Any]
     }
 
-    subscript(dynamicMember member: String) -> SPGDPRArbitraryJson {
+    public subscript(dynamicMember member: String) -> SPGDPRArbitraryJson {
         return self[member] ?? .null
     }
 }
