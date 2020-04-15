@@ -209,7 +209,7 @@ class SourcePointClient {
         let url = SourcePointClient.CONSENT_URL
 
         guard
-            let consents = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
+            let pmPayload = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
             let body = try? json.encode(ActionRequest(
                 propertyId: propertyId,
                 propertyHref: propertyName,
@@ -220,7 +220,7 @@ class SourcePointClient {
                 requestFromPM: action.id == nil,
                 uuid: consentUUID,
                 requestUUID: requestUUID,
-                pmSaveAndExitVariables: consents,
+                pmSaveAndExitVariables: pmPayload,
                 meta: UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY) ?? "{}"
         )) else {
             self.onError?(APIParsingError(url.absoluteString, nil))
