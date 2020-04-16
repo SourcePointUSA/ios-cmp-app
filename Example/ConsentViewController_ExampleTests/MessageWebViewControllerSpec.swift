@@ -28,9 +28,6 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         let purposes = ["categories": acceptedPurposes]
         let consents = [vendors, purposes]
         let payload: NSDictionary = ["id": "455262", "consents": consents]
-        let vendorconsents = PMConsent(accepted: [])
-        let purposeconsents = PMConsent(accepted: [])
-        let mockConsents = PMConsents(vendors: vendorconsents, categories: purposeconsents)
 
         /// this method is used to test whether webview is loaded or not successfully
         describe("Test loadView method") {
@@ -43,7 +40,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             }
         }
 
-        describe("Test GDPRConsentDelegate methods") {
+        fdescribe("Test GDPRConsentDelegate methods") {
             beforeEach {
                 messageWebViewController = self.getMessageWebViewController()
                 messageWebViewController.consentDelegate = mockConsentDelegate
@@ -100,14 +97,14 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
             context("Test onAction delegate method") {
                 it("Test MessageWebViewController calls onAction delegate method for show PM action") {
-                    messageWebViewController.onAction(showPMAction, consents: mockConsents)
+                    messageWebViewController.onAction(showPMAction)
                     expect(mockConsentDelegate.isOnActionCalled).to(equal(true), description: "onAction delegate method calls successfully")
                 }
             }
 
             context("Test onAction delegate method") {
                 it("Test MessageWebViewController calls onAction delegate method for PM cancel action") {
-                    messageWebViewController.onAction(cancelPMAction, consents: mockConsents)
+                    messageWebViewController.onAction(cancelPMAction)
                     expect(mockConsentDelegate.isOnActionCalled).to(equal(true), description: "onAction delegate method calls successfully")
                 }
             }
@@ -145,7 +142,6 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
         describe("Test getChoiceId methods") {
             var chioceID: String?
-            var pmConsents: PMConsents?
             beforeEach {
                 messageWebViewController = self.getMessageWebViewController()
             }
@@ -155,15 +151,6 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     expect(chioceID!).to(equal("455262"), description: "Able to get chioceID")
                 } else {
                     expect(chioceID).to(beNil(), description: "Unable to get chioceID")
-                }
-            }
-
-            it("Test MessageWebViewController calls getPMConsentsIfAny method") {
-              pmConsents =  messageWebViewController.getPMConsentsIfAny(payload as! [String: Any])
-                if pmConsents != nil {
-                    expect(pmConsents).notTo(beNil(), description: "Able get PM consents from wraper API")
-                } else {
-                    expect(pmConsents).to(beNil(), description: "Didn't get any PM consents from wraper API")
                 }
             }
         }

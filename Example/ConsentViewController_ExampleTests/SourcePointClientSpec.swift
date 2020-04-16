@@ -84,10 +84,7 @@ class SourcePointClientSpec: QuickSpec {
             context("Test postAction") {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
-                    let vendors = PMConsent(accepted: [])
-                    let purposes = PMConsent(accepted: [])
-                    let mockConsents = PMConsents(vendors: vendors, categories: purposes)
-                    client.postAction(action: acceptAllAction, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", consents: mockConsents, onSuccess: { _ in})
+                    client.postAction(action: acceptAllAction, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", onSuccess: { _ in})
                     expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/consent?inApp=true")))
                 }
             }

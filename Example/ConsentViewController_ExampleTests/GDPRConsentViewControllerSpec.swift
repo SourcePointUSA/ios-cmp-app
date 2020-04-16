@@ -35,11 +35,11 @@ public class MockConsentDelegate: GDPRConsentDelegate {
         isOnErrorCalled = true
     }
 
-    public func reportAction(_ action: GDPRAction, consents: PMConsents?) {
+    public func reportAction(_ action: GDPRAction) {
         isReportActionCalled = true
     }
 
-    public func onAction(_ action: GDPRAction, consents: PMConsents?) {
+    public func onAction(_ action: GDPRAction) {
         isOnActionCalled = true
     }
 
@@ -76,13 +76,9 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
         let mockConsentDelegate = MockConsentDelegate()
         let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
         let dismissAction = GDPRAction(type: .Dismiss, id: "1234")
-        let vendors = PMConsent(accepted: [])
-        let purposes = PMConsent(accepted: [])
-        let mockConsents = PMConsents(vendors: vendors, categories: purposes)
         let gdprUUID = UUID().uuidString
-        let tcfData = GDPRTcfData()
         let messageViewController = GDPRMessageViewController()
-        let userConsents = GDPRUserConsent(acceptedVendors: [], acceptedCategories: [], euconsent: "", tcfData: tcfData)
+        let userConsents = GDPRUserConsent(acceptedVendors: [], acceptedCategories: [], legitimateInterestCategories: [], specialFeatures: [], euconsent: "", tcfData: SPGDPRArbitraryJson())
 
         describe("load Native Message") {
             beforeEach {
@@ -179,21 +175,21 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
 
             context("Test reportAction delegate method") {
                 it("Test GDPRMessageViewController calls reportAction delegate method for accept all action") {
-                    consentViewController.reportAction(acceptAllAction, consents: mockConsents)
+                    consentViewController.reportAction(acceptAllAction)
                     expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(false), description: "reportAction delegate method calls successfully")
                 }
             }
 
             context("Test reportAction delegate method") {
                 it("Test GDPRMessageViewController calls reportAction delegate method for dismiss action") {
-                    consentViewController.reportAction(dismissAction, consents: mockConsents)
+                    consentViewController.reportAction(dismissAction)
                     expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(true), description: "reportAction delegate method calls successfully")
                 }
             }
 
             context("Test onAction delegate method") {
                 it("Test GDPRMessageViewController calls onAction delegate method") {
-                    consentViewController.onAction(acceptAllAction, consents: mockConsents)
+                    consentViewController.onAction(acceptAllAction)
                     expect(mockConsentDelegate.isOnActionCalled).to(equal(true), description: "onAction delegate method calls successfully")
                 }
             }
