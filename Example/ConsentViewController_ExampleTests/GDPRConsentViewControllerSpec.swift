@@ -6,6 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
+// swiftlint:disable force_try function_body_length
+
 import Quick
 import Nimble
 @testable import ConsentViewController
@@ -68,7 +70,12 @@ public class MockConsentDelegate: GDPRConsentDelegate {
 class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
 
     func getGDPRConsentViewController() -> GDPRConsentViewController {
-        return GDPRConsentViewController(accountId: 22, propertyId: 7094, propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"), PMId: "100699", campaignEnv: .Public, consentDelegate: self)
+        return GDPRConsentViewController(accountId: 22,
+                                         propertyId: 7094,
+                                         propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+                                         PMId: "100699",
+                                         campaignEnv: .Public,
+                                         consentDelegate: self)
     }
 
     override func spec() {
@@ -78,7 +85,13 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
         let dismissAction = GDPRAction(type: .Dismiss, id: "1234")
         let gdprUUID = UUID().uuidString
         let messageViewController = GDPRMessageViewController()
-        let userConsents = GDPRUserConsent(acceptedVendors: [], acceptedCategories: [], legitimateInterestCategories: [], specialFeatures: [], euconsent: "", tcfData: SPGDPRArbitraryJson())
+        let userConsents = GDPRUserConsent(
+            acceptedVendors: [],
+            acceptedCategories: [],
+            legitimateInterestCategories: [],
+            specialFeatures: [],
+            euconsent: "",
+            tcfData: SPGDPRArbitraryJson())
 
         describe("load Native Message") {
             beforeEach {

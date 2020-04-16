@@ -11,6 +11,8 @@ import Nimble
 import WebKit
 @testable import ConsentViewController
 
+// swiftlint:disable force_cast function_body_length
+
 class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigationDelegate {
 
     func getMessageWebViewController() -> MessageWebViewController {
@@ -29,7 +31,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         let consents = [vendors, purposes]
         let payload: NSDictionary = ["id": "455262", "consents": consents]
 
-        /// this method is used to test whether webview is loaded or not successfully
+        // this method is used to test whether webview is loaded or not successfully
         describe("Test loadView method") {
             beforeEach {
                 messageWebViewController = self.getMessageWebViewController()
@@ -129,7 +131,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             }
         }
 
-        /// this method is used to test whether viewWillDisappear is called or not successfully
+        // this method is used to test whether viewWillDisappear is called or not successfully
         describe("Test viewWillDisappear methods") {
             beforeEach {
                 messageWebViewController = self.getMessageWebViewController()

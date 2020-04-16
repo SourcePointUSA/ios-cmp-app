@@ -6,6 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
+// swiftlint:disable force_try
+
 import Quick
 import Nimble
 @testable import ConsentViewController
@@ -53,7 +55,14 @@ public class MockHttp: HttpClient {
 class SourcePointClientSpec: QuickSpec {
 
     func getClient(_ client: MockHttp) -> SourcePointClient {
-        return SourcePointClient(accountId: 123, propertyId: 123, propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"), pmId: "123", campaignEnv: .Public, targetingParams: ["native": "false"], client: client)
+        return SourcePointClient(
+            accountId: 123,
+            propertyId: 123,
+            propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+            pmId: "123",
+            campaignEnv: .Public,
+            targetingParams: ["native": "false"],
+            client: client)
     }
 
     override func spec() {
@@ -71,12 +80,22 @@ class SourcePointClientSpec: QuickSpec {
 
             context("Test getMessage") {
                 it("calls get on the http client with the right url") {
-                    client.getMessage(native: false, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA", authId: "test", onSuccess: { _ in})
+                    client.getMessage(
+                        native: false,
+                        consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
+                        euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
+                        authId: "test",
+                        onSuccess: { _ in})
                     expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
                 }
 
                 it("calls get on the http client with the right url") {
-                    client.getMessage(url: SourcePointClient.GET_MESSAGE_URL_URL, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA", authId: nil, onSuccess: { _ in})
+                    client.getMessage(
+                        url: SourcePointClient.GET_MESSAGE_URL_URL,
+                        consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
+                        euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
+                        authId: nil,
+                        onSuccess: { _ in })
                     expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
                 }
             }

@@ -10,10 +10,18 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
+// swiftlint:disable force_try function_body_length
+
 class GDPRNativeMessageViewControllerSpec: QuickSpec, GDPRConsentDelegate {
 
     func getGDPRConsentViewController() -> GDPRConsentViewController {
-        return GDPRConsentViewController(accountId: 22, propertyId: 7094, propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"), PMId: "100699", campaignEnv: .Public, consentDelegate: self)
+        return GDPRConsentViewController(
+            accountId: 22,
+            propertyId: 7094,
+            propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+            PMId: "100699",
+            campaignEnv: .Public,
+            consentDelegate: self)
     }
 
     override func spec() {
