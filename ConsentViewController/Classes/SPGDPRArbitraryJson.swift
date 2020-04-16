@@ -52,7 +52,6 @@ public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
 
     /// Creates the equivalent of an empty object JSON
     public init() {
-        // swiftlint:disable:next force_try
         self = .object([:])
     }
 

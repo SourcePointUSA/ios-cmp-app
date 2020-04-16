@@ -46,7 +46,7 @@ import Foundation
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-    override public var description: String { return "Error parsing response from \(endpoint):  \(parsingError.debugDescription)" }
+    override public var description: String { return "Error parsing response from \(endpoint): \(parsingError.debugDescription)" }
     public var errorDescription: String? { return description }
     public var failureReason: String? { return description }
 }

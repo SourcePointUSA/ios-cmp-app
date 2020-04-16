@@ -10,7 +10,7 @@ import WebKit
 
 /**
  MessageWebViewController is responsible for loading the consent message and privacy manager through a webview.
- 
+
  It not only knows how to render the message and pm but also understands how to react to their different events (showing, user action, etc)
  */
 class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, GDPRConsentDelegate {
@@ -57,12 +57,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         self.pmId = pmId
         self.consentUUID = consentUUID
         super.init(nibName: nil, bundle: nil)
-    }
-
-    deinit {
-        webview?.uiDelegate = nil
-        webview?.navigationDelegate = nil
-        webview?.scrollView.delegate = nil
     }
 
     required init?(coder: NSCoder) {
@@ -168,7 +162,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         return nil
     }
 
-    private func getChoiceId (_ payload: [String: Any]) -> String? {
+    func getChoiceId (_ payload: [String: Any]) -> String? {
         // Actions coming from the PM do not have a choiceId.
         // since we store the last non-null choiceId, the lastChoiceId
         // will be either the choiceId of "Show Options" action when coming from the message

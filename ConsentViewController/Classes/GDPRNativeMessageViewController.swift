@@ -41,7 +41,7 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func loadOrHideActionButton(actionType: GDPRActionType, button: UIButton) {
+    func loadOrHideActionButton(actionType: GDPRActionType, button: UIButton) {
         if let action =  message.actions.first(where: { message in message.choiceType == actionType }) {
             button.titleLabel?.text = action.text
             button.setTitleColor(hexStringToUIColor(hex: action.style.color), for: .normal)
@@ -55,7 +55,7 @@ import UIKit
         }
     }
 
-    private func loadTitle(forAttribute attr: MessageAttribute, label: UILabel) {
+    func loadTitle(forAttribute attr: MessageAttribute, label: UILabel) {
         label.text = attr.text
         label.textColor = hexStringToUIColor(hex: attr.style.color)
         label.backgroundColor = hexStringToUIColor(hex: attr.style.backgroundColor)
@@ -65,7 +65,7 @@ import UIKit
         )
     }
 
-    private func loadBody(forAttribute attr: MessageAttribute, textView: UITextView) {
+    func loadBody(forAttribute attr: MessageAttribute, textView: UITextView) {
         textView.text = attr.text
         textView.textColor = hexStringToUIColor(hex: attr.style.color)
         textView.backgroundColor = hexStringToUIColor(hex: attr.style.backgroundColor)
@@ -100,7 +100,7 @@ import UIKit
     ///   - hex: `String` in the format of `#ffffff` (Hexeximal color representation)
     ///
     /// Taken from https://stackoverflow.com/a/27203691/1244883)
-    private func hexStringToUIColor(hex: String) -> UIColor? {
+    func hexStringToUIColor(hex: String) -> UIColor? {
         let colorString = String(hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased().dropFirst())
 
         if colorString.count != 6 { return nil }

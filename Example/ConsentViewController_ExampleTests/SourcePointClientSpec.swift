@@ -1,45 +1,68 @@
 //
-//  SourcePointClient.swift
+//  SourcePointClientSpec.swift
 //  ConsentViewController_ExampleTests
 //
-//  Created by Andre Herculano on 25.11.19.
-//  Copyright © 2019 CocoaPods. All rights reserved.
+//  Created by Vilas on 29/03/20.
+//  Copyright © 2020 CocoaPods. All rights reserved.
 //
+
+// swiftlint:disable force_try
 
 import Quick
 import Nimble
 @testable import ConsentViewController
 
 public class MockHttp: HttpClient {
+    public var defaultOnError: OnError?
     var getCalledWith: URL?
-    let response: Data?
+    var success: Data?
+    var error: Error?
 
-    init(response: Data?) {
-        self.response = response
+    init(success: Data?) {
+        self.success = success
     }
 
-    public func get(url: URL, completionHandler handler: @escaping (Data?, Error?) -> Void) {
-        getCalledWith = url.absoluteURL
+    init(error: Error?) {
+        self.error = error
+    }
+
+    public func get(url: URL?, onSuccess: @escaping OnSuccess) {
+        getCalledWith = url?.absoluteURL
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            handler(self.response, nil)
+            onSuccess(self.success!)
+        })
+    }
+
+    func request(_ urlRequest: URLRequest, _ onSuccess: @escaping OnSuccess) {
+        getCalledWith = urlRequest.url?.absoluteURL
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            onSuccess(self.success!)
+        })
+    }
+
+    public func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
+        getCalledWith = url?.absoluteURL
+        var urlRequest = URLRequest(url: getCalledWith!)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = body
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            onSuccess(self.success!)
         })
     }
 }
 
 class SourcePointClientSpec: QuickSpec {
+
     func getClient(_ client: MockHttp) -> SourcePointClient {
-        return try! SourcePointClient(
+        return SourcePointClient(
             accountId: 123,
             propertyId: 123,
-            pmId: "abc",
-            showPM: true,
-            propertyUrl: URL(string: "https://demo.com")!,
-            campaign: "public",
-            mmsUrl: URL(string: "https://demo.com")!,
-            cmpUrl: URL(string: "https://demo.com")!,
-            messageUrl: URL(string: "https://demo.com")!,
-            client: client
-        )
+            propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+            pmId: "123",
+            campaignEnv: .Public,
+            targetingParams: ["native": "false"],
+            client: client)
     }
 
     override func spec() {
@@ -47,22 +70,52 @@ class SourcePointClientSpec: QuickSpec {
         var httpClient: MockHttp?
         var mockedResponse: Data?
 
-        describe("getMessageUrl") {
+        describe("Test SourcePointClient Methods") {
+
             beforeEach {
-                mockedResponse = "\"https://notice.sp-prod.net/?message_id=59706\"".data(using: .utf8)
-                httpClient = MockHttp(response: mockedResponse)
+                mockedResponse = "{\"url\": \"https://notice.sp-prod.net/?message_id=59706\"}".data(using: .utf8)
+                httpClient = MockHttp(success: mockedResponse)
                 client = self.getClient(httpClient!)
             }
 
-            it("calls get on the http client with the right url") {
-                client.getMessageUrl(accountId: 123, propertyId: 123) { _, _ in }
-                expect(httpClient?.getCalledWith).to(equal(URL(string: "https://fake_wrapper_api.com/getMessageUrl")))
+            context("Test getMessage") {
+                it("calls get on the http client with the right url") {
+                    client.getMessage(
+                        native: false,
+                        consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
+                        euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
+                        authId: "test",
+                        onSuccess: { _ in})
+                    expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
+                }
+
+                it("calls get on the http client with the right url") {
+                    client.getMessage(
+                        url: SourcePointClient.GET_MESSAGE_URL_URL,
+                        consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
+                        euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
+                        authId: nil,
+                        onSuccess: { _ in })
+                    expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
+                }
             }
 
-            it("returns the url of a message") {
-                var messageUrl: URL?
-                client.getMessageUrl(accountId: 123, propertyId: 123) { url, _ in messageUrl = url }
-                expect(messageUrl).toEventually(equal(URL(string: "https://notice.sp-prod.net/?message_id=59706")), timeout: 5)
+            context("Test postAction") {
+                it("calls post on the http client with the right url") {
+                    let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
+                    client.postAction(action: acceptAllAction, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", onSuccess: { _ in})
+                    expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/consent?inApp=true")))
+                }
+            }
+
+            context("Test targetingParamsToString") {
+                it("Test TargetingParamsToString with parameter") {
+                    let targetingParams = ["native": "false"]
+                    let targetingParamString = client.targetingParamsToString(targetingParams)
+                    let encodeTargetingParam = "{\"native\":\"false\"}".data(using: .utf8)
+                    let encodedString = String(data: encodeTargetingParam!, encoding: .utf8)
+                    expect(targetingParamString).to(equal(encodedString))
+                }
             }
         }
     }
