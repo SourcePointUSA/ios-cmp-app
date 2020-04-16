@@ -1,3 +1,14 @@
+## 5.1.0 (April, 16, 2020)
+This is big one. We're moving more and more towards a stable API, so bare with us.
+
+* Fixed an issue that'd prevent the user to save consents from the privacy manager with the action _Save & Exit_ #118
+* Added `legitimateInterestCategories: [String]` to `GDPRUserConsent` class #121
+* Added `specialFeatures: [String]` to `GDPRUserConsent` class #121
+* Updated the AuthExample app to use SDKv5 #116
+* Disabled zooming and pinch zooming actions on the message webview #114
+* Changed the delegate method from `onAction(_ action: GDPRAction, consents: PMConsents?)` to `onAction(_ action: GDPRAction)`. The consents is now part of `GDPRAction` and it's encoded into `Data`. 462e9b6
+* `GDPRUserConsent.tcfData` has changed types from `[String: StringOrInt]` to `SPGDPRArbitraryJson`. It can be used as a dictionary by calling its `.dictionaryValue -> [String: Any]?` property.
+
 ## 5.0.3 (April, 03, 2020)
 * Storing IAB consent data ealier by persisting it at the very first http call #109
 * Added Swiftlint pod and to GitHub workflow #107
