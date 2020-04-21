@@ -37,14 +37,6 @@ extension ViewController: GDPRConsentDelegate {
     func consentUIDidDisappear() {
         dismiss(animated: true, completion: nil)
     }
-    
-//    func pmWillShow() {
-//        present(consentViewController, animated: true, completion: nil)
-//    }
-//
-//    func pmDidDisappear() {
-//        dismiss(animated: true, completion: nil)
-//    }
 
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
