@@ -55,13 +55,17 @@
       }
     };
   };
+    
+  function isFromPM(event) {
+    return event.fromPM != null ? event.fromPM : (event.settings.vendorList != null)
+  }
 
   var handleMessageOrPMEvent = function (SDK) {
     return function (event) {
       try {
         handleMessageEvent(SDK)({
           name: event.name,
-          fromPM: event.fromPM != null ? event.fromPM : (event.settings.vendorList != null),
+          fromPM: isFromPM(event),
           actionType: event.actionType,
           payload: event.payload || event.actions || {}
         });
