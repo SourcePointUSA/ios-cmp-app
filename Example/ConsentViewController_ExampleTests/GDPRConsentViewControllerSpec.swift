@@ -22,8 +22,8 @@ public class MockConsentDelegate: GDPRConsentDelegate {
     var isOnConsentReadyCalled = false
     var isMessageWillShowCalled = false
     var isMessageDidDisappearCalled = false
-    var isPMWillShowCalled = false
-    var isPMDidDisappearCalled = false
+    var isGdprPMWillShowCalled = false
+    var isGdprPMDidDisappearCalled = false
 
     public func consentUIWillShow() {
         isConsentUIWillShowCalled = true
@@ -57,12 +57,12 @@ public class MockConsentDelegate: GDPRConsentDelegate {
         isMessageDidDisappearCalled = true
     }
 
-    public func pmWillShow() {
-        isPMWillShowCalled = true
+    public func gdprPMWillShow() {
+        isGdprPMWillShowCalled = true
     }
 
-    public func pmDidDisappear() {
-        isPMDidDisappearCalled = true
+    public func gdprPMDidDisappear() {
+        isGdprPMDidDisappearCalled = true
     }
 
 }
@@ -235,17 +235,17 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                 }
             }
 
-            context("Test pmWillShow delegate method") {
-                it("Test GDPRMessageViewController calls pmWillShow delegate method") {
-                    consentViewController.pmWillShow()
-                    expect(mockConsentDelegate.isPMWillShowCalled).to(equal(true), description: "pmWillShow delegate method calls successfully")
+            context("Test gdprPMWillShow delegate method") {
+                it("Test GDPRMessageViewController calls gdprPMWillShow delegate method") {
+                    consentViewController.gdprPMWillShow()
+                    expect(mockConsentDelegate.isGdprPMWillShowCalled).to(equal(true), description: "gdprPMWillShow delegate method calls successfully")
                 }
             }
 
-            context("Test pmDidDisappear delegate method") {
-                it("Test GDPRMessageViewController calls pmDidDisappear delegate method") {
-                    consentViewController.pmDidDisappear()
-                    expect(mockConsentDelegate.isPMDidDisappearCalled).to(equal(true), description: "pmDidDisappear delegate method calls successfully")
+            context("Test gdprPMDidDisappear delegate method") {
+                it("Test GDPRMessageViewController calls gdprPMDidDisappear delegate method") {
+                    consentViewController.gdprPMDidDisappear()
+                    expect(mockConsentDelegate.isGdprPMDidDisappearCalled).to(equal(true), description: "gdprPMDidDisappear delegate method calls successfully")
                 }
             }
         }
