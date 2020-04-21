@@ -42,7 +42,7 @@
         debugger
       switch(eventData.name) {
         case "sp.showMessage":
-          eventData.vendorList ? SDK.onPMReady() : SDK.onMessageReady();
+          eventData.fromPM ? SDK.onPMReady() : SDK.onMessageReady();
           break;
         case "sp.hideMessage":
           eventData.fromPM ?
@@ -61,10 +61,9 @@
       try {
         handleMessageEvent(SDK)({
           name: event.name,
-          fromPM: event.fromPM,
+          fromPM: event.fromPM != null ? event.fromPM : (event.settings.vendorList != null),
           actionType: event.actionType,
-          payload: event.payload || event.actions || {},
-          vendorList: event.settings.vendorList
+          payload: event.payload || event.actions || {}
         });
       } catch (error) {
         SDK.onError(error);
