@@ -9,7 +9,7 @@
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController, GDPRConsentDelegate {
+class ViewController: UIViewController {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 2372,
@@ -18,7 +18,18 @@ class ViewController: UIViewController, GDPRConsentDelegate {
         campaignEnv: .Public,
         consentDelegate: self
     )}()
-    
+
+    @IBAction func onPrivacySettingsTap(_ sender: Any) {
+        consentViewController.loadPrivacyManager()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        consentViewController.loadMessage()
+    }
+}
+
+extension ViewController: GDPRConsentDelegate {
     func gdprConsentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
@@ -26,7 +37,7 @@ class ViewController: UIViewController, GDPRConsentDelegate {
     func consentUIDidDisappear() {
         dismiss(animated: true, completion: nil)
     }
-    
+
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
         userConsent.acceptedVendors.forEach({ vendorId in print("Vendor: \(vendorId)") })
@@ -40,15 +51,6 @@ class ViewController: UIViewController, GDPRConsentDelegate {
 
     func onError(error: GDPRConsentViewControllerError?) {
         print("Error: \(error.debugDescription)")
-    }
-
-    @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        consentViewController.loadPrivacyManager()
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        consentViewController.loadMessage()
     }
 }
 

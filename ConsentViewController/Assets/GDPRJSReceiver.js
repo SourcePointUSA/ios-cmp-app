@@ -42,31 +42,39 @@
   }
 
   var handleMessageEvent = function(SDK) {
-    return function(name, payload) {
-      switch(name) {
+    return function(eventData) {
+      switch(eventData.name) {
         case "sp.showMessage":
-          SDK.onMessageReady();
+          eventData.fromPM ? SDK.onPMReady() : SDK.onMessageReady();
           break;
         case "sp.hideMessage":
-          payload.actionType ?
-            SDK.onAction(getActionFromPM(payload)) :
-            SDK.onAction(getActionFromMessage(payload));
+          eventData.payload.actionType ?
+            SDK.onAction(getActionFromPM(eventData.payload)) :
+            SDK.onAction(getActionFromMessage(eventData.payload));
           break;
         default:
-          payload.action = name;
-          SDK.onMessageEvent(payload);
+          eventData.payload.action = eventData.name;
+          SDK.onMessageEvent(eventData.payload);
       }
     }
   };
 
+  function isFromPM(event) {
+    return event.settings == null
+  }
+
   var handleMessageOrPMEvent = function (SDK) {
     return function (event) {
       try {
-        handleMessageEvent(SDK)(event.name, event.payload || event.actions || {});
+        handleMessageEvent(SDK)({
+          name: event.name,
+          fromPM: isFromPM(event),
+          payload: event.payload || event.actions || {}
+        });
       } catch (error) {
         SDK.onError(error);
       }
-    }
+    };
   }(window.SDK);
 
   window.postMessage = handleMessageOrPMEvent
