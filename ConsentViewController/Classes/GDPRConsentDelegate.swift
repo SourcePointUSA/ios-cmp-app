@@ -29,10 +29,10 @@ import Foundation
     @objc optional func messageWillShow()
     
     /// called when the privacy manager is about to show
-    @objc optional func pmWillShow()
+    @objc optional func gdprPMWillShow()
     
     /// called when the privacy manager is closed
-    @objc optional func pmDidDisappear()
+    @objc optional func gdprPMDidDisappear()
     
     /// called when the consent message is closed
     @objc optional func messageDidDisappear()
