@@ -92,7 +92,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
             context("Test gdprPMDidDisappear delegate method") {
                 it("Test MessageWebViewController calls gdprPMDidDisappear delegate method") {
-                    messageWebViewController.navigateBackToMessage()
+                    messageWebViewController.goBackAndClosePrivacyManager()
                     expect(mockConsentDelegate.isGdprPMDidDisappearCalled).to(equal(true), description: "gdprPMDidDisappear delegate method calls successfully")
                 }
             }
