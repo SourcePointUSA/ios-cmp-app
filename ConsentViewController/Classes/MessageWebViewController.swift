@@ -45,12 +45,14 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         return wv
     }()
 
-    private let propertyId: Int
-    private let pmId: String
-    private let consentUUID: GDPRUUID
+    let propertyId: Int
+    let pmId: String
+    let consentUUID: GDPRUUID
 
-    private var consentUILoaded = false
-    private var lastChoiceId: String?
+    var consentUILoaded = false
+    var isPMLoaded = false
+
+    var lastChoiceId: String?
 
     init(propertyId: Int, pmId: String, consentUUID: GDPRUUID) {
         self.propertyId = propertyId
@@ -82,9 +84,20 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     func onPMReady() {
         gdprConsentUIWillShow()
         consentDelegate?.gdprPMWillShow?()
+        isPMLoaded = true
+    }
+
+    func closePrivacyManager() {
+        isPMLoaded = false
+        consentDelegate?.gdprPMDidDisappear?()
+    }
+
+    func closeMessage() {
+        consentDelegate?.messageDidDisappear?()
     }
 
     func closeConsentUIIfOpen() {
+        isPMLoaded ? closePrivacyManager() : closeMessage()
         if consentUILoaded { consentUIDidDisappear() }
     }
 
@@ -98,19 +111,20 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func showPrivacyManagerFromMessageAction() {
-        consentDelegate?.messageDidDisappear?()
+        closeMessage()
         loadPrivacyManager()
     }
 
     func cancelPMAction() {
         (webview?.canGoBack ?? false) ?
-            navigateBackToMessage():
+            goBackAndClosePrivacyManager():
             closeConsentUIIfOpen()
     }
 
-    func navigateBackToMessage() {
+    func goBackAndClosePrivacyManager() {
         webview?.goBack()
-        consentDelegate?.gdprPMDidDisappear?()
+        closePrivacyManager()
+        onMessageReady()
     }
 
     func onAction(_ action: GDPRAction) {
@@ -125,7 +139,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
     }
 
-    private func load(url: URL) {
+    func load(url: URL) {
         if ConnectivityManager.shared.isConnectedToNetwork() {
             webview?.load(URLRequest(url: url))
         } else {
