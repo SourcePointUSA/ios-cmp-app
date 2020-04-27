@@ -81,7 +81,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     func onPMReady() {
         gdprConsentUIWillShow()
-        consentDelegate?.pmWillShow?()
+        consentDelegate?.gdprPMWillShow?()
     }
 
     func closeConsentUIIfOpen() {
@@ -110,7 +110,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     func navigateBackToMessage() {
         webview?.goBack()
-        consentDelegate?.pmDidDisappear?()
+        consentDelegate?.gdprPMDidDisappear?()
     }
 
     func onAction(_ action: GDPRAction) {

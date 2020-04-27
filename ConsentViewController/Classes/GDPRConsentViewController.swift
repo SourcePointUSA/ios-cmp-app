@@ -330,6 +330,6 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
 
     public func messageWillShow() { consentDelegate?.messageWillShow?() }
     public func messageDidDisappear() { consentDelegate?.messageDidDisappear?() }
-    public func pmWillShow() { consentDelegate?.pmWillShow?() }
-    public func pmDidDisappear() { consentDelegate?.pmDidDisappear?() }
+    public func gdprPMWillShow() { consentDelegate?.gdprPMWillShow?() }
+    public func gdprPMDidDisappear() { consentDelegate?.gdprPMDidDisappear?() }
 }

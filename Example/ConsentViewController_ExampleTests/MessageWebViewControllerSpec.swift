@@ -61,10 +61,10 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                 }
             }
 
-            context("Test pmWillShow delegate method") {
-                it("Test MessageWebViewController calls pmWillShow delegate method") {
+            context("Test gdprPMWillShow delegate method") {
+                it("Test MessageWebViewController calls gdprPMWillShow delegate method") {
                     messageWebViewController.onPMReady()
-                    expect(mockConsentDelegate.isPMWillShowCalled).to(equal(true), description: "pmWillShow delegate method calls successfully")
+                    expect(mockConsentDelegate.isGdprPMWillShowCalled).to(equal(true), description: "onPMReady delegate method calls successfully")
                 }
             }
 
@@ -90,10 +90,10 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                 }
             }
 
-            context("Test pmDidDisappear delegate method") {
-                it("Test MessageWebViewController calls pmDidDisappear delegate method") {
+            context("Test gdprPMDidDisappear delegate method") {
+                it("Test MessageWebViewController calls gdprPMDidDisappear delegate method") {
                     messageWebViewController.navigateBackToMessage()
-                    expect(mockConsentDelegate.isPMDidDisappearCalled).to(equal(true), description: "pmDidDisappear delegate method calls successfully")
+                    expect(mockConsentDelegate.isGdprPMDidDisappearCalled).to(equal(true), description: "gdprPMDidDisappear delegate method calls successfully")
                 }
             }
 

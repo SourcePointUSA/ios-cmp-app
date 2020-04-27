@@ -42,7 +42,7 @@
         debugger
       switch(eventData.name) {
         case "sp.showMessage":
-          SDK.onMessageReady();
+          eventData.fromPM ? SDK.onPMReady() : SDK.onMessageReady();
           break;
         case "sp.hideMessage":
           eventData.fromPM ?
@@ -55,13 +55,17 @@
       }
     };
   };
+    
+  function isFromPM(event) {
+    return event.fromPM != null ? event.fromPM : (event.settings.vendorList != null)
+  }
 
   var handleMessageOrPMEvent = function (SDK) {
     return function (event) {
       try {
         handleMessageEvent(SDK)({
           name: event.name,
-          fromPM: event.fromPM,
+          fromPM: isFromPM(event),
           actionType: event.actionType,
           payload: event.payload || event.actions || {}
         });
