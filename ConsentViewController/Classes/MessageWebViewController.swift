@@ -51,7 +51,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     var consentUILoaded = false
     var isPMLoaded = false
-    
+
     var lastChoiceId: String?
 
     init(propertyId: Int, pmId: String, consentUUID: GDPRUUID) {
@@ -86,12 +86,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         consentDelegate?.gdprPMWillShow?()
         isPMLoaded = true
     }
-    
+
     func closePrivacyManager() {
         isPMLoaded = false
         consentDelegate?.gdprPMDidDisappear?()
     }
-    
+
     func closeMessage() {
         consentDelegate?.messageDidDisappear?()
     }
