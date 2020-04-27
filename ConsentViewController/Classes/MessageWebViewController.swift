@@ -124,6 +124,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     func goBackAndClosePrivacyManager() {
         webview?.goBack()
         closePrivacyManager()
+        onMessageReady()
     }
 
     func onAction(_ action: GDPRAction) {
