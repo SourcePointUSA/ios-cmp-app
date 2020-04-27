@@ -28,6 +28,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         userContentController.addUserScript(script)
+        userContentController.addUserScript(self.disableZoomInScrollView())
         userContentController.add(self, name: MessageWebViewController.MESSAGE_HANDLER_NAME)
         config.userContentController = userContentController
         let wv = WKWebView(frame: .zero, configuration: config)
@@ -222,5 +223,13 @@ extension MessageWebViewController: UIScrollViewDelegate {
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return nil
+    }
+
+    func disableZoomInScrollView() -> WKUserScript {
+        let source: String = "var meta = document.createElement('meta');" +
+            "meta.name = 'viewport';" +
+            "meta.content = 'width=device-width, initial-scale=1.0, maximum- scale=1.0, user-scalable=no';" +
+            "var head = document.getElementsByTagName('head')[0];" + "head.appendChild(meta);"
+        return WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
     }
 }
