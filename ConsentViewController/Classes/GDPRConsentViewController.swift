@@ -192,7 +192,7 @@ public typealias TargetingParams = [String: String]
             }
             sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
                 self?.gdprUUID = messageResponse.uuid
-                self?.storeIABData(messageResponse.userConsent.tcfData)
+                self?.flushAndStoreIABData(messageResponse.userConsent.tcfData)
                 native ?
                     self?.handleNativeMessageResponse(messageResponse) :
                     self?.handleWebMessageResponse(messageResponse)
@@ -257,11 +257,10 @@ public typealias TargetingParams = [String: String]
 
     /// Clears meta data used by the SDK. If you're using this method in your app, something is weird...
     public func clearInternalData() {
-        let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: GDPRConsentViewController.META_KEY)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.GDPR_UUID_KEY)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
-        userDefaults.removeObject(forKey: GDPRConsentViewController.EU_CONSENT_KEY)
+        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.META_KEY)
+        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.GDPR_UUID_KEY)
+        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.EU_CONSENT_KEY)
     }
 
     /// Clears all consent data from the UserDefaults. Use this method if you want to **completely** wipe the user's consent data from the device.
@@ -270,15 +269,15 @@ public typealias TargetingParams = [String: String]
         clearIABConsentData()
     }
 
-    private func storeIABData(_ iabData: SPGDPRArbitraryJson) {
+    private func flushAndStoreIABData(_ iabData: SPGDPRArbitraryJson) {
         if let iabDataDictionary = iabData.dictionaryValue {
+            clearIABConsentData()
             UserDefaults.standard.setValuesForKeys(iabDataDictionary)
         }
     }
 }
 
 extension GDPRConsentViewController: GDPRConsentDelegate {
-
     public func gdprConsentUIWillShow() {
         loading = .Ready
         guard let viewController = messageViewController else { return }
@@ -321,7 +320,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.gdprUUID = gdprUUID
         self.userConsents = userConsent
-        storeIABData(userConsent.tcfData)
+        flushAndStoreIABData(userConsent.tcfData)
         UserDefaults.standard.setValue(euconsent, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
         UserDefaults.standard.synchronize()
