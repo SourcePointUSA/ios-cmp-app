@@ -68,7 +68,6 @@ public class MockConsentDelegate: GDPRConsentDelegate {
 }
 
 class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
-
     func getGDPRConsentViewController() -> GDPRConsentViewController {
         return GDPRConsentViewController(accountId: 22,
                                          propertyId: 7094,
@@ -79,25 +78,39 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
     }
 
     override func spec() {
-        var consentViewController: GDPRConsentViewController!
-        let mockConsentDelegate = MockConsentDelegate()
-        let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
-        let dismissAction = GDPRAction(type: .Dismiss, id: "1234")
-        let gdprUUID = UUID().uuidString
-        let messageViewController = GDPRMessageViewController()
-        let userConsents = GDPRUserConsent(
+        var consentViewController = self.getGDPRConsentViewController()
+        var mockConsentDelegate = MockConsentDelegate()
+        var acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
+        var dismissAction = GDPRAction(type: .Dismiss, id: "1234")
+        var gdprUUID = UUID().uuidString
+        var messageViewController = GDPRMessageViewController()
+        var userConsents = GDPRUserConsent(
             acceptedVendors: [],
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
             euconsent: "",
-            tcfData: SPGDPRArbitraryJson())
+            tcfData: SPGDPRArbitraryJson()
+        )
+
+        beforeEach {
+            consentViewController = self.getGDPRConsentViewController()
+            mockConsentDelegate = MockConsentDelegate()
+            acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
+            dismissAction = GDPRAction(type: .Dismiss, id: "1234")
+            gdprUUID = UUID().uuidString
+            messageViewController = GDPRMessageViewController()
+            userConsents = GDPRUserConsent(
+                acceptedVendors: [],
+                acceptedCategories: [],
+                legitimateInterestCategories: [],
+                specialFeatures: [],
+                euconsent: "",
+                tcfData: SPGDPRArbitraryJson()
+            )
+        }
 
         describe("load Native Message") {
-            beforeEach {
-                consentViewController = self.getGDPRConsentViewController()
-            }
-
             it("Load native message with auth ID") {
                 consentViewController.loadNativeMessage(forAuthId: "SPTest")
                 expect(consentViewController.loading).to(equal(.Loading), description: "")
@@ -207,10 +220,39 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                 }
             }
 
-            context("Test onConsentReady delegate method") {
-                it("Test GDPRMessageViewController calls onConsentReady delegate method") {
+            context("onConsentReady delegate method") {
+                beforeEach {
+                    userConsents = GDPRUserConsent(
+                        acceptedVendors: [],
+                        acceptedCategories: [],
+                        legitimateInterestCategories: [],
+                        specialFeatures: [],
+                        euconsent: "my_consent_string",
+                        tcfData: try! SPGDPRArbitraryJson(["IABTCF_bar": "bar"])
+                    )
+                }
+                it("calls onConsentReady delegate method") {
                     consentViewController.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
                     expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(true), description: "onConsentReady delegate method calls successfully")
+                }
+
+                it("should substitute all IAB related data from the UserDefaults with the ones from userConsents.tcfData") {
+                    UserDefaults.standard.set("foo", forKey: "IABTCF_foo")
+                    consentViewController.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
+                    expect(UserDefaults.standard.string(forKey: "IABTCF_foo")).to(beNil())
+                    expect(UserDefaults.standard.string(forKey: "IABTCF_bar")).to(equal("bar"))
+                }
+
+                it("should set the euconsent and consentUUID in the UserDefaults") {
+                    consentViewController.onConsentReady(gdprUUID: "my_uuid", userConsent: userConsents)
+                    expect(UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY)).to(equal("my_consent_string"))
+                    expect(UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY)).to(equal("my_uuid"))
+                }
+
+                it("should set the euconsent and consentUUID as attributes GDPRConsentViewController") {
+                    consentViewController.onConsentReady(gdprUUID: "my_uuid", userConsent: userConsents)
+                    expect(consentViewController.euconsent).to(equal("my_consent_string"))
+                    expect(consentViewController.gdprUUID).to(equal("my_uuid"))
                 }
             }
 
