@@ -20,23 +20,52 @@ protocol HttpClient {
 class SimpleClient: HttpClient {
     var defaultOnError: OnError?
     let connectivityManager: Connectivity
+    let logger: SPLogger
+    let printCalls: Bool = false
 
-    init(connectivityManager: Connectivity) {
+    func logRequest(_ request: URLRequest) {
+        if printCalls {
+            if let method = request.httpMethod, let url = request.url {
+                logger.debug("\(method) \(url)")
+            }
+            if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+                logger.debug("REQUEST: \(bodyString)")
+            }
+            logger.debug("\n")
+        }
+    }
+
+    func logResponse(_ request: URLRequest, response: Data) {
+        if printCalls {
+            if let method = request.httpMethod, let url = request.url {
+                logger.debug("\(method) \(url)")
+            }
+            if let responseString =  String(data: response, encoding: .utf8) {
+                logger.debug("RESPONSE: \(responseString)")
+            }
+            logger.debug("\n")
+        }
+    }
+
+    init(connectivityManager: Connectivity, logger: SPLogger) {
         self.connectivityManager = connectivityManager
+        self.logger = logger
     }
 
     convenience init() {
-        self.init(connectivityManager: ConnectivityManager.shared)
+        self.init(connectivityManager: ConnectivityManager.shared, logger: OSLogger())
     }
 
     func request(_ urlRequest: URLRequest, _ onSuccess: @escaping OnSuccess) {
         if connectivityManager.isConnectedToNetwork() {
+            logRequest(urlRequest)
             URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 DispatchQueue.main.async { [weak self] in
                     guard let data = data else {
                         self?.defaultOnError?(GeneralRequestError(urlRequest.url, response, error))
                         return
                     }
+                    self?.logResponse(urlRequest, response: data)
                     onSuccess(data)
                 }
             }.resume()
