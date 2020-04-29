@@ -1,5 +1,5 @@
 //
-//  Logger.swift
+//  OSLogger.swift
 //  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 06.10.19.
@@ -8,20 +8,43 @@
 import Foundation
 import os
 
-@objcMembers public class Logger {
+protocol SPLogger {
+    func log(_ message: String)
+    func debug(_ message: String)
+    func error(_ message: String)
+}
+
+class OSLogger: SPLogger {
     static let TOO_MANY_ARGS_ERROR = StaticString("Cannot log messages with more than 5 argumetns")
+    static let category = "GPDRConsent"
 
     let consentLog: OSLog?
 
-    public init() {
+    init(category: String) {
         if #available(iOS 10.0, *) {
-            consentLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Consent")
+            consentLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: category)
         } else {
             consentLog = nil
         }
     }
+    
+    convenience init() {
+        self.init(category: OSLogger.category)
+    }
 
-    public func log(_ message: StaticString, _ args: [CVarArg]) {
+    func log(_ message: String) {
+        log("%s", [message])
+    }
+
+    func debug(_ message: String) {
+        log("%s", [message])
+    }
+
+    func error(_ message: String) {
+        log("%s", [message])
+    }
+
+    func log(_ message: StaticString, _ args: [CVarArg]) {
         if #available(iOS 10.0, *) {
             switch args.count {
                 case 0: log(message)
@@ -31,8 +54,8 @@ import os
                 case 4: log(message, args[0], args[1], args[2], args[3])
                 case 5: log(message, args[0], args[1], args[2], args[3], args[4])
                 default:
-                    print(Logger.TOO_MANY_ARGS_ERROR)
-                    os_log(Logger.TOO_MANY_ARGS_ERROR)
+                    print(OSLogger.TOO_MANY_ARGS_ERROR)
+                    os_log(OSLogger.TOO_MANY_ARGS_ERROR)
             }
         } else {
             print(message)

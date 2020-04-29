@@ -50,7 +50,7 @@ public typealias TargetingParams = [String: String]
     private let pmId: String
     private let targetingParams: TargetingParams
     private let sourcePoint: SourcePointClient
-    private lazy var logger = { return Logger() }()
+    private lazy var logger = { return OSLogger() }()
     var messageViewController: GDPRMessageViewController?
     var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
     enum LoadingStatus: String {
