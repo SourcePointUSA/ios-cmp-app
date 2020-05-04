@@ -125,7 +125,6 @@ public typealias TargetingParams = [String: String]
         )
 
         super.init(nibName: nil, bundle: nil)
-        sourcePoint.onError = onError
         modalPresentationStyle = .overFullScreen
 
         /// - note: according to the IAB this value needs to be initialised as early as possible to signal to vendors, the app has a CMP
@@ -190,12 +189,16 @@ public typealias TargetingParams = [String: String]
                 resetConsentData()
                 UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
             }
-            sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
+            sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse, error in
+                if let messageResponse = messageResponse {
                 self?.gdprUUID = messageResponse.uuid
                 self?.flushAndStoreIABData(messageResponse.userConsent.tcfData)
                 native ?
                     self?.handleNativeMessageResponse(messageResponse) :
                     self?.handleWebMessageResponse(messageResponse)
+                } else {
+                    self?.onError(error: error)
+                }
             }
         }
     }
@@ -303,9 +306,13 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         if action.type == .AcceptAll ||
             action.type == .RejectAll ||
             action.type == .SaveAndExit {
-            sourcePoint.postAction(action: action, consentUUID: gdprUUID) { [weak self] response in
-                self?.userConsents = response.userConsent
-                self?.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+            sourcePoint.postAction(action: action, consentUUID: gdprUUID) { [weak self] response, error in
+                if let actionResponse = response {
+                    self?.userConsents = actionResponse.userConsent
+                    self?.onConsentReady(gdprUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
+                } else {
+                    self?.onError(error: error)
+                }
             }
         } else if action.type == .Dismiss {
             self.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
