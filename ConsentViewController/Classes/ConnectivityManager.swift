@@ -14,11 +14,8 @@ protocol Connectivity {
 
 final class ConnectivityManager: Connectivity {
 
-    /// Shared Instance of Connectivity manager
-    static let shared = ConnectivityManager()
-
-    /// Private Initializer support for Shared Instance.
-    private init() {}
+    /// Initializer support for Instance.
+    public init() {}
 
     /// The specified node name or address can be reached using the current network configuration
     func isConnectedToNetwork() -> Bool {
