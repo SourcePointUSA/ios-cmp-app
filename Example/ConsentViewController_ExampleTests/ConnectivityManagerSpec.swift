@@ -13,11 +13,11 @@ import Nimble
 class ConnectivityManagerSpec: QuickSpec {
 
     override func spec() {
-
+        let connectivityManager = ConnectivityManager()
         describe("Test ConnectivityManager") {
 
             it("Test isConnectedToNetwork method") {
-                let networkStatus = ConnectivityManager.shared.isConnectedToNetwork()
+                let networkStatus = connectivityManager.isConnectedToNetwork()
                 if networkStatus == true {
                     expect(networkStatus).to(equal(true), description: "Device is connected to internet")
                 } else {
@@ -26,7 +26,7 @@ class ConnectivityManagerSpec: QuickSpec {
             }
 
             it("Test getConnectivityFlags method") {
-                let connectivityFlags = ConnectivityManager.shared.getConnectivityFlags()
+                let connectivityFlags = connectivityManager.getConnectivityFlags()
                 if let flags = connectivityFlags {
                     expect(flags).notTo(beNil(), description: "Able to get network connectivity flags")
                 } else {
@@ -35,7 +35,7 @@ class ConnectivityManagerSpec: QuickSpec {
             }
 
             it("Test ipv6Connectivity method") {
-                let networkReachabilityAddress = ConnectivityManager.shared.ipv6Connectivity()
+                let networkReachabilityAddress = connectivityManager.ipv6Connectivity()
                 if let networkAddress = networkReachabilityAddress {
                     expect(networkAddress).notTo(beNil(), description: "Able to get network connectivity address/name")
                 } else {
@@ -44,7 +44,7 @@ class ConnectivityManagerSpec: QuickSpec {
             }
 
             it("Test ipv4Connectivity method") {
-                let networkReachabilityAddress = ConnectivityManager.shared.ipv4Connectivity()
+                let networkReachabilityAddress = connectivityManager.ipv4Connectivity()
                 if let networkAddress = networkReachabilityAddress {
                     expect(networkAddress).notTo(beNil(), description: "Able to get network connectivity address/name")
                 } else {

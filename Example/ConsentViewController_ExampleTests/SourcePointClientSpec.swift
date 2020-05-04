@@ -13,7 +13,6 @@ import Nimble
 @testable import ConsentViewController
 
 public class MockHttp: HttpClient {
-    public var defaultOnError: OnError?
     var getCalledWith: URL?
     var success: Data?
     var error: Error?
@@ -26,28 +25,28 @@ public class MockHttp: HttpClient {
         self.error = error
     }
 
-    public func get(url: URL?, onSuccess: @escaping OnSuccess) {
+    public func get(url: URL?, completionHandler: @escaping CompletionHandler) {
         getCalledWith = url?.absoluteURL
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            onSuccess(self.success!)
+            completionHandler(self.success!, nil)
         })
     }
 
-    func request(_ urlRequest: URLRequest, _ onSuccess: @escaping OnSuccess) {
+    func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {
         getCalledWith = urlRequest.url?.absoluteURL
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            onSuccess(self.success!)
+            completionHandler(self.success!, nil)
         })
     }
 
-    public func post(url: URL?, body: Data?, onSuccess: @escaping OnSuccess) {
+    public func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler) {
         getCalledWith = url?.absoluteURL
         var urlRequest = URLRequest(url: getCalledWith!)
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = body
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            onSuccess(self.success!)
+            completionHandler(self.success!, nil)
         })
     }
 }
@@ -85,7 +84,7 @@ class SourcePointClientSpec: QuickSpec {
                         consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
                         euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
                         authId: "test",
-                        onSuccess: { _ in})
+                        completionHandler: { _, _  in})
                     expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
                 }
 
@@ -95,7 +94,7 @@ class SourcePointClientSpec: QuickSpec {
                         consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
                         euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
                         authId: nil,
-                        onSuccess: { _ in })
+                        completionHandler: { _, _  in })
                     expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
                 }
             }
@@ -103,7 +102,7 @@ class SourcePointClientSpec: QuickSpec {
             context("Test postAction") {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
-                    client.postAction(action: acceptAllAction, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", onSuccess: { _ in})
+                    client.postAction(action: acceptAllAction, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", completionHandler: { _, _  in})
                     expect(httpClient?.getCalledWith).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/consent?inApp=true")))
                 }
             }
