@@ -11,10 +11,11 @@ import UIKit
 public typealias TargetingParams = [String: String]
 
 @objcMembers open class GDPRConsentViewController: UIViewController {
-    static let META_KEY = "sp_gdpr_meta"
-    static let EU_CONSENT_KEY = "sp_gdpr_euconsent"
-    static let GDPR_UUID_KEY = "sp_gdpr_consentUUID"
-    static let GDPR_AUTH_ID_KEY = "sp_gdpr_authId"
+    static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
+    static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
+    static let EU_CONSENT_KEY = "\(SP_GDPR_KEY_PREFIX)euconsent"
+    static let GDPR_UUID_KEY = "\(SP_GDPR_KEY_PREFIX)consentUUID"
+    static let GDPR_AUTH_ID_KEY = "\(SP_GDPR_KEY_PREFIX)authId"
     static public let IAB_KEY_PREFIX = "IABTCF_"
     static let IAB_CMP_SDK_ID_KEY = "IABTCF_CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
