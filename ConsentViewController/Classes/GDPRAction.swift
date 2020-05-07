@@ -15,6 +15,18 @@ import Foundation
     case ShowPrivacyManager = 12
     case RejectAll = 13
     case Dismiss = 15
+
+    public var description: String {
+        switch self {
+        case .AcceptAll: return "AcceptAll"
+        case .RejectAll: return "RejectAll"
+        case .ShowPrivacyManager: return "ShowPrivacyManager"
+        case .SaveAndExit: return "SaveAndExit"
+        case .Dismiss: return "Dismiss"
+        case .PMCancel: return "PMCancel"
+        default: return "Unknown"
+        }
+    }
 }
 
 /// Action consists of `GDPRActionType` and an id. Those come from each action the user can take in the ConsentUI
