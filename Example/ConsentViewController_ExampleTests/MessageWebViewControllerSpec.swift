@@ -42,7 +42,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             }
         }
 
-        fdescribe("Test GDPRConsentDelegate methods") {
+        describe("Test GDPRConsentDelegate methods") {
             beforeEach {
                 messageWebViewController = self.getMessageWebViewController()
                 messageWebViewController.consentDelegate = mockConsentDelegate
