@@ -19,6 +19,17 @@ class ViewController: UIViewController {
         consentDelegate: self
     )}()
 
+    @IBAction func onClearConsentTap(_ sender: Any) {
+        let spStoredData = UserDefaults.standard.dictionaryRepresentation().filter {
+            $0.key.starts(with: GDPRConsentViewController.SP_GDPR_KEY_PREFIX) ||
+            $0.key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX)
+        }
+        spStoredData.isEmpty ?
+            print("There's no consent data stored") :
+            print("Deleting following consent data: ", spStoredData)
+        consentViewController.clearAllData()
+    }
+
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
         consentViewController.loadPrivacyManager()
     }
@@ -30,6 +41,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: GDPRConsentDelegate {
+    func onAction(_ action: GDPRAction) {
+        print("User took the action: \(action.type.description)")
+    }
+
     func gdprConsentUIWillShow() {
         present(consentViewController, animated: true, completion: nil)
     }
@@ -43,7 +58,6 @@ extension ViewController: GDPRConsentDelegate {
         userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
 
-        // IAB Related Data
         print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.dictionaryValue?.keys.sorted() ?? []))
     }
 
