@@ -113,7 +113,7 @@ class SourcePointClient {
     static let GET_MESSAGE_CONTENTS_URL = URL(string: "native-message?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
     static let GET_MESSAGE_URL_URL = URL(string: "message-url?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CONSENT_URL = URL(string: "consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "https://fake-wrapper-api.herokuapp.com/tcfv2/v1/gdpr/custom-consent?inApp=true")!
+    static let CUSTOM_CONSENT_URL = URL(string: "custom-consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
 
     private var client: HttpClient
     private lazy var json: JSON = { return JSON() }()

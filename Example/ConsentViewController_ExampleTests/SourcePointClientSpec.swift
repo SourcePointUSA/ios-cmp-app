@@ -126,7 +126,7 @@ class SourcePointClientSpec: QuickSpec {
                 it("makes a POST to SourcePointClient.CUSTOM_CONSENT_URL") {
                     let http = MockHttp(success: "".data(using: .utf8)!)
                     self.getClient(http).customConsent(toConsentUUID: "", vendors: [], categories: [], legIntCategories: []) { _, _ in }
-                    expect(http.postWasCalledWithUrl).to(equal(SourcePointClient.CUSTOM_CONSENT_URL))
+                    expect(http.postWasCalledWithUrl).to(equal(SourcePointClient.CUSTOM_CONSENT_URL.absoluteURL))
                 }
 
                 it("makes a POST with the correct body") {
