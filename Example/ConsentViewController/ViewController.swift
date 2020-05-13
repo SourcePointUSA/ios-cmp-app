@@ -10,6 +10,9 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
+    static let vendorXId = "5e4a5fbf26de4a77922b38a6"
+    var vendorXAccepted = false
+
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7639,
@@ -28,15 +31,35 @@ class ViewController: UIViewController {
             print("There's no consent data stored") :
             print("Deleting following consent data: ", spStoredData)
         consentViewController.clearAllData()
+        vendorXAccepted = false
+        updateCustomVendorUI()
     }
 
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
         consentViewController.loadPrivacyManager()
     }
 
+    @IBAction func onAcceptVendorXTap(_ sender: Any) {
+        consentViewController.customConsentTo(vendors: [ViewController.vendorXId], categories: [], legIntCategories: []) { [weak self] consents in
+            self?.vendorXAccepted = consents.acceptedVendors.contains(ViewController.vendorXId)
+            self?.updateCustomVendorUI()
+        }
+    }
+
+    @IBOutlet weak var vendorXStatusLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         consentViewController.loadMessage()
+    }
+}
+
+// MARK: CustomConsent
+extension ViewController {
+    func updateCustomVendorUI() {
+        vendorXStatusLabel.text = vendorXAccepted ?
+            "Accepted" :
+            "Rejected"
     }
 }
 
@@ -55,10 +78,13 @@ extension ViewController: GDPRConsentDelegate {
 
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         print("ConsentUUID: \(gdprUUID)")
+        vendorXAccepted = userConsent.acceptedVendors.contains(ViewController.vendorXId)
         userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
 
         print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.dictionaryValue?.keys.sorted() ?? []))
+        
+        updateCustomVendorUI()
     }
 
     func onError(error: GDPRConsentViewControllerError?) {
