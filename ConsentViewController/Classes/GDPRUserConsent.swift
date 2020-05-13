@@ -50,6 +50,18 @@ import Foundation
         self.tcfData = tcfData
     }
 
+    public override func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? GDPRUserConsent {
+            return other.acceptedCategories.elementsEqual(acceptedVendors) &&
+                other.acceptedVendors.elementsEqual(acceptedVendors) &&
+                other.legitimateInterestCategories.elementsEqual(legitimateInterestCategories) &&
+                other.specialFeatures.elementsEqual(specialFeatures) &&
+                other.euconsent.elementsEqual(euconsent)
+        } else {
+            return false
+        }
+    }
+
     open override var description: String {
         return """
         UserConsents(
