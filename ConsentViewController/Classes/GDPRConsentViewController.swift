@@ -314,6 +314,11 @@ public typealias TargetingParams = [String: String]
         categories: [String],
         legIntCategories: [String],
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
+        if gdprUUID.isEmpty {
+            consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
+            return
+        }
+
         customConsent(
             uuid: gdprUUID,
             vendors: vendors,
@@ -352,6 +357,10 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         if action.type == .AcceptAll ||
             action.type == .RejectAll ||
             action.type == .SaveAndExit {
+            if gdprUUID.isEmpty {
+                consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
+                return
+            }
             sourcePoint.postAction(action: action, consentUUID: gdprUUID) { [weak self] response, error in
                 if let actionResponse = response {
                     self?.userConsents = actionResponse.userConsent

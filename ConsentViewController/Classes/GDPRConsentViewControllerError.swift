@@ -107,3 +107,8 @@ import Foundation
     public var failureReason: String? { return message }
     override public var description: String { return message }
 }
+
+@objcMembers public class PostingConsentWithoutConsentUUID: GDPRConsentViewControllerError {
+    public var failureReason: String? { return "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first." }
+    override public var description: String { return "\(failureReason!)\n" }
+}
