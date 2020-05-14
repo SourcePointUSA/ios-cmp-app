@@ -32,20 +32,61 @@
                                     <action selector="onClearConsentTap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="z83-uH-nwW"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oRm-6q-XKe">
+                                <rect key="frame" x="20" y="20" width="374" height="220"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eG1-YT-GoF">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="33.666666666666664"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Custom Vendor X: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lc7-fD-UxR" userLabel="Custom Vendor X:">
+                                                <rect key="frame" x="0.0" y="0.0" width="361.33333333333331" height="33.666666666666664"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zi-ja-23M" userLabel="Custom Vendor X:">
+                                                <rect key="frame" x="361.33333333333331" y="0.0" width="12.666666666666686" height="33.666666666666664"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cK6-8K-y3h">
+                                        <rect key="frame" x="0.0" y="33.666666666666671" width="374" height="186.33333333333331"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="phN-fo-I2o">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="186.33333333333334"/>
+                                                <state key="normal" title="Accept Vendor X"/>
+                                                <connections>
+                                                    <action selector="onAcceptVendorXTap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0A2-pq-2fs"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="oRm-6q-XKe" firstAttribute="top" secondItem="nYM-pK-Vec" secondAttribute="top" constant="20" id="G4X-UX-YYO"/>
                             <constraint firstItem="Cf6-CW-8f5" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="Hbv-hd-FU9"/>
+                            <constraint firstItem="nYM-pK-Vec" firstAttribute="trailing" secondItem="oRm-6q-XKe" secondAttribute="trailing" constant="20" id="Tgw-rY-tFq"/>
                             <constraint firstItem="Cf6-CW-8f5" firstAttribute="centerX" secondItem="nYM-pK-Vec" secondAttribute="centerX" id="gaZ-fa-jov"/>
+                            <constraint firstItem="Cf6-CW-8f5" firstAttribute="top" secondItem="oRm-6q-XKe" secondAttribute="bottom" constant="113" id="j74-aJ-pPs"/>
+                            <constraint firstItem="oRm-6q-XKe" firstAttribute="leading" secondItem="nYM-pK-Vec" secondAttribute="leading" constant="20" id="la4-sS-uM0"/>
                             <constraint firstItem="0Jg-eO-F1M" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="mdy-4X-3Kh"/>
                             <constraint firstItem="nYM-pK-Vec" firstAttribute="bottom" secondItem="0Jg-eO-F1M" secondAttribute="bottom" constant="20" id="sgi-zI-fxX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nYM-pK-Vec"/>
                     </view>
+                    <connections>
+                        <outlet property="vendorXStatusLabel" destination="8zi-ja-23M" id="AUh-7t-01b"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="105" y="62.5"/>
+            <point key="canvasLocation" x="104.34782608695653" y="61.956521739130437"/>
         </scene>
     </scenes>
 </document>

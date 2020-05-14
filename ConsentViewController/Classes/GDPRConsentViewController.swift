@@ -279,6 +279,51 @@ public typealias TargetingParams = [String: String]
             UserDefaults.standard.setValuesForKeys(iabDataDictionary)
         }
     }
+
+    // swiftlint:disable:next function_parameter_count
+    private func customConsent(
+        uuid: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        euconsent: String,
+        tcfData: SPGDPRArbitraryJson,
+        completionHandler: @escaping (GDPRUserConsent) -> Void) {
+        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
+            guard let response = response, error == nil else {
+                self?.consentDelegate?.onError?(error: error)
+                return
+            }
+
+            completionHandler(GDPRUserConsent(
+                acceptedVendors: response.vendors,
+                acceptedCategories: response.categories,
+                legitimateInterestCategories: response.legIntCategories,
+                specialFeatures: response.specialFeatures,
+                euconsent: euconsent,
+                tcfData: tcfData)
+            )
+        }
+    }
+
+    /// Add the vendors/categories/legitimateInterestCategories ids to the consent profile of the current user.
+    /// In order words, programatically consent a user to the above
+    /// If an error occurs, the `GDPRConsentDelegate.onError` is called
+    public func customConsentTo(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        completionHandler: @escaping (GDPRUserConsent) -> Void) {
+        customConsent(
+            uuid: gdprUUID,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            euconsent: self.euconsent,
+            tcfData: self.tcfData,
+            completionHandler: completionHandler
+        )
+    }
 }
 
 extension GDPRConsentViewController: GDPRConsentDelegate {

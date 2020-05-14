@@ -56,3 +56,7 @@ typealias PMConsents = SPGDPRArbitraryJson
 struct GDPRPMConsents: Codable {
     let acceptedVendors, acceptedCategories: [String]
 }
+
+struct CustomConsentResponse: Codable, Equatable {
+    let vendors, categories, legIntCategories, specialFeatures: [String]
+}
