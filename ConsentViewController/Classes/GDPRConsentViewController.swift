@@ -187,7 +187,7 @@ public typealias TargetingParams = [String: String]
         if loading == .Ready {
             loading = .Loading
             if didAuthIdChange(newAuthId: (authId)) {
-                resetConsentData()
+                clearAllData()
                 UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
             }
             sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse, error in
@@ -234,12 +234,6 @@ public typealias TargetingParams = [String: String]
         return newAuthId != UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
     }
 
-    private func resetConsentData() {
-        self.userConsents = GDPRUserConsent.empty()
-        self.gdprUUID = ""
-        clearAllData()
-    }
-
     /// Loads the PrivacyManager (that popup with the toggles) in a WebView
     /// If the user changes her consents we call `ConsentDelegate.onConsentReady`
     public func loadPrivacyManager() {
@@ -269,6 +263,8 @@ public typealias TargetingParams = [String: String]
 
     /// Clears all consent data from the UserDefaults. Use this method if you want to **completely** wipe the user's consent data from the device.
     public func clearAllData() {
+        userConsents = GDPRUserConsent.empty()
+        gdprUUID = ""
         clearInternalData()
         clearIABConsentData()
     }
@@ -314,6 +310,11 @@ public typealias TargetingParams = [String: String]
         categories: [String],
         legIntCategories: [String],
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
+        if gdprUUID.isEmpty {
+            consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
+            return
+        }
+
         customConsent(
             uuid: gdprUUID,
             vendors: vendors,
@@ -352,6 +353,10 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         if action.type == .AcceptAll ||
             action.type == .RejectAll ||
             action.type == .SaveAndExit {
+            if gdprUUID.isEmpty {
+                consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
+                return
+            }
             sourcePoint.postAction(action: action, consentUUID: gdprUUID) { [weak self] response, error in
                 if let actionResponse = response {
                     self?.userConsents = actionResponse.userConsent

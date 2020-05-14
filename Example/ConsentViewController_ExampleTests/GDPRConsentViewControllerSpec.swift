@@ -13,7 +13,6 @@ import Nimble
 @testable import ConsentViewController
 
 public class MockConsentDelegate: GDPRConsentDelegate {
-
     var isConsentUIWillShowCalled = false
     var isConsentUIDidDisappearCalled = false
     var isOnErrorCalled = false
@@ -146,13 +145,17 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
 
         describe("Clears UserDefaults ") {
             beforeEach {
+                UserDefaults.standard.set("consent string", forKey: GDPRConsentViewController.EU_CONSENT_KEY)
+                UserDefaults.standard.set("gdpr uuid", forKey: GDPRConsentViewController.GDPR_UUID_KEY)
                 consentViewController = self.getGDPRConsentViewController()
             }
 
             it("Clears all IAB related data from the UserDefaults") {
                 consentViewController.clearIABConsentData()
-                let gdprUUIDKey = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY)
-                expect(gdprUUIDKey).to(beNil(), description: "Upon successful call to clearIABConsentData GDPR_UUID_KEY gets cleared")
+                let iabData = UserDefaults.standard.dictionaryRepresentation().filter {
+                    $0.key.starts(with: "IABTCF_")
+                }
+                expect(iabData).to(beEmpty())
             }
 
             it("Clears meta data used by the SDK") {
@@ -165,6 +168,13 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                 consentViewController.clearAllData()
                 let metaKey = UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY)
                 expect(metaKey).to(beNil(), description: "Upon successful call to clearAllData META_KEY gets cleared")
+            }
+
+            it("Clears its consent related in-memory attributes") {
+                consentViewController.clearAllData()
+                expect(consentViewController.euconsent).to(beEmpty())
+                expect(consentViewController.gdprUUID).to(beEmpty())
+                expect(consentViewController.userConsents).to(equal(GDPRUserConsent.empty()))
             }
         }
 
