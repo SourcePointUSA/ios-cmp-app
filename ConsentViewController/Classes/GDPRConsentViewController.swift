@@ -124,9 +124,7 @@ public typealias TargetingParams = [String:String]
         )
 
         super.init(nibName: nil, bundle: nil)
-        sourcePoint.onError = onError
         modalPresentationStyle = .overFullScreen
-        
         UserDefaults.standard.setValue(true, forKey: GDPRConsentViewController.IAB_CONSENT_CMP_PRESENT)
     }
     
@@ -158,13 +156,17 @@ public typealias TargetingParams = [String:String]
     public func loadNativeMessage(forAuthId authId: String?) {
         if loading == .Ready {
             loading = .Loading
-            sourcePoint.getMessageContents(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse in
-                self?.gdprUUID = messageResponse.uuid
-                self?.loading = .Ready
-                if let message = messageResponse.msgJSON {
-                    self?.consentDelegate?.gdprConsentUIWillShow?(message: message)
+            sourcePoint.getMessageContents(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageData, error in
+                if let messageResponse = messageData {
+                    self?.gdprUUID = messageResponse.uuid
+                    self?.loading = .Ready
+                    if let message = messageResponse.msgJSON {
+                        self?.consentDelegate?.gdprConsentUIWillShow?(message: message)
+                    } else {
+                        self?.onConsentReady(gdprUUID: messageResponse.uuid, userConsent: messageResponse.userConsent)
+                    }
                 } else {
-                    self?.onConsentReady(gdprUUID: messageResponse.uuid, userConsent: messageResponse.userConsent)
+                    self?.onError(error: error)
                 }
             }
         }
@@ -195,13 +197,17 @@ public typealias TargetingParams = [String:String]
                 resetConsentData()
                 UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
             }
-            sourcePoint.getMessageUrl(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] message in
-                self?.gdprUUID = message.uuid
-                if let url = message.url {
-                    self?.loadMessage(fromUrl: url)
+            sourcePoint.getMessageUrl(consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageData, error in
+                if let message = messageData {
+                    self?.gdprUUID = message.uuid
+                    if let url = message.url {
+                        self?.loadMessage(fromUrl: url)
+                    } else {
+                        self?.loading = .Ready
+                        self?.onConsentReady(gdprUUID: message.uuid, userConsent: message.userConsent)
+                    }
                 } else {
-                    self?.loading = .Ready
-                    self?.onConsentReady(gdprUUID: message.uuid, userConsent: message.userConsent)
+                    self?.onError(error: error)
                 }
             }
         }
@@ -265,8 +271,12 @@ public typealias TargetingParams = [String:String]
     }
 
     internal func storeIABVars(consentString: ConsentString) {
-        sourcePoint.getGdprStatus { gdprApplies in
+        sourcePoint.getGdprStatus { gdprAppliesStatus, error in
+            if let gdprApplies = gdprAppliesStatus {
             UserDefaults.standard.setValue(gdprApplies ? "1" : "0", forKey: GDPRConsentViewController.IAB_CONSENT_SUBJECT_TO_GDPR)
+            } else {
+                self.onError(error: error)
+            }
         }
 
         UserDefaults.standard.setValue(consentString.consentString, forKey: GDPRConsentViewController.IAB_CONSENT_CONSENT_STRING)
@@ -338,8 +348,12 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     
     public func reportAction(_ action: GDPRAction, consents: PMConsents?) {
         if(action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit) {
-            sourcePoint.postAction(action: action, consentUUID: gdprUUID, consents: consents) { [weak self] response in
-                self?.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+            sourcePoint.postAction(action: action, consentUUID: gdprUUID, consents: consents) { [weak self] actionResponse, error in
+                if let response = actionResponse {
+                    self?.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+                } else {
+                    self?.onError(error: error)
+                }
             }
         } else if (action.type == .Dismiss) {
             self.onConsentReady(
