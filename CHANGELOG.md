@@ -1,3 +1,9 @@
+## 5.2.0 (May, 15, 2020)
+* Added the method `customConsentTo` to `GDPRConsentViewController`. It's now possible to programatically consent the current user to a list of vendors, categories and legitimate interest caregories. The ids passed will be appended to the list of already accepted vendors, categories and leg. int. categories. The method is asynchronous so you must pass a completion handler that will receive back an instance of `GDPRUserConsent` in case of success or it'll call the delegate method `onError` in case of failure. It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes it's still required to get consent via the consent message or privacy manager. #139
+* Fix an issue preventing consent data from being completely removed when calling `clearAllData` #141
+* Removed one (and hopfeully the last one) retaining cycle from our SDK #136
+
+
 ## 5.1.0 (April, 16, 2020)
 This is big one. We're moving more and more towards a stable API, so bare with us.
 
