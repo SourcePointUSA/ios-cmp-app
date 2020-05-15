@@ -130,6 +130,20 @@ extension ViewController: GDPRConsentDelegate {
 @end
 ```
 
+### Programatically consenting an user
+It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
+```swift
+func customConsentTo(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        completionHandler: @escaping (GDPRUserConsent) -> Void)
+```
+
+The ids passed will be appended to the list of already accepted vendors, categories and leg. int. categories. The method is asynchronous so you must pass a completion handler that will receive back an instance of `GDPRUserConsent` in case of success or it'll call the delegate method `onError` in case of failure.
+
+It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
+
 ### Authenticated Consent
 
 In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
