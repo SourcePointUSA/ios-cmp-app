@@ -213,7 +213,8 @@ public typealias TargetingParams = [String:String]
     }
     
     private func didAuthIdChange(newAuthId: String?) -> Bool {
-        return newAuthId != UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY);
+        let storedAuthId = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+        return storedAuthId != nil && newAuthId != nil && storedAuthId != newAuthId
     }
     
     private func resetConsentData(){
