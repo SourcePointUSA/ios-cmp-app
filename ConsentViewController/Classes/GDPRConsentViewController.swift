@@ -176,7 +176,8 @@ public typealias TargetingParams = [String: String]
 
     private func handleWebMessageResponse(_ response: MessageResponse) {
        if let url = response.url {
-           self.loadMessage(fromUrl: url)
+        let messageURL = "\(url)&consentUUID=\(response.uuid)"
+        self.loadMessage(fromUrl: URL(string: messageURL) ?? url)
        } else {
            self.loading = .Ready
            self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
