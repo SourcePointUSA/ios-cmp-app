@@ -231,7 +231,8 @@ public typealias TargetingParams = [String: String]
     }
 
     private func didAuthIdChange(newAuthId: String?) -> Bool {
-        return newAuthId != UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+        let stored = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+        return newAuthId != nil && stored != nil && stored != newAuthId
     }
 
     /// Loads the PrivacyManager (that popup with the toggles) in a WebView
