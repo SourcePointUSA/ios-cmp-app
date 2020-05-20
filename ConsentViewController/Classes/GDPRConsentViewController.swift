@@ -33,6 +33,8 @@ public typealias TargetingParams = [String:String]
 
     /// The key used to read and write the parsed IAB Vendor consented by the user in the `UserDefaults`
     static public let IAB_CONSENT_PARSED_VENDOR_CONSENTS: String = "IABConsent_ParsedVendorConsents"
+    
+    static let EmptyConsentUUID: GDPRUUID = ""
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: ConsentString
@@ -219,7 +221,7 @@ public typealias TargetingParams = [String:String]
     
     private func resetConsentData(){
         self.euconsent = ConsentString.empty
-        self.gdprUUID = ""
+        self.gdprUUID = GDPRConsentViewController.EmptyConsentUUID
         clearAllData()
     }
 
