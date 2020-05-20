@@ -110,8 +110,7 @@ public typealias TargetingParams = [String:String]
         self.targetingParams = targetingParams
         self.consentDelegate = consentDelegate
 
-        self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ??
-            UUID().uuidString
+        self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ?? ""
         self.euconsent = (try? ConsentString(consentString: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
         
         self.sourcePoint = SourcePointClient(
@@ -214,12 +213,13 @@ public typealias TargetingParams = [String:String]
     }
     
     private func didAuthIdChange(newAuthId: String?) -> Bool {
-        return newAuthId != UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY);
+        let storedAuthId = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+        return storedAuthId != nil && newAuthId != nil && storedAuthId != newAuthId
     }
     
     private func resetConsentData(){
         self.euconsent = ConsentString.empty
-        self.gdprUUID = UUID().uuidString
+        self.gdprUUID = ""
         clearAllData()
     }
 
