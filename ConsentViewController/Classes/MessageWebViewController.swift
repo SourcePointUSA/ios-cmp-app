@@ -51,13 +51,15 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     var consentUILoaded = false
     var isPMLoaded = false
+    let timeout: TimeInterval
 
     var lastChoiceId: String?
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
+        self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -142,7 +144,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     func load(url: URL) {
         let connectvityManager = ConnectivityManager()
         if connectvityManager.isConnectedToNetwork() {
-            webview?.load(URLRequest(url: url))
+            webview?.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: timeout))
         } else {
             onError(error: NoInternetConnection())
         }
@@ -175,6 +177,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             UIApplication.shared.openURL(url)
         }
         return nil
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        if let error = error as? URLError, error.code == .timedOut {
+            onError(error: MessageTimeout(url: error.failingURL, timeout: timeout))
+        }
     }
 
     func getChoiceId (_ payload: [String: Any]) -> String? {
