@@ -16,6 +16,25 @@ protocol HttpClient {
 }
 
 class SimpleClient: HttpClient {
+    static let logCalls = false
+
+    static func logRequest(_ type: String, _ url: URL?, _ body: Data?) {
+        if let url = url, logCalls {
+            print("\(type): \(url)")
+            
+            if let body = body {
+                print(String(data: body, encoding: .utf8) ?? "{}")
+            }
+        }
+    }
+
+    static func logRequest(_ url: URL?, _ body: Data?) {
+        logRequest("REQUEST", url, body)
+    }
+
+    static func logResponse(_ url: URL?, _ body: Data?) {
+        logRequest("RESPONSE", url, body)
+    }
 
     let connectivityManager: Connectivity
     
@@ -26,11 +45,13 @@ class SimpleClient: HttpClient {
     convenience init() {
         self.init(connectivityManager: ConnectivityManager())
     }
-    
+
     func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {
+        SimpleClient.logRequest(urlRequest.url, urlRequest.httpBody)
         if(connectivityManager.isConnectedToNetwork()) {
             URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 DispatchQueue.main.async {
+                    SimpleClient.logResponse(urlRequest.url, data)
                     guard let data = data else {
                         completionHandler(nil, GeneralRequestError(urlRequest.url, response, error))
                         return
