@@ -173,7 +173,7 @@ lazy var consentViewController: GDPRConsentViewController = { return GDPRConsent
 In this example a key/value pair "language":"fr" is passed to the sp scenario and can be useded, wiht the proper scenario setup, to show a french message instead of a english one.
 
 ## Configuring the Message/Consents timeout
-Just set the `.messageTimeoutInSeconds` attribute to a time interval that makes most sense for your own application. By default, we set it to 30 seconds.
+Before calling `.loadMessage` or `.loadPrivacyManager`, set the `.messageTimeoutInSeconds` attribute to a time interval that makes most sense for your own application. By default, we set it to 30 seconds.
 
 In case of a timeout error, the `onError` callback will be called and the consent flow will stop there.
 
