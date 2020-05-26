@@ -19,6 +19,7 @@ public typealias TargetingParams = [String: String]
     static public let IAB_KEY_PREFIX = "IABTCF_"
     static let IAB_CMP_SDK_ID_KEY = "IABTCF_CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
+    static let DefaultTimeout = TimeInterval(30)
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String {
@@ -37,7 +38,11 @@ public typealias TargetingParams = [String: String]
     public var userConsents: GDPRUserConsent
 
     /// The timeout interval in seconds for the message being displayed
-    public var messageTimeoutInSeconds = TimeInterval(300)
+    public var messageTimeoutInSeconds = GDPRConsentViewController.DefaultTimeout {
+        didSet {
+            sourcePoint.setRequestTimeout(self.messageTimeoutInSeconds)
+        }
+    }
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
@@ -122,7 +127,8 @@ public typealias TargetingParams = [String: String]
             propertyName: propertyName,
             pmId: PMId,
             campaignEnv: campaignEnv,
-            targetingParams: targetingParams
+            targetingParams: targetingParams,
+            timeout: GDPRConsentViewController.DefaultTimeout
         )
 
         super.init(nibName: nil, bundle: nil)

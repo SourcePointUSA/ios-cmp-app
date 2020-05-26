@@ -47,7 +47,7 @@ class SimpleClient: HttpClient {
     let session: SPURLSession
     let dispatchQueue: SPDispatchQueue
 
-    let logCalls: Bool = true
+    let logCalls: Bool = false
 
     func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {
         if logCalls {
@@ -73,9 +73,9 @@ class SimpleClient: HttpClient {
         self.dispatchQueue = dispatchQueue
     }
 
-    convenience init(timeOutAfter timeout: TimeInterval) {
+    convenience init(timeoutAfter timeout: TimeInterval) {
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = timeout
+        config.timeoutIntervalForResource = timeout
         self.init(
             connectivityManager: ConnectivityManager(),
             logger: OSLogger(),

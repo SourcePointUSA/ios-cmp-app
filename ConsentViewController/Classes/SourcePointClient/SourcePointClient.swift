@@ -61,29 +61,14 @@ class SourcePointClient {
         self.client = client
     }
 
-    convenience init(accountId: Int,
-                     propertyId: Int,
-                     propertyName: GDPRPropertyName,
-                     pmId: String,
-                     campaignEnv: GDPRCampaignEnv
-    ) {
-        self.init(accountId: accountId,
-                  propertyId: propertyId,
-                  propertyName: propertyName,
-                  pmId: pmId,
-                  campaignEnv: campaignEnv,
-                  targetingParams: nil,
-                  client: SimpleClient(timeOutAfter: 30.0)
-        )
-    }
-
     convenience init(
         accountId: Int,
         propertyId: Int,
         propertyName: GDPRPropertyName,
         pmId: String,
         campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams
+        targetingParams: TargetingParams,
+        timeout: TimeInterval
     ) {
         self.init(
             accountId: accountId,
@@ -92,8 +77,12 @@ class SourcePointClient {
             pmId: pmId,
             campaignEnv: campaignEnv,
             targetingParams: targetingParams,
-            client: SimpleClient(timeOutAfter: 30.0)
+            client: SimpleClient(timeoutAfter: timeout)
         )
+    }
+
+    func setRequestTimeout(_ timeout: TimeInterval) {
+        client = SimpleClient(timeoutAfter: timeout)
     }
 
     func targetingParamsToString(_ params: TargetingParams?) -> String {

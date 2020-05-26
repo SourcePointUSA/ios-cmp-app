@@ -59,15 +59,15 @@ class SimpleClientSpec: QuickSpec {
     let exampleRequest = URLRequest(url: URL(string: "http://example")!)
 
     override func spec() {
-        describe("init(timeOutAfter: TimeInterval)") {
-            it("sets the timeout in its URLSession configuration") {
-                let client = SimpleClient(timeOutAfter: 10.0)
-                expect(client.session.configuration.timeoutIntervalForRequest).to(equal(10.0))
+        describe("init(timeoutAfter: TimeInterval)") {
+            it("sets the dispatchQueue to DispatchQueue.main") {
+                let dispatchQueue = SimpleClient(timeoutAfter: 1).dispatchQueue as! DispatchQueue
+                expect(dispatchQueue).to(equal(DispatchQueue.main))
             }
 
-            it("sets the dispatchQueue to DispatchQueue.main") {
-                let dispatchQueue = SimpleClient(timeOutAfter: 10.0).dispatchQueue as! DispatchQueue
-                expect(dispatchQueue).to(equal(DispatchQueue.main))
+            it("sets the timeout in its URLSession") {
+                let session = SimpleClient(timeoutAfter: 10.0).session as! URLSession
+                expect(session.configuration.timeoutIntervalForResource).to(equal(10.0))
             }
         }
 

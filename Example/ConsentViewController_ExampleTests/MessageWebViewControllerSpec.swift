@@ -14,9 +14,8 @@ import WebKit
 // swiftlint:disable force_cast function_body_length
 
 class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigationDelegate {
-
     func getMessageWebViewController() -> MessageWebViewController {
-        return MessageWebViewController(propertyId: 22, pmId: "100699", consentUUID: UUID().uuidString)
+        return MessageWebViewController(propertyId: 22, pmId: "100699", consentUUID: UUID().uuidString, timeout: 100)
     }
 
     override func spec() {
