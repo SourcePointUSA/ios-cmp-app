@@ -1,0 +1,152 @@
+//
+//  SimpleClientSpec.swift
+//  ConsentViewController_ExampleTests
+//
+//  Created by Andre Herculano on 26.05.20.
+//  Copyright © 2020 CocoaPods. All rights reserved.
+//
+
+import Foundation
+import Quick
+import Nimble
+@testable import ConsentViewController
+
+// swiftlint:disable force_cast function_body_length
+
+class ConnectivityMock: Connectivity {
+    let isConnected: Bool
+    init(connected: Bool) {
+        isConnected = connected
+    }
+    func isConnectedToNetwork() -> Bool {
+        return isConnected
+    }
+}
+
+class URLSessionMock: SPURLSession {
+    let configuration: URLSessionConfiguration
+    let result: Data?
+    let error: Error?
+    var dataTaskCalledWith: URLRequest?
+
+    func dataTask(_ request: URLRequest, completionHandler: @escaping DataTaskResult) -> SPURLSessionDataTask {
+        dataTaskCalledWith = request
+        completionHandler(result, URLResponse(), error)
+        return URLSessionDataTask()
+    }
+
+    init(
+        configuration: URLSessionConfiguration = URLSessionConfiguration.default,
+        data: Data? = nil,
+        error: Error? =  nil
+    ) {
+        self.configuration = configuration
+        result = data
+        self.error = error
+    }
+}
+
+class DispatchQueueMock: SPDispatchQueue {
+    var asyncCalled: Bool?
+
+    func async(execute work: @escaping () -> Void) {
+        asyncCalled = true
+        work()
+    }
+}
+
+class SimpleClientSpec: QuickSpec {
+    let exampleRequest = URLRequest(url: URL(string: "http://example")!)
+
+    override func spec() {
+        describe("init(timeOutAfter: TimeInterval)") {
+            it("sets the timeout in its URLSession configuration") {
+                let client = SimpleClient(timeOutAfter: 10.0)
+                expect(client.session.configuration.timeoutIntervalForRequest).to(equal(10.0))
+            }
+
+            it("sets the dispatchQueue to DispatchQueue.main") {
+                let dispatchQueue = SimpleClient(timeOutAfter: 10.0).dispatchQueue as! DispatchQueue
+                expect(dispatchQueue).to(equal(DispatchQueue.main))
+            }
+        }
+
+        describe("request") {
+            it("calls dataTask on its urlSession passing the urlRequest as param") {
+                let session = URLSessionMock()
+                let client = SimpleClient(
+                    connectivityManager: ConnectivityMock(connected: true),
+                    logger: OSLogger(),
+                    urlSession: session,
+                    dispatchQueue: DispatchQueue.main
+                )
+                client.request(self.exampleRequest) { _, _ in }
+                expect(session.dataTaskCalledWith).to(equal(self.exampleRequest))
+            }
+
+            it("calls async on its dispatchQueue with the result of the dataTask") {
+                let queue = DispatchQueueMock()
+                let client = SimpleClient(
+                    connectivityManager: ConnectivityMock(connected: true),
+                    logger: OSLogger(),
+                    urlSession: URLSession.shared,
+                    dispatchQueue: queue
+                )
+                client.request(self.exampleRequest) { _, _ in }
+                expect(queue.asyncCalled).toEventually(beTrue())
+            }
+
+            describe("when the result data from the call is different than nil") {
+                it("calls the completionHandler with it") {
+                    var result: Data?
+                    let session = URLSessionMock(
+                        configuration: URLSessionConfiguration.default,
+                        data: "".data(using: .utf8),
+                        error: nil
+                    )
+                    let client = SimpleClient(
+                        connectivityManager: ConnectivityMock(connected: true),
+                        logger: OSLogger(),
+                        urlSession: session,
+                        dispatchQueue: DispatchQueueMock()
+                    )
+                    client.request(self.exampleRequest) { data, _ in result = data }
+                    expect(result).toEventuallyNot(beNil())
+                }
+            }
+
+            describe("when the result data from the call is nil") {
+                it("calls the completionHandler with the error") {
+                    var error: GDPRConsentViewControllerError?
+                    let session = URLSessionMock(
+                        configuration: URLSessionConfiguration.default,
+                        data: nil,
+                        error: GeneralRequestError(nil, nil, nil)
+                    )
+                    let client = SimpleClient(
+                        connectivityManager: ConnectivityMock(connected: true),
+                        logger: OSLogger(),
+                        urlSession: session,
+                        dispatchQueue: DispatchQueueMock()
+                    )
+                    client.request(self.exampleRequest) { _, e in error = e }
+                    expect(error).toEventuallyNot(beNil())
+                }
+            }
+        }
+
+        describe("when there's no internet connection") {
+            it("calls the completionHandler with an NoInternetConnection error") {
+                var error: GDPRConsentViewControllerError?
+                let client = SimpleClient(
+                    connectivityManager: ConnectivityMock(connected: false),
+                    logger: OSLogger(),
+                    urlSession: URLSession.shared,
+                    dispatchQueue: DispatchQueue.main
+                )
+                client.request(self.exampleRequest) { _, e in error = e! }
+                expect(error).toEventually(beAKindOf(NoInternetConnection.self))
+            }
+        }
+    }
+}
