@@ -11,8 +11,12 @@ public typealias VendorGrants = [String: VendorGrant]
 public typealias PurposeGrants = [String: Bool]
 
 @objcMembers public class VendorGrant: NSObject, Codable {
-    let vendorGrant: Bool
-    let purposeGrants: PurposeGrants
+    public let vendorGrant: Bool
+    public let purposeGrants: PurposeGrants
+
+    public override var description: String {
+        return "vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants)"
+    }
 }
 
 /**
