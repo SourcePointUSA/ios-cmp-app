@@ -112,3 +112,19 @@ import Foundation
     public var failureReason: String? { return "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first." }
     override public var description: String { return "\(failureReason!)\n" }
 }
+
+@objcMembers public class MessageTimeout: GDPRConsentViewControllerError {
+    let url: URL?
+    let timeout: TimeInterval?
+
+    init(url: URL?, timeout: TimeInterval?) {
+        self.url = url
+        self.timeout = timeout
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    public var failureReason: String? { return description }
+    override public var description: String { return "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
+}

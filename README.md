@@ -172,7 +172,11 @@ lazy var consentViewController: GDPRConsentViewController = { return GDPRConsent
 
 In this example a key/value pair "language":"fr" is passed to the sp scenario and can be useded, wiht the proper scenario setup, to show a french message instead of a english one.
 
+## Configuring the Message/Consents timeout
+Before calling `.loadMessage` or `.loadPrivacyManager`, set the `.messageTimeoutInSeconds` attribute to a time interval that makes most sense for your own application. By default, we set it to 30 seconds.
 
-### Rendering the message natively
+In case of a timeout error, the `onError` callback will be called and the consent flow will stop there.
+
+## Rendering the message natively
 
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.

@@ -7,90 +7,6 @@
 
 import Foundation
 
-typealias CompletionHandler = (Data?, GDPRConsentViewControllerError?) -> Void
-
-protocol HttpClient {
-    func get(url: URL?, completionHandler: @escaping CompletionHandler)
-    func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler)
-}
-
-class SimpleClient: HttpClient {
-    let connectivityManager: Connectivity
-    let logger: SPLogger
-    let printCalls: Bool = false
-
-    func logRequest(_ request: URLRequest) {
-        if printCalls {
-            if let method = request.httpMethod, let url = request.url {
-                logger.debug("\(method) \(url)")
-            }
-            if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
-                logger.debug("REQUEST: \(bodyString)")
-            }
-            logger.debug("\n")
-        }
-    }
-
-    func logResponse(_ request: URLRequest, response: Data) {
-        if printCalls {
-            if let method = request.httpMethod, let url = request.url {
-                logger.debug("\(method) \(url)")
-            }
-            if let responseString =  String(data: response, encoding: .utf8) {
-                logger.debug("RESPONSE: \(responseString)")
-            }
-            logger.debug("\n")
-        }
-    }
-
-    init(connectivityManager: Connectivity, logger: SPLogger) {
-        self.connectivityManager = connectivityManager
-        self.logger = logger
-    }
-
-    convenience init() {
-        self.init(connectivityManager: ConnectivityManager(), logger: OSLogger())
-    }
-
-    func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {
-        if connectivityManager.isConnectedToNetwork() {
-            logRequest(urlRequest)
-            URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                DispatchQueue.main.async { [weak self] in
-                    guard let data = data else {
-                        completionHandler(nil, GeneralRequestError(urlRequest.url, response, error))
-                        return
-                    }
-                    self?.logResponse(urlRequest, response: data)
-                    completionHandler(data, nil)
-                }
-            }.resume()
-        } else {
-            completionHandler(nil, NoInternetConnection())
-        }
-    }
-
-    func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler) {
-        guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
-            return
-        }
-        var urlRequest = URLRequest(url: _url)
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpMethod = "POST"
-        urlRequest.httpBody = body
-        request(urlRequest, completionHandler)
-    }
-
-    func get(url: URL?, completionHandler: @escaping CompletionHandler) {
-        guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
-            return
-        }
-        request(URLRequest(url: _url), completionHandler)
-    }
-}
-
 struct JSON {
     private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
     private lazy var jsonEncoder: JSONEncoder = { return JSONEncoder() }()
@@ -145,29 +61,14 @@ class SourcePointClient {
         self.client = client
     }
 
-    convenience init(accountId: Int,
-                     propertyId: Int,
-                     propertyName: GDPRPropertyName,
-                     pmId: String,
-                     campaignEnv: GDPRCampaignEnv
-    ) {
-        self.init(accountId: accountId,
-                  propertyId: propertyId,
-                  propertyName: propertyName,
-                  pmId: pmId,
-                  campaignEnv: campaignEnv,
-                  targetingParams: nil,
-                  client: SimpleClient()
-        )
-    }
-
     convenience init(
         accountId: Int,
         propertyId: Int,
         propertyName: GDPRPropertyName,
         pmId: String,
         campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams
+        targetingParams: TargetingParams,
+        timeout: TimeInterval
     ) {
         self.init(
             accountId: accountId,
@@ -176,8 +77,12 @@ class SourcePointClient {
             pmId: pmId,
             campaignEnv: campaignEnv,
             targetingParams: targetingParams,
-            client: SimpleClient()
+            client: SimpleClient(timeoutAfter: timeout)
         )
+    }
+
+    func setRequestTimeout(_ timeout: TimeInterval) {
+        client = SimpleClient(timeoutAfter: timeout)
     }
 
     func targetingParamsToString(_ params: TargetingParams?) -> String {
