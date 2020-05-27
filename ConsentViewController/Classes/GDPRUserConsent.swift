@@ -7,12 +7,18 @@
 
 import Foundation
 
-public typealias VendorGrants = [String: VendorGrant]
-public typealias PurposeGrants = [String: Bool]
+/// A dictionary in which the keys represent the Vendor Id
+public typealias GDPRVendorGrants = [GDPRVendorId: GDPRVendorGrant]
+public typealias GDPRVendorId = String
 
-@objcMembers public class VendorGrant: NSObject, Codable {
+/// A dictionary in which the keys represent the Purpose Id and the values indicate if that purpose is granted (`true`) or not (`false`)
+public typealias GDPRPurposeGrants = [GDPRPurposeId: Bool]
+public typealias GDPRPurposeId = String
+
+@objcMembers public class GDPRVendorGrant: NSObject, Codable {
+    /// if all purposes are granted, the vendorGrant will be set to `true`
     public let vendorGrant: Bool
-    public let purposeGrants: PurposeGrants
+    public let purposeGrants: GDPRPurposeGrants
 
     public override var description: String {
         return "vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants)"
@@ -29,7 +35,7 @@ public typealias PurposeGrants = [String: Bool]
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
-            vendorGrants: VendorGrants(),
+            vendorGrants: GDPRVendorGrants(),
             euconsent: "",
             tcfData: SPGDPRArbitraryJson())
     }
@@ -42,7 +48,7 @@ public typealias PurposeGrants = [String: Bool]
         legitimateInterestCategories,
         specialFeatures: [String]
 
-    public let vendorGrants: VendorGrants
+    public let vendorGrants: GDPRVendorGrants
 
     /// The iAB consent string.
     public let euconsent: String
@@ -55,7 +61,7 @@ public typealias PurposeGrants = [String: Bool]
         acceptedCategories: [String],
         legitimateInterestCategories: [String],
         specialFeatures: [String],
-        vendorGrants: VendorGrants,
+        vendorGrants: GDPRVendorGrants,
         euconsent: String,
         tcfData: SPGDPRArbitraryJson) {
         self.acceptedVendors = acceptedVendors

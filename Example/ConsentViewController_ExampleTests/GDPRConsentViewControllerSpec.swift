@@ -88,7 +88,7 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
-            vendorGrants: VendorGrants(),
+            vendorGrants: GDPRVendorGrants(),
             euconsent: "",
             tcfData: SPGDPRArbitraryJson()
         )
@@ -105,7 +105,7 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                 acceptedCategories: [],
                 legitimateInterestCategories: [],
                 specialFeatures: [],
-                vendorGrants: VendorGrants(),
+                vendorGrants: GDPRVendorGrants(),
                 euconsent: "",
                 tcfData: SPGDPRArbitraryJson()
             )
@@ -239,7 +239,7 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                         acceptedCategories: [],
                         legitimateInterestCategories: [],
                         specialFeatures: [],
-                        vendorGrants: VendorGrants(),
+                        vendorGrants: GDPRVendorGrants(),
                         euconsent: "my_consent_string",
                         tcfData: try! SPGDPRArbitraryJson(["IABTCF_bar": "bar"])
                     )

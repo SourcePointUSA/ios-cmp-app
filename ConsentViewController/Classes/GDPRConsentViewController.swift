@@ -117,7 +117,7 @@ public typealias TargetingParams = [String: String]
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
-            vendorGrants: VendorGrants(),
+            vendorGrants: GDPRVendorGrants(),
             euconsent: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "",
             tcfData: tcfData ?? SPGDPRArbitraryJson()
         )
@@ -303,7 +303,7 @@ public typealias TargetingParams = [String: String]
                 acceptedCategories: response.categories,
                 legitimateInterestCategories: response.legIntCategories,
                 specialFeatures: response.specialFeatures,
-                vendorGrants: VendorGrants(),
+                vendorGrants: GDPRVendorGrants(),
                 euconsent: euconsent,
                 tcfData: tcfData)
             )
