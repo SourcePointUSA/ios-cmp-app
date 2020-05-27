@@ -81,6 +81,7 @@ extension ViewController: GDPRConsentDelegate {
         vendorXAccepted = userConsent.acceptedVendors.contains(ViewController.vendorXId)
         userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
+        print(userConsent.vendorGrants)
 
         print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.dictionaryValue?.keys.sorted() ?? []))
         
