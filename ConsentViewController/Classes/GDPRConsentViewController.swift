@@ -117,6 +117,7 @@ public typealias TargetingParams = [String: String]
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
+            vendorGrants: VendorGrants(),
             euconsent: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "",
             tcfData: tcfData ?? SPGDPRArbitraryJson()
         )
@@ -230,7 +231,6 @@ public typealias TargetingParams = [String: String]
     /// Will first check if there's a message to show according to the scenario, for the `authId` provided.
     /// If there is, we'll load the message in a WebView and call `ConsentDelegate.onConsentUIWillShow`
     /// Otherwise, we short circuit to `ConsentDelegate.onConsentReady`
-    ///
     /// - Parameter authId: any arbitrary token that uniquely identifies an user in your system.
     public func loadMessage(forAuthId authId: String?) {
         loadGDPRMessage(native: false, authId: authId)
@@ -303,6 +303,7 @@ public typealias TargetingParams = [String: String]
                 acceptedCategories: response.categories,
                 legitimateInterestCategories: response.legIntCategories,
                 specialFeatures: response.specialFeatures,
+                vendorGrants: VendorGrants(),
                 euconsent: euconsent,
                 tcfData: tcfData)
             )

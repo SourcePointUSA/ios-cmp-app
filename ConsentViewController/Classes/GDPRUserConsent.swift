@@ -7,6 +7,14 @@
 
 import Foundation
 
+public typealias VendorGrants = [String: VendorGrant]
+public typealias PurposeGrants = [String: Bool]
+
+@objcMembers public class VendorGrant: NSObject, Codable {
+    let vendorGrant: Bool
+    let purposeGrants: PurposeGrants
+}
+
 /**
     GDPRUserConsent encapsulates all consent data from a user.
  */
@@ -17,6 +25,7 @@ import Foundation
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
+            vendorGrants: VendorGrants(),
             euconsent: "",
             tcfData: SPGDPRArbitraryJson())
     }
@@ -29,6 +38,8 @@ import Foundation
         legitimateInterestCategories,
         specialFeatures: [String]
 
+    public let vendorGrants: VendorGrants
+
     /// The iAB consent string.
     public let euconsent: String
 
@@ -40,12 +51,14 @@ import Foundation
         acceptedCategories: [String],
         legitimateInterestCategories: [String],
         specialFeatures: [String],
+        vendorGrants: VendorGrants,
         euconsent: String,
         tcfData: SPGDPRArbitraryJson) {
         self.acceptedVendors = acceptedVendors
         self.acceptedCategories = acceptedCategories
         self.legitimateInterestCategories = legitimateInterestCategories
         self.specialFeatures = specialFeatures
+        self.vendorGrants = vendorGrants
         self.euconsent = euconsent
         self.tcfData = tcfData
     }
@@ -75,7 +88,7 @@ import Foundation
     }
 
     enum CodingKeys: String, CodingKey {
-        case acceptedVendors, acceptedCategories, euconsent, specialFeatures
+        case acceptedVendors, acceptedCategories, euconsent, specialFeatures, vendorGrants
         case legitimateInterestCategories = "legIntCategories"
         case tcfData = "TCData"
     }
