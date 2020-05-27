@@ -1,3 +1,7 @@
+## 5.2.1 (May, 27, 2020)
+* Introduce the configurable timeout. You now can configure a timeout in which either the consent message must be shown or the consent data should be returned to the app (`onConsentReady`) by setting the attribute `.messageTimeoutInSeconds: TimeInterval`. Just make sure to set it _before_ calling `loadMessage` or `loadPrivacyManager`. #145
+* Fixed an issue that would in some cases show the consent message for logged in users. #144
+
 ## 5.2.0 (May, 15, 2020)
 * Added the method `customConsentTo` to `GDPRConsentViewController`. It's now possible to programatically consent the current user to a list of vendors, categories and legitimate interest caregories. The ids passed will be appended to the list of already accepted vendors, categories and leg. int. categories. The method is asynchronous so you must pass a completion handler that will receive back an instance of `GDPRUserConsent` in case of success or it'll call the delegate method `onError` in case of failure. It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes it's still required to get consent via the consent message or privacy manager. #139
 * Fix an issue preventing consent data from being completely removed when calling `clearAllData` #141
