@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Jira Issue
     steps:
-      - uses: actions/checkout@v2
       - name: Login
         uses: atlassian/gajira-login@master
         env:
@@ -16,7 +15,7 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
       - name: Create Issue
         id: create
-        uses: ./atlassian/gajira-create@master
+        uses: atlassian/gajira-create@master
         with:
           project: SP
           issuetype: Bug
