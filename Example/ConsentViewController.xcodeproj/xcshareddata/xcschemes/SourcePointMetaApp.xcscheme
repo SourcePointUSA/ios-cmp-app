@@ -39,6 +39,16 @@
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1997B64E238FDCF30079AF34"
+               BuildableName = "SourcePointMetaAppTests.xctest"
+               BlueprintName = "SourcePointMetaAppTests"
+               ReferencedContainer = "container:ConsentViewController.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

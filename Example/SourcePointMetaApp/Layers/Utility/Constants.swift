@@ -67,5 +67,4 @@ struct Alert {
 }
 
 // Will use this constant to differentiate MetaApp tcfv1 and tcfv2 versions to run the Jenkins specific automation job.
-//Test_PR
 let TCFv1_GDPRMetaApp = "TCFv1_GDPRMetaApp"
