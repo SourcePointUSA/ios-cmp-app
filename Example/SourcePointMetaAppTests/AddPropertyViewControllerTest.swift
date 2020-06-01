@@ -9,7 +9,7 @@
 import XCTest
 import CoreData
 import ConsentViewController
-@testable import SourcePointMetaApp
+@testable import GDPR_MetaApp
 
 class AddPropertyViewControllerTest: XCTestCase {
 
