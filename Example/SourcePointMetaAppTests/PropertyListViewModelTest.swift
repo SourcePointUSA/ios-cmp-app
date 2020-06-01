@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SourcePointMetaApp
+@testable import GDPR_MetaApp
 
 class PropertyListViewModelTest: XCTestCase {
     
@@ -40,7 +40,7 @@ class PropertyListViewModelTest: XCTestCase {
     func testPropertyName() {
         propertyListViewModel?.importAllproperties(executionCompletionHandler: { (properties) in
             if let _properties = properties, _properties.count > 0 {
-                XCTAssertNotNil(_properties[0].property, "Error property name is not available")
+                XCTAssertNotNil(_properties[0].propertyName, "Error property name is not available")
             }
         })
     }
@@ -54,26 +54,6 @@ class PropertyListViewModelTest: XCTestCase {
         })
     }
     
-    // This test method checks whether the property will be deleted or not.
-    func testDeleteProperty() {
-        let propertyDeletionExpectation = expectation(description: "successfully deleted property data from database")
-        propertyListViewModel?.importAllproperties(executionCompletionHandler: { (properties) in
-            if properties?.count ?? 0 > 0 {
-                self.propertyListViewModel?.delete(atIndex: 0, completionHandler: { (deleteStatus, error) in
-                    if error != nil {
-                        XCTAssert(false, "failed to delete property data from database")
-                    } else {
-                        XCTAssert(true, "successfully deleted property data from database")
-                    }
-                })
-            }else{
-                XCTAssert(false, "failed to delete property data from database")
-                propertyDeletionExpectation.fulfill()
-            }
-        })
-        waitForExpectations(timeout: 1, handler: nil)
-    }
-    
     func testClearUserDefaultsData() {
         propertyListViewModel?.clearUserDefaultsData()
         let consentUUID = UserDefaults.standard.string(forKey: "consentUUID")
@@ -83,23 +63,5 @@ class PropertyListViewModelTest: XCTestCase {
         } else {
             XCTAssert(false, "UserDefaultData is not cleared successfully")
         }
-    }
-    
-    func testPropertyDetails() {
-        let propertyDetailsExpectation = expectation(description: "property details are present")
-        propertyListViewModel?.importAllproperties(executionCompletionHandler: { (properties) in
-            if properties?.count ?? 0 > 0 {
-            let propertyDetails = self.propertyListViewModel?.propertyDetails(atIndex: 0)
-            if ((propertyDetails?.0?.accountId) != nil) {
-                XCTAssert(true, "property details are present")
-            }else {
-                 XCTAssert(false, "property details are not present")
-            }
-            }else {
-                XCTAssert(false, "property details are not present")
-                propertyDetailsExpectation.fulfill()
-            }
-        })
-        waitForExpectations(timeout: 1, handler: nil)
     }
 }

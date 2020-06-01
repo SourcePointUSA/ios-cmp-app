@@ -8,7 +8,7 @@
 
 import XCTest
 import WebKit
-@testable import SourcePointMetaApp
+@testable import GDPR_MetaApp
 
 class PropertyListViewControllerTest: XCTestCase {
     
@@ -93,18 +93,6 @@ class PropertyListViewControllerTest: XCTestCase {
             let cell = propertyListViewController?.tableView(propertyTableView, cellForRowAt: indexPath as IndexPath) as! PropertyCell
             
             XCTAssertEqual(cell.propertyLabel.text, "Cybage.sp-demo.com")
-        }
-    }
-    
-    func testTrailingSwipeActionsConfiguration() {
-        let indexPath = NSIndexPath(row: 0, section: 0)
-        if let propertyTableView = propertyListViewController?.propertyTableView {
-            let configuration = propertyListViewController?.tableView(propertyTableView, trailingSwipeActionsConfigurationForRowAt: indexPath as IndexPath)
-            if configuration?.actions.count ?? 0 > 0 {
-                XCTAssert(true, "TrailingSwipeActionsConfiguration is implemented")
-            } else {
-                XCTAssert(false, "TrailingSwipeActionsConfiguration is not implemented")
-            }
         }
     }
     

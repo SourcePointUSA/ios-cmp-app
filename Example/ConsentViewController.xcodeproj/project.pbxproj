@@ -9,15 +9,9 @@
 /* Begin PBXBuildFile section */
 		1997B669238FDE7C0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65C238FDE7B0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift */; };
 		1997B66A238FDE7C0079AF34 /* PropertyListViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65D238FDE7B0079AF34 /* PropertyListViewControllerTest.swift */; };
-		1997B66B238FDE7C0079AF34 /* AddPropertyViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65E238FDE7C0079AF34 /* AddPropertyViewModelTest.swift */; };
 		1997B66C238FDE7C0079AF34 /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B65F238FDE7C0079AF34 /* XCUIElement+Extensions.swift */; };
-		1997B66D238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B661238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift */; };
-		1997B66E238FDE7C0079AF34 /* ConsentViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B662238FDE7C0079AF34 /* ConsentViewControllerTest.swift */; };
-		1997B66F238FDE7C0079AF34 /* SourcePointClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B663238FDE7C0079AF34 /* SourcePointClientTest.swift */; };
-		1997B670238FDE7C0079AF34 /* ConsentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B664238FDE7C0079AF34 /* ConsentTest.swift */; };
 		1997B671238FDE7C0079AF34 /* TestData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1997B665238FDE7C0079AF34 /* TestData.plist */; };
 		1997B672238FDE7C0079AF34 /* PropertyListViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B666238FDE7C0079AF34 /* PropertyListViewModelTest.swift */; };
-		1997B673238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B667238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift */; };
 		1997B674238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B668238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift */; };
 		1997B6C6238FDEA10079AF34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1997B675238FDEA00079AF34 /* Assets.xcassets */; };
 		1997B6C7238FDEA10079AF34 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B678238FDEA10079AF34 /* DBManager.swift */; };
@@ -111,15 +105,9 @@
 		1997B655238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1997B65C238FDE7B0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyDetailsStorageCoordinatorTest.swift; sourceTree = "<group>"; };
 		1997B65D238FDE7B0079AF34 /* PropertyListViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewControllerTest.swift; sourceTree = "<group>"; };
-		1997B65E238FDE7C0079AF34 /* AddPropertyViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewModelTest.swift; sourceTree = "<group>"; };
 		1997B65F238FDE7C0079AF34 /* XCUIElement+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Extensions.swift"; sourceTree = "<group>"; };
-		1997B661238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerErrorTest.swift; sourceTree = "<group>"; };
-		1997B662238FDE7C0079AF34 /* ConsentViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewControllerTest.swift; sourceTree = "<group>"; };
-		1997B663238FDE7C0079AF34 /* SourcePointClientTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointClientTest.swift; sourceTree = "<group>"; };
-		1997B664238FDE7C0079AF34 /* ConsentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentTest.swift; sourceTree = "<group>"; };
 		1997B665238FDE7C0079AF34 /* TestData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestData.plist; sourceTree = "<group>"; };
 		1997B666238FDE7C0079AF34 /* PropertyListViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListViewModelTest.swift; sourceTree = "<group>"; };
-		1997B667238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentViewDetailsViewControllerTest.swift; sourceTree = "<group>"; };
 		1997B668238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPropertyViewControllerTest.swift; sourceTree = "<group>"; };
 		1997B675238FDEA00079AF34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1997B678238FDEA10079AF34 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
@@ -286,9 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				1997B668238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift */,
-				1997B65E238FDE7C0079AF34 /* AddPropertyViewModelTest.swift */,
 				1997B660238FDE7C0079AF34 /* ConsentViewControllerTests */,
-				1997B667238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift */,
 				1997B65C238FDE7B0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift */,
 				1997B65D238FDE7B0079AF34 /* PropertyListViewControllerTest.swift */,
 				1997B666238FDE7C0079AF34 /* PropertyListViewModelTest.swift */,
@@ -301,10 +287,6 @@
 		1997B660238FDE7C0079AF34 /* ConsentViewControllerTests */ = {
 			isa = PBXGroup;
 			children = (
-				1997B661238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift */,
-				1997B662238FDE7C0079AF34 /* ConsentViewControllerTest.swift */,
-				1997B663238FDE7C0079AF34 /* SourcePointClientTest.swift */,
-				1997B664238FDE7C0079AF34 /* ConsentTest.swift */,
 				1997B665238FDE7C0079AF34 /* TestData.plist */,
 			);
 			path = ConsentViewControllerTests;
@@ -1309,17 +1291,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1997B66B238FDE7C0079AF34 /* AddPropertyViewModelTest.swift in Sources */,
 				1997B672238FDE7C0079AF34 /* PropertyListViewModelTest.swift in Sources */,
 				1997B66C238FDE7C0079AF34 /* XCUIElement+Extensions.swift in Sources */,
-				1997B66F238FDE7C0079AF34 /* SourcePointClientTest.swift in Sources */,
 				1997B669238FDE7C0079AF34 /* PropertyDetailsStorageCoordinatorTest.swift in Sources */,
-				1997B66E238FDE7C0079AF34 /* ConsentViewControllerTest.swift in Sources */,
 				1997B66A238FDE7C0079AF34 /* PropertyListViewControllerTest.swift in Sources */,
-				1997B673238FDE7C0079AF34 /* ConsentViewDetailsViewControllerTest.swift in Sources */,
-				1997B670238FDE7C0079AF34 /* ConsentTest.swift in Sources */,
 				1997B674238FDE7C0079AF34 /* AddPropertyViewControllerTest.swift in Sources */,
-				1997B66D238FDE7C0079AF34 /* ConsentViewControllerErrorTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1526,7 +1502,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SourcePointMetaApp.app/SourcePointMetaApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GDPR-MetaApp.app/GDPR-MetaApp";
 			};
 			name = Debug;
 		};
@@ -1553,7 +1529,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SourcePointMetaApp.app/SourcePointMetaApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GDPR-MetaApp.app/GDPR-MetaApp";
 			};
 			name = Release;
 		};
