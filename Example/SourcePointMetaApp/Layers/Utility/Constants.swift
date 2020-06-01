@@ -42,8 +42,7 @@ struct SPLiteral {
 
 
 //// MARK: -  Alert Constants
-struct Alert
-{
+struct Alert {
     
     static let messageForPropertyUnavailability = NSLocalizedString("Please enter property details", comment: "")
     static let messageForUnknownError = NSLocalizedString("Something went wrong, please try again", comment: "")
@@ -65,6 +64,7 @@ struct Alert
     static let message = NSLocalizedString("Message".uppercased(), comment: "")
     static let showPropertyInfo = NSLocalizedString("Show Property Info".uppercased(), comment: "")
     static let clearCookies = NSLocalizedString("Clear Cookies".uppercased(), comment: "")
-    
 }
 
+// Will use this constant to differentiate MetaApp tcfv1 and tcfv2 versions to run the Jenkins specific automation job.
+let TCFv1_GDPRMetaApp = "TCFv1_GDPRMetaApp"
