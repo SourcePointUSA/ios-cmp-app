@@ -53,7 +53,7 @@ struct Alert {
     static let messageAlreadyShown  = NSLocalizedString("There is no message matching the scenario based on the property info and device local data. \nConsider reviewing the property info or clearing the cookies. \nIf that was intended, just ignore this message.", comment: "")
     static let messageAlreadyShownOrIncorrectCampaign  = NSLocalizedString("Message will not be shown.\nEither the scenario decided that no message should be displayed or \n the property you're creating has a public|staging campaign and you set it as staging|public", comment: "")
     static let messageForEmptyTargetingParamError = NSLocalizedString("Please enter targeting parameter key and value", comment: "")
-    static let messageForDeletingPropertyData = NSLocalizedString("Do you want to delete this property?", comment: "")
+    static let messageForDeletingPropertyData = NSLocalizedString("Are you sure you want to delete this property?", comment: "")
     
     // Alert actions
     static let alert = NSLocalizedString("Alert", comment: "")
