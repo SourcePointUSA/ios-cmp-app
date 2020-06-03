@@ -23,8 +23,17 @@ class ConnectivityMock: Connectivity {
     }
 }
 
+class URLSessionDataTaskMock: SPURLSessionDataTask {
+    var resumeWasCalled = false
+
+    func resume() {
+        resumeWasCalled = true
+    }
+}
+
 class URLSessionMock: SPURLSession {
     let configuration: URLSessionConfiguration
+    let dataTaskResult: SPURLSessionDataTask
     let result: Data?
     let error: Error?
     var dataTaskCalledWith: URLRequest?
@@ -32,17 +41,19 @@ class URLSessionMock: SPURLSession {
     func dataTask(_ request: URLRequest, completionHandler: @escaping DataTaskResult) -> SPURLSessionDataTask {
         dataTaskCalledWith = request
         completionHandler(result, URLResponse(), error)
-        return URLSessionDataTask()
+        return dataTaskResult
     }
 
     init(
         configuration: URLSessionConfiguration = URLSessionConfiguration.default,
+        dataTaskResult: SPURLSessionDataTask = URLSessionDataTaskMock(),
         data: Data? = nil,
         error: Error? =  nil
     ) {
         self.configuration = configuration
-        result = data
         self.error = error
+        self.dataTaskResult = dataTaskResult
+        result = data
     }
 }
 
@@ -94,6 +105,22 @@ class SimpleClientSpec: QuickSpec {
                 )
                 client.request(self.exampleRequest) { _, _ in }
                 expect(queue.asyncCalled).toEventually(beTrue())
+            }
+
+            it("calls resume on the result of the dataTask") {
+                let dataTaskResult = URLSessionDataTaskMock()
+                let session = URLSessionMock(
+                    configuration: URLSessionConfiguration.default,
+                    dataTaskResult: dataTaskResult
+                )
+                let client = SimpleClient(
+                    connectivityManager: ConnectivityMock(connected: true),
+                    logger: OSLogger(),
+                    urlSession: session,
+                    dispatchQueue: DispatchQueue.main
+                )
+                client.request(self.exampleRequest) { _, _ in }
+                expect(dataTaskResult.resumeWasCalled).to(beTrue())
             }
 
             describe("when the result data from the call is different than nil") {
