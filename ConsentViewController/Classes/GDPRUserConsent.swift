@@ -98,8 +98,9 @@ public typealias GDPRPurposeId = String
     }
 
     enum CodingKeys: String, CodingKey {
-        case acceptedVendors, acceptedCategories, euconsent, specialFeatures, vendorGrants
+        case acceptedVendors, acceptedCategories, euconsent, specialFeatures
         case legitimateInterestCategories = "legIntCategories"
         case tcfData = "TCData"
+        case vendorGrants = "grants"
     }
 }
