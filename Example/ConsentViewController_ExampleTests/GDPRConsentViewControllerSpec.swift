@@ -244,6 +244,7 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                         tcfData: try! SPGDPRArbitraryJson(["IABTCF_bar": "bar"])
                     )
                 }
+
                 it("calls onConsentReady delegate method") {
                     consentViewController.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
                     expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(true), description: "onConsentReady delegate method calls successfully")
