@@ -11,17 +11,18 @@ import Foundation
 public typealias GDPRVendorGrants = [GDPRVendorId: GDPRVendorGrant]
 public typealias GDPRVendorId = String
 
-/// A dictionary in which the keys represent the Purpose Id and the values indicate if that purpose is granted (`true`) or not (`false`)
+/// A dictionary in which the keys represent the Purpose Id and the values indicate if that purpose is granted (`true`) or not (`false`) on a legal basis.
 public typealias GDPRPurposeGrants = [GDPRPurposeId: Bool]
 public typealias GDPRPurposeId = String
 
+/// Encapuslates data about a particular vendor being "granted" based on its purposes
 @objcMembers public class GDPRVendorGrant: NSObject, Codable {
     /// if all purposes are granted, the vendorGrant will be set to `true`
     public let vendorGrant: Bool
     public let purposeGrants: GDPRPurposeGrants
 
     public override var description: String {
-        return "vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants)"
+        return "VendorGrant(vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants))"
     }
 }
 
