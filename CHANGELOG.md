@@ -1,3 +1,21 @@
+## 5.2.2 (Jun, 04, 2020)
+* Add `vendorGrants` attribute to `GDPRUserConsent` class. The `vendorGrants` attribute, simply put, is an dictionary reprensenting the consent state (on a legal basis) of all vendors and its purposes for the current user. For example:
+```swift
+[
+  "vendorId1": VendorGrant(
+    vendorGrant: Bool,
+    purposeGrants: [
+      "purposeId1": Bool,
+      "purposeId2": Bool,
+      // more purposes here
+    ]
+  )
+  // more vendors here
+]
+```
+The `vendorGrant` attribute is derived from `purposeGrants` and will be `true` if all purposes are also `true`.
+* Removed the _bounce effect_ from the `MessageWebView` to improve on the UX while interacting with the consent message or the Privacy Manager.
+
 ## 5.2.1 (May, 27, 2020)
 * Introduce the configurable timeout. You now can configure a timeout in which either the consent message must be shown or the consent data should be returned to the app (`onConsentReady`) by setting the attribute `.messageTimeoutInSeconds: TimeInterval`. Just make sure to set it _before_ calling `loadMessage` or `loadPrivacyManager`. #145
 * Fixed an issue that would in some cases show the consent message for logged in users. #144
