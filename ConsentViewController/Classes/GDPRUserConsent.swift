@@ -7,6 +7,25 @@
 
 import Foundation
 
+/// A dictionary in which the keys represent the Vendor Id
+public typealias GDPRVendorGrants = [GDPRVendorId: GDPRVendorGrant]
+public typealias GDPRVendorId = String
+
+/// A dictionary in which the keys represent the Purpose Id and the values indicate if that purpose is granted (`true`) or not (`false`) on a legal basis.
+public typealias GDPRPurposeGrants = [GDPRPurposeId: Bool]
+public typealias GDPRPurposeId = String
+
+/// Encapuslates data about a particular vendor being "granted" based on its purposes
+@objcMembers public class GDPRVendorGrant: NSObject, Codable {
+    /// if all purposes are granted, the vendorGrant will be set to `true`
+    public let vendorGrant: Bool
+    public let purposeGrants: GDPRPurposeGrants
+
+    public override var description: String {
+        return "VendorGrant(vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants))"
+    }
+}
+
 /**
     GDPRUserConsent encapsulates all consent data from a user.
  */
@@ -17,6 +36,7 @@ import Foundation
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
+            vendorGrants: GDPRVendorGrants(),
             euconsent: "",
             tcfData: SPGDPRArbitraryJson())
     }
@@ -29,6 +49,8 @@ import Foundation
         legitimateInterestCategories,
         specialFeatures: [String]
 
+    public let vendorGrants: GDPRVendorGrants
+
     /// The iAB consent string.
     public let euconsent: String
 
@@ -40,12 +62,14 @@ import Foundation
         acceptedCategories: [String],
         legitimateInterestCategories: [String],
         specialFeatures: [String],
+        vendorGrants: GDPRVendorGrants,
         euconsent: String,
         tcfData: SPGDPRArbitraryJson) {
         self.acceptedVendors = acceptedVendors
         self.acceptedCategories = acceptedCategories
         self.legitimateInterestCategories = legitimateInterestCategories
         self.specialFeatures = specialFeatures
+        self.vendorGrants = vendorGrants
         self.euconsent = euconsent
         self.tcfData = tcfData
     }
@@ -78,5 +102,6 @@ import Foundation
         case acceptedVendors, acceptedCategories, euconsent, specialFeatures
         case legitimateInterestCategories = "legIntCategories"
         case tcfData = "TCData"
+        case vendorGrants = "grants"
     }
 }
