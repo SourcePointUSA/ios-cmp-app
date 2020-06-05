@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible {
+public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
     public var description: String {
         switch self {
         case .string(let string): return "\"\(string)\""
