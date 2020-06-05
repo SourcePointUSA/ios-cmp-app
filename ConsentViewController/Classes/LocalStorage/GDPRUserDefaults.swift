@@ -41,9 +41,13 @@ class GDPRUserDefaults: GDPRLocalStorage {
     }
 
     var tcfData: [String: Any] {
-        get { storage.dictionaryRepresentation().filter { $0.key.starts(with: GDPRUserDefaults.IAB_KEY_PREFIX) } }
+        get {
+            storage.dictionaryRepresentation().filter {
+                $0.key.starts(with: GDPRUserDefaults.IAB_KEY_PREFIX)
+            }
+        }
         set {
-            storage.removeObjects(forKeys: Array(self.tcfData.keys))
+            storage.removeObjects(forKeys: Array(tcfData.keys))
             storage.setValuesForKeys(newValue)
         }
     }
@@ -53,6 +57,7 @@ class GDPRUserDefaults: GDPRLocalStorage {
             storage.object(ofType: GDPRUserConsent.self, forKey: GDPRUserDefaults.GDPR_USER_CONSENTS_KEY) ?? GDPRUserConsent.empty()
         }
         set {
+            tcfData = newValue.tcfData.dictionaryValue ?? [:]
             storage.setObject(newValue, forKey: GDPRUserDefaults.GDPR_USER_CONSENTS_KEY)
         }
     }
