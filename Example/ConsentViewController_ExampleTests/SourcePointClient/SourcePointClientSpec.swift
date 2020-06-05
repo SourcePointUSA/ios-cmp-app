@@ -34,10 +34,6 @@ public class MockHttp: HttpClient {
     public func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler) {
         postWasCalledWithUrl = url?.absoluteURL
         postWasCalledWithBody = body
-        var urlRequest = URLRequest(url: postWasCalledWithUrl!)
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpMethod = "POST"
-        urlRequest.httpBody = body
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
             self.success != nil ?
                 completionHandler(self.success!, nil) :
@@ -56,7 +52,7 @@ class SourcePointClientSpec: QuickSpec {
             propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
             pmId: "123",
             campaignEnv: .Public,
-            targetingParams: ["native": "false"],
+            targetingParams: [:],
             client: client)
     }
 
@@ -83,32 +79,71 @@ class SourcePointClientSpec: QuickSpec {
             }
 
             context("Test getMessage") {
-                it("calls get on the http client with the right url") {
+                it("calls POST on the http client with the right url") {
                     client.getMessage(
                         native: false,
-                        consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
-                        euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
-                        authId: "test",
+                        consentUUID: "uuid",
+                        euconsent: "consent string",
+                        authId: "auth id",
+                        meta: "meta",
                         completionHandler: { _, _  in})
                     expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
                 }
 
-                it("calls get on the http client with the right url") {
+                it("calls POST on the http client with the right body") {
+                    let messageRequest = MessageRequest(
+                        uuid: "uuid",
+                        euconsent: "consent string",
+                        authId: "auth id",
+                        accountId: client.accountId,
+                        propertyId: client.propertyId,
+                        propertyHref: client.propertyName,
+                        campaignEnv: client.campaignEnv,
+                        targetingParams: "{}",
+                        requestUUID: client.requestUUID,
+                        meta: "meta"
+                    )
                     client.getMessage(
-                        url: SourcePointClient.GET_MESSAGE_URL_URL,
-                        consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF",
-                        euconsent: "COwkbAyOwkbAyAGABBENAeCAAAAAAAAAAAAAAAAAAAAA",
-                        authId: nil,
-                        completionHandler: { _, _  in })
-                    expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
+                        native: false,
+                        consentUUID: "uuid",
+                        euconsent: "consent string",
+                        authId: "auth id",
+                        meta: "meta",
+                        completionHandler: { _, _  in})
+                    let parsed = try! JSONDecoder().decode(MessageRequest.self, from: httpClient!.postWasCalledWithBody!)
+                    expect(parsed).to(equal(messageRequest))
                 }
             }
 
             context("Test postAction") {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
-                    client.postAction(action: acceptAllAction, consentUUID: "744BC49E-7327-4255-9794-FB07AA43E1DF", completionHandler: { _, _  in})
+                    client.postAction(action: acceptAllAction, consentUUID: "consent uuid", meta: "meta", completionHandler: { _, _  in})
                     expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/consent?inApp=true")))
+                }
+
+                it("calls POST on the http client with the right body") {
+                    let action = GDPRAction(type: .AcceptAll, id: "1234")
+                    let actionRequest = ActionRequest(
+                        propertyId: client.propertyId,
+                        propertyHref: client.propertyName,
+                        accountId: client.accountId,
+                        actionType: action.type.rawValue,
+                        choiceId: action.id,
+                        privacyManagerId: client.pmId,
+                        requestFromPM: false,
+                        uuid: "uuid",
+                        requestUUID: client.requestUUID,
+                        pmSaveAndExitVariables: SPGDPRArbitraryJson(),
+                        meta: "meta")
+                    client.postAction(
+                        action: action,
+                        consentUUID: "uuid",
+                        meta: "meta",
+                        completionHandler: { _, _  in}
+                    )
+                    let parsed = try! JSONDecoder().decode(ActionRequest.self, from: httpClient!.postWasCalledWithBody!)
+                    expect(parsed).to(equal(actionRequest))
                 }
             }
 
