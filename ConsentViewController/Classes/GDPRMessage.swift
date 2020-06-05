@@ -61,7 +61,7 @@ public typealias CustomFields = [String: String]
     }
 }
 
-@objc public class GDPRMessage: NSObject, Decodable {
+@objc public class GDPRMessage: NSObject, Codable {
     public let title: MessageAttribute
     public let body: MessageAttribute
     public let actions: [MessageAction]
