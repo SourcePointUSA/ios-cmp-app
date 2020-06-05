@@ -31,7 +31,7 @@ class GDPRUserDefaults: GDPRLocalStorage {
     }
 
     var meta: String {
-        get { storage.string(forKey: GDPRUserDefaults.META_KEY) ?? String() }
+        get { storage.string(forKey: GDPRUserDefaults.META_KEY) ?? "{}" }
         set { storage.set(newValue, forKey: GDPRUserDefaults.META_KEY) }
     }
 
@@ -77,6 +77,6 @@ class GDPRUserDefaults: GDPRLocalStorage {
         consentString = ""
         consentUUID = ""
         authId = ""
-        meta = ""
+        meta = "{}"
     }
 }

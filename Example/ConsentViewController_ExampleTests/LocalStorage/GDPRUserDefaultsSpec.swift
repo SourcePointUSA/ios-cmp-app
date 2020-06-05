@@ -107,9 +107,9 @@ class GDPRUserDefaultsSpec: QuickSpec {
             }
 
             describe("meta") {
-                it("is empty string by default") {
+                it("is \"{}\" string by default") {
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
-                    expect(userDefaults.meta).to(equal(""))
+                    expect(userDefaults.meta).to(equal("{}"))
                 }
 
                 it("gets its value from the local storage") {
@@ -248,7 +248,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
                     userDefaults.meta = "foo"
                     userDefaults.clear()
-                    expect(userDefaults.meta).to(equal(""))
+                    expect(userDefaults.meta).to(equal("{}"))
                 }
 
                 it("sets userConsents back to its default value") {
