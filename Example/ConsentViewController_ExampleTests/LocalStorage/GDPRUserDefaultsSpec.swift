@@ -127,9 +127,9 @@ class GDPRUserDefaultsSpec: QuickSpec {
             }
 
             describe("authId") {
-                it("is empty string by default") {
+                it("is nil by default") {
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
-                    expect(userDefaults.authId).to(equal(""))
+                    expect(userDefaults.authId).to(beNil())
                 }
 
                 it("gets its value from the local storage") {
@@ -234,7 +234,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
                     userDefaults.authId = "foo"
                     userDefaults.clear()
-                    expect(userDefaults.authId).to(equal(""))
+                    expect(userDefaults.authId).to(beNil())
                 }
 
                 it("sets consentUUID back to its default value") {

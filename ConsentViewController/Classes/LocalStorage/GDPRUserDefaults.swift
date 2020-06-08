@@ -18,7 +18,7 @@ class GDPRUserDefaults: GDPRLocalStorage {
     static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
 
-    let storage: Storage
+    var storage: Storage
 
     var consentString: String {
         get { storage.string(forKey: GDPRUserDefaults.EU_CONSENT_KEY) ?? String() }
@@ -35,8 +35,8 @@ class GDPRUserDefaults: GDPRLocalStorage {
         set { storage.set(newValue, forKey: GDPRUserDefaults.META_KEY) }
     }
 
-    var authId: String {
-        get { storage.string(forKey: GDPRUserDefaults.GDPR_AUTH_ID_KEY) ?? String() }
+    var authId: String? {
+        get { storage.string(forKey: GDPRUserDefaults.GDPR_AUTH_ID_KEY) }
         set { storage.set(newValue, forKey: GDPRUserDefaults.GDPR_AUTH_ID_KEY) }
     }
 
@@ -81,7 +81,7 @@ class GDPRUserDefaults: GDPRLocalStorage {
         tcfData = [:]
         consentString = ""
         consentUUID = ""
-        authId = ""
+        authId = nil
         meta = "{}"
     }
 }
