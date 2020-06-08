@@ -19,6 +19,8 @@ public typealias TargetingParams = [String:String]
     
     static let GDPR_AUTH_ID_KEY: String = "sp_gdpr_authId"
 
+    static public let GDPR_USER_CONSENTS: String = "sp_gdpr_user_consents"
+
     /// If the user has consent data stored, reading for this key in the `UserDefaults` will return "1"
     static public let IAB_CONSENT_CMP_PRESENT: String = "IABConsent_CMPPresent"
 
@@ -60,6 +62,9 @@ public typealias TargetingParams = [String:String]
 
     public weak var consentDelegate: GDPRConsentDelegate?
     private var messageViewController: GDPRMessageViewController?
+
+    /// Contains the `GDPRConsentStatus`, an array of accepted vendor ids and and array of accepted purposes
+    public var userConsent: GDPRUserConsent
     
     enum LoadingStatus: String {
         case Ready = "Ready"
@@ -83,6 +88,17 @@ public typealias TargetingParams = [String:String]
         viewController.view.frame = view.bounds
         viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         viewController.didMove(toParent: self)
+    }
+
+    private static func getStoredUserConsents() -> GDPRUserConsent {
+        guard
+            let jsonConsents = UserDefaults.standard.string(forKey: GDPR_USER_CONSENTS),
+            let jsonData = jsonConsents.data(using: .utf8),
+            let userConsent = try? JSONDecoder().decode(GDPRUserConsent.self, from: jsonData)
+            else {
+                return GDPRUserConsent.empty()
+        }
+        return userConsent
     }
 
     /**
@@ -114,6 +130,7 @@ public typealias TargetingParams = [String:String]
 
         self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ?? ""
         self.euconsent = (try? ConsentString(consentString: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
+        self.userConsent = GDPRConsentViewController.getStoredUserConsents()
         
         self.sourcePoint = SourcePointClient(
             accountId: accountId,
@@ -378,6 +395,9 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         self.gdprUUID = gdprUUID
         self.euconsent = userConsent.euconsent
         storeIABVars(consentString: euconsent)
+        if let encodedConsents = try? JSONEncoder().encode(userConsent) {
+            UserDefaults.standard.set(String(data: encodedConsents, encoding: .utf8), forKey: GDPRConsentViewController.GDPR_USER_CONSENTS)
+        }
         UserDefaults.standard.setValue(euconsent.consentString, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
         UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
         UserDefaults.standard.synchronize()
