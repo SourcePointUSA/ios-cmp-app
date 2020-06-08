@@ -76,7 +76,19 @@ import Foundation
 }
 
 @objcMembers public class WebViewError: GDPRConsentViewControllerError {
-    public var failureReason: String? { return "Something went wrong in the webview" }
+    let spCode: Int?
+    let title, stackTrace: String?
+
+    init(code: Int? = nil, title: String? = nil, stackTrace: String? = nil) {
+        self.spCode = code
+        self.title = title
+        self.stackTrace = stackTrace
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    public var failureReason: String? { return "Something went wrong in the webview (code: \(spCode ?? 0), title: \(title ?? ""), stackTrace: \(stackTrace ?? "")" }
     override public var description: String { return "\(failureReason!)" }
 }
 
