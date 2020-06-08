@@ -88,7 +88,7 @@ import Foundation
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-    public var failureReason: String? { return "Something went wrong in the webview (code: \(spCode ?? 0), title: \(title ?? ""), stackTrace: \(stackTrace ?? "")" }
+    public var failureReason: String? { return "Something went wrong in the webview (code: \(spCode ?? 0), title: \(title ?? ""), stackTrace: \(stackTrace ?? ""))" }
     override public var description: String { return "\(failureReason!)" }
 }
 
