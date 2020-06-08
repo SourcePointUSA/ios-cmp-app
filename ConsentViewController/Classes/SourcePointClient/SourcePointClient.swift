@@ -95,6 +95,7 @@ class SourcePointClient {
         }
     }
 
+    // swiftlint:disable:next function_parameter_count
     func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, APIParsingError? ) -> Void) {
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
@@ -125,6 +126,7 @@ class SourcePointClient {
         }
     }
 
+    // swiftlint:disable:next line_length function_parameter_count
     func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, APIParsingError?) -> Void) {
         getMessage(
             url: native ?
