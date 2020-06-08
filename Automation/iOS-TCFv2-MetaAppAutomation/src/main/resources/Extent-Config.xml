@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This config is as per what is defined by extent reports, Use it as per customization provision and project need-->
+<extentreports>
+    <configuration>
+        <!-- report theme -->
+        <!-- standard, dark -->
+        <theme>standard</theme>
+    
+        <!-- document encoding -->
+        <!-- defaults to UTF-8 -->
+        <encoding>UTF-8</encoding>
+        
+        <!-- protocol for script and stylesheets -->
+        <!-- defaults to https -->
+        <protocol>https</protocol>
+        
+        <!-- title of the document -->
+        <documentTitle>Cybage Fusion Report</documentTitle>
+        
+        <!-- report name - displayed at top-nav -->
+        <reportName>Automation Report</reportName>
+        
+        <!-- A small headline next to report name - displayed at top-nav -->
+        <reportHeadline>- Demo Test</reportHeadline>
+        
+        <!-- location of charts in the test view -->
+        <!-- top, bottom -->
+        <testViewChartLocation>top</testViewChartLocation>
+		
+        
+        
+        <!-- custom javascript -->
+        <scripts>
+            <!-- <![CDATA[
+                $(document).ready(function() {
+                    
+                });
+            ]]> -->
+             <![CDATA[
+                $('.brand-logo').text('Fusion v3');
+ 
+            ]]>
+        </scripts>
+        
+        <!-- custom styles -->
+        <styles>
+            <![CDATA[
+                
+            ]]>
+        </styles>
+    </configuration>
+</extentreports>

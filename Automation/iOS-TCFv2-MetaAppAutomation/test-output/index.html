@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <meta charset='utf-8'>
+  <title>TestNG reports</title>
+
+    <link type="text/css" href="testng-reports.css" rel="stylesheet" />
+    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="testng-reports.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      var suiteTableInitFunctions = new Array();
+      var suiteTableData = new Array();
+    </script>
+    <!--
+      <script type="text/javascript" src="jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+     -->
+  </head>
+
+  <body>
+    <div class="top-banner-root">
+      <span class="top-banner-title-font">Test results</span>
+      <br/>
+      <span class="top-banner-font-1">1 suite</span>
+    </div> <!-- top-banner-root -->
+    <div class="navigator-root">
+      <div class="navigator-suite-header">
+        <span>All suites</span>
+        <a href="#" class="collapse-all-link" title="Collapse/expand all the suites">
+          <img class="collapse-all-icon" src="collapseall.gif">
+          </img> <!-- collapse-all-icon -->
+        </a> <!-- collapse-all-link -->
+      </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" class="navigator-link" panel-name="suite-Mobile_Suite">
+              <span class="suite-name border-passed">Mobile_Suite</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="test-xml-Mobile_Suite">
+                    <span>MobileTestNG.xml</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="testlist-Mobile_Suite">
+                    <span class="test-stats">1 test</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="group-Mobile_Suite">
+                    <span>1 group</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="times-Mobile_Suite">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="reporter-Mobile_Suite">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-Mobile_Suite">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="chronological-Mobile_Suite">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">1 method,   1 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-Mobile_Suite" class="hide-methods passed suite-Mobile_Suite"> (hide)</a> <!-- hide-methods passed suite-Mobile_Suite -->
+                      <a href="#" panel-name="suite-Mobile_Suite" class="show-methods passed suite-Mobile_Suite"> (show)</a> <!-- show-methods passed suite-Mobile_Suite -->
+                    </span>
+                    <div class="method-list-content passed suite-Mobile_Suite">
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Mobile_Suite" title="com.mobile.tests.GDPR_TCFV2_MetaAppTests" hash-for-method="CheckCancelFromPrivacyManager(C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B)">CheckCancelFromPrivacyManager(C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-Mobile_Suite -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
+    </div> <!-- navigator-root -->
+    <div class="wrapper">
+      <div class="main-panel-root">
+        <div panel-name="suite-Mobile_Suite" class="panel Mobile_Suite">
+          <div class="suite-Mobile_Suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.mobile.tests.GDPR_TCFV2_MetaAppTests</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="CheckCancelFromPrivacyManager(C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B)">
+                  </a> <!-- CheckCancelFromPrivacyManager(C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B) -->
+                  <span class="method-name">CheckCancelFromPrivacyManager</span>
+                  <span class="parameters">(C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Mobile_Suite-class-passed -->
+        </div> <!-- panel Mobile_Suite -->
+        <div panel-name="test-xml-Mobile_Suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">/Users/sangeeta/Documents/Sourcepoint-Automation/iOS-TCFv2-MetaAppAutomation/CommonFrameworkTest_Run/testNGFiles/MobileTestNG.xml</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
+&lt;suite name=&quot;Mobile_Suite&quot; parallel=&quot;tests&quot;&gt;
+  &lt;parameter name=&quot;BaseDirectoryPath&quot; value=&quot;/Users/sangeeta/Documents/Sourcepoint-Automation/iOS-TCFv2-MetaAppAutomation/CommonFrameworkTest_Run/Configuration&quot;/&gt;
+  &lt;groups&gt;
+    &lt;run&gt;
+      &lt;include name=&quot;GDPR-MetaAppTests1&quot;/&gt;
+    &lt;/run&gt;
+  &lt;/groups&gt;
+  &lt;test name=&quot;MobileTest-C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B&quot;&gt;
+    &lt;parameter name=&quot;udid&quot; value=&quot;C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B&quot;/&gt;
+    &lt;packages&gt;
+      &lt;package name=&quot;com.mobile.*&quot;/&gt;
+    &lt;/packages&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;com.mobile.tests.GDPR_TCFV2_MetaAppTests&quot;/&gt;
+      &lt;class name=&quot;com.mobile.pages.EditSitePage&quot;/&gt;
+      &lt;class name=&quot;com.mobile.pages.NewSitePage&quot;/&gt;
+      &lt;class name=&quot;com.mobile.pages.PrivacyManagerPage&quot;/&gt;
+      &lt;class name=&quot;com.mobile.pages.SiteListPage&quot;/&gt;
+      &lt;class name=&quot;com.mobile.pages.SiteDebugInfoPage&quot;/&gt;
+      &lt;class name=&quot;com.mobile.pages.MobilePageWrapper&quot;/&gt;
+      &lt;class name=&quot;com.mobile.pages.ConsentViewPage&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- MobileTest-C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B --&gt;
+&lt;/suite&gt; &lt;!-- Mobile_Suite --&gt;
+            </pre>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="testlist-Mobile_Suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Tests for Mobile_Suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <ul>
+              <li>
+                <span class="test-name">MobileTest-C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B (8 classes)</span>
+              </li>
+            </ul>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="group-Mobile_Suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Groups for Mobile_Suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="test-group">
+              <span class="test-group-name">GDPR-MetaAppTests1</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">CheckCancelFromPrivacyManager</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="times-Mobile_Suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Times for Mobile_Suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="times-div">
+              <script type="text/javascript">
+suiteTableInitFunctions.push('tableData_Mobile_Suite');
+function tableData_Mobile_Suite() {
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Number');
+data.addColumn('string', 'Method');
+data.addColumn('string', 'Class');
+data.addColumn('number', 'Time (ms)');
+data.addRows(1);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'CheckCancelFromPrivacyManager')
+data.setCell(0, 2, 'com.mobile.tests.GDPR_TCFV2_MetaAppTests')
+data.setCell(0, 3, 152953);
+window.suiteTableData['Mobile_Suite']= { tableData: data, tableDiv: 'times-div-Mobile_Suite'}
+return data;
+}
+              </script>
+              <span class="suite-total-time">Total running time: 2 minutes</span>
+              <div id="times-div-Mobile_Suite">
+              </div> <!-- times-div-Mobile_Suite -->
+            </div> <!-- times-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="reporter-Mobile_Suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Reporter output for Mobile_Suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="ignored-methods-Mobile_Suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">19 ignored methods</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">com.mobile.tests.GDPR_TCFV2_MetaAppTests</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">CheckConsentOnRejectAllFromPM</span>
+                <br/>
+                <span class="ignored-method-name">CheckConsentOnRejectAllFromConsentView</span>
+                <br/>
+                <span class="ignored-method-name">CheckConsentOnDirectPMLoadWhenPMAsMEssage</span>
+                <br/>
+                <span class="ignored-method-name">CheckNoMessageAfterLoggedInWithAuthID</span>
+                <br/>
+                <span class="ignored-method-name">CheckNoMessageWithShowOnceCriteriaWhenConsentAlreadySaved</span>
+                <br/>
+                <span class="ignored-method-name">CheckConsentDataFromPrivacyManagerDirect</span>
+                <br/>
+                <span class="ignored-method-name">CheckAcceptAllFromPrivacyManage</span>
+                <br/>
+                <span class="ignored-method-name">DeleteSite</span>
+                <br/>
+                <span class="ignored-method-name">EditSiteWithConsentGivenBefore</span>
+                <br/>
+                <span class="ignored-method-name">CheckCancelFromPMAsMEssage</span>
+                <br/>
+                <span class="ignored-method-name">CheckConsentWithSameAuthIDAfterDeletingAndRecreate</span>
+                <br/>
+                <span class="ignored-method-name">CheckSavedConsentAlwaysWithSameAuthID</span>
+                <br/>
+                <span class="ignored-method-name">CheckPurposeConsentAfterRestCookies</span>
+                <br/>
+                <span class="ignored-method-name">CheckConsentOnAcceptAllFromConsentView</span>
+                <br/>
+                <span class="ignored-method-name">CheckPMAsMEssage</span>
+                <br/>
+                <span class="ignored-method-name">CheckPropertDetailsOnMessageDismiss</span>
+                <br/>
+                <span class="ignored-method-name">CheckNoConsentMessageDisplayAfterShowSiteInfo</span>
+                <br/>
+                <span class="ignored-method-name">CheckCancelFromDirectPrivacyManager</span>
+                <br/>
+                <span class="ignored-method-name">CheckConsentWithAuthIDFromPMAsMessage</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="chronological-Mobile_Suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Methods in chronological order</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.mobile.tests.GDPR_TCFV2_MetaAppTests</div> <!-- chronological-class-name -->
+              <div class="configuration-suite before">
+                <span class="method-name">projectSetUp</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- configuration-suite before -->
+              <div class="configuration-test before">
+                <span class="method-name">BeforeTestRun(org.testng.TestRunner@a3d8174)</span>
+                <span class="method-start">16 ms</span>
+              </div> <!-- configuration-test before -->
+              <div class="configuration-method before">
+                <span class="method-name">setUpAssertion(public void com.mobile.tests.GDPR_TCFV2_MetaAppTests.CheckCancelFromPrivacyManager(java.lang.String)...)</span>
+                <span class="method-start">45 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="configuration-method before">
+                <span class="method-name">mobileSetUp(C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B, public void com.mobile.tests.GDPR_TCFV2_MetaAppTests.CheckCanc...)</span>
+                <span class="method-start">100 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">CheckCancelFromPrivacyManager(C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B)</span>
+                <span class="method-start">17510 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">TestDestroy(org.testng.TestRunner@a3d8174)</span>
+                <span class="method-start">170466 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-test after">
+                <span class="method-name">AfterTestRun(org.testng.TestRunner@a3d8174)</span>
+                <span class="method-start">173614 ms</span>
+              </div> <!-- configuration-test after -->
+              <div class="configuration-suite after">
+                <span class="method-name">projectDestroy(org.testng.TestRunner@a3d8174)</span>
+                <span class="method-start">173856 ms</span>
+              </div> <!-- configuration-suite after -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+      </div> <!-- main-panel-root -->
+    </div> <!-- wrapper -->
+  </body>
+</html>

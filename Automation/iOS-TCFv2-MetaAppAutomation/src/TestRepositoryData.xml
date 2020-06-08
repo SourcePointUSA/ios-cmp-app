@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<test generatedTimeStamp="2018-02-01T16:09:29.040+05:30">
+    <testGroup name="api">
+        <type groupName="ActionDelete"/>
+        <type groupName="ActionPUT"/>
+        <type groupName="ActionPatch"/>
+        <type groupName="BasicAuth"/>
+        <type groupName="Demo"/>
+        <type groupName="GeoCodeJSON"/>
+        <type groupName="GeoCodeXML"/>
+        <type groupName="GpLat"/>
+        <type groupName="Regression"/>
+        <type groupName="RestGetPost"/>
+        <type groupName="SOAP"/>
+        <type groupName="Smoke"/>
+        <type groupName="UsingREST"/>
+        <type groupName="UsingSOAP"/>
+        <type groupName="deprecated"/>
+        <type groupName="oauth"/>
+        <type groupName="oauth2"/>
+        <type groupName="smoke"/>
+    </testGroup>
+    <testGroup name="database">
+        <type groupName="Cassandradb"/>
+        <type groupName="Demo"/>
+        <type groupName="Demo2"/>
+        <type groupName="Demo3"/>
+        <type groupName="Demo4"/>
+        <type groupName="Demo5"/>
+        <type groupName="DemoGP"/>
+        <type groupName="FS1"/>
+        <type groupName="FS2"/>
+        <type groupName="GP2"/>
+        <type groupName="PgSQLdb"/>
+        <type groupName="couchdb"/>
+        <type groupName="h2db"/>
+        <type groupName="hive"/>
+        <type groupName="mongodb"/>
+        <type groupName="mssql"/>
+        <type groupName="mysql"/>
+    </testGroup>
+    <testGroup name="fusion">
+        <type groupName="Demo"/>
+        <type groupName="Demo1"/>
+        <type groupName="FuGpLat"/>
+        <type groupName="Smoke"/>
+        <type groupName="oauth"/>
+        <type groupName="para33"/>
+        <type groupName="sample_oauth"/>
+        <type groupName="uiDriver"/>
+    </testGroup>
+    <testGroup name="mobile">
+        <type groupName="NewDemo"/>
+        <type groupName="NewDemo12345"/>
+        <type groupName="NewDemo123456"/>
+    </testGroup>
+    <testGroup name="web">
+        <type groupName="Demo"/>
+        <type groupName="Smoke"/>
+        <type groupName="frame"/>
+        <type groupName="para"/>
+        <type groupName="para123"/>
+        <type groupName="regression"/>
+    </testGroup>
+</test>

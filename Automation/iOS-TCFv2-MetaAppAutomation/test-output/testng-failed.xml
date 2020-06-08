@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Mobile_Suite]" parallel="tests">
+  <parameter name="BaseDirectoryPath" value="/Users/sangeeta/Documents/Sourcepoint-Automation/iOS-MetaAppAutomation/CommonFrameworkTest_Run/Configuration"/>
+  <test name="MobileTest-C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B(failed)" parallel="tests">
+    <parameter name="udid" value="C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B"/>
+    <groups>
+      <run>
+        <include name="GDPR-MetaAppTests11"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.mobile.tests.GDPR_TCFV2_MetaAppTests">
+        <methods>
+          <include name="CheckCancelFromPMAsMEssage" invocation-numbers="0"/>
+          <include name="BeforeTestRun"/>
+          <include name="projectSetUp"/>
+          <include name="CheckNoMessageAfterLoggedInWithAuthID" invocation-numbers="0"/>
+          <include name="mobileSetUp"/>
+          <include name="AfterTestRun"/>
+          <include name="setUpAssertion"/>
+          <include name="CheckNoConsentMessageDisplayAfterShowSiteInfo" invocation-numbers="0"/>
+          <include name="CheckCancelFromDirectPrivacyManager" invocation-numbers="0"/>
+          <include name="projectDestroy"/>
+          <include name="TestDestroy"/>
+        </methods>
+      </class> <!-- com.mobile.tests.GDPR_TCFV2_MetaAppTests -->
+    </classes>
+  </test> <!-- MobileTest-C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B(failed) -->
+</suite> <!-- Failed suite [Mobile_Suite] -->

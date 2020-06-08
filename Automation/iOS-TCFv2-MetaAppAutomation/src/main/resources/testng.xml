@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite" parallel="none" thread-count="10">
+<parameter name="OS" value="Windows"/>
+  <!--<groups>
+      <run>
+      <include name="Smoke"/>
+      <include name="Regression"/>
+      </run>
+  </groups> -->
+  <test name="sampleTest">
+  <parameter name="Browser" value="firefox"/>	
+    <packages>
+  	     <package name="com.api"/>					
+  	</packages>
+  </test>
+  
+  </suite> 
+ 

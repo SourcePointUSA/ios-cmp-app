@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="19" total="20" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Mobile_Suite" duration-ms="173600" started-at="2020-06-08T06:16:15Z" finished-at="2020-06-08T06:19:09Z">
+    <groups>
+      <group name="GDPR-MetaAppTests1">
+        <method signature="GDPR_TCFV2_MetaAppTests.CheckCancelFromPrivacyManager(java.lang.String)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="CheckCancelFromPrivacyManager" class="com.mobile.tests.GDPR_TCFV2_MetaAppTests"/>
+      </group> <!-- GDPR-MetaAppTests1 -->
+    </groups>
+    <test name="MobileTest-C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B" duration-ms="173600" started-at="2020-06-08T06:16:15Z" finished-at="2020-06-08T06:19:09Z">
+      <class name="com.mobile.tests.GDPR_TCFV2_MetaAppTests">
+        <test-method status="PASS" signature="projectSetUp()[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="projectSetUp" is-config="true" duration-ms="10" started-at="2020-06-08T11:46:15Z" finished-at="2020-06-08T11:46:15Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- projectSetUp -->
+        <test-method status="PASS" signature="BeforeTestRun(org.testng.ITestContext)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="BeforeTestRun" is-config="true" duration-ms="1" started-at="2020-06-08T11:46:15Z" finished-at="2020-06-08T11:46:15Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@a3d8174]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- BeforeTestRun -->
+        <test-method status="PASS" signature="setUpAssertion(java.lang.reflect.Method)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="setUpAssertion" is-config="true" duration-ms="55" started-at="2020-06-08T11:46:15Z" finished-at="2020-06-08T11:46:15Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.mobile.tests.GDPR_TCFV2_MetaAppTests.CheckCancelFromPrivacyManager(java.lang.String) throws java.lang.InterruptedException]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpAssertion -->
+        <test-method status="PASS" signature="mobileSetUp(java.lang.String, java.lang.reflect.Method)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="mobileSetUp" is-config="true" duration-ms="17410" started-at="2020-06-08T11:46:15Z" finished-at="2020-06-08T11:46:33Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[public void com.mobile.tests.GDPR_TCFV2_MetaAppTests.CheckCancelFromPrivacyManager(java.lang.String) throws java.lang.InterruptedException]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- mobileSetUp -->
+        <test-method status="PASS" signature="CheckCancelFromPrivacyManager(java.lang.String)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="CheckCancelFromPrivacyManager" duration-ms="152953" started-at="2020-06-08T11:46:33Z" finished-at="2020-06-08T11:49:06Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CheckCancelFromPrivacyManager -->
+        <test-method status="PASS" signature="TestDestroy(org.testng.ITestContext)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="TestDestroy" is-config="true" duration-ms="2580" started-at="2020-06-08T11:49:06Z" finished-at="2020-06-08T11:49:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@a3d8174]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TestDestroy -->
+        <test-method status="PASS" signature="AfterTestRun(org.testng.ITestContext)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="AfterTestRun" is-config="true" duration-ms="0" started-at="2020-06-08T11:49:09Z" finished-at="2020-06-08T11:49:09Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@a3d8174]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AfterTestRun -->
+        <test-method status="PASS" signature="projectDestroy(org.testng.ITestContext)[pri:0, instance:com.mobile.tests.GDPR_TCFV2_MetaAppTests@382db087]" name="projectDestroy" is-config="true" duration-ms="0" started-at="2020-06-08T11:49:09Z" finished-at="2020-06-08T11:49:09Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@a3d8174]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- projectDestroy -->
+      </class> <!-- com.mobile.tests.GDPR_TCFV2_MetaAppTests -->
+    </test> <!-- MobileTest-C930DE28-6A9A-49F4-BE49-DAEBF0C0FF8B -->
+  </suite> <!-- Mobile_Suite -->
+</testng-results>
