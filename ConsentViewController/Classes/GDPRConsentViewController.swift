@@ -109,7 +109,7 @@ public typealias TargetingParams = [String: String]
         modalPresentationStyle = .overFullScreen
 
         /// - note: according to the IAB this value needs to be initialised as early as possible to signal to vendors, the app has a CMP
-        UserDefaults.standard.setValue(GDPRConsentViewController.IAB_CMP_SDK_ID, forKey: GDPRConsentViewController.IAB_CMP_SDK_ID_KEY)
+        localStorage.storage.set(GDPRConsentViewController.IAB_CMP_SDK_ID, forKey: GDPRConsentViewController.IAB_CMP_SDK_ID_KEY)
     }
 
     /**
@@ -210,7 +210,7 @@ public typealias TargetingParams = [String: String]
             loading = .Loading
             if didAuthIdChange(newAuthId: (authId)) {
                 clearAllData()
-                UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+                localStorage.authId = authId
             }
             sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId, meta: localStorage.meta) { [weak self] messageResponse, error in
                 if let messageResponse = messageResponse {
@@ -253,8 +253,9 @@ public typealias TargetingParams = [String: String]
     }
 
     private func didAuthIdChange(newAuthId: String?) -> Bool {
-        let stored = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
-        return newAuthId != nil && stored != nil && stored != newAuthId
+        return newAuthId != nil &&
+            localStorage.authId != nil &&
+            localStorage.authId != newAuthId
     }
 
     /// Loads the PrivacyManager (that popup with the toggles) in a WebView
