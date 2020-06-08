@@ -18,7 +18,14 @@ import Foundation
     
     /// The iAB consent string.
     public let euconsent: ConsentString
-    
+
+    static func empty() -> GDPRUserConsent {
+        return GDPRUserConsent(
+            acceptedVendors: [],
+            acceptedCategories: [],
+            euconsent: ConsentString.empty)
+    }
+
     public init(acceptedVendors: [String], acceptedCategories: [String], euconsent: ConsentString) {
         self.acceptedVendors = acceptedVendors
         self.acceptedCategories = acceptedCategories
