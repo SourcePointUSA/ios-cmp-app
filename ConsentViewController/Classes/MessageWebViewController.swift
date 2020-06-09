@@ -224,7 +224,13 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             }
             onAction(GDPRAction(type: actionType, id: getChoiceId(payload), payload: payloadData))
         case "onError":
-            onError(error: WebViewError())
+            let payload = body["body"] as? [String: Any] ?? [:]
+            let error = payload["error"] as? [String: Any] ?? [:]
+            onError(error: WebViewError(
+                code: error["code"] as? Int,
+                title: error["title"] as? String,
+                stackTrace: error["stackTrace"] as? String
+            ))
         default:
             print(message.body)
         }

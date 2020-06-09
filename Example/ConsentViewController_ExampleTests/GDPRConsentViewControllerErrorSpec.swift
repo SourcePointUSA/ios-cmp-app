@@ -40,7 +40,7 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
 
             it("Test WebViewError method") {
                 let errorObject = WebViewError()
-                expect(errorObject.failureReason).to(equal("Something went wrong in the webview"))
+                expect(errorObject.failureReason).to(equal("Something went wrong in the webview (code: 0, title: , stackTrace: )"))
             }
 
             it("Test URLParsingError method") {

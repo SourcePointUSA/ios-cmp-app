@@ -60,15 +60,29 @@
     return event.fromPM || event.settings.vendorList
   }
 
+    function isError(event) {
+        return event.stackTrace !== undefined
+    }
+
+    function handleError(event) {
+        window.SDK.onError({
+            code: event.code,
+            title: event.title,
+            stackTrace: event.stackTrace
+        })
+    }
+
   var handleMessageOrPMEvent = function (SDK) {
     return function (event) {
       try {
-        handleMessageEvent(SDK)({
-          name: event.name,
-          fromPM: isFromPM(event),
-          actionType: event.actionType,
-          payload: event.payload || event.actions || {}
-        });
+          isError(event) ?
+            handleError(event) :
+            handleMessageEvent(SDK)({
+              name: event.name,
+              fromPM: isFromPM(event),
+              actionType: event.actionType,
+              payload: event.payload || event.actions || {}
+            });
       } catch (error) {
         SDK.onError(error);
       }
