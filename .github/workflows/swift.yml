@@ -21,5 +21,5 @@ jobs:
         run: cd Example && pod install
       - name: iOS build
         run: xcodebuild build-for-testing -scheme ConsentViewController_ExampleTests -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.4.1'
-      - name: testing -> iPhone 11 (iOS 13.4.1)
+      - name: testing -> iPhone 11 (iOS 13.5)
         run: xcodebuild test-without-building -scheme ConsentViewController_ExampleTests -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.4.1'
