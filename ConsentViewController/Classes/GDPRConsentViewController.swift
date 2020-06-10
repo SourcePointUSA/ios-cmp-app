@@ -56,13 +56,13 @@ public typealias TargetingParams = [String: String]
 
     var localStorage: GDPRLocalStorage
 
-    private let accountId: Int
-    private let propertyName: GDPRPropertyName
-    private let propertyId: Int
-    private let pmId: String
-    private let targetingParams: TargetingParams
-    private let sourcePoint: SourcePointClient
-    private lazy var logger = { return OSLogger() }()
+    let accountId: Int
+    let propertyName: GDPRPropertyName
+    let propertyId: Int
+    let pmId: String
+    let targetingParams: TargetingParams
+    let sourcePoint: SourcePointProtocol
+    lazy var logger = { return OSLogger() }()
     var messageViewController: GDPRMessageViewController?
     var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
     enum LoadingStatus: String {
@@ -94,7 +94,7 @@ public typealias TargetingParams = [String: String]
         campaignEnv: GDPRCampaignEnv,
         targetingParams: TargetingParams,
         consentDelegate: GDPRConsentDelegate,
-        sourcePointClient: SourcePointClient,
+        sourcePointClient: SourcePointProtocol,
         localStorage: GDPRLocalStorage
     ) {
         self.accountId = accountId
@@ -187,7 +187,7 @@ public typealias TargetingParams = [String: String]
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func handleNativeMessageResponse(_ response: MessageResponse) {
+    func handleNativeMessageResponse(_ response: MessageResponse) {
         self.loading = .Ready
         if let message = response.msgJSON {
             self.consentDelegate?.consentUIWillShow?(message: message)
@@ -196,7 +196,7 @@ public typealias TargetingParams = [String: String]
         }
     }
 
-    private func handleWebMessageResponse(_ response: MessageResponse) {
+    func handleWebMessageResponse(_ response: MessageResponse) {
        if let url = response.url {
            self.loadMessage(fromUrl: url)
        } else {
@@ -205,7 +205,7 @@ public typealias TargetingParams = [String: String]
        }
    }
 
-    private func loadGDPRMessage(native: Bool, authId: String?) {
+    func loadGDPRMessage(native: Bool, authId: String?) {
         if loading == .Ready {
             loading = .Loading
             if didAuthIdChange(newAuthId: (authId)) {
@@ -231,7 +231,7 @@ public typealias TargetingParams = [String: String]
        loadGDPRMessage(native: true, authId: authId)
     }
 
-    private func loadMessage(fromUrl url: URL) {
+    func loadMessage(fromUrl url: URL) {
         messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
@@ -252,7 +252,7 @@ public typealias TargetingParams = [String: String]
         loadGDPRMessage(native: false, authId: authId)
     }
 
-    private func didAuthIdChange(newAuthId: String?) -> Bool {
+    func didAuthIdChange(newAuthId: String?) -> Bool {
         return newAuthId != nil &&
             localStorage.authId != nil &&
             localStorage.authId != newAuthId
@@ -280,7 +280,7 @@ public typealias TargetingParams = [String: String]
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func customConsent(
+    func customConsent(
         uuid: String,
         vendors: [String],
         categories: [String],
@@ -329,6 +329,21 @@ public typealias TargetingParams = [String: String]
             completionHandler: completionHandler
         )
     }
+
+    public func reportAction(_ action: GDPRAction) {
+        if gdprUUID.isEmpty {
+            consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
+            return
+        }
+        sourcePoint.postAction(action: action, consentUUID: gdprUUID, meta: localStorage.meta) { [weak self] response, error in
+            if let actionResponse = response {
+                self?.localStorage.meta = actionResponse.meta
+                self?.onConsentReady(gdprUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
+            } else {
+                self?.onError(error: error)
+            }
+        }
+    }
 }
 
 extension GDPRConsentViewController: GDPRConsentDelegate {
@@ -353,30 +368,14 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         consentDelegate?.onError?(error: error)
     }
 
-    public func reportAction(_ action: GDPRAction) {
-        if action.type == .AcceptAll ||
-            action.type == .RejectAll ||
-            action.type == .SaveAndExit {
-            if gdprUUID.isEmpty {
-                consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
-                return
-            }
-            sourcePoint.postAction(action: action, consentUUID: gdprUUID, meta: localStorage.meta) { [weak self] response, error in
-                if let actionResponse = response {
-                    self?.localStorage.meta = actionResponse.meta
-                    self?.onConsentReady(gdprUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
-                } else {
-                    self?.onError(error: error)
-                }
-            }
-        } else if action.type == .Dismiss {
-            self.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
-        }
-    }
-
     public func onAction(_ action: GDPRAction) {
-        reportAction(action)
+        let type = action.type
         consentDelegate?.onAction?(action)
+        if type == .Dismiss || type == .PMCancel {
+            self.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
+        } else if type == .AcceptAll || type == .RejectAll || type == .SaveAndExit {
+            reportAction(action)
+        }
     }
 
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {

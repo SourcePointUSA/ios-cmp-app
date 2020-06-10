@@ -7,11 +7,50 @@
 
 import Foundation
 
+protocol SourcePointProtocol {
+    init(
+        accountId: Int,
+        propertyId: Int,
+        propertyName: GDPRPropertyName,
+        pmId: String,
+        campaignEnv: GDPRCampaignEnv,
+        targetingParams: TargetingParams,
+        timeout: TimeInterval
+    )
+
+    // swiftlint:disable:next function_parameter_count
+    func getMessage(
+        native: Bool,
+        consentUUID: GDPRUUID?,
+        euconsent: String,
+        authId: String?,
+        meta: Meta,
+        completionHandler: @escaping (MessageResponse?, APIParsingError?)
+    -> Void)
+
+    func postAction(
+        action: GDPRAction,
+        consentUUID: GDPRUUID,
+        meta: Meta,
+        completionHandler: @escaping (ActionResponse?, APIParsingError?)
+    -> Void)
+
+    func customConsent(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        completionHandler: @escaping (CustomConsentResponse?, APIParsingError?)
+    -> Void)
+
+    func setRequestTimeout(_ timeout: TimeInterval)
+}
+
 /**
 A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
-class SourcePointClient {
+class SourcePointClient: SourcePointProtocol {
     static let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/")!
     static let GET_MESSAGE_CONTENTS_URL = URL(string: "native-message?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
     static let GET_MESSAGE_URL_URL = URL(string: "message-url?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
@@ -47,7 +86,7 @@ class SourcePointClient {
         self.client = client
     }
 
-    convenience init(
+    required convenience init(
         accountId: Int,
         propertyId: Int,
         propertyName: GDPRPropertyName,
