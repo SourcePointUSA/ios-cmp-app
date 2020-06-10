@@ -27,12 +27,15 @@ class GDPRActionSpec: QuickSpec {
                     expect(action.id).to(equal(id))
                     expect(action.payload).to(equal(payload))
                 }
-            }
 
-            describe("convenience init") {
-                it("initialises the data attribute with {}") {
-                    let action = GDPRAction(type: .AcceptAll, id: nil)
-                    expect(action.payload).to(equal("{}".data(using: .utf8)!))
+                it("initialises id to nil by default") {
+                    let action = GDPRAction(type: .AcceptAll)
+                    expect(action.id).to(beNil())
+                }
+
+                it("initialises data to data encoded \"{}\" by default") {
+                    let action = GDPRAction(type: .AcceptAll)
+                    expect(action.payload).to(equal("{}".data(using: .utf8)))
                 }
             }
         }

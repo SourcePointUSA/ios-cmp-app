@@ -35,13 +35,9 @@ import Foundation
     public let id: String?
     public let payload: Data
 
-    public init(type: GDPRActionType, id: String?, payload: Data) {
+    public init(type: GDPRActionType, id: String? = nil, payload: Data = "{}".data(using: .utf8)!) {
         self.type = type
         self.id = id
         self.payload = payload
-    }
-
-    convenience public init(type: GDPRActionType, id: String?) {
-        self.init(type: type, id: id, payload: "{}".data(using: .utf8)!)
     }
 }
