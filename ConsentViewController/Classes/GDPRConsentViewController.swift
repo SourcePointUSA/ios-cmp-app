@@ -17,25 +17,29 @@ public typealias TargetingParams = [String: String]
     static let GDPR_UUID_KEY = "\(SP_GDPR_KEY_PREFIX)consentUUID"
     static let GDPR_AUTH_ID_KEY = "\(SP_GDPR_KEY_PREFIX)authId"
     static public let IAB_KEY_PREFIX = "IABTCF_"
-    static let IAB_CMP_SDK_ID_KEY = "IABTCF_CmpSdkID"
+    static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
     static let DefaultTimeout = TimeInterval(30)
 
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String {
-        return userConsents.euconsent
+        return localStorage.userConsents.euconsent
     }
 
     /// The UUID assigned to a user, available after calling `loadMessage`
-    public var gdprUUID: GDPRUUID
+    public var gdprUUID: GDPRUUID {
+        return localStorage.consentUUID
+    }
 
     /// All data related to TCFv2
     public var tcfData: SPGDPRArbitraryJson {
-        return userConsents.tcfData
+        return localStorage.userConsents.tcfData
     }
 
     /// All consent data we have in memory and stored on UserDefaults
-    public var userConsents: GDPRUserConsent
+    public var userConsents: GDPRUserConsent {
+        return localStorage.userConsents
+    }
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = GDPRConsentViewController.DefaultTimeout {
@@ -49,6 +53,8 @@ public typealias TargetingParams = [String: String]
 
     /// the instance of `GDPRConsentDelegate` which the `GDPRConsentViewController` will use to perform the lifecycle methods
     public weak var consentDelegate: GDPRConsentDelegate?
+
+    var localStorage: GDPRLocalStorage
 
     private let accountId: Int
     private let propertyName: GDPRPropertyName
@@ -80,6 +86,32 @@ public typealias TargetingParams = [String: String]
         viewController.didMove(toParent: self)
     }
 
+    init(
+        accountId: Int,
+        propertyId: Int,
+        propertyName: GDPRPropertyName,
+        PMId: String,
+        campaignEnv: GDPRCampaignEnv,
+        targetingParams: TargetingParams,
+        consentDelegate: GDPRConsentDelegate,
+        sourcePointClient: SourcePointClient,
+        localStorage: GDPRLocalStorage
+    ) {
+        self.accountId = accountId
+        self.propertyName = propertyName
+        self.propertyId = propertyId
+        self.pmId = PMId
+        self.targetingParams = targetingParams
+        self.consentDelegate = consentDelegate
+        self.sourcePoint = sourcePointClient
+        self.localStorage = localStorage
+        super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .overFullScreen
+
+        /// - note: according to the IAB this value needs to be initialised as early as possible to signal to vendors, the app has a CMP
+        localStorage.storage.set(GDPRConsentViewController.IAB_CMP_SDK_ID, forKey: GDPRConsentViewController.IAB_CMP_SDK_ID_KEY)
+    }
+
     /**
         - Parameters:
             - accountId: the id of your account, can be found in the Account section of SourcePoint's dashboard
@@ -91,7 +123,7 @@ public typealias TargetingParams = [String: String]
             -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
         - SeeAlso: ConsentDelegate
      */
-    public init(
+    public convenience init(
         accountId: Int,
         propertyId: Int,
         propertyName: GDPRPropertyName,
@@ -100,29 +132,7 @@ public typealias TargetingParams = [String: String]
         targetingParams: TargetingParams,
         consentDelegate: GDPRConsentDelegate
     ) {
-        self.accountId = accountId
-        self.propertyName = propertyName
-        self.propertyId = propertyId
-        self.pmId = PMId
-        self.targetingParams = targetingParams
-        self.consentDelegate = consentDelegate
-
-        self.gdprUUID = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_UUID_KEY) ?? ""
-        let tcfData = try? SPGDPRArbitraryJson(
-            UserDefaults.standard.dictionaryRepresentation().filter { (key, _) in
-                key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX)
-        })
-        self.userConsents = GDPRUserConsent(
-            acceptedVendors: [],
-            acceptedCategories: [],
-            legitimateInterestCategories: [],
-            specialFeatures: [],
-            vendorGrants: GDPRVendorGrants(),
-            euconsent: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "",
-            tcfData: tcfData ?? SPGDPRArbitraryJson()
-        )
-
-        self.sourcePoint = SourcePointClient(
+        let sourcePoint = SourcePointClient(
             accountId: accountId,
             propertyId: propertyId,
             propertyName: propertyName,
@@ -131,12 +141,17 @@ public typealias TargetingParams = [String: String]
             targetingParams: targetingParams,
             timeout: GDPRConsentViewController.DefaultTimeout
         )
-
-        super.init(nibName: nil, bundle: nil)
-        modalPresentationStyle = .overFullScreen
-
-        /// - note: according to the IAB this value needs to be initialised as early as possible to signal to vendors, the app has a CMP
-        UserDefaults.standard.setValue(GDPRConsentViewController.IAB_CMP_SDK_ID, forKey: GDPRConsentViewController.IAB_CMP_SDK_ID_KEY)
+        self.init(
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyName: propertyName,
+            PMId: PMId,
+            campaignEnv: campaignEnv,
+            targetingParams: targetingParams,
+            consentDelegate: consentDelegate,
+            sourcePointClient: sourcePoint,
+            localStorage: GDPRUserDefaults()
+        )
     }
 
     /**
@@ -195,15 +210,16 @@ public typealias TargetingParams = [String: String]
             loading = .Loading
             if didAuthIdChange(newAuthId: (authId)) {
                 clearAllData()
-                UserDefaults.standard.setValue(authId, forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
+                localStorage.authId = authId
             }
-            sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId) { [weak self] messageResponse, error in
+            sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId, meta: localStorage.meta) { [weak self] messageResponse, error in
                 if let messageResponse = messageResponse {
-                self?.gdprUUID = messageResponse.uuid
-                self?.flushAndStoreIABData(messageResponse.userConsent.tcfData)
-                native ?
-                    self?.handleNativeMessageResponse(messageResponse) :
-                    self?.handleWebMessageResponse(messageResponse)
+                    self?.localStorage.consentUUID = messageResponse.uuid
+                    self?.localStorage.meta = messageResponse.meta
+                    self?.localStorage.userConsents = messageResponse.userConsent
+                    native ?
+                        self?.handleNativeMessageResponse(messageResponse) :
+                        self?.handleWebMessageResponse(messageResponse)
                 } else {
                     self?.onError(error: error)
                 }
@@ -237,8 +253,9 @@ public typealias TargetingParams = [String: String]
     }
 
     private func didAuthIdChange(newAuthId: String?) -> Bool {
-        let stored = UserDefaults.standard.string(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
-        return newAuthId != nil && stored != nil && stored != newAuthId
+        return newAuthId != nil &&
+            localStorage.authId != nil &&
+            localStorage.authId != newAuthId
     }
 
     /// Loads the PrivacyManager (that popup with the toggles) in a WebView
@@ -254,33 +271,12 @@ public typealias TargetingParams = [String: String]
 
     /// Clears all IAB related data from the UserDefaults
     public func clearIABConsentData() {
-        UserDefaults.standard.dictionaryRepresentation()
-            .keys
-            .filter { key in key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX) }
-            .forEach { key in UserDefaults.standard.removeObject(forKey: key) }
-    }
-
-    /// Clears meta data used by the SDK. If you're using this method in your app, something is weird...
-    public func clearInternalData() {
-        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.META_KEY)
-        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.GDPR_UUID_KEY)
-        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.GDPR_AUTH_ID_KEY)
-        UserDefaults.standard.removeObject(forKey: GDPRConsentViewController.EU_CONSENT_KEY)
+        localStorage.tcfData = [:]
     }
 
     /// Clears all consent data from the UserDefaults. Use this method if you want to **completely** wipe the user's consent data from the device.
     public func clearAllData() {
-        userConsents = GDPRUserConsent.empty()
-        gdprUUID = ""
-        clearInternalData()
-        clearIABConsentData()
-    }
-
-    private func flushAndStoreIABData(_ iabData: SPGDPRArbitraryJson) {
-        if let iabDataDictionary = iabData.dictionaryValue {
-            clearIABConsentData()
-            UserDefaults.standard.setValuesForKeys(iabDataDictionary)
-        }
+        localStorage.clear()
     }
 
     // swiftlint:disable:next function_parameter_count
@@ -365,9 +361,9 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
                 consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
                 return
             }
-            sourcePoint.postAction(action: action, consentUUID: gdprUUID) { [weak self] response, error in
+            sourcePoint.postAction(action: action, consentUUID: gdprUUID, meta: localStorage.meta) { [weak self] response, error in
                 if let actionResponse = response {
-                    self?.userConsents = actionResponse.userConsent
+                    self?.localStorage.meta = actionResponse.meta
                     self?.onConsentReady(gdprUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
                 } else {
                     self?.onError(error: error)
@@ -384,12 +380,8 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     }
 
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        self.gdprUUID = gdprUUID
-        self.userConsents = userConsent
-        flushAndStoreIABData(userConsent.tcfData)
-        UserDefaults.standard.setValue(euconsent, forKey: GDPRConsentViewController.EU_CONSENT_KEY)
-        UserDefaults.standard.setValue(gdprUUID, forKey: GDPRConsentViewController.GDPR_UUID_KEY)
-        UserDefaults.standard.synchronize()
+        localStorage.consentUUID = gdprUUID
+        localStorage.userConsents = userConsent
         consentDelegate?.onConsentReady?(gdprUUID: gdprUUID, userConsent: userConsent)
     }
 

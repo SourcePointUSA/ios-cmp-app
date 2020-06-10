@@ -31,17 +31,17 @@ class SourcePointClient {
     static let CONSENT_URL = URL(string: "consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "custom-consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
 
-    private var client: HttpClient
+    var client: HttpClient
     private lazy var json: JSON = { return JSON() }()
 
     let requestUUID = UUID()
 
-    private let accountId: Int
-    private let propertyId: Int
-    private let propertyName: GDPRPropertyName
-    private let pmId: String
-    private let campaignEnv: GDPRCampaignEnv
-    private let targetingParams: TargetingParams?
+    let accountId: Int
+    let propertyId: Int
+    let propertyName: GDPRPropertyName
+    let pmId: String
+    let campaignEnv: GDPRCampaignEnv
+    let targetingParams: TargetingParams?
 
     init(
         accountId: Int,
@@ -95,7 +95,8 @@ class SourcePointClient {
         }
     }
 
-    func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, completionHandler: @escaping (MessageResponse?, APIParsingError? ) -> Void) {
+    // swiftlint:disable:next function_parameter_count
+    func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, APIParsingError? ) -> Void) {
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
             euconsent: euconsent,
@@ -106,7 +107,7 @@ class SourcePointClient {
             campaignEnv: campaignEnv,
             targetingParams: targetingParamsToString(targetingParams),
             requestUUID: requestUUID,
-            meta: UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY) ?? "{}"
+            meta: meta
         )) else {
             completionHandler(nil, APIParsingError(url.absoluteString, nil))
             return
@@ -115,7 +116,6 @@ class SourcePointClient {
             do {
                 if let messageData = data {
                     let messageResponse = try (self?.json.decode(MessageResponse.self, from: messageData))
-                    UserDefaults.standard.setValue(messageResponse?.meta, forKey: GDPRConsentViewController.META_KEY)
                     completionHandler(messageResponse, nil)
                 } else {
                     completionHandler(nil, APIParsingError(url.absoluteString, error))
@@ -126,7 +126,8 @@ class SourcePointClient {
         }
     }
 
-    func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, completionHandler: @escaping (MessageResponse?, APIParsingError?) -> Void) {
+    // swiftlint:disable:next line_length function_parameter_count
+    func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, APIParsingError?) -> Void) {
         getMessage(
             url: native ?
                 SourcePointClient.GET_MESSAGE_CONTENTS_URL :
@@ -134,11 +135,12 @@ class SourcePointClient {
             consentUUID: consentUUID,
             euconsent: euconsent,
             authId: authId,
+            meta: meta,
             completionHandler: completionHandler
         )
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, completionHandler: @escaping (ActionResponse?, APIParsingError?) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, APIParsingError?) -> Void) {
         let url = SourcePointClient.CONSENT_URL
 
         guard
@@ -154,7 +156,7 @@ class SourcePointClient {
                 uuid: consentUUID,
                 requestUUID: requestUUID,
                 pmSaveAndExitVariables: pmPayload,
-                meta: UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY) ?? "{}"
+                meta: meta
             )) else {
                 completionHandler(nil, APIParsingError(url.absoluteString, nil))
                 return
@@ -163,7 +165,6 @@ class SourcePointClient {
             do {
                 if let actionData = data {
                     let actionResponse = try (self?.json.decode(ActionResponse.self, from: actionData))
-                    UserDefaults.standard.setValue(actionResponse?.meta, forKey: GDPRConsentViewController.META_KEY)
                     completionHandler(actionResponse, nil)
                 } else {
                     completionHandler(nil, APIParsingError(url.absoluteString, error))

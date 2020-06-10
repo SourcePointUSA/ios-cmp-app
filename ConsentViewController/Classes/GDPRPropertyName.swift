@@ -11,7 +11,6 @@ import Foundation
 /// - Important: notice that it can only contain letters, numbers, . (dots), : (semicolons),
 ///  - (dashes) and / (slashes). The constructor will validate upon that and throw an error otherwise.
 @objcMembers open class GDPRPropertyName: NSObject, Codable {
-
     /// Up and lowercase letters, dots, semicollons, numbers and dashes
     static let validPattern = "^[a-zA-Z.:/0-9-]*$"
 
@@ -25,6 +24,9 @@ import Foundation
     }
 
     let rawValue: String
+    public override var description: String {
+        rawValue.replacingOccurrences(of: "https://", with: "")
+    }
 
     /// - Parameter rawValue: the exact name of your property as created in SourcePoint's dashboard.
     /// - Throws: `InvalidArgumentError` if the property name contain anything other than letters, numbers, . (dots), : (semicolons) and / (slashes).
@@ -41,5 +43,13 @@ import Foundation
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.rawValue)
+    }
+
+    public override func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? GDPRPropertyName {
+            return other.rawValue == rawValue
+        } else {
+            return false
+        }
     }
 }

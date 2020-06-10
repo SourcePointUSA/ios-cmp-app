@@ -10,7 +10,7 @@ import Foundation
 typealias Meta = String
 public typealias GDPRUUID = String
 
-struct MessageRequest: Encodable {
+struct MessageRequest: Codable, Equatable {
     let uuid: GDPRUUID?
     let euconsent: String
     let authId: String?
@@ -23,7 +23,7 @@ struct MessageRequest: Encodable {
     let meta: Meta
 }
 
-struct MessageResponse: Decodable {
+struct MessageResponse: Codable {
     let url: URL?
     let msgJSON: GDPRMessage?
     let uuid: GDPRUUID
@@ -31,7 +31,7 @@ struct MessageResponse: Decodable {
     var meta: Meta
 }
 
-struct ActionRequest: Encodable {
+struct ActionRequest: Codable, Equatable {
     let propertyId: Int
     let propertyHref: GDPRPropertyName
     let accountId: Int
@@ -45,7 +45,7 @@ struct ActionRequest: Encodable {
     let meta: Meta
 }
 
-struct ActionResponse: Decodable {
+struct ActionResponse: Codable {
     let uuid: GDPRUUID
     let userConsent: GDPRUserConsent
     var meta: Meta
