@@ -7,19 +7,6 @@
 
 import Foundation
 
-struct JSON {
-    private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
-    private lazy var jsonEncoder: JSONEncoder = { return JSONEncoder() }()
-
-    mutating func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
-        return try jsonDecoder.decode(decodable, from: data)
-    }
-
-    mutating func encode<T: Encodable>(_ encodable: T) throws -> Data {
-        return try jsonEncoder.encode(encodable)
-    }
-}
-
 /**
 A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
@@ -32,7 +19,6 @@ class SourcePointClient {
     static let CUSTOM_CONSENT_URL = URL(string: "custom-consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
 
     var client: HttpClient
-    private lazy var json: JSON = { return JSON() }()
 
     let requestUUID = UUID()
 
@@ -97,7 +83,7 @@ class SourcePointClient {
 
     // swiftlint:disable:next function_parameter_count
     func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, APIParsingError? ) -> Void) {
-        guard let body = try? json.encode(MessageRequest(
+        guard let body = try? JSONEncoder().encode(MessageRequest(
             uuid: consentUUID,
             euconsent: euconsent,
             authId: authId,
@@ -112,10 +98,10 @@ class SourcePointClient {
             completionHandler(nil, APIParsingError(url.absoluteString, nil))
             return
         }
-        client.post(url: url, body: body) { [weak self] data, error in
+        client.post(url: url, body: body) { data, error in
             do {
                 if let messageData = data {
-                    let messageResponse = try (self?.json.decode(MessageResponse.self, from: messageData))
+                    let messageResponse = try (JSONDecoder().decode(MessageResponse.self, from: messageData))
                     completionHandler(messageResponse, nil)
                 } else {
                     completionHandler(nil, APIParsingError(url.absoluteString, error))
@@ -145,7 +131,7 @@ class SourcePointClient {
 
         guard
             let pmPayload = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
-            let body = try? json.encode(ActionRequest(
+            let body = try? JSONEncoder().encode(ActionRequest(
                 propertyId: propertyId,
                 propertyHref: propertyName,
                 accountId: accountId,
@@ -161,10 +147,10 @@ class SourcePointClient {
                 completionHandler(nil, APIParsingError(url.absoluteString, nil))
                 return
         }
-        client.post(url: url, body: body) { [weak self] data, error  in
+        client.post(url: url, body: body) { data, error  in
             do {
                 if let actionData = data {
-                    let actionResponse = try (self?.json.decode(ActionResponse.self, from: actionData))
+                    let actionResponse = try (JSONDecoder().decode(ActionResponse.self, from: actionData))
                     completionHandler(actionResponse, nil)
                 } else {
                     completionHandler(nil, APIParsingError(url.absoluteString, error))
@@ -192,10 +178,10 @@ class SourcePointClient {
             return
         }
 
-        client.post(url: SourcePointClient.CUSTOM_CONSENT_URL, body: body) { [weak self] data, error in
+        client.post(url: SourcePointClient.CUSTOM_CONSENT_URL, body: body) { data, error in
             guard
                 let data = data,
-                let consentsResponse = try? (self?.json.decode(CustomConsentResponse.self, from: data)),
+                let consentsResponse = try? (JSONDecoder().decode(CustomConsentResponse.self, from: data)),
                 error == nil
             else {
                 completionHandler(nil, APIParsingError(SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, error))
