@@ -115,10 +115,19 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         loadPrivacyManager()
     }
     
-    func cancelPMAction() {
+    func cancelPMAction(consents: PMConsents?) {
         webview.canGoBack ?
             goBackAndClosePrivacyManager():
-            closeConsentUIIfOpen()
+            onConsentReady(gdprUUID: consentUUID, consents:consents)
+    }
+
+    private func onConsentReady(gdprUUID: GDPRUUID, consents: PMConsents?) {
+        consentDelegate?.onConsentReady?(gdprUUID: gdprUUID, userConsent: GDPRUserConsent(
+            acceptedVendors: consents?.vendors.accepted ?? [],
+            acceptedCategories: consents?.categories.accepted ?? [],
+            euconsent: (try? ConsentString(consentString: UserDefaults.standard.string(forKey: GDPRConsentViewController.EU_CONSENT_KEY) ?? "")) ?? ConsentString.empty
+        ))
+        closeConsentUIIfOpen()
     }
     
     func goBackAndClosePrivacyManager() {
@@ -133,7 +142,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             case .ShowPrivacyManager:
                 showPrivacyManagerFromMessageAction()
             case .PMCancel:
-                cancelPMAction()
+                cancelPMAction(consents: consents)
             default:
                 closeConsentUIIfOpen()
         }
