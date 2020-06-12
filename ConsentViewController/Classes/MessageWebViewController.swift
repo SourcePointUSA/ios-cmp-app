@@ -139,12 +139,14 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     func onAction(_ action: GDPRAction, consents: PMConsents?) {
         consentDelegate?.onAction?(action, consents: consents)
         switch action.type {
-            case .ShowPrivacyManager:
-                showPrivacyManagerFromMessageAction()
-            case .PMCancel:
-                cancelPMAction(consents: consents)
-            default:
-                closeConsentUIIfOpen()
+        case .ShowPrivacyManager:
+            showPrivacyManagerFromMessageAction()
+        case .PMCancel:
+            cancelPMAction(consents: consents)
+        case .Dismiss:
+            onConsentReady(gdprUUID: consentUUID, consents: consents)
+        default:
+            closeConsentUIIfOpen()
         }
     }
     
