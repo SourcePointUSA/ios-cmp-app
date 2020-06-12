@@ -1,0 +1,13 @@
+[
+{
+    "name": "GalaxyJ6Plus",
+    "deviceName": "SM-J106F",
+    "platformName": "Android",
+    "platformVersion": "9",
+    "automationName": "UIAutomator2",
+    "packageName": "com.sourcepointmeta.app",
+    "activity": "com.sourcepointmeta.app.ui.SplashScreenActivity",
+    "reset": false,
+    "app": "SourcePointMetaApp.apk"
+  }
+]

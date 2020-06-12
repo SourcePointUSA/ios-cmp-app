@@ -1,0 +1,11 @@
+out/*
+target/*
+build/*
+src/main/main.iml
+src/test/test.iml
+test-output/
+allure-results/
+.DS_Store
+.classpath
+.project
+.settings/
