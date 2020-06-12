@@ -28,4 +28,3 @@ public class AppiumServer {
     }
 }
 
-//‎⁨/⁨Applications/⁨Appium/⁨Contents/⁨Resources⁩/app/⁨node_modules/appium⁩/⁨build/lib⁩
