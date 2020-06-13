@@ -23,8 +23,6 @@ import tests.BaseTest;
 @Listeners({ TestListener.class })
 public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
-	SoftAssert softAssert = new SoftAssert();
-
 	private static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 	String accountId = "808";
@@ -72,9 +70,10 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		// this.expectedShowOnceTCFv2Message = expectedShowOnceTCFv2Message;
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority =1)
 	public void CheckAcceptAllFromPrivacyManage() throws InterruptedException, NoSuchElementException {
 
+		SoftAssert softAssert = new SoftAssert();
 		try {
 
 			System.out.println(" Test execution start ");
@@ -130,8 +129,10 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" },priority = 2)
 	public void CheckCancelFromPrivacyManager() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
+
 		try {
 			System.out.println(" Test execution start ");
 			System.out.println("CheckCancleFromPrivacyManager - " + String.valueOf(Thread.currentThread().getId()));
@@ -176,8 +177,10 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=3)
 	public void CheckConsentOnAcceptAllFromConsentView() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
+
 		try {
 			System.out.println(" Test execution start ");
 			System.out.println(
@@ -229,8 +232,9 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=4)
 	public void CheckConsentOnRejectAllFromConsentView() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -286,8 +290,9 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=5)
 	public void CheckConsentOnRejectAllFromPM() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -356,8 +361,10 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=6)
 	public void CheckPurposeConsentAfterRestCookies() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
+
 		try {
 			String value = "en";
 			System.out.println(" Test execution start ");
@@ -423,8 +430,9 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=7)
 	public void CheckConsentDataFromPrivacyManagerDirect() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -487,9 +495,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=8)
 	public void CheckCancelFromDirectPrivacyManager() throws InterruptedException, NoSuchElementException {
-		try {
+	
+		SoftAssert softAssert = new SoftAssert();
+try {
 			System.out.println(" Test execution start ");
 			System.out
 					.println("CheckCancelFromDirectPrivacyManager - " + String.valueOf(Thread.currentThread().getId()));
@@ -552,8 +562,9 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=9)
 	public void CheckNoConsentMessageDisplayAfterShowSiteInfo() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			String key = "displayMode";
@@ -603,8 +614,9 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=10)
 	public void DeleteSite() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			String key = "language";
@@ -666,10 +678,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=11)
 	public void EditSiteWithConsentGivenBefore() throws InterruptedException, NoSuchElementException {
 		String key = "language";
 		String value = "en";
+		SoftAssert softAssert = new SoftAssert();
 
 		ArrayList<String> consentData;
 		try {
@@ -730,8 +743,9 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=12)
 	public void CheckNoMessageWithShowOnceCriteriaWhenConsentAlreadySaved() throws InterruptedException, NoSuchElementException {
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			String key = "displayMode";
@@ -795,9 +809,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=13)
 	public void CheckSavedConsentAlwaysWithSameAuthID() throws InterruptedException, NoSuchElementException {
-		String key = "language";
+	
+		SoftAssert softAssert = new SoftAssert();
+String key = "language";
 		String value = "fr";
 		Date date = new Date();
 		ArrayList<String> consentData;
@@ -879,11 +895,12 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-//	@Test(groups = { "GDPR-MetaAppTests" })
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority=14)
 	public void CheckConsentWithSameAuthIDWithNewInstallation() throws InterruptedException, NoSuchElementException {
 		String key = "language";
 		String value = "fr";
 		Date date = new Date();
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -962,10 +979,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-//	@Test(groups = { "GDPR-MetaAppTests" })
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority=15)
 	public void CheckSavedConsentAlwaysWithSameAuthIDCrossPlatform() throws InterruptedException, NoSuchElementException {
 		String key = "language";
 		String value = "fr";
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -1036,11 +1054,12 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=16)
 	public void CheckConsentWithSameAuthIDAfterDeletingAndRecreate() throws InterruptedException, NoSuchElementException {
 		String key = "language";
 		String value = "fr";
 		Date date = new Date();
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -1121,10 +1140,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=17)
 	public void CheckPropertDetailsOnMessageDismiss() throws InterruptedException, NoSuchElementException {
 		String key = "language";
 		String value = "en";
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -1168,10 +1188,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 18)
 	public void CheckPMAsMEssage() throws InterruptedException, NoSuchElementException {
 		String key = "pm";
 		String value = "true";
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -1205,10 +1226,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=19)
 	public void CheckCancelFromPMAsMEssage() throws InterruptedException, NoSuchElementException {
 		String key = "pm";
 		String value = "true";
+		SoftAssert softAssert = new SoftAssert();
 
 		Date date = new Date();
 		String authID = sdf.format(date);
@@ -1272,10 +1294,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=20)
 	public void CheckConsentOnDirectPMLoadWhenPMAsMEssage() throws InterruptedException, NoSuchElementException {
 		String key = "pm";
 		String value = "true";
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
@@ -1326,10 +1349,11 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=21)
 	public void CheckConsentWithAuthIDFromPMAsMessage() throws InterruptedException, NoSuchElementException {
 		String key = "pm";
 		String value = "true";
+		SoftAssert softAssert = new SoftAssert();
 
 		Date date = new Date();
 		String authID = sdf.format(date);
@@ -1388,12 +1412,13 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" })
+	@Test(groups = { "GDPR-MetaAppTests" }, priority=22)
 	public void CheckNoMessageAfterLoggedInWithAuthID() throws InterruptedException, NoSuchElementException {
 		String key = "displayMode";
 		String value = "appLaunch";
 		Date date = new Date();
 		String authID = sdf.format(date);
+		SoftAssert softAssert = new SoftAssert();
 
 		try {
 			System.out.println(" Test execution start ");
