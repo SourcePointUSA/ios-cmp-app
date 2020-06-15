@@ -5,7 +5,7 @@
 //  Created by Andre Herculano on 15.05.19.
 //  Copyright © 2019 sourcepoint. All rights reserved.
 //
-
+// Test automation jenkins job
 import UIKit
 import ConsentViewController
 
