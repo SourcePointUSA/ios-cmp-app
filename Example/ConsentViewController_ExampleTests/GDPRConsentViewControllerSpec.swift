@@ -125,18 +125,6 @@ class GDPRConsentViewControllerSpec: QuickSpec {
             }
 
             fcontext("onAction") {
-                describe("for actions that don't call the post consent API") {
-                    let types: [GDPRActionType] = [.Dismiss, .PMCancel]
-                    types.forEach { type in
-                        describe(type.description) {
-                            it("calls onConsentReady") {
-                                consentViewController.onAction(GDPRAction(type: type))
-                                expect(mockConsentDelegate.isOnConsentReadyCalled).to(beTrue(), description: type.description)
-                            }
-                        }
-                    }
-                }
-
                 describe("for actions that call the post consent API") {
                     let types: [GDPRActionType] = [.AcceptAll, .RejectAll, .SaveAndExit]
 
@@ -186,9 +174,21 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                     }
                 }
 
-                it("does not call onConsentReady for ShowPrivacyManager action type") {
-                    consentViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
-                    expect(mockConsentDelegate.isOnConsentReadyCalled).to(beFalse())
+                let types: [GDPRActionType] = [.ShowPrivacyManager, .PMCancel]
+                types.forEach { type in
+                    describe(type.description) {
+                        it("does not call onConsentReady") {
+                            consentViewController.onAction(GDPRAction(type: type))
+                            expect(mockConsentDelegate.isOnConsentReadyCalled).to(beFalse(), description: type.description)
+                        }
+                    }
+                }
+
+                describe("for an action with Dismiss type") {
+                    it("calls the onConsentReady") {
+                        consentViewController.onAction(GDPRAction(type: .Dismiss))
+                        expect(mockConsentDelegate.isOnConsentReadyCalled).to(beTrue())
+                    }
                 }
             }
 

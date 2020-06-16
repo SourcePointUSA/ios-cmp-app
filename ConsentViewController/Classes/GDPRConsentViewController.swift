@@ -331,10 +331,6 @@ public typealias TargetingParams = [String: String]
     }
 
     public func reportAction(_ action: GDPRAction) {
-        if gdprUUID.isEmpty {
-            consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
-            return
-        }
         sourcePoint.postAction(action: action, consentUUID: gdprUUID, meta: localStorage.meta) { [weak self] response, error in
             if let actionResponse = response {
                 self?.localStorage.meta = actionResponse.meta
@@ -371,7 +367,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onAction(_ action: GDPRAction) {
         let type = action.type
         consentDelegate?.onAction?(action)
-        if type == .Dismiss || type == .PMCancel {
+        if type == .Dismiss {
             self.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
         } else if type == .AcceptAll || type == .RejectAll || type == .SaveAndExit {
             reportAction(action)
