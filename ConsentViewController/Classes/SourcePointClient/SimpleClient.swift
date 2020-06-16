@@ -90,6 +90,7 @@ class SimpleClient: HttpClient {
             completionHandler(nil, NoInternetConnection())
             return
         }
+        setCachePolicy()
         session.dataTask(urlRequest) { [weak self] data, response, error in
             self?.dispatchQueue.async { [weak self] in
                 self?.logResponse(urlRequest, data)
@@ -118,5 +119,14 @@ class SimpleClient: HttpClient {
             return
         }
         request(URLRequest(url: _url), completionHandler)
+    }
+
+    // Set cache policy
+    func setCachePolicy() {
+        guard #available(iOS 13.0, *) else {
+            session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+            return
+        }
+        session.configuration.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
     }
 }
