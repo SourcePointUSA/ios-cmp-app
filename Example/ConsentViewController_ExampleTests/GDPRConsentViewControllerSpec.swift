@@ -12,54 +12,6 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-class MockConsentDelegate: GDPRConsentDelegate {
-    var isConsentUIWillShowCalled = false
-    var isConsentUIDidDisappearCalled = false
-    var isOnErrorCalled = false
-    var isOnActionCalled = false
-    var isOnConsentReadyCalled = false
-    var isMessageWillShowCalled = false
-    var isMessageDidDisappearCalled = false
-    var isGdprPMWillShowCalled = false
-    var isGdprPMDidDisappearCalled = false
-
-    public func consentUIWillShow() {
-        isConsentUIWillShowCalled = true
-    }
-
-    public func consentUIDidDisappear() {
-        isConsentUIDidDisappearCalled = true
-    }
-
-    public func onError(error: GDPRConsentViewControllerError?) {
-        isOnErrorCalled = true
-    }
-
-    public func onAction(_ action: GDPRAction) {
-        isOnActionCalled = true
-    }
-
-    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        isOnConsentReadyCalled = true
-    }
-
-    public func messageWillShow() {
-        isMessageWillShowCalled = true
-    }
-
-    public func messageDidDisappear() {
-        isMessageDidDisappearCalled = true
-    }
-
-    public func gdprPMWillShow() {
-        isGdprPMWillShowCalled = true
-    }
-
-    public func gdprPMDidDisappear() {
-        isGdprPMDidDisappearCalled = true
-    }
-}
-
 class GDPRConsentViewControllerSpec: QuickSpec {
     func getController(_ delegate: GDPRConsentDelegate = MockConsentDelegate(), _ spClient: SourcePointProtocol = SourcePointClientMock(), _ storage: GDPRLocalStorage = GDPRLocalStorageMock()) -> GDPRConsentViewController {
         return GDPRConsentViewController(accountId: 22,
