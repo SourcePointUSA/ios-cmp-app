@@ -13,16 +13,6 @@ import Nimble
 
 // swiftlint:disable force_cast function_body_length
 
-class ConnectivityMock: Connectivity {
-    let isConnected: Bool
-    init(connected: Bool) {
-        isConnected = connected
-    }
-    func isConnectedToNetwork() -> Bool {
-        return isConnected
-    }
-}
-
 class URLSessionDataTaskMock: SPURLSessionDataTask {
     var resumeWasCalled = false
 

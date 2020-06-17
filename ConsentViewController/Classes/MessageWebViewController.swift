@@ -55,7 +55,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var consentUILoaded = false
     var isPMLoaded = false
     let timeout: TimeInterval
-
+    var connectivityManager: Connectivity = ConnectivityManager()
     var lastChoiceId: String?
 
     init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
@@ -145,8 +145,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func load(url: URL) {
-        let connectvityManager = ConnectivityManager()
-        if connectvityManager.isConnectedToNetwork() {
+        if connectivityManager.isConnectedToNetwork() {
             webview?.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: timeout))
         } else {
             onError(error: NoInternetConnection())
