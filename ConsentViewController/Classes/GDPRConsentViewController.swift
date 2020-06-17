@@ -10,7 +10,7 @@ import UIKit
 
 public typealias TargetingParams = [String: String]
 
-@objcMembers open class GDPRConsentViewController: UIViewController {
+@objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
     static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
     static let EU_CONSENT_KEY = "\(SP_GDPR_KEY_PREFIX)euconsent"
@@ -231,7 +231,7 @@ public typealias TargetingParams = [String: String]
        loadGDPRMessage(native: true, authId: authId)
     }
 
-    func loadMessage(fromUrl url: URL) {
+    public func loadMessage(fromUrl url: URL) {
         messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
