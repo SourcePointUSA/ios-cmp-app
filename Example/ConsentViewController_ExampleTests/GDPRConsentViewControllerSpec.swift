@@ -42,22 +42,17 @@ class GDPRConsentViewControllerSpec: QuickSpec {
             userConsents = GDPRUserConsent.empty()
         }
 
-        describe("load Native Message") {
-            it("Load native message with auth ID") {
-                consentViewController.loadNativeMessage(forAuthId: "SPTest")
-                expect(consentViewController.loading).to(equal(.Loading), description: "")
+        describe("loadNativeMessage") {
+            it("calls getMessage on SourcePointClient") {
+                consentViewController.loadNativeMessage(forAuthId: nil)
+                expect(sourcePointClient.getMessageCalled).to(beTruthy())
             }
         }
 
-        describe("load Message in webview") {
-            it("Load message in webview without authId") {
+        describe("loadMessage") {
+            it("calls getMessage on SourcePointClient") {
                 consentViewController.loadMessage()
-                expect(consentViewController.loading).to(equal(.Loading), description: "loadMessage method works as expected")
-            }
-
-            it("Load message in webview with authId") {
-                consentViewController.loadMessage(forAuthId: "SPTestMessage")
-                expect(consentViewController.loading).to(equal(.Loading), description: "loadMessage method with authID works as expected")
+                expect(sourcePointClient.getMessageCalled).to(beTruthy())
             }
         }
 
@@ -124,7 +119,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                 }
             }
 
-            fcontext("onAction") {
+            context("onAction") {
                 describe("for actions that call the post consent API") {
                     let types: [GDPRActionType] = [.AcceptAll, .RejectAll, .SaveAndExit]
 
