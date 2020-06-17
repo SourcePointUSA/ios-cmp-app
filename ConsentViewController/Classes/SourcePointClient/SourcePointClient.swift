@@ -7,92 +7,14 @@
 
 import Foundation
 
-typealias CompletionHandler = (Data?, GDPRConsentViewControllerError?) -> Void
-
-protocol HttpClient {
-
-    func get(url: URL?, completionHandler: @escaping CompletionHandler)
-    func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler)
-}
-
-class SimpleClient: HttpClient {
-    static let logCalls = false
-
-    static func logRequest(_ type: String, _ url: URL?, _ body: Data?) {
-        if let url = url, logCalls {
-            print("\(type): \(url)")
-            
-            if let body = body {
-                print(String(data: body, encoding: .utf8) ?? "{}")
-            }
-        }
-    }
-
-    static func logRequest(_ url: URL?, _ body: Data?) {
-        logRequest("REQUEST", url, body)
-    }
-
-    static func logResponse(_ url: URL?, _ body: Data?) {
-        logRequest("RESPONSE", url, body)
-    }
-
-    let connectivityManager: Connectivity
-    
-    init(connectivityManager: Connectivity) {
-        self.connectivityManager = connectivityManager
-    }
-    
-    convenience init() {
-        self.init(connectivityManager: ConnectivityManager())
-    }
-
-    func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {
-        SimpleClient.logRequest(urlRequest.url, urlRequest.httpBody)
-        if(connectivityManager.isConnectedToNetwork()) {
-            URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                DispatchQueue.main.async {
-                    SimpleClient.logResponse(urlRequest.url, data)
-                    guard let data = data else {
-                        completionHandler(nil, GeneralRequestError(urlRequest.url, response, error))
-                        return
-                    }
-                    completionHandler(data, nil)
-                }
-            }.resume()
-        } else {
-            completionHandler(nil, NoInternetConnection())
-        }
-    }
-    
-    func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler) {
-        guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
-            return
-        }
-        var urlRequest = URLRequest(url: _url)
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpMethod = "POST"
-        urlRequest.httpBody = body
-        request(urlRequest, completionHandler)
-    }
-    
-    func get(url: URL?, completionHandler: @escaping CompletionHandler) {
-        guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
-            return
-        }
-        request(URLRequest(url: _url), completionHandler)
-    }
-}
-
 struct JSON {
     private lazy var jsonDecoder: JSONDecoder = { return JSONDecoder() }()
     private lazy var jsonEncoder: JSONEncoder = { return JSONEncoder() }()
-    
+
     mutating func decode<T: Decodable>(_ decodable: T.Type, from data: Data) throws -> T {
         return try jsonDecoder.decode(decodable, from: data)
     }
-    
+
     mutating func encode<T: Encodable>(_ encodable: T) throws -> Data {
         return try jsonEncoder.encode(encodable)
     }
@@ -108,12 +30,12 @@ class SourcePointClient {
     static let GET_MESSAGE_URL_URL = URL(string: "message-url", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CONSENT_URL = URL(string: "consent", relativeTo: SourcePointClient.WRAPPER_API)!
     static let GET_GDPR_STATUS_URL = URL(string: "https://sourcepoint.mgr.consensu.org/consent/v2/gdpr-status")!
-    
+
     private var client: HttpClient
     private lazy var json: JSON = { return JSON() }()
-    
+
     let requestUUID = UUID()
-    
+
     private let accountId: Int
     private let propertyId: Int
     private let propertyName: GDPRPropertyName
@@ -130,15 +52,15 @@ class SourcePointClient {
         self.targetingParams = targetingParams
         self.client = client
     }
-    
+
     convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: nil, client: SimpleClient())
     }
-    
+
     convenience init(accountId: Int, propertyId: Int, propertyName: GDPRPropertyName, pmId: String, campaignEnv: GDPRCampaignEnv, targetingParams: TargetingParams) {
         self.init(accountId: accountId, propertyId: propertyId, propertyName: propertyName, pmId: pmId, campaignEnv: campaignEnv, targetingParams: targetingParams, client: SimpleClient())
     }
-    
+
     func getGdprStatus(completionHandler: @escaping (Bool?, APIParsingError? ) -> Void) {
         client.get(url: SourcePointClient.GET_GDPR_STATUS_URL) { [weak self] data, error in
             do {
@@ -152,7 +74,7 @@ class SourcePointClient {
             }
         }
     }
-    
+
     private func targetingParamsToString(_ params: TargetingParams?) -> String {
         let emptyParams = "{}"
         do {
@@ -162,7 +84,7 @@ class SourcePointClient {
             return emptyParams
         }
     }
-    
+
     private func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, completionHandler: @escaping (MessageResponse?, APIParsingError?) -> Void) {
         guard let body = try? json.encode(MessageRequest(
             uuid: consentUUID,
@@ -203,7 +125,7 @@ class SourcePointClient {
             completionHandler: completionHandler
         )
     }
-    
+
     func getMessageContents(consentUUID: GDPRUUID?, euconsent: ConsentString?, authId: String?, completionHandler: @escaping (MessageResponse?, APIParsingError?) -> Void) {
         getMessage(
             url: SourcePointClient.GET_MESSAGE_CONTENTS_URL,
@@ -250,3 +172,4 @@ class SourcePointClient {
         }
     }
 }
+
