@@ -116,17 +116,19 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func showPrivacyManagerFromMessageAction() {
+        isSecondLayerMessage = true
         closeMessage()
         loadPrivacyManager()
     }
 
     func cancelPMAction() {
-        (webview?.canGoBack ?? false) ?
-            goBackAndClosePrivacyManager():
+        isSecondLayerMessage ?
+            goBackAndClosePrivacyManager() :
             closeConsentUIIfOpen()
     }
 
     func goBackAndClosePrivacyManager() {
+        isSecondLayerMessage = false
         webview?.goBack()
         closePrivacyManager()
         onMessageReady()
