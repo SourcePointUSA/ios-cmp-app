@@ -10,6 +10,8 @@ import UIKit
 
 public typealias TargetingParams = [String: String]
 
+// swiftlint:disable type_body_length
+
 @objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
     static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
