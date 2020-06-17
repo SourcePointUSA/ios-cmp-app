@@ -141,17 +141,18 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             }
         }
 
-        describe("Test getChoiceId methods") {
-            var chioceID: String?
-            beforeEach {
-                messageWebViewController = self.getMessageWebViewController()
+        describe("getChoiceId") {
+            context("when the payload contains an id") {
+                it("returns the id from the payload") {
+                    expect(messageWebViewController.getChoiceId(["id": "foo"])).to(equal("foo"))
+                }
             }
-            it("Test MessageWebViewController calls getChoiceId method") {
-                chioceID = messageWebViewController.getChoiceId(payload as! [String: Any])
-                if chioceID != nil {
-                    expect(chioceID!).to(equal("455262"), description: "Able to get chioceID")
-                } else {
-                    expect(chioceID).to(beNil(), description: "Unable to get chioceID")
+
+            context("when the payload doesn't contain id") {
+                it("returns the lastChoiceId property") {
+                    expect(messageWebViewController.getChoiceId([:])).to(beNil())
+                    messageWebViewController.lastChoiceId = "id"
+                    expect(messageWebViewController.getChoiceId([:])).to(equal("id"))
                 }
             }
         }

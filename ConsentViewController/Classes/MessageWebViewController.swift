@@ -51,6 +51,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     let pmId: String
     let consentUUID: GDPRUUID
 
+    var isSecondLayerMessage = false
     var consentUILoaded = false
     var isPMLoaded = false
     let timeout: TimeInterval
@@ -192,7 +193,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         // since we store the last non-null choiceId, the lastChoiceId
         // will be either the choiceId of "Show Options" action when coming from the message
         // or null if coming from the PM opened directly
-        lastChoiceId = payload["id"] as? String? ?? lastChoiceId
+        lastChoiceId = (payload["id"] as? String) ?? lastChoiceId
         return lastChoiceId
     }
 
