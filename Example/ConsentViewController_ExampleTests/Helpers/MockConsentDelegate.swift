@@ -20,6 +20,8 @@ class MockConsentDelegate: GDPRConsentDelegate {
     var isGdprPMWillShowCalled = false
     var isGdprPMDidDisappearCalled = false
 
+    var onActionCalledWith: GDPRAction!
+
     public func consentUIWillShow() {
         isConsentUIWillShowCalled = true
     }
@@ -34,6 +36,7 @@ class MockConsentDelegate: GDPRConsentDelegate {
 
     public func onAction(_ action: GDPRAction) {
         isOnActionCalled = true
+        onActionCalledWith = action
     }
 
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
