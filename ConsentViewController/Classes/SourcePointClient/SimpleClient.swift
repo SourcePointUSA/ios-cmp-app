@@ -88,6 +88,7 @@ class SimpleClient: HttpClient {
             completionHandler(nil, NoInternetConnection())
             return
         }
+        session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         session.dataTask(urlRequest) { [weak self] data, response, error in
             self?.dispatchQueue.async { [weak self] in
                 self?.logResponse(urlRequest, data)
