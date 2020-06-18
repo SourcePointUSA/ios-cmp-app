@@ -12,13 +12,18 @@ import Foundation
 class GDPRLocalStorageMock: GDPRLocalStorage {
     var storage: Storage = InMemoryStorageMock()
     var consentUUID: GDPRUUID = ""
-    var meta: String = ""
+    var meta: String = "{}"
     var authId: String?
     var tcfData: [String: Any] = [:]
     var userConsents: GDPRUserConsent = GDPRUserConsent.empty()
+
+    var clearWasCalled = false
+
     func clear() {
+        clearWasCalled = true
         storage = InMemoryStorageMock()
     }
+
     required init(storage: Storage = InMemoryStorageMock()) {
         self.storage = storage
     }

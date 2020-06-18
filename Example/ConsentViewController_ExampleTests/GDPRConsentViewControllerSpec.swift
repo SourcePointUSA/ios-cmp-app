@@ -63,28 +63,10 @@ class GDPRConsentViewControllerSpec: QuickSpec {
             }
         }
 
-        describe("Clears UserDefaults") {
-            beforeEach {
-                UserDefaults.standard.set("consent string", forKey: GDPRConsentViewController.EU_CONSENT_KEY)
-                UserDefaults.standard.set("gdpr uuid", forKey: GDPRConsentViewController.GDPR_UUID_KEY)
-            }
-
-            it("Clears all IAB related data from the UserDefaults") {
-                consentViewController.clearIABConsentData()
-                expect(consentViewController.localStorage.tcfData).to(beEmpty())
-            }
-
-            it("Clears all consent data from the UserDefaults") {
+        describe("clearAllData") {
+            it("calls clear on its localStorage") {
                 consentViewController.clearAllData()
-                let metaKey = UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY)
-                expect(metaKey).to(equal("{}"))
-            }
-
-            it("Clears its consent related in-memory attributes") {
-                consentViewController.clearAllData()
-                expect(consentViewController.euconsent).to(beEmpty())
-                expect(consentViewController.gdprUUID).to(beEmpty())
-                expect(consentViewController.userConsents).to(equal(GDPRUserConsent.empty()))
+                expect(localStorage.clearWasCalled).to(beTrue())
             }
         }
 
