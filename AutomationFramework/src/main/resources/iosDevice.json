@@ -6,7 +6,7 @@
 		"platformVersion": "12.0",
 		"automationName": "XCuiTest",
 		"udid": "8400B430-25E9-4061-B5A0-64C6546F4F19",
-		"reset": true,
+		"reset": false,
 		"app": "TCFv1_GDPR-MetaApp.zip"
 	}
-]
+]s
