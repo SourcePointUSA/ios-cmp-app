@@ -399,7 +399,6 @@ public class GDPR_TCFV1_MetaAppTests extends BaseTest {
 					"CheckConsentDataFromPrivacyManagerDirect - " + String.valueOf(Thread.currentThread().getId()));
 
 			MobilePageWrapper mobilePageWrapper = new MobilePageWrapper(driver);
-			Thread.sleep(4000);
 			mobilePageWrapper.siteListPage.GDPRAddButton.click();
 			mobilePageWrapper.newSitePage.GDPRAccountID.sendKeys(accountId);
 			mobilePageWrapper.newSitePage.GDPRSiteId.sendKeys(siteID);
@@ -631,7 +630,6 @@ public class GDPR_TCFV1_MetaAppTests extends BaseTest {
 			System.out.println("EditSiteWithConsentGivenBefore - " + String.valueOf(Thread.currentThread().getId()));
 
 			MobilePageWrapper mobilePageWrapper = new MobilePageWrapper(driver);
-			Thread.sleep(3000);
 			mobilePageWrapper.siteListPage.GDPRAddButton.click();
 			mobilePageWrapper.newSitePage.GDPRAccountID.sendKeys(accountId);
 			mobilePageWrapper.newSitePage.GDPRSiteId.sendKeys(siteID);
@@ -699,7 +697,6 @@ public class GDPR_TCFV1_MetaAppTests extends BaseTest {
 					+ String.valueOf(Thread.currentThread().getId()));
 
 			MobilePageWrapper mobilePageWrapper = new MobilePageWrapper(driver);
-			Thread.sleep(3000);
 			mobilePageWrapper.siteListPage.GDPRAddButton.click();
 			mobilePageWrapper.newSitePage.GDPRAccountID.sendKeys(accountId);
 			mobilePageWrapper.newSitePage.GDPRSiteId.sendKeys(siteID);
@@ -773,7 +770,6 @@ public class GDPR_TCFV1_MetaAppTests extends BaseTest {
 
 			MobilePageWrapper mobilePageWrapper = new MobilePageWrapper(driver);
 			mobilePageWrapper.siteListPage.GDPRAddButton.click();
-			Thread.sleep(3000);
 			mobilePageWrapper.newSitePage.GDPRAccountID.sendKeys(accountId);
 			mobilePageWrapper.newSitePage.GDPRSiteId.sendKeys(siteID);
 			mobilePageWrapper.newSitePage.GDPRSiteName.sendKeys(siteName);
@@ -1012,7 +1008,6 @@ public class GDPR_TCFV1_MetaAppTests extends BaseTest {
 					+ String.valueOf(Thread.currentThread().getId()));
 
 			MobilePageWrapper mobilePageWrapper = new MobilePageWrapper(driver);
-			Thread.sleep(3000);
 			mobilePageWrapper.siteListPage.GDPRAddButton.click();
 			mobilePageWrapper.newSitePage.GDPRAccountID.sendKeys(accountId);
 			mobilePageWrapper.newSitePage.GDPRSiteId.sendKeys(siteID);

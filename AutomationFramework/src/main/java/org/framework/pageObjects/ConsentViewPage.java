@@ -131,7 +131,6 @@ public class ConsentViewPage extends Page {
 
 	public ArrayList<String> getConsentMessageDetails() throws InterruptedException {
 		Thread.sleep(8000);
-		Thread.sleep(10000);
 		for (WebElement msg : ConsentMessage) {
 			consentMsg.add(msg.getText());
 			// consentMsg.add(msg.getAttribute("value"));
@@ -151,7 +150,6 @@ public class ConsentViewPage extends Page {
 	}
 
 	public String verifyWrongCampaignError() throws InterruptedException {
-		Thread.sleep(3000);
 		try {
 			return WrongCampaignErrorText.get(WrongCampaignErrorText.size() - 1).getText();
 		} catch (Exception e) {

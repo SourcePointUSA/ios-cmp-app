@@ -118,50 +118,10 @@ public class NewSitePage extends Page {
 
 	}
 
-	public String getError() throws InterruptedException {
-		boolean check = false;
-		// waitForElement(ErrorMessage, 10);
-		Thread.sleep(5000);
-		int i = ErrorMessage.size();
-
-		String errorMsg = ErrorMessage.get(ErrorMessage.size() - 1).getText();
-		return errorMsg;
-	}
-
-	public boolean verifyError() throws InterruptedException {
-		boolean check = false;
-		// waitForElement(ErrorMessage, 10);
-		Thread.sleep(3000);
-		int i = ErrorMessage.size();
-
-		String errorMsg = ErrorMessage.get(ErrorMessage.size() - 1).getText();
-		if (errorMsg.equals("Please enter targeting parameter key and value")) {
-			check = true;
-		}
-		return check;
-	}
-
-//	public boolean verifyError() {
-//		return paramFound;
-//
-//	}
 
 	public void waitForElement(WebElement ele, int timeOutInSeconds) {
 		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 		wait.until(ExpectedConditions.visibilityOf(ele));
 	}
 
-	public boolean verifyErrorMsg(String udid) throws InterruptedException {
-		boolean check = false;
-		// waitForElement(ErrorMessage, 10);
-		Thread.sleep(3000);
-		int i = ErrorMessage.size();
-
-		String errorMsg = ErrorMessage.get(ErrorMessage.size() - 1).getText();
-
-		if (errorMsg.equals("Please enter property details")) {
-			check = true;
-		}
-		return check;
-	}
 }

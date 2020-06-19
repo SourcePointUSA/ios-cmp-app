@@ -31,7 +31,7 @@ public class IOSDriverBuilder extends DeviceConfig {
         iosCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, device.getPlatformVersion());
         iosCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, device.getAutomationName());
         iosCapabilities.setCapability(MobileCapabilityType.UDID, device.getUdid());
-        iosCapabilities.setCapability(MobileCapabilityType.FULL_RESET, device.fullReset());
+  //      iosCapabilities.setCapability(MobileCapabilityType.FULL_RESET, device.fullReset());
         iosCapabilities.setCapability(MobileCapabilityType.APP, FileUtility.getFile(device.getApp()).getAbsolutePath());
         System.setProperty("webdriver.http.factory", "apache");
         driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), iosCapabilities);
