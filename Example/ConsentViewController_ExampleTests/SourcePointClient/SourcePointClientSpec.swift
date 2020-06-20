@@ -12,36 +12,6 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-public class MockHttp: HttpClient {
-    var getWasCalledWithUrl: URL?
-    var postWasCalledWithUrl: URL?
-    var postWasCalledWithBody: Data?
-    var success: Data?
-    var error: Error?
-
-    init(success: Data?) {
-        self.success = success
-    }
-
-    init(error: Error?) {
-        self.error = error
-    }
-
-    public func get(url: URL?, completionHandler: @escaping CompletionHandler) {}
-
-    func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {}
-
-    public func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler) {
-        postWasCalledWithUrl = url?.absoluteURL
-        postWasCalledWithBody = body
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-            self.success != nil ?
-                completionHandler(self.success!, nil) :
-                completionHandler(nil, APIParsingError(url!.absoluteString, self.error))
-        })
-    }
-}
-
 class SourcePointClientSpec: QuickSpec {
     static let propertyId = 123
 

@@ -6,178 +6,72 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try function_body_length
+// swiftlint:disable force_try function_body_length line_length
 
 import Quick
 import Nimble
 @testable import ConsentViewController
 
-public class MockConsentDelegate: GDPRConsentDelegate {
-    var isConsentUIWillShowCalled = false
-    var isConsentUIDidDisappearCalled = false
-    var isOnErrorCalled = false
-    var isReportActionCalled = false
-    var isOnActionCalled = false
-    var isOnConsentReadyCalled = false
-    var isMessageWillShowCalled = false
-    var isMessageDidDisappearCalled = false
-    var isGdprPMWillShowCalled = false
-    var isGdprPMDidDisappearCalled = false
-
-    public func consentUIWillShow() {
-        isConsentUIWillShowCalled = true
-    }
-
-    public func consentUIDidDisappear() {
-        isConsentUIDidDisappearCalled = true
-    }
-
-    public func onError(error: GDPRConsentViewControllerError?) {
-        isOnErrorCalled = true
-    }
-
-    public func reportAction(_ action: GDPRAction) {
-        isReportActionCalled = true
-    }
-
-    public func onAction(_ action: GDPRAction) {
-        isOnActionCalled = true
-    }
-
-    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        isOnConsentReadyCalled = true
-    }
-
-    public func messageWillShow() {
-        isMessageWillShowCalled = true
-    }
-
-    public func messageDidDisappear() {
-        isMessageDidDisappearCalled = true
-    }
-
-    public func gdprPMWillShow() {
-        isGdprPMWillShowCalled = true
-    }
-
-    public func gdprPMDidDisappear() {
-        isGdprPMDidDisappearCalled = true
-    }
-
-}
-
-class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
-    func getGDPRConsentViewController() -> GDPRConsentViewController {
+class GDPRConsentViewControllerSpec: QuickSpec {
+    func getController(_ delegate: GDPRConsentDelegate = MockConsentDelegate(), _ spClient: SourcePointProtocol = SourcePointClientMock(), _ storage: GDPRLocalStorage = GDPRLocalStorageMock()) -> GDPRConsentViewController {
         return GDPRConsentViewController(accountId: 22,
                                          propertyId: 7094,
                                          propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
                                          PMId: "100699",
                                          campaignEnv: .Public,
-                                         consentDelegate: self)
+                                         targetingParams: [:],
+                                         consentDelegate: delegate,
+                                         sourcePointClient: spClient,
+                                         localStorage: storage)
     }
 
     override func spec() {
-        var consentViewController = self.getGDPRConsentViewController()
+        var sourcePointClient = SourcePointClientMock()
+        var localStorage = GDPRLocalStorageMock()
         var mockConsentDelegate = MockConsentDelegate()
-        var acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
-        var dismissAction = GDPRAction(type: .Dismiss, id: "1234")
-        var gdprUUID = UUID().uuidString
+        var consentViewController = self.getController(mockConsentDelegate, sourcePointClient, localStorage)
         var messageViewController = GDPRMessageViewController()
-        var userConsents = GDPRUserConsent(
-            acceptedVendors: [],
-            acceptedCategories: [],
-            legitimateInterestCategories: [],
-            specialFeatures: [],
-            vendorGrants: GDPRVendorGrants(),
-            euconsent: "",
-            tcfData: SPGDPRArbitraryJson()
-        )
+        var userConsents = GDPRUserConsent.empty()
 
         beforeEach {
-            consentViewController = self.getGDPRConsentViewController()
-            consentViewController.localStorage.clear()
+            sourcePointClient = SourcePointClientMock()
+            localStorage = GDPRLocalStorageMock()
             mockConsentDelegate = MockConsentDelegate()
-            acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
-            dismissAction = GDPRAction(type: .Dismiss, id: "1234")
-            gdprUUID = UUID().uuidString
+            consentViewController = self.getController(mockConsentDelegate, sourcePointClient, localStorage)
             messageViewController = GDPRMessageViewController()
-            userConsents = GDPRUserConsent(
-                acceptedVendors: [],
-                acceptedCategories: [],
-                legitimateInterestCategories: [],
-                specialFeatures: [],
-                vendorGrants: GDPRVendorGrants(),
-                euconsent: "",
-                tcfData: SPGDPRArbitraryJson()
-            )
+            userConsents = GDPRUserConsent.empty()
         }
 
-        describe("load Native Message") {
-            it("Load native message with auth ID") {
-                consentViewController.loadNativeMessage(forAuthId: "SPTest")
-                expect(consentViewController.loading).to(equal(.Loading), description: "")
+        describe("loadNativeMessage") {
+            it("calls getMessage on SourcePointClient") {
+                consentViewController.loadNativeMessage(forAuthId: nil)
+                expect(sourcePointClient.getMessageCalled).to(beTruthy())
             }
         }
 
-        describe("load Message in webview") {
-            beforeEach {
-                consentViewController = self.getGDPRConsentViewController()
-            }
-
-            it("Load message in webview without authId") {
+        describe("loadMessage") {
+            it("calls getMessage on SourcePointClient") {
                 consentViewController.loadMessage()
-                expect(consentViewController.loading).to(equal(.Loading), description: "loadMessage method works as expected")
-            }
-
-            it("Load message in webview with authId") {
-                consentViewController.loadMessage(forAuthId: "SPTestMessage")
-                expect(consentViewController.loading).to(equal(.Loading), description: "loadMessage method with authID works as expected")
+                expect(sourcePointClient.getMessageCalled).to(beTruthy())
             }
         }
 
         describe("load Privacy Manager") {
-            beforeEach {
-                consentViewController = self.getGDPRConsentViewController()
-            }
-
             it("Load privacy manager in webview") {
                 consentViewController.loadPrivacyManager()
                 expect(consentViewController.loading).to(equal(.Loading), description: "loadPrivacyManager method works as expected")
             }
         }
 
-        describe("Clears UserDefaults") {
-            beforeEach {
-                UserDefaults.standard.set("consent string", forKey: GDPRConsentViewController.EU_CONSENT_KEY)
-                UserDefaults.standard.set("gdpr uuid", forKey: GDPRConsentViewController.GDPR_UUID_KEY)
-                consentViewController = self.getGDPRConsentViewController()
-            }
-
-            it("Clears all IAB related data from the UserDefaults") {
-                consentViewController.clearIABConsentData()
-                let iabData = UserDefaults.standard.dictionaryRepresentation().filter {
-                    $0.key.starts(with: "IABTCF_")
-                }
-                expect(iabData).to(beEmpty())
-            }
-
-            it("Clears all consent data from the UserDefaults") {
+        describe("clearAllData") {
+            it("calls clear on its localStorage") {
                 consentViewController.clearAllData()
-                let metaKey = UserDefaults.standard.string(forKey: GDPRConsentViewController.META_KEY)
-                expect(metaKey).to(equal("{}"))
-            }
-
-            it("Clears its consent related in-memory attributes") {
-                consentViewController.clearAllData()
-                expect(consentViewController.euconsent).to(beEmpty())
-                expect(consentViewController.gdprUUID).to(beEmpty())
-                expect(consentViewController.userConsents).to(equal(GDPRUserConsent.empty()))
+                expect(localStorage.clearWasCalled).to(beTrue())
             }
         }
 
         describe("GDPRConsentDelegate") {
             beforeEach {
-                consentViewController = self.getGDPRConsentViewController()
                 consentViewController.consentDelegate = mockConsentDelegate
             }
 
@@ -207,24 +101,71 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                 }
             }
 
-            context("Test reportAction delegate method") {
-                it("Test GDPRMessageViewController calls reportAction delegate method for accept all action") {
-                    consentViewController.reportAction(acceptAllAction)
-                    expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(false), description: "reportAction delegate method calls successfully")
-                }
-            }
+            context("onAction") {
+                describe("for actions that call the post consent API") {
+                    let types: [GDPRActionType] = [.AcceptAll, .RejectAll, .SaveAndExit]
 
-            context("Test reportAction delegate method") {
-                it("Test GDPRMessageViewController calls reportAction delegate method for dismiss action") {
-                    consentViewController.reportAction(dismissAction)
-                    expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(true), description: "reportAction delegate method calls successfully")
-                }
-            }
+                    describe("and the local storage contains an consentUUID") {
+                        beforeEach {
+                            consentViewController.localStorage.consentUUID = "test"
+                        }
+                        describe("and the api returns a valid ActionResponse") {
+                            beforeEach {
+                                sourcePointClient.postActionResponse = ActionResponse(uuid: "test", userConsent: GDPRUserConsent.empty(), meta: "")
+                            }
+                            types.forEach { type in
+                                describe(type.description) {
+                                    it("calls onConsentReady") {
+                                        consentViewController.onAction(GDPRAction(type: type))
+                                        expect(mockConsentDelegate.isOnConsentReadyCalled).toEventually(beTrue(), description: type.description)
+                                    }
+                                }
+                            }
+                        }
 
-            context("Test onAction delegate method") {
-                it("Test GDPRMessageViewController calls onAction delegate method") {
-                    consentViewController.onAction(acceptAllAction)
-                    expect(mockConsentDelegate.isOnActionCalled).to(equal(true), description: "onAction delegate method calls successfully")
+                        describe("and the api returns an error") {
+                            beforeEach {
+                                sourcePointClient.postActionResponse = nil
+                                sourcePointClient.error = APIParsingError("test", nil)
+                            }
+                            types.forEach { type in
+                                describe(type.description) {
+                                    it("calls onConsentReady") {
+                                        consentViewController.onAction(GDPRAction(type: type))
+                                        expect(mockConsentDelegate.isOnConsentReadyCalled).toEventually(beFalse(), description: type.description)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    describe("and the local storage doesn't contain an consentUUID") {
+                        types.forEach { type in
+                            describe(type.description) {
+                                it("calls onConsentReady") {
+                                    consentViewController.onAction(GDPRAction(type: type))
+                                    expect(mockConsentDelegate.isOnConsentReadyCalled).toEventually(beFalse(), description: type.description)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                let types: [GDPRActionType] = [.ShowPrivacyManager, .PMCancel]
+                types.forEach { type in
+                    describe(type.description) {
+                        it("does not call onConsentReady") {
+                            consentViewController.onAction(GDPRAction(type: type))
+                            expect(mockConsentDelegate.isOnConsentReadyCalled).to(beFalse(), description: type.description)
+                        }
+                    }
+                }
+
+                describe("for an action with Dismiss type") {
+                    it("calls the onConsentReady") {
+                        consentViewController.onAction(GDPRAction(type: .Dismiss))
+                        expect(mockConsentDelegate.isOnConsentReadyCalled).to(beTrue())
+                    }
                 }
             }
 
@@ -242,18 +183,18 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
                 }
 
                 it("calls onConsentReady delegate method") {
-                    consentViewController.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
+                    consentViewController.onConsentReady(gdprUUID: "test", userConsent: userConsents)
                     expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(true), description: "onConsentReady delegate method calls successfully")
                 }
 
                 it("sets the consentUUID in its local storage") {
-                    consentViewController.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
-                    expect(consentViewController.localStorage.consentUUID).to(equal(gdprUUID))
-                    expect(consentViewController.gdprUUID).to(equal(gdprUUID))
+                    consentViewController.onConsentReady(gdprUUID: "test", userConsent: userConsents)
+                    expect(consentViewController.localStorage.consentUUID).to(equal("test"))
+                    expect(consentViewController.gdprUUID).to(equal("test"))
                 }
 
                 it("sets the userConsent in its local storage") {
-                    consentViewController.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
+                    consentViewController.onConsentReady(gdprUUID: "test", userConsent: userConsents)
                     expect(consentViewController.localStorage.userConsents).to(equal(userConsents))
                     expect(consentViewController.userConsents).to(equal(userConsents))
                 }
@@ -296,10 +237,6 @@ class GDPRConsentViewControllerSpec: QuickSpec, GDPRConsentDelegate {
         }
 
         describe("Test Add/Remove MessageViewController") {
-            beforeEach {
-                consentViewController = self.getGDPRConsentViewController()
-            }
-
             it("Test add MessageViewController into viewcontroller stack") {
                 let viewController = UIViewController()
                 consentViewController.add(asChildViewController: viewController)

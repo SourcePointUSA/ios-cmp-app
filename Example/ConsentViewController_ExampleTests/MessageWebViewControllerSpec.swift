@@ -11,41 +11,62 @@ import Nimble
 import WebKit
 @testable import ConsentViewController
 
-// swiftlint:disable force_cast function_body_length
+// swiftlint:disable function_body_length
+
+class WebViewMock: WKWebView {
+    var loadCalledWith: URLRequest!
+
+    override func load(_ request: URLRequest) -> WKNavigation? {
+        loadCalledWith = request
+        return nil
+    }
+}
 
 class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigationDelegate {
-    func getMessageWebViewController() -> MessageWebViewController {
-        return MessageWebViewController(propertyId: 22, pmId: "100699", consentUUID: UUID().uuidString, timeout: 100)
-    }
-
     override func spec() {
         var messageWebViewController: MessageWebViewController!
-        let mockConsentDelegate = MockConsentDelegate()
-        let showPMAction = GDPRAction(type: .ShowPrivacyManager, id: "1234")
-        let cancelPMAction = GDPRAction(type: .PMCancel, id: "1234")
-        let acceptedVendors = ["123", "456", "789"]
-        let acceptedPurposes = ["123", "456", "789"]
-        let vendors = ["vendors": acceptedVendors]
-        let purposes = ["categories": acceptedPurposes]
-        let consents = [vendors, purposes]
-        let payload: NSDictionary = ["id": "455262", "consents": consents]
+        var mockConsentDelegate: MockConsentDelegate!
 
-        // this method is used to test whether webview is loaded or not successfully
-        describe("Test loadView method") {
-            beforeEach {
-                messageWebViewController = self.getMessageWebViewController()
+        beforeEach {
+            mockConsentDelegate = MockConsentDelegate()
+            messageWebViewController = MessageWebViewController(propertyId: 1, pmId: "pmId", consentUUID: "uuid", timeout: 1)
+            messageWebViewController.consentDelegate = mockConsentDelegate
+        }
+
+        describe("defaults") {
+            describe("isSecondLayerMessage") {
+                it("is set to false") {
+                    expect(messageWebViewController.isSecondLayerMessage).to(beFalse())
+                }
             }
+
+            describe("consentUILoaded") {
+                it("is set to false") {
+                    expect(messageWebViewController.consentUILoaded).to(beFalse())
+                }
+            }
+
+            describe("isPMLoaded") {
+                it("is set to false") {
+                    expect(messageWebViewController.isPMLoaded).to(beFalse())
+                }
+            }
+
+            describe("connectivityManager") {
+                it("is an instance of ConnectivityManager") {
+                    expect(messageWebViewController.connectivityManager).to(beAnInstanceOf(ConnectivityManager.self))
+                }
+            }
+        }
+
+        describe("Test loadView method") {
             it("Test MessageWebViewController calls loadView method") {
                 messageWebViewController.loadView()
                 expect(messageWebViewController.webview).notTo(beNil(), description: "Webview initialized successfully")
             }
         }
 
-        describe("Test GDPRConsentDelegate methods") {
-            beforeEach {
-                messageWebViewController = self.getMessageWebViewController()
-                messageWebViewController.consentDelegate = mockConsentDelegate
-            }
+        describe("GDPRConsentDelegate") {
             context("Test consentUIWillShow delegate method") {
                 it("Test MessageWebViewController calls consentUIWillShow delegate method") {
                     messageWebViewController.gdprConsentUIWillShow()
@@ -96,62 +117,186 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                 }
             }
 
-            context("Test onAction delegate method") {
-                it("Test MessageWebViewController calls onAction delegate method for show PM action") {
-                    messageWebViewController.onAction(showPMAction)
-                    expect(mockConsentDelegate.isOnActionCalled).to(equal(true), description: "onAction delegate method calls successfully")
-                }
-            }
-
-            context("Test onAction delegate method") {
-                it("Test MessageWebViewController calls onAction delegate method for PM cancel action") {
-                    messageWebViewController.onAction(cancelPMAction)
-                    expect(mockConsentDelegate.isOnActionCalled).to(equal(true), description: "onAction delegate method calls successfully")
-                }
-            }
-
-            context("Test loadMessage  method") {
-                it("Test MessageWebViewController calls loadMessage delegate method") {
-                    let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/")!
-                    messageWebViewController.loadMessage(fromUrl: WRAPPER_API)
-                    expect(messageWebViewController).notTo(beNil(), description: "loadMessage delegate method calls successfully")
-                }
-            }
-            context("Test loadPrivacyManager method") {
-                it("Test MessageWebViewController calls loadPrivacyManager delegate method") {
-                    messageWebViewController.loadPrivacyManager()
-                    expect(messageWebViewController).notTo(beNil(), description: "loadPrivacyManager delegate method calls successfully")
+            describe("onAction") {
+                GDPRActionType.allCases.forEach { type in
+                    it("calls the onAction on consent delegate for action of type \(type)") {
+                        messageWebViewController.onAction(GDPRAction(type: type))
+                        expect(mockConsentDelegate.isOnActionCalled).to(beTruthy())
+                    }
                 }
 
-                it("Test pmUrl is called and returns url") {
-                    let pmURL = messageWebViewController.pmUrl()
-                    expect(pmURL).notTo(beNil(), description: "Able to get pmUrl")
+                context("for action type PMCancel") {
+                    context("and the 2nd layer message is loaded") {
+                        beforeEach {
+                            messageWebViewController.isSecondLayerMessage = true
+                            messageWebViewController.onAction(GDPRAction(type: .PMCancel))
+                        }
+
+                        it("calls the onAction with an action of type PMCancel") {
+                            expect(mockConsentDelegate.onActionCalledWith.type).to(equal(.PMCancel))
+                        }
+
+                        it("sets the isSecondLayerMessage flag to false") {
+                            expect(messageWebViewController.isSecondLayerMessage).to(beFalse())
+                        }
+                    }
+
+                    context("and the 1st layer message is loaded") {
+                        it("calls the onAction with an action of type Dismiss") {
+                            messageWebViewController.isSecondLayerMessage = false
+                            messageWebViewController.onAction(GDPRAction(type: .PMCancel))
+                            expect(mockConsentDelegate.onActionCalledWith.type).to(equal(.Dismiss))
+                        }
+                    }
+                }
+
+                context("for action type ShowPrivacyManager") {
+                    it("calls gdprMessageDidDisappear on the consent delegate") {
+                        messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                        expect(mockConsentDelegate.isMessageDidDisappearCalled).to(beTruthy())
+                    }
+
+                    it("sets the isSecondLayerMessage flag to true") {
+                        messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                        expect(messageWebViewController.isSecondLayerMessage).to(beTruthy())
+                    }
+
+                    context("and there's internet connection") {
+                        it("loads the webview with the PM URL") {
+                            let webviewMock = WebViewMock()
+                            messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                            messageWebViewController.webview = webviewMock
+                            messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                            expect(webviewMock.loadCalledWith.url).to(equal(messageWebViewController.pmUrl()))
+                        }
+                    }
+
+                    context("and there's no internet connection") {
+                        it("calls the onError callback") {
+                            messageWebViewController.connectivityManager = ConnectivityMock(connected: false)
+                            messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                            expect(mockConsentDelegate.isOnErrorCalled).to(beTruthy())
+                        }
+                    }
+                }
+
+                // all action types other than PMCancel and ShowPrivacyManager
+                GDPRActionType
+                    .allCases
+                    .filter { !($0 == .PMCancel || $0 == .ShowPrivacyManager) }
+                    .forEach { type in
+                    context("when the action type is \(type)") {
+                        context("and the consent UI is open") {
+                            it("calls consentUIDidDisappear on the consent delegate") {
+                                messageWebViewController.consentUILoaded = true
+                                messageWebViewController.onAction(GDPRAction(type: type))
+                                expect(mockConsentDelegate.isConsentUIDidDisappearCalled).to(beTruthy(), description: type.description)
+                            }
+                        }
+
+                        context("and the consent UI is not open") {
+                            it("calls consentUIDidDisappear on the consent delegate") {
+                                messageWebViewController.consentUILoaded = false
+                                messageWebViewController.onAction(GDPRAction(type: type))
+                                expect(mockConsentDelegate.isConsentUIDidDisappearCalled).to(beFalse())
+                            }
+                        }
+
+                        context("and the pm is loaded") {
+                            beforeEach {
+                                messageWebViewController.isPMLoaded = true
+                                messageWebViewController.onAction(GDPRAction(type: type))
+                            }
+
+                            it("sets the isPMLoaded to false") {
+                                expect(messageWebViewController.isPMLoaded).to(beFalse())
+                            }
+
+                            it("calls gdprPMDidDisappear on the consent delegate") {
+                                expect(mockConsentDelegate.isGdprPMDidDisappearCalled).to(beTruthy())
+                            }
+                        }
+
+                        context("and the pm is not loaded") {
+                            it("calls gdprMessageDidDisappear on the consent delegate") {
+                                messageWebViewController.isPMLoaded = false
+                                messageWebViewController.onAction(GDPRAction(type: type))
+                                expect(mockConsentDelegate.isMessageDidDisappearCalled).to(beTruthy())
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        // this method is used to test whether viewWillDisappear is called or not successfully
-        describe("Test viewWillDisappear methods") {
-            beforeEach {
-                messageWebViewController = self.getMessageWebViewController()
+        describe("loadMessage") {
+            context("when there's internet connection") {
+                it("loads the webview with the url received as param") {
+                    let webviewMock = WebViewMock()
+                    messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                    messageWebViewController.webview = webviewMock
+                    let url = URL(string: "www.example.com")!
+                    messageWebViewController.loadMessage(fromUrl: url)
+                    expect(webviewMock.loadCalledWith.url).to(equal(url))
+                }
             }
+
+            context("when there's no internet connection") {
+                it("calls the onError callback") {
+                    messageWebViewController.connectivityManager = ConnectivityMock(connected: false)
+                    let url = URL(string: "www.example.com")!
+                    messageWebViewController.loadMessage(fromUrl: url)
+                    expect(mockConsentDelegate.isOnErrorCalled).to(beTruthy())
+                }
+            }
+        }
+
+        describe("loadPrivacyManager") {
+            context("when there's internet connection") {
+                it("loads the webview with the PM URL") {
+                    let webviewMock = WebViewMock()
+                    messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                    messageWebViewController.webview = webviewMock
+                    messageWebViewController.loadPrivacyManager()
+                    expect(webviewMock.loadCalledWith.url).to(equal(messageWebViewController.pmUrl()))
+                }
+            }
+
+            context("when there's no internet connection") {
+                it("calls the onError callback") {
+                    messageWebViewController.connectivityManager = ConnectivityMock(connected: false)
+                    messageWebViewController.loadPrivacyManager()
+                    expect(mockConsentDelegate.isOnErrorCalled).to(beTruthy())
+                }
+            }
+        }
+
+        describe("pmURL") {
+            it("returns an url with propertyId, pmId and consentUUID") {
+                let pmUrl = URL(string: "https://notice.sp-prod.net/privacy-manager/index.html?message_id=pmId&site_id=1&consentUUID=uuid")
+                expect(messageWebViewController.pmUrl()).to(equal(pmUrl))
+            }
+        }
+
+        describe("Test viewWillDisappear methods") {
             it("Test MessageWebViewController calls viewWillDisappear method") {
                 messageWebViewController.viewWillDisappear(false)
                 expect(messageWebViewController.consentDelegate).to(beNil(), description: "ConsentDelegate gets cleared")
             }
         }
 
-        describe("Test getChoiceId methods") {
-            var chioceID: String?
-            beforeEach {
-                messageWebViewController = self.getMessageWebViewController()
+        describe("getChoiceId") {
+            context("when the payload contains an id") {
+                it("returns the id from the payload") {
+                    expect(messageWebViewController.getChoiceId(["id": "foo"])).to(equal("foo"))
+                }
             }
-            it("Test MessageWebViewController calls getChoiceId method") {
-                chioceID = messageWebViewController.getChoiceId(payload as! [String: Any])
-                if chioceID != nil {
-                    expect(chioceID!).to(equal("455262"), description: "Able to get chioceID")
-                } else {
-                    expect(chioceID).to(beNil(), description: "Unable to get chioceID")
+
+            context("when the payload doesn't contain id") {
+                it("returns the lastChoiceId property") {
+                    expect(messageWebViewController.getChoiceId([:])).to(beNil())
+                    messageWebViewController.lastChoiceId = "id"
+                    expect(messageWebViewController.getChoiceId([:])).to(equal("id"))
                 }
             }
         }

@@ -51,10 +51,11 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     let pmId: String
     let consentUUID: GDPRUUID
 
+    var isSecondLayerMessage = false
     var consentUILoaded = false
     var isPMLoaded = false
     let timeout: TimeInterval
-
+    var connectivityManager: Connectivity = ConnectivityManager()
     var lastChoiceId: String?
 
     init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
@@ -115,37 +116,42 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func showPrivacyManagerFromMessageAction() {
+        isSecondLayerMessage = true
         closeMessage()
         loadPrivacyManager()
     }
 
     func cancelPMAction() {
-        (webview?.canGoBack ?? false) ?
-            goBackAndClosePrivacyManager():
+        isSecondLayerMessage ?
+            goBackAndClosePrivacyManager() :
             closeConsentUIIfOpen()
     }
 
     func goBackAndClosePrivacyManager() {
+        isSecondLayerMessage = false
         webview?.goBack()
         closePrivacyManager()
         onMessageReady()
     }
 
     func onAction(_ action: GDPRAction) {
-        consentDelegate?.onAction?(action)
         switch action.type {
         case .ShowPrivacyManager:
+            consentDelegate?.onAction?(action)
             showPrivacyManagerFromMessageAction()
         case .PMCancel:
+            consentDelegate?.onAction?(
+                GDPRAction(type: isSecondLayerMessage ? .PMCancel : .Dismiss, id: action.id, payload: action.payload)
+            )
             cancelPMAction()
         default:
+            consentDelegate?.onAction?(action)
             closeConsentUIIfOpen()
         }
     }
 
     func load(url: URL) {
-        let connectvityManager = ConnectivityManager()
-        if connectvityManager.isConnectedToNetwork() {
+        if connectivityManager.isConnectedToNetwork() {
             webview?.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: timeout))
         } else {
             onError(error: NoInternetConnection())
@@ -192,7 +198,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         // since we store the last non-null choiceId, the lastChoiceId
         // will be either the choiceId of "Show Options" action when coming from the message
         // or null if coming from the PM opened directly
-        lastChoiceId = payload["id"] as? String? ?? lastChoiceId
+        lastChoiceId = (payload["id"] as? String) ?? lastChoiceId
         return lastChoiceId
     }
 

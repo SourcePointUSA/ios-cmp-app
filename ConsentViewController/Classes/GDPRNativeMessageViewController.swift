@@ -29,9 +29,9 @@ import UIKit
     }
 
     let message: GDPRMessage
-    let consentViewController: GDPRConsentViewController
+    let consentViewController: GDPRMessageUIDelegate
 
-    public init(messageContents: GDPRMessage, consentViewController: GDPRConsentViewController) {
+    public init(messageContents: GDPRMessage, consentViewController: GDPRMessageUIDelegate) {
         message = messageContents
         self.consentViewController = consentViewController
         super.init(nibName: "GDPRNativeMessageViewController", bundle: Bundle.init(for: GDPRNativeMessageViewController.self))
