@@ -85,6 +85,19 @@ class SimpleClientSpec: QuickSpec {
                 expect(session.dataTaskCalledWith).to(equal(self.exampleRequest))
             }
 
+            it("calls requestCachePolicy on its urlSession configuration") {
+                let session = URLSessionMock()
+                session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+                let client = SimpleClient(
+                    connectivityManager: ConnectivityMock(connected: true),
+                    logger: OSLogger(),
+                    urlSession: session,
+                    dispatchQueue: DispatchQueue.main
+                )
+                client.request(self.exampleRequest) { _, _ in }
+                expect(session.configuration.requestCachePolicy).to(equal(.reloadIgnoringLocalCacheData))
+            }
+
             it("calls async on its dispatchQueue with the result of the dataTask") {
                 let queue = DispatchQueueMock()
                 let client = SimpleClient(
