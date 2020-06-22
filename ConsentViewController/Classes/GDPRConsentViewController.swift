@@ -55,7 +55,6 @@ public typealias TargetingParams = [String:String]
     private let targetingParams: TargetingParams
 
     private let sourcePoint: SourcePointClient
-    private lazy var logger = { return Logger() }()
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
