@@ -373,15 +373,6 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
                     self?.onError(error: error)
                 }
             }
-        } else if (action.type == .Dismiss) {
-            self.onConsentReady(
-                gdprUUID: gdprUUID,
-                userConsent: GDPRUserConsent(
-                    acceptedVendors: consents?.vendors.accepted ?? [],
-                    acceptedCategories: consents?.categories.accepted ?? [],
-                    euconsent: euconsent
-                )
-            )
         }
     }
 
