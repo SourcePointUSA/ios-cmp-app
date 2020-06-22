@@ -66,6 +66,10 @@ extension ViewController {
 extension ViewController: GDPRConsentDelegate {
     func onAction(_ action: GDPRAction) {
         print("User took the action: \(action.type.description)")
+        // To verify the ConsentViewController SDK version use below code,
+        // To print out on debug console use : po Bundle(for: GDPRConsentViewController.self).infoDictionary?["CFBundleShortVersionString"]
+        print("ConsentViewController SDK version: \(Bundle(for: GDPRConsentViewController.self).infoDictionary?["CFBundleShortVersionString"] ?? 1.0)")
+
     }
 
     func gdprConsentUIWillShow() {
