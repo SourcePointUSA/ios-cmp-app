@@ -1,0 +1,12 @@
+[
+	{
+		"name": "iphone 11 Pro",
+		"deviceName": "iPhone 11 Pro",
+		"platformName": "iOS",
+		"platformVersion": "13.4",
+		"automationName": "XCuiTest",
+		"udid": "575716D1-D30C-4167-A0CF-86591D5BF03B",
+		"app": "TCFv1_GDPR-MetaApp.zip"
+	}
+
+]
