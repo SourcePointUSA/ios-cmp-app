@@ -13,6 +13,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.WithTimeout;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -88,10 +91,8 @@ public class PrivacyManagerPage extends Page {
 		return privacyManageeFound;
 	}
 
-	public WebElement eleButton(String udid, String buttonText) {
-		eleButton = (WebElement) driver.findElement(By.id("+buttonText+"));
-		return eleButton;
-
+	public void waitForElement(WebElement ele, int timeOutInSeconds) {
+		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+		wait.until(ExpectedConditions.visibilityOf(ele));
 	}
-
 }

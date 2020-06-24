@@ -1,5 +1,6 @@
 package org.framework.pageObjects;
 
+import org.framework.helpers.Page;
 import org.openqa.selenium.WebDriver;
 
 import io.appium.java_client.AppiumDriver;

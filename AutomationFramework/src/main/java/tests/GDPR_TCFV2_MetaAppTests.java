@@ -67,7 +67,19 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		return expectedESConsentMsg;
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 1)
+	/**
+	 * Given user submit valid property details and tap on Save Then the expected
+	 * consent message should display And When user click on Manage PREFERENCES
+	 * button Then user will see Privacy Manager screen When user select Accept All
+	 * Then user will navigate to Site Info screen showing ConsentUUID, EUConsent
+	 * and all Purpose Consents When user navigate back and tap on the site name And
+	 * click on MANAGE PREFERENCES button from consent message Then he/she should
+	 * see all purposes are selected as true
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 1)
 	public void CheckAcceptAllFromPrivacyManage() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckAcceptAllFromPrivacyManager - " + String.valueOf(Thread.currentThread().getId()));
@@ -88,7 +100,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("MANAGE PREFERENCES");
 			softAssert.assertTrue(mobilePageWrapper.privacyManagerPage.isPrivacyManagerViewPresent(),
@@ -119,7 +131,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 2)
+	/**
+	 * * Given user submit valid property details and tap on Save Then expected
+	 * consent should display When user click on MANAGE PREFERENCES button Then user
+	 * will see Privacy Manager screen When user click on Cancel button Then user
+	 * will navigate back to the consent message
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 2)
 	public void CheckCancelFromPrivacyManager() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckCancleFromPrivacyManager - " + String.valueOf(Thread.currentThread().getId()));
@@ -140,7 +161,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("MANAGE PREFERENCES");
 
@@ -149,7 +170,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage1 = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage1.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 		} catch (Exception e) {
 			System.out.println(e);
 			throw e;
@@ -158,7 +179,18 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 3)
+	/**
+	 * Given user submit valid property details and tap on Save Then expected
+	 * consent message should display When user select Accept all Then user will
+	 * navigate to Site Info screen showing ConsentUUID, EUConsent and all Vendors &
+	 * Purpose Consents When user navigate back & tap on the site name and select
+	 * MANAGE PREFERENCES button from consent message view Then he/she will see all
+	 * vendors & purposes as selected true
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 3)
 	public void CheckConsentOnAcceptAllFromConsentView() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out
@@ -180,7 +212,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("ACCEPT ALL");
 
@@ -205,7 +237,18 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 4)
+	/**
+	 * Given user submit valid property details and tap on Save Then expected
+	 * consent message should display When user select Reject all Then user will
+	 * navigate to Site Info screen showing ConsentUUID and no EUConsent and with no
+	 * Vendors & Purpose Consents When user navigate back & tap on the site name and
+	 * select MANAGE PREFERENCES button from consent message view Then he/she will
+	 * see all vendors & purposes as selected false
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 4)
 	public void CheckConsentOnRejectAllFromConsentView() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out
@@ -227,7 +270,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("REJECT ALL");
 			softAssert.assertNotEquals(mobilePageWrapper.siteDebugInfoPage.GDPRConsentUUID.getText(),
@@ -252,7 +295,18 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 5)
+	/**
+	 * Given user submit valid property details and tap on Save Then expected
+	 * consent message should display When user tap on Accept All button Then user
+	 * navigate back to Info screen showing ConsentUUID and EUConsent data When user
+	 * tap on the property from property list screen And navigate to PM, all consent
+	 * toggle should show as selected When user tap on Reject all Then should see
+	 * same COnsentUUID and newly generated EUCONSENT data
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 5)
 	public void CheckConsentOnRejectAllFromPM() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckConsentOnRejectAllFromPM - " + String.valueOf(Thread.currentThread().getId()));
@@ -273,7 +327,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("ACCEPT ALL");
 
@@ -295,14 +349,13 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 			softAssert.assertTrue(mobilePageWrapper.privacyManagerPage.isPrivacyManagerViewPresent());
 			// check for all purposes selected as true
 
-			mobilePageWrapper.privacyManagerPage.tcfv2_RejectAll.click();
-
+			mobilePageWrapper.privacyManagerPage.scrollAndClick("Reject All");
 			softAssert.assertNotEquals(mobilePageWrapper.siteDebugInfoPage.GDPRConsentUUID.getText(),
-					"ConsentUUID not available");
+					"ConsentUUID not available", "AAAAA");
 			softAssert.assertNotEquals(mobilePageWrapper.siteDebugInfoPage.GDPREUConsent.getText(),
-					"EUConsent not available");
-			softAssert.assertEquals(mobilePageWrapper.siteDebugInfoPage.GDPRConsentUUID.getText(), consentData.get(0));
-			softAssert.assertNotEquals(mobilePageWrapper.siteDebugInfoPage.GDPREUConsent.getText(), consentData.get(1));
+					"EUConsent not available", "BBBB");
+			softAssert.assertEquals(mobilePageWrapper.siteDebugInfoPage.GDPRConsentUUID.getText(), consentData.get(0), "ABABA");
+			softAssert.assertNotEquals(mobilePageWrapper.siteDebugInfoPage.GDPREUConsent.getText(), consentData.get(1), "BABA");
 		} catch (Exception e) {
 			System.out.println(e);
 			throw e;
@@ -311,7 +364,17 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 6)
+	/**
+	 * Given user submit valid property details and tap on Save Then expected
+	 * consent message should display When user select MANAGE PREFERENCES Then user
+	 * navigate to PM And should see all toggles as false When user select Save &
+	 * Exit without any change Then user should navigate back to the info screen
+	 * showing no Vendors and Purposes as selected
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 6)
 	public void CheckConsentOnSaveAndExitFromPM() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckConsentOnSaveAndExitFromPM - " + String.valueOf(Thread.currentThread().getId()));
@@ -332,7 +395,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("MANAGE PREFERENCES");
 
@@ -352,8 +415,19 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 			softAssert.assertAll();
 		}
 	}
-	
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 7)
+
+	/**
+	 * Given user submit valid property details and tap on Save Then expected
+	 * consent message should display When user select MANAGE PREFERENCES and tap
+	 * from Accept All button Then consent data should display on info screen When
+	 * user navigate back and tap on the Property again Then he/she should not see
+	 * message again When user delete cookies for the property Then he.\/she should
+	 * see consent message again
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 7)
 	public void CheckPurposeConsentAfterRestCookies() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckPurposeConsentAfterRestCookies - " + String.valueOf(Thread.currentThread().getId()));
@@ -375,7 +449,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedESConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.tcfv2_ManagaePreferences.click();
 
@@ -412,7 +486,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 8)
+	/**
+	 * Given user submit valid property details and tap on Save Then expected
+	 * consent message should display When user tap on Accept All Then consent data
+	 * should get stored When user navigate to PM directly by clicking on Show PM
+	 * link And select Reject All Then EUConsent information should get updated
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 8)
 	public void CheckConsentDataFromPrivacyManagerDirect() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println(
@@ -434,7 +517,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("ACCEPT ALL");
 
@@ -466,7 +549,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 9)
+	/**
+	 * * Given user submit valid property details and tap on Save Then expected
+	 * message should load When user select Accept All Then consent information
+	 * should get stored When user tap on the Show link And click on Cancel Then
+	 * he/she should navigate back to the info screen
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 9)
 	public void CheckCancelFromDirectPrivacyManager() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckCancelFromDirectPrivacyManager - " + String.valueOf(Thread.currentThread().getId()));
@@ -487,7 +579,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("ACCEPT ALL");
 
@@ -517,7 +609,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 10)
+	/**
+	 * * Given user submit valid property details to show message once and tap on
+	 * Save Then expected message should load When user select Accept All Then
+	 * consent should get stored When user tap on the property from list screen Then
+	 * he/she should not see message
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 10)
 	public void CheckNoConsentMessageDisplayAfterShowSiteInfo() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println(
@@ -541,7 +642,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedShowOnlyMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("ACCEPT ALL");
 
@@ -567,7 +668,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 11)
+	/**
+	 * * Given user submit valid property details and tap on Save Then expected
+	 * message should load When user select Reject All Then consent information
+	 * should get stored When user swipe on property and choose to delete he/she
+	 * should able to delete the property screen
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 11)
 	public void DeleteSite() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("DeleteSite - " + String.valueOf(Thread.currentThread().getId()));
@@ -590,7 +700,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("REJECT ALL");
 			softAssert.assertNotEquals(mobilePageWrapper.siteDebugInfoPage.GDPRConsentUUID.getText(),
@@ -624,7 +734,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 12)
+	/**
+	 * * Given user submit valid property details and tap on Save Then expected
+	 * message should load When user select Accept All Then consent information
+	 * should get stored When user swipe on property and edit the key/parameter
+	 * details Then he/she should see respective message
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 12)
 	public void EditSiteWithConsentGivenBefore() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("EditSiteWithConsentGivenBefore - " + String.valueOf(Thread.currentThread().getId()));
@@ -648,7 +767,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedESConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.tcfv2_AcceptAll.click();
 
@@ -675,7 +794,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage1 = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage1.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("ACCEPT ALL");
 
@@ -690,7 +809,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 13)
+	/**
+	 * Given user submit valid property details to show message once with AuthID and
+	 * tap on Save Then expected message should load When user select Accept All
+	 * Then consent information should get stored When user reset the property Then
+	 * user should not see the message again
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 13)
 	public void CheckNoMessageWithShowOnceCriteriaWhenConsentAlreadySaved()
 			throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
@@ -720,7 +848,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedShowOnlyMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			ArrayList<String> consentData;
 
@@ -754,7 +882,17 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 14)
+	/**
+	 * * Given user submit valid property details with unique AuthID and tap on Save
+	 * Then expected message should load When user navigate PM and tap on Accept All
+	 * Then all consent data should be stored When user try to create new property
+	 * with same details but another unique authId And navigate to PM Then he/she
+	 * should not see already saved consent
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 14)
 	public void CheckSavedConsentAlwaysWithSameAuthID() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckSavedConsentAlwaysWithSameAuthID - " + String.valueOf(Thread.currentThread().getId()));
@@ -785,7 +923,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("MANAGE PREFERENCES");
 
@@ -834,7 +972,17 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 15)
+	/**
+	 * * Given user submit valid property details with unique AuthID and tap on Save
+	 * Then expected Message should load When user navigate to PM and tap on Accept
+	 * All Then all consent data will get stored When user delete this property and
+	 * create property with same details And navigate to PM Then he/she should see
+	 * already saved consents
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
+//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 15)
 	public void CheckConsentWithSameAuthIDAfterDeletingAndRecreate()
 			throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
@@ -864,7 +1012,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 			mobilePageWrapper.newSitePage.GDPRSaveButton.click();
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.scrollAndClick("MANAGE PREFERENCES");
 
@@ -886,7 +1034,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 			softAssert.assertTrue(mobilePageWrapper.siteListPage.verifyDeleteSiteMessage());
 
 			mobilePageWrapper.siteListPage.YESButton.click();
-			// softAssert.assertFalse(mobilePageWrapper.siteListPage.isSitePressent_gdpr(siteName));
+			softAssert.assertFalse(mobilePageWrapper.siteListPage.isSitePressent_gdpr(siteName));
 
 			mobilePageWrapper.siteListPage.GDPRAddButton.click();
 			mobilePageWrapper.newSitePage.GDPRAccountID.sendKeys(accountId);
@@ -903,7 +1051,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage1 = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage1.containsAll(expectedFRConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 			mobilePageWrapper.consentViewPage.scrollAndClick("MANAGE PREFERENCES");
 
 			softAssert.assertTrue(mobilePageWrapper.privacyManagerPage.isPrivacyManagerViewPresent());
@@ -917,6 +1065,14 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
+	/**
+	 * * Given user submit valid property details tap on Save Then expected message
+	 * should load When user dismiss the message Then he/she should see info screen
+	 * with ConsentUUID details
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
 	@Test(groups = { "GDPR-MetaAppTests" }, priority = 16)
 	public void CheckPropertDetailsOnMessageDismiss() throws InterruptedException, NoSuchElementException {
 
@@ -941,7 +1097,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 
 			ArrayList<String> consentMessage = mobilePageWrapper.consentViewPage.getConsentMessageDetails();
 			softAssert.assertTrue(consentMessage.containsAll(expectedESConsentMsg),
-					"Expected consent message not dispayed");
+					"Expected consent message not displayed");
 
 			mobilePageWrapper.consentViewPage.tcfv2_Dismiss.click();
 			softAssert.assertNotEquals(mobilePageWrapper.siteDebugInfoPage.GDPRConsentUUID.getText(),
@@ -958,6 +1114,13 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
+	/**
+	 * * Given user submit valid property details for loading PM as first layer
+	 * message and tap on Save Then expected PM should load
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
 	@Test(groups = { "GDPR-MetaAppTests" }, priority = 17)
 	public void CheckPMAsFirstLayerMessage() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
@@ -990,6 +1153,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
+	/**
+	 * * Given user submit valid property details for loading PM as first layer
+	 * message and tap on Save Then expected PM should load When user select Accept
+	 * All Then consent should get stored When user tap on the property from list
+	 * screen And click on Cancel Then he/she should navigate back to the info
+	 * screen
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
 	@Test(groups = { "GDPR-MetaAppTests" }, priority = 18)
 	public void CheckCancelFromPMAsFirstLayerMessage() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
@@ -1049,6 +1222,16 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
+	/**
+	 * * Given user submit valid property details for loading PM as first layer
+	 * message and tap on Save Then expected PM should load When user select Accept
+	 * All Then consent should get stored When user tap on the Show PM link from the
+	 * info screen Then he/she should navigate to PM screen showing all toggle as
+	 * true
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
 	@Test(groups = { "GDPR-MetaAppTests" }, priority = 19)
 	public void CheckConsentOnDirectPMLoadWhenPMAsMessage() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
@@ -1097,6 +1280,15 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
+	/**
+	 * Given user submit valid property details for loading PM as first layer
+	 * message with unique AuthID and tap on Save Then expected PM should load When
+	 * user select Accept All Then consent should get stored When user tap on the
+	 * property from list screen Then he/she should see all toggle as true
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
 	@Test(groups = { "GDPR-MetaAppTests" }, priority = 20)
 	public void CheckConsentWithAuthIDFromPMAsMessage() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
@@ -1151,6 +1343,17 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
+	/**
+	 * Given user submit valid property details without AuthID and tap on Save Then
+	 * expected consent message should display When user select Accept all Then user
+	 * will navigate to Site Info screen showing ConsentUUID, EUConsent and all
+	 * Vendors & Purpose Consents When user navigate back & edit property with
+	 * unique AuthID Then he/she should not see message again should see given
+	 * consent information
+	 * 
+	 * @throws InterruptedException
+	 * @throws NoSuchElementException
+	 */
 	@Test(groups = { "GDPR-MetaAppTests" }, priority = 21)
 	public void CheckNoMessageAfterLoggedInWithAuthID() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");

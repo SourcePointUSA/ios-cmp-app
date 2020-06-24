@@ -11,6 +11,9 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
@@ -112,7 +115,7 @@ public class SiteListPage extends Page {
 
 	public void swipeHorizontaly_gdpr(String siteName) throws InterruptedException {
 		System.out.println("Swipe on " + siteName);
-		WebElement ele = (WebElement) driver.findElement(By.xpath("//XCUIElementTypeStaticText[@name='propertyCell']"));
+		WebElement ele = driver.findElement(By.xpath("//XCUIElementTypeStaticText[@name='propertyCell']"));
 
 		waitForElement(ele, timeOutInSeconds);
 
@@ -126,10 +129,10 @@ public class SiteListPage extends Page {
 				.moveTo(PointOption.point(leftTopCoordinates[0] + 1, leftTopCoordinates[1] + 1)).release().perform();
 	}
 
-//	public void waitForElement(WebElement ele, int timeOutInSeconds) {
-//		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
-//		wait.until(ExpectedConditions.visibilityOf(ele));
-//	}
+	public void waitForElement(WebElement ele, int timeOutInSeconds) {
+		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+		wait.until(ExpectedConditions.visibilityOf(ele));
+	}
 
 	public boolean verifyDeleteSiteMessage() {
 		return ErrorMessage.get(ErrorMessage.size() - 1).getText().contains("Are you sure you want to");
