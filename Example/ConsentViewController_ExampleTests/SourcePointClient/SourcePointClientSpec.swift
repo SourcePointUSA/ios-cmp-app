@@ -23,7 +23,8 @@ class SourcePointClientSpec: QuickSpec {
             pmId: "123",
             campaignEnv: .Public,
             targetingParams: [:],
-            client: client)
+            client: client
+        )
     }
 
     override func spec() {
@@ -41,14 +42,14 @@ class SourcePointClientSpec: QuickSpec {
             }
         }
 
-        describe("Test SourcePointClient Methods") {
+        describe("SourcePointClient") {
             beforeEach {
                 mockedResponse = "{\"url\": \"https://notice.sp-prod.net/?message_id=59706\"}".data(using: .utf8)
                 httpClient = MockHttp(success: mockedResponse)
                 client = self.getClient(httpClient!)
             }
 
-            context("Test getMessage") {
+            describe("getMessage") {
                 it("calls POST on the http client with the right url") {
                     client.getMessage(
                         native: false,
@@ -83,9 +84,44 @@ class SourcePointClientSpec: QuickSpec {
                     let parsed = try! JSONDecoder().decode(MessageRequest.self, from: httpClient!.postWasCalledWithBody!)
                     expect(parsed).to(equal(messageRequest))
                 }
+
+                context("when there are targeting params") {
+                    it("gets parsed to 'stringified JSON'") {
+                        let client = SourcePointClient(
+                            accountId: 123,
+                            propertyId: SourcePointClientSpec.propertyId,
+                            propertyName: try! GDPRPropertyName("propertyName"),
+                            pmId: "pmId",
+                            campaignEnv: .Public,
+                            targetingParams: ["foo": "bar"],
+                            client: httpClient!
+                        )
+                        let messageRequest = MessageRequest(
+                            uuid: "uuid",
+                            euconsent: "consent string",
+                            authId: "auth id",
+                            accountId: client.accountId,
+                            propertyId: client.propertyId,
+                            propertyHref: client.propertyName,
+                            campaignEnv: client.campaignEnv,
+                            targetingParams: "{\"foo\":\"bar\"}",
+                            requestUUID: client.requestUUID,
+                            meta: "meta"
+                        )
+                        client.getMessage(
+                            native: false,
+                            consentUUID: "uuid",
+                            euconsent: "consent string",
+                            authId: "auth id",
+                            meta: "meta",
+                            completionHandler: { _, _  in})
+                        let parsed = try! JSONDecoder().decode(MessageRequest.self, from: httpClient!.postWasCalledWithBody!)
+                        expect(parsed).to(equal(messageRequest))
+                    }
+                }
             }
 
-            context("Test postAction") {
+            describe("postAction") {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
                     client.postAction(action: acceptAllAction, consentUUID: "consent uuid", meta: "meta", completionHandler: { _, _  in})
@@ -117,16 +153,6 @@ class SourcePointClientSpec: QuickSpec {
                 }
             }
 
-            context("Test targetingParamsToString") {
-                it("Test TargetingParamsToString with parameter") {
-                    let targetingParams = ["native": "false"]
-                    let targetingParamString = client.targetingParamsToString(targetingParams)
-                    let encodeTargetingParam = "{\"native\":\"false\"}".data(using: .utf8)
-                    let encodedString = String(data: encodeTargetingParam!, encoding: .utf8)
-                    expect(targetingParamString).to(equal(encodedString))
-                }
-            }
-
             describe("customConsent") {
                 it("makes a POST to SourcePointClient.CUSTOM_CONSENT_URL") {
                     let http = MockHttp(success: "".data(using: .utf8)!)
@@ -151,10 +177,18 @@ class SourcePointClientSpec: QuickSpec {
                     beforeEach {
                         client = self.getClient(MockHttp(success: """
                         {
-                            "vendors": [],
-                            "categories": [],
-                            "legIntCategories": [],
-                            "specialFeatures": []
+                            "vendors": ["aVendor"],
+                            "categories": ["aCategory"],
+                            "legIntCategories": ["aLegIntInterest"],
+                            "specialFeatures": ["aSpecialFeature"],
+                            "grants": {
+                                "vendorId": {
+                                    "vendorGrant": true,
+                                    "purposeGrants": {
+                                        "purposeId": true
+                                    }
+                                }
+                            }
                         }
                         """.data(using: .utf8)!))
                     }
@@ -165,10 +199,13 @@ class SourcePointClientSpec: QuickSpec {
                             consentsResponse = response
                         }
                         expect(consentsResponse).toEventually(equal(CustomConsentResponse(
-                            vendors: [],
-                            categories: [],
-                            legIntCategories: [],
-                            specialFeatures: []
+                            vendors: ["aVendor"],
+                            categories: ["aCategory"],
+                            legIntCategories: ["aLegIntInterest"],
+                            specialFeatures: ["aSpecialFeature"],
+                            grants: [
+                                "vendorId": GDPRVendorGrant(vendorGrant: true, purposeGrants: ["purposeId": true])
+                            ]
                         )))
                     }
 
