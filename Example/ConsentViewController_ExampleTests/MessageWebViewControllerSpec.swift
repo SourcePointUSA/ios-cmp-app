@@ -284,21 +284,5 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                 expect(messageWebViewController.consentDelegate).to(beNil(), description: "ConsentDelegate gets cleared")
             }
         }
-
-        describe("getChoiceId") {
-            context("when the payload contains an id") {
-                it("returns the id from the payload") {
-                    expect(messageWebViewController.getChoiceId(["id": "foo"])).to(equal("foo"))
-                }
-            }
-
-            context("when the payload doesn't contain id") {
-                it("returns the lastChoiceId property") {
-                    expect(messageWebViewController.getChoiceId([:])).to(beNil())
-                    messageWebViewController.lastChoiceId = "id"
-                    expect(messageWebViewController.getChoiceId([:])).to(equal("id"))
-                }
-            }
-        }
     }
 }
