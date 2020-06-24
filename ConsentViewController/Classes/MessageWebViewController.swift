@@ -56,7 +56,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var isPMLoaded = false
     let timeout: TimeInterval
     var connectivityManager: Connectivity = ConnectivityManager()
-    var lastChoiceId: String?
 
     init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
         self.propertyId = propertyId
@@ -193,15 +192,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
     }
 
-    func getChoiceId (_ payload: [String: Any]) -> String? {
-        // Actions coming from the PM do not have a choiceId.
-        // since we store the last non-null choiceId, the lastChoiceId
-        // will be either the choiceId of "Show Options" action when coming from the message
-        // or null if coming from the PM opened directly
-        lastChoiceId = (payload["id"] as? String) ?? lastChoiceId
-        return lastChoiceId
-    }
-
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard
             let body = message.body as? [String: Any?],
@@ -228,7 +218,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                 return
             }
-            onAction(GDPRAction(type: actionType, id: getChoiceId(payload), payload: payloadData))
+            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, payload: payloadData))
         case "onError":
             let payload = body["body"] as? [String: Any] ?? [:]
             let error = payload["error"] as? [String: Any] ?? [:]
