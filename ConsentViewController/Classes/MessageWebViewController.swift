@@ -56,7 +56,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var isPMLoaded = false
     let timeout: TimeInterval
     var connectivityManager: Connectivity = ConnectivityManager()
-    var lastChoiceId: String?
 
     init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
         self.propertyId = propertyId
