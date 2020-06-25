@@ -3,7 +3,7 @@
 		"name": "iphone 8",
 		"deviceName": "iPhone 8",
 		"platformName": "iOS",
-		"platformVersion": "12.2",
+		"platformVersion": "12.0",
 		"automationName": "XCuiTest",
 		"udid": "8400B430-25E9-4061-B5A0-64C6546F4F19",
 		"app": "GDPR-MetaApp.zip"
