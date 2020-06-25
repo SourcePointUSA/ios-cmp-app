@@ -10,3 +10,6 @@ allure-results/
 .project
 .settings/
 /.gradle/
+.lock
+.bin
+
