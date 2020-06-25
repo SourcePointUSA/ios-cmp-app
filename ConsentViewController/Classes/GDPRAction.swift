@@ -34,9 +34,10 @@ import Foundation
     public let type: GDPRActionType
     public let id: String?
     public let payload: Data
+    public let pm_url: String?
 
     public override var description: String {
-        "GDPRAction(type: \(type), id: \(id ?? ""), payload: \(String(data: payload, encoding: .utf8) ?? "")"
+        "GDPRAction(type: \(type), id: \(id ?? ""), pm_url: \(pm_url ?? ""), payload: \(String(data: payload, encoding: .utf8) ?? "")"
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
@@ -45,12 +46,14 @@ import Foundation
         }
         return other.type == type &&
             other.id == id &&
+            other.pm_url == pm_url &&
             other.payload == payload
     }
 
-    public init(type: GDPRActionType, id: String? = nil, payload: Data = "{}".data(using: .utf8)!) {
+    public init(type: GDPRActionType, id: String? = nil, pm_url: String? = nil, payload: Data = "{}".data(using: .utf8)!) {
         self.type = type
         self.id = id
+        self.pm_url = pm_url
         self.payload = payload
     }
 }
