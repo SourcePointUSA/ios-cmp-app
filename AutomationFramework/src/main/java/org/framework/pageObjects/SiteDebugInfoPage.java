@@ -9,10 +9,6 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileDriver;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.WithTimeout;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -29,7 +25,7 @@ public class SiteDebugInfoPage {
 	        Thread.sleep(1000);
 	    } 
 	 
-	// @WithTimeout(time = 30, unit = TimeUnit.SECONDS)
+	 @WithTimeout(time = 30, chronoUnit = ChronoUnit.SECONDS)
 	@iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText']")
 	public WebElement GDPRSiteDebugInfoPageTitle;
 	
@@ -46,7 +42,7 @@ public class SiteDebugInfoPage {
 	@iOSXCUITFindBy(xpath = "//XCUIElementTypeTable']")
 	public List<WebElement> GDPRConsentView;
 	
-	// @WithTimeout(time = 30, unit = TimeUnit.SECONDS)
+	@WithTimeout(time = 30, chronoUnit = ChronoUnit.SECONDS)
 	@iOSXCUITFindBy(accessibility = "Back")
 	public WebElement BackButton;
 
