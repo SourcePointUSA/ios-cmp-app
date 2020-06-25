@@ -306,7 +306,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 5)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 5)
 	public void CheckConsentOnRejectAllFromPM() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckConsentOnRejectAllFromPM - " + String.valueOf(Thread.currentThread().getId()));
@@ -374,7 +374,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 6)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 6)
 	public void CheckConsentOnSaveAndExitFromPM() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckConsentOnSaveAndExitFromPM - " + String.valueOf(Thread.currentThread().getId()));
@@ -427,7 +427,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 7)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 7)
 	public void CheckPurposeConsentAfterRestCookies() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckPurposeConsentAfterRestCookies - " + String.valueOf(Thread.currentThread().getId()));
@@ -495,7 +495,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 8)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 8)
 	public void CheckConsentDataFromPrivacyManagerDirect() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println(
@@ -558,7 +558,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 9)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 9)
 	public void CheckCancelFromDirectPrivacyManager() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckCancelFromDirectPrivacyManager - " + String.valueOf(Thread.currentThread().getId()));
@@ -618,7 +618,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 10)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 10)
 	public void CheckNoConsentMessageDisplayAfterShowSiteInfo() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println(
@@ -677,7 +677,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 11)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 11)
 	public void DeleteSite() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("DeleteSite - " + String.valueOf(Thread.currentThread().getId()));
@@ -743,7 +743,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 12)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 12)
 	public void EditSiteWithConsentGivenBefore() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("EditSiteWithConsentGivenBefore - " + String.valueOf(Thread.currentThread().getId()));
@@ -818,7 +818,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 13)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 13)
 	public void CheckNoMessageWithShowOnceCriteriaWhenConsentAlreadySaved()
 			throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
@@ -892,7 +892,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 14)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 14)
 	public void CheckSavedConsentAlwaysWithSameAuthID() throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
 		System.out.println("CheckSavedConsentAlwaysWithSameAuthID - " + String.valueOf(Thread.currentThread().getId()));
@@ -982,7 +982,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	 * @throws InterruptedException
 	 * @throws NoSuchElementException
 	 */
-//	@Test(groups = { "GDPR-MetaAppTests" }, priority = 15)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 15)
 	public void CheckConsentWithSameAuthIDAfterDeletingAndRecreate()
 			throws InterruptedException, NoSuchElementException {
 		System.out.println(" Test execution start ");
