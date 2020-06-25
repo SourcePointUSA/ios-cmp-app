@@ -27,8 +27,8 @@ public func showUp(in timeout: TimeInterval) -> Predicate<XCUIElement> {
     }
 }
 
-/// A Nimble matcher that succeeds when an XCUIElement shows up after
-/// a certain amount of time.
+/// A Nimble matcher that succeeds when an XCUIElement no longer exists. Due to its async nature, it should
+/// be used together with `.toEventually`.
 public func disappear() -> Predicate<XCUIElement> {
     return Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
