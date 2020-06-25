@@ -77,7 +77,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         }
 
         // responsible for the interface between javascript and native code
-        fdescribe("userContentController") {
+        describe("userContentController") {
             context("when it receives a 'onMessageReady' message") {
                 it("calls the onConsenUIWillShow on the consent delegate") {
                     let message = MessageMock(["name": "onMessageReady"])
@@ -152,10 +152,10 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         }
 
         describe("GDPRConsentDelegate") {
-            context("Test consentUIWillShow delegate method") {
-                it("Test MessageWebViewController calls consentUIWillShow delegate method") {
+            describe("consentUIWillShow") {
+                it("calls consentUIWillShow delegate method") {
                     messageWebViewController.gdprConsentUIWillShow()
-                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(equal(false), description: "consentUIWillShow delegate method calls successfully")
+                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(beTrue())
                 }
             }
 
