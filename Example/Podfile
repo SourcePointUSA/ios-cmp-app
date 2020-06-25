@@ -12,6 +12,12 @@ target 'ConsentViewController_ExampleTests' do
   pod 'Nimble'
 end
 
+target 'SPGDPRExampleAppUITests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
 target 'AuthExample' do
   pod 'ConsentViewController', :path => '../'
 end
@@ -30,3 +36,4 @@ target 'SourcePointMetaAppTests' do
   # Pods for testing
   pod 'ConsentViewController', :path => '../'
 end
+
