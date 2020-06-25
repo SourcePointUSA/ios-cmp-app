@@ -17,6 +17,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var postActionResponse: ActionResponse?
     var error: APIParsingError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
+    var customConsentWasCalledWith: [String: Any?]!
 
     convenience init() {
         self.init(accountId: 0, propertyId: 0, propertyName: try! GDPRPropertyName("test"), pmId: "", campaignEnv: .Stage, targetingParams: [:], timeout: 0.0)
@@ -50,7 +51,12 @@ class SourcePointClientMock: SourcePointProtocol {
                        categories: [String],
                        legIntCategories: [String],
                        completionHandler: @escaping (CustomConsentResponse?, APIParsingError?) -> Void) {
-        customConsentCalled = true
+        customConsentWasCalledWith = [
+            "consentUUID": consentUUID,
+            "vendors": vendors,
+            "categories": categories,
+            "legIntCategories": legIntCategories
+        ]
         completionHandler(customConsentResponse, error)
     }
 

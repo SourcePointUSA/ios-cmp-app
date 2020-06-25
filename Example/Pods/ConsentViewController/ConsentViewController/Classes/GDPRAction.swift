@@ -8,7 +8,7 @@
 import Foundation
 
 /// User actions. Its integer representation matches with what SourcePoint's endpoints expect.
-@objc public enum GDPRActionType: Int, Codable, CaseIterable, CustomStringConvertible {
+@objc public enum GDPRActionType: Int, Codable {
     case SaveAndExit = 1
     case PMCancel = 2
     case AcceptAll = 11
@@ -35,22 +35,13 @@ import Foundation
     public let id: String?
     public let payload: Data
 
-    public override var description: String {
-        "GDPRAction(type: \(type), id: \(id ?? ""), payload: \(String(data: payload, encoding: .utf8) ?? "")"
-    }
-
-    public override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? GDPRAction else {
-            return false
-        }
-        return other.type == type &&
-            other.id == id &&
-            other.payload == payload
-    }
-
-    public init(type: GDPRActionType, id: String? = nil, payload: Data = "{}".data(using: .utf8)!) {
+    public init(type: GDPRActionType, id: String?, payload: Data) {
         self.type = type
         self.id = id
         self.payload = payload
+    }
+
+    convenience public init(type: GDPRActionType, id: String?) {
+        self.init(type: type, id: id, payload: "{}".data(using: .utf8)!)
     }
 }

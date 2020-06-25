@@ -24,18 +24,6 @@ public typealias GDPRPurposeId = String
     public override var description: String {
         return "VendorGrant(vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants))"
     }
-
-    public override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? GDPRVendorGrant else {
-            return false
-        }
-        return other.vendorGrant == vendorGrant && other.purposeGrants == purposeGrants
-    }
-
-    public init(vendorGrant: Bool, purposeGrants: GDPRPurposeGrants) {
-        self.vendorGrant = vendorGrant
-        self.purposeGrants = purposeGrants
-    }
 }
 
 /**
@@ -88,12 +76,11 @@ public typealias GDPRPurposeId = String
 
     public override func isEqual(_ object: Any?) -> Bool {
         if let other = object as? GDPRUserConsent {
-            return other.acceptedCategories.elementsEqual(acceptedCategories) &&
+            return other.acceptedCategories.elementsEqual(acceptedVendors) &&
                 other.acceptedVendors.elementsEqual(acceptedVendors) &&
                 other.legitimateInterestCategories.elementsEqual(legitimateInterestCategories) &&
                 other.specialFeatures.elementsEqual(specialFeatures) &&
-                other.euconsent.elementsEqual(euconsent) &&
-                other.vendorGrants.allSatisfy { key, value in vendorGrants[key]?.isEqual(value) ?? false }
+                other.euconsent.elementsEqual(euconsent)
         } else {
             return false
         }
@@ -106,7 +93,6 @@ public typealias GDPRPurposeId = String
             acceptedCategories: \(acceptedCategories),
             legitimateInterests: \(legitimateInterestCategories),
             specialFeatures: \(specialFeatures),
-            vendorGrants: \(vendorGrants),
             euconsent: \(euconsent)
         )
         """

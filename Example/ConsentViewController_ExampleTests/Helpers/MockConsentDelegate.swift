@@ -22,7 +22,7 @@ class MockConsentDelegate: GDPRConsentDelegate {
 
     var onActionCalledWith: GDPRAction!
 
-    public func consentUIWillShow() {
+    public func gdprConsentUIWillShow() {
         isConsentUIWillShowCalled = true
     }
 

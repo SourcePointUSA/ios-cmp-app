@@ -22,10 +22,27 @@ class WebViewMock: WKWebView {
     }
 }
 
+class MessageMock: WKScriptMessage {
+    var _body: Any
+    override var body: Any {
+        get {
+            return _body
+        }
+        set {
+            _body = newValue
+        }
+    }
+
+    init(_ body: Any) {
+        self._body = body
+    }
+}
+
 class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigationDelegate {
     override func spec() {
         var messageWebViewController: MessageWebViewController!
         var mockConsentDelegate: MockConsentDelegate!
+        let userContentController = WKUserContentController()
 
         beforeEach {
             mockConsentDelegate = MockConsentDelegate()
@@ -59,6 +76,74 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             }
         }
 
+        // responsible for the interface between javascript and native code
+        describe("userContentController") {
+            context("when it receives a 'onMessageReady' message") {
+                it("calls the onConsenUIWillShow on the consent delegate") {
+                    let message = MessageMock(["name": "onMessageReady"])
+                    messageWebViewController.userContentController(userContentController, didReceive: message)
+                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(beTrue())
+                }
+
+                it("calls the onMessageWillShow on the consent delegate") {
+                    let message = MessageMock(["name": "onMessageReady"])
+                    messageWebViewController.userContentController(userContentController, didReceive: message)
+                    expect(mockConsentDelegate.isMessageWillShowCalled).to(beTrue())
+                }
+            }
+
+            context("when it receives a 'onPMReady' message") {
+                it("calls the onConsenUIWillShow on the consent delegate") {
+                    let message = MessageMock(["name": "onPMReady"])
+                    messageWebViewController.userContentController(userContentController, didReceive: message)
+                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(beTrue())
+                }
+
+                it("calls the onMessageWillShow on the consent delegate") {
+                    let message = MessageMock(["name": "onPMReady"])
+                    messageWebViewController.userContentController(userContentController, didReceive: message)
+                    expect(mockConsentDelegate.isGdprPMWillShowCalled).to(beTrue())
+                }
+            }
+
+            context("when it receives a 'onAction' message") {
+                [1, 11, 12, 13, 15].forEach { type in
+                    context("and the action type is \(type)") {
+                        let actionType = GDPRActionType(rawValue: type)!
+                        it("calls the onAction on the consent delegate with \(actionType)") {
+                            let message = MessageMock([
+                                "name": "onAction",
+                                "body": ["type": type, "id": "id", "payload": ["foo": "bar"]]
+                            ])
+                            let expectedAction = GDPRAction(type: actionType, id: "id", payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
+                            messageWebViewController.userContentController(userContentController, didReceive: message)
+                            expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
+                        }
+                    }
+                }
+
+                context("and the action type is 2") {
+                    it("calls the onAction on the consent delegate with Dismiss") {
+                        let message = MessageMock([
+                            "name": "onAction",
+                            "body": ["type": 2, "id": "id", "payload": [:]]
+                        ])
+                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", payload: "{}".data(using: .utf8)!)
+                        messageWebViewController.userContentController(userContentController, didReceive: message)
+                        expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
+                    }
+                }
+            }
+
+            context("when it receives a 'onError' message") {
+                it("calls the onError on the consent delegate") {
+                    let message = MessageMock(["name": "onError", "body": ["error": "foo"]])
+                    messageWebViewController.userContentController(userContentController, didReceive: message)
+                    expect(mockConsentDelegate.isOnErrorCalled).to(beTrue())
+                }
+            }
+        }
+
         describe("Test loadView method") {
             it("Test MessageWebViewController calls loadView method") {
                 messageWebViewController.loadView()
@@ -67,10 +152,10 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         }
 
         describe("GDPRConsentDelegate") {
-            context("Test consentUIWillShow delegate method") {
-                it("Test MessageWebViewController calls consentUIWillShow delegate method") {
+            describe("consentUIWillShow") {
+                it("calls consentUIWillShow delegate method") {
                     messageWebViewController.gdprConsentUIWillShow()
-                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(equal(false), description: "consentUIWillShow delegate method calls successfully")
+                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(beTrue())
                 }
             }
 
@@ -282,22 +367,6 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             it("Test MessageWebViewController calls viewWillDisappear method") {
                 messageWebViewController.viewWillDisappear(false)
                 expect(messageWebViewController.consentDelegate).to(beNil(), description: "ConsentDelegate gets cleared")
-            }
-        }
-
-        describe("getChoiceId") {
-            context("when the payload contains an id") {
-                it("returns the id from the payload") {
-                    expect(messageWebViewController.getChoiceId(["id": "foo"])).to(equal("foo"))
-                }
-            }
-
-            context("when the payload doesn't contain id") {
-                it("returns the lastChoiceId property") {
-                    expect(messageWebViewController.getChoiceId([:])).to(beNil())
-                    messageWebViewController.lastChoiceId = "id"
-                    expect(messageWebViewController.getChoiceId([:])).to(equal("id"))
-                }
             }
         }
     }

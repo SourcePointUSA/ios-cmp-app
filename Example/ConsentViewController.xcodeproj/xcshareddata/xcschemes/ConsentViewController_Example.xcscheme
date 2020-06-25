@@ -51,6 +51,16 @@
                ReferencedContainer = "container:ConsentViewController.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8214B276249CC13B00167BFE"
+               BuildableName = "SPGDPRExampleAppUITests.xctest"
+               BlueprintName = "SPGDPRExampleAppUITests"
+               ReferencedContainer = "container:ConsentViewController.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
