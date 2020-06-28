@@ -48,7 +48,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }()
 
     let propertyId: Int
-    let pmId: String
+    var pmId: String
     let consentUUID: GDPRUUID
 
     var isSecondLayerMessage = false
@@ -133,10 +133,17 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         onMessageReady()
     }
 
+    func getPMIdFromMessage(action: GDPRAction) {
+        if let pm_url = action.pm_url, let urlComponents = URLComponents(string: pm_url)?.queryItems, let pmId = urlComponents.first(where: { $0.name == "message_id" })?.value {
+            self.pmId = pmId
+        }
+    }
+
     func onAction(_ action: GDPRAction) {
         switch action.type {
         case .ShowPrivacyManager:
             consentDelegate?.onAction?(action)
+            getPMIdFromMessage(action: action)
             showPrivacyManagerFromMessageAction()
         case .PMCancel:
             consentDelegate?.onAction?(
@@ -218,7 +225,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                 return
             }
-            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, payload: payloadData))
+            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, pm_url: payload["pm_url"] as? String, payload: payloadData))
         case "onError":
             let payload = body["body"] as? [String: Any] ?? [:]
             let error = payload["error"] as? [String: Any] ?? [:]
