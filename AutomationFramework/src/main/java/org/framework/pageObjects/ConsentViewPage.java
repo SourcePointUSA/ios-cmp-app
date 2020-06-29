@@ -121,17 +121,6 @@ public class ConsentViewPage extends Page {
 		return consentMsg;
 	}
 
-	public void getLocation() {
-		for (WebElement msg : ConsentMessage) {
-			Point point = msg.getLocation();
-			TouchAction touchAction = new TouchAction((PerformsTouchActions) driver);
-			System.out.println("******************");
-			System.out.println((point.x) + (msg.getSize().getWidth()));
-			System.out.println((point.y) + (msg.getSize().getWidth()));
-			System.out.println("******************");
-		}
-	}
-
 	public void waitForElement(WebElement ele, int timeOutInSeconds) {
 		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 		wait.until(ExpectedConditions.visibilityOf(ele));
