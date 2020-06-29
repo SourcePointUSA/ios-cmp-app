@@ -127,10 +127,10 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         }
 
         describe("GDPRConsentDelegate") {
-            context("Test consentUIWillShow delegate method") {
-                it("Test MessageWebViewController calls consentUIWillShow delegate method") {
+            describe("consentUIWillShow") {
+                it("calls consentUIWillShow delegate method") {
                     messageWebViewController.gdprConsentUIWillShow()
-                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(equal(true), description: "consentUIWillShow delegate method calls successfully")
+                    expect(mockConsentDelegate.isConsentUIWillShowCalled).to(beTrue())
                 }
             }
 

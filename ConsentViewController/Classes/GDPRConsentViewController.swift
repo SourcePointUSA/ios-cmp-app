@@ -301,7 +301,7 @@ public typealias TargetingParams = [String: String]
                 acceptedCategories: response.categories,
                 legitimateInterestCategories: response.legIntCategories,
                 specialFeatures: response.specialFeatures,
-                vendorGrants: GDPRVendorGrants(),
+                vendorGrants: response.grants,
                 euconsent: euconsent,
                 tcfData: tcfData)
             )

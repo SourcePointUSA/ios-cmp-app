@@ -9,3 +9,4 @@ allure-results/
 .classpath
 .project
 .settings/
+/.gradle/

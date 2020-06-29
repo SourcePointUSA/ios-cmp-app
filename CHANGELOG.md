@@ -1,3 +1,9 @@
+## 5.2.4 (Jun, 25, 2020)
+* fixed an [issue](https://github.com/SourcePointUSA/ios-cmp-app/issues/195) preventing the `vendorGrants` from being filled in when calling `customConsentTo`.
+* cache the user's consent in the `UserDefaults`
+* we now make sure the `onConsentReady` is always called (except when returning from the PM to the consent message).
+* increase test and code coverage
+
 ## 5.2.3 (Jun, 09, 2020)
 * Fixed an issue that'd prevent the user from interacting with the app when the PMId passed to the SDK was wrong. We now encapuslate that in a `WebViewError` and call the `onError` callback on the `ConsentDelegate`.
 

@@ -59,4 +59,5 @@ struct GDPRPMConsents: Codable {
 
 struct CustomConsentResponse: Codable, Equatable {
     let vendors, categories, legIntCategories, specialFeatures: [String]
+    let grants: GDPRVendorGrants
 }
