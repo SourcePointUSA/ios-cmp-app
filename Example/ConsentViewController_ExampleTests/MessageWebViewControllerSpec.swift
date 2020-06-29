@@ -88,9 +88,9 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         it("calls the onAction on the consent delegate with \(actionType)") {
                             let message = MessageMock([
                                 "name": "onAction",
-                                "body": ["type": type, "id": "id", "pm_url": "pm_url", "payload": ["foo": "bar"]]
+                                "body": ["type": type, "id": "id", "payload": ["foo": "bar"]]
                             ])
-                            let expectedAction = GDPRAction(type: actionType, id: "id", pm_url: "pm_url", payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
+                            let expectedAction = GDPRAction(type: actionType, id: "id", payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
                             messageWebViewController.userContentController(userContentController, didReceive: message)
                             expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                         }
@@ -101,9 +101,9 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     it("calls the onAction on the consent delegate with Dismiss") {
                         let message = MessageMock([
                             "name": "onAction",
-                            "body": ["type": 2, "id": "id", "pm_url": nil, "payload": [:]]
+                            "body": ["type": 2, "id": "id", "payload": [:]]
                         ])
-                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", pm_url: nil, payload: "{}".data(using: .utf8)!)
+                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", payload: "{}".data(using: .utf8)!)
                         messageWebViewController.userContentController(userContentController, didReceive: message)
                         expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                     }
@@ -340,9 +340,8 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
         describe("getPMIdFromMessage") {
             it("returns pmId from PM url") {
-                let payload = "".data(using: .utf8)!
-                let pm_url = "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"
-                let action = GDPRAction(type: .AcceptAll, id: "something", pm_url: pm_url, payload: payload)
+                let payload = "{\"pm_url\":\"https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058\"}".data(using: .utf8)!
+                let action = GDPRAction(type: .AcceptAll, id: "something", payload: payload)
                 messageWebViewController.getPMIdFromMessage(action: action)
                 expect(messageWebViewController.pmId).to(equal("122058"))
             }

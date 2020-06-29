@@ -21,23 +21,16 @@ class GDPRActionSpec: QuickSpec {
                     let payload = "".data(using: .utf8)!
                     let type = GDPRActionType.AcceptAll
                     let id = "something"
-                    let pm_url = "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"
-                    let action = GDPRAction(type: .AcceptAll, id: "something", pm_url: pm_url, payload: payload)
+                    let action = GDPRAction(type: .AcceptAll, id: "something", payload: payload)
 
                     expect(action.type).to(equal(type))
                     expect(action.id).to(equal(id))
-                    expect(action.pm_url).to(equal(pm_url))
                     expect(action.payload).to(equal(payload))
                 }
 
                 it("initialises id to nil by default") {
                     let action = GDPRAction(type: .AcceptAll)
                     expect(action.id).to(beNil())
-                }
-
-                it("initialises pm_url to nil by default") {
-                    let action = GDPRAction(type: .AcceptAll)
-                    expect(action.pm_url).to(beNil())
                 }
 
                 it("initialises data to data encoded \"{}\" by default") {

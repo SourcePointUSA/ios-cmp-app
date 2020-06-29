@@ -134,8 +134,10 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func getPMIdFromMessage(action: GDPRAction) {
-        if let pm_url = action.pm_url, let urlComponents = URLComponents(string: pm_url)?.queryItems, let pmId = urlComponents.first(where: { $0.name == "message_id" })?.value {
-            self.pmId = pmId
+        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload), let pm_url = payloadData["pm_url"]?.stringValue {
+            if let urlComponents = URLComponents(string: pm_url)?.queryItems, let pmId = urlComponents.first(where: { $0.name == "message_id" })?.value {
+                self.pmId = pmId
+            }
         }
     }
 
@@ -225,7 +227,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                 return
             }
-            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, pm_url: payload["pm_url"] as? String, payload: payloadData))
+            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, payload: payloadData))
         case "onError":
             let payload = body["body"] as? [String: Any] ?? [:]
             let error = payload["error"] as? [String: Any] ?? [:]
