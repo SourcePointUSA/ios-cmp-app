@@ -18,15 +18,7 @@ public class TestRunner {
             MODE = "functional";
             logMessage("Image Comparison arguments not passed; Running tests in functional mode");
         } 
-//        else if (args[0].equalsIgnoreCase("compare")) {
-//            MODE = "visual";
-//            logMessage("Running tests in visual compare mode");
-//            ImageComparator.COMPARE = true;
-//        } else if (args[0].equalsIgnoreCase("capture")) {
-//            MODE = "visual";
-//            logMessage("Running tests in visual capture mode");
-//            ImageComparator.COMPARE = false;
-//        }
+
         List<String> suites = Lists.newArrayList();
         suites.add(FileUtility.getFile("testng.xml").getAbsolutePath());
         testng.setTestSuites(suites);

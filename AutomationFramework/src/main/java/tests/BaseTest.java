@@ -1,49 +1,40 @@
 package tests;
 
+import org.framework.allureReport.TestListener;
 import org.framework.appium.AppiumServer;
 import org.framework.drivers.IOSDriverBuilder;
 import org.framework.enums.PlatformName;
-import org.framework.enums.PlatformType;
 import org.framework.helpers.Page;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
-
 import static org.framework.logger.LoggingManager.logMessage;
-
 import java.io.IOException;
 
+@Listeners({ TestListener.class })
 public class BaseTest extends Page {
 	public WebDriver driver = null;
-
-	@Parameters({ "platformType", "platformName" })
+	
 	@BeforeTest
-	public void startAppiumServer(String platformType, @Optional String platformName) throws IOException {
-		if (platformType.equalsIgnoreCase(PlatformType.MOBILE.toString())) {
+	public void startAppiumServer() throws IOException {
 			if (AppiumServer.appium == null || !AppiumServer.appium.isRunning()) {
 				AppiumServer.start();
 				logMessage("Appium server has been started");
 			}
 		}
-	}
 
-	@Parameters({ "platformType", "platformName" })
 	@AfterTest
-	public void stopAppiumServer(String platformType, @Optional String platformName) throws IOException {
-		if (platformType.equalsIgnoreCase(PlatformType.MOBILE.toString())) {
+	public void stopAppiumServer() throws IOException {
 			if (AppiumServer.appium != null || AppiumServer.appium.isRunning()) {
 				AppiumServer.stop();
 				logMessage("Appium server has been stopped");
 			}
 		}
-	}
 
-	@Parameters({ "platformType", "platformName", "model" })
+	@Parameters({ "platformName", "model" })
 	@BeforeMethod
-	public void setupDriver(String platformType, String platformName, @Optional String model) throws IOException {
+	public void setupDriver(String platformName, @Optional String model) throws IOException {
 		try {
-			if (platformType.equalsIgnoreCase(PlatformType.MOBILE.toString())) {
 				setupMobileDriver(platformName, model);
-			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
