@@ -28,7 +28,13 @@ class SourcePointClientSpec: QuickSpec {
     }
 
     override func spec() {
-        Nimble.AsyncDefaults.Timeout = 2
+        beforeSuite {
+            Nimble.AsyncDefaults.Timeout = 2
+        }
+
+        afterSuite {
+            Nimble.AsyncDefaults.Timeout = 1
+        }
 
         var client: SourcePointClient!
         var httpClient: MockHttp?
@@ -220,7 +226,7 @@ class SourcePointClientSpec: QuickSpec {
 
                 context("on failure") {
                     beforeEach {
-                        client = self.getClient(MockHttp(error: nil))
+                        client = self.getClient(MockHttp(error: APIParsingError("foo", nil)))
                     }
 
                     it("calls the completion handler with an GDPRConsentViewControllerError") {
