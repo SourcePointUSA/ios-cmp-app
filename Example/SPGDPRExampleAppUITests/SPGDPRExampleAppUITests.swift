@@ -20,6 +20,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app = ExampleApp(XCUIApplication())
             self.app.launch()
             self.app.clearConsentButton.tap()
+            Nimble.AsyncDefaults.Timeout = 10
+            Nimble.AsyncDefaults.PollInterval = 1
         }
 
         afterSuite {
@@ -27,6 +29,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
             /// This is a side effect. We need to "force" the UserDefaults to synchronise otherwise
             /// it won't store its in-memory values on the file system in time before closing the app.
             UserDefaults.standard.synchronize()
+            Nimble.AsyncDefaults.Timeout = 1
+            Nimble.AsyncDefaults.PollInterval = 0.01
         }
 
         describe("SPGDPRExampleAppUITests") {
