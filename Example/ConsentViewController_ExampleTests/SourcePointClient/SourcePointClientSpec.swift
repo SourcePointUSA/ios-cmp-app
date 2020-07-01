@@ -28,13 +28,7 @@ class SourcePointClientSpec: QuickSpec {
     }
 
     override func spec() {
-        beforeSuite {
-            Nimble.AsyncDefaults.Timeout = 2
-        }
-
-        afterSuite {
-            Nimble.AsyncDefaults.Timeout = 1
-        }
+        Nimble.AsyncDefaults.Timeout = 2
 
         var client: SourcePointClient!
         var httpClient: MockHttp?
