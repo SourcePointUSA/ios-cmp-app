@@ -19,7 +19,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: CocoaPod Install
         run: cd Example && pod install
-      - name: iOS build
-        run: xcodebuild build-for-testing -scheme ConsentViewController_ExampleTests -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.5'
       - name: testing -> iPhone 11 (iOS 13.5)
-        run: xcodebuild test-without-building -scheme ConsentViewController_ExampleTests -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.5'
+        run: xcodebuild test -scheme ConsentViewController_Example -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.5' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
