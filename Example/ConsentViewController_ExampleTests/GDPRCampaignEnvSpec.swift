@@ -45,10 +45,26 @@ class GDPRCampaignEnvSpec: QuickSpec {
             }
 
             describe("Codable") {
-                it("can be encoded/decoded to/from JSON") {
-                    let original = GDPRCampaignEnv.Stage
-                    let decoded = try! JSONDecoder().decode(GDPRCampaignEnv.self, from: JSONEncoder().encode(original))
-                    expect(decoded).to(equal(original))
+                context("when encoded to JSON") {
+                    it("encodes to a string") {
+                        let encoded = try! JSONEncoder().encode(GDPRCampaignEnv.Stage)
+                        let encodedString = String(data: encoded, encoding: .utf8)
+                        if #available(iOS 11, *) {
+                            expect(encodedString).to(equal("\"stage\""))
+                        } else {
+                            expect(encodedString).to(equal("[\"stage\"]"))
+                        }
+                    }
+                }
+
+                it("can be decoded from JSON") {
+                    var decoded: GDPRCampaignEnv?
+                    if #available(iOS 11, *) {
+                        decoded = try? JSONDecoder().decode(GDPRCampaignEnv.self, from: "\"stage\"".data(using: .utf8)!)
+                    } else {
+                        decoded = try? JSONDecoder().decode(GDPRCampaignEnv.self, from: "[\"stage\"]".data(using: .utf8)!)
+                    }
+                    expect(decoded).to(equal(.Stage))
                 }
             }
         }
