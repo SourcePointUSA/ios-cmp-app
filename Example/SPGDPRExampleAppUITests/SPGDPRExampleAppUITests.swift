@@ -22,7 +22,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app.clearConsentButton.tap()
         }
 
-        afterSuite {
+        afterEach {
             self.app.clearConsentButton.tap()
             /// This is a side effect. We need to "force" the UserDefaults to synchronise otherwise
             /// it won't store its in-memory values on the file system in time before closing the app.
@@ -30,49 +30,129 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         describe("SPGDPRExampleAppUITests") {
-            context("when launching the app for the first time") {
-                it("1. should see the consent message") {
-                    expect(self.app.consentMessage).to(showUp())
+            it("1. Accept all through message") {
+                expect(self.app.consentMessage).to(showUp())
+                if self.app.consentMessage.exists {
+                    self.app.consentMessage.swipeUp()
                 }
+                self.app.acceptAllButton.tap()
+                expect(self.app.consentMessage).to(disappear())
+                expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+                self.app.relaunch()
+                expect(self.app.consentMessage).notTo(showUp())
+            }
 
-                it("2. have the message disappear after rejecting all") {
-                    self.app.rejectAllButton.tap()
-                    expect(self.app.consentMessage).toEventually(disappear())
+            it("2. Reject all through message") {
+                expect(self.app.consentMessage).to(showUp())
+                if self.app.consentMessage.exists {
+                    self.app.consentMessage.swipeUp()
                 }
+                self.app.rejectAllButton.tap()
+                expect(self.app.consentMessage).to(disappear())
+                expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+                self.app.relaunch()
+                expect(self.app.consentMessage).notTo(showUp())
+            }
 
-                it("3. vendor x should be 'Rejected'") {
-                    expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            it("3. Accept all through privacy manager via message") {
+                expect(self.app.consentMessage).to(showUp())
+                if self.app.consentMessage.exists {
+                    self.app.consentMessage.swipeUp()
                 }
+                self.app.showOptionsButton.tap()
+                expect(self.app.privacyManager).to(showUp())
+                if self.app.privacyManager.exists {
+                    self.app.privacyManager.swipeUp()
+                }
+                self.app.acceptAllButton.tap()
+                expect(self.app.consentMessage).to(disappear())
+                expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+                self.app.relaunch()
+                expect(self.app.consentMessage).notTo(showUp())
+            }
 
-                it("4. have the vendor x 'Accepted' after tapping on Accept Vendor X button") {
-                    self.app.acceptVendorXButton.tap()
-                    expect(self.app.vendorXConsentStatus).toEventually(equal("Accepted"))
+            it("4. Reject all through privacy manager via message") {
+                expect(self.app.consentMessage).to(showUp())
+                if self.app.consentMessage.exists {
+                    self.app.consentMessage.swipeUp()
                 }
+                self.app.showOptionsButton.tap()
+                expect(self.app.privacyManager).to(showUp())
+                if self.app.privacyManager.exists {
+                    self.app.privacyManager.swipeUp()
+                }
+                self.app.rejectAllButton.tap()
+                expect(self.app.consentMessage).to(disappear())
+                expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+                self.app.relaunch()
+                expect(self.app.consentMessage).notTo(showUp())
+            }
 
-                it("5. not see the consent message after relaunching") {
-                    self.app.relaunch()
-                    expect(self.app.consentMessage).notTo(showUp())
+            it("5. Save and Exit through privacy manager via message") {
+                expect(self.app.consentMessage).to(showUp())
+                if self.app.consentMessage.exists {
+                    self.app.consentMessage.swipeUp()
                 }
+                self.app.showOptionsButton.tap()
+                expect(self.app.privacyManager).to(showUp())
+                if self.app.privacyManager.exists {
+                    self.app.privacyManager.swipeUp()
+                }
+                self.app.saveAndExitButton.tap()
+                expect(self.app.consentMessage).to(disappear())
+                self.app.relaunch()
+                expect(self.app.consentMessage).notTo(showUp())
+            }
 
-                it("6. the vendor x 'Rejected' after tapping on Clear Consents button") {
-                    self.app.clearConsentButton.tap()
-                    expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
-                }
+            it("6. the vendor x 'Rejected' after tapping on Clear Consents button") {
+                self.app.clearConsentButton.tap()
+                expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            }
 
-                it("7. the Privacy Manager should open when taping on Privacy Settings button") {
-                    self.app.privacySettingsButton.tap()
-                    expect(self.app.privacyManager).to(showUp())
+            it("7. have the vendor x 'Accepted' after tapping on Accept Vendor X button") {
+                expect(self.app.consentMessage).to(showUp())
+                if self.app.consentMessage.exists {
+                    self.app.consentMessage.swipeUp()
                 }
+                self.app.rejectAllButton.tap()
+                expect(self.app.consentMessage).to(disappear())
+                expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+                self.app.acceptVendorXButton.tap()
+                expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+            }
 
-                it("8. the Privacy Manager should close after tapping on Accept All") {
-                    self.app.acceptAllButton.tap()
-                    expect(self.app.privacyManager).toEventually(disappear())
+            it("8. Accept all through the Privacy Manager directly") {
+                self.app.privacySettingsButton.tap()
+                expect(self.app.privacyManager).to(showUp())
+                if self.app.privacyManager.exists {
+                    self.app.privacyManager.swipeUp()
                 }
+                self.app.acceptAllButton.tap()
+                expect(self.app.privacyManager).to(disappear())
+                expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+            }
 
-                it("9. have the vendor x 'Accepted'") {
-                    expect(self.app.vendorXConsentStatus).toEventually(equal("Accepted"))
+            it("9. Reject all through the Privacy Manager directly") {
+                self.app.privacySettingsButton.tap()
+                expect(self.app.privacyManager).to(showUp())
+                if self.app.privacyManager.exists {
+                    self.app.privacyManager.swipeUp()
                 }
+                self.app.rejectAllButton.tap()
+                expect(self.app.privacyManager).to(disappear())
+                expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            }
+
+            it("10. Save And Exit through the Privacy Manager directly") {
+                self.app.privacySettingsButton.tap()
+                expect(self.app.privacyManager).to(showUp())
+                if self.app.privacyManager.exists {
+                    self.app.privacyManager.swipeUp()
+                }
+                self.app.saveAndExitButton.tap()
+                expect(self.app.privacyManager).to(disappear())
             }
         }
     }
 }
+
