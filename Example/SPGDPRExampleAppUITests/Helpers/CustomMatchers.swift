@@ -15,7 +15,7 @@ import Quick
 public func showUp() -> Predicate<XCUIElement> {
     return Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: 10))
+        return PredicateStatus(bool: actual.waitForExistence(timeout: Nimble.AsyncDefaults.Timeout))
     }
 }
 
@@ -34,7 +34,7 @@ public func disappear() -> Predicate<XCUIElement> {
     return Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual, handler: nil)
-        QuickSpec.current.waitForExpectations(timeout: 5.0, handler: nil)
+        QuickSpec.current.waitForExpectations(timeout: Nimble.AsyncDefaults.Timeout)
         return PredicateStatus(bool: !actual.exists)
     }
 }
