@@ -108,6 +108,18 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                     }
                 }
+
+                context("the action type is 12") {
+                    it("calls the onAction on the consent delegate with ShowPrivacyManager and will get PM Id associated with message") {
+                        let message = MessageMock([
+                            "name": "onAction",
+                            "body": ["type": 12, "id": "id", "payload": ["pm_url": "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"]]
+                        ])
+
+                        messageWebViewController.userContentController(userContentController, didReceive: message)
+                        expect(messageWebViewController.pmId).to(equal("122058"))
+                    }
+                }
             }
 
             context("when it receives a 'onError' message") {
@@ -335,15 +347,6 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             it("returns an url with propertyId, pmId and consentUUID") {
                 let pmUrl = URL(string: "https://notice.sp-prod.net/privacy-manager/index.html?message_id=pmId&site_id=1&consentUUID=uuid")
                 expect(messageWebViewController.pmUrl()).to(equal(pmUrl))
-            }
-        }
-
-        describe("getPMIdFromMessage") {
-            it("returns pmId from PM url") {
-                let payload = "{\"pm_url\":\"https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058\"}".data(using: .utf8)!
-                let action = GDPRAction(type: .AcceptAll, id: "something", payload: payload)
-                messageWebViewController.getPMIdFromMessage(action: action)
-                expect(messageWebViewController.pmId).to(equal("122058"))
             }
         }
 
