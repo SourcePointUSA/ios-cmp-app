@@ -1,3 +1,6 @@
+## 5.2.5 (Jul, 3, 2020)
+* fixed an issue that'd prevent the consent message from showing up on iOS 10
+
 ## 5.2.4 (Jun, 25, 2020)
 * fixed an [issue](https://github.com/SourcePointUSA/ios-cmp-app/issues/195) preventing the `vendorGrants` from being filled in when calling `customConsentTo`.
 * cache the user's consent in the `UserDefaults`
