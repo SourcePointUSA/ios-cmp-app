@@ -23,6 +23,11 @@ public typealias TargetingParams = [String: String]
     static let IAB_CMP_SDK_ID = 6
     static let DefaultTimeout = TimeInterval(30)
 
+    /// Resets the data stored by the SDK in the UserDefaults
+    static public func clearAllData() {
+        GDPRUserDefaults().clear()
+    }
+
     /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
     public var euconsent: String {
         return localStorage.userConsents.euconsent
