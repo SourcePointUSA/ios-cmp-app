@@ -18,8 +18,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = ExampleApp()
-            Nimble.AsyncDefaults.Timeout = 5
-            Nimble.AsyncDefaults.PollInterval = 1
+            Nimble.AsyncDefaults.Timeout = 10
+            Nimble.AsyncDefaults.PollInterval = 0.5
         }
 
         afterSuite {
