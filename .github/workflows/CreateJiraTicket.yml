@@ -19,5 +19,5 @@ jobs:
         with:
           project: SP
           issuetype: Bug
-          summary: "[SDK] ${{ github.event.issue.title }}"
-          description: ${{ github.event.issue.body }}
+          summary: "[iOS][TCFv2] ${{github.event.issue.title}}"
+          description: "${{github.event.issue.body}}\n This issue was reported by ${{github.event.issue.user.login}} via GitHub.\n ${{github.event.issue.html_url}}"
