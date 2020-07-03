@@ -1,14 +1,9 @@
 //
-//  SourcePointRequestsResponses.swift
-//  GDPRConsentViewController
+//  MessageRequest.swift
+//  ConsentViewController
 //
-//  Created by Andre Herculano on 15.12.19.
+//  Created by Andre Herculano on 03.07.20.
 //
-
-import Foundation
-
-typealias Meta = String
-public typealias GDPRUUID = String
 
 struct MessageRequest: Equatable {
     let uuid: GDPRUUID?
@@ -77,35 +72,4 @@ struct MessageResponse: Codable {
     let uuid: GDPRUUID
     let userConsent: GDPRUserConsent
     var meta: Meta
-}
-
-struct ActionRequest: Codable, Equatable {
-    let propertyId: Int
-    let propertyHref: GDPRPropertyName
-    let accountId: Int
-    let actionType: Int
-    let choiceId: String?
-    let privacyManagerId: String
-    let requestFromPM: Bool
-    let uuid: GDPRUUID
-    let requestUUID: UUID
-    let pmSaveAndExitVariables: SPGDPRArbitraryJson
-    let meta: Meta
-}
-
-struct ActionResponse: Codable {
-    let uuid: GDPRUUID
-    let userConsent: GDPRUserConsent
-    var meta: Meta
-}
-
-typealias PMConsents = SPGDPRArbitraryJson
-
-struct GDPRPMConsents: Codable {
-    let acceptedVendors, acceptedCategories: [String]
-}
-
-struct CustomConsentResponse: Codable, Equatable {
-    let vendors, categories, legIntCategories, specialFeatures: [String]
-    let grants: GDPRVendorGrants
 }
