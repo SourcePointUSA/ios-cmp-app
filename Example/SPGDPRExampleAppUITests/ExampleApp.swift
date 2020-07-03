@@ -1,5 +1,5 @@
 //
-//  ExampleApp.swift
+//  Exampleswift
 //  SPGDPRExampleAppUITests
 //
 //  Created by Andre Herculano on 22.06.20.
@@ -7,11 +7,23 @@
 //
 
 import XCTest
+import Nimble
 
 protocol App {
     func launch()
     func terminate()
-    func relaunch()
+    func relaunch(clean: Bool)
+}
+
+extension XCUIApplication: App {
+    func relaunch(clean: Bool = false) {
+        UserDefaults.standard.synchronize()
+        self.terminate()
+        clean ?
+            launchArguments.append("-cleanAppsData") :
+            launchArguments.removeAll { $0 == "-cleanAppsData" }
+        launch()
+    }
 }
 
 protocol GDPRUI {
@@ -20,58 +32,35 @@ protocol GDPRUI {
     var consentMessage: XCUIElement { get }
 }
 
-class ExampleApp {
-    let app: XCUIApplication
-
+class ExampleApp: XCUIApplication {
     var privacySettingsButton: XCUIElement {
-        app.buttons["privacySettingsButton"].firstMatch
+        buttons["privacySettingsButton"].firstMatch
     }
 
     var clearConsentButton: XCUIElement {
-        app.buttons["clearConsentButton"].firstMatch
+        buttons["clearConsentButton"].firstMatch
     }
 
     var acceptVendorXButton: XCUIElement {
-        app.buttons["acceptVendorXButton"].firstMatch
+        buttons["acceptVendorXButton"].firstMatch
     }
 
     var vendorXConsentStatus: String {
-        app.staticTexts["vendorXConsentStatus"].label
-    }
-
-    init(_ app: XCUIApplication) {
-        self.app = app
-    }
-}
-
-extension ExampleApp: App {
-    func launch() {
-        app.launch()
-    }
-
-    func terminate() {
-        app.terminate()
-    }
-
-    func relaunch() {
-        terminate()
-        launch()
+        staticTexts["vendorXConsentStatus"].label
     }
 }
 
 extension ExampleApp: GDPRUI {
     var consentUI: XCUIElement {
-        consentMessage.exists ?
-            consentMessage :
-            privacyManager
+        consentMessage.waitForExistence(timeout: Nimble.AsyncDefaults.Timeout) ? consentMessage : privacyManager
     }
 
     var privacyManager: XCUIElement {
-        app.webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Center'")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Center'")).firstMatch
     }
 
     var consentMessage: XCUIElement {
-        app.webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Notice'")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Notice'")).firstMatch
     }
 
     var acceptAllButton: XCUIElement {
