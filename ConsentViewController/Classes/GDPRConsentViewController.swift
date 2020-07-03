@@ -9,6 +9,8 @@
 import UIKit
 
 public typealias TargetingParams = [String: String]
+public typealias GDPRUUID = String
+typealias Meta = String
 
 // swiftlint:disable type_body_length
 

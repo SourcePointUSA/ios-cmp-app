@@ -206,13 +206,13 @@ class SourcePointClient: SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         completionHandler: @escaping (CustomConsentResponse?, APIParsingError?) -> Void) {
-        guard let body = try? JSONSerialization.data(withJSONObject: [
-            "consentUUID": consentUUID,
-            "propertyId": propertyId,
-            "vendors": vendors,
-            "categories": categories,
-            "legIntCategories": legIntCategories
-        ]) else {
+        guard let body = try? JSONEncoder().encode(CustomConsentRequest(
+            consentUUID: consentUUID,
+            propertyId: propertyId,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories
+        )) else {
             completionHandler(nil, APIParsingError("encoding custom consent", nil))
             return
         }
