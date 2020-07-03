@@ -18,7 +18,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = ExampleApp()
-            Nimble.AsyncDefaults.Timeout = 10
+            Nimble.AsyncDefaults.Timeout = 20
             Nimble.AsyncDefaults.PollInterval = 0.5
         }
 
@@ -50,6 +50,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Accept all through privacy manager via message") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.tap()
@@ -60,6 +61,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Reject all through privacy manager via message") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.rejectAllButton.tap()
@@ -70,6 +72,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Save and Exit through privacy manager via message") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.saveAndExitButton.tap()
@@ -79,12 +82,14 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Have the vendor x 'Rejected' after tapping on Clear Consents button") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             self.app.clearConsentButton.tap()
             expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
         }
 
         it("Have the vendor x 'Accepted' after tapping on Accept Vendor X button") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
             expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
             self.app.acceptVendorXButton.tap()
@@ -92,6 +97,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Accept all through the Privacy Manager directly") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
             self.app.privacySettingsButton.tap()
             expect(self.app.privacyManager).to(showUp())
@@ -101,6 +107,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Reject all through the Privacy Manager directly") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             self.app.privacySettingsButton.tap()
             expect(self.app.privacyManager).to(showUp())
@@ -110,6 +117,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Save And Exit through the Privacy Manager directly") {
+            expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             self.app.privacySettingsButton.tap()
             expect(self.app.privacyManager).to(showUp())

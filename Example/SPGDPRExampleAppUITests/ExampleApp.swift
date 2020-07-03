@@ -52,7 +52,7 @@ class ExampleApp: XCUIApplication {
 
 extension ExampleApp: GDPRUI {
     var consentUI: XCUIElement {
-        consentMessage.waitForExistence(timeout: Nimble.AsyncDefaults.Timeout) ? consentMessage : privacyManager
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'Privacy Notice') OR (label CONTAINS[cd] 'Privacy Center')")).firstMatch
     }
 
     var privacyManager: XCUIElement {
