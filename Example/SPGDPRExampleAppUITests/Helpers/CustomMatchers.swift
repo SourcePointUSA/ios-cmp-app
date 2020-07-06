@@ -8,13 +8,14 @@
 
 import XCTest
 import Nimble
+import Quick
 
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
-/// a certain amount of time. 5 seconds by default
+/// a certain amount of time. 10 seconds by default
 public func showUp() -> Predicate<XCUIElement> {
     return Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: 5))
+        return PredicateStatus(bool: actual.waitForExistence(timeout: Nimble.AsyncDefaults.Timeout))
     }
 }
 
@@ -32,6 +33,8 @@ public func showUp(in timeout: TimeInterval) -> Predicate<XCUIElement> {
 public func disappear() -> Predicate<XCUIElement> {
     return Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
+        QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual, handler: nil)
+        QuickSpec.current.waitForExpectations(timeout: Nimble.AsyncDefaults.Timeout)
         return PredicateStatus(bool: !actual.exists)
     }
 }
