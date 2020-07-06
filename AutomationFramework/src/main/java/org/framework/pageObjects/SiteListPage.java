@@ -114,7 +114,6 @@ public class SiteListPage extends Page {
 	}
 
 	public void swipeHorizontaly_gdpr(String siteName) throws InterruptedException {
-		System.out.println("Swipe on " + siteName);
 		WebElement ele = driver.findElement(By.xpath("//XCUIElementTypeStaticText[@name='propertyCell']"));
 
 		waitForElement(ele, timeOutInSeconds);
