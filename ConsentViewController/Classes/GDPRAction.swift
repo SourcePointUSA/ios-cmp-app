@@ -36,7 +36,7 @@ import Foundation
     public let payload: Data
 
     public override var description: String {
-        "GDPRAction(type: \(type), id: \(id ?? ""), payload: \(String(data: payload, encoding: .utf8) ?? "")"
+          "GDPRAction(type: \(type), id: \(id ?? ""), payload: \(String(data: payload, encoding: .utf8) ?? "")"
     }
 
     public override func isEqual(_ object: Any?) -> Bool {

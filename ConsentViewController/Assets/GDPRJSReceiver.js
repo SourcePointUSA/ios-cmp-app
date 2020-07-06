@@ -33,7 +33,7 @@
     return {
       id: String(choiceData.choice_id),
       type: choiceData.type,
-      payload: {}
+      payload: { pm_url: choiceData.iframe_url }
     };
   };
 

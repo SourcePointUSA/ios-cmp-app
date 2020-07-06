@@ -48,7 +48,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }()
 
     let propertyId: Int
-    let pmId: String
+    var pmId: String
     let consentUUID: GDPRUUID
 
     var isSecondLayerMessage = false
@@ -133,10 +133,19 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         onMessageReady()
     }
 
+    func getPMIdFromMessage(action: GDPRAction) {
+        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload), let pm_url = payloadData["pm_url"]?.stringValue {
+            if let urlComponents = URLComponents(string: pm_url)?.queryItems, let pmId = urlComponents.first(where: { $0.name == "message_id" })?.value {
+                self.pmId = pmId
+            }
+        }
+    }
+
     func onAction(_ action: GDPRAction) {
         switch action.type {
         case .ShowPrivacyManager:
             consentDelegate?.onAction?(action)
+            getPMIdFromMessage(action: action)
             showPrivacyManagerFromMessageAction()
         case .PMCancel:
             consentDelegate?.onAction?(
