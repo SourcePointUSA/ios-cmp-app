@@ -27,7 +27,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 	String siteName = "tcfv2.automation.testing";
 	String staggingValue = "OFF";
 	String siteID = "7376";
-	String pmID = "122040";
+	String pmID = "162636";
 	String key = "language";
 	String value = "fr";
 	String authID;
