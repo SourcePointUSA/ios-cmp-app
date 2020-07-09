@@ -129,7 +129,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 2, enabled = false)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 2)
 	@Description("Given user submit valid property details and tap on Save Then expected\n"
 			+ "	 consent should display When user click on MANAGE PREFERENCES button Then user\n"
 			+ "	 will see Privacy Manager screen When user click on Cancel button Then user\n"
@@ -1166,7 +1166,7 @@ public class GDPR_TCFV2_MetaAppTests extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "GDPR-MetaAppTests" }, priority = 18)
+	@Test(groups = { "GDPR-MetaAppTests" }, priority = 18, enabled = false)
 	@Description("Given user submit valid property details for loading PM as first layer message and tap on Save \n"
 			+ "	 Then expected PM should load \n" + "	 When user select Accept All Then consent should get stored \n"
 			+ "	 When user tap on the property from list screen And click on Cancel \n"
