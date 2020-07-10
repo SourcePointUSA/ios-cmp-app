@@ -63,6 +63,10 @@ extension ExampleApp: GDPRUI {
         webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Notice'")).firstMatch
     }
 
+    var termsAndConditionsWebPageTitle: XCUIElement {
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Address'")).firstMatch
+    }
+
     var acceptAllButton: XCUIElement {
         consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept'")).firstMatch
     }
@@ -77,5 +81,9 @@ extension ExampleApp: GDPRUI {
 
     var saveAndExitButton: XCUIElement {
         consentUI.buttons["Save & Exit"].firstMatch
+    }
+
+    var termsAndConditions: XCUIElement {
+        consentUI.links["Terms & Conditions"].firstMatch
     }
 }

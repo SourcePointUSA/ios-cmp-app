@@ -124,6 +124,15 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app.saveAndExitButton.tap()
             expect(self.app.privacyManager).to(disappear())
         }
+
+        it("Terms And Conditions link opens in other webview") {
+            expect(self.app.consentMessage).to(showUp())
+            self.app.acceptAllButton.tap()
+            self.app.privacySettingsButton.tap()
+            expect(self.app.privacyManager).to(showUp())
+            self.app.termsAndConditions.tap()
+            expect(self.app.termsAndConditionsWebPageTitle).to(showUp())
+        }
     }
 }
 
