@@ -2,6 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Test Execution" parallel="none">
+<listeners>
+      <listener class-name="org.framework.retryAnalyzer.RetryListener"/>
+  </listeners>
      <test name="E2E Test Suite On iOS - iPhone 8">
         <parameter name="platformType" value="mobile"/>
         <parameter name="platformName" value="ios"/>
