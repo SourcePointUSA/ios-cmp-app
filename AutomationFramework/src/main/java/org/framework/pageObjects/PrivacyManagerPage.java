@@ -80,7 +80,7 @@ public class PrivacyManagerPage extends Page {
 	public boolean isPrivacyManagerViewPresent() throws InterruptedException {
 		waitForElement(tcfv2_AcceptAll, timeOutInSeconds);
 		try {
-			if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[contains(@name,'Privacy Manager')]"))
+			if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[contains(@name,'Cookie Notice')]"))
 					.size() > 0)
 				privacyManageeFound = true;
 
