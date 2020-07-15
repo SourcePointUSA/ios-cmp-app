@@ -4,6 +4,7 @@
 //
 //  Created by Andre Herculano on 03.07.20.
 //
+import Foundation
 
 struct MessageRequest: Equatable {
     let uuid: GDPRUUID?
