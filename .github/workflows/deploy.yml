@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ SP-4243-publish_metaapp_to_testflight ]
 
 jobs:
   deploy:
