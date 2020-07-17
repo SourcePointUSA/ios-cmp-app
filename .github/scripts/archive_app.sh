@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -eo pipefail
-cd /Users/runner/work/ios-cmp-app/ios-cmp-app/Example/
+cd $META_APP_HOME
 xcodebuild -workspace "ConsentViewController.xcworkspace" \
             -scheme "SourcePointMetaApp" \
             -sdk "iphoneos" \
