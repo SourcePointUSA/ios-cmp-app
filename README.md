@@ -179,9 +179,9 @@ In case of a timeout error, the `onError` callback will be called and the consen
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.
 
 ## Frequently Asked Questions
-1. How big is the SDK?
+### 1. How big is the SDK?
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
-2. What's the lowes iOS version supported?
+### 2. What's the lowes iOS version supported?
 Although our SDK can be technically added to projects targeting iOS 9, we support iOS >= 10 only. 
 
 We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
