@@ -1,6 +1,3 @@
-
-# iOS Setup guide
-
 ## How to install
 
 ### CocoaPods
@@ -130,7 +127,7 @@ extension ViewController: GDPRConsentDelegate {
 @end
 ```
 
-### Programatically consenting an user
+## Programatically consenting an user
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
 ```swift
 func customConsentTo(
@@ -144,7 +141,7 @@ The ids passed will be appended to the list of already accepted vendors, categor
 
 It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
 
-### Authenticated Consent
+## Authenticated Consent
 
 In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
 
@@ -180,3 +177,12 @@ In case of a timeout error, the `onError` callback will be called and the consen
 ## Rendering the message natively
 
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.
+
+## Frequently Asked Questions
+1. How big is the SDK?
+The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
+2. What's the lowes iOS version supported?
+Although our SDK can be technically added to projects targeting iOS 9, we support iOS >= 10 only. 
+
+We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
+
