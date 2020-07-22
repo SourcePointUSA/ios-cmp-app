@@ -87,11 +87,11 @@ extension ExampleApp: GDPRUI {
         consentUI.links["Terms & Conditions"].firstMatch
     }
 
-    var SelectBasicAdsSwitch: XCUIElement {
-        consentUI.switches["Select basic ads"].firstMatch
+    var DeviceInformationSwitch: XCUIElement {
+        consentUI.switches["Store and/or access information on a device"].firstMatch
     }
 
-    var MeasureAdPerformanceSwitch: XCUIElement {
-        consentUI.switches["Measure ad performance"].firstMatch
+    var PersonalisedAdsSwitch: XCUIElement {
+        consentUI.switches["Create a personalised ads profile"].firstMatch
     }
 }
