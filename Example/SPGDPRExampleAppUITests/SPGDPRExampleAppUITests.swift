@@ -75,6 +75,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.SelectBasicAdsSwitch.tap()
+            self.app.MeasureAdPerformanceSwitch.tap()
             self.app.saveAndExitButton.tap()
             expect(self.app.consentMessage).to(disappear())
             self.app.relaunch()
@@ -102,7 +104,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app.privacySettingsButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.tap()
-            expect(self.app.privacyManager).to(disappear())
+            expect(self.app.privacyManager).to(disappear()) 
             expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
         }
 
@@ -125,12 +127,23 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.privacyManager).to(disappear())
         }
 
-        it("Terms And Conditions link opens in other webview") {
+        it("Save And Exit with few purposes through the Privacy Manager directly") {
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             self.app.privacySettingsButton.tap()
             expect(self.app.privacyManager).to(showUp())
-            self.app.termsAndConditions.tap()
+            self.app.SelectBasicAdsSwitch.tap()
+            self.app.MeasureAdPerformanceSwitch.tap()
+            self.app.saveAndExitButton.tap()
+            expect(self.app.privacyManager).to(disappear())
+        }
+
+        it("Terms And Conditions link opens in default safari browser") {
+            expect(self.app.consentMessage).to(showUp())
+            self.app.acceptAllButton.tap()
+            self.app.privacySettingsButton.tap()
+            expect(self.app.privacyManager).to(showUp())
+            self.app.termsAndConditionsLink.tap()
             expect(self.app.termsAndConditionsWebPageTitle).to(showUp())
         }
     }

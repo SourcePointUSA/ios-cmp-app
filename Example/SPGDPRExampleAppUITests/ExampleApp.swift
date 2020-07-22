@@ -83,7 +83,15 @@ extension ExampleApp: GDPRUI {
         consentUI.buttons["Save & Exit"].firstMatch
     }
 
-    var termsAndConditions: XCUIElement {
+    var termsAndConditionsLink: XCUIElement {
         consentUI.links["Terms & Conditions"].firstMatch
+    }
+
+    var SelectBasicAdsSwitch: XCUIElement {
+        consentUI.switches["Select basic ads"].firstMatch
+    }
+
+    var MeasureAdPerformanceSwitch: XCUIElement {
+        consentUI.switches["Measure ad performance"].firstMatch
     }
 }
