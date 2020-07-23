@@ -27,25 +27,60 @@ extension XCUIApplication: App {
 }
 
 protocol GDPRUI {
-    var consentUI: XCUIElement { get }
     var privacyManager: XCUIElement { get }
-    var consentMessage: XCUIElement { get }
 }
 
 class NativeExampleApp: XCUIApplication {
+    var messageTitle: XCUIElement {
+        staticTexts["Personalized Ads"].firstMatch
+    }
 
+    var exampleAppLabel: XCUIElement {
+        staticTexts["Example App"].firstMatch
+    }
+
+    var acceptButton: XCUIElement {
+        buttons["Accept"].firstMatch
+    }
+
+    var rejectButton: XCUIElement {
+        buttons["Reject"].firstMatch
+    }
+
+    var showOptionsButton: XCUIElement {
+        buttons["ShowOptions"].firstMatch
+    }
+    var settingsButton: XCUIElement {
+        buttons["Settings"].firstMatch
+    }
 }
 
 extension NativeExampleApp: GDPRUI {
-    var consentUI: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'Privacy Notice') OR (label CONTAINS[cd] 'Privacy Center')")).firstMatch
-    }
-
     var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Center'")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
     }
 
-    var consentMessage: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Notice'")).firstMatch
+    var acceptAllButton: XCUIElement {
+        privacyManager.buttons["Accept All"].firstMatch
+    }
+
+    var rejectAllButton: XCUIElement {
+        privacyManager.buttons["Reject All"].firstMatch
+    }
+
+    var saveAndExitButton: XCUIElement {
+        privacyManager.buttons["Save & Exit"].firstMatch
+    }
+
+    var cancelButton: XCUIElement {
+        privacyManager.buttons["Cancel"].firstMatch
+    }
+
+    var DeviceInformationSwitch: XCUIElement {
+        privacyManager.switches["Information storage and access"].firstMatch
+    }
+
+    var PersonalisedContentSwitch: XCUIElement {
+        privacyManager.switches["Select personalised content"].firstMatch
     }
 }
