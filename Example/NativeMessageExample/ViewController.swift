@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         propertyId: 7094,
         propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
         PMId: "100699",
-        campaignEnv: .Public,
+        campaignEnv: .Stage,
         consentDelegate: self
     )}()
 
