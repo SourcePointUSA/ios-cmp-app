@@ -32,7 +32,7 @@ protocol GDPRUI {
 
 class NativeExampleApp: XCUIApplication {
     var messageTitle: XCUIElement {
-        staticTexts["Personalized Ads"].firstMatch
+        staticTexts["Personalised Ads"].firstMatch
     }
 
     var exampleAppLabel: XCUIElement {
@@ -48,7 +48,7 @@ class NativeExampleApp: XCUIApplication {
     }
 
     var showOptionsButton: XCUIElement {
-        buttons["ShowOptions"].firstMatch
+        buttons["Show Options"].firstMatch
     }
     var settingsButton: XCUIElement {
         buttons["Settings"].firstMatch
@@ -57,7 +57,7 @@ class NativeExampleApp: XCUIApplication {
 
 extension NativeExampleApp: GDPRUI {
     var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Settings'")).firstMatch
     }
 
     var acceptAllButton: XCUIElement {
