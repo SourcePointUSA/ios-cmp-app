@@ -26,6 +26,12 @@ target 'NativeMessageExample' do
   pod 'ConsentViewController', :path => '../'
 end
 
+target 'NativeMessageExampleUITests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
 target 'SourcePointMetaApp' do
   pod 'ConsentViewController', :path => '../'
   pod 'IQKeyboardManagerSwift'

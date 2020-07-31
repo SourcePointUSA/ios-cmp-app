@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         accountId: 22,
         propertyId: 7094,
         propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
-        PMId: "100699",
+        PMId: "179657",
         campaignEnv: .Public,
         consentDelegate: self
     )}()
@@ -41,8 +41,8 @@ extension ViewController: GDPRConsentDelegate {
         present(messageController!, animated: true, completion: nil)
     }
 
-    /// called when the web consent UI is ready (in this case the Privacy Manager)
-    func gdprConsentUIWillShow() {
+    /// called when the Privacy Manager is ready to be displayed
+    func gdprPMWillShow() {
         if messageController?.viewIfLoaded?.window != nil {
             messageController?.present(consentViewController, animated: true, completion: nil)
         } else {
@@ -72,6 +72,7 @@ extension ViewController: GDPRConsentDelegate {
     }
 
     func onError(error: GDPRConsentViewControllerError?) {
+        stopActivityIndicator()
         print("ERROR: ", error?.description ?? "<empty>")
     }
 }
