@@ -56,6 +56,14 @@ public typealias CustomFields = [String: String]
         )
     }
 
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(choiceId, forKey: .choiceId)
+        try container.encode(choiceType, forKey: .choiceType)
+    }
+
     enum CodingKeys: String, CodingKey {
         case text, style, customFields, choiceId, choiceType
     }
