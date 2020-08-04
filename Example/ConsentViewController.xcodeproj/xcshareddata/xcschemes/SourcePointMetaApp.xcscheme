@@ -49,6 +49,16 @@
                ReferencedContainer = "container:ConsentViewController.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6D110B7B24D9E0A100A51BD9"
+               BuildableName = "SourcePointMetaAppUITests.xctest"
+               BlueprintName = "SourcePointMetaAppUITests"
+               ReferencedContainer = "container:ConsentViewController.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
