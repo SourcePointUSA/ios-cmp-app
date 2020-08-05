@@ -146,13 +146,7 @@ class SourcePointMetaAppUITests: QuickSpec {
                 self.app.propertyItem.swipeLeft()
                 self.app.editPropertyButton.tap()
                 expect(self.app.editProperty).to(showUp())
-                self.app.targetingParamKeyTextFieldOutlet.tap()
-                self.app.targetingParamKeyTextFieldOutlet.typeText(self.properyData.targetingKey)
-                self.app.targetingParamValueTextFieldOutlet.tap()
-                self.app.targetingParamValueTextFieldOutlet.typeText(self.properyData.targetingFrenchValue)
-                self.app.swipeUp()
-                self.app.addTargetingParamButton.tap()
-                self.app.savePropertyButton.tap()
+                self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
                 expect(self.app.consentMessage).to(showUp())
             }
         }

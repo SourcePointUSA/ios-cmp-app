@@ -176,9 +176,13 @@ class MetaApp: XCUIApplication {
     }
 
     func testPMToggles(value : Int) {
-        expect(Int(self.PersonalisationSwitch.value as! String) == value).to(beTrue())
-        expect(Int(self.PersonalisedAdsSwitch.value as! String) == value).to(beTrue())
-        expect(Int(self.DeviceInformationSwitch.value as! String) == value).to(beTrue())
+        if self.PersonalisationSwitch.value != nil {
+            expect(Int(self.PersonalisationSwitch.value as! String) == value).to(beTrue())
+            expect(Int(self.PersonalisedAdsSwitch.value as! String) == value).to(beTrue())
+            expect(Int(self.DeviceInformationSwitch.value as! String) == value).to(beTrue())
+        }else {
+            expect(self.privacyManager).to(showUp())
+        }
     }
 }
 
