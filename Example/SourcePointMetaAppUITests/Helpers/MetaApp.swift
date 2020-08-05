@@ -33,6 +33,8 @@ protocol GDPRUI {
 }
 
 class MetaApp: XCUIApplication {
+    var properyData = PropertyData()
+
     var propertyList: XCUIElement {
         staticTexts["Property List"].firstMatch
     }
@@ -127,6 +129,56 @@ class MetaApp: XCUIApplication {
 
     var alertNoButton: XCUIElement {
         alerts["alertView"].buttons["NO"].firstMatch
+    }
+
+    func addPropertyDetails() {
+        deleteProperty()
+        expect(self.propertyList).to(showUp())
+        self.addPropertyButton.tap()
+        expect(self.newProperty).to(showUp())
+        self.accountIDTextFieldOutlet.tap()
+        self.accountIDTextFieldOutlet.typeText(self.properyData.accountId)
+        self.propertyIdTextFieldOutlet.tap()
+        self.propertyIdTextFieldOutlet.typeText(self.properyData.propertyId)
+        self.propertyTextFieldOutlet.tap()
+        self.propertyTextFieldOutlet.typeText(self.properyData.propertyName)
+        self.pmTextFieldOutlet.tap()
+        self.pmTextFieldOutlet.typeText(self.properyData.pmID)
+    }
+
+    func addTargetingParameter(targetingValue : String) {
+        self.targetingParamKeyTextFieldOutlet.tap()
+        self.targetingParamKeyTextFieldOutlet.typeText(self.properyData.targetingKey)
+        self.targetingParamValueTextFieldOutlet.tap()
+        self.targetingParamValueTextFieldOutlet.typeText(targetingValue)
+        swipeUp()
+        self.addTargetingParamButton.tap()
+        self.savePropertyButton.tap()
+    }
+
+    func deleteProperty() {
+        expect(self.propertyList).to(showUp())
+        if self.propertyItem.exists {
+            self.propertyItem.swipeLeft()
+            self.deletePropertyButton.tap()
+            if self.alertYesButton.exists {
+                self.alertYesButton.tap()
+            }
+        }
+    }
+
+    func dateFormatterForAuthID() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d yyyy, h:mm:ss"
+        let formattedDateInString = formatter.string(from: date)
+        return formattedDateInString
+    }
+
+    func testPMToggles(value : Int) {
+        expect(Int(self.PersonalisationSwitch.value as! String) == value).to(beTrue())
+        expect(Int(self.PersonalisedAdsSwitch.value as! String) == value).to(beTrue())
+        expect(Int(self.DeviceInformationSwitch.value as! String) == value).to(beTrue())
     }
 }
 

@@ -8,7 +8,7 @@
 
 import XCTest
 
-class PropertyData {
+struct PropertyData {
     var accountId = "808"
     var propertyName = "tcfv2.automation.testing";
     var propertyId = "7376";
@@ -20,8 +20,4 @@ class PropertyData {
     var targetingValueShowOnce = "appLaunch"
     var targetingKeyForPMAsFirstLayer = "pm"
     var targetingValueForPMAsFirstLayer = "true"
-
-    init() {
-    }
 }
-

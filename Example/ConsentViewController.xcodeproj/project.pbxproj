@@ -70,6 +70,9 @@
 		6D110B8A24D9E28900A51BD9 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8924D9E28900A51BD9 /* CustomMatchers.swift */; };
 		6D110B8C24D9E2A500A51BD9 /* MetaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8B24D9E2A500A51BD9 /* MetaApp.swift */; };
 		6D110B8E24D9E2BC00A51BD9 /* PropertyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8D24D9E2BC00A51BD9 /* PropertyData.swift */; };
+		6D3FCA9C24DAA8C800F651E1 /* AuthIDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FCA9B24DAA8C800F651E1 /* AuthIDUITests.swift */; };
+		6D3FCA9E24DAAE2400F651E1 /* PMAsFirstLayerMessageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FCA9D24DAAE2400F651E1 /* PMAsFirstLayerMessageUITests.swift */; };
+		6D3FCAA024DAB22300F651E1 /* PrivacyManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FCA9F24DAB22300F651E1 /* PrivacyManagerUITests.swift */; };
 		6D554C2224310BF800B15583 /* SourcePointClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D554C2124310BF800B15583 /* SourcePointClientSpec.swift */; };
 		6D56EB7F24C8850C009F33D9 /* NativeMessageExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB7E24C8850C009F33D9 /* NativeMessageExampleUITests.swift */; };
 		6D56EB8824C88603009F33D9 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB8724C88603009F33D9 /* CustomMatchers.swift */; };
@@ -232,6 +235,9 @@
 		6D110B8924D9E28900A51BD9 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		6D110B8B24D9E2A500A51BD9 /* MetaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaApp.swift; sourceTree = "<group>"; };
 		6D110B8D24D9E2BC00A51BD9 /* PropertyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyData.swift; sourceTree = "<group>"; };
+		6D3FCA9B24DAA8C800F651E1 /* AuthIDUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthIDUITests.swift; sourceTree = "<group>"; };
+		6D3FCA9D24DAAE2400F651E1 /* PMAsFirstLayerMessageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMAsFirstLayerMessageUITests.swift; sourceTree = "<group>"; };
+		6D3FCA9F24DAB22300F651E1 /* PrivacyManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManagerUITests.swift; sourceTree = "<group>"; };
 		6D554C2124310BF800B15583 /* SourcePointClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcePointClientSpec.swift; sourceTree = "<group>"; };
 		6D56EB7C24C8850C009F33D9 /* NativeMessageExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativeMessageExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D56EB7E24C8850C009F33D9 /* NativeMessageExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeMessageExampleUITests.swift; sourceTree = "<group>"; };
@@ -794,6 +800,9 @@
 				6D110B8824D9E27300A51BD9 /* Helpers */,
 				6D110B8024D9E0A100A51BD9 /* Info.plist */,
 				6D110B8624D9E23500A51BD9 /* SourcePointMetaAppUITests.swift */,
+				6D3FCA9B24DAA8C800F651E1 /* AuthIDUITests.swift */,
+				6D3FCA9D24DAAE2400F651E1 /* PMAsFirstLayerMessageUITests.swift */,
+				6D3FCA9F24DAB22300F651E1 /* PrivacyManagerUITests.swift */,
 			);
 			path = SourcePointMetaAppUITests;
 			sourceTree = "<group>";
@@ -1792,8 +1801,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D110B8E24D9E2BC00A51BD9 /* PropertyData.swift in Sources */,
+				6D3FCA9E24DAAE2400F651E1 /* PMAsFirstLayerMessageUITests.swift in Sources */,
 				6D110B8724D9E23500A51BD9 /* SourcePointMetaAppUITests.swift in Sources */,
+				6D3FCA9C24DAA8C800F651E1 /* AuthIDUITests.swift in Sources */,
 				6D110B8C24D9E2A500A51BD9 /* MetaApp.swift in Sources */,
+				6D3FCAA024DAB22300F651E1 /* PrivacyManagerUITests.swift in Sources */,
 				6D110B8A24D9E28900A51BD9 /* CustomMatchers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
