@@ -35,7 +35,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
-            expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Accepted"))
             self.app.relaunch()
             expect(self.app.consentMessage).notTo(showUp())
         }
@@ -44,7 +44,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
-            expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Rejected"))
             self.app.relaunch()
             expect(self.app.consentMessage).notTo(showUp())
         }
@@ -55,7 +55,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
-            expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Accepted"))
             self.app.relaunch()
             expect(self.app.consentMessage).notTo(showUp())
         }
@@ -66,7 +66,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.privacyManager).to(showUp())
             self.app.rejectAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
-            expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Rejected"))
             self.app.relaunch()
             expect(self.app.consentMessage).notTo(showUp())
         }
@@ -87,15 +87,15 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             self.app.clearConsentButton.tap()
-            expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Rejected"))
         }
 
-        it("Have the vendor x 'Accepted' after tapping on Accept Vendor X button") {
+        fit("Have the vendor x 'Accepted' after tapping on Accept Vendor X button") {
             expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
-            expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Rejected"))
             self.app.acceptVendorXButton.tap()
-            expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Accepted"))
         }
 
         it("Accept all through the Privacy Manager directly") {
@@ -105,7 +105,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.privacyManager).to(disappear()) 
-            expect(self.app.vendorXConsentStatus).to(equal("Accepted"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Accepted"))
         }
 
         it("Reject all through the Privacy Manager directly") {
@@ -115,7 +115,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.privacyManager).to(showUp())
             self.app.rejectAllButton.tap()
             expect(self.app.privacyManager).to(disappear())
-            expect(self.app.vendorXConsentStatus).to(equal("Rejected"))
+            expect(self.app.vendorXConsentStatus).toEventually(equal("Rejected"))
         }
 
         it("Save And Exit through the Privacy Manager directly") {
