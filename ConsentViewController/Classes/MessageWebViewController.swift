@@ -43,7 +43,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         wv.scrollView.bounces = false
         wv.isOpaque = false
         wv.backgroundColor = .clear
-        wv.allowsBackForwardNavigationGestures = true
+        wv.allowsBackForwardNavigationGestures = false
         return wv
     }()
 
