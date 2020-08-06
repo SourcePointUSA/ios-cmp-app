@@ -44,6 +44,38 @@ class GDPRMessageSpec: QuickSpec {
             it("Test GDPRMessage method") {
                 expect(gdprMessage?.title.style.color).to(equal("#00FA9A"))
             }
+
+            context("Test JSON Encoding") {
+                var actual: GDPRMessage?
+                beforeEach {
+                    guard let data = try? JSONEncoder().encode(gdprMessage) else {
+                                      fail("Failed to encode \(String(describing: GDPRMessage.self))")
+                                      return
+                                  }
+
+                    actual = try? JSONDecoder().decode(GDPRMessage.self, from: data)
+                }
+
+                it("has matching title text") {
+                    expect(actual?.title.text).to(equal(gdprMessage?.title.text))
+                }
+
+                it("has matching body text") {
+                    expect(actual?.body.text).to(equal(gdprMessage?.body.text))
+                }
+
+                it("has matching action choice type") {
+                    expect(actual?.actions.first?.choiceType).to(equal(gdprMessage?.actions.first?.choiceType))
+                }
+
+                it("has matching action choice id") {
+                    expect(actual?.actions.first?.choiceId).to(equal(gdprMessage?.actions.first?.choiceId))
+                }
+
+                it("has matching action custom fields") {
+                    expect(actual?.customFields).to(equal(gdprMessage?.customFields))
+                }
+            }
         }
     }
 }
