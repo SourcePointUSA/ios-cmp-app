@@ -60,6 +60,10 @@ extension NativeExampleApp: GDPRUI {
         webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Settings'")).firstMatch
     }
 
+    var purposesTab: XCUIElement {
+        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
+    }
+
     var acceptAllButton: XCUIElement {
         privacyManager.buttons["Accept All"].firstMatch
     }

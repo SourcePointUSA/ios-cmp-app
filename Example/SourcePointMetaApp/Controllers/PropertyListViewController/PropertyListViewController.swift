@@ -121,6 +121,7 @@ extension PropertyListViewController: UITableViewDelegate {
             let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
 
             alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
+            alertController.view.accessibilityIdentifier = "alertView"
             let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
                 self.propertyTableView.reloadData()
             })
