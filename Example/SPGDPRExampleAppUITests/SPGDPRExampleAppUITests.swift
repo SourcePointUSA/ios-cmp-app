@@ -90,7 +90,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.vendorXConsentStatus).toEventually(equal("Rejected"))
         }
 
-        fit("Have the vendor x 'Accepted' after tapping on Accept Vendor X button") {
+        it("Have the vendor x 'Accepted' after tapping on Accept Vendor X button") {
             expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
             expect(self.app.vendorXConsentStatus).toEventually(equal("Rejected"))
