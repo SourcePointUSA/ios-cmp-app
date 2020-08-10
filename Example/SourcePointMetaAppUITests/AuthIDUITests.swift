@@ -31,15 +31,19 @@ class AuthIDUITests: QuickSpec {
         beforeEach {
             self.app.relaunch(clean: true)
         }
+
+        func addAuthID() {
+            self.app.authIdTextFieldOutlet.tap()
+            self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
+        }
         
         /**
          @Description - User submit valid property details to show message once with AuthID and tap on Save Then expected message should load When user select Accept All then consent information should get stored when user reset the property then user should not see the message again
          */
         it("No Message shown with show once criteria when consent already saved with AuthID") {
             self.app.addPropertyDetails()
-            self.app.authIdTextFieldOutlet.tap()
-            self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingEnglishValue)
+            addAuthID()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -56,39 +60,36 @@ class AuthIDUITests: QuickSpec {
         }
         
         /**
-         This is currently issue in SDK and we have created ticket for same SP-4457 - [iOS] Outdated consent showing when changing AuthIds
          @Description - User submit valid property details with unique AuthID and tap on Save then expected message should load when user navigate to PM and tap on Accept All then all consent data should be stored when user try to create new property with same details but another unique authId and navigate to PM then user should not see already saved consent
          */
-        //                it("Changing AuthID will change the consents too") {
-        //                    self.app.addPropertyDetails()
-        //                    self.app.authIdTextFieldOutlet.tap()
-        //                    self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
-        //                    self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
-        //                    expect(self.app.consentMessage).to(showUp())
-        //                    self.app.showOptionsButton.tap()
-        //                    expect(self.app.privacyManager).to(showUp())
-        //                    self.app.acceptAllButton.tap()
-        //                    expect(self.app.propertyDebugInfo).to(showUp())
-        //                    self.app.backButton.tap()
-        //                    expect(self.app.propertyList).to(showUp())
-        //                    self.app.addPropertyButton.tap()
-        //                    expect(self.app.newProperty).to(showUp())
-        //                    self.app.accountIDTextFieldOutlet.tap()
-        //                    self.app.accountIDTextFieldOutlet.typeText(self.properyData.accountId)
-        //                    self.app.propertyIdTextFieldOutlet.tap()
-        //                    self.app.propertyIdTextFieldOutlet.typeText(self.properyData.propertyId)
-        //                    self.app.propertyTextFieldOutlet.tap()
-        //                    self.app.propertyTextFieldOutlet.typeText(self.properyData.propertyName)
-        //                    self.app.authIdTextFieldOutlet.tap()
-        //                    self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
-        //                    self.app.pmTextFieldOutlet.tap()
-        //                    self.app.pmTextFieldOutlet.typeText(self.properyData.pmID)
-        //                    self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
-        //                    expect(self.app.consentMessage).to(showUp())
-        //                    self.app.showOptionsButton.tap()
-        //                    expect(self.app.privacyManager).to(showUp())
-        //                    self.app.testPMToggles(value: 0)
-        //                }
+        it("Changing AuthID will change the consents too") {
+            self.app.addPropertyDetails()
+            addAuthID()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
+            expect(self.app.consentMessage).to(showUp())
+            self.app.showOptionsButton.tap()
+            expect(self.app.privacyManager).to(showUp())
+            self.app.acceptAllButton.tap()
+            expect(self.app.propertyDebugInfo).to(showUp())
+            self.app.backButton.tap()
+            expect(self.app.propertyList).to(showUp())
+            self.app.addPropertyButton.tap()
+            expect(self.app.newProperty).to(showUp())
+            self.app.accountIDTextFieldOutlet.tap()
+            self.app.accountIDTextFieldOutlet.typeText(self.properyData.accountId)
+            self.app.propertyIdTextFieldOutlet.tap()
+            self.app.propertyIdTextFieldOutlet.typeText(self.properyData.propertyId)
+            self.app.propertyTextFieldOutlet.tap()
+            self.app.propertyTextFieldOutlet.typeText(self.properyData.propertyName)
+            addAuthID()
+            self.app.pmTextFieldOutlet.tap()
+            self.app.pmTextFieldOutlet.typeText(self.properyData.pmID)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
+            expect(self.app.consentMessage).to(showUp())
+            self.app.showOptionsButton.tap()
+            expect(self.app.privacyManager).to(showUp())
+            self.app.testPMToggles(value: 0)
+        }
         
         /**
          @Description - User submit valid property details with unique AuthID and tap on Save then expected Message should load when user navigate to PM and tap on Accept All then all consent data will get stored when user delete this property and create property with same details and navigate to PM then user should see already saved consents
@@ -98,7 +99,7 @@ class AuthIDUITests: QuickSpec {
             let authID = self.app.dateFormatterForAuthID()
             self.app.authIdTextFieldOutlet.tap()
             self.app.authIdTextFieldOutlet.typeText(authID)
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
@@ -108,7 +109,7 @@ class AuthIDUITests: QuickSpec {
             self.app.addPropertyDetails()
             self.app.authIdTextFieldOutlet.tap()
             self.app.authIdTextFieldOutlet.typeText(authID)
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
@@ -120,13 +121,7 @@ class AuthIDUITests: QuickSpec {
          */
         it("When consents already given then Message will not appear with AuthID and consents will attach with AuthID") {
             self.app.addPropertyDetails()
-            self.app.targetingParamKeyTextFieldOutlet.tap()
-            self.app.targetingParamKeyTextFieldOutlet.typeText(self.properyData.targetingKeyShowOnce)
-            self.app.targetingParamValueTextFieldOutlet.tap()
-            self.app.targetingParamValueTextFieldOutlet.typeText(self.properyData.targetingValueShowOnce)
-            self.app.swipeUp()
-            self.app.addTargetingParamButton.tap()
-            self.app.savePropertyButton.tap()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyShowOnce, targetingValue: self.properyData.targetingValueShowOnce)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -136,9 +131,7 @@ class AuthIDUITests: QuickSpec {
                 self.app.propertyItem.swipeLeft()
                 self.app.editPropertyButton.tap()
                 expect(self.app.editProperty).to(showUp())
-                self.app.authIdTextFieldOutlet.tap()
-                self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
-                self.app.targetingParamKeyTextFieldOutlet.tap()
+                addAuthID()
                 self.app.savePropertyButton.tap()
                 expect(self.app.propertyDebugInfo).to(showUp())
             }

@@ -146,9 +146,9 @@ class MetaApp: XCUIApplication {
         self.pmTextFieldOutlet.typeText(self.properyData.pmID)
     }
 
-    func addTargetingParameter(targetingValue : String) {
+    func addTargetingParameter(targetingKey : String, targetingValue : String) {
         self.targetingParamKeyTextFieldOutlet.tap()
-        self.targetingParamKeyTextFieldOutlet.typeText(self.properyData.targetingKey)
+        self.targetingParamKeyTextFieldOutlet.typeText(targetingKey)
         self.targetingParamValueTextFieldOutlet.tap()
         self.targetingParamValueTextFieldOutlet.typeText(targetingValue)
         swipeUp()
@@ -188,11 +188,11 @@ class MetaApp: XCUIApplication {
 
 extension MetaApp: GDPRUI {
     var consentUI: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce')")).firstMatch
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'My Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce')")).firstMatch
     }
 
     var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Cookie Notice'")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'My Cookie Notice'")).firstMatch
     }
 
     var consentMessage: XCUIElement {

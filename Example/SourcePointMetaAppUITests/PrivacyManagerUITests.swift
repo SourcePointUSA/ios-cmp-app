@@ -37,7 +37,7 @@ class PrivacyManagerUITests: QuickSpec {
          */
         it("Accept all from Privacy Manager via Message") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
@@ -57,7 +57,7 @@ class PrivacyManagerUITests: QuickSpec {
          */
         it("Save and Exit without any purposes selected from Privacy Manager via Message") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
@@ -77,7 +77,7 @@ class PrivacyManagerUITests: QuickSpec {
          */
         it("Reject all from Privacy Manager via Message") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -104,7 +104,7 @@ class PrivacyManagerUITests: QuickSpec {
          */
         it("Reject all from Privacy Manager directly") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -123,7 +123,7 @@ class PrivacyManagerUITests: QuickSpec {
          */
         it("Cancel from Privacy Manager directly") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -138,7 +138,7 @@ class PrivacyManagerUITests: QuickSpec {
          */
         it("Cancel from privacy Manager via Message") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())

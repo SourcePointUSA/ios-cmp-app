@@ -31,22 +31,13 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
         beforeEach {
             self.app.relaunch(clean: true)
         }
-        
-        func addTargetingParameter() {
-            self.app.targetingParamKeyTextFieldOutlet.tap()
-            self.app.targetingParamKeyTextFieldOutlet.typeText(self.properyData.targetingKeyForPMAsFirstLayer)
-            self.app.targetingParamValueTextFieldOutlet.tap()
-            self.app.targetingParamValueTextFieldOutlet.typeText(self.properyData.targetingValueForPMAsFirstLayer)
-            self.app.swipeUp()
-            self.app.addTargetingParamButton.tap()
-            self.app.savePropertyButton.tap()
-        }
+
         /**
          @Description - User submit valid property details for loading PM as first layer message and tap on Save then expected PM should load
          */
         it("PM as first layer Message") {
             self.app.addPropertyDetails()
-            addTargetingParameter()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
             expect(self.app.privacyManager).to(showUp())
         }
         
@@ -55,7 +46,7 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
          */
         it("Cancel from PM as first layer Message") {
             self.app.addPropertyDetails()
-            addTargetingParameter()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -72,7 +63,7 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
          */
         it("Consents for PM as first layer Message") {
             self.app.addPropertyDetails()
-            addTargetingParameter()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -89,13 +80,7 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
         //            self.app.addPropertyDetails()
         //            self.app.authIdTextFieldOutlet.tap()
         //            self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
-        //            self.app.targetingParamKeyTextFieldOutlet.tap()
-        //            self.app.targetingParamKeyTextFieldOutlet.typeText(self.properyData.targetingKeyForPMAsFirstLayer)
-        //            self.app.targetingParamValueTextFieldOutlet.tap()
-        //            self.app.targetingParamValueTextFieldOutlet.typeText(self.properyData.targetingValueForPMAsFirstLayer)
-        //            self.app.swipeUp()
-        //            self.app.addTargetingParamButton.tap()
-        //            self.app.savePropertyButton.tap()
+        //            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
         //            expect(self.app.privacyManager).to(showUp())
         //            self.app.acceptAllButton.tap()
         //            expect(self.app.propertyDebugInfo).to(showUp())
