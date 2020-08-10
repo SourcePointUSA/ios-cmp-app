@@ -226,6 +226,7 @@ typealias Meta = String
                     self?.localStorage.consentUUID = messageResponse.uuid
                     self?.localStorage.meta = messageResponse.meta
                     self?.localStorage.userConsents = messageResponse.userConsent
+                    self?.localStorage.authId = authId
                     native ?
                         self?.handleNativeMessageResponse(messageResponse) :
                         self?.handleWebMessageResponse(messageResponse)
