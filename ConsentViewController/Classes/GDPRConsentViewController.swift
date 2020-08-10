@@ -221,6 +221,7 @@ typealias Meta = String
                 clearAllData()
                 localStorage.authId = authId
             }
+            localStorage.authId = authId
             sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId, meta: localStorage.meta) { [weak self] messageResponse, error in
                 if let messageResponse = messageResponse {
                     self?.localStorage.consentUUID = messageResponse.uuid
@@ -264,7 +265,7 @@ typealias Meta = String
 
     func didAuthIdChange(newAuthId: String?) -> Bool {
         return newAuthId != nil &&
-            localStorage.authId != nil &&
+            localStorage.authId?.count ?? 0 > 0 &&
             localStorage.authId != newAuthId
     }
 
