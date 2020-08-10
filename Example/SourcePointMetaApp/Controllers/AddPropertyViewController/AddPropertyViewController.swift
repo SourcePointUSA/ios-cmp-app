@@ -226,10 +226,10 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-        if let authId = propertyDetails.authId {
-            consentViewController?.loadMessage(forAuthId: authId)
-        } else {
+        if propertyDetails.authId?.isEmpty ?? true {
             consentViewController?.loadMessage()
+        } else {
+            consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
         }
     }
 
