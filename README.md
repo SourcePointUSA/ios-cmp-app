@@ -12,7 +12,7 @@ We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to 
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.2.5'
+pod 'ConsentViewController', '5.2.6'
 ```
 
 ### Carthage
@@ -182,7 +182,7 @@ Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wi
 ### 1. How big is the SDK?
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
 ### 2. What's the lowes iOS version supported?
-Although our SDK can be technically added to projects targeting iOS 9, we support iOS >= 10 only. 
+Although our SDK can be technically added to projects targeting iOS 9, we support iOS >= 10 only.
 
 We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
 

@@ -1,3 +1,10 @@
+## 5.2.6 (Aug, 11, 2020)
+* fixed an issue that'd, in some cases, prevent authenticated consent from being stored #224
+* disabled "back and forward" gestures in the WebView, to prevent users from skipping the consent message when no _dismiss_ button is present. #221
+* we are now getting the privacy manager id from the consent message when the user taps on _Show PM_ instead of using the one provided to the SDK via constructor. #201
+* fixed an issue that'd prevent `GDPRMessageJson` from having all its fields encoded #218 (thank you @ivanlisovyi)
+* considerably increase UI test coverage for both Native and Web messages.
+
 ## 5.2.5 (Jul, 3, 2020)
 * fixed an issue that'd prevent the consent message from showing up on iOS 10
 
