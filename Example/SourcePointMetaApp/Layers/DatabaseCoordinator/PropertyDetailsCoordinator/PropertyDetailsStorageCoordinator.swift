@@ -190,7 +190,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
         if let authId = propertyDataModel.authId {
             subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND privacyManagerId == %@ AND authId == %@", propertyDataModel.privacyManagerId!, authId)
         } else {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND privacyManagerId == %@", propertyDataModel.campaign, propertyDataModel.privacyManagerId!)
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND privacyManagerId == %@", propertyDataModel.privacyManagerId!)
         }
 
         subPredicates.append(subPredicate)

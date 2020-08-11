@@ -182,7 +182,10 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         let propertyId = propertyIdTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
         let propertyName = propertyNameTextField.text?.trimmingCharacters(in: .whitespaces)
         let privacyManagerId = privacyManagerTextField.text?.trimmingCharacters(in: .whitespaces)
-        let authId = authIdTextField.text?.trimmingCharacters(in: .whitespaces)
+        var authId = authIdTextField.text?.trimmingCharacters(in: .whitespaces)
+        if authId?.isEmpty ?? true {
+            authId = nil
+        }
 
         if addpropertyViewModel.validatepropertyDetails(accountID: accountIDString, propertyId: propertyId, propertyName: propertyName, privacyManagerId: privacyManagerId) {
             guard let accountIDText = accountIDString, let accountID = Int64(accountIDText),
@@ -226,11 +229,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-        if propertyDetails.authId?.isEmpty ?? true {
-            consentViewController?.loadMessage()
-        } else {
-            consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
-        }
+        consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }
 
     func gdprConsentUIWillShow() {
