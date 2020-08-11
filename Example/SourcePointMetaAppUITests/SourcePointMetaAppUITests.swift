@@ -37,7 +37,7 @@ class SourcePointMetaAppUITests: QuickSpec {
          */
         it("Accept all from Message") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -55,7 +55,7 @@ class SourcePointMetaAppUITests: QuickSpec {
          */
         it("Reject all from Message") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -73,7 +73,7 @@ class SourcePointMetaAppUITests: QuickSpec {
          */
         it("Show purpose consents after reset cookies") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingEnglishValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
@@ -100,13 +100,7 @@ class SourcePointMetaAppUITests: QuickSpec {
          */
         it("Show Message once with Accept all from Message") {
             self.app.addPropertyDetails()
-            self.app.targetingParamKeyTextFieldOutlet.tap()
-            self.app.targetingParamKeyTextFieldOutlet.typeText(self.properyData.targetingKeyShowOnce)
-            self.app.targetingParamValueTextFieldOutlet.tap()
-            self.app.targetingParamValueTextFieldOutlet.typeText(self.properyData.targetingValueShowOnce)
-            self.app.swipeUp()
-            self.app.addTargetingParamButton.tap()
-            self.app.savePropertyButton.tap()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyShowOnce, targetingValue: self.properyData.targetingValueShowOnce)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -121,7 +115,7 @@ class SourcePointMetaAppUITests: QuickSpec {
          */
         it("Delete Property from property list") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -135,8 +129,8 @@ class SourcePointMetaAppUITests: QuickSpec {
          @Description - User submit valid property details and tap on Save then expected message should load when user select Accept All then consent information should get stored when user swipe on property and edit the key/parameter details then user should see respective message
          */
         it("Edit Property from property list") {
-           self.app.addPropertyDetails()
-           self.app.addTargetingParameter(targetingValue: self.properyData.targetingEnglishValue)
+            self.app.addPropertyDetails()
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -146,7 +140,7 @@ class SourcePointMetaAppUITests: QuickSpec {
                 self.app.propertyItem.swipeLeft()
                 self.app.editPropertyButton.tap()
                 expect(self.app.editProperty).to(showUp())
-                self.app.addTargetingParameter(targetingValue: self.properyData.targetingFrenchValue)
+                self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
                 expect(self.app.consentMessage).to(showUp())
             }
         }
@@ -156,7 +150,7 @@ class SourcePointMetaAppUITests: QuickSpec {
          */
         it("Check ConsentUUID on Message Dismiss") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingValue: self.properyData.targetingEnglishValue)
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.dismissMessageButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())

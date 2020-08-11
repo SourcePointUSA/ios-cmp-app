@@ -219,8 +219,8 @@ typealias Meta = String
             loading = .Loading
             if didAuthIdChange(newAuthId: (authId)) {
                 clearAllData()
-                localStorage.authId = authId
             }
+            localStorage.authId = authId
             sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId, meta: localStorage.meta) { [weak self] messageResponse, error in
                 if let messageResponse = messageResponse {
                     self?.localStorage.consentUUID = messageResponse.uuid
