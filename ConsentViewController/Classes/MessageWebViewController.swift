@@ -70,7 +70,22 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadView() {
+        /*
+         we need to add this piece of logic because of a bug on iOS 12/13 regarding the Keyboard shifiting the view up after hiding.
+         The root cause of issue is WKScrollview in WKWebview will be changed automatically content offset fit with height of keyboard in case keyboard is showed
+         but it didn't reset in case keyboard is hidden.
+         webkit forum issue link - https://bugs.webkit.org/show_bug.cgi?id=192564
+         with iOS version 13.4 Apple fixed this issue
+         */
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         view = webview
+    }
+
+    func keyboardWillHide(notification: NSNotification) {
+        // move back the root view origin to zero
+        if #available(iOS 12.0, *) {
+            webview?.scrollView.setContentOffset(.zero, animated: true)
+        }
     }
 
     func gdprConsentUIWillShow() {
