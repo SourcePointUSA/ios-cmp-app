@@ -70,7 +70,15 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         view = webview
+    }
+
+    func keyboardWillHide(notification: NSNotification) {
+        // move back the root view origin to zero
+        if #available(iOS 12.0, *) {
+            webview?.scrollView.setContentOffset(.zero, animated: true)
+        }
     }
 
     func gdprConsentUIWillShow() {
