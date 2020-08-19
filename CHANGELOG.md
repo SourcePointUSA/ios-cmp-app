@@ -1,3 +1,6 @@
+## 5.2.7 (Aug, 19, 2020)
+* fixed an issue affecting iOS 12 and 13.1 that would shift the ConsentUI to the top after the KeyBoard was dismissed.
+
 ## 5.2.6 (Aug, 11, 2020)
 * fixed an issue that'd, in some cases, prevent authenticated consent from being stored #224
 * disabled "back and forward" gestures in the WebView, to prevent users from skipping the consent message when no _dismiss_ button is present. #221
