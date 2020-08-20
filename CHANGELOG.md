@@ -1,3 +1,6 @@
+## 5.2.8 (Aug, 19, 2020)
+* improved the error handling code of our `WebMessageViewController`. #229 (thank you [@ivanlisovyi](https://github.com/ivanlisovyi))
+
 ## 5.2.7 (Aug, 19, 2020)
 * fixed an issue affecting iOS 12 and 13.1 that would shift the ConsentUI to the top after the KeyBoard was dismissed.
 
@@ -5,7 +8,7 @@
 * fixed an issue that'd, in some cases, prevent authenticated consent from being stored #224
 * disabled "back and forward" gestures in the WebView, to prevent users from skipping the consent message when no _dismiss_ button is present. #221
 * we are now getting the privacy manager id from the consent message when the user taps on _Show PM_ instead of using the one provided to the SDK via constructor. #201
-* fixed an issue that'd prevent `GDPRMessageJson` from having all its fields encoded #218 (thank you @ivanlisovyi)
+* fixed an issue that'd prevent `GDPRMessageJson` from having all its fields encoded #218 (thank you [@ivanlisovyi](https://github.com/ivanlisovyi))
 * considerably increase UI test coverage for both Native and Web messages.
 
 ## 5.2.5 (Jul, 3, 2020)
