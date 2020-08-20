@@ -339,6 +339,20 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     expect(mockConsentDelegate.isOnErrorCalled).to(beTruthy())
                 }
             }
+
+            context("when there's internet connect but load of message fails with bad server response") {
+                it("call the onError callback") {
+                    let webView = WKWebView()
+                    messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                    messageWebViewController.webview = webView
+                    let navigation = webView.load(URLRequest(url: URL(string: "www.example.com")!))
+
+                    let error = URLError(.badServerResponse)
+                    messageWebViewController.webView(webView, didFailProvisionalNavigation: navigation, withError: error)
+
+                    expect(mockConsentDelegate.isOnErrorCalled).to(beTruthy())
+                }
+            }
         }
 
         describe("loadPrivacyManager") {

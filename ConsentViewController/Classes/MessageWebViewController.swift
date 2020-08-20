@@ -211,8 +211,13 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        if let error = error as? URLError, error.code == .timedOut {
-            onError(error: MessageTimeout(url: error.failingURL, timeout: timeout))
+        if let error = error as? URLError {
+            switch error.code {
+            case .timedOut:
+                onError(error: MessageTimeout(url: error.failingURL, timeout: timeout))
+            default:
+                onError(error: WebViewError(code: error.code.rawValue, title: error.localizedDescription))
+            }
         }
     }
 
