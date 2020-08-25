@@ -70,7 +70,6 @@ class AlertView: NSObject, UIAlertViewDelegate {
         }
 
         let alertController = UIAlertController(title: "", message: message, preferredStyle: actionStyle)
-        alertController.view.tintColor = UIColor(red: 47/255, green: 81/255, blue: 163/255, alpha: 1)
         alertController.view.accessibilityIdentifier = "alertView"
 
         self.actions = actions
