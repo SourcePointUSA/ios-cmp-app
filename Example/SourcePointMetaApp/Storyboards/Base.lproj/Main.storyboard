@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hcy-kf-t7M">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hcy-kf-t7M">
+    <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,13 +45,13 @@
                                                     <constraint firstAttribute="height" constant="30" id="fdm-vV-zVo"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Account ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VeY-YI-wzN" userLabel="AccountIDTextfield">
                                                 <rect key="frame" x="125" y="30" width="230" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="accountIDTextFieldOutlet" label="accountIDTextFieldOutlet"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
@@ -64,13 +65,13 @@
                                                     <constraint firstAttribute="height" constant="30" id="wrz-rX-8ML"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Property Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HoB-pj-18x" userLabel="PropertyIdTextfiled">
                                                 <rect key="frame" x="125" y="79" width="230" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="propertyIdTextFieldOutlet" label="propertyIdTextFieldOutlet"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
@@ -84,13 +85,13 @@
                                                     <constraint firstAttribute="height" constant="30" id="B94-C3-Bh5"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Property Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xLh-rs-wyR" userLabel="PropertyTextfiled">
                                                 <rect key="frame" x="125" y="128" width="230" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="propertyTextFieldOutlet" label="propertyTextFieldOutlet"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
@@ -105,7 +106,7 @@
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="xay-TC-9yj"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-Gx-AGf">
@@ -116,13 +117,13 @@
                                                     <constraint firstAttribute="height" constant="30" id="9Dm-d6-TJn"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Auth Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T1z-3i-XRG" userLabel="AuthIdTextfield">
                                                 <rect key="frame" x="125" y="177" width="230" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="authIdTextFieldOutlet" label="authIdTextFieldOutlet"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                 <connections>
@@ -132,7 +133,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Privacy Manager Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ILg-hD-20L" userLabel="PrivacyManagerId">
                                                 <rect key="frame" x="125" y="231" width="230" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
@@ -146,7 +147,7 @@
                                                     <constraint firstAttribute="height" constant="31" id="gCd-6o-gPN"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZdE-5Q-Bgq">
@@ -170,13 +171,13 @@
                                                     <constraint firstAttribute="height" constant="30" id="hWr-eL-2u6"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9xQ-qp-kCe" userLabel="KeyTextfiled">
                                                 <rect key="frame" x="77" y="364" width="278" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingParamKeyTextFieldOutlet" label="targetingParamKeyTextFieldOutlet"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
@@ -190,13 +191,13 @@
                                                     <constraint firstAttribute="height" constant="30" id="q6g-Ct-oiV"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V8G-su-8BI" userLabel="TargetingValueTextField">
                                                 <rect key="frame" x="77" y="408" width="278" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingParamValueTextFieldOutlet" label="targetingParamValueTextFieldOutlet"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
@@ -227,7 +228,7 @@
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0iU-bH-K9k" userLabel="lineView">
                                                 <rect key="frame" x="20" y="489" width="335" height="1"/>
-                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="customeColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="3hZ-Ol-M4f"/>
                                                 </constraints>
@@ -239,11 +240,12 @@
                                                         <rect key="frame" x="52" y="223.5" width="271" height="18"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                        <color key="textColor" name="customeColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-tI-auQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="465"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="targetingParamCell" id="P4G-ju-zL2" customClass="TargetingParamCell" customModule="GDPR_MetaApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
@@ -256,7 +258,7 @@
                                                                             <rect key="frame" x="20" y="10" width="307" height="20"/>
                                                                             <accessibility key="accessibilityConfiguration" identifier="targetingParamName" label="targetingParamName"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
+                                                                            <color key="textColor" name="customeColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="maR-Hl-J9w" userLabel="DeleteButton">
@@ -267,7 +269,7 @@
                                                                                 <constraint firstAttribute="width" constant="20" id="leT-wp-wFk"/>
                                                                             </constraints>
                                                                             <state key="normal" image="cancel">
-                                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <color key="titleColor" name="customeColor"/>
                                                                             </state>
                                                                             <connections>
                                                                                 <action selector="deleteTargetingparamAction:" destination="P4G-ju-zL2" eventType="touchUpInside" id="c5f-27-use"/>
@@ -293,7 +295,6 @@
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="nUc-zL-t7J" firstAttribute="centerX" secondItem="qxB-D1-vpN" secondAttribute="centerX" id="8W9-pc-Vf4"/>
                                                     <constraint firstItem="JeP-tI-auQ" firstAttribute="top" secondItem="qxB-D1-vpN" secondAttribute="top" id="908-DP-zm4"/>
@@ -304,7 +305,6 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="leading" secondItem="0Yc-bl-D6Y" secondAttribute="trailing" constant="8" symbolic="YES" id="0fD-cK-HX4"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="yGV-0o-HrB" secondAttribute="trailing" constant="8" symbolic="YES" id="4Bt-8u-xgX"/>
@@ -380,7 +380,6 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mhW-Wn-4Ou" firstAttribute="top" secondItem="ARi-0k-eP1" secondAttribute="top" constant="44" id="Sw8-9I-GFT"/>
                             <constraint firstAttribute="bottom" secondItem="mhW-Wn-4Ou" secondAttribute="bottom" id="awD-X2-mAj"/>
@@ -430,7 +429,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="BK9-Hl-Nyi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" name="customeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="b7c-ec-m48" userLabel="ConsentUUIDString">
@@ -442,7 +441,7 @@
                                     <constraint firstAttribute="height" constant="40" id="Y8j-js-E2b"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" name="customeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUConsent :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xls-vD-PnJ">
@@ -452,7 +451,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="P7w-sR-CVk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" name="customeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="NoData available" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="x7Q-Lj-baY" userLabel="EUConsentString">
@@ -461,7 +460,7 @@
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" name="customeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose Consents List" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="huu-nZ-kKX">
@@ -473,7 +472,7 @@
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7M-iD-n1O" userLabel="LineViewForList">
                                 <rect key="frame" x="15" y="190" width="350" height="1"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="customeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="BwJ-Fi-p6w"/>
                                 </constraints>
@@ -486,12 +485,12 @@
                                         <rect key="frame" x="10.5" y="228" width="354" height="19.5"/>
                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" name="customeColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNV-ao-Wfg">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="475"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" rowHeight="60" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="GDPR_MetaApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="60"/>
@@ -507,14 +506,14 @@
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="vCt-KV-XW3"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" name="customeColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
                                                             <rect key="frame" x="58" y="21" width="317" height="18"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="consentID" label="consentID"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" name="customeColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -537,7 +536,6 @@
                                         </connections>
                                     </tableView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="hNV-ao-Wfg" firstAttribute="leading" secondItem="ocf-eS-t5u" secondAttribute="leading" id="1il-Kh-tMg"/>
                                     <constraint firstItem="D0L-qg-gaa" firstAttribute="centerY" secondItem="ocf-eS-t5u" secondAttribute="centerY" id="6qa-Vz-oIx"/>
@@ -548,7 +546,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ocf-eS-t5u" secondAttribute="bottom" id="4Zo-cF-dKd"/>
                             <constraint firstItem="ocf-eS-t5u" firstAttribute="trailing" secondItem="JPT-Vh-gpO" secondAttribute="trailing" id="6p8-u0-K8N"/>
@@ -601,7 +598,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7F7-Gu-WQr" userLabel="propertyTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="70" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="GDPR_MetaApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
@@ -616,7 +613,7 @@
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account ID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lah-ue-N1c">
@@ -628,7 +625,7 @@
                                                         <constraint firstAttribute="height" constant="20" id="4PM-Sm-wQN"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Campaign :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="tAJ-BW-CMH">
@@ -640,7 +637,7 @@
                                                         <constraint firstAttribute="height" constant="20" id="NtW-Zg-ULk"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1C-pm-DTM">
@@ -649,7 +646,7 @@
                                                     <accessibility key="accessibilityConfiguration" identifier="targetingParamTextView">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" name="customeColor"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <connections>
@@ -658,7 +655,7 @@
                                                 </textView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aqt-nl-RJg" userLabel="lineview">
                                                     <rect key="frame" x="0.0" y="69" width="375" height="1"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" name="customeColor"/>
                                                     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="l06-FD-DSS"/>
@@ -704,10 +701,10 @@
                                 <rect key="frame" x="33.5" y="324.5" width="308" height="18"/>
                                 <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <color key="textColor" name="customeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7F7-Gu-WQr" firstAttribute="bottom" secondItem="POH-Ao-l0L" secondAttribute="bottom" id="AHX-hU-9yy"/>
                             <constraint firstItem="7F7-Gu-WQr" firstAttribute="leading" secondItem="POH-Ao-l0L" secondAttribute="leading" id="DnJ-zJ-mS8"/>
@@ -772,9 +769,12 @@
             <point key="canvasLocation" x="3366" y="793"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.24705882352941178" green="0.79607843137254897" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
     <resources>
         <image name="AddIcon" width="20" height="20"/>
         <image name="cancel" width="14" height="14"/>
+        <namedColor name="customeColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
-    <color key="tintColor" red="0.24705882352941178" green="0.79607843137254897" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
 </document>
