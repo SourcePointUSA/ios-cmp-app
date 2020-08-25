@@ -58,7 +58,7 @@ class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITe
     func loadConsentDetailsViewController(atIndex index: Int) {
         if let consentDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentDetailsViewController") as? ConsentDetailsViewController {
             consentDetailsViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: index)
-            self.navigationController!.pushViewController(consentDetailsViewController, animated: true)
+            self.navigationController!.pushViewController(consentDetailsViewController, animated: false)
         }
     }
 }
@@ -112,7 +112,7 @@ extension PropertyListViewController: UITableViewDelegate {
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
                 editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
 
-                self.navigationController!.pushViewController(editpropertyViewController, animated: true)
+                self.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }
         }
         let resetAction = UIContextualAction(style: .destructive, title: nil) { (_, _, handler) in
@@ -173,7 +173,7 @@ extension PropertyListViewController: UITableViewDelegate {
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
                 editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
 
-                self.navigationController!.pushViewController(editpropertyViewController, animated: true)
+                self.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }
         }
 
