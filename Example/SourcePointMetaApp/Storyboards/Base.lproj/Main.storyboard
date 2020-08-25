@@ -165,7 +165,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAT-eK-kxm" userLabel="TargetingKeyLabel">
-                                                <rect key="frame" x="20" y="366" width="49" height="30"/>
+                                                <rect key="frame" x="20" y="366" width="46" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingKey" label="targetingKey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="hWr-eL-2u6"/>
@@ -175,7 +175,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9xQ-qp-kCe" userLabel="KeyTextfiled">
-                                                <rect key="frame" x="77" y="364" width="278" height="34"/>
+                                                <rect key="frame" x="74" y="364" width="281" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingParamKeyTextFieldOutlet" label="targetingParamKeyTextFieldOutlet"/>
                                                 <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -185,7 +185,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c67-NQ-pCu" userLabel="TargetingValueLabel">
-                                                <rect key="frame" x="20" y="410" width="49" height="30"/>
+                                                <rect key="frame" x="20" y="410" width="46" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingValueLabel" label="targetingValueLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="q6g-Ct-oiV"/>
@@ -195,7 +195,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V8G-su-8BI" userLabel="TargetingValueTextField">
-                                                <rect key="frame" x="77" y="408" width="278" height="34"/>
+                                                <rect key="frame" x="74" y="408" width="281" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingParamValueTextFieldOutlet" label="targetingParamValueTextFieldOutlet"/>
                                                 <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -237,7 +237,7 @@
                                                 <rect key="frame" x="0.0" y="491" width="375" height="465"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting parameter data is not added" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUc-zL-t7J" userLabel="NoDataLabel">
-                                                        <rect key="frame" x="52" y="223.5" width="271" height="18"/>
+                                                        <rect key="frame" x="59.5" y="223.5" width="256" height="18"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                         <color key="textColor" name="customeColor"/>
@@ -305,6 +305,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
+                                        <color key="backgroundColor" name="screenColor"/>
                                         <constraints>
                                             <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="leading" secondItem="0Yc-bl-D6Y" secondAttribute="trailing" constant="8" symbolic="YES" id="0fD-cK-HX4"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="yGV-0o-HrB" secondAttribute="trailing" constant="8" symbolic="YES" id="4Bt-8u-xgX"/>
@@ -455,7 +456,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="NoData available" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="x7Q-Lj-baY" userLabel="EUConsentString">
-                                <rect key="frame" x="135" y="117" width="230" height="18"/>
+                                <rect key="frame" x="135" y="117" width="230" height="17.5"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EUConsentString">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
@@ -464,7 +465,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose Consents List" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="huu-nZ-kKX">
-                                <rect key="frame" x="15" y="170" width="271" height="19"/>
+                                <rect key="frame" x="15" y="170" width="249" height="19"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Vendor and Purpose Consents List" label="Vendor and Purpose Consents List"/>
                                 <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
                                 <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -482,7 +483,7 @@
                                 <rect key="frame" x="0.0" y="192" width="375" height="475"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose consents are not available" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0L-qg-gaa">
-                                        <rect key="frame" x="10.5" y="228" width="354" height="19.5"/>
+                                        <rect key="frame" x="19" y="228" width="337" height="19"/>
                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                         <color key="textColor" name="customeColor"/>
@@ -510,7 +511,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
-                                                            <rect key="frame" x="58" y="21" width="317" height="18"/>
+                                                            <rect key="frame" x="58" y="21.5" width="317" height="17.5"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="consentID" label="consentID"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                             <color key="textColor" name="customeColor"/>
@@ -546,6 +547,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" name="screenColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ocf-eS-t5u" secondAttribute="bottom" id="4Zo-cF-dKd"/>
                             <constraint firstItem="ocf-eS-t5u" firstAttribute="trailing" secondItem="JPT-Vh-gpO" secondAttribute="trailing" id="6p8-u0-K8N"/>
@@ -608,7 +610,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Cybage.sp-demo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bch-vL-bwc" userLabel="Property Name">
-                                                    <rect key="frame" x="20" y="3" width="185" height="20"/>
+                                                    <rect key="frame" x="20" y="3" width="170.5" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="propertyName">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
@@ -617,7 +619,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account ID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lah-ue-N1c">
-                                                    <rect key="frame" x="20" y="26" width="92" height="20"/>
+                                                    <rect key="frame" x="20" y="26" width="88.5" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="accountIDLabel">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
@@ -629,7 +631,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Campaign :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="tAJ-BW-CMH">
-                                                    <rect key="frame" x="132" y="26" width="218" height="20"/>
+                                                    <rect key="frame" x="128.5" y="26" width="221.5" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="campaignLabel">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
@@ -698,7 +700,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on + button to add new property" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXj-NC-2l4" userLabel="NoDataLabel">
-                                <rect key="frame" x="33.5" y="324.5" width="308" height="18"/>
+                                <rect key="frame" x="41" y="324.5" width="293" height="18"/>
                                 <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                 <color key="textColor" name="customeColor"/>
@@ -718,7 +720,7 @@
                     <navigationItem key="navigationItem" title="Property List" id="6WE-Xa-SSc">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1PT-WR-BtS">
                             <connections>
-                                <segue destination="cyC-sw-8W2" kind="show" id="bX3-un-fGZ"/>
+                                <segue destination="cyC-sw-8W2" kind="show" animates="NO" id="bX3-un-fGZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -775,6 +777,9 @@
         <image name="cancel" width="14" height="14"/>
         <namedColor name="customeColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="screenColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
