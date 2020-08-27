@@ -15,6 +15,7 @@ A clear and concise description of what the bug is.
  - Property Id
  - Property Name
  - Campaign Env
+ - PrivacyManager Id
  - Targeting Params (if any)
  - AuthId (if any)
 
@@ -23,7 +24,7 @@ A clear and concise description of what the bug is.
  - Device: [e.g. iPhone6]
  - OS: [e.g. iOS8.1]
 
-**To Reproduce**
+** To Reproduce**
 Steps to reproduce the behavior:
 1. Go to '...'
 2. Tap on '....'
