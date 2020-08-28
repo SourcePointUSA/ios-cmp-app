@@ -34,7 +34,15 @@ struct SPLiteral {
 
     static func attributedString() -> NSMutableAttributedString {
         let attributedText = NSMutableAttributedString(string: "Cookies for ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
-        attributedText.append(NSAttributedString(string: "all properties", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.black]))
+        if #available(iOS 13.0, *) {
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                attributedText.append(NSAttributedString(string: "all properties", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white]))
+            }else {
+                attributedText.append(NSAttributedString(string: "all properties", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.black]))
+            }
+        } else {
+            attributedText.append(NSAttributedString(string: "all properties", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.black]))
+        }
         attributedText.append(NSAttributedString(string: " will be cleared.\nDo you want to proceed?", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
         return attributedText
     }

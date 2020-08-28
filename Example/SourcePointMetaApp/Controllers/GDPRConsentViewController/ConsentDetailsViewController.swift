@@ -72,7 +72,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     }
 
     @objc func back() {
-        _ = self.navigationController?.popToRootViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: false)
     }
 
     func setTableViewHidden() {

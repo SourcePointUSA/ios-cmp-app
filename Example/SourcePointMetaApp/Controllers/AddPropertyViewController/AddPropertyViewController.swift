@@ -263,7 +263,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
             consentDetailsController.userConsents =  userConsents
             consentDetailsController.propertyDetails = propertyDetailsModel
             consentDetailsController.targetingParams = targetingParams
-            self.navigationController?.pushViewController(consentDetailsController, animated: true)
+            self.navigationController?.pushViewController(consentDetailsController, animated: false)
         }
     }
 
