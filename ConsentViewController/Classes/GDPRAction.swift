@@ -34,7 +34,7 @@ import Foundation
     public let type: GDPRActionType
     public let id: String?
     public let payload: Data
-    public var publisherData: [String: SPGDPRArbitraryJson?]?
+    public var publisherData: [String: SPGDPRArbitraryJson?] = [:]
 
     public override var description: String {
         "GDPRAction(type: \(type), id: \(id ?? ""), payload: \(String(data: payload, encoding: .utf8) ?? ""), publisherData: \(String(describing: publisherData))"
