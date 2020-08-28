@@ -197,7 +197,7 @@ public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
     }
 }
 
-extension SPGDPRArbitraryJson {
+public extension SPGDPRArbitraryJson {
     init(_ value: Any) throws {
         if let string = value as? String { self = .string(string) } else if let number = value as? NSNumber {
             switch CFGetTypeID(number as CFTypeRef) {
