@@ -11,7 +11,7 @@ import Quick
 import Nimble
 @testable import GDPR_MetaApp
 
-class MetaAppValidationUITests: XCTestCase {
+class MetaAppValidationUITests: QuickSpec {
 
     var app: MetaApp!
         var properyData = PropertyData()
