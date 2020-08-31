@@ -59,6 +59,22 @@ class MetaApp: XCUIApplication {
         staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'tcfv2.automation.testing'")).firstMatch
     }
 
+    var propertyFieldValidationItem: XCUIElement {
+        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Please enter property details'")).firstMatch
+    }
+
+    var targetingParameterValidationItem: XCUIElement {
+           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Please enter targeting parameter key and value'")).firstMatch
+    }
+    
+    var wrongPropertyIdValidationItem: XCUIElement {
+           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Error parsing response from'")).firstMatch
+    }
+    
+    var wrongPMValidationItem: XCUIElement {
+              staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Could not load PM with id'")).firstMatch
+    }
+
     var deletePropertyButton: XCUIElement {
         propertyItem.buttons["trailing2"].firstMatch
     }
@@ -130,6 +146,10 @@ class MetaApp: XCUIApplication {
     var alertNoButton: XCUIElement {
         alerts["alertView"].buttons["NO"].firstMatch
     }
+    
+    var alertOkButton: XCUIElement {
+           alerts["alertView"].buttons["OK"].firstMatch
+       }
 
     func addPropertyDetails() {
         deleteProperty()
@@ -146,7 +166,23 @@ class MetaApp: XCUIApplication {
         self.pmTextFieldOutlet.typeText(self.properyData.pmID)
     }
 
+    func addPropertyWithWrongPropertyDetails(accountId : String, propertyId : String, propertyName : String, pmId : String) {
+        deleteProperty()
+        expect(self.propertyList).to(showUp())
+        self.addPropertyButton.tap()
+        self.accountIDTextFieldOutlet.tap()
+        self.accountIDTextFieldOutlet.typeText(accountId)
+        self.propertyIdTextFieldOutlet.tap()
+        self.propertyIdTextFieldOutlet.typeText(propertyId)
+        self.propertyTextFieldOutlet.tap()
+        self.propertyTextFieldOutlet.typeText(propertyName)
+        self.pmTextFieldOutlet.tap()
+        self.pmTextFieldOutlet.typeText(pmId)
+        self.savePropertyButton.tap()
+    }
+    
     func addTargetingParameter(targetingKey : String, targetingValue : String) {
+        swipeUp()
         self.targetingParamKeyTextFieldOutlet.tap()
         self.targetingParamKeyTextFieldOutlet.typeText(targetingKey)
         self.targetingParamValueTextFieldOutlet.tap()
@@ -156,6 +192,16 @@ class MetaApp: XCUIApplication {
         self.savePropertyButton.tap()
     }
 
+    func addTargetingParameterWithWrongDetails(targetingKey : String, targetingValue : String) {
+        swipeUp()
+        self.targetingParamKeyTextFieldOutlet.tap()
+        self.targetingParamKeyTextFieldOutlet.typeText(targetingKey)
+        self.targetingParamValueTextFieldOutlet.tap()
+        self.targetingParamValueTextFieldOutlet.typeText(targetingValue)
+        swipeUp()
+        self.addTargetingParamButton.tap()
+    }
+    
     func deleteProperty() {
         expect(self.propertyList).to(showUp())
         if self.propertyItem.exists {
@@ -243,5 +289,3 @@ extension MetaApp: GDPRUI {
         consentUI.switches["Personalisation"].firstMatch
     }
 }
-
-

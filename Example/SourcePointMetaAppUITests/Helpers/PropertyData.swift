@@ -20,4 +20,8 @@ struct PropertyData {
     var targetingValueShowOnce = "appLaunch"
     var targetingKeyForPMAsFirstLayer = "pm"
     var targetingValueForPMAsFirstLayer = "true"
+    var wrongAccountId = "80811";
+    var wrongPropertyName = "tcfv2.automation.testing111";
+    var wrongPropertyId = "7376111";
+    var wrongPMId = "17878611";
 }
