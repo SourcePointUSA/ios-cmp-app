@@ -88,8 +88,8 @@ class SourcePointMetaAppUITests: QuickSpec {
             if self.app.propertyItem.exists {
                 self.app.propertyItem.swipeLeft()
                 self.app.resetPropertyButton.tap()
-                if self.app.alertYesButton.exists {
-                    self.app.alertYesButton.tap()
+                if self.app.alertOKButton.exists {
+                    self.app.alertOKButton.tap()
                 }
             }
             expect(self.app.consentMessage).to(showUp())

@@ -131,6 +131,10 @@ class MetaApp: XCUIApplication {
         alerts["alertView"].buttons["NO"].firstMatch
     }
 
+    var alertOKButton: XCUIElement {
+        alerts["alertView"].buttons["OK"].firstMatch
+    }
+
     func addPropertyDetails() {
         deleteProperty()
         expect(self.propertyList).to(showUp())
