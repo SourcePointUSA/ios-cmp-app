@@ -122,10 +122,10 @@ extension PropertyListViewController: UITableViewDelegate {
 
             alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
             alertController.view.accessibilityIdentifier = "alertView"
-            let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
+            let noAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
                 self.propertyTableView.reloadData()
             })
-            let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
+            let yesAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
                 self.showIndicator()
                 self.propertyListViewModel.clearUserDefaultsData()
                 self.loadConsentDetailsViewController(atIndex: indexPath.row)
