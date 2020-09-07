@@ -146,6 +146,7 @@ extension PropertyListViewController: UITableViewDelegate {
                         AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     } else {
                         self?.hideIndicator()
+                        self?.propertyListViewModel.clearUserDefaultsData()
                         self?.fetchAllpropertiesData()
                     }
                 })

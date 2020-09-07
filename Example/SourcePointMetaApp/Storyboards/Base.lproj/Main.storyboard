@@ -157,15 +157,29 @@
                                                     <action selector="campaignSwitchButtonAction:" destination="cyC-sw-8W2" eventType="valueChanged" id="q6c-Wr-cIZ"/>
                                                 </connections>
                                             </switch>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Native Message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffk-4T-LVH">
+                                                <rect key="frame" x="20" y="326" width="273" height="31"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="stagingCampaignLabel" label="stagingCampaignLabel"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="31" id="a8t-uq-X9t"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                <color key="textColor" name="customeColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="c1A-9j-KI5" userLabel="NativeMessage">
+                                                <rect key="frame" x="301" y="326" width="51" height="31"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="isStagingSwitchOutlet" label="isStagingSwitchOutlet"/>
+                                            </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting Parameter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QN6-iP-uvT">
-                                                <rect key="frame" x="20" y="331" width="335" height="20"/>
+                                                <rect key="frame" x="20" y="377" width="335" height="20"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingParametrLabel" label="targetingParametrLabel"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                 <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAT-eK-kxm" userLabel="TargetingKeyLabel">
-                                                <rect key="frame" x="20" y="366" width="46" height="30"/>
+                                                <rect key="frame" x="20" y="412" width="46" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingKey" label="targetingKey"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="hWr-eL-2u6"/>
@@ -175,7 +189,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9xQ-qp-kCe" userLabel="KeyTextfiled">
-                                                <rect key="frame" x="74" y="364" width="281" height="34"/>
+                                                <rect key="frame" x="74" y="410" width="281" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingParamKeyTextFieldOutlet" label="targetingParamKeyTextFieldOutlet"/>
                                                 <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -185,7 +199,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c67-NQ-pCu" userLabel="TargetingValueLabel">
-                                                <rect key="frame" x="20" y="410" width="46" height="30"/>
+                                                <rect key="frame" x="20" y="456" width="46" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingValueLabel" label="targetingValueLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="q6g-Ct-oiV"/>
@@ -195,7 +209,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V8G-su-8BI" userLabel="TargetingValueTextField">
-                                                <rect key="frame" x="74" y="408" width="281" height="34"/>
+                                                <rect key="frame" x="74" y="454" width="281" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingParamValueTextFieldOutlet" label="targetingParamValueTextFieldOutlet"/>
                                                 <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -205,14 +219,14 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting Parameter List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8k-6P-4hr">
-                                                <rect key="frame" x="20" y="467" width="267" height="20"/>
+                                                <rect key="frame" x="20" y="513" width="267" height="20"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingparameterlist" label="targetingparameterlist"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                 <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IC5-sE-xTQ" userLabel="AddButton">
-                                                <rect key="frame" x="295" y="467" width="60" height="20"/>
+                                                <rect key="frame" x="295" y="513" width="60" height="20"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="xCE-tU-Nj1"/>
@@ -227,24 +241,24 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0iU-bH-K9k" userLabel="lineView">
-                                                <rect key="frame" x="20" y="489" width="335" height="1"/>
+                                                <rect key="frame" x="20" y="535" width="335" height="1"/>
                                                 <color key="backgroundColor" name="customeColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="3hZ-Ol-M4f"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qxB-D1-vpN" userLabel="TargetingParamListView">
-                                                <rect key="frame" x="0.0" y="491" width="375" height="465"/>
+                                                <rect key="frame" x="0.0" y="537" width="375" height="419"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting parameter data is not added" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUc-zL-t7J" userLabel="NoDataLabel">
-                                                        <rect key="frame" x="59.5" y="223.5" width="256" height="18"/>
+                                                        <rect key="frame" x="59.5" y="200.5" width="256" height="18"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                         <color key="textColor" name="customeColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-tI-auQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="465"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="419"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="targetingParamCell" id="P4G-ju-zL2" customClass="TargetingParamCell" customModule="GDPR_MetaApp" customModuleProvider="target">
@@ -310,6 +324,7 @@
                                             <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="leading" secondItem="0Yc-bl-D6Y" secondAttribute="trailing" constant="8" symbolic="YES" id="0fD-cK-HX4"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="yGV-0o-HrB" secondAttribute="trailing" constant="8" symbolic="YES" id="4Bt-8u-xgX"/>
                                             <constraint firstAttribute="trailing" secondItem="HoB-pj-18x" secondAttribute="trailing" constant="20" id="62Q-GM-7rk"/>
+                                            <constraint firstItem="c1A-9j-KI5" firstAttribute="leading" secondItem="Ffk-4T-LVH" secondAttribute="trailing" constant="8" symbolic="YES" id="62b-fl-xU0"/>
                                             <constraint firstAttribute="trailing" secondItem="ZdE-5Q-Bgq" secondAttribute="trailing" constant="25" id="6WS-nS-blX"/>
                                             <constraint firstItem="pAT-eK-kxm" firstAttribute="top" secondItem="QN6-iP-uvT" secondAttribute="bottom" constant="15" id="6n9-YB-Hc3"/>
                                             <constraint firstItem="9xQ-qp-kCe" firstAttribute="centerY" secondItem="pAT-eK-kxm" secondAttribute="centerY" id="6ya-r2-rjf"/>
@@ -321,7 +336,7 @@
                                             <constraint firstItem="fnx-Kc-2mw" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="CPH-MD-VMI"/>
                                             <constraint firstAttribute="trailing" secondItem="xLh-rs-wyR" secondAttribute="trailing" constant="20" id="Eyw-uG-2ii"/>
                                             <constraint firstItem="pAT-eK-kxm" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="FcK-uL-uCi"/>
-                                            <constraint firstItem="QN6-iP-uvT" firstAttribute="top" secondItem="0Yc-bl-D6Y" secondAttribute="bottom" constant="20" id="Gyr-K5-KDg"/>
+                                            <constraint firstItem="Ffk-4T-LVH" firstAttribute="top" secondItem="0Yc-bl-D6Y" secondAttribute="bottom" constant="15" id="Gyr-K5-KDg"/>
                                             <constraint firstItem="0Yc-bl-D6Y" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="HEN-V1-XKm"/>
                                             <constraint firstAttribute="trailing" secondItem="QN6-iP-uvT" secondAttribute="trailing" constant="20" symbolic="YES" id="I3D-TQ-gmq"/>
                                             <constraint firstItem="qxB-D1-vpN" firstAttribute="top" secondItem="0iU-bH-K9k" secondAttribute="bottom" constant="1" id="Jew-DO-hcL"/>
@@ -330,12 +345,15 @@
                                             <constraint firstItem="0iU-bH-K9k" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="MhH-z5-yAG"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="centerY" secondItem="yGV-0o-HrB" secondAttribute="centerY" id="NAF-yd-ozu"/>
                                             <constraint firstItem="NYc-TX-xHH" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="NG1-eX-sdJ"/>
+                                            <constraint firstItem="QN6-iP-uvT" firstAttribute="top" secondItem="c1A-9j-KI5" secondAttribute="bottom" constant="20" id="Our-od-Qso"/>
                                             <constraint firstItem="T1z-3i-XRG" firstAttribute="leading" secondItem="fnx-Kc-2mw" secondAttribute="trailing" constant="8" symbolic="YES" id="RLR-3A-lMh"/>
+                                            <constraint firstItem="c1A-9j-KI5" firstAttribute="centerY" secondItem="Ffk-4T-LVH" secondAttribute="centerY" id="Rdh-ho-VDG"/>
                                             <constraint firstItem="IC5-sE-xTQ" firstAttribute="top" secondItem="V8G-su-8BI" secondAttribute="bottom" constant="25" id="Syd-Wj-hBg"/>
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="centerY" secondItem="NYc-TX-xHH" secondAttribute="centerY" id="VmF-OX-rYM"/>
                                             <constraint firstItem="qxB-D1-vpN" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" id="WPy-h2-nl2"/>
                                             <constraint firstItem="I8k-6P-4hr" firstAttribute="top" secondItem="V8G-su-8BI" secondAttribute="bottom" constant="25" id="X0Z-Pw-BrC"/>
                                             <constraint firstAttribute="trailing" secondItem="V8G-su-8BI" secondAttribute="trailing" constant="20" id="XOV-zy-ebr"/>
+                                            <constraint firstAttribute="trailing" secondItem="c1A-9j-KI5" secondAttribute="trailing" constant="25" id="YO0-lK-62P"/>
                                             <constraint firstItem="I8k-6P-4hr" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="ZKL-l1-cnM"/>
                                             <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="top" secondItem="ILg-hD-20L" secondAttribute="bottom" constant="15" id="asY-a1-oUk"/>
                                             <constraint firstItem="lJg-Gx-AGf" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="b3U-oA-vQR"/>
@@ -355,6 +373,7 @@
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="top" secondItem="VeY-YI-wzN" secondAttribute="bottom" constant="15" id="p5i-hd-HiR"/>
                                             <constraint firstItem="yGV-0o-HrB" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="qAQ-WI-OxH"/>
                                             <constraint firstItem="ILg-hD-20L" firstAttribute="leading" secondItem="T1z-3i-XRG" secondAttribute="leading" id="qFd-Gf-SBL"/>
+                                            <constraint firstItem="Ffk-4T-LVH" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="rYB-RG-ngD"/>
                                             <constraint firstItem="HoB-pj-18x" firstAttribute="leading" secondItem="VeY-YI-wzN" secondAttribute="leading" id="rr2-4X-ZtL"/>
                                             <constraint firstAttribute="bottom" secondItem="qxB-D1-vpN" secondAttribute="bottom" id="s4J-es-8Xe"/>
                                             <constraint firstAttribute="trailing" secondItem="ILg-hD-20L" secondAttribute="trailing" constant="20" id="sY0-Yu-2Wg"/>
@@ -381,6 +400,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <color key="backgroundColor" name="screenColor"/>
                         <constraints>
                             <constraint firstItem="mhW-Wn-4Ou" firstAttribute="top" secondItem="ARi-0k-eP1" secondAttribute="top" constant="44" id="Sw8-9I-GFT"/>
                             <constraint firstAttribute="bottom" secondItem="mhW-Wn-4Ou" secondAttribute="bottom" id="awD-X2-mAj"/>
@@ -400,6 +420,7 @@
                     <connections>
                         <outlet property="accountIDTextFieldOutlet" destination="VeY-YI-wzN" id="z2P-jF-nU5"/>
                         <outlet property="authIdTextField" destination="T1z-3i-XRG" id="B8X-cG-iFo"/>
+                        <outlet property="isNativeMessageSwitch" destination="c1A-9j-KI5" id="t5W-8c-DRk"/>
                         <outlet property="isStagingSwitchOutlet" destination="ZdE-5Q-Bgq" id="pFE-9l-aoe"/>
                         <outlet property="keyTextFieldOutlet" destination="9xQ-qp-kCe" id="atJ-Um-9Tq"/>
                         <outlet property="noTargetingParamDataLabel" destination="nUc-zL-t7J" id="E0k-Wx-xbY"/>
