@@ -83,6 +83,14 @@ extension ExampleApp: GDPRUI {
         consentUI.buttons["Save & Exit"].firstMatch
     }
 
+    var purposesButton: XCUIElement {
+        staticTexts["PURPOSES"].firstMatch
+    }
+
+    var featuresTab: XCUIElement {
+        staticTexts["Match and combine offline data sources"].firstMatch
+    }
+
     var termsAndConditionsLink: XCUIElement {
         consentUI.links["Terms & Conditions"].firstMatch
     }
