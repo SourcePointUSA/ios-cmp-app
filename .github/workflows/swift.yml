@@ -19,10 +19,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: CocoaPod Install
         run: cd Example && pod install
-      - name: Example app Unit and UI testing -> iPhone 11 (iOS 13.6)
-        run: xcodebuild test -scheme ConsentViewController_Example -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
-      - name: NativeMessage UI testing -> iPhone 11 (iOS 13.6)
-        run: xcodebuild test -scheme NativeMessageExample -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
-      - name: SourcePointMetaApp UI testing -> iPhone 11 (iOS 13.6)
-        run: xcodebuild test -scheme SourcePointMetaApp -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+      - name: Example app Unit and UI testing -> iPhone 11 (iOS 13.7)
+        run: xcodebuild test -scheme ConsentViewController_Example -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.7' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+      - name: NativeMessage UI testing -> iPhone 11 (iOS 13.7)
+        run: xcodebuild test -scheme NativeMessageExample -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.7' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+      - name: SourcePointMetaApp UI testing -> iPhone 11 (iOS 13.7)
+        run: xcodebuild test -scheme SourcePointMetaApp -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.7' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
 
