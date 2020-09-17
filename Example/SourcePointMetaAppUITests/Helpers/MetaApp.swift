@@ -249,6 +249,14 @@ extension MetaApp: GDPRUI {
         webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'ShowOnce')")).firstMatch
     }
 
+    var privacyManagerForAccount22: XCUIElement {
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Center'")).firstMatch
+    }
+
+    var consentMessageForAccount22: XCUIElement {
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Notice'")).firstMatch
+    }
+
     var termsAndConditionsWebPageTitle: XCUIElement {
         webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Address'")).firstMatch
     }
@@ -263,6 +271,10 @@ extension MetaApp: GDPRUI {
 
     var showOptionsButton: XCUIElement {
         consentUI.buttons["MANAGE PREFERENCES"].firstMatch
+    }
+
+    var showOptionsButtonForAccount22: XCUIElement {
+        consentMessageForAccount22.buttons["Options"].firstMatch
     }
 
     var saveAndExitButton: XCUIElement {
@@ -291,5 +303,9 @@ extension MetaApp: GDPRUI {
 
     var PersonalisationSwitch: XCUIElement {
         consentUI.switches["Personalisation"].firstMatch
+    }
+
+    var featuresTab: XCUIElement {
+        staticTexts["Match and combine offline data sources"].firstMatch
     }
 }

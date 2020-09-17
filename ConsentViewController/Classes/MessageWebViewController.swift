@@ -50,7 +50,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     let propertyId: Int
     var pmId: String
     let consentUUID: GDPRUUID
-
+    var queryItems: [URLQueryItem]?
     var isSecondLayerMessage = false
     var consentUILoaded = false
     var isPMLoaded = false
@@ -63,6 +63,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         self.consentUUID = consentUUID
         self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
+        self.queryItems = [URLQueryItem(name: "site_id", value: "\(propertyId)"), URLQueryItem(name: "consentUUID", value: consentUUID)]
     }
 
     required init?(coder: NSCoder) {
@@ -150,8 +151,14 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     func getPMIdFromMessage(action: GDPRAction) {
         if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload), let pm_url = payloadData["pm_url"]?.stringValue {
-            if let urlComponents = URLComponents(string: pm_url)?.queryItems, let pmId = urlComponents.first(where: { $0.name == "message_id" })?.value {
-                self.pmId = pmId
+            if let urlComponents = URLComponents(string: pm_url)?.queryItems {
+                for queryItem in urlComponents {
+                    if queryItem.name == "message_id" {
+                        self.pmId = queryItem.value ?? ""
+                    } else if queryItem.name == "pmTab" {
+                        self.queryItems?.append(URLQueryItem(name: queryItem.name, value: queryItem.value))
+                    }
+                }
             }
         }
     }
@@ -186,10 +193,13 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func pmUrl() -> URL? {
-        return URL(string: "https://notice.sp-prod.net/privacy-manager/index.html?message_id=\(pmId)&site_id=\(propertyId)&consentUUID=\(consentUUID)")
+        var pmUrlComponents = URLComponents(string: "https://notice.sp-prod.net/privacy-manager/index.html")
+        pmUrlComponents?.queryItems = queryItems
+        return pmUrlComponents?.url
     }
 
     override func loadPrivacyManager() {
+        self.queryItems?.append(URLQueryItem(name: "message_id", value: pmId))
         guard let url = pmUrl() else {
             onError(error: URLParsingError(urlString: "PMUrl"))
             return
