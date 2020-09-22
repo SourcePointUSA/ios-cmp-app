@@ -52,8 +52,6 @@
 		1997B6EE238FDEA10079AF34 /* SourcePointUITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6C2238FDEA10079AF34 /* SourcePointUITableView.swift */; };
 		1997B6F0238FDEA10079AF34 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6C4238FDEA10079AF34 /* Constants.swift */; };
 		1997B6F1238FDEA10079AF34 /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B6C5238FDEA10079AF34 /* Debug.swift */; };
-		19CF731C23F17D09006B6F94 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF731A23F17D09006B6F94 /* PropertyDetails+CoreDataProperties.swift */; };
-		19CF731D23F17D09006B6F94 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF731B23F17D09006B6F94 /* PropertyDetails+CoreDataClass.swift */; };
 		232322AA26A19B3F8B550AD0 /* Pods_ConsentViewController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A406661B1D883EC0E146AF0 /* Pods_ConsentViewController_Example.framework */; };
 		2510CE5D8733056F4463E7D3 /* Pods_AuthExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 311F7288E425EEC394D59536 /* Pods_AuthExample.framework */; };
 		282C88A3615FC32EEC57BDF4 /* Pods_SourcePointMetaAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D905C719F010E2ABBF402451 /* Pods_SourcePointMetaAppTests.framework */; };
@@ -66,6 +64,8 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		6D020758251A0362002D1488 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D020756251A0362002D1488 /* PropertyDetails+CoreDataProperties.swift */; };
+		6D020759251A0362002D1488 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D020757251A0362002D1488 /* PropertyDetails+CoreDataClass.swift */; };
 		6D110B8724D9E23500A51BD9 /* SourcePointMetaAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8624D9E23500A51BD9 /* SourcePointMetaAppUITests.swift */; };
 		6D110B8A24D9E28900A51BD9 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8924D9E28900A51BD9 /* CustomMatchers.swift */; };
 		6D110B8C24D9E2A500A51BD9 /* MetaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8B24D9E2A500A51BD9 /* MetaApp.swift */; };
@@ -212,8 +212,6 @@
 		1997B6C2238FDEA10079AF34 /* SourcePointUITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointUITableView.swift; sourceTree = "<group>"; };
 		1997B6C4238FDEA10079AF34 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1997B6C5238FDEA10079AF34 /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
-		19CF731A23F17D09006B6F94 /* PropertyDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		19CF731B23F17D09006B6F94 /* PropertyDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		22D1DF94D8D43AA9D7BDB618 /* Pods_SourcePointMetaAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		310F40A2DFBD638BDC9441BF /* Pods_SourcePointMetaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		311F7288E425EEC394D59536 /* Pods_AuthExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +228,9 @@
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		6D0207552519FD72002D1488 /* SourcePointMetaApp 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SourcePointMetaApp 2.xcdatamodel"; sourceTree = "<group>"; };
+		6D020756251A0362002D1488 /* PropertyDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6D020757251A0362002D1488 /* PropertyDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6D110B7C24D9E0A100A51BD9 /* SourcePointMetaAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourcePointMetaAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D110B8024D9E0A100A51BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D110B8624D9E23500A51BD9 /* SourcePointMetaAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcePointMetaAppUITests.swift; sourceTree = "<group>"; };
@@ -697,8 +698,8 @@
 		1997B6BA238FDEA10079AF34 /* PropertyDetailsModel */ = {
 			isa = PBXGroup;
 			children = (
-				19CF731B23F17D09006B6F94 /* PropertyDetails+CoreDataClass.swift */,
-				19CF731A23F17D09006B6F94 /* PropertyDetails+CoreDataProperties.swift */,
+				6D020757251A0362002D1488 /* PropertyDetails+CoreDataClass.swift */,
+				6D020756251A0362002D1488 /* PropertyDetails+CoreDataProperties.swift */,
 			);
 			path = PropertyDetailsModel;
 			sourceTree = "<group>";
@@ -1753,12 +1754,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1997B6E4238FDEA10079AF34 /* AddPropertyViewModel.swift in Sources */,
-				19CF731D23F17D09006B6F94 /* PropertyDetails+CoreDataClass.swift in Sources */,
+				6D020759251A0362002D1488 /* PropertyDetails+CoreDataClass.swift in Sources */,
 				1997B6C8238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */,
 				1997B6D8238FDEA10079AF34 /* ConsentDetailsViewController.swift in Sources */,
-				19CF731C23F17D09006B6F94 /* PropertyDetails+CoreDataProperties.swift in Sources */,
 				1997B6EC238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift in Sources */,
 				1997B6E5238FDEA10079AF34 /* PropertyListViewModel.swift in Sources */,
+				6D020758251A0362002D1488 /* PropertyDetails+CoreDataProperties.swift in Sources */,
 				1997B6F1238FDEA10079AF34 /* Debug.swift in Sources */,
 				1997B6DB238FDEA10079AF34 /* PropertyCell.swift in Sources */,
 				1997B6E0238FDEA10079AF34 /* LoaderView.swift in Sources */,
@@ -2676,9 +2677,10 @@
 		1997B679238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6D0207552519FD72002D1488 /* SourcePointMetaApp 2.xcdatamodel */,
 				1997B67A238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodel */,
 			);
-			currentVersion = 1997B67A238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodel */;
+			currentVersion = 6D0207552519FD72002D1488 /* SourcePointMetaApp 2.xcdatamodel */;
 			path = SourcePointMetaApp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

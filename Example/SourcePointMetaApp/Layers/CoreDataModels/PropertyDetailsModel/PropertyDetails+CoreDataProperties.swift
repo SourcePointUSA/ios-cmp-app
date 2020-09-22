@@ -2,12 +2,13 @@
 //  PropertyDetails+CoreDataProperties.swift
 //  
 //
-//  Created by Vilas on 2/10/20.
+//  Created by Vilas on 22/09/20.
 //
 //
 
 import Foundation
 import CoreData
+
 
 extension PropertyDetails {
 
@@ -20,8 +21,9 @@ extension PropertyDetails {
     @NSManaged public var campaign: Int64
     @NSManaged public var creationTimestamp: Date?
     @NSManaged public var privacyManagerId: String?
-    @NSManaged public var propertyName: String?
     @NSManaged public var propertyId: Int64
+    @NSManaged public var propertyName: String?
+    @NSManaged public var nativeMessage: Int64
     @NSManaged public var manyTargetingParams: NSSet?
 
 }
