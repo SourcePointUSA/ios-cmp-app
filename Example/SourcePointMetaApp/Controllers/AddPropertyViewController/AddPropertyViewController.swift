@@ -101,6 +101,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                     self?.authIdTextField.text = authId
                 }
                 self?.isStagingSwitchOutlet.isOn = propertyDetailsModel.campaign == 0 ? true : false
+                self?.isNativeMessageSwitch.isOn = propertyDetailsModel.nativeMessage == 1 ? true : false
                 if let targetingParams = propertyDetailsModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                     for targetingParam in targetingParams {
                         let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
@@ -199,7 +200,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                     AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountIdAndPropertyId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     return
             }
-            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId)
+            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId, nativeMessage: Int64(truncating: NSNumber(value: isNativeMessageSwitch.isOn)))
 
             if let propertyDetails = propertyDetailsModel {
                 checkExitanceOfpropertyData(propertyDetails: propertyDetails)
@@ -263,8 +264,9 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         case .ShowPrivacyManager:
             showIndicator()
         default:
-            consentViewController!.reportAction(action)
-            dismiss(animated: true, completion: nil)
+            if isNativeMessageSwitch.isOn {
+                dismiss(animated: true, completion: nil)
+            }
         }
     }
 
