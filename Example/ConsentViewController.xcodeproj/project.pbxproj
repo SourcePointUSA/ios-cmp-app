@@ -86,6 +86,7 @@
 		6DB2B2222424C52A008F9226 /* ConnectivityManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */; };
 		6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB561ED24269470008501AC /* GDPRMessageSpec.swift */; };
 		6DC1CD412427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */; };
+		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
@@ -256,6 +257,7 @@
 		6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityManagerSpec.swift; sourceTree = "<group>"; };
 		6DB561ED24269470008501AC /* GDPRMessageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRMessageSpec.swift; sourceTree = "<group>"; };
 		6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRNativeMessageViewControllerSpec.swift; sourceTree = "<group>"; };
+		7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaAppValidationUITests.swift; sourceTree = "<group>"; };
 		8214B277249CC13B00167BFE /* SPGDPRExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPGDPRExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGDPRExampleAppUITests.swift; sourceTree = "<group>"; };
 		8214B27B249CC13B00167BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -811,6 +813,7 @@
 				6D3FCA9D24DAAE2400F651E1 /* PMAsFirstLayerMessageUITests.swift */,
 				6D3FCA9F24DAB22300F651E1 /* PrivacyManagerUITests.swift */,
 				6D4BC13A251B8821003FDA28 /* NativeMessageUITests.swift */,
+				7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */,
 			);
 			path = SourcePointMetaAppUITests;
 			sourceTree = "<group>";
@@ -1815,6 +1818,7 @@
 				6D110B8724D9E23500A51BD9 /* SourcePointMetaAppUITests.swift in Sources */,
 				6D3FCA9C24DAA8C800F651E1 /* AuthIDUITests.swift in Sources */,
 				6D110B8C24D9E2A500A51BD9 /* MetaApp.swift in Sources */,
+				7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */,
 				6D3FCAA024DAB22300F651E1 /* PrivacyManagerUITests.swift in Sources */,
 				6D110B8A24D9E28900A51BD9 /* CustomMatchers.swift in Sources */,
 			);
