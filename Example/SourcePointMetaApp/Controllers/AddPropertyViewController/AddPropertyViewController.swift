@@ -78,6 +78,8 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     // this variable holds the property details entered by user
     var propertyDetailsModel: PropertyDetailsModel?
 
+    var isPMLoaded = false
+
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
     var consentViewController: GDPRConsentViewController?
@@ -262,7 +264,18 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         case .PMCancel:
             dismissPrivacyManager()
         case .ShowPrivacyManager:
+            isPMLoaded = true
             showIndicator()
+        case .AcceptAll:
+            if isNativeMessageSwitch.isOn && !isPMLoaded {
+                consentViewController?.reportAction(action)
+                dismiss(animated: true, completion: nil)
+            }
+        case .RejectAll:
+            if isNativeMessageSwitch.isOn && !isPMLoaded {
+                consentViewController?.reportAction(action)
+                dismiss(animated: true, completion: nil)
+            }
         default:
             if isNativeMessageSwitch.isOn {
                 dismiss(animated: true, completion: nil)

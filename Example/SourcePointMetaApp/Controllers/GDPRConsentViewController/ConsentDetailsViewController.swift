@@ -26,7 +26,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     /** PM is loaded or not
      */
-    var pmloadedStatus = false
+    var isPMLoaded = false
     var userConsents: GDPRUserConsent?
     var gdprUUID: String = ""
     let sections = ["Vendor Consents", "Purpose Consents"]
@@ -145,7 +145,18 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         case .PMCancel:
             dismissPrivacyManager()
         case .ShowPrivacyManager:
+            isPMLoaded = true
             showIndicator()
+        case .AcceptAll:
+            if propertyDetails?.nativeMessage == 1 && !isPMLoaded {
+                consentViewController?.reportAction(action)
+                dismiss(animated: true, completion: nil)
+            }
+        case .RejectAll:
+            if propertyDetails?.nativeMessage == 1 && !isPMLoaded {
+                consentViewController?.reportAction(action)
+                dismiss(animated: true, completion: nil)
+            }
         default:
             if propertyDetails?.nativeMessage == 1 {
                 dismiss(animated: true, completion: nil)
