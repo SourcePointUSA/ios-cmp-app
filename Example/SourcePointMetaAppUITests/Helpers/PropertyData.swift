@@ -10,14 +10,18 @@ import XCTest
 
 struct PropertyData {
     var accountId = "808"
-    var propertyName = "tcfv2.automation.testing";
-    var propertyId = "7376";
-    var pmID = "178786";
-    var targetingKey = "language";
-    var targetingFrenchValue = "fr";
-    var targetingEnglishValue = "en";
+    var propertyName = "tcfv2.automation.testing"
+    var propertyId = "7376"
+    var pmID = "178786"
+    var targetingKey = "language"
+    var targetingFrenchValue = "fr"
+    var targetingEnglishValue = "en"
     var targetingKeyShowOnce = "displayMode"
     var targetingValueShowOnce = "appLaunch"
     var targetingKeyForPMAsFirstLayer = "pm"
     var targetingValueForPMAsFirstLayer = "true"
+    var nativeMessageAccountId = "22"
+    var nativeMessagePropertyId = "7094"
+    var nativeMessagePropertyName = "tcfv2.mobile.demo"
+    var nativeMessagePMId = "179657"
 }

@@ -169,7 +169,7 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="c1A-9j-KI5" userLabel="NativeMessage">
                                                 <rect key="frame" x="301" y="326" width="51" height="31"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="isStagingSwitchOutlet" label="isStagingSwitchOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="nativeMessageSwitchOutlet" label="nativeMessageSwitchOutlet"/>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting Parameter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QN6-iP-uvT">
                                                 <rect key="frame" x="20" y="377" width="335" height="20"/>
