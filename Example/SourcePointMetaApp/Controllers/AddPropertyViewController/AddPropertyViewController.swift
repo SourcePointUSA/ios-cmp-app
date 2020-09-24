@@ -260,24 +260,24 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
     /// `GDPRActionType`
     func onAction(_ action: GDPRAction) {
-        switch action.type {
-        case .PMCancel:
-            dismissPrivacyManager()
-        case .ShowPrivacyManager:
-            isPMLoaded = true
-            showIndicator()
-        case .AcceptAll:
-            if isNativeMessageSwitch.isOn && !isPMLoaded {
-                consentViewController?.reportAction(action)
-                dismiss(animated: true, completion: nil)
-            }
-        case .RejectAll:
-            if isNativeMessageSwitch.isOn && !isPMLoaded {
-                consentViewController?.reportAction(action)
-                dismiss(animated: true, completion: nil)
-            }
-        default:
-            if isNativeMessageSwitch.isOn {
+        if isNativeMessageSwitch.isOn {
+            switch action.type {
+            case .PMCancel:
+                dismissPrivacyManager()
+            case .ShowPrivacyManager:
+                isPMLoaded = true
+                showIndicator()
+            case .AcceptAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            case .RejectAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            default:
                 dismiss(animated: true, completion: nil)
             }
         }

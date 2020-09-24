@@ -141,24 +141,24 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
     /// `GDPRActionType`
     func onAction(_ action: GDPRAction) {
-        switch action.type {
-        case .PMCancel:
-            dismissPrivacyManager()
-        case .ShowPrivacyManager:
-            isPMLoaded = true
-            showIndicator()
-        case .AcceptAll:
-            if propertyDetails?.nativeMessage == 1 && !isPMLoaded {
-                consentViewController?.reportAction(action)
-                dismiss(animated: true, completion: nil)
-            }
-        case .RejectAll:
-            if propertyDetails?.nativeMessage == 1 && !isPMLoaded {
-                consentViewController?.reportAction(action)
-                dismiss(animated: true, completion: nil)
-            }
-        default:
-            if propertyDetails?.nativeMessage == 1 {
+        if propertyDetails?.nativeMessage == 1 {
+            switch action.type {
+            case .PMCancel:
+                dismissPrivacyManager()
+            case .ShowPrivacyManager:
+                isPMLoaded = true
+                showIndicator()
+            case .AcceptAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            case .RejectAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            default:
                 dismiss(animated: true, completion: nil)
             }
         }
