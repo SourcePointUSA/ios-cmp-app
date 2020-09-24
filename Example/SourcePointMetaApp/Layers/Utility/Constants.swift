@@ -31,6 +31,8 @@ struct SPLiteral {
     static let euConsentID = "EUConsent not available"
     static let stageEnv = "Stage"
     static let publicEnv = "Public"
+    static let webMessage = "Web Message"
+    static let nativeMessage = "Native Message"
 
     static func attributedString() -> NSMutableAttributedString {
         let attributedText = NSMutableAttributedString(string: "This will clear data for ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])

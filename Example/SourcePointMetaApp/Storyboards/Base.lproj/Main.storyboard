@@ -623,11 +623,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="70" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="GDPR_MetaApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="90" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="GDPR_MetaApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oya-4T-sTe" id="BDy-AV-b9J">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Cybage.sp-demo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bch-vL-bwc" userLabel="Property Name">
@@ -639,7 +639,7 @@
                                                     <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account ID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lah-ue-N1c">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account ID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lah-ue-N1c" userLabel="AccountId">
                                                     <rect key="frame" x="20" y="26" width="88.5" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="accountIDLabel">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -663,8 +663,20 @@
                                                     <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Web Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-wB-aP4" userLabel="MessageType">
+                                                    <rect key="frame" x="20" y="47" width="101.5" height="20"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="accountIDLabel">
+                                                        <accessibilityTraits key="traits" notEnabled="YES"/>
+                                                    </accessibility>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="N7V-bE-NJb"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                                                    <color key="textColor" name="customeColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1C-pm-DTM">
-                                                    <rect key="frame" x="18" y="47" width="332" height="21"/>
+                                                    <rect key="frame" x="18" y="68" width="332" height="20"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="targetingParamTextView">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -677,7 +689,7 @@
                                                     </connections>
                                                 </textView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aqt-nl-RJg" userLabel="lineview">
-                                                    <rect key="frame" x="0.0" y="69" width="375" height="1"/>
+                                                    <rect key="frame" x="0.0" y="89" width="375" height="1"/>
                                                     <color key="backgroundColor" name="customeColor"/>
                                                     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -687,15 +699,19 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Bch-vL-bwc" secondAttribute="trailing" constant="20" symbolic="YES" id="1cV-Mj-wig"/>
+                                                <constraint firstItem="X1C-pm-DTM" firstAttribute="top" secondItem="sqW-wB-aP4" secondAttribute="bottom" constant="1" id="60g-uO-lAD"/>
                                                 <constraint firstAttribute="bottom" secondItem="Aqt-nl-RJg" secondAttribute="bottom" id="6qk-aT-EH3"/>
                                                 <constraint firstItem="tAJ-BW-CMH" firstAttribute="leading" secondItem="Lah-ue-N1c" secondAttribute="trailing" constant="20" id="9Mq-KE-iap"/>
+                                                <constraint firstItem="sqW-wB-aP4" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="20" id="D69-hV-liu"/>
                                                 <constraint firstItem="Aqt-nl-RJg" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" id="KZt-Uc-KkP"/>
+                                                <constraint firstItem="sqW-wB-aP4" firstAttribute="top" secondItem="Lah-ue-N1c" secondAttribute="bottom" constant="1" id="VkG-G5-4d3"/>
                                                 <constraint firstItem="Lah-ue-N1c" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="20" id="VzK-oW-8uw"/>
-                                                <constraint firstItem="X1C-pm-DTM" firstAttribute="top" secondItem="Lah-ue-N1c" secondAttribute="bottom" constant="1" id="WYg-RA-qJr"/>
+                                                <constraint firstItem="X1C-pm-DTM" firstAttribute="top" secondItem="sqW-wB-aP4" secondAttribute="bottom" constant="1" id="WYg-RA-qJr"/>
                                                 <constraint firstAttribute="trailing" secondItem="Aqt-nl-RJg" secondAttribute="trailing" id="ZQq-4R-1ch"/>
                                                 <constraint firstItem="X1C-pm-DTM" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="18" id="bbg-Ee-pTx"/>
                                                 <constraint firstItem="Aqt-nl-RJg" firstAttribute="top" secondItem="X1C-pm-DTM" secondAttribute="bottom" constant="1" id="f30-t2-DXe"/>
                                                 <constraint firstItem="Lah-ue-N1c" firstAttribute="top" secondItem="Bch-vL-bwc" secondAttribute="bottom" constant="3" id="gbz-Vz-bm1"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sqW-wB-aP4" secondAttribute="trailing" constant="50" id="j1F-Gj-uos"/>
                                                 <constraint firstAttribute="trailing" secondItem="X1C-pm-DTM" secondAttribute="trailing" constant="25" id="oVP-Xp-RWi"/>
                                                 <constraint firstAttribute="trailing" secondItem="tAJ-BW-CMH" secondAttribute="trailing" constant="25" id="pde-9T-kUL"/>
                                                 <constraint firstItem="Bch-vL-bwc" firstAttribute="top" secondItem="BDy-AV-b9J" secondAttribute="top" constant="3" id="rgW-qE-eBl"/>
@@ -710,6 +726,7 @@
                                         <connections>
                                             <outlet property="accountIDLabel" destination="Lah-ue-N1c" id="Iym-Zk-3Tb"/>
                                             <outlet property="campaignLabel" destination="tAJ-BW-CMH" id="rAA-1g-P2E"/>
+                                            <outlet property="messageType" destination="sqW-wB-aP4" id="D8a-Nz-fZ6"/>
                                             <outlet property="propertyLabel" destination="Bch-vL-bwc" id="PKe-Y8-q12"/>
                                             <outlet property="targetingParamTextView" destination="X1C-pm-DTM" id="OPT-3Y-66W"/>
                                         </connections>
