@@ -19,10 +19,8 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     lazy var webview: WKWebView? = {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        guard let scriptSource = try? String(
-            contentsOfFile: Bundle(for: GDPRConsentViewController.self).path(forResource:
-                MessageWebViewController.MESSAGE_HANDLER_NAME, ofType: "js")!)
-            else {
+        guard let path = Bundle.framework.path(forResource: Self.MESSAGE_HANDLER_NAME, ofType: "js"),
+              let scriptSource = try? String(contentsOfFile: path) else {
             consentDelegate?.onError?(error: UnableToLoadJSReceiver())
             return nil
         }
