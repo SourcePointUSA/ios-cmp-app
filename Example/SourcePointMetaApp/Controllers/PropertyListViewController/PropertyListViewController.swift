@@ -82,11 +82,8 @@ extension PropertyListViewController: UITableViewDataSource {
             if let propertyDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).0 {
                 cell.propertyLabel.text = propertyDetails.propertyName
                 cell.accountIDLabel.text = "\(SPLiteral.accountID) \(propertyDetails.accountId)"
-                if propertyDetails.campaign == Int64(0) {
-                    cell.campaignLabel.text = "\(SPLiteral.campaign) \(SPLiteral.stageEnv)"
-                } else {
-                     cell.campaignLabel.text = "\(SPLiteral.campaign) \(SPLiteral.publicEnv)"
-                }
+                cell.campaignLabel.text = propertyDetails.campaign == Int64(0) ? "\(SPLiteral.campaign) \(SPLiteral.stageEnv)" : "\(SPLiteral.campaign) \(SPLiteral.publicEnv)"
+                cell.messageType.text = propertyDetails.nativeMessage == Int64(0) ? "\(SPLiteral.webMessage)" : "\(SPLiteral.nativeMessage)"
             }
             if let targetingDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).1 {
                 cell.targetingParamTextView.text = targetingDetails
@@ -146,6 +143,7 @@ extension PropertyListViewController: UITableViewDelegate {
                         AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     } else {
                         self?.hideIndicator()
+                        self?.propertyListViewModel.clearUserDefaultsData()
                         self?.fetchAllpropertiesData()
                     }
                 })

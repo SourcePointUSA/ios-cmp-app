@@ -14,6 +14,7 @@ class PropertyCell: SourcePointUItablewViewCell {
     @IBOutlet weak var targetingParamTextView: UITextView!
     @IBOutlet weak var campaignLabel: UILabel!
     @IBOutlet weak var accountIDLabel: UILabel!
+    @IBOutlet weak var messageType: UILabel!
     // MARK: - Instance Properties.
 
     /// Index of vendro item.

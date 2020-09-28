@@ -45,10 +45,12 @@ class DBManager: NSObject {
         let url = applicationDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
         /// For Console logs.
         Log.sharedLog.DLog(message: "documents url == \(applicationDocumentsDirectory)")
+        let options = [NSMigratePersistentStoresAutomaticallyOption: NSNumber(value: true),
+            NSInferMappingModelAutomaticallyOption: NSNumber(value: true)]
 
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: options)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()

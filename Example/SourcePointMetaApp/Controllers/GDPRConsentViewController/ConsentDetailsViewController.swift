@@ -26,7 +26,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     /** PM is loaded or not
      */
-    var pmloadedStatus = false
+    var isPMLoaded = false
     var userConsents: GDPRUserConsent?
     var gdprUUID: String = ""
     let sections = ["Vendor Consents", "Purpose Consents"]
@@ -36,7 +36,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     var consentViewController: GDPRConsentViewController?
     var propertyDetails: PropertyDetailsModel?
     var targetingParams = [TargetingParamModel]()
-//    let logger = Logger()
+    var nativeMessageController: GDPRNativeMessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +92,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     func fetchDataFromDatabase(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void) {
         self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
-            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId)
+            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage)
             var targetingParamsArray = [TargetingParamModel]()
             if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                 for targetingParam in targetingParams {
@@ -112,21 +112,57 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-        if let authId = propertyDetails.authId {
-            consentViewController?.loadMessage(forAuthId: authId)
-        } else {
-            consentViewController?.loadMessage()
-        }
+        propertyDetails.nativeMessage == 1 ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
+            consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }
 
     func gdprConsentUIWillShow() {
-           hideIndicator()
-           present(self.consentViewController!, animated: true, completion: nil)
-       }
+        hideIndicator()
+        if nativeMessageController?.viewIfLoaded?.window != nil {
+            nativeMessageController?.present(consentViewController!, animated: true, completion: nil)
+        } else {
+            present(self.consentViewController!, animated: true, completion: nil)
+        }
+    }
 
-       func consentUIDidDisappear() {
-           dismiss(animated: true, completion: nil)
-       }
+    func consentUIDidDisappear() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func consentUIWillShow(message: GDPRMessage) {
+        hideIndicator()
+        if let consentViewController = consentViewController {
+            nativeMessageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+            nativeMessageController?.modalPresentationStyle = .overFullScreen
+            present(nativeMessageController!, animated: true, completion: nil)
+        }
+    }
+
+    /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
+    /// `GDPRActionType`
+    func onAction(_ action: GDPRAction) {
+        if propertyDetails?.nativeMessage == 1 {
+            switch action.type {
+            case .PMCancel:
+                dismissPrivacyManager()
+            case .ShowPrivacyManager:
+                isPMLoaded = true
+                showIndicator()
+            case .AcceptAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            case .RejectAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            default:
+                dismiss(animated: true, completion: nil)
+            }
+        }
+    }
 
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.showIndicator()
@@ -138,12 +174,19 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     }
 
     func onError(error: GDPRConsentViewControllerError?) {
-        //           logger.log("Error: %{public}@", [error?.description ?? "Something Went Wrong"])
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
         }
         AlertView.sharedInstance.showAlertView(title: Alert.message, message: error?.description ?? "Something Went Wrong", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+    }
+
+    private func dismissPrivacyManager() {
+        if nativeMessageController?.viewIfLoaded?.window != nil {
+            nativeMessageController?.dismiss(animated: true, completion: nil)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     @IBAction func showPMAction(_ sender: Any) {

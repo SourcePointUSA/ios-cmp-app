@@ -54,6 +54,10 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         */
     @IBOutlet weak var isStagingSwitchOutlet: UISwitch!
 
+    /** UISwitch outlet for Native message switch.
+        */
+    @IBOutlet weak var isNativeMessageSwitch: UISwitch!
+
     /** UILabel outlet for showing No targeting param data.
     */
     @IBOutlet weak var noTargetingParamDataLabel: UILabel!
@@ -74,11 +78,12 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     // this variable holds the property details entered by user
     var propertyDetailsModel: PropertyDetailsModel?
 
+    var isPMLoaded = false
+
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
     var consentViewController: GDPRConsentViewController?
-
-//    let logger = Logger()
+    var nativeMessageController: GDPRNativeMessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +103,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                     self?.authIdTextField.text = authId
                 }
                 self?.isStagingSwitchOutlet.isOn = propertyDetailsModel.campaign == 0 ? true : false
+                self?.isNativeMessageSwitch.isOn = propertyDetailsModel.nativeMessage == 1 ? true : false
                 if let targetingParams = propertyDetailsModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                     for targetingParam in targetingParams {
                         let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
@@ -196,7 +202,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                     AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountIdAndPropertyId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     return
             }
-            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId)
+            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId, nativeMessage: Int64(truncating: NSNumber(value: isNativeMessageSwitch.isOn)))
 
             if let propertyDetails = propertyDetailsModel {
                 checkExitanceOfpropertyData(propertyDetails: propertyDetails)
@@ -229,12 +235,52 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-        consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
+        isNativeMessageSwitch.isOn ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
+            consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }
 
     func gdprConsentUIWillShow() {
         hideIndicator()
-        present(self.consentViewController!, animated: true, completion: nil)
+        if nativeMessageController?.viewIfLoaded?.window != nil {
+            nativeMessageController?.present(consentViewController!, animated: true, completion: nil)
+        } else {
+            present(consentViewController!, animated: true, completion: nil)
+        }
+    }
+
+    func consentUIWillShow(message: GDPRMessage) {
+        hideIndicator()
+        if let consentViewController = consentViewController {
+            nativeMessageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+            nativeMessageController?.modalPresentationStyle = .overFullScreen
+            present(nativeMessageController!, animated: true, completion: nil)
+        }
+    }
+
+    /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
+    /// `GDPRActionType`
+    func onAction(_ action: GDPRAction) {
+        if isNativeMessageSwitch.isOn {
+            switch action.type {
+            case .PMCancel:
+                dismissPrivacyManager()
+            case .ShowPrivacyManager:
+                isPMLoaded = true
+                showIndicator()
+            case .AcceptAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            case .RejectAll:
+                if !isPMLoaded {
+                    consentViewController?.reportAction(action)
+                    dismiss(animated: true, completion: nil)
+                }
+            default:
+                dismiss(animated: true, completion: nil)
+            }
+        }
     }
 
     func consentUIDidDisappear() {
@@ -249,12 +295,19 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     }
 
     func onError(error: GDPRConsentViewControllerError?) {
-//        logger.log("Error: %{public}@", [error?.description ?? "Something Went Wrong"])
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
         }
         AlertView.sharedInstance.showAlertView(title: Alert.message, message: error?.description ?? "Something Went Wrong", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+    }
+
+    private func dismissPrivacyManager() {
+        if nativeMessageController?.viewIfLoaded?.window != nil {
+            nativeMessageController?.dismiss(animated: true, completion: nil)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     func loadConsentInfoController(gdprUUID: GDPRUUID, userConsents: GDPRUserConsent) {

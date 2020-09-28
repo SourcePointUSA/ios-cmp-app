@@ -56,7 +56,7 @@ class MetaApp: XCUIApplication {
     }
 
     var propertyItem: XCUIElement {
-        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'tcfv2.automation.testing'")).firstMatch
+        staticTexts.containing(NSPredicate(format: "(label CONTAINS[cd] 'tcfv2.automation.testing') OR (label CONTAINS[cd] 'tcfv2.mobile.demo')")).firstMatch
     }
 
     var propertyFieldValidationItem: XCUIElement {
@@ -139,6 +139,10 @@ class MetaApp: XCUIApplication {
         switches["isStagingSwitchOutlet"].firstMatch
     }
 
+    var nativeMessageSwitchOutlet: XCUIElement {
+        switches["nativeMessageSwitchOutlet"].firstMatch
+    }
+
     var alertYesButton: XCUIElement {
         alerts["alertView"].buttons["YES"].firstMatch
     }
@@ -155,6 +159,25 @@ class MetaApp: XCUIApplication {
         alerts["alertView"].buttons["OK"].firstMatch
     }
 
+    var messageTitle: XCUIElement {
+        staticTexts["Personalised Ads"].firstMatch
+    }
+
+    var acceptButton: XCUIElement {
+        buttons["Accept"].firstMatch
+    }
+
+    var rejectButton: XCUIElement {
+        buttons["Reject"].firstMatch
+    }
+
+    var showOptions: XCUIElement {
+        buttons["Show Options"].firstMatch
+    }
+    var settingsButton: XCUIElement {
+        buttons["Settings"].firstMatch
+    }
+
     func addPropertyDetails() {
         deleteProperty()
         expect(self.propertyList).to(showUp())
@@ -168,6 +191,22 @@ class MetaApp: XCUIApplication {
         self.propertyTextFieldOutlet.typeText(self.properyData.propertyName)
         self.pmTextFieldOutlet.tap()
         self.pmTextFieldOutlet.typeText(self.properyData.pmID)
+    }
+
+    func addPropertyDetailsForNativeMessage() {
+        deleteProperty()
+        expect(self.propertyList).to(showUp())
+        self.addPropertyButton.tap()
+        expect(self.newProperty).to(showUp())
+        self.accountIDTextFieldOutlet.tap()
+        self.accountIDTextFieldOutlet.typeText(self.properyData.nativeMessageAccountId)
+        self.propertyIdTextFieldOutlet.tap()
+        self.propertyIdTextFieldOutlet.typeText(self.properyData.nativeMessagePropertyId)
+        self.propertyTextFieldOutlet.tap()
+        self.propertyTextFieldOutlet.typeText(self.properyData.nativeMessagePropertyName)
+        self.pmTextFieldOutlet.tap()
+        self.pmTextFieldOutlet.typeText(self.properyData.nativeMessagePMId)
+        self.nativeMessageSwitchOutlet.tap()
     }
 
     func addPropertyWithWrongPropertyDetails(accountId : String, propertyId : String, propertyName : String, pmId : String) {
@@ -234,15 +273,25 @@ class MetaApp: XCUIApplication {
             expect(self.privacyManager).to(showUp())
         }
     }
+
+    func testNativeMessagePMToggles(value : Int) {
+        if self.PersonalisedAdsSwitch.value != nil {
+            expect(Int(self.PersonalisedAdsSwitch.value as! String) == value).to(beTrue())
+            expect(Int(self.DeviceInformationSwitch.value as! String) == value).to(beTrue())
+        }else {
+            expect(self.privacyManager).to(showUp())
+        }
+    }
+
 }
 
 extension MetaApp: GDPRUI {
     var consentUI: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'My Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce')")).firstMatch
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'My Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
     }
 
     var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'My Cookie Notice'")).firstMatch
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'My Cookie Notice') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
     }
 
     var consentMessage: XCUIElement {
