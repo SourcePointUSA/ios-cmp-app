@@ -45,7 +45,7 @@ struct ActionRequest: Encodable {
     let requestFromPM: Bool
     let uuid: GDPRUUID
     let requestUUID: UUID
-    let consents: GDPRPMConsents
+    let consents: PMConsents
     let meta: Meta
 }
 
@@ -55,16 +55,16 @@ struct ActionResponse: Decodable {
     var meta: Meta
 }
 
-@objc public class PMConsents: NSObject, Codable {
-    let vendors, categories: PMConsent
+@objc public class GDPRPMConsents: NSObject, Codable {
+    let vendors, categories: GDPRPMConsent
     
-    public init(vendors: PMConsent, categories: PMConsent) {
+    public init(vendors: GDPRPMConsent, categories: GDPRPMConsent) {
         self.vendors = vendors
         self.categories = categories
     }
 }
 
-@objc public class PMConsent: NSObject, Codable {
+@objc public class GDPRPMConsent: NSObject, Codable {
     let accepted, rejected: [String]
     
     public init(accepted: [String], rejected: [String]) {
@@ -73,6 +73,6 @@ struct ActionResponse: Decodable {
     }
 }
 
-struct GDPRPMConsents: Codable {
+struct PMConsents: Codable {
     let acceptedVendors, acceptedCategories: [String]
 }

@@ -136,7 +136,7 @@ class SourcePointClient {
         )
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, consents: PMConsents?, completionHandler: @escaping (ActionResponse?, APIParsingError?) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: GDPRUUID, consents: GDPRPMConsents?, completionHandler: @escaping (ActionResponse?, APIParsingError?) -> Void) {
         let url = SourcePointClient.CONSENT_URL
         guard let body = try? json.encode(ActionRequest(
             propertyId: propertyId,
@@ -148,7 +148,7 @@ class SourcePointClient {
             requestFromPM: action.id == nil,
             uuid: consentUUID,
             requestUUID: requestUUID,
-            consents: GDPRPMConsents(
+            consents: PMConsents(
                 acceptedVendors: consents?.vendors.accepted ?? [],
                 acceptedCategories: consents?.categories.accepted ?? []
             ),

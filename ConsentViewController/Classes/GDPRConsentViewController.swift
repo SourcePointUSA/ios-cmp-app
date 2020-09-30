@@ -364,7 +364,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         consentDelegate?.onError?(error: error)
     }
     
-    public func reportAction(_ action: GDPRAction, consents: PMConsents?) {
+    public func reportAction(_ action: GDPRAction, consents: GDPRPMConsents?) {
         if(action.type == .AcceptAll || action.type == .RejectAll || action.type == .SaveAndExit) {
             sourcePoint.postAction(action: action, consentUUID: gdprUUID, consents: consents) { [weak self] actionResponse, error in
                 if let response = actionResponse {
@@ -376,9 +376,9 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         }
     }
 
-    public func onAction(_ action: GDPRAction, consents: PMConsents?) {
-        reportAction(action, consents: consents)
-        consentDelegate?.onAction?(action, consents: consents)
+    public func onAction(_ action: GDPRAction, gdprConsents: GDPRPMConsents?) {
+        reportAction(action, consents: gdprConsents)
+        consentDelegate?.onAction?(action, gdprConsents: gdprConsents)
     }
 
     public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
