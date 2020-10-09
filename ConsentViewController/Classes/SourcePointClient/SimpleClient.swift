@@ -85,7 +85,7 @@ class SimpleClient: HttpClient {
     func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {
         logRequest(urlRequest, urlRequest.httpBody)
         guard connectivityManager.isConnectedToNetwork() else {
-            completionHandler(nil, NoInternetConnection())
+            completionHandler(nil, GDPRNoInternetConnection())
             return
         }
         session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -94,14 +94,14 @@ class SimpleClient: HttpClient {
                 self?.logResponse(urlRequest, data)
                 data != nil ?
                     completionHandler(data, nil) :
-                    completionHandler(nil, GeneralRequestError(urlRequest.url, response, error))
+                    completionHandler(nil, GDPRGeneralRequestError(urlRequest.url, response, error))
             }
         }.resume()
     }
 
     func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler) {
         guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
+            completionHandler(nil, GDPRGeneralRequestError(url, nil, nil))
             return
         }
         var urlRequest = URLRequest(url: _url)
@@ -113,7 +113,7 @@ class SimpleClient: HttpClient {
 
     func get(url: URL?, completionHandler: @escaping CompletionHandler) {
         guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
+            completionHandler(nil, GDPRGeneralRequestError(url, nil, nil))
             return
         }
         request(URLRequest(url: _url), completionHandler)

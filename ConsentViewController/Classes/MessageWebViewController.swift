@@ -155,7 +155,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         if connectvityManager.isConnectedToNetwork() {
             webview.load(URLRequest(url: url))
         } else {
-            onError(error: NoInternetConnection())
+            onError(error: GDPRNoInternetConnection())
         }
     }
     
@@ -169,7 +169,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     
     override func loadPrivacyManager() {
         guard let url = pmUrl() else {
-            onError(error: URLParsingError(urlString: "PMUrl"))
+            onError(error: GDPRURLParsingError(urlString: "PMUrl"))
             return
         }
         load(url: url)
@@ -222,7 +222,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             let body = message.body as? [String: Any?],
             let name = body["name"] as? String
         else {
-            onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
+            onError(error: GDPRMessageEventParsingError(message: Optional(message.body).debugDescription))
             return
         }
         
@@ -237,12 +237,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                     let actionTypeRaw = payload["type"] as? Int,
                     let actionType = GDPRActionType(rawValue: actionTypeRaw)
                 else {
-                    onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
+                    onError(error: GDPRMessageEventParsingError(message: Optional(message.body).debugDescription))
                     return
                 }
                 onAction(GDPRAction(type: actionType, id: getChoiceId(payload)), gdprConsents: getPMConsentsIfAny(payload))
             case "onError":
-                onError(error: WebViewError())
+                onError(error: GDPRWebViewError())
             default:
                 print(message.body)
         }

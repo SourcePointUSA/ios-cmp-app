@@ -17,7 +17,7 @@ import Foundation
     private static func validate(_ string: String) throws -> String {
         let regex = try NSRegularExpression(pattern: validPattern, options: [])
         if regex.matches(in: string, options: [], range: NSMakeRange(0, string.count)).isEmpty {
-            throw InvalidArgumentError(message: "PropertyName can only include letters, numbers, '.', ':', '-' and '/'. \(string) passed is invalid")
+            throw GDPRInvalidArgumentError(message: "PropertyName can only include letters, numbers, '.', ':', '-' and '/'. \(string) passed is invalid")
         } else {
             return string
         }

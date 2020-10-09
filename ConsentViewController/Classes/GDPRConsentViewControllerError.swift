@@ -16,7 +16,7 @@ import Foundation
     }
 }
 
-@objcMembers public class GeneralRequestError: GDPRConsentViewControllerError {
+@objcMembers public class GDPRGeneralRequestError: GDPRConsentViewControllerError {
     public let url, response, error: String
 
     public var failureReason: String? { get { return "The request to: \(url) failed with response: \(response) and error: \(error)" } }
@@ -34,7 +34,7 @@ import Foundation
     override public var description: String { get { return "\(failureReason!)" } }
 }
 
-@objcMembers public class APIParsingError: GDPRConsentViewControllerError {
+@objcMembers public class GDPRAPIParsingError: GDPRConsentViewControllerError {
     private let parsingError: Error?
     private let endpoint: String
 
@@ -51,12 +51,12 @@ import Foundation
     public var failureReason: String? { get { return description } }
 }
 
-@objcMembers public class NoInternetConnection: GDPRConsentViewControllerError {
+@objcMembers public class GDPRNoInternetConnection: GDPRConsentViewControllerError {
     public var failureReason: String? { get { return "The device is not connected to the internet." } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
-@objcMembers public class MessageEventParsingError: GDPRConsentViewControllerError {
+@objcMembers public class GDPRMessageEventParsingError: GDPRConsentViewControllerError {
     let message: String
     
     init(message: String) {
@@ -70,12 +70,12 @@ import Foundation
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
-@objcMembers public class WebViewError: GDPRConsentViewControllerError {
+@objcMembers public class GDPRWebViewError: GDPRConsentViewControllerError {
     public var failureReason: String? { get { return "Something went wrong in the webview" } }
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
-@objcMembers public class URLParsingError: GDPRConsentViewControllerError {
+@objcMembers public class GDPRURLParsingError: GDPRConsentViewControllerError {
     let urlString: String
     
     init(urlString: String) {
@@ -89,7 +89,7 @@ import Foundation
     override public var description: String { get { return "\(failureReason!)\n" } }
 }
 
-@objcMembers public class InvalidArgumentError: GDPRConsentViewControllerError {
+@objcMembers public class GDPRInvalidArgumentError: GDPRConsentViewControllerError {
     let message: String
     
     init(message: String) {
