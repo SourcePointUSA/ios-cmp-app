@@ -12,7 +12,7 @@ We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to 
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.2.8'
+pod 'ConsentViewController', '5.2.9'
 ```
 
 ### Carthage
