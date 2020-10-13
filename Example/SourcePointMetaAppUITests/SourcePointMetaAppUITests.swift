@@ -88,8 +88,8 @@ class SourcePointMetaAppUITests: QuickSpec {
             if self.app.propertyItem.exists {
                 self.app.propertyItem.swipeLeft()
                 self.app.resetPropertyButton.tap()
-                if self.app.alertYesButton.exists {
-                    self.app.alertYesButton.tap()
+                if self.app.alertOKButton.exists {
+                    self.app.alertOKButton.tap()
                 }
             }
             expect(self.app.consentMessage).to(showUp())
@@ -154,6 +154,26 @@ class SourcePointMetaAppUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.dismissMessageButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
+        }
+
+        it("Check feature tab as default PM tab") {
+            self.app.deleteProperty()
+            expect(self.app.propertyList).to(showUp())
+            self.app.addPropertyButton.tap()
+            expect(self.app.newProperty).to(showUp())
+            self.app.accountIDTextFieldOutlet.tap()
+            self.app.accountIDTextFieldOutlet.typeText(self.properyData.accountIdOfAccount22)
+            self.app.propertyIdTextFieldOutlet.tap()
+            self.app.propertyIdTextFieldOutlet.typeText(self.properyData.propertyIdOfAccount22)
+            self.app.propertyTextFieldOutlet.tap()
+            self.app.propertyTextFieldOutlet.typeText(self.properyData.propertyNameOfAccount22)
+            self.app.pmTextFieldOutlet.tap()
+            self.app.pmTextFieldOutlet.typeText(self.properyData.PMIdOfAccount22)
+            self.app.savePropertyButton.tap()
+            expect(self.app.consentMessageForAccount22).to(showUp())
+            self.app.showOptionsButtonForAccount22.tap()
+            expect(self.app.privacyManagerForAccount22).to(showUp())
+            expect(self.app.featuresTab).to(showUp())
         }
     }
 }

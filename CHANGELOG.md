@@ -1,3 +1,6 @@
+## 5.2.9 (Oct, 13, 2020)
+* Fixed compatibility with Xcode 12.x
+
 ## 5.2.8 (Aug, 19, 2020)
 * improved the error handling code of our `WebMessageViewController`. #229 (thank you [@ivanlisovyi](https://github.com/ivanlisovyi))
 

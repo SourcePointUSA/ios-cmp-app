@@ -75,6 +75,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesButton.tap()
             self.app.DeviceInformationSwitch.tap()
             self.app.PersonalisedAdsSwitch.tap()
             self.app.saveAndExitButton.tap()
@@ -145,6 +146,13 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.privacyManager).to(showUp())
             self.app.termsAndConditionsLink.tap()
             expect(self.app.termsAndConditionsWebPageTitle).to(showUp())
+        }
+
+        it("Test feature tab as default PM tab") {
+            expect(self.app.consentMessage).to(showUp())
+            self.app.showOptionsButton.tap()
+            expect(self.app.privacyManager).to(showUp())
+            expect(self.app.featuresTab).to(showUp())
         }
     }
 }

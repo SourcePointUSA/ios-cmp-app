@@ -16,6 +16,10 @@ import Nimble
 class GDPRActionSpec: QuickSpec {
     override func spec() {
         describe("GDPRAction") {
+            it("publisherData is set to empty dictionary by default") {
+                expect(GDPRAction(type: .AcceptAll).publisherData).to(equal([:]))
+            }
+
             describe("init") {
                 it("initialises type, id and payload") {
                     let payload = "".data(using: .utf8)!

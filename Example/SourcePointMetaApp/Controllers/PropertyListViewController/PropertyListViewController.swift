@@ -58,7 +58,7 @@ class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITe
     func loadConsentDetailsViewController(atIndex index: Int) {
         if let consentDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentDetailsViewController") as? ConsentDetailsViewController {
             consentDetailsViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: index)
-            self.navigationController!.pushViewController(consentDetailsViewController, animated: true)
+            self.navigationController!.pushViewController(consentDetailsViewController, animated: false)
         }
     }
 }
@@ -82,11 +82,8 @@ extension PropertyListViewController: UITableViewDataSource {
             if let propertyDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).0 {
                 cell.propertyLabel.text = propertyDetails.propertyName
                 cell.accountIDLabel.text = "\(SPLiteral.accountID) \(propertyDetails.accountId)"
-                if propertyDetails.campaign == Int64(0) {
-                    cell.campaignLabel.text = "\(SPLiteral.campaign) \(SPLiteral.stageEnv)"
-                } else {
-                     cell.campaignLabel.text = "\(SPLiteral.campaign) \(SPLiteral.publicEnv)"
-                }
+                cell.campaignLabel.text = propertyDetails.campaign == Int64(0) ? "\(SPLiteral.campaign) \(SPLiteral.stageEnv)" : "\(SPLiteral.campaign) \(SPLiteral.publicEnv)"
+                cell.messageType.text = propertyDetails.nativeMessage == Int64(0) ? "\(SPLiteral.webMessage)" : "\(SPLiteral.nativeMessage)"
             }
             if let targetingDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).1 {
                 cell.targetingParamTextView.text = targetingDetails
@@ -112,7 +109,7 @@ extension PropertyListViewController: UITableViewDelegate {
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
                 editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
 
-                self.navigationController!.pushViewController(editpropertyViewController, animated: true)
+                self.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }
         }
         let resetAction = UIContextualAction(style: .destructive, title: nil) { (_, _, handler) in
@@ -122,10 +119,10 @@ extension PropertyListViewController: UITableViewDelegate {
 
             alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
             alertController.view.accessibilityIdentifier = "alertView"
-            let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
+            let noAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
                 self.propertyTableView.reloadData()
             })
-            let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
+            let yesAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
                 self.showIndicator()
                 self.propertyListViewModel.clearUserDefaultsData()
                 self.loadConsentDetailsViewController(atIndex: indexPath.row)
@@ -146,6 +143,7 @@ extension PropertyListViewController: UITableViewDelegate {
                         AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     } else {
                         self?.hideIndicator()
+                        self?.propertyListViewModel.clearUserDefaultsData()
                         self?.fetchAllpropertiesData()
                     }
                 })
@@ -173,7 +171,7 @@ extension PropertyListViewController: UITableViewDelegate {
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
                 editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
 
-                self.navigationController!.pushViewController(editpropertyViewController, animated: true)
+                self.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }
         }
 

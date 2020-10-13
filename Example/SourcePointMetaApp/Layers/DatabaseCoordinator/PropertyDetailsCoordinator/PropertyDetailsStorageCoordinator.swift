@@ -79,6 +79,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
             propertyEntity.campaign = propertyDataModel.campaign
             propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
             propertyEntity.creationTimestamp = creationTimestamp
+            propertyEntity.nativeMessage = propertyDataModel.nativeMessage
             if let authId = propertyDataModel.authId {
                 propertyEntity.authId = authId
             }
@@ -126,6 +127,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
                 propertyEntity.campaign = propertyDataModel.campaign
                 propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
                 propertyEntity.creationTimestamp = creationTimestamp
+                propertyEntity.nativeMessage = propertyDataModel.nativeMessage
                 if let authId = propertyDataModel.authId {
                     propertyEntity.authId = authId
                 }
@@ -188,9 +190,9 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
         var subPredicates: [NSPredicate] = []
         var subPredicate: NSPredicate
         if let authId = propertyDataModel.authId {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND privacyManagerId == %@ AND authId == %@", propertyDataModel.privacyManagerId!, authId)
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND authId == %@", propertyDataModel.privacyManagerId!, authId)
         } else {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND privacyManagerId == %@", propertyDataModel.privacyManagerId!)
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@", propertyDataModel.privacyManagerId!)
         }
 
         subPredicates.append(subPredicate)

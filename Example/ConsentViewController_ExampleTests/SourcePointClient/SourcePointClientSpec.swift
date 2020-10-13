@@ -130,6 +130,7 @@ class SourcePointClientSpec: QuickSpec {
 
                 it("calls POST on the http client with the right body") {
                     let action = GDPRAction(type: .AcceptAll, id: "1234")
+                    action.publisherData = ["foo": try? SPGDPRArbitraryJson("bar")]
                     let actionRequest = ActionRequest(
                         propertyId: client.propertyId,
                         propertyHref: client.propertyName,
@@ -141,7 +142,9 @@ class SourcePointClientSpec: QuickSpec {
                         uuid: "uuid",
                         requestUUID: client.requestUUID,
                         pmSaveAndExitVariables: SPGDPRArbitraryJson(),
-                        meta: "meta")
+                        meta: "meta",
+                        publisherData: action.publisherData
+                    )
                     client.postAction(
                         action: action,
                         consentUUID: "uuid",
