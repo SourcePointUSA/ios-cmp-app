@@ -228,6 +228,8 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             default:
                 onError(error: WebViewError(code: error.code.rawValue, title: error.localizedDescription))
             }
+        } else {
+            onError(error: GeneralRequestError(nil, nil, error))
         }
     }
 
