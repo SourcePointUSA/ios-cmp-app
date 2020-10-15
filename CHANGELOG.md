@@ -1,3 +1,6 @@
+## 5.2.10 (Oct, 15, 2020)
+* Improved `MessageWebView` error handling. #247
+
 ## 5.2.9 (Oct, 13, 2020)
 * Fixed compatibility with Xcode 12.x
 
