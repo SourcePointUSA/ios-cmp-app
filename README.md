@@ -19,6 +19,15 @@ pod 'ConsentViewController', '5.2.10'
 We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Carthage-SDK-integration-guide) for it.
 Let us know if we missed any step.
 
+### Swift Package Manager
+We also support [Swift Package Manager](https://swift.org/package-manager/). It is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but SourcePoint does support its use on iOS platform.
+
+To add our SDK package as dependency to your Xcode project, In Xcode select File > Swift Packages > Add Package Dependency and enter our SDK repository URL.
+
+```
+https://github.com/SourcePointUSA/ios-cmp-app.git
+```
+
 ## How to use it
 
 It's pretty simple, here are 5 easy steps for you:
