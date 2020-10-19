@@ -1,3 +1,6 @@
+## 5.3.0 (Oct, 16, 2020)
+* Added support to Swift Package Manager (SPM).
+
 ## 5.2.10 (Oct, 15, 2020)
 * Improved `MessageWebView` error handling. #247
 
