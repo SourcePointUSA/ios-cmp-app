@@ -110,31 +110,34 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                 }
 
                 context("the action type is 12") {
-                    it("calls the onAction on the consent delegate with ShowPrivacyManager and will get PM Id associated with message") {
-                        let webviewMock = WebViewMock()
-                        messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
-                        messageWebViewController.webview = webviewMock
-                        let message = MessageMock([
-                            "name": "onAction",
-                            "body": ["type": 12, "id": "id", "payload": ["pm_url": "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"]]
-                        ])
+                    context("and the pm_url attribute is valid") {
+                        it("uses message_id from pm_url which is associated with message") {
+                            let webviewMock = WebViewMock()
+                            messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                            messageWebViewController.webview = webviewMock
+                            let message = MessageMock([
+                                "name": "onAction",
+                                "body": ["type": 12, "id": "id", "payload": ["pm_url": "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"]]
+                            ])
 
-                        messageWebViewController.userContentController(userContentController, didReceive: message)
-                        let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=122058"
-                        expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
+                            messageWebViewController.userContentController(userContentController, didReceive: message)
+                            expect(messageWebViewController.pmId).to(equal("122058"))
+                        }
                     }
 
-                    it("calls the onAction on the consent delegate with ShowPrivacyManager with wrong PM URL") {
-                        let webviewMock = WebViewMock()
-                        messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
-                        messageWebViewController.webview = webviewMock
-                        let message = MessageMock([
-                            "name": "onAction",
-                            "body": ["type": 12, "id": "id", "payload": ["pm_url": "pm_url"]]
-                        ])
-                        messageWebViewController.userContentController(userContentController, didReceive: message)
-                        let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234"
-                        expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
+                    context("and the pm_url attribute is invalid") {
+                        it("uses its own pmId as message_id") {
+                            let webviewMock = WebViewMock()
+                            messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                            messageWebViewController.webview = webviewMock
+                            let message = MessageMock([
+                                "name": "onAction",
+                                "body": ["type": 12, "id": "id", "payload": ["pm_url": "pm_url"]]
+                            ])
+                            messageWebViewController.userContentController(userContentController, didReceive: message)
+                            let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234"
+                            expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
+                        }
                     }
                 }
             }
