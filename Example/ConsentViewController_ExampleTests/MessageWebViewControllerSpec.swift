@@ -135,8 +135,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                                 "body": ["type": 12, "id": "id", "payload": ["pm_url": "pm_url"]]
                             ])
                             messageWebViewController.userContentController(userContentController, didReceive: message)
-                            let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234"
-                            expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
+                            expect(messageWebViewController.pmId).to(equal("1234"))
                         }
                     }
                 }
