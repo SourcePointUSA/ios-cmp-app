@@ -18,6 +18,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         var messageWebViewController: MessageWebViewController!
         var mockConsentDelegate: MockConsentDelegate!
         let userContentController = WKUserContentController()
+        let consentLanguage = "EN"
 
         beforeEach {
             mockConsentDelegate = MockConsentDelegate()
@@ -88,9 +89,9 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         it("calls the onAction on the consent delegate with \(actionType)") {
                             let message = MessageMock([
                                 "name": "onAction",
-                                "body": ["type": type, "id": "id", "payload": ["foo": "bar"]]
+                                "body": ["type": type, "id": "id", "payload": ["foo": "bar"], "consentLanguage": "EN"]
                             ])
-                            let expectedAction = GDPRAction(type: actionType, id: "id", payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
+                            let expectedAction = GDPRAction(type: actionType, id: "id", consentLanguage: consentLanguage, payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
                             messageWebViewController.userContentController(userContentController, didReceive: message)
                             expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                         }
@@ -101,40 +102,45 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     it("calls the onAction on the consent delegate with Dismiss") {
                         let message = MessageMock([
                             "name": "onAction",
-                            "body": ["type": 2, "id": "id", "payload": [:]]
+                            "body": ["type": 2, "id": "id", "payload": [:], "consentLanguage": "EN"]
                         ])
-                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", payload: "{}".data(using: .utf8)!)
+                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", consentLanguage: consentLanguage, payload: "{}".data(using: .utf8)!)
                         messageWebViewController.userContentController(userContentController, didReceive: message)
                         expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                     }
                 }
 
                 context("the action type is 12") {
-                    it("calls the onAction on the consent delegate with ShowPrivacyManager and will get PM Id associated with message") {
-                        let webviewMock = WebViewMock()
-                        messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
-                        messageWebViewController.webview = webviewMock
-                        let message = MessageMock([
-                            "name": "onAction",
-                            "body": ["type": 12, "id": "id", "payload": ["pm_url": "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"]]
-                        ])
-
-                        messageWebViewController.userContentController(userContentController, didReceive: message)
-                        let expectedPMURL = "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=122058"
-                        expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
+                    context("and the pm_url attribute is valid") {
+                        it("uses message_id from pm_url which is associated with message") {
+                            let webviewMock = WebViewMock()
+                            messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                            messageWebViewController.webview = webviewMock
+                            let message = MessageMock([
+                                "name": "onAction",
+                                "body": [
+                                    "type": 12,
+                                    "id": "id",
+                                    "payload": ["pm_url": "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"],
+                                    "consentLanguage": "EN"
+                                ]])
+                            messageWebViewController.userContentController(userContentController, didReceive: message)
+                            expect(messageWebViewController.pmId).to(equal("122058"))
+                        }
                     }
 
-                    it("calls the onAction on the consent delegate with ShowPrivacyManager with wrong PM URL") {
-                        let webviewMock = WebViewMock()
-                        messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
-                        messageWebViewController.webview = webviewMock
-                        let message = MessageMock([
-                            "name": "onAction",
-                            "body": ["type": 12, "id": "id", "payload": ["pm_url": "pm_url"]]
-                        ])
-                        messageWebViewController.userContentController(userContentController, didReceive: message)
-                        let expectedPMURL = "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234"
-                        expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
+                    context("and the pm_url attribute is invalid") {
+                        it("uses its own pmId as message_id") {
+                            let webviewMock = WebViewMock()
+                            messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
+                            messageWebViewController.webview = webviewMock
+                            let message = MessageMock([
+                                "name": "onAction",
+                                "body": ["type": 12, "id": "id", "payload": ["pm_url": "pm_url"], "consentLanguage": "EN"]
+                            ])
+                            messageWebViewController.userContentController(userContentController, didReceive: message)
+                            expect(messageWebViewController.pmId).to(equal("1234"))
+                        }
                     }
                 }
             }
