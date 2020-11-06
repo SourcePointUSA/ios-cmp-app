@@ -335,7 +335,7 @@ extension MetaApp: GDPRUI {
     }
 
     var dismissMessageButton: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'X'")).firstMatch
+        staticTexts["X"].firstMatch
     }
 
     var termsAndConditionsLink: XCUIElement {
