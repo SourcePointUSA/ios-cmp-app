@@ -249,7 +249,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         case "onAction":
             guard
                 let payload = body["body"] as? [String: Any],
-                let consentLanguage = payload["consentLanguage"] as? String,
+                let consentLanguage = payload["consentLanguage"] as? String ?? "",
                 let typeString = payload["type"] as? Int,
                 let actionPayload = payload["payload"] as? [String: Any],
                 let actionJson = try? SPGDPRArbitraryJson(actionPayload),
