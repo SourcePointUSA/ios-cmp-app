@@ -33,7 +33,7 @@ import Foundation
 @objcMembers public class GDPRAction: NSObject {
     public let type: GDPRActionType
     public let id: String?
-    public var consentLanguage: String?
+    public let consentLanguage: String?
     public let payload: Data
     public var publisherData: [String: SPGDPRArbitraryJson?] = [:]
 
