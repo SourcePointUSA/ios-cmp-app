@@ -170,7 +170,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             showPrivacyManagerFromMessageAction()
         case .PMCancel:
             consentDelegate?.onAction?(
-                GDPRAction(type: isSecondLayerMessage ? .PMCancel : .Dismiss, id: action.id, payload: action.payload)
+                GDPRAction(type: isSecondLayerMessage ? .PMCancel : .Dismiss, id: action.id, consentLanguage: action.consentLanguage, payload: action.payload)
             )
             cancelPMAction()
         default:
@@ -249,6 +249,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         case "onAction":
             guard
                 let payload = body["body"] as? [String: Any],
+                let consentLanguage = payload["consentLanguage"] as? String ?? "",
                 let typeString = payload["type"] as? Int,
                 let actionPayload = payload["payload"] as? [String: Any],
                 let actionJson = try? SPGDPRArbitraryJson(actionPayload),
@@ -258,7 +259,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
                 return
             }
-            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, payload: payloadData))
+            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, consentLanguage: consentLanguage, payload: payloadData))
         case "onError":
             let payload = body["body"] as? [String: Any] ?? [:]
             let error = payload["error"] as? [String: Any] ?? [:]

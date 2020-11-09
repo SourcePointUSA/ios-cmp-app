@@ -182,7 +182,8 @@ class SourcePointClient: SourcePointProtocol {
                 requestUUID: requestUUID,
                 pmSaveAndExitVariables: pmPayload,
                 meta: meta,
-                publisherData: action.publisherData
+                publisherData: action.publisherData,
+                consentLanguage: action.consentLanguage
             )) else {
                 completionHandler(nil, APIParsingError(url.absoluteString, nil))
                 return

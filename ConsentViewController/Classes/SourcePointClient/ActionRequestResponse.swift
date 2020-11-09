@@ -20,9 +20,10 @@ struct ActionRequest: Codable, Equatable {
     let pmSaveAndExitVariables: SPGDPRArbitraryJson
     let meta: Meta
     let publisherData: [String: SPGDPRArbitraryJson?]?
+    let consentLanguage: String?
 
     enum CodingKeys: String, CodingKey {
-        case propertyId, propertyHref, accountId, actionType, choiceId, privacyManagerId, requestFromPM, uuid, requestUUID, pmSaveAndExitVariables, meta
+        case propertyId, propertyHref, accountId, actionType, choiceId, privacyManagerId, requestFromPM, uuid, requestUUID, pmSaveAndExitVariables, meta, consentLanguage
         case publisherData = "pubData"
     }
 }
