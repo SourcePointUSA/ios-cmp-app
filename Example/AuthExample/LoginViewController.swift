@@ -11,8 +11,8 @@ import ConsentViewController
 
 class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDelegate {
     @IBOutlet var loginButton: UIButton!
-    @IBOutlet var authIdField: UITextField!
     @IBOutlet var consentTableView: UITableView!
+    @IBOutlet weak var authIdLabel: UILabel!
 
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
@@ -22,29 +22,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
         campaignEnv: .Public,
         consentDelegate: self 
     )}()
+
+    let authId = UIDevice.current.identifierForVendor?.uuidString
     
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
     var consents: [String] = []
-
-    @IBAction func onUserNameChanged(_ sender: UITextField) {
-        let userName = sender.text ?? ""
-        loginButton.isEnabled = userName.trimmingCharacters(in: .whitespacesAndNewlines) != ""
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        let userName = textField.text ?? ""
-        if userName.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
-            loginButton.sendActions(for: .touchUpInside)
-            return true
-        }
-        return false
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
 
     func gdprConsentUIWillShow() {
         self.present(consentViewController, animated: true, completion: nil)
@@ -56,8 +39,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
 
     func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
         self.userData = [
-            "gdprUUID: \(gdprUUID)",
-            "consent string: \(userConsent.euconsent)"
+            "ConsentUUID: \(gdprUUID)",
+            "Consent String: \(userConsent.euconsent)"
         ]
         self.consents =
             userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
@@ -77,24 +60,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
     override func viewDidLoad() {
         super.viewDidLoad()
         initData()
-        consentViewController.loadMessage()
+        consentViewController.loadMessage(forAuthId: authId)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let homeController = segue.destination as? HomeViewController
-        homeController?.authId = authIdField.text!
-        resetView()
-    }
-
-    func resetView() {
-        authIdField.text = nil
-        loginButton.isEnabled = false
+        homeController?.authId = authId
     }
 }
 
 extension LoginViewController: UITableViewDataSource {
     func initData() {
-        self.userData = [
+        loginButton.isEnabled = true
+        authIdLabel.text = authId
+        userData = [
             "consentUUID: loading...",
             "euconsent: loading..."
         ]
