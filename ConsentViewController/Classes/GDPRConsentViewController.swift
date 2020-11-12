@@ -57,6 +57,16 @@ typealias Meta = String
         }
     }
 
+    // Default Message/PM language set to English
+    var messageLanguage: MessageLanguage = .English
+
+    /// Set language to see the Message/PM in given langauge
+    public var overwriteUserLanguageTo = MessageLanguage.English {
+        didSet {
+            self.messageLanguage = overwriteUserLanguageTo
+        }
+    }
+
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
@@ -241,7 +251,13 @@ typealias Meta = String
     }
 
     public func loadMessage(fromUrl url: URL) {
-        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
+        messageViewController = MessageWebViewController(
+            propertyId: propertyId,
+            pmId: pmId,
+            consentUUID: gdprUUID,
+            messageLanguage: messageLanguage,
+            timeout: messageTimeoutInSeconds
+        )
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
     }
@@ -272,7 +288,13 @@ typealias Meta = String
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading
-            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
+            messageViewController = MessageWebViewController(
+                propertyId: propertyId,
+                pmId: pmId,
+                consentUUID: gdprUUID,
+                messageLanguage: messageLanguage,
+                timeout: messageTimeoutInSeconds
+            )
             messageViewController?.consentDelegate = self
             messageViewController?.loadPrivacyManager()
         }
