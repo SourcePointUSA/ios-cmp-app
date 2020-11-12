@@ -10,42 +10,32 @@ import UIKit
 import WebKit
 
 class HomeViewController: UIViewController {
-    static func prepareWebViewConsent(_ webview: WKWebView, authId: String) -> WKWebView {
-        let script = WKUserScript(source: """
-            document.cookie="authId=\(authId)"
-        """, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-        webview.configuration.userContentController.addUserScript(script)
-        return webview
+    /// Injects the cookie `authId` in the webview before loading its content.
+    /// SourcePoint's web SDK reads the `authId` cookie and set everything up in the webview context.
+    static func prepareWebViewConsent(_ webview: WKWebView, authId: String) {
+        webview.configuration.userContentController.addUserScript(WKUserScript(
+            source: "document.cookie=\"authId=\(authId);\"",
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: true
+        ))
     }
 
-    static var webviewUrl = URL(string: "http://localhost:8080")!
+    static let webviewUrl = URL(string: "http://localhost:8080/")!
+    static let notFoundHtml = Bundle.main.path(forResource: "webserver/404", ofType: "html")!
 
     @IBOutlet weak var webview: WKWebView!
 
     var authId: String!
 
     override func viewDidLoad() {
+        HomeViewController.prepareWebViewConsent(webview, authId: authId)
         webview.navigationDelegate = self
-        webview = HomeViewController.prepareWebViewConsent(webview, authId: authId)
         webview.load(URLRequest(url: HomeViewController.webviewUrl))
     }
 }
 
 extension HomeViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        webview.loadHTMLString("""
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            </head>
-            <body>
-              <code>
-                Could not load the web content.
-                Is the server up?
-              </code>
-            </body>
-            </html>
-        """, baseURL: nil)
+        webview.loadHTMLString(try! String(contentsOfFile: HomeViewController.notFoundHtml), baseURL: nil)
     }
 }

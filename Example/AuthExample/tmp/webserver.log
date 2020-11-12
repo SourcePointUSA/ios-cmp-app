@@ -1,0 +1,5 @@
+Starting up http-server, serving /Users/andreherculano/dev/sourcepoint/ios-cmp-app/Example/AuthExample/webserver
+Available on:
+  http://127.0.0.1:8080
+  http://192.168.0.10:8080
+Hit CTRL-C to stop the server
