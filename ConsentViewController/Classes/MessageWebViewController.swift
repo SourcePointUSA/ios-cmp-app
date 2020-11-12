@@ -55,11 +55,13 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var isPMLoaded = false
     let timeout: TimeInterval
     var connectivityManager: Connectivity = ConnectivityManager()
+    let messageLanguage: MessageLanguage
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, timeout: TimeInterval) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
+        self.messageLanguage = messageLanguage
         self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
         self.queryItems = [URLQueryItem(name: "site_id", value: "\(propertyId)"), URLQueryItem(name: "consentUUID", value: consentUUID)]
@@ -188,7 +190,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadMessage(fromUrl url: URL) {
-        load(url: url)
+        load(url: URL(string: "\(url.absoluteString)&consentLanguage=\(messageLanguage.rawValue)")!)
     }
 
     func pmUrl() -> URL? {
@@ -199,6 +201,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     override func loadPrivacyManager() {
         self.queryItems?.append(URLQueryItem(name: "message_id", value: pmId))
+        self.queryItems?.append(URLQueryItem(name: "consentLanguage", value: messageLanguage.rawValue))
         guard let url = pmUrl() else {
             onError(error: URLParsingError(urlString: "PMUrl"))
             return
