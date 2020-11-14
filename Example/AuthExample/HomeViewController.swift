@@ -8,18 +8,9 @@
 
 import UIKit
 import WebKit
+import ConsentViewController
 
 class HomeViewController: UIViewController {
-    /// Injects the cookie `authId` in the webview before loading its content.
-    /// SourcePoint's web SDK reads the `authId` cookie and set everything up in the webview context.
-    static func prepareWebViewConsent(_ webview: WKWebView, authId: String) {
-        webview.configuration.userContentController.addUserScript(WKUserScript(
-            source: "document.cookie=\"authId=\(authId);\"",
-            injectionTime: .atDocumentStart,
-            forMainFrameOnly: true
-        ))
-    }
-
     static let webviewUrl = URL(string: "http://localhost:8080/")!
     static let notFoundHtml = Bundle.main.path(forResource: "webserver/404", ofType: "html")!
 
@@ -28,7 +19,7 @@ class HomeViewController: UIViewController {
     var authId: String!
 
     override func viewDidLoad() {
-        HomeViewController.prepareWebViewConsent(webview, authId: authId)
+        webview.setConsentFor(authId: authId) { error in print(error) }
         webview.navigationDelegate = self
         webview.load(URLRequest(url: HomeViewController.webviewUrl))
     }
@@ -37,5 +28,14 @@ class HomeViewController: UIViewController {
 extension HomeViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         webview.loadHTMLString(try! String(contentsOfFile: HomeViewController.notFoundHtml), baseURL: nil)
+    }
+
+    /// Get the value of authId cookie from the document
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.getAuthId { authId, error in
+            error != nil ?
+                print(error.debugDescription) :
+                print("AuthId:", authId ?? "No AuthId")
+        }
     }
 }
