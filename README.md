@@ -153,17 +153,47 @@ It's important to notice, this method is intended to be used for **custom** vend
 ## Authenticated Consent
 
 In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
-
 ```swift
   consentViewController.loadMessage(forAuthId: "JohnDoe")
 ```
-
 In Obj-C that'd be:
 ```objc
   [consentViewController loadMessage forAuthId: @"JohnDoe"]
 ```
-
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
+More about the `authId` below.
+
+## Sharing consent with a `WKWebView`
+```swift
+let webview = WKWebView()
+webview.setConsentFor(authId: String)
+webview.load(URLRequest)
+```
+
+### The `authId`:
+This feature makes use of what we call [Authenticated Consent](https://documentation.sourcepoint.com/dialogue/authenticated-consent/authenticated-consent-overview). In a nutshell, you provide an identifier for the current user (username, user id, uuid or any unique string) and we'll take care of associating the consent profile to that identifier.
+The authId will then assume 1 of the 3 values below:
+1. **User is authenticated and have an id:**
+In that case the `authId` is going to be that user id.
+2. **User is _not_ authenticated and I'm only interested in using consent in this app.**
+We recommend using a randomly generated `UUID` as `authId`. Make sure to persist this `authId` and always call the `.loadMessage(forAuthId: String)`
+3. **User is _not_ authenticated and I want the consent to be shared _across_ apps I controll.**
+In this case, you'll need an identifier that is guaranteed to be the same across apps you control. That's exactly what the [IDFV](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor) (Identifier for Vendor) is for. You don't need to store this id as it remains the same across app launches.
+
+### Example
+```swift
+// let authId = // my user id
+// let authId = // stored uuid || UUID().uuidString
+let authId = UIDevice().identifierForVendor
+consentViewController.loadMessage(forAuthId: myAuthId)
+
+// after the `onConsentReady` is called
+myWebView.setConsentFor(authId: authid)
+myWebView.load(urlRequest)
+```
+A few remarks:
+1. The web content being loaded (web property) needs to share the same vendor list as the app.
+2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
 
 ## Setting Targeting Parameters
 
@@ -190,7 +220,7 @@ Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wi
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
-### 2. What's the lowes iOS version supported?
+### 2. What's the lowest iOS version supported?
 Although our SDK can be technically added to projects targeting iOS 9, we support iOS >= 10 only.
 
 We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
