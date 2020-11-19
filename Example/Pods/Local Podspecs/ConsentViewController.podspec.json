@@ -22,9 +22,9 @@
   "resource_bundles": {
     "ConsentViewController": [
       "ConsentViewController/Assets/**/*",
-      "Pod/Classes/**/*.{storyboard,xib,xcassets,json,imageset,png}"
+      "Pod/Classes/**/*.{storyboard,xib,xcassets,json,imageset,png,js}"
     ]
   },
-  "resources": "ConsentViewController/**/*{.js}",
+  "resources": "ConsentViewController/**/*.{js,json}",
   "swift_version": "5.0"
 }

@@ -9,10 +9,10 @@
 import UIKit
 import ConsentViewController
 
-class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var loginButton: UIButton!
-    @IBOutlet var authIdField: UITextField!
     @IBOutlet var consentTableView: UITableView!
+    @IBOutlet weak var authIdLabel: UILabel!
 
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
@@ -22,52 +22,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
         campaignEnv: .Public,
         consentDelegate: self 
     )}()
+
+    /// Use a random generated `UUID` if you don't intend to share consent among different apps
+    /// Otherwise use the `UIDevice().identifierForVendor` if you intend to share consent among
+    /// different apps you control but don't have an id tha uniquely identifies a user such as email, username, etc.
+    /// Make sure to persist the authId as it needs to be re-used everytime the `.loadMessage(forAuthId:` is called.
+    var authId: String! {
+        didSet {
+            UserDefaults.standard.set(authId, forKey: "MyAppsAuthId")
+        }
+    }
     
     let tableSections = ["userData", "consents"]
     var userData: [String] = []
     var consents: [String] = []
-
-    @IBAction func onUserNameChanged(_ sender: UITextField) {
-        let userName = sender.text ?? ""
-        loginButton.isEnabled = userName.trimmingCharacters(in: .whitespacesAndNewlines) != ""
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        let userName = textField.text ?? ""
-        if userName.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
-            loginButton.sendActions(for: .touchUpInside)
-            return true
-        }
-        return false
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-
-    func gdprConsentUIWillShow() {
-        self.present(consentViewController, animated: true, completion: nil)
-    }
-
-    func consentUIDidDisappear() {
-        self.dismiss(animated: true, completion: nil)
-    }
-
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        self.userData = [
-            "gdprUUID: \(gdprUUID)",
-            "consent string: \(userConsent.euconsent)"
-        ]
-        self.consents =
-            userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
-            userConsent.acceptedCategories.map({ c in return "Purpose: \(c)"})
-        self.consentTableView.reloadData()
-    }
-
-    func onError(error: GDPRConsentViewControllerError?) {
-        print(error.debugDescription)
-    }
 
     @IBAction func onSettingsPress(_ sender: Any) {
         initData()
@@ -76,25 +44,46 @@ class LoginViewController: UIViewController, UITextFieldDelegate, GDPRConsentDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        authId = UserDefaults.standard.string(forKey: "MyAppsAuthId") ?? UUID().uuidString
         initData()
-        consentViewController.loadMessage()
+        consentViewController.loadMessage(forAuthId: authId)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let homeController = segue.destination as? HomeViewController
-        homeController?.authId = authIdField.text!
-        resetView()
+        homeController?.authId = authId
+    }
+}
+
+extension LoginViewController: GDPRConsentDelegate {
+    func gdprConsentUIWillShow() {
+        present(consentViewController, animated: true, completion: nil)
     }
 
-    func resetView() {
-        authIdField.text = nil
-        loginButton.isEnabled = false
+    func consentUIDidDisappear() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+        userData = [
+            "ConsentUUID: \(gdprUUID)",
+            "Consent String: \(userConsent.euconsent)"
+        ]
+        consents =
+            userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
+            userConsent.acceptedCategories.map({ c in return "Purpose: \(c)"})
+        consentTableView.reloadData()
+    }
+
+    func onError(error: GDPRConsentViewControllerError?) {
+        print(error.debugDescription)
     }
 }
 
 extension LoginViewController: UITableViewDataSource {
     func initData() {
-        self.userData = [
+        authIdLabel.text = authId
+        userData = [
             "consentUUID: loading...",
             "euconsent: loading..."
         ]
