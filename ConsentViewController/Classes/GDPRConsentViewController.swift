@@ -303,15 +303,17 @@ typealias Meta = String
                 return
             }
 
-            completionHandler(GDPRUserConsent(
+            let updatedUserConsents = GDPRUserConsent(
                 acceptedVendors: response.vendors,
                 acceptedCategories: response.categories,
                 legitimateInterestCategories: response.legIntCategories,
                 specialFeatures: response.specialFeatures,
                 vendorGrants: response.grants,
                 euconsent: euconsent,
-                tcfData: tcfData)
+                tcfData: tcfData
             )
+            self?.localStorage.userConsents = updatedUserConsents
+            completionHandler(updatedUserConsents)
         }
     }
 
