@@ -1,3 +1,5 @@
+![Swift](https://github.com/SourcePointUSA/ios-cmp-app/workflows/Swift/badge.svg?branch=develop)
+
 ## How to install
 
 ### CocoaPods
