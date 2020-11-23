@@ -1,5 +1,5 @@
 PODS:
-  - ConsentViewController (5.3.1)
+  - ConsentViewController (5.3.2)
   - IQKeyboardManagerSwift (6.5.5)
   - Nimble (8.0.7)
   - Quick (2.2.0)
@@ -24,7 +24,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: 83b7fc7c7650c5d956655339f263cc5c3b7586f1
+  ConsentViewController: 7049002923220a8d5ab6acc3011f9a6f05603d0b
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e

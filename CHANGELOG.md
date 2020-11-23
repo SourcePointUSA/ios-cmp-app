@@ -1,3 +1,6 @@
+## 5.3.2 (Nov, 23, 2020)
+* Fixed a regression in the _sharing consent with the webview_ new feature.
+
 ## 5.3.1 (Nov, 23, 2020)
 * Fixed an issue that would prevent the `consentLanguage` field from the consent string to always be set to `EN`. #260
 * Added a feature to ease sharing consent between native and webviews. Check how to use it in this [section of the README](https://github.com/SourcePointUSA/ios-cmp-app#sharing-consent-with-a-wkwebview). #263
