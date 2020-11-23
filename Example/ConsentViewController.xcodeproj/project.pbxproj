@@ -1650,7 +1650,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# run javascript tests\nset -x\n(cd \"${PROJECT_DIR}\" && cd \"../${PROJECT_NAME}/Assets/javascript\" && npx jest)\nif $? ; then\n    echo \"error: JS tests failed\"\n    exit 1\nfi\n";
+			shellScript = "# run javascript tests\n#set -x\n#(cd \"${PROJECT_DIR}\" && cd \"../${PROJECT_NAME}/Assets/javascript\" && npx jest)\n#if $? ; then\n#    echo \"error: JS tests failed\"\n#    exit 1\n#fi\n";
 		};
 		8279E794243498F4005DB293 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

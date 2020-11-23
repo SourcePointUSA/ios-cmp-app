@@ -17,12 +17,8 @@ import WebKit
     /// Injects the cookie `authId` in the webview before loading its content.
     /// SourcePoint's web SDK reads the `authId` cookie and set everything up in the webview context.
     func setConsentFor(authId: String, errorHandler: ((_ error: Error) -> Void)? = nil) {
-        guard let getAuthIdResource = getJsScript("setAuthId") else {
-            errorHandler?(UnableToLoadJSReceiver())
-            return
-        }
         configuration.userContentController.addUserScript(WKUserScript(
-            source: getAuthIdResource,
+            source: "document.cookie='authId=\(authId);'",
             injectionTime: .atDocumentStart,
             forMainFrameOnly: true
         ))
@@ -30,11 +26,11 @@ import WebKit
 
     /// Reads the value of the cookie authId
     func getAuthId(completionHandler: @escaping (_ authId: String?, _ error: Error?) -> Void) {
-        guard let setAuthIdResource = getJsScript("getAuthId") else {
+        guard let getAuthIdResource = getJsScript("getAuthId") else {
             completionHandler(nil, UnableToLoadJSReceiver())
             return
         }
-        evaluateJavaScript(setAuthIdResource) { result, error in
+        evaluateJavaScript(getAuthIdResource) { result, error in
             if error == nil, let authId = result as? String {
                 completionHandler(authId, nil)
             } else {

@@ -12,25 +12,34 @@ import Nimble
 import WebKit
 @testable import ConsentViewController
 
-class WKWebViewSpy: WKWebView {
-    var evaluatedJsString: String?
-    override func evaluateJavaScript(_ javaScriptString: String, completionHandler: ((Any?, Error?) -> Void)? = nil) {
-        super.evaluateJavaScript(javaScriptString, completionHandler: completionHandler)
-        evaluatedJsString = javaScriptString
-    }
-}
+class LoadedNotifier: NSObject, WKNavigationDelegate {
+    let onLoaded: () -> Void
 
-func getScript(_ name: String) -> String? {
-    return try? String(contentsOfFile: Bundle.framework.path(forResource: name, ofType: "js")!)
+    init(_ handler: @escaping () -> Void) {
+        onLoaded = handler
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        onLoaded()
+    }
 }
 
 class GDPRWebViewExtensionsSpec: QuickSpec {
     override func spec() {
         describe("getAuthID") {
             it("should evaluate the content of getAuthId.js script") {
-                let webview = WKWebViewSpy()
-                webview.getAuthId { (_, _) in }
-                expect(webview.evaluatedJsString).to(equal(getScript("getAuthId")))
+                let webview = WKWebView()
+                var authId: String?
+                let loadedNotifier = LoadedNotifier {
+                    webview.getAuthId { result, _ in authId = result }
+                }
+
+                webview.navigationDelegate = loadedNotifier
+                webview.configuration.userContentController.addUserScript(
+                    WKUserScript(source: "document.cookie='authId=foo;'", injectionTime: .atDocumentStart, forMainFrameOnly: true))
+                webview.loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
+
+                expect(authId).toEventually(equal("foo"))
             }
         }
 
@@ -38,7 +47,7 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
             it("should add the content of setAuthId.js as userContentScript") {
                 let webview = WKWebView()
                 webview.setConsentFor(authId: "foo")
-                expect(webview.configuration.userContentController.userScripts[0].source).to(equal(getScript("setAuthId")))
+                expect(webview.configuration.userContentController.userScripts[0].source).to(equal("document.cookie='authId=foo;'"))
             }
         }
     }
