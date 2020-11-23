@@ -1,14 +1,8 @@
+![Swift](https://github.com/SourcePointUSA/ios-cmp-app/workflows/Swift/badge.svg?branch=develop)
+
 ## How to install
 
 ### CocoaPods
-:heavy_exclamation_mark: **IMPORTANT** if you still haven't moved to TCFv2, use `v4.x`.
-```
-pod 'ConsentViewController', '< 5.0.0'
-```
-Refer to its [README](https://github.com/SourcePointUSA/ios-cmp-app/blob/163683c76513c61a7892c722014b5b2e45864ee8/README.md) for more information.
-
-
-We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to install our SDK.
 In your `Podfile` add the following line to your app target:
 
 ```
@@ -29,7 +23,6 @@ https://github.com/SourcePointUSA/ios-cmp-app.git
 ```
 
 ## How to use it
-
 It's pretty simple, here are 5 easy steps for you:
 
 1. implement the `GDPRConsentDelegate` protocol
@@ -151,7 +144,6 @@ The ids passed will be appended to the list of already accepted vendors, categor
 It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
 
 ## Authenticated Consent
-
 In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
 ```swift
   consentViewController.loadMessage(forAuthId: "JohnDoe")
@@ -196,7 +188,6 @@ A few remarks:
 2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
 
 ## Setting Targeting Parameters
-
 In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example:
 
 ```swift
@@ -213,8 +204,10 @@ Before calling `.loadMessage` or `.loadPrivacyManager`, set the `.messageTimeout
 
 In case of a timeout error, the `onError` callback will be called and the consent flow will stop there.
 
-## Rendering the message natively
+## `pubData`
+When the user takes an action within the consent UI, it's possible to attach an arbitrary payload to the action data an have it sent to our endpoints. For more information on how to do that check our wiki: [Sending arbitrary data when the user takes an action](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Sending-arbitrary-data-when-the-user-takes-an-action.)
 
+## Rendering the message natively
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.
 
 ## Frequently Asked Questions
