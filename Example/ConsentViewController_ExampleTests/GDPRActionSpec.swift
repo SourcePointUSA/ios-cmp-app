@@ -15,6 +15,7 @@ import Nimble
 
 class GDPRActionSpec: QuickSpec {
     override func spec() {
+
         describe("GDPRAction") {
             it("publisherData is set to empty dictionary by default") {
                 expect(GDPRAction(type: .AcceptAll).publisherData).to(equal([:]))
@@ -25,11 +26,13 @@ class GDPRActionSpec: QuickSpec {
                     let payload = "".data(using: .utf8)!
                     let type = GDPRActionType.AcceptAll
                     let id = "something"
-                    let action = GDPRAction(type: .AcceptAll, id: "something", payload: payload)
+                    let consentLanguage = "EN"
+                    let action = GDPRAction(type: .AcceptAll, id: "something", consentLanguage: "EN", payload: payload)
 
                     expect(action.type).to(equal(type))
                     expect(action.id).to(equal(id))
                     expect(action.payload).to(equal(payload))
+                    expect(action.consentLanguage).to(equal(consentLanguage))
                 }
 
                 it("initialises id to nil by default") {
@@ -40,6 +43,11 @@ class GDPRActionSpec: QuickSpec {
                 it("initialises data to data encoded \"{}\" by default") {
                     let action = GDPRAction(type: .AcceptAll)
                     expect(action.payload).to(equal("{}".data(using: .utf8)))
+                }
+
+                it("initialises consentLanguage to nil by default") {
+                    let action = GDPRAction(type: .AcceptAll)
+                    expect(action.consentLanguage).to(beNil())
                 }
             }
         }
