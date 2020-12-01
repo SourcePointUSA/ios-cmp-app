@@ -37,7 +37,7 @@ class SourcePointClientSpec: QuickSpec {
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
                 expect(SourcePointClient.CUSTOM_CONSENT_URL.absoluteURL).to(equal(
-                    URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/custom-consent?inApp=true")!.absoluteURL
+                    URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?inApp=true")!.absoluteURL
                 ))
             }
         }
@@ -58,7 +58,7 @@ class SourcePointClientSpec: QuickSpec {
                         authId: "auth id",
                         meta: "meta",
                         completionHandler: { _, _  in})
-                    expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
+                    expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/message-url?inApp=true")))
                 }
 
                 it("calls POST on the http client with the right body") {
@@ -125,7 +125,7 @@ class SourcePointClientSpec: QuickSpec {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
                     client.postAction(action: acceptAllAction, consentUUID: "consent uuid", meta: "meta", completionHandler: { _, _  in})
-                    expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/consent?inApp=true")))
+                    expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/consent?inApp=true")))
                 }
 
                 it("calls POST on the http client with the right body") {
