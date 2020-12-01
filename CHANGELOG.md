@@ -1,4 +1,7 @@
 ## 5.3.2 (Nov, 23, 2020)
+* Fixed a regression that'd prevent the SDK from running on projects using Swift Package Manager #266
+
+## 5.3.2 (Nov, 23, 2020)
 * Fixed a regression in the _sharing consent with the webview_ new feature.
 
 ## 5.3.1 (Nov, 23, 2020)
