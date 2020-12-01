@@ -64,7 +64,11 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         self.messageLanguage = messageLanguage
         self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
-        self.queryItems = [URLQueryItem(name: "site_id", value: "\(propertyId)"), URLQueryItem(name: "consentUUID", value: consentUUID)]
+        self.queryItems = [
+            URLQueryItem(name: "site_id", value: "\(propertyId)"),
+            URLQueryItem(name: "consentUUID", value: consentUUID),
+            URLQueryItem(name: "consentLanguage", value: messageLanguage.rawValue)
+        ]
     }
 
     required init?(coder: NSCoder) {
@@ -190,7 +194,23 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadMessage(fromUrl url: URL) {
-        load(url: URL(string: "\(url.absoluteString)&consentLanguage=\(messageLanguage.rawValue)")!)
+        guard let url = messageURL(url: url) else {
+            onError(error: URLParsingError(urlString: "MessageUrl"))
+            return
+        }
+        load(url: url)
+    }
+
+    func messageURL(url: URL) -> URL? {
+       var messageQueryItems = [URLQueryItem(name: "consentLanguage", value: messageLanguage.rawValue)]
+        if let urlComponents = URLComponents(string: url.absoluteString)?.queryItems {
+            messageQueryItems.append(contentsOf: urlComponents)
+        }
+        var messageUrlComponents = URLComponents()
+        messageUrlComponents.scheme = url.scheme
+        messageUrlComponents.host = url.host
+        messageUrlComponents.queryItems = messageQueryItems
+        return messageUrlComponents.url
     }
 
     func pmUrl() -> URL? {
@@ -201,7 +221,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     override func loadPrivacyManager() {
         self.queryItems?.append(URLQueryItem(name: "message_id", value: pmId))
-        self.queryItems?.append(URLQueryItem(name: "consentLanguage", value: messageLanguage.rawValue))
         guard let url = pmUrl() else {
             onError(error: URLParsingError(urlString: "PMUrl"))
             return
