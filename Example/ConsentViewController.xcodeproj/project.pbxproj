@@ -89,6 +89,7 @@
 		6DC1CD412427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */; };
 		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
+		822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
@@ -103,6 +104,8 @@
 		826D31B3249A71E20026A6B9 /* ConnectivityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31B2249A71E20026A6B9 /* ConnectivityMock.swift */; };
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* GDPRCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* GDPRCampaignEnvSpec.swift */; };
+		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
+		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82CC8CD824ACF6970030B28B /* MessageRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */; };
 		82D8FEDF23DC753400F28D74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8FEDE23DC753400F28D74 /* AppDelegate.swift */; };
 		82D8FEE323DC753400F28D74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8FEE223DC753400F28D74 /* ViewController.swift */; };
@@ -263,6 +266,7 @@
 		8214B277249CC13B00167BFE /* SPGDPRExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPGDPRExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGDPRExampleAppUITests.swift; sourceTree = "<group>"; };
 		8214B27B249CC13B00167BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRWebViewExtensionsSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8231B14122BA5A6B00D2669B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 		826D31B2249A71E20026A6B9 /* ConnectivityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectivityMock.swift; path = Helpers/ConnectivityMock.swift; sourceTree = "<group>"; };
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		82813A69248A69F000521571 /* GDPRCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRCampaignEnvSpec.swift; sourceTree = "<group>"; };
+		82A99CC2255D956400A85024 /* 404.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = 404.html; sourceTree = "<group>"; };
+		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		82ACF6AB2487E73C006E207A /* GDPRUserDefaultsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRUserDefaultsSpec.swift; sourceTree = "<group>"; };
 		82CC8B8224F6680600D94AA7 /* SPGDPRExampleAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SPGDPRExampleAppDebug.entitlements; sourceTree = "<group>"; };
 		82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequestSpec.swift; sourceTree = "<group>"; };
@@ -888,6 +894,7 @@
 		8231B13E22BA5A6B00D2669B /* AuthExample */ = {
 			isa = PBXGroup;
 			children = (
+				82A99CD8255D959200A85024 /* webserver */,
 				8231B13F22BA5A6B00D2669B /* AppDelegate.swift */,
 				8231B14122BA5A6B00D2669B /* LoginViewController.swift */,
 				8277C33B22BBD22C00F1607F /* HomeViewController.swift */,
@@ -916,6 +923,15 @@
 				82EA4FA52489171200BA48BF /* GDPRLocalStorageSpec.swift */,
 			);
 			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		82A99CD8255D959200A85024 /* webserver */ = {
+			isa = PBXGroup;
+			children = (
+				82A99CCD255D958000A85024 /* index.html */,
+				82A99CC2255D956400A85024 /* 404.html */,
+			);
+			path = webserver;
 			sourceTree = "<group>";
 		};
 		82D8FEDD23DC753400F28D74 /* NativeMessageExample */ = {
@@ -974,6 +990,7 @@
 				82813A69248A69F000521571 /* GDPRCampaignEnvSpec.swift */,
 				82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */,
 				82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */,
+				822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
@@ -1106,6 +1123,7 @@
 				8214B274249CC13B00167BFE /* Frameworks */,
 				8214B275249CC13B00167BFE /* Resources */,
 				49E1AD94D8676FB87E0EFD03 /* [CP] Embed Pods Frameworks */,
+				822482A9255FD5A0004C8639 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1336,7 +1354,9 @@
 			files = (
 				8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */,
 				8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */,
+				82A99CCE255D958000A85024 /* index.html in Resources */,
 				8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */,
+				82A99CC3255D956400A85024 /* 404.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1618,6 +1638,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		822482A9255FD5A0004C8639 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# run javascript tests\n#set -x\n#(cd \"${PROJECT_DIR}\" && cd \"../${PROJECT_NAME}/Assets/javascript\" && npx jest)\n#if $? ; then\n#    echo \"error: JS tests failed\"\n#    exit 1\n#fi\n";
+		};
 		8279E794243498F4005DB293 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1877,6 +1914,7 @@
 				82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */,
 				82EA4E342491324400DC01C9 /* GDPRLocalStorageMock.swift in Sources */,
 				6D605DF62423B96C00BB3E5F /* GDPRConsentViewControllerErrorSpec.swift in Sources */,
+				822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */,
 				6D605DF22423523700BB3E5F /* GDPRConsentViewControllerSpec.swift in Sources */,
 				82813A6A248A69F000521571 /* GDPRCampaignEnvSpec.swift in Sources */,
 				6D554C2224310BF800B15583 /* SourcePointClientSpec.swift in Sources */,
@@ -2448,7 +2486,7 @@
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AuthExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2476,7 +2514,7 @@
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AuthExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.AuthExample;

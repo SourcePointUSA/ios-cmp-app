@@ -78,3 +78,6 @@ fastlane/test_output
 iOSInjectionProject/
 .DS_Store
 /.metadata/
+
+*.log
+*.pid

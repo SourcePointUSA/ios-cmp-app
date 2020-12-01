@@ -4,6 +4,9 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+defaults:
+  run:
+    working-directory: Example
 jobs:
   lint:
     runs-on: macos-latest
@@ -12,17 +15,23 @@ jobs:
       - name: Installing SwiftLint
         run: brew install swiftlint
       - name: linting
-        run: cd Example && swiftlint lint
-  test:
+        run: swiftlint lint
+  example-app-tests:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: CocoaPod Install
-        run: cd Example && pod install
       - name: Example app Unit and UI testing -> iPhone 11 (iOS 14.0)
-        run: xcodebuild test -scheme ConsentViewController_Example -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        run: xcodebuild test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+  native-app-tests:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
       - name: NativeMessage UI testing -> iPhone 11 (iOS 14.0)
-        run: xcodebuild test -scheme NativeMessageExample -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
-      - name: SourcePointMetaApp UI testing -> iPhone 11 (iOS 14.0)
-        run: xcodebuild test -scheme SourcePointMetaApp -workspace Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        run: xcodebuild test -scheme NativeMessageExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+  meta-app-tests:
+      runs-on: macos-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: SourcePointMetaApp UI testing -> iPhone 11 (iOS 14.0)
+          run: xcodebuild test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
 

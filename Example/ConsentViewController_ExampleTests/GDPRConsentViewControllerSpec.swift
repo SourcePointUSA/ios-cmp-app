@@ -69,8 +69,9 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                 }
 
                 context("and the response is successfull") {
-                    it("calls the completion handler with a GDPRUserConsents") {
-                        let grants = ["vendorId": GDPRVendorGrant(vendorGrant: true, purposeGrants: ["purposeId": true])]
+                    let grants = ["vendorId": GDPRVendorGrant(vendorGrant: true, purposeGrants: ["purposeId": true])]
+
+                    beforeEach {
                         sourcePointClient.customConsentResponse = CustomConsentResponse(
                             vendors: ["vendor"],
                             categories: ["category"],
@@ -78,8 +79,17 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                             specialFeatures: ["specialFeature"],
                             grants: grants
                         )
+                    }
+
+                    it("updates its own userConsents property with the result") {
                         consentViewController.customConsentTo(vendors: [], categories: [], legIntCategories: []) { consents in
-                            let userConsents = GDPRUserConsent(
+                            expect(consentViewController.userConsents).toEventually(equal(consents))
+                        }
+                    }
+
+                    it("calls the completion handler with a GDPRUserConsents") {
+                        consentViewController.customConsentTo(vendors: [], categories: [], legIntCategories: []) { consents in
+                            expect(consents).toEventually(equal(GDPRUserConsent(
                                 acceptedVendors: ["vendor"],
                                 acceptedCategories: ["category"],
                                 legitimateInterestCategories: ["legInt"],
@@ -87,8 +97,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                                 vendorGrants: grants,
                                 euconsent: "",
                                 tcfData: SPGDPRArbitraryJson()
-                            )
-                            expect(consents).toEventually(equal(userConsents))
+                            )))
                         }
                     }
                 }

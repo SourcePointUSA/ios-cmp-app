@@ -1,18 +1,12 @@
+![Swift](https://github.com/SourcePointUSA/ios-cmp-app/workflows/Swift/badge.svg?branch=develop)
+
 ## How to install
 
 ### CocoaPods
-:heavy_exclamation_mark: **IMPORTANT** if you still haven't moved to TCFv2, use `v4.x`.
-```
-pod 'ConsentViewController', '< 5.0.0'
-```
-Refer to its [README](https://github.com/SourcePointUSA/ios-cmp-app/blob/163683c76513c61a7892c722014b5b2e45864ee8/README.md) for more information.
-
-
-We strongly recommend the use of [CocoaPods](https://cocoapods.org) in order to install our SDK.
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.3.0'
+pod 'ConsentViewController', '5.3.3'
 ```
 
 ### Carthage
@@ -29,7 +23,6 @@ https://github.com/SourcePointUSA/ios-cmp-app.git
 ```
 
 ## How to use it
-
 It's pretty simple, here are 5 easy steps for you:
 
 1. implement the `GDPRConsentDelegate` protocol
@@ -151,22 +144,50 @@ The ids passed will be appended to the list of already accepted vendors, categor
 It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
 
 ## Authenticated Consent
-
 In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
-
 ```swift
   consentViewController.loadMessage(forAuthId: "JohnDoe")
 ```
-
 In Obj-C that'd be:
 ```objc
   [consentViewController loadMessage forAuthId: @"JohnDoe"]
 ```
-
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
+More about the `authId` below.
+
+## Sharing consent with a `WKWebView`
+```swift
+let webview = WKWebView()
+webview.setConsentFor(authId: String)
+webview.load(URLRequest)
+```
+
+### The `authId`:
+This feature makes use of what we call [Authenticated Consent](https://documentation.sourcepoint.com/dialogue/authenticated-consent/authenticated-consent-overview). In a nutshell, you provide an identifier for the current user (username, user id, uuid or any unique string) and we'll take care of associating the consent profile to that identifier.
+The authId will then assume 1 of the 3 values below:
+1. **User is authenticated and have an id:**
+In that case the `authId` is going to be that user id.
+2. **User is _not_ authenticated and I'm only interested in using consent in this app.**
+We recommend using a randomly generated `UUID` as `authId`. Make sure to persist this `authId` and always call the `.loadMessage(forAuthId: String)`
+3. **User is _not_ authenticated and I want the consent to be shared _across_ apps I controll.**
+In this case, you'll need an identifier that is guaranteed to be the same across apps you control. That's exactly what the [IDFV](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor) (Identifier for Vendor) is for. You don't need to store this id as it remains the same across app launches.
+
+### Example
+```swift
+// let authId = // my user id
+// let authId = // stored uuid || UUID().uuidString
+let authId = UIDevice().identifierForVendor
+consentViewController.loadMessage(forAuthId: myAuthId)
+
+// after the `onConsentReady` is called
+myWebView.setConsentFor(authId: authid)
+myWebView.load(urlRequest)
+```
+A few remarks:
+1. The web content being loaded (web property) needs to share the same vendor list as the app.
+2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
 
 ## Setting Targeting Parameters
-
 In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example:
 
 ```swift
@@ -183,14 +204,16 @@ Before calling `.loadMessage` or `.loadPrivacyManager`, set the `.messageTimeout
 
 In case of a timeout error, the `onError` callback will be called and the consent flow will stop there.
 
-## Rendering the message natively
+## `pubData`
+When the user takes an action within the consent UI, it's possible to attach an arbitrary payload to the action data an have it sent to our endpoints. For more information on how to do that check our wiki: [Sending arbitrary data when the user takes an action](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Sending-arbitrary-data-when-the-user-takes-an-action.)
 
+## Rendering the message natively
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.
 
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
-### 2. What's the lowes iOS version supported?
+### 2. What's the lowest iOS version supported?
 Although our SDK can be technically added to projects targeting iOS 9, we support iOS >= 10 only.
 
 We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
