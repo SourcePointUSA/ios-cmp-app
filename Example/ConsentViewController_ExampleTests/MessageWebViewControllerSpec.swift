@@ -18,6 +18,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         var messageWebViewController: MessageWebViewController!
         var mockConsentDelegate: MockConsentDelegate!
         let userContentController = WKUserContentController()
+        let consentLanguage = "EN"
 
         beforeEach {
             mockConsentDelegate = MockConsentDelegate()
@@ -88,9 +89,9 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         it("calls the onAction on the consent delegate with \(actionType)") {
                             let message = MessageMock([
                                 "name": "onAction",
-                                "body": ["type": type, "id": "id", "payload": ["foo": "bar"]]
+                                "body": ["type": type, "id": "id", "payload": ["foo": "bar"], "consentLanguage": "EN"]
                             ])
-                            let expectedAction = GDPRAction(type: actionType, id: "id", payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
+                            let expectedAction = GDPRAction(type: actionType, id: "id", consentLanguage: consentLanguage, payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
                             messageWebViewController.userContentController(userContentController, didReceive: message)
                             expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                         }
@@ -101,9 +102,9 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     it("calls the onAction on the consent delegate with Dismiss") {
                         let message = MessageMock([
                             "name": "onAction",
-                            "body": ["type": 2, "id": "id", "payload": [:]]
+                            "body": ["type": 2, "id": "id", "payload": [:], "consentLanguage": "EN"]
                         ])
-                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", payload: "{}".data(using: .utf8)!)
+                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", consentLanguage: consentLanguage, payload: "{}".data(using: .utf8)!)
                         messageWebViewController.userContentController(userContentController, didReceive: message)
                         expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                     }
@@ -117,9 +118,12 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                             messageWebViewController.webview = webviewMock
                             let message = MessageMock([
                                 "name": "onAction",
-                                "body": ["type": 12, "id": "id", "payload": ["pm_url": "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"]]
-                            ])
-
+                                "body": [
+                                    "type": 12,
+                                    "id": "id",
+                                    "payload": ["pm_url": "https://notice.sp-prod.net/privacy-manager/index.html?message_id=122058"],
+                                    "consentLanguage": "EN"
+                                ]])
                             messageWebViewController.userContentController(userContentController, didReceive: message)
                             expect(messageWebViewController.pmId).to(equal("122058"))
                         }
@@ -132,7 +136,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                             messageWebViewController.webview = webviewMock
                             let message = MessageMock([
                                 "name": "onAction",
-                                "body": ["type": 12, "id": "id", "payload": ["pm_url": "pm_url"]]
+                                "body": ["type": 12, "id": "id", "payload": ["pm_url": "pm_url"], "consentLanguage": "EN"]
                             ])
                             messageWebViewController.userContentController(userContentController, didReceive: message)
                             expect(messageWebViewController.pmId).to(equal("1234"))

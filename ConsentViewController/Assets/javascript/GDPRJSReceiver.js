@@ -25,15 +25,16 @@
     };
   }(postToWebView);
 
-  var getActionFromMessage = function (actions) {
-    var choiceAction = actions.filter(function (action) {
+  var getActionFromMessage = function (eventData) {
+    var choiceAction = eventData.payload.filter(function (action) {
       return action.type === 'choice';
     })[0] || {};
     var choiceData = choiceAction.data || {};
     return {
       id: String(choiceData.choice_id),
       type: choiceData.type,
-      payload: { pm_url: choiceData.iframe_url }
+      payload: { pm_url: choiceData.iframe_url },
+      consentLanguage : eventData.consentLanguage
     };
   };
 
@@ -45,8 +46,8 @@
           break;
         case "sp.hideMessage":
           eventData.fromPM ?
-            SDK.onAction({ type: eventData.actionType, payload: eventData.payload }) :
-            SDK.onAction(getActionFromMessage(eventData.payload));
+            SDK.onAction({ type: eventData.actionType, payload: eventData.payload, consentLanguage: eventData.consentLanguage }) :
+            SDK.onAction(getActionFromMessage(eventData));
           break;
         default:
           eventData.payload.action = eventData.name;
@@ -81,7 +82,8 @@
               name: event.name,
               fromPM: isFromPM(event),
               actionType: event.actionType,
-              payload: event.payload || event.actions || {}
+              payload: event.payload || event.actions || {},
+              consentLanguage: event.consentLanguage
             });
       } catch (error) {
         SDK.onError(error);

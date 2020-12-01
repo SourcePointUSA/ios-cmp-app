@@ -86,7 +86,7 @@ import UIKit
 
     func action(_ action: GDPRActionType) {
         if let messageAction = message.actions.first(where: { message in message.choiceType == action }) {
-            let action = GDPRAction(type: messageAction.choiceType, id: String(messageAction.choiceId))
+            let action = GDPRAction(type: messageAction.choiceType, id: String(messageAction.choiceId), consentLanguage: Locale.preferredLanguages[0].uppercased())
             consentViewController.consentDelegate?.onAction?(action)
         }
     }
