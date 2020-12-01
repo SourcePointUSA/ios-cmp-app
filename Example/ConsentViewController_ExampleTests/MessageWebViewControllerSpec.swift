@@ -22,7 +22,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
         beforeEach {
             mockConsentDelegate = MockConsentDelegate()
-            messageWebViewController = MessageWebViewController(propertyId: 1, pmId: "1234", consentUUID: "uuid", messageLanguage: MessageLanguage.English, timeout: 1)
+            messageWebViewController = MessageWebViewController(propertyId: 1, pmId: "1234", consentUUID: "uuid", messageLanguage: .English, timeout: 1)
             messageWebViewController.consentDelegate = mockConsentDelegate
         }
 
@@ -263,7 +263,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                             messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
                             messageWebViewController.webview = webviewMock
                             messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
-                            let expectedPMURL = "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234&consentLanguage=EN"
+                            let expectedPMURL = "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid&consentLanguage=EN&message_id=1234"
                             expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
                         }
                     }
@@ -333,7 +333,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     messageWebViewController.webview = webviewMock
                     let url = URL(string: "www.example.com")!
                     messageWebViewController.loadMessage(fromUrl: url)
-                    let expectedURL = URL(string: "\(url.absoluteString)&consentLanguage=EN")
+                    let expectedURL = messageWebViewController.messageURL(url: url)
                     expect(webviewMock.loadCalledWith.url).to(equal(expectedURL))
                 }
             }
@@ -369,7 +369,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
                     messageWebViewController.webview = webviewMock
                     messageWebViewController.loadPrivacyManager()
-                    let expectedPMURL = "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234&consentLanguage=EN"
+                    let expectedPMURL = "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid&consentLanguage=EN&message_id=1234"
                     expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
                 }
             }
@@ -385,7 +385,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
         describe("pmURL") {
             it("returns an url with propertyId and consentUUID") {
-                let pmUrl = URL(string: "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid")
+                let pmUrl = URL(string: "https://notice.sp-prod.net/privacy-manager/index.html?site_id=1&consentUUID=uuid&consentLanguage=EN")
                 expect(messageWebViewController.pmUrl()).to(equal(pmUrl))
             }
         }

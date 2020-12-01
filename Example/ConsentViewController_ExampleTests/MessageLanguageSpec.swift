@@ -5,6 +5,7 @@
 //  Created by Vilas on 12/11/20.
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import Quick
@@ -15,6 +16,12 @@ class MessageLanguageSpec: QuickSpec {
     override func spec() {
 
         describe("MessageLanguage") {
+            context("BrowserDefault") {
+                it("has the raw value language code empty") {
+                    expect(MessageLanguage.BrowserDefault.rawValue).to(equal(""))
+                }
+            }
+
             context("English") {
                 it("has the raw value language code is EN") {
                     expect(MessageLanguage.English.rawValue).to(equal("EN"))

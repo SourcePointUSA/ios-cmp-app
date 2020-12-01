@@ -136,10 +136,9 @@ class GDPRConsentViewControllerSpec: QuickSpec {
         describe("overwriteUserLanguageTo") {
             it("set language to see the message in given language") {
                 consentViewController.overwriteUserLanguageTo = .Bulgarian
-                expect(consentViewController.messageLanguage).to(equal(.Bulgarian), description: "Message language is set to Bulgarian")
+                expect(consentViewController.overwriteUserLanguageTo).to(equal(.Bulgarian), description: "Message language is set to Bulgarian")
             }
         }
-
 
         describe("GDPRConsentDelegate") {
             beforeEach {
