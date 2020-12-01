@@ -12,7 +12,7 @@ public typealias TargetingParams = [String: String]
 public typealias GDPRUUID = String
 typealias Meta = String
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 
 @objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
@@ -57,15 +57,8 @@ typealias Meta = String
         }
     }
 
-    // Default Message/PM language set to English
-    var messageLanguage: MessageLanguage = .English
-
     /// Set language to see the Message/PM in given langauge
-    public var overwriteUserLanguageTo = MessageLanguage.English {
-        didSet {
-            self.messageLanguage = overwriteUserLanguageTo
-        }
-    }
+    public var overwriteUserLanguageTo = MessageLanguage.BrowserDefault
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
@@ -255,7 +248,7 @@ typealias Meta = String
             propertyId: propertyId,
             pmId: pmId,
             consentUUID: gdprUUID,
-            messageLanguage: messageLanguage,
+            messageLanguage: overwriteUserLanguageTo,
             timeout: messageTimeoutInSeconds
         )
         messageViewController?.consentDelegate = self
@@ -292,7 +285,7 @@ typealias Meta = String
                 propertyId: propertyId,
                 pmId: pmId,
                 consentUUID: gdprUUID,
-                messageLanguage: messageLanguage,
+                messageLanguage: overwriteUserLanguageTo,
                 timeout: messageTimeoutInSeconds
             )
             messageViewController?.consentDelegate = self
