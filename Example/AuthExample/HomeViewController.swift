@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     var authId: String!
 
     override func viewDidLoad() {
-        webview.setConsentFor(authId: authId) { error in print(error) }
+        webview.setConsentFor(authId: authId)
         webview.navigationDelegate = self
         webview.load(URLRequest(url: HomeViewController.webviewUrl))
     }
