@@ -194,23 +194,11 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadMessage(fromUrl url: URL) {
-        guard let url = messageURL(url: url) else {
+        guard let url = url.appendQueryItem(["consentLanguage": messageLanguage.rawValue]) else {
             onError(error: URLParsingError(urlString: "MessageUrl"))
             return
         }
         load(url: url)
-    }
-
-    func messageURL(url: URL) -> URL? {
-       var messageQueryItems = [URLQueryItem(name: "consentLanguage", value: messageLanguage.rawValue)]
-        if let urlComponents = URLComponents(string: url.absoluteString)?.queryItems {
-            messageQueryItems.append(contentsOf: urlComponents)
-        }
-        var messageUrlComponents = URLComponents()
-        messageUrlComponents.scheme = url.scheme
-        messageUrlComponents.host = url.host
-        messageUrlComponents.queryItems = messageQueryItems
-        return messageUrlComponents.url
     }
 
     func pmUrl() -> URL? {
@@ -311,6 +299,20 @@ extension MessageWebViewController: UIScrollViewDelegate {
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return nil
+    }
+}
+
+extension URL {
+
+    /// - Parameter parameters: parameters dictionary.
+    /// - Returns: URL with appending given query parameters.
+    func appendQueryItem(_ parameters: [String: String]) -> URL? {
+        if var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true) {
+            urlComponents.queryItems = (urlComponents.queryItems ?? []) + parameters
+                .map { URLQueryItem(name: $0, value: $1) }
+            return urlComponents.url
+        }
         return nil
     }
 }

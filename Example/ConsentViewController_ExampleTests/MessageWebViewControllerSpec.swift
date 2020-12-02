@@ -333,7 +333,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     messageWebViewController.webview = webviewMock
                     let url = URL(string: "www.example.com")!
                     messageWebViewController.loadMessage(fromUrl: url)
-                    let expectedURL = messageWebViewController.messageURL(url: url)
+                    let expectedURL = URL(string: "\(url.absoluteString)?consentLanguage=EN")
                     expect(webviewMock.loadCalledWith.url).to(equal(expectedURL))
                 }
             }
