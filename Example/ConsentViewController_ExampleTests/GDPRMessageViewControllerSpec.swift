@@ -19,7 +19,7 @@ class GDPRMessageViewControllerSpec: QuickSpec {
 
             context("Test loadMessage delegate method") {
                 it("Test GDPRMessageViewController calls loadMessage delegate method") {
-                    let WRAPPER_API = URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/")!
+                    let WRAPPER_API = URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/")!
                     messageViewController.loadMessage(fromUrl: WRAPPER_API)
                     expect(messageViewController).notTo(beNil(), description: "loadMessage delegate method calls successfully")
                 }

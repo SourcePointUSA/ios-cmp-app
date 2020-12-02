@@ -214,7 +214,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func pmUrl() -> URL? {
-        var pmUrlComponents = URLComponents(string: "https://notice.sp-prod.net/privacy-manager/index.html")
+        var pmUrlComponents = URLComponents(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")
         pmUrlComponents?.queryItems = queryItems
         return pmUrlComponents?.url
     }
