@@ -8,7 +8,7 @@
 import Foundation
 
 /// Languages supported for Message and PM
-public enum MessageLanguage: String, CaseIterable {
+public enum MessageLanguage: String {
     case BrowserDefault = ""
     case English = "EN"
     case Bulgarian = "BG"
