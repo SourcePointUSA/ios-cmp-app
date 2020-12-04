@@ -32,4 +32,6 @@ struct PropertyData {
     var wrongPropertyName = "tcfv2.automation.testing111"
     var wrongPropertyId = "7376111"
     var wrongPMId = "17878611"
+    var messageLanguageTargetingKey = "messageLanguage"
+    var messageLanguageTargetingValue = "german"
 }
