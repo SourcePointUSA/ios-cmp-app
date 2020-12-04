@@ -80,6 +80,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
             propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
             propertyEntity.creationTimestamp = creationTimestamp
             propertyEntity.nativeMessage = propertyDataModel.nativeMessage
+            propertyEntity.messageLanguage = propertyDataModel.messageLanguage
             if let authId = propertyDataModel.authId {
                 propertyEntity.authId = authId
             }
@@ -128,6 +129,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
                 propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
                 propertyEntity.creationTimestamp = creationTimestamp
                 propertyEntity.nativeMessage = propertyDataModel.nativeMessage
+                propertyEntity.messageLanguage = propertyDataModel.messageLanguage
                 if let authId = propertyDataModel.authId {
                     propertyEntity.authId = authId
                 }
@@ -210,17 +212,22 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
                             storedTargetingParamArray.append(targetingParamModel)
                         }
                         if storedTargetingParamArray.count == targetingParams.count {
-                            ispropertyDataStored = storedTargetingParamArray.sorted {$0.targetingKey! < $1.targetingKey!} == targetingParams.sorted {$0.targetingKey! < $1.targetingKey!}
-                            storedTargetingParamArray.removeAll()
-                            if ispropertyDataStored {
-                                break
+                            let isTargetingParamSame = storedTargetingParamArray.sorted {$0.targetingKey! < $1.targetingKey!} == targetingParams.sorted {$0.targetingKey! < $1.targetingKey!}
+                            if result.messageLanguage == propertyDataModel.messageLanguage {
+                                ispropertyDataStored = isTargetingParamSame
+                            } else {
+                                ispropertyDataStored = false
                             }
+                            storedTargetingParamArray.removeAll()
+                            break
                         } else {
                             ispropertyDataStored = false
                             storedTargetingParamArray.removeAll()
                         }
                     } else if let storedTargetingParamItem = result.manyTargetingParams?.allObjects as! [TargetingParams]?, storedTargetingParamItem.count == 0, targetingParams.count == 0 {
-                        ispropertyDataStored = true
+                        if result.messageLanguage == propertyDataModel.messageLanguage {
+                            ispropertyDataStored = true
+                        }
                         storedTargetingParamArray.removeAll()
                         break
                     }

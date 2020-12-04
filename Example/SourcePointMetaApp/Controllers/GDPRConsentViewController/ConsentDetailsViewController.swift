@@ -92,7 +92,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     func fetchDataFromDatabase(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void) {
         self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
-            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage)
+            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage, messageLanguage: propertyDataModel.messageLanguage)
             var targetingParamsArray = [TargetingParamModel]()
             if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                 for targetingParam in targetingParams {
@@ -112,6 +112,9 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        if let messageLanguage = propertyDetails.messageLanguage {
+            consentViewController?.overwriteUserLanguageTo = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+        }
         propertyDetails.nativeMessage == 1 ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
             consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }
@@ -198,6 +201,9 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! GDPRPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        if let messageLanguage = propertyDetails?.messageLanguage {
+            consentViewController?.overwriteUserLanguageTo = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+        }
         consentViewController?.loadPrivacyManager()
     }
 }
