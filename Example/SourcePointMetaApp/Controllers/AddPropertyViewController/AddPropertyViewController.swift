@@ -262,7 +262,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
         if let messageLanguage = propertyDetails.messageLanguage {
-            consentViewController?.overwriteUserLanguageTo = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
         }
         isNativeMessageSwitch.isOn ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
             consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
