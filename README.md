@@ -187,6 +187,14 @@ A few remarks:
 1. The web content being loaded (web property) needs to share the same vendor list as the app.
 2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
 
+## Overwriting default language
+By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behaviour and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `GDPRConsentViewController` _before_ calling `.loadMessage() / .loadPrivacyManager()`. 
+```swift
+consentViewController.messageLanguage = .German
+consentViewController.loadMessage()
+```
+It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
+
 ## Setting Targeting Parameters
 In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example:
 
