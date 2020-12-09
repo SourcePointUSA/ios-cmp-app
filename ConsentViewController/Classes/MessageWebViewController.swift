@@ -185,7 +185,10 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadMessage(fromUrl url: URL) {
-        guard let messageUrl = url.appendQueryItem(["consentLanguage": messageLanguage.rawValue]) else {
+        guard let messageUrl = url.appendQueryItem([
+            "consentLanguage": messageLanguage.rawValue,
+            "consentUUID": consentUUID
+        ]) else {
             onError(error: InvalidURLError(urlString: url.absoluteString))
             return
         }
