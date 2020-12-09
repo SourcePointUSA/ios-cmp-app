@@ -302,17 +302,3 @@ extension MessageWebViewController: UIScrollViewDelegate {
         return nil
     }
 }
-
-extension URL {
-
-    /// - Parameter parameters: parameters dictionary.
-    /// - Returns: URL with appending given query parameters.
-    func appendQueryItem(_ parameters: [String: String]) -> URL? {
-        if var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true) {
-            urlComponents.queryItems = (urlComponents.queryItems ?? []) + parameters
-                .map { URLQueryItem(name: $0, value: $1) }
-            return urlComponents.url
-        }
-        return nil
-    }
-}
