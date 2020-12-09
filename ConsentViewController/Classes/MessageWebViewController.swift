@@ -55,14 +55,20 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var isPMLoaded = false
     let timeout: TimeInterval
     var connectivityManager: Connectivity = ConnectivityManager()
+    let messageLanguage: MessageLanguage
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, timeout: TimeInterval) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
+        self.messageLanguage = messageLanguage
         self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
-        self.queryItems = [URLQueryItem(name: "site_id", value: "\(propertyId)"), URLQueryItem(name: "consentUUID", value: consentUUID)]
+        self.queryItems = [
+            URLQueryItem(name: "site_id", value: "\(propertyId)"),
+            URLQueryItem(name: "consentUUID", value: consentUUID),
+            URLQueryItem(name: "consentLanguage", value: messageLanguage.rawValue)
+        ]
     }
 
     required init?(coder: NSCoder) {
@@ -188,6 +194,10 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadMessage(fromUrl url: URL) {
+        guard let url = url.appendQueryItem(["consentLanguage": messageLanguage.rawValue]) else {
+            onError(error: URLParsingError(urlString: "MessageUrl"))
+            return
+        }
         load(url: url)
     }
 

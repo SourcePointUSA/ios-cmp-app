@@ -12,7 +12,7 @@ public typealias TargetingParams = [String: String]
 public typealias GDPRUUID = String
 typealias Meta = String
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 
 @objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
@@ -56,6 +56,10 @@ typealias Meta = String
             sourcePoint.setRequestTimeout(self.messageTimeoutInSeconds)
         }
     }
+
+    /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+    /// By default the SDK will use the locale defined by the WebView
+    public var messageLanguage = MessageLanguage.BrowserDefault
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
@@ -241,7 +245,13 @@ typealias Meta = String
     }
 
     public func loadMessage(fromUrl url: URL) {
-        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
+        messageViewController = MessageWebViewController(
+            propertyId: propertyId,
+            pmId: pmId,
+            consentUUID: gdprUUID,
+            messageLanguage: messageLanguage,
+            timeout: messageTimeoutInSeconds
+        )
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
     }
@@ -272,7 +282,13 @@ typealias Meta = String
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading
-            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
+            messageViewController = MessageWebViewController(
+                propertyId: propertyId,
+                pmId: pmId,
+                consentUUID: gdprUUID,
+                messageLanguage: messageLanguage,
+                timeout: messageTimeoutInSeconds
+            )
             messageViewController?.consentDelegate = self
             messageViewController?.loadPrivacyManager()
         }
