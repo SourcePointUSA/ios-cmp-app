@@ -7,8 +7,9 @@
 
 import Foundation
 
-/// Languages supported for Message and PM
+/// Languages supported by Message and PM
 public enum MessageLanguage: String {
+    /// having it empty string instructs the rendering app to use the browser's locale
     case BrowserDefault = ""
     case English = "EN"
     case Bulgarian = "BG"

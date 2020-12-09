@@ -57,8 +57,9 @@ typealias Meta = String
         }
     }
 
-    /// Set language to see the Message/PM in given langauge
-    public var overwriteUserLanguageTo = MessageLanguage.BrowserDefault
+    /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+    /// By default the SDK will use the locale defined by the WebView
+    public var messageLanguage = MessageLanguage.BrowserDefault
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
@@ -248,7 +249,7 @@ typealias Meta = String
             propertyId: propertyId,
             pmId: pmId,
             consentUUID: gdprUUID,
-            messageLanguage: overwriteUserLanguageTo,
+            messageLanguage: messageLanguage,
             timeout: messageTimeoutInSeconds
         )
         messageViewController?.consentDelegate = self
@@ -285,7 +286,7 @@ typealias Meta = String
                 propertyId: propertyId,
                 pmId: pmId,
                 consentUUID: gdprUUID,
-                messageLanguage: overwriteUserLanguageTo,
+                messageLanguage: messageLanguage,
                 timeout: messageTimeoutInSeconds
             )
             messageViewController?.consentDelegate = self
