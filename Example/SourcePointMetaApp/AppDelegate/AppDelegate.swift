@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 import ConsentViewController
 
 @UIApplicationMain
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if CommandLine.arguments.contains("-cleanAppsData") {
             GDPRConsentViewController.clearAllData()
         }
+        IQKeyboardManager.shared.enable = true
         return true
     }
 

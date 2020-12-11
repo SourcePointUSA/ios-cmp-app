@@ -92,6 +92,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         setTextFieldDelegate()
+        addTapGestureRecognizer()
         targetingParamTableview.tableFooterView = UIView(frame: .zero)
         setTableViewHidden()
 
@@ -138,10 +139,18 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         noTargetingParamDataLabel.isHidden = targetingParams.count > 0
     }
 
+    func addTapGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(touch))
+        recognizer.numberOfTapsRequired = 1
+        recognizer.numberOfTouchesRequired = 1
+        scrollView.addGestureRecognizer(recognizer)
+    }
+
     func setTextFieldDelegate() {
         pickerView.delegate = self
         pickerView.dataSource = self
         SelectLanguageOutlet.inputView = pickerView
+        SelectLanguageOutlet.text = addpropertyViewModel.countries[0]
         accountIDTextFieldOutlet.delegate = self
         propertyIdTextFieldOutlet.delegate = self
         propertyNameTextField.delegate = self
@@ -154,7 +163,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(done))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         toolBar.setItems([doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         SelectLanguageOutlet.inputAccessoryView = toolBar
@@ -162,7 +171,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
 
     @objc func done() {
         SelectLanguageOutlet.resignFirstResponder()
-     }
+    }
 
     // add targeting param value to the tableview
     @IBAction func addTargetingParamAction(_ sender: Any) {
@@ -394,6 +403,17 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
             textField.resignFirstResponder()
         }
         return true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == SelectLanguageOutlet {
+            return false
+        }
+        return true
+    }
+
+    @objc func touch() {
+        self.view.endEditing(true)
     }
 }
 
