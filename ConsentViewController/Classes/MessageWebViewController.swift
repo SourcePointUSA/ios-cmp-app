@@ -230,16 +230,19 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        var spError: GDPRConsentViewControllerError = WebViewError(code: nil, title: error.localizedDescription)
         if let error = error as? URLError {
             switch error.code {
             case .timedOut:
-                onError(error: MessageTimeout(url: error.failingURL, timeout: timeout))
+                spError = MessageTimeout(url: error.failingURL, timeout: timeout)
+//            case .cannotFindHost, .dnsLookupFailed: 404
+            case .networkConnectionLost, .notConnectedToInternet:
+                spError = NoInternetConnection()
             default:
-                onError(error: WebViewError(code: error.code.rawValue, title: error.localizedDescription))
+                spError = WebViewError(code: error.code.rawValue, title: error.localizedDescription)
             }
-        } else {
-            onError(error: GeneralRequestError(nil, nil, error))
         }
+        onError(error: spError)
     }
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

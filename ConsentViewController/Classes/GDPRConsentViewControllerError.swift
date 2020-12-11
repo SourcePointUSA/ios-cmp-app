@@ -8,6 +8,9 @@
 import Foundation
 
 @objcMembers public class GDPRConsentViewControllerError: NSError, LocalizedError {
+    public var spCode: String { "generic_sdk_error" }
+    public var spDescription: String { "Something went wrong in the SDK" }
+    
     init() {
         super.init(domain: "GDPRConsentViewController", code: 0, userInfo: nil)
     }
@@ -53,11 +56,6 @@ import Foundation
 
 @objcMembers public class UnableToLoadJSReceiver: GDPRConsentViewControllerError {
     public var failureReason: String? { return "Unable to load the JSReceiver.js resource." }
-    override public var description: String { return "\(failureReason!)" }
-}
-
-@objcMembers public class NoInternetConnection: GDPRConsentViewControllerError {
-    public var failureReason: String? { return "The device is not connected to the internet." }
     override public var description: String { return "\(failureReason!)" }
 }
 
@@ -125,18 +123,30 @@ import Foundation
     override public var description: String { return "\(failureReason!)" }
 }
 
+/// Network Errors
+@objcMembers public class NoInternetConnection: GDPRConsentViewControllerError {
+    override public var spDescription: String { "User has no Internet connection." }
+    override public var spCode: String { "no_internet_connection" }
+    
+    public var failureReason: String? { "The device is not connected to the internet." }
+    override public var description: String { "\(failureReason!)" }
+}
+
 @objcMembers public class MessageTimeout: GDPRConsentViewControllerError {
+    override public var spDescription: String { description }
+    override public var spCode: String { "connection_timeout" }
+    
     let url: URL?
     let timeout: TimeInterval?
-
+    
     init(url: URL?, timeout: TimeInterval?) {
         self.url = url
         self.timeout = timeout
         super.init()
     }
-
+    
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
+    
     public var failureReason: String? { return description }
     override public var description: String { return "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
 }
