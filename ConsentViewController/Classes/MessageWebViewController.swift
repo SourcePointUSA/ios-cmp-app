@@ -15,6 +15,7 @@ import WebKit
  */
 class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, GDPRConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "GDPRJSReceiver"
+    static let PM_BASE_URL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")!
 
     lazy var webview: WKWebView? = {
         let config = WKWebViewConfiguration()
@@ -48,8 +49,8 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     let propertyId: Int
     var pmId: String
+    var pmTab: String?
     let consentUUID: GDPRUUID
-    var queryItems: [URLQueryItem]?
     var isSecondLayerMessage = false
     var consentUILoaded = false
     var isPMLoaded = false
@@ -64,11 +65,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         self.messageLanguage = messageLanguage
         self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
-        self.queryItems = [
-            URLQueryItem(name: "site_id", value: "\(propertyId)"),
-            URLQueryItem(name: "consentUUID", value: consentUUID),
-            URLQueryItem(name: "consentLanguage", value: messageLanguage.rawValue)
-        ]
     }
 
     required init?(coder: NSCoder) {
@@ -154,17 +150,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         onMessageReady()
     }
 
-    func getPMIdFromMessage(action: GDPRAction) {
-        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload), let pm_url = payloadData["pm_url"]?.stringValue {
-            if let urlComponents = URLComponents(string: pm_url)?.queryItems {
-                for queryItem in urlComponents {
-                    if queryItem.name == "message_id" {
-                        self.pmId = queryItem.value ?? ""
-                    } else if queryItem.name == "pmTab" {
-                        self.queryItems?.append(URLQueryItem(name: queryItem.name, value: queryItem.value))
-                    }
-                }
-            }
+    func updatePMParamsFromAction(_ action: GDPRAction) {
+        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
+           let pm_url = payloadData["pm_url"]?.stringValue,
+           let urlComponents = URLComponents(string: pm_url)?.queryItems {
+            pmTab = urlComponents.first { $0.name == "pmId" }?.value
+            pmId = urlComponents.first { $0.name == "message_id" }?.value ?? pmId
         }
     }
 
@@ -172,7 +163,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         switch action.type {
         case .ShowPrivacyManager:
             consentDelegate?.onAction?(action)
-            getPMIdFromMessage(action: action)
+            updatePMParamsFromAction(action)
             showPrivacyManagerFromMessageAction()
         case .PMCancel:
             consentDelegate?.onAction?(
@@ -194,23 +185,33 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadMessage(fromUrl url: URL) {
-        guard let url = url.appendQueryItem(["consentLanguage": messageLanguage.rawValue]) else {
-            onError(error: URLParsingError(urlString: "MessageUrl"))
+        guard let messageUrl = url.appendQueryItem(["consentLanguage": messageLanguage.rawValue]) else {
+            onError(error: InvalidURLError(urlString: url.absoluteString))
             return
         }
-        load(url: url)
+        load(url: messageUrl)
+    }
+
+    func pmQueryParams() -> [URLQueryItem] {
+        return [
+            URLQueryItem(name: "site_id", value: String(propertyId)),
+            URLQueryItem(name: "consentUUID", value: consentUUID),
+            URLQueryItem(name: "message_id", value: pmId),
+            URLQueryItem(name: "pmTab", value: pmTab)
+        ]
     }
 
     func pmUrl() -> URL? {
-        var pmUrlComponents = URLComponents(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")
-        pmUrlComponents?.queryItems = queryItems
-        return pmUrlComponents?.url
+        var urlComponents = URLComponents(url: MessageWebViewController.PM_BASE_URL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = pmQueryParams()
+        return urlComponents?.url
     }
 
     override func loadPrivacyManager() {
-        self.queryItems?.append(URLQueryItem(name: "message_id", value: pmId))
         guard let url = pmUrl() else {
-            onError(error: URLParsingError(urlString: "PMUrl"))
+            let queryString = pmQueryParams().reduce("?") { $0 + "\($1.name)=\($1.value ?? "")&" }
+            let error = InvalidURLError(urlString: MessageWebViewController.PM_BASE_URL.absoluteString + queryString)
+            onError(error: error)
             return
         }
         load(url: url)
@@ -234,7 +235,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         if let error = error as? URLError {
             switch error.code {
             case .timedOut:
-                spError = MessageTimeout(url: error.failingURL, timeout: timeout)
+                spError = ConnectionTimeOutError(url: error.failingURL, timeout: timeout)
             case .networkConnectionLost, .notConnectedToInternet:
                 spError = NoInternetConnection()
             default:
