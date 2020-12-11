@@ -137,7 +137,7 @@ class SourcePointClient: SourcePointProtocol {
             completionHandler(nil, APIParsingError(url.absoluteString, nil))
             return
         }
-        client.post(url: url, body: body) { data, error in
+        client.post(urlString: url.absoluteString, body: body) { data, error in
             do {
                 if let messageData = data {
                     let messageResponse = try (JSONDecoder().decode(MessageResponse.self, from: messageData))
@@ -188,7 +188,7 @@ class SourcePointClient: SourcePointProtocol {
                 completionHandler(nil, APIParsingError(url.absoluteString, nil))
                 return
         }
-        client.post(url: url, body: body) { data, error  in
+        client.post(urlString: url.absoluteString, body: body) { data, error  in
             do {
                 if let actionData = data {
                     let actionResponse = try (JSONDecoder().decode(ActionResponse.self, from: actionData))
@@ -219,7 +219,7 @@ class SourcePointClient: SourcePointProtocol {
             return
         }
 
-        client.post(url: SourcePointClient.CUSTOM_CONSENT_URL, body: body) { data, error in
+        client.post(urlString: SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, body: body) { data, error in
             guard
                 let data = data,
                 let consentsResponse = try? (JSONDecoder().decode(CustomConsentResponse.self, from: data)),
