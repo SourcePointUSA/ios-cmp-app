@@ -235,7 +235,6 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             switch error.code {
             case .timedOut:
                 spError = MessageTimeout(url: error.failingURL, timeout: timeout)
-//            case .cannotFindHost, .dnsLookupFailed: 404
             case .networkConnectionLost, .notConnectedToInternet:
                 spError = NoInternetConnection()
             default:

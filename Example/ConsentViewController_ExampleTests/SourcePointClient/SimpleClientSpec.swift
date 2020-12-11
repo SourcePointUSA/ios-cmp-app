@@ -151,7 +151,7 @@ class SimpleClientSpec: QuickSpec {
                     let session = URLSessionMock(
                         configuration: URLSessionConfiguration.default,
                         data: nil,
-                        error: GeneralRequestError(nil, nil, nil)
+                        error: GenericNetworkError(nil, nil, nil)
                     )
                     let client = SimpleClient(
                         connectivityManager: ConnectivityMock(connected: true),

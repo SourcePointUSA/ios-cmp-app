@@ -19,24 +19,6 @@ import Foundation
     }
 }
 
-@objcMembers public class GeneralRequestError: GDPRConsentViewControllerError {
-    public let url, response, error: String
-
-    public var failureReason: String? { return "The request to: \(url) failed with response: \(response) and error: \(error)" }
-    public var errorDescription: String? { return "Error while requesting from: \(url)" }
-
-    init(_ url: URL?, _ response: URLResponse?, _ error: Error?) {
-        self.url = url?.absoluteString ?? "<Unknown Url>"
-        self.response = response?.description ?? "<Unknown Response>"
-        self.error = error?.localizedDescription ?? "<Unknown Error>"
-        super.init()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    override public var description: String { return "\(failureReason!)" }
-}
-
 @objcMembers public class APIParsingError: GDPRConsentViewControllerError {
     private let parsingError: Error?
     private let endpoint: String
@@ -151,14 +133,14 @@ import Foundation
     override public var description: String { return "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
 }
 
-@objcMembers public class InternalServerError: GDPRConsentViewControllerError {
+@objcMembers public class GenericNetworkError: GDPRConsentViewControllerError {
     override public var spDescription: String { description }
-    override public var spCode: String { "internal_server_error_\(request.httpMethod ?? "500")" }
+    override public var spCode: String { "generic_network_request_\(request.httpMethod ?? "")" }
     
     let request: URLRequest
-    let response: HTTPURLResponse
+    let response: HTTPURLResponse?
     
-    init(request: URLRequest, response: HTTPURLResponse) {
+    init(request: URLRequest, response: HTTPURLResponse?) {
         self.request = request
         self.response = response
         super.init()
@@ -167,5 +149,13 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     public var failureReason: String? { return description }
-    override public var description: String { return "The server responsed with \(response.statusCode) when performing \(request.httpMethod ?? "<no verb>") \(response.url?.absoluteString ?? "<no url>")" }
+    override public var description: String { return "The server responsed with \(response?.statusCode ?? 999) when performing \(request.httpMethod ?? "<no verb>") \(response?.url?.absoluteString ?? "<no url>")" }
+}
+
+@objcMembers public class InternalServerError: GenericNetworkError {
+    override public var spCode: String { "internal_server_error_\(request.httpMethod ?? "500")" }
+}
+
+@objcMembers public class ResourceNotFoundError: GenericNetworkError {
+    override public var spCode: String { "resource_not_found_\(request.httpMethod ?? "400")" }
 }

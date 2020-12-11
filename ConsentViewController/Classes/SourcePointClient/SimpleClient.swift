@@ -95,13 +95,17 @@ class SimpleClient: HttpClient {
             self?.dispatchQueue.async { [weak self] in
                 self?.logResponse(urlRequest, data)
                 
-                if error != nil, let response = response as? HTTPURLResponse {
-                    var spError: GDPRConsentViewControllerError
-                    switch response.statusCode {
-                    case 500...599:
-                        spError = InternalServerError(request: urlRequest, response: response)
-                    default:
-                        spError = GeneralRequestError(urlRequest.url, response, error)
+                if error != nil {
+                    var spError = GenericNetworkError(request: urlRequest, response: response as? HTTPURLResponse)
+                    if let response = response as? HTTPURLResponse {
+                        switch response.statusCode {
+                        case 400...499:
+                            spError = ResourceNotFoundError(request: urlRequest, response: response)
+                        case 500...599:
+                            spError = InternalServerError(request: urlRequest, response: response)
+                        default:
+                            spError = GenericNetworkError(request: urlRequest, response: response)
+                        }
                     }
                     completionHandler(nil, spError)
                 }
@@ -113,7 +117,7 @@ class SimpleClient: HttpClient {
 
     func post(url: URL?, body: Data?, completionHandler: @escaping CompletionHandler) {
         guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
+            completionHandler(nil, GenericNetworkError(url, nil, nil))
             return
         }
         var urlRequest = URLRequest(url: _url)
@@ -125,7 +129,7 @@ class SimpleClient: HttpClient {
 
     func get(url: URL?, completionHandler: @escaping CompletionHandler) {
         guard let _url = url else {
-            completionHandler(nil, GeneralRequestError(url, nil, nil))
+            completionHandler(nil, GenericNetworkError(url, nil, nil))
             return
         }
         request(URLRequest(url: _url), completionHandler)

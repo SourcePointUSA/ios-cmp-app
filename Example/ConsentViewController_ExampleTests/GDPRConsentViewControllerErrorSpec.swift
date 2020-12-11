@@ -16,11 +16,10 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
         let url = "https://notice.sp-prod.net/?message_id=59706"
         describe("Test GDPRConsentViewControllerError methods") {
 
-            it("Test GeneralRequestError method") {
-                let url = URL(string: url)
-                let errorObject = GeneralRequestError(url, nil, nil)
-                expect(errorObject.description).to(
-                    equal("The request to: https://notice.sp-prod.net/?message_id=59706 failed with response: <Unknown Response> and error: <Unknown Error>"))
+            describe("GenericNetworkError") {
+                it("has spCode: generic_network_request") {
+                    expect(GenericNetworkError(request: URLRequest(url: URL()), response: nil).spCode).to(equal("generic_network_request"))
+                }
             }
 
             it("Test APIParsingError method") {
