@@ -154,7 +154,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
            let pm_url = payloadData["pm_url"]?.stringValue,
            let urlComponents = URLComponents(string: pm_url)?.queryItems {
-            pmTab = urlComponents.first { $0.name == "pmId" }?.value
+            pmTab = urlComponents.first { $0.name == "pmTab" }?.value
             pmId = urlComponents.first { $0.name == "message_id" }?.value ?? pmId
         }
     }
