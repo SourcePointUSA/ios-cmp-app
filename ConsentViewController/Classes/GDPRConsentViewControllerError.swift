@@ -98,6 +98,40 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
+/// Invalid API Response Errors
+@objcMembers public class InvalidResponseError: GDPRConsentViewControllerError {
+    public override var failureReason: String? { decodingError?.failureReason ?? description }
+
+    let decodingError: DecodingError?
+
+    init(_ error: DecodingError? = nil) {
+        decodingError = error
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+@objcMembers public class InvalidResponseWebMessageError: InvalidResponseError {
+    override public var spCode: String { "invalid_response_web_message" }
+    override public var description: String { "The SDK got an unexpected response from /message-url endpoint" }
+}
+
+@objcMembers public class InvalidResponseNativeMessageError: InvalidResponseError {
+    override public var spCode: String { "invalid_response_native_message" }
+    override public var description: String { "The SDK got an unexpected response from /native-message endpoint" }
+}
+
+@objcMembers public class InvalidResponseConsentError: InvalidResponseError {
+    override public var spCode: String { "invalid_response_consent" }
+    override public var description: String { "The SDK got an unexpected response from /consent endpoint" }
+}
+
+@objcMembers public class InvalidResponseCustomError: InvalidResponseError {
+    override public var spCode: String { "invalid_response_custom_consent" }
+    override public var description: String { "The SDK got an unexpected response from /custom-consent endpoint" }
+}
+
 /// Network Errors
 @objcMembers public class NoInternetConnection: GDPRConsentViewControllerError {
     override public var spCode: String { "no_internet_connection" }

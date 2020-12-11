@@ -61,6 +61,36 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
                 }
             }
 
+            describe("WebViewError") {
+                it("has spCode: web_view_error") {
+                    expect(WebViewError().spCode).to(equal("web_view_error"))
+                }
+            }
+
+            describe("InvalidResponseWebMessageError") {
+                it("has spCode: invalid_response_web_message") {
+                    expect(InvalidResponseWebMessageError().spCode).to(equal("invalid_response_web_message"))
+                }
+            }
+
+            describe("InvalidResponseNativeMessageError") {
+                it("has spCode: invalid_response_native_message") {
+                    expect(InvalidResponseNativeMessageError().spCode).to(equal("invalid_response_native_message"))
+                }
+            }
+
+            describe("InvalidResponseConsentError") {
+                it("has spCode: invalid_response_consent") {
+                    expect(InvalidResponseConsentError().spCode).to(equal("invalid_response_consent"))
+                }
+            }
+
+            describe("InvalidResponseCustomError") {
+                it("has spCode: invalid_response_custom_consent") {
+                    expect(InvalidResponseCustomError().spCode).to(equal("invalid_response_custom_consent"))
+                }
+            }
+
             it("Test APIParsingError method") {
                 let errorObject = APIParsingError(url, nil)
                 expect(errorObject.description).to(equal("Error parsing response from https://notice.sp-prod.net/?message_id=59706: nil"))
@@ -69,11 +99,6 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
             it("Test MessageEventParsingError method") {
                 let errorObject = MessageEventParsingError(message: "The operation couldn't be completed")
                 expect(errorObject.failureReason).to(equal("Could not parse message coming from the WebView The operation couldn't be completed"))
-            }
-
-            it("Test WebViewError method") {
-                let errorObject = WebViewError()
-                expect(errorObject.failureReason).to(equal("Something went wrong in the webview (code: 0, title: , stackTrace: )"))
             }
 
             it("Test InvalidArgumentError method") {
