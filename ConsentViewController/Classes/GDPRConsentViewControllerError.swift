@@ -9,14 +9,12 @@ import Foundation
 
 @objcMembers public class GDPRConsentViewControllerError: NSError, LocalizedError {
     public var spCode: String { "generic_sdk_error" }
-    public var spDescription: String { "Something went wrong in the SDK" }
+    public var spDescription: String { description }
+    override public var description: String { "Something went wrong in the SDK" }
+    public var failureReason: String? { description }
 
-    init() {
-        super.init(domain: "GDPRConsentViewController", code: 0, userInfo: nil)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    init() { super.init(domain: "GDPRConsentViewController", code: 0, userInfo: nil) }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 @objcMembers public class APIParsingError: GDPRConsentViewControllerError {
@@ -31,14 +29,11 @@ import Foundation
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-    override public var description: String { return "Error parsing response from \(endpoint): \(parsingError.debugDescription)" }
-    public var errorDescription: String? { return description }
-    public var failureReason: String? { return description }
+    override public var description: String { "Error parsing response from \(endpoint): \(parsingError.debugDescription)" }
 }
 
 @objcMembers public class UnableToLoadJSReceiver: GDPRConsentViewControllerError {
-    public var failureReason: String? { return "Unable to load the JSReceiver.js resource." }
-    override public var description: String { return "\(failureReason!)" }
+    override public var description: String { "Unable to load the JSReceiver.js resource." }
 }
 
 @objcMembers public class MessageEventParsingError: GDPRConsentViewControllerError {
@@ -50,29 +45,29 @@ import Foundation
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    public var failureReason: String? { return "Could not parse message coming from the WebView \(message)" }
-    override public var description: String { return "\(failureReason!)" }
+    override public var description: String { "Could not parse message coming from the WebView \(message)" }
 }
 
 @objcMembers public class WebViewError: GDPRConsentViewControllerError {
+    override public var spCode: String { "web_view_error" }
+    override public var description: String {
+        "Something went wrong in the webview (code: \(errorCode ?? 0), title: \(title ?? "")"
+    }
+
     let errorCode: Int?
-    let title, stackTrace: String?
+    let title: String?
 
     init(code: Int? = nil, title: String? = nil, stackTrace: String? = nil) {
         self.errorCode = code
         self.title = title
-        self.stackTrace = stackTrace
         super.init()
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    public var failureReason: String? { return "Something went wrong in the webview (code: \(errorCode ?? 0), title: \(title ?? ""), stackTrace: \(stackTrace ?? ""))" }
-    override public var description: String { return "\(failureReason!)" }
 }
 
 @objcMembers public class InvalidArgumentError: GDPRConsentViewControllerError {
+    override public var description: String { message }
     let message: String
 
     init(message: String) {
@@ -81,19 +76,17 @@ import Foundation
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    public var failureReason: String? { return message }
-    override public var description: String { return message }
 }
 
 @objcMembers public class PostingConsentWithoutConsentUUID: GDPRConsentViewControllerError {
-    public var failureReason: String? { return "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first." }
-    override public var description: String { return "\(failureReason!)" }
+    override public var description: String {
+        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
+    }
 }
 
 @objcMembers public class InvalidURLError: GDPRConsentViewControllerError {
-    override public var spDescription: String { description }
     override public var spCode: String { "invalid_url" }
+    override public var description: String { "Could not parse URL: \(urlString)" }
 
     let urlString: String
 
@@ -103,23 +96,17 @@ import Foundation
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    public var failureReason: String? { description }
-    override public var description: String { "Could not parse URL: \(urlString)" }
 }
 
 /// Network Errors
 @objcMembers public class NoInternetConnection: GDPRConsentViewControllerError {
-    override public var spDescription: String { "User has no Internet connection." }
     override public var spCode: String { "no_internet_connection" }
-
-    public var failureReason: String? { description }
     override public var description: String { "The device is not connected to the internet." }
 }
 
 @objcMembers public class ConnectionTimeOutError: GDPRConsentViewControllerError {
-    override public var spDescription: String { description }
     override public var spCode: String { "connection_timeout" }
+    override public var description: String { "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
 
     let url: URL?
     let timeout: TimeInterval?
@@ -131,14 +118,13 @@ import Foundation
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    public var failureReason: String? { return description }
-    override public var description: String { return "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
 }
 
 @objcMembers public class GenericNetworkError: GDPRConsentViewControllerError {
-    override public var spDescription: String { description }
     override public var spCode: String { "generic_network_request_\(response?.statusCode ?? 999)" }
+    override public var description: String {
+        "The server responsed with \(response?.statusCode ?? 999) when performing \(request.httpMethod ?? "<no verb>") \(response?.url?.absoluteString ?? "<no url>")"
+    }
 
     let request: URLRequest
     let response: HTTPURLResponse?
@@ -150,11 +136,6 @@ import Foundation
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    public var failureReason: String? { return description }
-    override public var description: String { return
-        "The server responsed with \(response?.statusCode ?? 999) when performing \(request.httpMethod ?? "<no verb>") \(response?.url?.absoluteString ?? "<no url>")"
-    }
 }
 
 @objcMembers public class InternalServerError: GenericNetworkError {
