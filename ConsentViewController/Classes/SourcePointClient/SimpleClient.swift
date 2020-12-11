@@ -94,9 +94,19 @@ class SimpleClient: HttpClient {
         session.dataTask(urlRequest) { [weak self] data, response, error in
             self?.dispatchQueue.async { [weak self] in
                 self?.logResponse(urlRequest, data)
-                data != nil ?
-                    completionHandler(data, nil) :
-                    completionHandler(nil, GeneralRequestError(urlRequest.url, response, error))
+                
+                if error != nil, let response = response as? HTTPURLResponse {
+                    var spError: GDPRConsentViewControllerError
+                    switch response.statusCode {
+                    case 500...599:
+                        spError = InternalServerError(request: urlRequest, response: response)
+                    default:
+                        spError = GeneralRequestError(urlRequest.url, response, error)
+                    }
+                    completionHandler(nil, spError)
+                }
+                
+                completionHandler(data, nil)
             }
         }.resume()
     }

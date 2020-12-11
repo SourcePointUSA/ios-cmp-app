@@ -150,3 +150,22 @@ import Foundation
     public var failureReason: String? { return description }
     override public var description: String { return "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
 }
+
+@objcMembers public class InternalServerError: GDPRConsentViewControllerError {
+    override public var spDescription: String { description }
+    override public var spCode: String { "internal_server_error_\(request.httpMethod ?? "500")" }
+    
+    let request: URLRequest
+    let response: HTTPURLResponse
+    
+    init(request: URLRequest, response: HTTPURLResponse) {
+        self.request = request
+        self.response = response
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    public var failureReason: String? { return description }
+    override public var description: String { return "The server responsed with \(response.statusCode) when performing \(request.httpMethod ?? "<no verb>") \(response.url?.absoluteString ?? "<no url>")" }
+}
