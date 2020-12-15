@@ -37,18 +37,6 @@ import Foundation
     override public var description: String { "Unable to load the JSReceiver.js resource." }
 }
 
-@objcMembers public class MessageEventParsingError: GDPRConsentViewControllerError {
-    let message: String
-
-    init(message: String) {
-        self.message = message
-        super.init()
-    }
-
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    override public var description: String { "Could not parse message coming from the WebView \(message)" }
-}
-
 @objcMembers public class WebViewError: GDPRConsentViewControllerError {
     override public var spCode: String { "web_view_error" }
     override public var description: String {
