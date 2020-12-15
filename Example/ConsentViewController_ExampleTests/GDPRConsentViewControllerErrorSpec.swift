@@ -22,7 +22,6 @@ func aResponseWith(status: Int) -> HTTPURLResponse {
 
 class GDPRConsentViewControllerErrorSpec: QuickSpec {
     override func spec() {
-        let url = "https://notice.sp-prod.net/?message_id=59706"
         describe("GDPRConsentViewControllerErrorSpec") {
             describe("GenericNetworkError") {
                 it("has spCode: generic_network_request_{response.status}") {
@@ -125,9 +124,10 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
                 }
             }
 
-            it("Test APIParsingError method") {
-                let errorObject = APIParsingError(url, nil)
-                expect(errorObject.description).to(equal("Error parsing response from https://notice.sp-prod.net/?message_id=59706: nil"))
+            describe("UnableToLoadJSReceiver") {
+                it("has spCode: unable_to_load_jsreceiver") {
+                    expect(UnableToLoadJSReceiver().spCode).to(equal("unable_to_load_jsreceiver"))
+                }
             }
 
             it("Test InvalidArgumentError method") {

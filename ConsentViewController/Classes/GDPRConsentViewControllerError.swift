@@ -18,6 +18,7 @@ import Foundation
 }
 
 @objcMembers public class UnableToLoadJSReceiver: GDPRConsentViewControllerError {
+    public override var spCode: String { "unable_to_load_jsreceiver" }
     override public var description: String { "Unable to load the JSReceiver.js resource." }
 }
 
