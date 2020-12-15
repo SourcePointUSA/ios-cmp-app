@@ -278,11 +278,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         case "onError":
             let payload = body["body"] as? [String: Any] ?? [:]
             let error = payload["error"] as? [String: Any] ?? [:]
-            onError(error: WebViewError(
-                code: error["code"] as? Int,
-                title: error["title"] as? String,
-                stackTrace: error["stackTrace"] as? String
-            ))
+            onError(error: RenderingAppError(error["code"] as? String))
         default:
             /// TODO: This should not trigger the `onError` but we should notifiy our custom metrics endpoint
             print(message.body)

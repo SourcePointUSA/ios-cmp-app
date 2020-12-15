@@ -110,6 +110,18 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
+@objcMembers public class RenderingAppError: GDPRConsentViewControllerError {
+    public override var spCode: String { renderingAppErrorCode ?? "rendering_app_error" }
+    public let renderingAppErrorCode: String?
+
+    init(_ renderingAppErrorCode: String?) {
+        self.renderingAppErrorCode = renderingAppErrorCode
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
 /// Invalid API Response Errors
 @objcMembers public class InvalidResponseError: GDPRConsentViewControllerError {
     public override var failureReason: String? { decodingError?.failureReason ?? description }

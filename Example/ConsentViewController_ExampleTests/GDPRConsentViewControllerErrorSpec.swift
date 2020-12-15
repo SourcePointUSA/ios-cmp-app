@@ -105,14 +105,23 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
                 }
             }
 
+            describe("RenderingAppError") {
+                describe("if not code is provided") {
+                    it("its spCode should be rendering_app_error") {
+                        expect(RenderingAppError(nil).spCode).to(equal("rendering_app_error"))
+                    }
+                }
+
+                describe("if a code is provided") {
+                    it("its spCode should be the same as the code provided") {
+                        expect(RenderingAppError("foo").spCode).to(equal("foo"))
+                    }
+                }
+            }
+
             it("Test APIParsingError method") {
                 let errorObject = APIParsingError(url, nil)
                 expect(errorObject.description).to(equal("Error parsing response from https://notice.sp-prod.net/?message_id=59706: nil"))
-            }
-
-            it("Test MessageEventParsingError method") {
-                let errorObject = MessageEventParsingError(message: "The operation couldn't be completed")
-                expect(errorObject.failureReason).to(equal("Could not parse message coming from the WebView The operation couldn't be completed"))
             }
 
             it("Test InvalidArgumentError method") {

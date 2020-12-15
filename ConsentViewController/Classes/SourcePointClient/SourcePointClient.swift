@@ -119,7 +119,7 @@ class SourcePointClient: SourcePointProtocol {
         return paramsString
     }
 
-    // swiftlint:disable:next function_parameter_count
+    // swiftlint:disable:next function_parameter_count line_length
     func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError? ) -> Void) {
         guard let body = try? JSONEncoder().encode(MessageRequest(
             uuid: consentUUID,
