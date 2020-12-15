@@ -52,12 +52,6 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class PostingConsentWithoutConsentUUID: GDPRConsentViewControllerError {
-    override public var description: String {
-        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
-    }
-}
-
 /// Invalid Rendering App (JSReceiver) event payloads
 @objcMembers public class InvalidEventPayloadError: GDPRConsentViewControllerError {
     public override var failureReason: String? { description }
@@ -202,4 +196,10 @@ import Foundation
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+@objcMembers public class PostingConsentWithoutConsentUUID: InvalidRequestError {
+    override public var description: String {
+        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
+    }
 }
