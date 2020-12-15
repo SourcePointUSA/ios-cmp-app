@@ -18,6 +18,8 @@ func aResponseWith(status: Int) -> HTTPURLResponse {
     return HTTPURLResponse(url: URL(string: "/")!, statusCode: status, httpVersion: nil, headerFields: nil)!
 }
 
+// swiftlint:disable function_body_length
+
 class GDPRConsentViewControllerErrorSpec: QuickSpec {
     override func spec() {
         let url = "https://notice.sp-prod.net/?message_id=59706"
@@ -88,6 +90,18 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
             describe("InvalidResponseCustomError") {
                 it("has spCode: invalid_response_custom_consent") {
                     expect(InvalidResponseCustomError().spCode).to(equal("invalid_response_custom_consent"))
+                }
+            }
+
+            describe("InvalidEventPayloadError") {
+                it("has spCode: invalid_event_payload") {
+                    expect(InvalidEventPayloadError().spCode).to(equal("invalid_event_payload"))
+                }
+            }
+
+            describe("InvalidOnActionEventPayloadError") {
+                it("has spCode: invalid_event_payload") {
+                    expect(InvalidOnActionEventPayloadError().spCode).to(equal("invalid_onAction_event_payload"))
                 }
             }
 

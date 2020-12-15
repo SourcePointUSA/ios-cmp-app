@@ -250,7 +250,9 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             let body = message.body as? [String: Any?],
             let name = body["name"] as? String
         else {
-            onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
+            let eventBody = message.body as? [String: Any?]
+            let eventName = eventBody?["name"] as? String
+            onError(error: InvalidEventPayloadError(eventName, body: eventBody?.debugDescription))
             return
         }
 
@@ -269,7 +271,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 let payloadData = try? JSONEncoder().encode(actionJson),
                 let actionType = GDPRActionType(rawValue: typeString)
             else {
-                onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
+                onError(error: InvalidOnActionEventPayloadError(name, body: body["body"]?.debugDescription))
                 return
             }
             onAction(GDPRAction(type: actionType, id: payload["id"] as? String, consentLanguage: consentLanguage, payload: payloadData))
@@ -282,6 +284,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 stackTrace: error["stackTrace"] as? String
             ))
         default:
+            /// TODO: This should not trigger the `onError` but we should notifiy our custom metrics endpoint
             print(message.body)
         }
     }

@@ -17,6 +17,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
+/// TODO: Refactor these to be invalid request parsing erro
 @objcMembers public class APIParsingError: GDPRConsentViewControllerError {
     private let parsingError: Error?
     private let endpoint: String
@@ -82,6 +83,29 @@ import Foundation
     override public var description: String {
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
     }
+}
+
+/// Invalid Rendering App (JSReceiver) event payloads
+@objcMembers public class InvalidEventPayloadError: GDPRConsentViewControllerError {
+    public override var failureReason: String? { description }
+    public override var spCode: String { "invalid_event_payload" }
+    public override var description: String {
+        "Could not parse the event: \(name) with body: \(body)"
+    }
+
+    let name, body: String
+
+    init(_ name: String? = nil, body: String? = nil) {
+        self.name = name ?? "<no name>"
+        self.body = body ?? "<no body>"
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+@objcMembers public class InvalidOnActionEventPayloadError: InvalidEventPayloadError {
+    public override var spCode: String { "invalid_onAction_event_payload" }
 }
 
 @objcMembers public class InvalidURLError: GDPRConsentViewControllerError {
