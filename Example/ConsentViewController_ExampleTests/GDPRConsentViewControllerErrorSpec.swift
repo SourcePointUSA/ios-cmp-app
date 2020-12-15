@@ -119,6 +119,12 @@ class GDPRConsentViewControllerErrorSpec: QuickSpec {
                 }
             }
 
+            describe("InvalidRequestError") {
+                it("has spCode: invalid_request_error") {
+                    expect(InvalidRequestError().spCode).to(equal("invalid_request_error"))
+                }
+            }
+
             it("Test APIParsingError method") {
                 let errorObject = APIParsingError(url, nil)
                 expect(errorObject.description).to(equal("Error parsing response from https://notice.sp-prod.net/?message_id=59706: nil"))

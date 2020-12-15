@@ -17,22 +17,6 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-/// TODO: Refactor these to be invalid request parsing erro
-@objcMembers public class APIParsingError: GDPRConsentViewControllerError {
-    private let parsingError: Error?
-    private let endpoint: String
-
-    init(_ endpoint: String, _ error: Error?) {
-        self.endpoint = endpoint
-        self.parsingError = error
-        super.init()
-    }
-
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
-    override public var description: String { "Error parsing response from \(endpoint): \(parsingError.debugDescription)" }
-}
-
 @objcMembers public class UnableToLoadJSReceiver: GDPRConsentViewControllerError {
     override public var description: String { "Unable to load the JSReceiver.js resource." }
 }
@@ -202,4 +186,19 @@ import Foundation
 
 @objcMembers public class ResourceNotFoundError: GenericNetworkError {
     override public var spCode: String { "resource_not_found_\(response?.statusCode ?? 400)" }
+}
+
+/// Invalid Request Error
+@objcMembers public class InvalidRequestError: GDPRConsentViewControllerError {
+    override public var spCode: String { "invalid_request_error" }
+    public override var failureReason: String? { decodingError?.failureReason ?? description }
+
+    let decodingError: DecodingError?
+
+    init(_ error: DecodingError? = nil) {
+        decodingError = error
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
