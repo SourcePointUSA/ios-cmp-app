@@ -15,7 +15,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
     var getMessageResponse: MessageResponse?
     var postActionResponse: ActionResponse?
-    var error: APIParsingError?
+    var error: GDPRConsentViewControllerError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
 

@@ -104,7 +104,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
                 context("and the response is error") {
                     it("calls the onError method on its consent delegate") {
-                        sourcePointClient.error = APIParsingError("custom-consent", nil)
+                        sourcePointClient.error = GDPRConsentViewControllerError()
                         consentViewController.customConsentTo(vendors: [], categories: [], legIntCategories: []) { _ in }
                         expect(mockConsentDelegate.isOnErrorCalled).to(beTrue())
                     }
@@ -189,7 +189,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                         describe("and the api returns an error") {
                             beforeEach {
                                 sourcePointClient.postActionResponse = nil
-                                sourcePointClient.error = APIParsingError("test", nil)
+                                sourcePointClient.error = GDPRConsentViewControllerError()
                             }
                             types.forEach { type in
                                 describe(type.description) {

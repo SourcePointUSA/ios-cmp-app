@@ -224,7 +224,7 @@ class SourcePointClientSpec: QuickSpec {
 
                 context("on failure") {
                     beforeEach {
-                        client = self.getClient(MockHttp(error: APIParsingError("foo", nil)))
+                        client = self.getClient(MockHttp(error: GDPRConsentViewControllerError()))
                     }
 
                     it("calls the completion handler with an GDPRConsentViewControllerError") {
