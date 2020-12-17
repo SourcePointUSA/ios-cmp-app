@@ -25,14 +25,14 @@ protocol SourcePointProtocol {
         euconsent: String,
         authId: String?,
         meta: Meta,
-        completionHandler: @escaping (MessageResponse?, APIParsingError?)
+        completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?)
     -> Void)
 
     func postAction(
         action: GDPRAction,
         consentUUID: GDPRUUID,
         meta: Meta,
-        completionHandler: @escaping (ActionResponse?, APIParsingError?)
+        completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?)
     -> Void)
 
     func customConsent(
@@ -40,7 +40,7 @@ protocol SourcePointProtocol {
         vendors: [String],
         categories: [String],
         legIntCategories: [String],
-        completionHandler: @escaping (CustomConsentResponse?, APIParsingError?)
+        completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?)
     -> Void)
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -111,48 +111,47 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func targetingParamsToString(_ params: TargetingParams?) -> String {
-        let emptyParams = "{}"
-        do {
-            let data = try JSONSerialization.data(withJSONObject: params!)
-            return String(data: data, encoding: .utf8) ?? emptyParams
-        } catch {
-            return emptyParams
+        guard
+            let data = try? JSONSerialization.data(withJSONObject: params ?? [:]),
+            let paramsString = String(data: data, encoding: .utf8) else {
+            return "{}"
         }
+        return paramsString
     }
 
-    // swiftlint:disable:next function_parameter_count
-    func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, APIParsingError? ) -> Void) {
-        guard let body = try? JSONEncoder().encode(MessageRequest(
-            uuid: consentUUID,
-            euconsent: euconsent,
-            authId: authId,
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyHref: propertyName,
-            campaignEnv: campaignEnv,
-            targetingParams: targetingParamsToString(targetingParams),
-            requestUUID: requestUUID,
-            meta: meta
-        )) else {
-            completionHandler(nil, APIParsingError(url.absoluteString, nil))
-            return
-        }
-        client.post(url: url, body: body) { data, error in
-            do {
-                if let messageData = data {
-                    let messageResponse = try (JSONDecoder().decode(MessageResponse.self, from: messageData))
-                    completionHandler(messageResponse, nil)
+    // swiftlint:disable:next function_parameter_count line_length
+    func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError? ) -> Void) {
+        do {
+            let body = try JSONEncoder().encode(MessageRequest(
+                uuid: consentUUID,
+                euconsent: euconsent,
+                authId: authId,
+                accountId: accountId,
+                propertyId: propertyId,
+                propertyHref: propertyName,
+                campaignEnv: campaignEnv,
+                targetingParams: targetingParamsToString(targetingParams),
+                requestUUID: requestUUID,
+                meta: meta
+            ))
+            client.post(urlString: url.absoluteString, body: body) { data, error in
+                if let error = error {
+                    completionHandler(nil, error)
                 } else {
-                    completionHandler(nil, APIParsingError(url.absoluteString, error))
+                    do {
+                        completionHandler(try JSONDecoder().decode(MessageResponse.self, from: data!), nil)
+                    } catch {
+                        completionHandler(nil, InvalidResponseWebMessageError(error as? DecodingError))
+                    }
                 }
-            } catch {
-                completionHandler(nil, APIParsingError(url.absoluteString, error))
             }
+        } catch {
+            completionHandler(nil, InvalidRequestError(error as? DecodingError))
         }
     }
 
     // swiftlint:disable:next line_length function_parameter_count
-    func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, APIParsingError?) -> Void) {
+    func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?) -> Void) {
         getMessage(
             url: native ?
                 SourcePointClient.GET_MESSAGE_CONTENTS_URL :
@@ -165,12 +164,12 @@ class SourcePointClient: SourcePointProtocol {
         )
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, APIParsingError?) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
         let url = SourcePointClient.CONSENT_URL
 
-        guard
-            let pmPayload = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
-            let body = try? JSONEncoder().encode(ActionRequest(
+        do {
+            let pmPayload = try JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload)
+            let body = try JSONEncoder().encode(ActionRequest(
                 propertyId: propertyId,
                 propertyHref: propertyName,
                 accountId: accountId,
@@ -184,21 +183,20 @@ class SourcePointClient: SourcePointProtocol {
                 meta: meta,
                 publisherData: action.publisherData,
                 consentLanguage: action.consentLanguage
-            )) else {
-                completionHandler(nil, APIParsingError(url.absoluteString, nil))
-                return
-        }
-        client.post(url: url, body: body) { data, error  in
-            do {
-                if let actionData = data {
-                    let actionResponse = try (JSONDecoder().decode(ActionResponse.self, from: actionData))
-                    completionHandler(actionResponse, nil)
+            ))
+            client.post(urlString: url.absoluteString, body: body) { data, error  in
+                if let error = error {
+                    completionHandler(nil, error)
                 } else {
-                    completionHandler(nil, APIParsingError(url.absoluteString, error))
+                    do {
+                        completionHandler(try JSONDecoder().decode(ActionResponse.self, from: data!), nil)
+                    } catch {
+                        completionHandler(nil, InvalidResponseConsentError(error as? DecodingError))
+                    }
                 }
-            } catch {
-                completionHandler(nil, APIParsingError(url.absoluteString, error))
             }
+        } catch {
+            completionHandler(nil, InvalidRequestError(error as? DecodingError))
         }
     }
 
@@ -207,28 +205,28 @@ class SourcePointClient: SourcePointProtocol {
         vendors: [String],
         categories: [String],
         legIntCategories: [String],
-        completionHandler: @escaping (CustomConsentResponse?, APIParsingError?) -> Void) {
-        guard let body = try? JSONEncoder().encode(CustomConsentRequest(
-            consentUUID: consentUUID,
-            propertyId: propertyId,
-            vendors: vendors,
-            categories: categories,
-            legIntCategories: legIntCategories
-        )) else {
-            completionHandler(nil, APIParsingError("encoding custom consent", nil))
-            return
-        }
-
-        client.post(url: SourcePointClient.CUSTOM_CONSENT_URL, body: body) { data, error in
-            guard
-                let data = data,
-                let consentsResponse = try? (JSONDecoder().decode(CustomConsentResponse.self, from: data)),
-                error == nil
-            else {
-                completionHandler(nil, APIParsingError(SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, error))
-                return
+        completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?) -> Void) {
+        do {
+            let body = try JSONEncoder().encode(CustomConsentRequest(
+                consentUUID: consentUUID,
+                propertyId: propertyId,
+                vendors: vendors,
+                categories: categories,
+                legIntCategories: legIntCategories
+            ))
+            client.post(urlString: SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, body: body) { data, error in
+                if let error = error {
+                    completionHandler(nil, error)
+                } else {
+                    do {
+                        completionHandler(try JSONDecoder().decode(CustomConsentResponse.self, from: data!), nil)
+                    } catch {
+                        completionHandler(nil, InvalidResponseConsentError(error as? DecodingError))
+                    }
+                }
             }
-            completionHandler(consentsResponse, nil)
+        } catch {
+            completionHandler(nil, InvalidRequestError(error as? DecodingError))
         }
     }
 }

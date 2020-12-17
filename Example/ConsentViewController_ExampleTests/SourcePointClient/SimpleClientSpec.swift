@@ -145,13 +145,13 @@ class SimpleClientSpec: QuickSpec {
                 }
             }
 
-            describe("when the result data from the call is nil") {
+            describe("when the error from the call is not nil") {
                 it("calls the completionHandler with the error") {
                     var error: GDPRConsentViewControllerError?
                     let session = URLSessionMock(
                         configuration: URLSessionConfiguration.default,
                         data: nil,
-                        error: GeneralRequestError(nil, nil, nil)
+                        error: GenericNetworkError(request: URLRequest(url: URL(string: "/")!), response: nil)
                     )
                     let client = SimpleClient(
                         connectivityManager: ConnectivityMock(connected: true),

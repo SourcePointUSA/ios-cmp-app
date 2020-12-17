@@ -15,7 +15,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
     var getMessageResponse: MessageResponse?
     var postActionResponse: ActionResponse?
-    var error: APIParsingError?
+    var error: GDPRConsentViewControllerError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
 
@@ -36,12 +36,12 @@ class SourcePointClientMock: SourcePointProtocol {
                     euconsent: String,
                     authId: String?,
                     meta: Meta,
-                    completionHandler: @escaping (MessageResponse?, APIParsingError?) -> Void) {
+                    completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?) -> Void) {
         getMessageCalled = true
         completionHandler(getMessageResponse, error)
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, APIParsingError?) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
         postActionCalled = true
         completionHandler(postActionResponse, error)
     }
@@ -50,7 +50,7 @@ class SourcePointClientMock: SourcePointProtocol {
                        vendors: [String],
                        categories: [String],
                        legIntCategories: [String],
-                       completionHandler: @escaping (CustomConsentResponse?, APIParsingError?) -> Void) {
+                       completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?) -> Void) {
         customConsentWasCalledWith = [
             "consentUUID": consentUUID,
             "vendors": vendors,

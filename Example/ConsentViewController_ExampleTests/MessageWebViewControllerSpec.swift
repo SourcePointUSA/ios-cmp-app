@@ -263,7 +263,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                             messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
                             messageWebViewController.webview = webviewMock
                             messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
-                            let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&consentLanguage=EN&message_id=1234"
+                            let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234&pmTab"
                             expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
                         }
                     }
@@ -369,7 +369,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
                     messageWebViewController.webview = webviewMock
                     messageWebViewController.loadPrivacyManager()
-                    let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&consentLanguage=EN&message_id=1234"
+                    let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234&pmTab"
                     expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
                 }
             }
@@ -384,8 +384,8 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         }
 
         describe("pmURL") {
-            it("returns an url with propertyId and consentUUID") {
-                let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&consentLanguage=EN")
+            it("returns an url with propertyId, consentUUID and messageId") {
+                let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234&pmTab")
                 expect(messageWebViewController.pmUrl()).to(equal(pmUrl))
             }
         }
