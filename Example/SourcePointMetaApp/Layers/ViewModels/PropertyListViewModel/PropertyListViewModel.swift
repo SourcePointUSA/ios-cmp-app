@@ -84,7 +84,7 @@ class PropertyListViewModel {
     func propertyDetails(atIndex index: Int) -> (PropertyDetailsModel?, String?) {
         if let _properties = properties, _properties.count > index {
             var targetingParamString = ""
-            let propertyDataModel = PropertyDetailsModel(accountId: _properties[index].accountId, propertyId: _properties[index].propertyId, propertyName: _properties[index].propertyName, campaign: _properties[index].campaign, privacyManagerId: _properties[index].privacyManagerId, creationTimestamp: _properties[index].creationTimestamp!, authId: _properties[index].authId, nativeMessage: _properties[index].nativeMessage)
+            let propertyDataModel = PropertyDetailsModel(accountId: _properties[index].accountId, propertyId: _properties[index].propertyId, propertyName: _properties[index].propertyName, campaign: _properties[index].campaign, privacyManagerId: _properties[index].privacyManagerId, creationTimestamp: _properties[index].creationTimestamp!, authId: _properties[index].authId, nativeMessage: _properties[index].nativeMessage, messageLanguage: _properties[index].messageLanguage)
             if let targetingParams = _properties[index].manyTargetingParams?.allObjects as! [TargetingParams]? {
                 for targetingParam in targetingParams {
                     let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)

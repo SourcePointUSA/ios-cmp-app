@@ -145,5 +145,25 @@ class PrivacyManagerUITests: QuickSpec {
             self.app.cancelButton.tap()
             expect(self.app.consentMessage).to(showUp())
         }
+
+        /**
+         @Description - User submit valid property details and tap on save then the expected consent message should display and when user click on MANAGE PREFERENCES/show options button then user will see Privacy Manager screen when user select Accept All then user will navigate to Site Info screen showing ConsentUUID, EUConsent and all Purpose Consents when user navigate back and tap on the site name And click on MANAGE PREFERENCES button from consent message then user should see all purposes are selected
+         */
+        it("Accept all from Privacy Manager via German Message") {
+            self.app.addPropertyDetails()
+            self.app.addTargetingParameter(targetingKey: self.properyData.messageLanguageTargetingKey, targetingValue: self.properyData.messageLanguageTargetingValue)
+            expect(self.app.consentMessageInGerman).to(showUp())
+            self.app.showOptionsButtonInGerman.tap()
+            expect(self.app.privacyManager).to(showUp())
+            self.app.acceptAllButton.tap()
+            expect(self.app.propertyDebugInfo).to(showUp())
+            self.app.backButton.tap()
+            expect(self.app.propertyList).to(showUp())
+            self.app.propertyItem.tap()
+            expect(self.app.consentMessageInGerman).to(showUp())
+            self.app.showOptionsButtonInGerman.tap()
+            expect(self.app.privacyManager).to(showUp())
+            self.app.testPMToggles(value: 1)
+        }
     }
 }

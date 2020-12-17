@@ -298,6 +298,10 @@ extension MetaApp: GDPRUI {
         webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'ShowOnce')")).firstMatch
     }
 
+    var consentMessageInGerman: XCUIElement {
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Wir benötigen Ihre Zustimmung'")).firstMatch
+    }
+
     var privacyManagerForAccount22: XCUIElement {
         webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Center'")).firstMatch
     }
@@ -314,12 +318,20 @@ extension MetaApp: GDPRUI {
         consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept'")).firstMatch
     }
 
+    var acceptAllButtonInGerman: XCUIElement {
+        consentMessageInGerman.buttons["Zustimmen"].firstMatch
+    }
+
     var rejectAllButton: XCUIElement {
         consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Reject'")).firstMatch
     }
 
     var showOptionsButton: XCUIElement {
         consentUI.buttons["MANAGE PREFERENCES"].firstMatch
+    }
+
+    var showOptionsButtonInGerman: XCUIElement {
+        consentMessageInGerman.buttons["Einstellungen"].firstMatch
     }
 
     var showOptionsButtonForAccount22: XCUIElement {

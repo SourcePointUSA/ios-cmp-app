@@ -62,6 +62,10 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     */
     @IBOutlet weak var noTargetingParamDataLabel: UILabel!
 
+    @IBOutlet weak var SelectLanguageOutlet: UITextField!
+
+    var pickerView = UIPickerView()
+
     /** Default campaign value is public
      */
     var campaign = GDPRCampaignEnv.Public
@@ -88,6 +92,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         setTextFieldDelegate()
+        addTapGestureRecognizer()
         targetingParamTableview.tableFooterView = UIView(frame: .zero)
         setTableViewHidden()
 
@@ -101,6 +106,9 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                 self?.privacyManagerTextField.text = propertyDetailsModel.privacyManagerId
                 if let authId = propertyDetailsModel.authId {
                     self?.authIdTextField.text = authId
+                }
+                if let messageLanguage = propertyDetailsModel.messageLanguage {
+                    self?.SelectLanguageOutlet.text = messageLanguage
                 }
                 self?.isStagingSwitchOutlet.isOn = propertyDetailsModel.campaign == 0 ? true : false
                 self?.isNativeMessageSwitch.isOn = propertyDetailsModel.nativeMessage == 1 ? true : false
@@ -131,7 +139,18 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         noTargetingParamDataLabel.isHidden = targetingParams.count > 0
     }
 
+    func addTapGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(touch))
+        recognizer.numberOfTapsRequired = 1
+        recognizer.numberOfTouchesRequired = 1
+        scrollView.addGestureRecognizer(recognizer)
+    }
+
     func setTextFieldDelegate() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        SelectLanguageOutlet.inputView = pickerView
+        SelectLanguageOutlet.text = addpropertyViewModel.countries[0]
         accountIDTextFieldOutlet.delegate = self
         propertyIdTextFieldOutlet.delegate = self
         propertyNameTextField.delegate = self
@@ -139,6 +158,19 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         privacyManagerTextField.delegate = self
         keyTextFieldOutlet.delegate = self
         valueTextFieldOutlet.delegate = self
+        SelectLanguageOutlet.delegate = self
+        let toolBar = UIToolbar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: CGFloat(44))))
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        toolBar.setItems([doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        SelectLanguageOutlet.inputAccessoryView = toolBar
+    }
+
+    @objc func done() {
+        SelectLanguageOutlet.resignFirstResponder()
     }
 
     // add targeting param value to the tableview
@@ -189,10 +221,13 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         let propertyName = propertyNameTextField.text?.trimmingCharacters(in: .whitespaces)
         let privacyManagerId = privacyManagerTextField.text?.trimmingCharacters(in: .whitespaces)
         var authId = authIdTextField.text?.trimmingCharacters(in: .whitespaces)
+        var messageLanguage = SelectLanguageOutlet.text?.trimmingCharacters(in: .whitespaces)
         if authId?.isEmpty ?? true {
             authId = nil
         }
-
+        if messageLanguage?.isEmpty ?? true {
+            messageLanguage = nil
+        }
         if addpropertyViewModel.validatepropertyDetails(accountID: accountIDString, propertyId: propertyId, propertyName: propertyName, privacyManagerId: privacyManagerId) {
             guard let accountIDText = accountIDString, let accountID = Int64(accountIDText),
                 let propertyIDText = propertyId, let propertyID = Int64(propertyIDText) else {
@@ -202,7 +237,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                     AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountIdAndPropertyId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     return
             }
-            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId, nativeMessage: Int64(truncating: NSNumber(value: isNativeMessageSwitch.isOn)))
+            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId, nativeMessage: Int64(truncating: NSNumber(value: isNativeMessageSwitch.isOn)), messageLanguage: messageLanguage)
 
             if let propertyDetails = propertyDetailsModel {
                 checkExitanceOfpropertyData(propertyDetails: propertyDetails)
@@ -235,6 +270,9 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        if let messageLanguage = propertyDetails.messageLanguage {
+            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+        }
         isNativeMessageSwitch.isOn ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
             consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }
@@ -366,6 +404,17 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         }
         return true
     }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == SelectLanguageOutlet {
+            return false
+        }
+        return true
+    }
+
+    @objc func touch() {
+        self.view.endEditing(true)
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -393,5 +442,23 @@ extension AddPropertyViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         targetingParamTableview.deselectRow(at: indexPath, animated: false)
+    }
+}
+
+extension AddPropertyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return addpropertyViewModel.countries.count
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return addpropertyViewModel.countries[row]
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        SelectLanguageOutlet.text = addpropertyViewModel.countries[row]
     }
 }
