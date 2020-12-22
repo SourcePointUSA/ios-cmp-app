@@ -15,7 +15,7 @@ class MockHttp: HttpClient {
     var success: Data?
     var error: Error?
 
-    init(success: Data?) {
+    init(success: Data? = nil) {
         self.success = success
     }
 
