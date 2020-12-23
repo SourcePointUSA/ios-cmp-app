@@ -112,6 +112,7 @@
 		80DEBE41D84FBA1C4D4FE00C8D797E82 /* CwlPreconditionTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E944D1EA17AE5FF617FBD54A491849B /* CwlPreconditionTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8260C8AC2591F89000CB4E6B /* ErrorMetricsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260C8AB2591F89000CB4E6B /* ErrorMetricsRequest.swift */; };
 		8260C8BD2591FD0B00CB4E6B /* SPLegislation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260C8BC2591FD0B00CB4E6B /* SPLegislation.swift */; };
+		82AC4A712593477700817B65 /* SPDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A702593477700817B65 /* SPDeviceManager.swift */; };
 		83976C4AC81DBA1656F1358F25032074 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0F422CBF8B8DF8CA6AC6CE5FD14B9 /* World.swift */; };
 		853E4026DDF1D89422F4B4E95C6A61C0 /* SPGDPRArbitraryJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2181AEB20901417C1886AD1451515B4 /* SPGDPRArbitraryJson.swift */; };
 		874381421922C8BEFDF43C52533331EF /* Pods-SourcePointMetaAppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B68CC3ED4F885758D6A04F6E2E48FCD7 /* Pods-SourcePointMetaAppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -508,6 +509,7 @@
 		8260C8AB2591F89000CB4E6B /* ErrorMetricsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMetricsRequest.swift; sourceTree = "<group>"; };
 		8260C8BC2591FD0B00CB4E6B /* SPLegislation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPLegislation.swift; sourceTree = "<group>"; };
 		826812D2445C9D32D8DD44B307A109F1 /* ConsentViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController-umbrella.h"; sourceTree = "<group>"; };
+		82AC4A702593477700817B65 /* SPDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SPDeviceManager.swift; path = ConsentViewController/Classes/SPDeviceManager.swift; sourceTree = "<group>"; };
 		842EFC6E202CD7DDBC3FEAF194A263EB /* HaveCount.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HaveCount.swift; path = Sources/Nimble/Matchers/HaveCount.swift; sourceTree = "<group>"; };
 		849853560FACBBAFF278E017EDF7F4C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		87F52123A0B2F891277E0CFF9A267D9B /* Pods_AuthExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -964,6 +966,7 @@
 				4EFD9A9519DAAEEC8548C6F198F6D2D6 /* SourcePointClient */,
 				9403064A56339604A18C61BEE7F41020 /* Support Files */,
 				8260C8BC2591FD0B00CB4E6B /* SPLegislation.swift */,
+				82AC4A702593477700817B65 /* SPDeviceManager.swift */,
 			);
 			name = ConsentViewController;
 			path = ../..;
@@ -2099,6 +2102,7 @@
 				D14B53D16411CA9783F9DE537EFA6035 /* OSLogger.swift in Sources */,
 				3EB5C215C52697A53B9EBA20F3C45000 /* SimpleClient.swift in Sources */,
 				591C9C32F166FAA14CDB35E2AA4FEB0F /* SourcePointClient.swift in Sources */,
+				82AC4A712593477700817B65 /* SPDeviceManager.swift in Sources */,
 				853E4026DDF1D89422F4B4E95C6A61C0 /* SPGDPRArbitraryJson.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
