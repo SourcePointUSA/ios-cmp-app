@@ -12,9 +12,12 @@ public typealias TargetingParams = [String: String]
 public typealias GDPRUUID = String
 typealias Meta = String
 
-// swiftlint:disable type_body_length file_length
+// swiftlint:disable type_body_length
 
 @objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
+    /// The version of the SDK. It should mirror the version from podspec.
+    static public let VERSION = "5.3.3"
+
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
     static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
     static let EU_CONSENT_KEY = "\(SP_GDPR_KEY_PREFIX)euconsent"
