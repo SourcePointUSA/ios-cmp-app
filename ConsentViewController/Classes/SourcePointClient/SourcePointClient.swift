@@ -43,6 +43,14 @@ protocol SourcePointProtocol {
         completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?)
     -> Void)
 
+    func errorMetrics(
+        _ error: GDPRConsentViewControllerError,
+        sdkVersion: String,
+        OSVersion: String,
+        deviceFamily: String,
+        legislation: SPLegislation
+    )
+
     func setRequestTimeout(_ timeout: TimeInterval)
 }
 

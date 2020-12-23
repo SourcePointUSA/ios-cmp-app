@@ -78,6 +78,7 @@ typealias Meta = String
     let pmId: String
     let targetingParams: TargetingParams
     let sourcePoint: SourcePointProtocol
+    let deviceManager: SPDeviceManager
     lazy var logger = { return OSLogger() }()
     var messageViewController: GDPRMessageViewController?
     var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
@@ -108,10 +109,11 @@ typealias Meta = String
         propertyName: GDPRPropertyName,
         PMId: String,
         campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams,
+        targetingParams: TargetingParams = [:],
         consentDelegate: GDPRConsentDelegate,
         sourcePointClient: SourcePointProtocol,
-        localStorage: GDPRLocalStorage
+        localStorage: GDPRLocalStorage = GDPRUserDefaults(),
+        deviceManager: SPDeviceManager = SPDevice()
     ) {
         self.accountId = accountId
         self.propertyName = propertyName
@@ -121,6 +123,7 @@ typealias Meta = String
         self.consentDelegate = consentDelegate
         self.sourcePoint = sourcePointClient
         self.localStorage = localStorage
+        self.deviceManager = deviceManager
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .overFullScreen
 
@@ -144,8 +147,8 @@ typealias Meta = String
         propertyId: Int,
         propertyName: GDPRPropertyName,
         PMId: String,
-        campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams,
+        campaignEnv: GDPRCampaignEnv = .Public,
+        targetingParams: TargetingParams = [:],
         consentDelegate: GDPRConsentDelegate
     ) {
         let sourcePoint = SourcePointClient(
@@ -165,36 +168,7 @@ typealias Meta = String
             campaignEnv: campaignEnv,
             targetingParams: targetingParams,
             consentDelegate: consentDelegate,
-            sourcePointClient: sourcePoint,
-            localStorage: GDPRUserDefaults()
-        )
-    }
-
-    /**
-       - Parameters:
-           - accountId: the id of your account, can be found in the Account section of SourcePoint's dashboard
-           - propertyId: the id of your property, can be found in the property page of SourcePoint's dashboard
-           - propertyName: the exact name of your property,
-           -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
-           -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
-           -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
-       - SeeAlso: ConsentDelegate
-    */
-    public convenience init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: GDPRPropertyName,
-        PMId: String,
-        campaignEnv: GDPRCampaignEnv,
-        consentDelegate: GDPRConsentDelegate) {
-        self.init(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            PMId: PMId,
-            campaignEnv: campaignEnv,
-            targetingParams: [:],
-            consentDelegate: consentDelegate
+            sourcePointClient: sourcePoint
         )
     }
 
@@ -391,6 +365,13 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onError(error: GDPRConsentViewControllerError) {
         loading = .Ready
         if shouldCleanConsentOnError { clearIABConsentData() }
+        sourcePoint.errorMetrics(
+            error,
+            sdkVersion: GDPRConsentViewController.VERSION,
+            OSVersion: deviceManager.osVersion(),
+            deviceFamily: deviceManager.deviceFamily(),
+            legislation: .GDPR
+        )
         consentDelegate?.onError?(error: error)
     }
 
