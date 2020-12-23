@@ -13,7 +13,7 @@ protocol SPDeviceManager {
 }
 
 struct SPDevice: SPDeviceManager {
-    /// Returns he Version of the OS. E.g 1.2
+    /// Returns the Version of the OS. E.g 1.2
     /// - SeeAlso: UIDevice.current.systemVersion
     func osVersion() -> String {
         return UIDevice.current.systemVersion
