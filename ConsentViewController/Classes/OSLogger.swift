@@ -9,82 +9,39 @@ import Foundation
 import os
 
 protocol SPLogger {
-    func log(_ message: String)
-    func debug(_ message: String)
-    func error(_ message: String)
+    func log(_ message: String, _ args: [String: String])
+    func debug(_ message: String, _ args: [String: String])
+    func error(_ message: String, _ args: [String: String])
 }
 
-class OSLogger: SPLogger {
-    static let TOO_MANY_ARGS_ERROR = StaticString("Cannot log messages with more than 5 argumetns")
+struct OSLogger: SPLogger {
     static let category = "GPDRConsent"
 
-    let consentLog: OSLog?
-
-    init(category: String) {
+    var consentLog: OSLog? {
         if #available(iOS 10.0, *) {
-            consentLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: category)
+            return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: OSLogger.category)
         } else {
-            consentLog = nil
-        }
-    }
-    
-    convenience init() {
-        self.init(category: OSLogger.category)
-    }
-
-    func log(_ message: String) {
-        log("%s", [message])
-    }
-
-    func debug(_ message: String) {
-        log("%s", [message])
-    }
-
-    func error(_ message: String) {
-        log("%s", [message])
-    }
-
-    func log(_ message: StaticString, _ args: [CVarArg]) {
-        if #available(iOS 10.0, *) {
-            switch args.count {
-                case 0: log(message)
-                case 1: log(message, args[0])
-                case 2: log(message, args[0], args[1])
-                case 3: log(message, args[0], args[1], args[2])
-                case 4: log(message, args[0], args[1], args[2], args[3])
-                case 5: log(message, args[0], args[1], args[2], args[3], args[4])
-                default:
-                    print(OSLogger.TOO_MANY_ARGS_ERROR)
-                    os_log(OSLogger.TOO_MANY_ARGS_ERROR)
-            }
-        } else {
-            print(message)
+            return nil
         }
     }
 
-    //  It's not possible to forward variadic parameters in Swift so this is a gross workaround
-    @available(iOS 10.0, *)
-    private func log(_ message: StaticString) {
-        os_log(message, log: consentLog!, type: .default)
+    func log(_ message: String, _ args: [String: String] = [:]) {
+        osLog("%s", [message, args])
     }
-    @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg) {
-        os_log(message, log: consentLog!, type: .default, a)
+
+    func debug(_ message: String, _ args: [String: String] = [:]) {
+        osLog("%s", [message, args])
     }
-    @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg) {
-        os_log(message, log: consentLog!, type: .default, a, b)
+
+    func error(_ message: String, _ args: [String: String] = [:]) {
+        osLog("%s", [message, args])
     }
-    @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg, _ c: CVarArg) {
-        os_log(message, log: consentLog!, type: .default, a, b, c)
-    }
-    @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg, _ c: CVarArg, _ d: CVarArg) {
-        os_log(message, log: consentLog!, type: .default, a, b, c, d)
-    }
-    @available(iOS 10.0, *)
-    private func log(_ message: StaticString, _ a: CVarArg, _ b: CVarArg, _ c: CVarArg, _ d: CVarArg, _ e: CVarArg) {
-        os_log(message, log: consentLog!, type: .default, a, b, c, d, e)
+
+    private func osLog(_ message: StaticString, _ args: CVarArg) {
+        if #available(iOS 10, *), let consentLog = consentLog {
+            os_log(message, log: consentLog, type: .default, args)
+        } else {
+            print(message, args)
+        }
     }
 }
