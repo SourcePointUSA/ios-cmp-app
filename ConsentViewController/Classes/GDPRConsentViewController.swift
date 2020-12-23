@@ -234,7 +234,7 @@ typealias Meta = String
                         self?.handleNativeMessageResponse(messageResponse) :
                         self?.handleWebMessageResponse(messageResponse)
                 } else {
-                    self?.onError(error: error)
+                    self?.onError(error: error ?? GDPRConsentViewControllerError())
                 }
             }
         }
@@ -315,7 +315,7 @@ typealias Meta = String
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
         sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
             guard let response = response, error == nil else {
-                self?.consentDelegate?.onError?(error: error)
+                self?.onError(error: error ?? GDPRConsentViewControllerError())
                 return
             }
 
@@ -342,7 +342,7 @@ typealias Meta = String
         legIntCategories: [String],
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
         if gdprUUID.isEmpty {
-            consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
+            onError(error: PostingConsentWithoutConsentUUID())
             return
         }
 
@@ -363,7 +363,7 @@ typealias Meta = String
                 self?.localStorage.meta = actionResponse.meta
                 self?.onConsentReady(gdprUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
             } else {
-                self?.onError(error: error)
+                self?.onError(error: error ?? GDPRConsentViewControllerError())
             }
         }
     }
@@ -385,7 +385,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         consentDelegate?.consentUIDidDisappear?()
     }
 
-    public func onError(error: GDPRConsentViewControllerError?) {
+    public func onError(error: GDPRConsentViewControllerError) {
         loading = .Ready
         if shouldCleanConsentOnError { clearIABConsentData() }
         consentDelegate?.onError?(error: error)

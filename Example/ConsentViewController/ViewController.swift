@@ -88,7 +88,7 @@ extension ViewController: GDPRConsentDelegate {
         updateCustomVendorUI()
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         print("Error: \(error.debugDescription)")
     }
 }
