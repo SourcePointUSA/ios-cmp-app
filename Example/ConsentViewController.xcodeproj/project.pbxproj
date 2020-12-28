@@ -106,6 +106,7 @@
 		82813A6A248A69F000521571 /* GDPRCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* GDPRCampaignEnvSpec.swift */; };
 		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
+		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
 		82B224182580D5D60032BC49 /* GDPRURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B224172580D5D60032BC49 /* GDPRURLExtensionsSpec.swift */; };
 		82CC8CD824ACF6970030B28B /* MessageRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */; };
 		82D8FEDF23DC753400F28D74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8FEDE23DC753400F28D74 /* AppDelegate.swift */; };
@@ -288,6 +289,7 @@
 		82813A69248A69F000521571 /* GDPRCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRCampaignEnvSpec.swift; sourceTree = "<group>"; };
 		82A99CC2255D956400A85024 /* 404.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = 404.html; sourceTree = "<group>"; };
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceSpec.swift; sourceTree = "<group>"; };
 		82ACF6AB2487E73C006E207A /* GDPRUserDefaultsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRUserDefaultsSpec.swift; sourceTree = "<group>"; };
 		82B224172580D5D60032BC49 /* GDPRURLExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRURLExtensionsSpec.swift; sourceTree = "<group>"; };
 		82CC8B8224F6680600D94AA7 /* SPGDPRExampleAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SPGDPRExampleAppDebug.entitlements; sourceTree = "<group>"; };
@@ -1003,6 +1005,7 @@
 				82813A69248A69F000521571 /* GDPRCampaignEnvSpec.swift */,
 				82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */,
 				82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */,
+				82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
@@ -1937,6 +1940,7 @@
 				6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */,
 				6DC1CD412427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift in Sources */,
 				6D605DF42423523700BB3E5F /* GDPRMessageViewControllerSpec.swift in Sources */,
+				82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */,
 				826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */,
 				8248A499247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift in Sources */,
 				82F8B1AA24EBC7560055F430 /* ActionRequestSpec.swift in Sources */,

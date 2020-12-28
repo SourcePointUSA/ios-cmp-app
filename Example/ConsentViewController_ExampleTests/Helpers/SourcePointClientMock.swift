@@ -18,6 +18,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var error: GDPRConsentViewControllerError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
+    var errorMetricsCalledWith: [String: Any?]!
 
     convenience init() {
         self.init(accountId: 0, propertyId: 0, propertyName: try! GDPRPropertyName("test"), pmId: "", campaignEnv: .Stage, targetingParams: [:], timeout: 0.0)
@@ -58,6 +59,16 @@ class SourcePointClientMock: SourcePointProtocol {
             "legIntCategories": legIntCategories
         ]
         completionHandler(customConsentResponse, error)
+    }
+
+    func errorMetrics(_ error: GDPRConsentViewControllerError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPLegislation) {
+        errorMetricsCalledWith = [
+            "error": error,
+            "sdkVersion": sdkVersion,
+            "OSVersion": OSVersion,
+            "deviceFamily": deviceFamily,
+            "legislation": legislation
+        ]
     }
 
     func setRequestTimeout(_ timeout: TimeInterval) {}

@@ -126,7 +126,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         consentDelegate?.consentUIDidDisappear?()
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         consentDelegate?.onError?(error: error)
         closeConsentUIIfOpen()
     }
