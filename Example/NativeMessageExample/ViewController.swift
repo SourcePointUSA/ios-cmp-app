@@ -29,6 +29,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        consentViewController.privacyManagerTab = .VendorsTab
         consentViewController.loadNativeMessage(forAuthId: nil)
     }
 }

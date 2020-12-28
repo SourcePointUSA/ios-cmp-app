@@ -87,4 +87,12 @@ extension NativeExampleApp: GDPRUI {
     var PersonalisedContentSwitch: XCUIElement {
         privacyManager.switches["Select personalised content"].firstMatch
     }
+
+    var VibrantMediaLimitedVendorSwitch: XCUIElement {
+        privacyManager.switches["Vibrant Media Limited"].firstMatch
+    }
+
+    var GoogleVendorSwitch: XCUIElement {
+        privacyManager.switches["Google, Inc."].firstMatch
+    }
 }
