@@ -64,6 +64,10 @@ typealias Meta = String
     /// By default the SDK will use the locale defined by the WebView
     public var messageLanguage = MessageLanguage.BrowserDefault
 
+    /// Instructs the privacy manager to be displayed with this tab.
+    /// By default the SDK will use the defult tab of PM
+    public var privacyManagerTab = PrivacyManagerTab.DefaultTab
+
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
@@ -227,6 +231,7 @@ typealias Meta = String
             pmId: pmId,
             consentUUID: gdprUUID,
             messageLanguage: messageLanguage,
+            pmTab: privacyManagerTab,
             timeout: messageTimeoutInSeconds
         )
         messageViewController?.consentDelegate = self
@@ -264,6 +269,7 @@ typealias Meta = String
                 pmId: pmId,
                 consentUUID: gdprUUID,
                 messageLanguage: messageLanguage,
+                pmTab: privacyManagerTab,
                 timeout: messageTimeoutInSeconds
             )
             messageViewController?.consentDelegate = self
