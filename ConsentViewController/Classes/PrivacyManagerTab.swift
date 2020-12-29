@@ -10,8 +10,8 @@ import Foundation
 /// Supported privacy manager tabs in PM
 public enum PrivacyManagerTab: String, CaseIterable {
     /// having it empty string instructs the rendering app to use the defult tab of PM
-    case DefaultTab = ""
-    case PurposesTab = "purposes"
-    case VendorsTab = "vendors"
-    case FeaturesTab = "features"
+    case Default = ""
+    case Purposes = "purposes"
+    case Vendors = "vendors"
+    case Features = "features"
 }

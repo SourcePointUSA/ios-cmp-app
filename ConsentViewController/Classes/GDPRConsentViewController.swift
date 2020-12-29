@@ -66,7 +66,7 @@ typealias Meta = String
 
     /// Instructs the privacy manager to be displayed with this tab.
     /// By default the SDK will use the defult tab of PM
-    public var privacyManagerTab = PrivacyManagerTab.DefaultTab
+    public var privacyManagerTab = PrivacyManagerTab.Default
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true

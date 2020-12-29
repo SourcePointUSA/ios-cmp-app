@@ -15,25 +15,25 @@ class PrivacyManagerTabSpec: QuickSpec {
     override func spec() {
 
         describe("PrivacyManagerTab") {
-            context("DefaultTab") {
+            context("Default") {
                 it("has the empty raw value") {
                     expect(PrivacyManagerTab.DefaultTab.rawValue).to(equal(""))
                 }
             }
 
-            context("PurposesTab") {
+            context("Purposes") {
                 it("has the raw value 'purposes'") {
                     expect(PrivacyManagerTab.PurposesTab.rawValue).to(equal("purposes"))
                 }
             }
 
-            context("VendorsTab") {
+            context("Vendors") {
                 it("has the raw value 'vendors'") {
                     expect(PrivacyManagerTab.VendorsTab.rawValue).to(equal("vendors"))
                 }
             }
 
-            context("FeaturesTab") {
+            context("Features") {
                 it("has the raw value 'features'") {
                     expect(PrivacyManagerTab.FeaturesTab.rawValue).to(equal("features"))
                 }
