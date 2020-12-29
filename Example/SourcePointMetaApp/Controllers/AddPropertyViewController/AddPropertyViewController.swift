@@ -64,7 +64,11 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
 
     @IBOutlet weak var SelectLanguageOutlet: UITextField!
 
-    var pickerView = UIPickerView()
+    @IBOutlet weak var PMTabOutlet: UITextField!
+
+    var messageLanguagePickerView = UIPickerView()
+
+    var pmTabPickerView = UIPickerView()
 
     /** Default campaign value is public
      */
@@ -147,10 +151,14 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     }
 
     func setTextFieldDelegate() {
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        SelectLanguageOutlet.inputView = pickerView
+        messageLanguagePickerView.delegate = self
+        messageLanguagePickerView.dataSource = self
+        pmTabPickerView.delegate = self
+        pmTabPickerView.dataSource = self
+        SelectLanguageOutlet.inputView = messageLanguagePickerView
         SelectLanguageOutlet.text = addpropertyViewModel.countries[0]
+        PMTabOutlet.inputView = pmTabPickerView
+        PMTabOutlet.text = addpropertyViewModel.pmTabs[0]
         accountIDTextFieldOutlet.delegate = self
         propertyIdTextFieldOutlet.delegate = self
         propertyNameTextField.delegate = self
@@ -159,6 +167,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         keyTextFieldOutlet.delegate = self
         valueTextFieldOutlet.delegate = self
         SelectLanguageOutlet.delegate = self
+        PMTabOutlet.delegate = self
         let toolBar = UIToolbar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: CGFloat(44))))
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
@@ -167,10 +176,12 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         toolBar.setItems([doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         SelectLanguageOutlet.inputAccessoryView = toolBar
+        PMTabOutlet.inputAccessoryView = toolBar
     }
 
     @objc func done() {
         SelectLanguageOutlet.resignFirstResponder()
+        PMTabOutlet.resignFirstResponder()
     }
 
     // add targeting param value to the tableview
@@ -221,12 +232,10 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         let propertyName = propertyNameTextField.text?.trimmingCharacters(in: .whitespaces)
         let privacyManagerId = privacyManagerTextField.text?.trimmingCharacters(in: .whitespaces)
         var authId = authIdTextField.text?.trimmingCharacters(in: .whitespaces)
-        var messageLanguage = SelectLanguageOutlet.text?.trimmingCharacters(in: .whitespaces)
+        let messageLanguage = SelectLanguageOutlet.text?.trimmingCharacters(in: .whitespaces)
+        let pmTab = PMTabOutlet.text?.trimmingCharacters(in: .whitespaces)
         if authId?.isEmpty ?? true {
             authId = nil
-        }
-        if messageLanguage?.isEmpty ?? true {
-            messageLanguage = nil
         }
         if addpropertyViewModel.validatepropertyDetails(accountID: accountIDString, propertyId: propertyId, propertyName: propertyName, privacyManagerId: privacyManagerId) {
             guard let accountIDText = accountIDString, let accountID = Int64(accountIDText),
@@ -237,7 +246,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                     AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountIdAndPropertyId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                     return
             }
-            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId, nativeMessage: Int64(truncating: NSNumber(value: isNativeMessageSwitch.isOn)), messageLanguage: messageLanguage)
+            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyId: propertyID, propertyName: propertyName, campaign: Int64(campaign.rawValue), privacyManagerId: privacyManagerId, creationTimestamp: Date(), authId: authId, nativeMessage: Int64(truncating: NSNumber(value: isNativeMessageSwitch.isOn)), messageLanguage: messageLanguage, pmTab: pmTab)
 
             if let propertyDetails = propertyDetailsModel {
                 checkExitanceOfpropertyData(propertyDetails: propertyDetails)
@@ -272,6 +281,11 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
         if let messageLanguage = propertyDetails.messageLanguage {
             consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+        }
+        if isNativeMessageSwitch.isOn {
+            if let pmTab = propertyDetails.pmTab {
+                consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: pmTab)
+            }
         }
         isNativeMessageSwitch.isOn ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
             consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
@@ -332,12 +346,12 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         hideIndicator()
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
         }
-        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error?.description ?? "Something Went Wrong", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description , actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 
     private func dismissPrivacyManager() {
@@ -408,6 +422,8 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == SelectLanguageOutlet {
             return false
+        }else if textField == PMTabOutlet {
+            return false
         }
         return true
     }
@@ -451,14 +467,26 @@ extension AddPropertyViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return addpropertyViewModel.countries.count
+        if pickerView == messageLanguagePickerView {
+            return addpropertyViewModel.countries.count
+        } else {
+            return addpropertyViewModel.pmTabs.count
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return addpropertyViewModel.countries[row]
+        if pickerView == messageLanguagePickerView {
+            return addpropertyViewModel.countries[row]
+        } else {
+            return addpropertyViewModel.pmTabs[row]
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        SelectLanguageOutlet.text = addpropertyViewModel.countries[row]
+        if pickerView == messageLanguagePickerView {
+            SelectLanguageOutlet.text = addpropertyViewModel.countries[row]
+        } else {
+            PMTabOutlet.text = addpropertyViewModel.pmTabs[row]
+        }
     }
 }

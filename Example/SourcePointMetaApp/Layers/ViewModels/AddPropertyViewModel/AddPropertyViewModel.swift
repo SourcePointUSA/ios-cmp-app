@@ -16,6 +16,7 @@ class AddPropertyViewModel {
     private var storageCoordinator: PropertyDetailsStorageCoordinator = PropertyDetailsStorageCoordinator()
 
     var countries = ["BrowserDefault", "English", "Bulgarian", "Catalan", "Chinese", "Croatian", "Czech", "Danish", "Dutch", "Estonian", "Finnish", "French", "Gaelic", "German", "Greek", "Hungarian", "Icelandic", "Italian", "Japanese", "Latvian", "Lithuanian", "Norwegian", "Polish", "Portuguese", "Romanian", "Russian", "Serbian_Cyrillic", "Serbian_Latin", "Slovakian", "Slovenian", "Spanish", "Swedish", "Turkish"]
+    var pmTabs = ["Default", "Purposes", "Vendors", "Features"]
 
     // MARK: - Initializers
 
@@ -119,6 +120,21 @@ class AddPropertyViewModel {
             return true
         } else {
             return false
+        }
+    }
+
+    func getPMTab(pmTab: String) -> PrivacyManagerTab {
+        switch pmTab {
+        case "Default":
+            return .Default
+        case "Purposes":
+            return .Purposes
+        case "Features":
+            return .Features
+        case "Vendors":
+            return .Vendors
+        default:
+            return .Default
         }
     }
 
