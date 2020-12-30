@@ -111,9 +111,8 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
                 if let authId = propertyDetailsModel.authId {
                     self?.authIdTextField.text = authId
                 }
-                if let messageLanguage = propertyDetailsModel.messageLanguage {
-                    self?.SelectLanguageOutlet.text = messageLanguage
-                }
+                self?.SelectLanguageOutlet.text = propertyDetailsModel.messageLanguage
+                self?.PMTabOutlet.text = propertyDetailsModel.pmId
                 self?.isStagingSwitchOutlet.isOn = propertyDetailsModel.campaign == 0 ? true : false
                 self?.isNativeMessageSwitch.isOn = propertyDetailsModel.nativeMessage == 1 ? true : false
                 if let targetingParams = propertyDetailsModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
@@ -282,11 +281,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         if let messageLanguage = propertyDetails.messageLanguage {
             consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
         }
-        if isNativeMessageSwitch.isOn {
-            if let pmTab = propertyDetails.pmTab {
-                consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: pmTab)
-            }
-        }
+        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
         isNativeMessageSwitch.isOn ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
             consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }

@@ -267,6 +267,7 @@
 		6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityManagerSpec.swift; sourceTree = "<group>"; };
 		6DB561ED24269470008501AC /* GDPRMessageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRMessageSpec.swift; sourceTree = "<group>"; };
 		6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRNativeMessageViewControllerSpec.swift; sourceTree = "<group>"; };
+		6DE0222E259B40E100414510 /* SourcePointMetaApp 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SourcePointMetaApp 4.xcdatamodel"; sourceTree = "<group>"; };
 		7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaAppValidationUITests.swift; sourceTree = "<group>"; };
 		8214B277249CC13B00167BFE /* SPGDPRExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPGDPRExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGDPRExampleAppUITests.swift; sourceTree = "<group>"; };
@@ -2748,11 +2749,12 @@
 		1997B679238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6DE0222E259B40E100414510 /* SourcePointMetaApp 4.xcdatamodel */,
 				6D9DD70E2578BABF003468B8 /* SourcePointMetaApp 3.xcdatamodel */,
 				6D0207552519FD72002D1488 /* SourcePointMetaApp 2.xcdatamodel */,
 				1997B67A238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodel */,
 			);
-			currentVersion = 6D9DD70E2578BABF003468B8 /* SourcePointMetaApp 3.xcdatamodel */;
+			currentVersion = 6DE0222E259B40E100414510 /* SourcePointMetaApp 4.xcdatamodel */;
 			path = SourcePointMetaApp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
