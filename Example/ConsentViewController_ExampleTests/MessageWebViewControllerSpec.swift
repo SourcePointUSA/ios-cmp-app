@@ -22,7 +22,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
         beforeEach {
             mockConsentDelegate = MockConsentDelegate()
-            messageWebViewController = MessageWebViewController(propertyId: 1, pmId: "1234", consentUUID: "uuid", messageLanguage: .English, pmTab: .PurposesTab, timeout: 1)
+            messageWebViewController = MessageWebViewController(propertyId: 1, pmId: "1234", consentUUID: "uuid", messageLanguage: .English, pmTab: .Purposes, timeout: 1)
             messageWebViewController.consentDelegate = mockConsentDelegate
         }
 
