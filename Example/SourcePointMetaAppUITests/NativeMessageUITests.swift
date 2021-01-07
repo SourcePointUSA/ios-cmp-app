@@ -108,11 +108,13 @@ class NativeMessageUITests: QuickSpec {
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesTab.tap()
             self.app.testNativeMessagePMToggles(value: 0)
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesTab.tap()
             self.app.testNativeMessagePMToggles(value: 1)
         }
 
@@ -124,11 +126,13 @@ class NativeMessageUITests: QuickSpec {
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesTab.tap()
             self.app.testNativeMessagePMToggles(value: 1)
             self.app.rejectAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesTab.tap()
             self.app.testNativeMessagePMToggles(value: 0)
         }
 
@@ -156,6 +160,7 @@ class NativeMessageUITests: QuickSpec {
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesTab.tap()
             self.app.testNativeMessagePMToggles(value: 1)
             self.app.DeviceInformationSwitch.tap()
             self.app.PersonalisedAdsSwitch.tap()
@@ -163,6 +168,7 @@ class NativeMessageUITests: QuickSpec {
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesTab.tap()
             self.app.testNativeMessagePMToggles(value: 0)
         }
 
@@ -174,6 +180,7 @@ class NativeMessageUITests: QuickSpec {
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.purposesTab.tap()
             self.app.DeviceInformationSwitch.tap()
             self.app.PersonalisedAdsSwitch.tap()
             self.app.cancelButton.tap()

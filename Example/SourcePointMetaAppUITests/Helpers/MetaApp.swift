@@ -68,11 +68,11 @@ class MetaApp: XCUIApplication {
     }
     
     var wrongPropertyIdValidationItem: XCUIElement {
-           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Error parsing response from'")).firstMatch
+           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'The SDK got an unexpected response from /message-url endpoint'")).firstMatch
     }
     
     var wrongPMValidationItem: XCUIElement {
-              staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Could not load PM with id'")).firstMatch
+              staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Something went wrong in the SDK'")).firstMatch
     }
 
     var deletePropertyButton: XCUIElement {
@@ -348,6 +348,10 @@ extension MetaApp: GDPRUI {
 
     var dismissMessageButton: XCUIElement {
         staticTexts["X"].firstMatch
+    }
+
+    var purposesTab: XCUIElement {
+        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
     }
 
     var termsAndConditionsLink: XCUIElement {
