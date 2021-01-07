@@ -18,11 +18,7 @@ struct OSLogger: SPLogger {
     static let category = "GPDRConsent"
 
     var consentLog: OSLog? {
-        if #available(iOS 10.0, *) {
-            return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: OSLogger.category)
-        } else {
-            return nil
-        }
+        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: OSLogger.category)
     }
 
     func log(_ message: String, _ args: [String: String] = [:]) {
@@ -38,7 +34,7 @@ struct OSLogger: SPLogger {
     }
 
     private func osLog(_ message: StaticString, _ args: CVarArg) {
-        if #available(iOS 10, *), let consentLog = consentLog {
+        if let consentLog = consentLog {
             os_log(message, log: consentLog, type: .default, args)
         } else {
             print(message, args)
