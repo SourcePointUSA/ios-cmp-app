@@ -176,12 +176,12 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         self.hideIndicator()
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
         }
-        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error?.description ?? "Something Went Wrong", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 
     private func dismissPrivacyManager() {

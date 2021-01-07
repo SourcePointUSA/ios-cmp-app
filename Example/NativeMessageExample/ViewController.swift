@@ -71,9 +71,9 @@ extension ViewController: GDPRConsentDelegate {
         }
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         stopActivityIndicator()
-        print("ERROR: ", error?.description ?? "<empty>")
+        print("ERROR: ", error.description)
     }
 }
 
