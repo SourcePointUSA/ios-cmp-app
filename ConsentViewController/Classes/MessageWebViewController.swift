@@ -157,12 +157,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
            let urlComponents = URLComponents(string: pm_url)?.queryItems {
             pmId = urlComponents.first { $0.name == "message_id" }?.value ?? pmId
             if pmTab == .Default {
-                for pmTab in PrivacyManagerTab.allCases {
-                    if pmTab.rawValue == urlComponents.first(where: { $0.name == "pmTab" })?.value {
-                        self.pmTab = pmTab
-                        break
-                    }
-                }
+                pmTab = PrivacyManagerTab.init(rawValue: urlComponents.first { $0.name == "pmTab" }?.value ?? "") ?? .Default
             }
         }
     }
