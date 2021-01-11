@@ -8,6 +8,16 @@
 import UIKit
 import WebKit
 
+protocol RenderingApp {
+    func loadMessage(
+        msgJson: SPGDPRArbitraryJson?,
+        actions: SPGDPRArbitraryJson?,
+        choiceOptions: SPGDPRArbitraryJson?,
+        stackInfo: SPGDPRArbitraryJson?,
+        siteId: Int
+    )
+}
+
 /**
  MessageWebViewController is responsible for loading the consent message and privacy manager through a webview.
 
@@ -55,16 +65,18 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var consentUILoaded = false
     var isPMLoaded = false
     let timeout: TimeInterval
+    let readyForPreload: (_ renderingApp: RenderingApp) -> Void
     var connectivityManager: Connectivity = ConnectivityManager()
     let messageLanguage: MessageLanguage
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, pmTab: PrivacyManagerTab, timeout: TimeInterval) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, pmTab: PrivacyManagerTab, timeout: TimeInterval, readyForPreload: @escaping (_ renderingApp: RenderingApp) -> Void) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
         self.messageLanguage = messageLanguage
         self.pmTab = pmTab
         self.timeout = timeout
+        self.readyForPreload = readyForPreload
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -185,12 +197,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
     }
 
-    override func loadMessage(fromUrl url: URL) {
-        guard let messageUrl = url.appendQueryItem([
-            "consentLanguage": messageLanguage.rawValue,
-            "consentUUID": consentUUID
+    /// TODO: check this method
+    override func loadMessage() {
+        guard
+            let url = URL(string: "https://cdn.privacy-mgmt.com"),
+            let messageUrl = url.appendQueryItem([
+                "preload_message": "true",
+                "consentLanguage": messageLanguage.rawValue,
+                "consentUUID": consentUUID
         ]) else {
-            onError(error: InvalidURLError(urlString: url.absoluteString))
+            onError(error: InvalidURLError(urlString: "https://cdn.privacy-mgmt.com"))
             return
         }
         load(url: messageUrl)
@@ -261,6 +277,8 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
 
         switch name {
+        case "readyForPreload":
+            readyForPreload(self)
         case "onMessageReady":
             onMessageReady()
         case "onPMReady":
@@ -306,5 +324,20 @@ extension MessageWebViewController: UIScrollViewDelegate {
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return nil
+    }
+}
+
+extension MessageWebViewController: RenderingApp {
+    func loadMessage(msgJson: SPGDPRArbitraryJson?, actions: SPGDPRArbitraryJson?, choiceOptions: SPGDPRArbitraryJson?, stackInfo: SPGDPRArbitraryJson?, siteId: Int) {
+        webview?.evaluateJavaScript("""
+            postMessage({
+                name: 'sp.loadMessage',
+                message_json: \(msgJson ?? SPGDPRArbitraryJson.null),
+                message_choice: \(choiceOptions ?? SPGDPRArbitraryJson.null),
+                categories: \(stackInfo?.dictionaryValue?["categories"] ?? SPGDPRArbitraryJson.null),
+                site_id: \(siteId),
+                language: \(stackInfo?.dictionaryValue?["language"] ?? SPGDPRArbitraryJson.null)
+            }, '*')
+        """)
     }
 }

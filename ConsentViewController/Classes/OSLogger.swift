@@ -9,9 +9,9 @@ import Foundation
 import os
 
 protocol SPLogger {
-    func log(_ message: String, _ args: [String: String])
-    func debug(_ message: String, _ args: [String: String])
-    func error(_ message: String, _ args: [String: String])
+    func log(_ message: String)
+    func debug(_ message: String)
+    func error(_ message: String)
 }
 
 struct OSLogger: SPLogger {
@@ -25,21 +25,21 @@ struct OSLogger: SPLogger {
         }
     }
 
-    func log(_ message: String, _ args: [String: String] = [:]) {
-        osLog("%s", [message, args])
+    func log(_ message: String) {
+        osLog("%s", message)
     }
 
-    func debug(_ message: String, _ args: [String: String] = [:]) {
-        osLog("%s", [message, args])
+    func debug(_ message: String) {
+        osLog("%s", message)
     }
 
-    func error(_ message: String, _ args: [String: String] = [:]) {
-        osLog("%s", [message, args])
+    func error(_ message: String) {
+        osLog("%s", message)
     }
 
     private func osLog(_ message: StaticString, _ args: CVarArg) {
         if #available(iOS 10, *), let consentLog = consentLog {
-            os_log(message, log: consentLog, type: .default, args)
+            os_log(message, log: consentLog, args)
         } else {
             print(message, args)
         }

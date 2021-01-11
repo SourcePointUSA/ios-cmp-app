@@ -10,7 +10,7 @@ import WebKit
 
 @objc public protocol GDPRMessageUIDelegate {
     var consentDelegate: GDPRConsentDelegate? { get }
-    func loadMessage(fromUrl url: URL)
+    func loadMessage()
     func loadPrivacyManager()
 }
 
@@ -22,6 +22,6 @@ import WebKit
 ///  Eg. a native message view controller
 @objcMembers open class GDPRMessageViewController: UIViewController, GDPRMessageUIDelegate {
     weak public var consentDelegate: GDPRConsentDelegate?
-    public func loadMessage(fromUrl url: URL) {}
+    public func loadMessage() {}
     public func loadPrivacyManager() {}
 }

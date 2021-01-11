@@ -62,7 +62,7 @@ class SourcePointClient: SourcePointProtocol {
     static let WRAPPER_API = URL(string: "https://cdn.privacy-mgmt.com/wrapper/")!
     static let ERROR_METRIS_URL = URL(string: "metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
     static let GET_MESSAGE_CONTENTS_URL = URL(string: "tcfv2/v1/gdpr/native-message?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_URL_URL = URL(string: "tcfv2/v1/gdpr/message-url?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGE_URL = URL(string: "tcfv2/v1/gdpr/native-message", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CONSENT_URL = URL(string: "tcfv2/v1/gdpr/consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "tcfv2/v1/gdpr/custom-consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
 
@@ -164,7 +164,7 @@ class SourcePointClient: SourcePointProtocol {
         getMessage(
             url: native ?
                 SourcePointClient.GET_MESSAGE_CONTENTS_URL :
-                SourcePointClient.GET_MESSAGE_URL_URL,
+                SourcePointClient.GET_MESSAGE_URL,
             consentUUID: consentUUID,
             euconsent: euconsent,
             authId: authId,

@@ -183,21 +183,43 @@ typealias Meta = String
 
     func handleNativeMessageResponse(_ response: MessageResponse) {
         self.loading = .Ready
-        if let message = response.msgJSON {
-            self.consentDelegate?.consentUIWillShow?(message: message)
+        if
+            response.msgJSON != nil,
+            let messageData = response.msgJSON?.description.data(using: .utf8),
+            let gdprMessage = try? JSONDecoder().decode(GDPRMessage.self, from: messageData)
+        {
+            self.consentDelegate?.consentUIWillShow?(message: gdprMessage)
         } else {
             self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
         }
     }
 
     func handleWebMessageResponse(_ response: MessageResponse) {
-       if let url = response.url {
-           self.loadMessage(fromUrl: url)
-       } else {
-           self.loading = .Ready
-           self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
-       }
-   }
+        if response.msgJSON != nil {
+            messageViewController = MessageWebViewController(
+                propertyId: propertyId,
+                pmId: pmId,
+                consentUUID: gdprUUID,
+                messageLanguage: messageLanguage,
+                pmTab: self.privacyManagerTab,
+                timeout: messageTimeoutInSeconds,
+                readyForPreload: { renderingApp in
+                    renderingApp.loadMessage(
+                        msgJson: response.msgJSON,
+                        actions: response.actions,
+                        choiceOptions: response.choiceOptions,
+                        stackInfo: response.stackInfo,
+                        siteId: self.propertyId /// TODO: check for memory leak possibility
+                    )
+                }
+            )
+            messageViewController?.consentDelegate = self
+            messageViewController?.loadMessage()
+        } else {
+            self.loading = .Ready
+            self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+        }
+    }
 
     func loadGDPRMessage(native: Bool, authId: String?) {
         if loading == .Ready {
@@ -223,19 +245,6 @@ typealias Meta = String
 
     public func loadNativeMessage(forAuthId authId: String?) {
        loadGDPRMessage(native: true, authId: authId)
-    }
-
-    public func loadMessage(fromUrl url: URL) {
-        messageViewController = MessageWebViewController(
-            propertyId: propertyId,
-            pmId: pmId,
-            consentUUID: gdprUUID,
-            messageLanguage: messageLanguage,
-            pmTab: privacyManagerTab,
-            timeout: messageTimeoutInSeconds
-        )
-        messageViewController?.consentDelegate = self
-        messageViewController?.loadMessage(fromUrl: url)
     }
 
     /// Will first check if there's a message to show according to the scenario
@@ -270,7 +279,8 @@ typealias Meta = String
                 consentUUID: gdprUUID,
                 messageLanguage: messageLanguage,
                 pmTab: privacyManagerTab,
-                timeout: messageTimeoutInSeconds
+                timeout: messageTimeoutInSeconds,
+                readyForPreload: { _ in }
             )
             messageViewController?.consentDelegate = self
             messageViewController?.loadPrivacyManager()

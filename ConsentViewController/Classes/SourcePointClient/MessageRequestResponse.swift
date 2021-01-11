@@ -69,8 +69,11 @@ extension MessageRequest: Codable {
 }
 
 struct MessageResponse: Codable {
-    let url: URL?
-    let msgJSON: GDPRMessage?
+    let msgJSON: SPGDPRArbitraryJson?
+    let actions: SPGDPRArbitraryJson?
+    let stackInfo: SPGDPRArbitraryJson?
+    let choiceOptions: SPGDPRArbitraryJson?
+
     let uuid: GDPRUUID
     let userConsent: GDPRUserConsent
     var meta: Meta
