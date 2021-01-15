@@ -92,7 +92,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     func fetchDataFromDatabase(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void) {
         self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
-            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage, messageLanguage: propertyDataModel.messageLanguage)
+            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage, messageLanguage: propertyDataModel.messageLanguage, pmTab: propertyDataModel.pmId)
             var targetingParamsArray = [TargetingParamModel]()
             if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                 for targetingParam in targetingParams {
@@ -115,6 +115,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         if let messageLanguage = propertyDetails.messageLanguage {
             consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
         }
+        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
         propertyDetails.nativeMessage == 1 ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
             consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }
@@ -204,6 +205,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         if let messageLanguage = propertyDetails?.messageLanguage {
             consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
         }
+        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails?.pmTab ?? "")
         consentViewController?.loadPrivacyManager()
     }
 }
