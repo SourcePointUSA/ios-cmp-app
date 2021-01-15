@@ -29,6 +29,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        consentViewController.privacyManagerTab = .Vendors
         consentViewController.loadNativeMessage(forAuthId: nil)
     }
 }
@@ -71,9 +72,9 @@ extension ViewController: GDPRConsentDelegate {
         }
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         stopActivityIndicator()
-        print("ERROR: ", error?.description ?? "<empty>")
+        print("ERROR: ", error.description )
     }
 }
 

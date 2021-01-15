@@ -49,7 +49,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     let propertyId: Int
     var pmId: String
-    var pmTab: String?
+    var pmTab: PrivacyManagerTab
     let consentUUID: GDPRUUID
     var isSecondLayerMessage = false
     var consentUILoaded = false
@@ -58,11 +58,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var connectivityManager: Connectivity = ConnectivityManager()
     let messageLanguage: MessageLanguage
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, timeout: TimeInterval) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, pmTab: PrivacyManagerTab, timeout: TimeInterval) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
         self.messageLanguage = messageLanguage
+        self.pmTab = pmTab
         self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
     }
@@ -154,8 +155,8 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
            let pm_url = payloadData["pm_url"]?.stringValue,
            let urlComponents = URLComponents(string: pm_url)?.queryItems {
-            pmTab = urlComponents.first { $0.name == "pmTab" }?.value
             pmId = urlComponents.first { $0.name == "message_id" }?.value ?? pmId
+            pmTab = PrivacyManagerTab.init(rawValue: urlComponents.first { $0.name == "pmTab" }?.value ?? pmTab.rawValue) ?? .Default
         }
     }
 
@@ -200,7 +201,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             URLQueryItem(name: "site_id", value: String(propertyId)),
             URLQueryItem(name: "consentUUID", value: consentUUID),
             URLQueryItem(name: "message_id", value: pmId),
-            URLQueryItem(name: "pmTab", value: pmTab)
+            URLQueryItem(name: "pmTab", value: pmTab.rawValue)
         ]
     }
 

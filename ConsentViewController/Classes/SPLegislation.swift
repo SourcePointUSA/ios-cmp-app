@@ -11,7 +11,6 @@ import Foundation
 enum SPLegislation: String, Codable, CaseIterable {
     /// General Data Protection Regulation
     case GDPR
-    
     /// California Consumer Protection Act
     case CCPA
 }
