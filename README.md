@@ -128,6 +128,8 @@ extension ViewController: GDPRConsentDelegate {
 }
 @end
 ```
+## Loading the Privacy Manager on demand
+You can load the Privacy Manager (that UI with the toggles) any time programatically by calling the `.loadPrivacyManager()` method. The SDK will follow the same exact same lifecycle as with the 1st layer consent message. First calling the delegate method `gdprConsentUIWillShow` when the PM is ready and then calling `onConsentReady` after the user takes an action.
 
 ## Programatically consenting an user
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
