@@ -1,4 +1,9 @@
-## 5.3.2 (Nov, 23, 2020)
+## 5.3.4 (Jan, 20, 2021)
+* Added a feature to overwrite default language. You can now configure language in which the consent message must be shown by setting the attribute `.messageLanguage`. Just make sure to set it _before_ calling `loadMessage` or `loadPrivacyManager`. [#262](https://github.com/SourcePointUSA/ios-cmp-app/pull/262)
+* Added a feature to overwrite default privacy manager tab. You can now configure tab which loads with privacy manager by setting the attribute `.privacyManagerTab`. Just make sure to set it _before_ calling `loadMessage` or `loadPrivacyManager`. [#273](https://github.com/SourcePointUSA/ios-cmp-app/pull/273)
+* Refactoring of error classes with addition of error codes. [#269](https://github.com/SourcePointUSA/ios-cmp-app/pull/269)
+
+## 5.3.3 (Nov, 23, 2020)
 * Fixed a regression that'd prevent the SDK from running on projects using Swift Package Manager #266
 
 ## 5.3.2 (Nov, 23, 2020)
