@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.3.3'
+pod 'ConsentViewController', '5.3.4'
 ```
 
 ### Carthage
@@ -196,6 +196,18 @@ consentViewController.messageLanguage = .German
 consentViewController.loadMessage()
 ```
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
+
+## Overwriting Privacy Manager tab
+By default, the SDK will load default tab of privacy manager or the tab specified in the `Show Options`  action. If you wish to overwrite this behavior, you need to set the `.privacyManagerTab` attribute of `GDPRConsentViewController` _before_ calling `.loadMessage() / .loadPrivacyManager()`.
+```swift
+consentViewController.privacyManagerTab = .Vendors
+consentViewController.loadMessage()
+```
+It's important to note that the order of precedence for the PM tab will be as follow:
+1. PM tab set in the `Show Options` action (set in the dashboard)
+2. If none, then the one provided by the developer
+3. If none, the one set by default in the PM settings in the dashboard
+
 
 ## Setting Targeting Parameters
 In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example:
