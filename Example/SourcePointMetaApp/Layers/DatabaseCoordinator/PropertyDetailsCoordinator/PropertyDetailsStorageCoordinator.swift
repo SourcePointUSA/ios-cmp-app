@@ -80,6 +80,8 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
             propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
             propertyEntity.creationTimestamp = creationTimestamp
             propertyEntity.nativeMessage = propertyDataModel.nativeMessage
+            propertyEntity.messageLanguage = propertyDataModel.messageLanguage
+            propertyEntity.pmId = propertyDataModel.pmTab
             if let authId = propertyDataModel.authId {
                 propertyEntity.authId = authId
             }
@@ -128,6 +130,8 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
                 propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
                 propertyEntity.creationTimestamp = creationTimestamp
                 propertyEntity.nativeMessage = propertyDataModel.nativeMessage
+                propertyEntity.messageLanguage = propertyDataModel.messageLanguage
+                propertyEntity.pmId = propertyDataModel.pmTab
                 if let authId = propertyDataModel.authId {
                     propertyEntity.authId = authId
                 }
@@ -188,11 +192,11 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     func  checkExitanceOfData(propertyDetails propertyDataModel: PropertyDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
 
         var subPredicates: [NSPredicate] = []
-        var subPredicate: NSPredicate
-        if let authId = propertyDataModel.authId {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND authId == %@", propertyDataModel.privacyManagerId!, authId)
-        } else {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@", propertyDataModel.privacyManagerId!)
+        var subPredicate: NSPredicate = NSPredicate()
+        if let authId = propertyDataModel.authId, let pmId = propertyDataModel.pmTab {
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND authId == %@ AND pmId == %@", propertyDataModel.privacyManagerId!, authId, pmId)
+        } else if let pmId = propertyDataModel.pmTab {
+            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND pmId == %@", propertyDataModel.privacyManagerId!, pmId)
         }
 
         subPredicates.append(subPredicate)
@@ -210,17 +214,22 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
                             storedTargetingParamArray.append(targetingParamModel)
                         }
                         if storedTargetingParamArray.count == targetingParams.count {
-                            ispropertyDataStored = storedTargetingParamArray.sorted {$0.targetingKey! < $1.targetingKey!} == targetingParams.sorted {$0.targetingKey! < $1.targetingKey!}
-                            storedTargetingParamArray.removeAll()
-                            if ispropertyDataStored {
-                                break
+                            let isTargetingParamSame = storedTargetingParamArray.sorted {$0.targetingKey! < $1.targetingKey!} == targetingParams.sorted {$0.targetingKey! < $1.targetingKey!}
+                            if result.messageLanguage == propertyDataModel.messageLanguage {
+                                ispropertyDataStored = isTargetingParamSame
+                            } else {
+                                ispropertyDataStored = false
                             }
+                            storedTargetingParamArray.removeAll()
+                            break
                         } else {
                             ispropertyDataStored = false
                             storedTargetingParamArray.removeAll()
                         }
                     } else if let storedTargetingParamItem = result.manyTargetingParams?.allObjects as! [TargetingParams]?, storedTargetingParamItem.count == 0, targetingParams.count == 0 {
-                        ispropertyDataStored = true
+                        if result.messageLanguage == propertyDataModel.messageLanguage {
+                            ispropertyDataStored = true
+                        }
                         storedTargetingParamArray.removeAll()
                         break
                     }

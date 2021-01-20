@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.3.2'
+pod 'ConsentViewController', '5.3.4'
 ```
 
 ### Carthage
@@ -128,6 +128,8 @@ extension ViewController: GDPRConsentDelegate {
 }
 @end
 ```
+## Loading the Privacy Manager on demand
+You can load the Privacy Manager (that UI with the toggles) any time programatically by calling the `.loadPrivacyManager()` method. The SDK will follow the same exact same lifecycle as with the 1st layer consent message. First calling the delegate method `gdprConsentUIWillShow` when the PM is ready and then calling `onConsentReady` after the user takes an action.
 
 ## Programatically consenting an user
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
@@ -163,7 +165,7 @@ webview.load(URLRequest)
 ```
 
 ### The `authId`:
-This feature makes use of what we call [Authenticated Consent](https://documentation.sourcepoint.com/dialogue/authenticated-consent/authenticated-consent-overview). In a nutshell, you provide an identifier for the current user (username, user id, uuid or any unique string) and we'll take care of associating the consent profile to that identifier.
+This feature makes use of what we call [Authenticated Consent](https://documentation.sourcepoint.com/consent_mp/authenticated-consent/authenticated-consent-overview). In a nutshell, you provide an identifier for the current user (username, user id, uuid or any unique string) and we'll take care of associating the consent profile to that identifier.
 The authId will then assume 1 of the 3 values below:
 1. **User is authenticated and have an id:**
 In that case the `authId` is going to be that user id.
@@ -186,6 +188,26 @@ myWebView.load(urlRequest)
 A few remarks:
 1. The web content being loaded (web property) needs to share the same vendor list as the app.
 2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
+
+## Overwriting default language
+By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behaviour and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `GDPRConsentViewController` _before_ calling `.loadMessage() / .loadPrivacyManager()`. 
+```swift
+consentViewController.messageLanguage = .German
+consentViewController.loadMessage()
+```
+It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
+
+## Overwriting Privacy Manager tab
+By default, the SDK will load default tab of privacy manager or the tab specified in the `Show Options`  action. If you wish to overwrite this behavior, you need to set the `.privacyManagerTab` attribute of `GDPRConsentViewController` _before_ calling `.loadMessage() / .loadPrivacyManager()`.
+```swift
+consentViewController.privacyManagerTab = .Vendors
+consentViewController.loadMessage()
+```
+It's important to note that the order of precedence for the PM tab will be as follow:
+1. PM tab set in the `Show Options` action (set in the dashboard)
+2. If none, then the one provided by the developer
+3. If none, the one set by default in the PM settings in the dashboard
+
 
 ## Setting Targeting Parameters
 In order to set a targeting param all you need to do is passing `targetingParams:[string:string]` as a parametter in the ConsentViewController constructor. Example:

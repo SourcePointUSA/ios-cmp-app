@@ -6,7 +6,7 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try function_body_length force_cast
+// swiftlint:disable force_try function_body_length
 
 import Quick
 import Nimble
@@ -37,7 +37,7 @@ class SourcePointClientSpec: QuickSpec {
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
                 expect(SourcePointClient.CUSTOM_CONSENT_URL.absoluteURL).to(equal(
-                    URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/custom-consent?inApp=true")!.absoluteURL
+                    URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?inApp=true")!.absoluteURL
                 ))
             }
         }
@@ -58,7 +58,7 @@ class SourcePointClientSpec: QuickSpec {
                         authId: "auth id",
                         meta: "meta",
                         completionHandler: { _, _  in})
-                    expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/message-url?inApp=true")))
+                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/message-url?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {
@@ -125,7 +125,7 @@ class SourcePointClientSpec: QuickSpec {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
                     client.postAction(action: acceptAllAction, consentUUID: "consent uuid", meta: "meta", completionHandler: { _, _  in})
-                    expect(httpClient?.postWasCalledWithUrl).to(equal(URL(string: "https://wrapper-api.sp-prod.net/tcfv2/v1/gdpr/consent?inApp=true")))
+                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/consent?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {
@@ -159,22 +159,21 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("customConsent") {
                 it("makes a POST to SourcePointClient.CUSTOM_CONSENT_URL") {
-                    let http = MockHttp(success: "".data(using: .utf8)!)
+                    let http = MockHttp()
                     self.getClient(http).customConsent(toConsentUUID: "", vendors: [], categories: [], legIntCategories: []) { _, _ in }
-                    expect(http.postWasCalledWithUrl).to(equal(SourcePointClient.CUSTOM_CONSENT_URL.absoluteURL))
+                    expect(http.postWasCalledWithUrl).to(equal(SourcePointClient.CUSTOM_CONSENT_URL.absoluteURL.absoluteString))
                 }
 
                 it("makes a POST with the correct body") {
-                    var parsedRequest: [String: Any]?
-                    let http = MockHttp(success: "".data(using: .utf8)!)
+                    let http = MockHttp()
                     self.getClient(http).customConsent(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: []) { _, _ in }
-                    parsedRequest = try! JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as! [String: Any]
+                    let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
 
-                    expect((parsedRequest?["consentUUID"] as! String)).to(equal("uuid"))
-                    expect((parsedRequest?["vendors"] as! [String])).to(equal([]))
-                    expect((parsedRequest?["categories"] as! [String])).to(equal([]))
-                    expect((parsedRequest?["legIntCategories"] as! [String])).to(equal([]))
-                    expect((parsedRequest?["propertyId"] as! Int)).to(equal(SourcePointClientSpec.propertyId))
+                    expect((parsedRequest?["consentUUID"] as? String)).to(equal("uuid"))
+                    expect((parsedRequest?["vendors"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["categories"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["legIntCategories"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["propertyId"] as? Int)).to(equal(SourcePointClientSpec.propertyId))
                 }
 
                 context("on success") {
@@ -224,7 +223,7 @@ class SourcePointClientSpec: QuickSpec {
 
                 context("on failure") {
                     beforeEach {
-                        client = self.getClient(MockHttp(error: APIParsingError("foo", nil)))
+                        client = self.getClient(MockHttp(error: GDPRConsentViewControllerError()))
                     }
 
                     it("calls the completion handler with an GDPRConsentViewControllerError") {
@@ -234,6 +233,31 @@ class SourcePointClientSpec: QuickSpec {
                         }
                         expect(error).toEventually(beAKindOf(GDPRConsentViewControllerError.self))
                     }
+                }
+            }
+
+            describe("metrics") {
+                it("makes a POST to https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics with correct body") {
+                    let http = MockHttp()
+                    let error = GDPRConsentViewControllerError()
+                    self.getClient(http).errorMetrics(
+                        error,
+                        sdkVersion: "1.2.3",
+                        OSVersion: "11.0",
+                        deviceFamily: "iPhone 11 pro",
+                        legislation: .GDPR
+                    )
+                    let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
+                    expect(http.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"))
+                    expect((parsedRequest?["code"] as? String)).to(equal(error.spCode))
+                    expect((parsedRequest?["accountId"] as? String)).to(equal("123"))
+                    expect((parsedRequest?["propertyHref"] as? String)).to(equal("https://tcfv2.mobile.demo"))
+                    expect((parsedRequest?["propertyId"] as? String)).to(equal("123"))
+                    expect((parsedRequest?["description"] as? String)).to(equal(error.description))
+                    expect((parsedRequest?["scriptVersion"] as? String)).to(equal("1.2.3"))
+                    expect((parsedRequest?["sdkOSVersion"] as? String)).to(equal("11.0"))
+                    expect((parsedRequest?["deviceFamily"] as? String)).to(equal("iPhone 11 pro"))
+                    expect((parsedRequest?["legislation"] as? String)).to(equal("GDPR"))
                 }
             }
         }

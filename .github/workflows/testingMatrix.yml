@@ -1,0 +1,73 @@
+name: TestingMatrix
+on:
+  push:
+    branches: [ develop ]
+defaults:
+  run:
+    working-directory: Example
+jobs:
+  lint:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installing SwiftLint
+        run: brew install swiftlint
+      - name: linting
+        run: swiftlint lint
+  test-set-one:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        xcode: ['10.3']
+        destination: ['platform=iOS Simulator,name=iPhone 8 Plus,OS=12.4']
+        app: ['ConsentViewController_Example', 'NativeMessageExample', 'SourcePointMetaApp']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Xcode
+        run: |
+          echo "Choosing Xcode_${{ matrix.xcode }}.app"
+          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+      - name: App Unit and UI testing
+        run: xcodebuild test -scheme "${app}" -workspace ConsentViewController.xcworkspace -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        env:
+            destination: ${{ matrix.destination }}
+            app: ${{ matrix.app }}
+  test-set-two:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        xcode: ['11.7']
+        destination: ['platform=iOS Simulator,name=iPhone 11,OS=13.7']
+        app: ['ConsentViewController_Example', 'NativeMessageExample', 'SourcePointMetaApp']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Xcode
+        run: |
+          echo "Choosing Xcode_${{ matrix.xcode }}.app"
+          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+      - name: App Unit and UI testing
+        run: xcodebuild test -scheme "${app}" -workspace ConsentViewController.xcworkspace -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        env:
+            destination: ${{ matrix.destination }}
+            app: ${{ matrix.app }}
+  test-set-three:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        xcode: ['12.3']
+        destination: ['platform=iOS Simulator,name=iPhone 12 Pro,OS=14.3']
+        app: ['ConsentViewController_Example', 'NativeMessageExample', 'SourcePointMetaApp']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Xcode
+        run: |
+          echo "Choosing Xcode_${{ matrix.xcode }}.app"
+          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+      - name: App Unit and UI testing
+        run: xcodebuild test -scheme "${app}" -workspace ConsentViewController.xcworkspace -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        env:
+            destination: ${{ matrix.destination }}
+            app: ${{ matrix.app }}

@@ -118,15 +118,14 @@ class NativeMessageExampleUITests: QuickSpec {
             expect(self.app.messageTitle).notTo(showUp())
         }
 
-        it("Save and Exit with few purposes through privacy manager directly") {
+        it("Save and Exit with few vendors through privacy manager directly") {
             expect(self.app.messageTitle).to(showUp())
             self.app.acceptButton.tap()
             expect(self.app.exampleAppLabel).to(showUp())
             self.app.settingsButton.tap()
             expect(self.app.privacyManager).to(showUp())
-            self.app.purposesTab.tap()
-            self.app.PersonalisedContentSwitch.tap()
-            self.app.DeviceInformationSwitch.tap()
+            self.app.GoogleVendorSwitch.tap()
+            self.app.VibrantMediaLimitedVendorSwitch.tap()
             self.app.saveAndExitButton.tap()
             expect(self.app.privacyManager).to(disappear())
             self.app.relaunch()

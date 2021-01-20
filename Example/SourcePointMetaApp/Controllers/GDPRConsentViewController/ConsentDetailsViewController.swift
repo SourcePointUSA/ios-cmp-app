@@ -92,7 +92,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     func fetchDataFromDatabase(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void) {
         self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
-            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage)
+            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage, messageLanguage: propertyDataModel.messageLanguage, pmTab: propertyDataModel.pmId)
             var targetingParamsArray = [TargetingParamModel]()
             if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
                 for targetingParam in targetingParams {
@@ -112,6 +112,10 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        if let messageLanguage = propertyDetails.messageLanguage {
+            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+        }
+        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
         propertyDetails.nativeMessage == 1 ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
             consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
     }
@@ -173,12 +177,12 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         self.hideIndicator()
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
         }
-        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error?.description ?? "Something Went Wrong", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description , actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 
     private func dismissPrivacyManager() {
@@ -198,6 +202,10 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
         consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! GDPRPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        if let messageLanguage = propertyDetails?.messageLanguage {
+            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+        }
+        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails?.pmTab ?? "")
         consentViewController?.loadPrivacyManager()
     }
 }

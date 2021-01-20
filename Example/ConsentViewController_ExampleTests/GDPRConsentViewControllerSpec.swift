@@ -6,29 +6,41 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try function_body_length line_length force_cast
+// swiftlint:disable force_try function_body_length force_cast type_body_length
 
 import Quick
 import Nimble
 @testable import ConsentViewController
 
+struct DeviceMock: SPDeviceManager {
+    func osVersion() -> String { "1.2.3" }
+    func deviceFamily() -> String { "1.2.3" }
+}
+
 class GDPRConsentViewControllerSpec: QuickSpec {
-    func getController(_ delegate: GDPRConsentDelegate = MockConsentDelegate(), _ spClient: SourcePointProtocol = SourcePointClientMock(), _ storage: GDPRLocalStorage = GDPRLocalStorageMock()) -> GDPRConsentViewController {
+    func getController(
+        _ delegate: GDPRConsentDelegate = MockConsentDelegate(),
+        _ spClient: SourcePointProtocol = SourcePointClientMock(),
+        _ storage: GDPRLocalStorage = GDPRLocalStorageMock(),
+        _ deviceManager: SPDeviceManager = DeviceMock()
+    ) -> GDPRConsentViewController {
         return GDPRConsentViewController(accountId: 22,
                                          propertyId: 7094,
                                          propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
                                          PMId: "100699",
                                          campaignEnv: .Public,
-                                         targetingParams: [:],
                                          consentDelegate: delegate,
                                          sourcePointClient: spClient,
-                                         localStorage: storage)
+                                         localStorage: storage,
+                                         deviceManager: deviceManager
+        )
     }
 
     override func spec() {
         var sourcePointClient = SourcePointClientMock()
         var localStorage = GDPRLocalStorageMock()
         var mockConsentDelegate = MockConsentDelegate()
+        var mockDeviceManager = DeviceMock()
         var consentViewController = self.getController(mockConsentDelegate, sourcePointClient, localStorage)
         var messageViewController = GDPRMessageViewController()
         var userConsents = GDPRUserConsent.empty()
@@ -36,6 +48,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
         beforeEach {
             sourcePointClient = SourcePointClientMock()
             localStorage = GDPRLocalStorageMock()
+            mockDeviceManager = DeviceMock()
             mockConsentDelegate = MockConsentDelegate()
             consentViewController = self.getController(mockConsentDelegate, sourcePointClient, localStorage)
             messageViewController = GDPRMessageViewController()
@@ -104,7 +117,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
                 context("and the response is error") {
                     it("calls the onError method on its consent delegate") {
-                        sourcePointClient.error = APIParsingError("custom-consent", nil)
+                        sourcePointClient.error = GDPRConsentViewControllerError()
                         consentViewController.customConsentTo(vendors: [], categories: [], legIntCategories: []) { _ in }
                         expect(mockConsentDelegate.isOnErrorCalled).to(beTrue())
                     }
@@ -156,11 +169,21 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                 }
             }
 
-            context("Test onError delegate method") {
-                it("Test GDPRMessageViewController calls onError delegate method") {
+            describe("onError") {
+                it("calls the client's onError delegate method") {
+                    consentViewController.onError(error: GDPRConsentViewControllerError())
+                    expect(mockConsentDelegate.isOnErrorCalled).to(equal(true))
+                }
+
+                it("sends error metrics using SPClient") {
                     let error = GDPRConsentViewControllerError()
                     consentViewController.onError(error: error)
-                    expect(mockConsentDelegate.isOnErrorCalled).to(equal(true), description: "onError delegate method calls successfully")
+                    let errorMetricsCalledWith = sourcePointClient.errorMetricsCalledWith
+                    expect(errorMetricsCalledWith?["error"] as? GDPRConsentViewControllerError).to(equal(error))
+                    expect(errorMetricsCalledWith?["sdkVersion"] as? String).to(equal(GDPRConsentViewController.VERSION))
+                    expect(errorMetricsCalledWith?["deviceFamily"] as? String).to(equal(mockDeviceManager.deviceFamily()))
+                    expect(errorMetricsCalledWith?["OSVersion"] as? String).to(equal(mockDeviceManager.osVersion()))
+                    expect(errorMetricsCalledWith?["legislation"] as? SPLegislation).to(equal(.GDPR))
                 }
             }
 
@@ -189,7 +212,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                         describe("and the api returns an error") {
                             beforeEach {
                                 sourcePointClient.postActionResponse = nil
-                                sourcePointClient.error = APIParsingError("test", nil)
+                                sourcePointClient.error = GDPRConsentViewControllerError()
                             }
                             types.forEach { type in
                                 describe(type.description) {

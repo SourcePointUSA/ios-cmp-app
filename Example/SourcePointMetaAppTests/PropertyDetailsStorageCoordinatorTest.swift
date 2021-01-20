@@ -51,7 +51,7 @@ class PropertyDetailsStorageCoordinatorTest: XCTestCase {
 
     // This test method is used to test whether the property data added or not to database.
     func testAddWebproperty() {
-        let propertyDataModel = PropertyDetailsModel(accountId: 22, propertyId: 2372, propertyName: "mobile.demo", campaign: 0, privacyManagerId: "5c0e81b7d74b3c30c6852301", creationTimestamp: Date(), authId: nil, nativeMessage: 0)
+        let propertyDataModel = PropertyDetailsModel(accountId: 22, propertyId: 2372, propertyName: "mobile.demo", campaign: 0, privacyManagerId: "5c0e81b7d74b3c30c6852301", creationTimestamp: Date(), authId: nil, nativeMessage: 0, messageLanguage: "English", pmTab: "vendors")
         propertyDetailsStorageCoordinator.add(propertyDetails: propertyDataModel, targetingParams: targetingParamsArray, completionHandler: { (_, propertiestoredStatus) in
 
             if propertiestoredStatus {
@@ -64,7 +64,7 @@ class PropertyDetailsStorageCoordinatorTest: XCTestCase {
 
     // This test method is used to test whether the property data updated or not to database.
     func testUpdatepropertyData() {
-        let propertyDataModel = PropertyDetailsModel(accountId: 22, propertyId: 2372, propertyName: "mobile.demo", campaign: 0, privacyManagerId: "5c0e81b7d74b3c30c6852301", creationTimestamp: Date(), authId: nil, nativeMessage: 0)
+        let propertyDataModel = PropertyDetailsModel(accountId: 22, propertyId: 2372, propertyName: "mobile.demo", campaign: 0, privacyManagerId: "5c0e81b7d74b3c30c6852301", creationTimestamp: Date(), authId: nil, nativeMessage: 0, messageLanguage: "English", pmTab: "vendors")
         propertyDetailsStorageCoordinator.add(propertyDetails: propertyDataModel, targetingParams: targetingParamsArray, completionHandler: { (propertyManagedObjectID, _) in
             if let managedObjectID = propertyManagedObjectID {
                 self.targetingParamsArray.removeAll()

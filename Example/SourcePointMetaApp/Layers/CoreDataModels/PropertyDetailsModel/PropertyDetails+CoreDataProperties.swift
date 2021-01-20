@@ -2,7 +2,7 @@
 //  PropertyDetails+CoreDataProperties.swift
 //  
 //
-//  Created by Vilas on 22/09/20.
+//  Created by Vilas on 29/12/20.
 //
 //
 
@@ -20,10 +20,12 @@ extension PropertyDetails {
     @NSManaged public var authId: String?
     @NSManaged public var campaign: Int64
     @NSManaged public var creationTimestamp: Date?
+    @NSManaged public var messageLanguage: String?
+    @NSManaged public var nativeMessage: Int64
     @NSManaged public var privacyManagerId: String?
     @NSManaged public var propertyId: Int64
     @NSManaged public var propertyName: String?
-    @NSManaged public var nativeMessage: Int64
+    @NSManaged public var pmId: String?
     @NSManaged public var manyTargetingParams: NSSet?
 
 }

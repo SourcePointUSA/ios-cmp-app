@@ -49,5 +49,5 @@ import Foundation
     @objc optional func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent)
 
     /// the `onError` function can be called at any moment during the SDKs lifecycle
-    @objc optional func onError(error: GDPRConsentViewControllerError?)
+    @objc optional func onError(error: GDPRConsentViewControllerError)
 }

@@ -73,22 +73,21 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
         }
         
         /**
-         This is currently issue in SDK and need to be fixed from backend, currently PM is not attached with Property in the case of PM as first layer Message.
          @Description - User submit valid property details for loading PM as first layer message with unique AuthID and tap on Save then expected PM should load when user select Accept All then consent should get stored when user tap on the property from list screen then user should see all toggle as true
          */
-        //        it("Consents with AuthID for PM as first layer Message") {
-        //            self.app.addPropertyDetails()
-        //            self.app.authIdTextFieldOutlet.tap()
-        //            self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
-        //            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
-        //            expect(self.app.privacyManager).to(showUp())
-        //            self.app.acceptAllButton.tap()
-        //            expect(self.app.propertyDebugInfo).to(showUp())
-        //            self.app.backButton.tap()
-        //            expect(self.app.propertyList).to(showUp())
-        //            self.app.propertyItem.tap()
-        //            expect(self.app.privacyManager).to(showUp())
-        //            self.app.testPMToggles(value: 1)
-        //        }
+        it("Consents with AuthID for PM as first layer Message") {
+            self.app.addPropertyDetails()
+            self.app.authIdTextFieldOutlet.tap()
+            self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
+            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
+            expect(self.app.privacyManager).to(showUp())
+            self.app.acceptAllButton.tap()
+            expect(self.app.propertyDebugInfo).to(showUp())
+            self.app.backButton.tap()
+            expect(self.app.propertyList).to(showUp())
+            self.app.propertyItem.tap()
+            expect(self.app.privacyManager).to(showUp())
+            self.app.testPMToggles(value: 1)
+        }
     }
 }

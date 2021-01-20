@@ -15,6 +15,9 @@ typealias Meta = String
 // swiftlint:disable type_body_length
 
 @objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
+    /// The version of the SDK. It should mirror the version from podspec.
+    static public let VERSION = "5.3.3"
+
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
     static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
     static let EU_CONSENT_KEY = "\(SP_GDPR_KEY_PREFIX)euconsent"
@@ -57,6 +60,14 @@ typealias Meta = String
         }
     }
 
+    /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+    /// By default the SDK will use the locale defined by the WebView
+    public var messageLanguage = MessageLanguage.BrowserDefault
+
+    /// Instructs the privacy manager to be displayed with this tab.
+    /// By default the SDK will use the defult tab of PM
+    public var privacyManagerTab = PrivacyManagerTab.Default
+
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
@@ -71,6 +82,7 @@ typealias Meta = String
     let pmId: String
     let targetingParams: TargetingParams
     let sourcePoint: SourcePointProtocol
+    let deviceManager: SPDeviceManager
     lazy var logger = { return OSLogger() }()
     var messageViewController: GDPRMessageViewController?
     var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
@@ -101,10 +113,11 @@ typealias Meta = String
         propertyName: GDPRPropertyName,
         PMId: String,
         campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams,
+        targetingParams: TargetingParams = [:],
         consentDelegate: GDPRConsentDelegate,
         sourcePointClient: SourcePointProtocol,
-        localStorage: GDPRLocalStorage
+        localStorage: GDPRLocalStorage = GDPRUserDefaults(),
+        deviceManager: SPDeviceManager = SPDevice()
     ) {
         self.accountId = accountId
         self.propertyName = propertyName
@@ -114,6 +127,7 @@ typealias Meta = String
         self.consentDelegate = consentDelegate
         self.sourcePoint = sourcePointClient
         self.localStorage = localStorage
+        self.deviceManager = deviceManager
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .overFullScreen
 
@@ -137,8 +151,8 @@ typealias Meta = String
         propertyId: Int,
         propertyName: GDPRPropertyName,
         PMId: String,
-        campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams,
+        campaignEnv: GDPRCampaignEnv = .Public,
+        targetingParams: TargetingParams = [:],
         consentDelegate: GDPRConsentDelegate
     ) {
         let sourcePoint = SourcePointClient(
@@ -158,36 +172,7 @@ typealias Meta = String
             campaignEnv: campaignEnv,
             targetingParams: targetingParams,
             consentDelegate: consentDelegate,
-            sourcePointClient: sourcePoint,
-            localStorage: GDPRUserDefaults()
-        )
-    }
-
-    /**
-       - Parameters:
-           - accountId: the id of your account, can be found in the Account section of SourcePoint's dashboard
-           - propertyId: the id of your property, can be found in the property page of SourcePoint's dashboard
-           - propertyName: the exact name of your property,
-           -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
-           -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
-           -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
-       - SeeAlso: ConsentDelegate
-    */
-    public convenience init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: GDPRPropertyName,
-        PMId: String,
-        campaignEnv: GDPRCampaignEnv,
-        consentDelegate: GDPRConsentDelegate) {
-        self.init(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            PMId: PMId,
-            campaignEnv: campaignEnv,
-            targetingParams: [:],
-            consentDelegate: consentDelegate
+            sourcePointClient: sourcePoint
         )
     }
 
@@ -230,7 +215,7 @@ typealias Meta = String
                         self?.handleNativeMessageResponse(messageResponse) :
                         self?.handleWebMessageResponse(messageResponse)
                 } else {
-                    self?.onError(error: error)
+                    self?.onError(error: error ?? GDPRConsentViewControllerError())
                 }
             }
         }
@@ -241,7 +226,14 @@ typealias Meta = String
     }
 
     public func loadMessage(fromUrl url: URL) {
-        messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
+        messageViewController = MessageWebViewController(
+            propertyId: propertyId,
+            pmId: pmId,
+            consentUUID: gdprUUID,
+            messageLanguage: messageLanguage,
+            pmTab: privacyManagerTab,
+            timeout: messageTimeoutInSeconds
+        )
         messageViewController?.consentDelegate = self
         messageViewController?.loadMessage(fromUrl: url)
     }
@@ -272,7 +264,14 @@ typealias Meta = String
     public func loadPrivacyManager() {
         if loading == .Ready {
             loading = .Loading
-            messageViewController = MessageWebViewController(propertyId: propertyId, pmId: pmId, consentUUID: gdprUUID, timeout: messageTimeoutInSeconds)
+            messageViewController = MessageWebViewController(
+                propertyId: propertyId,
+                pmId: pmId,
+                consentUUID: gdprUUID,
+                messageLanguage: messageLanguage,
+                pmTab: privacyManagerTab,
+                timeout: messageTimeoutInSeconds
+            )
             messageViewController?.consentDelegate = self
             messageViewController?.loadPrivacyManager()
         }
@@ -299,7 +298,7 @@ typealias Meta = String
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
         sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
             guard let response = response, error == nil else {
-                self?.consentDelegate?.onError?(error: error)
+                self?.onError(error: error ?? GDPRConsentViewControllerError())
                 return
             }
 
@@ -326,7 +325,7 @@ typealias Meta = String
         legIntCategories: [String],
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
         if gdprUUID.isEmpty {
-            consentDelegate?.onError?(error: PostingConsentWithoutConsentUUID())
+            onError(error: PostingConsentWithoutConsentUUID())
             return
         }
 
@@ -347,7 +346,7 @@ typealias Meta = String
                 self?.localStorage.meta = actionResponse.meta
                 self?.onConsentReady(gdprUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
             } else {
-                self?.onError(error: error)
+                self?.onError(error: error ?? GDPRConsentViewControllerError())
             }
         }
     }
@@ -369,9 +368,16 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         consentDelegate?.consentUIDidDisappear?()
     }
 
-    public func onError(error: GDPRConsentViewControllerError?) {
+    public func onError(error: GDPRConsentViewControllerError) {
         loading = .Ready
         if shouldCleanConsentOnError { clearIABConsentData() }
+        sourcePoint.errorMetrics(
+            error,
+            sdkVersion: GDPRConsentViewController.VERSION,
+            OSVersion: deviceManager.osVersion(),
+            deviceFamily: deviceManager.deviceFamily(),
+            legislation: .GDPR
+        )
         consentDelegate?.onError?(error: error)
     }
 

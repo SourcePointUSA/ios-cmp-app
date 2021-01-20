@@ -15,6 +15,7 @@ import WebKit
  */
 class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, GDPRConsentDelegate {
     static let MESSAGE_HANDLER_NAME = "GDPRJSReceiver"
+    static let PM_BASE_URL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")!
 
     lazy var webview: WKWebView? = {
         let config = WKWebViewConfiguration()
@@ -48,21 +49,23 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     let propertyId: Int
     var pmId: String
+    var pmTab: PrivacyManagerTab
     let consentUUID: GDPRUUID
-    var queryItems: [URLQueryItem]?
     var isSecondLayerMessage = false
     var consentUILoaded = false
     var isPMLoaded = false
     let timeout: TimeInterval
     var connectivityManager: Connectivity = ConnectivityManager()
+    let messageLanguage: MessageLanguage
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, timeout: TimeInterval) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, pmTab: PrivacyManagerTab, timeout: TimeInterval) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
+        self.messageLanguage = messageLanguage
+        self.pmTab = pmTab
         self.timeout = timeout
         super.init(nibName: nil, bundle: nil)
-        self.queryItems = [URLQueryItem(name: "site_id", value: "\(propertyId)"), URLQueryItem(name: "consentUUID", value: consentUUID)]
     }
 
     required init?(coder: NSCoder) {
@@ -124,7 +127,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         consentDelegate?.consentUIDidDisappear?()
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         consentDelegate?.onError?(error: error)
         closeConsentUIIfOpen()
     }
@@ -148,17 +151,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         onMessageReady()
     }
 
-    func getPMIdFromMessage(action: GDPRAction) {
-        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload), let pm_url = payloadData["pm_url"]?.stringValue {
-            if let urlComponents = URLComponents(string: pm_url)?.queryItems {
-                for queryItem in urlComponents {
-                    if queryItem.name == "message_id" {
-                        self.pmId = queryItem.value ?? ""
-                    } else if queryItem.name == "pmTab" {
-                        self.queryItems?.append(URLQueryItem(name: queryItem.name, value: queryItem.value))
-                    }
-                }
-            }
+    func updatePMParamsFromAction(_ action: GDPRAction) {
+        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
+           let pm_url = payloadData["pm_url"]?.stringValue,
+           let urlComponents = URLComponents(string: pm_url)?.queryItems {
+            pmId = urlComponents.first { $0.name == "message_id" }?.value ?? pmId
+            pmTab = PrivacyManagerTab.init(rawValue: urlComponents.first { $0.name == "pmTab" }?.value ?? pmTab.rawValue) ?? .Default
         }
     }
 
@@ -166,7 +164,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         switch action.type {
         case .ShowPrivacyManager:
             consentDelegate?.onAction?(action)
-            getPMIdFromMessage(action: action)
+            updatePMParamsFromAction(action)
             showPrivacyManagerFromMessageAction()
         case .PMCancel:
             consentDelegate?.onAction?(
@@ -188,19 +186,36 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     override func loadMessage(fromUrl url: URL) {
-        load(url: url)
+        guard let messageUrl = url.appendQueryItem([
+            "consentLanguage": messageLanguage.rawValue,
+            "consentUUID": consentUUID
+        ]) else {
+            onError(error: InvalidURLError(urlString: url.absoluteString))
+            return
+        }
+        load(url: messageUrl)
+    }
+
+    func pmQueryParams() -> [URLQueryItem] {
+        return [
+            URLQueryItem(name: "site_id", value: String(propertyId)),
+            URLQueryItem(name: "consentUUID", value: consentUUID),
+            URLQueryItem(name: "message_id", value: pmId),
+            URLQueryItem(name: "pmTab", value: pmTab.rawValue)
+        ]
     }
 
     func pmUrl() -> URL? {
-        var pmUrlComponents = URLComponents(string: "https://notice.sp-prod.net/privacy-manager/index.html")
-        pmUrlComponents?.queryItems = queryItems
-        return pmUrlComponents?.url
+        var urlComponents = URLComponents(url: MessageWebViewController.PM_BASE_URL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = pmQueryParams()
+        return urlComponents?.url
     }
 
     override func loadPrivacyManager() {
-        self.queryItems?.append(URLQueryItem(name: "message_id", value: pmId))
         guard let url = pmUrl() else {
-            onError(error: URLParsingError(urlString: "PMUrl"))
+            let queryString = pmQueryParams().reduce("?") { $0 + "\($1.name)=\($1.value ?? "")&" }
+            let error = InvalidURLError(urlString: MessageWebViewController.PM_BASE_URL.absoluteString + queryString)
+            onError(error: error)
             return
         }
         load(url: url)
@@ -220,16 +235,18 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        var spError: GDPRConsentViewControllerError = WebViewError(code: nil, title: error.localizedDescription)
         if let error = error as? URLError {
             switch error.code {
             case .timedOut:
-                onError(error: MessageTimeout(url: error.failingURL, timeout: timeout))
+                spError = ConnectionTimeOutError(url: error.failingURL, timeout: timeout)
+            case .networkConnectionLost, .notConnectedToInternet:
+                spError = NoInternetConnection()
             default:
-                onError(error: WebViewError(code: error.code.rawValue, title: error.localizedDescription))
+                spError = WebViewError(code: error.code.rawValue, title: error.localizedDescription)
             }
-        } else {
-            onError(error: GeneralRequestError(nil, nil, error))
         }
+        onError(error: spError)
     }
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -237,7 +254,9 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             let body = message.body as? [String: Any?],
             let name = body["name"] as? String
         else {
-            onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
+            let eventBody = message.body as? [String: Any?]
+            let eventName = eventBody?["name"] as? String
+            onError(error: InvalidEventPayloadError(eventName, body: eventBody?.debugDescription))
             return
         }
 
@@ -256,19 +275,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 let payloadData = try? JSONEncoder().encode(actionJson),
                 let actionType = GDPRActionType(rawValue: typeString)
             else {
-                onError(error: MessageEventParsingError(message: Optional(message.body).debugDescription))
+                onError(error: InvalidOnActionEventPayloadError(name, body: body["body"]?.debugDescription))
                 return
             }
             onAction(GDPRAction(type: actionType, id: payload["id"] as? String, consentLanguage: consentLanguage, payload: payloadData))
         case "onError":
             let payload = body["body"] as? [String: Any] ?? [:]
             let error = payload["error"] as? [String: Any] ?? [:]
-            onError(error: WebViewError(
-                code: error["code"] as? Int,
-                title: error["title"] as? String,
-                stackTrace: error["stackTrace"] as? String
-            ))
+            onError(error: RenderingAppError(error["code"] as? String))
         default:
+            /// TODO: This should not trigger the `onError` but we should notifiy our custom metrics endpoint
             print(message.body)
         }
     }

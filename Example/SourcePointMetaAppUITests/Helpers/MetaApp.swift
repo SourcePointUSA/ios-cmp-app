@@ -68,11 +68,11 @@ class MetaApp: XCUIApplication {
     }
     
     var wrongPropertyIdValidationItem: XCUIElement {
-           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Error parsing response from'")).firstMatch
+           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'The SDK got an unexpected response from /message-url endpoint'")).firstMatch
     }
     
     var wrongPMValidationItem: XCUIElement {
-              staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Could not load PM with id'")).firstMatch
+              staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Something went wrong in the SDK'")).firstMatch
     }
 
     var deletePropertyButton: XCUIElement {
@@ -298,6 +298,10 @@ extension MetaApp: GDPRUI {
         webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'ShowOnce')")).firstMatch
     }
 
+    var consentMessageInGerman: XCUIElement {
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Wir benötigen Ihre Zustimmung'")).firstMatch
+    }
+
     var privacyManagerForAccount22: XCUIElement {
         webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Center'")).firstMatch
     }
@@ -314,12 +318,20 @@ extension MetaApp: GDPRUI {
         consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept'")).firstMatch
     }
 
+    var acceptAllButtonInGerman: XCUIElement {
+        consentMessageInGerman.buttons["Zustimmen"].firstMatch
+    }
+
     var rejectAllButton: XCUIElement {
         consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Reject'")).firstMatch
     }
 
     var showOptionsButton: XCUIElement {
         consentUI.buttons["MANAGE PREFERENCES"].firstMatch
+    }
+
+    var showOptionsButtonInGerman: XCUIElement {
+        consentMessageInGerman.buttons["Einstellungen"].firstMatch
     }
 
     var showOptionsButtonForAccount22: XCUIElement {
@@ -336,6 +348,10 @@ extension MetaApp: GDPRUI {
 
     var dismissMessageButton: XCUIElement {
         staticTexts["X"].firstMatch
+    }
+
+    var purposesTab: XCUIElement {
+        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
     }
 
     var termsAndConditionsLink: XCUIElement {

@@ -30,7 +30,7 @@ class MockConsentDelegate: GDPRConsentDelegate {
         isConsentUIDidDisappearCalled = true
     }
 
-    public func onError(error: GDPRConsentViewControllerError?) {
+    public func onError(error: GDPRConsentViewControllerError) {
         isOnErrorCalled = true
     }
 

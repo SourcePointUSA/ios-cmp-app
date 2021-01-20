@@ -15,6 +15,9 @@ class AddPropertyViewModel {
     //// Reference to storage coordinator. it interacts with the database.
     private var storageCoordinator: PropertyDetailsStorageCoordinator = PropertyDetailsStorageCoordinator()
 
+    var countries = ["BrowserDefault", "English", "Bulgarian", "Catalan", "Chinese", "Croatian", "Czech", "Danish", "Dutch", "Estonian", "Finnish", "French", "Gaelic", "German", "Greek", "Hungarian", "Icelandic", "Italian", "Japanese", "Latvian", "Lithuanian", "Norwegian", "Polish", "Portuguese", "Romanian", "Russian", "Serbian_Cyrillic", "Serbian_Latin", "Slovakian", "Slovenian", "Spanish", "Swedish", "Turkish"]
+    var pmTabs = ["Default", "Purposes", "Vendors", "Features"]
+
     // MARK: - Initializers
 
     /// Default initializer
@@ -117,6 +120,94 @@ class AddPropertyViewModel {
             return true
         } else {
             return false
+        }
+    }
+
+    func getPMTab(pmTab: String) -> PrivacyManagerTab {
+        switch pmTab {
+        case "Default":
+            return .Default
+        case "Purposes":
+            return .Purposes
+        case "Features":
+            return .Features
+        case "Vendors":
+            return .Vendors
+        default:
+            return .Default
+        }
+    }
+
+    func getMessageLanguage(countryName: String) -> MessageLanguage {
+        switch countryName {
+        case "BrowserDefault":
+            return .BrowserDefault
+        case "English":
+            return .English
+        case "Bulgarian":
+            return .Bulgarian
+        case "Catalan":
+            return .Catalan
+        case "Chinese":
+            return .Chinese
+        case "Croatian":
+            return .Croatian
+        case "Czech":
+            return .Czech
+        case "Danish":
+            return .Danish
+        case "Dutch":
+            return .Dutch
+        case "Estonian":
+            return .Estonian
+        case "Finnish":
+            return .Finnish
+        case "French":
+            return .French
+        case "Gaelic":
+            return .Gaelic
+        case "German":
+            return .German
+        case "Greek":
+            return .Greek
+        case "Hungarian":
+            return .Hungarian
+        case "Icelandic":
+            return .Icelandic
+        case "Italian":
+            return .Italian
+        case "Japanese":
+            return .Japanese
+        case "Latvian":
+            return .Latvian
+        case "Lithuanian":
+            return .Lithuanian
+        case "Norwegian":
+            return .Norwegian
+        case "Polish":
+            return .Polish
+        case "Portuguese":
+            return .Portuguese
+        case "Romanian":
+            return .Romanian
+        case "Russian":
+            return .Russian
+        case "Serbian_Cyrillic":
+            return .Serbian_Cyrillic
+        case "Serbian_Latin":
+            return .Serbian_Latin
+        case "Slovakian":
+            return .Slovakian
+        case "Slovenian":
+            return .Slovenian
+        case "Spanish":
+            return .Spanish
+        case "Swedish":
+            return .Swedish
+        case "Turkish":
+            return .Turkish
+        default:
+            return .BrowserDefault
         }
     }
 }
