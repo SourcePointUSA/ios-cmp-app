@@ -49,39 +49,6 @@ class NativeMessageExampleUITests: QuickSpec {
             expect(self.app.messageTitle).notTo(showUp())
         }
 
-        it("Accept all through privacy manager via message") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.showOptionsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.acceptAllButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
-        }
-
-        it("Reject all through privacy manager via message") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.showOptionsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.rejectAllButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
-        }
-
-        it("Save and Exit through privacy manager via message") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.showOptionsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.purposesTab.tap()
-            self.app.PersonalisedContentSwitch.tap()
-            self.app.DeviceInformationSwitch.tap()
-            self.app.saveAndExitButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
-        }
-
         it("Accept all through privacy manager directly") {
             expect(self.app.messageTitle).to(showUp())
             self.app.rejectButton.tap()
