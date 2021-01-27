@@ -15,8 +15,7 @@ import Nimble
 class SourcePointClientSpec: QuickSpec {
     static let propertyId = 123
 
-    func getClient(_ client: MockHttp) -> SourcePointClient {
-        return SourcePointClient(
+    func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
             accountId: 123,
             propertyId: SourcePointClientSpec.propertyId,
             propertyName: try! SPPropertyName("tcfv2.mobile.demo"),
@@ -25,6 +24,25 @@ class SourcePointClientSpec: QuickSpec {
             targetingParams: [:],
             client: client
         )
+    }
+
+    /// TODO: add CCPA campaign
+    /// TODO: pass targeting params "encoding" to MessageRequest
+    func getMessageRequest(_ client: SourcePointClient, _ targetingParams: String = "{}") -> MessageRequest { MessageRequest(
+        authId: "auth id",
+        requestUUID: client.requestUUID,
+        campaigns: CampaignsRequest(
+            gdpr: CampaignRequest(
+                uuid: "uuid",
+                accountId: client.accountId,
+                propertyId: client.propertyId,
+                propertyHref: client.propertyName,
+                campaignEnv: client.campaignEnv,
+                meta: "meta",
+                targetingParams: targetingParams
+            ),
+            ccpa: nil
+        ))
     }
 
     override func spec() {
@@ -62,18 +80,6 @@ class SourcePointClientSpec: QuickSpec {
                 }
 
                 it("calls POST on the http client with the right body") {
-                    let messageRequest = MessageRequest(
-                        uuid: "uuid",
-                        euconsent: "consent string",
-                        authId: "auth id",
-                        accountId: client.accountId,
-                        propertyId: client.propertyId,
-                        propertyHref: client.propertyName,
-                        campaignEnv: client.campaignEnv,
-                        targetingParams: "{}",
-                        requestUUID: client.requestUUID,
-                        meta: "meta"
-                    )
                     client.getMessage(
                         native: false,
                         consentUUID: "uuid",
@@ -82,7 +88,7 @@ class SourcePointClientSpec: QuickSpec {
                         meta: "meta",
                         completionHandler: { _, _  in})
                     let parsed = try! JSONDecoder().decode(MessageRequest.self, from: httpClient!.postWasCalledWithBody!)
-                    expect(parsed).to(equal(messageRequest))
+                    expect(parsed).to(equal(self.getMessageRequest(client)))
                 }
 
                 context("when there are targeting params") {
@@ -96,18 +102,6 @@ class SourcePointClientSpec: QuickSpec {
                             targetingParams: ["foo": "bar"],
                             client: httpClient!
                         )
-                        let messageRequest = MessageRequest(
-                            uuid: "uuid",
-                            euconsent: "consent string",
-                            authId: "auth id",
-                            accountId: client.accountId,
-                            propertyId: client.propertyId,
-                            propertyHref: client.propertyName,
-                            campaignEnv: client.campaignEnv,
-                            targetingParams: "{\"foo\":\"bar\"}",
-                            requestUUID: client.requestUUID,
-                            meta: "meta"
-                        )
                         client.getMessage(
                             native: false,
                             consentUUID: "uuid",
@@ -116,7 +110,7 @@ class SourcePointClientSpec: QuickSpec {
                             meta: "meta",
                             completionHandler: { _, _  in})
                         let parsed = try! JSONDecoder().decode(MessageRequest.self, from: httpClient!.postWasCalledWithBody!)
-                        expect(parsed).to(equal(messageRequest))
+                        expect(parsed).to(equal(self.getMessageRequest(client, "{\"foo\":\"bar\"}")))
                     }
                 }
             }

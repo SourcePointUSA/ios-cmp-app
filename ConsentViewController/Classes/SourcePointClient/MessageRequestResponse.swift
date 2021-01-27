@@ -7,30 +7,25 @@
 
 import Foundation
 
-struct MessageRequest: Equatable {
+struct CampaignRequest: Equatable {
+//    let euconsent: String still needed?
     let uuid: SPConsentUUID?
-    let euconsent: String
-    let authId: String?
-    let accountId: Int
-    let propertyId: Int
+    let accountId, propertyId: Int
     let propertyHref: SPPropertyName
     let campaignEnv: SPCampaignEnv
-    let targetingParams: String?
-    let requestUUID: UUID
     let meta: Meta
+    let targetingParams: String?
 }
 
-extension MessageRequest: Codable {
+extension CampaignRequest: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         uuid = try? container.decode(SPConsentUUID.self, forKey: .uuid)
-        euconsent = try container.decode(String.self, forKey: .euconsent)
-        authId = try? container.decode(String.self, forKey: .authId)
+//        euconsent = try container.decode(String.self, forKey: .euconsent)
         accountId = try container.decode(Int.self, forKey: .accountId)
         propertyId = try container.decode(Int.self, forKey: .propertyId)
         propertyHref = try container.decode(SPPropertyName.self, forKey: .propertyHref)
         targetingParams = try? container.decode(String.self, forKey: .targetingParams)
-        requestUUID = try container.decode(UUID.self, forKey: .requestUUID)
         meta = try container.decode(String.self, forKey: .meta)
         if #available(iOS 11, *) {
             campaignEnv = try container.decode(SPCampaignEnv.self, forKey: .campaignEnv)
@@ -47,14 +42,12 @@ extension MessageRequest: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(euconsent, forKey: .euconsent)
+//        try container.encode(euconsent, forKey: .euconsent)
         try container.encode(accountId, forKey: .accountId)
         try container.encode(propertyId, forKey: .propertyId)
         try container.encode(propertyHref, forKey: .propertyHref)
-        try container.encode(requestUUID, forKey: .requestUUID)
         try container.encode(meta, forKey: .meta)
         if uuid != nil { try container.encode(uuid, forKey: .uuid) }
-        if authId != nil { try container.encode(authId, forKey: .authId) }
         if targetingParams != nil { try container.encode(targetingParams, forKey: .targetingParams) }
         if #available(iOS 11, *) {
             try container.encode(campaignEnv, forKey: .campaignEnv)
@@ -64,8 +57,20 @@ extension MessageRequest: Codable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case uuid, euconsent, authId, accountId, propertyId, propertyHref, campaignEnv, targetingParams, requestUUID, meta
+        case uuid, accountId,
+             propertyId, propertyHref, campaignEnv,
+             targetingParams, meta //, euconsent
     }
+}
+
+struct CampaignsRequest: Equatable, Codable {
+    let gdpr, ccpa: CampaignRequest?
+}
+
+struct MessageRequest: Equatable, Codable {
+    let authId: String?
+    let requestUUID: UUID
+    let campaigns: CampaignsRequest
 }
 
 struct MessageResponse: Codable {

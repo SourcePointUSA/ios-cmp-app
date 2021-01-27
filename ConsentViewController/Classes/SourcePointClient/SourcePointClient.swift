@@ -131,17 +131,22 @@ class SourcePointClient: SourcePointProtocol {
     // swiftlint:disable:next function_parameter_count line_length
     func getMessage(url: URL, consentUUID: SPConsentUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError? ) -> Void) {
         do {
+            /// TODO: add CCPA campaign
             let body = try JSONEncoder().encode(MessageRequest(
-                uuid: consentUUID,
-                euconsent: euconsent,
                 authId: authId,
-                accountId: accountId,
-                propertyId: propertyId,
-                propertyHref: propertyName,
-                campaignEnv: campaignEnv,
-                targetingParams: targetingParamsToString(targetingParams),
                 requestUUID: requestUUID,
-                meta: meta
+                campaigns: CampaignsRequest(
+                    gdpr: CampaignRequest(
+                        uuid: consentUUID,
+                        accountId: accountId,
+                        propertyId: propertyId,
+                        propertyHref: propertyName,
+                        campaignEnv: campaignEnv,
+                        meta: meta,
+                        targetingParams: targetingParamsToString(targetingParams)
+                    ),
+                    ccpa: nil
+                )
             ))
             client.post(urlString: url.absoluteString, body: body) { data, error in
                 if let error = error {

@@ -12,54 +12,41 @@ import Nimble
 
 // swiftlint:disable force_try
 
-/**
-
-
- {
- "requestUUID": "test",
- "campaigns": {
- "gdpr": {
- "accountId": 22,
- "propertyId": 7639,
- "propertyHref": "https://tcfv2.mobile.webview"
- },
- "ccpa": {
- "accountId": 22,
- "propertyId": 7639,
- "propertyHref": "https://tcfv2.mobile.webview"
- }
- }
- }
- */
-
 class MessageRequestSpec: QuickSpec {
-    override func spec() {
-        let requestUUID = UUID()
-        let message = MessageRequest(
+    func campaign(_ name: String) -> CampaignRequest { CampaignRequest(
             uuid: nil,
-            euconsent: "euconsent",
-            authId: nil,
             accountId: 1,
             propertyId: 1,
-            propertyHref: try! SPPropertyName("propertyName"),
-            campaignEnv: .Stage,
-            targetingParams: nil,
-            requestUUID: requestUUID,
-            meta: "meta"
+            propertyHref: try! SPPropertyName(name),
+            campaignEnv: .Public,
+            meta: "",
+            targetingParams: nil
+        )
+    }
+    override func spec() {
+        let reqUUID = UUID()
+        let message = MessageRequest(
+            authId: nil,
+            requestUUID: reqUUID,
+            campaigns: CampaignsRequest(gdpr: campaign("gdpr"), ccpa: campaign("ccpa"))
         )
         let messageString = """
         {
-            "requestUUID": "uuid string",
+            "requestUUID": "\(reqUUID.uuidString)",
             "campaigns": {
-                "gdpr": {
-                    "accountId": 1,
-                    "propertyId": 1,
-                    "propertyHref": "https://propertyName"
-                },
                 "ccpa": {
-                    "accountId": 1,
+                    "campaignEnv": "prod",
                     "propertyId": 1,
-                    "propertyHref": "https://propertyName"
+                    "accountId": 1,
+                    "meta": "",
+                    "propertyHref": "https:\\/\\/ccpa"
+                },
+                "gdpr": {
+                    "campaignEnv": "prod",
+                    "propertyId": 1,
+                    "accountId": 1,
+                    "meta": "",
+                    "propertyHref": "https:\\/\\/gdpr"
                 }
             }
         }
