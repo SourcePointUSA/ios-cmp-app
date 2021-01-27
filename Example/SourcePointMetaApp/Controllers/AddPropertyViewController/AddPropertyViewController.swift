@@ -72,7 +72,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
 
     /** Default campaign value is public
      */
-    var campaign = GDPRCampaignEnv.Public
+    var campaign = SPCampaignEnv.Public
 
     // Reference to the selected property managed object ID
     var propertyManagedObjectID: NSManagedObjectID?
@@ -134,7 +134,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
 
     // Set value of staging switch
     @IBAction func campaignSwitchButtonAction(_ sender: UISwitch) {
-        campaign = sender.isOn ? GDPRCampaignEnv.Stage : GDPRCampaignEnv.Public
+        campaign = sender.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
     }
 
     func setTableViewHidden() {

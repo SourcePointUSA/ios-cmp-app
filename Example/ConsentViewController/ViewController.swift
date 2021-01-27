@@ -192,14 +192,14 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 @objcMembers class SPCampaign {
     let accountId, propertyId: Int
     let propertyName: String
-    let environment: GDPRCampaignEnv
+    let environment: SPCampaignEnv
     let targetingParams: TargetingParams
 
     init(
         accountId: Int,
         propertyId: Int,
         propertyName: String,
-        environment: GDPRCampaignEnv = .Public,
+        environment: SPCampaignEnv = .Public,
         targetingParams: TargetingParams = [:]
     ) {
         self.accountId = accountId

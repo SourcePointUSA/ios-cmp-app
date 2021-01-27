@@ -13,7 +13,7 @@ protocol SourcePointProtocol {
         propertyId: Int,
         propertyName: SPPropertyName,
         pmId: String,
-        campaignEnv: GDPRCampaignEnv,
+        campaignEnv: SPCampaignEnv,
         targetingParams: TargetingParams,
         timeout: TimeInterval
     )
@@ -74,7 +74,7 @@ class SourcePointClient: SourcePointProtocol {
     let propertyId: Int
     let propertyName: SPPropertyName
     let pmId: String
-    let campaignEnv: GDPRCampaignEnv
+    let campaignEnv: SPCampaignEnv
     let targetingParams: TargetingParams?
 
     init(
@@ -82,7 +82,7 @@ class SourcePointClient: SourcePointProtocol {
         propertyId: Int,
         propertyName: SPPropertyName,
         pmId: String,
-        campaignEnv: GDPRCampaignEnv,
+        campaignEnv: SPCampaignEnv,
         targetingParams: TargetingParams?,
         client: HttpClient
     ) {
@@ -100,7 +100,7 @@ class SourcePointClient: SourcePointProtocol {
         propertyId: Int,
         propertyName: SPPropertyName,
         pmId: String,
-        campaignEnv: GDPRCampaignEnv,
+        campaignEnv: SPCampaignEnv,
         targetingParams: TargetingParams,
         timeout: TimeInterval
     ) {

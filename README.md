@@ -102,7 +102,7 @@ extension ViewController: GDPRConsentDelegate {
            propertyId: 7639
            propertyName: propertyName
            PMId: @"122058"
-           campaignEnv: GDPRCampaignEnvPublic
+           campaignEnv: SPCampaignEnvPublic
            consentDelegate: self];
 
     [cvc loadMessage];

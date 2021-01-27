@@ -28,7 +28,7 @@ class SourcePointClientMock: SourcePointProtocol {
                   propertyId: Int,
                   propertyName: SPPropertyName,
                   pmId: String,
-                  campaignEnv: GDPRCampaignEnv,
+                  campaignEnv: SPCampaignEnv,
                   targetingParams: TargetingParams,
                   timeout: TimeInterval) {}
 

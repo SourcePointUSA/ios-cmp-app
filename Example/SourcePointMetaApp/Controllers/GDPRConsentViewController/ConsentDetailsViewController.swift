@@ -105,7 +105,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     }
 
     func loadConsentManager(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel]) {
-        let campaign: GDPRCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
+        let campaign: SPCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
         var targetingParameters = [String: String]()
         for targetingParam in targetingParams {
@@ -195,7 +195,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     @IBAction func showPMAction(_ sender: Any) {
         self.showIndicator()
-        let campaign: GDPRCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
+        let campaign: SPCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
         var targetingParameters = [String: String]()
         for targetingParam in targetingParams {

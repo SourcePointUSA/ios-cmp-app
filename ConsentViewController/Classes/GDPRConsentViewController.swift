@@ -112,7 +112,7 @@ typealias Meta = String
         propertyId: Int,
         propertyName: SPPropertyName,
         PMId: String,
-        campaignEnv: GDPRCampaignEnv,
+        campaignEnv: SPCampaignEnv,
         targetingParams: TargetingParams = [:],
         consentDelegate: GDPRConsentDelegate,
         sourcePointClient: SourcePointProtocol,
@@ -151,7 +151,7 @@ typealias Meta = String
         propertyId: Int,
         propertyName: SPPropertyName,
         PMId: String,
-        campaignEnv: GDPRCampaignEnv = .Public,
+        campaignEnv: SPCampaignEnv = .Public,
         targetingParams: TargetingParams = [:],
         consentDelegate: GDPRConsentDelegate
     ) {

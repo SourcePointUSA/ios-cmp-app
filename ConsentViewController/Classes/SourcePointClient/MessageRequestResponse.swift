@@ -14,7 +14,7 @@ struct MessageRequest: Equatable {
     let accountId: Int
     let propertyId: Int
     let propertyHref: SPPropertyName
-    let campaignEnv: GDPRCampaignEnv
+    let campaignEnv: SPCampaignEnv
     let targetingParams: String?
     let requestUUID: UUID
     let meta: Meta
@@ -33,12 +33,12 @@ extension MessageRequest: Codable {
         requestUUID = try container.decode(UUID.self, forKey: .requestUUID)
         meta = try container.decode(String.self, forKey: .meta)
         if #available(iOS 11, *) {
-            campaignEnv = try container.decode(GDPRCampaignEnv.self, forKey: .campaignEnv)
+            campaignEnv = try container.decode(SPCampaignEnv.self, forKey: .campaignEnv)
         } else {
-            guard let env = GDPRCampaignEnv(stringValue: try container.decode(String.self, forKey: .campaignEnv)) else {
+            guard let env = SPCampaignEnv(stringValue: try container.decode(String.self, forKey: .campaignEnv)) else {
                 throw DecodingError.dataCorrupted(DecodingError.Context(
                    codingPath: [],
-                   debugDescription: "Unknown GDPRCampaignEnv"
+                   debugDescription: "Unknown SPCampaignEnv"
                 ))
             }
             campaignEnv = env
