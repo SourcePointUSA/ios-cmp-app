@@ -100,18 +100,6 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     }
 }
 
-//@objc enum SPLegislation: Int, Codable, CaseIterable, CustomStringConvertible {
-//    case GDPR, CCPA, Unknown
-//
-//    public var description: String {
-//        switch self {
-//        case .GDPR: return "GDPR"
-//        case .CCPA: return "CCPA"
-//        default: return "Unknown Legislation"
-//        }
-//    }
-//}
-
 @objcMembers class SPConsentAction: NSObject {
     let type: SPActionType
 
@@ -124,6 +112,7 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     let uuid: UUID
     let meta: String
     let idfaStatus: SPIDFAStatus
+
     init(uuid: UUID, meta: String, idfaStatus: SPIDFAStatus) {
         self.uuid = uuid
         self.meta = meta
@@ -205,7 +194,6 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     let propertyName: String
     let environment: GDPRCampaignEnv
     let targetingParams: TargetingParams
-//    var legislation: SPLegislation { .Unknown }
 
     init(
         accountId: Int,
@@ -221,17 +209,10 @@ func afterFakeDelay (execute: @escaping () -> Void) {
         self.targetingParams = targetingParams
     }
 }
-//
-//@objcMembers class SPGDPRCampaign: SPCampaign {
-//    override var legislation: SPLegislation { .GDPR }
-//}
-//
-//@objcMembers class SPCCPACampaign: SPCampaign {
-//    override var legislation: SPLegislation { .CCPA }
-//}
 
 @objcMembers class SPCampaigns {
     let gdpr, ccpa: SPCampaign?
+//    let adblock, idfaPrompt: SPCampaign?
 
     init(gdpr: SPCampaign? = nil, ccpa: SPCampaign? = nil) {
         self.gdpr = gdpr
@@ -347,8 +328,8 @@ class ViewController: UIViewController, SPDelegate {
     }
     @IBAction func onAcceptVendorXTap(_ sender: Any) {}
 
-    lazy var consentManager: SPConsentManager = { SPConsentManager(
-        campaigns: SPCampaigns(gdpr: SPCampaign(
+    lazy var consentManager: SPConsentManager = { SPConsentManager(campaigns: SPCampaigns(
+        gdpr: SPCampaign(
             accountId: 22,
             propertyId: 123,
             propertyName: "test"
