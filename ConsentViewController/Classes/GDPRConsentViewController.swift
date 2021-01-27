@@ -77,7 +77,7 @@ typealias Meta = String
     var localStorage: GDPRLocalStorage
 
     let accountId: Int
-    let propertyName: GDPRPropertyName
+    let propertyName: SPPropertyName
     let propertyId: Int
     let pmId: String
     let targetingParams: TargetingParams
@@ -110,7 +110,7 @@ typealias Meta = String
     init(
         accountId: Int,
         propertyId: Int,
-        propertyName: GDPRPropertyName,
+        propertyName: SPPropertyName,
         PMId: String,
         campaignEnv: GDPRCampaignEnv,
         targetingParams: TargetingParams = [:],
@@ -149,7 +149,7 @@ typealias Meta = String
     public convenience init(
         accountId: Int,
         propertyId: Int,
-        propertyName: GDPRPropertyName,
+        propertyName: SPPropertyName,
         PMId: String,
         campaignEnv: GDPRCampaignEnv = .Public,
         targetingParams: TargetingParams = [:],

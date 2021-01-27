@@ -7,10 +7,10 @@
 
 import Foundation
 
-/// GDPRPropertyName is the exact name of your property as created in SourcePoint's dashboard.
+/// SPPropertyName is the exact name of your property as created in SourcePoint's dashboard.
 /// - Important: notice that it can only contain letters, numbers, . (dots), : (semicolons),
 ///  - (dashes) and / (slashes). The constructor will validate upon that and throw an error otherwise.
-@objcMembers open class GDPRPropertyName: NSObject, Codable {
+@objcMembers open class SPPropertyName: NSObject, Codable {
     /// Up and lowercase letters, dots, semicollons, numbers and dashes
     static let validPattern = "^[a-zA-Z.:/0-9-]*$"
 
@@ -31,13 +31,13 @@ import Foundation
     /// - Parameter rawValue: the exact name of your property as created in SourcePoint's dashboard.
     /// - Throws: `InvalidArgumentError` if the property name contain anything other than letters, numbers, . (dots), : (semicolons) and / (slashes).
     public init(_ rawValue: String) throws {
-        let validRawValue = try GDPRPropertyName.validate(rawValue)
+        let validRawValue = try SPPropertyName.validate(rawValue)
         self.rawValue = "https://" + validRawValue
     }
 
     required public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.rawValue = try GDPRPropertyName.validate(try container.decode(String.self))
+        self.rawValue = try SPPropertyName.validate(try container.decode(String.self))
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -46,7 +46,7 @@ import Foundation
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
-        if let other = object as? GDPRPropertyName {
+        if let other = object as? SPPropertyName {
             return other.rawValue == rawValue
         } else {
             return false

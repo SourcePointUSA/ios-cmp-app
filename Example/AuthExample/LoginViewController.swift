@@ -17,7 +17,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7639,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
+        propertyName: try! SPPropertyName("tcfv2.mobile.webview"),
         PMId: "122058",
         campaignEnv: .Public,
         consentDelegate: self 

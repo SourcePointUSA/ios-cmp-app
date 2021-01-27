@@ -11,7 +11,7 @@ protocol SourcePointProtocol {
     init(
         accountId: Int,
         propertyId: Int,
-        propertyName: GDPRPropertyName,
+        propertyName: SPPropertyName,
         pmId: String,
         campaignEnv: GDPRCampaignEnv,
         targetingParams: TargetingParams,
@@ -72,7 +72,7 @@ class SourcePointClient: SourcePointProtocol {
 
     let accountId: Int
     let propertyId: Int
-    let propertyName: GDPRPropertyName
+    let propertyName: SPPropertyName
     let pmId: String
     let campaignEnv: GDPRCampaignEnv
     let targetingParams: TargetingParams?
@@ -80,7 +80,7 @@ class SourcePointClient: SourcePointProtocol {
     init(
         accountId: Int,
         propertyId: Int,
-        propertyName: GDPRPropertyName,
+        propertyName: SPPropertyName,
         pmId: String,
         campaignEnv: GDPRCampaignEnv,
         targetingParams: TargetingParams?,
@@ -98,7 +98,7 @@ class SourcePointClient: SourcePointProtocol {
     required convenience init(
         accountId: Int,
         propertyId: Int,
-        propertyName: GDPRPropertyName,
+        propertyName: SPPropertyName,
         pmId: String,
         campaignEnv: GDPRCampaignEnv,
         targetingParams: TargetingParams,

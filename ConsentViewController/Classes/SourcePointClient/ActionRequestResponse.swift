@@ -9,7 +9,7 @@ import Foundation
 
 struct ActionRequest: Codable, Equatable {
     let propertyId: Int
-    let propertyHref: GDPRPropertyName
+    let propertyHref: SPPropertyName
     let accountId: Int
     let actionType: Int
     let choiceId: String?

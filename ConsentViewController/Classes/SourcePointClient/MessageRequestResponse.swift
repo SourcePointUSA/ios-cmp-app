@@ -13,7 +13,7 @@ struct MessageRequest: Equatable {
     let authId: String?
     let accountId: Int
     let propertyId: Int
-    let propertyHref: GDPRPropertyName
+    let propertyHref: SPPropertyName
     let campaignEnv: GDPRCampaignEnv
     let targetingParams: String?
     let requestUUID: UUID
@@ -28,7 +28,7 @@ extension MessageRequest: Codable {
         authId = try? container.decode(String.self, forKey: .authId)
         accountId = try container.decode(Int.self, forKey: .accountId)
         propertyId = try container.decode(Int.self, forKey: .propertyId)
-        propertyHref = try container.decode(GDPRPropertyName.self, forKey: .propertyHref)
+        propertyHref = try container.decode(SPPropertyName.self, forKey: .propertyHref)
         targetingParams = try? container.decode(String.self, forKey: .targetingParams)
         requestUUID = try container.decode(UUID.self, forKey: .requestUUID)
         meta = try container.decode(String.self, forKey: .meta)

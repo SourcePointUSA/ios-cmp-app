@@ -10,7 +10,7 @@ import Foundation
 /// Encapsulates the ErrorMetrics request body
 struct ErrorMetricsRequest: Equatable {
     let code, accountId, description, sdkVersion, OSVersion, deviceFamily, propertyId: String
-    let propertyName: GDPRPropertyName
+    let propertyName: SPPropertyName
     let legislation: SPLegislation
 }
 

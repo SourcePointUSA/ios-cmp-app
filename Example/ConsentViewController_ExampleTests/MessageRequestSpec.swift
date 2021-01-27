@@ -41,7 +41,7 @@ class MessageRequestSpec: QuickSpec {
             authId: nil,
             accountId: 1,
             propertyId: 1,
-            propertyHref: try! GDPRPropertyName("propertyName"),
+            propertyHref: try! SPPropertyName("propertyName"),
             campaignEnv: .Stage,
             targetingParams: nil,
             requestUUID: requestUUID,

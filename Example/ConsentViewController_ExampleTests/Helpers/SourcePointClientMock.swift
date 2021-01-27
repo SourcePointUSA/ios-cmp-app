@@ -21,12 +21,12 @@ class SourcePointClientMock: SourcePointProtocol {
     var errorMetricsCalledWith: [String: Any?]!
 
     convenience init() {
-        self.init(accountId: 0, propertyId: 0, propertyName: try! GDPRPropertyName("test"), pmId: "", campaignEnv: .Stage, targetingParams: [:], timeout: 0.0)
+        self.init(accountId: 0, propertyId: 0, propertyName: try! SPPropertyName("test"), pmId: "", campaignEnv: .Stage, targetingParams: [:], timeout: 0.0)
     }
 
     required init(accountId: Int,
                   propertyId: Int,
-                  propertyName: GDPRPropertyName,
+                  propertyName: SPPropertyName,
                   pmId: String,
                   campaignEnv: GDPRCampaignEnv,
                   targetingParams: TargetingParams,

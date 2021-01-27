@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7639,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
+        propertyName: try! SPPropertyName("tcfv2.mobile.webview"),
         PMId: "122058",
         campaignEnv: .Public,
         consentDelegate: self
@@ -95,7 +95,7 @@ extension ViewController: GDPRConsentDelegate {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    GDPRPropertyName *propertyName = [[GDPRPropertyName alloc] init:@"tcfv2.mobile.webview" error:NULL];
+    SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"tcfv2.mobile.webview" error:NULL];
 
     cvc = [[GDPRConsentViewController alloc]
            initWithAccountId: 22

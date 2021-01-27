@@ -19,7 +19,7 @@ class SourcePointClientSpec: QuickSpec {
         return SourcePointClient(
             accountId: 123,
             propertyId: SourcePointClientSpec.propertyId,
-            propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+            propertyName: try! SPPropertyName("tcfv2.mobile.demo"),
             pmId: "123",
             campaignEnv: .Public,
             targetingParams: [:],
@@ -90,7 +90,7 @@ class SourcePointClientSpec: QuickSpec {
                         let client = SourcePointClient(
                             accountId: 123,
                             propertyId: SourcePointClientSpec.propertyId,
-                            propertyName: try! GDPRPropertyName("propertyName"),
+                            propertyName: try! SPPropertyName("propertyName"),
                             pmId: "pmId",
                             campaignEnv: .Public,
                             targetingParams: ["foo": "bar"],

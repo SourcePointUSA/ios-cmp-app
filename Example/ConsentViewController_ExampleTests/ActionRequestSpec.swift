@@ -17,7 +17,7 @@ class ActionRequestSpec: QuickSpec {
         let requestUUID = UUID()
         let action = ActionRequest(
             propertyId: 1,
-            propertyHref: try! GDPRPropertyName("property-name"),
+            propertyHref: try! SPPropertyName("property-name"),
             accountId: 1,
             actionType: 1,
             choiceId: "choiceId",

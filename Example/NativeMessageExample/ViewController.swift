@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7094,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+        propertyName: try! SPPropertyName("tcfv2.mobile.demo"),
         PMId: "179657",
         campaignEnv: .Public,
         consentDelegate: self

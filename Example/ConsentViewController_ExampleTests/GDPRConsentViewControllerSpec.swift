@@ -26,7 +26,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
     ) -> GDPRConsentViewController {
         return GDPRConsentViewController(accountId: 22,
                                          propertyId: 7094,
-                                         propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+                                         propertyName: try! SPPropertyName("tcfv2.mobile.demo"),
                                          PMId: "100699",
                                          campaignEnv: .Public,
                                          consentDelegate: delegate,
