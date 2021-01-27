@@ -71,6 +71,9 @@ typealias Meta = String
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
 
+    /// will instruct the SDK to call the error metrics if an error occurs
+    static public var shouldCallErrorMetrics = true
+
     /// the instance of `GDPRConsentDelegate` which the `GDPRConsentViewController` will use to perform the lifecycle methods
     public weak var consentDelegate: GDPRConsentDelegate?
 
@@ -371,13 +374,13 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onError(error: GDPRConsentViewControllerError) {
         loading = .Ready
         if shouldCleanConsentOnError { clearIABConsentData() }
-        sourcePoint.errorMetrics(
+        if GDPRConsentViewController.shouldCallErrorMetrics { sourcePoint.errorMetrics(
             error,
             sdkVersion: GDPRConsentViewController.VERSION,
             OSVersion: deviceManager.osVersion(),
             deviceFamily: deviceManager.deviceFamily(),
             legislation: .GDPR
-        )
+        )}
         consentDelegate?.onError?(error: error)
     }
 
