@@ -44,9 +44,9 @@ import Foundation
 
     /// called when we finish getting the consent profile from SourcePoint's endpoints
     /// - Parameters:
-    ///  - gdprUUID: is the uuid we give to that user internally. Notice this is not the same as authId
+    ///  - consentUUID: is the uuid we give to that user internally. Notice this is not the same as authId
     ///  - userConsent: is the data structure encapsulating the consent status, rejected vendors and purposes
-    @objc optional func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent)
+    @objc optional func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent)
 
     /// the `onError` function can be called at any moment during the SDKs lifecycle
     @objc optional func onError(error: GDPRConsentViewControllerError)

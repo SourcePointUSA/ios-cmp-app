@@ -64,9 +64,9 @@ extension LoginViewController: GDPRConsentDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
         userData = [
-            "ConsentUUID: \(gdprUUID)",
+            "ConsentUUID: \(consentUUID)",
             "Consent String: \(userConsent.euconsent)"
         ]
         consents =

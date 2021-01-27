@@ -15,7 +15,7 @@ struct ActionRequest: Codable, Equatable {
     let choiceId: String?
     let privacyManagerId: String
     let requestFromPM: Bool
-    let uuid: GDPRUUID
+    let uuid: SPConsentUUID
     let requestUUID: UUID
     let pmSaveAndExitVariables: SPGDPRArbitraryJson
     let meta: Meta
@@ -29,7 +29,7 @@ struct ActionRequest: Codable, Equatable {
 }
 
 struct ActionResponse: Codable {
-    let uuid: GDPRUUID
+    let uuid: SPConsentUUID
     let userConsent: GDPRUserConsent
     var meta: Meta
 }

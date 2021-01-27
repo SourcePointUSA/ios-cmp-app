@@ -64,8 +64,8 @@ extension ViewController: GDPRConsentDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        print("ConsentUUID: \(gdprUUID)")
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
+        print("ConsentUUID: \(consentUUID)")
         userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
 
@@ -108,8 +108,8 @@ extension ViewController: GDPRConsentDelegate {
     [cvc loadMessage];
 }
 
-- (void)onConsentReadyWithGdprUUID:(NSString *)gdprUUID userConsent:(GDPRUserConsent *)userConsent {
-    NSLog(@"ConsentUUID: %@", gdprUUID);
+- (void)onConsentReadyWithSPConsentUUID:(NSString *)consentUUID userConsent:(GDPRUserConsent *)userConsent {
+    NSLog(@"ConsentUUID: %@", consentUUID);
     NSLog(@"ConsentString: %@", userConsent.euconsent);
     for (id vendorId in userConsent.acceptedVendors) {
         NSLog(@"Consented to Vendor(id: %@)", vendorId);

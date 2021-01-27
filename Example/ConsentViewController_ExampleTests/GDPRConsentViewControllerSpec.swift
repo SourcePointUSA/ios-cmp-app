@@ -269,18 +269,18 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                 }
 
                 it("calls onConsentReady delegate method") {
-                    consentViewController.onConsentReady(gdprUUID: "test", userConsent: userConsents)
+                    consentViewController.onConsentReady(consentUUID: "test", userConsent: userConsents)
                     expect(mockConsentDelegate.isOnConsentReadyCalled).to(equal(true), description: "onConsentReady delegate method calls successfully")
                 }
 
                 it("sets the consentUUID in its local storage") {
-                    consentViewController.onConsentReady(gdprUUID: "test", userConsent: userConsents)
+                    consentViewController.onConsentReady(consentUUID: "test", userConsent: userConsents)
                     expect(consentViewController.localStorage.consentUUID).to(equal("test"))
-                    expect(consentViewController.gdprUUID).to(equal("test"))
+                    expect(consentViewController.consentUUID).to(equal("test"))
                 }
 
                 it("sets the userConsent in its local storage") {
-                    consentViewController.onConsentReady(gdprUUID: "test", userConsent: userConsents)
+                    consentViewController.onConsentReady(consentUUID: "test", userConsent: userConsents)
                     expect(consentViewController.localStorage.userConsents).to(equal(userConsents))
                     expect(consentViewController.userConsents).to(equal(userConsents))
                 }

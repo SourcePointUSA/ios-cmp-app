@@ -12,6 +12,26 @@ import Nimble
 
 // swiftlint:disable force_try
 
+/**
+
+
+ {
+ "requestUUID": "test",
+ "campaigns": {
+ "gdpr": {
+ "accountId": 22,
+ "propertyId": 7639,
+ "propertyHref": "https://tcfv2.mobile.webview"
+ },
+ "ccpa": {
+ "accountId": 22,
+ "propertyId": 7639,
+ "propertyHref": "https://tcfv2.mobile.webview"
+ }
+ }
+ }
+ */
+
 class MessageRequestSpec: QuickSpec {
     override func spec() {
         let requestUUID = UUID()
@@ -29,13 +49,19 @@ class MessageRequestSpec: QuickSpec {
         )
         let messageString = """
         {
-            "euconsent": "euconsent",
-            "accountId": 1,
-            "propertyHref": "https:\\/\\/propertyName",
-            "requestUUID": "\(requestUUID.uuidString)",
-            "meta": "meta",
-            "campaignEnv": "stage",
-            "propertyId": 1
+            "requestUUID": "uuid string",
+            "campaigns": {
+                "gdpr": {
+                    "accountId": 1,
+                    "propertyId": 1,
+                    "propertyHref": "https://propertyName"
+                },
+                "ccpa": {
+                    "accountId": 1,
+                    "propertyId": 1,
+                    "propertyHref": "https://propertyName"
+                }
+            }
         }
         """.filter { !" \n\t\r".contains($0) }
 

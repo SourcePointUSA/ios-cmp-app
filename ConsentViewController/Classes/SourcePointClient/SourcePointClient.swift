@@ -21,7 +21,7 @@ protocol SourcePointProtocol {
     // swiftlint:disable:next function_parameter_count
     func getMessage(
         native: Bool,
-        consentUUID: GDPRUUID?,
+        consentUUID: SPConsentUUID?,
         euconsent: String,
         authId: String?,
         meta: Meta,
@@ -30,7 +30,7 @@ protocol SourcePointProtocol {
 
     func postAction(
         action: GDPRAction,
-        consentUUID: GDPRUUID,
+        consentUUID: SPConsentUUID,
         meta: Meta,
         completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?)
     -> Void)
@@ -129,7 +129,7 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     // swiftlint:disable:next function_parameter_count line_length
-    func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError? ) -> Void) {
+    func getMessage(url: URL, consentUUID: SPConsentUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError? ) -> Void) {
         do {
             let body = try JSONEncoder().encode(MessageRequest(
                 uuid: consentUUID,
@@ -160,7 +160,7 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     // swiftlint:disable:next line_length function_parameter_count
-    func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?) -> Void) {
+    func getMessage(native: Bool, consentUUID: SPConsentUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?) -> Void) {
         getMessage(
             url: native ?
                 SourcePointClient.GET_MESSAGE_CONTENTS_URL :
@@ -173,7 +173,7 @@ class SourcePointClient: SourcePointProtocol {
         )
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: SPConsentUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
         let url = SourcePointClient.CONSENT_URL
 
         do {

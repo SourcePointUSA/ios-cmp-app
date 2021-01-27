@@ -53,9 +53,9 @@ extension ViewController: GDPRConsentDelegate {
     }
 
     /// called after an action is taken by the user and the consent info is returned by SourcePoint's endpoints
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
         print("onConsentReady: ", storedSDKData())
-        print("onConsentReady: ", gdprUUID, userConsent)
+        print("onConsentReady: ", consentUUID, userConsent)
     }
 
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check

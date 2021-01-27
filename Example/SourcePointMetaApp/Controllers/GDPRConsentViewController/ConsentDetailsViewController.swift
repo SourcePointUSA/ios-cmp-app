@@ -28,7 +28,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
      */
     var isPMLoaded = false
     var userConsents: GDPRUserConsent?
-    var gdprUUID: String = ""
+    var consentUUID: String = ""
     let sections = ["Vendor Consents", "Purpose Consents"]
 
     // MARK: - Initializer
@@ -81,8 +81,8 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     }
 
     func setconsentUUId() {
-        if gdprUUID.count > 0 {
-            consentUUIDLabel.text = gdprUUID
+        if consentUUID.count > 0 {
+            consentUUIDLabel.text = consentUUID
             euConsentLabel.text = userConsents?.euconsent
         } else {
             consentUUIDLabel.text = SPLiteral.consentUUID
@@ -168,10 +168,10 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         }
     }
 
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
         self.showIndicator()
         self.userConsents = userConsent
-        self.gdprUUID = gdprUUID
+        self.consentUUID = consentUUID
         setconsentUUId()
         consentTableView.reloadData()
         self.hideIndicator()

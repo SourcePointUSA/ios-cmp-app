@@ -41,7 +41,7 @@ extension UserDefaults: Storage {
 
 protocol GDPRLocalStorage {
     var storage: Storage { get set }
-    var consentUUID: GDPRUUID { get set }
+    var consentUUID: SPConsentUUID { get set }
     var meta: String { get set }
     var authId: String? { get set }
     var tcfData: [String: Any] { get set }

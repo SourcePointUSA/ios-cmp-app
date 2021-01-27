@@ -11,7 +11,7 @@ import Foundation
 
 class GDPRLocalStorageMock: GDPRLocalStorage {
     var storage: Storage = InMemoryStorageMock()
-    var consentUUID: GDPRUUID = ""
+    var consentUUID: SPConsentUUID = ""
     var meta: String = "{}"
     var authId: String?
     var tcfData: [String: Any] = [:]

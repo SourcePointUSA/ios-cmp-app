@@ -50,7 +50,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     let propertyId: Int
     var pmId: String
     var pmTab: PrivacyManagerTab
-    let consentUUID: GDPRUUID
+    let consentUUID: SPConsentUUID
     var isSecondLayerMessage = false
     var consentUILoaded = false
     var isPMLoaded = false
@@ -58,7 +58,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     var connectivityManager: Connectivity = ConnectivityManager()
     let messageLanguage: MessageLanguage
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, pmTab: PrivacyManagerTab, timeout: TimeInterval) {
+    init(propertyId: Int, pmId: String, consentUUID: SPConsentUUID, messageLanguage: MessageLanguage, pmTab: PrivacyManagerTab, timeout: TimeInterval) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID

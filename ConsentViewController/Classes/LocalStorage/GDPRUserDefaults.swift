@@ -25,7 +25,7 @@ class GDPRUserDefaults: GDPRLocalStorage {
         set { storage.set(newValue, forKey: GDPRUserDefaults.EU_CONSENT_KEY) }
     }
 
-    var consentUUID: GDPRUUID {
+    var consentUUID: SPConsentUUID {
        get { storage.string(forKey: GDPRUserDefaults.GDPR_UUID_KEY) ?? String() }
        set { storage.set(newValue, forKey: GDPRUserDefaults.GDPR_UUID_KEY) }
     }

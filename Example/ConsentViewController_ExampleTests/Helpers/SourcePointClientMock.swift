@@ -33,7 +33,7 @@ class SourcePointClientMock: SourcePointProtocol {
                   timeout: TimeInterval) {}
 
     func getMessage(native: Bool,
-                    consentUUID: GDPRUUID?,
+                    consentUUID: SPConsentUUID?,
                     euconsent: String,
                     authId: String?,
                     meta: Meta,
@@ -42,7 +42,7 @@ class SourcePointClientMock: SourcePointProtocol {
         completionHandler(getMessageResponse, error)
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
+    func postAction(action: GDPRAction, consentUUID: SPConsentUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
         postActionCalled = true
         completionHandler(postActionResponse, error)
     }

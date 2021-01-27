@@ -9,7 +9,7 @@
 import UIKit
 
 public typealias TargetingParams = [String: String]
-public typealias GDPRUUID = String
+public typealias SPConsentUUID = String
 typealias Meta = String
 
 // swiftlint:disable type_body_length
@@ -39,7 +39,7 @@ typealias Meta = String
     }
 
     /// The UUID assigned to a user, available after calling `loadMessage`
-    public var gdprUUID: GDPRUUID {
+    public var consentUUID: SPConsentUUID {
         return localStorage.consentUUID
     }
 
@@ -186,7 +186,7 @@ typealias Meta = String
         if let message = response.msgJSON {
             self.consentDelegate?.consentUIWillShow?(message: message)
         } else {
-            self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+            self.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
         }
     }
 
@@ -195,7 +195,7 @@ typealias Meta = String
            self.loadMessage(fromUrl: url)
        } else {
            self.loading = .Ready
-           self.onConsentReady(gdprUUID: response.uuid, userConsent: response.userConsent)
+           self.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
        }
    }
 
@@ -206,7 +206,7 @@ typealias Meta = String
                 clearAllData()
             }
             localStorage.authId = authId
-            sourcePoint.getMessage(native: native, consentUUID: gdprUUID, euconsent: euconsent, authId: authId, meta: localStorage.meta) { [weak self] messageResponse, error in
+            sourcePoint.getMessage(native: native, consentUUID: consentUUID, euconsent: euconsent, authId: authId, meta: localStorage.meta) { [weak self] messageResponse, error in
                 if let messageResponse = messageResponse {
                     self?.localStorage.consentUUID = messageResponse.uuid
                     self?.localStorage.meta = messageResponse.meta
@@ -229,7 +229,7 @@ typealias Meta = String
         messageViewController = MessageWebViewController(
             propertyId: propertyId,
             pmId: pmId,
-            consentUUID: gdprUUID,
+            consentUUID: consentUUID,
             messageLanguage: messageLanguage,
             pmTab: privacyManagerTab,
             timeout: messageTimeoutInSeconds
@@ -267,7 +267,7 @@ typealias Meta = String
             messageViewController = MessageWebViewController(
                 propertyId: propertyId,
                 pmId: pmId,
-                consentUUID: gdprUUID,
+                consentUUID: consentUUID,
                 messageLanguage: messageLanguage,
                 pmTab: privacyManagerTab,
                 timeout: messageTimeoutInSeconds
@@ -324,13 +324,13 @@ typealias Meta = String
         categories: [String],
         legIntCategories: [String],
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
-        if gdprUUID.isEmpty {
+        if consentUUID.isEmpty {
             onError(error: PostingConsentWithoutConsentUUID())
             return
         }
 
         customConsent(
-            uuid: gdprUUID,
+            uuid: consentUUID,
             vendors: vendors,
             categories: categories,
             legIntCategories: legIntCategories,
@@ -341,10 +341,10 @@ typealias Meta = String
     }
 
     public func reportAction(_ action: GDPRAction) {
-        sourcePoint.postAction(action: action, consentUUID: gdprUUID, meta: localStorage.meta) { [weak self] response, error in
+        sourcePoint.postAction(action: action, consentUUID: consentUUID, meta: localStorage.meta) { [weak self] response, error in
             if let actionResponse = response {
                 self?.localStorage.meta = actionResponse.meta
-                self?.onConsentReady(gdprUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
+                self?.onConsentReady(consentUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
             } else {
                 self?.onError(error: error ?? GDPRConsentViewControllerError())
             }
@@ -385,16 +385,16 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         let type = action.type
         consentDelegate?.onAction?(action)
         if type == .Dismiss {
-            self.onConsentReady(gdprUUID: gdprUUID, userConsent: userConsents)
+            self.onConsentReady(consentUUID: consentUUID, userConsent: userConsents)
         } else if type == .AcceptAll || type == .RejectAll || type == .SaveAndExit {
             reportAction(action)
         }
     }
 
-    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        localStorage.consentUUID = gdprUUID
+    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
+        localStorage.consentUUID = consentUUID
         localStorage.userConsents = userConsent
-        consentDelegate?.onConsentReady?(gdprUUID: gdprUUID, userConsent: userConsent)
+        consentDelegate?.onConsentReady?(consentUUID: consentUUID, userConsent: userConsent)
     }
 
     public func messageWillShow() { consentDelegate?.messageWillShow?() }

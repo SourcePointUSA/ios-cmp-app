@@ -8,7 +8,7 @@
 import Foundation
 
 struct MessageRequest: Equatable {
-    let uuid: GDPRUUID?
+    let uuid: SPConsentUUID?
     let euconsent: String
     let authId: String?
     let accountId: Int
@@ -23,7 +23,7 @@ struct MessageRequest: Equatable {
 extension MessageRequest: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try? container.decode(GDPRUUID.self, forKey: .uuid)
+        uuid = try? container.decode(SPConsentUUID.self, forKey: .uuid)
         euconsent = try container.decode(String.self, forKey: .euconsent)
         authId = try? container.decode(String.self, forKey: .authId)
         accountId = try container.decode(Int.self, forKey: .accountId)
@@ -71,7 +71,7 @@ extension MessageRequest: Codable {
 struct MessageResponse: Codable {
     let url: URL?
     let msgJSON: GDPRMessage?
-    let uuid: GDPRUUID
+    let uuid: SPConsentUUID
     let userConsent: GDPRUserConsent
     var meta: Meta
 }
