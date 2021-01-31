@@ -28,21 +28,22 @@ class SourcePointClientSpec: QuickSpec {
 
     /// TODO: add CCPA campaign
     /// TODO: pass targeting params "encoding" to MessageRequest
-    func getMessageRequest(_ client: SourcePointClient, _ targetingParams: String = "{}") -> MessageRequest { MessageRequest(
-        authId: "auth id",
-        requestUUID: client.requestUUID,
-        campaigns: CampaignsRequest(
-            gdpr: CampaignRequest(
-                uuid: "uuid",
-                accountId: client.accountId,
-                propertyId: client.propertyId,
-                propertyHref: client.propertyName,
-                campaignEnv: client.campaignEnv,
-                meta: "meta",
-                targetingParams: targetingParams
-            ),
-            ccpa: nil
-        ))
+    func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> String { String(data: try! JSONEncoder().encode(
+            MessageRequest(
+            authId: "auth id",
+            requestUUID: client.requestUUID,
+            campaigns: CampaignsRequest(
+                gdpr: CampaignRequest(
+                    uuid: "uuid",
+                    accountId: client.accountId,
+                    propertyId: client.propertyId,
+                    propertyHref: client.propertyName,
+                    campaignEnv: client.campaignEnv,
+                    meta: "meta",
+                    targetingParams: targetingParams
+                ),
+                ccpa: nil
+            ))), encoding: .utf8)!
     }
 
     override func spec() {
@@ -87,7 +88,7 @@ class SourcePointClientSpec: QuickSpec {
                         authId: "auth id",
                         meta: "meta",
                         completionHandler: { _, _  in})
-                    let parsed = try! JSONDecoder().decode(MessageRequest.self, from: httpClient!.postWasCalledWithBody!)
+                    let parsed = String(data: httpClient!.postWasCalledWithBody!, encoding: .utf8)
                     expect(parsed).to(equal(self.getMessageRequest(client)))
                 }
 
@@ -109,8 +110,8 @@ class SourcePointClientSpec: QuickSpec {
                             authId: "auth id",
                             meta: "meta",
                             completionHandler: { _, _  in})
-                        let parsed = try! JSONDecoder().decode(MessageRequest.self, from: httpClient!.postWasCalledWithBody!)
-                        expect(parsed).to(equal(self.getMessageRequest(client, "{\"foo\":\"bar\"}")))
+                        let parsed = String(data: httpClient!.postWasCalledWithBody!, encoding: .utf8)
+                        expect(parsed).to(equal(self.getMessageRequest(client, ["foo": "bar"])))
                     }
                 }
             }

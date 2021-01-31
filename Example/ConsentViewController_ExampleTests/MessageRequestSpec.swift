@@ -20,7 +20,7 @@ class MessageRequestSpec: QuickSpec {
             propertyHref: try! SPPropertyName(name),
             campaignEnv: .Public,
             meta: "",
-            targetingParams: nil
+            targetingParams: ["foo": "bar"]
         )
     }
     override func spec() {
@@ -39,6 +39,7 @@ class MessageRequestSpec: QuickSpec {
                     "propertyId": 1,
                     "accountId": 1,
                     "meta": "",
+                    "targetingParams": {"foo":"bar"},
                     "propertyHref": "https:\\/\\/ccpa"
                 },
                 "gdpr": {
@@ -46,6 +47,7 @@ class MessageRequestSpec: QuickSpec {
                     "propertyId": 1,
                     "accountId": 1,
                     "meta": "",
+                    "targetingParams": {"foo":"bar"},
                     "propertyHref": "https:\\/\\/gdpr"
                 }
             }
@@ -55,12 +57,6 @@ class MessageRequestSpec: QuickSpec {
         it("can be encoded to JSON") {
             let messageEncoded = String(data: try! JSONEncoder().encode(message), encoding: .utf8)
             expect(messageString).to(equal(messageEncoded))
-        }
-
-        it("can be decoded from JSON") {
-            let messageDecoded = try? JSONDecoder()
-                .decode(MessageRequest.self, from: messageString.data(using: .utf8)!)
-            expect(message).to(equal(messageDecoded))
         }
     }
 }

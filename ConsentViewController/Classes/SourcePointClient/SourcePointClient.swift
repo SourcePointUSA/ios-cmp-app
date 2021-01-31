@@ -119,15 +119,6 @@ class SourcePointClient: SourcePointProtocol {
         client = SimpleClient(timeoutAfter: timeout)
     }
 
-    func targetingParamsToString(_ params: TargetingParams?) -> String {
-        guard
-            let data = try? JSONSerialization.data(withJSONObject: params ?? [:]),
-            let paramsString = String(data: data, encoding: .utf8) else {
-            return "{}"
-        }
-        return paramsString
-    }
-
     // swiftlint:disable:next function_parameter_count line_length
     func getMessage(url: URL, consentUUID: SPConsentUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError? ) -> Void) {
         do {
@@ -143,7 +134,7 @@ class SourcePointClient: SourcePointProtocol {
                         propertyHref: propertyName,
                         campaignEnv: campaignEnv,
                         meta: meta,
-                        targetingParams: targetingParamsToString(targetingParams)
+                        targetingParams: targetingParams
                     ),
                     ccpa: nil
                 )

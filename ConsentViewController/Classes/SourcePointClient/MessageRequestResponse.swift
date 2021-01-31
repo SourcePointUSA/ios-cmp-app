@@ -14,32 +14,10 @@ struct CampaignRequest: Equatable {
     let propertyHref: SPPropertyName
     let campaignEnv: SPCampaignEnv
     let meta: Meta
-    let targetingParams: String?
+    let targetingParams: SPTargetingParams /// TODO: check if targetingParams can be an object instead of string
 }
 
-extension CampaignRequest: Codable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try? container.decode(SPConsentUUID.self, forKey: .uuid)
-//        euconsent = try container.decode(String.self, forKey: .euconsent)
-        accountId = try container.decode(Int.self, forKey: .accountId)
-        propertyId = try container.decode(Int.self, forKey: .propertyId)
-        propertyHref = try container.decode(SPPropertyName.self, forKey: .propertyHref)
-        targetingParams = try? container.decode(String.self, forKey: .targetingParams)
-        meta = try container.decode(String.self, forKey: .meta)
-        if #available(iOS 11, *) {
-            campaignEnv = try container.decode(SPCampaignEnv.self, forKey: .campaignEnv)
-        } else {
-            guard let env = SPCampaignEnv(stringValue: try container.decode(String.self, forKey: .campaignEnv)) else {
-                throw DecodingError.dataCorrupted(DecodingError.Context(
-                   codingPath: [],
-                   debugDescription: "Unknown SPCampaignEnv"
-                ))
-            }
-            campaignEnv = env
-        }
-    }
-
+extension CampaignRequest: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 //        try container.encode(euconsent, forKey: .euconsent)
@@ -48,7 +26,7 @@ extension CampaignRequest: Codable {
         try container.encode(propertyHref, forKey: .propertyHref)
         try container.encode(meta, forKey: .meta)
         if uuid != nil { try container.encode(uuid, forKey: .uuid) }
-        if targetingParams != nil { try container.encode(targetingParams, forKey: .targetingParams) }
+        try container.encode(targetingParams, forKey: .targetingParams)
         if #available(iOS 11, *) {
             try container.encode(campaignEnv, forKey: .campaignEnv)
         } else {
@@ -63,17 +41,17 @@ extension CampaignRequest: Codable {
     }
 }
 
-struct CampaignsRequest: Equatable, Codable {
+struct CampaignsRequest: Equatable, Encodable {
     let gdpr, ccpa: CampaignRequest?
 }
 
-struct MessageRequest: Equatable, Codable {
+struct MessageRequest: Equatable, Encodable {
     let authId: String?
     let requestUUID: UUID
     let campaigns: CampaignsRequest
 }
 
-struct MessageResponse: Codable {
+struct MessageResponse: Decodable {
     let url: URL?
     let msgJSON: GDPRMessage?
     let uuid: SPConsentUUID
