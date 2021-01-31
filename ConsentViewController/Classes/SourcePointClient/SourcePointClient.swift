@@ -14,7 +14,7 @@ protocol SourcePointProtocol {
         propertyName: SPPropertyName,
         pmId: String,
         campaignEnv: SPCampaignEnv,
-        targetingParams: TargetingParams,
+        targetingParams: SPTargetingParams,
         timeout: TimeInterval
     )
 
@@ -75,7 +75,7 @@ class SourcePointClient: SourcePointProtocol {
     let propertyName: SPPropertyName
     let pmId: String
     let campaignEnv: SPCampaignEnv
-    let targetingParams: TargetingParams?
+    let targetingParams: SPTargetingParams
 
     init(
         accountId: Int,
@@ -83,7 +83,7 @@ class SourcePointClient: SourcePointProtocol {
         propertyName: SPPropertyName,
         pmId: String,
         campaignEnv: SPCampaignEnv,
-        targetingParams: TargetingParams?,
+        targetingParams: SPTargetingParams = [:],
         client: HttpClient
     ) {
         self.accountId = accountId
@@ -101,7 +101,7 @@ class SourcePointClient: SourcePointProtocol {
         propertyName: SPPropertyName,
         pmId: String,
         campaignEnv: SPCampaignEnv,
-        targetingParams: TargetingParams,
+        targetingParams: SPTargetingParams = [:],
         timeout: TimeInterval
     ) {
         self.init(

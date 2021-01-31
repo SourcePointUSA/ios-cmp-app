@@ -29,7 +29,7 @@ class SourcePointClientMock: SourcePointProtocol {
                   propertyName: SPPropertyName,
                   pmId: String,
                   campaignEnv: SPCampaignEnv,
-                  targetingParams: TargetingParams,
+                  targetingParams: SPTargetingParams,
                   timeout: TimeInterval) {}
 
     func getMessage(native: Bool,

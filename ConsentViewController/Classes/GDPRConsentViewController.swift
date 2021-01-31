@@ -8,7 +8,7 @@
 
 import UIKit
 
-public typealias TargetingParams = [String: String]
+public typealias SPTargetingParams = [String: String]
 public typealias SPConsentUUID = String
 typealias Meta = String
 
@@ -80,7 +80,7 @@ typealias Meta = String
     let propertyName: SPPropertyName
     let propertyId: Int
     let pmId: String
-    let targetingParams: TargetingParams
+    let targetingParams: SPTargetingParams
     let sourcePoint: SourcePointProtocol
     let deviceManager: SPDeviceManager
     lazy var logger = { return OSLogger() }()
@@ -113,7 +113,7 @@ typealias Meta = String
         propertyName: SPPropertyName,
         PMId: String,
         campaignEnv: SPCampaignEnv,
-        targetingParams: TargetingParams = [:],
+        targetingParams: SPTargetingParams = [:],
         consentDelegate: GDPRConsentDelegate,
         sourcePointClient: SourcePointProtocol,
         localStorage: GDPRLocalStorage = GDPRUserDefaults(),
@@ -152,7 +152,7 @@ typealias Meta = String
         propertyName: SPPropertyName,
         PMId: String,
         campaignEnv: SPCampaignEnv = .Public,
-        targetingParams: TargetingParams = [:],
+        targetingParams: SPTargetingParams = [:],
         consentDelegate: GDPRConsentDelegate
     ) {
         let sourcePoint = SourcePointClient(

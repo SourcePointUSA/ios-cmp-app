@@ -193,14 +193,14 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     let accountId, propertyId: Int
     let propertyName: String
     let environment: SPCampaignEnv
-    let targetingParams: TargetingParams
+    let targetingParams: SPTargetingParams
 
     init(
         accountId: Int,
         propertyId: Int,
         propertyName: String,
         environment: SPCampaignEnv = .Public,
-        targetingParams: TargetingParams = [:]
+        targetingParams: SPTargetingParams = [:]
     ) {
         self.accountId = accountId
         self.propertyId = propertyId
