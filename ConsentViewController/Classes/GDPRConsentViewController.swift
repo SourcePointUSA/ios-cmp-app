@@ -86,6 +86,10 @@ typealias Meta = String
     lazy var logger = { return OSLogger() }()
     var messageViewController: GDPRMessageViewController?
     var loading: LoadingStatus = .Ready  // used in order not to load the message ui multiple times
+
+    let campaigns: SPCampaigns
+    let profile: ConsentsProfile
+
     enum LoadingStatus: String {
         case Ready
         case Presenting
@@ -119,6 +123,23 @@ typealias Meta = String
         localStorage: GDPRLocalStorage = GDPRUserDefaults(),
         deviceManager: SPDeviceManager = SPDevice()
     ) {
+        campaigns = SPCampaigns(
+            gdpr: SPCampaign(
+                accountId: accountId,
+                propertyId: propertyId,
+                propertyName: propertyName,
+                environment: campaignEnv,
+                targetingParams: targetingParams
+            )
+        )
+        profile = ConsentsProfile(
+            gdpr: ConsentProfile<GDPRUserConsent>(
+                uuid: localStorage.consentUUID,
+                authId: localStorage.authId,
+                meta: localStorage.meta,
+                consents: localStorage.userConsents
+            )
+        )
         self.accountId = accountId
         self.propertyName = propertyName
         self.propertyId = propertyId
@@ -156,12 +177,6 @@ typealias Meta = String
         consentDelegate: GDPRConsentDelegate
     ) {
         let sourcePoint = SourcePointClient(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            pmId: PMId,
-            campaignEnv: campaignEnv,
-            targetingParams: targetingParams,
             timeout: GDPRConsentViewController.DefaultTimeout
         )
         self.init(
@@ -206,16 +221,17 @@ typealias Meta = String
                 clearAllData()
             }
             localStorage.authId = authId
-            sourcePoint.getMessage(native: native, consentUUID: consentUUID, euconsent: euconsent, authId: authId, meta: localStorage.meta) { [weak self] messageResponse, error in
-                if let messageResponse = messageResponse {
+            sourcePoint.getMessage(native: native, campaigns: campaigns, profile: profile) { [weak self] result in
+                switch result {
+                case .success(let messageResponse):
                     self?.localStorage.consentUUID = messageResponse.uuid
                     self?.localStorage.meta = messageResponse.meta
                     self?.localStorage.userConsents = messageResponse.userConsent
                     native ?
                         self?.handleNativeMessageResponse(messageResponse) :
                         self?.handleWebMessageResponse(messageResponse)
-                } else {
-                    self?.onError(error: error ?? GDPRConsentViewControllerError())
+                case .failure(let error):
+                    self?.onError(error: error)
                 }
             }
         }
@@ -296,24 +312,26 @@ typealias Meta = String
         euconsent: String,
         tcfData: SPGDPRArbitraryJson,
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
-        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
-            guard let response = response, error == nil else {
-                self?.onError(error: error ?? GDPRConsentViewControllerError())
-                return
-            }
-
-            let updatedUserConsents = GDPRUserConsent(
-                acceptedVendors: response.vendors,
-                acceptedCategories: response.categories,
-                legitimateInterestCategories: response.legIntCategories,
-                specialFeatures: response.specialFeatures,
-                vendorGrants: response.grants,
-                euconsent: euconsent,
-                tcfData: tcfData
-            )
-            self?.localStorage.userConsents = updatedUserConsents
-            completionHandler(updatedUserConsents)
-        }
+        /// TODO: implement custom consent
+        fatalError("customConsent has not been implemented")
+//        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
+//            guard let response = response, error == nil else {
+//                self?.onError(error: error ?? GDPRConsentViewControllerError())
+//                return
+//            }
+//
+//            let updatedUserConsents = GDPRUserConsent(
+//                acceptedVendors: response.vendors,
+//                acceptedCategories: response.categories,
+//                legitimateInterestCategories: response.legIntCategories,
+//                specialFeatures: response.specialFeatures,
+//                vendorGrants: response.grants,
+//                euconsent: euconsent,
+//                tcfData: tcfData
+//            )
+//            self?.localStorage.userConsents = updatedUserConsents
+//            completionHandler(updatedUserConsents)
+//        }
     }
 
     /// Add the vendors/categories/legitimateInterestCategories ids to the consent profile of the current user.
@@ -341,12 +359,15 @@ typealias Meta = String
     }
 
     public func reportAction(_ action: GDPRAction) {
-        sourcePoint.postAction(action: action, consentUUID: consentUUID, meta: localStorage.meta) { [weak self] response, error in
-            if let actionResponse = response {
+        /// TODO: add support to CCPA
+        sourcePoint.postAction(action: action, campaign: campaigns.gdpr!, profile: profile.gdpr!) {
+            [weak self] result in
+            switch result {
+            case .success(let actionResponse):
                 self?.localStorage.meta = actionResponse.meta
                 self?.onConsentReady(consentUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
-            } else {
-                self?.onError(error: error ?? GDPRConsentViewControllerError())
+            case .failure(let error):
+                self?.onError(error: error)
             }
         }
     }
@@ -373,6 +394,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         if shouldCleanConsentOnError { clearIABConsentData() }
         sourcePoint.errorMetrics(
             error,
+            campaign: campaigns.gdpr!, /// TODO: remove this optional unwrapping
             sdkVersion: GDPRConsentViewController.VERSION,
             OSVersion: deviceManager.osVersion(),
             deviceFamily: deviceManager.deviceFamily(),

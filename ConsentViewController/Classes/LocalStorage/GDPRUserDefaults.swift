@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// TODO: handle data transition from v5 -> v6
 class GDPRUserDefaults: GDPRLocalStorage {
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
     static public let IAB_KEY_PREFIX = "IABTCF_"

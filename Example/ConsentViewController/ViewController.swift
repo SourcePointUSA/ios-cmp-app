@@ -15,6 +15,21 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: execute)
 }
 
+@objc protocol SPCCPA {
+    @objc func loadCCPAPrivacyManager()
+    @objc func ccpaApplies() -> Bool
+}
+
+@objc protocol SPGDPR {
+    @objc func loadGDPRPrivacyManager()
+    @objc func gdprApplies() -> Bool
+}
+
+@objc protocol SPSDK: SPGDPR, SPCCPA {
+    @objc func loadMessage(forAuthId authId: String?)
+}
+
+
 @objc protocol SPConsentUIDelegate {
     @objc func onAction(_ action: SPConsentAction)
 }
@@ -220,7 +235,7 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     }
 }
 
-@objcMembers class SPConsentManager {
+@objcMembers class SPConsentManager: SPSDK {
     weak var delegate: (SPDelegate)?
     let campaigns: SPCampaigns
     var consentUI: SPConsentViewController!
@@ -244,6 +259,22 @@ func afterFakeDelay (execute: @escaping () -> Void) {
         }
         // 2b. otherwise call onConsentReady
         // 3. store data
+    }
+
+    func loadGDPRPrivacyManager() {
+        loadPrivacyManager()
+    }
+
+    func loadCCPAPrivacyManager() {
+        loadPrivacyManager()
+    }
+
+    func gdprApplies() -> Bool{
+        false
+    }
+
+    func ccpaApplies() -> Bool{
+        false
     }
 
     func loadPrivacyManager() {
@@ -304,6 +335,7 @@ extension SPConsentManager: SPConsentUIDelegate {
                     idfaStatus = SPIDFAStatus(fromApple: status)
                 }
             }
+            print(idfaStatus)
 
             self.report(action: action) { result in
                 switch result {
