@@ -18,10 +18,6 @@ target 'SPGDPRExampleAppUITests' do
   pod 'Nimble'
 end
 
-target 'AuthExample' do
-  pod 'ConsentViewController', :path => '../'
-end
-
 target 'NativeMessageExample' do
   pod 'ConsentViewController', :path => '../'
 end
