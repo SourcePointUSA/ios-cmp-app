@@ -1,0 +1,35 @@
+PODS:
+  - ConsentViewController (5.3.5-beta.1)
+  - IQKeyboardManagerSwift (6.5.5)
+  - Nimble (8.0.7)
+  - Quick (2.2.0)
+  - SwiftLint (0.39.1)
+
+DEPENDENCIES:
+  - ConsentViewController (from `../`)
+  - IQKeyboardManagerSwift
+  - Nimble
+  - Quick
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - IQKeyboardManagerSwift
+    - Nimble
+    - Quick
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  ConsentViewController:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ConsentViewController: 9dd21ebe89b4f1b7b6842c76af3c7e89cfa01315
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
+  SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
+
+PODFILE CHECKSUM: dd7e6549923a59ebf21b38e7c0bd90c366711671
+
+COCOAPODS: 1.10.0.rc.1

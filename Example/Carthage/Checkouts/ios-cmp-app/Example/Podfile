@@ -1,0 +1,56 @@
+use_frameworks!
+platform :ios, '9.0'
+
+target 'ConsentViewController_Example' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'SwiftLint'
+end
+
+target 'ConsentViewController_ExampleTests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
+target 'SPGDPRExampleAppUITests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
+target 'NativeMessageExample' do
+  pod 'ConsentViewController', :path => '../'
+end
+
+target 'NativeMessageExampleUITests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
+target 'SourcePointMetaApp' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'IQKeyboardManagerSwift'
+end
+
+target 'SourcePointMetaAppTests' do
+  inherit! :search_paths
+  # Pods for testing
+  pod 'ConsentViewController', :path => '../'
+end
+
+target 'SourcePointMetaAppUITests' do
+  inherit! :search_paths
+  # Pods for testing
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
+post_install do |pi|
+    pi.pods_project.targets.each do |t|
+      t.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      end
+    end
+end

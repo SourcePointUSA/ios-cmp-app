@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Site</title>
+  <script type="text/javascript">
+    !function () { var e = function () { var e, t = "__tcfapiLocator", a = [], n = window; for (; n;) { try { if (n.frames[t]) { e = n; break } } catch (e) { } if (n === window.top) break; n = n.parent } e || (!function e() { var a = n.document, r = !!n.frames[t]; if (!r) if (a.body) { var i = a.createElement("iframe"); i.style.cssText = "display:none", i.name = t, a.body.appendChild(i) } else setTimeout(e, 5); return !r }(), n.__tcfapi = function () { for (var e, t = arguments.length, n = new Array(t), r = 0; r < t; r++)n[r] = arguments[r]; if (!n.length) return a; if ("setGdprApplies" === n[0]) n.length > 3 && 2 === parseInt(n[1], 10) && "boolean" == typeof n[3] && (e = n[3], "function" == typeof n[2] && n[2]("set", !0)); else if ("ping" === n[0]) { var i = { gdprApplies: e, cmpLoaded: !1, cmpStatus: "stub" }; "function" == typeof n[2] && n[2](i) } else a.push(n) }, n.addEventListener("message", (function (e) { var t = "string" == typeof e.data, a = {}; try { a = t ? JSON.parse(e.data) : e.data } catch (e) { } var n = a.__tcfapiCall; n && window.__tcfapi(n.command, n.version, (function (a, r) { var i = { __tcfapiReturn: { returnValue: a, success: r, callId: n.callId } }; t && (i = JSON.stringify(i)), e.source.postMessage(i, "*") }), n.parameter) }), !1)) }; "undefined" != typeof module ? module.exports = e : e() }();
+  </script>
+  <script>
+    window.getCookie = (name) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      return parts.length === 2 ? parts.pop().split(';').shift() : null
+    }
+
+    window._sp_ = {
+      config: {
+        accountId: 22,
+        baseEndpoint: 'https://cdn.privacy-mgmt.com',
+        propertyHref: 'https://andre.webview',
+        propertyId: 14150,
+        events: {
+          onMessageReady: function () {
+            console.log('onMessageReady')
+          },
+          onMessageChoiceSelect: function (choice_id, choice_type_id) {
+            console.log('onMessageChoiceSelect choice_id: ', choice_id);
+            console.log('onMessageChoiceSelect choice_id: ', choice_type_id);
+          },
+          onPrivacyManagerAction: function (pmData) {
+            console.log('onPrivacyManagerAction', pmData)
+          },
+          onMessageChoiceError: function (err) {
+            console.log('onMessageChoiceError', err)
+          },
+          onConsentReady: function (consentUUID, euconsent) {
+            console.log('onConsentReady')
+            console.log('consentUUID', consentUUID)
+            console.log('euconsent', euconsent)
+            var consentUUIDEl = document.querySelector("#consentUUID")
+            var euconsentEl = document.querySelector("#euconsent")
+            var authIdEl = document.querySelector("#authId")
+            consentUUIDEl.innerHTML = consentUUID
+            euconsentEl.innerHTML = euconsent
+            authIdEl.innerHTML = window.getCookie('authId') || ""
+            consentUUIDEl.classList.add('highlighted')
+            euconsentEl.classList.add('highlighted')
+            setTimeout(function removeHighlight () {
+              var consentUUIDEl = document.querySelector("#consentUUID")
+              var euconsentEl = document.querySelector("#euconsent")
+              consentUUIDEl.classList.remove('highlighted')
+              euconsentEl.classList.remove('highlighted')
+            }, 600);
+          },
+          onPMCancel: function () {
+            console.log('onPMCancel')
+          },
+          onMessageReceiveData: function (data) {
+            console.log('onMessageReceiveData', data)
+            console.log(JSON.stringify(data));
+          },
+          onSPPMObjectReady: function () {
+            console.log('onSPPMObjectReady', window._sp_.loadPrivacyManagerModal)
+            // window._sp_.loadPrivacyManager(4400, '5d566301ab45d123ed973688')
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.privacy-mgmt.com/wrapperMessagingWithoutDetection.js"></script>
+  <style>
+    * {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    body {
+      background: #eee;
+    }
+    span {
+      color: #555;
+      word-wrap: break-word;
+      transition: background-color 0.6s ease-in-out;
+    }
+    .highlighted {
+      background-color: darkorange;
+    }
+  </style>
+</head>
+<body>
+  <h1>Web Content</h1>
+  <div>
+    <p>
+      ConsentUUID:
+      <br>
+      <small><span id="consentUUID"></span></small>
+    </p>
+    <p>
+      Consent String:
+      <br>
+      <small><span id="euconsent"></span></small>
+    </p>
+    <p>
+      AuthId:
+      <br>
+      <small><span id="authId"></span></small>
+    </p>
+  </div>
+</body>
+</html>

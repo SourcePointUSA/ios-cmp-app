@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AccountId</key>
+	<integer>22</integer>
+	<key>Property</key>
+	<string>mobile.demo</string>
+	<key>PropertyId</key>
+	<integer>2372</integer>
+	<key>ShowPM</key>
+	<false/>
+	<key>PMId</key>
+	<string>5c0e81b7d74b3c30c6852301</string>
+	<key>Campaign</key>
+	<string>stage</string>
+	<key>PropertyUrl</key>
+	<string>https://mobile.demo</string>
+	<key>MmsUrl</key>
+	<string>https://mms.sp-prod.net</string>
+	<key>CmpUrl</key>
+	<string>https://sourcepoint.mgr.consensu.org</string>
+	<key>MessageUrl</key>
+	<string>https://in-app-messaging.pm.sourcepoint.mgr.consensu.org</string>
+	<key>AuthId</key>
+	<string>sourcepoint@123</string>
+	<key>ConsentString</key>
+	<string>BOmW7qdOmW7qdAGABCENCj-AAAAqKADABUADQAUg</string>
+	<key>ConsentUUID</key>
+	<string>f645bb5b-f190-4eb7-a588-2e3d6e1886e1</string>
+	<key>EUConsent</key>
+	<string>BOmUHleOmUHleAGABBENCj-AAAAqKADABUADQAUg</string>
+</dict>
+</plist>

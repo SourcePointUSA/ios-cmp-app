@@ -1,0 +1,24 @@
+name: JIRA
+on:
+  issues:
+    types: [opened]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Jira Issue
+    steps:
+      - name: Login
+        uses: atlassian/gajira-login@master
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+      - name: Create Issue
+        id: create
+        uses: andresilveirah/gajira-create@master
+        with:
+          project: SP
+          issuetype: Bug
+          summary: "[iOS][TCFv2] ${{github.event.issue.title}}"
+          description: "${{github.event.issue.body}}\n This issue was reported by ${{github.event.issue.user.login}} via GitHub.\n ${{github.event.issue.html_url}}"
+          labels: "In-App,GitHub"
