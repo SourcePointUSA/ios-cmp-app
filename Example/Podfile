@@ -47,6 +47,12 @@ target 'SourcePointMetaAppUITests' do
   pod 'Nimble'
 end
 
+target 'ObjC-ExampleAppUITests' do
+  # Pods for testing
+  pod 'Quick'
+  pod 'Nimble'
+end
+
 post_install do |pi|
     pi.pods_project.targets.each do |t|
       t.build_configurations.each do |config|
