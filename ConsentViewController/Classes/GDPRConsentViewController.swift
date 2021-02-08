@@ -49,7 +49,7 @@ typealias Meta = String
     }
 
     /// All consent data we have in memory and stored on UserDefaults
-    public var userConsents: GDPRUserConsent {
+    public var userConsents: SPGDPRUserConsent {
         return localStorage.userConsents
     }
 
@@ -134,7 +134,7 @@ typealias Meta = String
             )
         )
         profile = ConsentsProfile(
-            gdpr: ConsentProfile<GDPRUserConsent>(
+            gdpr: ConsentProfile<SPGDPRUserConsent>(
                 uuid: localStorage.consentUUID,
                 authId: localStorage.authId,
                 meta: localStorage.meta,
@@ -197,22 +197,24 @@ typealias Meta = String
         fatalError("init(coder:) has not been implemented")
     }
 
-    func handleNativeMessageResponse(_ response: MessageResponse) {
+    /// TODO: model native message
+    func handleNativeMessageResponse(_ response: MessagesResponse<SPGDPRArbitraryJson>) {
         self.loading = .Ready
-        if let message = response.msgJSON {
-            self.consentDelegate?.consentUIWillShow?(message: message)
-        } else {
-            self.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
-        }
+//        if let message = response.msgJSON {
+//            self.consentDelegate?.consentUIWillShow?(message: message)
+//        } else {
+//            self.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
+//        }
     }
 
-    func handleWebMessageResponse(_ response: MessageResponse) {
-       if let url = response.url {
-           self.loadMessage(fromUrl: url)
-       } else {
-           self.loading = .Ready
-           self.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
-       }
+    typealias WebMessage = SPGDPRArbitraryJson
+    func handleWebMessageResponse(_ response: MessagesResponse<WebMessage>) {
+//       if let url = response.url {
+//           self.loadMessage(fromUrl: url)
+//       } else {
+//           self.loading = .Ready
+//           self.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
+//       }
    }
 
     func loadGDPRMessage(native: Bool, authId: String?) {
@@ -222,19 +224,19 @@ typealias Meta = String
                 clearAllData()
             }
             localStorage.authId = authId
-            sourcePoint.getMessage(native: native, campaigns: campaigns, profile: profile) { [weak self] result in
-                switch result {
-                case .success(let messageResponse):
-                    self?.localStorage.consentUUID = messageResponse.uuid
-                    self?.localStorage.meta = messageResponse.meta
-                    self?.localStorage.userConsents = messageResponse.userConsent
-                    native ?
-                        self?.handleNativeMessageResponse(messageResponse) :
-                        self?.handleWebMessageResponse(messageResponse)
-                case .failure(let error):
-                    self?.onError(error: error)
-                }
-            }
+//            sourcePoint.getMessage(native: native, campaigns: campaigns, profile: profile) { [weak self] result in
+//                switch result {
+//                case .success(let messageResponse):
+//                    self?.localStorage.consentUUID = messageResponse.uuid
+//                    self?.localStorage.meta = messageResponse.meta
+//                    self?.localStorage.userConsents = messageResponse.userConsent
+//                    native ?
+//                        self?.handleNativeMessageResponse(messageResponse) :
+//                        self?.handleWebMessageResponse(messageResponse)
+//                case .failure(let error):
+//                    self?.onError(error: error)
+//                }
+//            }
         }
     }
 
@@ -312,7 +314,7 @@ typealias Meta = String
         legIntCategories: [String],
         euconsent: String,
         tcfData: SPGDPRArbitraryJson,
-        completionHandler: @escaping (GDPRUserConsent) -> Void) {
+        completionHandler: @escaping (SPGDPRUserConsent) -> Void) {
         /// TODO: implement custom consent
 //        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
 //            guard let response = response, error == nil else {
@@ -320,7 +322,7 @@ typealias Meta = String
 //                return
 //            }
 //
-//            let updatedUserConsents = GDPRUserConsent(
+//            let updatedUserConsents = SPGDPRUserConsent(
 //                acceptedVendors: response.vendors,
 //                acceptedCategories: response.categories,
 //                legitimateInterestCategories: response.legIntCategories,
@@ -341,7 +343,7 @@ typealias Meta = String
         vendors: [String],
         categories: [String],
         legIntCategories: [String],
-        completionHandler: @escaping (GDPRUserConsent) -> Void) {
+        completionHandler: @escaping (SPGDPRUserConsent) -> Void) {
         if consentUUID.isEmpty {
             onError(error: PostingConsentWithoutConsentUUID())
             return
@@ -413,7 +415,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         }
     }
 
-    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
+    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRUserConsent) {
         localStorage.consentUUID = consentUUID
         localStorage.userConsents = userConsent
         consentDelegate?.onConsentReady?(consentUUID: consentUUID, userConsent: userConsent)

@@ -39,7 +39,7 @@ class MockConsentDelegate: GDPRConsentDelegate {
         onActionCalledWith = action
     }
 
-    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
+    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRUserConsent) {
         isOnConsentReadyCalled = true
     }
 

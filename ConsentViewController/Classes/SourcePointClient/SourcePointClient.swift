@@ -37,33 +37,38 @@ struct ConsentProfile<T: Codable> {
 }
 
 struct ConsentsProfile {
-    let gdpr: ConsentProfile<GDPRUserConsent>?
-    let ccpa: ConsentProfile<GDPRUserConsent>? /// TODO: change to CCPAUserConsents
+    let gdpr: ConsentProfile<SPGDPRUserConsent>?
+    let ccpa: ConsentProfile<SPCCPAUserConsent>?
 
-    init(gdpr: ConsentProfile<GDPRUserConsent>? = nil, ccpa: ConsentProfile<GDPRUserConsent>? = nil) {
+    init(gdpr: ConsentProfile<SPGDPRUserConsent>? = nil, ccpa: ConsentProfile<SPCCPAUserConsent>? = nil) {
         self.gdpr = gdpr
         self.ccpa = ccpa
     }
 }
 
-typealias MessageHandler = (Result<MessageResponse, GDPRConsentViewControllerError>) -> Void
+typealias MessageHandler<MessageType: Decodable> = (Result<MessagesResponse<MessageType>, GDPRConsentViewControllerError>) -> Void
+typealias WebMessageHandler = MessageHandler<SPGDPRArbitraryJson>
+typealias NativeMessageHandler = MessageHandler<SPGDPRArbitraryJson>
 typealias ConsentHandler = (Result<ActionResponse, GDPRConsentViewControllerError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, GDPRConsentViewControllerError>) -> Void
 
 protocol SourcePointProtocol {
     init(timeout: TimeInterval)
 
-    // swiftlint:disable:next function_parameter_count
-    func getMessage(
-        native: Bool,
+    func getWebMessage(
         campaigns: SPCampaigns,
         profile: ConsentsProfile,
-        handler: @escaping MessageHandler)
+        handler: @escaping WebMessageHandler)
+
+    func getNativeMessage(
+        campaigns: SPCampaigns,
+        profile: ConsentsProfile,
+        handler: @escaping NativeMessageHandler)
 
     func postAction(
         action: GDPRAction,
         campaign: SPCampaign,
-        profile: ConsentProfile<GDPRUserConsent>,
+        profile: ConsentProfile<SPGDPRUserConsent>,
         handler: @escaping ConsentHandler)
 
 //    /// TODO: add postAction for CCPA
@@ -127,11 +132,19 @@ class SourcePointClient: SourcePointProtocol {
         )
     }
 
-    func getMessage(
+    func getNativeMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping NativeMessageHandler) {
+        /// TODO:
+    }
+
+    func getWebMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping WebMessageHandler) {
+        getMessage(native: false, campaigns: campaigns, profile: profile, handler: handler)
+    }
+
+    func getMessage<MessageType: Decodable>(
         native: Bool,
         campaigns: SPCampaigns,
         profile: ConsentsProfile,
-        handler: @escaping MessageHandler) {
+        handler: @escaping MessageHandler<MessageType>) {
         let url = native ?
             SourcePointClient.GET_MESSAGE_CONTENTS_URL :
             SourcePointClient.GET_MESSAGE_URL_URL
@@ -153,7 +166,7 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: url.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as MessageResponse
+                    try result.decoded() as MessagesResponse<MessageType>
                 }.mapError({
                     InvalidResponseWebMessageError(error: $0)
                 }))
@@ -164,7 +177,7 @@ class SourcePointClient: SourcePointProtocol {
     func postAction(
         action: GDPRAction,
         campaign: SPCampaign,
-        profile: ConsentProfile<GDPRUserConsent>,
+        profile: ConsentProfile<SPGDPRUserConsent>,
         handler: @escaping ConsentHandler)
     {
         JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload).map { pmPayload in

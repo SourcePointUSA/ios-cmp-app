@@ -48,11 +48,11 @@ class ViewController: UIViewController, SPDelegate {
         print("SDK finished")
     }
 
-    func onConsentReady(consents: SPGDPRConsents) {
+    func onConsentReady(consents: SPGDPRUserConsent) {
         print("GDPR onConsentReady")
     }
 
-    func onConsentReady(consents: SPCCPAConsents) {
+    func onConsentReady(consents: SPCCPAUserConsent) {
         print("CCPA onConsentReady")
     }
 

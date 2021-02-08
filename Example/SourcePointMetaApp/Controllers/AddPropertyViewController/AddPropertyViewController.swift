@@ -334,7 +334,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRUserConsent) {
         showIndicator()
         saveSitDataToDatabase(propertyDetailsModel: propertyDetailsModel!)
         self.loadConsentInfoController(consentUUID: consentUUID, userConsents: userConsent)
@@ -357,7 +357,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         }
     }
 
-    func loadConsentInfoController(consentUUID: SPConsentUUID, userConsents: GDPRUserConsent) {
+    func loadConsentInfoController(consentUUID: SPConsentUUID, userConsents: SPGDPRUserConsent) {
         if let consentDetailsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentDetailsViewController") as? ConsentDetailsViewController {
             consentDetailsController.consentUUID = consentUUID
             consentDetailsController.userConsents =  userConsents

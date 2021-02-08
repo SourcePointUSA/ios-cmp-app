@@ -1,5 +1,5 @@
 //
-//  GDPRUserConsents.swift
+//  SPGDPRUserConsents.swift
 //  ConsentViewController_ExampleTests
 //
 //  Created by Andre Herculano on 27.05.20.
@@ -11,11 +11,11 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-class GDPRUserConsentsSpec: QuickSpec {
+class SPGDPRUserConsentsSpec: QuickSpec {
     override func spec() {
         describe("static empty()") {
             it("contain empty defaults for all its fields") {
-                let consents = GDPRUserConsent.empty()
+                let consents = SPGDPRUserConsent.empty()
                 expect(consents.acceptedCategories).to(beEmpty())
                 expect(consents.acceptedVendors).to(beEmpty())
                 expect(consents.legitimateInterestCategories).to(beEmpty())
@@ -27,17 +27,17 @@ class GDPRUserConsentsSpec: QuickSpec {
         }
 
         it("is Codable") {
-            expect(GDPRUserConsent.empty()).to(beAKindOf(Codable.self))
+            expect(SPGDPRUserConsent.empty()).to(beAKindOf(Codable.self))
         }
 
         describe("CodingKeys") {
             it("legIntCategories is mapped to legitimateInterestCategories") {
-                expect(GDPRUserConsent.CodingKeys.legitimateInterestCategories.rawValue)
+                expect(SPGDPRUserConsent.CodingKeys.legitimateInterestCategories.rawValue)
                     .to(equal("legIntCategories"))
             }
 
             it("TCData is mapped to tcfData") {
-                expect(GDPRUserConsent.CodingKeys.tcfData.rawValue).to(equal("TCData"))
+                expect(SPGDPRUserConsent.CodingKeys.tcfData.rawValue).to(equal("TCData"))
             }
         }
     }

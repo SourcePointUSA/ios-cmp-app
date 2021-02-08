@@ -9,18 +9,24 @@
 import Foundation
 @testable import ConsentViewController
 
+// swiftlint:disable force_try
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
-    var getMessageResponse: MessageResponse = MessageResponse(
-        url: nil,
-        msgJSON: nil,
-        uuid: "",
-        userConsent: GDPRUserConsent.empty(),
-        meta: ""
+    static func getMessageResponse<C: Decodable>(_ c: C) -> MessageResponse<C, SPGDPRArbitraryJson> {
+        MessageResponse<C, SPGDPRArbitraryJson>(
+            message: try! SPGDPRArbitraryJson([:]),
+            uuid: "uuid",
+            userConsent: c,
+            meta: ""
+        )
+    }
+    var getMessagesResponse = MessagesResponse<SPGDPRArbitraryJson>(
+        gdpr: SourcePointClientMock.getMessageResponse(SPGDPRUserConsent.empty()),
+        ccpa: SourcePointClientMock.getMessageResponse(SPCCPAUserConsent.empty())
     )
-    var postActionResponse: ActionResponse = ActionResponse(
+    var postActionResponse = ActionResponse(
         uuid: "",
-        userConsent: GDPRUserConsent.empty(),
+        userConsent: SPGDPRUserConsent.empty(),
         meta: ""
     )
     var error: GDPRConsentViewControllerError?
@@ -30,16 +36,25 @@ class SourcePointClientMock: SourcePointProtocol {
 
     required init(timeout: TimeInterval) { }
 
-    func getMessage(native: Bool, campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping MessageHandler) {
+    func getWebMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping WebMessageHandler) {
         getMessageCalled = true
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(getMessageResponse))
+            handler(.success(self.getMessagesResponse))
         }
     }
 
-    func postAction(action: GDPRAction, campaign: SPCampaign, profile: ConsentProfile<GDPRUserConsent>, handler: @escaping ConsentHandler) {
+    func getNativeMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping NativeMessageHandler) {
+        getMessageCalled = true
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(self.getMessagesResponse))
+        }
+    }
+
+    func postAction(action: GDPRAction, campaign: SPCampaign, profile: ConsentProfile<SPGDPRUserConsent>, handler: @escaping ConsentHandler) {
         postActionCalled = true
         if let error = error {
             handler(.failure(error))

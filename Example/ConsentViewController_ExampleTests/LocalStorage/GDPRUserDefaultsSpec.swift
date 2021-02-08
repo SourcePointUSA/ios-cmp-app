@@ -13,8 +13,8 @@ import Nimble
 // swiftlint:disable force_cast function_body_length
 
 class GDPRUserDefaultsSpec: QuickSpec {
-    func randomUserConsents() -> GDPRUserConsent {
-        return GDPRUserConsent(acceptedVendors: [],
+    func randomUserConsents() -> SPGDPRUserConsent {
+        return SPGDPRUserConsent(acceptedVendors: [],
                                acceptedCategories: [],
                                legitimateInterestCategories: [],
                                specialFeatures: [],
@@ -134,21 +134,21 @@ class GDPRUserDefaultsSpec: QuickSpec {
             describe("userConsents") {
                 it("is empty UserConsent by default") {
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
-                    expect(userDefaults.userConsents).to(equal(GDPRUserConsent.empty()))
+                    expect(userDefaults.userConsents).to(equal(SPGDPRUserConsent.empty()))
                 }
 
                 it("gets its value from the local storage") {
-                    let userConsents = GDPRUserConsent.empty()
+                    let userConsents = SPGDPRUserConsent.empty()
                     localStorage.storage = [GDPRUserDefaults.GDPR_USER_CONSENTS_KEY: userConsents]
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
                     expect(userDefaults.userConsents).to(equal(userConsents))
                 }
 
                 it("persists the value in the local storage") {
-                    let userConsents = GDPRUserConsent.empty()
+                    let userConsents = SPGDPRUserConsent.empty()
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
                     userDefaults.userConsents = userConsents
-                    let stored = localStorage.storage[GDPRUserDefaults.GDPR_USER_CONSENTS_KEY] as! GDPRUserConsent
+                    let stored = localStorage.storage[GDPRUserDefaults.GDPR_USER_CONSENTS_KEY] as! SPGDPRUserConsent
                     expect(stored).to(equal(userConsents))
                 }
             }
@@ -169,7 +169,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     expect((dict[GDPRUserDefaults.GDPR_UUID_KEY] as? String)).to(equal("consent uuid"))
                     expect((dict[GDPRUserDefaults.META_KEY] as? String)).to(equal("meta"))
                     expect((dict[GDPRUserDefaults.GDPR_AUTH_ID_KEY] as? String)).to(equal("auth id"))
-                    expect((dict[GDPRUserDefaults.GDPR_USER_CONSENTS_KEY] as? GDPRUserConsent)).to(equal(userConsents))
+                    expect((dict[GDPRUserDefaults.GDPR_USER_CONSENTS_KEY] as? SPGDPRUserConsent)).to(equal(userConsents))
                     expect((dict["\(GDPRUserDefaults.IAB_KEY_PREFIX)foo"] as? String)).to(equal("bar"))
                 }
 
@@ -220,7 +220,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     let userDefaults = GDPRUserDefaults(storage: localStorage)
                     userDefaults.userConsents = self.randomUserConsents()
                     userDefaults.clear()
-                    expect(userDefaults.userConsents).to(equal(GDPRUserConsent.empty()))
+                    expect(userDefaults.userConsents).to(equal(SPGDPRUserConsent.empty()))
                 }
 
                 it("sets tcfData back to its default value") {

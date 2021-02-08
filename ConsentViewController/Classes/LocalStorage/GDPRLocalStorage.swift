@@ -45,7 +45,7 @@ protocol GDPRLocalStorage {
     var meta: String { get set }
     var authId: String? { get set }
     var tcfData: [String: Any] { get set }
-    var userConsents: GDPRUserConsent { get set }
+    var userConsents: SPGDPRUserConsent { get set }
 
     func clear()
 

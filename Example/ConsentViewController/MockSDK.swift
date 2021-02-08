@@ -36,8 +36,8 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 @objc protocol SPConsentDelegate {
     @objc func onConsentUIReady(_ viewController: SPConsentViewController)
     @objc func onConsentUIFinished()
-    @objc(onGDPRConsentReady:) optional func onConsentReady(consents: SPGDPRConsents)
-    @objc(onCCPAConsentReady:) optional func onConsentReady(consents: SPCCPAConsents)
+    @objc(onGDPRConsentReady:) optional func onConsentReady(consents: SPGDPRUserConsent)
+    @objc(onCCPAConsentReady:) optional func onConsentReady(consents: SPCCPAUserConsent)
     @objc optional func onError(error: GDPRConsentViewControllerError)
 }
 
@@ -50,12 +50,6 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
 @objc protocol SPRenderingApp {
     func loadMessage(_ contents: [String: String])
-}
-
-@objc protocol SPConsents {
-    var uuid: UUID { get }
-    var meta: String { get }
-    var idfaStatus: SPIDFAStatus { get }
 }
 
 /// TODO: Don't forget to set the NSUserTrackingUsageDescription on the apps Info.plist otherwise we can't request access to IDFA
@@ -121,30 +115,6 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
     init(type: SPActionType) {
         self.type = type
-    }
-}
-
-@objcMembers class SPGDPRConsents: NSObject, SPConsents {
-    let uuid: UUID
-    let meta: String
-    let idfaStatus: SPIDFAStatus
-
-    init(uuid: UUID, meta: String, idfaStatus: SPIDFAStatus) {
-        self.uuid = uuid
-        self.meta = meta
-        self.idfaStatus = idfaStatus
-    }
-}
-
-@objcMembers class SPCCPAConsents: NSObject, SPConsents {
-    let uuid: UUID
-    let meta: String
-    let idfaStatus: SPIDFAStatus
-
-    init(uuid: UUID, meta: String, idfaStatus: SPIDFAStatus) {
-        self.uuid = uuid
-        self.meta = meta
-        self.idfaStatus = idfaStatus
     }
 }
 
@@ -289,16 +259,12 @@ func afterFakeDelay (execute: @escaping () -> Void) {
         }
     }
 
-    func report(action: SPConsentAction, completionHandler: @escaping (Result<SPGDPRConsents, Error>) -> Void) {
+    func report(action: SPConsentAction, completionHandler: @escaping (Result<SPGDPRUserConsent, Error>) -> Void) {
         // send consent action
         // we will need to know what legislation that action is referring to
         // in oder to send to the right endpoint and call the appropriate consentReady delegate
         afterFakeDelay {
-            completionHandler(.success(SPGDPRConsents(
-                uuid: UUID(),
-                meta: "{}",
-                idfaStatus: .accepted
-            )))
+            completionHandler(.success(SPGDPRUserConsent.empty()))
         }
     }
 }

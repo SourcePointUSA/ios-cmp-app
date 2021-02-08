@@ -46,7 +46,7 @@ import Foundation
     /// - Parameters:
     ///  - consentUUID: is the uuid we give to that user internally. Notice this is not the same as authId
     ///  - userConsent: is the data structure encapsulating the consent status, rejected vendors and purposes
-    @objc optional func onConsentReady(consentUUID: SPConsentUUID, userConsent: GDPRUserConsent)
+    @objc optional func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRUserConsent)
 
     /// the `onError` function can be called at any moment during the SDKs lifecycle
     @objc optional func onError(error: GDPRConsentViewControllerError)

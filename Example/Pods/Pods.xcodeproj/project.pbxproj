@@ -94,7 +94,7 @@
 		664BEEA25DE34A784CE921DF2FD73436 /* Pods-NativeMessageExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E608ECBCB7E138D4A1D440352DB63FA /* Pods-NativeMessageExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6771C8A3C1BD0EB16110402337D045C1 /* PrivacyManagerTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27B167D16B7F1929D67486D8B294B9D /* PrivacyManagerTab.swift */; };
 		6A4CD6A2CA25C24A5F130B7B6B14FFFA /* GDPRJSReceiver.spec.js in Resources */ = {isa = PBXBuildFile; fileRef = 2C8B89B0020A4AACE47925947FC4D819 /* GDPRJSReceiver.spec.js */; };
-		6A821CC5340A83E4D9BE2F6701171BEE /* GDPRUserConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696F8A7D1BCFE69792A9F3DD96144B1 /* GDPRUserConsent.swift */; };
+		6A821CC5340A83E4D9BE2F6701171BEE /* SPGDPRUserConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7696F8A7D1BCFE69792A9F3DD96144B1 /* SPGDPRUserConsent.swift */; };
 		6B208ADC7C0A1E218185146D9C11A7A2 /* World+DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA67272BF53457CD319FBA4849BBF96 /* World+DSL.swift */; };
 		6CE7470A198B0C804AB59EA47299FDC0 /* Pods-SourcePointMetaApp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A8A7EB3BDC600E2074A39EDAAF1EF1 /* Pods-SourcePointMetaApp-dummy.m */; };
 		706CEC35B3D8A123470744F2D690B1BF /* Quick-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B195869167AFCC8D9480E93E3E5074 /* Quick-dummy.m */; };
@@ -117,6 +117,7 @@
 		806B9040D79A3DC58FB56EAC16FE19BF /* Stringers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DFEC2B3EDAC2A39D36CFF208DD14AB /* Stringers.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		80DEBE41D84FBA1C4D4FE00C8D797E82 /* CwlPreconditionTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E944D1EA17AE5FF617FBD54A491849B /* CwlPreconditionTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		822577E425C6B3B000B16212 /* SPCampaigns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822577E325C6B3B000B16212 /* SPCampaigns.swift */; };
+		82E1E33B25D175A000E96E12 /* SPCCPAUserConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E1E33A25D175A000E96E12 /* SPCCPAUserConsent.swift */; };
 		83976C4AC81DBA1656F1358F25032074 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0F422CBF8B8DF8CA6AC6CE5FD14B9 /* World.swift */; };
 		874381421922C8BEFDF43C52533331EF /* Pods-SourcePointMetaAppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B68CC3ED4F885758D6A04F6E2E48FCD7 /* Pods-SourcePointMetaAppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8911DDD5910AA1C6E099EBF768AFC8F7 /* QuickSpecBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E6484FEE9EB7BBDF57720DA32544F /* QuickSpecBase.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -498,7 +499,7 @@
 		748141A806970E7D86E4C18B49A91F4F /* Nimble-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Nimble-Info.plist"; sourceTree = "<group>"; };
 		755E2D6135639D0C3881E7CE7D6E1EBC /* Pods-SourcePointMetaAppTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SourcePointMetaAppTests-frameworks.sh"; sourceTree = "<group>"; };
 		7619260D33902C2CFB1B7A6AAB6F442B /* Pods-SourcePointMetaApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SourcePointMetaApp-acknowledgements.markdown"; sourceTree = "<group>"; };
-		7696F8A7D1BCFE69792A9F3DD96144B1 /* GDPRUserConsent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GDPRUserConsent.swift; path = ConsentViewController/Classes/GDPRUserConsent.swift; sourceTree = "<group>"; };
+		7696F8A7D1BCFE69792A9F3DD96144B1 /* SPGDPRUserConsent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPGDPRUserConsent.swift; sourceTree = "<group>"; };
 		776BFAACBE9FAF890A9DE571902C4D4A /* BeIdenticalTo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeIdenticalTo.swift; path = Sources/Nimble/Matchers/BeIdenticalTo.swift; sourceTree = "<group>"; };
 		78030BAA3EE1F17D489F98A79CA61A2A /* IQKeyboardManagerSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = IQKeyboardManagerSwift.modulemap; sourceTree = "<group>"; };
 		79FCE4AD50A883E1183B494BD3AD3B3C /* XCTestObservationCenter+Register.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+Register.m"; path = "Sources/NimbleObjectiveC/XCTestObservationCenter+Register.m"; sourceTree = "<group>"; };
@@ -515,6 +516,7 @@
 		81D641720B6717CA4FE5953222E642B5 /* ConsentViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController-prefix.pch"; sourceTree = "<group>"; };
 		822577E325C6B3B000B16212 /* SPCampaigns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SPCampaigns.swift; path = ConsentViewController/Classes/SPCampaigns.swift; sourceTree = "<group>"; };
 		8225788525CA00E900B16212 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ../../../../../Desktop/MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		82E1E33A25D175A000E96E12 /* SPCCPAUserConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCCPAUserConsent.swift; sourceTree = "<group>"; };
 		842EFC6E202CD7DDBC3FEAF194A263EB /* HaveCount.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HaveCount.swift; path = Sources/Nimble/Matchers/HaveCount.swift; sourceTree = "<group>"; };
 		872557A750A5D828EE692CAFE459E965 /* GDPRAction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GDPRAction.swift; path = ConsentViewController/Classes/GDPRAction.swift; sourceTree = "<group>"; };
 		87F52123A0B2F891277E0CFF9A267D9B /* Pods_AuthExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AuthExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -855,7 +857,7 @@
 				69080AEE0FA917DF275CFAA427CF24B9 /* GDPRNativeMessageViewController.swift */,
 				AAAF5AF69E7360417BFB0DE850075F10 /* GDPRNativeMessageViewController.xib */,
 				68F2849B10B589018CBA76286411CF76 /* GDPRPropertyName.swift */,
-				7696F8A7D1BCFE69792A9F3DD96144B1 /* GDPRUserConsent.swift */,
+				82E1E33925D1758900E96E12 /* Consents */,
 				4C12A64EA85829768533A145751C276E /* javascript */,
 				4840715FCF030F53FB6846C297718128 /* jest.config.json */,
 				8AFAC830F65B1EE3424E3ED1E34BFB8E /* MessageLanguage.swift */,
@@ -987,6 +989,15 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SwiftLint";
+			sourceTree = "<group>";
+		};
+		82E1E33925D1758900E96E12 /* Consents */ = {
+			isa = PBXGroup;
+			children = (
+				7696F8A7D1BCFE69792A9F3DD96144B1 /* SPGDPRUserConsent.swift */,
+				82E1E33A25D175A000E96E12 /* SPCCPAUserConsent.swift */,
+			);
+			path = Consents;
 			sourceTree = "<group>";
 		};
 		928F647FDE82DA82E73877C97495DA8A /* Pods-AuthExample */ = {
@@ -2093,13 +2104,14 @@
 				49BD59EC15354F95D9D9B226175E1B89 /* GDPRNativeMessageViewController.xib in Sources */,
 				72BB943DD90102DD794E700699E36218 /* GDPRPropertyName.swift in Sources */,
 				E03500890C97B1769C629715206B1A93 /* GDPRURLExtensions.swift in Sources */,
-				6A821CC5340A83E4D9BE2F6701171BEE /* GDPRUserConsent.swift in Sources */,
+				6A821CC5340A83E4D9BE2F6701171BEE /* SPGDPRUserConsent.swift in Sources */,
 				CD333958399B690FB100314BA50BF030 /* GDPRUserDefaults.swift in Sources */,
 				5C4C6955BA89803031C53441F6065C09 /* GDPRWebViewExtensions.swift in Sources */,
 				1E75C0E932B8DD53A64B01EE7975C7C8 /* MessageLanguage.swift in Sources */,
 				ADE24119CE7F033AC40DBDE5D6161C02 /* MessageRequestResponse.swift in Sources */,
 				A93BA76BF87CCDC3998C4A4531E39C0B /* MessageWebViewController.swift in Sources */,
 				744EB6320FB3D1DF904C460F8ACD7F86 /* OSLogger.swift in Sources */,
+				82E1E33B25D175A000E96E12 /* SPCCPAUserConsent.swift in Sources */,
 				6771C8A3C1BD0EB16110402337D045C1 /* PrivacyManagerTab.swift in Sources */,
 				DE78E964978D8ECD6B0B5D3AAAC38CEE /* SimpleClient.swift in Sources */,
 				9AD31A38B019877B30EDB32697379767 /* SourcePointClient.swift in Sources */,

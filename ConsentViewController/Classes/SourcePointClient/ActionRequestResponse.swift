@@ -30,6 +30,6 @@ struct ActionRequest: Codable, Equatable {
 
 struct ActionResponse: Codable {
     let uuid: SPConsentUUID
-    let userConsent: GDPRUserConsent
+    let userConsent: SPGDPRUserConsent
     var meta: Meta
 }
