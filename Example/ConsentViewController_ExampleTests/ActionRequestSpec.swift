@@ -58,9 +58,9 @@ class ActionRequestSpec: QuickSpec {
         }
 
         it("can be decoded from JSON") {
-            let actionDecoded = try! JSONDecoder()
-                .decode(ActionRequest.self, from: actionString.data(using: .utf8)!)
-            expect(action).to(equal(actionDecoded))
+            JSONDecoder().decode(ActionRequest.self, from: actionString.data(using: .utf8)!).map {
+                expect(action).to(equal($0))
+            }
         }
     }
 }

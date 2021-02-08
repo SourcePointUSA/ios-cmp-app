@@ -11,6 +11,7 @@ import Foundation
 /// E.g. do they all have the same attributes?
 @objcMembers class SPCampaign {
     let accountId, propertyId: Int
+    let pmId: String
     let propertyName: SPPropertyName
     let environment: SPCampaignEnv
     let targetingParams: SPTargetingParams
@@ -18,12 +19,14 @@ import Foundation
     init(
         accountId: Int,
         propertyId: Int,
+        pmId: String,
         propertyName: SPPropertyName,
         environment: SPCampaignEnv = .Public,
         targetingParams: SPTargetingParams = [:]
     ) {
         self.accountId = accountId
         self.propertyId = propertyId
+        self.pmId = pmId
         self.propertyName = propertyName
         self.environment = environment
         self.targetingParams = targetingParams

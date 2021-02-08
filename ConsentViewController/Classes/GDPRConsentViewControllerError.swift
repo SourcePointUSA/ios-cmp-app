@@ -1,19 +1,15 @@
-//
-//  ConsentError.swift
-//  GDPRConsentViewController
-//
-//  Created by Andre Herculano on 12.03.19.
-//
-
-import Foundation
-
 @objcMembers public class GDPRConsentViewControllerError: NSError, LocalizedError {
     public var spCode: String { "sp_metric_generic_sdk_error" }
     public var spDescription: String { description }
     override public var description: String { "Something went wrong in the SDK" }
-    public var failureReason: String? { description }
+    public var failureReason: String { originalError.debugDescription }
+    public var originalError: Error?
 
     init() { super.init(domain: "GDPRConsentViewController", code: 0, userInfo: nil) }
+    convenience init(error: Error) {
+        self.init()
+        originalError = error
+    }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
@@ -54,7 +50,7 @@ import Foundation
 
 /// Invalid Rendering App (JSReceiver) event payloads
 @objcMembers public class InvalidEventPayloadError: GDPRConsentViewControllerError {
-    public override var failureReason: String? { description }
+    public override var failureReason: String { description }
     public override var spCode: String { "sp_metric_invalid_event_payload" }
     public override var description: String {
         "Could not parse the event: \(name) with body: \(body)"
@@ -102,35 +98,22 @@ import Foundation
 }
 
 /// Invalid API Response Errors
-@objcMembers public class InvalidResponseError: GDPRConsentViewControllerError {
-    public override var failureReason: String? { decodingError?.failureReason ?? description }
-
-    let decodingError: DecodingError?
-
-    init(_ error: DecodingError? = nil) {
-        decodingError = error
-        super.init()
-    }
-
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-}
-
-@objcMembers public class InvalidResponseWebMessageError: InvalidResponseError {
+@objcMembers public class InvalidResponseWebMessageError: GDPRConsentViewControllerError {
     override public var spCode: String { "sp_metric_invalid_response_web_message" }
     override public var description: String { "The SDK got an unexpected response from /message-url endpoint" }
 }
 
-@objcMembers public class InvalidResponseNativeMessageError: InvalidResponseError {
+@objcMembers public class InvalidResponseNativeMessageError: GDPRConsentViewControllerError {
     override public var spCode: String { "sp_metric_invalid_response_native_message" }
     override public var description: String { "The SDK got an unexpected response from /native-message endpoint" }
 }
 
-@objcMembers public class InvalidResponseConsentError: InvalidResponseError {
+@objcMembers public class InvalidResponseConsentError: GDPRConsentViewControllerError {
     override public var spCode: String { "sp_metric_invalid_response_consent" }
     override public var description: String { "The SDK got an unexpected response from /consent endpoint" }
 }
 
-@objcMembers public class InvalidResponseCustomError: InvalidResponseError {
+@objcMembers public class InvalidResponseCustomError: GDPRConsentViewControllerError {
     override public var spCode: String { "sp_metric_invalid_response_custom_consent" }
     override public var description: String { "The SDK got an unexpected response from /custom-consent endpoint" }
 }
@@ -186,16 +169,6 @@ import Foundation
 /// Invalid Request Error
 @objcMembers public class InvalidRequestError: GDPRConsentViewControllerError {
     override public var spCode: String { "sp_metric_invalid_request_error" }
-    public override var failureReason: String? { decodingError?.failureReason ?? description }
-
-    let decodingError: DecodingError?
-
-    init(_ error: DecodingError? = nil) {
-        decodingError = error
-        super.init()
-    }
-
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 @objcMembers public class PostingConsentWithoutConsentUUID: InvalidRequestError {

@@ -355,9 +355,15 @@ extension SPConsentManager: SPConsentUIDelegate {
 class ViewController: UIViewController, SPDelegate {
     @IBOutlet weak var vendorXStatusLabel: UILabel!
     @IBAction func onClearConsentTap(_ sender: Any) {}
-    @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        consentManager.loadPrivacyManager()
+
+    @IBAction func onCCPASettingsTap(_ sender: Any) {
+        consentManager.loadCCPAPrivacyManager()
     }
+
+    @IBAction func onGDPRSettingsTap(_ sender: Any) {
+        consentManager.loadGDPRPrivacyManager()
+    }
+
     @IBAction func onAcceptVendorXTap(_ sender: Any) {}
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(campaigns: SPCampaigns(

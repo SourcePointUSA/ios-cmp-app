@@ -49,8 +49,8 @@ class SPGDPRArbitraryJsonSpec: QuickSpec {
 
             it("can be encoded to and decoded to JSON") {
                 let spJson = try! SPGDPRArbitraryJson(self.json)
-                let encoded = try! JSONEncoder().encode(spJson)
-                let decoded = try! JSONDecoder().decode(SPGDPRArbitraryJson.self, from: encoded)
+                let encoded = try! JSONEncoder().encode(spJson).get()
+                let decoded = try! JSONDecoder().decode(SPGDPRArbitraryJson.self, from: encoded).get()
                 expect(decoded["string"]?.stringValue).to(equal("hello there"))
                 expect(decoded["fake int"]?.stringValue).to(equal("1"))
                 expect(decoded["double"]?.doubleValue).to(equal(1.01))

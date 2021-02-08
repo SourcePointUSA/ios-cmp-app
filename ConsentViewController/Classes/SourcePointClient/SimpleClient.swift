@@ -34,11 +34,11 @@ extension DispatchQueue: SPDispatchQueue {
     }
 }
 
-typealias CompletionHandler = (Data?, GDPRConsentViewControllerError?) -> Void
+typealias ResponseHandler = (Result<Data?, GDPRConsentViewControllerError>) -> Void
 
 protocol HttpClient {
-    func get(urlString: String, completionHandler: @escaping CompletionHandler)
-    func post(urlString: String, body: Data?, completionHandler: @escaping CompletionHandler)
+    func get(urlString: String, handler: @escaping ResponseHandler)
+    func post(urlString: String, body: Data?, handler: @escaping ResponseHandler)
 }
 
 class SimpleClient: HttpClient {
@@ -84,10 +84,10 @@ class SimpleClient: HttpClient {
         )
     }
 
-    func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {
+    func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {
         logRequest(urlRequest, urlRequest.httpBody)
         guard connectivityManager.isConnectedToNetwork() else {
-            completionHandler(nil, NoInternetConnection())
+            handler(.failure(NoInternetConnection()))
             return
         }
         session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -107,31 +107,31 @@ class SimpleClient: HttpClient {
                             spError = GenericNetworkError(request: urlRequest, response: response)
                         }
                     }
-                    completionHandler(nil, spError)
+                    handler(.failure(spError))
                 } else {
-                    completionHandler(data, nil)
+                    handler(.success(data))
                 }
             }
         }.resume()
     }
 
-    func post(urlString: String, body: Data?, completionHandler: @escaping CompletionHandler) {
+    func post(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
-            completionHandler(nil, InvalidURLError(urlString: urlString))
+            handler(.failure(InvalidURLError(urlString: urlString)))
             return
         }
         var urlRequest = URLRequest(url: url)
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = body
-        request(urlRequest, completionHandler)
+        request(urlRequest, handler)
     }
 
-    func get(urlString: String, completionHandler: @escaping CompletionHandler) {
+    func get(urlString: String, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
-            completionHandler(nil, InvalidURLError(urlString: urlString))
+            handler(.failure(InvalidURLError(urlString: urlString)))
             return
         }
-        request(URLRequest(url: url), completionHandler)
+        request(URLRequest(url: url), handler)
     }
 }

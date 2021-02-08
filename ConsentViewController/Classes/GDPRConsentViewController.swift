@@ -127,6 +127,7 @@ typealias Meta = String
             gdpr: SPCampaign(
                 accountId: accountId,
                 propertyId: propertyId,
+                pmId: PMId,
                 propertyName: propertyName,
                 environment: campaignEnv,
                 targetingParams: targetingParams
@@ -313,7 +314,6 @@ typealias Meta = String
         tcfData: SPGDPRArbitraryJson,
         completionHandler: @escaping (GDPRUserConsent) -> Void) {
         /// TODO: implement custom consent
-        fatalError("customConsent has not been implemented")
 //        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
 //            guard let response = response, error == nil else {
 //                self?.onError(error: error ?? GDPRConsentViewControllerError())
@@ -360,8 +360,8 @@ typealias Meta = String
 
     public func reportAction(_ action: GDPRAction) {
         /// TODO: add support to CCPA
-        sourcePoint.postAction(action: action, campaign: campaigns.gdpr!, profile: profile.gdpr!) {
-            [weak self] result in
+        sourcePoint.postAction(action: action, campaign: campaigns.gdpr!, profile: profile.gdpr!)
+        { [weak self] result in
             switch result {
             case .success(let actionResponse):
                 self?.localStorage.meta = actionResponse.meta
@@ -392,14 +392,14 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onError(error: GDPRConsentViewControllerError) {
         loading = .Ready
         if shouldCleanConsentOnError { clearIABConsentData() }
-        sourcePoint.errorMetrics(
-            error,
-            campaign: campaigns.gdpr!, /// TODO: remove this optional unwrapping
-            sdkVersion: GDPRConsentViewController.VERSION,
-            OSVersion: deviceManager.osVersion(),
-            deviceFamily: deviceManager.deviceFamily(),
-            legislation: .GDPR
-        )
+//        sourcePoint.errorMetrics(
+//            error,
+//            campaign: campaigns.gdpr!, /// TODO: remove this optional unwrapping
+//            sdkVersion: GDPRConsentViewController.VERSION,
+//            OSVersion: deviceManager.osVersion(),
+//            deviceFamily: deviceManager.deviceFamily(),
+//            legislation: .GDPR
+//        )
         consentDelegate?.onError?(error: error)
     }
 

@@ -152,7 +152,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func updatePMParamsFromAction(_ action: GDPRAction) {
-        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload),
+        if let payloadData = try? JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload).get(),
            let pm_url = payloadData["pm_url"]?.stringValue,
            let urlComponents = URLComponents(string: pm_url)?.queryItems {
             pmId = urlComponents.first { $0.name == "message_id" }?.value ?? pmId
@@ -272,7 +272,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 let typeString = payload["type"] as? Int,
                 let actionPayload = payload["payload"] as? [String: Any],
                 let actionJson = try? SPGDPRArbitraryJson(actionPayload),
-                let payloadData = try? JSONEncoder().encode(actionJson),
+                let payloadData = try? JSONEncoder().encode(actionJson).get(),
                 let actionType = GDPRActionType(rawValue: typeString)
             else {
                 onError(error: InvalidOnActionEventPayloadError(name, body: body["body"]?.debugDescription))

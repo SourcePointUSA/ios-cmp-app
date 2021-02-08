@@ -21,14 +21,14 @@ protocol Storage {
 extension UserDefaults: Storage {
     func setObject<T: Encodable>(_ value: T, forKey defaultName: String) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(value) {
+        if let encoded = try? encoder.encode(value).get() {
             self.set(encoded, forKey: defaultName)
         }
     }
 
     func object<T>(ofType type: T.Type, forKey defaultName: String) -> T? where T: Decodable {
         let decoder = JSONDecoder()
-        if let data = self.data(forKey: defaultName), let object = try? decoder.decode(type, from: data) {
+        if let data = self.data(forKey: defaultName), let object = try? decoder.decode(type, from: data).get() {
             return object
         }
         return nil

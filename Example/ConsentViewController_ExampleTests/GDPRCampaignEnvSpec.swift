@@ -47,7 +47,7 @@ class SPCampaignEnvSpec: QuickSpec {
             describe("Codable") {
                 context("when encoded to JSON") {
                     it("encodes to a string") {
-                        let encoded = try! JSONEncoder().encode(SPCampaignEnv.Stage)
+                        let encoded = try! JSONEncoder().encode(SPCampaignEnv.Stage).get()
                         let encodedString = String(data: encoded, encoding: .utf8)
                         if #available(iOS 11, *) {
                             expect(encodedString).to(equal("\"stage\""))

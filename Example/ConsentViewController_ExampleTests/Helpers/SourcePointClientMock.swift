@@ -9,42 +9,43 @@
 import Foundation
 @testable import ConsentViewController
 
-// swiftlint:disable force_try function_parameter_count
-
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
-    var getMessageResponse: MessageResponse?
-    var postActionResponse: ActionResponse?
+    var getMessageResponse: MessageResponse = MessageResponse(
+        url: nil,
+        msgJSON: nil,
+        uuid: "",
+        userConsent: GDPRUserConsent.empty(),
+        meta: ""
+    )
+    var postActionResponse: ActionResponse = ActionResponse(
+        uuid: "",
+        userConsent: GDPRUserConsent.empty(),
+        meta: ""
+    )
     var error: GDPRConsentViewControllerError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
 
-    convenience init() {
-        self.init(accountId: 0, propertyId: 0, propertyName: try! SPPropertyName("test"), pmId: "", campaignEnv: .Stage, targetingParams: [:], timeout: 0.0)
-    }
+    required init(timeout: TimeInterval) { }
 
-    required init(accountId: Int,
-                  propertyId: Int,
-                  propertyName: SPPropertyName,
-                  pmId: String,
-                  campaignEnv: SPCampaignEnv,
-                  targetingParams: SPTargetingParams,
-                  timeout: TimeInterval) {}
-
-    func getMessage(native: Bool,
-                    consentUUID: SPConsentUUID?,
-                    euconsent: String,
-                    authId: String?,
-                    meta: Meta,
-                    completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?) -> Void) {
+    func getMessage(native: Bool, campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping MessageHandler) {
         getMessageCalled = true
-        completionHandler(getMessageResponse, error)
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(getMessageResponse))
+        }
     }
 
-    func postAction(action: GDPRAction, consentUUID: SPConsentUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
+    func postAction(action: GDPRAction, campaign: SPCampaign, profile: ConsentProfile<GDPRUserConsent>, handler: @escaping ConsentHandler) {
         postActionCalled = true
-        completionHandler(postActionResponse, error)
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(postActionResponse))
+        }
     }
 
     func customConsent(toConsentUUID consentUUID: String,
