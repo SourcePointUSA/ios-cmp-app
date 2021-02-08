@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
+public enum SPJson: Codable, CustomStringConvertible, Equatable {
     public var description: String {
         switch self {
         case .string(let string): return "\"\(string)\""
@@ -45,8 +45,8 @@ public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
 
     case string(String)
     case number(Double)
-    case object([Key: SPGDPRArbitraryJson])
-    case array([SPGDPRArbitraryJson])
+    case object([Key: SPJson])
+    case array([SPJson])
     case bool(Bool)
     case null
 
@@ -59,22 +59,22 @@ public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
         if let string = try? decoder.singleValueContainer().decode(String.self) {
             self = .string(string)
         } else if let number = try? decoder.singleValueContainer().decode(Double.self) { self = .number(number) } else if let object = try? decoder.container(keyedBy: Key.self) {
-            var result: [Key: SPGDPRArbitraryJson] = [:]
+            var result: [Key: SPJson] = [:]
             for key in object.allKeys {
-                result[key] = (try? object.decode(SPGDPRArbitraryJson.self, forKey: key)) ?? .null
+                result[key] = (try? object.decode(SPJson.self, forKey: key)) ?? .null
             }
             self = .object(result)
         } else if var array = try? decoder.unkeyedContainer() {
-            var result: [SPGDPRArbitraryJson] = []
+            var result: [SPJson] = []
             for _ in 0..<(array.count ?? 0) {
-                result.append(try array.decode(SPGDPRArbitraryJson.self))
+                result.append(try array.decode(SPJson.self))
             }
             self = .array(result)
         } else if let bool = try? decoder.singleValueContainer().decode(Bool.self) {
             self = .bool(bool)
         } else if let isNull = try? decoder.singleValueContainer().decodeNil(), isNull { self = .null
         } else { throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [],
-                                                                       debugDescription: "Unknown SPGDPRArbitraryJson type")) }
+                                                                       debugDescription: "Unknown SPJson type")) }
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -104,24 +104,24 @@ public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
         }
     }
 
-    public var objectValue: [String: SPGDPRArbitraryJson]? {
+    public var objectValue: [String: SPJson]? {
         switch self {
         case .object(let object):
-            let mapped: [String: SPGDPRArbitraryJson] = Dictionary(uniqueKeysWithValues:
+            let mapped: [String: SPJson] = Dictionary(uniqueKeysWithValues:
                 object.map { (key, value) in (key.stringValue, value) })
             return mapped
         default: return nil
         }
     }
 
-    public var arrayValue: [SPGDPRArbitraryJson]? {
+    public var arrayValue: [SPJson]? {
         switch self {
         case .array(let array): return array
         default: return nil
         }
     }
 
-    public subscript(key: String) -> SPGDPRArbitraryJson? {
+    public subscript(key: String) -> SPJson? {
         guard let jsonKey = Key(stringValue: key),
             case .object(let object) = self,
             let value = object[jsonKey]
@@ -154,7 +154,7 @@ public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
         }
     }
 
-    public subscript(index: Int) -> SPGDPRArbitraryJson? {
+    public subscript(index: Int) -> SPJson? {
         switch self {
         case .array(let array): return array[index]
         default: return nil
@@ -192,12 +192,12 @@ public enum SPGDPRArbitraryJson: Codable, CustomStringConvertible, Equatable {
         return anyValue as? [String: Any]
     }
 
-    public subscript(dynamicMember member: String) -> SPGDPRArbitraryJson {
+    public subscript(dynamicMember member: String) -> SPJson {
         return self[member] ?? .null
     }
 }
 
-public extension SPGDPRArbitraryJson {
+public extension SPJson {
     init(_ value: Any) throws {
         if let string = value as? String { self = .string(string) } else if let number = value as? NSNumber {
             switch CFGetTypeID(number as CFTypeRef) {
@@ -209,13 +209,13 @@ public extension SPGDPRArbitraryJson {
                 throw EncodingError.invalidValue(value, EncodingError.Context(codingPath: [], debugDescription: "Cannot encode value"))
             }
         } else if let object = value as? [String: Any] {
-            var result: [Key: SPGDPRArbitraryJson] = [:]
+            var result: [Key: SPJson] = [:]
             for (key, subvalue) in object {
-                result[Key(key)] = try SPGDPRArbitraryJson(subvalue)
+                result[Key(key)] = try SPJson(subvalue)
             }
             self = .object(result)
         } else if let array = value as? [Any] {
-            self = .array(try array.map(SPGDPRArbitraryJson.init))
+            self = .array(try array.map(SPJson.init))
         } else if case Optional<Any>.none = value {
             self = .null
         } else if let obj = value as? NSObject, obj.isEqual(NSNull()) {

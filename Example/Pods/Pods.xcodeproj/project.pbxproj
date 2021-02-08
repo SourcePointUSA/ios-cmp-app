@@ -188,7 +188,7 @@
 		DB84342A0C0DEABBF7F729DE55225D82 /* XCTestObservationCenter+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCE4AD50A883E1183B494BD3AD3B3C /* XCTestObservationCenter+Register.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		DCD198D49C0A198A09525B7688EE3BC9 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C58CE3D8E6E248F9E4F1B0B9B58088 /* Async.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		DCF492C3C030C4FE6D4CD93E1BF4E1C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D6555A11C48CA9EB74A526710B8A8CB /* Foundation.framework */; };
-		DD0FC4C9CC9E03F4991669E870B89686 /* SPGDPRArbitraryJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EC5A4512F9EE7304D8614EED21E5D1 /* SPGDPRArbitraryJson.swift */; };
+		DD0FC4C9CC9E03F4991669E870B89686 /* SPJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EC5A4512F9EE7304D8614EED21E5D1 /* SPJson.swift */; };
 		DD227C9D7F307B4D32C0908661D4DFE4 /* jest.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4840715FCF030F53FB6846C297718128 /* jest.config.json */; };
 		DDE417BA9D13D2BB98316DF0512A1944 /* IQBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D681698DFBBE97A754506A833D1077 /* IQBarButtonItem.swift */; };
 		DE78E964978D8ECD6B0B5D3AAAC38CEE /* SimpleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A54B43311C3F53857A5277F8ED7EAC /* SimpleClient.swift */; };
@@ -620,7 +620,7 @@
 		E1BAFF384E998A06CFC5ED70A8F912C4 /* BeCloseTo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeCloseTo.swift; path = Sources/Nimble/Matchers/BeCloseTo.swift; sourceTree = "<group>"; };
 		E219E8E5104795446C7892FEFDEA2412 /* Pods-SPGDPRExampleAppUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SPGDPRExampleAppUITests-acknowledgements.plist"; sourceTree = "<group>"; };
 		E2CC4E5DDE14C7B65385598BF843F98A /* ConsentViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ConsentViewController.release.xcconfig; sourceTree = "<group>"; };
-		E2EC5A4512F9EE7304D8614EED21E5D1 /* SPGDPRArbitraryJson.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPGDPRArbitraryJson.swift; path = ConsentViewController/Classes/SPGDPRArbitraryJson.swift; sourceTree = "<group>"; };
+		E2EC5A4512F9EE7304D8614EED21E5D1 /* SPJson.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPJson.swift; path = ConsentViewController/Classes/SPJson.swift; sourceTree = "<group>"; };
 		E30F6F7747155AD1ABE5B4CE822E7D03 /* GDPRMessageViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GDPRMessageViewController.swift; path = ConsentViewController/Classes/GDPRMessageViewController.swift; sourceTree = "<group>"; };
 		E32E43F46BA65189A9B2406EA7279A0D /* Pods-NativeMessageExample-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-NativeMessageExample-frameworks.sh"; sourceTree = "<group>"; };
 		E3D349D4E2324262FD876DD435DC33CC /* QCKDSL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QCKDSL.h; path = Sources/QuickObjectiveC/DSL/QCKDSL.h; sourceTree = "<group>"; };
@@ -865,7 +865,7 @@
 				2648B74E83E7BB4548247C717DA083BF /* OSLogger.swift */,
 				B27B167D16B7F1929D67486D8B294B9D /* PrivacyManagerTab.swift */,
 				A959FF913A605C60DFA344D658E5BE6E /* SPDeviceManager.swift */,
-				E2EC5A4512F9EE7304D8614EED21E5D1 /* SPGDPRArbitraryJson.swift */,
+				E2EC5A4512F9EE7304D8614EED21E5D1 /* SPJson.swift */,
 				F353B700865A3DF9F2762F64F09DC49A /* SPLegislation.swift */,
 				7121C8836C04FD9DA179D7CB2E89B21C /* Extensions */,
 				A2248750D0C59D44475189A10B3BA611 /* LocalStorage */,
@@ -2116,7 +2116,7 @@
 				DE78E964978D8ECD6B0B5D3AAAC38CEE /* SimpleClient.swift in Sources */,
 				9AD31A38B019877B30EDB32697379767 /* SourcePointClient.swift in Sources */,
 				B74865CB156483FC9DB057DA7184814A /* SPDeviceManager.swift in Sources */,
-				DD0FC4C9CC9E03F4991669E870B89686 /* SPGDPRArbitraryJson.swift in Sources */,
+				DD0FC4C9CC9E03F4991669E870B89686 /* SPJson.swift in Sources */,
 				36EB0257156525B41486E3151E691C02 /* SPLegislation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

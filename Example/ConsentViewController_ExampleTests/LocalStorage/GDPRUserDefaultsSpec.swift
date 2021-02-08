@@ -20,7 +20,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                                specialFeatures: [],
                                vendorGrants: GDPRVendorGrants(),
                                euconsent: UUID().uuidString,
-                               tcfData: SPGDPRArbitraryJson())
+                               tcfData: SPJson())
     }
 
     override func spec() {

@@ -44,7 +44,7 @@ typealias Meta = String
     }
 
     /// All data related to TCFv2
-    public var tcfData: SPGDPRArbitraryJson {
+    public var tcfData: SPJson {
         return localStorage.userConsents.tcfData
     }
 
@@ -198,7 +198,7 @@ typealias Meta = String
     }
 
     /// TODO: model native message
-    func handleNativeMessageResponse(_ response: MessagesResponse<SPGDPRArbitraryJson>) {
+    func handleNativeMessageResponse(_ response: MessagesResponse<SPJson>) {
         self.loading = .Ready
 //        if let message = response.msgJSON {
 //            self.consentDelegate?.consentUIWillShow?(message: message)
@@ -207,7 +207,7 @@ typealias Meta = String
 //        }
     }
 
-    typealias WebMessage = SPGDPRArbitraryJson
+    typealias WebMessage = SPJson
     func handleWebMessageResponse(_ response: MessagesResponse<WebMessage>) {
 //       if let url = response.url {
 //           self.loadMessage(fromUrl: url)
@@ -313,7 +313,7 @@ typealias Meta = String
         categories: [String],
         legIntCategories: [String],
         euconsent: String,
-        tcfData: SPGDPRArbitraryJson,
+        tcfData: SPJson,
         completionHandler: @escaping (SPGDPRUserConsent) -> Void) {
         /// TODO: implement custom consent
 //        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in

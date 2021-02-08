@@ -1,5 +1,5 @@
 //
-//  SPGDPRArbitraryJsonSpec.swift
+//  SPJsonSpec.swift
 //  ConsentViewController_ExampleTests
 //
 //  Created by Andre Herculano on 13.04.20.
@@ -13,7 +13,7 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-class SPGDPRArbitraryJsonSpec: QuickSpec {
+class SPJsonSpec: QuickSpec {
     let jsonSample = """
     {
         "arr": [1, "2", null],
@@ -33,9 +33,9 @@ class SPGDPRArbitraryJsonSpec: QuickSpec {
     }
 
     override func spec() {
-        describe("SPGDPRArbitraryJson") {
+        describe("SPJson") {
             it("parses all primitive types of data") {
-                let spJson = try! SPGDPRArbitraryJson(self.json)
+                let spJson = try! SPJson(self.json)
                 expect(spJson["string"]?.stringValue).to(equal("hello there"))
                 expect(spJson["fake int"]?.stringValue).to(equal("1"))
                 expect(spJson["double"]?.doubleValue).to(equal(1.01))
@@ -48,9 +48,9 @@ class SPGDPRArbitraryJsonSpec: QuickSpec {
             }
 
             it("can be encoded to and decoded to JSON") {
-                let spJson = try! SPGDPRArbitraryJson(self.json)
+                let spJson = try! SPJson(self.json)
                 let encoded = try! JSONEncoder().encode(spJson).get()
-                let decoded = try! JSONDecoder().decode(SPGDPRArbitraryJson.self, from: encoded).get()
+                let decoded = try! JSONDecoder().decode(SPJson.self, from: encoded).get()
                 expect(decoded["string"]?.stringValue).to(equal("hello there"))
                 expect(decoded["fake int"]?.stringValue).to(equal("1"))
                 expect(decoded["double"]?.doubleValue).to(equal(1.01))
@@ -63,8 +63,8 @@ class SPGDPRArbitraryJsonSpec: QuickSpec {
             }
 
             it("empty constructor instantiates an equivalent to empty object") {
-                expect(SPGDPRArbitraryJson().dictionaryValue!).to(beAKindOf([String: Any].self))
-                expect(SPGDPRArbitraryJson().dictionaryValue!).to(beEmpty())
+                expect(SPJson().dictionaryValue!).to(beAKindOf([String: Any].self))
+                expect(SPJson().dictionaryValue!).to(beEmpty())
             }
         }
     }

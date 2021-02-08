@@ -12,15 +12,15 @@ import Foundation
 // swiftlint:disable force_try
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
-    static func getMessageResponse<C: Decodable>(_ c: C) -> MessageResponse<C, SPGDPRArbitraryJson> {
-        MessageResponse<C, SPGDPRArbitraryJson>(
-            message: try! SPGDPRArbitraryJson([:]),
+    static func getMessageResponse<C: Decodable>(_ c: C) -> MessageResponse<C, SPJson> {
+        MessageResponse<C, SPJson>(
+            message: try! SPJson([:]),
             uuid: "uuid",
             userConsent: c,
             meta: ""
         )
     }
-    var getMessagesResponse = MessagesResponse<SPGDPRArbitraryJson>(
+    var getMessagesResponse = MessagesResponse<SPJson>(
         gdpr: SourcePointClientMock.getMessageResponse(SPGDPRUserConsent.empty()),
         ccpa: SourcePointClientMock.getMessageResponse(SPCCPAUserConsent.empty())
     )

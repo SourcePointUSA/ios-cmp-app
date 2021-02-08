@@ -47,8 +47,8 @@ struct ConsentsProfile {
 }
 
 typealias MessageHandler<MessageType: Decodable> = (Result<MessagesResponse<MessageType>, GDPRConsentViewControllerError>) -> Void
-typealias WebMessageHandler = MessageHandler<SPGDPRArbitraryJson>
-typealias NativeMessageHandler = MessageHandler<SPGDPRArbitraryJson>
+typealias WebMessageHandler = MessageHandler<SPJson>
+typealias NativeMessageHandler = MessageHandler<SPJson>
 typealias ConsentHandler = (Result<ActionResponse, GDPRConsentViewControllerError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, GDPRConsentViewControllerError>) -> Void
 
@@ -180,7 +180,7 @@ class SourcePointClient: SourcePointProtocol {
         profile: ConsentProfile<SPGDPRUserConsent>,
         handler: @escaping ConsentHandler)
     {
-        JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload).map { pmPayload in
+        JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
             JSONEncoder().encode(ActionRequest(
                 propertyId: campaign.propertyId,
                 propertyHref: campaign.propertyName,

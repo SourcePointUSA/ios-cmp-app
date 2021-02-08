@@ -78,12 +78,12 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
-                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPGDPRArbitraryJson>, GDPRConsentViewControllerError>) in }
+                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, GDPRConsentViewControllerError>) in }
                     expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message-url?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPGDPRArbitraryJson>, GDPRConsentViewControllerError>) in }
+                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, GDPRConsentViewControllerError>) in }
                     let parsed = httpClient!.postWasCalledWithBody!
                     expect(parsed).toEventually(equal(self.getMessageRequest(client)))
                 }
@@ -102,7 +102,7 @@ class SourcePointClientSpec: QuickSpec {
 
                 it("calls POST on the http client with the right body") {
                     let action = GDPRAction(type: .AcceptAll, id: "1234", consentLanguage: "EN")
-                    action.publisherData = ["foo": try? SPGDPRArbitraryJson("bar")]
+                    action.publisherData = ["foo": try? SPJson("bar")]
                     let actionRequest = ActionRequest(
                         propertyId: self.campaign.propertyId,
                         propertyHref: self.campaign.propertyName,
@@ -113,7 +113,7 @@ class SourcePointClientSpec: QuickSpec {
                         requestFromPM: false,
                         uuid: self.gdprProfile.uuid ?? "uuid",
                         requestUUID: client.requestUUID,
-                        pmSaveAndExitVariables: SPGDPRArbitraryJson(),
+                        pmSaveAndExitVariables: SPJson(),
                         meta: self.gdprProfile.meta,
                         publisherData: action.publisherData,
                         consentLanguage: "EN"

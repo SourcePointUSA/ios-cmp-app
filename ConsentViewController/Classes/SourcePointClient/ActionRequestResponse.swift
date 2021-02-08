@@ -17,9 +17,9 @@ struct ActionRequest: Codable, Equatable {
     let requestFromPM: Bool
     let uuid: SPConsentUUID
     let requestUUID: UUID
-    let pmSaveAndExitVariables: SPGDPRArbitraryJson
+    let pmSaveAndExitVariables: SPJson
     let meta: Meta
-    let publisherData: [String: SPGDPRArbitraryJson?]?
+    let publisherData: [String: SPJson?]?
     let consentLanguage: String?
 
     enum CodingKeys: String, CodingKey {

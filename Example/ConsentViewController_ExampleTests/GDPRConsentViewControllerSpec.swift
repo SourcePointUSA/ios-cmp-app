@@ -109,7 +109,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                                 specialFeatures: ["specialFeature"],
                                 vendorGrants: grants,
                                 euconsent: "",
-                                tcfData: SPGDPRArbitraryJson()
+                                tcfData: SPJson()
                             )))
                         }
                     }
@@ -263,7 +263,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                         specialFeatures: [],
                         vendorGrants: GDPRVendorGrants(),
                         euconsent: "consent string",
-                        tcfData: try! SPGDPRArbitraryJson(["foo": "bar"])
+                        tcfData: try! SPJson(["foo": "bar"])
                     )
                 }
 

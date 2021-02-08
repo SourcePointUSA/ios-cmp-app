@@ -50,7 +50,7 @@ public typealias GDPRPurposeId = String
             specialFeatures: [],
             vendorGrants: GDPRVendorGrants(),
             euconsent: "",
-            tcfData: SPGDPRArbitraryJson())
+            tcfData: SPJson())
     }
 
     /// The ids of the accepted vendors and categories. These can be found in SourcePoint's dashboard
@@ -67,7 +67,7 @@ public typealias GDPRPurposeId = String
     public let euconsent: String
 
     /// A dictionary with all TCFv2 related data
-    public let tcfData: SPGDPRArbitraryJson
+    public let tcfData: SPJson
 
     public init(
         acceptedVendors: [String],
@@ -76,7 +76,7 @@ public typealias GDPRPurposeId = String
         specialFeatures: [String],
         vendorGrants: GDPRVendorGrants,
         euconsent: String,
-        tcfData: SPGDPRArbitraryJson) {
+        tcfData: SPJson) {
         self.acceptedVendors = acceptedVendors
         self.acceptedCategories = acceptedCategories
         self.legitimateInterestCategories = legitimateInterestCategories

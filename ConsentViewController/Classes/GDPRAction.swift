@@ -35,7 +35,7 @@ import Foundation
     public let id: String?
     public let consentLanguage: String?
     public let payload: Data
-    public var publisherData: [String: SPGDPRArbitraryJson?] = [:]
+    public var publisherData: [String: SPJson?] = [:]
 
     public override var description: String {
         """

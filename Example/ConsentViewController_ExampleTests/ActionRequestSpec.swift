@@ -25,9 +25,9 @@ class ActionRequestSpec: QuickSpec {
             requestFromPM: false,
             uuid: "consentUUID",
             requestUUID: requestUUID,
-            pmSaveAndExitVariables: try! SPGDPRArbitraryJson(["foo": "bar"]),
+            pmSaveAndExitVariables: try! SPJson(["foo": "bar"]),
             meta: "meta",
-            publisherData: try! ["pubFoo": SPGDPRArbitraryJson("pubBar")],
+            publisherData: try! ["pubFoo": SPJson("pubBar")],
             consentLanguage: "EN"
         )
         let actionString = """
