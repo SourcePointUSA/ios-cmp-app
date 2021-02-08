@@ -46,7 +46,7 @@ struct ConsentsProfile {
     }
 }
 
-typealias MessageHandler<MessageType: Decodable> = (Result<MessagesResponse<MessageType>, GDPRConsentViewControllerError>) -> Void
+typealias MessageHandler<MessageType: Decodable & Equatable> = (Result<MessagesResponse<MessageType>, GDPRConsentViewControllerError>) -> Void
 typealias WebMessageHandler = MessageHandler<SPJson>
 typealias NativeMessageHandler = MessageHandler<SPJson>
 typealias ConsentHandler = (Result<ActionResponse, GDPRConsentViewControllerError>) -> Void

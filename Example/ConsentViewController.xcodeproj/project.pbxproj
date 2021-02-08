@@ -116,6 +116,7 @@
 		82D8FEE823DC753500F28D74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D8FEE723DC753500F28D74 /* Assets.xcassets */; };
 		82D8FEEB23DC753500F28D74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D8FEE923DC753500F28D74 /* LaunchScreen.storyboard */; };
 		82E1E31A25D1665000E96E12 /* MockSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E1E31925D1665000E96E12 /* MockSDK.swift */; };
+		82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */; };
 		82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E2F2491019900DC01C9 /* HttpMock.swift */; };
 		82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */; };
 		82EA4E342491324400DC01C9 /* GDPRLocalStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E332491324400DC01C9 /* GDPRLocalStorageMock.swift */; };
@@ -306,6 +307,7 @@
 		82D8FEEA23DC753500F28D74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82D8FEEC23DC753500F28D74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82E1E31925D1665000E96E12 /* MockSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSDK.swift; sourceTree = "<group>"; };
+		82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponseSpec.swift; sourceTree = "<group>"; };
 		82EA4E2F2491019900DC01C9 /* HttpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HttpMock.swift; path = Helpers/HttpMock.swift; sourceTree = "<group>"; };
 		82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourcePointClientMock.swift; path = Helpers/SourcePointClientMock.swift; sourceTree = "<group>"; };
 		82EA4E332491324400DC01C9 /* GDPRLocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GDPRLocalStorageMock.swift; path = Helpers/GDPRLocalStorageMock.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 				82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */,
 				82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */,
 				82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */,
+				82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
@@ -1939,6 +1942,7 @@
 				6D605DF62423B96C00BB3E5F /* GDPRConsentViewControllerErrorSpec.swift in Sources */,
 				822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */,
 				6D605DF22423523700BB3E5F /* GDPRConsentViewControllerSpec.swift in Sources */,
+				82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */,
 				6D45580D259A446800635952 /* PrivacyManagerTabSpec.swift in Sources */,
 				82813A6A248A69F000521571 /* GDPRCampaignEnvSpec.swift in Sources */,
 				6D554C2224310BF800B15583 /* SourcePointClientSpec.swift in Sources */,

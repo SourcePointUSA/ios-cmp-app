@@ -51,17 +51,16 @@ struct MessageRequest: Equatable, Encodable {
     let campaigns: CampaignsRequest
 }
 
-typealias CCPAMessageResponse<MessageType: Decodable> = MessageResponse<SPCCPAUserConsent, MessageType>
-typealias GDPRMessageResponse<MessageType: Decodable> = MessageResponse<SPGDPRUserConsent, MessageType>
-struct MessagesResponse<MessageType: Decodable>: Decodable {
+typealias CCPAMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPCCPAUserConsent, MessageType>
+typealias GDPRMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPGDPRUserConsent, MessageType>
+struct MessagesResponse<MessageType: Decodable & Equatable>: Decodable, Equatable {
     let gdpr: GDPRMessageResponse<MessageType>?
     let ccpa: CCPAMessageResponse<MessageType>?
 }
 
-struct MessageResponse<ConsentType: Decodable, MessageType: Decodable>: Decodable {
+struct MessageResponse<ConsentType: Decodable & Equatable, MessageType: Decodable & Equatable>: Equatable, Decodable {
     let message: MessageType?
     let uuid: SPConsentUUID
     let userConsent: ConsentType
     var meta: Meta
 }
-

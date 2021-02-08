@@ -119,5 +119,16 @@ public typealias SPUsPrivacyString = String
         )
         }
     }
+
+    public override func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? SPCCPAUserConsent {
+            return other.rejectedCategories.elementsEqual(rejectedCategories) &&
+                other.rejectedVendors.elementsEqual(rejectedVendors) &&
+                other.status == status &&
+                other.uspstring == uspstring
+        } else {
+            return false
+        }
+    }
 }
 
