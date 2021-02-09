@@ -8,7 +8,6 @@
 
 import Foundation
 import AppTrackingTransparency
-import AdSupport
 import ConsentViewController
 
 func afterFakeDelay (execute: @escaping () -> Void) {

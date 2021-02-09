@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import AppTrackingTransparency
+import AdSupport
 
 /// TODO: Don't forget to set the NSUserTrackingUsageDescription on the apps Info.plist otherwise we can't request access to IDFA
-public @objc enum SPIDFAStatus: Int, Codable, CaseIterable, CustomStringConvertible {
+@objc public enum SPIDFAStatus: Int, Codable, CaseIterable, CustomStringConvertible {
     /// the user hasn't been prompted about the IDFA yet
     case unknown = 0
     /// the user accepted being tracked
@@ -28,7 +30,7 @@ public @objc enum SPIDFAStatus: Int, Codable, CaseIterable, CustomStringConverti
     }
 
     @available(iOS 14, *)
-    init(fromApple status: ATTrackingManager.AuthorizationStatus) {
+    public init(fromApple status: ATTrackingManager.AuthorizationStatus) {
         switch status {
         case .authorized:
             self = .accepted
