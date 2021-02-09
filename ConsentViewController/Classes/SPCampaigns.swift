@@ -7,8 +7,10 @@
 
 import Foundation
 
-/// TODO: understand if the different types of Campaigns can be generalised into the same data structure
-/// E.g. do they all have the same attributes?
+/// A collection of key/value pairs passed to the scenario builder on SP's dashboard
+public typealias SPTargetingParams = [String: String]
+
+/// Contains information about the property/campaign.
 @objcMembers class SPCampaign {
     let accountId, propertyId: Int
     let pmId: String
@@ -33,6 +35,9 @@ import Foundation
     }
 }
 
+/// Set `gdpr` and/or `ccpa` if you wish to cover any of those legislations.
+/// It's important to notice the campaign you passed as parameter needs to have
+/// a active vendor list of that legislation.
 @objcMembers class SPCampaigns {
     let gdpr, ccpa: SPCampaign?
     //    let adblock, idfaPrompt: SPCampaign?

@@ -52,37 +52,6 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     func loadMessage(_ contents: [String: String])
 }
 
-/// TODO: Don't forget to set the NSUserTrackingUsageDescription on the apps Info.plist otherwise we can't request access to IDFA
-@objc enum SPIDFAStatus: Int, Codable, CaseIterable, CustomStringConvertible {
-    case unknown = 0
-    case accepted = 1
-    case denied = 2
-    case unavailable = 3
-
-    public var description: String {
-        switch self {
-        case .unknown: return "unknown"
-        case .accepted: return "accepted"
-        case .denied: return "denied"
-        case .unavailable: return "unavailable"
-        }
-    }
-
-    @available(iOS 14, *)
-    init(fromApple status: ATTrackingManager.AuthorizationStatus) {
-        switch status {
-        case .authorized:
-            self = .accepted
-        case .denied, .restricted:
-            self = .denied
-        case .notDetermined:
-            self = .unknown
-        @unknown default:
-            self = .unknown
-        }
-    }
-}
-
 @objc enum SPActionType: Int, Codable, CaseIterable, CustomStringConvertible {
     case SaveAndExit = 1
     case PMCancel = 2

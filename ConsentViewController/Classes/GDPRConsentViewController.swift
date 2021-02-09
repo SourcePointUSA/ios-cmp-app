@@ -8,7 +8,6 @@
 
 import UIKit
 
-public typealias SPTargetingParams = [String: String]
 public typealias SPConsentUUID = String
 typealias Meta = String
 

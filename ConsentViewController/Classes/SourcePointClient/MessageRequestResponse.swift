@@ -8,13 +8,14 @@
 import Foundation
 
 struct CampaignRequest: Equatable {
-//    let euconsent: String still needed?
+    /// TODO: still needed?
+//    let euconsent: String
     let uuid: SPConsentUUID?
     let accountId, propertyId: Int
     let propertyHref: SPPropertyName
     let campaignEnv: SPCampaignEnv
     let meta: Meta
-    let targetingParams: SPTargetingParams /// TODO: check if targetingParams can be an object instead of string
+    let targetingParams: SPTargetingParams
 }
 
 extension CampaignRequest: Encodable {
