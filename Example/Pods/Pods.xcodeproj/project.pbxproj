@@ -85,7 +85,7 @@
 		582D529682D8E57A3BE833B667F788D2 /* ExampleMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542F7EF01FF3B7EE97E26A245100184F /* ExampleMetadata.swift */; };
 		5B6F70DDD4C63CF6ED95291BCB633494 /* ContainElementSatisfying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EC1134CF8F5071E0368CB59653579E /* ContainElementSatisfying.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		5BDB0BB5F464064DF78D998FB490324F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D6555A11C48CA9EB74A526710B8A8CB /* Foundation.framework */; };
-		5C4C6955BA89803031C53441F6065C09 /* GDPRWebViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CE5D81C89EB96419783F02C08D656 /* GDPRWebViewExtensions.swift */; };
+		5C4C6955BA89803031C53441F6065C09 /* SPWebViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CE5D81C89EB96419783F02C08D656 /* SPWebViewExtensions.swift */; };
 		5C73FEBC2117150A9F1586F4977DC71C /* Pods-SPGDPRExampleAppUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F8AAE1119A0C1B61C4028D511ACF6213 /* Pods-SPGDPRExampleAppUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		602E3758C0EF64AF6B7FCEA05BF5B9B9 /* Expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120536060C61F269739D32721764A17 /* Expectation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		602ECC13D9B8BBB0BA1B0301BC384409 /* GDPRConsentViewControllerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EAF3FFCF39EDF17328A2A8D2E1F760 /* GDPRConsentViewControllerError.swift */; };
@@ -195,7 +195,7 @@
 		DE78E964978D8ECD6B0B5D3AAAC38CEE /* SimpleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A54B43311C3F53857A5277F8ED7EAC /* SimpleClient.swift */; };
 		DED813943ABF7ACBD1C38B2D8024DA9C /* Quick.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B0988E1661980D2367CA77DF88F8D1 /* Quick.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFAAEF3440DDBCA8719DD048DAE27FDF /* QuickConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BC257AC397FDA5D15BD2A04A6891F1C /* QuickConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E03500890C97B1769C629715206B1A93 /* GDPRURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5253BDF5EEE40EEE5521094FF17A3819 /* GDPRURLExtensions.swift */; };
+		E03500890C97B1769C629715206B1A93 /* SPURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5253BDF5EEE40EEE5521094FF17A3819 /* SPURLExtensions.swift */; };
 		E0EAC85F7ACFAD998B14FCE66144000E /* NMBStringify.h in Headers */ = {isa = PBXBuildFile; fileRef = 97A1EAF93D5DCB6086201EB189ABAF8E /* NMBStringify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E2F241AE194191F06998ECFD8517ACB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632205C55EA320F29F521CD75EAA944E /* UIKit.framework */; };
 		E458AAE1AE9E2250F29806E5633B1860 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3689DB19A7E17EF58FDD9E5DEC07A /* Expression.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -454,7 +454,7 @@
 		5040F58E3A985794D9804AFC255F83DD /* Pods-SPGDPRExampleAppUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SPGDPRExampleAppUITests.modulemap"; sourceTree = "<group>"; };
 		510925CF4993719A64DA67893F88EE67 /* Pods_SPGDPRExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SPGDPRExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5123AA52E48C96F93A4E636F871CBB34 /* Quick-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Quick-prefix.pch"; sourceTree = "<group>"; };
-		5253BDF5EEE40EEE5521094FF17A3819 /* GDPRURLExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GDPRURLExtensions.swift; sourceTree = "<group>"; };
+		5253BDF5EEE40EEE5521094FF17A3819 /* SPURLExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPURLExtensions.swift; sourceTree = "<group>"; };
 		52A8A7EB3BDC600E2074A39EDAAF1EF1 /* Pods-SourcePointMetaApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SourcePointMetaApp-dummy.m"; sourceTree = "<group>"; };
 		52CF56CC511733BB34FC25D0B7882CE5 /* ThrowAssertion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThrowAssertion.swift; path = Sources/Nimble/Matchers/ThrowAssertion.swift; sourceTree = "<group>"; };
 		52F790C72EF780FD776370FA634A5CD4 /* AssertionDispatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AssertionDispatcher.swift; path = Sources/Nimble/Adapters/AssertionDispatcher.swift; sourceTree = "<group>"; };
@@ -539,7 +539,7 @@
 		9216D41DD07107C7A7612F6911F2AD89 /* Pods-SourcePointMetaAppUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SourcePointMetaAppUITests-dummy.m"; sourceTree = "<group>"; };
 		928C81E9B44089EAD1C63037924F6EB4 /* BeVoid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeVoid.swift; path = Sources/Nimble/Matchers/BeVoid.swift; sourceTree = "<group>"; };
 		93B7C0F990136CC16DD567A092E04C9A /* QuickConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickConfiguration.swift; path = Sources/Quick/Configuration/QuickConfiguration.swift; sourceTree = "<group>"; };
-		940CE5D81C89EB96419783F02C08D656 /* GDPRWebViewExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GDPRWebViewExtensions.swift; sourceTree = "<group>"; };
+		940CE5D81C89EB96419783F02C08D656 /* SPWebViewExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPWebViewExtensions.swift; sourceTree = "<group>"; };
 		97A1EAF93D5DCB6086201EB189ABAF8E /* NMBStringify.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NMBStringify.h; path = Sources/NimbleObjectiveC/NMBStringify.h; sourceTree = "<group>"; };
 		97FE08456625FAF1683E7DDCE8352C2D /* IQUITextFieldView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUITextFieldView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUITextFieldView+Additions.swift"; sourceTree = "<group>"; };
 		9803FB937A11F9C11D1F96A2B8E9D0C5 /* Pods-NativeMessageExampleUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NativeMessageExampleUITests.modulemap"; sourceTree = "<group>"; };
@@ -977,8 +977,8 @@
 		7121C8836C04FD9DA179D7CB2E89B21C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				5253BDF5EEE40EEE5521094FF17A3819 /* GDPRURLExtensions.swift */,
-				940CE5D81C89EB96419783F02C08D656 /* GDPRWebViewExtensions.swift */,
+				5253BDF5EEE40EEE5521094FF17A3819 /* SPURLExtensions.swift */,
+				940CE5D81C89EB96419783F02C08D656 /* SPWebViewExtensions.swift */,
 			);
 			name = Extensions;
 			path = ConsentViewController/Classes/Extensions;
@@ -2107,10 +2107,10 @@
 				25B859835E13FF6660BE6497E9E0A7C5 /* SPNativeMessageViewController.swift in Sources */,
 				49BD59EC15354F95D9D9B226175E1B89 /* SPNativeMessageViewController.xib in Sources */,
 				72BB943DD90102DD794E700699E36218 /* SPPropertyName.swift in Sources */,
-				E03500890C97B1769C629715206B1A93 /* GDPRURLExtensions.swift in Sources */,
+				E03500890C97B1769C629715206B1A93 /* SPURLExtensions.swift in Sources */,
 				6A821CC5340A83E4D9BE2F6701171BEE /* SPGDPRUserConsent.swift in Sources */,
 				CD333958399B690FB100314BA50BF030 /* GDPRUserDefaults.swift in Sources */,
-				5C4C6955BA89803031C53441F6065C09 /* GDPRWebViewExtensions.swift in Sources */,
+				5C4C6955BA89803031C53441F6065C09 /* SPWebViewExtensions.swift in Sources */,
 				1E75C0E932B8DD53A64B01EE7975C7C8 /* MessageLanguage.swift in Sources */,
 				ADE24119CE7F033AC40DBDE5D6161C02 /* MessageRequestResponse.swift in Sources */,
 				A93BA76BF87CCDC3998C4A4531E39C0B /* MessageWebViewController.swift in Sources */,
