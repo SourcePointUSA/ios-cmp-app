@@ -53,6 +53,13 @@ target 'ObjC-ExampleAppUITests' do
   pod 'Nimble'
 end
 
+target 'AuthExampleUITests' do
+  # Pods for testing
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
 post_install do |pi|
     pi.pods_project.targets.each do |t|
       t.build_configurations.each do |config|
