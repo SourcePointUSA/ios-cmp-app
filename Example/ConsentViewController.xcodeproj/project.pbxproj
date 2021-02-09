@@ -331,6 +331,7 @@
 		6DB561ED24269470008501AC /* GDPRMessageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRMessageSpec.swift; sourceTree = "<group>"; };
 		6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRNativeMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		6DE0222E259B40E100414510 /* SourcePointMetaApp 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SourcePointMetaApp 4.xcdatamodel"; sourceTree = "<group>"; };
+		6DEF568C25D2E73500EB9AC9 /* temp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = temp.xcconfig; sourceTree = "<group>"; };
 		7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaAppValidationUITests.swift; sourceTree = "<group>"; };
 		8214B277249CC13B00167BFE /* SPGDPRExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPGDPRExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGDPRExampleAppUITests.swift; sourceTree = "<group>"; };
@@ -1048,6 +1049,7 @@
 				8231B14622BA5A6C00D2669B /* Assets.xcassets */,
 				8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */,
 				8231B14B22BA5A6C00D2669B /* Info.plist */,
+				6DEF568C25D2E73500EB9AC9 /* temp.xcconfig */,
 			);
 			path = AuthExample;
 			sourceTree = "<group>";
