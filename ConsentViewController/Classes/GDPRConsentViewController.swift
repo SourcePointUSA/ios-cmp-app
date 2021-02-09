@@ -359,7 +359,7 @@ typealias Meta = String
         )
     }
 
-    public func reportAction(_ action: GDPRAction) {
+    public func reportAction(_ action: SPAction) {
         /// TODO: add support to CCPA
         sourcePoint.postAction(action: action, campaign: campaigns.gdpr!, profile: profile.gdpr!)
         { [weak self] result in
@@ -404,7 +404,7 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
         consentDelegate?.onError?(error: error)
     }
 
-    public func onAction(_ action: GDPRAction) {
+    public func onAction(_ action: SPAction) {
         let type = action.type
         consentDelegate?.onAction?(action)
         if type == .Dismiss {

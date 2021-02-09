@@ -37,7 +37,7 @@ import Foundation
     /// called when the user takes an action in the consent ui (message/PM)
     /// - Parameters:
     ///   - action: the user action
-    @objc optional func onAction(_ action: GDPRAction)
+    @objc optional func onAction(_ action: SPAction)
 
     /// called when the consent ui is closed
     @objc optional func consentUIDidDisappear()

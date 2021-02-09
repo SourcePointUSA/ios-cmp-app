@@ -59,8 +59,8 @@ extension ViewController: GDPRConsentDelegate {
     }
 
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
-    /// `GDPRActionType`
-    func onAction(_ action: GDPRAction) {
+    /// `SPActionType`
+    func onAction(_ action: SPAction) {
         switch action.type {
         case .PMCancel:
             dismissPrivacyManager()

@@ -66,7 +66,7 @@ protocol SourcePointProtocol {
         handler: @escaping NativeMessageHandler)
 
     func postAction(
-        action: GDPRAction,
+        action: SPAction,
         campaign: SPCampaign,
         profile: ConsentProfile<SPGDPRUserConsent>,
         handler: @escaping ConsentHandler)
@@ -175,7 +175,7 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func postAction(
-        action: GDPRAction,
+        action: SPAction,
         campaign: SPCampaign,
         profile: ConsentProfile<SPGDPRUserConsent>,
         handler: @escaping ConsentHandler)

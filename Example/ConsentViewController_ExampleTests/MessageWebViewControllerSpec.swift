@@ -85,13 +85,13 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
             context("when it receives a 'onAction' message") {
                 [1, 11, 12, 13, 15].forEach { type in
                     context("and the action type is \(type)") {
-                        let actionType = GDPRActionType(rawValue: type)!
+                        let actionType = SPActionType(rawValue: type)!
                         it("calls the onAction on the consent delegate with \(actionType)") {
                             let message = MessageMock([
                                 "name": "onAction",
                                 "body": ["type": type, "id": "id", "payload": ["foo": "bar"], "consentLanguage": "EN"]
                             ])
-                            let expectedAction = GDPRAction(type: actionType, id: "id", consentLanguage: consentLanguage, payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
+                            let expectedAction = SPAction(type: actionType, id: "id", consentLanguage: consentLanguage, payload: "{\"foo\":\"bar\"}".data(using: .utf8)!)
                             messageWebViewController.userContentController(userContentController, didReceive: message)
                             expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                         }
@@ -104,7 +104,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                             "name": "onAction",
                             "body": ["type": 2, "id": "id", "payload": [:], "consentLanguage": "EN"]
                         ])
-                        let expectedAction = GDPRAction(type: .Dismiss, id: "id", consentLanguage: consentLanguage, payload: "{}".data(using: .utf8)!)
+                        let expectedAction = SPAction(type: .Dismiss, id: "id", consentLanguage: consentLanguage, payload: "{}".data(using: .utf8)!)
                         messageWebViewController.userContentController(userContentController, didReceive: message)
                         expect(mockConsentDelegate.onActionCalledWith).to(equal(expectedAction))
                     }
@@ -214,9 +214,9 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
         }
 
             describe("onAction") {
-                GDPRActionType.allCases.forEach { type in
+                SPActionType.allCases.forEach { type in
                     it("calls the onAction on consent delegate for action of type \(type)") {
-                        messageWebViewController.onAction(GDPRAction(type: type))
+                        messageWebViewController.onAction(SPAction(type: type))
                         expect(mockConsentDelegate.isOnActionCalled).to(beTruthy())
                     }
                 }
@@ -225,7 +225,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     context("and the 2nd layer message is loaded") {
                         beforeEach {
                             messageWebViewController.isSecondLayerMessage = true
-                            messageWebViewController.onAction(GDPRAction(type: .PMCancel))
+                            messageWebViewController.onAction(SPAction(type: .PMCancel))
                         }
 
                         it("calls the onAction with an action of type PMCancel") {
@@ -240,7 +240,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     context("and the 1st layer message is loaded") {
                         it("calls the onAction with an action of type Dismiss") {
                             messageWebViewController.isSecondLayerMessage = false
-                            messageWebViewController.onAction(GDPRAction(type: .PMCancel))
+                            messageWebViewController.onAction(SPAction(type: .PMCancel))
                             expect(mockConsentDelegate.onActionCalledWith.type).to(equal(.Dismiss))
                         }
                     }
@@ -248,12 +248,12 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
                 context("for action type ShowPrivacyManager") {
                     it("calls gdprMessageDidDisappear on the consent delegate") {
-                        messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                        messageWebViewController.onAction(SPAction(type: .ShowPrivacyManager))
                         expect(mockConsentDelegate.isMessageDidDisappearCalled).to(beTruthy())
                     }
 
                     it("sets the isSecondLayerMessage flag to true") {
-                        messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                        messageWebViewController.onAction(SPAction(type: .ShowPrivacyManager))
                         expect(messageWebViewController.isSecondLayerMessage).to(beTruthy())
                     }
 
@@ -262,7 +262,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                             let webviewMock = WebViewMock()
                             messageWebViewController.connectivityManager = ConnectivityMock(connected: true)
                             messageWebViewController.webview = webviewMock
-                            messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                            messageWebViewController.onAction(SPAction(type: .ShowPrivacyManager))
                             let expectedPMURL = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?site_id=1&consentUUID=uuid&message_id=1234&pmTab=purposes"
                             expect(webviewMock.loadCalledWith.url?.absoluteString).to(equal(expectedPMURL))
                         }
@@ -271,14 +271,14 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                     context("and there's no internet connection") {
                         it("calls the onError callback") {
                             messageWebViewController.connectivityManager = ConnectivityMock(connected: false)
-                            messageWebViewController.onAction(GDPRAction(type: .ShowPrivacyManager))
+                            messageWebViewController.onAction(SPAction(type: .ShowPrivacyManager))
                             expect(mockConsentDelegate.isOnErrorCalled).to(beTruthy())
                         }
                     }
                 }
 
                 // all action types other than PMCancel and ShowPrivacyManager
-                GDPRActionType
+                SPActionType
                     .allCases
                     .filter { !($0 == .PMCancel || $0 == .ShowPrivacyManager) }
                     .forEach { type in
@@ -286,7 +286,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         context("and the consent UI is open") {
                             it("calls consentUIDidDisappear on the consent delegate") {
                                 messageWebViewController.consentUILoaded = true
-                                messageWebViewController.onAction(GDPRAction(type: type))
+                                messageWebViewController.onAction(SPAction(type: type))
                                 expect(mockConsentDelegate.isConsentUIDidDisappearCalled).to(beTruthy(), description: type.description)
                             }
                         }
@@ -294,7 +294,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         context("and the consent UI is not open") {
                             it("calls consentUIDidDisappear on the consent delegate") {
                                 messageWebViewController.consentUILoaded = false
-                                messageWebViewController.onAction(GDPRAction(type: type))
+                                messageWebViewController.onAction(SPAction(type: type))
                                 expect(mockConsentDelegate.isConsentUIDidDisappearCalled).to(beFalse())
                             }
                         }
@@ -302,7 +302,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         context("and the pm is loaded") {
                             beforeEach {
                                 messageWebViewController.isPMLoaded = true
-                                messageWebViewController.onAction(GDPRAction(type: type))
+                                messageWebViewController.onAction(SPAction(type: type))
                             }
 
                             it("sets the isPMLoaded to false") {
@@ -317,7 +317,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
                         context("and the pm is not loaded") {
                             it("calls gdprMessageDidDisappear on the consent delegate") {
                                 messageWebViewController.isPMLoaded = false
-                                messageWebViewController.onAction(GDPRAction(type: type))
+                                messageWebViewController.onAction(SPAction(type: type))
                                 expect(mockConsentDelegate.isMessageDidDisappearCalled).to(beTruthy())
                             }
                         }

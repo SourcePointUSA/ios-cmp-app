@@ -25,7 +25,7 @@ class GDPRMessageSpec: QuickSpec {
             beforeEach {
                 attributeStyle = AttributeStyle(fontFamily: "System-Font", fontSize: 14, color: "#00FA9A", backgroundColor: "#944488")
                 messageAttribute = MessageAttribute(text: "Test GDPR Message", style: attributeStyle!, customFields: customFileds)
-                messageAction = MessageAction(text: "Test GDPR Message", style: attributeStyle!, customFields: customFileds, choiceId: 12, choiceType: GDPRActionType.AcceptAll)
+                messageAction = MessageAction(text: "Test GDPR Message", style: attributeStyle!, customFields: customFileds, choiceId: 12, choiceType: SPActionType.AcceptAll)
                 gdprMessage = GDPRMessage(title: messageAttribute!, body: messageAttribute!, actions: [messageAction!], customFields: customFileds)
             }
 
@@ -38,7 +38,7 @@ class GDPRMessageSpec: QuickSpec {
             }
 
             it("Test MessageAction method") {
-                expect(messageAction?.choiceType).to(equal(GDPRActionType.AcceptAll))
+                expect(messageAction?.choiceType).to(equal(SPActionType.AcceptAll))
             }
 
             it("Test GDPRMessage method") {

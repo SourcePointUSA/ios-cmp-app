@@ -151,7 +151,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         onMessageReady()
     }
 
-    func updatePMParamsFromAction(_ action: GDPRAction) {
+    func updatePMParamsFromAction(_ action: SPAction) {
         if let payloadData = try? JSONDecoder().decode(SPJson.self, from: action.payload).get(),
            let pm_url = payloadData["pm_url"]?.stringValue,
            let urlComponents = URLComponents(string: pm_url)?.queryItems {
@@ -160,7 +160,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         }
     }
 
-    func onAction(_ action: GDPRAction) {
+    func onAction(_ action: SPAction) {
         switch action.type {
         case .ShowPrivacyManager:
             consentDelegate?.onAction?(action)
@@ -168,7 +168,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
             showPrivacyManagerFromMessageAction()
         case .PMCancel:
             consentDelegate?.onAction?(
-                GDPRAction(type: isSecondLayerMessage ? .PMCancel : .Dismiss, id: action.id, consentLanguage: action.consentLanguage, payload: action.payload)
+                SPAction(type: isSecondLayerMessage ? .PMCancel : .Dismiss, id: action.id, consentLanguage: action.consentLanguage, payload: action.payload)
             )
             cancelPMAction()
         default:
@@ -273,12 +273,12 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
                 let actionPayload = payload["payload"] as? [String: Any],
                 let actionJson = try? SPJson(actionPayload),
                 let payloadData = try? JSONEncoder().encode(actionJson).get(),
-                let actionType = GDPRActionType(rawValue: typeString)
+                let actionType = SPActionType(rawValue: typeString)
             else {
                 onError(error: InvalidOnActionEventPayloadError(name, body: body["body"]?.debugDescription))
                 return
             }
-            onAction(GDPRAction(type: actionType, id: payload["id"] as? String, consentLanguage: consentLanguage, payload: payloadData))
+            onAction(SPAction(type: actionType, id: payload["id"] as? String, consentLanguage: consentLanguage, payload: payloadData))
         case "onError":
             let payload = body["body"] as? [String: Any] ?? [:]
             let error = payload["error"] as? [String: Any] ?? [:]

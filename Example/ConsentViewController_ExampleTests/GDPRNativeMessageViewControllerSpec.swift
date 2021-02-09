@@ -18,7 +18,7 @@ class SPNativeMessageViewControllerSpec: QuickSpec {
             let customFileds = ["Custom": "Fileds"]
             let attributeStyle = AttributeStyle(fontFamily: "System-Font", fontSize: 14, color: "#00FA9A", backgroundColor: "#944488")
             let messageAttribute = MessageAttribute(text: "Test GDPR Message", style: attributeStyle, customFields: customFileds)
-            let messageAction = MessageAction(text: "Test GDPR Message", style: attributeStyle, customFields: customFileds, choiceId: 12, choiceType: GDPRActionType.AcceptAll)
+            let messageAction = MessageAction(text: "Test GDPR Message", style: attributeStyle, customFields: customFileds, choiceId: 12, choiceType: SPActionType.AcceptAll)
             let gdprMessage = GDPRMessage(title: messageAttribute, body: messageAttribute, actions: [messageAction], customFields: customFileds)
             var mockConsentDelegate = MockConsentDelegate()
             var gpdrMessageUiDelegate = GDPRUIDelegateMock(mockConsentDelegate)
@@ -50,7 +50,7 @@ class SPNativeMessageViewControllerSpec: QuickSpec {
             }
 
             it("Test loadOrHideActionButton method") {
-                gdprNativeMessageViewController.loadOrHideActionButton(actionType: GDPRActionType.AcceptAll, button: acceptButton)
+                gdprNativeMessageViewController.loadOrHideActionButton(actionType: SPActionType.AcceptAll, button: acceptButton)
                 expect(acceptButton.titleLabel?.text).to(equal("Test GDPR Message"), description: "Expected data is added in label")
             }
 
@@ -66,7 +66,7 @@ class SPNativeMessageViewControllerSpec: QuickSpec {
 
             context("Test onAction delegate method") {
                 it("Test GDPRMessageViewController calls onAction delegate method") {
-                    gdprNativeMessageViewController.action(GDPRActionType.AcceptAll)
+                    gdprNativeMessageViewController.action(SPActionType.AcceptAll)
                     expect(mockConsentDelegate.isOnActionCalled).to(equal(true), description: "onAction delegate method calls successfully")
                 }
             }

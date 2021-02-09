@@ -41,7 +41,7 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
 
-    func loadOrHideActionButton(actionType: GDPRActionType, button: UIButton) {
+    func loadOrHideActionButton(actionType: SPActionType, button: UIButton) {
         if let action =  message.actions.first(where: { message in message.choiceType == actionType }) {
             button.titleLabel?.text = action.text
             button.setTitleColor(hexStringToUIColor(hex: action.style.color), for: .normal)
@@ -84,9 +84,9 @@ import UIKit
         loadOrHideActionButton(actionType: .ShowPrivacyManager, button: showOptionsButton)
     }
 
-    func action(_ action: GDPRActionType) {
+    func action(_ action: SPActionType) {
         if let messageAction = message.actions.first(where: { message in message.choiceType == action }) {
-            let action = GDPRAction(type: messageAction.choiceType, id: String(messageAction.choiceId), consentLanguage: Locale.preferredLanguages[0].uppercased())
+            let action = SPAction(type: messageAction.choiceType, id: String(messageAction.choiceId), consentLanguage: Locale.preferredLanguages[0].uppercased())
             consentViewController.consentDelegate?.onAction?(action)
         }
     }

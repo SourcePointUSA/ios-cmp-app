@@ -189,7 +189,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
             context("onAction") {
                 describe("for actions that call the post consent API") {
-                    let types: [GDPRActionType] = [.AcceptAll, .RejectAll, .SaveAndExit]
+                    let types: [SPActionType] = [.AcceptAll, .RejectAll, .SaveAndExit]
 
                     describe("and the local storage contains an consentUUID") {
                         beforeEach {
@@ -202,7 +202,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                             types.forEach { type in
                                 describe(type.description) {
                                     it("calls onConsentReady") {
-                                        consentViewController.onAction(GDPRAction(type: type))
+                                        consentViewController.onAction(SPAction(type: type))
                                         expect(mockConsentDelegate.isOnConsentReadyCalled).toEventually(beTrue(), description: type.description)
                                     }
                                 }
@@ -216,7 +216,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                             types.forEach { type in
                                 describe(type.description) {
                                     it("calls onConsentReady") {
-                                        consentViewController.onAction(GDPRAction(type: type))
+                                        consentViewController.onAction(SPAction(type: type))
                                         expect(mockConsentDelegate.isOnConsentReadyCalled).toEventually(beFalse(), description: type.description)
                                     }
                                 }
@@ -228,7 +228,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                         types.forEach { type in
                             describe(type.description) {
                                 it("calls onConsentReady") {
-                                    consentViewController.onAction(GDPRAction(type: type))
+                                    consentViewController.onAction(SPAction(type: type))
                                     expect(mockConsentDelegate.isOnConsentReadyCalled).toEventually(beFalse(), description: type.description)
                                 }
                             }
@@ -236,11 +236,11 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                     }
                 }
 
-                let types: [GDPRActionType] = [.ShowPrivacyManager, .PMCancel]
+                let types: [SPActionType] = [.ShowPrivacyManager, .PMCancel]
                 types.forEach { type in
                     describe(type.description) {
                         it("does not call onConsentReady") {
-                            consentViewController.onAction(GDPRAction(type: type))
+                            consentViewController.onAction(SPAction(type: type))
                             expect(mockConsentDelegate.isOnConsentReadyCalled).to(beFalse(), description: type.description)
                         }
                     }
@@ -248,7 +248,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
                 describe("for an action with Dismiss type") {
                     it("calls the onConsentReady") {
-                        consentViewController.onAction(GDPRAction(type: .Dismiss))
+                        consentViewController.onAction(SPAction(type: .Dismiss))
                         expect(mockConsentDelegate.isOnConsentReadyCalled).to(beTrue())
                     }
                 }

@@ -37,9 +37,9 @@ public typealias CustomFields = [String: String]
 
 @objc public class MessageAction: MessageAttribute {
     public let choiceId: Int
-    public let choiceType: GDPRActionType
+    public let choiceType: SPActionType
 
-    public init(text: String, style: AttributeStyle, customFields: CustomFields, choiceId: Int, choiceType: GDPRActionType) {
+    public init(text: String, style: AttributeStyle, customFields: CustomFields, choiceId: Int, choiceType: SPActionType) {
         self.choiceId = choiceId
         self.choiceType = choiceType
         super.init(text: text, style: style, customFields: customFields)
@@ -52,7 +52,7 @@ public typealias CustomFields = [String: String]
             style: container.decode(AttributeStyle.self, forKey: .style),
             customFields: container.decode(CustomFields.self, forKey: .customFields),
             choiceId: container.decode(Int.self, forKey: .choiceId),
-            choiceType: container.decode(GDPRActionType.self, forKey: .choiceType)
+            choiceType: container.decode(SPActionType.self, forKey: .choiceType)
         )
     }
 

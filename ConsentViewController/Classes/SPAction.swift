@@ -8,7 +8,7 @@
 import Foundation
 
 /// User actions. Its integer representation matches with what SourcePoint's endpoints expect.
-@objc public enum GDPRActionType: Int, Codable, CaseIterable, CustomStringConvertible {
+@objc public enum SPActionType: Int, Codable, CaseIterable, CustomStringConvertible {
     case SaveAndExit = 1
     case PMCancel = 2
     case AcceptAll = 11
@@ -29,9 +29,9 @@ import Foundation
     }
 }
 
-/// Action consists of `GDPRActionType` and an id. Those come from each action the user can take in the ConsentUI
-@objcMembers public class GDPRAction: NSObject {
-    public let type: GDPRActionType
+/// Action consists of `SPActionType` and an id. Those come from each action the user can take in the ConsentUI
+@objcMembers public class SPAction: NSObject {
+    public let type: SPActionType
     public let id: String?
     public let consentLanguage: String?
     public let payload: Data
@@ -39,13 +39,13 @@ import Foundation
 
     public override var description: String {
         """
-        GDPRAction(type: \(type), id: \(id ?? ""), consentLanguage: \(consentLanguage ?? ""), \
+        SPAction(type: \(type), id: \(id ?? ""), consentLanguage: \(consentLanguage ?? ""), \
         payload: \(String(data: payload, encoding: .utf8) ?? ""), publisherData: \(String(describing: publisherData))
         """
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? GDPRAction else {
+        guard let other = object as? SPAction else {
             return false
         }
         return other.type == type &&
@@ -55,7 +55,7 @@ import Foundation
             other.publisherData == publisherData
     }
 
-    public init(type: GDPRActionType, id: String? = nil, consentLanguage: String? = nil, payload: Data = "{}".data(using: .utf8)!) {
+    public init(type: SPActionType, id: String? = nil, consentLanguage: String? = nil, payload: Data = "{}".data(using: .utf8)!) {
         self.type = type
         self.id = id
         self.consentLanguage = consentLanguage

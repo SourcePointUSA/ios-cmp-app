@@ -91,7 +91,7 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("postAction") {
                 it("calls post on the http client with the right url") {
-                    let acceptAllAction = GDPRAction(type: .AcceptAll, id: "1234")
+                    let acceptAllAction = SPAction(type: .AcceptAll, id: "1234")
                     client.postAction(
                         action: acceptAllAction,
                         campaign: self.campaign,
@@ -101,7 +101,7 @@ class SourcePointClientSpec: QuickSpec {
                 }
 
                 it("calls POST on the http client with the right body") {
-                    let action = GDPRAction(type: .AcceptAll, id: "1234", consentLanguage: "EN")
+                    let action = SPAction(type: .AcceptAll, id: "1234", consentLanguage: "EN")
                     action.publisherData = ["foo": try? SPJson("bar")]
                     let actionRequest = ActionRequest(
                         propertyId: self.campaign.propertyId,
