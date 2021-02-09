@@ -1,5 +1,5 @@
 //
-//  GDPRNativeMessageViewControllerSpec.swift
+//  SPNativeMessageViewControllerSpec.swift
 //  ConsentViewController_ExampleTests
 //
 //  Created by Vilas on 23/03/20.
@@ -12,9 +12,9 @@ import Nimble
 
 // swiftlint:disable function_body_length
 
-class GDPRNativeMessageViewControllerSpec: QuickSpec {
+class SPNativeMessageViewControllerSpec: QuickSpec {
     override func spec() {
-        describe("GDPRNativeMessageViewController") {
+        describe("SPNativeMessageViewController") {
             let customFileds = ["Custom": "Fileds"]
             let attributeStyle = AttributeStyle(fontFamily: "System-Font", fontSize: 14, color: "#00FA9A", backgroundColor: "#944488")
             let messageAttribute = MessageAttribute(text: "Test GDPR Message", style: attributeStyle, customFields: customFileds)
@@ -22,7 +22,7 @@ class GDPRNativeMessageViewControllerSpec: QuickSpec {
             let gdprMessage = GDPRMessage(title: messageAttribute, body: messageAttribute, actions: [messageAction], customFields: customFileds)
             var mockConsentDelegate = MockConsentDelegate()
             var gpdrMessageUiDelegate = GDPRUIDelegateMock(mockConsentDelegate)
-            var gdprNativeMessageViewController = GDPRNativeMessageViewController(messageContents: gdprMessage, consentViewController: gpdrMessageUiDelegate)
+            var gdprNativeMessageViewController = SPNativeMessageViewController(messageContents: gdprMessage, consentViewController: gpdrMessageUiDelegate)
 
             let titleLabel = UILabel()
             let descriptionTextView = UITextView()
@@ -31,7 +31,7 @@ class GDPRNativeMessageViewControllerSpec: QuickSpec {
             beforeEach {
                 mockConsentDelegate = MockConsentDelegate()
                 gpdrMessageUiDelegate = GDPRUIDelegateMock(mockConsentDelegate)
-                gdprNativeMessageViewController = GDPRNativeMessageViewController(messageContents: gdprMessage, consentViewController: gpdrMessageUiDelegate)
+                gdprNativeMessageViewController = SPNativeMessageViewController(messageContents: gdprMessage, consentViewController: gpdrMessageUiDelegate)
             }
 
             it("Test onShowOptionsTap method") {

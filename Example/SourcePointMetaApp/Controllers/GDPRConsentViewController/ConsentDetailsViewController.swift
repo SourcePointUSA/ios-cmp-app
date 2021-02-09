@@ -36,7 +36,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     var consentViewController: GDPRConsentViewController?
     var propertyDetails: PropertyDetailsModel?
     var targetingParams = [TargetingParamModel]()
-    var nativeMessageController: GDPRNativeMessageViewController?
+    var nativeMessageController: SPNativeMessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,7 +136,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     func consentUIWillShow(message: GDPRMessage) {
         hideIndicator()
         if let consentViewController = consentViewController {
-            nativeMessageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+            nativeMessageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
             nativeMessageController?.modalPresentationStyle = .overFullScreen
             present(nativeMessageController!, animated: true, completion: nil)
         }

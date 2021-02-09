@@ -91,7 +91,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
     var consentViewController: GDPRConsentViewController?
-    var nativeMessageController: GDPRNativeMessageViewController?
+    var nativeMessageController: SPNativeMessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -298,7 +298,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     func consentUIWillShow(message: GDPRMessage) {
         hideIndicator()
         if let consentViewController = consentViewController {
-            nativeMessageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+            nativeMessageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
             nativeMessageController?.modalPresentationStyle = .overFullScreen
             present(nativeMessageController!, animated: true, completion: nil)
         }

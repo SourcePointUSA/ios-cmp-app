@@ -10,7 +10,7 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
-    var messageController: GDPRNativeMessageViewController?
+    var messageController: SPNativeMessageViewController?
     var activityIndicator = UIActivityIndicatorView(style: .gray)
 
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
 extension ViewController: GDPRConsentDelegate {
     /// called when there's a message to show and its content (`GDPRMessage`) is ready
     func consentUIWillShow(message: GDPRMessage) {
-        messageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+        messageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
         messageController!.modalPresentationStyle = .overFullScreen
         present(messageController!, animated: true, completion: nil)
     }

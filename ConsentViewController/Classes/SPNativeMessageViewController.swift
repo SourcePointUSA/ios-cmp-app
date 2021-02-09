@@ -1,5 +1,5 @@
 //
-//  GDPRNativeMessageViewController.swift
+//  SPNativeMessageViewController.swift
 //  ConsentViewController
 //
 //  Created by Andre Herculano on 25.01.20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers open class GDPRNativeMessageViewController: UIViewController {
+@objcMembers open class SPNativeMessageViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var showOptionsButton: UIButton!
@@ -34,7 +34,7 @@ import UIKit
     public init(messageContents: GDPRMessage, consentViewController: GDPRMessageUIDelegate) {
         message = messageContents
         self.consentViewController = consentViewController
-        super.init(nibName: "GDPRNativeMessageViewController", bundle: Bundle.framework)
+        super.init(nibName: "SPNativeMessageViewController", bundle: Bundle.framework)
     }
 
     public required init?(coder: NSCoder) {
