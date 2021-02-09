@@ -36,8 +36,8 @@ jobs:
      runs-on: macos-latest
      steps:
       - uses: actions/checkout@v2
-      - name: AuthExampe App UI testing -> iPhone 11 (iOS 14.3)
-        run: xcodebuild -workspace ConsentViewController.xcworkspace -scheme AuthExample -sdk iphonesimulator -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.3'
+      - name: AuthExample App UI testing -> iPhone 11 (iOS 14.3)
+        run: xcodebuild clean test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.3' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
   objc-example-app-tests:
       runs-on: macos-latest
       steps:
