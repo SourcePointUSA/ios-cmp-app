@@ -12,8 +12,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Installing SwiftLint
-        run: brew install swiftlint
       - name: linting
         run: swiftlint lint
   example-app-tests:
