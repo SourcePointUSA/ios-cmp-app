@@ -25,7 +25,8 @@ class ViewController: UIViewController, SPDelegate {
         gdpr: SPCampaign(
             accountId: 22,
             propertyId: 123,
-            propertyName: "test"
+            pmId: "1",
+            propertyName: try! SPPropertyName("test")
         )),
         delegate: self
     )}()

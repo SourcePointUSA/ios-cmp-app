@@ -141,39 +141,6 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     }
 }
 
-/// TODO: understand if the different types of Campaigns can be generalised into the same data structure
-/// E.g. do they all have the same attributes?
-@objcMembers class SPCampaign {
-    let accountId, propertyId: Int
-    let propertyName: String
-    let environment: SPCampaignEnv
-    let targetingParams: SPTargetingParams
-
-    init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: String,
-        environment: SPCampaignEnv = .Public,
-        targetingParams: SPTargetingParams = [:]
-    ) {
-        self.accountId = accountId
-        self.propertyId = propertyId
-        self.propertyName = propertyName
-        self.environment = environment
-        self.targetingParams = targetingParams
-    }
-}
-
-@objcMembers class SPCampaigns {
-    let gdpr, ccpa: SPCampaign?
-    //    let adblock, idfaPrompt: SPCampaign?
-
-    init(gdpr: SPCampaign? = nil, ccpa: SPCampaign? = nil) {
-        self.gdpr = gdpr
-        self.ccpa = ccpa
-    }
-}
-
 @objcMembers class SPConsentManager: SPSDK {
     weak var delegate: (SPDelegate)?
     let campaigns: SPCampaigns
@@ -250,16 +217,6 @@ extension SPConsentManager: SPRenderingAppDelegate {
 
 /// TODO: What happens if the developers decide to call `AcceptAll` regardless of user action?
 extension SPConsentManager: SPConsentUIDelegate {
-    func getIdfaStatus(handler: @escaping (SPIDFAStatus) -> Void) {
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                handler(SPIDFAStatus(fromApple: status))
-            }
-        } else {
-            handler(.unavailable)
-        }
-    }
-
     func onAction(_ action: SPConsentAction) {
         self.delegate?.onAction(action)
         switch action.type {
@@ -274,7 +231,7 @@ extension SPConsentManager: SPConsentUIDelegate {
                 }
             }
         case .IDFAOk:
-            getIdfaStatus { _ in
+            SPIDFAStatus.requestAuthorisation { _ in
                 self.delegate?.onConsentUIFinished()
                 self.report(action: action) { _ in }
             }

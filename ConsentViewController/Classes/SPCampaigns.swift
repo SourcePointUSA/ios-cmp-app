@@ -11,14 +11,14 @@ import Foundation
 public typealias SPTargetingParams = [String: String]
 
 /// Contains information about the property/campaign.
-@objcMembers class SPCampaign {
+@objcMembers public class SPCampaign {
     let accountId, propertyId: Int
     let pmId: String
     let propertyName: SPPropertyName
     let environment: SPCampaignEnv
     let targetingParams: SPTargetingParams
 
-    init(
+    public init(
         accountId: Int,
         propertyId: Int,
         pmId: String,
@@ -38,11 +38,11 @@ public typealias SPTargetingParams = [String: String]
 /// Set `gdpr` and/or `ccpa` if you wish to cover any of those legislations.
 /// It's important to notice the campaign you passed as parameter needs to have
 /// a active vendor list of that legislation.
-@objcMembers class SPCampaigns {
+@objcMembers public class SPCampaigns {
     let gdpr, ccpa: SPCampaign?
     //    let adblock, idfaPrompt: SPCampaign?
 
-    init(gdpr: SPCampaign? = nil, ccpa: SPCampaign? = nil) {
+    public init(gdpr: SPCampaign? = nil, ccpa: SPCampaign? = nil) {
         self.gdpr = gdpr
         self.ccpa = ccpa
     }
