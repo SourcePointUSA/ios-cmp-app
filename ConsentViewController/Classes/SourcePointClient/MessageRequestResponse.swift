@@ -61,6 +61,7 @@ struct MessagesResponse<MessageType: Decodable & Equatable>: Decodable, Equatabl
 
 struct MessageResponse<ConsentType: Decodable & Equatable, MessageType: Decodable & Equatable>: Equatable, Decodable {
     let message: MessageType?
+    let applies: Bool
     let uuid: SPConsentUUID
     let userConsent: ConsentType
     var meta: Meta

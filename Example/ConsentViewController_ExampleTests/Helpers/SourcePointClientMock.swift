@@ -15,6 +15,7 @@ class SourcePointClientMock: SourcePointProtocol {
     static func getMessageResponse<C: Decodable>(_ c: C) -> MessageResponse<C, SPJson> {
         MessageResponse<C, SPJson>(
             message: try! SPJson([:]),
+            applies: true,
             uuid: "uuid",
             userConsent: c,
             meta: ""

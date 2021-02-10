@@ -18,6 +18,7 @@ class MessageResponseSpec: QuickSpec {
         {
             "gdpr": {
                 "uuid": "gdpr-uuid",
+                "applies": true,
                 "userConsent": {
                     "euconsent": "consent-string",
                     "acceptedCategories": ["accepted-category"],
@@ -41,6 +42,7 @@ class MessageResponseSpec: QuickSpec {
             },
             "ccpa": {
                 "uuid": "ccpa-uuid",
+                "applies": true,
                 "userConsent": {
                     "status": "rejectedNone",
                     "uspstring": "us-pstring",
@@ -59,6 +61,7 @@ class MessageResponseSpec: QuickSpec {
             expect(try! response.decoded() as MessagesResponse).to(equal(MessagesResponse(
                 gdpr: GDPRMessageResponse<SPJson>(
                     message: try! SPJson(["foo": "message"]),
+                    applies: true,
                     uuid: "gdpr-uuid",
                     userConsent: SPGDPRUserConsent(
                         acceptedVendors: ["accepted-vendor"],
@@ -76,6 +79,7 @@ class MessageResponseSpec: QuickSpec {
                 ),
                 ccpa: CCPAMessageResponse<SPJson>(
                     message: try! SPJson(["foo": "message"]),
+                    applies: true,
                     uuid: "ccpa-uuid",
                     userConsent: SPCCPAUserConsent(
                         status: .RejectedNone,
