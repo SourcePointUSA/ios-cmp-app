@@ -177,7 +177,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         self.hideIndicator()
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError) {
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)

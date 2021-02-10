@@ -1,5 +1,5 @@
 //
-//  GDPRConsentViewControllerErrorSpec.swift
+//  SPErrorSpec.swift
 //  ConsentViewController_ExampleTests
 //
 //  Created by Vilas on 19/03/20.
@@ -20,9 +20,9 @@ func aResponseWith(status: Int) -> HTTPURLResponse {
 
 // swiftlint:disable function_body_length
 
-class GDPRConsentViewControllerErrorSpec: QuickSpec {
+class SPErrorSpec: QuickSpec {
     override func spec() {
-        describe("GDPRConsentViewControllerErrorSpec") {
+        describe("SPErrorSpec") {
             describe("GenericNetworkError") {
                 context("when no response object is provided") {
                     it("has spCode: generic_network_request_999") {

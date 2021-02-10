@@ -57,7 +57,7 @@ class ViewController: UIViewController, SPDelegate {
         print("CCPA onConsentReady")
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError) {
         print("Something went wrong: ", error)
     }
 }

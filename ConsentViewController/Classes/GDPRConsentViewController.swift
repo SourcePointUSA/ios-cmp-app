@@ -317,7 +317,7 @@ typealias Meta = String
         /// TODO: implement custom consent
 //        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
 //            guard let response = response, error == nil else {
-//                self?.onError(error: error ?? GDPRConsentViewControllerError())
+//                self?.onError(error: error ?? SPError())
 //                return
 //            }
 //
@@ -389,7 +389,7 @@ extension GDPRConsentViewController: SPDelegate {
         spDelegate?.onSPUIFinished()
     }
 
-    public func onError(error: GDPRConsentViewControllerError) {
+    public func onError(error: SPError) {
         loading = .Ready
         if shouldCleanConsentOnError { clearIABConsentData() }
 //        sourcePoint.errorMetrics(

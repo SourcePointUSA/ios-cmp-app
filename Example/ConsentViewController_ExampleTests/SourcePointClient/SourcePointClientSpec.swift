@@ -78,12 +78,12 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
-                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, GDPRConsentViewControllerError>) in }
+                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, SPError>) in }
                     expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message-url?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, GDPRConsentViewControllerError>) in }
+                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, SPError>) in }
                     let parsed = httpClient!.postWasCalledWithBody!
                     expect(parsed).toEventually(equal(self.getMessageRequest(client)))
                 }
@@ -184,7 +184,7 @@ class SourcePointClientSpec: QuickSpec {
 //                    }
 //
 //                    it("calls completion handler with nil as error") {
-//                        var error: GDPRConsentViewControllerError? = .none
+//                        var error: SPError? = .none
 //                        client.customConsent(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: []) { _, e in
 //                            error = e
 //                        }
@@ -194,15 +194,15 @@ class SourcePointClientSpec: QuickSpec {
 //
 //                context("on failure") {
 //                    beforeEach {
-//                        client = self.getClient(MockHttp(error: GDPRConsentViewControllerError()))
+//                        client = self.getClient(MockHttp(error: SPError()))
 //                    }
 //
-//                    it("calls the completion handler with an GDPRConsentViewControllerError") {
-//                        var error: GDPRConsentViewControllerError?
+//                    it("calls the completion handler with an SPError") {
+//                        var error: SPError?
 //                        client.customConsent(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: []) { _, e in
 //                            error = e
 //                        }
-//                        expect(error).toEventually(beAKindOf(GDPRConsentViewControllerError.self))
+//                        expect(error).toEventually(beAKindOf(SPError.self))
 //                    }
 //                }
             }
@@ -210,7 +210,7 @@ class SourcePointClientSpec: QuickSpec {
             xdescribe("metrics") {
 //                it("makes a POST to https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics with correct body") {
 //                    let http = MockHttp()
-//                    let error = GDPRConsentViewControllerError()
+//                    let error = SPError()
 //                    self.getClient(http).errorMetrics(
 //                        error,
 //                        sdkVersion: "1.2.3",

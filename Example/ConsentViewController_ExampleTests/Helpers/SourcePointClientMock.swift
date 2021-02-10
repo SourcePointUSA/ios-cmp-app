@@ -30,7 +30,7 @@ class SourcePointClientMock: SourcePointProtocol {
         userConsent: SPGDPRUserConsent.empty(),
         meta: ""
     )
-    var error: GDPRConsentViewControllerError?
+    var error: SPError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
@@ -68,7 +68,7 @@ class SourcePointClientMock: SourcePointProtocol {
                        vendors: [String],
                        categories: [String],
                        legIntCategories: [String],
-                       completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?) -> Void) {
+                       completionHandler: @escaping (CustomConsentResponse?, SPError?) -> Void) {
         customConsentWasCalledWith = [
             "consentUUID": consentUUID,
             "vendors": vendors,
@@ -78,7 +78,7 @@ class SourcePointClientMock: SourcePointProtocol {
         completionHandler(customConsentResponse, error)
     }
 
-    func errorMetrics(_ error: GDPRConsentViewControllerError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPLegislation) {
+    func errorMetrics(_ error: SPError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPLegislation) {
         errorMetricsCalledWith = [
             "error": error,
             "sdkVersion": sdkVersion,

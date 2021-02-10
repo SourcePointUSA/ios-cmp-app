@@ -34,7 +34,7 @@ extension DispatchQueue: SPDispatchQueue {
     }
 }
 
-typealias ResponseHandler = (Result<Data?, GDPRConsentViewControllerError>) -> Void
+typealias ResponseHandler = (Result<Data?, SPError>) -> Void
 
 protocol HttpClient {
     func get(urlString: String, handler: @escaping ResponseHandler)

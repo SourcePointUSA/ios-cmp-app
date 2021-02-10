@@ -33,7 +33,7 @@ import UIKit
     @objc(onCCPAConsentReady:) optional func onConsentReady(consents: SPCCPAUserConsent)
 
     /// called if something goes wrong during the entire lifecycle of the SDK
-    @objc optional func onError(error: GDPRConsentViewControllerError)
+    @objc optional func onError(error: SPError)
 }
 
 /**

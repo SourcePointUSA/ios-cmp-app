@@ -88,7 +88,7 @@
 		5C4C6955BA89803031C53441F6065C09 /* SPWebViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CE5D81C89EB96419783F02C08D656 /* SPWebViewExtensions.swift */; };
 		5C73FEBC2117150A9F1586F4977DC71C /* Pods-SPGDPRExampleAppUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F8AAE1119A0C1B61C4028D511ACF6213 /* Pods-SPGDPRExampleAppUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		602E3758C0EF64AF6B7FCEA05BF5B9B9 /* Expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120536060C61F269739D32721764A17 /* Expectation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		602ECC13D9B8BBB0BA1B0301BC384409 /* GDPRConsentViewControllerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EAF3FFCF39EDF17328A2A8D2E1F760 /* GDPRConsentViewControllerError.swift */; };
+		602ECC13D9B8BBB0BA1B0301BC384409 /* SPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EAF3FFCF39EDF17328A2A8D2E1F760 /* SPError.swift */; };
 		62A85277D0462C43B80A05E8822794BB /* IQKeyboardManagerSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C4C25757F6F6F1C85ADCF6D99FBED51C /* IQKeyboardManagerSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64E26D7D025AC4462DFA8BA66B38C9D8 /* HaveCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842EFC6E202CD7DDBC3FEAF194A263EB /* HaveCount.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		664BEEA25DE34A784CE921DF2FD73436 /* Pods-NativeMessageExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E608ECBCB7E138D4A1D440352DB63FA /* Pods-NativeMessageExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -589,7 +589,7 @@
 		C4C25757F6F6F1C85ADCF6D99FBED51C /* IQKeyboardManagerSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManagerSwift-umbrella.h"; sourceTree = "<group>"; };
 		C5C0F422CBF8B8DF8CA6AC6CE5FD14B9 /* World.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = World.swift; path = Sources/Quick/World.swift; sourceTree = "<group>"; };
 		C5D5D132578750756EA267344FBAA4CD /* IQTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQTextView.swift; path = IQKeyboardManagerSwift/IQTextView/IQTextView.swift; sourceTree = "<group>"; };
-		C5EAF3FFCF39EDF17328A2A8D2E1F760 /* GDPRConsentViewControllerError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GDPRConsentViewControllerError.swift; path = ConsentViewController/Classes/GDPRConsentViewControllerError.swift; sourceTree = "<group>"; };
+		C5EAF3FFCF39EDF17328A2A8D2E1F760 /* SPError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPError.swift; path = ConsentViewController/Classes/SPError.swift; sourceTree = "<group>"; };
 		C6A54B43311C3F53857A5277F8ED7EAC /* SimpleClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SimpleClient.swift; sourceTree = "<group>"; };
 		C82AB691CEF42332EAAB33196F371D5D /* HooksPhase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HooksPhase.swift; path = Sources/Quick/Hooks/HooksPhase.swift; sourceTree = "<group>"; };
 		C8F238171E8241C4A1AE4F9DE658BBD1 /* IQKeyboardManagerSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQKeyboardManagerSwift-dummy.m"; sourceTree = "<group>"; };
@@ -851,7 +851,7 @@
 				7B0D95CA3EC980F91B4678E8DC790169 /* SPCampaignEnv.swift */,
 				CA37148C0C7130248D23572E1DBF0764 /* SPDelegate.swift */,
 				1B97E0E1EA1ACC5DE3E1AF769D55216E /* GDPRConsentViewController.swift */,
-				C5EAF3FFCF39EDF17328A2A8D2E1F760 /* GDPRConsentViewControllerError.swift */,
+				C5EAF3FFCF39EDF17328A2A8D2E1F760 /* SPError.swift */,
 				149F0C38CAF775FFD99871A92FF53E1F /* SPJSReceiver.js */,
 				2C8B89B0020A4AACE47925947FC4D819 /* SPJSReceiver.spec.js */,
 				601F9835A9FC0A9AB52A9EE23100EBEE /* GDPRMessage.swift */,
@@ -2100,7 +2100,7 @@
 				F8A8036A8CA364E5F04733379EB766FF /* SPCampaignEnv.swift in Sources */,
 				97347CC878FCB57EB29ECDFBC2E13AA7 /* SPDelegate.swift in Sources */,
 				9886B4E94DD518981955E5963F773500 /* GDPRConsentViewController.swift in Sources */,
-				602ECC13D9B8BBB0BA1B0301BC384409 /* GDPRConsentViewControllerError.swift in Sources */,
+				602ECC13D9B8BBB0BA1B0301BC384409 /* SPError.swift in Sources */,
 				F4913C4FF8E45A81BD77F67AAC29A5B9 /* GDPRLocalStorage.swift in Sources */,
 				1AAC91BC2001D96B22968B0E7457B989 /* GDPRMessage.swift in Sources */,
 				10FE7480EDD526EC8E8AB4BEA4F6D5C1 /* GDPRMessageViewController.swift in Sources */,

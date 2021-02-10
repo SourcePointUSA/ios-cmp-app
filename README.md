@@ -73,7 +73,7 @@ extension ViewController: GDPRConsentDelegate {
         print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.dictionaryValue?.keys.sorted() ?? []))
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: SPError?) {
         print("Error: \(error.debugDescription)")
     }
 }

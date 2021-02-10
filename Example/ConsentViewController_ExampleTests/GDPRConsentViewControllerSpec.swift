@@ -117,7 +117,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
                 context("and the response is error") {
                     it("calls the onError method on its consent delegate") {
-                        sourcePointClient.error = GDPRConsentViewControllerError()
+                        sourcePointClient.error = SPError()
                         consentViewController.customConsentTo(vendors: [], categories: [], legIntCategories: []) { _ in }
                         expect(mockConsentDelegate.isOnErrorCalled).to(beTrue())
                     }
@@ -171,15 +171,15 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
             describe("onError") {
                 it("calls the client's onError delegate method") {
-                    consentViewController.onError(error: GDPRConsentViewControllerError())
+                    consentViewController.onError(error: SPError())
                     expect(mockConsentDelegate.isOnErrorCalled).to(equal(true))
                 }
 
                 it("sends error metrics using SPClient") {
-                    let error = GDPRConsentViewControllerError()
+                    let error = SPError()
                     consentViewController.onError(error: error)
                     let errorMetricsCalledWith = sourcePointClient.errorMetricsCalledWith
-                    expect(errorMetricsCalledWith?["error"] as? GDPRConsentViewControllerError).to(equal(error))
+                    expect(errorMetricsCalledWith?["error"] as? SPError).to(equal(error))
                     expect(errorMetricsCalledWith?["sdkVersion"] as? String).to(equal(GDPRConsentViewController.VERSION))
                     expect(errorMetricsCalledWith?["deviceFamily"] as? String).to(equal(mockDeviceManager.deviceFamily()))
                     expect(errorMetricsCalledWith?["OSVersion"] as? String).to(equal(mockDeviceManager.osVersion()))
@@ -211,7 +211,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
                         describe("and the api returns an error") {
                             beforeEach {
-                                sourcePointClient.error = GDPRConsentViewControllerError()
+                                sourcePointClient.error = SPError()
                             }
                             types.forEach { type in
                                 describe(type.description) {

@@ -127,7 +127,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
         consentDelegate?.consentUIDidDisappear?()
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError) {
         consentDelegate?.onError?(error: error)
         closeConsentUIIfOpen()
     }
@@ -235,7 +235,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        var spError: GDPRConsentViewControllerError = WebViewError(code: nil, title: error.localizedDescription)
+        var spError: SPError = WebViewError(code: nil, title: error.localizedDescription)
         if let error = error as? URLError {
             switch error.code {
             case .timedOut:

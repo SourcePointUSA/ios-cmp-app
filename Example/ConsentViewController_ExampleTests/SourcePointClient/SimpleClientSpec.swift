@@ -128,7 +128,7 @@ class SimpleClientSpec: QuickSpec {
 
             describe("when the result data from the call is different than nil") {
                 it("calls the completionHandler with it") {
-                    var result: Result<Data?, GDPRConsentViewControllerError>?
+                    var result: Result<Data?, SPError>?
                     let session = URLSessionMock(
                         configuration: URLSessionConfiguration.default,
                         data: "".data(using: .utf8),

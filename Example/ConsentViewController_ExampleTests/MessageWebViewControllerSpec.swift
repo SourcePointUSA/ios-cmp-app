@@ -192,7 +192,7 @@ class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigation
 
             context("Test onError delegate method") {
                 it("Test MessageWebViewController calls onError delegate method") {
-                    let error = GDPRConsentViewControllerError()
+                    let error = SPError()
                     messageWebViewController.onError(error: error)
                     expect(mockConsentDelegate.isOnErrorCalled).to(equal(true), description: "onError delegate method calls successfully")
                 }

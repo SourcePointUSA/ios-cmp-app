@@ -46,11 +46,11 @@ struct ConsentsProfile {
     }
 }
 
-typealias MessageHandler<MessageType: Decodable & Equatable> = (Result<MessagesResponse<MessageType>, GDPRConsentViewControllerError>) -> Void
+typealias MessageHandler<MessageType: Decodable & Equatable> = (Result<MessagesResponse<MessageType>, SPError>) -> Void
 typealias WebMessageHandler = MessageHandler<SPJson>
 typealias NativeMessageHandler = MessageHandler<SPJson>
-typealias ConsentHandler = (Result<ActionResponse, GDPRConsentViewControllerError>) -> Void
-typealias CustomConsentHandler = (Result<CustomConsentResponse, GDPRConsentViewControllerError>) -> Void
+typealias ConsentHandler = (Result<ActionResponse, SPError>) -> Void
+typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(timeout: TimeInterval)
@@ -80,7 +80,7 @@ protocol SourcePointProtocol {
 //        handler: @escaping CustomConsentHandler)
 
 //    func errorMetrics(
-//        _ error: GDPRConsentViewControllerError,
+//        _ error: SPError,
 //        campaign: SPCampaign,
 //        sdkVersion: String,
 //        OSVersion: String,
@@ -239,7 +239,7 @@ class SourcePointClient: SourcePointProtocol {
 //    }
 
 //    func errorMetrics(
-//        _ error: GDPRConsentViewControllerError,
+//        _ error: SPError,
 //        campaign: SPCampaign,
 //        sdkVersion: String,
 //        OSVersion: String,

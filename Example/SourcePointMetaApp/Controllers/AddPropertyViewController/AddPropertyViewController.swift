@@ -341,7 +341,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         hideIndicator()
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError) {
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
