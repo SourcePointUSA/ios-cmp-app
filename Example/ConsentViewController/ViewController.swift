@@ -40,7 +40,7 @@ class ViewController: UIViewController, SPDelegate {
         present(viewController, animated: true)
     }
 
-    func onAction(_ action: SPConsentAction) {
+    func onAction(_ action: SPAction) {
         print(action)
     }
 

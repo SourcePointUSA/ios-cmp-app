@@ -16,6 +16,9 @@ import Foundation
     case RejectAll = 13
     case Dismiss = 15
 
+    case IDFAOk = 99
+    case Unknown = 0
+
     public var description: String {
         switch self {
         case .AcceptAll: return "AcceptAll"
@@ -24,7 +27,9 @@ import Foundation
         case .SaveAndExit: return "SaveAndExit"
         case .Dismiss: return "Dismiss"
         case .PMCancel: return "PMCancel"
-        default: return "Unknown"
+        case .IDFAOk: return "IDFAOk"
+        case .Unknown: return "Unkown"
+        @unknown default: return "Unknown"
         }
     }
 }

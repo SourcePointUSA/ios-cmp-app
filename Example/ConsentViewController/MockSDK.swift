@@ -29,7 +29,7 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 }
 
 @objc protocol SPConsentUIDelegate {
-    @objc func onAction(_ action: SPConsentAction)
+    @objc func onAction(_ action: SPAction)
 }
 
 @objc protocol SPConsentDelegate {
@@ -49,41 +49,6 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
 @objc protocol SPRenderingApp {
     func loadMessage(_ contents: [String: String])
-}
-
-@objc enum SPActionType: Int, Codable, CaseIterable, CustomStringConvertible {
-    case SaveAndExit = 1
-    case PMCancel = 2
-    case AcceptAll = 11
-    case ShowPrivacyManager = 12
-    case RejectAll = 13
-    case Dismiss = 15
-    /// TODO: confirm with Mike we'll have a special action type for the IDFA
-    /// TODO: will the rendering app support preloading IDFA message?
-    case IDFAOk = 98
-    case Unknown = 99
-
-    public var description: String {
-        switch self {
-        case .AcceptAll: return "AcceptAll"
-        case .RejectAll: return "RejectAll"
-        case .ShowPrivacyManager: return "ShowPrivacyManager"
-        case .SaveAndExit: return "SaveAndExit"
-        case .Dismiss: return "Dismiss"
-        case .PMCancel: return "PMCancel"
-        case .IDFAOk: return "IDFAOk"
-        default: return "Unknown"
-        }
-    }
-}
-
-@objcMembers class SPConsentAction: NSObject {
-    override var description: String { get { "Action(\(type))" } }
-    let type: SPActionType
-
-    init(type: SPActionType) {
-        self.type = type
-    }
 }
 
 @objcMembers class SPConsentViewController: UIViewController, SPRenderingApp {
@@ -137,7 +102,7 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
     func onEvent(_ payload: [String: String]) {
         let action  = SPActionType.init(rawValue: Int(payload["action"]!) ?? 0) ?? .Unknown
-        consentUIDelegate?.onAction(SPConsentAction(type: action))
+        consentUIDelegate?.onAction(SPAction(type: action))
     }
 }
 
@@ -194,7 +159,7 @@ func afterFakeDelay (execute: @escaping () -> Void) {
         }
     }
 
-    func report(action: SPConsentAction, completionHandler: @escaping (Result<SPGDPRUserConsent, Error>) -> Void) {
+    func report(action: SPAction, completionHandler: @escaping (Result<SPGDPRUserConsent, Error>) -> Void) {
         // send consent action
         // we will need to know what legislation that action is referring to
         // in oder to send to the right endpoint and call the appropriate consentReady delegate
@@ -217,7 +182,7 @@ extension SPConsentManager: SPRenderingAppDelegate {
 
 /// TODO: What happens if the developers decide to call `AcceptAll` regardless of user action?
 extension SPConsentManager: SPConsentUIDelegate {
-    func onAction(_ action: SPConsentAction) {
+    func onAction(_ action: SPAction) {
         self.delegate?.onAction(action)
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
