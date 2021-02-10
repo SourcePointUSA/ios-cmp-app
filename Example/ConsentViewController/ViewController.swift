@@ -15,7 +15,7 @@ class ViewController: UIViewController, SPDelegate {
     @IBOutlet weak var vendorXStatusLabel: UILabel!
     @IBAction func onClearConsentTap(_ sender: Any) {}
 
-    @IBAction func onGDPRSettingsTap(_ sender: Any) {
+    @IBAction func onPrivacySettingsTap(_ sender: Any) {
         consentManager.loadGDPRPrivacyManager()
     }
 

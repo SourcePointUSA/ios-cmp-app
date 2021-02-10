@@ -39,12 +39,12 @@ func afterFakeDelay (execute: @escaping () -> Void) {
         title.adjustsFontSizeToFitWidth = true
         view.addSubview(title)
 
-        if contents["AcceptAllLabel"] != nil {
+        if contents["SaveAndExitLabel"] != nil {
             let button = ActionButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
             button.center = view.center
             button.backgroundColor = .systemBlue
-            button.setTitle(contents["AcceptAllLabel"], for: .normal)
-            button.action = .AcceptAll
+            button.setTitle(contents["SaveAndExitLabel"], for: .normal)
+            button.action = .SaveAndExit
             button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
             view.addSubview(button)
         }
@@ -134,7 +134,7 @@ func afterFakeDelay (execute: @escaping () -> Void) {
             self?.consentUI.messageUIDelegate = self
             self?.consentUI.loadMessage(self!.toJSON([
                 "Title": "Fake Privacy Manager",
-                "AcceptAllLabel": "Save & Exit"
+                "SaveAndExitLabel": "Save & Exit"
             ]))
         }
     }
@@ -161,12 +161,12 @@ extension SPConsentManager: SPMessageUIDelegate {
 
     public func action(_ action: SPAction) {
         self.delegate?.onAction(action)
+        self.delegate?.onSPUIFinished()
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             self.report(action: action) { result in
                 switch result {
                 case .success(let consents):
-                    self.delegate?.onSPUIFinished()
                     self.delegate?.onConsentReady?(consents: consents)
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -174,7 +174,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             }
         case .IDFAOk:
             SPIDFAStatus.requestAuthorisation { _ in
-                self.delegate?.onSPUIFinished()
+                /// pass the status here
                 self.report(action: action) { _ in }
             }
         default:
