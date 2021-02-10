@@ -71,7 +71,7 @@ typealias Meta = String
     public var shouldCleanConsentOnError = true
 
     /// the instance of `GDPRConsentDelegate` which the `GDPRConsentViewController` will use to perform the lifecycle methods
-    public weak var consentDelegate: GDPRConsentDelegate?
+    public weak var spDelegate: SPDelegate?
 
     var localStorage: GDPRLocalStorage
 
@@ -117,7 +117,7 @@ typealias Meta = String
         PMId: String,
         campaignEnv: SPCampaignEnv,
         targetingParams: SPTargetingParams = [:],
-        consentDelegate: GDPRConsentDelegate,
+        spDelegate: SPDelegate,
         sourcePointClient: SourcePointProtocol,
         localStorage: GDPRLocalStorage = GDPRUserDefaults(),
         deviceManager: SPDeviceManager = SPDevice()
@@ -145,7 +145,7 @@ typealias Meta = String
         self.propertyId = propertyId
         self.pmId = PMId
         self.targetingParams = targetingParams
-        self.consentDelegate = consentDelegate
+        self.spDelegate = spDelegate
         self.sourcePoint = sourcePointClient
         self.localStorage = localStorage
         self.deviceManager = deviceManager
@@ -164,7 +164,7 @@ typealias Meta = String
             -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
             -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
             - targetingParams: an arbitrary collection of key/value pairs made available to the Scenario built on SourcePoint's dashboard
-            -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
+            -  spDelegate: responsible for dealing with the different consent lifecycle functions.
         - SeeAlso: ConsentDelegate
      */
     public convenience init(
@@ -174,7 +174,7 @@ typealias Meta = String
         PMId: String,
         campaignEnv: SPCampaignEnv = .Public,
         targetingParams: SPTargetingParams = [:],
-        consentDelegate: GDPRConsentDelegate
+        spDelegate: SPDelegate
     ) {
         let sourcePoint = SourcePointClient(
             timeout: GDPRConsentViewController.DefaultTimeout
@@ -186,7 +186,7 @@ typealias Meta = String
             PMId: PMId,
             campaignEnv: campaignEnv,
             targetingParams: targetingParams,
-            consentDelegate: consentDelegate,
+            spDelegate: spDelegate,
             sourcePointClient: sourcePoint
         )
     }
@@ -200,7 +200,7 @@ typealias Meta = String
     func handleNativeMessageResponse(_ response: MessagesResponse<SPJson>) {
         self.loading = .Ready
 //        if let message = response.msgJSON {
-//            self.consentDelegate?.consentUIWillShow?(message: message)
+//            self.spDelegate?.consentUIWillShow?(message: message)
 //        } else {
 //            self.onConsentReady(consentUUID: response.uuid, userConsent: response.userConsent)
 //        }
@@ -366,7 +366,7 @@ typealias Meta = String
             switch result {
             case .success(let actionResponse):
                 self?.localStorage.meta = actionResponse.meta
-                self?.onConsentReady(consentUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
+//                self?.onConsentReady(consentUUID: actionResponse.uuid, userConsent: actionResponse.userConsent)
             case .failure(let error):
                 self?.onError(error: error)
             }
@@ -374,20 +374,19 @@ typealias Meta = String
     }
 }
 
-extension GDPRConsentViewController: GDPRConsentDelegate {
-    public func gdprConsentUIWillShow() {
+extension GDPRConsentViewController: SPDelegate {
+    public func onSPUIReady(_ viewController: UIViewController) {
         loading = .Ready
         guard let viewController = messageViewController else { return }
         add(asChildViewController: viewController)
-        consentDelegate?.consentUIWillShow?()
-        consentDelegate?.gdprConsentUIWillShow?()
+        spDelegate?.onSPUIReady(self)
     }
 
-    public func consentUIDidDisappear() {
+    public func onSPUIFinished() {
         loading = .Ready
         remove(asChildViewController: messageViewController)
         messageViewController = nil
-        consentDelegate?.consentUIDidDisappear?()
+        spDelegate?.onSPUIFinished()
     }
 
     public func onError(error: GDPRConsentViewControllerError) {
@@ -401,27 +400,27 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
 //            deviceFamily: deviceManager.deviceFamily(),
 //            legislation: .GDPR
 //        )
-        consentDelegate?.onError?(error: error)
+        spDelegate?.onError?(error: error)
     }
 
     public func onAction(_ action: SPAction) {
         let type = action.type
-        consentDelegate?.onAction?(action)
+        spDelegate?.onAction(action)
+        /// TODO: evaluate if we can call on consent ready
         if type == .Dismiss {
-            self.onConsentReady(consentUUID: consentUUID, userConsent: userConsents)
+//            self.onConsentReady(consentUUID: consentUUID, userConsent: userConsents)
         } else if type == .AcceptAll || type == .RejectAll || type == .SaveAndExit {
             reportAction(action)
         }
     }
 
-    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRUserConsent) {
-        localStorage.consentUUID = consentUUID
-        localStorage.userConsents = userConsent
-        consentDelegate?.onConsentReady?(consentUUID: consentUUID, userConsent: userConsent)
+    @objc(onGDPRConsentReady:) public func onConsentReady(consents: SPGDPRUserConsent) {
+        /// TODO: implement
+        spDelegate?.onConsentReady?(consents: consents)
     }
 
-    public func messageWillShow() { consentDelegate?.messageWillShow?() }
-    public func messageDidDisappear() { consentDelegate?.messageDidDisappear?() }
-    public func gdprPMWillShow() { consentDelegate?.gdprPMWillShow?() }
-    public func gdprPMDidDisappear() { consentDelegate?.gdprPMDidDisappear?() }
+    @objc(onCCPAConsentReady:) public func onConsentReady(consents: SPCCPAUserConsent) {
+        /// TODO: implement
+        spDelegate?.onConsentReady?(consents: consents)
+    }
 }

@@ -28,27 +28,14 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     @objc func loadMessage(forAuthId authId: String?)
 }
 
-@objc protocol SPConsentUIDelegate {
-    @objc func onAction(_ action: SPAction)
-}
-
-@objc protocol SPConsentDelegate {
-    @objc func onConsentUIReady(_ viewController: SPConsentViewController)
-    @objc func onConsentUIFinished()
-    @objc(onGDPRConsentReady:) optional func onConsentReady(consents: SPGDPRUserConsent)
-    @objc(onCCPAConsentReady:) optional func onConsentReady(consents: SPCCPAUserConsent)
-    @objc optional func onError(error: GDPRConsentViewControllerError)
-}
-
-@objc protocol SPDelegate: SPConsentUIDelegate, SPConsentDelegate {}
-
 @objc protocol SPRenderingAppDelegate {
     func loaded()
+    func action()
     func finished()
 }
 
 @objc protocol SPRenderingApp {
-    func loadMessage(_ contents: [String: String])
+    func loadMessage(_ stringifiedMessage: String)
 }
 
 @objcMembers class SPConsentViewController: UIViewController, SPRenderingApp {

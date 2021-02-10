@@ -13,7 +13,7 @@ import WebKit
 
  It not only knows how to render the message and pm but also understands how to react to their different events (showing, user action, etc)
  */
-class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, GDPRConsentDelegate {
+class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, SPDelegate {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
     static let PM_BASE_URL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")!
 

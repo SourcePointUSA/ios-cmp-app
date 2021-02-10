@@ -87,7 +87,7 @@ import UIKit
     func action(_ action: SPActionType) {
         if let messageAction = message.actions.first(where: { message in message.choiceType == action }) {
             let action = SPAction(type: messageAction.choiceType, id: String(messageAction.choiceId), consentLanguage: Locale.preferredLanguages[0].uppercased())
-            consentViewController.consentDelegate?.onAction?(action)
+            consentViewController.spDelegate?.onAction(action)
         }
     }
 

@@ -133,7 +133,7 @@
 		944ED57EA4A60A68B013CE98634A26D1 /* ConsentViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DC9180CAB7D1C745F0882081A77EE3A /* ConsentViewController.bundle */; };
 		9456F5E09E3B18192DE5C97FC00158A9 /* Pods-SourcePointMetaAppUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FB3DBB12781170EFA5A9A502CA0E9F51 /* Pods-SourcePointMetaAppUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94DA3131D64B3D904BE28E72F1871065 /* BeAKindOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244D940DD97366903C2E262594EC8A49 /* BeAKindOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		97347CC878FCB57EB29ECDFBC2E13AA7 /* GDPRConsentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA37148C0C7130248D23572E1DBF0764 /* GDPRConsentDelegate.swift */; };
+		97347CC878FCB57EB29ECDFBC2E13AA7 /* SPDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA37148C0C7130248D23572E1DBF0764 /* SPDelegate.swift */; };
 		980E5594F8DBCE362764AEDC2F086E36 /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91925724160CAC0E482E686F4A2D9 /* IQToolbar.swift */; };
 		9886B4E94DD518981955E5963F773500 /* GDPRConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B97E0E1EA1ACC5DE3E1AF769D55216E /* GDPRConsentViewController.swift */; };
 		99600C9A28E1F62DAD8D3E6B4B9786ED /* Pods-SourcePointMetaAppTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EDEC96725FBB30FB0F4BC8C3F523D3 /* Pods-SourcePointMetaAppTests-dummy.m */; };
@@ -596,7 +596,7 @@
 		C9393928EAD0D9C8190EF88B9FBD7D7D /* Pods-ConsentViewController_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ConsentViewController_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		C965CECA1DDCCCCA4970CBEFAFDFF35A /* Pods-SourcePointMetaApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SourcePointMetaApp-umbrella.h"; sourceTree = "<group>"; };
 		C97B0A0377027DB3445B7B0BE4603B7D /* Pods-NativeMessageExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NativeMessageExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		CA37148C0C7130248D23572E1DBF0764 /* GDPRConsentDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GDPRConsentDelegate.swift; path = ConsentViewController/Classes/GDPRConsentDelegate.swift; sourceTree = "<group>"; };
+		CA37148C0C7130248D23572E1DBF0764 /* SPDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPDelegate.swift; path = ConsentViewController/Classes/SPDelegate.swift; sourceTree = "<group>"; };
 		CAEA285DACFED563DC456C78F35A66CF /* Pods_SourcePointMetaAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC873847070E72E99B1BCEBE9499050E /* Pods-AuthExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AuthExample.debug.xcconfig"; sourceTree = "<group>"; };
 		CCD5B3F5D3184344C5D558E4805A58E3 /* MessageWebViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MessageWebViewController.swift; path = ConsentViewController/Classes/MessageWebViewController.swift; sourceTree = "<group>"; };
@@ -849,7 +849,7 @@
 				9FCE6A9B8B7A5EB9DF9B0E5771995ABC /* ConnectivityManager.swift */,
 				872557A750A5D828EE692CAFE459E965 /* SPAction.swift */,
 				7B0D95CA3EC980F91B4678E8DC790169 /* SPCampaignEnv.swift */,
-				CA37148C0C7130248D23572E1DBF0764 /* GDPRConsentDelegate.swift */,
+				CA37148C0C7130248D23572E1DBF0764 /* SPDelegate.swift */,
 				1B97E0E1EA1ACC5DE3E1AF769D55216E /* GDPRConsentViewController.swift */,
 				C5EAF3FFCF39EDF17328A2A8D2E1F760 /* GDPRConsentViewControllerError.swift */,
 				149F0C38CAF775FFD99871A92FF53E1F /* SPJSReceiver.js */,
@@ -2098,7 +2098,7 @@
 				822577E425C6B3B000B16212 /* SPCampaigns.swift in Sources */,
 				829DA25B25D2A79800612517 /* SPIDFAStatus.swift in Sources */,
 				F8A8036A8CA364E5F04733379EB766FF /* SPCampaignEnv.swift in Sources */,
-				97347CC878FCB57EB29ECDFBC2E13AA7 /* GDPRConsentDelegate.swift in Sources */,
+				97347CC878FCB57EB29ECDFBC2E13AA7 /* SPDelegate.swift in Sources */,
 				9886B4E94DD518981955E5963F773500 /* GDPRConsentViewController.swift in Sources */,
 				602ECC13D9B8BBB0BA1B0301BC384409 /* GDPRConsentViewControllerError.swift in Sources */,
 				F4913C4FF8E45A81BD77F67AAC29A5B9 /* GDPRLocalStorage.swift in Sources */,
