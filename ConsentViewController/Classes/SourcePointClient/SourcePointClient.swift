@@ -178,8 +178,7 @@ class SourcePointClient: SourcePointProtocol {
         action: SPAction,
         campaign: SPCampaign,
         profile: ConsentProfile<SPGDPRUserConsent>,
-        handler: @escaping ConsentHandler)
-    {
+        handler: @escaping ConsentHandler) {
         JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
             JSONEncoder().encode(ActionRequest(
                 propertyId: campaign.propertyId,

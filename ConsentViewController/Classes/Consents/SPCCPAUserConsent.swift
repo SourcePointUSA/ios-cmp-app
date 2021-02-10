@@ -131,4 +131,3 @@ public typealias SPUsPrivacyString = String
         }
     }
 }
-

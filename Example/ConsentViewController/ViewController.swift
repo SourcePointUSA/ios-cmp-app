@@ -36,7 +36,7 @@ class ViewController: UIViewController, SPDelegate {
         consentManager.loadMessage()
     }
 
-    func onConsentUIReady(_ viewController: SPConsentViewController) {
+    func onSPUIReady(_ viewController: UIViewController) {
         present(viewController, animated: true)
     }
 
@@ -44,7 +44,7 @@ class ViewController: UIViewController, SPDelegate {
         print(action)
     }
 
-    func onConsentUIFinished() {
+    func onSPUIFinished() {
         dismiss(animated: true)
         print("SDK finished")
     }
