@@ -33,19 +33,13 @@ jobs:
         - name: SourcePointMetaApp UI testing -> iPhone 11 (iOS 14.3)
           run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.3' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
   auth-app-tests:
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        xcode: ['11.7']
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set Xcode
-        run: |
-          echo "Choosing Xcode_${{ matrix.xcode }}.app"
-          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
-      - name: AuthExample UI testing -> iPhone 11 (iOS 13.7)
-        run: xcodebuild test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.7' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+     runs-on: macos-latest
+     steps:
+        - uses: actions/checkout@v2
+        - name: Dependencies
+          run: carthage bootstrap --no-use-binaries --platform iOS --cache-builds
+        - name: AuthExample App UI testing -> iPhone 11 (iOS 14.3)
+          run: xcodebuild clean test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.3' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
   objc-example-app-tests:
       runs-on: macos-latest
       steps:
