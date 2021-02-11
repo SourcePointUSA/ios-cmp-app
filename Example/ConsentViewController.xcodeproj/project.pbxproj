@@ -68,6 +68,8 @@
 		6D110B8C24D9E2A500A51BD9 /* MetaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8B24D9E2A500A51BD9 /* MetaApp.swift */; };
 		6D110B8E24D9E2BC00A51BD9 /* PropertyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8D24D9E2BC00A51BD9 /* PropertyData.swift */; };
 		6D1A5A9B25D569D600F36240 /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6D1A5A9A25D569D600F36240 /* ConsentViewController */; };
+		6D1A5ACD25D5760700F36240 /* ConsentViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; };
+		6D1A5ACE25D5760700F36240 /* ConsentViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D21341B2578BEB600E0C5E2 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D21341A2578BEB600E0C5E2 /* PropertyDetails+CoreDataProperties.swift */; };
 		6D21341D2578BEBF00E0C5E2 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D21341C2578BEBE00E0C5E2 /* PropertyDetails+CoreDataClass.swift */; };
 		6D3FCA9C24DAA8C800F651E1 /* AuthIDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FCA9B24DAA8C800F651E1 /* AuthIDUITests.swift */; };
@@ -97,8 +99,6 @@
 		6DB2B2222424C52A008F9226 /* ConnectivityManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */; };
 		6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB561ED24269470008501AC /* GDPRMessageSpec.swift */; };
 		6DC1CD412427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1CD402427E7330028F03F /* GDPRNativeMessageViewControllerSpec.swift */; };
-		6DCFAED125D3D2A50071A738 /* ConsentViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; };
-		6DCFAED225D3D2A50071A738 /* ConsentViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6DCFB09B25D40D4E0071A738 /* AuthExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCFB09A25D40D4E0071A738 /* AuthExampleUITests.swift */; };
 		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
 		7BE0961C80D09BCCE7BCE5F6 /* Pods_ObjC_ExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F96D0129CE5B8D51EE1829 /* Pods_ObjC_ExampleAppUITests.framework */; };
@@ -194,13 +194,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6DCFAED325D3D2A50071A738 /* Embed Frameworks */ = {
+		6D1A5ACF25D5760700F36240 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6DCFAED225D3D2A50071A738 /* ConsentViewController.framework in Embed Frameworks */,
+				6D1A5ACE25D5760700F36240 /* ConsentViewController.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,7 +470,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DCFAED125D3D2A50071A738 /* ConsentViewController.framework in Frameworks */,
+				6D1A5ACD25D5760700F36240 /* ConsentViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1349,8 +1349,8 @@
 				8231B13922BA5A6B00D2669B /* Sources */,
 				8231B13A22BA5A6B00D2669B /* Frameworks */,
 				8231B13B22BA5A6B00D2669B /* Resources */,
-				6DCFAED325D3D2A50071A738 /* Embed Frameworks */,
 				6DCFAEEA25D3D2CC0071A738 /* ShellScript */,
+				6D1A5ACF25D5760700F36240 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2354,7 +2354,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.4;
+				MARKETING_VERSION = 5.3.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdprmetaapp;
@@ -2389,7 +2389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.4;
+				MARKETING_VERSION = 5.3.5;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.gdprmetaapp;
 				PRODUCT_NAME = "GDPR-MetaApp";
