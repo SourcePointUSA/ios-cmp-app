@@ -75,7 +75,7 @@ extension LoginViewController: GDPRConsentDelegate {
         consentTableView.reloadData()
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         print(error.debugDescription)
     }
 }
