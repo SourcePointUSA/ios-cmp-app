@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.3.4'
+pod 'ConsentViewController', '5.3.5'
 ```
 
 ### Carthage
@@ -73,7 +73,7 @@ extension ViewController: GDPRConsentDelegate {
         print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.dictionaryValue?.keys.sorted() ?? []))
     }
 
-    func onError(error: GDPRConsentViewControllerError?) {
+    func onError(error: GDPRConsentViewControllerError) {
         print("Error: \(error.debugDescription)")
     }
 }
@@ -96,6 +96,8 @@ extension ViewController: GDPRConsentDelegate {
     [super viewDidLoad];
 
     GDPRPropertyName *propertyName = [[GDPRPropertyName alloc] init:@"tcfv2.mobile.webview" error:NULL];
+    
+    NSDictionary *targetingParameter = [NSDictionary dictionary];
 
     cvc = [[GDPRConsentViewController alloc]
            initWithAccountId: 22
@@ -103,6 +105,7 @@ extension ViewController: GDPRConsentDelegate {
            propertyName: propertyName
            PMId: @"122058"
            campaignEnv: GDPRCampaignEnvPublic
+           targetingParams:targetingParameter
            consentDelegate: self];
 
     [cvc loadMessage];
@@ -214,9 +217,19 @@ In order to set a targeting param all you need to do is passing `targetingParams
 
 ```swift
 lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
-       //other parametters here...
+       //other parameters here...
         targetingParams:["language":"fr"]
     )}()
+```
+In Obj-C that'd be:
+```objc
+NSMutableDictionary *targetingParameter = [[NSMutableDictionary alloc] init];
+[targetingParameter setObject:@"fr" forKey:@"language"];
+
+cvc = [[GDPRConsentViewController alloc]
+       //other parameters here...
+       targetingParams:targetingParameter
+       consentDelegate: self];
 ```
 
 In this example a key/value pair "language":"fr" is passed to the sp scenario and can be useded, wiht the proper scenario setup, to show a french message instead of a english one.

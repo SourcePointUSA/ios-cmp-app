@@ -58,48 +58,6 @@ class NativeMessageUITests: QuickSpec {
             expect(self.app.propertyDebugInfo).to(showUp())
         }
 
-        it("Accept all through privacy manager via native message") {
-            self.app.addPropertyDetailsForNativeMessage()
-            self.app.savePropertyButton.tap()
-            expect(self.app.messageTitle).to(showUp())
-            self.app.showOptions.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.acceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
-            self.app.propertyItem.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-        }
-
-        it("Reject all through privacy manager via native message") {
-            self.app.addPropertyDetailsForNativeMessage()
-            self.app.savePropertyButton.tap()
-            expect(self.app.messageTitle).to(showUp())
-            self.app.showOptions.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.rejectAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
-            self.app.propertyItem.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-        }
-
-        it("Save and Exit through privacy manager via native message") {
-            self.app.addPropertyDetailsForNativeMessage()
-            self.app.savePropertyButton.tap()
-            expect(self.app.messageTitle).to(showUp())
-            self.app.showOptions.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.saveAndExitButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
-            self.app.propertyItem.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-        }
-
         it("Accept all through privacy manager directly") {
             self.app.addPropertyDetailsForNativeMessage()
             self.app.savePropertyButton.tap()
@@ -145,45 +103,6 @@ class NativeMessageUITests: QuickSpec {
             self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.saveAndExitButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
-            self.app.propertyItem.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-        }
-
-        it("Save and Exit with few purposes through privacy manager directly") {
-            self.app.addPropertyDetailsForNativeMessage()
-            self.app.savePropertyButton.tap()
-            expect(self.app.messageTitle).to(showUp())
-            self.app.acceptButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.showPMButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.purposesTab.tap()
-            self.app.testNativeMessagePMToggles(value: 1)
-            self.app.DeviceInformationSwitch.tap()
-            self.app.PersonalisedAdsSwitch.tap()
-            self.app.saveAndExitButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.showPMButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.purposesTab.tap()
-            self.app.testNativeMessagePMToggles(value: 0)
-        }
-
-        it("Cancel with few purposes through privacy manager directly") {
-            self.app.addPropertyDetailsForNativeMessage()
-            self.app.savePropertyButton.tap()
-            expect(self.app.messageTitle).to(showUp())
-            self.app.acceptButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.showPMButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.purposesTab.tap()
-            self.app.DeviceInformationSwitch.tap()
-            self.app.PersonalisedAdsSwitch.tap()
-            self.app.cancelButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.backButton.tap()
             expect(self.app.propertyList).to(showUp())

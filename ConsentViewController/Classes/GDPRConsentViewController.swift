@@ -16,7 +16,7 @@ typealias Meta = String
 
 @objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
     /// The version of the SDK. It should mirror the version from podspec.
-    static public let VERSION = "5.3.3"
+    static public let VERSION = "5.3.5"
 
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
     static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
@@ -70,6 +70,9 @@ typealias Meta = String
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true
+
+    /// will instruct the SDK to call the error metrics if an error occurs
+    static public var shouldCallErrorMetrics = true
 
     /// the instance of `GDPRConsentDelegate` which the `GDPRConsentViewController` will use to perform the lifecycle methods
     public weak var consentDelegate: GDPRConsentDelegate?
@@ -371,13 +374,13 @@ extension GDPRConsentViewController: GDPRConsentDelegate {
     public func onError(error: GDPRConsentViewControllerError) {
         loading = .Ready
         if shouldCleanConsentOnError { clearIABConsentData() }
-        sourcePoint.errorMetrics(
+        if GDPRConsentViewController.shouldCallErrorMetrics { sourcePoint.errorMetrics(
             error,
             sdkVersion: GDPRConsentViewController.VERSION,
             OSVersion: deviceManager.osVersion(),
             deviceFamily: deviceManager.deviceFamily(),
             legislation: .GDPR
-        )
+        )}
         consentDelegate?.onError?(error: error)
     }
 
