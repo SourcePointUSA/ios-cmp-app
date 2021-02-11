@@ -1,5 +1,5 @@
 //
-//  SPGDPRUserConsent.swift
+//  SPGDPRConsent.swift
 //  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 19.12.19.
@@ -39,11 +39,11 @@ public typealias GDPRPurposeId = String
 }
 
 /**
-    SPGDPRUserConsent encapsulates all consent data from a user.
+    SPGDPRConsent encapsulates all consent data from a user.
  */
-@objcMembers public class SPGDPRUserConsent: NSObject, Codable {
-    public static func empty() -> SPGDPRUserConsent {
-        return SPGDPRUserConsent(
+@objcMembers public class SPGDPRConsent: NSObject, Codable {
+    public static func empty() -> SPGDPRConsent {
+        return SPGDPRConsent(
             acceptedVendors: [],
             acceptedCategories: [],
             legitimateInterestCategories: [],
@@ -87,7 +87,7 @@ public typealias GDPRPurposeId = String
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
-        if let other = object as? SPGDPRUserConsent {
+        if let other = object as? SPGDPRConsent {
             return other.acceptedCategories.elementsEqual(acceptedCategories) &&
                 other.acceptedVendors.elementsEqual(acceptedVendors) &&
                 other.legitimateInterestCategories.elementsEqual(legitimateInterestCategories) &&

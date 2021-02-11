@@ -63,7 +63,7 @@ class MessageResponseSpec: QuickSpec {
                     message: try! SPJson(["foo": "message"]),
                     applies: true,
                     uuid: "gdpr-uuid",
-                    userConsent: SPGDPRUserConsent(
+                    userConsent: SPGDPRConsent(
                         acceptedVendors: ["accepted-vendor"],
                         acceptedCategories: ["accepted-category"],
                         legitimateInterestCategories: ["leg-int-category"],
@@ -81,7 +81,7 @@ class MessageResponseSpec: QuickSpec {
                     message: try! SPJson(["foo": "message"]),
                     applies: true,
                     uuid: "ccpa-uuid",
-                    userConsent: SPCCPAUserConsent(
+                    userConsent: SPCCPAConsent(
                         status: .RejectedNone,
                         rejectedVendors: ["rejected-vendor"],
                         rejectedCategories: ["rejected-category"],

@@ -139,12 +139,12 @@ func afterFakeDelay (execute: @escaping () -> Void) {
         }
     }
 
-    func report(action: SPAction, completionHandler: @escaping (Result<SPGDPRUserConsent, Error>) -> Void) {
+    func report(action: SPAction, completionHandler: @escaping (Result<SPGDPRConsent, Error>) -> Void) {
         // send consent action
         // we will need to know what legislation that action is referring to
         // in oder to send to the right endpoint and call the appropriate consentReady delegate
         afterFakeDelay {
-            completionHandler(.success(SPGDPRUserConsent.empty()))
+            completionHandler(.success(SPGDPRConsent.empty()))
         }
     }
 }
@@ -220,7 +220,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 //    }
 //
 //    /// All consent data we have in memory and stored on UserDefaults
-//    public var userConsents: SPGDPRUserConsent {
+//    public var userConsents: SPGDPRConsent {
 //        return localStorage.userConsents
 //    }
 //
@@ -305,7 +305,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 //            )
 //        )
 //        profile = ConsentsProfile(
-//            gdpr: ConsentProfile<SPGDPRUserConsent>(
+//            gdpr: ConsentProfile<SPGDPRConsent>(
 //                uuid: localStorage.consentUUID,
 //                authId: localStorage.authId,
 //                meta: localStorage.meta,
@@ -484,7 +484,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 //        legIntCategories: [String],
 //        euconsent: String,
 //        tcfData: SPJson,
-//        completionHandler: @escaping (SPGDPRUserConsent) -> Void) {
+//        completionHandler: @escaping (SPGDPRConsent) -> Void) {
 //        /// TODO: implement custom consent
 ////        sourcePoint.customConsent(toConsentUUID: uuid, vendors: vendors, categories: categories, legIntCategories: legIntCategories) { [weak self] (response, error) in
 ////            guard let response = response, error == nil else {
@@ -492,7 +492,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 ////                return
 ////            }
 ////
-////            let updatedUserConsents = SPGDPRUserConsent(
+////            let updatedUserConsents = SPGDPRConsent(
 ////                acceptedVendors: response.vendors,
 ////                acceptedCategories: response.categories,
 ////                legitimateInterestCategories: response.legIntCategories,
@@ -513,7 +513,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 //        vendors: [String],
 //        categories: [String],
 //        legIntCategories: [String],
-//        completionHandler: @escaping (SPGDPRUserConsent) -> Void) {
+//        completionHandler: @escaping (SPGDPRConsent) -> Void) {
 //        if consentUUID.isEmpty {
 //            onError(error: PostingConsentWithoutConsentUUID())
 //            return
@@ -585,12 +585,12 @@ extension SPConsentManager: SPMessageUIDelegate {
 //        }
 //    }
 //
-//    @objc(onGDPRConsentReady:) public func onConsentReady(consents: SPGDPRUserConsent) {
+//    @objc(onGDPRConsentReady:) public func onConsentReady(consents: SPGDPRConsent) {
 //        /// TODO: implement
 //        spDelegate?.onConsentReady?(consents: consents)
 //    }
 //
-//    @objc(onCCPAConsentReady:) public func onConsentReady(consents: SPCCPAUserConsent) {
+//    @objc(onCCPAConsentReady:) public func onConsentReady(consents: SPCCPAConsent) {
 //        /// TODO: implement
 //        spDelegate?.onConsentReady?(consents: consents)
 //    }

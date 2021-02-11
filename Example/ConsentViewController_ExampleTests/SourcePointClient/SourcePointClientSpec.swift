@@ -25,11 +25,11 @@ class SourcePointClientSpec: QuickSpec {
         targetingParams: [:]
     )}
     var campaigns: SPCampaigns { SPCampaigns(gdpr: campaign) }
-    var gdprProfile: ConsentProfile<SPGDPRUserConsent> { ConsentProfile<SPGDPRUserConsent>(
+    var gdprProfile: ConsentProfile<SPGDPRConsent> { ConsentProfile<SPGDPRConsent>(
         uuid: "uuid",
         authId: "auth id",
         meta: "meta",
-        consents: SPGDPRUserConsent.empty()
+        consents: SPGDPRConsent.empty()
     )}
     var profile: ConsentsProfile { ConsentsProfile(gdpr: gdprProfile) }
 

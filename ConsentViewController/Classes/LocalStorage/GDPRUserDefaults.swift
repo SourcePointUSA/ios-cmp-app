@@ -53,9 +53,9 @@ class GDPRUserDefaults: GDPRLocalStorage {
         }
     }
 
-    var userConsents: SPGDPRUserConsent {
+    var userConsents: SPGDPRConsent {
         get {
-            storage.object(ofType: SPGDPRUserConsent.self, forKey: GDPRUserDefaults.GDPR_USER_CONSENTS_KEY) ?? SPGDPRUserConsent.empty()
+            storage.object(ofType: SPGDPRConsent.self, forKey: GDPRUserDefaults.GDPR_USER_CONSENTS_KEY) ?? SPGDPRConsent.empty()
         }
         set {
             tcfData = newValue.tcfData.dictionaryValue ?? [:]
@@ -78,7 +78,7 @@ class GDPRUserDefaults: GDPRLocalStorage {
     }
 
     func clear() {
-        userConsents = SPGDPRUserConsent.empty()
+        userConsents = SPGDPRConsent.empty()
         tcfData = [:]
         consentString = ""
         consentUUID = ""

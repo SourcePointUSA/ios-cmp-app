@@ -43,7 +43,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
         var mockDeviceManager = DeviceMock()
         var consentViewController = self.getController(mockConsentDelegate, sourcePointClient, localStorage)
         var messageViewController = GDPRMessageViewController()
-        var userConsents = SPGDPRUserConsent.empty()
+        var userConsents = SPGDPRConsent.empty()
 
         beforeEach {
             sourcePointClient = SourcePointClientMock(timeout: 1)
@@ -52,7 +52,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
             mockConsentDelegate = MockConsentDelegate()
             consentViewController = self.getController(mockConsentDelegate, sourcePointClient, localStorage)
             messageViewController = GDPRMessageViewController()
-            userConsents = SPGDPRUserConsent.empty()
+            userConsents = SPGDPRConsent.empty()
         }
 
         describe("loadNativeMessage") {
@@ -100,9 +100,9 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                         }
                     }
 
-                    it("calls the completion handler with a SPGDPRUserConsents") {
+                    it("calls the completion handler with a SPGDPRConsents") {
                         consentViewController.customConsentTo(vendors: [], categories: [], legIntCategories: []) { consents in
-                            expect(consents).toEventually(equal(SPGDPRUserConsent(
+                            expect(consents).toEventually(equal(SPGDPRConsent(
                                 acceptedVendors: ["vendor"],
                                 acceptedCategories: ["category"],
                                 legitimateInterestCategories: ["legInt"],
@@ -197,7 +197,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
                         }
                         describe("and the api returns a valid ActionResponse") {
                             beforeEach {
-                                sourcePointClient.postActionResponse = ActionResponse(uuid: "test", userConsent: SPGDPRUserConsent.empty(), meta: "")
+                                sourcePointClient.postActionResponse = ActionResponse(uuid: "test", userConsent: SPGDPRConsent.empty(), meta: "")
                             }
                             types.forEach { type in
                                 describe(type.description) {
@@ -256,7 +256,7 @@ class GDPRConsentViewControllerSpec: QuickSpec {
 
             context("onConsentReady") {
                 beforeEach {
-                    userConsents = SPGDPRUserConsent(
+                    userConsents = SPGDPRConsent(
                         acceptedVendors: [],
                         acceptedCategories: [],
                         legitimateInterestCategories: [],

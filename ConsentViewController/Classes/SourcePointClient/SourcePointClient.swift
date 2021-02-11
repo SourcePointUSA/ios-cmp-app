@@ -28,24 +28,6 @@ extension JSONDecoder {
     }
 }
 
-/// TODO: move this code to their file
-struct ConsentProfile<T: Codable> {
-    let uuid: SPConsentUUID?
-    let authId: String?
-    let meta: String
-    let consents: T
-}
-
-struct ConsentsProfile {
-    let gdpr: ConsentProfile<SPGDPRUserConsent>?
-    let ccpa: ConsentProfile<SPCCPAUserConsent>?
-
-    init(gdpr: ConsentProfile<SPGDPRUserConsent>? = nil, ccpa: ConsentProfile<SPCCPAUserConsent>? = nil) {
-        self.gdpr = gdpr
-        self.ccpa = ccpa
-    }
-}
-
 typealias MessageHandler<MessageType: Decodable & Equatable> = (Result<MessagesResponse<MessageType>, SPError>) -> Void
 typealias WebMessageHandler = MessageHandler<SPJson>
 typealias NativeMessageHandler = MessageHandler<SPJson>
@@ -68,7 +50,7 @@ protocol SourcePointProtocol {
     func postAction(
         action: SPAction,
         campaign: SPCampaign,
-        profile: ConsentProfile<SPGDPRUserConsent>,
+        profile: ConsentProfile<SPGDPRConsent>,
         handler: @escaping ConsentHandler)
 
 //    /// TODO: add postAction for CCPA
@@ -177,7 +159,7 @@ class SourcePointClient: SourcePointProtocol {
     func postAction(
         action: SPAction,
         campaign: SPCampaign,
-        profile: ConsentProfile<SPGDPRUserConsent>,
+        profile: ConsentProfile<SPGDPRConsent>,
         handler: @escaping ConsentHandler) {
         JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
             JSONEncoder().encode(ActionRequest(

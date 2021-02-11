@@ -1,5 +1,5 @@
 //
-//  SPCCPAUserConsent.swift
+//  SPCCPAConsent.swift
 //  ConsentViewController
 //
 //  Created by Andre Herculano on 08.02.21.
@@ -60,12 +60,12 @@ public typealias SPUsPrivacyString = String
  - Important: The `rejectedVendors` and `rejectedCategories` arrays will only be populated if the `status` is `.Some`.
  That is, if the user has rejected `.All` or `.None` vendors/categories, those arrays will be empty.
  */
-@objcMembers public class SPCCPAUserConsent: NSObject, Codable {
+@objcMembers public class SPCCPAConsent: NSObject, Codable {
     /// represents the default state of the consumer prior to seeing the consent message
     /// - seealso: https://github.com/InteractiveAdvertisingBureau/USPrivacy/blob/master/CCPA/US%20Privacy%20String.md#us-privacy-string-format
     public static let defaultUsPrivacyString = "1---"
 
-    public static func empty() -> SPCCPAUserConsent { SPCCPAUserConsent(
+    public static func empty() -> SPCCPAConsent { SPCCPAConsent(
         status: .RejectedNone,
         rejectedVendors: [],
         rejectedCategories: [],
@@ -79,7 +79,7 @@ public typealias SPUsPrivacyString = String
     /// the US Privacy String as described by the IAB
     public let uspstring: SPUsPrivacyString
 
-    public static func rejectedNone () -> SPCCPAUserConsent { SPCCPAUserConsent(
+    public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
         status: CCPAConsentStatus.RejectedNone,
         rejectedVendors: [],
         rejectedCategories: [],
@@ -121,7 +121,7 @@ public typealias SPUsPrivacyString = String
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
-        if let other = object as? SPCCPAUserConsent {
+        if let other = object as? SPCCPAConsent {
             return other.rejectedCategories.elementsEqual(rejectedCategories) &&
                 other.rejectedVendors.elementsEqual(rejectedVendors) &&
                 other.status == status &&

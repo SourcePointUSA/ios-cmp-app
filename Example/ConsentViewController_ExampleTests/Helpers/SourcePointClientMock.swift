@@ -22,12 +22,12 @@ class SourcePointClientMock: SourcePointProtocol {
         )
     }
     var getMessagesResponse = MessagesResponse<SPJson>(
-        gdpr: SourcePointClientMock.getMessageResponse(SPGDPRUserConsent.empty()),
-        ccpa: SourcePointClientMock.getMessageResponse(SPCCPAUserConsent.empty())
+        gdpr: SourcePointClientMock.getMessageResponse(SPGDPRConsent.empty()),
+        ccpa: SourcePointClientMock.getMessageResponse(SPCCPAConsent.empty())
     )
     var postActionResponse = ActionResponse(
         uuid: "",
-        userConsent: SPGDPRUserConsent.empty(),
+        userConsent: SPGDPRConsent.empty(),
         meta: ""
     )
     var error: SPError?
@@ -55,7 +55,7 @@ class SourcePointClientMock: SourcePointProtocol {
         }
     }
 
-    func postAction(action: SPAction, campaign: SPCampaign, profile: ConsentProfile<SPGDPRUserConsent>, handler: @escaping ConsentHandler) {
+    func postAction(action: SPAction, campaign: SPCampaign, profile: ConsentProfile<SPGDPRConsent>, handler: @escaping ConsentHandler) {
         postActionCalled = true
         if let error = error {
             handler(.failure(error))

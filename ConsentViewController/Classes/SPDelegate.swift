@@ -25,12 +25,12 @@ import UIKit
     /// called after the user takes an action and the SDK receives consent data back from the server
     /// - Parameters:
     ///  - consents: is the gdpr consent profile
-    @objc(onGDPRConsentReady:) optional func onConsentReady(consents: SPGDPRUserConsent)
+    @objc(onGDPRConsentReady:) optional func onConsentReady(consents: SPGDPRConsent)
 
     /// called after the user takes an action and the SDK receives consent data back from the server
     /// - Parameters:
     ///  - consents: is the gdpr consent profile
-    @objc(onCCPAConsentReady:) optional func onConsentReady(consents: SPCCPAUserConsent)
+    @objc(onCCPAConsentReady:) optional func onConsentReady(consents: SPCCPAConsent)
 
     /// called if something goes wrong during the entire lifecycle of the SDK
     @objc optional func onError(error: SPError)

@@ -15,7 +15,7 @@ class GDPRLocalStorageMock: GDPRLocalStorage {
     var meta: String = "{}"
     var authId: String?
     var tcfData: [String: Any] = [:]
-    var userConsents: SPGDPRUserConsent = SPGDPRUserConsent.empty()
+    var userConsents: SPGDPRConsent = SPGDPRConsent.empty()
 
     var clearWasCalled = false
 

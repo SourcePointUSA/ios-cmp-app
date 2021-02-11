@@ -27,7 +27,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     /** PM is loaded or not
      */
     var isPMLoaded = false
-    var userConsents: SPGDPRUserConsent?
+    var userConsents: SPGDPRConsent?
     var consentUUID: String = ""
     let sections = ["Vendor Consents", "Purpose Consents"]
 
@@ -168,7 +168,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         }
     }
 
-    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
         self.showIndicator()
         self.userConsents = userConsent
         self.consentUUID = consentUUID

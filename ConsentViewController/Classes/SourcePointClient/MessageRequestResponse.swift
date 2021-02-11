@@ -52,8 +52,8 @@ struct MessageRequest: Equatable, Encodable {
     let campaigns: CampaignsRequest
 }
 
-typealias CCPAMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPCCPAUserConsent, MessageType>
-typealias GDPRMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPGDPRUserConsent, MessageType>
+typealias CCPAMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPCCPAConsent, MessageType>
+typealias GDPRMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPGDPRConsent, MessageType>
 struct MessagesResponse<MessageType: Decodable & Equatable>: Decodable, Equatable {
     let gdpr: GDPRMessageResponse<MessageType>?
     let ccpa: CCPAMessageResponse<MessageType>?
