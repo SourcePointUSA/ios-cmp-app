@@ -67,6 +67,7 @@
 		6D110B8A24D9E28900A51BD9 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8924D9E28900A51BD9 /* CustomMatchers.swift */; };
 		6D110B8C24D9E2A500A51BD9 /* MetaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8B24D9E2A500A51BD9 /* MetaApp.swift */; };
 		6D110B8E24D9E2BC00A51BD9 /* PropertyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D110B8D24D9E2BC00A51BD9 /* PropertyData.swift */; };
+		6D1A5A9B25D569D600F36240 /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6D1A5A9A25D569D600F36240 /* ConsentViewController */; };
 		6D21341B2578BEB600E0C5E2 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D21341A2578BEB600E0C5E2 /* PropertyDetails+CoreDataProperties.swift */; };
 		6D21341D2578BEBF00E0C5E2 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D21341C2578BEBE00E0C5E2 /* PropertyDetails+CoreDataClass.swift */; };
 		6D3FCA9C24DAA8C800F651E1 /* AuthIDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3FCA9B24DAA8C800F651E1 /* AuthIDUITests.swift */; };
@@ -90,7 +91,6 @@
 		6D8046F925D1A88B0005002B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D8046F825D1A88B0005002B /* Assets.xcassets */; };
 		6D8046FC25D1A88C0005002B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D8046FA25D1A88C0005002B /* LaunchScreen.storyboard */; };
 		6D8046FF25D1A88C0005002B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8046FE25D1A88C0005002B /* main.m */; };
-		6D80472325D1A9380005002B /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6D80472225D1A9380005002B /* ConsentViewController */; };
 		6D80473525D1AC3E0005002B /* ObjC_ExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80473425D1AC3E0005002B /* ObjC_ExampleAppUITests.swift */; };
 		6D80476D25D1B0E40005002B /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80476C25D1B0E40005002B /* CustomMatchers.swift */; };
 		6DA66EA3255D1A690034E11A /* MessageLanguageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA66EA2255D1A690034E11A /* MessageLanguageSpec.swift */; };
@@ -439,7 +439,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D80472325D1A9380005002B /* ConsentViewController in Frameworks */,
+				6D1A5A9B25D569D600F36240 /* ConsentViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,7 +1277,7 @@
 			);
 			name = "ObjC-ExampleApp";
 			packageProductDependencies = (
-				6D80472225D1A9380005002B /* ConsentViewController */,
+				6D1A5A9A25D569D600F36240 /* ConsentViewController */,
 			);
 			productName = "ObjC-ExampleApp";
 			productReference = 6D8046EA25D1A87E0005002B /* ObjC-ExampleApp.app */;
@@ -1486,7 +1486,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				6D80472125D1A9380005002B /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
+				6D1A5A9925D569D600F36240 /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -3324,20 +3324,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6D80472125D1A9380005002B /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
+		6D1A5A9925D569D600F36240 /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
-				kind = exactVersion;
-				version = "5.3.5-beta.1";
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.3.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6D80472225D1A9380005002B /* ConsentViewController */ = {
+		6D1A5A9A25D569D600F36240 /* ConsentViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6D80472125D1A9380005002B /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
+			package = 6D1A5A9925D569D600F36240 /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
 			productName = ConsentViewController;
 		};
 /* End XCSwiftPackageProductDependency section */
