@@ -93,7 +93,6 @@
 		6D80472325D1A9380005002B /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6D80472225D1A9380005002B /* ConsentViewController */; };
 		6D80473525D1AC3E0005002B /* ObjC_ExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80473425D1AC3E0005002B /* ObjC_ExampleAppUITests.swift */; };
 		6D80476D25D1B0E40005002B /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80476C25D1B0E40005002B /* CustomMatchers.swift */; };
-		6D90542B25D27B7100E4B49D /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90542A25D27B7100E4B49D /* CustomMatchers.swift */; };
 		6DA66EA3255D1A690034E11A /* MessageLanguageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA66EA2255D1A690034E11A /* MessageLanguageSpec.swift */; };
 		6DB2B2222424C52A008F9226 /* ConnectivityManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */; };
 		6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB561ED24269470008501AC /* GDPRMessageSpec.swift */; };
@@ -321,7 +320,6 @@
 		6D8047D225D1C76D0005002B /* ConsentViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ConsentViewController.framework; path = Carthage/Build/iOS/ConsentViewController.framework; sourceTree = "<group>"; };
 		6D9053FB25D27ABF00E4B49D /* AuthExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D90541C25D27B0600E4B49D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D90542A25D27B7100E4B49D /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		6D90553125D2857700E4B49D /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D9DD70E2578BABF003468B8 /* SourcePointMetaApp 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SourcePointMetaApp 3.xcdatamodel"; sourceTree = "<group>"; };
 		6DA66EA2255D1A690034E11A /* MessageLanguageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLanguageSpec.swift; sourceTree = "<group>"; };
@@ -987,7 +985,6 @@
 		6D9053FC25D27ABF00E4B49D /* AuthExampleUITests */ = {
 			isa = PBXGroup;
 			children = (
-				6D90542A25D27B7100E4B49D /* CustomMatchers.swift */,
 				6DCFB09A25D40D4E0071A738 /* AuthExampleUITests.swift */,
 				6D90541C25D27B0600E4B49D /* Info.plist */,
 			);
@@ -2141,7 +2138,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DCFB09B25D40D4E0071A738 /* AuthExampleUITests.swift in Sources */,
-				6D90542B25D27B7100E4B49D /* CustomMatchers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

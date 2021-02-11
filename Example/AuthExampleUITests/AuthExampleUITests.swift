@@ -20,7 +20,7 @@ class AuthExampleUITests: XCTestCase {
     override func tearDownWithError() throws {
     }
 
-    func testExample() throws {
+    func testAcceptAllMessage() throws {
         let webViewsQuery = XCUIApplication().webViews
         let webMessageTitle = webViewsQuery.staticTexts["Privacy Notice"]
         let exists = NSPredicate(format: "exists == 1")
