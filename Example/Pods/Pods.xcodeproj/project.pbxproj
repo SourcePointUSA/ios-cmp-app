@@ -92,7 +92,7 @@
 		6BD5A180D109B5013E7E7C9D2966017B /* SPNativeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6220FBD7E1AA2707DE639A4F6DD1E56E /* SPNativeMessageViewController.swift */; };
 		6CE7470A198B0C804AB59EA47299FDC0 /* Pods-SourcePointMetaApp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A8A7EB3BDC600E2074A39EDAAF1EF1 /* Pods-SourcePointMetaApp-dummy.m */; };
 		6E032DED297CD1E58441850AC03E50E5 /* Bundle+Framework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D721D22365BCF6C4FFC21C51EF0BC2D /* Bundle+Framework.swift */; };
-		6F1CC434848105E735F950646F57DBB2 /* MessageLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF4583E6A69196E3F11B6698794C78A /* MessageLanguage.swift */; };
+		6F1CC434848105E735F950646F57DBB2 /* SPMessageLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF4583E6A69196E3F11B6698794C78A /* SPMessageLanguage.swift */; };
 		7004621B75061C0B33FD56FD6A809408 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39271DF928C81446E95655600904D78A /* Foundation.framework */; };
 		706CEC35B3D8A123470744F2D690B1BF /* Quick-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B195869167AFCC8D9480E93E3E5074 /* Quick-dummy.m */; };
 		72DDD7AE2125A695DB8D093F17B7C4E6 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A5B2B31EB26A1D2E1F498683054F72 /* DSL.swift */; };
@@ -587,7 +587,7 @@
 		BAE263041362D074978BB3B577DF0A05 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD67B5A06FE9D7489BA63F056B00DD29 /* CwlCatchException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CwlCatchException.swift; path = Carthage/Checkouts/CwlPreconditionTesting/Dependencies/CwlCatchException/Sources/CwlCatchException/CwlCatchException.swift; sourceTree = "<group>"; };
 		BEEDDF187DB109B9CFE0DA2C5D852537 /* Pods-AuthExample-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AuthExample-Info.plist"; sourceTree = "<group>"; };
-		BFF4583E6A69196E3F11B6698794C78A /* MessageLanguage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MessageLanguage.swift; path = ConsentViewController/Classes/MessageLanguage.swift; sourceTree = "<group>"; };
+		BFF4583E6A69196E3F11B6698794C78A /* SPMessageLanguage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPMessageLanguage.swift; path = ConsentViewController/Classes/SPMessageLanguage.swift; sourceTree = "<group>"; };
 		C2DC54894C72D6D95DE80BDB28A1A241 /* BeLessThanOrEqual.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeLessThanOrEqual.swift; path = Sources/Nimble/Matchers/BeLessThanOrEqual.swift; sourceTree = "<group>"; };
 		C345B1094A73A56FCBFFD93A73F6FDFF /* Pods-NativeMessageExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NativeMessageExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C4C25757F6F6F1C85ADCF6D99FBED51C /* IQKeyboardManagerSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQKeyboardManagerSwift-umbrella.h"; sourceTree = "<group>"; };
@@ -963,7 +963,7 @@
 				576D51D71C1EDBC3F8AA2B915B5CD591 /* SPConsentManager.swift */,
 				A2523B6AF00EC72569E2DDDEF816B24E /* GDPRMessage.swift */,
 				2C5F2E282377621BB7DABD9325B0D5CB /* GDPRMessageViewController.swift */,
-				BFF4583E6A69196E3F11B6698794C78A /* MessageLanguage.swift */,
+				BFF4583E6A69196E3F11B6698794C78A /* SPMessageLanguage.swift */,
 				94EBC14892769064A7A4F6448094AB63 /* MessageWebViewController.swift */,
 				7309A9149B1AE26CD4372DD42AC72B5A /* OSLogger.swift */,
 				E546F3C1938B3100003AA5D3EA9B0DE9 /* PrivacyManagerTab.swift */,
@@ -1917,7 +1917,7 @@
 				4664177C3B4298717C1CB4E2EACF0439 /* GDPRMessage.swift in Sources */,
 				12C4FA80F14A5966BF9BDA82F061B9FF /* GDPRMessageViewController.swift in Sources */,
 				82FD005C58104AE731A93D49F399F7AB /* GDPRUserDefaults.swift in Sources */,
-				6F1CC434848105E735F950646F57DBB2 /* MessageLanguage.swift in Sources */,
+				6F1CC434848105E735F950646F57DBB2 /* SPMessageLanguage.swift in Sources */,
 				5CADAA3782BB0AC438A5A1913698DECB /* MessageRequestResponse.swift in Sources */,
 				A296188FF235AF07FA7D59B54A0E35EA /* MessageWebViewController.swift in Sources */,
 				F28F18DF7000B5115CE0AA69DCCF31F3 /* OSLogger.swift in Sources */,

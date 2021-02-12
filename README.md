@@ -195,6 +195,11 @@ By default, the SDK will instruct the message to render itself using the locale 
 consentViewController.messageLanguage = .German
 consentViewController.loadMessage()
 ```
+In Obj-C that'd be:
+```objc
+cvc.messageLanguage = MessageLanguageGerman;
+[cvc loadMessage];
+```
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
 
 ## Overwriting Privacy Manager tab

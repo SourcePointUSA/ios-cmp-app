@@ -87,6 +87,10 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
     }
 
+    /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+    /// By default the SDK will use the locale defined by the WebView
+    public var messageLanguage = SPMessageLanguage.BrowserDefault
+
     private func toJSON(_ contents: [String: String]) -> String {
         String(data: try! JSONSerialization.data(withJSONObject: contents), encoding: .utf8) ?? "{}"
     }
