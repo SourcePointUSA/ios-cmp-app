@@ -7,6 +7,13 @@
 
 import Foundation
 
+extension SPTargetingParams {
+    func stringified() throws -> String? { String(
+        data: try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted),
+        encoding: .utf8
+    )}
+}
+
 struct CampaignRequest: Equatable {
     let uuid: SPConsentUUID?
     let accountId, propertyId: Int
@@ -22,9 +29,11 @@ extension CampaignRequest: Encodable {
         try container.encode(accountId, forKey: .accountId)
         try container.encode(propertyId, forKey: .propertyId)
         try container.encode(propertyHref, forKey: .propertyHref)
-        try container.encode(meta, forKey: .meta)
-        if uuid != nil { try container.encode(uuid, forKey: .uuid) }
-        try container.encode(targetingParams, forKey: .targetingParams)
+        try container.encodeIfPresent(meta, forKey: .meta)
+        try container.encodeIfPresent(uuid, forKey: .uuid)
+        if !targetingParams.isEmpty {
+            try container.encode(targetingParams.stringified(), forKey: .targetingParams)
+        }
         if #available(iOS 11, *) {
             try container.encode(campaignEnv, forKey: .campaignEnv)
         } else {
