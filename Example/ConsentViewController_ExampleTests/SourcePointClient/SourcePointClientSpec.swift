@@ -79,7 +79,7 @@ class SourcePointClientSpec: QuickSpec {
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
                     client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, SPError>) in }
-                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message-url?inApp=true"))
+                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {

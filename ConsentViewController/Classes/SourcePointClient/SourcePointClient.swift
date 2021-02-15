@@ -80,10 +80,10 @@ A Http client for SourcePoint's endpoints
 class SourcePointClient: SourcePointProtocol {
     static let WRAPPER_API = URL(string: "http://localhost:3000/wrapper/")! /// TODO: change to real URL
     static let ERROR_METRIS_URL = URL(string: "metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_CONTENTS_URL = URL(string: "unified/v1/gdpr/native-message?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_URL_URL = URL(string: "unified/v1/gdpr/message-url?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let CONSENT_URL = URL(string: "unified/v1/gdpr/consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "unified/v1/gdpr/custom-consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGE_CONTENTS_URL = URL(string: "v1/unified/native-message?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGE_URL_URL = URL(string: "v1/unified/message?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let CONSENT_URL = URL(string: "v1/unified/gdpr/consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let CUSTOM_CONSENT_URL = URL(string: "v1/unified/gdpr/custom-consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
 
     var client: HttpClient
 
@@ -131,8 +131,8 @@ class SourcePointClient: SourcePointProtocol {
         let url = native ?
             SourcePointClient.GET_MESSAGE_CONTENTS_URL :
             SourcePointClient.GET_MESSAGE_URL_URL
-        JSONEncoder().encode(MessageRequest(
-            authId: authId, /// handle auth id
+        let _ = JSONEncoder().encode(MessageRequest(
+            authId: profile.authId,
             requestUUID: requestUUID,
             campaigns: CampaignsRequest(
                 gdpr: campaignToRequest(
@@ -162,7 +162,7 @@ class SourcePointClient: SourcePointProtocol {
         campaign: SPCampaign,
         profile: ConsentProfile<SPGDPRConsent>,
         handler: @escaping ConsentHandler) {
-        JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
+        let _ = JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
             JSONEncoder().encode(ActionRequest(
                 propertyId: campaign.propertyId,
                 propertyHref: campaign.propertyName,
