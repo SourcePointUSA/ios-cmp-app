@@ -205,7 +205,7 @@ consentViewController.loadMessage()
 ```
 In Obj-C that'd be:
 ```objc
-cvc.privacyManagerTab = PrivacyManagerTabPurposes;
+cvc.privacyManagerTab = SPPrivacyManagerTabPurposes;
 [cvc loadMessage];
 ```
 It's important to note that the order of precedence for the PM tab will be as follow:
