@@ -27,7 +27,7 @@ class SourcePointClientSpec: QuickSpec {
     var campaigns: SPCampaigns { SPCampaigns(gdpr: campaign) }
     var gdprProfile: ConsentProfile<SPGDPRConsent> { ConsentProfile<SPGDPRConsent>(
         uuid: "uuid",
-        authId: "auth id",
+        applies: true,
         meta: "meta",
         consents: SPGDPRConsent.empty()
     )}
@@ -38,7 +38,7 @@ class SourcePointClientSpec: QuickSpec {
     func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {
         try! JSONEncoder().encode(
             MessageRequest(
-                authId: profile.gdpr?.authId,
+                authId: "auth id",
                 requestUUID: client.requestUUID,
                 campaigns: CampaignsRequest(
                     gdpr: CampaignRequest(

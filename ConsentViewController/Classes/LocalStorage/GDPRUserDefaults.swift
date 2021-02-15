@@ -21,6 +21,11 @@ class GDPRUserDefaults: GDPRLocalStorage {
 
     var storage: Storage
 
+    var consentsProfile: ConsentsProfile? {
+        get { storage.object(ofType: ConsentsProfile.self, forKey: "TODO" ) }
+        set { storage.setObject(newValue, forKey: "TODO" ) }
+    }
+
     var consentString: String {
         get { storage.string(forKey: GDPRUserDefaults.EU_CONSENT_KEY) ?? String() }
         set { storage.set(newValue, forKey: GDPRUserDefaults.EU_CONSENT_KEY) }

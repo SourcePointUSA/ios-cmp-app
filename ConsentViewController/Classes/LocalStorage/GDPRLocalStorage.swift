@@ -43,7 +43,7 @@ protocol GDPRLocalStorage {
     var storage: Storage { get set }
     var authId: String? { get set }
     var tcfData: [String: Any] { get set }
-    var consentsProfile: ConsentsProfile { get set }
+    var consentsProfile: ConsentsProfile? { get set }
     var consentUUID: SPConsentUUID { get set }
     var meta: String { get set }
     var userConsents: SPGDPRConsent { get set }

@@ -109,7 +109,7 @@ class SourcePointClient: SourcePointProtocol {
             propertyId: campaign.propertyId,
             propertyHref: campaign.propertyName,
             campaignEnv: campaign.environment,
-            meta: meta ?? "{}", /// TODO: add meta
+            meta: meta,
             targetingParams: campaign.targetingParams
         )
     }
@@ -124,6 +124,7 @@ class SourcePointClient: SourcePointProtocol {
 
     func getMessage<MessageType: Decodable>(
         native: Bool,
+        authId: String? = nil,
         campaigns: SPCampaigns,
         profile: ConsentsProfile,
         handler: @escaping MessageHandler<MessageType>) {
@@ -131,7 +132,7 @@ class SourcePointClient: SourcePointProtocol {
             SourcePointClient.GET_MESSAGE_CONTENTS_URL :
             SourcePointClient.GET_MESSAGE_URL_URL
         JSONEncoder().encode(MessageRequest(
-            authId: profile.gdpr?.authId, /// handle auth id
+            authId: authId, /// handle auth id
             requestUUID: requestUUID,
             campaigns: CampaignsRequest(
                 gdpr: campaignToRequest(

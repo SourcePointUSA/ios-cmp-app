@@ -8,20 +8,17 @@
 import Foundation
 
 struct CampaignRequest: Equatable {
-    /// TODO: still needed?
-//    let euconsent: String
     let uuid: SPConsentUUID?
     let accountId, propertyId: Int
     let propertyHref: SPPropertyName
     let campaignEnv: SPCampaignEnv
-    let meta: Meta
+    let meta: Meta?
     let targetingParams: SPTargetingParams
 }
 
 extension CampaignRequest: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(euconsent, forKey: .euconsent)
         try container.encode(accountId, forKey: .accountId)
         try container.encode(propertyId, forKey: .propertyId)
         try container.encode(propertyHref, forKey: .propertyHref)
@@ -38,7 +35,7 @@ extension CampaignRequest: Encodable {
     enum CodingKeys: String, CodingKey {
         case uuid, accountId,
              propertyId, propertyHref, campaignEnv,
-             targetingParams, meta //, euconsent
+             targetingParams, meta
     }
 }
 

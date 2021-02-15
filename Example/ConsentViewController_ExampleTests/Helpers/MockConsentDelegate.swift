@@ -9,7 +9,15 @@
 import Foundation
 @testable import ConsentViewController
 
-class MockConsentDelegate: GDPRConsentDelegate {
+class MockConsentDelegate: SPDelegate {
+    func onSPUIReady(_ viewController: UIViewController) {
+        
+    }
+
+    func onSPUIFinished() {
+
+    }
+
     var isConsentUIWillShowCalled = false
     var isConsentUIDidDisappearCalled = false
     var isOnErrorCalled = false

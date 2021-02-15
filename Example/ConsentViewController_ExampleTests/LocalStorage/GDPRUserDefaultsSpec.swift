@@ -18,7 +18,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                                acceptedCategories: [],
                                legitimateInterestCategories: [],
                                specialFeatures: [],
-                               vendorGrants: GDPRVendorGrants(),
+                               vendorGrants: SPGDPRVendorGrants(),
                                euconsent: UUID().uuidString,
                                tcfData: SPJson())
     }

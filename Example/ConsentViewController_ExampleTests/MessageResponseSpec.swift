@@ -69,7 +69,7 @@ class MessageResponseSpec: QuickSpec {
                         legitimateInterestCategories: ["leg-int-category"],
                         specialFeatures: ["special-feature"],
                         vendorGrants: [
-                            "foo-purpose": GDPRVendorGrant(vendorGrant: true, purposeGrants: GDPRPurposeGrants())
+                            "foo-purpose": SPGDPRVendorGrant(vendorGrant: true, purposeGrants: SPGDPRPurposeGrants())
                         ],
                         euconsent: "consent-string",
                         tcfData: try! SPJson([

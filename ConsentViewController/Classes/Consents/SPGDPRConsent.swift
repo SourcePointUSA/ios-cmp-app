@@ -8,31 +8,31 @@
 import Foundation
 
 /// A dictionary in which the keys represent the Vendor Id
-public typealias GDPRVendorGrants = [GDPRVendorId: GDPRVendorGrant]
+public typealias SPGDPRVendorGrants = [GDPRVendorId: SPGDPRVendorGrant]
 public typealias GDPRVendorId = String
 
 /// A dictionary in which the keys represent the Purpose Id and the values indicate if that purpose is granted (`true`) or not (`false`) on a legal basis.
-public typealias GDPRPurposeGrants = [GDPRPurposeId: Bool]
-public typealias GDPRPurposeId = String
+public typealias SPGDPRPurposeGrants = [SPGDPRPurposeId: Bool]
+public typealias SPGDPRPurposeId = String
 
 /// Encapuslates data about a particular vendor being "granted" based on its purposes
-@objcMembers public class GDPRVendorGrant: NSObject, Codable {
+@objcMembers public class SPGDPRVendorGrant: NSObject, Codable {
     /// if all purposes are granted, the vendorGrant will be set to `true`
     public let vendorGrant: Bool
-    public let purposeGrants: GDPRPurposeGrants
+    public let purposeGrants: SPGDPRPurposeGrants
 
     public override var description: String {
         return "VendorGrant(vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants))"
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? GDPRVendorGrant else {
+        guard let other = object as? SPGDPRVendorGrant else {
             return false
         }
         return other.vendorGrant == vendorGrant && other.purposeGrants == purposeGrants
     }
 
-    public init(vendorGrant: Bool, purposeGrants: GDPRPurposeGrants) {
+    public init(vendorGrant: Bool, purposeGrants: SPGDPRPurposeGrants) {
         self.vendorGrant = vendorGrant
         self.purposeGrants = purposeGrants
     }
@@ -48,7 +48,7 @@ public typealias GDPRPurposeId = String
             acceptedCategories: [],
             legitimateInterestCategories: [],
             specialFeatures: [],
-            vendorGrants: GDPRVendorGrants(),
+            vendorGrants: SPGDPRVendorGrants(),
             euconsent: "",
             tcfData: SPJson())
     }
@@ -61,7 +61,7 @@ public typealias GDPRPurposeId = String
         legitimateInterestCategories,
         specialFeatures: [String]
 
-    public let vendorGrants: GDPRVendorGrants
+    public let vendorGrants: SPGDPRVendorGrants
 
     /// The iAB consent string.
     public let euconsent: String
@@ -74,7 +74,7 @@ public typealias GDPRPurposeId = String
         acceptedCategories: [String],
         legitimateInterestCategories: [String],
         specialFeatures: [String],
-        vendorGrants: GDPRVendorGrants,
+        vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
         tcfData: SPJson) {
         self.acceptedVendors = acceptedVendors

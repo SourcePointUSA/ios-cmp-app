@@ -12,20 +12,63 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
+// swiftlint:disable force_try
 class ConsentsProfileSpec: QuickSpec {
-    let gdprProfile = ConsentProfile<SPGDPRConsent>
-    let jsonString = """
+    let gdprProfile = ConsentProfile<SPGDPRConsent>(
+        uuid: "gdpr-uuid",
+        applies: true,
+        meta: "{}",
+        consents: SPGDPRConsent.empty()
+    )
+    let ccpaProfile = ConsentProfile<SPCCPAConsent>(
+        uuid: "ccpa-uuid",
+        applies: true,
+        meta: "{}",
+        consents: SPCCPAConsent.empty()
+    )
+    let jsonData = """
         {
-            "gdpr": \()
+            "ccpa": {
+                "applies": true,
+                "meta": "{}",
+                "consents": {
+                    "status": "rejectedNone",
+                    "rejectedVendors": [],
+                    "rejectedCategories": [],
+                    "uspstring": "1---"
+                },
+                "uuid": "ccpa-uuid"
+            },
+            "gdpr": {
+                "applies": true,
+                "meta": "{}",
+                "consents": {
+                    "grants": {},
+                    "TCData": {},
+                    "acceptedVendors": [],
+                    "legIntCategories": [],
+                    "acceptedCategories": [],
+                    "specialFeatures": [],
+                    "euconsent": ""
+                },
+                "uuid": "gdpr-uuid"
+            }
         }
-    """
-    func spec() {
-        describe("can be encoded to JSON") {
-
+    """.filter { !" \n\t\r".contains($0) }
+    var consentsProfile: ConsentsProfile { ConsentsProfile(
+        gdpr: gdprProfile,
+        ccpa: ccpaProfile
+    )}
+    override func spec() {
+        it("can be encoded to JSON") {
+            let encoded = String(data: try! JSONEncoder()
+                                    .encode(self.consentsProfile).get(), encoding: .utf8)!
+            expect(encoded).to(equal(self.jsonData))
         }
 
-        describe("can be decoded from JSON") {
-
+        it("can be decoded from JSON") {
+            let decoded = try! JSONDecoder().decode(ConsentsProfile.self, from: self.jsonData.data(using: .utf8)!).get()
+            expect(decoded).to(equal(self.consentsProfile))
         }
     }
 }
