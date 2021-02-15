@@ -87,6 +87,10 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
     }
 
+    /// Instructs the privacy manager to be displayed with this tab.
+    /// By default the SDK will use the defult tab of PM
+    public var privacyManagerTab = SPPrivacyManagerTab.Default
+
     private func toJSON(_ contents: [String: String]) -> String {
         String(data: try! JSONSerialization.data(withJSONObject: contents), encoding: .utf8) ?? "{}"
     }
