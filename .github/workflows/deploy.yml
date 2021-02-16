@@ -26,6 +26,9 @@ jobs:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
         run: |
           exec .github/scripts/import-profile.sh
+      - name: Increment version and build number
+        run: |
+          exec .github/scripts/increment_version_and_build_number.sh
       - name: Archiving project
         run: .github/scripts/archive_app.sh
       - name: Exporting .ipa
