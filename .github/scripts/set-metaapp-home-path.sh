@@ -12,7 +12,6 @@ echo $meta_app_version
 buildNumber=$(sed -n '/CURRENT_PROJECT_VERSION/{s/CURRENT_PROJECT_VERSION = //;s/;//;s/^[[:space:]]*//;p;q;}' $ProjectFilePath)
 buildNumber=$(($buildNumber + 1))
 echo $buildNumber
-cd $META_APP_HOME
 if [ $new_sdk_version != $meta_app_version ]
 then
     xcrun agvtool new-marketing-version $new_sdk_version
