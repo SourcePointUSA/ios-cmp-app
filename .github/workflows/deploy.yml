@@ -15,16 +15,6 @@ jobs:
       - name: Set environment variables from project settings
         run: |
           exec .github/scripts/set-metaapp-home-path.sh
-          echo "$SDK_VERSION"
-          echo "${SDK_VERSION}"
-          echo "$BUILD_NUMBER"
-          echo "${BUILD_NUMBER}"
-          
-      - name: Set build number and version number
-        uses: yanamura/ios-bump-version@v1
-        with:
-          version: $SDK_VERSION
-          build-number: $BUILD_NUMBER
       - name: Import signing certificate
         env:
           SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
