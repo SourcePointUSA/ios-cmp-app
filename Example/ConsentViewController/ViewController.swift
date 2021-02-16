@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import AppTrackingTransparency
-import AdSupport
 import ConsentViewController
 
 class ViewController: UIViewController, SPDelegate {
@@ -21,13 +19,15 @@ class ViewController: UIViewController, SPDelegate {
 
     @IBAction func onAcceptVendorXTap(_ sender: Any) {}
 
-    lazy var consentManager: SPConsentManager = { SPConsentManager(campaigns: SPCampaigns(
-        gdpr: SPCampaign(
-            accountId: 22,
-            propertyId: 123,
-            pmId: "1",
-            propertyName: try! SPPropertyName("test")
-        )),
+    var campaign: SPCampaign { SPCampaign(
+        accountId: 22,
+        propertyId: 10589,
+        pmId: "1",
+        propertyName: try! SPPropertyName("unified.mobile.demo")
+    ) }
+
+    lazy var consentManager: SPConsentManager = { SPConsentManager(
+        campaigns: SPCampaigns(gdpr: campaign, ccpa: campaign),
         delegate: self
     )}()
 
@@ -49,12 +49,8 @@ class ViewController: UIViewController, SPDelegate {
         print("SDK finished")
     }
 
-    func onConsentReady(consents: SPGDPRConsent) {
-        print("GDPR onConsentReady")
-    }
-
-    func onConsentReady(consents: SPCCPAConsent) {
-        print("CCPA onConsentReady")
+    func onConsentReady(consents: SPConsents) {
+        print("GDPR onConsentReady:", consents)
     }
 
     func onError(error: SPError) {

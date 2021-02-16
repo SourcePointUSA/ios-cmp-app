@@ -80,6 +80,7 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 @objcMembers public class SPConsentManager: SPSDK {
     weak var delegate: SPDelegate?
     let campaigns: SPCampaigns
+    let spClient: SourcePointProtocol
     var consentUI: SPConsentViewController!
 
     /// TODO: implement
@@ -91,25 +92,44 @@ func afterFakeDelay (execute: @escaping () -> Void) {
         String(data: try! JSONSerialization.data(withJSONObject: contents), encoding: .utf8) ?? "{}"
     }
 
-    public init(campaigns: SPCampaigns, delegate: SPDelegate) {
-        self.delegate = delegate
+    public convenience init(campaigns: SPCampaigns, delegate: SPDelegate?) {
+        self.init(
+            campaigns: campaigns,
+            delegate: delegate,
+            spClient: SourcePointClient(timeout: 10)
+        )
+    }
+
+    init(
+        campaigns: SPCampaigns,
+        delegate: SPDelegate?,
+        spClient: SourcePointProtocol) {
         self.campaigns = campaigns
+        self.delegate = delegate
+        self.spClient = spClient
     }
 
     public func loadMessage(forAuthId: String? = nil) {
-        // 1. call the API
-        // 2a. if there's a message
-        afterFakeDelay { [weak self] in
-            // pass a bunch of data to the view controller
-            self?.consentUI = SPConsentViewController()
-            self?.consentUI.messageUIDelegate = self
-            self?.consentUI.loadMessage(self!.toJSON([
-                "Title": "Fake IDFA Message",
-                "IDFAOkLabel": "That's Ok"
-            ]))
+        spClient.getWebMessage(campaigns: campaigns, profile: ConsentsProfile()) { [weak self] result in
+            switch result {
+            case .success(let messageResponse):
+                if messageResponse.ccpa?.message != nil {
+                    print("CCPA Message")
+                } else if messageResponse.gdpr?.message != nil {
+                    print("GDPR Message")
+                } else {
+//                    self?.delegate.o
+                }
+                print(messageResponse)
+                self?.consentUI = SPConsentViewController()
+                self?.consentUI.messageUIDelegate = self
+                self?.consentUI.loadMessage(self!.toJSON([
+                    "Title": "Fake IDFA Message",
+                    "IDFAOkLabel": "That's Ok"
+                ]))
+            case .failure(let error): self?.onError(error)
+            }
         }
-        // 2b. otherwise call onConsentReady
-        // 3. store data
     }
 
     public func loadGDPRPrivacyManager() {
@@ -147,6 +167,11 @@ func afterFakeDelay (execute: @escaping () -> Void) {
             completionHandler(.success(SPGDPRConsent.empty()))
         }
     }
+
+    func onError(_ error: SPError) {
+        /// TODO: clean user data?
+        delegate?.onError?(error: error)
+    }
 }
 
 extension SPConsentManager: SPMessageUIDelegate {
@@ -167,7 +192,15 @@ extension SPConsentManager: SPMessageUIDelegate {
             self.report(action: action) { result in
                 switch result {
                 case .success(let consents):
-                    self.delegate?.onConsentReady?(consents: consents)
+                    /// TODO: get the remaining consents from the local storage
+                    self.delegate?.onConsentReady?(
+                        consents: SPConsents(
+                            gdpr: SPConsent<SPGDPRConsent>(
+                                consents: consents,
+                                applies: self.gdprApplies()
+                            )
+                        )
+                    )
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -182,6 +215,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         }
     }
 }
+
 //
 //
 //
