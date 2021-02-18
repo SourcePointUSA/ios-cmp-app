@@ -11,10 +11,15 @@ import UIKit
 // swiftlint:disable file_length
 
 public typealias SPConsentUUID = String
-typealias Meta = String
+typealias SPMeta = String
 
 func afterFakeDelay (execute: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: execute)
+}
+
+func toJSON(_ contents: [String: String]) -> String {
+    // swiftlint:disable:next force_try
+    String(data: try! JSONSerialization.data(withJSONObject: contents), encoding: .utf8) ?? "{}"
 }
 
 @objc protocol SPRenderingApp {
@@ -24,9 +29,10 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 @objcMembers class SPConsentViewController: UIViewController, SPRenderingApp {
     class ActionButton: UIButton {
         var action: SPActionType!
+        var actionId: String = ""
     }
     weak var messageUIDelegate: SPMessageUIDelegate?
-    var contents: [String: String] = [:]
+    var contents: [String: Any] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,34 +41,30 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
         let title = UILabel(frame: CGRect(x: 0, y: 50, width: view.frame.width, height: 60))
         title.font = UIFont(name: "Arial", size: 60.0)
-        title.text = contents["Title"]
+        title.text = contents["Title"] as? String
         title.adjustsFontSizeToFitWidth = true
         view.addSubview(title)
 
-        if contents["SaveAndExitLabel"] != nil {
+        if contents["ButtonLabel"] != nil {
             let button = ActionButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
             button.center = view.center
             button.backgroundColor = .systemBlue
-            button.setTitle(contents["SaveAndExitLabel"], for: .normal)
-            button.action = .SaveAndExit
-            button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-            view.addSubview(button)
-        }
-
-        if contents["IDFAOkLabel"] != nil {
-            let button = ActionButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-            button.center = view.center
-            button.backgroundColor = .systemBlue
-            button.setTitle(contents["IDFAOkLabel"], for: .normal)
-            button.action = .IDFAOk
+            button.setTitle(contents["ButtonLabel"] as? String, for: .normal)
+            button.action = SPActionType(rawValue: contents["ChoiceType"] as? Int ?? 11)
+            // swiftlint:disable:next force_cast
+            button.actionId = contents["ChoiceId"] as! String
             button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
             view.addSubview(button)
         }
     }
 
     func buttonAction(sender: UIButton!) {
-        let action = (sender as? ActionButton)?.action
-        onEvent(["action": String(action?.rawValue ?? 0)])
+        let action = (sender as? ActionButton)?.action ?? .Unknown
+        let id = (sender as? ActionButton)?.actionId ?? ""
+        onEvent([
+            "action": String(action.rawValue),
+            "id": id
+        ])
     }
 
     func loadMessage(_ stringifiedMessage: String) {
@@ -72,8 +74,9 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     }
 
     func onEvent(_ payload: [String: String]) {
-        let action  = SPActionType.init(rawValue: Int(payload["action"]!) ?? 0) ?? .Unknown
-        messageUIDelegate?.action(SPAction(type: action))
+        let action = SPActionType.init(rawValue: Int(payload["action"]!) ?? 0) ?? .Unknown
+        let id = payload["id"]
+        messageUIDelegate?.action(SPAction(type: action, id: id))
     }
 }
 
@@ -81,6 +84,12 @@ func afterFakeDelay (execute: @escaping () -> Void) {
     weak var delegate: SPDelegate?
     let campaigns: SPCampaigns
     let spClient: SourcePointProtocol
+    var storage: SPLocalStorage
+    var presentingLegislation: SPLegislation?
+    var consentsProfile: ConsentsProfile {
+        get { storage.consentsProfile }
+        set { storage.consentsProfile = newValue }
+    }
     var consentUI: SPConsentViewController!
 
     /// TODO: implement
@@ -88,45 +97,92 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
     }
 
-    private func toJSON(_ contents: [String: String]) -> String {
-        String(data: try! JSONSerialization.data(withJSONObject: contents), encoding: .utf8) ?? "{}"
-    }
-
     public convenience init(campaigns: SPCampaigns, delegate: SPDelegate?) {
         self.init(
             campaigns: campaigns,
             delegate: delegate,
-            spClient: SourcePointClient(timeout: 10)
+            spClient: SourcePointClient(timeout: 10),
+            storage: SPUserDefaults(storage: UserDefaults.standard)
         )
     }
 
     init(
         campaigns: SPCampaigns,
         delegate: SPDelegate?,
-        spClient: SourcePointProtocol) {
+        spClient: SourcePointProtocol,
+        storage: SPLocalStorage) {
         self.campaigns = campaigns
         self.delegate = delegate
         self.spClient = spClient
+        self.storage = storage
+    }
+
+    func renderMessage(message: SPJson) {
+        let title = message["message_json"]?["name"]?.stringValue ?? "Fake Message"
+        consentUI = SPConsentViewController()
+        consentUI.messageUIDelegate = self
+        consentUI.loadMessage(toJSON([
+            "Title": title,
+            "ButtonLabel": "Accept All",
+            "ChoiceId": "3307000",
+            "ChoiceType": "11"
+        ]))
+    }
+
+    func profileToConsent<ConsentType>(_ profile: ConsentProfile<ConsentType>?) -> SPConsent<ConsentType>? {
+        if let profile = profile {
+            return SPConsent(consents: profile.consents, applies: profile.applies ?? false)
+        }
+        return nil
+    }
+
+    func responseToProfile<CType, MType>(_ response: MessageResponse<CType, MType>?) -> ConsentProfile<CType>? {
+        if let response = response {
+            return ConsentProfile<CType>(
+                uuid: response.uuid,
+                applies: response.applies,
+                meta: response.meta,
+                consents: response.userConsent
+            )
+        }
+        return nil
+    }
+
+    func storeConsentsProfile<MType>(_ response: MessagesResponse<MType>) {
+        consentsProfile.ccpa = responseToProfile(response.ccpa)
+        storage.usPrivacyString = consentsProfile.ccpa?.consents.uspstring
+        consentsProfile.gdpr = responseToProfile(response.gdpr)
+        storage.tcfData = response.gdpr?.userConsent.tcfData.dictionaryValue ?? [:]
+    }
+
+    func messageToShow<MType>(_ response: MessagesResponse<MType>) -> (legislation: SPLegislation?, message: MType?) {
+        if let message = response.ccpa?.message {
+            return (.CCPA, message)
+        } else if let message = response.gdpr?.message {
+            return (.GDPR, message)
+        } else {
+            return (nil, nil)
+        }
     }
 
     public func loadMessage(forAuthId: String? = nil) {
-        spClient.getWebMessage(campaigns: campaigns, profile: ConsentsProfile()) { [weak self] result in
+        spClient.getWebMessage(campaigns: campaigns, profile: consentsProfile) { [weak self] result in
             switch result {
             case .success(let messageResponse):
-                if messageResponse.ccpa?.message != nil {
-                    print("CCPA Message")
-                } else if messageResponse.gdpr?.message != nil {
-                    print("GDPR Message")
+                self?.storeConsentsProfile(messageResponse)
+                let messageLegislation = self?.messageToShow(messageResponse)
+                if let message = messageLegislation?.message,
+                    let legislation = messageLegislation?.legislation {
+                    self?.presentingLegislation = legislation
+                    self?.renderMessage(message: message)
                 } else {
-//                    self?.delegate.o
+                    self?.delegate?.onConsentReady?(
+                        consents: SPConsents(
+                            gdpr: self?.profileToConsent(self?.consentsProfile.gdpr),
+                            ccpa: self?.profileToConsent(self?.consentsProfile.ccpa)
+                        )
+                    )
                 }
-                print(messageResponse)
-                self?.consentUI = SPConsentViewController()
-                self?.consentUI.messageUIDelegate = self
-                self?.consentUI.loadMessage(self!.toJSON([
-                    "Title": "Fake IDFA Message",
-                    "IDFAOkLabel": "That's Ok"
-                ]))
             case .failure(let error): self?.onError(error)
             }
         }
@@ -150,21 +206,32 @@ func afterFakeDelay (execute: @escaping () -> Void) {
 
     public func loadPrivacyManager() {
         afterFakeDelay { [weak self] in
-            self?.consentUI = SPConsentViewController()
-            self?.consentUI.messageUIDelegate = self
-            self?.consentUI.loadMessage(self!.toJSON([
-                "Title": "Fake Privacy Manager",
-                "SaveAndExitLabel": "Save & Exit"
-            ]))
+            self?.renderMessage(message: SPJson())
         }
     }
 
     func report(action: SPAction, completionHandler: @escaping (Result<SPGDPRConsent, Error>) -> Void) {
-        // send consent action
-        // we will need to know what legislation that action is referring to
-        // in oder to send to the right endpoint and call the appropriate consentReady delegate
-        afterFakeDelay {
-            completionHandler(.success(SPGDPRConsent.empty()))
+        /// TODO: add legislation to SPAction
+        spClient.postAction(
+            action: action,
+            campaign: campaigns.gdpr!,
+            uuid: "",
+            meta: "{}"
+        ) { [weak self] result in
+            switch result {
+            case .failure(let error): self?.onError(error)
+            case .success(let response):
+                /// TODO: store consent profile
+                /// TODO: build up consent for both legislations
+                let allConsents = SPConsents(
+                    gdpr: SPConsent<SPGDPRConsent>(
+                        consents: response.userConsent,
+                        applies: true
+                    ),
+                    ccpa: nil
+                )
+                self?.delegate?.onConsentReady?(consents: allConsents)
+            }
         }
     }
 
@@ -223,7 +290,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 //    /// The version of the SDK. It should mirror the version from podspec.
 //    static public let VERSION = "5.3.3"
 //
-//    static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
+//    static public let SP_KEY_PREFIX = "sp_gdpr_"
 //    static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
 //    static let EU_CONSENT_KEY = "\(SP_GDPR_KEY_PREFIX)euconsent"
 //    static let GDPR_UUID_KEY = "\(SP_GDPR_KEY_PREFIX)consentUUID"
@@ -235,7 +302,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 //
 //    /// Resets the data stored by the SDK in the UserDefaults
 //    static public func clearAllData() {
-//        GDPRUserDefaults().clear()
+//        SPUserDefaults().clear()
 //    }
 //
 //    /// The IAB consent string, set after the user has chosen after interacting with the ConsentViewController
@@ -279,7 +346,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 //    /// the instance of `GDPRConsentDelegate` which the `GDPRConsentViewController` will use to perform the lifecycle methods
 //    public weak var spDelegate: SPDelegate?
 //
-//    var localStorage: GDPRLocalStorage
+//    var localStorage: SPLocalStorage
 //
 //    let accountId: Int
 //    let propertyName: SPPropertyName

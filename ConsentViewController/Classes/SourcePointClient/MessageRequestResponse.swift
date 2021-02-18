@@ -19,7 +19,7 @@ struct CampaignRequest: Equatable {
     let accountId, propertyId: Int
     let propertyHref: SPPropertyName
     let campaignEnv: SPCampaignEnv
-    let meta: Meta?
+    let meta: SPMeta?
     let targetingParams: SPTargetingParams
 }
 
@@ -70,5 +70,5 @@ struct MessageResponse<ConsentType: Decodable & Equatable, MessageType: Decodabl
     let applies: Bool
     let uuid: SPConsentUUID
     let userConsent: ConsentType
-    var meta: Meta
+    var meta: SPMeta
 }

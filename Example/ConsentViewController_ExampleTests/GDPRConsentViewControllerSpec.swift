@@ -21,7 +21,7 @@
 //    func getController(
 //        _ delegate: GDPRConsentDelegate = MockConsentDelegate(),
 //        _ spClient: SourcePointProtocol = SourcePointClientMock(timeout: 1),
-//        _ storage: GDPRLocalStorage = GDPRLocalStorageMock(),
+//        _ storage: SPLocalStorage = GDPRLocalStorageMock(),
 //        _ deviceManager: SPDeviceManager = DeviceMock()
 //    ) -> GDPRConsentViewController {
 //        return GDPRConsentViewController(accountId: 22,

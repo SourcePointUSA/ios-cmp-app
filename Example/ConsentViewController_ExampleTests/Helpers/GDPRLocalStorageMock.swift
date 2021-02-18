@@ -9,7 +9,7 @@
 import Foundation
 @testable import ConsentViewController
 
-class GDPRLocalStorageMock: GDPRLocalStorage {
+class GDPRLocalStorageMock: SPLocalStorage {
     var storage: Storage = InMemoryStorageMock()
     var consentUUID: SPConsentUUID = ""
     var meta: String = "{}"

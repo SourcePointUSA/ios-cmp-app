@@ -15,6 +15,8 @@ import Foundation
         self.consents = consents
         self.applies = applies
     }
+
+    public override var description: String { "applies: \(applies), consents: \(consents)" }
 }
 
 @objcMembers public class SPConsents: NSObject {
@@ -28,4 +30,6 @@ import Foundation
         self.gdpr = gdpr
         self.ccpa = ccpa
     }
+
+    public override var description: String { "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa))" }
 }

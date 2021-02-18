@@ -15,7 +15,7 @@ protocol SPLogger {
 }
 
 struct OSLogger: SPLogger {
-    static let category = "GPDRConsent"
+    static let category = "SPSDK"
 
     var consentLog: OSLog? {
         if #available(iOS 10.0, *) {

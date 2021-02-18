@@ -18,8 +18,8 @@ struct ConsentProfile<LegislationConsent: Codable & Equatable>: Codable, Equatab
 /// Represent the collection of legislation and user data we support at SourcePoint
 struct ConsentsProfile: Codable, Equatable {
     let authId: String?
-    let gdpr: ConsentProfile<SPGDPRConsent>?
-    let ccpa: ConsentProfile<SPCCPAConsent>?
+    var gdpr: ConsentProfile<SPGDPRConsent>?
+    var ccpa: ConsentProfile<SPCCPAConsent>?
 
     init(
         authId: String? = nil,
