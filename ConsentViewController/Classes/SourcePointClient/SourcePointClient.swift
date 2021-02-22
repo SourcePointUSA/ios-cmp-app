@@ -49,9 +49,10 @@ protocol SourcePointProtocol {
 
     func postAction(
         action: SPAction,
+        legislation: SPLegislation,
         campaign: SPCampaign,
-        uuid: SPConsentUUID?,
-        meta: SPMeta,
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
         handler: @escaping ConsentHandler)
 
 //    func customConsent(
@@ -168,9 +169,10 @@ class SourcePointClient: SourcePointProtocol {
 
     func postAction(
         action: SPAction,
+        legislation: SPLegislation,
         campaign: SPCampaign,
-        uuid: SPConsentUUID?,
-        meta: SPMeta,
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
         handler: @escaping ConsentHandler) {
         _ = JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
             JSONEncoder().encode(ActionRequest(
@@ -181,14 +183,14 @@ class SourcePointClient: SourcePointProtocol {
                 choiceId: action.id,
                 privacyManagerId: campaign.pmId,
                 requestFromPM: action.id == nil,
-                uuid: uuid ?? "", /// TODO: can uuid be "" or nil?
+                uuid: uuid,
                 requestUUID: requestUUID,
                 pmSaveAndExitVariables: pmPayload,
-                meta: meta,
+                meta: meta ?? "{}",
                 publisherData: action.publisherData,
                 consentLanguage: action.consentLanguage
             )).map { body in
-                client.post(urlString: consentURL(action.legislation), body: body) { result in
+                client.post(urlString: consentURL(legislation), body: body) { result in
                     handler(Result {
                         try result.decoded() as ActionResponse
                     }.mapError {

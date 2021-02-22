@@ -37,7 +37,6 @@ import Foundation
 /// Action consists of `SPActionType` and an id. Those come from each action the user can take in the ConsentUI
 @objcMembers public class SPAction: NSObject {
     public let type: SPActionType
-    public var legislation: SPLegislation = .Unknown
     public let id: String?
     public let consentLanguage: String?
     public let payload: Data

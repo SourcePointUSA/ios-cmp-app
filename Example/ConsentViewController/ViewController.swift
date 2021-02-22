@@ -28,7 +28,7 @@ class ViewController: UIViewController, SPDelegate {
         propertyId: 10589,
         pmId: "1",
         propertyName: try! SPPropertyName("unified.mobile.demo"),
-        targetingParams: ["location": "GDPR"]
+        targetingParams: ["legislation": "GDPR", "location": "EU"]
     )}
 
     var ccpaCampaign: SPCampaign { SPCampaign(
@@ -36,7 +36,7 @@ class ViewController: UIViewController, SPDelegate {
         propertyId: 10589,
         pmId: "1",
         propertyName: try! SPPropertyName("unified.mobile.demo"),
-        targetingParams: ["location": "CCPA"]
+        targetingParams: ["legislation": "CCPA", "location": "EU"]
     )}
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(

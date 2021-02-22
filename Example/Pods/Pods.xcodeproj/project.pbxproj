@@ -117,6 +117,7 @@
 		806B9040D79A3DC58FB56EAC16FE19BF /* Stringers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DFEC2B3EDAC2A39D36CFF208DD14AB /* Stringers.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		80DEBE41D84FBA1C4D4FE00C8D797E82 /* CwlPreconditionTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E944D1EA17AE5FF617FBD54A491849B /* CwlPreconditionTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		825A7D6925DADEE900E18F51 /* SPConsents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825A7D6825DADEE900E18F51 /* SPConsents.swift */; };
+		827E0A1825DEBF9C0051E515 /* SPMockMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827E0A1725DEBF9C0051E515 /* SPMockMessageViewController.swift */; };
 		83976C4AC81DBA1656F1358F25032074 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0F422CBF8B8DF8CA6AC6CE5FD14B9 /* World.swift */; };
 		874381421922C8BEFDF43C52533331EF /* Pods-SourcePointMetaAppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B68CC3ED4F885758D6A04F6E2E48FCD7 /* Pods-SourcePointMetaAppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8911DDD5910AA1C6E099EBF768AFC8F7 /* QuickSpecBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E6484FEE9EB7BBDF57720DA32544F /* QuickSpecBase.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -522,6 +523,7 @@
 		80020AADCAFDFAF19DE35BF5EE456E5F /* IQKeyboardManagerSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "IQKeyboardManagerSwift-Info.plist"; sourceTree = "<group>"; };
 		80F277611E8CE7374D19DB2E100FF7AD /* ConsentViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ConsentViewController.modulemap; sourceTree = "<group>"; };
 		825A7D6825DADEE900E18F51 /* SPConsents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPConsents.swift; sourceTree = "<group>"; };
+		827E0A1725DEBF9C0051E515 /* SPMockMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SPMockMessageViewController.swift; path = ConsentViewController/Classes/SPMockMessageViewController.swift; sourceTree = "<group>"; };
 		83029B6FBB91F7EA5CE9D006F6216A94 /* SPPropertyName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPPropertyName.swift; path = ConsentViewController/Classes/SPPropertyName.swift; sourceTree = "<group>"; };
 		842EFC6E202CD7DDBC3FEAF194A263EB /* HaveCount.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HaveCount.swift; path = Sources/Nimble/Matchers/HaveCount.swift; sourceTree = "<group>"; };
 		849853560FACBBAFF278E017EDF7F4C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
@@ -874,6 +876,7 @@
 				43770A131015EF4768A164C6A81EAF9E /* Resources */,
 				B891CAA5F438302C989FD9655F1280E4 /* SourcePointClient */,
 				353A2C89C36542807E1104629D1198D5 /* Support Files */,
+				827E0A1725DEBF9C0051E515 /* SPMockMessageViewController.swift */,
 			);
 			name = ConsentViewController;
 			path = ../..;
@@ -2039,6 +2042,7 @@
 				4AC0AD944E64F1485626458FCE5E4168 /* SPSDK.swift in Sources */,
 				06A8D23B2D9FD2F46B164C103550359A /* SPURLExtensions.swift in Sources */,
 				6B3F203552729D76FDE70A07D059A9C2 /* SPWebViewExtensions.swift in Sources */,
+				827E0A1825DEBF9C0051E515 /* SPMockMessageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
