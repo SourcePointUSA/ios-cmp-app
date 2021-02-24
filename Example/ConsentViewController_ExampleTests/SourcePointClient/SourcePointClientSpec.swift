@@ -94,8 +94,10 @@ class SourcePointClientSpec: QuickSpec {
                     let acceptAllAction = SPAction(type: .AcceptAll, id: "1234")
                     client.postAction(
                         action: acceptAllAction,
+                        legislation: .GDPR,
                         campaign: self.campaign,
-                        profile: self.gdprProfile
+                        uuid: self.gdprProfile.uuid ?? "",
+                        meta: self.gdprProfile.meta
                     ) { _ in }
                     expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/consent?inApp=true"))
                 }
@@ -114,14 +116,16 @@ class SourcePointClientSpec: QuickSpec {
                         uuid: self.gdprProfile.uuid ?? "uuid",
                         requestUUID: client.requestUUID,
                         pmSaveAndExitVariables: SPJson(),
-                        meta: self.gdprProfile.meta,
+                        meta: self.gdprProfile.meta ?? "{}",
                         publisherData: action.publisherData,
                         consentLanguage: "EN"
                     )
                     client.postAction(
                         action: action,
+                        legislation: .GDPR,
                         campaign: self.campaign,
-                        profile: self.gdprProfile
+                        uuid: self.gdprProfile.uuid ?? "",
+                        meta: self.gdprProfile.meta
                     ) { _ in }
                     let parsed = try! JSONDecoder().decode(ActionRequest.self, from: httpClient!.postWasCalledWithBody!).get()
                     expect(parsed).toEventually(equal(actionRequest))

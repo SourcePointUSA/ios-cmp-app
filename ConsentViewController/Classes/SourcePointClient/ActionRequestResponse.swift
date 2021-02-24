@@ -28,8 +28,8 @@ struct ActionRequest: Codable, Equatable {
     }
 }
 
-struct ActionResponse: Codable {
+struct ActionResponse<ConsentType: Decodable & Equatable>: Decodable & Equatable {
     let uuid: SPConsentUUID
-    let userConsent: SPGDPRConsent
+    let userConsent: ConsentType
     var meta: SPMeta
 }

@@ -31,7 +31,9 @@ extension JSONDecoder {
 typealias MessageHandler<MessageType: Decodable & Equatable> = (Result<MessagesResponse<MessageType>, SPError>) -> Void
 typealias WebMessageHandler = MessageHandler<SPJson>
 typealias NativeMessageHandler = MessageHandler<SPJson>
-typealias ConsentHandler = (Result<ActionResponse, SPError>) -> Void
+typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
+typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
+typealias ConsentHandler<T: Decodable & Equatable> = (Result<ActionResponse<T>, SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
@@ -47,13 +49,27 @@ protocol SourcePointProtocol {
         profile: ConsentsProfile,
         handler: @escaping NativeMessageHandler)
 
-    func postAction(
+    func postCCPAAction(
+        action: SPAction,
+        campaign: SPCampaign,
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
+        handler: @escaping CCPAConsentHandler)
+
+    func postGDPRAction(
+        action: SPAction,
+        campaign: SPCampaign,
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
+        handler: @escaping GDPRConsentHandler)
+
+    func postAction<T: Decodable & Equatable>(
         action: SPAction,
         legislation: SPLegislation,
         campaign: SPCampaign,
         uuid: SPConsentUUID,
         meta: SPMeta?,
-        handler: @escaping ConsentHandler)
+        handler: @escaping ConsentHandler<T>)
 
 //    func customConsent(
 //        toConsentUUID consentUUID: SPConsentUUID,
@@ -167,13 +183,35 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postAction(
+    func postCCPAAction(action: SPAction, campaign: SPCampaign, uuid: SPConsentUUID, meta: SPMeta?, handler: @escaping CCPAConsentHandler) {
+        postAction(
+            action: action,
+            legislation: .CCPA,
+            campaign: campaign,
+            uuid: uuid,
+            meta: meta,
+            handler: handler
+        )
+    }
+
+    func postGDPRAction(action: SPAction, campaign: SPCampaign, uuid: SPConsentUUID, meta: SPMeta?, handler: @escaping GDPRConsentHandler) {
+        postAction(
+            action: action,
+            legislation: .GDPR,
+            campaign: campaign,
+            uuid: uuid,
+            meta: meta,
+            handler: handler
+        )
+    }
+
+    func postAction<T: Decodable & Equatable>(
         action: SPAction,
         legislation: SPLegislation,
         campaign: SPCampaign,
         uuid: SPConsentUUID,
         meta: SPMeta?,
-        handler: @escaping ConsentHandler) {
+        handler: @escaping ConsentHandler<T>) {
         _ = JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
             JSONEncoder().encode(ActionRequest(
                 propertyId: campaign.propertyId,

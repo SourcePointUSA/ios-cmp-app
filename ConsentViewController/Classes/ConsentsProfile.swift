@@ -11,7 +11,7 @@ import Foundation
 struct ConsentProfile<LegislationConsent: Codable & Equatable>: Codable, Equatable {
     let uuid: SPConsentUUID?
     let applies: Bool?
-    let meta: String
+    let meta: String?
     let consents: LegislationConsent
 }
 

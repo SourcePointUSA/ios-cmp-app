@@ -115,8 +115,7 @@ public typealias SPUsPrivacyString = String
         default: throw DecodingError.dataCorruptedError(
             forKey: CodingKeys.status,
             in: values,
-            debugDescription: "Unknown Status: \(statusString)"
-        )
+            debugDescription: "Unknown Status: \(statusString)")
         }
     }
 

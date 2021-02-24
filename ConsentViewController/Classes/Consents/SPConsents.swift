@@ -8,15 +8,15 @@
 import Foundation
 
 @objcMembers public class SPConsent<ConsentType>: NSObject {
-    let consents: ConsentType
+    let consents: ConsentType?
     let applies: Bool
 
-    public init(consents: ConsentType, applies: Bool) {
+    public init(consents: ConsentType?, applies: Bool) {
         self.consents = consents
         self.applies = applies
     }
 
-    public override var description: String { "applies: \(applies), consents: \(consents)" }
+    public override var description: String { "applies: \(applies), consents: \(String(describing: consents))" }
 }
 
 @objcMembers public class SPConsents: NSObject {

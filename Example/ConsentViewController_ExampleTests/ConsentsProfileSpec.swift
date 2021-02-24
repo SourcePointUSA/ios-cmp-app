@@ -43,8 +43,8 @@ class ConsentsProfileSpec: QuickSpec {
                 "applies": true,
                 "meta": "{}",
                 "consents": {
-                    "grants": {},
                     "TCData": {},
+                    "grants": {},
                     "acceptedVendors": [],
                     "legIntCategories": [],
                     "acceptedCategories": [],
@@ -72,3 +72,4 @@ class ConsentsProfileSpec: QuickSpec {
         }
     }
 }
+

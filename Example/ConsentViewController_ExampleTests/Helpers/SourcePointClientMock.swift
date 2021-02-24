@@ -55,7 +55,7 @@ class SourcePointClientMock: SourcePointProtocol {
         }
     }
 
-    func postAction(action: SPAction, campaign: SPCampaign, profile: ConsentProfile<SPGDPRConsent>, handler: @escaping ConsentHandler) {
+    func postAction(action: SPAction, legislation: SPLegislation, campaign: SPCampaign, uuid: SPConsentUUID, meta: SPMeta?, handler: @escaping ConsentHandler) {
         postActionCalled = true
         if let error = error {
             handler(.failure(error))

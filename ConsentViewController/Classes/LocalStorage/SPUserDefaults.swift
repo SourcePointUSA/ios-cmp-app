@@ -43,7 +43,10 @@ class SPUserDefaults: SPLocalStorage {
                 forKey: SPUserDefaults.CONSENTS_PROFILE
             ) ?? ConsentsProfile()
         }
-        set { storage.setObject(newValue, forKey: SPUserDefaults.CONSENTS_PROFILE ) }
+        set {
+            storage.setObject(newValue, forKey: SPUserDefaults.CONSENTS_PROFILE)
+
+        }
     }
 
     required init(storage: Storage = UserDefaults.standard) {
