@@ -129,10 +129,6 @@ typealias SPMeta = String
     /// By default the SDK will use the defult tab of PM
     public var privacyManagerTab = SPPrivacyManagerTab.Default
 
-    private func toJSON(_ contents: [String: String]) -> String {
-        String(data: try! JSONSerialization.data(withJSONObject: contents), encoding: .utf8) ?? "{}"
-    }
-
     public func loadMessage(forAuthId: String? = nil) {
         spClient.getWebMessage(campaigns: campaigns, profile: consentsProfile) { [weak self] result in
             switch result {
@@ -153,6 +149,7 @@ typealias SPMeta = String
                 }
             case .failure(let error): self?.onError(error)
             }
+        }
     }
 
     func reportDataBy(legislation: SPLegislation, campaigns: SPCampaigns) -> (campaign: SPCampaign?, uuid: SPConsentUUID?, meta: SPMeta?) {
