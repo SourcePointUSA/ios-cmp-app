@@ -125,6 +125,10 @@ typealias SPMeta = String
         }
     }
 
+    /// Instructs the privacy manager to be displayed with this tab.
+    /// By default the SDK will use the defult tab of PM
+    public var privacyManagerTab = SPPrivacyManagerTab.Default
+
     public func loadMessage(forAuthId: String? = nil) {
         spClient.getWebMessage(campaigns: campaigns, profile: consentsProfile) { [weak self] result in
             switch result {

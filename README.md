@@ -203,6 +203,11 @@ By default, the SDK will load default tab of privacy manager or the tab specifie
 consentViewController.privacyManagerTab = .Vendors
 consentViewController.loadMessage()
 ```
+In Obj-C that'd be:
+```objc
+cvc.privacyManagerTab = SPPrivacyManagerTabPurposes;
+[cvc loadMessage];
+```
 It's important to note that the order of precedence for the PM tab will be as follow:
 1. PM tab set in the `Show Options` action (set in the dashboard)
 2. If none, then the one provided by the developer
