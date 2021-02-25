@@ -100,7 +100,7 @@
 /// Invalid API Response Errors
 @objcMembers public class InvalidResponseWebMessageError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_web_message" }
-    override public var description: String { "The SDK got an unexpected response from /message-url endpoint" }
+    override public var description: String { "The SDK got an unexpected response from /message endpoint" }
 }
 
 @objcMembers public class InvalidResponseNativeMessageError: SPError {

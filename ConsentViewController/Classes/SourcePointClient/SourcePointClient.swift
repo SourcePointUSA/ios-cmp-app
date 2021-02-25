@@ -28,28 +28,12 @@ extension JSONDecoder {
     }
 }
 
-/// TODO: move this code to their file
-struct ConsentProfile<T: Codable> {
-    let uuid: SPConsentUUID?
-    let authId: String?
-    let meta: String
-    let consents: T
-}
-
-struct ConsentsProfile {
-    let gdpr: ConsentProfile<SPGDPRUserConsent>?
-    let ccpa: ConsentProfile<SPCCPAUserConsent>?
-
-    init(gdpr: ConsentProfile<SPGDPRUserConsent>? = nil, ccpa: ConsentProfile<SPCCPAUserConsent>? = nil) {
-        self.gdpr = gdpr
-        self.ccpa = ccpa
-    }
-}
-
 typealias MessageHandler<MessageType: Decodable & Equatable> = (Result<MessagesResponse<MessageType>, SPError>) -> Void
 typealias WebMessageHandler = MessageHandler<SPJson>
 typealias NativeMessageHandler = MessageHandler<SPJson>
-typealias ConsentHandler = (Result<ActionResponse, SPError>) -> Void
+typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
+typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
+typealias ConsentHandler<T: Decodable & Equatable> = (Result<ActionResponse<T>, SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
@@ -65,13 +49,28 @@ protocol SourcePointProtocol {
         profile: ConsentsProfile,
         handler: @escaping NativeMessageHandler)
 
-    func postAction(
+    func postCCPAAction(
         action: SPAction,
         campaign: SPCampaign,
-        profile: ConsentProfile<SPGDPRUserConsent>,
-        handler: @escaping ConsentHandler)
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
+        handler: @escaping CCPAConsentHandler)
 
-//    /// TODO: add postAction for CCPA
+    func postGDPRAction(
+        action: SPAction,
+        campaign: SPCampaign,
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
+        handler: @escaping GDPRConsentHandler)
+
+    func postAction<T: Decodable & Equatable>(
+        action: SPAction,
+        legislation: SPLegislation,
+        campaign: SPCampaign,
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
+        handler: @escaping ConsentHandler<T>)
+
 //    func customConsent(
 //        toConsentUUID consentUUID: SPConsentUUID,
 //        vendors: [String],
@@ -98,10 +97,11 @@ A Http client for SourcePoint's endpoints
 class SourcePointClient: SourcePointProtocol {
     static let WRAPPER_API = URL(string: "http://localhost:3000/wrapper/")! /// TODO: change to real URL
     static let ERROR_METRIS_URL = URL(string: "metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_CONTENTS_URL = URL(string: "unified/v1/gdpr/native-message?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_URL_URL = URL(string: "unified/v1/gdpr/message-url?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let CONSENT_URL = URL(string: "unified/v1/gdpr/consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "unified/v1/gdpr/custom-consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGE_CONTENTS_URL = URL(string: "v1/unified/native-message?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGE_URL_URL = URL(string: "v1/unified/message?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GDPR_CONSENT_URL = URL(string: "tcfv2/v1/gdpr/consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let CCPA_CONSENT_URL = URL(string: "v1/ccpa/consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let CUSTOM_CONSENT_URL = URL(string: "v1/unified/gdpr/custom-consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
 
     var client: HttpClient
 
@@ -127,13 +127,13 @@ class SourcePointClient: SourcePointProtocol {
             propertyId: campaign.propertyId,
             propertyHref: campaign.propertyName,
             campaignEnv: campaign.environment,
-            meta: meta ?? "{}", /// TODO: add meta
+            meta: meta,
             targetingParams: campaign.targetingParams
         )
     }
 
     func getNativeMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping NativeMessageHandler) {
-        /// TODO:
+        /// TODO: implement native message
     }
 
     func getWebMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping WebMessageHandler) {
@@ -142,14 +142,15 @@ class SourcePointClient: SourcePointProtocol {
 
     func getMessage<MessageType: Decodable>(
         native: Bool,
+        authId: String? = nil,
         campaigns: SPCampaigns,
         profile: ConsentsProfile,
         handler: @escaping MessageHandler<MessageType>) {
         let url = native ?
             SourcePointClient.GET_MESSAGE_CONTENTS_URL :
             SourcePointClient.GET_MESSAGE_URL_URL
-        JSONEncoder().encode(MessageRequest(
-            authId: profile.gdpr?.authId, /// handle auth id
+        _ = JSONEncoder().encode(MessageRequest(
+            authId: profile.authId,
             requestUUID: requestUUID,
             campaigns: CampaignsRequest(
                 gdpr: campaignToRequest(
@@ -174,28 +175,60 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postAction(
+    func consentURL(_ legislation: SPLegislation) -> String {
+        switch legislation {
+        case .GDPR: return SourcePointClient.GDPR_CONSENT_URL.absoluteString
+        case .CCPA: return SourcePointClient.CCPA_CONSENT_URL.absoluteString
+        case .Unknown: return SourcePointClient.GDPR_CONSENT_URL.absoluteString
+        }
+    }
+
+    func postCCPAAction(action: SPAction, campaign: SPCampaign, uuid: SPConsentUUID, meta: SPMeta?, handler: @escaping CCPAConsentHandler) {
+        postAction(
+            action: action,
+            legislation: .CCPA,
+            campaign: campaign,
+            uuid: uuid,
+            meta: meta,
+            handler: handler
+        )
+    }
+
+    func postGDPRAction(action: SPAction, campaign: SPCampaign, uuid: SPConsentUUID, meta: SPMeta?, handler: @escaping GDPRConsentHandler) {
+        postAction(
+            action: action,
+            legislation: .GDPR,
+            campaign: campaign,
+            uuid: uuid,
+            meta: meta,
+            handler: handler
+        )
+    }
+
+    func postAction<T: Decodable & Equatable>(
         action: SPAction,
+        legislation: SPLegislation,
         campaign: SPCampaign,
-        profile: ConsentProfile<SPGDPRUserConsent>,
-        handler: @escaping ConsentHandler) {
-        JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
+        uuid: SPConsentUUID,
+        meta: SPMeta?,
+        handler: @escaping ConsentHandler<T>) {
+        _ = JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
             JSONEncoder().encode(ActionRequest(
                 propertyId: campaign.propertyId,
                 propertyHref: campaign.propertyName,
                 accountId: campaign.accountId,
                 actionType: action.type.rawValue,
                 choiceId: action.id,
-                privacyManagerId: "", /// TODO: add privacy manager id
+                privacyManagerId: campaign.pmId,
                 requestFromPM: action.id == nil,
-                uuid: profile.uuid ?? "", /// TODO: can uuid be "" ??
+                uuid: uuid,
                 requestUUID: requestUUID,
                 pmSaveAndExitVariables: pmPayload,
-                meta: profile.meta,
+                meta: meta ?? "{}",
                 publisherData: action.publisherData,
                 consentLanguage: action.consentLanguage
             )).map { body in
-                client.post(urlString: SourcePointClient.CONSENT_URL.absoluteString, body: body) { result in
+                client.post(urlString: consentURL(legislation), body: body) { result in
                     handler(Result {
                         try result.decoded() as ActionResponse
                     }.mapError {
@@ -206,7 +239,6 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-/// TODO: definie if customConsents will work for both campaigns
 //    func customConsent(
 //        toConsentUUID consentUUID: String,
 //        vendors: [String],
@@ -254,7 +286,7 @@ class SourcePointClient: SourcePointProtocol {
 //            deviceFamily: deviceFamily,
 //            propertyId: String(campaign.propertyId),
 //            propertyName: campaign.propertyName,
-//            legislation: legislation /// TODO: move legislation to campaign type?
+//            legislation: legislation
 //        ))
 //        client.post(urlString: SourcePointClient.ERROR_METRIS_URL.absoluteString, body: body) {_, _ in
 //

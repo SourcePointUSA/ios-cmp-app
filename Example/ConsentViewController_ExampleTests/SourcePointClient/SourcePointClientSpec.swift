@@ -25,11 +25,11 @@ class SourcePointClientSpec: QuickSpec {
         targetingParams: [:]
     )}
     var campaigns: SPCampaigns { SPCampaigns(gdpr: campaign) }
-    var gdprProfile: ConsentProfile<SPGDPRUserConsent> { ConsentProfile<SPGDPRUserConsent>(
+    var gdprProfile: ConsentProfile<SPGDPRConsent> { ConsentProfile<SPGDPRConsent>(
         uuid: "uuid",
-        authId: "auth id",
+        applies: true,
         meta: "meta",
-        consents: SPGDPRUserConsent.empty()
+        consents: SPGDPRConsent.empty()
     )}
     var profile: ConsentsProfile { ConsentsProfile(gdpr: gdprProfile) }
 
@@ -38,7 +38,7 @@ class SourcePointClientSpec: QuickSpec {
     func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {
         try! JSONEncoder().encode(
             MessageRequest(
-                authId: profile.gdpr?.authId,
+                authId: "auth id",
                 requestUUID: client.requestUUID,
                 campaigns: CampaignsRequest(
                     gdpr: CampaignRequest(
@@ -79,7 +79,7 @@ class SourcePointClientSpec: QuickSpec {
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
                     client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, SPError>) in }
-                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message-url?inApp=true"))
+                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {
@@ -94,8 +94,10 @@ class SourcePointClientSpec: QuickSpec {
                     let acceptAllAction = SPAction(type: .AcceptAll, id: "1234")
                     client.postAction(
                         action: acceptAllAction,
+                        legislation: .GDPR,
                         campaign: self.campaign,
-                        profile: self.gdprProfile
+                        uuid: self.gdprProfile.uuid ?? "",
+                        meta: self.gdprProfile.meta
                     ) { _ in }
                     expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/consent?inApp=true"))
                 }
@@ -114,14 +116,16 @@ class SourcePointClientSpec: QuickSpec {
                         uuid: self.gdprProfile.uuid ?? "uuid",
                         requestUUID: client.requestUUID,
                         pmSaveAndExitVariables: SPJson(),
-                        meta: self.gdprProfile.meta,
+                        meta: self.gdprProfile.meta ?? "{}",
                         publisherData: action.publisherData,
                         consentLanguage: "EN"
                     )
                     client.postAction(
                         action: action,
+                        legislation: .GDPR,
                         campaign: self.campaign,
-                        profile: self.gdprProfile
+                        uuid: self.gdprProfile.uuid ?? "",
+                        meta: self.gdprProfile.meta
                     ) { _ in }
                     let parsed = try! JSONDecoder().decode(ActionRequest.self, from: httpClient!.postWasCalledWithBody!).get()
                     expect(parsed).toEventually(equal(actionRequest))

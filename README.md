@@ -64,7 +64,7 @@ extension ViewController: GDPRConsentDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
         print("ConsentUUID: \(consentUUID)")
         userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
         userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
@@ -108,7 +108,7 @@ extension ViewController: GDPRConsentDelegate {
     [cvc loadMessage];
 }
 
-- (void)onConsentReadyWithSPConsentUUID:(NSString *)consentUUID userConsent:(SPGDPRUserConsent *)userConsent {
+- (void)onConsentReadyWithSPConsentUUID:(NSString *)consentUUID userConsent:(SPGDPRConsent *)userConsent {
     NSLog(@"ConsentUUID: %@", consentUUID);
     NSLog(@"ConsentString: %@", userConsent.euconsent);
     for (id vendorId in userConsent.acceptedVendors) {
@@ -138,10 +138,10 @@ func customConsentTo(
         vendors: [String],
         categories: [String],
         legIntCategories: [String],
-        completionHandler: @escaping (SPGDPRUserConsent) -> Void)
+        completionHandler: @escaping (SPGDPRConsent) -> Void)
 ```
 
-The ids passed will be appended to the list of already accepted vendors, categories and leg. int. categories. The method is asynchronous so you must pass a completion handler that will receive back an instance of `SPGDPRUserConsent` in case of success or it'll call the delegate method `onError` in case of failure.
+The ids passed will be appended to the list of already accepted vendors, categories and leg. int. categories. The method is asynchronous so you must pass a completion handler that will receive back an instance of `SPGDPRConsent` in case of success or it'll call the delegate method `onError` in case of failure.
 
 It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
 
@@ -207,6 +207,11 @@ By default, the SDK will load default tab of privacy manager or the tab specifie
 ```swift
 consentViewController.privacyManagerTab = .Vendors
 consentViewController.loadMessage()
+```
+In Obj-C that'd be:
+```objc
+cvc.privacyManagerTab = SPPrivacyManagerTabPurposes;
+[cvc loadMessage];
 ```
 It's important to note that the order of precedence for the PM tab will be as follow:
 1. PM tab set in the `Show Options` action (set in the dashboard)

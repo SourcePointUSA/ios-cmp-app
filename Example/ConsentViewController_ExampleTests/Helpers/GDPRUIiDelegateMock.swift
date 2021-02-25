@@ -10,12 +10,12 @@ import Foundation
 @testable import ConsentViewController
 
 class GDPRUIDelegateMock: GDPRMessageUIDelegate {
-    weak var consentDelegate: GDPRConsentDelegate?
+    weak var consentDelegate: SPDelegate?
     var loadMessageCalled = false
     var loadPrivacyManagerCalled = false
     var loadMessageCalledWith: URL?
 
-    init(_ consentDelegate: GDPRConsentDelegate) {
+    init(_ consentDelegate: SPDelegate) {
         self.consentDelegate = consentDelegate
     }
 
