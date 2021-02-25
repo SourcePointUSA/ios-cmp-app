@@ -47,13 +47,13 @@ class SimpleClient: HttpClient {
     let session: SPURLSession
     let dispatchQueue: SPDispatchQueue
 
-    let logCalls: Bool = false
+    let logCalls: Bool = true
 
     func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {
         if logCalls, let method = request.httpMethod, let url = request.url {
-            logger.debug("\(type) \(method) \(url)", [:])
+            logger.debug("\(type) \(method) \(url)")
             if let body = body, let bodyString = String(data: body, encoding: .utf8) {
-                logger.debug(bodyString, [:])
+                logger.debug(bodyString)
             }
         }
     }

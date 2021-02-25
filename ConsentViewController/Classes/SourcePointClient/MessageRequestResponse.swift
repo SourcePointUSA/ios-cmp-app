@@ -7,27 +7,33 @@
 
 import Foundation
 
+extension SPTargetingParams {
+    func stringified() throws -> String? { String(
+        data: try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted),
+        encoding: .utf8
+    )}
+}
+
 struct CampaignRequest: Equatable {
-    /// TODO: still needed?
-//    let euconsent: String
     let uuid: SPConsentUUID?
     let accountId, propertyId: Int
     let propertyHref: SPPropertyName
     let campaignEnv: SPCampaignEnv
-    let meta: Meta
+    let meta: SPMeta?
     let targetingParams: SPTargetingParams
 }
 
 extension CampaignRequest: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(euconsent, forKey: .euconsent)
         try container.encode(accountId, forKey: .accountId)
         try container.encode(propertyId, forKey: .propertyId)
         try container.encode(propertyHref, forKey: .propertyHref)
-        try container.encode(meta, forKey: .meta)
-        if uuid != nil { try container.encode(uuid, forKey: .uuid) }
-        try container.encode(targetingParams, forKey: .targetingParams)
+        try container.encodeIfPresent(meta, forKey: .meta)
+        try container.encodeIfPresent(uuid, forKey: .uuid)
+        if !targetingParams.isEmpty {
+            try container.encode(targetingParams.stringified(), forKey: .targetingParams)
+        }
         if #available(iOS 11, *) {
             try container.encode(campaignEnv, forKey: .campaignEnv)
         } else {
@@ -38,7 +44,7 @@ extension CampaignRequest: Encodable {
     enum CodingKeys: String, CodingKey {
         case uuid, accountId,
              propertyId, propertyHref, campaignEnv,
-             targetingParams, meta //, euconsent
+             targetingParams, meta
     }
 }
 
@@ -52,8 +58,8 @@ struct MessageRequest: Equatable, Encodable {
     let campaigns: CampaignsRequest
 }
 
-typealias CCPAMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPCCPAUserConsent, MessageType>
-typealias GDPRMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPGDPRUserConsent, MessageType>
+typealias CCPAMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPCCPAConsent, MessageType>
+typealias GDPRMessageResponse<MessageType: Decodable & Equatable> = MessageResponse<SPGDPRConsent, MessageType>
 struct MessagesResponse<MessageType: Decodable & Equatable>: Decodable, Equatable {
     let gdpr: GDPRMessageResponse<MessageType>?
     let ccpa: CCPAMessageResponse<MessageType>?
@@ -64,5 +70,5 @@ struct MessageResponse<ConsentType: Decodable & Equatable, MessageType: Decodabl
     let applies: Bool
     let uuid: SPConsentUUID
     let userConsent: ConsentType
-    var meta: Meta
+    var meta: SPMeta
 }

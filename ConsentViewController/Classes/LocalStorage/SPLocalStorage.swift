@@ -1,5 +1,5 @@
 //
-//  GDPRLocalStorage.swift
+//  SPLocalStorage.swift
 //  ConsentViewController
 //
 //  Created by Andre Herculano on 07.05.20.
@@ -28,7 +28,8 @@ extension UserDefaults: Storage {
 
     func object<T>(ofType type: T.Type, forKey defaultName: String) -> T? where T: Decodable {
         let decoder = JSONDecoder()
-        if let data = self.data(forKey: defaultName), let object = try? decoder.decode(type, from: data).get() {
+        if let data = self.data(forKey: defaultName),
+           let object = try? decoder.decode(type, from: data).get() {
             return object
         }
         return nil
@@ -39,13 +40,11 @@ extension UserDefaults: Storage {
     }
 }
 
-protocol GDPRLocalStorage {
+protocol SPLocalStorage {
     var storage: Storage { get set }
-    var consentUUID: SPConsentUUID { get set }
-    var meta: String { get set }
-    var authId: String? { get set }
-    var tcfData: [String: Any] { get set }
-    var userConsents: SPGDPRUserConsent { get set }
+    var tcfData: [String: Any]? { get set }
+    var usPrivacyString: String? { get set }
+    var consentsProfile: ConsentsProfile { get set }
 
     func clear()
 

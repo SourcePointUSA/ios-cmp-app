@@ -9,13 +9,11 @@
 import Foundation
 @testable import ConsentViewController
 
-class GDPRLocalStorageMock: GDPRLocalStorage {
+class GDPRLocalStorageMock: SPLocalStorage {
     var storage: Storage = InMemoryStorageMock()
-    var consentUUID: SPConsentUUID = ""
-    var meta: String = "{}"
-    var authId: String?
-    var tcfData: [String: Any] = [:]
-    var userConsents: SPGDPRUserConsent = SPGDPRUserConsent.empty()
+    var tcfData: [String: Any]? = [:]
+    var usPrivacyString: String?
+    var consentsProfile: ConsentsProfile = ConsentsProfile()
 
     var clearWasCalled = false
 

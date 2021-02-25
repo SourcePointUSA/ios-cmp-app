@@ -68,7 +68,7 @@ class MetaApp: XCUIApplication {
     }
     
     var wrongPropertyIdValidationItem: XCUIElement {
-           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'The SDK got an unexpected response from /message-url endpoint'")).firstMatch
+           staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'The SDK got an unexpected response from /message endpoint'")).firstMatch
     }
     
     var wrongPMValidationItem: XCUIElement {

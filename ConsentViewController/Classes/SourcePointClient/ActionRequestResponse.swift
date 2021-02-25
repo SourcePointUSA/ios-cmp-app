@@ -18,7 +18,7 @@ struct ActionRequest: Codable, Equatable {
     let uuid: SPConsentUUID
     let requestUUID: UUID
     let pmSaveAndExitVariables: SPJson
-    let meta: Meta
+    let meta: SPMeta
     let publisherData: [String: SPJson?]?
     let consentLanguage: String?
 
@@ -28,8 +28,8 @@ struct ActionRequest: Codable, Equatable {
     }
 }
 
-struct ActionResponse: Codable {
+struct ActionResponse<ConsentType: Decodable & Equatable>: Decodable & Equatable {
     let uuid: SPConsentUUID
-    let userConsent: SPGDPRUserConsent
-    var meta: Meta
+    let userConsent: ConsentType
+    var meta: SPMeta
 }
