@@ -11,31 +11,31 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-class PrivacyManagerTabSpec: QuickSpec {
+class SPPrivacyManagerTabSpec: QuickSpec {
     override func spec() {
 
-        describe("PrivacyManagerTab") {
+        describe("SPPrivacyManagerTab") {
             context("Default") {
                 it("has the empty raw value") {
-                    expect(PrivacyManagerTab.Default.rawValue).to(equal(""))
+                    expect(SPPrivacyManagerTab.Default.rawValue).to(equal(""))
                 }
             }
 
             context("Purposes") {
                 it("has the raw value 'purposes'") {
-                    expect(PrivacyManagerTab.Purposes.rawValue).to(equal("purposes"))
+                    expect(SPPrivacyManagerTab.Purposes.rawValue).to(equal("purposes"))
                 }
             }
 
             context("Vendors") {
                 it("has the raw value 'vendors'") {
-                    expect(PrivacyManagerTab.Vendors.rawValue).to(equal("vendors"))
+                    expect(SPPrivacyManagerTab.Vendors.rawValue).to(equal("vendors"))
                 }
             }
 
             context("Features") {
                 it("has the raw value 'features'") {
-                    expect(PrivacyManagerTab.Features.rawValue).to(equal("features"))
+                    expect(SPPrivacyManagerTab.Features.rawValue).to(equal("features"))
                 }
             }
         }

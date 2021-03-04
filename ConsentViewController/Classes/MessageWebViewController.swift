@@ -49,16 +49,16 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
 
     let propertyId: Int
     var pmId: String
-    var pmTab: PrivacyManagerTab
+    var pmTab: SPPrivacyManagerTab
     let consentUUID: GDPRUUID
     var isSecondLayerMessage = false
     var consentUILoaded = false
     var isPMLoaded = false
     let timeout: TimeInterval
     var connectivityManager: Connectivity = ConnectivityManager()
-    let messageLanguage: MessageLanguage
+    let messageLanguage: SPMessageLanguage
 
-    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: MessageLanguage, pmTab: PrivacyManagerTab, timeout: TimeInterval) {
+    init(propertyId: Int, pmId: String, consentUUID: GDPRUUID, messageLanguage: SPMessageLanguage, pmTab: SPPrivacyManagerTab, timeout: TimeInterval) {
         self.propertyId = propertyId
         self.pmId = pmId
         self.consentUUID = consentUUID
@@ -156,7 +156,7 @@ class MessageWebViewController: GDPRMessageViewController, WKUIDelegate, WKNavig
            let pm_url = payloadData["pm_url"]?.stringValue,
            let urlComponents = URLComponents(string: pm_url)?.queryItems {
             pmId = urlComponents.first { $0.name == "message_id" }?.value ?? pmId
-            pmTab = PrivacyManagerTab.init(rawValue: urlComponents.first { $0.name == "pmTab" }?.value ?? pmTab.rawValue) ?? .Default
+            pmTab = SPPrivacyManagerTab.init(rawValue: urlComponents.first { $0.name == "pmTab" }?.value ?? pmTab.rawValue) ?? .Default
         }
     }
 

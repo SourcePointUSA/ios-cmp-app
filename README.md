@@ -203,6 +203,11 @@ By default, the SDK will instruct the message to render itself using the locale 
 consentViewController.messageLanguage = .German
 consentViewController.loadMessage()
 ```
+In Obj-C that'd be:
+```objc
+cvc.messageLanguage = SPMessageLanguageGerman;
+[cvc loadMessage];
+```
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
 
 ## Overwriting Privacy Manager tab
@@ -210,6 +215,11 @@ By default, the SDK will load default tab of privacy manager or the tab specifie
 ```swift
 consentViewController.privacyManagerTab = .Vendors
 consentViewController.loadMessage()
+```
+In Obj-C that'd be:
+```objc
+cvc.privacyManagerTab = SPPrivacyManagerTabPurposes;
+[cvc loadMessage];
 ```
 It's important to note that the order of precedence for the PM tab will be as follow:
 1. PM tab set in the `Show Options` action (set in the dashboard)

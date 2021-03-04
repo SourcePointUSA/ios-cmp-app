@@ -123,7 +123,7 @@ class AddPropertyViewModel {
         }
     }
 
-    func getPMTab(pmTab: String) -> PrivacyManagerTab {
+    func getPMTab(pmTab: String) -> SPPrivacyManagerTab {
         switch pmTab {
         case "Default":
             return .Default
@@ -138,7 +138,7 @@ class AddPropertyViewModel {
         }
     }
 
-    func getMessageLanguage(countryName: String) -> MessageLanguage {
+    func getMessageLanguage(countryName: String) -> SPMessageLanguage {
         switch countryName {
         case "BrowserDefault":
             return .BrowserDefault
