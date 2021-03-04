@@ -10,5 +10,6 @@ import Foundation
 @objc public protocol SPMessageUIDelegate {
     func loaded()
     func action(_ action: SPAction)
+    func onError(_ error: SPError)
     func finished()
 }

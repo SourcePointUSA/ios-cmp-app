@@ -64,6 +64,7 @@ class ViewController: UIViewController, SPDelegate {
     }
 
     func onSPUIReady(_ viewController: UIViewController) {
+        viewController.modalPresentationStyle = .overFullScreen
         present(viewController, animated: true)
     }
 

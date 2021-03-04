@@ -23,7 +23,7 @@ typealias SPMeta = String
     var storage: SPLocalStorage
     var presentingLegislation: SPLegislation?
     var consentsProfile: ConsentsProfile { storage.consentsProfile }
-    var consentUI: SPConsentViewController!
+    var consentUI: SPMessageViewController!
 
     /// TODO: implement
     public static func clearAllData() {
@@ -51,17 +51,9 @@ typealias SPMeta = String
     }
 
     func renderMessage(message: SPJson) {
-        let choiceType = SPActionType.AcceptAll.rawValue
-        let title = message["message_json"]?["name"]?.stringValue ?? "Fake Message"
-        let choiceId = message["message_choice"]?.arrayValue?.first { $0["type"]?.intValue == choiceType }?["choice_id"]?.intValue as Any
-        consentUI = SPConsentViewController()
+        consentUI = GDPRWebMessageViewController()
         consentUI.messageUIDelegate = self
-        consentUI.loadMessage(try! SPJson([ // swiftlint:disable:this force_try
-            "Title": title,
-            "ButtonLabel": "Accept All",
-            "ChoiceId": choiceId,
-            "ChoiceType": choiceType
-        ]))
+        consentUI.loadMessage(message)
     }
 
     func profileToConsent<ConsentType>(_ profile: ConsentProfile<ConsentType>?) -> SPConsent<ConsentType>? {
@@ -246,7 +238,7 @@ typealias SPMeta = String
         }
     }
 
-    func onError(_ error: SPError) {
+    public func onError(_ error: SPError) {
         if cleanUserDataOnError {
             SPConsentManager.clearAllData()
         }

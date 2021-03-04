@@ -118,6 +118,7 @@
 		80DEBE41D84FBA1C4D4FE00C8D797E82 /* CwlPreconditionTesting.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E944D1EA17AE5FF617FBD54A491849B /* CwlPreconditionTesting.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		825A7D6925DADEE900E18F51 /* SPConsents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825A7D6825DADEE900E18F51 /* SPConsents.swift */; };
 		827E0A1825DEBF9C0051E515 /* SPMockMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827E0A1725DEBF9C0051E515 /* SPMockMessageViewController.swift */; };
+		82D2E24925EF9066005A4F3F /* GDPRWebMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D2E24825EF9066005A4F3F /* GDPRWebMessage.swift */; };
 		83976C4AC81DBA1656F1358F25032074 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C0F422CBF8B8DF8CA6AC6CE5FD14B9 /* World.swift */; };
 		874381421922C8BEFDF43C52533331EF /* Pods-SourcePointMetaAppTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B68CC3ED4F885758D6A04F6E2E48FCD7 /* Pods-SourcePointMetaAppTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8911DDD5910AA1C6E099EBF768AFC8F7 /* QuickSpecBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E6484FEE9EB7BBDF57720DA32544F /* QuickSpecBase.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -524,6 +525,7 @@
 		80F277611E8CE7374D19DB2E100FF7AD /* ConsentViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ConsentViewController.modulemap; sourceTree = "<group>"; };
 		825A7D6825DADEE900E18F51 /* SPConsents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPConsents.swift; sourceTree = "<group>"; };
 		827E0A1725DEBF9C0051E515 /* SPMockMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SPMockMessageViewController.swift; path = ConsentViewController/Classes/SPMockMessageViewController.swift; sourceTree = "<group>"; };
+		82D2E24825EF9066005A4F3F /* GDPRWebMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GDPRWebMessage.swift; path = ConsentViewController/Classes/Messages/GDPRWebMessage.swift; sourceTree = "<group>"; };
 		83029B6FBB91F7EA5CE9D006F6216A94 /* SPPropertyName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPPropertyName.swift; path = ConsentViewController/Classes/SPPropertyName.swift; sourceTree = "<group>"; };
 		842EFC6E202CD7DDBC3FEAF194A263EB /* HaveCount.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HaveCount.swift; path = Sources/Nimble/Matchers/HaveCount.swift; sourceTree = "<group>"; };
 		849853560FACBBAFF278E017EDF7F4C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
@@ -869,6 +871,7 @@
 				13CB39238B726E5766B507F19CF1AE64 /* SPNativeMessageViewController.xib */,
 				83029B6FBB91F7EA5CE9D006F6216A94 /* SPPropertyName.swift */,
 				CC78C64E0C49DD5DF342CB9680E643E9 /* SPSDK.swift */,
+				82D2E24825EF9066005A4F3F /* GDPRWebMessage.swift */,
 				4B63A4933C2635220352BAC532640677 /* Consents */,
 				D8F87C806217E8FB9FE617B09D1EA9B8 /* Extensions */,
 				B54142E02EE1C2F50918CE80877B0412 /* LocalStorage */,
@@ -2030,6 +2033,7 @@
 				F1F5B94DF6A3D3E7A9C6C0DF1C73833B /* SPDeviceManager.swift in Sources */,
 				F1884D1C87F188A4DF3C3729343FF689 /* SPError.swift in Sources */,
 				A7C125117E709669318E600B708BC34F /* SPGDPRConsent.swift in Sources */,
+				82D2E24925EF9066005A4F3F /* GDPRWebMessage.swift in Sources */,
 				22AC9173FFA51A878BBB0CE11F9DD334 /* SPIDFAStatus.swift in Sources */,
 				44850B24211CB3CFE534E1BF5CCE3181 /* SPJson.swift in Sources */,
 				262B3D1E7BD61BCFE5C933866A31B581 /* SPLegislation.swift in Sources */,
