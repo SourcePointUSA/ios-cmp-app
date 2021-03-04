@@ -117,6 +117,14 @@ typealias SPMeta = String
         }
     }
 
+    /// Instructs the privacy manager to be displayed with this tab.
+    /// By default the SDK will use the defult tab of PM
+    public var privacyManagerTab = SPPrivacyManagerTab.Default
+
+    /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+    /// By default the SDK will use the locale defined by the WebView
+    public var messageLanguage = SPMessageLanguage.BrowserDefault
+
     public func loadMessage(forAuthId: String? = nil) {
         spClient.getWebMessage(campaigns: campaigns, profile: consentsProfile) { [weak self] result in
             switch result {
