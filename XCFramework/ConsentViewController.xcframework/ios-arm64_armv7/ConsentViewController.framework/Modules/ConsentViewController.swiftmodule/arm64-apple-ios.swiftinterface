@@ -93,8 +93,8 @@ public typealias GDPRUUID = Swift.String
     @objc get
     @objc set
   }
-  public var messageLanguage: ConsentViewController.MessageLanguage
-  public var privacyManagerTab: ConsentViewController.PrivacyManagerTab
+  @objc public var messageLanguage: ConsentViewController.SPMessageLanguage
+  @objc public var privacyManagerTab: ConsentViewController.SPPrivacyManagerTab
   @objc public var shouldCleanConsentOnError: Swift.Bool
   @objc public static var shouldCallErrorMetrics: Swift.Bool
   @objc weak public var consentDelegate: ConsentViewController.GDPRConsentDelegate?
@@ -401,57 +401,6 @@ public typealias GDPRPurposeId = Swift.String
   @objc dynamic public func setConsentFor(authId: Swift.String)
   @objc dynamic public func getAuthId(completionHandler: @escaping (Swift.String?, Swift.Error?) -> Swift.Void)
 }
-public enum MessageLanguage : Swift.String {
-  case BrowserDefault
-  case English
-  case Bulgarian
-  case Catalan
-  case Chinese
-  case Croatian
-  case Czech
-  case Danish
-  case Dutch
-  case Estonian
-  case Finnish
-  case French
-  case Gaelic
-  case German
-  case Greek
-  case Hungarian
-  case Icelandic
-  case Italian
-  case Japanese
-  case Latvian
-  case Lithuanian
-  case Norwegian
-  case Polish
-  case Portuguese
-  case Romanian
-  case Russian
-  case Serbian_Cyrillic
-  case Serbian_Latin
-  case Slovakian
-  case Slovenian
-  case Spanish
-  case Swedish
-  case Turkish
-  public typealias RawValue = Swift.String
-  public init?(rawValue: Swift.String)
-  public var rawValue: Swift.String {
-    get
-  }
-}
-public enum PrivacyManagerTab : Swift.String {
-  case Default
-  case Purposes
-  case Vendors
-  case Features
-  public typealias RawValue = Swift.String
-  public init?(rawValue: Swift.String)
-  public var rawValue: Swift.String {
-    get
-  }
-}
 public enum SPGDPRArbitraryJson : Swift.Codable, Swift.CustomStringConvertible, Swift.Equatable {
   public var description: Swift.String {
     get
@@ -523,15 +472,66 @@ public enum SPGDPRArbitraryJson : Swift.Codable, Swift.CustomStringConvertible, 
 extension SPGDPRArbitraryJson {
   public init(_ value: Any) throws
 }
+@objc public enum SPMessageLanguage : Swift.Int {
+  case BrowserDefault
+  case English
+  case Bulgarian
+  case Catalan
+  case Chinese
+  case Croatian
+  case Czech
+  case Danish
+  case Dutch
+  case Estonian
+  case Finnish
+  case French
+  case Gaelic
+  case German
+  case Greek
+  case Hungarian
+  case Icelandic
+  case Italian
+  case Japanese
+  case Latvian
+  case Lithuanian
+  case Norwegian
+  case Polish
+  case Portuguese
+  case Romanian
+  case Russian
+  case Serbian_Cyrillic
+  case Serbian_Latin
+  case Slovakian
+  case Slovenian
+  case Spanish
+  case Swedish
+  case Turkish
+  public typealias RawValue = Swift.String
+  public var rawValue: ConsentViewController.SPMessageLanguage.RawValue {
+    get
+  }
+  public init?(rawValue: ConsentViewController.SPMessageLanguage.RawValue)
+}
+@objc public enum SPPrivacyManagerTab : Swift.Int {
+  case Default
+  case Purposes
+  case Vendors
+  case Features
+  public typealias RawValue = Swift.String
+  public var rawValue: ConsentViewController.SPPrivacyManagerTab.RawValue {
+    get
+  }
+  public init?(rawValue: ConsentViewController.SPPrivacyManagerTab.RawValue)
+}
 extension ConsentViewController.GDPRActionType : Swift.Equatable {}
 extension ConsentViewController.GDPRActionType : Swift.Hashable {}
 extension ConsentViewController.GDPRActionType : Swift.RawRepresentable {}
 extension ConsentViewController.GDPRCampaignEnv : Swift.Equatable {}
 extension ConsentViewController.GDPRCampaignEnv : Swift.Hashable {}
 extension ConsentViewController.GDPRCampaignEnv : Swift.RawRepresentable {}
-extension ConsentViewController.MessageLanguage : Swift.Equatable {}
-extension ConsentViewController.MessageLanguage : Swift.Hashable {}
-extension ConsentViewController.MessageLanguage : Swift.RawRepresentable {}
-extension ConsentViewController.PrivacyManagerTab : Swift.Equatable {}
-extension ConsentViewController.PrivacyManagerTab : Swift.Hashable {}
-extension ConsentViewController.PrivacyManagerTab : Swift.RawRepresentable {}
+extension ConsentViewController.SPMessageLanguage : Swift.Equatable {}
+extension ConsentViewController.SPMessageLanguage : Swift.Hashable {}
+extension ConsentViewController.SPMessageLanguage : Swift.RawRepresentable {}
+extension ConsentViewController.SPPrivacyManagerTab : Swift.Equatable {}
+extension ConsentViewController.SPPrivacyManagerTab : Swift.Hashable {}
+extension ConsentViewController.SPPrivacyManagerTab : Swift.RawRepresentable {}

@@ -333,6 +333,8 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController21GDPRMessageUIDelegate_")
 - (void)loadPrivacyManager;
 @end
 
+enum SPMessageLanguage : NSInteger;
+enum SPPrivacyManagerTab : NSInteger;
 @class GDPRPropertyName;
 @class NSBundle;
 
@@ -355,6 +357,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, strong) GDPRUserConsent * _Nonnull userConsents;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
+/// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+/// By default the SDK will use the locale defined by the WebView
+@property (nonatomic) enum SPMessageLanguage messageLanguage;
+/// Instructs the privacy manager to be displayed with this tab.
+/// By default the SDK will use the defult tab of PM
+@property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 /// will instruct the SDK to clean consent data if an error occurs
 @property (nonatomic) BOOL shouldCleanConsentOnError;
 /// will instruct the SDK to call the error metrics if an error occurs
@@ -648,6 +656,51 @@ SWIFT_CLASS("_TtC21ConsentViewController21ResourceNotFoundError")
 @interface ResourceNotFoundError : GenericNetworkError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
 @end
+
+/// Languages supported by Message and PM
+typedef SWIFT_ENUM(NSInteger, SPMessageLanguage, open) {
+  SPMessageLanguageBrowserDefault = 0,
+  SPMessageLanguageEnglish = 1,
+  SPMessageLanguageBulgarian = 2,
+  SPMessageLanguageCatalan = 3,
+  SPMessageLanguageChinese = 4,
+  SPMessageLanguageCroatian = 5,
+  SPMessageLanguageCzech = 6,
+  SPMessageLanguageDanish = 7,
+  SPMessageLanguageDutch = 8,
+  SPMessageLanguageEstonian = 9,
+  SPMessageLanguageFinnish = 10,
+  SPMessageLanguageFrench = 11,
+  SPMessageLanguageGaelic = 12,
+  SPMessageLanguageGerman = 13,
+  SPMessageLanguageGreek = 14,
+  SPMessageLanguageHungarian = 15,
+  SPMessageLanguageIcelandic = 16,
+  SPMessageLanguageItalian = 17,
+  SPMessageLanguageJapanese = 18,
+  SPMessageLanguageLatvian = 19,
+  SPMessageLanguageLithuanian = 20,
+  SPMessageLanguageNorwegian = 21,
+  SPMessageLanguagePolish = 22,
+  SPMessageLanguagePortuguese = 23,
+  SPMessageLanguageRomanian = 24,
+  SPMessageLanguageRussian = 25,
+  SPMessageLanguageSerbian_Cyrillic = 26,
+  SPMessageLanguageSerbian_Latin = 27,
+  SPMessageLanguageSlovakian = 28,
+  SPMessageLanguageSlovenian = 29,
+  SPMessageLanguageSpanish = 30,
+  SPMessageLanguageSwedish = 31,
+  SPMessageLanguageTurkish = 32,
+};
+
+/// Supported privacy manager tabs in PM
+typedef SWIFT_ENUM(NSInteger, SPPrivacyManagerTab, open) {
+  SPPrivacyManagerTabDefault = 0,
+  SPPrivacyManagerTabPurposes = 1,
+  SPPrivacyManagerTabVendors = 2,
+  SPPrivacyManagerTabFeatures = 3,
+};
 
 
 
@@ -1015,6 +1068,8 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController21GDPRMessageUIDelegate_")
 - (void)loadPrivacyManager;
 @end
 
+enum SPMessageLanguage : NSInteger;
+enum SPPrivacyManagerTab : NSInteger;
 @class GDPRPropertyName;
 @class NSBundle;
 
@@ -1037,6 +1092,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, strong) GDPRUserConsent * _Nonnull userConsents;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
+/// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+/// By default the SDK will use the locale defined by the WebView
+@property (nonatomic) enum SPMessageLanguage messageLanguage;
+/// Instructs the privacy manager to be displayed with this tab.
+/// By default the SDK will use the defult tab of PM
+@property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 /// will instruct the SDK to clean consent data if an error occurs
 @property (nonatomic) BOOL shouldCleanConsentOnError;
 /// will instruct the SDK to call the error metrics if an error occurs
@@ -1330,6 +1391,51 @@ SWIFT_CLASS("_TtC21ConsentViewController21ResourceNotFoundError")
 @interface ResourceNotFoundError : GenericNetworkError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
 @end
+
+/// Languages supported by Message and PM
+typedef SWIFT_ENUM(NSInteger, SPMessageLanguage, open) {
+  SPMessageLanguageBrowserDefault = 0,
+  SPMessageLanguageEnglish = 1,
+  SPMessageLanguageBulgarian = 2,
+  SPMessageLanguageCatalan = 3,
+  SPMessageLanguageChinese = 4,
+  SPMessageLanguageCroatian = 5,
+  SPMessageLanguageCzech = 6,
+  SPMessageLanguageDanish = 7,
+  SPMessageLanguageDutch = 8,
+  SPMessageLanguageEstonian = 9,
+  SPMessageLanguageFinnish = 10,
+  SPMessageLanguageFrench = 11,
+  SPMessageLanguageGaelic = 12,
+  SPMessageLanguageGerman = 13,
+  SPMessageLanguageGreek = 14,
+  SPMessageLanguageHungarian = 15,
+  SPMessageLanguageIcelandic = 16,
+  SPMessageLanguageItalian = 17,
+  SPMessageLanguageJapanese = 18,
+  SPMessageLanguageLatvian = 19,
+  SPMessageLanguageLithuanian = 20,
+  SPMessageLanguageNorwegian = 21,
+  SPMessageLanguagePolish = 22,
+  SPMessageLanguagePortuguese = 23,
+  SPMessageLanguageRomanian = 24,
+  SPMessageLanguageRussian = 25,
+  SPMessageLanguageSerbian_Cyrillic = 26,
+  SPMessageLanguageSerbian_Latin = 27,
+  SPMessageLanguageSlovakian = 28,
+  SPMessageLanguageSlovenian = 29,
+  SPMessageLanguageSpanish = 30,
+  SPMessageLanguageSwedish = 31,
+  SPMessageLanguageTurkish = 32,
+};
+
+/// Supported privacy manager tabs in PM
+typedef SWIFT_ENUM(NSInteger, SPPrivacyManagerTab, open) {
+  SPPrivacyManagerTabDefault = 0,
+  SPPrivacyManagerTabPurposes = 1,
+  SPPrivacyManagerTabVendors = 2,
+  SPPrivacyManagerTabFeatures = 3,
+};
 
 
 
@@ -1697,6 +1803,8 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController21GDPRMessageUIDelegate_")
 - (void)loadPrivacyManager;
 @end
 
+enum SPMessageLanguage : NSInteger;
+enum SPPrivacyManagerTab : NSInteger;
 @class GDPRPropertyName;
 @class NSBundle;
 
@@ -1719,6 +1827,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, strong) GDPRUserConsent * _Nonnull userConsents;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
+/// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+/// By default the SDK will use the locale defined by the WebView
+@property (nonatomic) enum SPMessageLanguage messageLanguage;
+/// Instructs the privacy manager to be displayed with this tab.
+/// By default the SDK will use the defult tab of PM
+@property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 /// will instruct the SDK to clean consent data if an error occurs
 @property (nonatomic) BOOL shouldCleanConsentOnError;
 /// will instruct the SDK to call the error metrics if an error occurs
@@ -2012,6 +2126,51 @@ SWIFT_CLASS("_TtC21ConsentViewController21ResourceNotFoundError")
 @interface ResourceNotFoundError : GenericNetworkError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
 @end
+
+/// Languages supported by Message and PM
+typedef SWIFT_ENUM(NSInteger, SPMessageLanguage, open) {
+  SPMessageLanguageBrowserDefault = 0,
+  SPMessageLanguageEnglish = 1,
+  SPMessageLanguageBulgarian = 2,
+  SPMessageLanguageCatalan = 3,
+  SPMessageLanguageChinese = 4,
+  SPMessageLanguageCroatian = 5,
+  SPMessageLanguageCzech = 6,
+  SPMessageLanguageDanish = 7,
+  SPMessageLanguageDutch = 8,
+  SPMessageLanguageEstonian = 9,
+  SPMessageLanguageFinnish = 10,
+  SPMessageLanguageFrench = 11,
+  SPMessageLanguageGaelic = 12,
+  SPMessageLanguageGerman = 13,
+  SPMessageLanguageGreek = 14,
+  SPMessageLanguageHungarian = 15,
+  SPMessageLanguageIcelandic = 16,
+  SPMessageLanguageItalian = 17,
+  SPMessageLanguageJapanese = 18,
+  SPMessageLanguageLatvian = 19,
+  SPMessageLanguageLithuanian = 20,
+  SPMessageLanguageNorwegian = 21,
+  SPMessageLanguagePolish = 22,
+  SPMessageLanguagePortuguese = 23,
+  SPMessageLanguageRomanian = 24,
+  SPMessageLanguageRussian = 25,
+  SPMessageLanguageSerbian_Cyrillic = 26,
+  SPMessageLanguageSerbian_Latin = 27,
+  SPMessageLanguageSlovakian = 28,
+  SPMessageLanguageSlovenian = 29,
+  SPMessageLanguageSpanish = 30,
+  SPMessageLanguageSwedish = 31,
+  SPMessageLanguageTurkish = 32,
+};
+
+/// Supported privacy manager tabs in PM
+typedef SWIFT_ENUM(NSInteger, SPPrivacyManagerTab, open) {
+  SPPrivacyManagerTabDefault = 0,
+  SPPrivacyManagerTabPurposes = 1,
+  SPPrivacyManagerTabVendors = 2,
+  SPPrivacyManagerTabFeatures = 3,
+};
 
 
 
