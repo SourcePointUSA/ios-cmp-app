@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/SourcePointUSA/ios-cmp-app.git",
         "state": {
           "branch": null,
-          "revision": "5641bd958354fffa4d181488705bc7ef1692b591",
-          "version": "5.3.5"
+          "revision": "d5d16ef0afd765c2f2bc40926bf6e39e5d58028c",
+          "version": "5.3.6-beta.0"
         }
       }
     ]

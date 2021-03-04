@@ -1,3 +1,7 @@
+## 5.3.6 (March, 04, 2021)
+* Added support to XCFramework [#288](https://github.com/SourcePointUSA/ios-cmp-app/pull/288)
+* Added Obj-C support to Message Language and PMTab feature[#289](https://github.com/SourcePointUSA/ios-cmp-app/pull/289)
+
 ## 5.3.5 (Feb, 11, 2021)
 * Fixed a regression that'd prevent the SDK from running on projects using Swift Package Manager [#282](https://github.com/SourcePointUSA/ios-cmp-app/pull/282)
 ## 5.3.4 (Jan, 20, 2021)

@@ -16,7 +16,7 @@ typealias Meta = String
 
 @objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
     /// The version of the SDK. It should mirror the version from podspec.
-    static public let VERSION = "5.3.5"
+    static public let VERSION = "5.3.6"
 
     static public let SP_GDPR_KEY_PREFIX = "sp_gdpr_"
     static let META_KEY = "\(SP_GDPR_KEY_PREFIX)meta"
@@ -62,11 +62,11 @@ typealias Meta = String
 
     /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
     /// By default the SDK will use the locale defined by the WebView
-    public var messageLanguage = MessageLanguage.BrowserDefault
+    public var messageLanguage = SPMessageLanguage.BrowserDefault
 
     /// Instructs the privacy manager to be displayed with this tab.
     /// By default the SDK will use the defult tab of PM
-    public var privacyManagerTab = PrivacyManagerTab.Default
+    public var privacyManagerTab = SPPrivacyManagerTab.Default
 
     /// will instruct the SDK to clean consent data if an error occurs
     public var shouldCleanConsentOnError = true

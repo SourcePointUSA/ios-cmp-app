@@ -10,13 +10,18 @@ pod 'ConsentViewController', '5.3.5'
 ```
 
 ### Carthage
-We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Carthage-SDK-integration-guide) for it.
+We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/SDK-integration-using-Carthage) for it.
 Let us know if we missed any step.
 
 ### Swift Package Manager
 We also support [Swift Package Manager](https://swift.org/package-manager/). It is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but SourcePoint does support its use on iOS platform.
 
 To add our SDK package as dependency to your Xcode project, In Xcode select File > Swift Packages > Add Package Dependency and enter our SDK repository URL.
+
+### Manually add XCFramework
+If you prefer not to use any of the dependency managers. You can add `ConsentViewController.xcframework` as a library to your project or workspace.
+1. Download the [latest code version](https://github.com/SourcePointUSA/ios-cmp-app.git).
+2. Open your project in Xcode, select your target and go to the General tab. In the Frameworks, Libraries, and Embedded Content section. drag and drop `ConsentViewController.xcframework` from downloaded project XCFramework folder.
 
 ```
 https://github.com/SourcePointUSA/ios-cmp-app.git
@@ -198,6 +203,11 @@ By default, the SDK will instruct the message to render itself using the locale 
 consentViewController.messageLanguage = .German
 consentViewController.loadMessage()
 ```
+In Obj-C that'd be:
+```objc
+cvc.messageLanguage = SPMessageLanguageGerman;
+[cvc loadMessage];
+```
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
 
 ## Overwriting Privacy Manager tab
@@ -205,6 +215,11 @@ By default, the SDK will load default tab of privacy manager or the tab specifie
 ```swift
 consentViewController.privacyManagerTab = .Vendors
 consentViewController.loadMessage()
+```
+In Obj-C that'd be:
+```objc
+cvc.privacyManagerTab = SPPrivacyManagerTabPurposes;
+[cvc loadMessage];
 ```
 It's important to note that the order of precedence for the PM tab will be as follow:
 1. PM tab set in the `Show Options` action (set in the dashboard)
