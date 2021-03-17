@@ -2,7 +2,7 @@ name: SDKRelease
 
 on:
   push:
-    branches: [ master ]
+    branches: [ SP-6382_automate_sdk_release ]
 
 jobs:
   deploy:
