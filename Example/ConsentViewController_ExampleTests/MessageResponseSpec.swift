@@ -58,36 +58,43 @@ class MessageResponseSpec: QuickSpec {
         """.filter { !" \n\t\r".contains($0) }.data(using: .utf8) }
 
         it("can be decoded from JSON") {
+            let metaData = MessageMetaData(
+                categoryId: .unknown,
+                subCategoryId: .TCFv2,
+                messageId: 1
+            )
             expect(try! response.decoded() as MessagesResponse).to(equal(MessagesResponse(
-                gdpr: GDPRMessageResponse<SPJson>(
-                    message: try! SPJson(["foo": "message"]),
-                    applies: true,
-                    uuid: "gdpr-uuid",
-                    userConsent: SPGDPRConsent(
-                        acceptedVendors: ["accepted-vendor"],
-                        acceptedCategories: ["accepted-category"],
-                        legitimateInterestCategories: ["leg-int-category"],
-                        specialFeatures: ["special-feature"],
-                        vendorGrants: [
-                            "foo-purpose": SPGDPRVendorGrant(vendorGrant: true, purposeGrants: SPGDPRPurposeGrants())
-                        ],
-                        euconsent: "consent-string",
-                        tcfData: try! SPJson([
-                            "foo": "tc-data"
-                        ])),
-                    meta: "gdpr-meta"
-                ),
-                ccpa: CCPAMessageResponse<SPJson>(
-                    message: try! SPJson(["foo": "message"]),
-                    applies: true,
-                    uuid: "ccpa-uuid",
-                    userConsent: SPCCPAConsent(
-                        status: .RejectedNone,
-                        rejectedVendors: ["rejected-vendor"],
-                        rejectedCategories: ["rejected-category"],
-                        uspstring: "us-pstring"
+                campaigns: [
+                    Campaign(
+                        type: .gdpr,
+                        message: .web(try! SPJson(["foo": "message"])),
+                        userConsent: .gdpr(consents: SPGDPRConsent(
+                            vendorGrants: [
+                                "foo-purpose": SPGDPRVendorGrant(
+                                    vendorGrant: true,
+                                    purposeGrants: SPGDPRPurposeGrants()
+                                )
+                            ],
+                            euconsent: "consent-string",
+                            tcfData: try! SPJson(["foo": "tc-data"])
+                        )),
+                        applies: true,
+                        messageMetaData: metaData
                     ),
-                    meta: "ccpa-meta")
+                    Campaign(
+                        type: .ccpa,
+                        message: .web(try! SPJson(["foo": "message"])),
+                        userConsent: .ccpa(consents: SPCCPAConsent(
+                            status: .RejectedNone,
+                            rejectedVendors: ["rejected-vendor"],
+                            rejectedCategories: ["rejected-category"],
+                            uspstring: "us-pstring"
+                        )),
+                        applies: true,
+                        messageMetaData: metaData
+                    )
+                ],
+                localState: ""
             )))
         }
     }

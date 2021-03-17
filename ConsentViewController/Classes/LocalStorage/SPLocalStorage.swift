@@ -21,7 +21,7 @@ protocol Storage {
 extension UserDefaults: Storage {
     func setObject<T: Encodable>(_ value: T, forKey defaultName: String) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(value).get() {
+        if let encoded = try? encoder.encodeResult(value).get() {
             self.set(encoded, forKey: defaultName)
         }
     }
@@ -45,6 +45,7 @@ protocol SPLocalStorage {
     var tcfData: [String: Any]? { get set }
     var usPrivacyString: String? { get set }
     var consentsProfile: ConsentsProfile { get set }
+    var localState: String { get set }
 
     func clear()
 

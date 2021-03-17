@@ -24,22 +24,16 @@ class ViewController: UIViewController, SPDelegate {
     @IBAction func onAcceptVendorXTap(_ sender: Any) {}
 
     var gdprCampaign: SPCampaign { SPCampaign(
-        accountId: 22,
-        propertyId: 10589,
-        pmId: "1",
-        propertyName: try! SPPropertyName("unified.mobile.demo"),
         targetingParams: ["legislation": "GDPR", "location": "EU"]
     )}
 
     var ccpaCampaign: SPCampaign { SPCampaign(
-        accountId: 22,
-        propertyId: 10589,
-        pmId: "1",
-        propertyName: try! SPPropertyName("unified.mobile.demo"),
         targetingParams: ["legislation": "CCPA", "location": "EU"]
     )}
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
+        accountId: 22,
+        propertyName: try! SPPropertyName("unified.mobile.demo"),
         campaigns: SPCampaigns(gdpr: gdprCampaign, ccpa: ccpaCampaign),
         delegate: self
     )}()

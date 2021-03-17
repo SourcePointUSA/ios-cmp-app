@@ -9,9 +9,7 @@ import Foundation
 
 /// Represent all the data related to a single legislation when communicating with the API or storing it in the local storage
 struct ConsentProfile<LegislationConsent: Codable & Equatable>: Codable, Equatable {
-    let uuid: SPConsentUUID?
     let applies: Bool?
-    let meta: String?
     let consents: LegislationConsent
 }
 

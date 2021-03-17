@@ -108,6 +108,7 @@ import WebKit
 @objcMembers class GDPRWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
     static let PM_BASE_URL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")!
+    static let GDPR_RENDERING_APP_URL = URL(string: "https://notice.sp-prod.net/?preload_message=true")!
 
     override var webviewConfig: WKWebViewConfiguration? {
         let config = WKWebViewConfiguration()
@@ -125,11 +126,12 @@ import WebKit
         return config
     }
 
+    /// TODO: remove the force_try
     // swiftlint:disable force_try
     override func loadMessage(_ jsonMessage: SPJson) {
         let jsonString = String(data: try! JSONSerialization.data(withJSONObject: jsonMessage.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
         self.contents = jsonMessage
-        webview?.load(URLRequest(url: URL(string: "http://localhost:8080/?preload_message=true")!))
+        webview?.load(URLRequest(url: GDPRWebMessageViewController.GDPR_RENDERING_APP_URL))
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             print("LOADING: ", jsonString)
             self.webview?.evaluateJavaScript("""

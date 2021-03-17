@@ -44,22 +44,10 @@ public typealias SPGDPRPurposeId = String
 @objcMembers public class SPGDPRConsent: NSObject, Codable {
     public static func empty() -> SPGDPRConsent {
         return SPGDPRConsent(
-            acceptedVendors: [],
-            acceptedCategories: [],
-            legitimateInterestCategories: [],
-            specialFeatures: [],
             vendorGrants: SPGDPRVendorGrants(),
             euconsent: "",
             tcfData: SPJson())
     }
-
-    /// The ids of the accepted vendors and categories. These can be found in SourcePoint's dashboard
-    ///
-    /// - Important: All ids are related to non-iAB vendors/purposes. For iAB related consent refer to `euconsent`
-    public let acceptedVendors,
-        acceptedCategories,
-        legitimateInterestCategories,
-        specialFeatures: [String]
 
     public let vendorGrants: SPGDPRVendorGrants
 
@@ -70,17 +58,9 @@ public typealias SPGDPRPurposeId = String
     public let tcfData: SPJson
 
     public init(
-        acceptedVendors: [String],
-        acceptedCategories: [String],
-        legitimateInterestCategories: [String],
-        specialFeatures: [String],
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
         tcfData: SPJson) {
-        self.acceptedVendors = acceptedVendors
-        self.acceptedCategories = acceptedCategories
-        self.legitimateInterestCategories = legitimateInterestCategories
-        self.specialFeatures = specialFeatures
         self.vendorGrants = vendorGrants
         self.euconsent = euconsent
         self.tcfData = tcfData
@@ -88,11 +68,7 @@ public typealias SPGDPRPurposeId = String
 
     public override func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPGDPRConsent {
-            return other.acceptedCategories.elementsEqual(acceptedCategories) &&
-                other.acceptedVendors.elementsEqual(acceptedVendors) &&
-                other.legitimateInterestCategories.elementsEqual(legitimateInterestCategories) &&
-                other.specialFeatures.elementsEqual(specialFeatures) &&
-                other.euconsent.elementsEqual(euconsent) &&
+            return other.euconsent.elementsEqual(euconsent) &&
                 other.vendorGrants.allSatisfy { key, value in vendorGrants[key]?.isEqual(value) ?? false }
         } else {
             return false
@@ -102,10 +78,6 @@ public typealias SPGDPRPurposeId = String
     open override var description: String {
         return """
         UserConsents(
-            acceptedVendors: \(acceptedVendors),
-            acceptedCategories: \(acceptedCategories),
-            legitimateInterests: \(legitimateInterestCategories),
-            specialFeatures: \(specialFeatures),
             vendorGrants: \(vendorGrants),
             euconsent: \(euconsent)
         )
@@ -113,8 +85,7 @@ public typealias SPGDPRPurposeId = String
     }
 
     enum CodingKeys: String, CodingKey {
-        case acceptedVendors, acceptedCategories, euconsent, specialFeatures
-        case legitimateInterestCategories = "legIntCategories"
+        case euconsent
         case tcfData = "TCData"
         case vendorGrants = "grants"
     }

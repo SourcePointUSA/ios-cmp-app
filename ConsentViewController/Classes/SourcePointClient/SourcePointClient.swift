@@ -17,7 +17,7 @@ extension Result where Success == Data? {
 }
 
 extension JSONEncoder {
-    func encode<T: Encodable>(_ value: T) -> Result<Data, Error> {
+    func encodeResult<T: Encodable>(_ value: T) -> Result<Data, Error> {
         Result { try self.encode(value) }
     }
 }
@@ -28,47 +28,39 @@ extension JSONDecoder {
     }
 }
 
-typealias MessageHandler<MessageType: Decodable & Equatable> = (Result<MessagesResponse<MessageType>, SPError>) -> Void
-typealias WebMessageHandler = MessageHandler<SPJson>
-typealias NativeMessageHandler = MessageHandler<SPJson>
+typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<ActionResponse<T>, SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
-    init(timeout: TimeInterval)
+    init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval)
 
-    func getWebMessage(
+    func getMessages(
         campaigns: SPCampaigns,
-        profile: ConsentsProfile,
-        handler: @escaping WebMessageHandler)
-
-    func getNativeMessage(
-        campaigns: SPCampaigns,
-        profile: ConsentsProfile,
-        handler: @escaping NativeMessageHandler)
+        authId: String?,
+        localState: String,
+        idfaStaus: SPIDFAStatus,
+        handler: @escaping MessagesHandler)
 
     func postCCPAAction(
         action: SPAction,
         campaign: SPCampaign,
-        uuid: SPConsentUUID,
-        meta: SPMeta?,
+        localState: String,
         handler: @escaping CCPAConsentHandler)
 
     func postGDPRAction(
         action: SPAction,
         campaign: SPCampaign,
-        uuid: SPConsentUUID,
-        meta: SPMeta?,
+        localState: String,
         handler: @escaping GDPRConsentHandler)
 
     func postAction<T: Decodable & Equatable>(
         action: SPAction,
         legislation: SPLegislation,
         campaign: SPCampaign,
-        uuid: SPConsentUUID,
-        meta: SPMeta?,
+        localState: String,
         handler: @escaping ConsentHandler<T>)
 
 //    func customConsent(
@@ -97,77 +89,66 @@ A Http client for SourcePoint's endpoints
 class SourcePointClient: SourcePointProtocol {
     static let WRAPPER_API = URL(string: "http://localhost:3000/wrapper/")! /// TODO: change to real URL
     static let ERROR_METRIS_URL = URL(string: "metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_CONTENTS_URL = URL(string: "v1/unified/native-message?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_URL_URL = URL(string: "v1/unified/message?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+//    static let GET_MESSAGES_URL = URL(string: "v1/unified/message?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGES_URL = URL(string: "https://fake-wrapper-api.herokuapp.com/all/v1/multi-campaign")!
     static let GDPR_CONSENT_URL = URL(string: "tcfv2/v1/gdpr/consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CCPA_CONSENT_URL = URL(string: "v1/ccpa/consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "v1/unified/gdpr/custom-consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
 
+    let accountId: Int
+    let propertyName: SPPropertyName
     var client: HttpClient
 
     let requestUUID = UUID()
 
-    init(client: HttpClient) {
+    init(accountId: Int, propertyName: SPPropertyName, client: HttpClient) {
+        self.accountId = accountId
+        self.propertyName = propertyName
         self.client = client
     }
 
-    required convenience init(timeout: TimeInterval) {
-        self.init(client: SimpleClient(timeoutAfter: timeout))
+    required convenience init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval) {
+        self.init(
+            accountId: accountId,
+            propertyName: propertyName,
+            client: SimpleClient(timeoutAfter: timeout))
     }
 
     func setRequestTimeout(_ timeout: TimeInterval) {
         client = SimpleClient(timeoutAfter: timeout)
     }
 
-    func campaignToRequest(_ campaign: SPCampaign?, uuid: SPConsentUUID?, meta: String?) -> CampaignRequest? {
+    func campaignToRequest(_ campaign: SPCampaign?) -> CampaignRequest? {
         guard let campaign = campaign else { return nil }
         return CampaignRequest(
-            uuid: uuid,
-            accountId: campaign.accountId,
-            propertyId: campaign.propertyId,
-            propertyHref: campaign.propertyName,
             campaignEnv: campaign.environment,
-            meta: meta,
             targetingParams: campaign.targetingParams
         )
     }
 
-    func getNativeMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping NativeMessageHandler) {
-        /// TODO: implement native message
-    }
-
-    func getWebMessage(campaigns: SPCampaigns, profile: ConsentsProfile, handler: @escaping WebMessageHandler) {
-        getMessage(native: false, campaigns: campaigns, profile: profile, handler: handler)
-    }
-
-    func getMessage<MessageType: Decodable>(
-        native: Bool,
-        authId: String? = nil,
+    func getMessages(
         campaigns: SPCampaigns,
-        profile: ConsentsProfile,
-        handler: @escaping MessageHandler<MessageType>) {
-        let url = native ?
-            SourcePointClient.GET_MESSAGE_CONTENTS_URL :
-            SourcePointClient.GET_MESSAGE_URL_URL
-        _ = JSONEncoder().encode(MessageRequest(
-            authId: profile.authId,
+        authId: String?,
+        localState: String,
+        idfaStaus: SPIDFAStatus,
+        handler: @escaping MessagesHandler) {
+
+        _ = JSONEncoder().encodeResult(MessageRequest(
+            authId: authId,
             requestUUID: requestUUID,
+            propertyHref: propertyName,
+            accountId: accountId,
+            idfaStatus: idfaStaus,
+            localState: localState,
             campaigns: CampaignsRequest(
-                gdpr: campaignToRequest(
-                    campaigns.gdpr,
-                    uuid: profile.gdpr?.uuid,
-                    meta: profile.gdpr?.meta
-                ),
-                ccpa: campaignToRequest(
-                    campaigns.ccpa,
-                    uuid: profile.ccpa?.uuid,
-                    meta: profile.ccpa?.meta
-                )
+                gdpr: campaignToRequest(campaigns.gdpr),
+                ccpa: campaignToRequest(campaigns.ccpa),
+                ios14: campaignToRequest(campaigns.ccpa)
             )
         )).map { body in
-            client.post(urlString: url.absoluteString, body: body) { result in
+            client.post(urlString: SourcePointClient.GET_MESSAGES_URL.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as MessagesResponse<MessageType>
+                    try result.decoded() as MessagesResponse
                 }.mapError({
                     InvalidResponseWebMessageError(error: $0)
                 }))
@@ -183,24 +164,22 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postCCPAAction(action: SPAction, campaign: SPCampaign, uuid: SPConsentUUID, meta: SPMeta?, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(action: SPAction, campaign: SPCampaign, localState: String, handler: @escaping CCPAConsentHandler) {
         postAction(
             action: action,
             legislation: .CCPA,
             campaign: campaign,
-            uuid: uuid,
-            meta: meta,
+            localState: localState,
             handler: handler
         )
     }
 
-    func postGDPRAction(action: SPAction, campaign: SPCampaign, uuid: SPConsentUUID, meta: SPMeta?, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(action: SPAction, campaign: SPCampaign, localState: String, handler: @escaping GDPRConsentHandler) {
         postAction(
             action: action,
             legislation: .GDPR,
             campaign: campaign,
-            uuid: uuid,
-            meta: meta,
+            localState: localState,
             handler: handler
         )
     }
@@ -209,22 +188,19 @@ class SourcePointClient: SourcePointProtocol {
         action: SPAction,
         legislation: SPLegislation,
         campaign: SPCampaign,
-        uuid: SPConsentUUID,
-        meta: SPMeta?,
+        localState: String,
         handler: @escaping ConsentHandler<T>) {
         _ = JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
-            JSONEncoder().encode(ActionRequest(
-                propertyId: campaign.propertyId,
-                propertyHref: campaign.propertyName,
-                accountId: campaign.accountId,
+            JSONEncoder().encodeResult(ActionRequest(
+                propertyHref: propertyName,
+                accountId: accountId,
                 actionType: action.type.rawValue,
                 choiceId: action.id,
-                privacyManagerId: campaign.pmId,
+                privacyManagerId: "1", /// TODO: use real PM id
                 requestFromPM: action.id == nil,
-                uuid: uuid,
                 requestUUID: requestUUID,
                 pmSaveAndExitVariables: pmPayload,
-                meta: meta ?? "{}",
+                localState: localState,
                 publisherData: action.publisherData,
                 consentLanguage: action.consentLanguage
             )).map { body in

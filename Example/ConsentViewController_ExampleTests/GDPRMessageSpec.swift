@@ -48,7 +48,7 @@ class GDPRMessageSpec: QuickSpec {
             context("Test JSON Encoding") {
                 var actual: GDPRMessage?
                 beforeEach {
-                    guard let data = try? JSONEncoder().encode(gdprMessage).get() else {
+                    guard let data = try? JSONEncoder().encodeResult(gdprMessage).get() else {
                         fail("Failed to encode \(String(describing: GDPRMessage.self))")
                         return
                     }

@@ -39,6 +39,14 @@ import AdSupport
         }
     }
 
+    public static func current() -> SPIDFAStatus {
+        if #available(iOS 14, *) {
+            return SPIDFAStatus.init(fromApple: ATTrackingManager.trackingAuthorizationStatus)
+        } else {
+            return .unavailable
+        }
+    }
+
     public var description: String {
         switch self {
         case .unknown: return "unknown"

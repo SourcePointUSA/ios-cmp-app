@@ -49,7 +49,7 @@ class SPJsonSpec: QuickSpec {
 
             it("can be encoded to and decoded to JSON") {
                 let spJson = try! SPJson(self.json)
-                let encoded = try! JSONEncoder().encode(spJson).get()
+                let encoded = try! JSONEncoder().encodeResult(spJson).get()
                 let decoded = try! JSONDecoder().decode(SPJson.self, from: encoded).get()
                 expect(decoded["string"]?.stringValue).to(equal("hello there"))
                 expect(decoded["fake int"]?.stringValue).to(equal("1"))

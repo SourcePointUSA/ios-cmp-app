@@ -13,22 +13,24 @@ import Nimble
 // swiftlint:disable force_try
 
 class MessageRequestSpec: QuickSpec {
-    func campaign(_ name: String) -> CampaignRequest { CampaignRequest(
-            uuid: nil,
-            accountId: 1,
-            propertyId: 1,
-            propertyHref: try! SPPropertyName(name),
-            campaignEnv: .Public,
-            meta: "",
-            targetingParams: ["foo": "bar"]
-        )
-    }
+    let campaign = CampaignRequest(
+        campaignEnv: .Public,
+        targetingParams: ["foo": "bar"]
+    )
     override func spec() {
         let reqUUID = UUID()
         let message = MessageRequest(
             authId: nil,
             requestUUID: reqUUID,
-            campaigns: CampaignsRequest(gdpr: campaign("gdpr"), ccpa: campaign("ccpa"))
+            propertyHref: try! SPPropertyName(name),
+            accountId: 1,
+            idfaStatus: .unknown,
+            localState: "",
+            campaigns: CampaignsRequest(
+                gdpr: campaign,
+                ccpa: campaign,
+                ios14: campaign
+            )
         )
         let messageString = """
         {

@@ -16,10 +16,6 @@ class SPGDPRConsentsSpec: QuickSpec {
         describe("static empty()") {
             it("contain empty defaults for all its fields") {
                 let consents = SPGDPRConsent.empty()
-                expect(consents.acceptedCategories).to(beEmpty())
-                expect(consents.acceptedVendors).to(beEmpty())
-                expect(consents.legitimateInterestCategories).to(beEmpty())
-                expect(consents.specialFeatures).to(beEmpty())
                 expect(consents.euconsent).to(beEmpty())
                 expect(consents.tcfData.dictionaryValue).to(beEmpty())
                 expect(consents.vendorGrants).to(beEmpty())
@@ -31,9 +27,9 @@ class SPGDPRConsentsSpec: QuickSpec {
         }
 
         describe("CodingKeys") {
-            it("legIntCategories is mapped to legitimateInterestCategories") {
-                expect(SPGDPRConsent.CodingKeys.legitimateInterestCategories.rawValue)
-                    .to(equal("legIntCategories"))
+            it("grants is mapped to vendorGrants") {
+                expect(SPGDPRConsent.CodingKeys.vendorGrants.rawValue)
+                    .to(equal("grants"))
             }
 
             it("TCData is mapped to tcfData") {

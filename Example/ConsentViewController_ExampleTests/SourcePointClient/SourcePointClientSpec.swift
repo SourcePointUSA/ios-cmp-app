@@ -13,22 +13,16 @@ import Nimble
 @testable import ConsentViewController
 
 class SourcePointClientSpec: QuickSpec {
-    static let propertyId = 123
+    let propertyId = 123
+    let accountId = 1, propertyName = try! SPPropertyName("test")
 
-    func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(client: client) }
-    var campaign: SPCampaign { SPCampaign(
-        accountId: 1,
-        propertyId: 1,
-        pmId: "",
-        propertyName: try! SPPropertyName("test"),
-        environment: .Public,
-        targetingParams: [:]
-    )}
+    func getClient(_ client: MockHttp) -> SourcePointClient {
+        SourcePointClient(accountId: accountId, propertyName: propertyName, client: client)
+    }
+    var campaign: SPCampaign { SPCampaign(environment: .Public, targetingParams: [:]) }
     var campaigns: SPCampaigns { SPCampaigns(gdpr: campaign) }
     var gdprProfile: ConsentProfile<SPGDPRConsent> { ConsentProfile<SPGDPRConsent>(
-        uuid: "uuid",
         applies: true,
-        meta: "meta",
         consents: SPGDPRConsent.empty()
     )}
     var profile: ConsentsProfile { ConsentsProfile(gdpr: gdprProfile) }
@@ -39,18 +33,18 @@ class SourcePointClientSpec: QuickSpec {
         try! JSONEncoder().encode(
             MessageRequest(
                 authId: "auth id",
-                requestUUID: client.requestUUID,
+                requestUUID: UUID(),
+                propertyHref: propertyName,
+                accountId: accountId,
+                idfaStatus: .unknown,
+                localState: "",
                 campaigns: CampaignsRequest(
                     gdpr: CampaignRequest(
-                        uuid: profile.gdpr?.uuid,
-                        accountId: campaign.accountId,
-                        propertyId: campaign.propertyId,
-                        propertyHref: campaign.propertyName,
                         campaignEnv: campaign.environment,
-                        meta: profile.gdpr!.meta,
                         targetingParams: targetingParams
                     ),
-                    ccpa: nil
+                    ccpa: nil,
+                    ios14: nil
                 )))
     }
 
@@ -78,12 +72,12 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
-                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, SPError>) in }
+                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: "", idfaStaus: .unknown) { _ in }
                     expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessage(native: false, campaigns: self.campaigns, profile: self.profile) { (r: Result<MessagesResponse<SPJson>, SPError>) in }
+                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: "", idfaStaus: .unknown) { _ in }
                     let parsed = httpClient!.postWasCalledWithBody!
                     expect(parsed).toEventually(equal(self.getMessageRequest(client)))
                 }
@@ -96,8 +90,7 @@ class SourcePointClientSpec: QuickSpec {
                         action: acceptAllAction,
                         legislation: .GDPR,
                         campaign: self.campaign,
-                        uuid: self.gdprProfile.uuid ?? "",
-                        meta: self.gdprProfile.meta
+                        localState: ""
                     ) { _ in }
                     expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/consent?inApp=true"))
                 }
@@ -106,17 +99,15 @@ class SourcePointClientSpec: QuickSpec {
                     let action = SPAction(type: .AcceptAll, id: "1234", consentLanguage: "EN")
                     action.publisherData = ["foo": try? SPJson("bar")]
                     let actionRequest = ActionRequest(
-                        propertyId: self.campaign.propertyId,
-                        propertyHref: self.campaign.propertyName,
-                        accountId: self.campaign.accountId,
+                        propertyHref: self.propertyName,
+                        accountId: self.accountId,
                         actionType: action.type.rawValue,
                         choiceId: action.id,
-                        privacyManagerId: self.campaign.pmId,
+                        privacyManagerId: "1",
                         requestFromPM: false,
-                        uuid: self.gdprProfile.uuid ?? "uuid",
                         requestUUID: client.requestUUID,
                         pmSaveAndExitVariables: SPJson(),
-                        meta: self.gdprProfile.meta ?? "{}",
+                        localState: "{}",
                         publisherData: action.publisherData,
                         consentLanguage: "EN"
                     )
@@ -124,8 +115,7 @@ class SourcePointClientSpec: QuickSpec {
                         action: action,
                         legislation: .GDPR,
                         campaign: self.campaign,
-                        uuid: self.gdprProfile.uuid ?? "",
-                        meta: self.gdprProfile.meta
+                        localState: ""
                     ) { _ in }
                     let parsed = try! JSONDecoder().decode(ActionRequest.self, from: httpClient!.postWasCalledWithBody!).get()
                     expect(parsed).toEventually(equal(actionRequest))

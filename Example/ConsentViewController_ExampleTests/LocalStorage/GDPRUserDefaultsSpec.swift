@@ -53,7 +53,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
 
                 it("gets its value from the local storage") {
                     let profile = ConsentsProfile()
-                    localStorage.storage = [SPUserDefaults.CONSENTS_PROFILE: profile]
+                    localStorage.storage = [SPUserDefaults.CONSENTS_PROFILE_KEY: profile]
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     expect(userDefaults.consentsProfile).to(equal(profile))
                 }
@@ -62,7 +62,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     let profile = ConsentsProfile()
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     userDefaults.consentsProfile = profile
-                    let stored = localStorage.storage[SPUserDefaults.CONSENTS_PROFILE] as! ConsentsProfile
+                    let stored = localStorage.storage[SPUserDefaults.CONSENTS_PROFILE_KEY] as! ConsentsProfile
                     expect(stored).to(equal(profile))
                 }
             }
@@ -75,14 +75,14 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     userDefaults.consentsProfile = profile
                     userDefaults.tcfData = tcfData
                     let dict = userDefaults.dictionaryRepresentation()
-                    expect((dict[SPUserDefaults.CONSENTS_PROFILE] as? ConsentsProfile)).to(equal(profile))
+                    expect((dict[SPUserDefaults.CONSENTS_PROFILE_KEY] as? ConsentsProfile)).to(equal(profile))
                     expect((dict["\(SPUserDefaults.IAB_KEY_PREFIX)foo"] as? String)).to(equal("bar"))
                 }
 
                 it("returns a dictionary containing only its attributes") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     let attributes = [
-                        SPUserDefaults.CONSENTS_PROFILE
+                        SPUserDefaults.CONSENTS_PROFILE_KEY
                     ]
                     let dict = userDefaults.dictionaryRepresentation().keys.filter { key in !attributes.contains(key) }
                     expect(dict).to(beEmpty())

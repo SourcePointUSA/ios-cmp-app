@@ -10,23 +10,20 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_try function_body_length
-
+// swiftlint:disable force_try
 class ActionRequestSpec: QuickSpec {
     override func spec() {
         let requestUUID = UUID()
         let action = ActionRequest(
-            propertyId: 1,
             propertyHref: try! SPPropertyName("property-name"),
             accountId: 1,
             actionType: 1,
             choiceId: "choiceId",
             privacyManagerId: "pmId",
             requestFromPM: false,
-            uuid: "consentUUID",
             requestUUID: requestUUID,
             pmSaveAndExitVariables: try! SPJson(["foo": "bar"]),
-            meta: "meta",
+            localState: "local state",
             publisherData: try! ["pubFoo": SPJson("pubBar")],
             consentLanguage: "EN"
         )
@@ -58,7 +55,7 @@ class ActionRequestSpec: QuickSpec {
         }
 
         it("can be decoded from JSON") {
-            JSONDecoder().decode(ActionRequest.self, from: actionString.data(using: .utf8)!).map {
+            _ = JSONDecoder().decode(ActionRequest.self, from: actionString.data(using: .utf8)!).map {
                 expect(action).to(equal($0))
             }
         }

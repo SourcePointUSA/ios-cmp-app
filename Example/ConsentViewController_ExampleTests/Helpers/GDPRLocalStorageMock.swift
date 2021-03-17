@@ -10,6 +10,7 @@ import Foundation
 @testable import ConsentViewController
 
 class GDPRLocalStorageMock: SPLocalStorage {
+    var localState: String = ""
     var storage: Storage = InMemoryStorageMock()
     var tcfData: [String: Any]? = [:]
     var usPrivacyString: String?
