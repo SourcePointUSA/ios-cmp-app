@@ -1,0 +1,73 @@
+name: SDKRelease
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        
+      - name: Set environment variables from project settings
+        run: |
+          exec .github/scripts/set-metaapp-home-path.sh
+      - name: Import signing certificate
+        env:
+          SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+        run: |
+          exec .github/scripts/import-certificate.sh
+      - name: Import provisioning profile
+        env:
+          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+        run: |
+          exec .github/scripts/import-profile.sh
+      - name: Increment version and build number
+        run: |
+          exec .github/scripts/increment_version_and_build_number.sh
+      - name: Archiving project
+        run: .github/scripts/archive_app.sh
+      - name: Exporting .ipa
+        run: .github/scripts/export_ipa.sh
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: (MMMM, DD, YYYY)
+      - name: Read Release Note
+        id: release_note
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./release_note.txt
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
+        with:
+          tag_name: ${{ env.Tag }}
+          release_name: ${{ env.Tag }}
+          body: |
+            ## ${{ env.Tag }} ${{ steps.current-time.outputs.formattedTime }}
+            ${{ steps.release_note.outputs.content }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./Example/build/GDPR-MetaApp.ipa
+          asset_name: GDPR-MetaApp.ipa
+          asset_content_type: application/ipa
+      - name: Publish to CocoaPod register
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          pod trunk push ConsentViewController.podspec
