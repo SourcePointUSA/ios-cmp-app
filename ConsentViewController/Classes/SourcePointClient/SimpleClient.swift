@@ -51,9 +51,9 @@ class SimpleClient: HttpClient {
 
     func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {
         if logCalls, let method = request.httpMethod, let url = request.url {
-            logger.debug("\(type) \(method) \(url)", [:])
+            logger.debug("\(type) \(method) \(url)")
             if let body = body, let bodyString = String(data: body, encoding: .utf8) {
-                logger.debug(bodyString, [:])
+                logger.debug(bodyString)
             }
         }
     }
@@ -63,7 +63,7 @@ class SimpleClient: HttpClient {
     }
 
     func logResponse(_ request: URLRequest, _ response: Data?) {
-        logRequest("REQUEST", request, response)
+        logRequest("RESPONSE", request, response)
     }
 
     init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession, dispatchQueue: SPDispatchQueue) {
