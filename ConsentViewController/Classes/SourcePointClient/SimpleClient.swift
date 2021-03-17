@@ -63,7 +63,7 @@ class SimpleClient: HttpClient {
     }
 
     func logResponse(_ request: URLRequest, _ response: Data?) {
-        logRequest("REQUEST", request, response)
+        logRequest("RESPONSE", request, response)
     }
 
     init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession, dispatchQueue: SPDispatchQueue) {

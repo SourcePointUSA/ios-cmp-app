@@ -16,6 +16,8 @@ typealias SPMeta = String
 @objcMembers public class SPConsentManager: SPSDK {
     static public let VERSION = "6.0.0-beta"
 
+    static public var shouldCallErrorMetrics = true
+
     weak var delegate: SPDelegate?
     let accountId: Int
     let propertyName: SPPropertyName

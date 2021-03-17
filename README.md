@@ -6,17 +6,22 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '5.3.4'
+pod 'ConsentViewController', '5.3.6'
 ```
 
 ### Carthage
-We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Carthage-SDK-integration-guide) for it.
+We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/SDK-integration-using-Carthage) for it.
 Let us know if we missed any step.
 
 ### Swift Package Manager
 We also support [Swift Package Manager](https://swift.org/package-manager/). It is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but SourcePoint does support its use on iOS platform.
 
 To add our SDK package as dependency to your Xcode project, In Xcode select File > Swift Packages > Add Package Dependency and enter our SDK repository URL.
+
+### Manually add XCFramework
+If you prefer not to use any of the dependency managers. You can add `ConsentViewController.xcframework` as a library to your project or workspace.
+1. Download the [latest code version](https://github.com/SourcePointUSA/ios-cmp-app.git).
+2. Open your project in Xcode, select your target and go to the General tab. In the Frameworks, Libraries, and Embedded Content section. drag and drop `ConsentViewController.xcframework` from downloaded project XCFramework folder.
 
 ```
 https://github.com/SourcePointUSA/ios-cmp-app.git
@@ -96,6 +101,8 @@ extension ViewController: GDPRConsentDelegate {
     [super viewDidLoad];
 
     SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"tcfv2.mobile.webview" error:NULL];
+    
+    NSDictionary *targetingParameter = [NSDictionary dictionary];
 
     cvc = [[GDPRConsentViewController alloc]
            initWithAccountId: 22
@@ -103,6 +110,7 @@ extension ViewController: GDPRConsentDelegate {
            propertyName: propertyName
            PMId: @"122058"
            campaignEnv: SPCampaignEnvPublic
+           targetingParams:targetingParameter
            consentDelegate: self];
 
     [cvc loadMessage];
@@ -224,9 +232,19 @@ In order to set a targeting param all you need to do is passing `targetingParams
 
 ```swift
 lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
-       //other parametters here...
+       //other parameters here...
         targetingParams:["language":"fr"]
     )}()
+```
+In Obj-C that'd be:
+```objc
+NSMutableDictionary *targetingParameter = [[NSMutableDictionary alloc] init];
+[targetingParameter setObject:@"fr" forKey:@"language"];
+
+cvc = [[GDPRConsentViewController alloc]
+       //other parameters here...
+       targetingParams:targetingParameter
+       consentDelegate: self];
 ```
 
 In this example a key/value pair "language":"fr" is passed to the sp scenario and can be useded, wiht the proper scenario setup, to show a french message instead of a english one.
