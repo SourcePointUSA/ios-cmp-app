@@ -23,26 +23,24 @@ class ActionRequestSpec: QuickSpec {
             requestFromPM: false,
             requestUUID: requestUUID,
             pmSaveAndExitVariables: try! SPJson(["foo": "bar"]),
-            localState: "local state",
+            localState: "localstate",
             publisherData: try! ["pubFoo": SPJson("pubBar")],
             consentLanguage: "EN"
         )
         let actionString = """
         {
+            "actionType": 1,
+            "accountId": 1,
             "pmSaveAndExitVariables": {
                 "foo": "bar"
             },
-            "uuid": "consentUUID",
-            "consentLanguage":"EN",
-            "privacyManagerId": "pmId",
-            "choiceId": "choiceId",
-            "requestFromPM": false,
-            "accountId": 1,
-            "actionType": 1,
-            "requestUUID": "\(requestUUID.uuidString)",
-            "meta": "meta",
-            "propertyId": 1,
             "propertyHref": "https:\\/\\/property-name",
+            "localState": "localstate",
+            "requestUUID": "\(requestUUID.uuidString)",
+            "privacyManagerId": "pmId",
+            "requestFromPM": false,
+            "consentLanguage":"EN",
+            "choiceId": "choiceId",
             "pubData": {
                 "pubFoo": "pubBar"
             }

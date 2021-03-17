@@ -82,7 +82,9 @@ class GDPRUserDefaultsSpec: QuickSpec {
                 it("returns a dictionary containing only its attributes") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     let attributes = [
-                        SPUserDefaults.CONSENTS_PROFILE_KEY
+                        SPUserDefaults.CONSENTS_PROFILE_KEY,
+                        SPUserDefaults.US_PRIVACY_STRING_KEY,
+                        SPUserDefaults.LOCAL_STATE_KEY
                     ]
                     let dict = userDefaults.dictionaryRepresentation().keys.filter { key in !attributes.contains(key) }
                     expect(dict).to(beEmpty())

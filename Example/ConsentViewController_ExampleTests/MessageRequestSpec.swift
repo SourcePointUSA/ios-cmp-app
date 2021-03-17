@@ -22,7 +22,7 @@ class MessageRequestSpec: QuickSpec {
         let message = MessageRequest(
             authId: nil,
             requestUUID: reqUUID,
-            propertyHref: try! SPPropertyName(name),
+            propertyHref: try! SPPropertyName("demo"),
             accountId: 1,
             idfaStatus: .unknown,
             localState: "",
@@ -34,23 +34,28 @@ class MessageRequestSpec: QuickSpec {
         )
         let messageString = """
         {
+            "accountId": 1,
+            "idfaStatus": "unknown",
+            "includeData":{
+                "localState":{"type":"string"},
+                "TCData": {"type":"RecordString"},
+                "messageMetaData": {"type":"RecordString"}
+            },
+            "propertyHref": "https:\\/\\/demo",
+            "localState": "",
             "requestUUID": "\(reqUUID.uuidString)",
             "campaigns": {
                 "ccpa": {
                     "campaignEnv": "prod",
-                    "propertyId": 1,
-                    "accountId": 1,
-                    "meta": "",
-                    "targetingParams": {"foo":"bar"},
-                    "propertyHref": "https:\\/\\/ccpa"
+                    "targetingParams": {"foo":"bar"}
                 },
                 "gdpr": {
                     "campaignEnv": "prod",
-                    "propertyId": 1,
-                    "accountId": 1,
-                    "meta": "",
-                    "targetingParams": {"foo":"bar"},
-                    "propertyHref": "https:\\/\\/gdpr"
+                    "targetingParams": {"foo":"bar"}
+                },
+                "ios14": {
+                    "campaignEnv": "prod",
+                    "targetingParams": {"foo":"bar"}
                 }
             }
         }

@@ -26,28 +26,20 @@ class ConsentsProfileSpec: QuickSpec {
         {
             "ccpa": {
                 "applies": true,
-                "meta": "{}",
                 "consents": {
                     "status": "rejectedNone",
                     "rejectedVendors": [],
                     "rejectedCategories": [],
                     "uspstring": "1---"
-                },
-                "uuid": "ccpa-uuid"
+                }
             },
             "gdpr": {
                 "applies": true,
-                "meta": "{}",
                 "consents": {
-                    "TCData": {},
                     "grants": {},
-                    "acceptedVendors": [],
-                    "legIntCategories": [],
-                    "acceptedCategories": [],
-                    "specialFeatures": [],
+                    "TCData": {},
                     "euconsent": ""
-                },
-                "uuid": "gdpr-uuid"
+                }
             }
         }
     """.filter { !" \n\t\r".contains($0) }

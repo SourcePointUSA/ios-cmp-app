@@ -11,7 +11,7 @@ import AdSupport
 
 /// Maps `ATTrackingManager.requestTrackingAuthorization` into our own enum.
 /// It covers also the case when `ATTrackingManager.AuthorizationStatus` is not available.
-@objc public enum SPIDFAStatus: Int, Codable, CaseIterable, CustomStringConvertible {
+@objc public enum SPIDFAStatus: Int, CaseIterable, CustomStringConvertible {
     /// the user hasn't been prompted about the IDFA yet
     case unknown = 0
     /// the user accepted being tracked
@@ -67,6 +67,19 @@ import AdSupport
             self = .unknown
         @unknown default:
             self = .unknown
+        }
+    }
+}
+
+extension SPIDFAStatus: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .accepted: try container.encode("accepted")
+        case .denied: try container.encode("denied")
+        case .unknown: try container.encode("unknown")
+        default:
+            try container.encode("unavailable")
         }
     }
 }

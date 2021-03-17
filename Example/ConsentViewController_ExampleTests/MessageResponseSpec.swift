@@ -16,50 +16,58 @@ class MessageResponseSpec: QuickSpec {
     override func spec() {
         let response = Result { """
         {
-            "gdpr": {
-                "uuid": "gdpr-uuid",
-                "applies": true,
-                "userConsent": {
-                    "euconsent": "consent-string",
-                    "acceptedCategories": ["accepted-category"],
-                    "acceptedVendors": ["accepted-vendor"],
-                    "specialFeatures": ["special-feature"],
-                    "legIntCategories": ["leg-int-category"],
-                    "grants": {
-                        "foo-purpose": {
-                            "vendorGrant": true,
-                            "purposeGrants": {}
+            "campaigns": [
+                {
+                    "type": "gdpr",
+                    "applies": true,
+                    "userConsent": {
+                        "euconsent": "consent-string",
+                        "grants": {
+                            "foo-purpose": {
+                                "vendorGrant": true,
+                                "purposeGrants": {}
+                            }
+                        },
+                        "TCData": {
+                            "foo": "tc-data"
                         }
                     },
-                    "TCData": {
-                        "foo": "tc-data"
+                    "message": {
+                        "foo": "message"
+                    },
+                    "messageMetaData": {
+                        "messageId": 1,
+                        "categoryId": 1,
+                        "subCategoryId": 5
                     }
                 },
-                "meta": "gdpr-meta",
-                "message": {
-                    "foo": "message"
+                {
+                    "type": "ccpa",
+                    "applies": true,
+                    "userConsent": {
+                        "status": "rejectedNone",
+                        "uspstring": "us-pstring",
+                        "rejectedVendors": ["rejected-vendor"],
+                        "rejectedCategories": ["rejected-category"]
+                    },
+                    "meta": "ccpa-meta",
+                    "message": {
+                        "foo": "message"
+                    },
+                    "messageMetaData": {
+                        "messageId": 1,
+                        "categoryId": 1,
+                        "subCategoryId": 5
+                    }
                 }
-            },
-            "ccpa": {
-                "uuid": "ccpa-uuid",
-                "applies": true,
-                "userConsent": {
-                    "status": "rejectedNone",
-                    "uspstring": "us-pstring",
-                    "rejectedVendors": ["rejected-vendor"],
-                    "rejectedCategories": ["rejected-category"]
-                },
-                "meta": "ccpa-meta",
-                "message": {
-                    "foo": "message"
-                }
-            }
+            ],
+            "localState": "test"
         }
         """.filter { !" \n\t\r".contains($0) }.data(using: .utf8) }
 
         it("can be decoded from JSON") {
             let metaData = MessageMetaData(
-                categoryId: .unknown,
+                categoryId: .gdpr,
                 subCategoryId: .TCFv2,
                 messageId: 1
             )
@@ -94,7 +102,7 @@ class MessageResponseSpec: QuickSpec {
                         messageMetaData: metaData
                     )
                 ],
-                localState: ""
+                localState: "test"
             )))
         }
     }
