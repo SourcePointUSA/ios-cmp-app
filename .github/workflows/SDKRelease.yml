@@ -2,7 +2,7 @@ name: SDKRelease
 
 on:
   push:
-    branches: [ master ]
+    branches: [ SP-6382_automate_sdk_release ]
 
 jobs:
   deploy:
@@ -66,7 +66,7 @@ jobs:
           asset_path: ./Example/build/GDPR-MetaApp.ipa
           asset_name: GDPR-MetaApp.ipa
           asset_content_type: application/ipa
-      - name: Import browserstack details
+      - name: Upload MetaApp IPA to BrowserStack
         env:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
