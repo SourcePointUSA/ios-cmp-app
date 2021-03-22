@@ -53,7 +53,6 @@ class ViewController: UIViewController, SPDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        printLocalStorage()
         consentManager.loadMessage()
     }
 
