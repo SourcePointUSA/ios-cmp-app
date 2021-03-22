@@ -151,16 +151,8 @@ enum RenderingAppEvents: String, Defaultable {
         return config
     }
 
-    /// TODO: remove the force_try
     override func loadMessage() {
-        // swiftlint:disable:next force_try
-        let jsonString = String(data: try! JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
         webview?.load(URLRequest(url: GenericWebMessageViewController.GDPR_RENDERING_APP_URL))
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            self.webview?.evaluateJavaScript("""
-                window.SDK.loadMessage("\(self.campaignType.rawValue)",\(jsonString));
-            """)
-        }
     }
 
     override func loadMessage(_ jsonMessage: SPJson? = nil) {
@@ -168,6 +160,23 @@ enum RenderingAppEvents: String, Defaultable {
             contents = jsonMessage
         }
         self.loadMessage()
+    }
+
+    func handleAction(_ actionBody: SPJson) -> SPAction? {
+        guard
+            let type = SPActionType(rawValue: actionBody["type"]?.intValue ?? 0),
+            let language = actionBody["consentLanguage"]?.stringValue,
+            let payload = try? JSONSerialization.data(
+                withJSONObject: actionBody["payload"]?.dictionaryValue as Any,
+                options: .fragmentsAllowed
+            )
+        else { return nil }
+        return SPAction(
+            type: type,
+            id: actionBody["id"]?.stringValue,
+            consentLanguage: language,
+            payload: payload
+        )
     }
 
     override func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -178,28 +187,29 @@ enum RenderingAppEvents: String, Defaultable {
         {
             print("[RenderingApp]", messageBody)
             switch eventName {
+            case .readyForPreload:
+                // TODO: remove the force_try
+                // swiftlint:disable:next force_try
+                let jsonString = String(data: try! JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
+                DispatchQueue.main.async {
+                    self.webview?.evaluateJavaScript("""
+                        window.SDK.loadMessage("\(self.campaignType.rawValue)",\(jsonString));
+                    """)
+                }
             case .onMessageReady:
                 self.messageUIDelegate?.loaded(self)
             case .onAction:
-                guard
-                    let type = SPActionType(rawValue: body["type"]?.intValue ?? 0),
-                    let language = body["consentLanguage"]?.stringValue,
-                    let payload = try? JSONSerialization.data(
-                        withJSONObject: body["payload"]?.dictionaryValue as Any,
-                        options: .fragmentsAllowed
+                if let action = self.handleAction(body) {
+                    self.messageUIDelegate?.action(action)
+                } else {
+                    self.messageUIDelegate?.onError(
+                        InvalidOnActionEventPayloadError(eventName.rawValue, body: body.description)
                     )
-                else {
-                    messageUIDelegate?.onError(InvalidOnActionEventPayloadError(eventName.rawValue, body: messageBody.description))
-                    break
                 }
-                self.messageUIDelegate?.action(SPAction(
-                    type: type,
-                    id: body["id"]?.stringValue,
-                    consentLanguage: language,
-                    payload: payload
-                ))
+            case .onError:
+                self.messageUIDelegate?.onError(SPError())
             default:
-                break
+                print("[RenderingApp] UnknownAction(\(eventName.rawValue))")
             }
         } else {
             print("[RenderingApp] UnknownBody(\(message.body))")
