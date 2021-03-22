@@ -7,13 +7,11 @@ var postToWebView = function (webview) {
 window.SDK = function (postToWebView) {
     return {
     loadMessage: function(messageJSON) {
-        postToWebView("before");
         var messagePayload = Object.assign({}, messageJSON, {
             name: "sp.loadMessage",
             fromNativeSDK: true
         });
         window.postMessage(messagePayload);
-        postToWebView("after");
     },
     onMessageReady: function() {
         postToWebView("onMessageReady");
@@ -39,10 +37,10 @@ var getActionFromMessage = function (eventData) {
     })[0] || {};
     var choiceData = choiceAction.data || {};
     return {
-    id: String(choiceData.choice_id),
-    type: choiceData.type,
-    payload: { pm_url: choiceData.iframe_url },
-    consentLanguage: eventData.consentLanguage
+        id: String(choiceData.choice_id),
+        type: choiceData.type,
+        payload: { pm_url: choiceData.iframe_url },
+        consentLanguage: eventData.consentLanguage
     };
 };
 
@@ -61,9 +59,12 @@ var handleMessageEvent = function(SDK) {
                 }) :
                 SDK.onAction(getActionFromMessage(eventData));
                 break;
+            case "sp.renderingAppError":
+                SDK.onError(eventData);
+                break;
             default:
                 eventData.payload.action = eventData.name;
-                SDK.onMessageEvent(eventData.payload);
+                SDK.onMessageEvent(eventData);
         }
     };
 };
@@ -79,24 +80,25 @@ function isError(event) {
 
 function handleError(event) {
     window.SDK.onError({
-    code: event.code,
-    title: event.title,
-    stackTrace: event.stackTrace
+        code: event.code,
+        title: event.title,
+        stackTrace: event.stackTrace
     });
 }
 
 var handleMessageOrPMEvent = function (SDK) {
-    return function ({ data }) {
+    return function (event) {
+        var data = event.data;
         try {
-            isError(event) ? handleError(data) : handleMessageEvent(SDK)({
-            name: event.name,
-            fromPM: isFromPM(data),
-            actionType: data.actionType,
-            payload: data.payload || data.actions || {},
-            consentLanguage: data.consentLanguage
+            isError(event) ? handleError(event) : handleMessageEvent(SDK)({
+                name: data.name,
+                fromPM: isFromPM(data),
+                actionType: data.actionType,
+                payload: data.payload || data.actions || {},
+                consentLanguage: data.consentLanguage
             });
         } catch (error) {
-            window.SDK.onError(error);
+            SDK.onError(error);
         }
     };
 };
