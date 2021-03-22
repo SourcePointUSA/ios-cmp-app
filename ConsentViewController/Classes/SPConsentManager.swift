@@ -59,14 +59,6 @@ typealias SPMeta = String
         self.storage = storage
     }
 
-    func renderMessage(campaignType: CampaignType, _ message: SPJson) {
-        GenericWebMessageViewController(
-            contents: message,
-            campaignType: campaignType,
-            delegate: self
-        ).loadMessage(message)
-    }
-
     /// Instructs the privacy manager to be displayed with this tab.
     /// By default the SDK will use the defult tab of PM
     public var privacyManagerTab = SPPrivacyManagerTab.Default
@@ -85,7 +77,7 @@ typealias SPMeta = String
         }
     }
 
-    func messageToViewController (_ message: Message?, _ type: CampaignType) -> SPMessageViewController {
+    func messageToViewController (_ message: Message?, _ type: CampaignType) -> SPMessageViewController? {
         switch message {
         case .native(let content):
             /// TODO: here we'd initialise the Native Message object
@@ -95,7 +87,7 @@ typealias SPMeta = String
         case .web(let content):
             return GenericWebMessageViewController(contents: content, campaignType: type, delegate: self)
         default:
-            return GenericWebMessageViewController(contents: nil, campaignType: type, delegate: self)
+            return nil
         }
     }
 
@@ -139,7 +131,11 @@ typealias SPMeta = String
     }
 
     func loadPrivacyManager(_ campaignType: CampaignType) {
-        renderMessage(campaignType: campaignType, SPJson())
+        GenericWebMessageViewController(
+            contents: SPJson(),
+            campaignType: campaignType,
+            delegate: self
+        ).loadPrivacyManager()
     }
 
     public func onError(_ error: SPError) {

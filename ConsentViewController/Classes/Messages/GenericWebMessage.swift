@@ -9,8 +9,9 @@ import Foundation
 import WebKit
 
 protocol SPRenderingApp {
-    func loadMessage(_ jsonMessage: SPJson)
     func loadMessage()
+    func loadPrivacyManager()
+    func loadPrivacyManager(url: URL)
 }
 
 enum RenderingAppEvents: String, Defaultable {
@@ -19,11 +20,11 @@ enum RenderingAppEvents: String, Defaultable {
 
 @objcMembers class SPMessageViewController: UIViewController, SPRenderingApp {
     weak var messageUIDelegate: SPMessageUIDelegate?
-    var contents: SPJson = SPJson()
+    let contents: SPJson
     var campaignType: CampaignType
 
-    init(contents: SPJson?, campaignType: CampaignType, delegate: SPMessageUIDelegate?) {
-        self.contents = contents ?? SPJson()
+    init(contents: SPJson, campaignType: CampaignType, delegate: SPMessageUIDelegate?) {
+        self.contents = contents
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
         super.init(nibName: nil, bundle: nil)
@@ -33,11 +34,15 @@ enum RenderingAppEvents: String, Defaultable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func loadMessage(_ jsonMessage: SPJson) {
+    func loadMessage() {
         fatalError("not implemented")
     }
 
-    func loadMessage() {
+    func loadPrivacyManager(url: URL) {
+        fatalError("not implemented")
+    }
+
+    func loadPrivacyManager() {
         fatalError("not implemented")
     }
 }
@@ -87,10 +92,6 @@ enum RenderingAppEvents: String, Defaultable {
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        fatalError("not implemented")
-    }
-
-    override func loadMessage(_ jsonMessage: SPJson) {
         fatalError("not implemented")
     }
 
@@ -155,11 +156,12 @@ enum RenderingAppEvents: String, Defaultable {
         webview?.load(URLRequest(url: GenericWebMessageViewController.GDPR_RENDERING_APP_URL))
     }
 
-    override func loadMessage(_ jsonMessage: SPJson? = nil) {
-        if let jsonMessage = jsonMessage {
-            contents = jsonMessage
-        }
-        self.loadMessage()
+    override func loadPrivacyManager() {
+        loadPrivacyManager(url: GenericWebMessageViewController.PM_BASE_URL)
+    }
+
+    override func loadPrivacyManager(url: URL) {
+        webview?.load(URLRequest(url: url))
     }
 
     func handleAction(_ actionBody: SPJson) -> SPAction? {

@@ -35,8 +35,8 @@ enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
 }
 
 enum Message: Equatable {
-    case native(_ message: SPJson?)
-    case web(_ message: SPJson?)
+    case native(_ message: SPJson)
+    case web(_ message: SPJson)
     case unknown
 }
 extension Message: Decodable {

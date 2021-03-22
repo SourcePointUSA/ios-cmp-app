@@ -168,7 +168,6 @@
 		AD3F3DEA678B9C0A1C4F0EF79BFB7505 /* MatcherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C40B06B5DF643A529F14078F378FDA /* MatcherProtocols.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		AE3B246482DCD60BA846EA3CE983A1FB /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9111A4417173FD53BA1F003F9A42D8 /* IQUIView+IQKeyboardToolbar.swift */; };
 		AF60C00928A7AFE04E374B620EEA5F49 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9348433BC3DA39E302CF633443377 /* Filter.swift */; };
-		B1EA9EF0D78FA3F57C2A21867A35A6BF /* SPMockMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5E2C43AA31C91D13386D377C84FEB9 /* SPMockMessageViewController.swift */; };
 		B324A2195C69F41F7515FB8400A97403 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39271DF928C81446E95655600904D78A /* Foundation.framework */; };
 		B3A14E7D18C64299488164C04FD75E83 /* BeEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F783F630CD1BEE2C5BCB26E882C1D7F2 /* BeEmpty.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		B48508EB39EE315F5A00429EEA69DD63 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45377D4F5660A1531538B581E82C6CB /* Configuration.swift */; };
@@ -556,7 +555,6 @@
 		98BA0456FA07BBB1577C0FEE41B4CCB5 /* NimbleEnvironment.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleEnvironment.swift; path = Sources/Nimble/Adapters/NimbleEnvironment.swift; sourceTree = "<group>"; };
 		9905DA479F62F74FA17FDE71C7D1AFA3 /* MessageWebViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MessageWebViewController.swift; path = ConsentViewController/Classes/MessageWebViewController.swift; sourceTree = "<group>"; };
 		9A22A183FA28CF3ABB4BCFFE27F4909F /* Pods-NativeMessageExample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NativeMessageExample-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9A5E2C43AA31C91D13386D377C84FEB9 /* SPMockMessageViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPMockMessageViewController.swift; path = ConsentViewController/Classes/SPMockMessageViewController.swift; sourceTree = "<group>"; };
 		9B4A1120ABED7768B20A07129482F649 /* MatcherFunc.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MatcherFunc.swift; path = Sources/Nimble/Matchers/MatcherFunc.swift; sourceTree = "<group>"; };
 		9BD41EDA452455DE9F39FF9AB4A2380C /* Pods-NativeMessageExampleUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NativeMessageExampleUITests-umbrella.h"; sourceTree = "<group>"; };
 		9D49E9181F18D4FEA0C637E59C926571 /* ConsentViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController-umbrella.h"; sourceTree = "<group>"; };
@@ -1048,7 +1046,6 @@
 				34448C2EB88582A5903B44281E76CEC5 /* SPMessage.swift */,
 				53B7460C5AD862D0285A0DFF051CE147 /* SPMessageLanguage.swift */,
 				D9C878D786E6E89ED985A55DB3C4AA7A /* SPMessageUIDelegate.swift */,
-				9A5E2C43AA31C91D13386D377C84FEB9 /* SPMockMessageViewController.swift */,
 				D4FAB3235EA5FC1C9658262153B2205E /* SPNativeMessageViewController.swift */,
 				65681D9C9EE35C99D516C5F397692EE9 /* SPNativeMessageViewController.xib */,
 				90EE500DDF80144DDA98A3291F057B85 /* SPPrivacyManagerTab.swift */,
@@ -1992,7 +1989,6 @@
 				17FE0A6906003ED76F3D58990EF8B232 /* SPMessage.swift in Sources */,
 				68D939740E841CE090E3334BE2974EC1 /* SPMessageLanguage.swift in Sources */,
 				468CA30A96FF32A6C2A5D75F6F7F8A7D /* SPMessageUIDelegate.swift in Sources */,
-				B1EA9EF0D78FA3F57C2A21867A35A6BF /* SPMockMessageViewController.swift in Sources */,
 				AD1801F02E4B18E863500BCB2B29F9F5 /* SPNativeMessageViewController.swift in Sources */,
 				53B8E560E2E752BC81A731F8971696FD /* SPNativeMessageViewController.xib in Sources */,
 				091E166A761324D03BE550245C69E0FC /* SPPrivacyManagerTab.swift in Sources */,
