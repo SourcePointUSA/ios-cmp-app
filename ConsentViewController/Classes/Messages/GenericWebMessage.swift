@@ -13,12 +13,18 @@ protocol SPRenderingApp {
     func loadMessage()
 }
 
+enum RenderingAppEvents: String, Defaultable {
+    case readyForPreload, onMessageReady, onPMReady, onAction, onError
+}
+
 @objcMembers class SPMessageViewController: UIViewController, SPRenderingApp {
     weak var messageUIDelegate: SPMessageUIDelegate?
     var contents: SPJson = SPJson()
+    var campaignType: CampaignType
 
-    init(contents: SPJson?, delegate: SPMessageUIDelegate?) {
+    init(contents: SPJson?, campaignType: CampaignType, delegate: SPMessageUIDelegate?) {
         self.contents = contents ?? SPJson()
+        self.campaignType = campaignType
         self.messageUIDelegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
@@ -124,7 +130,7 @@ protocol SPRenderingApp {
     }
 }
 
-@objcMembers class GDPRWebMessageViewController: SPWebMessageViewController {
+@objcMembers class GenericWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
     static let PM_BASE_URL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")!
     static let GDPR_RENDERING_APP_URL = URL(string: "https://notice.sp-prod.net/?preload_message=true")!
@@ -140,7 +146,7 @@ protocol SPRenderingApp {
         }
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         userContentController.addUserScript(script)
-        userContentController.add(self, name: GDPRWebMessageViewController.MESSAGE_HANDLER_NAME)
+        userContentController.add(self, name: GenericWebMessageViewController.MESSAGE_HANDLER_NAME)
         config.userContentController = userContentController
         return config
     }
@@ -149,14 +155,12 @@ protocol SPRenderingApp {
     override func loadMessage() {
         // swiftlint:disable:next force_try
         let jsonString = String(data: try! JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
-        webview?.load(URLRequest(url: GDPRWebMessageViewController.GDPR_RENDERING_APP_URL))
+        webview?.load(URLRequest(url: GenericWebMessageViewController.GDPR_RENDERING_APP_URL))
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            print("LOADING: ", jsonString)
             self.webview?.evaluateJavaScript("""
-                window.SDK.loadMessage(\(jsonString))
+                window.SDK.loadMessage("\(self.campaignType.rawValue)",\(jsonString));
             """)
         }
-        messageUIDelegate?.loaded(self)
     }
 
     override func loadMessage(_ jsonMessage: SPJson? = nil) {
@@ -167,9 +171,38 @@ protocol SPRenderingApp {
     }
 
     override func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        print(message.name, message.body)
-//        if message.body["test"] as String == "foo" {
-//            messageUIDelegate?.action(SPAction(type: .AcceptAll))
-//        }
+        if
+            let messageBody = try? SPJson(message.body),
+            let eventName = RenderingAppEvents(rawValue: messageBody["name"]?.stringValue ?? ""),
+            let body = messageBody["body"]
+        {
+            print("RenderingApp:", messageBody)
+            switch eventName {
+            case .onMessageReady:
+                self.messageUIDelegate?.loaded(self)
+            case .onAction:
+                guard
+                    let type = SPActionType(rawValue: body["type"]?.intValue ?? 0),
+                    let language = body["consentLanguage"]?.stringValue,
+                    let payload = try? JSONSerialization.data(
+                        withJSONObject: body["payload"]?.dictionaryValue as Any,
+                        options: .fragmentsAllowed
+                    )
+                else {
+                    messageUIDelegate?.onError(InvalidOnActionEventPayloadError(eventName.rawValue, body: messageBody.description))
+                    break
+                }
+                self.messageUIDelegate?.action(SPAction(
+                    type: type,
+                    id: body["id"]?.stringValue,
+                    consentLanguage: language,
+                    payload: payload
+                ))
+            default:
+                break
+            }
+        } else {
+            print("RenderingApp: UnknownBody(\(message.body))")
+        }
     }
 }
