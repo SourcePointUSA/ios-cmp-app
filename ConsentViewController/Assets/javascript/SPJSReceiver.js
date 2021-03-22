@@ -6,28 +6,33 @@ var postToWebView = function (webview) {
 
 window.SDK = function (postToWebView) {
     return {
-    loadMessage: function(messageJSON) {
-        var messagePayload = Object.assign({}, messageJSON, {
-            name: "sp.loadMessage",
-            fromNativeSDK: true
-        });
-        window.postMessage(messagePayload);
-    },
-    onMessageReady: function() {
-        postToWebView("onMessageReady");
-    },
-    onPMReady: function() {
-        postToWebView("onPMReady");
-    },
-    onAction: function(action) {
-        postToWebView("onAction", action);
-    },
-    onError: function(error) {
-        postToWebView("onError", { error: error });
-    },
-    onMessageEvent: function(payload) {
-        postToWebView("onMessageEvent", payload);
-    }
+        campaignType: '',
+        loadMessage: function(campaignType, messageJSON) {
+            window.SDK.campaignType = campaignType;
+            var messagePayload = Object.assign({}, messageJSON, {
+                name: "sp.loadMessage",
+                fromNativeSDK: true
+            });
+            window.postMessage(messagePayload);
+        },
+        readyForPreload: function () {
+            postToWebView("readyForPreload");
+        },
+        onMessageReady: function() {
+            postToWebView("onMessageReady");
+        },
+        onPMReady: function() {
+            postToWebView("onPMReady");
+        },
+        onAction: function(action) {
+            postToWebView("onAction", action);
+        },
+        onError: function(error) {
+            postToWebView("onError", { error: error });
+        },
+        onMessageEvent: function(payload) {
+            postToWebView("onMessageEvent", payload);
+        }
     };
 }(postToWebView);
 
@@ -40,24 +45,31 @@ var getActionFromMessage = function (eventData) {
         id: String(choiceData.choice_id),
         type: choiceData.type,
         payload: { pm_url: choiceData.iframe_url },
-        consentLanguage: eventData.consentLanguage
+        consentLanguage: eventData.consentLanguage,
+        campaignType: window.SDK.campaignType
     };
 };
 
 var handleMessageEvent = function(SDK) {
     return function(eventData) {
         switch(eventData.name) {
+            case "sp.readyForPreload":
+                SDK.readyForPreload();
+                break;
+            case "sp.loadMessage":
+                /* do nothing */
+                break;
             case "sp.showMessage":
                 eventData.fromPM ? SDK.onPMReady() : SDK.onMessageReady();
                 break;
             case "sp.hideMessage":
                 eventData.fromPM ?
-                SDK.onAction({
-                type: eventData.actionType,
-                payload: eventData.payload,
-                consentLanguage: eventData.consentLanguage
-                }) :
-                SDK.onAction(getActionFromMessage(eventData));
+                    SDK.onAction({
+                        type: eventData.actionType,
+                        payload: eventData.payload,
+                        consentLanguage: eventData.consentLanguage
+                    }) :
+                    SDK.onAction(getActionFromMessage(eventData));
                 break;
             case "sp.renderingAppError":
                 SDK.onError(eventData);
