@@ -1,1 +1,1 @@
-* Added Github Action CI to automate SDK release process
+* Added GitHub Action to upload Meta App IPA to BrowserStack.
