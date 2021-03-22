@@ -176,7 +176,7 @@ enum RenderingAppEvents: String, Defaultable {
             let eventName = RenderingAppEvents(rawValue: messageBody["name"]?.stringValue ?? ""),
             let body = messageBody["body"]
         {
-            print("RenderingApp:", messageBody)
+            print("[RenderingApp]", messageBody)
             switch eventName {
             case .onMessageReady:
                 self.messageUIDelegate?.loaded(self)
@@ -202,7 +202,7 @@ enum RenderingAppEvents: String, Defaultable {
                 break
             }
         } else {
-            print("RenderingApp: UnknownBody(\(message.body))")
+            print("[RenderingApp] UnknownBody(\(message.body))")
         }
     }
 }

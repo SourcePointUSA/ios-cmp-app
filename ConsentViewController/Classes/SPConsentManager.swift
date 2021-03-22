@@ -29,9 +29,8 @@ typealias SPMeta = String
     var consentsProfile: ConsentsProfile { storage.consentsProfile }
     var messageControllersStack: [SPMessageViewController] = []
 
-    /// TODO: implement
     public static func clearAllData() {
-
+        SPUserDefaults(storage: UserDefaults.standard).clear()
     }
 
     public convenience init(accountId: Int, propertyName: SPPropertyName, campaigns: SPCampaigns, delegate: SPDelegate?) {
@@ -179,13 +178,13 @@ extension SPConsentManager: SPMessageUIDelegate {
             finishAndNextIfAny()
         case .IDFAOk:
             SPIDFAStatus.requestAuthorisation { status in
-                print("IDFA status:", status)
+                print("[SDK] IDFA status:", status)
                 /// pass the status here
                 // self.report(action: action, legislation: legislation)
                 self.finishAndNextIfAny()
             }
         default:
-            print("UNKNOWN Action")
+            print("[SDK] UNKNOWN Action")
         }
     }
 }

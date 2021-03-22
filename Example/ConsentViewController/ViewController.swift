@@ -62,12 +62,11 @@ class ViewController: UIViewController, SPDelegate {
     }
 
     func onAction(_ action: SPAction) {
-        print(action)
+//        print(action)
     }
 
     func onSPUIFinished() {
         dismiss(animated: true)
-        print("SDK finished")
     }
 
     func onConsentReady(consents: SPConsents) {
