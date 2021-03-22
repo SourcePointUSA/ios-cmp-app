@@ -66,6 +66,12 @@ jobs:
           asset_path: ./Example/build/GDPR-MetaApp.ipa
           asset_name: GDPR-MetaApp.ipa
           asset_content_type: application/ipa
+      - name: Import browserstack details
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        run: |
+          exec .github/scripts/upload_to_browserstack.sh
       - name: Publish to CocoaPod register
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
