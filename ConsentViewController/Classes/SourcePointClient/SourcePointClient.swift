@@ -190,27 +190,25 @@ class SourcePointClient: SourcePointProtocol {
         campaign: SPCampaign,
         localState: String,
         handler: @escaping ConsentHandler<T>) {
-        _ = JSONDecoder().decode(SPJson.self, from: action.payload).map { pmPayload in
-            JSONEncoder().encodeResult(ActionRequest(
-                propertyHref: propertyName,
-                accountId: accountId,
-                actionType: action.type.rawValue,
-                choiceId: action.id,
-                privacyManagerId: "1", /// TODO: use real PM id
-                requestFromPM: action.id == nil,
-                requestUUID: requestUUID,
-                pmSaveAndExitVariables: pmPayload,
-                localState: localState,
-                publisherData: action.publisherData,
-                consentLanguage: action.consentLanguage
-            )).map { body in
-                client.post(urlString: consentURL(legislation), body: body) { result in
-                    handler(Result {
-                        try result.decoded() as ActionResponse
-                    }.mapError {
-                        InvalidResponseConsentError(error: $0)
-                    })
-                }
+        _ = JSONEncoder().encodeResult(ActionRequest(
+            propertyHref: propertyName,
+            accountId: accountId,
+            actionType: action.type.rawValue,
+            choiceId: action.id,
+            privacyManagerId: "1", /// TODO: use real PM id
+            requestFromPM: action.id == nil,
+            requestUUID: requestUUID,
+            pmSaveAndExitVariables: action.pmPayload,
+            localState: localState,
+            publisherData: action.publisherData,
+            consentLanguage: action.consentLanguage
+        )).map { body in
+            client.post(urlString: consentURL(legislation), body: body) { result in
+                handler(Result {
+                    try result.decoded() as ActionResponse
+                }.mapError {
+                    InvalidResponseConsentError(error: $0)
+                })
             }
         }
     }

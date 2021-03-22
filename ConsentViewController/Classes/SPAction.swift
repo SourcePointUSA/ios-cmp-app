@@ -39,13 +39,14 @@ import Foundation
     public let type: SPActionType
     public let id: String?
     public let consentLanguage: String?
-    public let payload: Data
+    public var pmURL: URL?
+    public var pmPayload: SPJson = SPJson()
     public var publisherData: [String: SPJson?] = [:]
 
     public override var description: String {
         """
         SPAction(type: \(type), id: \(id ?? ""), consentLanguage: \(consentLanguage ?? ""), \
-        payload: \(String(data: payload, encoding: .utf8) ?? ""), publisherData: \(String(describing: publisherData))
+        payload: \(pmPayload), publisherData: \(String(describing: publisherData))
         """
     }
 
@@ -56,14 +57,22 @@ import Foundation
         return other.type == type &&
             other.id == id &&
             other.consentLanguage == consentLanguage &&
-            other.payload == payload &&
+            other.pmURL == pmURL &&
+            other.pmPayload == pmPayload &&
             other.publisherData == publisherData
     }
 
-    public init(type: SPActionType, id: String? = nil, consentLanguage: String? = nil, payload: Data = "{}".data(using: .utf8)!) {
+    public init(
+        type: SPActionType,
+        id: String? = nil,
+        consentLanguage: String? = nil,
+        pmPayload: SPJson = SPJson(),
+        pmurl: URL? = nil)
+    {
         self.type = type
         self.id = id
         self.consentLanguage = consentLanguage
-        self.payload = payload
+        self.pmPayload = pmPayload
+        self.pmURL = pmurl
     }
 }

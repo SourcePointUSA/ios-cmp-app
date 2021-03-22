@@ -44,7 +44,7 @@ var getActionFromMessage = function (eventData) {
     return {
         id: String(choiceData.choice_id),
         type: choiceData.type,
-        payload: { pm_url: choiceData.iframe_url },
+        pm_url: choiceData.iframe_url,
         consentLanguage: eventData.consentLanguage,
         campaignType: window.SDK.campaignType
     };

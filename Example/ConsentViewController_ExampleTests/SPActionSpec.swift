@@ -31,7 +31,7 @@ class SPActionSpec: QuickSpec {
 
                     expect(action.type).to(equal(type))
                     expect(action.id).to(equal(id))
-                    expect(action.payload).to(equal(payload))
+                    expect(action.pmPayload).to(equal(payload))
                     expect(action.consentLanguage).to(equal(consentLanguage))
                 }
 
@@ -42,7 +42,7 @@ class SPActionSpec: QuickSpec {
 
                 it("initialises data to data encoded \"{}\" by default") {
                     let action = SPAction(type: .AcceptAll)
-                    expect(action.payload).to(equal("{}".data(using: .utf8)))
+                    expect(action.pmPayload).to(equal("{}".data(using: .utf8)))
                 }
 
                 it("initialises consentLanguage to nil by default") {

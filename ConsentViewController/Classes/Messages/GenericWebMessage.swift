@@ -166,18 +166,14 @@ enum RenderingAppEvents: String, Defaultable {
 
     func handleAction(_ actionBody: SPJson) -> SPAction? {
         guard
-            let type = SPActionType(rawValue: actionBody["type"]?.intValue ?? 0),
-            let language = actionBody["consentLanguage"]?.stringValue,
-            let payload = try? JSONSerialization.data(
-                withJSONObject: actionBody["payload"]?.dictionaryValue as Any,
-                options: .fragmentsAllowed
-            )
+            let type = SPActionType(rawValue: actionBody["type"]?.intValue ?? 0)
         else { return nil }
         return SPAction(
             type: type,
             id: actionBody["id"]?.stringValue,
-            consentLanguage: language,
-            payload: payload
+            consentLanguage: actionBody["consentLanguage"]?.stringValue,
+            pmPayload: (try? SPJson(actionBody["payload"] as Any)) ?? SPJson(),
+            pmurl: URL(string: actionBody["pm_url"]?.stringValue ?? "")
         )
     }
 
