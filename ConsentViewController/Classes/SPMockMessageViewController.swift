@@ -7,17 +7,11 @@
 
 import Foundation
 
-protocol SPRenderingApp {
-    func loadMessage(_ jsonMessage: SPJson)
-}
-
-@objcMembers class SPConsentViewController: UIViewController, SPRenderingApp {
+@objcMembers class SPConsentViewController: SPMessageViewController {
     class ActionButton: UIButton {
         var action: SPActionType!
         var actionId: String = ""
     }
-    weak var messageUIDelegate: SPMessageUIDelegate?
-    var contents: SPJson = SPJson()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +45,13 @@ protocol SPRenderingApp {
         ])
     }
 
-    func loadMessage(_ jsonMessage: SPJson) {
-        self.contents = jsonMessage
-        messageUIDelegate?.loaded()
+    override func loadMessage() {
+        messageUIDelegate?.loaded(self)
+    }
+
+    override func loadMessage(_ jsonMessage: SPJson) {
+        contents = jsonMessage
+        messageUIDelegate?.loaded(self)
     }
 
     func onEvent(_ payload: [String: String]) {

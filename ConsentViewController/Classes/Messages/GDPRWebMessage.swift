@@ -8,11 +8,30 @@
 import Foundation
 import WebKit
 
+protocol SPRenderingApp {
+    func loadMessage(_ jsonMessage: SPJson)
+    func loadMessage()
+}
+
 @objcMembers class SPMessageViewController: UIViewController, SPRenderingApp {
     weak var messageUIDelegate: SPMessageUIDelegate?
     var contents: SPJson = SPJson()
 
+    init(contents: SPJson?, delegate: SPMessageUIDelegate?) {
+        self.contents = contents ?? SPJson()
+        self.messageUIDelegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func loadMessage(_ jsonMessage: SPJson) {
+        fatalError("not implemented")
+    }
+
+    func loadMessage() {
         fatalError("not implemented")
     }
 }
@@ -127,10 +146,9 @@ import WebKit
     }
 
     /// TODO: remove the force_try
-    // swiftlint:disable force_try
-    override func loadMessage(_ jsonMessage: SPJson) {
-        let jsonString = String(data: try! JSONSerialization.data(withJSONObject: jsonMessage.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
-        self.contents = jsonMessage
+    override func loadMessage() {
+        // swiftlint:disable:next force_try
+        let jsonString = String(data: try! JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
         webview?.load(URLRequest(url: GDPRWebMessageViewController.GDPR_RENDERING_APP_URL))
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             print("LOADING: ", jsonString)
@@ -138,10 +156,20 @@ import WebKit
                 window.SDK.loadMessage(\(jsonString))
             """)
         }
-        messageUIDelegate?.loaded()
+        messageUIDelegate?.loaded(self)
+    }
+
+    override func loadMessage(_ jsonMessage: SPJson? = nil) {
+        if let jsonMessage = jsonMessage {
+            contents = jsonMessage
+        }
+        self.loadMessage()
     }
 
     override func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print(message.name, message.body)
+//        if message.body["test"] as String == "foo" {
+//            messageUIDelegate?.action(SPAction(type: .AcceptAll))
+//        }
     }
 }
