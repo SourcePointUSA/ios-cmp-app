@@ -12,13 +12,51 @@ protocol SPRenderingApp {
     func loadMessage()
     func loadPrivacyManager()
     func loadPrivacyManager(url: URL)
+    func closePrivacyManager()
 }
 
-enum RenderingAppEvents: String, Defaultable {
+enum RenderingAppEvents {
     case readyForPreload, onMessageReady, onPMReady, onAction, onError
+    case unknown(String?)
 }
 
-@objcMembers class SPMessageViewController: UIViewController, SPRenderingApp {
+extension RenderingAppEvents: Equatable {}
+
+extension RenderingAppEvents: RawRepresentable {
+    typealias StringLiteralType = String
+
+    typealias RawValue = String
+
+    init?(rawValue: String) {
+        switch rawValue {
+        case "readyForPreload": self = .readyForPreload
+        case "onMessageReady": self = .onMessageReady
+        case "onPMReady": self = .onPMReady
+        case "onAction": self = .onAction
+        case "onError": self = .onError
+        case let event: self = .unknown(event)
+        }
+    }
+
+    var rawValue: String {
+        switch self {
+        case .readyForPreload: return "readyForPreload"
+        case .onMessageReady: return "onMessageReady"
+        case .onPMReady: return "onPMReady"
+        case .onAction: return "onAction"
+        case .onError: return "onError"
+        case let .unknown(event): return event ?? ""
+        }
+    }
+}
+
+extension RenderingAppEvents: ExpressibleByStringLiteral {
+    init(stringLiteral value: String) {
+        self.init(rawValue: value)!
+    }
+}
+
+@objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp {
     weak var messageUIDelegate: SPMessageUIDelegate?
     let contents: SPJson
     var campaignType: CampaignType
@@ -43,6 +81,10 @@ enum RenderingAppEvents: String, Defaultable {
     }
 
     func loadPrivacyManager() {
+        fatalError("not implemented")
+    }
+
+    func closePrivacyManager() {
         fatalError("not implemented")
     }
 }
@@ -164,16 +206,25 @@ enum RenderingAppEvents: String, Defaultable {
         webview?.load(URLRequest(url: url))
     }
 
-    func handleAction(_ actionBody: SPJson) -> SPAction? {
+    override func closePrivacyManager() {
+        if let canGoBack = webview?.canGoBack,
+           canGoBack == true {
+            webview?.goBack()
+        } else {
+            messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
+        }
+    }
+
+    func getActionFrom(body: SPJson) -> SPAction? {
         guard
-            let type = SPActionType(rawValue: actionBody["type"]?.intValue ?? 0)
+            let type = SPActionType(rawValue: body["type"]?.intValue ?? 0)
         else { return nil }
         return SPAction(
             type: type,
-            id: actionBody["id"]?.stringValue,
-            consentLanguage: actionBody["consentLanguage"]?.stringValue,
-            pmPayload: (try? SPJson(actionBody["payload"] as Any)) ?? SPJson(),
-            pmurl: URL(string: actionBody["pm_url"]?.stringValue ?? "")
+            id: body["id"]?.stringValue,
+            consentLanguage: body["consentLanguage"]?.stringValue,
+            pmPayload: (try? SPJson(body["payload"] as Any)) ?? SPJson(),
+            pmurl: URL(string: body["pm_url"]?.stringValue ?? "")
         )
     }
 
@@ -194,20 +245,18 @@ enum RenderingAppEvents: String, Defaultable {
                         window.SDK.loadMessage("\(self.campaignType.rawValue)",\(jsonString));
                     """)
                 }
-            case .onMessageReady:
-                self.messageUIDelegate?.loaded(self)
+            case .onMessageReady: messageUIDelegate?.loaded(self)
             case .onAction:
                 if let action = getActionFrom(body: body) {
                     messageUIDelegate?.action(action, from: self)
                 } else {
-                    self.messageUIDelegate?.onError(
+                    messageUIDelegate?.onError(
                         InvalidOnActionEventPayloadError(eventName.rawValue, body: body.description)
                     )
                 }
-            case .onError:
-                self.messageUIDelegate?.onError(SPError())
-            default:
-                print("[RenderingApp] UnknownAction(\(eventName.rawValue))")
+            case .onError: messageUIDelegate?.onError(SPError())
+            case .onPMReady: break
+            case .unknown: break
             }
         } else {
             print("[RenderingApp] UnknownBody(\(message.body))")

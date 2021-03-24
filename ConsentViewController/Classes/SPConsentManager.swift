@@ -172,6 +172,14 @@ extension SPConsentManager: SPMessageUIDelegate {
                 report(action: action, legislation: legislation)
             }
             finishAndNextIfAny()
+        case .ShowPrivacyManager:
+            if let url = action.pmURL {
+                controller.loadPrivacyManager(url: url)
+            } else {
+                controller.loadPrivacyManager()
+            }
+        case .PMCancel:
+            controller.closePrivacyManager()
         case .IDFAOk:
             SPIDFAStatus.requestAuthorisation { status in
                 print("[SDK] IDFA status:", status)
