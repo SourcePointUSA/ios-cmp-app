@@ -61,7 +61,7 @@ class ViewController: UIViewController, SPDelegate {
         present(viewController, animated: true)
     }
 
-    func onAction(_ action: SPAction) {
+    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
 //        print(action)
     }
 

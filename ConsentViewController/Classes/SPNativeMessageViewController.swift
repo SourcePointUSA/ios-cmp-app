@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers open class SPNativeMessageViewController: UIViewController {
+@objcMembers public class SPNativeMessageViewController: SPMessageViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var showOptionsButton: UIButton!
@@ -31,10 +31,10 @@ import UIKit
     let message: GDPRMessage
     let consentViewController: GDPRMessageUIDelegate
 
-    public init(messageContents: GDPRMessage, consentViewController: GDPRMessageUIDelegate) {
+    public init?(messageContents: GDPRMessage, consentViewController: GDPRMessageUIDelegate) {
         message = messageContents
         self.consentViewController = consentViewController
-        super.init(nibName: "SPNativeMessageViewController", bundle: Bundle.framework)
+        super.init(coder: NSCoder())
     }
 
     public required init?(coder: NSCoder) {
@@ -87,7 +87,7 @@ import UIKit
     func action(_ action: SPActionType) {
         if let messageAction = message.actions.first(where: { message in message.choiceType == action }) {
             let action = SPAction(type: messageAction.choiceType, id: String(messageAction.choiceId), consentLanguage: Locale.preferredLanguages[0].uppercased())
-            consentViewController.consentDelegate?.onAction(action)
+            consentViewController.consentDelegate?.onAction(action, from: self)
         }
     }
 

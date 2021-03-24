@@ -197,8 +197,8 @@ enum RenderingAppEvents: String, Defaultable {
             case .onMessageReady:
                 self.messageUIDelegate?.loaded(self)
             case .onAction:
-                if let action = self.handleAction(body) {
-                    self.messageUIDelegate?.action(action)
+                if let action = getActionFrom(body: body) {
+                    messageUIDelegate?.action(action, from: self)
                 } else {
                     self.messageUIDelegate?.onError(
                         InvalidOnActionEventPayloadError(eventName.rawValue, body: body.description)

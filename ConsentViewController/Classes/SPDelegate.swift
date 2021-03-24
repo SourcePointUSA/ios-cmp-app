@@ -12,7 +12,7 @@ import UIKit
     /// called when the user takes an action in the SP UI
     /// - Parameters:
     ///   - action: the user action
-    @objc func onAction(_ action: SPAction)
+    @objc func onAction(_ action: SPAction, from controller: SPMessageViewController)
 }
 
 @objc public protocol SPConsentDelegate {

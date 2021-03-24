@@ -164,8 +164,8 @@ extension SPConsentManager: SPMessageUIDelegate {
         self.renderNextMessageIfAny()
     }
 
-    func action(_ action: SPAction) {
-        self.delegate?.onAction(action)
+    func action(_ action: SPAction, from controller: SPMessageViewController) {
+        self.delegate?.onAction(action, from: controller)
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             if let legislation = presentingLegislation {
