@@ -71,10 +71,6 @@ extension Consent: Decodable {
     }
 }
 
-enum CampaignType: String, Codable, Defaultable, Equatable {
-    case gdpr, ios14, ccpa, unknown
-}
-
 struct MessageMetaData: Decodable, Equatable {
     let categoryId: MessageCategory
     let subCategoryId: MessageSubCategory
@@ -82,7 +78,7 @@ struct MessageMetaData: Decodable, Equatable {
 }
 
 struct Campaign: Equatable {
-    let type: CampaignType
+    let type: SPCampaignType
     let message: Message?
     let userConsent: Consent
     let applies: Bool
@@ -92,7 +88,7 @@ struct Campaign: Equatable {
 extension Campaign: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
-        self.type = try container.decode(CampaignType.self, forKey: .type)
+        self.type = try container.decode(SPCampaignType.self, forKey: .type)
         self.applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
         self.messageMetaData = try container.decode(MessageMetaData.self, forKey: .messageMetaData)
         self.userConsent = try Consent(from: try container.superDecoder(forKey: .userConsent))

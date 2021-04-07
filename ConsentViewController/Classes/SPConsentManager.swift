@@ -77,7 +77,7 @@ typealias SPMeta = String
         }
     }
 
-    func messageToViewController (_ message: Message?, _ type: CampaignType) -> SPMessageViewController? {
+    func messageToViewController (_ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
         switch message {
         case .native(let content):
             /// TODO: here we'd initialise the Native Message object
@@ -130,7 +130,7 @@ typealias SPMeta = String
         consentsProfile.ccpa?.applies ?? false
     }
 
-    func loadPrivacyManager(_ campaignType: CampaignType) {
+    func loadPrivacyManager(_ campaignType: SPCampaignType) {
         GenericWebMessageViewController(
             contents: SPJson(),
             campaignType: campaignType,

@@ -12,7 +12,7 @@ import Foundation
 // swiftlint:disable force_try
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
-    static func getCampaign(_ type: CampaignType, _ consent: Consent) -> Campaign {
+    static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
         Campaign(
             type: type,
             message: .none,

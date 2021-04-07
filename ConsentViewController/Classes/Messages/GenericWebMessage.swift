@@ -59,9 +59,9 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 @objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp {
     weak var messageUIDelegate: SPMessageUIDelegate?
     let contents: SPJson
-    var campaignType: CampaignType
+    var campaignType: SPCampaignType
 
-    init(contents: SPJson, campaignType: CampaignType, delegate: SPMessageUIDelegate?) {
+    init(contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
         self.contents = contents
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
@@ -222,6 +222,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         return SPAction(
             type: type,
             id: body["id"]?.stringValue,
+            campaignType: SPCampaignType(rawValue: body["campaignType"]?.stringValue ?? ""),
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: (try? SPJson(body["payload"] as Any)) ?? SPJson(),
             pmurl: URL(string: body["pm_url"]?.stringValue ?? "")
@@ -249,6 +250,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
             case .onAction:
                 if let action = getActionFrom(body: body) {
                     messageUIDelegate?.action(action, from: self)
+
                 } else {
                     messageUIDelegate?.onError(
                         InvalidOnActionEventPayloadError(eventName.rawValue, body: body.description)
