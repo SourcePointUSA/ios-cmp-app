@@ -25,7 +25,7 @@ window.SDK = function (postToWebView) {
             postToWebView("onPMReady");
         },
         onAction: function(action) {
-            postToWebView("onAction", action);
+            postToWebView("onAction", Object.assign({ campaignType: window.SDK.campaignType }, action));
         },
         onError: function(error) {
             postToWebView("onError", { error: error });

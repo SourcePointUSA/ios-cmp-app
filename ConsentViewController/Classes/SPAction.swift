@@ -38,6 +38,7 @@ import Foundation
 @objcMembers public class SPAction: NSObject {
     public let type: SPActionType
     public let id: String?
+    public let campaignType: SPCampaignType?
     public let consentLanguage: String?
     public var pmURL: URL?
     public var pmPayload: SPJson = SPJson()
@@ -65,12 +66,13 @@ import Foundation
     public init(
         type: SPActionType,
         id: String? = nil,
+        campaignType: SPCampaignType? = nil,
         consentLanguage: String? = nil,
         pmPayload: SPJson = SPJson(),
-        pmurl: URL? = nil)
-    {
+        pmurl: URL? = nil) {
         self.type = type
         self.id = id
+        self.campaignType = campaignType
         self.consentLanguage = consentLanguage
         self.pmPayload = pmPayload
         self.pmURL = pmurl
