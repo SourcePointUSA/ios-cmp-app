@@ -10,8 +10,12 @@ import Foundation
 @testable import ConsentViewController
 
 class MockConsentDelegate: SPDelegate {
+    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+
+    }
+
     func onSPUIReady(_ viewController: UIViewController) {
-        
+
     }
 
     func onSPUIFinished() {

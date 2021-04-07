@@ -35,15 +35,6 @@ class MessageRequestSpec: QuickSpec {
         let messageString = """
         {
             "accountId": 1,
-            "idfaStatus": "unknown",
-            "includeData":{
-                "localState":{"type":"string"},
-                "TCData": {"type":"RecordString"},
-                "messageMetaData": {"type":"RecordString"}
-            },
-            "propertyHref": "https:\\/\\/demo",
-            "localState": "",
-            "requestUUID": "\(reqUUID.uuidString)",
             "campaigns": {
                 "ccpa": {
                     "campaignEnv": "prod",
@@ -57,12 +48,23 @@ class MessageRequestSpec: QuickSpec {
                     "campaignEnv": "prod",
                     "targetingParams": {"foo":"bar"}
                 }
-            }
+            },
+            "idfaStatus": "unknown",
+            "includeData": {
+                "localState": {"type":"string"},
+                "messageMetaData": {"type":"RecordString"},
+                "TCData": {"type":"RecordString"}
+            },
+            "localState": "",
+            "propertyHref": "https:\\/\\/demo",
+            "requestUUID": "\(reqUUID.uuidString)"
         }
         """.filter { !" \n\t\r".contains($0) }
 
         it("can be encoded to JSON") {
-            let messageEncoded = String(data: try! JSONEncoder().encode(message), encoding: .utf8)
+            let encoder = JSONEncoder()
+            if #available(iOS 11.0, *) { encoder.outputFormatting = .sortedKeys }
+            let messageEncoded = String(data: try! encoder.encode(message), encoding: .utf8)
             expect(messageString).to(equal(messageEncoded))
         }
     }
