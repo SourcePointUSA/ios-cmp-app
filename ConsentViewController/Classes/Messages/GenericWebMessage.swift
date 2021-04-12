@@ -250,7 +250,6 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
             case .onAction:
                 if let action = getActionFrom(body: body) {
                     messageUIDelegate?.action(action, from: self)
-
                 } else {
                     messageUIDelegate?.onError(
                         InvalidOnActionEventPayloadError(eventName.rawValue, body: body.description)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ActionRequest: Codable, Equatable {
+struct GDPRActionRequest: Codable, Equatable {
     let propertyHref: SPPropertyName
     let accountId: Int
     let actionType: Int
@@ -23,6 +23,19 @@ struct ActionRequest: Codable, Equatable {
     enum CodingKeys: String, CodingKey {
         case accountId, propertyHref, actionType, choiceId, privacyManagerId, requestFromPM, requestUUID, pmSaveAndExitVariables, localState, consentLanguage
         case publisherData = "pubData"
+    }
+}
+
+struct CCPAActionRequest: Encodable, Equatable {
+    let accountId: Int
+    let consents: SPCCPAConsent
+    let localState: String
+    let privacyManagerId: String
+    let propertyHref: SPPropertyName
+    let requestUUID: UUID
+
+    enum CodingKeys: String, CodingKey {
+        case accountId, consents, localState, privacyManagerId, propertyHref, requestUUID
     }
 }
 

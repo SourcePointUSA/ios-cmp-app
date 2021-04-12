@@ -14,7 +14,7 @@ import Nimble
 class ActionRequestSpec: QuickSpec {
     override func spec() {
         let requestUUID = UUID()
-        let action = ActionRequest(
+        let action = GDPRActionRequest(
             propertyHref: try! SPPropertyName("property-name"),
             accountId: 1,
             actionType: 1,
@@ -53,7 +53,7 @@ class ActionRequestSpec: QuickSpec {
         }
 
         it("can be decoded from JSON") {
-            _ = JSONDecoder().decode(ActionRequest.self, from: actionString.data(using: .utf8)!).map {
+            _ = JSONDecoder().decode(GDPRActionRequest.self, from: actionString.data(using: .utf8)!).map {
                 expect(action).to(equal($0))
             }
         }

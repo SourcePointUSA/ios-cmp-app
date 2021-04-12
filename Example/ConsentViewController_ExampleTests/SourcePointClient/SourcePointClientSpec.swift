@@ -98,7 +98,7 @@ class SourcePointClientSpec: QuickSpec {
                 it("calls POST on the http client with the right body") {
                     let action = SPAction(type: .AcceptAll, id: "1234", consentLanguage: "EN")
                     action.publisherData = ["foo": try? SPJson("bar")]
-                    let actionRequest = ActionRequest(
+                    let actionRequest = GDPRActionRequest(
                         propertyHref: self.propertyName,
                         accountId: self.accountId,
                         actionType: action.type.rawValue,
@@ -117,7 +117,7 @@ class SourcePointClientSpec: QuickSpec {
 //                        campaign: self.campaign,
 //                        localState: ""
 //                    ) { _ in }
-                    let parsed = try? JSONDecoder().decode(ActionRequest.self, from: httpClient!.postWasCalledWithBody ?? "".data(using: .utf8)!).get()
+                    let parsed = try? JSONDecoder().decode(GDPRActionRequest.self, from: httpClient!.postWasCalledWithBody ?? "".data(using: .utf8)!).get()
                     expect(parsed).toEventually(equal(actionRequest))
                 }
             }

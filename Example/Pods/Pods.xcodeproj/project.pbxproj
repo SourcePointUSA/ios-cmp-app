@@ -168,7 +168,6 @@
 		AD3F3DEA678B9C0A1C4F0EF79BFB7505 /* MatcherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C40B06B5DF643A529F14078F378FDA /* MatcherProtocols.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		ADFA0254B62D225DE3AE3213C0A3E1FF /* SPSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52D79A47763A7FCEE81035A6CC67FA8 /* SPSDK.swift */; };
 		AE3B246482DCD60BA846EA3CE983A1FB /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9111A4417173FD53BA1F003F9A42D8 /* IQUIView+IQKeyboardToolbar.swift */; };
-		AE9BA73BE926A2EE486A6A09F5C649EC /* SPLegislation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA95AF39F84974E8D05EC50ACBA765B /* SPLegislation.swift */; };
 		AF60C00928A7AFE04E374B620EEA5F49 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9348433BC3DA39E302CF633443377 /* Filter.swift */; };
 		B116CBE7C65E8BC1B6529177BE4362C5 /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B269AC896DA1069F6C68C24151108B /* SourcePointClient.swift */; };
 		B324A2195C69F41F7515FB8400A97403 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39271DF928C81446E95655600904D78A /* Foundation.framework */; };
@@ -563,7 +562,6 @@
 		98BA0456FA07BBB1577C0FEE41B4CCB5 /* NimbleEnvironment.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleEnvironment.swift; path = Sources/Nimble/Adapters/NimbleEnvironment.swift; sourceTree = "<group>"; };
 		9A22A183FA28CF3ABB4BCFFE27F4909F /* Pods-NativeMessageExample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NativeMessageExample-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9B4A1120ABED7768B20A07129482F649 /* MatcherFunc.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MatcherFunc.swift; path = Sources/Nimble/Matchers/MatcherFunc.swift; sourceTree = "<group>"; };
-		9BA95AF39F84974E8D05EC50ACBA765B /* SPLegislation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPLegislation.swift; path = ConsentViewController/Classes/SPLegislation.swift; sourceTree = "<group>"; };
 		9BD41EDA452455DE9F39FF9AB4A2380C /* Pods-NativeMessageExampleUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NativeMessageExampleUITests-umbrella.h"; sourceTree = "<group>"; };
 		9D76A20F4B1BD76B84BA0FD883CA6E63 /* Closures.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Closures.swift; path = Sources/Quick/Hooks/Closures.swift; sourceTree = "<group>"; };
 		9D76D2AAF759795F17D78BD9B137FB61 /* Pods_ObjC_ExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjC_ExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1169,7 +1167,6 @@
 				05AB64FB7CB2F88010661FAD22795F8D /* SPError.swift */,
 				24151DA9E4D1AD125E360477454523FF /* SPIDFAStatus.swift */,
 				25AEA9AFABEAB8E7A8B1C8A97975477F /* SPJson.swift */,
-				9BA95AF39F84974E8D05EC50ACBA765B /* SPLegislation.swift */,
 				F9FA8B69DBCCC0ED72A40350F4719E17 /* SPMessage.swift */,
 				2D029C34967462E5F6BCEB2B52445C0C /* SPMessageLanguage.swift */,
 				01C571E4294EBF2669183A667A92B1B2 /* SPMessageUIDelegate.swift */,
@@ -2148,7 +2145,6 @@
 				C8A60874F2A74DE159AD05D21B854B07 /* SPGDPRConsent.swift in Sources */,
 				14D397CE2B7D4257124E0D1CC4999168 /* SPIDFAStatus.swift in Sources */,
 				E381975B574CA59C1A54010D832C9F22 /* SPJson.swift in Sources */,
-				AE9BA73BE926A2EE486A6A09F5C649EC /* SPLegislation.swift in Sources */,
 				C79F20E4C44AEB8724F2E20DA399F665 /* SPLocalStorage.swift in Sources */,
 				13E2FA2E18CCC5B05F5702411EFFC090 /* SPMessage.swift in Sources */,
 				84A1B969FC778704E0E449C0CDC6FC8D /* SPMessageLanguage.swift in Sources */,

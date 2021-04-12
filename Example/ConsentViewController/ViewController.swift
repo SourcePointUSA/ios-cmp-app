@@ -23,33 +23,22 @@ class ViewController: UIViewController, SPDelegate {
 
     @IBAction func onAcceptVendorXTap(_ sender: Any) {}
 
-    var gdprCampaign: SPCampaign { SPCampaign(
-        targetingParams: ["legislation": "GDPR", "location": "EU"]
-    )}
+    var gdprCampaign: SPCampaign { SPCampaign() }
 
-    var ccpaCampaign: SPCampaign { SPCampaign(
-        targetingParams: ["legislation": "CCPA", "location": "EU"]
-    )}
+    var ccpaCampaign: SPCampaign { SPCampaign() }
+
+    var ios14Campaign: SPCampaign { SPCampaign() }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
-        propertyName: try! SPPropertyName("unified.mobile.demo"),
-        campaigns: SPCampaigns(gdpr: gdprCampaign, ccpa: ccpaCampaign),
+        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        campaigns: SPCampaigns(
+            gdpr: gdprCampaign,
+            ccpa: ccpaCampaign,
+            ios14: ios14Campaign
+        ),
         delegate: self
     )}()
-
-    func printLocalStorage() {
-        UserDefaults.standard.dictionaryRepresentation().filter { (key, _) in
-            key.starts(with: "sp_") || key.starts(with: "IAB")
-        }.map { (key, value) -> Any in
-            switch value.self {
-            case is Data: return (key, try! JSONSerialization.jsonObject(with: value as! Data, options: .allowFragments))
-            default: return (key, value)
-            }
-        }.forEach {
-            print($0)
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,11 +51,11 @@ class ViewController: UIViewController, SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: SPMessageViewController) {
-//        print(action)
+        print(action)
     }
 
     func onSPUIFinished() {
-        dismiss(animated: true)
+//        dismiss(animated: true)
     }
 
     func onConsentReady(consents: SPConsents) {

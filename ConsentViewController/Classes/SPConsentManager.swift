@@ -25,7 +25,6 @@ typealias SPMeta = String
     let spClient: SourcePointProtocol
     var cleanUserDataOnError = true
     var storage: SPLocalStorage
-    var presentingLegislation: SPLegislation?
     var consentsProfile: ConsentsProfile { storage.consentsProfile }
     var messageControllersStack: [SPMessageViewController] = []
 
@@ -110,7 +109,7 @@ typealias SPMeta = String
         }
     }
 
-    func report(action: SPAction, legislation: SPLegislation) {
+    func report(action: SPAction) {
 
     }
 
@@ -168,9 +167,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         self.delegate?.onAction(action, from: controller)
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
-            if let legislation = presentingLegislation {
-                report(action: action, legislation: legislation)
-            }
+            report(action: action)
             finishAndNextIfAny()
         case .ShowPrivacyManager:
             if let url = action.pmURL {

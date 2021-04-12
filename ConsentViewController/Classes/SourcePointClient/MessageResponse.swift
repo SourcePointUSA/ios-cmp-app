@@ -79,20 +79,22 @@ struct MessageMetaData: Decodable, Equatable {
 
 struct Campaign: Equatable {
     let type: SPCampaignType
-    let message: Message?
+    var message: Message?
     let userConsent: Consent
-    let applies: Bool
-    let messageMetaData: MessageMetaData
+    let applies: Bool?
+    let messageMetaData: MessageMetaData?
 }
 
 extension Campaign: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         self.type = try container.decode(SPCampaignType.self, forKey: .type)
-        self.applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
-        self.messageMetaData = try container.decode(MessageMetaData.self, forKey: .messageMetaData)
+        self.applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
+        self.messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
         self.userConsent = try Consent(from: try container.superDecoder(forKey: .userConsent))
-        self.message = try Message(type: messageMetaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
+        if let metaData = messageMetaData {
+            self.message = try Message(type: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
+        }
     }
 
     enum Keys: CodingKey {

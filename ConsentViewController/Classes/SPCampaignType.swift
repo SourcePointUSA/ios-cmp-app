@@ -14,8 +14,8 @@ import Foundation
 extension SPCampaignType: Codable {
     public var rawValue: String {
         switch self {
-        case .gdpr: return "gdpr"
-        case .ccpa: return "ccpa"
+        case .gdpr: return "GDPR"
+        case .ccpa: return "CCPA"
         case .ios14: return "ios14"
         default: return "unknown"
         }
@@ -23,8 +23,8 @@ extension SPCampaignType: Codable {
 
     public init(rawValue: String) {
         switch rawValue {
-        case "gdpr": self = .gdpr
-        case "ccpa": self = .ccpa
+        case "GDPR": self = .gdpr
+        case "CCPA": self = .ccpa
         case "ios14": self = .ios14
         default: self = .unknown
         }

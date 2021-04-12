@@ -11,7 +11,7 @@ import Foundation
 struct ErrorMetricsRequest: Equatable {
     let code, accountId, description, sdkVersion, OSVersion, deviceFamily, propertyId: String
     let propertyName: SPPropertyName
-    let legislation: SPLegislation
+    let legislation: SPCampaignType
 }
 
 extension ErrorMetricsRequest: Codable {
