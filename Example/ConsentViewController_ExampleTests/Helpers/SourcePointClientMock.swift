@@ -9,7 +9,6 @@
 import Foundation
 @testable import ConsentViewController
 
-// swiftlint:disable force_try
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
     static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {

@@ -17,6 +17,8 @@ class MessageRequestSpec: QuickSpec {
         campaignEnv: .Public,
         targetingParams: ["foo": "bar"]
     )
+
+    // swiftlint:disable function_body_length
     override func spec() {
         let reqUUID = UUID()
         let message = MessageRequest(

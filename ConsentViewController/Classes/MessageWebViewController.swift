@@ -1,14 +1,14 @@
 ////
-////  MessageWebViewController.swift
-////  GDPRConsentViewController
+//  MessageWebViewController.swift
+//  GDPRConsentViewController
 ////
-////  Created by Andre Herculano on 05.12.19.
+//  Created by Andre Herculano on 05.12.19.
 ////
 //
 //import UIKit
 //import WebKit
 //
-///**
+//**
 // MessageWebViewController is responsible for loading the consent message and privacy manager through a webview.
 //
 // It not only knows how to render the message and pm but also understands how to react to their different events (showing, user action, etc)
@@ -284,7 +284,6 @@
 //            let error = payload["error"] as? [String: Any] ?? [:]
 //            onError(error: RenderingAppError(error["code"] as? String))
 //        default:
-//            /// TODO: This should not trigger the `onError` but we should notifiy our custom metrics endpoint
 //            print(message.body)
 //        }
 //    }
@@ -298,7 +297,7 @@
 //    }
 //}
 //
-//// we implement this protocol to disable the zoom when the user taps twice on the screen
+// we implement this protocol to disable the zoom when the user taps twice on the screen
 //extension MessageWebViewController: UIScrollViewDelegate {
 //    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
 //        scrollView.pinchGestureRecognizer?.isEnabled = false

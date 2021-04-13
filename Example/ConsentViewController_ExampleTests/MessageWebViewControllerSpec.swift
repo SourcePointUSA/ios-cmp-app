@@ -1,9 +1,9 @@
 ////
-////  MessageWebViewControllerSpec.swift
-////  ConsentViewController_ExampleTests
+//  MessageWebViewControllerSpec.swift
+//  ConsentViewController_ExampleTests
 ////
-////  Created by Vilas on 3/16/20.
-////  Copyright © 2020 CocoaPods. All rights reserved.
+//  Created by Vilas on 3/16/20.
+//  Copyright © 2020 CocoaPods. All rights reserved.
 ////
 //
 //import Quick
@@ -11,7 +11,6 @@
 //import WebKit
 //@testable import ConsentViewController
 //
-//// swiftlint:disable function_body_length type_body_length
 //
 //class MessageWebViewControllerSpec: QuickSpec, GDPRConsentDelegate, WKNavigationDelegate {
 //    override func spec() {

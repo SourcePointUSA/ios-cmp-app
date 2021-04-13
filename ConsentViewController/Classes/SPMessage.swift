@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// TODO: Implement native message
 @objcMembers public class SPMessage {
 
 }

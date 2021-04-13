@@ -1,12 +1,11 @@
 ////
-////  GDPRConsentViewControllerSpec.swift
-////  ConsentViewController_ExampleTests
+// GDPRConsentViewControllerSpec.swift
+//  ConsentViewController_ExampleTests
 ////
-////  Created by Vilas on 3/16/20.
-////  Copyright © 2020 CocoaPods. All rights reserved.
+//  Created by Vilas on 3/16/20.
+// Copyright © 2020 CocoaPods. All rights reserved.
 ////
 //
-//// swiftlint:disable force_try function_body_length force_cast type_body_length
 //
 //import Quick
 //import Nimble

@@ -1,18 +1,16 @@
-////
-////  GDPRConsentViewController.swift
-////  cmp-app-test-app
-////
-////  Created by Andre Herculano on 12/16/19.
-////  Copyright © 2019 Sourcepoint. All rights reserved.
-////
+///
+//  GDPRConsentViewController.swift
+//  cmp-app-test-app
+///
+//  Created by Andre Herculano on 12/16/19.
+//  Copyright © 2019 Sourcepoint. All rights reserved.
+///
 //
 //import UIKit
 //
 //public typealias TargetingParams = [String: String]
 //public typealias GDPRUUID = String
 //typealias Meta = String
-//
-//// swiftlint:disable type_body_length
 //
 //@objcMembers open class GDPRConsentViewController: UIViewController, GDPRMessageUIDelegate {
 //    /// The version of the SDK. It should mirror the version from podspec.
@@ -137,18 +135,6 @@
 //        /// - note: according to the IAB this value needs to be initialised as early as possible to signal to vendors, the app has a CMP
 //        localStorage.storage.set(GDPRConsentViewController.IAB_CMP_SDK_ID, forKey: GDPRConsentViewController.IAB_CMP_SDK_ID_KEY)
 //    }
-//
-//    /**
-//        - Parameters:
-//            - accountId: the id of your account, can be found in the Account section of SourcePoint's dashboard
-//            - propertyId: the id of your property, can be found in the property page of SourcePoint's dashboard
-//            - propertyName: the exact name of your property,
-//            -  PMId: the id of the PrivacyManager, can be found in the PrivacyManager page of SourcePoint's dashboard
-//            -  campaignEnv: Indicates if the SDK should load the message from the Public or Stage campaign
-//            - targetingParams: an arbitrary collection of key/value pairs made available to the Scenario built on SourcePoint's dashboard
-//            -  consentDelegate: responsible for dealing with the different consent lifecycle functions.
-//        - SeeAlso: ConsentDelegate
-//     */
 //    public convenience init(
 //        accountId: Int,
 //        propertyId: Int,
@@ -290,7 +276,6 @@
 //        localStorage.clear()
 //    }
 //
-//    // swiftlint:disable:next function_parameter_count
 //    func customConsent(
 //        uuid: String,
 //        vendors: [String],

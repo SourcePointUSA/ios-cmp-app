@@ -28,7 +28,6 @@ class SourcePointClientSpec: QuickSpec {
     var profile: ConsentsProfile { ConsentsProfile(gdpr: gdprProfile) }
 
     /// TODO: add CCPA campaign
-    /// TODO: pass targeting params "encoding" to MessageRequest
     func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {
         try! JSONEncoder().encode(
             MessageRequest(
