@@ -31,7 +31,7 @@ extension JSONDecoder {
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
-typealias ConsentHandler<T: Decodable & Equatable> = (Result<ActionResponse<T>, SPError>) -> Void
+typealias ConsentHandler<T: Decodable & Equatable> = (Result<ConsentResponse<T>, SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
@@ -161,7 +161,7 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: consentUrl(SourcePointClient.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as ActionResponse
+                    try result.decoded() as ConsentResponse
                 }.mapError {
                     InvalidResponseConsentError(error: $0)
                 })
@@ -185,7 +185,7 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: SourcePointClient.GDPR_CONSENT_URL.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as ActionResponse
+                    try result.decoded() as ConsentResponse
                 }.mapError {
                     InvalidResponseConsentError(error: $0)
                 })

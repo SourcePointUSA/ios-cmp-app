@@ -71,7 +71,7 @@ import AdSupport
     }
 }
 
-extension SPIDFAStatus: Encodable {
+extension SPIDFAStatus: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
