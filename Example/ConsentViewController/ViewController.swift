@@ -55,7 +55,7 @@ class ViewController: UIViewController, SPDelegate {
     }
 
     func onSPUIFinished() {
-//        dismiss(animated: true)
+        dismiss(animated: true)
     }
 
     func onConsentReady(consents: SPConsents) {
