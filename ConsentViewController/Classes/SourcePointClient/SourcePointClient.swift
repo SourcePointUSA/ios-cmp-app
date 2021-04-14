@@ -151,12 +151,11 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func postCCPAAction(action: SPAction, consents: SPCCPAConsent, localState: String, handler: @escaping CCPAConsentHandler) {
-        _ = JSONEncoder().encodeResult(CCPAActionRequest(
-            accountId: accountId,
-            consents: consents,
+        _ = JSONEncoder().encodeResult(CCPAConsentRequest(
+            authId: "",
             localState: localState,
-            privacyManagerId: "1", /// TODO: use real PM id
-            propertyHref: propertyName,
+            publisherData: [:],
+            pmSaveAndExitVariables: SPJson(),
             requestUUID: requestUUID
         )).map { body in
             client.post(urlString: consentUrl(SourcePointClient.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
@@ -170,18 +169,13 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func postGDPRAction(action: SPAction, localState: String, handler: @escaping GDPRConsentHandler) {
-        _ = JSONEncoder().encodeResult(GDPRActionRequest(
-            propertyHref: propertyName,
-            accountId: accountId,
-            actionType: action.type.rawValue,
-            choiceId: action.id,
-            privacyManagerId: "1", /// TODO: use real PM id
-            requestFromPM: action.id == nil,
-            requestUUID: requestUUID,
-            pmSaveAndExitVariables: action.pmPayload,
+        _ = JSONEncoder().encodeResult(GDPRConsentRequest(
+            authId: "",
+            idfaStatus: .unavailable,
             localState: localState,
-            publisherData: action.publisherData,
-            consentLanguage: action.consentLanguage
+            pmSaveAndExitVariables: nil,
+            publisherData: [:],
+            requestUUID: requestUUID
         )).map { body in
             client.post(urlString: SourcePointClient.GDPR_CONSENT_URL.absoluteString, body: body) { result in
                 handler(Result {
