@@ -79,6 +79,7 @@ struct MessageMetaData: Decodable, Equatable {
 
 struct Campaign: Equatable {
     let type: SPCampaignType
+    var url: URL?
     var message: Message?
     let userConsent: Consent
     let applies: Bool?
@@ -88,21 +89,28 @@ struct Campaign: Equatable {
 extension Campaign: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
-        self.type = try container.decode(SPCampaignType.self, forKey: .type)
-        self.applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
-        self.messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
-        self.userConsent = try Consent(from: try container.superDecoder(forKey: .userConsent))
+        type = try container.decode(SPCampaignType.self, forKey: .type)
+        applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
+        messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
+        userConsent = try Consent(from: try container.superDecoder(forKey: .userConsent))
         if let metaData = messageMetaData {
-            self.message = try Message(type: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
+            message = try Message(type: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
+            url = try container.decodeIfPresent(URL.self, forKey: .url)
+            /// TODO: remove once the response contains message url
+            if type == .ios14 {
+                url = URL(string: "https://notice.sp-stage.net/ios/index.html?preload_message=true")!
+            } else {
+                url = URL(string: "https://cdn.privacy-mgmt.com/index.html?preload_message=true")!
+            }
         }
     }
 
     enum Keys: CodingKey {
-        case type, message, userConsent, applies, messageMetaData
+        case type, message, userConsent, applies, messageMetaData, url
     }
 }
 
 struct MessagesResponse: Decodable, Equatable {
     let campaigns: [Campaign]
-    let localState: String
+    let localState: SPJson
 }

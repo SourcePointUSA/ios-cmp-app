@@ -59,9 +59,11 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 @objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp {
     weak var messageUIDelegate: SPMessageUIDelegate?
     let contents: SPJson
+    let url: URL
     var campaignType: SPCampaignType
 
-    init(contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
+    init(url: URL, contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
+        self.url = url
         self.contents = contents
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
@@ -176,7 +178,6 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 @objcMembers class GenericWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
     static let PM_BASE_URL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")!
-    static let GDPR_RENDERING_APP_URL = URL(string: "https://notice.sp-prod.net/?preload_message=true")!
 
     override var webviewConfig: WKWebViewConfiguration? {
         let config = WKWebViewConfiguration()
@@ -195,7 +196,8 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     }
 
     override func loadMessage() {
-        webview?.load(URLRequest(url: GenericWebMessageViewController.GDPR_RENDERING_APP_URL))
+        print("LOADING:", url)
+        webview?.load(URLRequest(url: url))
     }
 
     override func loadPrivacyManager() {

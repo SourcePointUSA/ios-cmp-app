@@ -74,15 +74,25 @@ typealias SPMeta = String
         }
     }
 
-    func messageToViewController (_ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
+    func messageToViewController (_ url: URL, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
         switch message {
         case .native(let content):
             /// TODO: here we'd initialise the Native Message object
             /// Call a delegate Method to get the Message controller
             /// Pass the native message object to it
-            return GenericWebMessageViewController(contents: content, campaignType: type, delegate: self)
+            return GenericWebMessageViewController(
+                url: url,
+                contents: content,
+                campaignType: type,
+                delegate: self
+            )
         case .web(let content):
-            return GenericWebMessageViewController(contents: content, campaignType: type, delegate: self)
+            return GenericWebMessageViewController(
+                url: url,
+                contents: content,
+                campaignType: type,
+                delegate: self
+            )
         default:
             return nil
         }
@@ -99,7 +109,8 @@ typealias SPMeta = String
             case .success(let messagesResponse):
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
-                    .compactMap { self?.messageToViewController($0.message, $0.type) }
+                    .filter { $0.url != nil }
+                    .compactMap { self?.messageToViewController($0.url!, $0.message, $0.type) }
                     .reversed()
                 self?.renderNextMessageIfAny()
             case .failure(let error): self?.onError(error)
@@ -129,6 +140,7 @@ typealias SPMeta = String
 
     func loadPrivacyManager(_ campaignType: SPCampaignType) {
         GenericWebMessageViewController(
+            url: URL(string: "https://google.com")!, /// TODO: use real PM url
             contents: SPJson(),
             campaignType: campaignType,
             delegate: self
@@ -157,8 +169,8 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 
     func finishAndNextIfAny() {
-        self.finished()
-        self.renderNextMessageIfAny()
+        finished()
+        renderNextMessageIfAny()
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
