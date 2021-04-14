@@ -193,10 +193,10 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
 
         var subPredicates: [NSPredicate] = []
         var subPredicate: NSPredicate = NSPredicate()
-        if let authId = propertyDataModel.authId, let pmId = propertyDataModel.pmTab {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND authId == %@ AND pmId == %@", propertyDataModel.privacyManagerId!, authId, pmId)
-        } else if let pmId = propertyDataModel.pmTab {
-            subPredicate = NSPredicate(format: "accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND pmId == %@", propertyDataModel.privacyManagerId!, pmId)
+        if let authId = propertyDataModel.authId, let pmId = propertyDataModel.privacyManagerId, let propertyName = propertyDataModel.propertyName, let pmTab = propertyDataModel.pmTab  {
+            subPredicate = NSPredicate(format: "propertyName == %@ AND accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND authId == %@ AND pmId == %@", propertyName, pmId, authId, pmTab)
+        } else if let pmId = propertyDataModel.privacyManagerId, let pmTab = propertyDataModel.pmTab, let propertyName = propertyDataModel.propertyName {
+            subPredicate = NSPredicate(format: "propertyName == %@ AND accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND pmId == %@", propertyName, pmId, pmTab)
         }
 
         subPredicates.append(subPredicate)
