@@ -44,7 +44,7 @@ class SourcePointClientMock: SourcePointProtocol {
     func getMessages(
         campaigns: SPCampaigns,
         authId: String?,
-        localState: String,
+        localState: SPJson,
         idfaStaus: SPIDFAStatus,
         handler: @escaping MessagesHandler
     ) {

@@ -29,7 +29,7 @@ struct MessageRequest: Equatable, Encodable {
     let propertyHref: SPPropertyName
     let accountId: Int
     let idfaStatus: SPIDFAStatus
-    let localState: String
+    let localState: SPJson
     let campaigns: CampaignsRequest
     let includeData = [
         "localState": ["type": "RecordString"],

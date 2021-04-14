@@ -49,8 +49,8 @@ class SPUserDefaults: SPLocalStorage {
         }
     }
 
-    var localState: String {
-        get { storage.string(forKey: SPUserDefaults.LOCAL_STATE_KEY) ?? "" }
+    var localState: SPJson {
+        get { storage.object(ofType: SPJson.self, forKey: SPUserDefaults.LOCAL_STATE_KEY) ?? SPJson() }
         set { storage.set(newValue, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
     }
 
@@ -65,7 +65,7 @@ class SPUserDefaults: SPLocalStorage {
     ].merging(tcfData ?? [:]) { item, _ in item }}
 
     func clear() {
-        localState = ""
+        localState = SPJson()
         tcfData = [:]
         usPrivacyString = ""
         consentsProfile = ConsentsProfile()

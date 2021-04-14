@@ -98,7 +98,7 @@ extension Campaign: Decodable {
             url = try container.decodeIfPresent(URL.self, forKey: .url)
             /// TODO: remove once the response contains message url
             if type == .ios14 {
-                url = URL(string: "https://notice.sp-stage.net/ios/index.html?preload_message=true")!
+                url = URL(string: "https://notice.sp-stage.net/ios/index.html?preload_message=true&message_id=\(metaData.messageId)")!
             } else {
                 url = URL(string: "https://cdn.privacy-mgmt.com/index.html?preload_message=true")!
             }

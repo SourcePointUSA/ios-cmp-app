@@ -40,19 +40,19 @@ protocol SourcePointProtocol {
     func getMessages(
         campaigns: SPCampaigns,
         authId: String?,
-        localState: String,
+        localState: SPJson,
         idfaStaus: SPIDFAStatus,
         handler: @escaping MessagesHandler)
 
     func postCCPAAction(
         action: SPAction,
         consents: SPCCPAConsent,
-        localState: String,
+        localState: SPJson,
         handler: @escaping CCPAConsentHandler)
 
     func postGDPRAction(
         action: SPAction,
-        localState: String,
+        localState: SPJson,
         handler: @escaping GDPRConsentHandler)
 
 //    func customConsent(
@@ -120,7 +120,7 @@ class SourcePointClient: SourcePointProtocol {
     func getMessages(
         campaigns: SPCampaigns,
         authId: String?,
-        localState: String,
+        localState: SPJson,
         idfaStaus: SPIDFAStatus,
         handler: @escaping MessagesHandler) {
         _ = JSONEncoder().encodeResult(MessageRequest(
@@ -150,7 +150,7 @@ class SourcePointClient: SourcePointProtocol {
         URL(string: String(actionType.rawValue), relativeTo: baseUrl)
     }
 
-    func postCCPAAction(action: SPAction, consents: SPCCPAConsent, localState: String, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(action: SPAction, consents: SPCCPAConsent, localState: SPJson, handler: @escaping CCPAConsentHandler) {
         _ = JSONEncoder().encodeResult(CCPAConsentRequest(
             authId: "",
             localState: localState,
@@ -168,7 +168,7 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postGDPRAction(action: SPAction, localState: String, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
         _ = JSONEncoder().encodeResult(GDPRConsentRequest(
             authId: "",
             idfaStatus: .unavailable,

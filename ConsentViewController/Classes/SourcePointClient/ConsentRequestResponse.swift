@@ -10,7 +10,7 @@ import Foundation
 struct GDPRConsentRequest: Encodable, Equatable {
     let authId: String?
     let idfaStatus: SPIDFAStatus
-    let localState: String
+    let localState: SPJson
     let pmSaveAndExitVariables: SPJson?
     let publisherData: [String: SPJson?]?
     let requestUUID: UUID
@@ -23,7 +23,7 @@ struct GDPRConsentRequest: Encodable, Equatable {
 
 struct CCPAConsentRequest: Encodable, Equatable {
     let authId: String?
-    let localState: String
+    let localState: SPJson
     let publisherData: [String: SPJson?]?
     let pmSaveAndExitVariables: SPJson?
     let requestUUID: UUID
@@ -35,6 +35,6 @@ struct CCPAConsentRequest: Encodable, Equatable {
 }
 
 struct ConsentResponse<ConsentType: Decodable & Equatable>: Decodable & Equatable {
-    let localState: String
+    let localState: SPJson
     let userConsent: ConsentType
 }
