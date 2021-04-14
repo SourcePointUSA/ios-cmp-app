@@ -15,8 +15,7 @@ import Foundation
     case ShowPrivacyManager = 12
     case RejectAll = 13
     case Dismiss = 15
-
-    case IDFAOk = 99
+    case RequestATTAccess = 16
     case Unknown = 0
 
     public var description: String {
@@ -27,7 +26,7 @@ import Foundation
         case .SaveAndExit: return "SaveAndExit"
         case .Dismiss: return "Dismiss"
         case .PMCancel: return "PMCancel"
-        case .IDFAOk: return "IDFAOk"
+        case .RequestATTAccess: return "RequestATTAccess"
         case .Unknown: return "Unkown"
         @unknown default: return "Unknown"
         }

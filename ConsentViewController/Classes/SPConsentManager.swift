@@ -187,7 +187,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             }
         case .PMCancel:
             controller.closePrivacyManager()
-        case .IDFAOk:
+        case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { status in
                 print("[SDK] IDFA status:", status)
                 /// pass the status here
