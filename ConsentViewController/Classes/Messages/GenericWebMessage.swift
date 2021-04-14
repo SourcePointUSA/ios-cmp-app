@@ -222,7 +222,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         return SPAction(
             type: type,
             id: body["id"]?.stringValue,
-            campaignType: SPCampaignType(rawValue: body["campaignType"]?.stringValue ?? ""),
+            campaignType: campaignType,
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: (try? SPJson(body["payload"] as Any)) ?? SPJson(),
             pmurl: URL(string: body["pm_url"]?.stringValue ?? "")
@@ -243,7 +243,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
                 let jsonString = String(data: try! JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
                 DispatchQueue.main.async {
                     self.webview?.evaluateJavaScript("""
-                        window.SDK.loadMessage("\(self.campaignType.rawValue)",\(jsonString));
+                        window.SDK.loadMessage(\(jsonString));
                     """)
                 }
             case .onMessageReady: messageUIDelegate?.loaded(self)

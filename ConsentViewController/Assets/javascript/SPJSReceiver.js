@@ -6,9 +6,7 @@ var postToWebView = function (webview) {
 
 window.SDK = function (postToWebView) {
     return {
-        campaignType: '',
-        loadMessage: function(campaignType, messageJSON) {
-            window.SDK.campaignType = campaignType;
+        loadMessage: function(messageJSON) {
             var messagePayload = Object.assign({}, messageJSON, {
                 name: "sp.loadMessage",
                 fromNativeSDK: true
@@ -25,7 +23,7 @@ window.SDK = function (postToWebView) {
             postToWebView("onPMReady");
         },
         onAction: function(action) {
-            postToWebView("onAction", Object.assign({ campaignType: window.SDK.campaignType }, action));
+            postToWebView("onAction", action);
         },
         onError: function(error) {
             postToWebView("onError", { error: error });
@@ -45,8 +43,7 @@ var getActionFromMessage = function (eventData) {
         id: String(choiceData.choice_id),
         type: choiceData.type,
         pm_url: choiceData.iframe_url,
-        consentLanguage: eventData.consentLanguage,
-        campaignType: window.SDK.campaignType
+        consentLanguage: eventData.consentLanguage
     };
 };
 
