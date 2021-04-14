@@ -32,7 +32,7 @@ struct MessageRequest: Equatable, Encodable {
     let localState: String
     let campaigns: CampaignsRequest
     let includeData = [
-        "localState": ["type": "string"],
+        "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"],
         "messageMetaData": ["type": "RecordString"]
     ]
