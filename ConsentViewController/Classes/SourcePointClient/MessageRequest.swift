@@ -7,13 +7,6 @@
 
 import Foundation
 
-extension SPTargetingParams {
-    func stringified() throws -> String? { String(
-        data: try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted),
-        encoding: .utf8
-    )}
-}
-
 struct CampaignRequest: Encodable, Equatable {
     let campaignEnv: SPCampaignEnv
     let targetingParams: SPTargetingParams
@@ -21,6 +14,20 @@ struct CampaignRequest: Encodable, Equatable {
 
 struct CampaignsRequest: Equatable, Encodable {
     let gdpr, ccpa, ios14: CampaignRequest?
+
+    static func spCampaignToRequest(_ campaign: SPCampaign?) -> CampaignRequest? {
+        guard let campaign = campaign else { return nil }
+        return CampaignRequest(
+            campaignEnv: campaign.environment,
+            targetingParams: campaign.targetingParams
+        )
+    }
+
+    init(from campaigns: SPCampaigns) {
+        gdpr = CampaignsRequest.spCampaignToRequest(campaigns.gdpr)
+        ccpa = CampaignsRequest.spCampaignToRequest(campaigns.ccpa)
+        ios14 = CampaignsRequest.spCampaignToRequest(campaigns.ios14)
+    }
 }
 
 struct MessageRequest: Equatable, Encodable {

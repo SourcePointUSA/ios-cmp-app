@@ -109,14 +109,6 @@ class SourcePointClient: SourcePointProtocol {
         client = SimpleClient(timeoutAfter: timeout)
     }
 
-    func campaignToRequest(_ campaign: SPCampaign?) -> CampaignRequest? {
-        guard let campaign = campaign else { return nil }
-        return CampaignRequest(
-            campaignEnv: campaign.environment,
-            targetingParams: campaign.targetingParams
-        )
-    }
-
     func getMessages(
         campaigns: SPCampaigns,
         authId: String?,
@@ -130,11 +122,7 @@ class SourcePointClient: SourcePointProtocol {
             accountId: accountId,
             idfaStatus: idfaStaus,
             localState: localState,
-            campaigns: CampaignsRequest(
-                gdpr: campaignToRequest(campaigns.gdpr),
-                ccpa: campaignToRequest(campaigns.ccpa),
-                ios14: campaignToRequest(campaigns.ios14)
-            )
+            campaigns: CampaignsRequest(from: campaigns)
         )).map { body in
             client.post(urlString: SourcePointClient.GET_MESSAGES_URL.absoluteString, body: body) { result in
                 handler(Result {
