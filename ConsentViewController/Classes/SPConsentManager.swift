@@ -65,12 +65,12 @@ typealias SPMeta = String
     public var messageLanguage = SPMessageLanguage.BrowserDefault
 
     func renderNextMessageIfAny () {
-        if let ui = messageControllersStack.popLast() {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            if let ui = self?.messageControllersStack.popLast() {
                 ui.loadMessage()
+            } else {
+                self?.delegate?.onConsentReady?(consents: SPConsents())
             }
-        } else {
-            delegate?.onConsentReady?(consents: SPConsents())
         }
     }
 
@@ -107,6 +107,7 @@ typealias SPMeta = String
         ) { [weak self] result in
             switch result {
             case .success(let messagesResponse):
+                self?.storage.localState = messagesResponse.localState
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
                     .filter { $0.url != nil }
@@ -119,7 +120,29 @@ typealias SPMeta = String
     }
 
     func report(action: SPAction) {
-
+        switch action.campaignType {
+        case .ccpa:
+            spClient.postCCPAAction(action: action, consents: SPCCPAConsent.empty(), localState: storage.localState) { result in
+                switch result {
+                case .success(let consentsResponse):
+                    self.storage.localState = consentsResponse.localState
+                    self.delegate?.onConsentReady?(consents: SPConsents())
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case .gdpr:
+            spClient.postGDPRAction(action: action, localState: storage.localState) { result in
+                switch result {
+                case .success(let consentsResponse):
+                    self.storage.localState = consentsResponse.localState
+                    self.delegate?.onConsentReady?(consents: SPConsents())
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        default: break
+        }
     }
 
     public func loadGDPRPrivacyManager() {

@@ -79,11 +79,11 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient: SourcePointProtocol {
-    static let WRAPPER_API = URL(string: "https://cdn.sp-stage.net")!
+    static let WRAPPER_API = URL(string: "https://cdn.sp-stage.net/wrapper/v2/messages/")!
     static let ERROR_METRIS_URL = URL(string: "/metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGES_URL = URL(string: "/wrapper/v2/messages/?env=stage", relativeTo: WRAPPER_API)!
-    static let GDPR_CONSENT_URL = URL(string: "/gdpr", relativeTo: WRAPPER_API)!
-    static let CCPA_CONSENT_URL = URL(string: "/ccpa", relativeTo: WRAPPER_API)!
+    static let GET_MESSAGES_URL = URL(string: "./?env=stage", relativeTo: WRAPPER_API)!
+    static let GDPR_CONSENT_URL = URL(string: "gdpr/", relativeTo: WRAPPER_API)!
+    static let CCPA_CONSENT_URL = URL(string: "ccpa/", relativeTo: WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "v1/unified/gdpr/custom-consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
 
     let accountId: Int
@@ -135,15 +135,20 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
-        URL(string: String(actionType.rawValue), relativeTo: baseUrl)
+        guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
+
+        var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
+        components?.queryItems = [URLQueryItem(name: "env", value: "stage")]
+        return components?.url(relativeTo: baseUrl)
     }
 
     func postCCPAAction(action: SPAction, consents: SPCCPAConsent, localState: SPJson, handler: @escaping CCPAConsentHandler) {
+        // TODO: use real authId
         _ = JSONEncoder().encodeResult(CCPAConsentRequest(
             authId: "",
             localState: localState,
-            publisherData: [:],
-            pmSaveAndExitVariables: SPJson(),
+            publisherData: action.publisherData,
+            pmSaveAndExitVariables: action.pmPayload,
             requestUUID: requestUUID
         )).map { body in
             client.post(urlString: consentUrl(SourcePointClient.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
@@ -157,15 +162,16 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func postGDPRAction(action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
+        // TODO: use real authId
         _ = JSONEncoder().encodeResult(GDPRConsentRequest(
             authId: "",
-            idfaStatus: .unavailable,
+            idfaStatus: SPIDFAStatus.current(),
             localState: localState,
-            pmSaveAndExitVariables: nil,
-            publisherData: [:],
+            pmSaveAndExitVariables: action.pmPayload,
+            publisherData: action.publisherData,
             requestUUID: requestUUID
         )).map { body in
-            client.post(urlString: SourcePointClient.GDPR_CONSENT_URL.absoluteString, body: body) { result in
+            client.post(urlString: consentUrl(SourcePointClient.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
                     try result.decoded() as ConsentResponse
                 }.mapError {
