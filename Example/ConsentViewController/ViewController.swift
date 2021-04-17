@@ -10,7 +10,8 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController, SPDelegate {
-    @IBOutlet weak var vendorXStatusLabel: UILabel!
+    @IBOutlet weak var idfaStatusLabel: UILabel!
+
     @IBAction func onClearConsentTap(_ sender: Any) {
         UserDefaults.standard.dictionaryRepresentation().keys
             .filter { $0.starts(with: "sp_") }
@@ -21,27 +22,30 @@ class ViewController: UIViewController, SPDelegate {
         consentManager.loadGDPRPrivacyManager()
     }
 
-    @IBAction func onAcceptVendorXTap(_ sender: Any) {}
-
-    var gdprCampaign: SPCampaign { SPCampaign() }
-
-    var ccpaCampaign: SPCampaign { SPCampaign() }
-
-    var ios14Campaign: SPCampaign { SPCampaign() }
-
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
-            gdpr: gdprCampaign,
-            ccpa: ccpaCampaign,
-            ios14: ios14Campaign
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign(),
+            ios14: SPCampaign()
         ),
         delegate: self
     )}()
 
+    func loadIDFAStatusLabel() {
+        idfaStatusLabel.text = SPIDFAStatus.current().description
+        switch SPIDFAStatus.current() {
+        case .unknown: idfaStatusLabel.textColor = .systemYellow
+        case .accepted: idfaStatusLabel.textColor = .systemGreen
+        case .denied: idfaStatusLabel.textColor = .systemRed
+        case .unavailable: idfaStatusLabel.textColor = .systemGray
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadIDFAStatusLabel()
         consentManager.loadMessage()
     }
 
@@ -55,6 +59,7 @@ class ViewController: UIViewController, SPDelegate {
     }
 
     func onSPUIFinished() {
+        loadIDFAStatusLabel()
         dismiss(animated: true)
     }
 
