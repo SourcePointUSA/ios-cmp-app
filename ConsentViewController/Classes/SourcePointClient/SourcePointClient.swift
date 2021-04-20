@@ -153,7 +153,7 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: consentUrl(SourcePointClient.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as ConsentResponse
+                    try result.decoded() as ConsentResponse<SPCCPAConsent>
                 }.mapError {
                     InvalidResponseConsentError(error: $0)
                 })
@@ -173,7 +173,7 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: consentUrl(SourcePointClient.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as ConsentResponse
+                    try result.decoded() as ConsentResponse<SPGDPRConsent>
                 }.mapError {
                     InvalidResponseConsentError(error: $0)
                 })
