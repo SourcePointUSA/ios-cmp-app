@@ -14,7 +14,7 @@ class GDPRLocalStorageMock: SPLocalStorage {
     var storage: Storage = InMemoryStorageMock()
     var tcfData: [String: Any]? = [:]
     var usPrivacyString: String?
-    var consentsProfile: ConsentsProfile = ConsentsProfile()
+    var consentsProfile: SPConsents = SPConsents()
 
     var clearWasCalled = false
 

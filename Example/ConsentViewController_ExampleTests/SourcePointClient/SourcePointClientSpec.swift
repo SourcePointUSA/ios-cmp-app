@@ -25,7 +25,7 @@ class SourcePointClientSpec: QuickSpec {
         applies: true,
         consents: SPGDPRConsent.empty()
     )}
-    var profile: ConsentsProfile { ConsentsProfile(gdpr: gdprProfile) }
+    var profile: SPConsents { SPConsents(gdpr: gdprProfile) }
 
     /// TODO: add CCPA campaign
     func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {

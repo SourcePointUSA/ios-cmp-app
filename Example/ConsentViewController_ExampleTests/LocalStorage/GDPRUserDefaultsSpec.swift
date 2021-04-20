@@ -13,8 +13,8 @@ import Nimble
 // swiftlint:disable force_cast function_body_length
 
 class GDPRUserDefaultsSpec: QuickSpec {
-    func randomUserConsents() -> ConsentsProfile {
-        ConsentsProfile()
+    func randomUserConsents() -> SPConsents {
+        SPConsents()
     }
 
     override func spec() {

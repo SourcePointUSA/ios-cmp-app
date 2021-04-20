@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objcMembers public class SPConsent<ConsentType>: NSObject {
+@objcMembers public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     let consents: ConsentType?
     let applies: Bool
 
@@ -19,7 +19,7 @@ import Foundation
     public override var description: String { "applies: \(applies), consents: \(String(describing: consents))" }
 }
 
-@objcMembers public class SPConsents: NSObject {
+@objcMembers public class SPConsents: NSObject, Codable {
     let gdpr: SPConsent<SPGDPRConsent>?
     let ccpa: SPConsent<SPCCPAConsent>?
 

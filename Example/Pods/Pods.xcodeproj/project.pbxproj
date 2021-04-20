@@ -170,7 +170,6 @@
 		AD3F3DEA678B9C0A1C4F0EF79BFB7505 /* MatcherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C40B06B5DF643A529F14078F378FDA /* MatcherProtocols.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		AE3B246482DCD60BA846EA3CE983A1FB /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9111A4417173FD53BA1F003F9A42D8 /* IQUIView+IQKeyboardToolbar.swift */; };
 		AF60C00928A7AFE04E374B620EEA5F49 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E9348433BC3DA39E302CF633443377 /* Filter.swift */; };
-		B09398270B96BF42B3E9AEED4EAE91BF /* ConsentsProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406CF4183648920991E57233930D64D5 /* ConsentsProfile.swift */; };
 		B324A2195C69F41F7515FB8400A97403 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39271DF928C81446E95655600904D78A /* Foundation.framework */; };
 		B3A14E7D18C64299488164C04FD75E83 /* BeEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F783F630CD1BEE2C5BCB26E882C1D7F2 /* BeEmpty.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		B48508EB39EE315F5A00429EEA69DD63 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45377D4F5660A1531538B581E82C6CB /* Configuration.swift */; };
@@ -468,7 +467,6 @@
 		3CB61FF245F215E41B31ED4906D7D968 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		3E6634FEF5BA9E40E387BE8203ED736D /* SatisfyAllOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SatisfyAllOf.swift; path = Sources/Nimble/Matchers/SatisfyAllOf.swift; sourceTree = "<group>"; };
 		404777277CD9E196528A797140A8FA9C /* NMBExceptionCapture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NMBExceptionCapture.h; path = Sources/NimbleObjectiveC/NMBExceptionCapture.h; sourceTree = "<group>"; };
-		406CF4183648920991E57233930D64D5 /* ConsentsProfile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConsentsProfile.swift; path = ConsentViewController/Classes/ConsentsProfile.swift; sourceTree = "<group>"; };
 		4085B5B121F174CF707054017C4C15D4 /* CwlCatchException.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CwlCatchException.m; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchExceptionSupport/CwlCatchException.m; sourceTree = "<group>"; };
 		41726E0C3B6BA2FD588F14C9F0A70D4D /* MessageRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
 		41B0E00A0A837CE3D627049C77AF6F3B /* ErrorMetricsRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ErrorMetricsRequest.swift; sourceTree = "<group>"; };
@@ -1362,7 +1360,6 @@
 			children = (
 				36F2B51589199CD1A5F3420F0E517C69 /* Bundle+Framework.swift */,
 				EC05E427046EC9BDB4C0F5D68E155A55 /* ConnectivityManager.swift */,
-				406CF4183648920991E57233930D64D5 /* ConsentsProfile.swift */,
 				743A5D062D0E142E79A0784A732C99B4 /* GDPRConsentViewController.swift */,
 				252FFF64E7EE8F0E6215FD8F9F9B09E4 /* GDPRMessage.swift */,
 				7061E585184C62FC9FBFBEE186C41FD2 /* GDPRMessageViewController.swift */,
@@ -2024,7 +2021,6 @@
 				2EEEE2521FFE8191DDE54F1BA310769D /* ConsentRequestResponse.swift in Sources */,
 				17356DEED366C77350E62AA06D2C3C3E /* Bundle+Framework.swift in Sources */,
 				663580FC6366875A354381573DB56D48 /* ConnectivityManager.swift in Sources */,
-				B09398270B96BF42B3E9AEED4EAE91BF /* ConsentsProfile.swift in Sources */,
 				24BD011F47338F16AE2EE121A897F708 /* ConsentViewController-dummy.m in Sources */,
 				1015BA051A81F8349E4CE4201E24473B /* CustomConsentRequestResponse.swift in Sources */,
 				456CBB1F59E6B0FFBC517FF75EBAC66A /* ErrorMetricsRequest.swift in Sources */,

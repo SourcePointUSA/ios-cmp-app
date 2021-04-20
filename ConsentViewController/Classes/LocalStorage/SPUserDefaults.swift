@@ -37,12 +37,12 @@ class SPUserDefaults: SPLocalStorage {
         set { storage.set(newValue, forKey: SPUserDefaults.US_PRIVACY_STRING_KEY) }
     }
 
-    var consentsProfile: ConsentsProfile {
+    var consentsProfile: SPConsents {
         get {
             storage.object(
-                ofType: ConsentsProfile.self,
+                ofType: SPConsents.self,
                 forKey: SPUserDefaults.CONSENTS_PROFILE_KEY
-            ) ?? ConsentsProfile()
+            ) ?? SPConsents()
         }
         set {
             storage.setObject(newValue, forKey: SPUserDefaults.CONSENTS_PROFILE_KEY)
@@ -68,6 +68,6 @@ class SPUserDefaults: SPLocalStorage {
         localState = SPJson()
         tcfData = [:]
         usPrivacyString = ""
-        consentsProfile = ConsentsProfile()
+        consentsProfile = SPConsents()
     }
 }

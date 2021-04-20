@@ -23,7 +23,7 @@ typealias SPMeta = String
     let spClient: SourcePointProtocol
     var cleanUserDataOnError = true
     var storage: SPLocalStorage
-    var consentsProfile: ConsentsProfile { storage.consentsProfile }
+    var consentsProfile: SPConsents { storage.consentsProfile }
     var messageControllersStack: [SPMessageViewController] = []
 
     public static func clearAllData() {
