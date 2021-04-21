@@ -44,7 +44,7 @@ protocol SPLocalStorage {
     var storage: Storage { get set }
     var tcfData: [String: Any]? { get set }
     var usPrivacyString: String? { get set }
-    var consentsProfile: SPUserData { get set }
+    var userData: SPUserData { get set }
     var localState: SPJson { get set }
 
     func clear()

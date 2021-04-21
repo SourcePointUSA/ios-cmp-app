@@ -37,7 +37,7 @@ class SPUserDefaults: SPLocalStorage {
         set { storage.set(newValue, forKey: SPUserDefaults.US_PRIVACY_STRING_KEY) }
     }
 
-    var consentsProfile: SPUserData {
+    var userData: SPUserData {
         get {
             storage.object(
                 ofType: SPUserData.self,
@@ -59,7 +59,7 @@ class SPUserDefaults: SPLocalStorage {
     }
 
     func dictionaryRepresentation() -> [String: Any?] {[
-        SPUserDefaults.CONSENTS_PROFILE_KEY: consentsProfile,
+        SPUserDefaults.CONSENTS_PROFILE_KEY: userData,
         SPUserDefaults.US_PRIVACY_STRING_KEY: usPrivacyString,
         SPUserDefaults.LOCAL_STATE_KEY: localState
     ].merging(tcfData ?? [:]) { item, _ in item }}
@@ -68,6 +68,6 @@ class SPUserDefaults: SPLocalStorage {
         localState = SPJson()
         tcfData = [:]
         usPrivacyString = ""
-        consentsProfile = SPUserData()
+        userData = SPUserData()
     }
 }
