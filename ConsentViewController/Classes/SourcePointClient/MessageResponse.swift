@@ -59,7 +59,15 @@ enum Consent: Equatable {
     case ccpa(consents: SPCCPAConsent)
     case unknown
 }
-extension Consent: Decodable {
+extension Consent: Codable {
+    func encode(to encoder: Encoder) throws {
+        switch self {
+        case .ccpa(let consents): try consents.encode(to: encoder)
+        case .gdpr(let consents): try consents.encode(to: encoder)
+        default: break
+        }
+    }
+
     init(from decoder: Decoder) throws {
         if let consent = try? SPGDPRConsent.init(from: decoder) {
             self = .gdpr(consents: consent)

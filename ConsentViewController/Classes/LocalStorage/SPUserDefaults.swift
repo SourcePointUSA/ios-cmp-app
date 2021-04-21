@@ -14,7 +14,7 @@ class SPUserDefaults: SPLocalStorage {
     static public let US_PRIVACY_STRING_KEY = "IABUSPrivacy_String"
 
     static let LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)localState"
-    static let CONSENTS_PROFILE_KEY = "\(SP_KEY_PREFIX)consents_profile"
+    static let USER_DATA_KEY = "\(SP_KEY_PREFIX)userData"
     static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
 
@@ -41,11 +41,11 @@ class SPUserDefaults: SPLocalStorage {
         get {
             storage.object(
                 ofType: SPUserData.self,
-                forKey: SPUserDefaults.CONSENTS_PROFILE_KEY
+                forKey: SPUserDefaults.USER_DATA_KEY
             ) ?? SPUserData()
         }
         set {
-            storage.setObject(newValue, forKey: SPUserDefaults.CONSENTS_PROFILE_KEY)
+            storage.setObject(newValue, forKey: SPUserDefaults.USER_DATA_KEY)
         }
     }
 
@@ -59,7 +59,7 @@ class SPUserDefaults: SPLocalStorage {
     }
 
     func dictionaryRepresentation() -> [String: Any?] {[
-        SPUserDefaults.CONSENTS_PROFILE_KEY: userData,
+        SPUserDefaults.USER_DATA_KEY: userData,
         SPUserDefaults.US_PRIVACY_STRING_KEY: usPrivacyString,
         SPUserDefaults.LOCAL_STATE_KEY: localState
     ].merging(tcfData ?? [:]) { item, _ in item }}

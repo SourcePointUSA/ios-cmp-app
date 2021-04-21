@@ -23,7 +23,7 @@ typealias SPMeta = String
     let spClient: SourcePointProtocol
     var cleanUserDataOnError = true
     var storage: SPLocalStorage
-    var consentsProfile: SPUserData { storage.userData }
+    var storedUserData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
 
     public static func clearAllData() {
@@ -69,7 +69,7 @@ typealias SPMeta = String
             if let ui = self?.messageControllersStack.popLast() {
                 ui.loadMessage()
             } else {
-                self?.delegate?.onConsentReady?(consents: SPUserData())
+                self?.delegate?.onConsentReady?(consents: self?.storage.userData ?? SPUserData())
             }
         }
     }
@@ -98,6 +98,17 @@ typealias SPMeta = String
         }
     }
 
+    func storeData(localState: SPJson, userData: SPUserData) {
+        storage.localState = localState
+        storage.userData = userData
+        if let tcData = userData.gdpr?.consents?.tcfData {
+            storage.tcfData = tcData.dictionaryValue
+        }
+        if let uspString = userData.ccpa?.consents?.uspstring {
+            storage.usPrivacyString = uspString
+        }
+    }
+
     public func loadMessage(forAuthId authId: String? = nil) {
         spClient.getMessages(
             campaigns: campaigns,
@@ -107,7 +118,10 @@ typealias SPMeta = String
         ) { [weak self] result in
             switch result {
             case .success(let messagesResponse):
-                self?.storage.localState = messagesResponse.localState
+                self?.storeData(
+                    localState: messagesResponse.localState,
+                    userData: SPUserData(from: messagesResponse)
+                )
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
                     .filter { $0.url != nil }
@@ -126,8 +140,15 @@ typealias SPMeta = String
             spClient.postCCPAAction(action: action, consents: SPCCPAConsent.empty(), localState: storage.localState) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
-                    self?.storage.localState = consentsResponse.localState
-                    self?.delegate?.onConsentReady?(consents: SPUserData())
+                    let userData = SPUserData(
+                        gdpr: self?.storage.userData.gdpr,
+                        ccpa: SPConsent(consents: consentsResponse.userConsent, applies: true)
+                    )
+                    self?.storeData(
+                        localState: consentsResponse.localState,
+                        userData: userData
+                    )
+                    self?.delegate?.onConsentReady?(consents: userData)
                 case .failure(let error):
                     self?.onError(error)
                 }
@@ -136,8 +157,15 @@ typealias SPMeta = String
             spClient.postGDPRAction(action: action, localState: storage.localState) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
-                    self?.storage.localState = consentsResponse.localState
-                    self?.delegate?.onConsentReady?(consents: SPUserData())
+                    let userData = SPUserData(
+                        gdpr: SPConsent(consents: consentsResponse.userConsent, applies: true),
+                        ccpa: self?.storage.userData.ccpa
+                    )
+                    self?.storeData(
+                        localState: consentsResponse.localState,
+                        userData: userData
+                    )
+                    self?.delegate?.onConsentReady?(consents: userData)
                 case .failure(let error):
                     self?.onError(error)
                 }
@@ -155,13 +183,11 @@ typealias SPMeta = String
     }
 
     public func gdprApplies() -> Bool {
-        /// TODO: implement
-        consentsProfile.gdpr?.applies ?? false
+        storage.userData.gdpr?.applies ?? false
     }
 
     public func ccpaApplies() -> Bool {
-        /// TODO: implement
-        consentsProfile.ccpa?.applies ?? false
+        storage.userData.ccpa?.applies ?? false
     }
 
     func loadPrivacyManager(_ campaignType: SPCampaignType) {
@@ -208,15 +234,11 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .ShowPrivacyManager:
             if let url = action.pmURL {
                 controller.loadPrivacyManager(url: url)
-            } else {
-                controller.loadPrivacyManager()
             }
         case .PMCancel:
             controller.closePrivacyManager()
         case .RequestATTAccess:
-            SPIDFAStatus.requestAuthorisation { _ in
-                self.finishAndNextIfAny()
-            }
+            SPIDFAStatus.requestAuthorisation { _ in self.finishAndNextIfAny() }
         default:
             print("[SDK] UNKNOWN Action")
         }
