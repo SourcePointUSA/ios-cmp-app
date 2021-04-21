@@ -12,7 +12,7 @@ public typealias SPConsentUUID = String
 typealias SPMeta = String
 
 @objcMembers public class SPConsentManager: SPSDK {
-    static public let VERSION = "6.0.0-beta"
+    static public let VERSION = "6.0.0-beta1"
 
     static public var shouldCallErrorMetrics = true
 
@@ -23,7 +23,7 @@ typealias SPMeta = String
     let spClient: SourcePointProtocol
     var cleanUserDataOnError = true
     var storage: SPLocalStorage
-    var consentsProfile: SPConsents { storage.consentsProfile }
+    var consentsProfile: SPUserData { storage.consentsProfile }
     var messageControllersStack: [SPMessageViewController] = []
 
     public static func clearAllData() {
@@ -69,7 +69,7 @@ typealias SPMeta = String
             if let ui = self?.messageControllersStack.popLast() {
                 ui.loadMessage()
             } else {
-                self?.delegate?.onConsentReady?(consents: SPConsents())
+                self?.delegate?.onConsentReady?(consents: SPUserData())
             }
         }
     }
@@ -114,7 +114,8 @@ typealias SPMeta = String
                     .compactMap { self?.messageToViewController($0.url!, $0.message, $0.type) }
                     .reversed()
                 self?.renderNextMessageIfAny()
-            case .failure(let error): self?.onError(error)
+            case .failure(let error):
+                self?.onError(error)
             }
         }
     }
@@ -122,23 +123,23 @@ typealias SPMeta = String
     func report(action: SPAction) {
         switch action.campaignType {
         case .ccpa:
-            spClient.postCCPAAction(action: action, consents: SPCCPAConsent.empty(), localState: storage.localState) { result in
+            spClient.postCCPAAction(action: action, consents: SPCCPAConsent.empty(), localState: storage.localState) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
-                    self.storage.localState = consentsResponse.localState
-                    self.delegate?.onConsentReady?(consents: SPConsents())
+                    self?.storage.localState = consentsResponse.localState
+                    self?.delegate?.onConsentReady?(consents: SPUserData())
                 case .failure(let error):
-                    print(error)
+                    self?.onError(error)
                 }
             }
         case .gdpr:
-            spClient.postGDPRAction(action: action, localState: storage.localState) { result in
+            spClient.postGDPRAction(action: action, localState: storage.localState) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
-                    self.storage.localState = consentsResponse.localState
-                    self.delegate?.onConsentReady?(consents: SPConsents())
+                    self?.storage.localState = consentsResponse.localState
+                    self?.delegate?.onConsentReady?(consents: SPUserData())
                 case .failure(let error):
-                    print(error)
+                    self?.onError(error)
                 }
             }
         default: break
@@ -154,10 +155,12 @@ typealias SPMeta = String
     }
 
     public func gdprApplies() -> Bool {
+        /// TODO: implement
         consentsProfile.gdpr?.applies ?? false
     }
 
     public func ccpaApplies() -> Bool {
+        /// TODO: implement
         consentsProfile.ccpa?.applies ?? false
     }
 
@@ -211,10 +214,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .PMCancel:
             controller.closePrivacyManager()
         case .RequestATTAccess:
-            SPIDFAStatus.requestAuthorisation { status in
-                print("[SDK] IDFA status:", status)
-                /// pass the status here
-                // self.report(action: action, legislation: legislation)
+            SPIDFAStatus.requestAuthorisation { _ in
                 self.finishAndNextIfAny()
             }
         default:

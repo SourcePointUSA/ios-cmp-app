@@ -19,7 +19,7 @@ import Foundation
     public override var description: String { "applies: \(applies), consents: \(String(describing: consents))" }
 }
 
-@objcMembers public class SPConsents: NSObject, Codable {
+@objcMembers public class SPUserData: NSObject, Codable {
     let gdpr: SPConsent<SPGDPRConsent>?
     let ccpa: SPConsent<SPCCPAConsent>?
 

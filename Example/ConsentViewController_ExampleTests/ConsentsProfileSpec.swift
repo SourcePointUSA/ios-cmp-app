@@ -43,7 +43,7 @@ class ConsentsProfileSpec: QuickSpec {
             }
         }
     """.filter { !" \n\t\r".contains($0) }
-    var consentsProfile: SPConsents { SPConsents(
+    var consentsProfile: SPUserData { SPUserData(
         gdpr: gdprProfile,
         ccpa: ccpaProfile
     )}
