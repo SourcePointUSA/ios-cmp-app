@@ -13,14 +13,17 @@ class ViewController: UIViewController, SPDelegate {
     @IBOutlet weak var idfaStatusLabel: UILabel!
 
     @IBAction func onClearConsentTap(_ sender: Any) {
-        UserDefaults.standard.dictionaryRepresentation().keys
-            .filter { $0.starts(with: "sp_") }
-            .forEach { UserDefaults.standard.removeObject(forKey: $0)}
+
     }
 
-    @IBAction func onPrivacySettingsTap(_ sender: Any) {
+    @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
         consentManager.loadGDPRPrivacyManager(withId: "13111")
     }
+
+    @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
+        consentManager.loadCCPAPrivacyManager(withId: "14967")
+    }
+
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
