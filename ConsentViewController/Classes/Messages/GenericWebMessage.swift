@@ -217,7 +217,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
             id: body["id"]?.stringValue,
             campaignType: campaignType,
             consentLanguage: body["consentLanguage"]?.stringValue,
-            pmPayload: (try? SPJson(body["payload"] as Any)) ?? SPJson(),
+            pmPayload: body["payload"] ?? SPJson(),
             pmurl: URL(string: body["pm_url"]?.stringValue ?? "")
         )
     }
