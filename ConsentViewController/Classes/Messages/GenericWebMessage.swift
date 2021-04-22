@@ -189,6 +189,8 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         return config
     }
 
+    var isFirstLayerMessage = true
+
     override func loadMessage() {
         print("LOADING:", url)
         webview?.load(URLRequest(url: url))
@@ -241,13 +243,19 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
             case .onAction:
                 if let action = getActionFrom(body: body) {
                     messageUIDelegate?.action(action, from: self)
+                    if action.type == .ShowPrivacyManager {
+                        isFirstLayerMessage = false
+                    }
                 } else {
                     messageUIDelegate?.onError(
                         InvalidOnActionEventPayloadError(eventName.rawValue, body: body.description)
                     )
                 }
             case .onError: messageUIDelegate?.onError(SPError())
-            case .onPMReady: break
+            case .onPMReady:
+                if isFirstLayerMessage {
+                    messageUIDelegate?.loaded(self)
+                }
             case .unknown: break
             }
         } else {
