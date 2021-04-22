@@ -17,7 +17,7 @@ class ViewController: UIViewController, SPDelegate {
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "13111")
+        consentManager.loadGDPRPrivacyManager(withId: "13111", tab: .Features)
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
