@@ -222,6 +222,20 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         )
     }
 
+    func handleMessagePreload() {
+        guard
+            let messageData = try? JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed),
+            let jsonString = String(data: messageData, encoding: .utf8) else {
+            messageUIDelegate?.onError(UnableToInjectMessageIntoRenderingApp())
+            return
+        }
+        DispatchQueue.main.async {
+            self.webview?.evaluateJavaScript("""
+                window.SDK.loadMessage(\(jsonString));
+            """)
+        }
+    }
+
     override func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if
             let messageBody = try? SPJson(message.body),
@@ -230,15 +244,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         {
             print("[RenderingApp]", messageBody)
             switch eventName {
-            case .readyForPreload:
-                // TODO: remove the force_try
-                // swiftlint:disable:next force_try
-                let jsonString = String(data: try! JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed), encoding: .utf8)!
-                DispatchQueue.main.async {
-                    self.webview?.evaluateJavaScript("""
-                        window.SDK.loadMessage(\(jsonString));
-                    """)
-                }
+            case .readyForPreload: handleMessagePreload()
             case .onMessageReady: messageUIDelegate?.loaded(self)
             case .onAction:
                 if let action = getActionFrom(body: body) {

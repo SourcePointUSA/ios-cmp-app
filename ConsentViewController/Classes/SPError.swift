@@ -97,6 +97,11 @@
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
+@objcMembers public class UnableToInjectMessageIntoRenderingApp: SPError {
+    public override var spCode: String { "sp_metric_unable_to_stringify_msgJSON" }
+    override public var description: String { "The SDK could convert the message into JSON." }
+}
+
 /// Invalid API Response Errors
 @objcMembers public class InvalidResponseWebMessageError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_web_message" }
