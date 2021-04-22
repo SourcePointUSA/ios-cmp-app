@@ -25,6 +25,8 @@ typealias SPMeta = String
     var storage: SPLocalStorage
     var storedUserData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
+    var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
+    var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
@@ -174,12 +176,14 @@ typealias SPMeta = String
         }
     }
 
-    public func loadGDPRPrivacyManager() {
-        loadPrivacyManager(.gdpr)
+    public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        let pmUrl = URL(string: "https://cdn.sp-stage.net/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)")!
+        loadPrivacyManager(.gdpr, pmUrl)
     }
 
-    public func loadCCPAPrivacyManager() {
-        loadPrivacyManager(.ccpa)
+    public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        let pmUrl = URL(string: "https://ccpa-notice.sp-stage.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)")!
+        loadPrivacyManager(.ccpa, pmUrl)
     }
 
     public func gdprApplies() -> Bool {
@@ -190,13 +194,13 @@ typealias SPMeta = String
         storage.userData.ccpa?.applies ?? false
     }
 
-    func loadPrivacyManager(_ campaignType: SPCampaignType) {
+    func loadPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
         GenericWebMessageViewController(
-            url: URL(string: "https://google.com")!, /// TODO: use real PM url
+            url: pmURL,
             contents: SPJson(),
             campaignType: campaignType,
             delegate: self
-        ).loadPrivacyManager()
+        ).loadPrivacyManager(url: pmURL)
     }
 
     public func onError(_ error: SPError) {

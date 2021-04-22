@@ -19,7 +19,7 @@ class ViewController: UIViewController, SPDelegate {
     }
 
     @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager()
+        consentManager.loadGDPRPrivacyManager(withId: "13111")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
@@ -63,7 +63,7 @@ class ViewController: UIViewController, SPDelegate {
         dismiss(animated: true)
     }
 
-    func onConsentReady(consents: SPConsents) {
+    func onConsentReady(consents: SPUserData) {
         print("onConsentReady:", consents)
     }
 

@@ -10,7 +10,6 @@ import WebKit
 
 protocol SPRenderingApp {
     func loadMessage()
-    func loadPrivacyManager()
     func loadPrivacyManager(url: URL)
     func closePrivacyManager()
 }
@@ -79,10 +78,6 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     }
 
     func loadPrivacyManager(url: URL) {
-        fatalError("not implemented")
-    }
-
-    func loadPrivacyManager() {
         fatalError("not implemented")
     }
 
@@ -177,7 +172,6 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 
 @objcMembers class GenericWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
-    static let PM_BASE_URL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")!
 
     override var webviewConfig: WKWebViewConfiguration? {
         let config = WKWebViewConfiguration()
@@ -200,17 +194,12 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         webview?.load(URLRequest(url: url))
     }
 
-    override func loadPrivacyManager() {
-        loadPrivacyManager(url: GenericWebMessageViewController.PM_BASE_URL)
-    }
-
     override func loadPrivacyManager(url: URL) {
         webview?.load(URLRequest(url: url))
     }
 
     override func closePrivacyManager() {
-        if let canGoBack = webview?.canGoBack,
-           canGoBack == true {
+        if let canGoBack = webview?.canGoBack, canGoBack == true {
             webview?.goBack()
         } else {
             messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
