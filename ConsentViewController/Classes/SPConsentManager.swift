@@ -241,6 +241,8 @@ extension SPConsentManager: SPMessageUIDelegate {
             }
         case .PMCancel:
             controller.closePrivacyManager()
+        case .Dismiss:
+            finishAndNextIfAny()
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { _ in self.finishAndNextIfAny() }
         default:
