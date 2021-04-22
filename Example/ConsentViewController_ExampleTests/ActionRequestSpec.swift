@@ -14,33 +14,23 @@ import Nimble
 class ActionRequestSpec: QuickSpec {
     override func spec() {
         let requestUUID = UUID()
-        let action = GDPRActionRequest(
-            propertyHref: try! SPPropertyName("property-name"),
-            accountId: 1,
-            actionType: 1,
-            choiceId: "choiceId",
-            privacyManagerId: "pmId",
-            requestFromPM: false,
-            requestUUID: requestUUID,
+        let request = GDPRConsentRequest(
+            authId: "authId",
+            idfaStatus: .accepted,
+            localState: try! SPJson(["local": "state"]),
             pmSaveAndExitVariables: try! SPJson(["foo": "bar"]),
-            localState: "localstate",
-            publisherData: try! ["pubFoo": SPJson("pubBar")],
-            consentLanguage: "EN"
+            publisherData: ["pubFoo": try? SPJson("pubBar")],
+            requestUUID: requestUUID
         )
         let actionString = """
         {
-            "actionType": 1,
-            "accountId": 1,
             "pmSaveAndExitVariables": {
                 "foo": "bar"
             },
-            "propertyHref": "https:\\/\\/property-name",
-            "localState": "localstate",
+            "localState": {
+                "local": "state"
+            },
             "requestUUID": "\(requestUUID.uuidString)",
-            "privacyManagerId": "pmId",
-            "requestFromPM": false,
-            "consentLanguage":"EN",
-            "choiceId": "choiceId",
             "pubData": {
                 "pubFoo": "pubBar"
             }
@@ -48,14 +38,8 @@ class ActionRequestSpec: QuickSpec {
         """.filter { !" \n\t\r".contains($0) }
 
         it("can be encoded to JSON") {
-            let actionEncoded = String(data: try! JSONEncoder().encode(action), encoding: .utf8)
+            let actionEncoded = String(data: try! JSONEncoder().encode(request), encoding: .utf8)
             expect(actionString).to(equal(actionEncoded))
-        }
-
-        it("can be decoded from JSON") {
-            _ = JSONDecoder().decode(GDPRActionRequest.self, from: actionString.data(using: .utf8)!).map {
-                expect(action).to(equal($0))
-            }
         }
     }
 }

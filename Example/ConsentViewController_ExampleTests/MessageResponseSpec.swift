@@ -61,7 +61,9 @@ class MessageResponseSpec: QuickSpec {
                     }
                 }
             ],
-            "localState": "test"
+            "localState": {
+                "local": "state"
+            }
         }
         """.filter { !" \n\t\r".contains($0) }.data(using: .utf8) }
 
@@ -102,7 +104,7 @@ class MessageResponseSpec: QuickSpec {
                         messageMetaData: metaData
                     )
                 ],
-                localState: "test"
+                localState: try! SPJson(["local": "state"])
             )))
         }
     }

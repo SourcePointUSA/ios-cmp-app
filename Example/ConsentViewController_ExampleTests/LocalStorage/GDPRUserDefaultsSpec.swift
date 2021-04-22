@@ -45,44 +45,44 @@ class GDPRUserDefaultsSpec: QuickSpec {
                 }
             }
 
-            describe("consentsProfile") {
-                it("is empty ConsentsProfile by default") {
+            describe("userData") {
+                it("is empty SPUserData by default") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    expect(userDefaults.consentsProfile).to(equal(ConsentsProfile()))
+                    expect(userDefaults.userData).to(equal(SPUserData()))
                 }
 
                 it("gets its value from the local storage") {
-                    let profile = ConsentsProfile()
-                    localStorage.storage = [SPUserDefaults.CONSENTS_PROFILE_KEY: profile]
+                    let userData = SPUserData()
+                    localStorage.storage = [SPUserDefaults.USER_DATA_KEY: userData]
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    expect(userDefaults.consentsProfile).to(equal(profile))
+                    expect(userDefaults.userData).to(equal(userData))
                 }
 
                 it("persists the value in the local storage") {
-                    let profile = ConsentsProfile()
+                    let userData = SPUserData()
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    userDefaults.consentsProfile = profile
-                    let stored = localStorage.storage[SPUserDefaults.CONSENTS_PROFILE_KEY] as! ConsentsProfile
-                    expect(stored).to(equal(profile))
+                    userDefaults.userData = userData
+                    let stored = localStorage.storage[SPUserDefaults.USER_DATA_KEY] as! SPUserData
+                    expect(stored).to(equal(userData))
                 }
             }
 
             describe("dictionaryRepresentation") {
                 it("returns a dictionary containing its attributes") {
-                    let profile = self.randomUserConsents()
+                    let userData = self.randomUserConsents()
                     let tcfData = ["\(SPUserDefaults.IAB_KEY_PREFIX)foo": "bar"]
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    userDefaults.consentsProfile = profile
+                    userDefaults.userData = userData
                     userDefaults.tcfData = tcfData
                     let dict = userDefaults.dictionaryRepresentation()
-                    expect((dict[SPUserDefaults.CONSENTS_PROFILE_KEY] as? ConsentsProfile)).to(equal(profile))
+                    expect((dict[SPUserDefaults.USER_DATA_KEY] as? SPUserData)).to(equal(userData))
                     expect((dict["\(SPUserDefaults.IAB_KEY_PREFIX)foo"] as? String)).to(equal("bar"))
                 }
 
                 it("returns a dictionary containing only its attributes") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     let attributes = [
-                        SPUserDefaults.CONSENTS_PROFILE_KEY,
+                        SPUserDefaults.USER_DATA_KEY,
                         SPUserDefaults.US_PRIVACY_STRING_KEY,
                         SPUserDefaults.LOCAL_STATE_KEY
                     ]
@@ -94,9 +94,9 @@ class GDPRUserDefaultsSpec: QuickSpec {
             describe("clear") {
                 it("sets userConsents back to its default value") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    userDefaults.consentsProfile = self.randomUserConsents()
+                    userDefaults.userData = self.randomUserConsents()
                     userDefaults.clear()
-                    expect(userDefaults.consentsProfile).to(equal(ConsentsProfile()))
+                    expect(userDefaults.userData).to(equal(SPUserData()))
                 }
 
                 it("sets tcfData back to its default value") {

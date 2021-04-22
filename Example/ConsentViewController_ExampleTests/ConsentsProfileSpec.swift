@@ -14,13 +14,13 @@ import Nimble
 
 // swiftlint:disable force_try
 class ConsentsProfileSpec: QuickSpec {
-    let gdprProfile = ConsentProfile<SPGDPRConsent>(
-        applies: true,
-        consents: SPGDPRConsent.empty()
+    let gdprProfile = SPConsent<SPGDPRConsent>(
+        consents: SPGDPRConsent.empty(),
+        applies: true
     )
-    let ccpaProfile = ConsentProfile<SPCCPAConsent>(
-        applies: true,
-        consents: SPCCPAConsent.empty()
+    let ccpaProfile = SPConsent<SPCCPAConsent>(
+        consents: SPCCPAConsent.empty(),
+        applies: true
     )
     let jsonData = """
         {
@@ -55,7 +55,7 @@ class ConsentsProfileSpec: QuickSpec {
         }
 
         it("can be decoded from JSON") {
-            let decoded = try! JSONDecoder().decode(ConsentsProfile.self, from: self.jsonData.data(using: .utf8)!).get()
+            let decoded = try! JSONDecoder().decode(SPUserData.self, from: self.jsonData.data(using: .utf8)!).get()
             expect(decoded).to(equal(self.consentsProfile))
         }
     }

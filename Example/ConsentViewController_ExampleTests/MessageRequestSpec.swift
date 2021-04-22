@@ -27,7 +27,7 @@ class MessageRequestSpec: QuickSpec {
             propertyHref: try! SPPropertyName("demo"),
             accountId: 1,
             idfaStatus: .unknown,
-            localState: "",
+            localState: SPJson(),
             campaigns: CampaignsRequest(
                 gdpr: campaign,
                 ccpa: campaign,

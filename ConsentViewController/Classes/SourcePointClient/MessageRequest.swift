@@ -22,7 +22,9 @@ struct CampaignsRequest: Equatable, Encodable {
             targetingParams: campaign.targetingParams
         )
     }
+}
 
+extension CampaignsRequest {
     init(from campaigns: SPCampaigns) {
         gdpr = CampaignsRequest.spCampaignToRequest(campaigns.gdpr)
         ccpa = CampaignsRequest.spCampaignToRequest(campaigns.ccpa)

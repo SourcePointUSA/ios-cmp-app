@@ -29,7 +29,7 @@ class SourcePointClientMock: SourcePointProtocol {
             SourcePointClientMock.getCampaign(.ccpa, .unknown),
             SourcePointClientMock.getCampaign(.gdpr, .unknown)
         ],
-        localState: ""
+        localState: SPJson()
     )
 
     var error: SPError?
@@ -56,27 +56,11 @@ class SourcePointClientMock: SourcePointProtocol {
         }
     }
 
-    func postAction<T: Decodable & Equatable>(
-        action: SPAction,
-        legislation: SPLegislation,
-        campaign: SPCampaign,
-        localState: String,
-        handler: @escaping ConsentHandler<T>
-    ) {
-        postActionCalled = true
-        if let error = error {
-            handler(.failure(error))
-        } else {
-            fatalError("Implement here!")
-//            handler(.success(postActionResponse))
-        }
-    }
-
-    func postCCPAAction(action: SPAction, campaign: SPCampaign, localState: String, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
 
     }
 
-    func postGDPRAction(action: SPAction, campaign: SPCampaign, localState: String, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
 
     }
 
@@ -94,7 +78,7 @@ class SourcePointClientMock: SourcePointProtocol {
         completionHandler(customConsentResponse, error)
     }
 
-    func errorMetrics(_ error: SPError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPLegislation) {
+    func errorMetrics(_ error: SPError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPCampaignType) {
         errorMetricsCalledWith = [
             "error": error,
             "sdkVersion": sdkVersion,
