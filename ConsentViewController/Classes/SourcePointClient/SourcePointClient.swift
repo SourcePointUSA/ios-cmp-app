@@ -45,12 +45,13 @@ protocol SourcePointProtocol {
         handler: @escaping MessagesHandler)
 
     func postCCPAAction(
+        authId: String?,
         action: SPAction,
-        consents: SPCCPAConsent,
         localState: SPJson,
         handler: @escaping CCPAConsentHandler)
 
     func postGDPRAction(
+        authId: String?,
         action: SPAction,
         localState: SPJson,
         handler: @escaping GDPRConsentHandler)
@@ -142,10 +143,9 @@ class SourcePointClient: SourcePointProtocol {
         return components?.url(relativeTo: baseUrl)
     }
 
-    func postCCPAAction(action: SPAction, consents: SPCCPAConsent, localState: SPJson, handler: @escaping CCPAConsentHandler) {
-        // TODO: use real authId
+    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
         _ = JSONEncoder().encodeResult(CCPAConsentRequest(
-            authId: "",
+            authId: authId,
             localState: localState,
             publisherData: action.publisherData,
             pmSaveAndExitVariables: action.pmPayload,
@@ -161,10 +161,9 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postGDPRAction(action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
-        // TODO: use real authId
+    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
         _ = JSONEncoder().encodeResult(GDPRConsentRequest(
-            authId: "",
+            authId: authId,
             idfaStatus: SPIDFAStatus.current(),
             localState: localState,
             pmSaveAndExitVariables: action.pmPayload,

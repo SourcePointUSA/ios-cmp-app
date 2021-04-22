@@ -20,6 +20,8 @@ typealias SPMeta = String
     let accountId: Int
     let propertyName: SPPropertyName
     let campaigns: SPCampaigns
+
+    var authId: String?
     let spClient: SourcePointProtocol
     var cleanUserDataOnError = true
     var storage: SPLocalStorage
@@ -112,6 +114,7 @@ typealias SPMeta = String
     }
 
     public func loadMessage(forAuthId authId: String? = nil) {
+        self.authId = authId
         spClient.getMessages(
             campaigns: campaigns,
             authId: authId,
@@ -139,7 +142,7 @@ typealias SPMeta = String
     func report(action: SPAction) {
         switch action.campaignType {
         case .ccpa:
-            spClient.postCCPAAction(action: action, consents: SPCCPAConsent.empty(), localState: storage.localState) { [weak self] result in
+            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
                     let userData = SPUserData(
@@ -156,7 +159,7 @@ typealias SPMeta = String
                 }
             }
         case .gdpr:
-            spClient.postGDPRAction(action: action, localState: storage.localState) { [weak self] result in
+            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
                     let userData = SPUserData(
