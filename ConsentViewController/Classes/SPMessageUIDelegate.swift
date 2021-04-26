@@ -11,5 +11,5 @@ import Foundation
     func loaded(_ controller: SPMessageViewController)
     func action(_ action: SPAction, from controller: SPMessageViewController)
     func onError(_ error: SPError)
-    func finished()
+    func finished(_ vcFinished: SPMessageViewController)
 }

@@ -17,10 +17,10 @@ import UIKit
 
 @objc public protocol SPConsentDelegate {
     /// called when there's a consent Message to be shown
-    @objc func onSPUIReady(_ viewController: UIViewController)
+    @objc func onSPUIReady(_ controller: SPMessageViewController)
 
     /// called when the SP UI is finished and can be dismissed
-    @objc func onSPUIFinished()
+    @objc func onSPUIFinished(_ controller: SPMessageViewController)
 
     /// called after the user takes an action and the SDK receives consent data back from the server
     /// - Parameters:

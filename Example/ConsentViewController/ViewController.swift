@@ -52,16 +52,16 @@ class ViewController: UIViewController, SPDelegate {
         consentManager.loadMessage()
     }
 
-    func onSPUIReady(_ viewController: UIViewController) {
-        viewController.modalPresentationStyle = .overFullScreen
-        present(viewController, animated: true)
+    func onSPUIReady(_ controller: SPMessageViewController) {
+        controller.modalPresentationStyle = .overFullScreen
+        present(controller, animated: true)
     }
 
     func onAction(_ action: SPAction, from controller: SPMessageViewController) {
         print(action)
     }
 
-    func onSPUIFinished() {
+    func onSPUIFinished(_ controller: SPMessageViewController) {
         loadIDFAStatusLabel()
         dismiss(animated: true)
     }

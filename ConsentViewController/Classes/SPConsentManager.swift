@@ -221,14 +221,14 @@ extension SPConsentManager: SPMessageUIDelegate {
         }
     }
 
-    func finished() {
+    func finished(_ vcFinished: SPMessageViewController) {
         DispatchQueue.main.async {
-            self.delegate?.onSPUIFinished()
+            self.delegate?.onSPUIFinished(vcFinished)
         }
     }
 
-    func finishAndNextIfAny() {
-        finished()
+    func finishAndNextIfAny(_ vcFinished: SPMessageViewController) {
+        finished(vcFinished)
         renderNextMessageIfAny()
     }
 
@@ -237,7 +237,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             report(action: action)
-            finishAndNextIfAny()
+            finishAndNextIfAny(controller)
         case .ShowPrivacyManager:
             if let url = action.pmURL {
                 controller.loadPrivacyManager(url: url)
@@ -245,9 +245,9 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .PMCancel:
             controller.closePrivacyManager()
         case .Dismiss:
-            finishAndNextIfAny()
+            finishAndNextIfAny(controller)
         case .RequestATTAccess:
-            SPIDFAStatus.requestAuthorisation { _ in self.finishAndNextIfAny() }
+            SPIDFAStatus.requestAuthorisation { _ in self.finishAndNextIfAny(controller) }
         default:
             print("[SDK] UNKNOWN Action")
         }

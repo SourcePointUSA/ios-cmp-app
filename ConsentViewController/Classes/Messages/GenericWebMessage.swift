@@ -55,15 +55,17 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     }
 }
 
-@objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp {
-    weak var messageUIDelegate: SPMessageUIDelegate?
-    let contents: SPJson
-    let url: URL
-    var campaignType: SPCampaignType
+@objc public protocol MessageController {
+    func loadMessage()
+    func loadPrivacyManager(url: URL)
+    func closePrivacyManager()
+}
 
-    init(url: URL, contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
-        self.url = url
-        self.contents = contents
+@objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp, MessageController {
+    weak var messageUIDelegate: SPMessageUIDelegate?
+    public var campaignType: SPCampaignType
+
+    init(campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
         super.init(nibName: nil, bundle: nil)
@@ -73,15 +75,15 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func loadMessage() {
+    public func loadMessage() {
         fatalError("not implemented")
     }
 
-    func loadPrivacyManager(url: URL) {
+    public func loadPrivacyManager(url: URL) {
         fatalError("not implemented")
     }
 
-    func closePrivacyManager() {
+    public func closePrivacyManager() {
         fatalError("not implemented")
     }
 }
@@ -89,6 +91,8 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 @objcMembers class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
     var timeout: TimeInterval?
     var webviewConfig: WKWebViewConfiguration? { nil }
+    let url: URL
+    let contents: SPJson
 
     lazy var webview: WKWebView? = {
         if let config = self.webviewConfig {
@@ -110,6 +114,16 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         }
         return nil
     }()
+
+    init(url: URL, contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
+        self.url = url
+        self.contents = contents
+        super.init(campaignType: campaignType, delegate: delegate)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func loadView() {
         /*
