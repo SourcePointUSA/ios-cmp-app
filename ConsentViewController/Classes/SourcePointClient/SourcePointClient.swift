@@ -80,11 +80,11 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient: SourcePointProtocol {
-    static let WRAPPER_API = URL(string: "https://cdn.sp-stage.net/wrapper/v2/messages/")!
+    static let WRAPPER_API = URL(string: "https://cdn.sp-stage.net/wrapper/v2/")!
     static let ERROR_METRIS_URL = URL(string: "/metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGES_URL = URL(string: "./?env=stage", relativeTo: WRAPPER_API)!
-    static let GDPR_CONSENT_URL = URL(string: "gdpr/", relativeTo: WRAPPER_API)!
-    static let CCPA_CONSENT_URL = URL(string: "ccpa/", relativeTo: WRAPPER_API)!
+    static let GET_MESSAGES_URL = URL(string: "./get_messages/?env=stage", relativeTo: WRAPPER_API)!
+    static let GDPR_CONSENT_URL = URL(string: "./messages/choice/gdpr/", relativeTo: WRAPPER_API)!
+    static let CCPA_CONSENT_URL = URL(string: "./messages/choice/ccpa/", relativeTo: WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "v1/unified/gdpr/custom-consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
 
     let accountId: Int
