@@ -13,7 +13,7 @@ class ViewController: UIViewController, SPDelegate {
     @IBOutlet weak var idfaStatusLabel: UILabel!
 
     @IBAction func onClearConsentTap(_ sender: Any) {
-
+        SPConsentManager.clearAllData()
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
