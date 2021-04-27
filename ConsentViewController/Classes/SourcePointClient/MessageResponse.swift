@@ -113,6 +113,7 @@ extension Campaign: Decodable {
 }
 
 struct MessagesResponse: Decodable, Equatable {
+    let propertyId: Int
     let campaigns: [Campaign]
     let localState: SPJson
 }
