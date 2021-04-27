@@ -12,7 +12,7 @@ import Foundation
     @objc func ccpaApplies() -> Bool
 }
 
-@objc public  protocol SPGDPR {
+@objc public protocol SPGDPR {
     @objc func loadGDPRPrivacyManager(withId: String, tab: SPPrivacyManagerTab)
     @objc func gdprApplies() -> Bool
 }

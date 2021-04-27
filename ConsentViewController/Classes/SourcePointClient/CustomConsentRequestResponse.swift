@@ -11,7 +11,7 @@ struct CustomConsentResponse: Codable, Equatable {
 }
 
 struct CustomConsentRequest: Codable, Equatable {
-    let consentUUID: SPConsentUUID
+    let consentUUID: String
     let propertyId: Int
     let vendors, categories, legIntCategories: [String]
 }

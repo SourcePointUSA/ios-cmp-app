@@ -1,15 +1,10 @@
 //
-//  GDPRConsentViewController.swift
+//  SPConsentManager.swift
 //  cmp-app-test-app
 //
 //  Created by Andre Herculano on 12/16/19.
 //  Copyright © 2019 Sourcepoint. All rights reserved.
 //
-
-import UIKit
-
-public typealias SPConsentUUID = String
-typealias SPMeta = String
 
 @objcMembers public class SPConsentManager: SPSDK {
     static public let VERSION = "6.0.0-beta0"
