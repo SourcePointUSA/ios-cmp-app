@@ -64,10 +64,12 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 @objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp, MessageController {
     weak var messageUIDelegate: SPMessageUIDelegate?
     public var campaignType: SPCampaignType
+    public var messageId: Int?
 
-    init(campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
+    init(messageId: Int?, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
+        self.messageId = messageId
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -115,10 +117,10 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         return nil
     }()
 
-    init(url: URL, contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
+    init(url: URL, messageId: Int?, contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
         self.url = url
         self.contents = contents
-        super.init(campaignType: campaignType, delegate: delegate)
+        super.init(messageId: messageId, campaignType: campaignType, delegate: delegate)
     }
 
     required init?(coder: NSCoder) {

@@ -47,7 +47,7 @@ class SimpleClient: HttpClient {
     let session: SPURLSession
     let dispatchQueue: SPDispatchQueue
 
-    let logCalls: Bool = false
+    let logCalls: Bool = true
 
     func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {
         if logCalls, let method = request.httpMethod, let url = request.url {

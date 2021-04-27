@@ -58,6 +58,14 @@ protocol SourcePointProtocol {
         idfaStatus: SPIDFAStatus,
         handler: @escaping GDPRConsentHandler)
 
+    func reportIdfaStatus(
+        propertyId: Int,
+        uuid: String?,
+        uuidType: SPCampaignType?,
+        messageId: Int,
+        idfaStatus: SPIDFAStatus
+    )
+
 //    func customConsent(
 //        toConsentUUID consentUUID: SPConsentUUID,
 //        vendors: [String],
@@ -82,11 +90,12 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient: SourcePointProtocol {
-    static let WRAPPER_API = URL(string: "https://cdn.sp-stage.net/wrapper/v2/")!
-    static let ERROR_METRIS_URL = URL(string: "/metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGES_URL = URL(string: "./get_messages/?env=stage", relativeTo: WRAPPER_API)!
-    static let GDPR_CONSENT_URL = URL(string: "./messages/choice/gdpr/", relativeTo: WRAPPER_API)!
-    static let CCPA_CONSENT_URL = URL(string: "./messages/choice/ccpa/", relativeTo: WRAPPER_API)!
+    static let WRAPPER_API = URL(string: "https://cdn.sp-stage.net/wrapper/")!
+    static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=stage", relativeTo: WRAPPER_API)!
+    static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
+    static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
+    static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=stage", relativeTo: WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "v1/unified/gdpr/custom-consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
 
     let accountId: Int
@@ -179,6 +188,20 @@ class SourcePointClient: SourcePointProtocol {
                     InvalidResponseConsentError(error: $0)
                 })
             }
+        }
+    }
+
+    func reportIdfaStatus(propertyId: Int, uuid: String?, uuidType: SPCampaignType?, messageId: Int, idfaStatus: SPIDFAStatus) {
+        _ = JSONEncoder().encodeResult(IDFAStatusReportRequest(
+            accountId: accountId,
+            propertyId: propertyId,
+            uuid: uuid,
+            uuidType: uuidType,
+            requestUUID: UUID(),
+            messageId: messageId,
+            idfaStatus: idfaStatus
+        )).map { body in
+            client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: body) { _ in }
         }
     }
 

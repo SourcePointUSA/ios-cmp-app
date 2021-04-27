@@ -12,7 +12,7 @@ public typealias SPConsentUUID = String
 typealias SPMeta = String
 
 @objcMembers public class SPConsentManager: SPSDK {
-    static public let VERSION = "6.0.0-beta1"
+    static public let VERSION = "6.0.0-beta0"
 
     static public var shouldCallErrorMetrics = true
 
@@ -27,8 +27,10 @@ typealias SPMeta = String
     var storage: SPLocalStorage
     var storedUserData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
+
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
+    var propertyId: Int?
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
@@ -78,14 +80,15 @@ typealias SPMeta = String
         }
     }
 
-    func messageToViewController (_ url: URL, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
+    func messageToViewController (_ url: URL, _ messageId: Int, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
         switch message {
         case .native(let content):
-            /// TODO: here we'd initialise the Native Message object
+            /// TODO: Initialise the Native Message object
             /// Call a delegate Method to get the Message controller
             /// Pass the native message object to it
             return GenericWebMessageViewController(
                 url: url,
+                messageId: messageId,
                 contents: content,
                 campaignType: type,
                 delegate: self
@@ -93,6 +96,7 @@ typealias SPMeta = String
         case .web(let content):
             return GenericWebMessageViewController(
                 url: url,
+                messageId: messageId,
                 contents: content,
                 campaignType: type,
                 delegate: self
@@ -127,10 +131,17 @@ typealias SPMeta = String
                     localState: messagesResponse.localState,
                     userData: SPUserData(from: messagesResponse)
                 )
+                self?.propertyId = messagesResponse.propertyId
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
+                    .filter { $0.messageMetaData != nil }
                     .filter { $0.url != nil }
-                    .compactMap { self?.messageToViewController($0.url!, $0.message, $0.type) }
+                    .compactMap { self?.messageToViewController(
+                        $0.url!,
+                        $0.messageMetaData!.messageId,
+                        $0.message,
+                        $0.type
+                    )}
                     .reversed()
                 self?.renderNextMessageIfAny()
             case .failure(let error):
@@ -198,8 +209,15 @@ typealias SPMeta = String
     }
 
     func loadPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
+        let messageId = Int(
+            URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
+                .queryItems?
+                .first { $0.name == "message_id"}?
+                .value ?? ""
+        )
         GenericWebMessageViewController(
             url: pmURL,
+            messageId: messageId,
             contents: SPJson(),
             campaignType: campaignType,
             delegate: self
@@ -247,7 +265,22 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .Dismiss:
             finishAndNextIfAny(controller)
         case .RequestATTAccess:
-            SPIDFAStatus.requestAuthorisation { _ in self.finishAndNextIfAny(controller) }
+            SPIDFAStatus.requestAuthorisation { status in
+                // TODO: extract this logic to its own method
+                let uuid = self.gdprUUID != "" ? self.gdprUUID : self.ccpaUUID
+                let uuidType: SPCampaignType? = self.gdprUUID != "" ?
+                    .gdpr
+                    : self.ccpaUUID != "" ?
+                        .ccpa : nil
+                self.spClient.reportIdfaStatus(
+                    propertyId: self.propertyId!, // TODO: remove force_unwrap from propertyId
+                    uuid: uuid,
+                    uuidType: uuidType,
+                    messageId: controller.messageId!, // TODO: remove force_unwrap from messageId
+                    idfaStatus: status
+                ) // TODO: deal with error case
+                self.finishAndNextIfAny(controller)
+            }
         default:
             print("[SDK] UNKNOWN Action")
         }
