@@ -25,7 +25,7 @@ typealias SPMeta = String
     let spClient: SourcePointProtocol
     var cleanUserDataOnError = true
     var storage: SPLocalStorage
-    var storedUserData: SPUserData { storage.userData }
+    public var userData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
 
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }

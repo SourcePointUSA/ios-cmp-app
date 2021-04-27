@@ -18,6 +18,7 @@ import Foundation
 }
 
 @objc public protocol SPSDK: SPGDPR, SPCCPA {
+    @objc var userData: SPUserData { get }
     @objc func loadMessage(forAuthId authId: String?)
 //    @objc func loadNativeMessage(forAuthId authId: String?)
 }
