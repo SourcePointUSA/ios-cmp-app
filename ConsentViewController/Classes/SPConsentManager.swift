@@ -142,7 +142,7 @@ typealias SPMeta = String
     func report(action: SPAction) {
         switch action.campaignType {
         case .ccpa:
-            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState) { [weak self] result in
+            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: SPIDFAStatus.current()) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
                     let userData = SPUserData(
@@ -159,7 +159,7 @@ typealias SPMeta = String
                 }
             }
         case .gdpr:
-            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState) { [weak self] result in
+            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: SPIDFAStatus.current()) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
                     let userData = SPUserData(

@@ -48,12 +48,14 @@ protocol SourcePointProtocol {
         authId: String?,
         action: SPAction,
         localState: SPJson,
+        idfaStatus: SPIDFAStatus,
         handler: @escaping CCPAConsentHandler)
 
     func postGDPRAction(
         authId: String?,
         action: SPAction,
         localState: SPJson,
+        idfaStatus: SPIDFAStatus,
         handler: @escaping GDPRConsentHandler)
 
 //    func customConsent(
@@ -143,7 +145,7 @@ class SourcePointClient: SourcePointProtocol {
         return components?.url(relativeTo: baseUrl)
     }
 
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
         _ = JSONEncoder().encodeResult(CCPAConsentRequest(
             authId: authId,
             localState: localState,
@@ -161,7 +163,7 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
         _ = JSONEncoder().encodeResult(GDPRConsentRequest(
             authId: authId,
             idfaStatus: SPIDFAStatus.current(),
