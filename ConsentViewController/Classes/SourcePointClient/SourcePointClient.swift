@@ -59,10 +59,10 @@ protocol SourcePointProtocol {
         handler: @escaping GDPRConsentHandler)
 
     func reportIdfaStatus(
-        propertyId: Int,
+        propertyId: Int?,
         uuid: String?,
         uuidType: SPCampaignType?,
-        messageId: Int,
+        messageId: Int?,
         idfaStatus: SPIDFAStatus
     )
 
@@ -191,7 +191,7 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func reportIdfaStatus(propertyId: Int, uuid: String?, uuidType: SPCampaignType?, messageId: Int, idfaStatus: SPIDFAStatus) {
+    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus) {
         _ = JSONEncoder().encodeResult(IDFAStatusReportRequest(
             accountId: accountId,
             propertyId: propertyId,

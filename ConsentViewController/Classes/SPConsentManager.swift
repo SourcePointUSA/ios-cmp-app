@@ -250,6 +250,25 @@ extension SPConsentManager: SPMessageUIDelegate {
         renderNextMessageIfAny()
     }
 
+    func reportIdfaStatus(status: SPIDFAStatus, messageId: Int?) {
+        var uuid = ""
+        var uuidType: SPCampaignType?
+        if !gdprUUID.isEmpty {
+            uuid = gdprUUID
+            uuidType = .gdpr
+        } else if !ccpaUUID.isEmpty {
+            uuid = ccpaUUID
+            uuidType = .ccpa
+        }
+        spClient.reportIdfaStatus(
+            propertyId: propertyId,
+            uuid: uuid,
+            uuidType: uuidType,
+            messageId: messageId,
+            idfaStatus: status
+        ) // TODO: deal with error and send it to error reporting endpoint
+    }
+
     func action(_ action: SPAction, from controller: SPMessageViewController) {
         self.delegate?.onAction(action, from: controller)
         switch action.type {
@@ -266,19 +285,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             finishAndNextIfAny(controller)
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { status in
-                // TODO: extract this logic to its own method
-                let uuid = self.gdprUUID != "" ? self.gdprUUID : self.ccpaUUID
-                let uuidType: SPCampaignType? = self.gdprUUID != "" ?
-                    .gdpr
-                    : self.ccpaUUID != "" ?
-                        .ccpa : nil
-                self.spClient.reportIdfaStatus(
-                    propertyId: self.propertyId!, // TODO: remove force_unwrap from propertyId
-                    uuid: uuid,
-                    uuidType: uuidType,
-                    messageId: controller.messageId!, // TODO: remove force_unwrap from messageId
-                    idfaStatus: status
-                ) // TODO: deal with error case
+                self.reportIdfaStatus(status: status, messageId: controller.messageId)
                 self.finishAndNextIfAny(controller)
             }
         default:

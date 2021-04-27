@@ -8,12 +8,13 @@
 import Foundation
 
 struct AppleTrackingPayload: Codable {
-    let appleMsgId: Int
+    let appleMsgId: Int?
     let appleChoice: SPIDFAStatus
 }
 
 struct IDFAStatusReportRequest: Codable {
-    let accountId, propertyId: Int
+    let accountId: Int
+    let propertyId: Int?
     let uuid: String?
     let uuidType: SPCampaignType?
     let requestUUID: UUID
@@ -21,7 +22,7 @@ struct IDFAStatusReportRequest: Codable {
 }
 
 extension IDFAStatusReportRequest {
-    init(accountId: Int, propertyId: Int, uuid: String?, uuidType: SPCampaignType?, requestUUID: UUID, messageId: Int, idfaStatus: SPIDFAStatus) {
+    init(accountId: Int, propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, requestUUID: UUID, messageId: Int?, idfaStatus: SPIDFAStatus) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.uuid = uuid
