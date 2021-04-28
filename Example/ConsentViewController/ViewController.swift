@@ -9,7 +9,7 @@
 import UIKit
 import ConsentViewController
 
-class ViewController: UIViewController, SPDelegate {
+class ViewController: UIViewController {
     @IBOutlet weak var idfaStatusLabel: UILabel!
 
     @IBAction func onClearConsentTap(_ sender: Any) {
@@ -51,7 +51,9 @@ class ViewController: UIViewController, SPDelegate {
         loadIDFAStatusLabel()
         consentManager.loadMessage()
     }
+}
 
+extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: SPMessageViewController) {
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)

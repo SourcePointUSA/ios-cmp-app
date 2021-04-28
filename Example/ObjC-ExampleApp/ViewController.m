@@ -27,7 +27,7 @@
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
-                              ccpa: NULL
+                              ccpa: campaign
                               ios14: campaign];
 
     consentManager = [[SPConsentManager alloc]
@@ -43,6 +43,10 @@
     [self presentViewController:controller animated:true completion:NULL];
 }
 
+- (void)onAction:(SPAction * _Nonnull)action from:(SPMessageViewController * _Nonnull)controller {
+    NSLog(@"onAction: %@", action);
+}
+
 - (void)onSPUIFinished:(SPMessageViewController * _Nonnull)controller {
     [self dismissViewControllerAnimated:true completion:nil];
 }
@@ -50,27 +54,4 @@
 - (void)onConsentReadyWithConsents:(SPUserData *)consents {
     NSLog(@"onConsentReady: %@", consents);
 }
-
-- (void)onAction:(SPAction * _Nonnull)action from:(SPMessageViewController * _Nonnull)controller {
-
-}
-
-//- (void)onConsentReadyWithGdprUUID:(NSString *)gdprUUID userConsent:(GDPRUserConsent *)userConsent {
-//    NSLog(@"ConsentUUID: %@", gdprUUID);
-//    NSLog(@"ConsentString: %@", userConsent.euconsent);
-//    for (id vendorId in userConsent.acceptedVendors) {
-//        NSLog(@"Consented to Vendor(id: %@)", vendorId);
-//    }
-//    for (id purposeId in userConsent.acceptedCategories) {
-//        NSLog(@"Consented to Purpose(id: %@)", purposeId);
-//    }
-//}
-
-//- (void)gdprConsentUIWillShow {
-//    [self presentViewController:cvc animated:true completion:NULL];
-//}
-//
-//- (void)consentUIDidDisappear {
-//    [self dismissViewControllerAnimated:true completion:nil];
-//}
 @end
