@@ -20,5 +20,11 @@ import Foundation
 @objc public protocol SPSDK: SPGDPR, SPCCPA {
     @objc var userData: SPUserData { get }
     @objc func loadMessage(forAuthId authId: String?)
+    @objc func customConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (SPGDPRConsent) -> Void)
+
 //    @objc func loadNativeMessage(forAuthId authId: String?)
 }

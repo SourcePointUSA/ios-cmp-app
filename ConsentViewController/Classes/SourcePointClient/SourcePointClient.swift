@@ -5,6 +5,8 @@
 //  Created by Andre Herculano on 13.03.19.
 //
 
+// swiftlint:disable function_parameter_count
+
 import Foundation
 
 extension Result where Success == Data? {
@@ -66,12 +68,13 @@ protocol SourcePointProtocol {
         idfaStatus: SPIDFAStatus
     )
 
-//    func customConsent(
-//        toConsentUUID consentUUID: SPConsentUUID,
-//        vendors: [String],
-//        categories: [String],
-//        legIntCategories: [String],
-//        handler: @escaping CustomConsentHandler)
+    func customConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping CustomConsentHandler)
 
 //    func errorMetrics(
 //        _ error: SPError,
@@ -205,35 +208,29 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-//    func customConsent(
-//        toConsentUUID consentUUID: String,
-//        vendors: [String],
-//        categories: [String],
-//        legIntCategories: [String],
-//        handler: @escaping CustomConsentHandler) {
-//        do {
-//            let body = try JSONEncoder().encode(CustomConsentRequest(
-//                consentUUID: consentUUID,
-//                propertyId: propertyId,
-//                vendors: vendors,
-//                categories: categories,
-//                legIntCategories: legIntCategories
-//            ))
-//            client.post(urlString: SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, body: body) { data, error in
-//                if let error = error {
-//                    completionHandler(nil, error)
-//                } else {
-//                    do {
-//                        completionHandler(try JSONDecoder().decode(CustomConsentResponse.self, from: data!), nil)
-//                    } catch {
-//                        completionHandler(nil, InvalidResponseConsentError(error as? DecodingError))
-//                    }
-//                }
-//            }
-//        } catch {
-//            completionHandler(nil, InvalidRequestError(error as? DecodingError))
-//        }
-//    }
+    func customConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping CustomConsentHandler) {
+        _ = JSONEncoder().encodeResult(CustomConsentRequest(
+            consentUUID: consentUUID,
+            propertyId: propertyId,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories
+        )).map { body in
+            client.post(urlString: SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, body: body) { result in
+                handler(Result {
+                    try result.decoded() as CustomConsentResponse
+                }.mapError {
+                    InvalidResponseConsentError(error: $0)
+                })
+            }
+        }
+    }
 
 //    func errorMetrics(
 //        _ error: SPError,
