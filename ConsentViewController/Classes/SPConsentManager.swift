@@ -73,8 +73,6 @@
         DispatchQueue.main.async { [weak self] in
             if let ui = self?.messageControllersStack.popLast() {
                 ui.loadMessage()
-            } else {
-                self?.delegate?.onConsentReady?(consents: self?.storage.userData ?? SPUserData())
             }
         }
     }
@@ -136,7 +134,11 @@
                         $0.type
                     )}
                     .reversed()
-                self?.renderNextMessageIfAny()
+                if self?.messageControllersStack.isEmpty ?? true {
+                    self?.delegate?.onConsentReady?(consents: self?.storage.userData ?? SPUserData())
+                } else {
+                    self?.renderNextMessageIfAny()
+                }
             case .failure(let error):
                 self?.onError(error)
             }
