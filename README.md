@@ -161,7 +161,7 @@ func customConsentToGDPR(
     vendors: [String],
     categories: [String],
     legIntCategories: [String],
-    completionHandler: @escaping (SPGDPRConsent) -> Void
+    handler: @escaping (SPGDPRConsent) -> Void
 )
 ```
 
