@@ -55,7 +55,7 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIY-t5-3jC">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIY-t5-3jC">
                                         <rect key="frame" x="119" y="248" width="176" height="116"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="Accept My Vendor"/>
@@ -63,7 +63,7 @@
                                             <action selector="onAcceptMyVendorTap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="We3-A8-eIJ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kal-fZ-4TM">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kal-fZ-4TM">
                                         <rect key="frame" x="96" y="372" width="222" height="116"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
@@ -72,7 +72,7 @@
                                             <action selector="onGDPRPrivacyManagerTap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wUT-EZ-y2i"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cf6-CW-8f5">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cf6-CW-8f5">
                                         <rect key="frame" x="98" y="496" width="218" height="116"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
@@ -112,6 +112,8 @@
                     </view>
                     <connections>
                         <outlet property="acceptMyVendorButton" destination="qIY-t5-3jC" id="Le4-0P-YqM"/>
+                        <outlet property="ccpaPMButton" destination="Cf6-CW-8f5" id="P14-cj-ZZy"/>
+                        <outlet property="gdprPMButton" destination="Kal-fZ-4TM" id="H3Q-rQ-r0B"/>
                         <outlet property="idfaStatusLabel" destination="Eyw-Oc-Mos" id="UeG-zw-ErZ"/>
                         <outlet property="myVendorAcceptedLabel" destination="Gpu-Yh-muK" id="UIA-WV-x88"/>
                     </connections>

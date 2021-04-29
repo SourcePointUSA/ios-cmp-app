@@ -10,9 +10,15 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    let myVendorId = "5fbe6f090d88c7d28d765e1e"
+    let myPurposeId = "60657acc9c97c400122f21f3"
+
     @IBOutlet weak var idfaStatusLabel: UILabel!
     @IBOutlet weak var myVendorAcceptedLabel: UILabel!
     @IBOutlet weak var acceptMyVendorButton: UIButton!
+    @IBOutlet weak var gdprPMButton: UIButton!
+    @IBOutlet weak var ccpaPMButton: UIButton!
 
     @IBAction func onClearConsentTap(_ sender: Any) {
         SPConsentManager.clearAllData()
@@ -46,10 +52,6 @@ class ViewController: UIViewController {
         delegate: self
     )}()
 
-    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    let myVendorId = "5fbe6f090d88c7d28d765e1e"
-    let myPurposeId = "60657acc9c97c400122f21f3"
-
     override func viewDidLoad() {
         super.viewDidLoad()
         updateIDFAStatusLabel()
@@ -57,6 +59,7 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - SPDelegate implementation
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: SPMessageViewController) {
         controller.modalPresentationStyle = .overFullScreen
@@ -76,6 +79,7 @@ extension ViewController: SPDelegate {
         print("onConsentReady:", userData)
         let vendorAccepted = userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted ?? false
         updateMyVendorUI(vendorAccepted)
+        updatePMButtons(ccpaApplies: consentManager.ccpaApplies(), gdprApplies: consentManager.gdprApplies())
     }
 
     func onError(error: SPError) {
@@ -83,6 +87,7 @@ extension ViewController: SPDelegate {
     }
 }
 
+// MARK: - UI methods
 extension ViewController {
     func updateIDFAStatusLabel() {
         idfaStatusLabel.text = idfaStatus.description
@@ -98,5 +103,10 @@ extension ViewController {
         myVendorAcceptedLabel.text = accepted ? "accepted" : "rejected"
         myVendorAcceptedLabel.textColor = accepted ? .systemGreen : .systemRed
         acceptMyVendorButton.isEnabled = !accepted
+    }
+
+    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool) {
+        gdprPMButton.isEnabled = gdprApplies
+        ccpaPMButton.isEnabled = ccpaApplies
     }
 }
