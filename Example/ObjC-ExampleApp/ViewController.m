@@ -51,7 +51,7 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-- (void)onConsentReadyWithConsents:(SPUserData *)consents {
-    NSLog(@"onConsentReady: %@", consents);
+- (void)onConsentReadyWithUserData:(SPUserData *)userData {
+    NSLog(@"onConsentReady: %@", userData);
 }
 @end

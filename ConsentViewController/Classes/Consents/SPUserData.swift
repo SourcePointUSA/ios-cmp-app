@@ -8,8 +8,8 @@
 import Foundation
 
 @objcMembers public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
-    let consents: ConsentType?
-    let applies: Bool
+    public let consents: ConsentType?
+    public let applies: Bool
 
     public init(consents: ConsentType?, applies: Bool) {
         self.consents = consents
@@ -32,8 +32,8 @@ extension SPConsent {
 }
 
 @objcMembers public class SPUserData: NSObject, Codable {
-    let gdpr: SPConsent<SPGDPRConsent>?
-    let ccpa: SPConsent<SPCCPAConsent>?
+    public let gdpr: SPConsent<SPGDPRConsent>?
+    public let ccpa: SPConsent<SPCCPAConsent>?
 
     public init(
         gdpr: SPConsent<SPGDPRConsent>? = nil,

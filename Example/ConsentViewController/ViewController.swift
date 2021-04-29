@@ -11,44 +11,48 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     @IBOutlet weak var idfaStatusLabel: UILabel!
+    @IBOutlet weak var myVendorAcceptedLabel: UILabel!
+    @IBOutlet weak var acceptMyVendorButton: UIButton!
 
     @IBAction func onClearConsentTap(_ sender: Any) {
         SPConsentManager.clearAllData()
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "13111", tab: .Features)
+        consentManager.loadGDPRPrivacyManager(withId: "13111", tab: .Vendors)
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
         consentManager.loadCCPAPrivacyManager(withId: "14967")
     }
 
+    @IBAction func onAcceptMyVendorTap(_ sender: Any) {
+        consentManager.customConsentGDPR(
+            vendors: [myVendorId],
+            categories: [myPurposeId],
+            legIntCategories: []) { consents in
+            let vendorAccepted = consents.vendorGrants[self.myVendorId]?.granted ?? false
+            self.updateMyVendorUI(vendorAccepted)
+        }
+    }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
             ios14: SPCampaign()
         ),
         delegate: self
     )}()
 
-    func loadIDFAStatusLabel() {
-        idfaStatusLabel.text = SPIDFAStatus.current().description
-        switch SPIDFAStatus.current() {
-        case .unknown: idfaStatusLabel.textColor = .systemYellow
-        case .accepted: idfaStatusLabel.textColor = .systemGreen
-        case .denied: idfaStatusLabel.textColor = .systemRed
-        case .unavailable: idfaStatusLabel.textColor = .systemGray
-        }
-    }
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    let myVendorId = "5fbe6f090d88c7d28d765e1e"
+    let myPurposeId = "60657acc9c97c400122f21f3"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadIDFAStatusLabel()
+        updateIDFAStatusLabel()
         consentManager.loadMessage()
     }
 }
@@ -64,15 +68,35 @@ extension ViewController: SPDelegate {
     }
 
     func onSPUIFinished(_ controller: SPMessageViewController) {
-        loadIDFAStatusLabel()
+        updateIDFAStatusLabel()
         dismiss(animated: true)
     }
 
-    func onConsentReady(consents: SPUserData) {
-        print("onConsentReady:", consents)
+    func onConsentReady(userData: SPUserData) {
+        print("onConsentReady:", userData)
+        let vendorAccepted = userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted ?? false
+        updateMyVendorUI(vendorAccepted)
     }
 
     func onError(error: SPError) {
         print("Something went wrong: ", error)
+    }
+}
+
+extension ViewController {
+    func updateIDFAStatusLabel() {
+        idfaStatusLabel.text = idfaStatus.description
+        switch idfaStatus {
+        case .unknown: idfaStatusLabel.textColor = .systemYellow
+        case .accepted: idfaStatusLabel.textColor = .systemGreen
+        case .denied: idfaStatusLabel.textColor = .systemRed
+        case .unavailable: idfaStatusLabel.textColor = .systemGray
+        }
+    }
+
+    func updateMyVendorUI(_ accepted: Bool) {
+        myVendorAcceptedLabel.text = accepted ? "accepted" : "rejected"
+        myVendorAcceptedLabel.textColor = accepted ? .systemGreen : .systemRed
+        acceptMyVendorButton.isEnabled = !accepted
     }
 }

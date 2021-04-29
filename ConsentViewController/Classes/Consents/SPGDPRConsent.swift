@@ -18,23 +18,28 @@ public typealias SPGDPRPurposeId = String
 /// Encapuslates data about a particular vendor being "granted" based on its purposes
 @objcMembers public class SPGDPRVendorGrant: NSObject, Codable {
     /// if all purposes are granted, the vendorGrant will be set to `true`
-    public let vendorGrant: Bool
+    public let granted: Bool
     public let purposeGrants: SPGDPRPurposeGrants
 
     public override var description: String {
-        return "VendorGrant(vendorGrant: \(vendorGrant), purposeGrants: \(purposeGrants))"
+        return "VendorGrant(granted: \(granted), purposeGrants: \(purposeGrants))"
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? SPGDPRVendorGrant else {
             return false
         }
-        return other.vendorGrant == vendorGrant && other.purposeGrants == purposeGrants
+        return other.granted == granted && other.purposeGrants == purposeGrants
     }
 
-    public init(vendorGrant: Bool, purposeGrants: SPGDPRPurposeGrants) {
-        self.vendorGrant = vendorGrant
+    public init(granted: Bool, purposeGrants: SPGDPRPurposeGrants) {
+        self.granted = granted
         self.purposeGrants = purposeGrants
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case purposeGrants
+        case granted = "vendorGrant"
     }
 }
 

@@ -135,7 +135,7 @@
                     )}
                     .reversed()
                 if self?.messageControllersStack.isEmpty ?? true {
-                    self?.delegate?.onConsentReady?(consents: self?.storage.userData ?? SPUserData())
+                    self?.delegate?.onConsentReady?(userData: self?.storage.userData ?? SPUserData())
                 } else {
                     self?.renderNextMessageIfAny()
                 }
@@ -159,7 +159,7 @@
                         localState: consentsResponse.localState,
                         userData: userData
                     )
-                    self?.delegate?.onConsentReady?(consents: userData)
+                    self?.delegate?.onConsentReady?(userData: userData)
                 case .failure(let error):
                     self?.onError(error)
                 }
@@ -176,7 +176,7 @@
                         localState: consentsResponse.localState,
                         userData: userData
                     )
-                    self?.delegate?.onConsentReady?(consents: userData)
+                    self?.delegate?.onConsentReady?(userData: userData)
                 case .failure(let error):
                     self?.onError(error)
                 }

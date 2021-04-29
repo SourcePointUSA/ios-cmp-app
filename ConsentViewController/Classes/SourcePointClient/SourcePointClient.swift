@@ -99,7 +99,7 @@ class SourcePointClient: SourcePointProtocol {
     static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
     static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
     static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=stage", relativeTo: WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "v1/unified/gdpr/custom-consent?env=localProd&inApp=true&sdkVersion=iOSLocal", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=stage&inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
 
     let accountId: Int
     let propertyName: SPPropertyName
