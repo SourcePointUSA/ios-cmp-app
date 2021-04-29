@@ -189,6 +189,14 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 @objcMembers class GenericWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
 
+    override func viewWillDisappear(_ animated: Bool) {
+        messageUIDelegate = nil
+        if let contentController = webview?.configuration.userContentController {
+            contentController.removeScriptMessageHandler(forName: GenericWebMessageViewController.MESSAGE_HANDLER_NAME)
+            contentController.removeAllUserScripts()
+        }
+    }
+
     override var webviewConfig: WKWebViewConfiguration? {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
