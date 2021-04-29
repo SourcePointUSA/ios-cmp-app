@@ -81,17 +81,11 @@
 
     func messageToViewController (_ url: URL, _ messageId: Int, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
         switch message {
-        case .native(let content):
+        case .native:
             /// TODO: Initialise the Native Message object
             /// Call a delegate Method to get the Message controller
             /// Pass the native message object to it
-            return GenericWebMessageViewController(
-                url: url,
-                messageId: messageId,
-                contents: content,
-                campaignType: type,
-                delegate: self
-            )
+            return nil
         case .web(let content):
             return GenericWebMessageViewController(
                 url: url,
