@@ -1,0 +1,1 @@
+* Added GitHub Action to upload Meta App IPA to BrowserStack.
