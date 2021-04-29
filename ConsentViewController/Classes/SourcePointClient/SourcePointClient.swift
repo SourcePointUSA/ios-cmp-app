@@ -76,14 +76,14 @@ protocol SourcePointProtocol {
         propertyId: Int,
         handler: @escaping CustomConsentHandler)
 
-//    func errorMetrics(
-//        _ error: SPError,
-//        campaign: SPCampaign,
-//        sdkVersion: String,
-//        OSVersion: String,
-//        deviceFamily: String,
-//        legislation: SPCampaignType
-//    )
+    func errorMetrics(
+        _ error: SPError,
+        propertyId: Int?,
+        sdkVersion: String,
+        OSVersion: String,
+        deviceFamily: String,
+        campaignType: SPCampaignType
+    )
 
     func setRequestTimeout(_ timeout: TimeInterval)
 }
@@ -232,27 +232,26 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-//    func errorMetrics(
-//        _ error: SPError,
-//        campaign: SPCampaign,
-//        sdkVersion: String,
-//        OSVersion: String,
-//        deviceFamily: String,
-//        legislation: SPLegislation
-//    ) {
-//        let body = try? JSONEncoder().encode(ErrorMetricsRequest(
-//            code: error.spCode,
-//            accountId: String(campaign.accountId),
-//            description: error.description,
-//            sdkVersion: sdkVersion,
-//            OSVersion: OSVersion,
-//            deviceFamily: deviceFamily,
-//            propertyId: String(campaign.propertyId),
-//            propertyName: campaign.propertyName,
-//            legislation: legislation
-//        ))
-//        client.post(urlString: SourcePointClient.ERROR_METRIS_URL.absoluteString, body: body) {_, _ in
-//
-//        }
-//    }
+    func errorMetrics(
+        _ error: SPError,
+        propertyId: Int?,
+        sdkVersion: String,
+        OSVersion: String,
+        deviceFamily: String,
+        campaignType: SPCampaignType
+    ) {
+        _ = JSONEncoder().encodeResult(ErrorMetricsRequest(
+            code: error.spCode,
+            accountId: String(accountId),
+            description: error.description,
+            sdkVersion: sdkVersion,
+            OSVersion: OSVersion,
+            deviceFamily: deviceFamily,
+            propertyId: propertyId != nil ? String(propertyId!) : "",
+            propertyName: propertyName,
+            campaignType: campaignType
+        )).map {
+            client.post(urlString: SourcePointClient.ERROR_METRIS_URL.absoluteString, body: $0) { _ in }
+        }
+    }
 }

@@ -18,6 +18,7 @@
 
     var authId: String?
     let spClient: SourcePointProtocol
+    let deviceManager: SPDeviceManager
     var cleanUserDataOnError = true
     var storage: SPLocalStorage
     public var userData: SPUserData { storage.userData }
@@ -48,13 +49,16 @@
         campaigns: SPCampaigns,
         delegate: SPDelegate?,
         spClient: SourcePointProtocol,
-        storage: SPLocalStorage) {
+        storage: SPLocalStorage,
+        deviceManager: SPDeviceManager = SPDevice()
+    ) {
         self.accountId = accountId
         self.propertyName = propertyName
         self.campaigns = campaigns
         self.delegate = delegate
         self.spClient = spClient
         self.storage = storage
+        self.deviceManager = deviceManager
     }
 
     /// Instructs the privacy manager to be displayed with this tab.
@@ -250,6 +254,14 @@
     }
 
     public func onError(_ error: SPError) {
+        spClient.errorMetrics(
+            error,
+            propertyId: propertyId, // TODO: remove the force_unwrap
+            sdkVersion: SPConsentManager.VERSION,
+            OSVersion: deviceManager.osVersion(),
+            deviceFamily: deviceManager.osVersion(),
+            campaignType: error.campaignType
+        )
         if cleanUserDataOnError {
             SPConsentManager.clearAllData()
         }
