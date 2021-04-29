@@ -252,7 +252,7 @@
     public func onError(_ error: SPError) {
         spClient.errorMetrics(
             error,
-            propertyId: propertyId, // TODO: remove the force_unwrap
+            propertyId: propertyId,
             sdkVersion: SPConsentManager.VERSION,
             OSVersion: deviceManager.osVersion(),
             deviceFamily: deviceManager.osVersion(),
@@ -299,7 +299,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             uuidType: uuidType,
             messageId: messageId,
             idfaStatus: status
-        ) // TODO: deal with error and send it to error reporting endpoint
+        )
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
