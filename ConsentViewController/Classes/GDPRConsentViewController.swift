@@ -364,7 +364,7 @@
 //            sdkVersion: GDPRConsentViewController.VERSION,
 //            OSVersion: deviceManager.osVersion(),
 //            deviceFamily: deviceManager.deviceFamily(),
-//            legislation: .GDPR
+//            campaignType: .GDPR
 //        )}
 //        consentDelegate?.onError?(error: error)
 //    }

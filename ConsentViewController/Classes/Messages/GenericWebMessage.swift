@@ -171,15 +171,15 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        var spError: SPError = WebViewError(code: nil, title: error.localizedDescription)
+        var spError: SPError = WebViewError(campaignType: campaignType, code: nil, title: error.localizedDescription)
         if let error = error as? URLError {
             switch error.code {
             case .timedOut:
-                spError = ConnectionTimeOutError(url: error.failingURL, timeout: timeout)
+                spError = ConnectionTimeOutError(url: error.failingURL, timeout: timeout, campaignType: campaignType)
             case .networkConnectionLost, .notConnectedToInternet:
-                spError = NoInternetConnection()
+                spError = NoInternetConnection(campaignType: campaignType)
             default:
-                spError = WebViewError(code: error.code.rawValue, title: error.localizedDescription)
+                spError = WebViewError(campaignType: campaignType, code: error.code.rawValue, title: error.localizedDescription)
             }
         }
         messageUIDelegate?.onError(spError)
@@ -195,7 +195,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         guard let path = Bundle.framework.path(forResource: Self.MESSAGE_HANDLER_NAME, ofType: "js"),
               let scriptSource = try? String(contentsOfFile: path)
         else {
-            messageUIDelegate?.onError(UnableToLoadJSReceiver())
+            messageUIDelegate?.onError(UnableToLoadJSReceiver(campaignType: campaignType))
             return nil
         }
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentStart, forMainFrameOnly: true)
@@ -242,7 +242,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         guard
             let messageData = try? JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed),
             let jsonString = String(data: messageData, encoding: .utf8) else {
-            messageUIDelegate?.onError(UnableToInjectMessageIntoRenderingApp())
+            messageUIDelegate?.onError(UnableToInjectMessageIntoRenderingApp(campaignType: campaignType))
             return
         }
         DispatchQueue.main.async {
@@ -270,10 +270,10 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
                     }
                 } else {
                     messageUIDelegate?.onError(
-                        InvalidOnActionEventPayloadError(eventName.rawValue, body: body.description)
+                        InvalidOnActionEventPayloadError(campaignType: campaignType, eventName.rawValue, body: body.description)
                     )
                 }
-            case .onError: messageUIDelegate?.onError(SPError())
+            case .onError: messageUIDelegate?.onError(RenderingAppError(campaignType: campaignType, body["error"]?.stringValue ?? ""))
             case .onPMReady:
                 if isFirstLayerMessage {
                     messageUIDelegate?.loaded(self)

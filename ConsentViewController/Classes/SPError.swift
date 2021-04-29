@@ -4,11 +4,21 @@
     override public var description: String { "Something went wrong in the SDK" }
     public var failureReason: String { originalError.debugDescription }
     public var originalError: Error?
+    public var campaignType: SPCampaignType = .unknown
 
-    init() { super.init(domain: "GDPRConsentViewController", code: 0, userInfo: nil) }
+    init() { super.init(domain: "SPConsentManager", code: 0, userInfo: nil) }
+    convenience init(campaignType: SPCampaignType) {
+        self.init()
+        self.campaignType = campaignType
+    }
     convenience init(error: Error) {
         self.init()
         originalError = error
+    }
+    convenience init(error: Error, campaignType: SPCampaignType) {
+        self.init()
+        originalError = error
+        self.campaignType = campaignType
     }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
@@ -27,10 +37,11 @@
     let errorCode: Int?
     let title: String?
 
-    init(code: Int? = nil, title: String? = nil, stackTrace: String? = nil) {
+    init(campaignType: SPCampaignType, code: Int? = nil, title: String? = nil, stackTrace: String? = nil) {
         self.errorCode = code
         self.title = title
         super.init()
+        self.campaignType = campaignType
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -58,7 +69,7 @@
 
     let name, body: String
 
-    init(_ name: String? = nil, body: String? = nil) {
+    init(campaignType: SPCampaignType, _ name: String? = nil, body: String? = nil) {
         self.name = name ?? "<no name>"
         self.body = body ?? "<no body>"
         super.init()
@@ -89,9 +100,10 @@
     public override var spCode: String { renderingAppErrorCode ?? "sp_metric_rendering_app_error" }
     public let renderingAppErrorCode: String?
 
-    init(_ renderingAppErrorCode: String?) {
+    init(campaignType: SPCampaignType, _ renderingAppErrorCode: String?) {
         self.renderingAppErrorCode = renderingAppErrorCode
         super.init()
+        self.campaignType = campaignType
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -136,10 +148,11 @@
     let url: URL?
     let timeout: TimeInterval?
 
-    init(url: URL?, timeout: TimeInterval?) {
+    init(url: URL?, timeout: TimeInterval?, campaignType: SPCampaignType) {
         self.url = url
         self.timeout = timeout
         super.init()
+        self.campaignType = campaignType
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -180,4 +193,6 @@
     override public var description: String {
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
     }
+    // swiftlint:disable:next unused_setter_value
+    public override var campaignType: SPCampaignType { get { .gdpr } set {} }
 }

@@ -169,7 +169,7 @@ class SourcePointClient: SourcePointProtocol {
                 handler(Result {
                     try result.decoded() as ConsentResponse<SPCCPAConsent>
                 }.mapError {
-                    InvalidResponseConsentError(error: $0)
+                    InvalidResponseConsentError(error: $0, campaignType: .ccpa)
                 })
             }
         }
@@ -188,7 +188,7 @@ class SourcePointClient: SourcePointProtocol {
                 handler(Result {
                     try result.decoded() as ConsentResponse<SPGDPRConsent>
                 }.mapError {
-                    InvalidResponseConsentError(error: $0)
+                    InvalidResponseConsentError(error: $0, campaignType: .gdpr)
                 })
             }
         }
@@ -203,8 +203,8 @@ class SourcePointClient: SourcePointProtocol {
             requestUUID: UUID(),
             messageId: messageId,
             idfaStatus: idfaStatus
-        )).map { body in
-            client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: body) { _ in }
+        )).map {
+            client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
         }
     }
 
@@ -226,7 +226,7 @@ class SourcePointClient: SourcePointProtocol {
                 handler(Result {
                     try result.decoded() as CustomConsentResponse
                 }.mapError {
-                    InvalidResponseConsentError(error: $0)
+                    InvalidResponseCustomError(error: $0, campaignType: .gdpr)
                 })
             }
         }

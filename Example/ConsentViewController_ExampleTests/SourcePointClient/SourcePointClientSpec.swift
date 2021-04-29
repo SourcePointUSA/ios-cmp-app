@@ -106,7 +106,7 @@ class SourcePointClientSpec: QuickSpec {
                     )
 //                    client.postAction(
 //                        action: action,
-//                        legislation: .GDPR,
+//                        campaignType: .GDPR,
 //                        campaign: self.campaign,
 //                        localState: ""
 //                    ) { _ in }
@@ -203,7 +203,7 @@ class SourcePointClientSpec: QuickSpec {
 //                        sdkVersion: "1.2.3",
 //                        OSVersion: "11.0",
 //                        deviceFamily: "iPhone 11 pro",
-//                        legislation: .GDPR
+//                        campaignType: .GDPR
 //                    )
 //                    let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
 //                    expect(http.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"))
