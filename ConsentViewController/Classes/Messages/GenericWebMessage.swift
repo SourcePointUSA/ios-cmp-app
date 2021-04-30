@@ -216,7 +216,6 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     var isFirstLayerMessage = true
 
     override func loadMessage() {
-        print("LOADING:", url)
         webview?.load(URLRequest(url: url))
     }
 
@@ -266,7 +265,6 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
             let eventName = RenderingAppEvents(rawValue: messageBody["name"]?.stringValue ?? ""),
             let body = messageBody["body"]
         {
-            print("[RenderingApp]", messageBody)
             switch eventName {
             case .readyForPreload: handleMessagePreload()
             case .onMessageReady: messageUIDelegate?.loaded(self)
