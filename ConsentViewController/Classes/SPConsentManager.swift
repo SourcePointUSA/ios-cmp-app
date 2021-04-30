@@ -23,6 +23,7 @@
     var storage: SPLocalStorage
     public var userData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
 
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
@@ -114,7 +115,7 @@
             campaigns: campaigns,
             authId: authId,
             localState: storage.localState,
-            idfaStaus: SPIDFAStatus.current()
+            idfaStaus: idfaStatus
         ) { [weak self] result in
             switch result {
             case .success(let messagesResponse):
@@ -148,7 +149,7 @@
     func report(action: SPAction) {
         switch action.campaignType {
         case .ccpa:
-            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: SPIDFAStatus.current()) { [weak self] result in
+            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
                     let userData = SPUserData(
@@ -165,7 +166,7 @@
                 }
             }
         case .gdpr:
-            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: SPIDFAStatus.current()) { [weak self] result in
+            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
                 switch result {
                 case .success(let consentsResponse):
                     let userData = SPUserData(
@@ -186,12 +187,12 @@
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        let pmUrl = URL(string: "https://cdn.sp-stage.net/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)")!
+        let pmUrl = URL(string: "https://preprod-cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
         loadPrivacyManager(.gdpr, pmUrl)
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        let pmUrl = URL(string: "https://ccpa-notice.sp-stage.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)")!
+        let pmUrl = URL(string: "https://ccpa-notice.sp-stage.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)&idfaStatus=\(idfaStatus)")!
         loadPrivacyManager(.ccpa, pmUrl)
     }
 
