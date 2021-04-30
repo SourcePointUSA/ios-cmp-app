@@ -187,7 +187,7 @@
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        let pmUrl = URL(string: "https://preprod-cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
+        let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
         loadPrivacyManager(.gdpr, pmUrl)
     }
 
