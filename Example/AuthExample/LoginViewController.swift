@@ -17,7 +17,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7639,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
+        propertyName: try! SPPropertyName("tcfv2.mobile.webview"),
         PMId: "122058",
         campaignEnv: .Public,
         consentDelegate: self 
@@ -64,9 +64,9 @@ extension LoginViewController: GDPRConsentDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
         userData = [
-            "ConsentUUID: \(gdprUUID)",
+            "ConsentUUID: \(consentUUID)",
             "Consent String: \(userConsent.euconsent)"
         ]
         consents =
@@ -75,7 +75,7 @@ extension LoginViewController: GDPRConsentDelegate {
         consentTableView.reloadData()
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError?) {
         print(error.debugDescription)
     }
 }

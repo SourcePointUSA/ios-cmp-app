@@ -10,85 +10,103 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
-    static let vendorXId = "5e4a5fbf26de4a77922b38a6"
-    var vendorXAccepted = false
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    let myVendorId = "5ff4d000a228633ac048be41"
+    let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
 
-    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
-        accountId: 22,
-        propertyId: 7639,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.webview"),
-        PMId: "122058",
-        campaignEnv: .Public,
-        consentDelegate: self
-    )}()
+    @IBOutlet weak var idfaStatusLabel: UILabel!
+    @IBOutlet weak var myVendorAcceptedLabel: UILabel!
+    @IBOutlet weak var acceptMyVendorButton: UIButton!
+    @IBOutlet weak var gdprPMButton: UIButton!
+    @IBOutlet weak var ccpaPMButton: UIButton!
 
     @IBAction func onClearConsentTap(_ sender: Any) {
-        let spStoredData = UserDefaults.standard.dictionaryRepresentation().filter {
-            $0.key.starts(with: GDPRConsentViewController.SP_GDPR_KEY_PREFIX) ||
-            $0.key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX)
-        }
-        spStoredData.isEmpty ?
-            print("There's no consent data stored") :
-            print("Deleting following consent data: ", spStoredData)
-        consentViewController.clearAllData()
-        vendorXAccepted = false
-        updateCustomVendorUI()
+        SPConsentManager.clearAllData()
     }
 
-    @IBAction func onPrivacySettingsTap(_ sender: Any) {
-        consentViewController.loadPrivacyManager()
+    @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
+        consentManager.loadGDPRPrivacyManager(withId: "488393", tab: .Vendors)
     }
 
-    @IBAction func onAcceptVendorXTap(_ sender: Any) {
-        consentViewController.customConsentTo(vendors: [ViewController.vendorXId], categories: [], legIntCategories: []) { [weak self] consents in
-            self?.vendorXAccepted = consents.acceptedVendors.contains(ViewController.vendorXId)
-            self?.updateCustomVendorUI()
+    @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
+        consentManager.loadCCPAPrivacyManager(withId: "14967")
+    }
+
+    @IBAction func onAcceptMyVendorTap(_ sender: Any) {
+        consentManager.customConsentGDPR(
+            vendors: [myVendorId],
+            categories: myPurposesId,
+            legIntCategories: []) { consents in
+            let vendorAccepted = consents.vendorGrants[self.myVendorId]?.granted ?? false
+            self.updateMyVendorUI(vendorAccepted)
         }
     }
 
-    @IBOutlet weak var vendorXStatusLabel: UILabel!
-    
+    lazy var consentManager: SPConsentManager = { SPConsentManager(
+        accountId: 22,
+        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        campaigns: SPCampaigns(
+            gdpr: SPCampaign(),
+            ios14: SPCampaign()
+        ),
+        delegate: self
+    )}()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        consentViewController.loadMessage()
+        updateIDFAStatusLabel()
+        consentManager.loadMessage()
     }
 }
 
-// MARK: CustomConsent
+// MARK: - SPDelegate implementation
+extension ViewController: SPDelegate {
+    func onSPUIReady(_ controller: SPMessageViewController) {
+        controller.modalPresentationStyle = .overFullScreen
+        present(controller, animated: true)
+    }
+
+    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+        print(action)
+    }
+
+    func onSPUIFinished(_ controller: SPMessageViewController) {
+        updateIDFAStatusLabel()
+        dismiss(animated: true)
+    }
+
+    func onConsentReady(userData: SPUserData) {
+        print("onConsentReady:", userData)
+        let vendorAccepted = userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted ?? false
+        updateMyVendorUI(vendorAccepted)
+        updatePMButtons(ccpaApplies: consentManager.ccpaApplies(), gdprApplies: consentManager.gdprApplies())
+    }
+
+    func onError(error: SPError) {
+        print("Something went wrong: ", error)
+    }
+}
+
+// MARK: - UI methods
 extension ViewController {
-    func updateCustomVendorUI() {
-        vendorXStatusLabel.text = vendorXAccepted ?
-            "Accepted" :
-            "Rejected"
-    }
-}
-
-extension ViewController: GDPRConsentDelegate {
-    func onAction(_ action: GDPRAction) {
-        print("User took the action: \(action.type.description)")
+    func updateIDFAStatusLabel() {
+        idfaStatusLabel.text = idfaStatus.description
+        switch idfaStatus {
+        case .unknown: idfaStatusLabel.textColor = .systemYellow
+        case .accepted: idfaStatusLabel.textColor = .systemGreen
+        case .denied: idfaStatusLabel.textColor = .systemRed
+        case .unavailable: idfaStatusLabel.textColor = .systemGray
+        }
     }
 
-    func gdprConsentUIWillShow() {
-        present(consentViewController, animated: true, completion: nil)
+    func updateMyVendorUI(_ accepted: Bool) {
+        myVendorAcceptedLabel.text = accepted ? "accepted" : "rejected"
+        myVendorAcceptedLabel.textColor = accepted ? .systemGreen : .systemRed
+        acceptMyVendorButton.isEnabled = !accepted
     }
 
-    func consentUIDidDisappear() {
-        dismiss(animated: true, completion: nil)
-    }
-
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
-        print("ConsentUUID: \(gdprUUID)")
-        vendorXAccepted = userConsent.acceptedVendors.contains(ViewController.vendorXId)
-        userConsent.acceptedVendors.forEach { vendorId in print("Vendor: \(vendorId)") }
-        userConsent.acceptedCategories.forEach { purposeId in print("Purpose: \(purposeId)") }
-        print("VendorGrants(\(userConsent.vendorGrants))")
-
-        print(UserDefaults.standard.dictionaryWithValues(forKeys: userConsent.tcfData.dictionaryValue?.keys.sorted() ?? []))
-        
-        updateCustomVendorUI()
-    }
-
-    func onError(error: GDPRConsentViewControllerError) {
-        print("Error: \(error.debugDescription)")
+    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool) {
+        gdprPMButton.isEnabled = gdprApplies
+        ccpaPMButton.isEnabled = ccpaApplies
     }
 }

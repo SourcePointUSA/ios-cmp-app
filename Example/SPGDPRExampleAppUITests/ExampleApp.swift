@@ -52,7 +52,7 @@ class ExampleApp: XCUIApplication {
 
 extension ExampleApp: GDPRUI {
     var consentUI: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'Privacy Notice') OR (label CONTAINS[cd] 'Privacy Center')")).firstMatch
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'GDPR Message') OR (label CONTAINS[cd] 'Privacy Center')")).firstMatch
     }
 
     var privacyManager: XCUIElement {
@@ -60,7 +60,7 @@ extension ExampleApp: GDPRUI {
     }
 
     var consentMessage: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Notice'")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Message'")).firstMatch
     }
 
     var termsAndConditionsWebPageTitle: XCUIElement {
@@ -76,7 +76,7 @@ extension ExampleApp: GDPRUI {
     }
 
     var showOptionsButton: XCUIElement {
-        consentUI.buttons["Options"].firstMatch
+        consentUI.buttons["Show Options"].firstMatch
     }
 
     var saveAndExitButton: XCUIElement {
@@ -88,11 +88,11 @@ extension ExampleApp: GDPRUI {
     }
 
     var featuresTab: XCUIElement {
-        staticTexts["Match and combine offline data sources"].firstMatch
+        staticTexts["Features are a use of the data that you have already agreed to share with us"].firstMatch
     }
 
     var termsAndConditionsLink: XCUIElement {
-        consentUI.links["Terms & Conditions"].firstMatch
+        consentUI.links["Privacy Policy"].firstMatch
     }
 
     var DeviceInformationSwitch: XCUIElement {

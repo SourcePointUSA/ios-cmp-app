@@ -10,13 +10,13 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
-    var messageController: GDPRNativeMessageViewController?
+    var messageController: SPNativeMessageViewController?
     var activityIndicator = UIActivityIndicatorView(style: .gray)
 
     lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
         accountId: 22,
         propertyId: 7094,
-        propertyName: try! GDPRPropertyName("tcfv2.mobile.demo"),
+        propertyName: try! SPPropertyName("tcfv2.mobile.demo"),
         PMId: "179657",
         campaignEnv: .Public,
         consentDelegate: self
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
 extension ViewController: GDPRConsentDelegate {
     /// called when there's a message to show and its content (`GDPRMessage`) is ready
     func consentUIWillShow(message: GDPRMessage) {
-        messageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+        messageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
         messageController!.modalPresentationStyle = .overFullScreen
         present(messageController!, animated: true, completion: nil)
     }
@@ -53,14 +53,14 @@ extension ViewController: GDPRConsentDelegate {
     }
 
     /// called after an action is taken by the user and the consent info is returned by SourcePoint's endpoints
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
         print("onConsentReady: ", storedSDKData())
-        print("onConsentReady: ", gdprUUID, userConsent)
+        print("onConsentReady: ", consentUUID, userConsent)
     }
 
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
-    /// `GDPRActionType`
-    func onAction(_ action: GDPRAction) {
+    /// `SPActionType`
+    func onAction(_ action: SPAction) {
         switch action.type {
         case .PMCancel:
             dismissPrivacyManager()
@@ -72,7 +72,7 @@ extension ViewController: GDPRConsentDelegate {
         }
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError) {
         stopActivityIndicator()
         print("ERROR: ", error.description )
     }

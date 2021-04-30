@@ -9,49 +9,66 @@
 import Foundation
 @testable import ConsentViewController
 
-// swiftlint:disable force_try function_parameter_count
-
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: CustomConsentResponse?
-    var getMessageResponse: MessageResponse?
-    var postActionResponse: ActionResponse?
-    var error: GDPRConsentViewControllerError?
+    static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
+        Campaign(
+            type: type,
+            message: .none,
+            userConsent: consent,
+            applies: true,
+            messageMetaData: MessageMetaData(
+                categoryId: .unknown,
+                subCategoryId: .TCFv2,
+                messageId: 1
+            )
+        )
+    }
+    var getMessagesResponse = MessagesResponse(
+        campaigns: [
+            SourcePointClientMock.getCampaign(.ccpa, .unknown),
+            SourcePointClientMock.getCampaign(.gdpr, .unknown)
+        ],
+        localState: SPJson()
+    )
+
+    var error: SPError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
 
-    convenience init() {
-        self.init(accountId: 0, propertyId: 0, propertyName: try! GDPRPropertyName("test"), pmId: "", campaignEnv: .Stage, targetingParams: [:], timeout: 0.0)
+    required init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval) {
+
     }
 
-    required init(accountId: Int,
-                  propertyId: Int,
-                  propertyName: GDPRPropertyName,
-                  pmId: String,
-                  campaignEnv: GDPRCampaignEnv,
-                  targetingParams: TargetingParams,
-                  timeout: TimeInterval) {}
-
-    func getMessage(native: Bool,
-                    consentUUID: GDPRUUID?,
-                    euconsent: String,
-                    authId: String?,
-                    meta: Meta,
-                    completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?) -> Void) {
+    func getMessages(
+        campaigns: SPCampaigns,
+        authId: String?,
+        localState: SPJson,
+        idfaStaus: SPIDFAStatus,
+        handler: @escaping MessagesHandler
+    ) {
         getMessageCalled = true
-        completionHandler(getMessageResponse, error)
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(self.getMessagesResponse))
+        }
     }
 
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
-        postActionCalled = true
-        completionHandler(postActionResponse, error)
+    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
+
+    }
+
+    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
+
     }
 
     func customConsent(toConsentUUID consentUUID: String,
                        vendors: [String],
                        categories: [String],
                        legIntCategories: [String],
-                       completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?) -> Void) {
+                       completionHandler: @escaping (CustomConsentResponse?, SPError?) -> Void) {
         customConsentWasCalledWith = [
             "consentUUID": consentUUID,
             "vendors": vendors,
@@ -61,7 +78,7 @@ class SourcePointClientMock: SourcePointProtocol {
         completionHandler(customConsentResponse, error)
     }
 
-    func errorMetrics(_ error: GDPRConsentViewControllerError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPLegislation) {
+    func errorMetrics(_ error: SPError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPCampaignType) {
         errorMetricsCalledWith = [
             "error": error,
             "sdkVersion": sdkVersion,

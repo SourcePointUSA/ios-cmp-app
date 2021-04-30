@@ -5,50 +5,84 @@
 //  Created by Andre Herculano on 13.03.19.
 //
 
+// swiftlint:disable function_parameter_count
+
 import Foundation
 
+extension Result where Success == Data? {
+    func decoded<T: Decodable>(
+        using decoder: JSONDecoder = .init()
+    ) throws -> T {
+        let data = try get()
+        return try decoder.decode(T.self, from: data!)
+    }
+}
+
+extension JSONEncoder {
+    func encodeResult<T: Encodable>(_ value: T) -> Result<Data, Error> {
+        Result { try self.encode(value) }
+    }
+}
+
+extension JSONDecoder {
+    func decode<T: Decodable>(_ type: T.Type, from: Data) -> Result<T, Error> {
+        Result { try self.decode(type, from: from) }
+    }
+}
+
+typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
+typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
+typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
+typealias ConsentHandler<T: Decodable & Equatable> = (Result<ConsentResponse<T>, SPError>) -> Void
+typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
+
 protocol SourcePointProtocol {
-    init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: GDPRPropertyName,
-        pmId: String,
-        campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams,
-        timeout: TimeInterval
+    init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval)
+
+    func getMessages(
+        campaigns: SPCampaigns,
+        authId: String?,
+        localState: SPJson,
+        idfaStaus: SPIDFAStatus,
+        handler: @escaping MessagesHandler)
+
+    func postCCPAAction(
+        authId: String?,
+        action: SPAction,
+        localState: SPJson,
+        idfaStatus: SPIDFAStatus,
+        handler: @escaping CCPAConsentHandler)
+
+    func postGDPRAction(
+        authId: String?,
+        action: SPAction,
+        localState: SPJson,
+        idfaStatus: SPIDFAStatus,
+        handler: @escaping GDPRConsentHandler)
+
+    func reportIdfaStatus(
+        propertyId: Int?,
+        uuid: String?,
+        uuidType: SPCampaignType?,
+        messageId: Int?,
+        idfaStatus: SPIDFAStatus
     )
 
-    // swiftlint:disable:next function_parameter_count
-    func getMessage(
-        native: Bool,
-        consentUUID: GDPRUUID?,
-        euconsent: String,
-        authId: String?,
-        meta: Meta,
-        completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?)
-    -> Void)
-
-    func postAction(
-        action: GDPRAction,
-        consentUUID: GDPRUUID,
-        meta: Meta,
-        completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?)
-    -> Void)
-
-    func customConsent(
+    func customConsentGDPR(
         toConsentUUID consentUUID: String,
         vendors: [String],
         categories: [String],
         legIntCategories: [String],
-        completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?)
-    -> Void)
+        propertyId: Int,
+        handler: @escaping CustomConsentHandler)
 
     func errorMetrics(
-        _ error: GDPRConsentViewControllerError,
+        _ error: SPError,
+        propertyId: Int?,
         sdkVersion: String,
         OSVersion: String,
         deviceFamily: String,
-        legislation: SPLegislation
+        campaignType: SPCampaignType
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -60,197 +94,164 @@ A Http client for SourcePoint's endpoints
  */
 class SourcePointClient: SourcePointProtocol {
     static let WRAPPER_API = URL(string: "https://cdn.privacy-mgmt.com/wrapper/")!
-    static let ERROR_METRIS_URL = URL(string: "metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_CONTENTS_URL = URL(string: "tcfv2/v1/gdpr/native-message?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGE_URL_URL = URL(string: "tcfv2/v1/gdpr/message-url?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let CONSENT_URL = URL(string: "tcfv2/v1/gdpr/consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "tcfv2/v1/gdpr/custom-consent?inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=prod", relativeTo: WRAPPER_API)!
+    static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
+    static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
+    static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=prod", relativeTo: WRAPPER_API)!
+    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
 
+    let accountId: Int
+    let propertyName: SPPropertyName
     var client: HttpClient
 
     let requestUUID = UUID()
 
-    let accountId: Int
-    let propertyId: Int
-    let propertyName: GDPRPropertyName
-    let pmId: String
-    let campaignEnv: GDPRCampaignEnv
-    let targetingParams: TargetingParams?
-
-    init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: GDPRPropertyName,
-        pmId: String,
-        campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams?,
-        client: HttpClient
-    ) {
+    init(accountId: Int, propertyName: SPPropertyName, client: HttpClient) {
         self.accountId = accountId
-        self.propertyId = propertyId
         self.propertyName = propertyName
-        self.pmId = pmId
-        self.campaignEnv = campaignEnv
-        self.targetingParams = targetingParams
         self.client = client
     }
 
-    required convenience init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: GDPRPropertyName,
-        pmId: String,
-        campaignEnv: GDPRCampaignEnv,
-        targetingParams: TargetingParams,
-        timeout: TimeInterval
-    ) {
+    required convenience init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval) {
         self.init(
             accountId: accountId,
-            propertyId: propertyId,
             propertyName: propertyName,
-            pmId: pmId,
-            campaignEnv: campaignEnv,
-            targetingParams: targetingParams,
-            client: SimpleClient(timeoutAfter: timeout)
-        )
+            client: SimpleClient(timeoutAfter: timeout))
     }
 
     func setRequestTimeout(_ timeout: TimeInterval) {
         client = SimpleClient(timeoutAfter: timeout)
     }
 
-    func targetingParamsToString(_ params: TargetingParams?) -> String {
-        guard
-            let data = try? JSONSerialization.data(withJSONObject: params ?? [:]),
-            let paramsString = String(data: data, encoding: .utf8) else {
-            return "{}"
-        }
-        return paramsString
-    }
-
-    // swiftlint:disable:next function_parameter_count line_length
-    func getMessage(url: URL, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError? ) -> Void) {
-        do {
-            let body = try JSONEncoder().encode(MessageRequest(
-                uuid: consentUUID,
-                euconsent: euconsent,
-                authId: authId,
-                accountId: accountId,
-                propertyId: propertyId,
-                propertyHref: propertyName,
-                campaignEnv: campaignEnv,
-                targetingParams: targetingParamsToString(targetingParams),
-                requestUUID: requestUUID,
-                meta: meta
-            ))
-            client.post(urlString: url.absoluteString, body: body) { data, error in
-                if let error = error {
-                    completionHandler(nil, error)
-                } else {
-                    do {
-                        completionHandler(try JSONDecoder().decode(MessageResponse.self, from: data!), nil)
-                    } catch {
-                        completionHandler(nil, InvalidResponseWebMessageError(error as? DecodingError))
-                    }
-                }
-            }
-        } catch {
-            completionHandler(nil, InvalidRequestError(error as? DecodingError))
-        }
-    }
-
-    // swiftlint:disable:next line_length function_parameter_count
-    func getMessage(native: Bool, consentUUID: GDPRUUID?, euconsent: String, authId: String?, meta: Meta, completionHandler: @escaping (MessageResponse?, GDPRConsentViewControllerError?) -> Void) {
-        getMessage(
-            url: native ?
-                SourcePointClient.GET_MESSAGE_CONTENTS_URL :
-                SourcePointClient.GET_MESSAGE_URL_URL,
-            consentUUID: consentUUID,
-            euconsent: euconsent,
+    func getMessages(
+        campaigns: SPCampaigns,
+        authId: String?,
+        localState: SPJson,
+        idfaStaus: SPIDFAStatus,
+        handler: @escaping MessagesHandler) {
+        _ = JSONEncoder().encodeResult(MessageRequest(
             authId: authId,
-            meta: meta,
-            completionHandler: completionHandler
-        )
-    }
-
-    func postAction(action: GDPRAction, consentUUID: GDPRUUID, meta: Meta, completionHandler: @escaping (ActionResponse?, GDPRConsentViewControllerError?) -> Void) {
-        let url = SourcePointClient.CONSENT_URL
-
-        do {
-            let pmPayload = try JSONDecoder().decode(SPGDPRArbitraryJson.self, from: action.payload)
-            let body = try JSONEncoder().encode(ActionRequest(
-                propertyId: propertyId,
-                propertyHref: propertyName,
-                accountId: accountId,
-                actionType: action.type.rawValue,
-                choiceId: action.id,
-                privacyManagerId: pmId,
-                requestFromPM: action.id == nil,
-                uuid: consentUUID,
-                requestUUID: requestUUID,
-                pmSaveAndExitVariables: pmPayload,
-                meta: meta,
-                publisherData: action.publisherData,
-                consentLanguage: action.consentLanguage
-            ))
-            client.post(urlString: url.absoluteString, body: body) { data, error  in
-                if let error = error {
-                    completionHandler(nil, error)
-                } else {
-                    do {
-                        completionHandler(try JSONDecoder().decode(ActionResponse.self, from: data!), nil)
-                    } catch {
-                        completionHandler(nil, InvalidResponseConsentError(error as? DecodingError))
-                    }
-                }
+            requestUUID: requestUUID,
+            propertyHref: propertyName,
+            accountId: accountId,
+            idfaStatus: idfaStaus,
+            localState: localState,
+            campaigns: CampaignsRequest(from: campaigns)
+        )).map { body in
+            client.post(urlString: SourcePointClient.GET_MESSAGES_URL.absoluteString, body: body) { result in
+                handler(Result {
+                    try result.decoded() as MessagesResponse
+                }.mapError({
+                    InvalidResponseWebMessageError(error: $0)
+                }))
             }
-        } catch {
-            completionHandler(nil, InvalidRequestError(error as? DecodingError))
         }
     }
 
-    func customConsent(
+    func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
+        guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
+
+        var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
+        components?.queryItems = [URLQueryItem(name: "env", value: "prod")]
+        return components?.url(relativeTo: baseUrl)
+    }
+
+    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
+        _ = JSONEncoder().encodeResult(CCPAConsentRequest(
+            authId: authId,
+            localState: localState,
+            publisherData: action.publisherData,
+            pmSaveAndExitVariables: action.pmPayload,
+            requestUUID: requestUUID
+        )).map { body in
+            client.post(urlString: consentUrl(SourcePointClient.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+                handler(Result {
+                    try result.decoded() as ConsentResponse<SPCCPAConsent>
+                }.mapError {
+                    InvalidResponseConsentError(error: $0, campaignType: .ccpa)
+                })
+            }
+        }
+    }
+
+    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
+        _ = JSONEncoder().encodeResult(GDPRConsentRequest(
+            authId: authId,
+            idfaStatus: SPIDFAStatus.current(),
+            localState: localState,
+            pmSaveAndExitVariables: action.pmPayload,
+            publisherData: action.publisherData,
+            requestUUID: requestUUID
+        )).map { body in
+            client.post(urlString: consentUrl(SourcePointClient.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+                handler(Result {
+                    try result.decoded() as ConsentResponse<SPGDPRConsent>
+                }.mapError {
+                    InvalidResponseConsentError(error: $0, campaignType: .gdpr)
+                })
+            }
+        }
+    }
+
+    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus) {
+        _ = JSONEncoder().encodeResult(IDFAStatusReportRequest(
+            accountId: accountId,
+            propertyId: propertyId,
+            uuid: uuid,
+            uuidType: uuidType,
+            requestUUID: UUID(),
+            messageId: messageId,
+            idfaStatus: idfaStatus
+        )).map {
+            client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
+        }
+    }
+
+    func customConsentGDPR(
         toConsentUUID consentUUID: String,
         vendors: [String],
         categories: [String],
         legIntCategories: [String],
-        completionHandler: @escaping (CustomConsentResponse?, GDPRConsentViewControllerError?) -> Void) {
-        do {
-            let body = try JSONEncoder().encode(CustomConsentRequest(
-                consentUUID: consentUUID,
-                propertyId: propertyId,
-                vendors: vendors,
-                categories: categories,
-                legIntCategories: legIntCategories
-            ))
-            client.post(urlString: SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, body: body) { data, error in
-                if let error = error {
-                    completionHandler(nil, error)
-                } else {
-                    do {
-                        completionHandler(try JSONDecoder().decode(CustomConsentResponse.self, from: data!), nil)
-                    } catch {
-                        completionHandler(nil, InvalidResponseConsentError(error as? DecodingError))
-                    }
-                }
+        propertyId: Int,
+        handler: @escaping CustomConsentHandler) {
+        _ = JSONEncoder().encodeResult(CustomConsentRequest(
+            consentUUID: consentUUID,
+            propertyId: propertyId,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories
+        )).map { body in
+            client.post(urlString: SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, body: body) { result in
+                handler(Result {
+                    try result.decoded() as CustomConsentResponse
+                }.mapError {
+                    InvalidResponseCustomError(error: $0, campaignType: .gdpr)
+                })
             }
-        } catch {
-            completionHandler(nil, InvalidRequestError(error as? DecodingError))
         }
     }
 
-    func errorMetrics(_ error: GDPRConsentViewControllerError, sdkVersion: String, OSVersion: String, deviceFamily: String, legislation: SPLegislation) {
-        let body = try? JSONEncoder().encode(ErrorMetricsRequest(
+    func errorMetrics(
+        _ error: SPError,
+        propertyId: Int?,
+        sdkVersion: String,
+        OSVersion: String,
+        deviceFamily: String,
+        campaignType: SPCampaignType
+    ) {
+        _ = JSONEncoder().encodeResult(ErrorMetricsRequest(
             code: error.spCode,
             accountId: String(accountId),
             description: error.description,
             sdkVersion: sdkVersion,
             OSVersion: OSVersion,
             deviceFamily: deviceFamily,
-            propertyId: String(propertyId),
+            propertyId: propertyId != nil ? String(propertyId!) : "",
             propertyName: propertyName,
-            legislation: legislation
-        ))
-        client.post(urlString: SourcePointClient.ERROR_METRIS_URL.absoluteString, body: body) {_, _ in }
+            campaignType: campaignType
+        )).map {
+            client.post(urlString: SourcePointClient.ERROR_METRIS_URL.absoluteString, body: $0) { _ in }
+        }
     }
 }

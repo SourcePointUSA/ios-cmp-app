@@ -72,7 +72,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
 
     /** Default campaign value is public
      */
-    var campaign = GDPRCampaignEnv.Public
+    var campaign = SPCampaignEnv.Public
 
     // Reference to the selected property managed object ID
     var propertyManagedObjectID: NSManagedObjectID?
@@ -91,7 +91,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
     var consentViewController: GDPRConsentViewController?
-    var nativeMessageController: GDPRNativeMessageViewController?
+    var nativeMessageController: SPNativeMessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,7 +134,7 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
 
     // Set value of staging switch
     @IBAction func campaignSwitchButtonAction(_ sender: UISwitch) {
-        campaign = sender.isOn ? GDPRCampaignEnv.Stage : GDPRCampaignEnv.Public
+        campaign = sender.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
     }
 
     func setTableViewHidden() {
@@ -308,15 +308,15 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     func consentUIWillShow(message: GDPRMessage) {
         hideIndicator()
         if let consentViewController = consentViewController {
-            nativeMessageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+            nativeMessageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
             nativeMessageController?.modalPresentationStyle = .overFullScreen
             present(nativeMessageController!, animated: true, completion: nil)
         }
     }
 
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
-    /// `GDPRActionType`
-    func onAction(_ action: GDPRAction) {
+    /// `SPActionType`
+    func onAction(_ action: SPAction) {
         if isNativeMessageSwitch.isOn {
             switch action.type {
             case .PMCancel:
@@ -344,14 +344,14 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         dismiss(animated: true, completion: nil)
     }
 
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
         showIndicator()
         saveSitDataToDatabase(propertyDetailsModel: propertyDetailsModel!)
-        self.loadConsentInfoController(gdprUUID: gdprUUID, userConsents: userConsent)
+        self.loadConsentInfoController(consentUUID: consentUUID, userConsents: userConsent)
         hideIndicator()
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError) {
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
@@ -367,9 +367,9 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
         }
     }
 
-    func loadConsentInfoController(gdprUUID: GDPRUUID, userConsents: GDPRUserConsent) {
+    func loadConsentInfoController(consentUUID: SPConsentUUID, userConsents: SPGDPRConsent) {
         if let consentDetailsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentDetailsViewController") as? ConsentDetailsViewController {
-            consentDetailsController.gdprUUID = gdprUUID
+            consentDetailsController.consentUUID = consentUUID
             consentDetailsController.userConsents =  userConsents
             consentDetailsController.propertyDetails = propertyDetailsModel
             consentDetailsController.targetingParams = targetingParams

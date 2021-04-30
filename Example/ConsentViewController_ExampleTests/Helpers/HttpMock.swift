@@ -23,17 +23,17 @@ class MockHttp: HttpClient {
         self.error = error
     }
 
-    public func get(urlString: String, completionHandler: @escaping CompletionHandler) {}
+    public func get(urlString: String, handler: @escaping ResponseHandler) {}
 
-    func request(_ urlRequest: URLRequest, _ completionHandler: @escaping CompletionHandler) {}
+    func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {}
 
-    public func post(urlString: String, body: Data?, completionHandler: @escaping CompletionHandler) {
+    public func post(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
         postWasCalledWithUrl = urlString
         postWasCalledWithBody = body
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
             self.success != nil ?
-                completionHandler(self.success!, nil) :
-                completionHandler(nil, InvalidURLError(urlString: urlString))
+                handler(.success(self.success)) :
+                handler(.failure(InvalidURLError(urlString: urlString)))
         })
     }
 }
