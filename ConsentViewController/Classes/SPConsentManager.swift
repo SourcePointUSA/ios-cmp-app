@@ -7,7 +7,7 @@
 //
 
 @objcMembers public class SPConsentManager: NSObject, SPSDK {
-    static public let VERSION = "6.0.0-beta0"
+    static public let VERSION = "6.0.0"
 
     static public var shouldCallErrorMetrics = true
 
