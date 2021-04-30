@@ -93,13 +93,13 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient: SourcePointProtocol {
-    static let WRAPPER_API = URL(string: "https://cdn.sp-stage.net/wrapper/")!
+    static let WRAPPER_API = URL(string: "https://preprod-cdn.privacy-mgmt.com/wrapper/")!
     static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
-    static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=stage", relativeTo: WRAPPER_API)!
+    static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=prod", relativeTo: WRAPPER_API)!
     static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
     static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
-    static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=stage", relativeTo: WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=stage&inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=prod", relativeTo: WRAPPER_API)!
+    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
 
     let accountId: Int
     let propertyName: SPPropertyName
@@ -153,7 +153,7 @@ class SourcePointClient: SourcePointProtocol {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
 
         var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
-        components?.queryItems = [URLQueryItem(name: "env", value: "stage")]
+        components?.queryItems = [URLQueryItem(name: "env", value: "prod")]
         return components?.url(relativeTo: baseUrl)
     }
 
