@@ -11,8 +11,8 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    let myVendorId = "5fbe6f090d88c7d28d765e1e"
-    let myPurposeId = "60657acc9c97c400122f21f3"
+    let myVendorId = "5ff4d000a228633ac048be41"
+    let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
 
     @IBOutlet weak var idfaStatusLabel: UILabel!
     @IBOutlet weak var myVendorAcceptedLabel: UILabel!
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "13111", tab: .Vendors)
+        consentManager.loadGDPRPrivacyManager(withId: "488393", tab: .Vendors)
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
         consentManager.customConsentGDPR(
             vendors: [myVendorId],
-            categories: [myPurposeId],
+            categories: myPurposesId,
             legIntCategories: []) { consents in
             let vendorAccepted = consents.vendorGrants[self.myVendorId]?.granted ?? false
             self.updateMyVendorUI(vendorAccepted)
