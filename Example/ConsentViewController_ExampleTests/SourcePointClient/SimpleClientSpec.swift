@@ -11,7 +11,7 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_cast function_body_length
+// swiftlint:disable force_cast function_body_length empty_enum_arguments
 
 class URLSessionDataTaskMock: SPURLSessionDataTask {
     var resumeWasCalled = false
@@ -81,7 +81,7 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { _, _ in }
+                client.request(self.exampleRequest) { _ in }
                 expect(session.dataTaskCalledWith).to(equal(self.exampleRequest))
             }
 
@@ -94,7 +94,7 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { _, _ in }
+                client.request(self.exampleRequest) { _ in }
                 expect(session.configuration.requestCachePolicy).to(equal(.reloadIgnoringLocalCacheData))
             }
 
@@ -106,7 +106,7 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: URLSession.shared,
                     dispatchQueue: queue
                 )
-                client.request(self.exampleRequest) { _, _ in }
+                client.request(self.exampleRequest) { _ in }
                 expect(queue.asyncCalled).toEventually(beTrue())
             }
 
@@ -122,13 +122,13 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { _, _ in }
+                client.request(self.exampleRequest) { _ in }
                 expect(dataTaskResult.resumeWasCalled).to(beTrue())
             }
 
             describe("when the result data from the call is different than nil") {
                 it("calls the completionHandler with it") {
-                    var result: Data?
+                    var result: Result<Data?, SPError>?
                     let session = URLSessionMock(
                         configuration: URLSessionConfiguration.default,
                         data: "".data(using: .utf8),
@@ -140,14 +140,13 @@ class SimpleClientSpec: QuickSpec {
                         urlSession: session,
                         dispatchQueue: DispatchQueueMock()
                     )
-                    client.request(self.exampleRequest) { data, _ in result = data }
+                    client.request(self.exampleRequest) { result = $0 }
                     expect(result).toEventuallyNot(beNil())
                 }
             }
 
             describe("when the error from the call is not nil") {
                 it("calls the completionHandler with the error") {
-                    var error: GDPRConsentViewControllerError?
                     let session = URLSessionMock(
                         configuration: URLSessionConfiguration.default,
                         data: nil,
@@ -159,23 +158,32 @@ class SimpleClientSpec: QuickSpec {
                         urlSession: session,
                         dispatchQueue: DispatchQueueMock()
                     )
-                    client.request(self.exampleRequest) { _, e in error = e }
-                    expect(error).toEventuallyNot(beNil())
+                    client.request(self.exampleRequest) { result in
+                        switch result {
+                        case .success(_): fail("call should fail")
+                        case .failure(let e):
+                            expect(e).toEventuallyNot(beNil())
+                        }
+                    }
                 }
             }
         }
 
         describe("when there's no internet connection") {
             it("calls the completionHandler with an NoInternetConnection error") {
-                var error: GDPRConsentViewControllerError?
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: false),
                     logger: OSLogger(),
                     urlSession: URLSession.shared,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { _, e in error = e! }
-                expect(error).toEventually(beAKindOf(NoInternetConnection.self))
+                client.request(self.exampleRequest) { result in
+                    switch result {
+                    case .success(_): fail("call should fail")
+                    case .failure(let e):
+                        expect(e).toEventually(beAKindOf(NoInternetConnection.self))
+                    }
+                }
             }
         }
     }

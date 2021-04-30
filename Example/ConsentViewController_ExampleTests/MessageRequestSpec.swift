@@ -13,41 +13,61 @@ import Nimble
 // swiftlint:disable force_try
 
 class MessageRequestSpec: QuickSpec {
+    let campaign = CampaignRequest(
+        campaignEnv: .Public,
+        targetingParams: ["foo": "bar"]
+    )
+
+    // swiftlint:disable function_body_length
     override func spec() {
-        let requestUUID = UUID()
+        let reqUUID = UUID()
         let message = MessageRequest(
-            uuid: nil,
-            euconsent: "euconsent",
             authId: nil,
+            requestUUID: reqUUID,
+            propertyHref: try! SPPropertyName("demo"),
             accountId: 1,
-            propertyId: 1,
-            propertyHref: try! GDPRPropertyName("propertyName"),
-            campaignEnv: .Stage,
-            targetingParams: nil,
-            requestUUID: requestUUID,
-            meta: "meta"
+            idfaStatus: .unknown,
+            localState: SPJson(),
+            campaigns: CampaignsRequest(
+                gdpr: campaign,
+                ccpa: campaign,
+                ios14: campaign
+            )
         )
         let messageString = """
         {
-            "euconsent": "euconsent",
             "accountId": 1,
-            "propertyHref": "https:\\/\\/propertyName",
-            "requestUUID": "\(requestUUID.uuidString)",
-            "meta": "meta",
-            "campaignEnv": "stage",
-            "propertyId": 1
+            "campaigns": {
+                "ccpa": {
+                    "campaignEnv": "prod",
+                    "targetingParams": {"foo":"bar"}
+                },
+                "gdpr": {
+                    "campaignEnv": "prod",
+                    "targetingParams": {"foo":"bar"}
+                },
+                "ios14": {
+                    "campaignEnv": "prod",
+                    "targetingParams": {"foo":"bar"}
+                }
+            },
+            "idfaStatus": "unknown",
+            "includeData": {
+                "localState": {"type":"string"},
+                "messageMetaData": {"type":"RecordString"},
+                "TCData": {"type":"RecordString"}
+            },
+            "localState": "",
+            "propertyHref": "https:\\/\\/demo",
+            "requestUUID": "\(reqUUID.uuidString)"
         }
         """.filter { !" \n\t\r".contains($0) }
 
         it("can be encoded to JSON") {
-            let messageEncoded = String(data: try! JSONEncoder().encode(message), encoding: .utf8)
+            let encoder = JSONEncoder()
+            if #available(iOS 11.0, *) { encoder.outputFormatting = .sortedKeys }
+            let messageEncoded = String(data: try! encoder.encode(message), encoding: .utf8)
             expect(messageString).to(equal(messageEncoded))
-        }
-
-        it("can be decoded from JSON") {
-            let messageDecoded = try? JSONDecoder()
-                .decode(MessageRequest.self, from: messageString.data(using: .utf8)!)
-            expect(message).to(equal(messageDecoded))
         }
     }
 }

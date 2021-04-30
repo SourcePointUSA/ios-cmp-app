@@ -27,8 +27,8 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     /** PM is loaded or not
      */
     var isPMLoaded = false
-    var userConsents: GDPRUserConsent?
-    var gdprUUID: String = ""
+    var userConsents: SPGDPRConsent?
+    var consentUUID: String = ""
     let sections = ["Vendor Consents", "Purpose Consents"]
 
     // MARK: - Initializer
@@ -36,7 +36,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     var consentViewController: GDPRConsentViewController?
     var propertyDetails: PropertyDetailsModel?
     var targetingParams = [TargetingParamModel]()
-    var nativeMessageController: GDPRNativeMessageViewController?
+    var nativeMessageController: SPNativeMessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +81,8 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     }
 
     func setconsentUUId() {
-        if gdprUUID.count > 0 {
-            consentUUIDLabel.text = gdprUUID
+        if consentUUID.count > 0 {
+            consentUUIDLabel.text = consentUUID
             euConsentLabel.text = userConsents?.euconsent
         } else {
             consentUUIDLabel.text = SPLiteral.consentUUID
@@ -105,13 +105,13 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     }
 
     func loadConsentManager(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel]) {
-        let campaign: GDPRCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
+        let campaign: SPCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
         var targetingParameters = [String: String]()
         for targetingParam in targetingParams {
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
-        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! GDPRPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! SPPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
         if let messageLanguage = propertyDetails.messageLanguage {
             consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
         }
@@ -136,15 +136,15 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
     func consentUIWillShow(message: GDPRMessage) {
         hideIndicator()
         if let consentViewController = consentViewController {
-            nativeMessageController = GDPRNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+            nativeMessageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
             nativeMessageController?.modalPresentationStyle = .overFullScreen
             present(nativeMessageController!, animated: true, completion: nil)
         }
     }
 
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
-    /// `GDPRActionType`
-    func onAction(_ action: GDPRAction) {
+    /// `SPActionType`
+    func onAction(_ action: SPAction) {
         if propertyDetails?.nativeMessage == 1 {
             switch action.type {
             case .PMCancel:
@@ -168,16 +168,16 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         }
     }
 
-    func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
         self.showIndicator()
         self.userConsents = userConsent
-        self.gdprUUID = gdprUUID
+        self.consentUUID = consentUUID
         setconsentUUId()
         consentTableView.reloadData()
         self.hideIndicator()
     }
 
-    func onError(error: GDPRConsentViewControllerError) {
+    func onError(error: SPError) {
         let okHandler = {
             self.hideIndicator()
             self.dismiss(animated: false, completion: nil)
@@ -195,13 +195,13 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     @IBAction func showPMAction(_ sender: Any) {
         self.showIndicator()
-        let campaign: GDPRCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
+        let campaign: SPCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
         var targetingParameters = [String: String]()
         for targetingParam in targetingParams {
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
-        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! GDPRPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! SPPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
         if let messageLanguage = propertyDetails?.messageLanguage {
             consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
         }

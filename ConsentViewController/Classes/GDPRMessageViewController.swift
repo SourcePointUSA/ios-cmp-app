@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 
 @objc public protocol GDPRMessageUIDelegate {
-    var consentDelegate: GDPRConsentDelegate? { get }
+    var consentDelegate: SPDelegate? { get }
     func loadMessage(fromUrl url: URL)
     func loadPrivacyManager()
 }
@@ -21,7 +21,7 @@ import WebKit
 ///  with any other class that knows how to render a consent message and a privacy manager.
 ///  Eg. a native message view controller
 @objcMembers open class GDPRMessageViewController: UIViewController, GDPRMessageUIDelegate {
-    weak public var consentDelegate: GDPRConsentDelegate?
+    weak public var consentDelegate: SPDelegate?
     public func loadMessage(fromUrl url: URL) {}
     public func loadPrivacyManager() {}
 }

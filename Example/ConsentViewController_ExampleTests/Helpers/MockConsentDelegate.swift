@@ -9,7 +9,19 @@
 import Foundation
 @testable import ConsentViewController
 
-class MockConsentDelegate: GDPRConsentDelegate {
+class MockConsentDelegate: SPDelegate {
+    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+
+    }
+
+    func onSPUIReady(_ viewController: UIViewController) {
+
+    }
+
+    func onSPUIFinished() {
+
+    }
+
     var isConsentUIWillShowCalled = false
     var isConsentUIDidDisappearCalled = false
     var isOnErrorCalled = false
@@ -20,7 +32,7 @@ class MockConsentDelegate: GDPRConsentDelegate {
     var isGdprPMWillShowCalled = false
     var isGdprPMDidDisappearCalled = false
 
-    var onActionCalledWith: GDPRAction!
+    var onActionCalledWith: SPAction!
 
     public func gdprConsentUIWillShow() {
         isConsentUIWillShowCalled = true
@@ -30,16 +42,16 @@ class MockConsentDelegate: GDPRConsentDelegate {
         isConsentUIDidDisappearCalled = true
     }
 
-    public func onError(error: GDPRConsentViewControllerError) {
+    public func onError(error: SPError) {
         isOnErrorCalled = true
     }
 
-    public func onAction(_ action: GDPRAction) {
+    public func onAction(_ action: SPAction) {
         isOnActionCalled = true
         onActionCalledWith = action
     }
 
-    public func onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent) {
+    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
         isOnConsentReadyCalled = true
     }
 

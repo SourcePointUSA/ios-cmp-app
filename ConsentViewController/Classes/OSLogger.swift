@@ -9,13 +9,13 @@ import Foundation
 import os
 
 protocol SPLogger {
-    func log(_ message: String, _ args: [String: String])
-    func debug(_ message: String, _ args: [String: String])
-    func error(_ message: String, _ args: [String: String])
+    func log(_ message: String)
+    func debug(_ message: String)
+    func error(_ message: String)
 }
 
 struct OSLogger: SPLogger {
-    static let category = "GPDRConsent"
+    static let category = "SPSDK"
 
     var consentLog: OSLog? {
         if #available(iOS 10.0, *) {
@@ -25,16 +25,16 @@ struct OSLogger: SPLogger {
         }
     }
 
-    func log(_ message: String, _ args: [String: String] = [:]) {
-        osLog("%s", [message, args])
+    func log(_ message: String) {
+        osLog("%s", message)
     }
 
-    func debug(_ message: String, _ args: [String: String] = [:]) {
-        osLog("%s", [message, args])
+    func debug(_ message: String) {
+        osLog("%s", message)
     }
 
-    func error(_ message: String, _ args: [String: String] = [:]) {
-        osLog("%s", [message, args])
+    func error(_ message: String) {
+        osLog("%s", message)
     }
 
     private func osLog(_ message: StaticString, _ args: CVarArg) {
