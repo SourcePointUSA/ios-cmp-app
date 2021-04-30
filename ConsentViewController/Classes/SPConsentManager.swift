@@ -192,7 +192,7 @@
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        let pmUrl = URL(string: "https://ccpa-notice.sp-stage.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)&idfaStatus=\(idfaStatus)")!
+        let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)&idfaStatus=\(idfaStatus)")!
         loadPrivacyManager(.ccpa, pmUrl)
     }
 
