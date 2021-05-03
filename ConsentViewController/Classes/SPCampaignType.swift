@@ -12,6 +12,8 @@ import Foundation
 }
 
 extension SPCampaignType: Codable {
+    public typealias RawValue = String
+
     public var rawValue: String {
         switch self {
         case .gdpr: return "GDPR"

@@ -1,5 +1,6 @@
 # 6.0.1 (May, 3, 2021)
 * Fixed Swift Package Manager support.
+* Fixed an issue preventing the SDK from building on XCode 12.5
 * Updated README with IDFA status FAQ.
 
 # 6.0.0 (April, 30, 2021)

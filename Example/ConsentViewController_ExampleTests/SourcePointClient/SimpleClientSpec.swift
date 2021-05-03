@@ -11,7 +11,7 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_cast function_body_length empty_enum_arguments
+// swiftlint:disable force_cast function_body_length
 
 class URLSessionDataTaskMock: SPURLSessionDataTask {
     var resumeWasCalled = false

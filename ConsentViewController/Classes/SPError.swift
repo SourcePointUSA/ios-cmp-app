@@ -1,4 +1,3 @@
-
 import Foundation
 
 @objcMembers public class SPError: NSError, LocalizedError {
