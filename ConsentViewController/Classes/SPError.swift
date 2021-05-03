@@ -1,3 +1,5 @@
+import Foundation
+
 @objcMembers public class SPError: NSError, LocalizedError {
     public var spCode: String { "sp_metric_generic_sdk_error" }
     public var spDescription: String { description }
