@@ -1,3 +1,17 @@
+# 6.0.1 (May, 3, 2021)
+* Fixed Swift Package Manager support.
+* Updated README with IDFA status FAQ.
+
+# 6.0.0 (April, 30, 2021)
+* Multi-campaign
+* ATT pre-prompt message
+* Lots and lots of performance improvements
+
+These are only a few of the changes we are bringing to this new major version of the SDK. Are you worried it's going to be too much work to migrate from v5? We got you covered, check our [Migration Guide](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/MigrationGuide.md).
+For a more comprehensive explanation of how the SDK works and what you can do with it, check our beloved [README](https://github.com/SourcePointUSA/ios-cmp-app#how-to-use-it).
+
+As always, don't hesitate to reach out to us either via GitHub issues, slack or to your account manager directly. We appreciate your feedback.
+
 ## 5.3.6 (March, 04, 2021)
 * Added support to XCFramework [#288](https://github.com/SourcePointUSA/ios-cmp-app/pull/288)
 * Added Obj-C support to Message Language and PMTab feature[#289](https://github.com/SourcePointUSA/ios-cmp-app/pull/289)

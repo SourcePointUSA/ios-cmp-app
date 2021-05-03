@@ -5,6 +5,8 @@
 //  Created by Andre Herculano on 08.02.21.
 //
 
+import Foundation
+
 /// Indicates the consent status of a given user.
 @objc public enum CCPAConsentStatus: Int, Codable {
     /// Indicates the user has rejected none of the vendors or purposes (categories)

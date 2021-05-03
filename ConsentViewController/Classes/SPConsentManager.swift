@@ -6,8 +6,10 @@
 //  Copyright © 2019 Sourcepoint. All rights reserved.
 //
 
+import Foundation
+
 @objcMembers public class SPConsentManager: NSObject, SPSDK {
-    static public let VERSION = "6.0.0"
+    static public let VERSION = "6.0.1"
 
     static public var shouldCallErrorMetrics = true
 

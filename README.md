@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.0.0'
+pod 'ConsentViewController', '6.0.1'
 ```
 
 ### Carthage
@@ -253,6 +253,11 @@ Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wi
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
 ### 2. What's the lowest iOS version supported?
 iOS 10 onwards.
+### 3. What if IDFA is not supported (iOS < 14)
+We encapsulate the IDFA status in our own enum called `SPIDFAstatus`. In case the SDK is running on an iOS version that does not support IDFA, the status will be `unavailable`. Otherwise, it'll assume one of the 3 values:
+* `unknown`: User has never been prompted to accept/reject tracking (the native iOS ATT prompt).
+* `accepted`: User accepted the ATT prompt, giving your app access to the IDFA.
+* `rejected`: User rejected the ATT prompt, denyinh your app access to the IDFA.
 
 We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
 
