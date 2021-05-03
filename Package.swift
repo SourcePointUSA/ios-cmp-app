@@ -18,7 +18,7 @@ let package = Package(
       dependencies: [],
       path: "ConsentViewController",
       resources: [
-        .process("Assets/javascript/GDPRJSReceiver.js")
+        .copy("Assets/javascript/GDPRJSReceiver.js")
       ]
     )
   ],
