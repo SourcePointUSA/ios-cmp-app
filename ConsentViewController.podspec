@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ConsentViewController'
-  s.version          = '6.0.0-beta.5'
+  s.version          = '6.0.0-beta.6'
   s.summary          = 'SourcePoint\'s ConsentViewController to handle privacy consents.'
   s.homepage         = 'https://www.sourcepoint.com'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
