@@ -22,7 +22,7 @@ let package = Package(
         "Assets/javascript/jest.config.json",
       ],
       resources: [
-        .process("Assets/javascript/GDPRJSReceiver.js")
+        .copy("Assets/javascript/GDPRJSReceiver.js")
       ]
     )
   ],
