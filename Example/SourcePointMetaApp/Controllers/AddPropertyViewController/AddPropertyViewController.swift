@@ -272,28 +272,35 @@ class AddPropertyViewController: BaseViewController, TargetingParamCellDelegate,
     }
 
     func loadConsentManager(propertyDetails: PropertyDetailsModel) {
+        self.validateProperty(propertyDetails: propertyDetails)
+            if let messageLanguage = propertyDetails.messageLanguage {
+                consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+            }
+            consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
+            isNativeMessageSwitch.isOn ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
+                consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
+    }
+
+    func validateProperty(propertyDetails: PropertyDetailsModel) {
         // optional, set custom targeting parameters supports Strings and Integers
         var targetingParameters = [String: String]()
         for targetingParam in targetingParams {
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
-        if let propertyName = propertyDetails.propertyName, let propertyId = propertyDetails.privacyManagerId {
+        if let propertyName = propertyDetails.propertyName, let privacyManagerID = propertyDetails.privacyManagerId {
             do {
-                consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try GDPRPropertyName(propertyName), PMId:propertyId , campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-                if let messageLanguage = propertyDetails.messageLanguage {
-                    consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
-                }
-                consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
-                isNativeMessageSwitch.isOn ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
-                    consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
+                consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try GDPRPropertyName(propertyName), PMId: privacyManagerID , campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
             } catch {
-                let okHandler = {
-                }
-                self.hideIndicator()
-                let errorString = error as? GDPRConsentViewControllerError
-                AlertView.sharedInstance.showAlertView(title: Alert.alert, message: errorString?.description ?? "", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+                self.showError(error: error as? GDPRConsentViewControllerError)
             }
         }
+    }
+
+    func showError(error: GDPRConsentViewControllerError?) {
+        let okHandler = {
+        }
+        self.hideIndicator()
+        AlertView.sharedInstance.showAlertView(title: Alert.alert, message: error?.description ?? "" , actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 
     func gdprConsentUIWillShow() {
