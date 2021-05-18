@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TargetingParamCellDelegate: class {
+protocol TargetingParamCellDelegate: AnyObject {
     func deleteButton(sender: TargetingParamCell)
 }
 

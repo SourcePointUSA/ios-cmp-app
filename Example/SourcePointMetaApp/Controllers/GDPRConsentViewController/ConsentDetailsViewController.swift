@@ -11,7 +11,8 @@ import ConsentViewController
 import CoreData
 import WebKit
 
-class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GDPRConsentDelegate {
+class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate //SPDelegate
+{
 
     @IBOutlet weak var euConsentLabel: UILabel!
     @IBOutlet weak var consentUUIDLabel: UILabel!
@@ -33,7 +34,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
-    var consentViewController: GDPRConsentViewController?
+//    var consentViewController: GDPRConsentViewController?
     var propertyDetails: PropertyDetailsModel?
     var targetingParams = [TargetingParamModel]()
     var nativeMessageController: SPNativeMessageViewController?
@@ -43,7 +44,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         consentTableView.tableFooterView = UIView(frame: .zero)
         self.navigationItem.hidesBackButton = true
         navigationSetup()
-        setTableViewHidden()
+//        setTableViewHidden()
         setconsentUUId()
 
         if let _propertyManagedObjectID = propertyManagedObjectID {
@@ -51,7 +52,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
             fetchDataFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: {(propertyDetails, targetingParams) in
                 self.propertyDetails = propertyDetails
                 self.targetingParams = targetingParams
-                self.loadConsentManager(propertyDetails: propertyDetails, targetingParams: targetingParams)
+//                self.loadConsentManager(propertyDetails: propertyDetails, targetingParams: targetingParams)
             })
         }
     }
@@ -75,10 +76,10 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         _ = self.navigationController?.popToRootViewController(animated: false)
     }
 
-    func setTableViewHidden() {
-        consentTableView.isHidden = !(userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0)
-        noDataLabel.isHidden = userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0
-    }
+//    func setTableViewHidden() {
+//        consentTableView.isHidden = !(userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0)
+//        noDataLabel.isHidden = userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0
+//    }
 
     func setconsentUUId() {
         if consentUUID.count > 0 {
@@ -104,78 +105,78 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
         })
     }
 
-    func loadConsentManager(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel]) {
-        let campaign: SPCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
-        // optional, set custom targeting parameters supports Strings and Integers
-        var targetingParameters = [String: String]()
-        for targetingParam in targetingParams {
-            targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
-        }
-        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! SPPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-        if let messageLanguage = propertyDetails.messageLanguage {
-            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
-        }
-        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
-        propertyDetails.nativeMessage == 1 ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
-            consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
-    }
+//    func loadConsentManager(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel]) {
+//        let campaign: SPCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
+//        // optional, set custom targeting parameters supports Strings and Integers
+//        var targetingParameters = [String: String]()
+//        for targetingParam in targetingParams {
+//            targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
+//        }
+//        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! SPPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+//        if let messageLanguage = propertyDetails.messageLanguage {
+//            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+//        }
+//        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
+//        propertyDetails.nativeMessage == 1 ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
+//            consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
+//    }
 
-    func gdprConsentUIWillShow() {
-        hideIndicator()
-        if nativeMessageController?.viewIfLoaded?.window != nil {
-            nativeMessageController?.present(consentViewController!, animated: true, completion: nil)
-        } else {
-            present(self.consentViewController!, animated: true, completion: nil)
-        }
-    }
+//    func gdprConsentUIWillShow() {
+//        hideIndicator()
+//        if nativeMessageController?.viewIfLoaded?.window != nil {
+//            nativeMessageController?.present(consentViewController!, animated: true, completion: nil)
+//        } else {
+//            present(self.consentViewController!, animated: true, completion: nil)
+//        }
+//    }
 
     func consentUIDidDisappear() {
         dismiss(animated: true, completion: nil)
     }
 
-    func consentUIWillShow(message: GDPRMessage) {
-        hideIndicator()
-        if let consentViewController = consentViewController {
-            nativeMessageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
-            nativeMessageController?.modalPresentationStyle = .overFullScreen
-            present(nativeMessageController!, animated: true, completion: nil)
-        }
-    }
+//    func consentUIWillShow(message: GDPRMessage) {
+//        hideIndicator()
+//        if let consentViewController = consentViewController {
+//            nativeMessageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
+//            nativeMessageController?.modalPresentationStyle = .overFullScreen
+//            present(nativeMessageController!, animated: true, completion: nil)
+//        }
+//    }
 
     /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
     /// `SPActionType`
-    func onAction(_ action: SPAction) {
-        if propertyDetails?.nativeMessage == 1 {
-            switch action.type {
-            case .PMCancel:
-                dismissPrivacyManager()
-            case .ShowPrivacyManager:
-                isPMLoaded = true
-                showIndicator()
-            case .AcceptAll:
-                if !isPMLoaded {
-                    consentViewController?.reportAction(action)
-                    dismiss(animated: true, completion: nil)
-                }
-            case .RejectAll:
-                if !isPMLoaded {
-                    consentViewController?.reportAction(action)
-                    dismiss(animated: true, completion: nil)
-                }
-            default:
-                dismiss(animated: true, completion: nil)
-            }
-        }
-    }
+//    func onAction(_ action: SPAction) {
+//        if propertyDetails?.nativeMessage == 1 {
+//            switch action.type {
+//            case .PMCancel:
+//                dismissPrivacyManager()
+//            case .ShowPrivacyManager:
+//                isPMLoaded = true
+//                showIndicator()
+//            case .AcceptAll:
+//                if !isPMLoaded {
+//                    consentViewController?.reportAction(action)
+//                    dismiss(animated: true, completion: nil)
+//                }
+//            case .RejectAll:
+//                if !isPMLoaded {
+//                    consentViewController?.reportAction(action)
+//                    dismiss(animated: true, completion: nil)
+//                }
+//            default:
+//                dismiss(animated: true, completion: nil)
+//            }
+//        }
+//    }
 
-    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
-        self.showIndicator()
-        self.userConsents = userConsent
-        self.consentUUID = consentUUID
-        setconsentUUId()
-        consentTableView.reloadData()
-        self.hideIndicator()
-    }
+//    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
+//        self.showIndicator()
+//        self.userConsents = userConsent
+//        self.consentUUID = consentUUID
+//        setconsentUUId()
+//        consentTableView.reloadData()
+//        self.hideIndicator()
+//    }
 
     func onError(error: SPError) {
         let okHandler = {
@@ -195,18 +196,18 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate, GD
 
     @IBAction func showPMAction(_ sender: Any) {
         self.showIndicator()
-        let campaign: SPCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
+//        let campaign: SPCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
         var targetingParameters = [String: String]()
         for targetingParam in targetingParams {
             targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
         }
-        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! SPPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-        if let messageLanguage = propertyDetails?.messageLanguage {
-            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
-        }
-        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails?.pmTab ?? "")
-        consentViewController?.loadPrivacyManager()
+//        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! SPPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
+//        if let messageLanguage = propertyDetails?.messageLanguage {
+//            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
+//        }
+//        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails?.pmTab ?? "")
+//        consentViewController?.loadPrivacyManager()
     }
 }
 
@@ -231,21 +232,22 @@ extension ConsentDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        setTableViewHidden()
+//        setTableViewHidden()
         if section == 0 {
-            return userConsents?.acceptedVendors.count ?? 0
+//            return userConsents?.acceptedVendors.count ?? 0
         } else {
-            return userConsents?.acceptedCategories.count ?? 0
+//            return userConsents?.acceptedCategories.count ?? 0
         }
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConsentTableViewCell {
             if indexPath.section == 0 {
-                cell.consentIDString.text = userConsents?.acceptedVendors[indexPath.row]
+//                cell.consentIDString.text = userConsents?.acceptedVendors[indexPath.row]
             } else {
-                cell.consentIDString.text = userConsents?.acceptedCategories[indexPath.row]
+//                cell.consentIDString.text = userConsents?.acceptedCategories[indexPath.row]
             }
             return cell
         }
