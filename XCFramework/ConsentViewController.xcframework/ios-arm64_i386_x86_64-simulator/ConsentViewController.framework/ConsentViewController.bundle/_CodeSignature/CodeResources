@@ -4,21 +4,21 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>GDPRJSReceiver.js</key>
+		<key>SPJSReceiver.js</key>
 		<data>
-		gTVoAiC8CuFtU85/zGWrzOyXrZA=
+		B7J168EO01/rXtb4RgQo7PetWUY=
 		</data>
-		<key>GDPRJSReceiver.spec.js</key>
+		<key>SPJSReceiver.spec.js</key>
 		<data>
-		9IzNupN+1HTnUDlsYuc23TPBgjo=
+		+4WHti4rYU1VZ79338GbucDYS3Q=
 		</data>
-		<key>javascript/GDPRJSReceiver.js</key>
+		<key>javascript/SPJSReceiver.js</key>
 		<data>
-		gTVoAiC8CuFtU85/zGWrzOyXrZA=
+		B7J168EO01/rXtb4RgQo7PetWUY=
 		</data>
-		<key>javascript/GDPRJSReceiver.spec.js</key>
+		<key>javascript/SPJSReceiver.spec.js</key>
 		<data>
-		9IzNupN+1HTnUDlsYuc23TPBgjo=
+		+4WHti4rYU1VZ79338GbucDYS3Q=
 		</data>
 		<key>javascript/jest.config.json</key>
 		<data>
@@ -31,48 +31,48 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>GDPRJSReceiver.js</key>
+		<key>SPJSReceiver.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gTVoAiC8CuFtU85/zGWrzOyXrZA=
+			B7J168EO01/rXtb4RgQo7PetWUY=
 			</data>
 			<key>hash2</key>
 			<data>
-			x8uCSSgJmXVs13aerMVqV5nsnJNE+so/mqS/ODeooXU=
+			y9sR7Y8AoM5si9bJ9xLnIPOqrTUZrVe6742i/NsPm7U=
 			</data>
 		</dict>
-		<key>GDPRJSReceiver.spec.js</key>
+		<key>SPJSReceiver.spec.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9IzNupN+1HTnUDlsYuc23TPBgjo=
+			+4WHti4rYU1VZ79338GbucDYS3Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			7a7GaWeic5xtbrBU6vRI/wWFiznfr3MXpSjCkfbBjYM=
+			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
 			</data>
 		</dict>
-		<key>javascript/GDPRJSReceiver.js</key>
+		<key>javascript/SPJSReceiver.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gTVoAiC8CuFtU85/zGWrzOyXrZA=
+			B7J168EO01/rXtb4RgQo7PetWUY=
 			</data>
 			<key>hash2</key>
 			<data>
-			x8uCSSgJmXVs13aerMVqV5nsnJNE+so/mqS/ODeooXU=
+			y9sR7Y8AoM5si9bJ9xLnIPOqrTUZrVe6742i/NsPm7U=
 			</data>
 		</dict>
-		<key>javascript/GDPRJSReceiver.spec.js</key>
+		<key>javascript/SPJSReceiver.spec.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9IzNupN+1HTnUDlsYuc23TPBgjo=
+			+4WHti4rYU1VZ79338GbucDYS3Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			7a7GaWeic5xtbrBU6vRI/wWFiznfr3MXpSjCkfbBjYM=
+			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
 			</data>
 		</dict>
 		<key>javascript/jest.config.json</key>
