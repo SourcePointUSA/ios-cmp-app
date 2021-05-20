@@ -46,6 +46,10 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func onNetworkCallsTap(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
+    }
+
     @IBOutlet weak var vendorXStatusLabel: UILabel!
     
     override func viewDidLoad() {
