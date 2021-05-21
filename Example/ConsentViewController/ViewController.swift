@@ -20,6 +20,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var gdprPMButton: UIButton!
     @IBOutlet weak var ccpaPMButton: UIButton!
 
+    @IBAction func onNetworkCallsTap(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
+    }
+
     @IBAction func onClearConsentTap(_ sender: Any) {
         SPConsentManager.clearAllData()
     }

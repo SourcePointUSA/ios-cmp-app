@@ -9,6 +9,7 @@ end
 target 'ConsentViewController_Example' do
   pod 'ConsentViewController', :path => '../'
   pod 'SwiftLint'
+  pod 'Wormholy'
 end
 
 target 'ConsentViewController_ExampleTests' do
