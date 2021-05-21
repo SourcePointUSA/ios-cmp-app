@@ -1,3 +1,6 @@
+# 6.0.2 (May, 21, 2021)
+* Fixes #295 - `SPUserData` properties not being accessible on ObjC.
+
 # 6.0.1 (May, 3, 2021)
 * Fixed Swift Package Manager support.
 * Fixed an issue preventing the SDK from building on XCode 12.5

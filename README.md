@@ -57,9 +57,9 @@ class ViewController: UIViewController {
         accountId: 22,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
-            ios14: SPCampaign()
+            gdpr: SPCampaign(), // optional
+            ccpa: SPCampaign(), // optional
+            ios14: SPCampaign() // optional
         ),
         delegate: self
     )}()
@@ -142,8 +142,12 @@ consentManager = [[SPConsentManager alloc]
         [self dismissViewControllerAnimated:true completion:nil];
     }
 
-    - (void)onConsentReadyWithConsents:(SPUserData *)consents {
-        NSLog(@"onConsentReady: %@", consents);
+    - (void)onConsentReadyWithConsents:(SPUserData *)userData {
+        NSLog(@"onConsentReady");
+        NSLog(@"GDPR Applies: %d", userData.objcGDPRApplies);
+        NSLog(@"GDPR: %@", userData.objcGDPRConsents);
+        NSLog(@"CCPA Applies: %d", userData.objcCCPAApplies);
+        NSLog(@"CCPA: %@", userData.objcCCPAConsents);
     }
 @end
 ```

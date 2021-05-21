@@ -52,6 +52,9 @@
 }
 
 - (void)onConsentReadyWithUserData:(SPUserData *)userData {
-    NSLog(@"onConsentReady: %@", userData);
+    NSLog(@"GDPR Applies: %d", userData.objcGDPRApplies);
+    NSLog(@"GDPR: %@", userData.objcGDPRConsents);
+    NSLog(@"CCPA Applies: %d", userData.objcCCPAApplies);
+    NSLog(@"CCPA: %@", userData.objcCCPAConsents);
 }
 @end
