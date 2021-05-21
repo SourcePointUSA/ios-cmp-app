@@ -73,7 +73,7 @@ public protocol SPObjcUserData {
     public func objcGDPRApplies() -> Bool {
         gdpr?.applies ?? false
     }
-    
+
     /// Returns GDPR consent data if any available.
     /// - SeeAlso: `SPCCPAConsent`
     public func objcCCPAConsents() -> SPCCPAConsent? {
