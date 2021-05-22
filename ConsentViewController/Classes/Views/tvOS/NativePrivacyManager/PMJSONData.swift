@@ -9,7 +9,7 @@ import Foundation
 
 // swiftlint:disable all
 
-public let AppleOTTJSON = """
+public let MockNativePMResponse = """
 {
    "homeView":{
       "id":"HomeView",
