@@ -12,9 +12,7 @@ import ConsentViewController
 class ViewController: UIViewController {
     var activityIndicator = UIActivityIndicatorView(style: .medium)
 
-    @IBOutlet weak var sourcepointSDKButton: UIButton!
-
-    @IBAction func loadSourcepointSDKAction(_ sender: Any) {
+    @IBAction func onLoadPMTap(_ sender: Any) {
         consentManager.loadGDPRPrivacyManager(withId: "488393")
     }
 
