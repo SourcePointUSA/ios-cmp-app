@@ -142,11 +142,18 @@ import UIKit
     }
 
     @IBAction func onBackButtonTap(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
-
+        messageUIDelegate?.action(
+            SPAction(
+                type: .AcceptAll,
+                id: nil,
+                campaignType: campaignType
+            ),
+            from: self)
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {

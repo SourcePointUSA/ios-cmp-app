@@ -38,9 +38,12 @@ extension ViewController: SPDelegate {
         present(controller, animated: true)
     }
 
-    func onAction(_ action: SPAction, from controller: SPMessageViewController) {}
+    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+        print("onAction:", action)
+    }
 
     func onSPUIFinished(_ controller: SPMessageViewController) {
+        print("onSPUIReady")
         dismiss(animated: true)
     }
 
