@@ -199,8 +199,20 @@ import Foundation
         #if canImport(GenericWebMessageViewController)
         let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
         loadWebPrivacyManager(.gdpr, pmUrl)
-        #elseif canImport(SPNativePrivacyManagerViewController)
-        /// TODO: load NativePM
+        #elseif os(tvOS)
+        spClient.getNativePrivacyManager(withId: id) { result in
+            switch result {
+            case .success(let pmContent):
+                self.loaded(SPNativePrivacyManagerViewController(
+                    messageId: nil, // TODO: make sure PM comes with message id
+                    contents: pmContent,
+                    campaignType: .gdpr,
+                    delegate: self
+                ))
+            case .failure(let error):
+                self.onError(error)
+            }
+        }
         #endif
     }
 
