@@ -47,9 +47,11 @@ protocol SourcePointProtocol {
         idfaStaus: SPIDFAStatus,
         handler: @escaping MessagesHandler)
 
+    #if os(tvOS)
     func getNativePrivacyManager(
         withId pmId: String,
         handler: @escaping NativePMHandler)
+    #endif
 
     func postCCPAAction(
         authId: String?,
@@ -154,6 +156,7 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
+    #if os(tvOS)
     func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
         handler(Result {
             try JSONDecoder().decode(
@@ -164,6 +167,7 @@ class SourcePointClient: SourcePointProtocol {
             InvalidResponseWebMessageError(error: $0)
         })
     }
+    #endif
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }

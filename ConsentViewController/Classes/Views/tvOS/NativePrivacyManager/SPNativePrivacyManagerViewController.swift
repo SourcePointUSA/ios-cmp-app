@@ -19,7 +19,7 @@ import UIKit
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
-    
+
     let homeView: SPPrivacyManager
     var privacyPolicyView: SPPrivacyManager?
     let contents: SPPrivacyManagerResponse
