@@ -65,11 +65,11 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     public var campaignType: SPCampaignType
     public var messageId: Int?
 
-    init(messageId: Int?, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
+    init(messageId: Int?, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?, nibName: String? = nil, bundle: Bundle? = nil) {
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
         self.messageId = messageId
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: nibName, bundle: bundle)
     }
 
     required init?(coder: NSCoder) {
