@@ -18,13 +18,12 @@ import UIKit
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
-
     @IBOutlet weak var categoryTableView: UITableView!
-
+    
     let homeView: SPPrivacyManager
     var privacyPolicyView: SPPrivacyManager?
     let contents: SPPrivacyManagerResponse
-    let categoryList: [String] = [
+    let categoryList = [
         "Store and/or access information on a device",
         "Select personalized content",
         "Personalized ads, ad meansurement and audience insights",
@@ -41,17 +40,14 @@ import UIKit
         self.contents = contents
         homeView = contents.homeView
         privacyPolicyView = contents.privacyPolicyView
-        super.init(messageId: messageId, campaignType: campaignType, delegate: delegate)
+        super.init(
+            messageId: messageId,
+            campaignType: campaignType,
+            delegate: delegate,
+            nibName: "SPNativePrivacyManagerViewController",
+            bundle: Bundle.framework
+        )
     }
-
-//    public init(pmContent: SPPrivacyManagerResponse) {
-//        homeView = pmContent.homeView
-//        self.pmContent = pmContent
-//        if homeView.showPrivacyPolicyBtn == false {
-//            privacyPolicyView = pmContent.privacyPolicyView
-//        }
-//        super.init(nibName: "SPNativePrivacyManagerViewController", bundle: Bundle.framework)
-//    }
 
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -61,34 +57,37 @@ import UIKit
         if let textDetails = homeView.components.first(where: { $0.id == id }) {
             label.text = textDetails.text
             label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
-            if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
+            if let fontFamily = textDetails.style?.font?.fontFamily,
+               let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
     }
 
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) {
-        if let textDetails = homeView.components.first(where: {component in component.id == id }) {
+        if let textDetails = homeView.components.first(where: { $0.id == id }) {
             label.text = text
             label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
-            if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
+            if let fontFamily = textDetails.style?.font?.fontFamily,
+               let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
     }
 
     func loadBody(forComponentId id: String, textView: UITextView) {
-        if let categoriesDescription = homeView.components.first(where: {component in component.id == id }) {
+        if let categoriesDescription = homeView.components.first(where: { $0.id == id }) {
             textView.text = categoriesDescription.text
             textView.textColor = SDKUtils.hexStringToUIColor(hex: categoriesDescription.style?.font?.color ?? "")
-            if let fontFamily = categoriesDescription.style?.font?.fontFamily, let fontsize = categoriesDescription.style?.font?.fontSize {
+            if let fontFamily = categoriesDescription.style?.font?.fontFamily,
+               let fontsize = categoriesDescription.style?.font?.fontSize {
                 textView.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
     }
 
     func loadActionButton(forComponentId id: String, button: UIButton) {
-        if let action =  homeView.components.first(where: { component in component.id == id }) {
+        if let action =  homeView.components.first(where: { $0.id == id }) {
             button.titleLabel?.text = action.text
             button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusTextColor ?? ""), for: .normal)
             button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onFocusTextColor ?? ""), for: .focused)
@@ -100,7 +99,7 @@ import UIKit
     }
 
     func loadBackButton(forComponentId id: String, button: UIButton) {
-        if let action =  homeView.components.first(where: { component in component.id == id }) {
+        if let action =  homeView.components.first(where: { $0.id == id }) {
             button.titleLabel?.text = action.text
             button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.font?.color ?? ""), for: .normal)
             button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.backgroundColor ?? "")
@@ -111,17 +110,17 @@ import UIKit
     }
 
     func showPrivacyPolicy() -> Bool {
-        return homeView.showPrivacyPolicyBtn ?? false
+        homeView.showPrivacyPolicyBtn ?? false
     }
 
     func addBackgroundColor() -> UIColor? {
-        return SDKUtils.hexStringToUIColor(hex: homeView.style.backgroundColor ?? "")
+        SDKUtils.hexStringToUIColor(hex: homeView.style.backgroundColor ?? "")
     }
 
     func setupHomeView() {
+        view.backgroundColor = addBackgroundColor()
+        view.tintColor = addBackgroundColor()
         privacyPolicyButton.isHidden = showPrivacyPolicy()
-        self.view.backgroundColor = addBackgroundColor()
-        self.view.tintColor = addBackgroundColor()
         descriptionTextView.textContainer.lineFragmentPadding = 0
         descriptionTextView.textContainerInset = .zero
         loadLabelText(forComponentId: "HeaderText", label: titleLabel)
@@ -132,13 +131,13 @@ import UIKit
         loadActionButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadActionButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
         loadBackButton(forComponentId: "BackButton", button: backButton)
+        categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        categoryTableView.delegate = self
+        categoryTableView.dataSource = self
     }
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        categoryTableView.delegate = self
-        categoryTableView.dataSource = self
         setupHomeView()
     }
 
@@ -171,30 +170,32 @@ import UIKit
 
 // MARK: UITableViewDataSource
 extension SPNativePrivacyManagerViewController: UITableViewDataSource {
-
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.categoryList.count
+        categoryList.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (self.categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        cell.textLabel?.text = self.categoryList[indexPath.row]
+        let cell: UITableViewCell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as UITableViewCell
+        cell.textLabel?.text = categoryList[indexPath.row]
         return cell
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        self.loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: self.categoryList[indexPath.row], label: self.selectedCategoryTextLabel)
+        loadLabelText(
+            forComponentId: "CategoriesDescriptionText",
+            labelText: categoryList[indexPath.row],
+            label: selectedCategoryTextLabel
+        )
         return true
     }
 }
 
 // MARK: - UITableViewDelegate
 extension SPNativePrivacyManagerViewController: UITableViewDelegate {
-
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     }
