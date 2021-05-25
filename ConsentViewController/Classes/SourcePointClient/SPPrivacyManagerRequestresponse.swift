@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc public class SPPrivacyManagerResponse: NSObject, Decodable {
+class SPPrivacyManagerResponse: NSObject, Decodable {
     let homeView: SPPrivacyManager
     let categoriesView: SPPrivacyManager
     let categoryDetails: SPPrivacyManager
@@ -15,7 +15,7 @@ import Foundation
     let vendorDetails: SPPrivacyManager
     let privacyPolicyView: SPPrivacyManager?
 
-    public init(
+    init(
         homeView: SPPrivacyManager,
         categoriesView: SPPrivacyManager,
         categoryDetails: SPPrivacyManager,

@@ -50,8 +50,8 @@
                         <action selector="onBackButtonTap:" destination="-1" eventType="primaryActionTriggered" id="jlJ-K9-hqE"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="xze-gk-XHF" userLabel="SelectedCategoryLabel">
-                    <rect key="frame" x="180" y="514" width="550" height="46"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="xze-gk-XHF" userLabel="SelectedCategoryLabel">
+                    <rect key="frame" x="180" y="514" width="550" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="550" id="TUV-zS-qAX"/>
                     </constraints>
@@ -68,7 +68,7 @@
                     </subviews>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="VFh-o0-szs" userLabel="Stack View - Buttons">
-                    <rect key="frame" x="230" y="585" width="450" height="0.0"/>
+                    <rect key="frame" x="230" y="539" width="450" height="0.0"/>
                     <subviews>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl">
                             <rect key="frame" x="0.0" y="0.0" width="405" height="0.0"/>

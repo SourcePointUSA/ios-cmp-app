@@ -7,13 +7,13 @@
 
 import Foundation
 
-@objc public class PMLongButtonAttributes: NSObject, Codable {
-    public let onText: String?
-    public let offText: String?
-    public let customCategoryText: String?
-    public let customVendorText: String?
+@objc class PMLongButtonAttributes: NSObject, Codable {
+    let onText: String?
+    let offText: String?
+    let customCategoryText: String?
+    let customVendorText: String?
 
-    public init(onText: String?, offText: String, customCategoryText: String?, customVendorText: String) {
+    init(onText: String?, offText: String, customCategoryText: String?, customVendorText: String) {
         self.onText = onText
         self.offText = offText
         self.customCategoryText = customCategoryText
@@ -21,23 +21,23 @@ import Foundation
     }
 }
 
-@objc public class PMSliderAttributes: NSObject, Codable {
-    public let consentText: String?
-    public let legitInterestText: String?
+@objc class PMSliderAttributes: NSObject, Codable {
+    let consentText: String?
+    let legitInterestText: String?
 
-    public init(consentText: String?, legitInterestText: String) {
+    init(consentText: String?, legitInterestText: String) {
         self.consentText = consentText
         self.legitInterestText = legitInterestText
     }
 }
 
-@objc public class PMFontAttributes: NSObject, Codable {
-    public let fontSize: CGFloat
-    public let fontWeight: String
-    public let color: String?
-    public let fontFamily: String
+@objc class PMFontAttributes: NSObject, Codable {
+    let fontSize: CGFloat
+    let fontWeight: String
+    let color: String?
+    let fontFamily: String
 
-    public init(fontSize: CGFloat, fontWeight: String, color: String?, fontFamily: String) {
+    init(fontSize: CGFloat, fontWeight: String, color: String?, fontFamily: String) {
         self.fontSize = fontSize
         self.fontWeight = fontWeight
         self.color = color
@@ -45,18 +45,18 @@ import Foundation
     }
 }
 
-@objc public class PMStyleAttributes: NSObject, Codable {
-    public let backgroundColor: String?
-    public let width: Int?
-    public let font: PMFontAttributes?
-    public let onFocusBackgroundColor: String?
-    public let onUnfocusBackgroundColor: String?
-    public let onFocusTextColor: String?
-    public let onUnfocusTextColor: String?
-    public let activeBackgroundColor: String?
-    public let activeFont: PMFontAttributes?
+@objc class PMStyleAttributes: NSObject, Codable {
+    let backgroundColor: String?
+    let width: Int?
+    let font: PMFontAttributes?
+    let onFocusBackgroundColor: String?
+    let onUnfocusBackgroundColor: String?
+    let onFocusTextColor: String?
+    let onUnfocusTextColor: String?
+    let activeBackgroundColor: String?
+    let activeFont: PMFontAttributes?
 
-    public init(
+    init(
         backgroundColor: String?,
         width: Int?,
         font: PMFontAttributes?,
@@ -79,16 +79,16 @@ import Foundation
     }
 }
 
-@objc public class PMUIComponents: NSObject, Codable {
-    public let id: String
-    public let type: String
-    public let text: String?
-    public let style: PMStyleAttributes?
-    public let src: String?
-    public let textDetails: PMLongButtonAttributes?
-    public let sliderDetails: PMSliderAttributes?
+@objc class PMUIComponents: NSObject, Codable {
+    let id: String
+    let type: String
+    let text: String?
+    let style: PMStyleAttributes?
+    let src: String?
+    let textDetails: PMLongButtonAttributes?
+    let sliderDetails: PMSliderAttributes?
 
-    public init(id: String, type: String, text: String?, style: PMStyleAttributes?, src: String?, textDetails: PMLongButtonAttributes?, sliderDetails: PMSliderAttributes?) {
+    init(id: String, type: String, text: String?, style: PMStyleAttributes?, src: String?, textDetails: PMLongButtonAttributes?, sliderDetails: PMSliderAttributes?) {
         self.id = id
         self.type = type
         self.text = text
@@ -99,12 +99,12 @@ import Foundation
     }
 }
 
-@objc public class SPPrivacyManager: NSObject, Codable {
-    public let showPrivacyPolicyBtn: Bool?
-    public let style: PMStyleAttributes
-    public let components: [PMUIComponents]
+@objc class SPPrivacyManager: NSObject, Codable {
+    let showPrivacyPolicyBtn: Bool?
+    let style: PMStyleAttributes
+    let components: [PMUIComponents]
 
-    public init(showPrivacyPolicyBtn: Bool?, style: PMStyleAttributes, components: [PMUIComponents]) {
+    init(showPrivacyPolicyBtn: Bool?, style: PMStyleAttributes, components: [PMUIComponents]) {
         self.showPrivacyPolicyBtn = showPrivacyPolicyBtn
         self.style = style
         self.components = components
