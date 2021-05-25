@@ -87,14 +87,23 @@ import Foundation
             /// Call a delegate Method to get the Message controller
             /// Pass the native message object to it
             return nil
-        case .web(let content):
-            return GenericWebMessageViewController(
-                url: url,
-                messageId: messageId,
-                contents: content,
-                campaignType: type,
-                delegate: self
-            )
+        #if os(tvOS)
+        case .nativePM(let content): return SPNativePrivacyManagerViewController(
+            messageId: messageId,
+            contents: content,
+            campaignType: type,
+            delegate: self
+        )
+        #endif
+        #if os(iOS)
+        case .web(let content): return GenericWebMessageViewController(
+            url: url,
+            messageId: messageId,
+            contents: content,
+            campaignType: type,
+            delegate: self
+        )
+        #endif
         default:
             return nil
         }
@@ -189,13 +198,33 @@ import Foundation
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        #if os(iOS)
         let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
-        loadPrivacyManager(.gdpr, pmUrl)
+        loadWebPrivacyManager(.gdpr, pmUrl)
+        #elseif os(tvOS)
+        spClient.getNativePrivacyManager(withId: id) { result in
+            switch result {
+            case .success(let pmContent):
+                self.loaded(SPNativePrivacyManagerViewController(
+                    messageId: nil, // TODO: make sure PM comes with message id
+                    contents: pmContent,
+                    campaignType: .gdpr,
+                    delegate: self
+                ))
+            case .failure(let error):
+                self.onError(error)
+            }
+        }
+        #endif
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        #if os(iOS)
         let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)&idfaStatus=\(idfaStatus)")!
-        loadPrivacyManager(.ccpa, pmUrl)
+        loadWebPrivacyManager(.ccpa, pmUrl)
+        #elseif os(tvOS)
+        /// TODO: load NativePM
+        #endif
     }
 
     public func gdprApplies() -> Bool {
@@ -236,7 +265,8 @@ import Foundation
         }
     }
 
-    func loadPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
+    #if os(iOS)
+    func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
         let messageId = Int(
             URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
                 .queryItems?
@@ -251,6 +281,7 @@ import Foundation
             delegate: self
         ).loadPrivacyManager(url: pmURL)
     }
+    #endif
 
     public func onError(_ error: SPError) {
         spClient.errorMetrics(

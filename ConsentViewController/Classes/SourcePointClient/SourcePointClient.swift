@@ -31,6 +31,7 @@ extension JSONDecoder {
 }
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
+typealias NativePMHandler = (Result<SPPrivacyManagerResponse, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<ConsentResponse<T>, SPError>) -> Void
@@ -45,6 +46,12 @@ protocol SourcePointProtocol {
         localState: SPJson,
         idfaStaus: SPIDFAStatus,
         handler: @escaping MessagesHandler)
+
+    #if os(tvOS)
+    func getNativePrivacyManager(
+        withId pmId: String,
+        handler: @escaping NativePMHandler)
+    #endif
 
     func postCCPAAction(
         authId: String?,
@@ -148,6 +155,19 @@ class SourcePointClient: SourcePointProtocol {
             }
         }
     }
+
+    #if os(tvOS)
+    func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
+        handler(Result {
+            try JSONDecoder().decode(
+                SPPrivacyManagerResponse.self,
+                from: MockNativePMResponse.data(using: .utf8)!
+            )
+        }.mapError {
+            InvalidResponseWebMessageError(error: $0)
+        })
+    }
+    #endif
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
