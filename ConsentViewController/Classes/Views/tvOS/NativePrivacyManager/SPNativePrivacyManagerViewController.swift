@@ -36,6 +36,8 @@ import UIKit
     ]
     let cellReuseIdentifier = "cell"
 
+    override var preferredFocusedView: UIView? { get { acceptButton } }
+
     init(messageId: Int?, contents: SPPrivacyManagerResponse, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
         self.contents = contents
         homeView = contents.homeView
@@ -86,23 +88,13 @@ import UIKit
         }
     }
 
-    func loadActionButton(forComponentId id: String, button: UIButton) {
+    func loadButton(forComponentId id: String, button: UIButton) {
         if let action =  homeView.components.first(where: { $0.id == id }) {
+            button.isHidden = false
             button.titleLabel?.text = action.text
             button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusTextColor ?? ""), for: .normal)
             button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onFocusTextColor ?? ""), for: .focused)
             button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusBackgroundColor ?? "")
-            if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
-                button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
-            }
-        }
-    }
-
-    func loadBackButton(forComponentId id: String, button: UIButton) {
-        if let action =  homeView.components.first(where: { $0.id == id }) {
-            button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.font?.color ?? ""), for: .normal)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.backgroundColor ?? "")
             if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -126,11 +118,11 @@ import UIKit
         loadLabelText(forComponentId: "HeaderText", label: titleLabel)
         loadLabelText(forComponentId: "CategoriesSubDescriptionText", label: subDescriptionTextLabel)
         loadBody(forComponentId: "CategoriesDescriptionText", textView: descriptionTextView)
-        loadActionButton(forComponentId: "AcceptAllButton", button: acceptButton)
-        loadActionButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
-        loadActionButton(forComponentId: "NavVendorsButton", button: ourPartners)
-        loadActionButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
-        loadBackButton(forComponentId: "BackButton", button: backButton)
+        loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
+        loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
+        loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
+        loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
+        loadButton(forComponentId: "BackButton", button: backButton)
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
@@ -142,7 +134,6 @@ import UIKit
     }
 
     @IBAction func onBackButtonTap(_ sender: Any) {
-//        dismiss(animated: true, completion: nil)
         messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
     }
 

@@ -39,7 +39,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwn-Ay-DjD">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwn-Ay-DjD">
                     <rect key="frame" x="80" y="70" width="179" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="hoX-Ae-EM4"/>
@@ -68,34 +68,34 @@
                     </subviews>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="VFh-o0-szs" userLabel="Stack View - Buttons">
-                    <rect key="frame" x="230" y="585" width="450" height="419"/>
+                    <rect key="frame" x="230" y="585" width="450" height="0.0"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl">
-                            <rect key="frame" x="0.0" y="0.0" width="450" height="86"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl">
+                            <rect key="frame" x="0.0" y="0.0" width="405" height="0.0"/>
                             <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                             <state key="normal" title="Accept All"/>
                             <connections>
                                 <action selector="onAcceptTap:" destination="-1" eventType="primaryActionTriggered" id="kZP-FO-DLP"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaN-Kj-XpH">
-                            <rect key="frame" x="0.0" y="111" width="450" height="86"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaN-Kj-XpH">
+                            <rect key="frame" x="0.0" y="0.0" width="405" height="0.0"/>
                             <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                             <state key="normal" title="Manage Preference"/>
                             <connections>
                                 <action selector="onManagePreferenceTap:" destination="-1" eventType="primaryActionTriggered" id="oZQ-PN-Mh8"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAh-er-2XQ">
-                            <rect key="frame" x="0.0" y="222" width="450" height="86"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAh-er-2XQ">
+                            <rect key="frame" x="0.0" y="0.0" width="405" height="0.0"/>
                             <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                             <state key="normal" title="Our Partners"/>
                             <connections>
                                 <action selector="onPartnersTap:" destination="-1" eventType="primaryActionTriggered" id="ddN-GT-VO2"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-4F-WQC">
-                            <rect key="frame" x="0.0" y="333" width="450" height="86"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-4F-WQC">
+                            <rect key="frame" x="0.0" y="0.0" width="405" height="0.0"/>
                             <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                             <state key="normal" title="Privacy Policy"/>
                             <connections>
