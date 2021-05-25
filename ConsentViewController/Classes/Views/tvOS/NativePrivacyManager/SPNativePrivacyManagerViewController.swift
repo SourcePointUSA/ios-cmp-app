@@ -82,11 +82,23 @@ import Foundation
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
-        present(SPManagePreferenceViewController(pmContent: privacyManagerViews), animated: true)
+        present(SPManagePreferenceViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            contents: privacyManagerViews.categoriesView,
+            delegate: self,
+            nibName: "SPManagePreferenceViewController"
+        ), animated: true)
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {
-        present(SPPartnersViewController(pmContent: privacyManagerViews), animated: true)
+        present(SPPartnersViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            contents: privacyManagerViews.vendorsView,
+            delegate: self,
+            nibName: "SPPartnersViewController"
+        ), animated: true)
     }
 
     @IBAction func onPrivacyPolicyTap(_ sender: Any) {

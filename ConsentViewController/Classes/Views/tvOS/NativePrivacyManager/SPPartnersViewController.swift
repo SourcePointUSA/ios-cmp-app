@@ -7,8 +7,7 @@
 
 import UIKit
 
-class SPPartnersViewController: UIViewController {
-
+class SPPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var partnerLabel: UILabel!
     @IBOutlet weak var selectedvendorTextLabel: UILabel!
@@ -16,11 +15,10 @@ class SPPartnersViewController: UIViewController {
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
     @IBOutlet weak var backButton: UIButton!
-
     @IBOutlet weak var vednorsSlider: UISegmentedControl!
     @IBOutlet weak var vendorsTableView: UITableView!
 
-    let vendorList: [String] = [
+    let vendorList = [
         "Arcspire Limited",
         "Amobee Inc",
         "AppNexus",
@@ -31,7 +29,7 @@ class SPPartnersViewController: UIViewController {
         "Bidstack ltd",
         "Celtra, Inc", "ChartBeat"
     ]
-    let ligitimateInterestVendorList: [String] = [
+    let ligitimateInterestVendorList = [
         "Captify Technologs Limited",
         "Digital Control GmbH & amp CO",
         "Delta projects AB",
@@ -44,108 +42,21 @@ class SPPartnersViewController: UIViewController {
     ]
     let cellReuseIdentifier = "cell"
 
-    var vendorContent: SPPrivacyManager
-    let pmContent: SPPrivacyManagerResponse
-
-    public init(pmContent: SPPrivacyManagerResponse) {
-        self.vendorContent = pmContent.vendorsView
-        self.pmContent = pmContent
-        super.init(nibName: "SPPartnersViewController", bundle: Bundle.framework)
-    }
-
-    public required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func loadLabelText(forComponentId id: String, label: UILabel) {
-        if let textDetails = vendorContent.components.first(where: {component in component.id == id }) {
-            label.text = textDetails.text
-            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
-            if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
-                label.font = UIFont(name: fontFamily, size: fontsize)
-            }
-        }
-    }
-
-    func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) {
-        if let textDetails = vendorContent.components.first(where: {component in component.id == id }) {
-            label.text = text
-            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
-            if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
-                label.font = UIFont(name: fontFamily, size: fontsize)
-            }
-        }
-    }
-
-    func loadActionButton(forComponentId id: String, button: UIButton) {
-        if let action =  vendorContent.components.first(where: { component in component.id == id }) {
-            button.titleLabel?.text = action.text
-            button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
-            button.setTitleColor(UIColor(hexString: action.style?.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
-            if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
-                button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
-            }
-        }
-    }
-
-    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) {
-        if let sliderDetails =  vendorContent.components.first(where: { component in component.id == id }) {
-            slider.setTitle(sliderDetails.sliderDetails?.consentText, forSegmentAt: 0)
-            slider.setTitle(sliderDetails.sliderDetails?.legitInterestText, forSegmentAt: 1)
-            slider.backgroundColor = UIColor(hexString: sliderDetails.style?.backgroundColor)
-            if let fontFamily = sliderDetails.style?.font?.fontFamily, let fontsize = sliderDetails.style?.font?.fontSize {
-                let font = UIFont(name: fontFamily, size: fontsize)
-                slider.setTitleTextAttributes(
-                    [
-                        NSAttributedString.Key.font: font ?? "",
-                        NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.font?.color) as Any
-                    ], for: .normal)
-                slider.setTitleTextAttributes(
-                    [
-                        NSAttributedString.Key.font: font ?? "",
-                        NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.activeFont?.color) as Any
-                    ], for: .selected)
-            }
-        }
-    }
-
-    func loadBackButton(forComponentId id: String, button: UIButton) {
-        if let action =  vendorContent.components.first(where: { component in component.id == id }) {
-            button.titleLabel?.text = action.text
-            button.setTitleColor(UIColor(hexString: action.style?.font?.color), for: .normal)
-            button.backgroundColor = UIColor(hexString: action.style?.backgroundColor)
-            if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
-                button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
-            }
-        }
-    }
-
-    func addBackgroundColor() -> UIColor? {
-        return UIColor(hexString: vendorContent.style.backgroundColor)
-    }
-
-    func setupHomeView() {
-        self.view.backgroundColor = addBackgroundColor()
-        self.view.tintColor = addBackgroundColor()
-        loadLabelText(forComponentId: "HeaderText", label: titleLabel)
-        loadLabelText(forComponentId: "VendorsHeader", label: partnerLabel)
-        loadActionButton(forComponentId: "AcceptAllButton", button: acceptButton)
-        loadActionButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadBackButton(forComponentId: "BackButton", button: backButton)
-        loadSliderButton(forComponentId: "CategoriesSlider", slider: vednorsSlider)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.vendorsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        loadLabelView(forComponentId: "VendorsHeader", label: partnerLabel)
+        loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
+        loadButton(forComponentId: "SaveButton", button: saveAndExit)
+        loadButton(forComponentId: "BackButton", button: backButton)
+        loadSliderButton(forComponentId: "CategoriesSlider", slider: vednorsSlider)
+        vendorsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorsTableView.delegate = self
         vendorsTableView.dataSource = self
-        setupHomeView()
     }
 
     @IBAction func onBackTap(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 
     @IBAction func onVendorSliderTap(_ sender: Any) {
@@ -156,7 +67,7 @@ class SPPartnersViewController: UIViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 }
 
@@ -169,19 +80,16 @@ extension SPPartnersViewController: UITableViewDataSource {
             return vendorList.count
         case 1:
             return ligitimateInterestVendorList.count
-
         default:
-            break
+            return 0
         }
-        return 0
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         let cell: UITableViewCell = (self.vendorsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         switch vednorsSlider.selectedSegmentIndex {
         case 0:
@@ -197,9 +105,9 @@ extension SPPartnersViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         switch vednorsSlider.selectedSegmentIndex {
         case 0:
-            self.loadLabelText(forComponentId: "VendorsHeader", labelText: vendorList[indexPath.row], label: self.selectedvendorTextLabel)
+            loadLabelText(forComponentId: "VendorsHeader", labelText: vendorList[indexPath.row], label: selectedvendorTextLabel)
         case 1:
-            self.loadLabelText(forComponentId: "VendorsHeader", labelText: ligitimateInterestVendorList[indexPath.row], label: self.selectedvendorTextLabel)
+            loadLabelText(forComponentId: "VendorsHeader", labelText: ligitimateInterestVendorList[indexPath.row], label: selectedvendorTextLabel)
         default:
             break
         }
@@ -209,10 +117,8 @@ extension SPPartnersViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension SPPartnersViewController: UITableViewDelegate {
-
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let partnersController = SPVendorDetailsViewController(vendorDetailsView: vendorContent, selectedVendor: self.selectedvendorTextLabel.text ?? "")
-        partnersController.modalPresentationStyle = .currentContext
-        present(partnersController, animated: true, completion: nil)
+//        let partnersController = SPVendorDetailsViewController(vendorDetailsView: vendorContent, selectedVendor: self.selectedvendorTextLabel.text ?? "")
+//        present(partnersController, animated: true, completion: nil)
     }
 }

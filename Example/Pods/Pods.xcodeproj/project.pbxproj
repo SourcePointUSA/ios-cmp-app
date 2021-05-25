@@ -1216,6 +1216,8 @@
 			isa = PBXGroup;
 			children = (
 				824443A0265D29B400A27B8B /* SPNativeScreenViewController.swift */,
+				7F9172A9CC1883B42C9FB60324754D03 /* SPNativePrivacyManagerViewController.swift */,
+				DB0A65E33ABF7C926BA0B8FCED2E9FD2 /* SPNativePrivacyManagerViewController.xib */,
 				0CC14B0852D66678BDBB4369E43F26DB /* Barcode.png */,
 				863CB5537FB60BC052774AD5B5840AB5 /* PMJSONData.swift */,
 				279AA8508AC590C48A8DB92AA8188056 /* SDKUtils.swift */,
@@ -1224,8 +1226,6 @@
 				5FEF0EC0ECC21535AC8649F8CA4A1970 /* SPCategoryDetailsViewController.xib */,
 				F7D1FF4758D57E12C3492ACA522FF225 /* SPManagePreferenceViewController.swift */,
 				2325CB6A804BC078E67682C16061EAA7 /* SPManagePreferenceViewController.xib */,
-				7F9172A9CC1883B42C9FB60324754D03 /* SPNativePrivacyManagerViewController.swift */,
-				DB0A65E33ABF7C926BA0B8FCED2E9FD2 /* SPNativePrivacyManagerViewController.xib */,
 				3639D91C9CBEA4FD9C3ECD240117FD57 /* SPPartnersViewController.swift */,
 				0136A2C11E8E37E985E506B782EA8FDA /* SPPartnersViewController.xib */,
 				D418E26D07DD9C4E44D16124CFA2107E /* SPPrivacyPolicyViewController.swift */,

@@ -78,4 +78,26 @@ import UIKit
             }
         }
     }
+
+    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) {
+        if let sliderDetails =  components.first(where: { $0.id == id }) {
+            slider.setTitle(sliderDetails.sliderDetails?.consentText, forSegmentAt: 0)
+            slider.setTitle(sliderDetails.sliderDetails?.legitInterestText, forSegmentAt: 1)
+            slider.backgroundColor = UIColor(hexString: sliderDetails.style?.backgroundColor)
+            if let fontFamily = sliderDetails.style?.font?.fontFamily,
+               let fontsize = sliderDetails.style?.font?.fontSize {
+                let font = UIFont(name: fontFamily, size: fontsize)
+                slider.setTitleTextAttributes(
+                    [
+                        NSAttributedString.Key.font: font ?? "",
+                        NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.font?.color) as Any
+                    ], for: .normal)
+                slider.setTitleTextAttributes(
+                    [
+                        NSAttributedString.Key.font: font ?? "",
+                        NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.activeFont?.color) as Any
+                    ], for: .selected)
+            }
+        }
+    }
 }

@@ -26,6 +26,17 @@
             <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cb7-OE-PvC">
+                    <rect key="frame" x="80" y="70" width="179" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="MJr-OX-10R"/>
+                    </constraints>
+                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                    <state key="normal" title="BACK"/>
+                    <connections>
+                        <action selector="onBackTap:" destination="-1" eventType="primaryActionTriggered" id="msw-EV-6Qp"/>
+                    </connections>
+                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our Partners" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlx-5G-abM">
                     <rect key="frame" x="816.5" y="70" width="287" height="80"/>
                     <constraints>
@@ -49,17 +60,6 @@
                         <action selector="onVendorSliderTap:" destination="-1" eventType="valueChanged" id="FzH-9h-r53"/>
                     </connections>
                 </segmentedControl>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cb7-OE-PvC">
-                    <rect key="frame" x="80" y="70" width="179" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="MJr-OX-10R"/>
-                    </constraints>
-                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                    <state key="normal" title="BACK"/>
-                    <connections>
-                        <action selector="onBackTap:" destination="-1" eventType="primaryActionTriggered" id="msw-EV-6Qp"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="9BH-5a-sr8" userLabel="SelectedVendorLabel">
                     <rect key="frame" x="180" y="589" width="550" height="46"/>
                     <constraints>
