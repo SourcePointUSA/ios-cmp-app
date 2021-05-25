@@ -34,7 +34,7 @@ import Foundation
     ]
     let cellReuseIdentifier = "cell"
 
-    override var preferredFocusedView: UIView? { get { acceptButton } }
+    override var preferredFocusedView: UIView? { acceptButton }
 
     let privacyManagerViews: SPPrivacyManagerResponse
 

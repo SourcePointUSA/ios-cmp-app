@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 @objcMembers class SPNativeScreenViewController: SPMessageViewController {
-    var components: [PMUIComponents] { get { viewData.components } }
+    var components: [PMUIComponents] { viewData.components }
     let viewData: SPPrivacyManager
 
     init(messageId: Int?, campaignType: SPCampaignType, contents: SPPrivacyManager, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
