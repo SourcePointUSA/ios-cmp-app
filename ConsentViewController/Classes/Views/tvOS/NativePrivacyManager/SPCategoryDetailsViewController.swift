@@ -49,7 +49,7 @@ class SPCategoryDetailsViewController: UIViewController {
     func loadLabelText(forComponentId id: String, label: UILabel) {
         if let textDetails = categoryDetailsView.components.first(where: {component in component.id == id }) {
             label.text = self.selectedCategory
-            label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
+            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
             if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -59,7 +59,7 @@ class SPCategoryDetailsViewController: UIViewController {
     func loadBody(forComponentId id: String, textView: UITextView) {
         if let categoriesDescription = categoryDetailsView.components.first(where: {component in component.id == id }) {
             textView.text = categoriesDescription.text
-            textView.textColor = SDKUtils.hexStringToUIColor(hex: categoriesDescription.style?.font?.color ?? "")
+            textView.textColor = UIColor(hexString: categoriesDescription.style?.font?.color)
             if let fontFamily = categoriesDescription.style?.font?.fontFamily, let fontsize = categoriesDescription.style?.font?.fontSize {
                 textView.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -69,9 +69,9 @@ class SPCategoryDetailsViewController: UIViewController {
     func loadActionButton(forComponentId id: String, button: UIButton) {
         if let action =  categoryDetailsView.components.first(where: { component in component.id == id }) {
             button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusTextColor ?? ""), for: .normal)
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onFocusTextColor ?? ""), for: .focused)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusBackgroundColor ?? "")
+            button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: action.style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
             if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -81,8 +81,8 @@ class SPCategoryDetailsViewController: UIViewController {
     func loadBackButton(forComponentId id: String, button: UIButton) {
         if let action =  categoryDetailsView.components.first(where: { component in component.id == id }) {
             button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.font?.color ?? ""), for: .normal)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.backgroundColor ?? "")
+            button.setTitleColor(UIColor(hexString: action.style?.font?.color), for: .normal)
+            button.backgroundColor = UIColor(hexString: action.style?.backgroundColor)
             if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -90,7 +90,7 @@ class SPCategoryDetailsViewController: UIViewController {
     }
 
     func addBackgroundColor() -> UIColor? {
-        return SDKUtils.hexStringToUIColor(hex: categoryDetailsView.style.backgroundColor ?? "")
+        return UIColor(hexString: categoryDetailsView.style.backgroundColor)
     }
 
     func setupHomeView() {

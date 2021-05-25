@@ -58,7 +58,7 @@ import UIKit
     func loadLabelText(forComponentId id: String, label: UILabel) {
         if let textDetails = homeView.components.first(where: { $0.id == id }) {
             label.text = textDetails.text
-            label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
+            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
             if let fontFamily = textDetails.style?.font?.fontFamily,
                let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
@@ -69,7 +69,7 @@ import UIKit
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) {
         if let textDetails = homeView.components.first(where: { $0.id == id }) {
             label.text = text
-            label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
+            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
             if let fontFamily = textDetails.style?.font?.fontFamily,
                let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
@@ -80,7 +80,7 @@ import UIKit
     func loadBody(forComponentId id: String, textView: UITextView) {
         if let categoriesDescription = homeView.components.first(where: { $0.id == id }) {
             textView.text = categoriesDescription.text
-            textView.textColor = SDKUtils.hexStringToUIColor(hex: categoriesDescription.style?.font?.color ?? "")
+            textView.textColor = UIColor(hexString: categoriesDescription.style?.font?.color)
             if let fontFamily = categoriesDescription.style?.font?.fontFamily,
                let fontsize = categoriesDescription.style?.font?.fontSize {
                 textView.font = UIFont(name: fontFamily, size: fontsize)
@@ -92,27 +92,19 @@ import UIKit
         if let action =  homeView.components.first(where: { $0.id == id }) {
             button.isHidden = false
             button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusTextColor ?? ""), for: .normal)
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onFocusTextColor ?? ""), for: .focused)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusBackgroundColor ?? "")
-            if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
+            button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: action.style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
+            if let fontFamily = action.style?.font?.fontFamily,
+               let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
     }
 
-    func showPrivacyPolicy() -> Bool {
-        homeView.showPrivacyPolicyBtn ?? false
-    }
-
-    func addBackgroundColor() -> UIColor? {
-        SDKUtils.hexStringToUIColor(hex: homeView.style.backgroundColor ?? "")
-    }
-
     func setupHomeView() {
-        view.backgroundColor = addBackgroundColor()
-        view.tintColor = addBackgroundColor()
-        privacyPolicyButton.isHidden = showPrivacyPolicy()
+        view.backgroundColor = UIColor(hexString: homeView.style.backgroundColor)
+        view.tintColor = UIColor(hexString: homeView.style.backgroundColor)
         descriptionTextView.textContainer.lineFragmentPadding = 0
         descriptionTextView.textContainerInset = .zero
         loadLabelText(forComponentId: "HeaderText", label: titleLabel)

@@ -61,7 +61,7 @@ class SPManagePreferenceViewController: UIViewController {
     func loadLabelText(forComponentId id: String, label: UILabel) {
         if let textDetails = categoriesView.components.first(where: {component in component.id == id }) {
             label.text = textDetails.text
-            label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
+            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
             if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -71,7 +71,7 @@ class SPManagePreferenceViewController: UIViewController {
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) {
         if let textDetails = categoriesView.components.first(where: {component in component.id == id }) {
             label.text = text
-            label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
+            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
             if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -81,7 +81,7 @@ class SPManagePreferenceViewController: UIViewController {
     func loadBody(forComponentId id: String, textView: UITextView) {
         if let categoriesDescription = categoriesView.components.first(where: {component in component.id == id }) {
             textView.text = categoriesDescription.text
-            textView.textColor = SDKUtils.hexStringToUIColor(hex: categoriesDescription.style?.font?.color ?? "")
+            textView.textColor = UIColor(hexString: categoriesDescription.style?.font?.color)
             if let fontFamily = categoriesDescription.style?.font?.fontFamily, let fontsize = categoriesDescription.style?.font?.fontSize {
                 textView.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -91,9 +91,9 @@ class SPManagePreferenceViewController: UIViewController {
     func loadActionButton(forComponentId id: String, button: UIButton) {
         if let action =  categoriesView.components.first(where: { component in component.id == id }) {
             button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusTextColor ?? ""), for: .normal)
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onFocusTextColor ?? ""), for: .focused)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusBackgroundColor ?? "")
+            button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: action.style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
             if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -104,19 +104,19 @@ class SPManagePreferenceViewController: UIViewController {
         if let sliderDetails =  categoriesView.components.first(where: { component in component.id == id }) {
             slider.setTitle(sliderDetails.sliderDetails?.consentText, forSegmentAt: 0)
             slider.setTitle(sliderDetails.sliderDetails?.legitInterestText, forSegmentAt: 1)
-            slider.backgroundColor = SDKUtils.hexStringToUIColor(hex: sliderDetails.style?.backgroundColor ?? "")
+            slider.backgroundColor = UIColor(hexString: sliderDetails.style?.backgroundColor)
             if let fontFamily = sliderDetails.style?.font?.fontFamily, let fontsize = sliderDetails.style?.font?.fontSize {
                 let font = UIFont(name: fontFamily, size: fontsize)
                 slider.setTitleTextAttributes(
                     [
                         NSAttributedString.Key.font: font ?? "",
                         NSAttributedString.Key.foregroundColor:
-                            SDKUtils.hexStringToUIColor(hex: sliderDetails.style?.font?.color ?? "") as Any
+                            UIColor(hexString: sliderDetails.style?.font?.color) as Any
                     ], for: .normal)
                 slider.setTitleTextAttributes(
                     [
                         NSAttributedString.Key.font: font ?? "",
-                        NSAttributedString.Key.foregroundColor: SDKUtils.hexStringToUIColor(hex: sliderDetails.style?.activeFont?.color ?? "") as Any
+                        NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.activeFont?.color) as Any
                     ], for: .selected)
             }
         }
@@ -125,8 +125,8 @@ class SPManagePreferenceViewController: UIViewController {
     func loadBackButton(forComponentId id: String, button: UIButton) {
         if let action =  categoriesView.components.first(where: { component in component.id == id }) {
             button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.font?.color ?? ""), for: .normal)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.backgroundColor ?? "")
+            button.setTitleColor(UIColor(hexString: action.style?.font?.color), for: .normal)
+            button.backgroundColor = UIColor(hexString: action.style?.backgroundColor)
             if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
@@ -134,7 +134,7 @@ class SPManagePreferenceViewController: UIViewController {
     }
 
     func addBackgroundColor() -> UIColor? {
-        return SDKUtils.hexStringToUIColor(hex: categoriesView.style.backgroundColor ?? "")
+        return UIColor(hexString: categoriesView.style.backgroundColor)
     }
 
     func setupHomeView() {

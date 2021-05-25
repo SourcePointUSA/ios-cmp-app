@@ -29,8 +29,9 @@ class SPPrivacyPolicyViewController: UIViewController {
     func loadLabelText(forComponentId id: String, label: UILabel) {
         if let textDetails = privacyPolicyView.components.first(where: {component in component.id == id }) {
             label.text = textDetails.text
-            label.textColor = SDKUtils.hexStringToUIColor(hex: textDetails.style?.font?.color ?? "")
-            if let fontFamily = textDetails.style?.font?.fontFamily, let fontsize = textDetails.style?.font?.fontSize {
+            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
+            if let fontFamily = textDetails.style?.font?.fontFamily,
+               let fontsize = textDetails.style?.font?.fontSize {
                 label.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
@@ -39,8 +40,9 @@ class SPPrivacyPolicyViewController: UIViewController {
     func loadBody(forComponentId id: String, textView: UITextView) {
         if let categoriesDescription = privacyPolicyView.components.first(where: {component in component.id == id }) {
             textView.text = categoriesDescription.text
-            textView.textColor = SDKUtils.hexStringToUIColor(hex: categoriesDescription.style?.font?.color ?? "")
-            if let fontFamily = categoriesDescription.style?.font?.fontFamily, let fontsize = categoriesDescription.style?.font?.fontSize {
+            textView.textColor = UIColor(hexString: categoriesDescription.style?.font?.color)
+            if let fontFamily = categoriesDescription.style?.font?.fontFamily,
+               let fontsize = categoriesDescription.style?.font?.fontSize {
                 textView.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
@@ -49,10 +51,11 @@ class SPPrivacyPolicyViewController: UIViewController {
     func loadActionButton(forComponentId id: String, button: UIButton) {
         if let action =  privacyPolicyView.components.first(where: { component in component.id == id }) {
             button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusTextColor ?? ""), for: .normal)
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.onFocusTextColor ?? ""), for: .focused)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.onUnfocusBackgroundColor ?? "")
-            if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
+            button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: action.style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
+            if let fontFamily = action.style?.font?.fontFamily,
+               let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
@@ -61,21 +64,18 @@ class SPPrivacyPolicyViewController: UIViewController {
     func loadBackButton(forComponentId id: String, button: UIButton) {
         if let action =  privacyPolicyView.components.first(where: { component in component.id == id }) {
             button.titleLabel?.text = action.text
-            button.setTitleColor(SDKUtils.hexStringToUIColor(hex: action.style?.font?.color ?? ""), for: .normal)
-            button.backgroundColor = SDKUtils.hexStringToUIColor(hex: action.style?.backgroundColor ?? "")
-            if let fontFamily = action.style?.font?.fontFamily, let fontsize = action.style?.font?.fontSize {
+            button.setTitleColor(UIColor(hexString: action.style?.font?.color), for: .normal)
+            button.backgroundColor = UIColor(hexString: action.style?.backgroundColor)
+            if let fontFamily = action.style?.font?.fontFamily,
+               let fontsize = action.style?.font?.fontSize {
                 button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
             }
         }
     }
 
-    func addBackgroundColor() -> UIColor? {
-        return SDKUtils.hexStringToUIColor(hex: privacyPolicyView.style.backgroundColor ?? "")
-    }
-
     func setupHomeView() {
-        self.view.backgroundColor = addBackgroundColor()
-        self.view.tintColor = addBackgroundColor()
+        self.view.backgroundColor = UIColor(hexString: privacyPolicyView.style.backgroundColor)
+        self.view.tintColor = UIColor(hexString: privacyPolicyView.style.backgroundColor)
         loadLabelText(forComponentId: "HeaderText", label: titleLabel)
         loadBody(forComponentId: "Body", textView: descriptionTextView)
         loadActionButton(forComponentId: "CloseButton", button: closeButton)
