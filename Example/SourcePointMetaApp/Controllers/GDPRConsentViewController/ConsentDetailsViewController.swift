@@ -11,7 +11,7 @@ import ConsentViewController
 import CoreData
 import WebKit
 
-class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate //SPDelegate
+class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
 {
 
     @IBOutlet weak var euConsentLabel: UILabel!

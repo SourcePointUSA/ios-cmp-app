@@ -107,7 +107,7 @@ extension PropertyListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .destructive, title: nil) { (_, _, _) in
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
-                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
+//                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
 
                 self.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }
@@ -169,7 +169,7 @@ extension PropertyListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction(style: .destructive, title: "Edit") { (_, _) in
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
-                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
+//                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
 
                 self.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }

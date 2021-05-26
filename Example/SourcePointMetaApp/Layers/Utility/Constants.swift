@@ -33,6 +33,10 @@ struct SPLiteral {
     static let publicEnv = "Public"
     static let webMessage = "Web Message"
     static let nativeMessage = "Native Message"
+    static let alertView = "alertView"
+    static let gdprCampaign = "GDPR Campaign"
+    static let ccpaCampaign = "CCPA Campaign"
+    static let iOS14Campaign = "iOS14 Campaign"
 
     static func attributedString() -> NSMutableAttributedString {
         let attributedText = NSMutableAttributedString(string: "This will clear data for ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
@@ -63,6 +67,7 @@ struct Alert {
     static let messageAlreadyShownOrIncorrectCampaign  = NSLocalizedString("Message will not be shown.\nEither the scenario decided that no message should be displayed or \n the property you're creating has a public|staging campaign and you set it as staging|public", comment: "")
     static let messageForEmptyTargetingParamError = NSLocalizedString("Please enter targeting parameter key and value", comment: "")
     static let messageForDeletingPropertyData = NSLocalizedString("Are you sure you want to delete this property?", comment: "")
+    static let messageForSaveCampaign = NSLocalizedString("This will save the campaign data \nDo you want to proceed?", comment: "")
 
     // Alert actions
     static let alert = NSLocalizedString("Alert", comment: "")
