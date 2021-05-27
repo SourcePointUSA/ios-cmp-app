@@ -26,6 +26,7 @@ import Foundation
     public var userData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    static let DefaultTimeout = TimeInterval(30)
 
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
@@ -35,13 +36,20 @@ import Foundation
         SPUserDefaults(storage: UserDefaults.standard).clear()
     }
 
+    /// The timeout interval in seconds for the message being displayed
+    public var messageTimeoutInSeconds = SPConsentManager.DefaultTimeout {
+        didSet {
+            spClient.setRequestTimeout(self.messageTimeoutInSeconds)
+        }
+    }
+
     public convenience init(accountId: Int, propertyName: SPPropertyName, campaigns: SPCampaigns, delegate: SPDelegate?) {
         self.init(
             accountId: accountId,
             propertyName: propertyName,
             campaigns: campaigns,
             delegate: delegate,
-            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, timeout: 30),
+            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, timeout: SPConsentManager.DefaultTimeout),
             storage: SPUserDefaults(storage: UserDefaults.standard)
         )
     }
@@ -101,6 +109,7 @@ import Foundation
             messageId: messageId,
             contents: content,
             campaignType: type,
+            timeout: messageTimeoutInSeconds,
             delegate: self
         )
         #endif
@@ -278,6 +287,7 @@ import Foundation
             messageId: messageId,
             contents: SPJson(),
             campaignType: campaignType,
+            timeout: messageTimeoutInSeconds,
             delegate: self
         ).loadPrivacyManager(url: pmURL)
     }
