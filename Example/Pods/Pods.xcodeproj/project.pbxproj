@@ -191,6 +191,7 @@
 		80DB3E3D4F5FD36BE176F93741182D00 /* Wormholy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068B32EB6A8E3ADFE87460998E4F7C9C /* Wormholy.swift */; };
 		80FCFD8A59BA7DEE0C76B07A38E5A481 /* CustomActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E4F51C70D2EB10EA7577DD7A6F79D0 /* CustomActivity.swift */; };
 		8193F5963F0BF07DBF0C948BF3FA4B35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6308A7EB527C21AC5ECCE44CEB872D78 /* Foundation.framework */; };
+		822B52F5266113FC002A164C /* PrivacyManagerViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B52F4266113FC002A164C /* PrivacyManagerViewData.swift */; };
 		824443A1265D29B400A27B8B /* SPNativeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824443A0265D29B400A27B8B /* SPNativeScreenViewController.swift */; };
 		832CF11AA8EEA25F3239D8F63DE302FF /* SPDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E879606C700660AD76E8A5C6FC64917 /* SPDelegate.swift */; };
 		857EC866BACF3D228603BE7E715EF0D3 /* SPPrivacyPolicyViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = AA0114AEDF362371E603BC7E10562C47 /* SPPrivacyPolicyViewController.xib */; };
@@ -788,6 +789,7 @@
 		8020DBBD2D0E254291E3487E91E48339 /* ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist"; sourceTree = "<group>"; };
 		8105E2B5D95B4E9C36AC9A0DEE73F5BB /* InputStream+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "InputStream+Utils.swift"; path = "Sources/Utils/InputStream+Utils.swift"; sourceTree = "<group>"; };
 		8160767891890004CBC0E2C3490716F7 /* Pods-ConsentViewController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ConsentViewController_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		822B52F4266113FC002A164C /* PrivacyManagerViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManagerViewData.swift; sourceTree = "<group>"; };
 		8240F9F82124FDB4269CDA6479664156 /* AdapterProtocols.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AdapterProtocols.swift; path = Sources/Nimble/Adapters/AdapterProtocols.swift; sourceTree = "<group>"; };
 		824443A0265D29B400A27B8B /* SPNativeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPNativeScreenViewController.swift; sourceTree = "<group>"; };
 		82B7BC285B50581A20ED8B25E824919A /* IQKeyboardManagerSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManagerSwift.debug.xcconfig; sourceTree = "<group>"; };
@@ -1232,6 +1234,7 @@
 				AA0114AEDF362371E603BC7E10562C47 /* SPPrivacyPolicyViewController.xib */,
 				B927147A017BD2F987E5D094A0C79319 /* SPVendorDetailsViewController.swift */,
 				23C181780345689B1D3CEB45920E7289 /* SPVendorDetailsViewController.xib */,
+				822B52F4266113FC002A164C /* PrivacyManagerViewData.swift */,
 			);
 			path = NativePrivacyManager;
 			sourceTree = "<group>";
@@ -2992,6 +2995,7 @@
 				FAE0FFD262B2E2B7066007F8703942E0 /* SPGDPRConsent.swift in Sources */,
 				07ABF9F95CA743751EA327B6BABD0635 /* SPIDFAStatus.swift in Sources */,
 				F9D5E3DA333021784405A9E2D62CDF4E /* SPJson.swift in Sources */,
+				822B52F5266113FC002A164C /* PrivacyManagerViewData.swift in Sources */,
 				C88F87F37BACB7B3A42F1AC002AA21D1 /* SPLocalStorage.swift in Sources */,
 				F4EE6795E030D8A21544ADD49D803A15 /* SPManagePreferenceViewController.swift in Sources */,
 				C47191ACC1115D498211027AFF78CBC8 /* SPManagePreferenceViewController.xib in Sources */,

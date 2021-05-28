@@ -36,23 +36,6 @@ import Foundation
 
     override var preferredFocusedView: UIView? { acceptButton }
 
-    let privacyManagerViews: SPPrivacyManagerResponse
-
-    init(messageId: Int?, contents: SPPrivacyManagerResponse, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
-        privacyManagerViews = contents
-        super.init(
-            messageId: messageId,
-            campaignType: campaignType,
-            contents: contents.homeView,
-            delegate: delegate,
-            nibName: "SPNativePrivacyManagerViewController"
-        )
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         descriptionTextView.textContainer.lineFragmentPadding = 0
@@ -85,7 +68,8 @@ import Foundation
         present(SPManagePreferenceViewController(
             messageId: messageId,
             campaignType: campaignType,
-            contents: privacyManagerViews.categoriesView,
+            viewData: pmData.categoriesView,
+            pmData: pmData,
             delegate: self,
             nibName: "SPManagePreferenceViewController"
         ), animated: true)
@@ -95,21 +79,23 @@ import Foundation
         present(SPPartnersViewController(
             messageId: messageId,
             campaignType: campaignType,
-            contents: privacyManagerViews.vendorsView,
+            viewData: pmData.vendorsView,
+            pmData: pmData,
             delegate: self,
             nibName: "SPPartnersViewController"
         ), animated: true)
     }
 
     @IBAction func onPrivacyPolicyTap(_ sender: Any) {
-        guard let policyViewData = privacyManagerViews.privacyPolicyView else {
-            // TODO: call onError if privacyManagerViews.privacyPolicyView is empty
+        guard let privacyPolicyView = pmData.privacyPolicyView else {
+            onError(UnableToFindView(withId: "PrivacyPolicyView"))
             return
         }
         present(SPPrivacyPolicyViewController(
             messageId: messageId,
             campaignType: campaignType,
-            contents: policyViewData,
+            viewData: privacyPolicyView,
+            pmData: pmData,
             delegate: self,
             nibName: "SPPrivacyPolicyViewController"
         ), animated: true)

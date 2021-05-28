@@ -12,11 +12,12 @@
             <connections>
                 <outlet property="acceptButton" destination="TFL-UT-kAA" id="u46-ID-c6A"/>
                 <outlet property="backButton" destination="cb7-OE-PvC" id="Upp-EQ-ajf"/>
+                <outlet property="logoImageView" destination="81G-bU-WeC" id="JNT-q0-qY4"/>
                 <outlet property="partnerLabel" destination="YV1-O6-fN3" id="Ssn-TF-jGT"/>
                 <outlet property="saveAndExit" destination="v2F-0r-KWK" id="qyS-Fn-vDB"/>
                 <outlet property="selectedvendorTextLabel" destination="9BH-5a-sr8" id="h2X-2t-eOB"/>
                 <outlet property="titleLabel" destination="hlx-5G-abM" id="7vm-tc-qCT"/>
-                <outlet property="vednorsSlider" destination="199-HU-OtX" id="Qec-qC-ncz"/>
+                <outlet property="vendorsSlider" destination="199-HU-OtX" id="Qec-qC-ncz"/>
                 <outlet property="vendorsTableView" destination="W7V-S9-3N2" id="GZ6-8e-eNg"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>

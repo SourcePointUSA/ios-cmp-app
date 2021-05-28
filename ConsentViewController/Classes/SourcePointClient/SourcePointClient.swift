@@ -31,7 +31,7 @@ extension JSONDecoder {
 }
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
-typealias NativePMHandler = (Result<SPPrivacyManagerResponse, SPError>) -> Void
+typealias NativePMHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<ConsentResponse<T>, SPError>) -> Void
@@ -159,10 +159,10 @@ class SourcePointClient: SourcePointProtocol {
     #if os(tvOS)
     func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
         handler(Result {
-            try JSONDecoder().decode(
+            return try! PrivacyManagerViewData(from: try! JSONDecoder().decode(
                 SPPrivacyManagerResponse.self,
                 from: MockNativePMResponse.data(using: .utf8)!
-            )
+            ))
         }.mapError {
             InvalidResponseWebMessageError(error: $0)
         })

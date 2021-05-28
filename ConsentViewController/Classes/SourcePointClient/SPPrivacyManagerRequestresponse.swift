@@ -7,27 +7,50 @@
 
 import Foundation
 
-class SPPrivacyManagerResponse: NSObject, Decodable {
-    let homeView: SPPrivacyManager
-    let categoriesView: SPPrivacyManager
-    let categoryDetails: SPPrivacyManager
-    let vendorsView: SPPrivacyManager
-    let vendorDetails: SPPrivacyManager
-    let privacyPolicyView: SPPrivacyManager?
+@objc public enum CategoryType: Int, Equatable {
+    case IAB_PURPOSE, unknown
+}
 
-    init(
-        homeView: SPPrivacyManager,
-        categoriesView: SPPrivacyManager,
-        categoryDetails: SPPrivacyManager,
-        vendorsView: SPPrivacyManager,
-        vendorDetails: SPPrivacyManager,
-        privacyPolicyView: SPPrivacyManager
-    ) {
-        self.homeView = homeView
-        self.categoriesView = categoriesView
-        self.categoryDetails = categoryDetails
-        self.vendorsView = vendorsView
-        self.vendorDetails = vendorDetails
-        self.privacyPolicyView = privacyPolicyView
+extension CategoryType: Codable {
+    public typealias RawValue = String
+
+    public var rawValue: String {
+        switch self {
+        case .IAB_PURPOSE: return "IAB_PURPOSE"
+        default: return "unknown"
+        }
+    }
+
+    public init(rawValue: String) {
+        switch rawValue {
+        case "IAB_PURPOSE": self = .IAB_PURPOSE
+        default: self = .unknown
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
+    }
+}
+
+@objcMembers class VendorListCategory: Decodable {
+    let _id, name, description: String
+    let type: CategoryType?
+}
+
+extension VendorListCategory: Equatable {
+    static func == (lhs: VendorListCategory, rhs: VendorListCategory) -> Bool {
+        lhs._id == rhs._id
+    }
+}
+
+@objcMembers class SPPrivacyManagerResponse: NSObject, Decodable {
+    let categories: [VendorListCategory]
+    let message: SPNativeView
+
+    enum CodingKeys: String, CodingKey {
+        case categories
+        case message = "message_json"
     }
 }

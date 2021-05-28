@@ -15,7 +15,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var vednorsSlider: UISegmentedControl!
+    @IBOutlet weak var vendorsSlider: UISegmentedControl!
     @IBOutlet weak var vendorsTableView: UITableView!
 
     let vendorList = [
@@ -49,7 +49,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadButton(forComponentId: "BackButton", button: backButton)
-        loadSliderButton(forComponentId: "CategoriesSlider", slider: vednorsSlider)
+        loadSliderButton(forComponentId: "CategoriesSlider", slider: vendorsSlider)
         vendorsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorsTableView.delegate = self
         vendorsTableView.dataSource = self
@@ -73,9 +73,8 @@ class SPPartnersViewController: SPNativeScreenViewController {
 
 // MARK: UITableViewDataSource
 extension SPPartnersViewController: UITableViewDataSource {
-
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch vednorsSlider.selectedSegmentIndex {
+        switch vendorsSlider.selectedSegmentIndex {
         case 0:
             return vendorList.count
         case 1:
@@ -91,7 +90,7 @@ extension SPPartnersViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (self.vendorsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        switch vednorsSlider.selectedSegmentIndex {
+        switch vendorsSlider.selectedSegmentIndex {
         case 0:
             cell.textLabel?.text = vendorList[indexPath.row]
         case 1:
@@ -103,7 +102,7 @@ extension SPPartnersViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        switch vednorsSlider.selectedSegmentIndex {
+        switch vendorsSlider.selectedSegmentIndex {
         case 0:
             loadLabelText(forComponentId: "VendorsHeader", labelText: vendorList[indexPath.row], label: selectedvendorTextLabel)
         case 1:

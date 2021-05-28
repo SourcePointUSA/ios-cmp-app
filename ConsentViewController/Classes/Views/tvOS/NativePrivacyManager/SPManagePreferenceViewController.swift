@@ -148,7 +148,8 @@ extension SPManagePreferenceViewController: UITableViewDelegate {
         present(SPCategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
-            contents: viewData,
+            viewData: pmData.categoryDetailsView,
+            pmData: pmData,
             delegate: nil,
             nibName: "SPCategoryDetailsViewController"
         ), animated: true)

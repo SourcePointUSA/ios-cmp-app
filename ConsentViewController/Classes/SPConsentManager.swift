@@ -88,12 +88,14 @@ import Foundation
             /// Pass the native message object to it
             return nil
         #if os(tvOS)
-        case .nativePM(let content): return SPNativePrivacyManagerViewController(
-            messageId: messageId,
-            contents: content,
-            campaignType: type,
-            delegate: self
-        )
+        case .nativePM(let content):
+            return SPNativePrivacyManagerViewController(
+                messageId: messageId,
+                campaignType: type,
+                viewData: content.homeView,
+                pmData: content,
+                delegate: self
+            )
         #endif
         #if os(iOS)
         case .web(let content): return GenericWebMessageViewController(
@@ -204,13 +206,15 @@ import Foundation
         #elseif os(tvOS)
         spClient.getNativePrivacyManager(withId: id) { result in
             switch result {
-            case .success(let pmContent):
-                self.loaded(SPNativePrivacyManagerViewController(
-                    messageId: nil, // TODO: make sure PM comes with message id
-                    contents: pmContent,
+            case .success(let content):
+                let pmViewController = SPNativePrivacyManagerViewController(
+                    messageId: Int(id),
                     campaignType: .gdpr,
+                    viewData: content.homeView,
+                    pmData: content,
                     delegate: self
-                ))
+                )
+                self.loaded(pmViewController)
             case .failure(let error):
                 self.onError(error)
             }
