@@ -8,15 +8,14 @@
 import UIKit
 
 class SPManagePreferenceViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var categorySlider: UISegmentedControl!
     @IBOutlet weak var categoriesTableView: UITableView!
+    @IBOutlet weak var header: SPPMHeader!
 
     let categoryList = [
         "Store and/or access information on a device",
@@ -47,23 +46,27 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     ]
     let cellReuseIdentifier = "cell"
 
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: categorySlider, direction: .bottom)
+        addFocusGuide(from: categorySlider, to: header.backButton, direction: .top)
+    }
+
+    func setHeader() {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { self.dismiss(animated: true) }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView.textContainer.lineFragmentPadding = 0
-        descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadButton(forComponentId: "BackButton", button: backButton)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         categoriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
-    }
-
-    @IBAction func onBackTap(_ sender: Any) {
-        dismiss(animated: true)
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {

@@ -32,8 +32,8 @@
                         <action selector="onBackButtonPressed:" destination="-1" eventType="primaryActionTriggered" id="aw1-GY-liT"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmT-ud-kbL">
-                    <rect key="frame" x="804" y="511" width="312" height="58"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmT-ud-kbL">
+                    <rect key="frame" x="809.5" y="511" width="301" height="58"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="50"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>

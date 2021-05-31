@@ -20,10 +20,69 @@ extension UIFont {
     }
 }
 
+extension UIViewController {
+    @discardableResult
+    func addFocusGuide(from origin: UIView?, to destination: UIView?, direction: UIRectEdge, debug: Bool = false) -> UIFocusGuide? {
+        addFocusGuide(from: origin, to: [destination], direction: direction, debug: debug)
+    }
+
+    @discardableResult
+    func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: UIRectEdge, debug: Bool = false) -> UIFocusGuide? {
+        if let origin = origin {
+            let destinations = maybeDestinations.filter { $0 != nil }.map { $0! }
+            let focusGuide = UIFocusGuide()
+            view.addLayoutGuide(focusGuide)
+            focusGuide.preferredFocusEnvironments = destinations
+            focusGuide.widthAnchor.constraint(equalTo: origin.widthAnchor).isActive = true
+            focusGuide.heightAnchor.constraint(equalTo: origin.heightAnchor).isActive = true
+
+            switch direction {
+            case .bottom:
+                focusGuide.topAnchor.constraint(equalTo: origin.bottomAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+            case .top:
+                focusGuide.bottomAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+            case .left:
+                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.rightAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+            case .right:
+                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.rightAnchor).isActive = true
+            default:
+                // Not supported :(
+                break
+            }
+
+            if debug {
+                view.addSubview(FocusGuideDebugView(focusGuide: focusGuide))
+            }
+
+            return focusGuide
+        }
+        return nil
+    }
+}
+
+class FocusGuideDebugView: UIView {
+    init(focusGuide: UIFocusGuide) {
+        super.init(frame: focusGuide.layoutFrame)
+        backgroundColor = UIColor.green.withAlphaComponent(0.15)
+        layer.borderColor = UIColor.green.withAlphaComponent(0.3).cgColor
+        layer.borderWidth = 1
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        return nil
+    }
+}
+
 @objcMembers class SPNativeScreenViewController: SPMessageViewController {
     var components: [SPNativeUI] { viewData.components }
     let viewData: SPNativeView
     let pmData: PrivacyManagerViewData
+
+    func setFocusGuides() { }
 
     init(messageId: Int?, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.viewData = viewData
@@ -42,8 +101,9 @@ extension UIFont {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(hexString: viewData.style?.backgroundColor)
-        self.view.tintColor = UIColor(hexString: viewData.style?.backgroundColor)
+        view.backgroundColor = UIColor(hexString: viewData.style?.backgroundColor)
+        view.tintColor = UIColor(hexString: viewData.style?.backgroundColor)
+        setFocusGuides()
     }
 
     func loadButton(forComponentId id: String, button: UIButton) {
