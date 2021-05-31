@@ -88,6 +88,7 @@ struct MessageMetaData: Decodable, Equatable {
     let categoryId: MessageCategory
     let subCategoryId: MessageSubCategory
     let messageId: Int
+    let prtnUUID: String
 }
 
 struct Campaign: Equatable {

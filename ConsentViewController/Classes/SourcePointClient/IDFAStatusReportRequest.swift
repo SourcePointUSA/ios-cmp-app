@@ -8,8 +8,9 @@
 import Foundation
 
 struct AppleTrackingPayload: Codable {
-    let appleMsgId: Int?
     let appleChoice: SPIDFAStatus
+    let appleMsgId: Int?
+    let partition_uuid: String?
 }
 
 struct IDFAStatusReportRequest: Codable {
@@ -18,16 +19,28 @@ struct IDFAStatusReportRequest: Codable {
     let uuid: String?
     let uuidType: SPCampaignType?
     let requestUUID: UUID
+    let iosVersion: String
     let appleTracking: AppleTrackingPayload
 }
 
 extension IDFAStatusReportRequest {
-    init(accountId: Int, propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, requestUUID: UUID, messageId: Int?, idfaStatus: SPIDFAStatus) {
+    init(
+        accountId: Int,
+        propertyId: Int?,
+        uuid: String?,
+        uuidType: SPCampaignType?,
+        requestUUID: UUID,
+        messageId: Int?,
+        idfaStatus: SPIDFAStatus,
+        iosVersion: String,
+        partition_uuid: String
+    ) {
         self.accountId = accountId
         self.propertyId = propertyId
         self.uuid = uuid
         self.uuidType = uuidType
         self.requestUUID = requestUUID
-        appleTracking = AppleTrackingPayload(appleMsgId: messageId, appleChoice: idfaStatus)
+        self.iosVersion = iosVersion
+        appleTracking = AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, partition_uuid: partition_uuid)
     }
 }
