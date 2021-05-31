@@ -8,14 +8,15 @@
 import UIKit
 
 class SPCategoryDetailsViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var subDescriptionTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var onButton: UIButton!
     @IBOutlet weak var offButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-
+    @IBOutlet weak var actionsContainer: UIStackView!
+    @IBOutlet weak var selectedVendorLabel: UILabel!
+    
     @IBOutlet weak var categoryDetailsTableView: UITableView!
 
     let vendorList = [
@@ -32,15 +33,28 @@ class SPCategoryDetailsViewController: SPNativeScreenViewController {
     ]
     let cellReuseIdentifier = "cell"
 
+    func setHeader() {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { self.dismiss(animated: true) }
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottom)
+        addFocusGuide(from: actionsContainer, to: header.backButton, direction: .top)
+
+        addFocusGuide(from: actionsContainer, to: categoryDetailsTableView, direction: .right)
+        addFocusGuide(from: categoryDetailsTableView, to: actionsContainer, direction: .left)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setHeader()
         descriptionTextView.textContainer.lineFragmentPadding = 0
         descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: onButton)
         loadButton(forComponentId: "SaveButton", button: offButton)
-        loadButton(forComponentId: "BackButton", button: backButton)
         categoryDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryDetailsTableView.delegate = self
         categoryDetailsTableView.dataSource = self

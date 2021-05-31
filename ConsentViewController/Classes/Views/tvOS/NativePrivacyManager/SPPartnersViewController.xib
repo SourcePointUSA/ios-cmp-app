@@ -10,13 +10,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPPartnersViewController" customModule="ConsentViewController" customModuleProvider="target">
             <connections>
-                <outlet property="acceptButton" destination="TFL-UT-kAA" id="u46-ID-c6A"/>
-                <outlet property="backButton" destination="cb7-OE-PvC" id="Upp-EQ-ajf"/>
-                <outlet property="logoImageView" destination="81G-bU-WeC" id="JNT-q0-qY4"/>
+                <outlet property="acceptButton" destination="D6p-Na-Ow5" id="wVD-Yb-RKn"/>
+                <outlet property="actionsContainer" destination="fkt-xy-1Gj" id="Ltd-Jb-qc8"/>
+                <outlet property="header" destination="IIU-ZS-feP" id="XaD-1g-uUh"/>
+                <outlet property="logoImageView" destination="Nlg-W0-A4w" id="7Bz-ZU-rWd"/>
                 <outlet property="partnerLabel" destination="YV1-O6-fN3" id="Ssn-TF-jGT"/>
-                <outlet property="saveAndExit" destination="v2F-0r-KWK" id="qyS-Fn-vDB"/>
-                <outlet property="selectedvendorTextLabel" destination="9BH-5a-sr8" id="h2X-2t-eOB"/>
-                <outlet property="titleLabel" destination="hlx-5G-abM" id="7vm-tc-qCT"/>
+                <outlet property="saveAndExit" destination="eIA-bC-Rnh" id="j2I-AU-wZr"/>
+                <outlet property="selectedvendorTextLabel" destination="jSe-4i-jyb" id="PQK-hG-rLC"/>
                 <outlet property="vendorsSlider" destination="199-HU-OtX" id="Qec-qC-ncz"/>
                 <outlet property="vendorsTableView" destination="W7V-S9-3N2" id="GZ6-8e-eNg"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
@@ -27,121 +27,112 @@
             <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cb7-OE-PvC">
-                    <rect key="frame" x="80" y="70" width="179" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="MJr-OX-10R"/>
-                    </constraints>
-                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                    <state key="normal" title="BACK"/>
-                    <connections>
-                        <action selector="onBackTap:" destination="-1" eventType="primaryActionTriggered" id="msw-EV-6Qp"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our Partners" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlx-5G-abM">
-                    <rect key="frame" x="816.5" y="70" width="287" height="80"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="80" id="DLt-Me-Zvj"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="50"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="199-HU-OtX">
-                    <rect key="frame" x="524" y="180" width="872" height="81"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="80" id="Rfx-9a-p6j"/>
-                    </constraints>
-                    <segments>
-                        <segment title="UserConsent"/>
-                        <segment title="LEGITIMATE INTEREST"/>
-                    </segments>
-                    <connections>
-                        <action selector="onVendorSliderTap:" destination="-1" eventType="valueChanged" id="FzH-9h-r53"/>
-                    </connections>
-                </segmentedControl>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="9BH-5a-sr8" userLabel="SelectedVendorLabel">
-                    <rect key="frame" x="180" y="589" width="550" height="46"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="550" id="rL7-yv-cBW"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="mDN-KZ-dAK" userLabel="Stack View - ImageView">
-                    <rect key="frame" x="280" y="295" width="350" height="259"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="MOE-ok-xFA" userLabel="Stack View - Main">
+                    <rect key="frame" x="80" y="60" width="1760" height="960"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SP_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="81G-bU-WeC">
-                            <rect key="frame" x="0.0" y="0.0" width="350" height="259"/>
-                        </imageView>
-                    </subviews>
-                </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="mST-mQ-2vC" userLabel="Stack View - Buttons">
-                    <rect key="frame" x="230" y="660" width="450" height="197"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TFL-UT-kAA">
-                            <rect key="frame" x="0.0" y="0.0" width="450" height="86"/>
-                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" title="Accept All"/>
-                            <connections>
-                                <action selector="onAcceptTap:" destination="-1" eventType="primaryActionTriggered" id="tUw-jq-bJw"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v2F-0r-KWK">
-                            <rect key="frame" x="0.0" y="111" width="450" height="86"/>
-                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" title="Save &amp; Exit"/>
-                            <connections>
-                                <action selector="onSaveAndExitTap:" destination="-1" eventType="primaryActionTriggered" id="Oqv-mg-azx"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="450" id="w55-T8-cNp"/>
-                    </constraints>
-                </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aaV-Mj-JhX" userLabel="Stack View - Description">
-                    <rect key="frame" x="904" y="310" width="900" height="695"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YV1-O6-fN3">
-                            <rect key="frame" x="0.0" y="0.0" width="900" height="50"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IIU-ZS-feP" customClass="SPPMHeader" customModule="ConsentViewController" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="1760" height="100"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="poR-zx-HZL"/>
+                                <constraint firstAttribute="height" constant="100" id="BCY-qt-trm"/>
                             </constraints>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="W7V-S9-3N2">
-                            <rect key="frame" x="0.0" y="70" width="900" height="625"/>
-                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </tableView>
+                        </view>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="199-HU-OtX">
+                            <rect key="frame" x="444" y="116" width="872" height="81"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="Rfx-9a-p6j"/>
+                            </constraints>
+                            <segments>
+                                <segment title="UserConsent"/>
+                                <segment title="LEGITIMATE INTEREST"/>
+                            </segments>
+                            <connections>
+                                <action selector="onVendorSliderTap:" destination="-1" eventType="valueChanged" id="FzH-9h-r53"/>
+                            </connections>
+                        </segmentedControl>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoB-tD-PZ6" userLabel="Stack View - Content">
+                            <rect key="frame" x="0.0" y="212" width="1760" height="748"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gcn-TZ-MaO" userLabel="Stack View - 1st Column">
+                                    <rect key="frame" x="0.0" y="0.0" width="880" height="748"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SP_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Nlg-W0-A4w">
+                                            <rect key="frame" x="260" y="0.0" width="360" height="360"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="360" id="4TX-uZ-PPX"/>
+                                                <constraint firstAttribute="height" constant="360" id="4lj-4z-zYK"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="jSe-4i-jyb" userLabel="SelectedCategoryLabel">
+                                            <rect key="frame" x="165" y="424" width="550" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="24P-N3-fVM"/>
+                                                <constraint firstAttribute="width" constant="550" id="EtQ-zw-LjX"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fkt-xy-1Gj" userLabel="Stack View - Actions">
+                                            <rect key="frame" x="190" y="568" width="500" height="180"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6p-Na-Ow5">
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="86"/>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Accept All"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIA-bC-Rnh">
+                                                    <rect key="frame" x="0.0" y="94" width="500" height="86"/>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Save &amp; Exit"/>
+                                                </button>
+                                            </subviews>
+                                            <viewLayoutGuide key="safeArea" id="k6G-6r-ypI"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="500" id="5lj-HN-GZj"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="T5e-1y-rxW" userLabel="Stack View - 2nd Column">
+                                    <rect key="frame" x="880" y="0.0" width="880" height="748"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YV1-O6-fN3">
+                                            <rect key="frame" x="0.0" y="0.0" width="880" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="poR-zx-HZL"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="W7V-S9-3N2">
+                                            <rect key="frame" x="0.0" y="50" width="880" height="698"/>
+                                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </tableView>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="T5e-1y-rxW" firstAttribute="width" secondItem="Gcn-TZ-MaO" secondAttribute="width" id="YhC-Gh-xLL"/>
+                            </constraints>
+                        </stackView>
                     </subviews>
+                    <viewLayoutGuide key="safeArea" id="ohS-ed-e4m"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="900" id="r6h-uW-Jpp"/>
+                        <constraint firstItem="IIU-ZS-feP" firstAttribute="width" secondItem="MOE-ok-xFA" secondAttribute="width" id="XBs-2G-wXz"/>
+                        <constraint firstItem="RoB-tD-PZ6" firstAttribute="leading" secondItem="MOE-ok-xFA" secondAttribute="leading" id="eIB-a9-Ksa"/>
+                        <constraint firstAttribute="width" constant="1760" id="j43-In-dNu"/>
                     </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="nkI-NY-t1X"/>
             <constraints>
-                <constraint firstItem="mST-mQ-2vC" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" constant="150" id="0J6-Xq-8ej"/>
-                <constraint firstItem="9BH-5a-sr8" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" constant="100" id="7Ai-iN-1wm"/>
-                <constraint firstAttribute="trailingMargin" secondItem="aaV-Mj-JhX" secondAttribute="trailing" constant="20" id="CxS-qu-U0R"/>
-                <constraint firstItem="aaV-Mj-JhX" firstAttribute="top" secondItem="199-HU-OtX" secondAttribute="bottom" constant="50" id="EHr-Wt-j0I"/>
-                <constraint firstItem="hlx-5G-abM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="F8p-01-HlD"/>
-                <constraint firstItem="cb7-OE-PvC" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" id="GKs-HR-dc0"/>
-                <constraint firstItem="hlx-5G-abM" firstAttribute="top" secondItem="cb7-OE-PvC" secondAttribute="top" id="Mqh-t5-f8g"/>
-                <constraint firstItem="mST-mQ-2vC" firstAttribute="centerX" secondItem="mDN-KZ-dAK" secondAttribute="centerX" id="cok-IH-l5a"/>
-                <constraint firstItem="199-HU-OtX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gEA-nq-nOR"/>
-                <constraint firstItem="mDN-KZ-dAK" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" constant="200" id="po3-58-iPe"/>
-                <constraint firstItem="mDN-KZ-dAK" firstAttribute="top" secondItem="cb7-OE-PvC" secondAttribute="bottom" constant="175" id="qWZ-oy-QYX"/>
-                <constraint firstItem="199-HU-OtX" firstAttribute="top" secondItem="hlx-5G-abM" secondAttribute="bottom" constant="30" id="qmV-qi-aLE"/>
-                <constraint firstItem="nkI-NY-t1X" firstAttribute="bottom" secondItem="aaV-Mj-JhX" secondAttribute="bottom" constant="15" id="s2I-hm-2ys"/>
-                <constraint firstItem="mST-mQ-2vC" firstAttribute="top" secondItem="9BH-5a-sr8" secondAttribute="bottom" constant="25" id="sXJ-Vv-kX9"/>
-                <constraint firstItem="hlx-5G-abM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="10" id="t6a-Hl-yhe"/>
-                <constraint firstItem="9BH-5a-sr8" firstAttribute="top" secondItem="mDN-KZ-dAK" secondAttribute="bottom" constant="35" id="tKG-Cd-YgQ"/>
+                <constraint firstItem="MOE-ok-xFA" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" id="IBH-lZ-hPl"/>
+                <constraint firstItem="MOE-ok-xFA" firstAttribute="height" secondItem="nkI-NY-t1X" secondAttribute="height" id="Qn0-yd-EW8"/>
+                <constraint firstItem="MOE-ok-xFA" firstAttribute="width" secondItem="nkI-NY-t1X" secondAttribute="width" id="TDH-jZ-CBK"/>
+                <constraint firstItem="MOE-ok-xFA" firstAttribute="top" secondItem="nkI-NY-t1X" secondAttribute="top" id="Xqa-Kc-BV7"/>
             </constraints>
             <point key="canvasLocation" x="223" y="-1"/>
         </view>

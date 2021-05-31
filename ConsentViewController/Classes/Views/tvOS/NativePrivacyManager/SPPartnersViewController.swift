@@ -8,15 +8,15 @@
 import UIKit
 
 class SPPartnersViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var partnerLabel: UILabel!
     @IBOutlet weak var selectedvendorTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var vendorsSlider: UISegmentedControl!
     @IBOutlet weak var vendorsTableView: UITableView!
+    @IBOutlet weak var header: SPPMHeader!
+    @IBOutlet weak var actionsContainer: UIStackView!
 
     let vendorList = [
         "Arcspire Limited",
@@ -42,13 +42,28 @@ class SPPartnersViewController: SPNativeScreenViewController {
     ]
     let cellReuseIdentifier = "cell"
 
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottom)
+        addFocusGuide(from: actionsContainer, to: header.backButton, direction: .top)
+
+        addFocusGuide(from: vendorsSlider, to: vendorsTableView.cellForRow(at: IndexPath(row: 0, section: 0)), direction: .bottom)
+        addFocusGuide(from: vendorsSlider, to: header.backButton, direction: .left)
+        addFocusGuide(from: vendorsTableView, to: vendorsSlider, direction: .top)
+        addFocusGuide(from: vendorsTableView, to: actionsContainer, direction: .left)
+    }
+
+    func setHeader () {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.onBackButtonTapped = { self.dismiss(animated: true) }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadLabelView(forComponentId: "VendorsHeader", label: partnerLabel)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadButton(forComponentId: "BackButton", button: backButton)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: vendorsSlider)
         vendorsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorsTableView.delegate = self

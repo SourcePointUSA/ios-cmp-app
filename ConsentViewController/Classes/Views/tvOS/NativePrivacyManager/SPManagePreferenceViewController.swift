@@ -16,7 +16,8 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var categorySlider: UISegmentedControl!
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
-
+    @IBOutlet weak var actionsContainer: UIStackView!
+    
     let categoryList = [
         "Store and/or access information on a device",
         "Select personalized content",
@@ -47,8 +48,12 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: categorySlider, direction: .bottom)
-        addFocusGuide(from: categorySlider, to: header.backButton, direction: .top)
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottom)
+        addFocusGuide(from: actionsContainer, to: header.backButton, direction: .top)
+
+        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottom)
+        addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
+        addFocusGuide(from: categoriesTableView, to: categorySlider, direction: .top)
     }
 
     func setHeader() {
@@ -135,9 +140,9 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            self.loadLabelText(forComponentId: "CategoriesHeader", labelText: categoryList[indexPath.row], label: selectedCategoryTextLabel)
+            loadLabelText(forComponentId: "CategoriesHeader", labelText: categoryList[indexPath.row], label: selectedCategoryTextLabel)
         case 1:
-            self.loadLabelText(forComponentId: "CategoriesHeader", labelText: ligitimateInterestList[indexPath.row], label: selectedCategoryTextLabel)
+            loadLabelText(forComponentId: "CategoriesHeader", labelText: ligitimateInterestList[indexPath.row], label: selectedCategoryTextLabel)
         default:
             break
         }

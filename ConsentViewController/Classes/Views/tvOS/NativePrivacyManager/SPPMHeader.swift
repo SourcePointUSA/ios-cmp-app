@@ -11,6 +11,7 @@ import TVUIKit
 extension UILabel {
     func setup(from spText: SPNativeText?) {
         if let spText = spText {
+            isHidden = false
             text = spText.text
             textColor = UIColor(hexString: spText.style?.font?.color)
             font = UIFont(from: spText.style?.font)
