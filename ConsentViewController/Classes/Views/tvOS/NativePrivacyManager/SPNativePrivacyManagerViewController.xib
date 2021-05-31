@@ -16,6 +16,7 @@
                 <outlet property="categoryTableView" destination="HVs-YH-qhj" id="DIP-H7-MJY"/>
                 <outlet property="descriptionTextView" destination="JAT-0K-Z6o" id="Shc-Rj-GKP"/>
                 <outlet property="header" destination="oRM-Q5-ya9" id="Ejd-R8-DIW"/>
+                <outlet property="logoImageView" destination="gkm-7r-4K2" id="9sx-wS-b4u"/>
                 <outlet property="managePreferenceButton" destination="NaN-Kj-XpH" id="3Wd-7j-WXE"/>
                 <outlet property="ourPartners" destination="ZAh-er-2XQ" id="1Vx-fk-Qmq"/>
                 <outlet property="privacyPolicyButton" destination="p3s-4F-WQC" id="VCB-gR-wFn"/>

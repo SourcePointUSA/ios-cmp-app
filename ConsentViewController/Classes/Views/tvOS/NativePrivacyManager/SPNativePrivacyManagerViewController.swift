@@ -21,17 +21,7 @@ import Foundation
 
     @IBOutlet weak var header: SPPMHeader!
 
-    let categoryList = [
-        "Store and/or access information on a device",
-        "Select personalized content",
-        "Personalized ads, ad meansurement and audience insights",
-        "Project developement",
-        "Information storage and access",
-        "Ad selection, delivery, reporting",
-        "Measure ad performance",
-        "Develop and improve products",
-        "Use precise geolocation data"
-    ]
+    var categories: [VendorListCategory] { pmData.categories }
     let cellReuseIdentifier = "cell"
 
     override var preferredFocusedView: UIView? { acceptButton }
@@ -47,8 +37,6 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        descriptionTextView.textContainer.lineFragmentPadding = 0
-        descriptionTextView.textContainerInset = .zero
         loadLabelView(forComponentId: "CategoriesSubDescriptionText", label: subDescriptionTextLabel)
         loadTextView(forComponentId: "CategoriesDescriptionText", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
@@ -106,7 +94,9 @@ import Foundation
 }
 
 extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
-    func loaded(_ controller: SPMessageViewController) {}
+    func loaded(_ controller: SPMessageViewController) {
+        messageUIDelegate?.loaded(self)
+    }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
 
@@ -122,7 +112,7 @@ extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
 // MARK: UITableViewDataSource
 extension SPNativePrivacyManagerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categoryList.count
+        categories.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -130,23 +120,23 @@ extension SPNativePrivacyManagerViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as UITableViewCell
-        cell.textLabel?.text = categoryList[indexPath.row]
+        let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+        cell.textLabel?.text = categories[indexPath.row].name
         return cell
-    }
-
-    public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        loadLabelText(
-            forComponentId: "CategoriesDescriptionText",
-            labelText: categoryList[indexPath.row],
-            label: selectedCategoryTextLabel
-        )
-        return true
     }
 }
 
 // MARK: - UITableViewDelegate
 extension SPNativePrivacyManagerViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
+        loadLabelText(
+            forComponentId: "CategoriesDescriptionText",
+            labelText: categories[indexPath.row].description,
+            label: selectedCategoryTextLabel
+        )
+        return true
+    }
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     }
