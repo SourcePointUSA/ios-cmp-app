@@ -11,11 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPPrivacyPolicyViewController" customModule="ConsentViewController" customModuleProvider="target">
             <connections>
-                <outlet property="backButton" destination="GaJ-sO-FN1" id="zd9-pN-gn6"/>
                 <outlet property="closeButton" destination="hcC-YE-YoY" id="tFY-Ob-C0k"/>
                 <outlet property="descriptionTextView" destination="fY0-fz-czN" id="QV2-Vo-WPj"/>
+                <outlet property="header" destination="GYu-e7-hDj" id="EZd-nm-a6Y"/>
                 <outlet property="logoImageView" destination="Kez-k9-Bhs" id="V5t-8t-MYY"/>
-                <outlet property="titleLabel" destination="Ehr-pg-4EN" id="kWg-7N-bU3"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
         </placeholder>
@@ -27,33 +26,13 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="8an-JK-h4N" userLabel="Stack View - Main">
                     <rect key="frame" x="80" y="60" width="1760" height="960"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Fbw-Nr-cJo" userLabel="Stack View - Header">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYu-e7-hDj" customClass="SPPMHeader" customModule="ConsentViewController" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="1760" height="100"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaJ-sO-FN1">
-                                    <rect key="frame" x="0.0" y="10" width="240" height="80"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="240" id="HuC-ew-May"/>
-                                        <constraint firstAttribute="height" constant="80" id="mmb-NC-nrH"/>
-                                    </constraints>
-                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                    <state key="normal" title="BACK"/>
-                                    <connections>
-                                        <action selector="onBackTap:" destination="-1" eventType="primaryActionTriggered" id="cWB-C8-wVS"/>
-                                    </connections>
-                                </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehr-pg-4EN">
-                                    <rect key="frame" x="240" y="21" width="1520" height="58"/>
-                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="50"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="100" id="0Qf-Rn-43Z"/>
-                                <constraint firstAttribute="width" constant="1760" id="v6g-kd-Rf3"/>
+                                <constraint firstAttribute="height" constant="100" id="9MJ-iQ-jqx"/>
                             </constraints>
-                        </stackView>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vPg-Jh-lP6" userLabel="Stack View - Content">
                             <rect key="frame" x="0.0" y="250" width="1760" height="710"/>
                             <subviews>
@@ -87,7 +66,7 @@
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fY0-fz-czN" userLabel="DescriptionText View">
                                             <rect key="frame" x="0.0" y="0.0" width="880" height="710"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                             <color key="textColor" systemColor="labelColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -102,9 +81,8 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="width" constant="1760" id="A8r-I4-ZhQ"/>
+                        <constraint firstItem="GYu-e7-hDj" firstAttribute="width" secondItem="8an-JK-h4N" secondAttribute="width" id="Ycg-dY-Jd1"/>
                         <constraint firstItem="vPg-Jh-lP6" firstAttribute="leading" secondItem="8an-JK-h4N" secondAttribute="leading" id="dOy-tE-aMt"/>
-                        <constraint firstItem="Fbw-Nr-cJo" firstAttribute="leading" secondItem="8an-JK-h4N" secondAttribute="leading" id="eZk-iT-cOu"/>
-                        <constraint firstItem="Fbw-Nr-cJo" firstAttribute="top" secondItem="8an-JK-h4N" secondAttribute="top" id="rf5-qo-swG"/>
                     </constraints>
                 </stackView>
             </subviews>

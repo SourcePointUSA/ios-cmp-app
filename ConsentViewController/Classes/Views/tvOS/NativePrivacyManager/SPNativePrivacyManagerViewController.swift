@@ -9,7 +9,6 @@ import UIKit
 import Foundation
 
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var subDescriptionTextLabel: UILabel!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
@@ -18,8 +17,9 @@ import Foundation
     @IBOutlet weak var managePreferenceButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
+
+    @IBOutlet weak var header: SPPMHeader!
 
     let categoryList = [
         "Store and/or access information on a device",
@@ -36,25 +36,28 @@ import Foundation
 
     override var preferredFocusedView: UIView? { acceptButton }
 
+    func setHeader () {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.onBackButtonTapped = {
+            self.messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setHeader()
         descriptionTextView.textContainer.lineFragmentPadding = 0
         descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
         loadLabelView(forComponentId: "CategoriesSubDescriptionText", label: subDescriptionTextLabel)
         loadTextView(forComponentId: "CategoriesDescriptionText", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
-        loadButton(forComponentId: "BackButton", button: backButton)
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
-    }
-
-    @IBAction func onBackButtonTap(_ sender: Any) {
-        messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {

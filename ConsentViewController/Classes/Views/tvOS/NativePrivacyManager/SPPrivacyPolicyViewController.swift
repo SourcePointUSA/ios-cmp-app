@@ -8,25 +8,25 @@
 import UIKit
 
 @objcMembers class SPPrivacyPolicyViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var header: SPPMHeader!
+
+    func setHeader () {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.onBackButtonTapped = { self.dismiss(animated: true) }
+    }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadTextView(forComponentId: "Body", textView: descriptionTextView)
         loadButton(forComponentId: "CloseButton", button: closeButton)
-        loadButton(forComponentId: "BackButton", button: backButton)
-    }
-
-    @IBAction func onBackTap(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func onCloseTap(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 }

@@ -89,7 +89,7 @@ public let MockNativePMResponse = """
                         "fontSize":50,
                         "fontWeight":"400",
                         "color":"#000000",
-                        "fontFamily":"arial, trebuchet, sans-serif"
+                        "fontFamily":"arial, helvetica, sans-serif"
                      }
                   }
                },
@@ -759,7 +759,7 @@ public let MockNativePMResponse = """
                   "style":{
                      "backgroundColor":"#ffffff",
                      "font":{
-                        "fontSize":16,
+                        "fontSize":24,
                         "fontWeight":"400",
                         "color":"#000000",
                         "fontFamily":"arial, helvetica, sans-serif"
