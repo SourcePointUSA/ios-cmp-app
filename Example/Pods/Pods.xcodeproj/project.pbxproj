@@ -195,8 +195,10 @@
 		822B52F926614E87002A164C /* SPPMHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 822B52F826614E87002A164C /* SPPMHeader.xib */; };
 		822B52FB26614F5C002A164C /* SPPMHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B52FA26614F5C002A164C /* SPPMHeader.swift */; };
 		824443A1265D29B400A27B8B /* SPNativeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824443A0265D29B400A27B8B /* SPNativeScreenViewController.swift */; };
-		82A07C1B2665511D0072118F /* MMSPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A07C1A2665511D0072118F /* MMSPrivacyManagerViewResponse.swift */; };
-		82A07C1C2665511D0072118F /* MMSPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A07C1A2665511D0072118F /* MMSPrivacyManagerViewResponse.swift */; };
+		8254CD6C2666818E003D347C /* PrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8254CD6B2666818E003D347C /* PrivacyManagerViewResponse.swift */; };
+		8254CD6D2666818E003D347C /* PrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8254CD6B2666818E003D347C /* PrivacyManagerViewResponse.swift */; };
+		82A07C1B2665511D0072118F /* MMSMessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A07C1A2665511D0072118F /* MMSMessageResponse.swift */; };
+		82A07C1C2665511D0072118F /* MMSMessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A07C1A2665511D0072118F /* MMSMessageResponse.swift */; };
 		82AEC47F2666326D00D82440 /* SPStringifiedJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AEC47E2666326D00D82440 /* SPStringifiedJSON.swift */; };
 		82AEC4802666326D00D82440 /* SPStringifiedJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AEC47E2666326D00D82440 /* SPStringifiedJSON.swift */; };
 		832CF11AA8EEA25F3239D8F63DE302FF /* SPDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E879606C700660AD76E8A5C6FC64917 /* SPDelegate.swift */; };
@@ -800,7 +802,8 @@
 		822B52FA26614F5C002A164C /* SPPMHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPMHeader.swift; sourceTree = "<group>"; };
 		8240F9F82124FDB4269CDA6479664156 /* AdapterProtocols.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AdapterProtocols.swift; path = Sources/Nimble/Adapters/AdapterProtocols.swift; sourceTree = "<group>"; };
 		824443A0265D29B400A27B8B /* SPNativeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPNativeScreenViewController.swift; sourceTree = "<group>"; };
-		82A07C1A2665511D0072118F /* MMSPrivacyManagerViewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MMSPrivacyManagerViewResponse.swift; sourceTree = "<group>"; };
+		8254CD6B2666818E003D347C /* PrivacyManagerViewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManagerViewResponse.swift; sourceTree = "<group>"; };
+		82A07C1A2665511D0072118F /* MMSMessageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MMSMessageResponse.swift; sourceTree = "<group>"; };
 		82AEC47E2666326D00D82440 /* SPStringifiedJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SPStringifiedJSON.swift; path = ConsentViewController/Classes/SPStringifiedJSON.swift; sourceTree = "<group>"; };
 		82B7BC285B50581A20ED8B25E824919A /* IQKeyboardManagerSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManagerSwift.debug.xcconfig; sourceTree = "<group>"; };
 		82ECAFB8B9040C40E7EC859F89AE7960 /* Pods-NativeMessageExampleUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NativeMessageExampleUITests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -1686,7 +1689,8 @@
 				D83D140A8038B3A00D1DBB43FDDF555E /* SourcePointClient.swift */,
 				BAA7DE3F730F47DD9E22FBD83E7BA2A4 /* SPPrivacyManager.swift */,
 				123FF7A0F28F5E0954AE60CD79A945D7 /* SPPrivacyManagerRequestresponse.swift */,
-				82A07C1A2665511D0072118F /* MMSPrivacyManagerViewResponse.swift */,
+				82A07C1A2665511D0072118F /* MMSMessageResponse.swift */,
+				8254CD6B2666818E003D347C /* PrivacyManagerViewResponse.swift */,
 			);
 			name = SourcePointClient;
 			path = ConsentViewController/Classes/SourcePointClient;
@@ -2758,6 +2762,7 @@
 				47BA156A40DF165357411DE18C83B0D6 /* ErrorMetricsRequest.swift in Sources */,
 				82AEC47F2666326D00D82440 /* SPStringifiedJSON.swift in Sources */,
 				C139B903D3098F0EAD0B517AE28A6AFB /* GDPRConsentViewController.swift in Sources */,
+				8254CD6C2666818E003D347C /* PrivacyManagerViewResponse.swift in Sources */,
 				D2CB4CE56F5CD73D88D6A6D26C7DBD54 /* GDPRMessage.swift in Sources */,
 				7E1ECC0B276D93B98905325D9C9F1548 /* IDFAStatusReportRequest.swift in Sources */,
 				A18599A2184996BC7BE7641E93C05FD1 /* MessageRequest.swift in Sources */,
@@ -2789,7 +2794,7 @@
 				D5FC9B25D82BFFA6CF2F98FB6D3D6D56 /* SPPrivacyManagerTab.swift in Sources */,
 				0B89C585B33C7A94889246D7D92BF607 /* SPPropertyName.swift in Sources */,
 				DCF546FE41726E161C6ECFBDF9D851EF /* SPSDK.swift in Sources */,
-				82A07C1B2665511D0072118F /* MMSPrivacyManagerViewResponse.swift in Sources */,
+				82A07C1B2665511D0072118F /* MMSMessageResponse.swift in Sources */,
 				3BC1F09A7922983DC346C2108511E28B /* SPURLExtensions.swift in Sources */,
 				66FC7AB86611947FFAD912494F5991EC /* SPUserData.swift in Sources */,
 				607B774098CF33D0ED05D23940377781 /* SPUserDefaults.swift in Sources */,
@@ -2988,7 +2993,7 @@
 				824443A1265D29B400A27B8B /* SPNativeScreenViewController.swift in Sources */,
 				773A9943C836A7881E6EF09E9CE0A543 /* ErrorMetricsRequest.swift in Sources */,
 				01D5B3C1E646CB5A5D95A4672B15F2A6 /* GDPRConsentViewController.swift in Sources */,
-				82A07C1C2665511D0072118F /* MMSPrivacyManagerViewResponse.swift in Sources */,
+				82A07C1C2665511D0072118F /* MMSMessageResponse.swift in Sources */,
 				493F1CF44562108460B32F9715F4D6D2 /* GDPRMessage.swift in Sources */,
 				E56C2846187B296C2D549674C96737E5 /* IDFAStatusReportRequest.swift in Sources */,
 				34ED59379ED35207443F4A7CB5B54599 /* MessageRequest.swift in Sources */,
@@ -3038,6 +3043,7 @@
 				F6E83DF8CC19CFCC4B9A00026FC256D0 /* SPUserData.swift in Sources */,
 				25AAAADDD2C6A5F02B7251464960BE24 /* SPUserDefaults.swift in Sources */,
 				F8604D0609CB5BDE2CE2EBF0659A499C /* SPVendorDetailsViewController.swift in Sources */,
+				8254CD6D2666818E003D347C /* PrivacyManagerViewResponse.swift in Sources */,
 				70B409EE3B071B76F7B5B0374EC77EDC /* SPVendorDetailsViewController.xib in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

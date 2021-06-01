@@ -8,7 +8,13 @@
 import UIKit
 import Foundation
 
+protocol SPNativePMDelegate: AnyObject {
+    func on2ndLayerNavigating(messageId: Int?, handler: @escaping (PrivacyManagerViewResponse) -> Void)
+}
+
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
+    weak var delegate: SPNativePMDelegate?
+
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var subDescriptionTextLabel: UILabel!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
@@ -56,14 +62,20 @@ import Foundation
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
-        present(SPManagePreferenceViewController(
-            messageId: messageId,
-            campaignType: campaignType,
-            viewData: pmData.categoriesView,
-            pmData: pmData,
-            delegate: self,
-            nibName: "SPManagePreferenceViewController"
-        ), animated: true)
+        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] data in
+            if let strongSelf = self {
+                let controller = SPManagePreferenceViewController(
+                    messageId: self?.messageId,
+                    campaignType: strongSelf.campaignType,
+                    viewData: strongSelf.pmData.categoriesView,
+                    pmData: strongSelf.pmData,
+                    delegate: self,
+                    nibName: "SPManagePreferenceViewController"
+                )
+                controller.categories = data.categories
+                self?.present(controller, animated: true)
+            }
+        }
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {

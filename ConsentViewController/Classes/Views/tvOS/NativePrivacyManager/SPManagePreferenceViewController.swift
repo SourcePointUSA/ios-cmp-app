@@ -17,18 +17,13 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
-    
-    let categoryList = [
-        "Store and/or access information on a device",
-        "Select personalized content",
-        "Personalized ads, ad meansurement and audience insights",
-        "Project developement",
-        "Information storage and access",
-        "Ad selection, delivery, reporting",
-        "Measure ad performance",
-        "Develop and improve products",
-        "Use precise geolocation data"
-    ]
+
+    var categories: [PrivacyManagerViewResponse.Category] = [] {
+        didSet {
+            print(categories)
+        }
+    }
+
     let ligitimateInterestList = [
         "Ad selection, delivery, reporting",
         "Select personalized content",
@@ -41,8 +36,9 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         "Measure ad performance"
     ]
     let sections = [
-        "Vendor Consents",
+        "Purposes",
         "Special Purposes",
+        "Features",
         "Special features"
     ]
     let cellReuseIdentifier = "cell"
@@ -100,7 +96,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
         switch categorySlider.selectedSegmentIndex {
         case 0:
             if section == 0 {
-                return 3
+                return categories.count
             } else if section == 1 {
                 return 5
             } else {
@@ -128,7 +124,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
         let cell: UITableViewCell = (categoriesTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            cell.textLabel?.text = categoryList[indexPath.row]
+            cell.textLabel?.text = categories[indexPath.row].name
         case 1:
             cell.textLabel?.text = ligitimateInterestList[indexPath.row]
         default:
@@ -140,7 +136,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            loadLabelText(forComponentId: "CategoriesHeader", labelText: categoryList[indexPath.row], label: selectedCategoryTextLabel)
+            loadLabelText(forComponentId: "CategoriesHeader", labelText: categories[indexPath.row].description, label: selectedCategoryTextLabel)
         case 1:
             loadLabelText(forComponentId: "CategoriesHeader", labelText: ligitimateInterestList[indexPath.row], label: selectedCategoryTextLabel)
         default:

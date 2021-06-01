@@ -214,6 +214,7 @@ import Foundation
                     pmData: content,
                     delegate: self
                 )
+                pmViewController.delegate = self
                 self.loaded(pmViewController)
             case .failure(let error):
                 self.onError(error)
@@ -361,6 +362,26 @@ extension SPConsentManager: SPMessageUIDelegate {
             }
         default:
             print("[SDK] UNKNOWN Action")
+        }
+    }
+}
+
+extension SPConsentManager: SPNativePMDelegate {
+    func on2ndLayerNavigating(messageId: Int?, handler: @escaping (PrivacyManagerViewResponse) -> Void) {
+//        if let messageId = messageId {
+//            spClient.mmsMessage(messageId: messageId) { result in
+//                let response = try! result.get() // TODO: remove force try
+//                handler(SPJson(response.messageJson) ?? SPJson())
+//            }
+//        }
+        if let propertyId = propertyId {
+            print("PROPERTY ID", propertyId)
+            spClient.privacyManagerView(
+                propertyId: propertyId,
+                consentLanguage: messageLanguage) { result in
+                let response = try! result.get()
+                handler(response)
+            }
         }
     }
 }
