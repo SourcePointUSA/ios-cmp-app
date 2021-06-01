@@ -31,7 +31,8 @@ extension JSONDecoder {
 }
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
-typealias MMSMessageHandler = (Result<MMSPrivacyManagerViewResponse, SPError>) -> Void
+typealias MMSMessageHandler = (Result<MMSMessageResponse, SPError>) -> Void
+typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
 typealias NativePMHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
@@ -52,7 +53,14 @@ protocol SourcePointProtocol {
         withId pmId: String,
         handler: @escaping NativePMHandler)
 
-    func mmsPrivacyManagerView(messageId: Int, handler: @escaping MMSMessageHandler)
+    func mmsMessage(
+        messageId: Int,
+        handler: @escaping MMSMessageHandler)
+
+    func privacyManagerView(
+        propertyId: Int,
+        consentLanguage: SPMessageLanguage,
+        handler: @escaping PrivacyManagerViewHandler)
 
     func postCCPAAction(
         authId: String?,
@@ -110,6 +118,7 @@ class SourcePointClient: SourcePointProtocol {
     static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=prod", relativeTo: WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true", relativeTo: WRAPPER_API)!
     static let MMS_MESSAGE_URL = URL(string: "./mms/v2/message", relativeTo: SP_ROOT)!
+    static let PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
 
     let accountId: Int
     let propertyName: SPPropertyName
@@ -159,11 +168,28 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func mmsPrivacyManagerView(messageId: Int, handler: @escaping MMSMessageHandler) {
-        let url = SourcePointClient.MMS_MESSAGE_URL.appendQueryItem(["message_id": String(messageId)])!
+    func mmsMessage(messageId: Int, handler: @escaping MMSMessageHandler) {
+        let url = SourcePointClient.MMS_MESSAGE_URL.appendQueryItems(["message_id": String(messageId)])!
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
-                try! result.decoded() as MMSPrivacyManagerViewResponse
+                try! result.decoded() as MMSMessageResponse
+            }.mapError({
+                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+            }))
+        }
+    }
+
+    func privacyManagerView(
+        propertyId: Int,
+        consentLanguage: SPMessageLanguage,
+        handler: @escaping PrivacyManagerViewHandler) {
+        let url = SourcePointClient.PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
+            "siteId": String(propertyId),
+            "consentLanguage": consentLanguage.rawValue
+        ])!
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try! result.decoded() as PrivacyManagerViewResponse
             }.mapError({
                 InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
             }))

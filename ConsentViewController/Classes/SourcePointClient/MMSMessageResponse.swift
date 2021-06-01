@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MMSPrivacyManagerViewResponse {
+struct MMSMessageResponse {
     class MessageSettings: SPStringifiedJSON {
         var vendorListId: String = ""
 
@@ -30,7 +30,7 @@ struct MMSPrivacyManagerViewResponse {
     }
 }
 
-extension MMSPrivacyManagerViewResponse: Decodable {
+extension MMSMessageResponse: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         messageJson = try SPStringifiedJSON(from: container.superDecoder(forKey: .messageJson))
