@@ -137,6 +137,17 @@ extension SPNativePrivacyManagerViewController: UITableViewDelegate {
         return true
     }
 
+    func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
+        if context.nextFocusedIndexPath == nil {
+            loadLabelText(
+                forComponentId: "CategoriesDescriptionText",
+                labelText: "",
+                label: selectedCategoryTextLabel
+            )
+        }
+        return true
+    }
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     }
