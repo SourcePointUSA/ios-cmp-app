@@ -88,7 +88,12 @@ struct MessageMetaData: Decodable, Equatable {
     let categoryId: MessageCategory
     let subCategoryId: MessageSubCategory
     let messageId: Int
-    let prtnUUID: String
+    let messagePartitionUUID: String
+
+    enum CodingKeys: String, CodingKey {
+        case categoryId, subCategoryId, messageId
+        case messagePartitionUUID = "prtnUUID"
+    }
 }
 
 struct Campaign: Equatable {
