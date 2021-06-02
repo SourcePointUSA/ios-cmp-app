@@ -10,7 +10,12 @@ import Foundation
 struct AppleTrackingPayload: Codable {
     let appleChoice: SPIDFAStatus
     let appleMsgId: Int?
-    let partition_uuid: String?
+    let messagePartitionUUID: String?
+
+    enum CodingKeys: String, CodingKey {
+        case appleChoice, appleMsgId
+        case messagePartitionUUID = "partition_uuid"
+    }
 }
 
 struct IDFAStatusReportRequest: Codable {
@@ -33,7 +38,7 @@ extension IDFAStatusReportRequest {
         messageId: Int?,
         idfaStatus: SPIDFAStatus,
         iosVersion: String,
-        partition_uuid: String
+        messagePartitionUUID: String
     ) {
         self.accountId = accountId
         self.propertyId = propertyId
@@ -41,6 +46,6 @@ extension IDFAStatusReportRequest {
         self.uuidType = uuidType
         self.requestUUID = requestUUID
         self.iosVersion = iosVersion
-        appleTracking = AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, partition_uuid: partition_uuid)
+        appleTracking = AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, messagePartitionUUID: messagePartitionUUID)
     }
 }
