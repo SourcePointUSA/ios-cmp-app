@@ -30,7 +30,7 @@ import Foundation
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var propertyId: Int?
-    var partition_uuid: String?
+    var iOSMessagePartitionUUID: String?
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
@@ -140,7 +140,7 @@ import Foundation
                     .filter { $0.message != nil }
                     .filter {
                         if $0.type == .ios14 {
-                            self?.partition_uuid = $0.messageMetaData?.prtnUUID
+                            self?.iOSMessagePartitionUUID = $0.messageMetaData?.messagePartitionUUID
                         }
                         return $0.messageMetaData != nil
                     }
@@ -340,7 +340,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             messageId: messageId,
             idfaStatus: status,
             iosVersion: deviceManager.osVersion(),
-            partition_uuid: partition_uuid
+            partitionUUID: iOSMessagePartitionUUID
         )
     }
 
