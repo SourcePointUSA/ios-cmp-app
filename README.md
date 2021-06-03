@@ -259,7 +259,8 @@ Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wi
 
 ## App Tracking Transparency
 To display the App Tracking Transparency authorization request for accessing the IDFA, update your `Info.plist`  to add the `NSUserTrackingUsageDescription` key with a custom message describing your usage. Here is an example description text:
-```<key>NSUserTrackingUsageDescription</key>
+```
+<key>NSUserTrackingUsageDescription</key>
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 ![App Tracking](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/wiki/assets/AppTracking.png)
