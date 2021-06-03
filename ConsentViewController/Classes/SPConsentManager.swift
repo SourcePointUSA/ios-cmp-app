@@ -9,7 +9,7 @@
 import Foundation
 
 @objcMembers public class SPConsentManager: NSObject, SPSDK {
-    static public let VERSION = "6.0.2"
+    static public let VERSION = "6.0.3"
 
     static public var shouldCallErrorMetrics = true
 
@@ -26,13 +26,22 @@ import Foundation
     public var userData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    static let DefaultTimeout = TimeInterval(30)
 
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var propertyId: Int?
+    var iOSMessagePartitionUUID: String?
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
+    }
+
+    /// The timeout interval in seconds for the message being displayed
+    public var messageTimeoutInSeconds = SPConsentManager.DefaultTimeout {
+        didSet {
+            spClient.setRequestTimeout(self.messageTimeoutInSeconds)
+        }
     }
 
     public convenience init(accountId: Int, propertyName: SPPropertyName, campaigns: SPCampaigns, delegate: SPDelegate?) {
@@ -41,7 +50,7 @@ import Foundation
             propertyName: propertyName,
             campaigns: campaigns,
             delegate: delegate,
-            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, timeout: 30),
+            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, timeout: SPConsentManager.DefaultTimeout),
             storage: SPUserDefaults(storage: UserDefaults.standard)
         )
     }
@@ -87,14 +96,24 @@ import Foundation
             /// Call a delegate Method to get the Message controller
             /// Pass the native message object to it
             return nil
-        case .web(let content):
-            return GenericWebMessageViewController(
-                url: url,
-                messageId: messageId,
-                contents: content,
-                campaignType: type,
-                delegate: self
-            )
+        #if os(tvOS)
+        case .nativePM(let content): return SPNativePrivacyManagerViewController(
+            messageId: messageId,
+            contents: content,
+            campaignType: type,
+            delegate: self
+        )
+        #endif
+        #if os(iOS)
+        case .web(let content): return GenericWebMessageViewController(
+            url: url,
+            messageId: messageId,
+            contents: content,
+            campaignType: type,
+            timeout: messageTimeoutInSeconds,
+            delegate: self
+        )
+        #endif
         default:
             return nil
         }
@@ -128,7 +147,12 @@ import Foundation
                 self?.propertyId = messagesResponse.propertyId
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
-                    .filter { $0.messageMetaData != nil }
+                    .filter {
+                        if $0.type == .ios14 {
+                            self?.iOSMessagePartitionUUID = $0.messageMetaData?.messagePartitionUUID
+                        }
+                        return $0.messageMetaData != nil
+                    }
                     .filter { $0.url != nil }
                     .compactMap { self?.messageToViewController(
                         $0.url!,
@@ -189,13 +213,33 @@ import Foundation
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        #if os(iOS)
         let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
-        loadPrivacyManager(.gdpr, pmUrl)
+        loadWebPrivacyManager(.gdpr, pmUrl)
+        #elseif os(tvOS)
+        spClient.getNativePrivacyManager(withId: id) { result in
+            switch result {
+            case .success(let pmContent):
+                self.loaded(SPNativePrivacyManagerViewController(
+                    messageId: nil, // TODO: make sure PM comes with message id
+                    contents: pmContent,
+                    campaignType: .gdpr,
+                    delegate: self
+                ))
+            case .failure(let error):
+                self.onError(error)
+            }
+        }
+        #endif
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        #if os(iOS)
         let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)&idfaStatus=\(idfaStatus)")!
-        loadPrivacyManager(.ccpa, pmUrl)
+        loadWebPrivacyManager(.ccpa, pmUrl)
+        #elseif os(tvOS)
+        /// TODO: load NativePM
+        #endif
     }
 
     public func gdprApplies() -> Bool {
@@ -236,7 +280,8 @@ import Foundation
         }
     }
 
-    func loadPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
+    #if os(iOS)
+    func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
         let messageId = Int(
             URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
                 .queryItems?
@@ -248,9 +293,11 @@ import Foundation
             messageId: messageId,
             contents: SPJson(),
             campaignType: campaignType,
+            timeout: messageTimeoutInSeconds,
             delegate: self
         ).loadPrivacyManager(url: pmURL)
     }
+    #endif
 
     public func onError(_ error: SPError) {
         spClient.errorMetrics(
@@ -301,7 +348,9 @@ extension SPConsentManager: SPMessageUIDelegate {
             uuid: uuid,
             uuidType: uuidType,
             messageId: messageId,
-            idfaStatus: status
+            idfaStatus: status,
+            iosVersion: deviceManager.osVersion(),
+            partitionUUID: iOSMessagePartitionUUID
         )
     }
 

@@ -31,14 +31,17 @@ enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
     case PMNonTCF = 9
     case ios = 10
     case CCPAOTT = 11
+    case NativePMOTT = 99
     case unknown
 }
 
 enum Message: Equatable {
+    case nativePM(_ message: SPPrivacyManagerResponse)
     case native(_ message: SPJson)
     case web(_ message: SPJson)
     case unknown
 }
+
 extension Message: Decodable {
     init(from decoder: Decoder) throws {
         self = .unknown
@@ -46,10 +49,12 @@ extension Message: Decodable {
 
     init(type: MessageSubCategory, decoder: Decoder) throws {
         switch type {
+        case .NativePMOTT:
+            self = .nativePM(try SPPrivacyManagerResponse(from: decoder))
         case .NativeInApp:
-            self = .native(try SPJson.init(from: decoder))
+            self = .native(try SPJson(from: decoder))
         default:
-            self = .web(try SPJson.init(from: decoder))
+            self = .web(try SPJson(from: decoder))
         }
     }
 }
@@ -83,6 +88,12 @@ struct MessageMetaData: Decodable, Equatable {
     let categoryId: MessageCategory
     let subCategoryId: MessageSubCategory
     let messageId: Int
+    let messagePartitionUUID: String
+
+    enum CodingKeys: String, CodingKey {
+        case categoryId, subCategoryId, messageId
+        case messagePartitionUUID = "prtnUUID"
+    }
 }
 
 struct Campaign: Equatable {

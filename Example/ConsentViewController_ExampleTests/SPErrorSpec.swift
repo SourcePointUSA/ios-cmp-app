@@ -61,7 +61,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("ConnectionTimeOutError") {
                 it("has spCode: connection_timeout") {
-                    expect(ConnectionTimeOutError(url: nil, timeout: nil).spCode).to(equal("sp_metric_connection_timeout"))
+                    expect(ConnectionTimeOutError(url: nil, timeout: nil, campaignType: .unknown).spCode).to(equal("sp_metric_connection_timeout"))
                 }
             }
 

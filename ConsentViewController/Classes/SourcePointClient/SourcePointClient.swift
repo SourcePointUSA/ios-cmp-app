@@ -31,6 +31,7 @@ extension JSONDecoder {
 }
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
+typealias NativePMHandler = (Result<SPPrivacyManagerResponse, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<ConsentResponse<T>, SPError>) -> Void
@@ -45,6 +46,12 @@ protocol SourcePointProtocol {
         localState: SPJson,
         idfaStaus: SPIDFAStatus,
         handler: @escaping MessagesHandler)
+
+    #if os(tvOS)
+    func getNativePrivacyManager(
+        withId pmId: String,
+        handler: @escaping NativePMHandler)
+    #endif
 
     func postCCPAAction(
         authId: String?,
@@ -65,7 +72,9 @@ protocol SourcePointProtocol {
         uuid: String?,
         uuidType: SPCampaignType?,
         messageId: Int?,
-        idfaStatus: SPIDFAStatus
+        idfaStatus: SPIDFAStatus,
+        iosVersion: String,
+        partitionUUID: String?
     )
 
     func customConsentGDPR(
@@ -149,6 +158,19 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
+    #if os(tvOS)
+    func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
+        handler(Result {
+            try JSONDecoder().decode(
+                SPPrivacyManagerResponse.self,
+                from: MockNativePMResponse.data(using: .utf8)!
+            )
+        }.mapError {
+            InvalidResponseWebMessageError(error: $0)
+        })
+    }
+    #endif
+
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
 
@@ -194,15 +216,15 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus) {
+    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
         _ = JSONEncoder().encodeResult(IDFAStatusReportRequest(
             accountId: accountId,
             propertyId: propertyId,
             uuid: uuid,
             uuidType: uuidType,
             requestUUID: UUID(),
-            messageId: messageId,
-            idfaStatus: idfaStatus
+            iosVersion: iosVersion,
+            appleTracking: AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, messagePartitionUUID: partitionUUID)
         )).map {
             client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
         }

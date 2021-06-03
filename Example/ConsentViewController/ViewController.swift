@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "488393", tab: .Vendors)
+        consentManager.loadGDPRPrivacyManager(withId: "488393")
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
