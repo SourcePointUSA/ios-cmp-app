@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.0.1'
+pod 'ConsentViewController', '6.0.3'
 ```
 
 ### Carthage
@@ -246,11 +246,23 @@ SPCampaign *myCampaign = [[SPCampaign alloc]
 ];
 ```
 
+## Configuring the Message/Consents timeout
+Before calling `.loadMessage` or `.loadPrivacyManager`, set the `.messageTimeoutInSeconds` attribute to a time interval that makes most sense for your own application. By default, we set it to 30 seconds.
+
+In case of a timeout error, the `onError` callback will be called and the consent flow will stop there.
+
 ## `pubData`
 When the user takes an action within the consent UI, it's possible to attach an arbitrary payload to the action data an have it sent to our endpoints. For more information on how to do that check our wiki: [Sending arbitrary data when the user takes an action](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Sending-arbitrary-data-when-the-user-takes-an-action.)
 
 ## Rendering the message natively
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.
+
+## App Tracking Transparency
+To display the App Tracking Transparency authorization request for accessing the IDFA, update your `Info.plist`  to add the `NSUserTrackingUsageDescription` key with a custom message describing your usage. Here is an example description text:
+```<key>NSUserTrackingUsageDescription</key>
+<string>This identifier will be used to deliver personalized ads to you.</string>
+```
+![App Tracking](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/wiki/assets/AppTracking.png)
 
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
