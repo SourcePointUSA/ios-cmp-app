@@ -31,6 +31,7 @@ import Foundation
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var propertyId: Int?
+    var iOSMessagePartitionUUID: String?
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
@@ -146,7 +147,12 @@ import Foundation
                 self?.propertyId = messagesResponse.propertyId
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
-                    .filter { $0.messageMetaData != nil }
+                    .filter {
+                        if $0.type == .ios14 {
+                            self?.iOSMessagePartitionUUID = $0.messageMetaData?.messagePartitionUUID
+                        }
+                        return $0.messageMetaData != nil
+                    }
                     .filter { $0.url != nil }
                     .compactMap { self?.messageToViewController(
                         $0.url!,
@@ -342,7 +348,9 @@ extension SPConsentManager: SPMessageUIDelegate {
             uuid: uuid,
             uuidType: uuidType,
             messageId: messageId,
-            idfaStatus: status
+            idfaStatus: status,
+            iosVersion: deviceManager.osVersion(),
+            partitionUUID: iOSMessagePartitionUUID
         )
     }
 

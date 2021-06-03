@@ -72,7 +72,9 @@ protocol SourcePointProtocol {
         uuid: String?,
         uuidType: SPCampaignType?,
         messageId: Int?,
-        idfaStatus: SPIDFAStatus
+        idfaStatus: SPIDFAStatus,
+        iosVersion: String,
+        partitionUUID: String?
     )
 
     func customConsentGDPR(
@@ -214,15 +216,15 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus) {
+    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
         _ = JSONEncoder().encodeResult(IDFAStatusReportRequest(
             accountId: accountId,
             propertyId: propertyId,
             uuid: uuid,
             uuidType: uuidType,
             requestUUID: UUID(),
-            messageId: messageId,
-            idfaStatus: idfaStatus
+            iosVersion: iosVersion,
+            appleTracking: AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, messagePartitionUUID: partitionUUID)
         )).map {
             client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
         }
