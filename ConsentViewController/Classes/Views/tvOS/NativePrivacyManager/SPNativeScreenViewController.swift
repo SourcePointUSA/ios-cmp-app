@@ -17,6 +17,7 @@ import UIKit
         super.init(
             messageId: messageId,
             campaignType: campaignType,
+            timeout: 10,
             delegate: delegate
         )
         modalPresentationStyle = .currentContext

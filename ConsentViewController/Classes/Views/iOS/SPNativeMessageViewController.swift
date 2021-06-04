@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 @objc public protocol GDPRMessageUIDelegate {
     var consentDelegate: SPDelegate? { get }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol SPRenderingApp {
     func loadMessage()
