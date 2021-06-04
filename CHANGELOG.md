@@ -1,4 +1,4 @@
-# 6.0.3 (June, 03, 2021)
+# 6.0.3 (June, 04, 2021)
 * Configurable timeout. You now can configure a timeout in which either the consent message must be shown or the consent data should be returned to the app (`onConsentReady`) by setting the attribute `.messageTimeoutInSeconds: TimeInterval`. Just make sure to set it _before_ calling `loadMessage` or `loadPrivacyManager`. [#301](https://github.com/SourcePointUSA/ios-cmp-app/pull/301)
 * Updated Apple tracking API request.  [#302](https://github.com/SourcePointUSA/ios-cmp-app/pull/302)
 * Updated README with Configuring the Message/Consents timeout

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc protocol SPMessageUIDelegate {
     func loaded(_ controller: SPMessageViewController)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class SPVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var titleLabel: UILabel!

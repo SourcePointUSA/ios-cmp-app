@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc class PMLongButtonAttributes: NSObject, Codable {
     let onText: String?
