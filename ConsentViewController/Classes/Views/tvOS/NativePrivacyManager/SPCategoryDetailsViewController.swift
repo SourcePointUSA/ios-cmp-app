@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class SPCategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var titleLabel: UILabel!
