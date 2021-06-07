@@ -8,8 +8,10 @@
 import UIKit
 import Foundation
 
+typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
+
 protocol SPNativePMDelegate: AnyObject {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping (PrivacyManagerViewResponse) -> Void)
+    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
 }
 
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
@@ -62,31 +64,46 @@ protocol SPNativePMDelegate: AnyObject {
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
-        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] data in
-            if let strongSelf = self {
-                let controller = SPManagePreferenceViewController(
-                    messageId: self?.messageId,
-                    campaignType: strongSelf.campaignType,
-                    viewData: strongSelf.pmData.categoriesView,
-                    pmData: strongSelf.pmData,
-                    delegate: self,
-                    nibName: "SPManagePreferenceViewController"
-                )
-                controller.categories = data.categories
-                self?.present(controller, animated: true)
+        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+            switch result {
+            case .failure(let error): print(error) // TODO: give user feedback
+            case .success(let data):
+                if let strongSelf = self {
+                    let controller = SPManagePreferenceViewController(
+                        messageId: self?.messageId,
+                        campaignType: strongSelf.campaignType,
+                        viewData: strongSelf.pmData.categoriesView,
+                        pmData: strongSelf.pmData,
+                        delegate: self,
+                        nibName: "SPManagePreferenceViewController"
+                    )
+                    controller.categories = data.categories
+                    self?.present(controller, animated: true)
+                }
             }
         }
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {
-        present(SPPartnersViewController(
-            messageId: messageId,
-            campaignType: campaignType,
-            viewData: pmData.vendorsView,
-            pmData: pmData,
-            delegate: self,
-            nibName: "SPPartnersViewController"
-        ), animated: true)
+        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+            switch result {
+            case .failure(let error): print(error) // TODO: give user feedback
+            case .success(let data):
+                if let strongSelf = self {
+                    let controller = SPPartnersViewController(
+                        messageId: self?.messageId,
+                        campaignType: strongSelf.campaignType,
+                        viewData: strongSelf.pmData.vendorsView,
+                        pmData: strongSelf.pmData,
+                        delegate: self,
+                        nibName: "SPPartnersViewController"
+                    )
+                    print(data)
+                    controller.vendors = data.vendors
+                    self?.present(controller, animated: true)
+                }
+            }
+        }
     }
 
     @IBAction func onPrivacyPolicyTap(_ sender: Any) {

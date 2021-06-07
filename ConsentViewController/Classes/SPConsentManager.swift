@@ -31,6 +31,8 @@ import Foundation
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var propertyId: Int?
 
+    var pmSecondLayerData: PrivacyManagerViewResponse?
+
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
     }
@@ -367,20 +369,22 @@ extension SPConsentManager: SPMessageUIDelegate {
 }
 
 extension SPConsentManager: SPNativePMDelegate {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping (PrivacyManagerViewResponse) -> Void) {
+    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler) {
 //        if let messageId = messageId {
 //            spClient.mmsMessage(messageId: messageId) { result in
 //                let response = try! result.get() // TODO: remove force try
 //                handler(SPJson(response.messageJson) ?? SPJson())
 //            }
 //        }
-        if let propertyId = propertyId {
+        if let propertyId = propertyId, pmSecondLayerData == nil {
             print("PROPERTY ID", propertyId)
             spClient.privacyManagerView(
                 propertyId: propertyId,
-                consentLanguage: messageLanguage) {
-                handler(try! $0.get())
-            }
+                consentLanguage: messageLanguage,
+                handler: handler
+            )
+        } else {
+            handler(Result{ pmSecondLayerData! }.mapError({ InvalidResponseNativeMessageError(error: $0) }))
         }
     }
 }
