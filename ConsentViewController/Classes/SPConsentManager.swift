@@ -378,9 +378,8 @@ extension SPConsentManager: SPNativePMDelegate {
             print("PROPERTY ID", propertyId)
             spClient.privacyManagerView(
                 propertyId: propertyId,
-                consentLanguage: messageLanguage) { result in
-                let response = try! result.get()
-                handler(response)
+                consentLanguage: messageLanguage) {
+                handler(try! $0.get())
             }
         }
     }

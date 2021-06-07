@@ -18,7 +18,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
 
-    var categories: [PrivacyManagerViewResponse.Category] = [] {
+    var categories: [VendorListCategory] = [] {
         didSet {
             print(categories)
         }

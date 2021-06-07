@@ -8,8 +8,8 @@
 import Foundation
 
 struct PrivacyManagerViewResponse: Decodable {
-    struct Vendor: Decodable {
-        enum SPType: String, Decodable {
+    struct VendorListVendor: Decodable {
+        enum SPVendorType: String, Decodable {
             case IAB, CUSTOM
         }
 
@@ -17,20 +17,9 @@ struct PrivacyManagerViewResponse: Decodable {
         let iabId: Int?
         let policyUrl: URL?
         let cookieHeader: String?
-        let vendorType: SPType
+        let vendorType: SPVendorType
     }
 
-    struct Category: Decodable {
-        enum SPType: String, Decodable {
-            case IAB_PURPOSE, CUSTOM
-        }
-
-        let _id, name, description: String
-        let friendlyDescription: String?
-        let iabId: Int?
-        let type: SPType
-    }
-
-    let vendors: [Vendor]
-    let categories: [Category]
+    let vendors: [VendorListVendor]
+    let categories: [VendorListCategory]
 }

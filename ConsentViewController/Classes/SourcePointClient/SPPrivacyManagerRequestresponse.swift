@@ -7,11 +7,11 @@
 
 import Foundation
 
-@objc public enum CategoryType: Int, Equatable {
+@objc public enum SPCategoryType: Int, Equatable {
     case IAB_PURPOSE, unknown
 }
 
-extension CategoryType: Codable {
+extension SPCategoryType: Codable {
     public typealias RawValue = String
 
     public var rawValue: String {
@@ -34,9 +34,9 @@ extension CategoryType: Codable {
     }
 }
 
-@objcMembers class VendorListCategory: Decodable {
+@objcMembers class VendorListCategory: Codable {
     let _id, name, description: String
-    let type: CategoryType?
+    let type: SPCategoryType?
 }
 
 extension VendorListCategory: Equatable {
