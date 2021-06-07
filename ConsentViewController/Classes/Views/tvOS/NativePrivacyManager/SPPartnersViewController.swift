@@ -7,6 +7,25 @@
 
 import UIKit
 
+extension String {
+    var htmlToAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else { return nil }
+        do {
+            return try NSAttributedString(
+                data: data,
+                options: [
+                    .documentType: NSAttributedString.DocumentType.html,
+                    .characterEncoding:String.Encoding.utf8.rawValue
+                ],
+                documentAttributes: nil
+            )
+        } catch {
+            return nil
+        }
+    }
+    var htmlToString: String { htmlToAttributedString?.string ?? "" }
+}
+
 class SPPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var partnerLabel: UILabel!
     @IBOutlet weak var selectedvendorTextLabel: UILabel!
@@ -18,28 +37,9 @@ class SPPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
 
-    let vendorList = [
-        "Arcspire Limited",
-        "Amobee Inc",
-        "AppNexus",
-        "Audiens S.r.l",
-        "Bannerflow AB",
-        "BeeswaxLo Corporation",
-        "Beachfront Media LLC",
-        "Bidstack ltd",
-        "Celtra, Inc", "ChartBeat"
-    ]
-    let ligitimateInterestVendorList = [
-        "Captify Technologs Limited",
-        "Digital Control GmbH & amp CO",
-        "Delta projects AB",
-        "Eyeota Ptd Ltd",
-        "BeeswaxLo Corporation",
-        "AppNexus",
-        "Celtra, Inc",
-        "Amobee Inc",
-        "ChartBeat"
-    ]
+    var vendors: [VendorListVendor] = []
+    var userConsentVendors: [VendorListVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
+    var ligitimateInterestVendorList: [VendorListVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
@@ -88,7 +88,7 @@ extension SPPartnersViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch vendorsSlider.selectedSegmentIndex {
         case 0:
-            return vendorList.count
+            return userConsentVendors.count
         case 1:
             return ligitimateInterestVendorList.count
         default:
@@ -104,9 +104,9 @@ extension SPPartnersViewController: UITableViewDataSource {
         let cell: UITableViewCell = (self.vendorsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         switch vendorsSlider.selectedSegmentIndex {
         case 0:
-            cell.textLabel?.text = vendorList[indexPath.row]
+            cell.textLabel?.text = userConsentVendors[indexPath.row].name
         case 1:
-            cell.textLabel?.text = ligitimateInterestVendorList[indexPath.row]
+            cell.textLabel?.text = ligitimateInterestVendorList[indexPath.row].name
         default:
             break
         }
@@ -116,9 +116,11 @@ extension SPPartnersViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         switch vendorsSlider.selectedSegmentIndex {
         case 0:
-            loadLabelText(forComponentId: "VendorsHeader", labelText: vendorList[indexPath.row], label: selectedvendorTextLabel)
+            loadLabelText(forComponentId: "VendorsHeader", labelText: "", label: selectedvendorTextLabel)
+                .attributedText = userConsentVendors[indexPath.row].description?.htmlToAttributedString
         case 1:
-            loadLabelText(forComponentId: "VendorsHeader", labelText: ligitimateInterestVendorList[indexPath.row], label: selectedvendorTextLabel)
+            loadLabelText(forComponentId: "VendorsHeader", labelText: "", label: selectedvendorTextLabel)
+                .attributedText = userConsentVendors[indexPath.row].description?.htmlToAttributedString
         default:
             break
         }

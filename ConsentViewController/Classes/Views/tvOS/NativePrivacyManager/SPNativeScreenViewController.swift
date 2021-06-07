@@ -137,7 +137,8 @@ class FocusGuideDebugView: UIView {
         setFocusGuides()
     }
 
-    func loadButton(forComponentId id: String, button: UIButton) {
+    @discardableResult
+    func loadButton(forComponentId id: String, button: UIButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             button.isHidden = false
             button.titleLabel?.text = action.text
@@ -146,25 +147,31 @@ class FocusGuideDebugView: UIView {
             button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
             button.titleLabel?.font = UIFont(from: action.style?.font)
         }
+        return button
     }
 
-    func loadLabelView(forComponentId id: String, label: UILabel) {
+    @discardableResult
+    func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel  {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             label.text = textDetails.text
             label.textColor = UIColor(hexString: textDetails.style?.font?.color)
             label.font = UIFont(from: textDetails.style?.font)
         }
+        return label
     }
 
-    func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) {
+    @discardableResult
+    func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) {
             label.text = text
             label.textColor = UIColor(hexString: textDetails.style?.font?.color)
             label.font = UIFont(from: textDetails.style?.font)
         }
+        return label
     }
 
-    func loadTextView(forComponentId id: String, textView: UITextView) {
+    @discardableResult
+    func loadTextView(forComponentId id: String, textView: UITextView) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             textView.text = textViewComponent.text
             textView.textColor = UIColor(hexString: textViewComponent.style?.font?.color)
@@ -177,9 +184,11 @@ class FocusGuideDebugView: UIView {
             ]
             textView.font = UIFont(from: textViewComponent.style?.font)
         }
+        return textView
     }
 
-    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) {
+    @discardableResult
+    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
             slider.setTitle(sliderDetails.offText, forSegmentAt: 0)
             slider.setTitle(sliderDetails.onText, forSegmentAt: 1)
@@ -192,5 +201,6 @@ class FocusGuideDebugView: UIView {
             slider.setTitleTextAttributes(attributes, for: .normal)
             slider.setTitleTextAttributes(attributes, for: .selected)
         }
+        return slider
     }
 }

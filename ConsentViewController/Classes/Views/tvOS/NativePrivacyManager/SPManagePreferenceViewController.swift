@@ -18,11 +18,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
 
-    var categories: [VendorListCategory] = [] {
-        didSet {
-            print(categories)
-        }
-    }
+    var categories: [VendorListCategory] = []
 
     let ligitimateInterestList = [
         "Ad selection, delivery, reporting",
