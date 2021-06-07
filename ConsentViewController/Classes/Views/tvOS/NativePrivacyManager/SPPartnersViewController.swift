@@ -43,13 +43,10 @@ class SPPartnersViewController: SPNativeScreenViewController {
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottom)
-        addFocusGuide(from: actionsContainer, to: header.backButton, direction: .top)
-
-        addFocusGuide(from: vendorsSlider, to: vendorsTableView.cellForRow(at: IndexPath(row: 0, section: 0)), direction: .bottom)
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: vendorsSlider, to: vendorsTableView, direction: .bottomTop)
         addFocusGuide(from: vendorsSlider, to: header.backButton, direction: .left)
-        addFocusGuide(from: vendorsTableView, to: vendorsSlider, direction: .top)
-        addFocusGuide(from: vendorsTableView, to: actionsContainer, direction: .left)
+        addFocusGuide(from: actionsContainer, to: vendorsTableView, direction: .rightLeft)
     }
 
     func setHeader () {

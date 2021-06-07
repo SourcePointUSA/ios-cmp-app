@@ -8,6 +8,22 @@
 import Foundation
 import UIKit
 
+enum SPUIRectEdge {
+    case bottomTop, rightLeft, topBottom, leftRight, left, right, top, bottom, all
+
+    init(from edge: UIRectEdge) {
+        switch edge {
+        case .all: self = .all
+        case .top: self = .top
+        case .bottom: self = .bottom
+        case .left: self = .left
+        case .right: self = .right
+        default:
+            self = .all
+        }
+    }
+}
+
 extension UIFont {
     convenience init?(from spFont: SPNativeFont?) {
         let fontSize = spFont?.fontSize ?? UIFont.preferredFont(forTextStyle: .body).pointSize
@@ -22,12 +38,27 @@ extension UIFont {
 
 extension UIViewController {
     @discardableResult
-    func addFocusGuide(from origin: UIView?, to destination: UIView?, direction: UIRectEdge, debug: Bool = false) -> UIFocusGuide? {
-        addFocusGuide(from: origin, to: [destination], direction: direction, debug: debug)
+    func addFocusGuide(from origin: UIView?, to destination: UIView?, direction: SPUIRectEdge, debug: Bool = false) -> [UIFocusGuide?] {
+        switch direction {
+        case .bottomTop:
+            return [
+                addFocusGuide(from: origin, to: [destination], direction: .bottom, debug: debug),
+                addFocusGuide(from: destination, to: [origin], direction: .top, debug: debug)
+            ]
+        case .topBottom: return addFocusGuide(from: destination, to: origin, direction: .bottomTop, debug: debug)
+        case .rightLeft:
+            return [
+                addFocusGuide(from: origin, to: [destination], direction: .right, debug: debug),
+                addFocusGuide(from: destination, to: [origin], direction: .left, debug: debug)
+            ]
+        case .leftRight: return addFocusGuide(from: destination, to: origin, direction: .rightLeft, debug: debug)
+        default:
+            return [addFocusGuide(from: origin, to: [destination], direction: direction, debug: debug)]
+        }
     }
 
     @discardableResult
-    func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: UIRectEdge, debug: Bool = false) -> UIFocusGuide? {
+    func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: SPUIRectEdge, debug: Bool = false) -> UIFocusGuide? {
         if let origin = origin {
             let destinations = maybeDestinations.filter { $0 != nil }.map { $0! }
             let focusGuide = UIFocusGuide()
@@ -107,7 +138,7 @@ class FocusGuideDebugView: UIView {
     }
 
     func loadButton(forComponentId id: String, button: UIButton) {
-        if let action =  components.first(where: { $0.id == id }) as? SPNativeButton {
+        if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             button.isHidden = false
             button.titleLabel?.text = action.text
             button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
@@ -149,7 +180,7 @@ class FocusGuideDebugView: UIView {
     }
 
     func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) {
-        if let sliderDetails =  components.first(where: { $0.id == id }) as? SPNativeSlider {
+        if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
             slider.setTitle(sliderDetails.offText, forSegmentAt: 0)
             slider.setTitle(sliderDetails.onText, forSegmentAt: 1)
             slider.backgroundColor = UIColor(hexString: sliderDetails.style?.backgroundColor)

@@ -40,11 +40,8 @@ class SPCategoryDetailsViewController: SPNativeScreenViewController {
     }
 
     override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottom)
-        addFocusGuide(from: actionsContainer, to: header.backButton, direction: .top)
-
-        addFocusGuide(from: actionsContainer, to: categoryDetailsTableView, direction: .right)
-        addFocusGuide(from: categoryDetailsTableView, to: actionsContainer, direction: .left)
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: actionsContainer, to: categoryDetailsTableView, direction: .rightLeft)
     }
 
     override func viewDidLoad() {

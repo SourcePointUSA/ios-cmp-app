@@ -44,12 +44,10 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottom)
-        addFocusGuide(from: actionsContainer, to: header.backButton, direction: .top)
-
-        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottom)
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
         addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
-        addFocusGuide(from: categoriesTableView, to: categorySlider, direction: .top)
+        addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
     }
 
     func setHeader() {
