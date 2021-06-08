@@ -35,8 +35,15 @@ extension SPCategoryType: Codable {
 }
 
 @objcMembers class VendorListCategory: Codable {
+    struct Vendor: Codable {
+        let name, vendorId: String
+        let policyUrl: URL?
+        let vendorType: SPVendorType
+    }
+
     let _id, name, description: String
     let type: SPCategoryType?
+    let legIntVendors: [Vendor]
 }
 
 extension VendorListCategory: Equatable {

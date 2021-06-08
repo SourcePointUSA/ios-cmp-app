@@ -7,10 +7,11 @@
 
 import Foundation
 
+enum SPVendorType: String, Codable {
+    case IAB, CUSTOM
+}
+
 struct VendorListVendor: Decodable {
-    enum SPVendorType: String, Decodable {
-        case IAB, CUSTOM
-    }
     struct SPLegIntCategory: Decodable {
         let type: SPCategoryType
         let iabId: Int?
