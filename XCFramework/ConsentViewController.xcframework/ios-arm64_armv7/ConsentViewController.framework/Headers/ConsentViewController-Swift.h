@@ -278,24 +278,6 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController21GDPRMessageUIDelegate_")
 - (void)loadPrivacyManager;
 @end
 
-@class NSBundle;
-
-/// The <code>GDPRMessageViewController</code> is the class responsible for rendering the consent
-/// message and privacy manager.
-/// note:
-/// at the moment we only have one child of <code>MessageViewController</code>
-/// (<code>MessageWebViewController</code>) but the idea is to be able to swap the webview
-/// with any other class that knows how to render a consent message and a privacy manager.
-/// Eg. a native message view controller
-SWIFT_CLASS("_TtC21ConsentViewController25GDPRMessageViewController")
-@interface GDPRMessageViewController : UIViewController <GDPRMessageUIDelegate>
-@property (nonatomic, weak) id <SPDelegate> _Nullable consentDelegate;
-- (void)loadMessageFromUrl:(NSURL * _Nonnull)url;
-- (void)loadPrivacyManager;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-@end
-
 
 SWIFT_CLASS("_TtC21ConsentViewController19GenericNetworkError")
 @interface GenericNetworkError : SPError
@@ -580,6 +562,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (void)setShouldCallErrorMetrics:(BOOL)value;
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 + (void)clearAllData;
+/// The timeout interval in seconds for the message being displayed
+@property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
@@ -695,10 +679,12 @@ typedef SWIFT_ENUM(NSInteger, SPMessageLanguage, open) {
   SPMessageLanguageTurkish = 32,
 };
 
+@class NSBundle;
 
 SWIFT_CLASS("_TtC21ConsentViewController23SPMessageViewController")
 @interface SPMessageViewController : UIViewController <MessageController>
 @property (nonatomic) enum SPCampaignType campaignType;
+@property (nonatomic) NSTimeInterval timeout;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)loadMessage;
 - (void)loadPrivacyManagerWithUrl:(NSURL * _Nonnull)url;
@@ -754,6 +740,22 @@ SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+
+@interface SPUserData (SWIFT_EXTENSION(ConsentViewController))
+/// Returns GDPR consent data if any available.
+/// seealso:
+/// <code>SPGDPRConsent</code>
+- (SPGDPRConsent * _Nullable)objcGDPRConsents SWIFT_WARN_UNUSED_RESULT;
+/// Indicates whether GDPR applies based on the VendorList configuration.
+- (BOOL)objcGDPRApplies SWIFT_WARN_UNUSED_RESULT;
+/// Returns GDPR consent data if any available.
+/// seealso:
+/// <code>SPCCPAConsent</code>
+- (SPCCPAConsent * _Nullable)objcCCPAConsents SWIFT_WARN_UNUSED_RESULT;
+/// Indicates whether GDPR applies based on the VendorList configuration.
+- (BOOL)objcCCPAApplies SWIFT_WARN_UNUSED_RESULT;
+@end
 
 
 
@@ -1073,24 +1075,6 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController21GDPRMessageUIDelegate_")
 - (void)loadPrivacyManager;
 @end
 
-@class NSBundle;
-
-/// The <code>GDPRMessageViewController</code> is the class responsible for rendering the consent
-/// message and privacy manager.
-/// note:
-/// at the moment we only have one child of <code>MessageViewController</code>
-/// (<code>MessageWebViewController</code>) but the idea is to be able to swap the webview
-/// with any other class that knows how to render a consent message and a privacy manager.
-/// Eg. a native message view controller
-SWIFT_CLASS("_TtC21ConsentViewController25GDPRMessageViewController")
-@interface GDPRMessageViewController : UIViewController <GDPRMessageUIDelegate>
-@property (nonatomic, weak) id <SPDelegate> _Nullable consentDelegate;
-- (void)loadMessageFromUrl:(NSURL * _Nonnull)url;
-- (void)loadPrivacyManager;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-@end
-
 
 SWIFT_CLASS("_TtC21ConsentViewController19GenericNetworkError")
 @interface GenericNetworkError : SPError
@@ -1375,6 +1359,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (void)setShouldCallErrorMetrics:(BOOL)value;
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 + (void)clearAllData;
+/// The timeout interval in seconds for the message being displayed
+@property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
@@ -1490,10 +1476,12 @@ typedef SWIFT_ENUM(NSInteger, SPMessageLanguage, open) {
   SPMessageLanguageTurkish = 32,
 };
 
+@class NSBundle;
 
 SWIFT_CLASS("_TtC21ConsentViewController23SPMessageViewController")
 @interface SPMessageViewController : UIViewController <MessageController>
 @property (nonatomic) enum SPCampaignType campaignType;
+@property (nonatomic) NSTimeInterval timeout;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
 - (void)loadMessage;
 - (void)loadPrivacyManagerWithUrl:(NSURL * _Nonnull)url;
@@ -1549,6 +1537,22 @@ SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+
+@interface SPUserData (SWIFT_EXTENSION(ConsentViewController))
+/// Returns GDPR consent data if any available.
+/// seealso:
+/// <code>SPGDPRConsent</code>
+- (SPGDPRConsent * _Nullable)objcGDPRConsents SWIFT_WARN_UNUSED_RESULT;
+/// Indicates whether GDPR applies based on the VendorList configuration.
+- (BOOL)objcGDPRApplies SWIFT_WARN_UNUSED_RESULT;
+/// Returns GDPR consent data if any available.
+/// seealso:
+/// <code>SPCCPAConsent</code>
+- (SPCCPAConsent * _Nullable)objcCCPAConsents SWIFT_WARN_UNUSED_RESULT;
+/// Indicates whether GDPR applies based on the VendorList configuration.
+- (BOOL)objcCCPAApplies SWIFT_WARN_UNUSED_RESULT;
+@end
 
 
 
