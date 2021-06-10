@@ -79,6 +79,11 @@ public typealias SPGDPRPurposeId = String
             return false
         }
     }
+    
+    /// Returns json string representation of this object
+    @objc public func getJsonString() -> String? {
+        return self.toJSON()
+    }
 
     open override var description: String {
         return """

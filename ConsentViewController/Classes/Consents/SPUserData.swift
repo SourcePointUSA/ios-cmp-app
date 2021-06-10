@@ -84,4 +84,9 @@ public protocol SPObjcUserData {
     public func objcCCPAApplies() -> Bool {
         ccpa?.applies ?? false
     }
+    
+    /// Returns json string representation of this object
+    @objc public func getJsonString() -> String? {
+        return self.toJSON()
+    }
 }
