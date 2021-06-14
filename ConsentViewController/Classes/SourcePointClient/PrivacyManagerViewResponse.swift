@@ -29,6 +29,7 @@ struct VendorListVendor: Decodable {
     let vendorType: SPVendorType
     let legIntCategories: [SPLegIntCategory]
     let consentCategories: [SPConsentCategory]
+    let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
 }
 
 struct VendorListShortVendor: Decodable {

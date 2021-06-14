@@ -131,7 +131,15 @@ extension SPPartnersViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPPartnersViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let partnersController = SPVendorDetailsViewController(vendorDetailsView: vendorContent, selectedVendor: self.selectedvendorTextLabel.text ?? "")
-//        present(partnersController, animated: true, completion: nil)
+        let vendorDetailsVC = SPVendorDetailsViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: viewData,
+            pmData: pmData,
+            delegate: nil,
+            nibName: "SPVendorDetailsViewController"
+        )
+        vendorDetailsVC.vendor = vendors[indexPath.row]
+        present(vendorDetailsVC, animated: true)
     }
 }
