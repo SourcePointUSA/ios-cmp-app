@@ -78,6 +78,9 @@ protocol SPNativePMDelegate: AnyObject {
                         nibName: "SPManagePreferenceViewController"
                     )
                     controller.categories = data.categories
+                    controller.specialPurposes = data.specialPurposes
+                    controller.features = data.features
+                    controller.specialFeatures = data.specialFeatures
                     self?.present(controller, animated: true)
                 }
             }
@@ -98,7 +101,6 @@ protocol SPNativePMDelegate: AnyObject {
                         delegate: self,
                         nibName: "SPPartnersViewController"
                     )
-                    print(data)
                     controller.vendors = data.vendors
                     self?.present(controller, animated: true)
                 }

@@ -19,18 +19,12 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var actionsContainer: UIStackView!
 
     var categories: [VendorListCategory] = []
+    var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
+    var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
+    var specialPurposes: [VendorListShortVendor] = []
+    var features: [VendorListShortVendor] = []
+    var specialFeatures: [VendorListShortVendor] = []
 
-    let ligitimateInterestList = [
-        "Ad selection, delivery, reporting",
-        "Select personalized content",
-        "Personalized ads, ad meansurement and audience insights",
-        "Develop and improve products",
-        "Use precise geolocation data",
-        "Store and/or access information on a device",
-        "Project developement",
-        "Information storage and access",
-        "Measure ad performance"
-    ]
     let sections = [
         "Purposes",
         "Special Purposes",
@@ -60,6 +54,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         categoriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        categoriesTableView.allowsSelection = false
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
     }
@@ -77,33 +72,35 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPManagePreferenceViewController: UITableViewDataSource {
+extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
+        switch categorySlider.selectedSegmentIndex {
+        case 0: return sections.count
+        default: return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section]
+        switch categorySlider.selectedSegmentIndex {
+        case 0: return sections[section]
+        default: return nil
+        }
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            if section == 0 {
-                return categories.count
-            } else if section == 1 {
-                return 5
-            } else {
-                return 8
+            if section == 0 { // purposes
+                return userConsentCategories.count
+            } else if section == 1 { // special purposes
+                return specialPurposes.count
+            } else if section == 2 { // features
+                return features.count
+            } else if section == 3 {
+                return specialFeatures.count
             }
         case 1:
-            if section == 0 {
-                return 2
-            } else if section == 1 {
-                return 4
-            } else {
-                return 8
-            }
+            return legIntCategories.count
         default:
             break
         }
@@ -116,11 +113,23 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (categoriesTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+        let section = indexPath.section
+        let row = indexPath.row
+        var cellText = ""
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            cell.textLabel?.text = categories[indexPath.row].name
+            if section == 0 { // purposes
+                cellText = userConsentCategories[row].name
+            } else if section == 1 { // special purposes
+                cellText = specialPurposes[row].name
+            } else if section == 2 { // features
+                cellText = features[row].name
+            } else if section == 3 {
+                cellText = specialFeatures[row].name
+            }
+            cell.textLabel?.text = cellText
         case 1:
-            cell.textLabel?.text = ligitimateInterestList[indexPath.row]
+            cell.textLabel?.text = legIntCategories[indexPath.row].name
         default:
             break
         }
@@ -130,26 +139,12 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            loadLabelText(forComponentId: "CategoriesHeader", labelText: categories[indexPath.row].description, label: selectedCategoryTextLabel)
+            loadLabelText(forComponentId: "CategoriesHeader", labelText: userConsentCategories[indexPath.row].description, label: selectedCategoryTextLabel)
         case 1:
-            loadLabelText(forComponentId: "CategoriesHeader", labelText: ligitimateInterestList[indexPath.row], label: selectedCategoryTextLabel)
+            loadLabelText(forComponentId: "CategoriesHeader", labelText: legIntCategories[indexPath.row].description, label: selectedCategoryTextLabel)
         default:
             break
         }
         return true
-    }
-}
-
-// MARK: - UITableViewDelegate
-extension SPManagePreferenceViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        present(SPCategoryDetailsViewController(
-            messageId: messageId,
-            campaignType: campaignType,
-            viewData: pmData.categoryDetailsView,
-            pmData: pmData,
-            delegate: nil,
-            nibName: "SPCategoryDetailsViewController"
-        ), animated: true)
     }
 }

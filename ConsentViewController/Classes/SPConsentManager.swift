@@ -380,9 +380,15 @@ extension SPConsentManager: SPNativePMDelegate {
             print("PROPERTY ID", propertyId)
             spClient.privacyManagerView(
                 propertyId: propertyId,
-                consentLanguage: messageLanguage,
-                handler: handler
-            )
+                consentLanguage: messageLanguage
+            ) { result in
+                switch result {
+                case .failure(let error): self.onError(error)
+                case .success(let pmData):
+                    self.pmSecondLayerData = pmData
+                    handler(result)
+                }
+            }
         } else {
             handler(Result{ pmSecondLayerData! }.mapError({ InvalidResponseNativeMessageError(error: $0) }))
         }

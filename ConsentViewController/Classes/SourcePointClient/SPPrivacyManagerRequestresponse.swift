@@ -43,7 +43,8 @@ extension SPCategoryType: Codable {
 
     let _id, name, description: String
     let type: SPCategoryType?
-    let legIntVendors: [Vendor]
+    let legIntVendors: [Vendor]?
+    let requiringConsentVendors: [Vendor]?
 }
 
 extension VendorListCategory: Equatable {
