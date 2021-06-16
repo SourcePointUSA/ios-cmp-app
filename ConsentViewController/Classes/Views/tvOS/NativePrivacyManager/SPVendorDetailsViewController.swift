@@ -8,15 +8,14 @@
 import UIKit
 
 class SPVendorDetailsViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var headerView: SPPMHeader!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var barcodeLabel: UILabel!
     @IBOutlet weak var barcodeImageView: UIImageView!
     @IBOutlet weak var onButton: UIButton!
     @IBOutlet weak var offButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-
     @IBOutlet weak var vendorDetailsTableView: UITableView!
+    @IBOutlet weak var actionsContainer: UIStackView!
 
     let sections = [
         "Vendor Consents",
@@ -29,22 +28,29 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     var specialPurposes: [String] { vendor?.iabSpecialPurposes ?? [] }
     var specialFeatures: [String] { vendor?.iabSpecialFeatures ?? [] }
 
+    func setHeader () {
+        headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        headerView.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        headerView.onBackButtonTapped = { self.dismiss(animated: true) }
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: headerView.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right
+        )
+        addFocusGuide(from: actionsContainer, to: vendorDetailsTableView, direction: .rightLeft)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView.textContainer.lineFragmentPadding = 0
-        descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: onButton)
         loadButton(forComponentId: "SaveButton", button: offButton)
-        loadButton(forComponentId: "BackButton", button: backButton)
+        vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
-    }
-
-    @IBAction func onBackTap(_ sender: Any) {
-        dismiss(animated: true)
     }
 
     @IBAction func onOnButtonTap(_ sender: Any) {
@@ -57,7 +63,7 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPVendorDetailsViewController: UITableViewDataSource {
+extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
@@ -97,9 +103,8 @@ extension SPVendorDetailsViewController: UITableViewDataSource {
         cell.textLabel?.text = cellText
         return cell
     }
-}
 
-// MARK: - UITableViewDelegate
-extension SPVendorDetailsViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+    public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
 }
