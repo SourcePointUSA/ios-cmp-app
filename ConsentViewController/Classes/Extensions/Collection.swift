@@ -10,5 +10,3 @@ import Foundation
 extension Collection {
     func isNotEmpty() -> Bool { !isEmpty }
 }
-
-

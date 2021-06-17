@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objcMembers class SPNativeFont: NSObject, Codable {
     let fontSize: CGFloat
@@ -82,7 +83,7 @@ class SPNativeView: SPNativeUI {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         var componentsContainer = try container.nestedUnkeyedContainer(forKey: .components)
         var tempComponentsContainer = componentsContainer
-        while(!componentsContainer.isAtEnd) {
+        while !componentsContainer.isAtEnd {
             let componentContainer = try componentsContainer.nestedContainer(keyedBy: SPNativeUI.CodingKeys.self)
             let type = try componentContainer.decode(SPNativeUIType.self, forKey: .type)
             switch type {

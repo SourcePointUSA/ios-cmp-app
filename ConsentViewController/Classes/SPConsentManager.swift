@@ -9,7 +9,7 @@
 import Foundation
 
 @objcMembers public class SPConsentManager: NSObject, SPSDK {
-    static public let VERSION = "6.0.2"
+    static public let VERSION = "6.0.3"
 
     static public var shouldCallErrorMetrics = true
 
@@ -26,15 +26,24 @@ import Foundation
     public var userData: SPUserData { storage.userData }
     var messageControllersStack: [SPMessageViewController] = []
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    static let DefaultTimeout = TimeInterval(30)
 
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var propertyId: Int?
+    var iOSMessagePartitionUUID: String?
 
     var pmSecondLayerData: PrivacyManagerViewResponse?
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
+    }
+
+    /// The timeout interval in seconds for the message being displayed
+    public var messageTimeoutInSeconds = SPConsentManager.DefaultTimeout {
+        didSet {
+            spClient.setRequestTimeout(self.messageTimeoutInSeconds)
+        }
     }
 
     public convenience init(accountId: Int, propertyName: SPPropertyName, campaigns: SPCampaigns, delegate: SPDelegate?) {
@@ -43,7 +52,7 @@ import Foundation
             propertyName: propertyName,
             campaigns: campaigns,
             delegate: delegate,
-            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, timeout: 30),
+            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, timeout: SPConsentManager.DefaultTimeout),
             storage: SPUserDefaults(storage: UserDefaults.standard)
         )
     }
@@ -105,6 +114,7 @@ import Foundation
             messageId: messageId,
             contents: content,
             campaignType: type,
+            timeout: messageTimeoutInSeconds,
             delegate: self
         )
         #endif
@@ -141,7 +151,12 @@ import Foundation
                 self?.propertyId = messagesResponse.propertyId
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
-                    .filter { $0.messageMetaData != nil }
+                    .filter {
+                        if $0.type == .ios14 {
+                            self?.iOSMessagePartitionUUID = $0.messageMetaData?.messagePartitionUUID
+                        }
+                        return $0.messageMetaData != nil
+                    }
                     .filter { $0.url != nil }
                     .compactMap { self?.messageToViewController(
                         $0.url!,
@@ -285,6 +300,7 @@ import Foundation
             messageId: messageId,
             contents: SPJson(),
             campaignType: campaignType,
+            timeout: messageTimeoutInSeconds,
             delegate: self
         ).loadPrivacyManager(url: pmURL)
     }
@@ -339,7 +355,9 @@ extension SPConsentManager: SPMessageUIDelegate {
             uuid: uuid,
             uuidType: uuidType,
             messageId: messageId,
-            idfaStatus: status
+            idfaStatus: status,
+            iosVersion: deviceManager.osVersion(),
+            partitionUUID: iOSMessagePartitionUUID
         )
     }
 
@@ -372,7 +390,7 @@ extension SPConsentManager: SPNativePMDelegate {
     func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler) {
 //        if let messageId = messageId {
 //            spClient.mmsMessage(messageId: messageId) { result in
-//                let response = try! result.get() // TODO: remove force try
+//                let response = try! result.get()
 //                handler(SPJson(response.messageJson) ?? SPJson())
 //            }
 //        }
@@ -390,7 +408,14 @@ extension SPConsentManager: SPNativePMDelegate {
                 }
             }
         } else {
-            handler(Result{ pmSecondLayerData! }.mapError({ InvalidResponseNativeMessageError(error: $0) }))
+            handler(Result { pmSecondLayerData! }.mapError({ InvalidResponseNativeMessageError(error: $0)
+            }))
         }
     }
+}
+
+typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
+
+protocol SPNativePMDelegate: AnyObject {
+    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
 }

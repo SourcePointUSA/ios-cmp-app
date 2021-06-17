@@ -13,7 +13,7 @@ class SPStringifiedJSON: Codable {
 
     required init(from decoder: Decoder) throws {
         let data = try decoder.singleValueContainer().decode(String.self).data(using: .utf8)!
-        raw = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        raw = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] ?? [:]
     }
 
     func encode(to encoder: Encoder) throws {
@@ -29,7 +29,7 @@ extension SPStringifiedJSON: Collection {
     var endIndex: Index { raw.endIndex }
 
     subscript(index: Index) -> DictionaryType.Element {
-        get { raw[index] }
+        raw[index]
     }
 
     subscript(_ key: DictionaryType.Key) -> DictionaryType.Value {

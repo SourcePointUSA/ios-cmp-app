@@ -13,9 +13,13 @@ struct MMSMessageResponse {
 
         required init(from decoder: Decoder) throws {
             try super.init(from: decoder)
-            vendorListId = self[Keys.vendorListId.rawValue] as! String
+            guard let vListId = self[Keys.vendorListId.rawValue] as? String else {
+                throw DecodingError.dataCorruptedError(in: try decoder.unkeyedContainer(), debugDescription: "Could not parse/find vendorListId in MMS response")
+            }
+            vendorListId = vListId
         }
 
+        // swiftlint:disable:next nesting
         enum Keys: String, CodingKey {
             case vendorListId = "vendorList"
         }

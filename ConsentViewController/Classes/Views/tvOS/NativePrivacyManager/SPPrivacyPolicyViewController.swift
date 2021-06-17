@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 @objcMembers class SPPrivacyPolicyViewController: SPNativeScreenViewController {
     @IBOutlet weak var descriptionTextView: UITextView!

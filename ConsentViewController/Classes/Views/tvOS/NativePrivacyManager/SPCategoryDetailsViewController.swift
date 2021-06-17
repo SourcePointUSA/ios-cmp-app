@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class SPCategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
@@ -16,7 +17,6 @@ class SPCategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var offButton: UIButton!
     @IBOutlet weak var actionsContainer: UIStackView!
     @IBOutlet weak var selectedVendorLabel: UILabel!
-    
     @IBOutlet weak var categoryDetailsTableView: UITableView!
 
     let vendorList = [

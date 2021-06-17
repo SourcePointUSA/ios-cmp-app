@@ -121,6 +121,7 @@ class FocusGuideDebugView: UIView {
         super.init(
             messageId: messageId,
             campaignType: campaignType,
+            timeout: 10,
             delegate: delegate
         )
         modalPresentationStyle = .currentContext
@@ -151,7 +152,7 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel  {
+    func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             label.text = textDetails.text
             label.textColor = UIColor(hexString: textDetails.style?.font?.color)

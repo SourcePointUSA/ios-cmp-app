@@ -8,12 +8,6 @@
 import UIKit
 import Foundation
 
-typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
-
-protocol SPNativePMDelegate: AnyObject {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
-}
-
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
     weak var delegate: SPNativePMDelegate?
 
@@ -66,7 +60,8 @@ protocol SPNativePMDelegate: AnyObject {
     @IBAction func onManagePreferenceTap(_ sender: Any) {
         delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
             switch result {
-            case .failure(let error): print(error) // TODO: give user feedback
+            case .failure(let error):
+                self?.onError(error)
             case .success(let data):
                 if let strongSelf = self {
                     let controller = SPManagePreferenceViewController(
@@ -90,7 +85,8 @@ protocol SPNativePMDelegate: AnyObject {
     @IBAction func onPartnersTap(_ sender: Any) {
         delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
             switch result {
-            case .failure(let error): print(error) // TODO: give user feedback
+            case .failure(let error):
+                self?.onError(error)
             case .success(let data):
                 if let strongSelf = self {
                     let controller = SPPartnersViewController(

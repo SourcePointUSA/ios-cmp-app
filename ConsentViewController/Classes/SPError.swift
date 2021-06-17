@@ -39,7 +39,6 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-
 @objcMembers public class UnableToLoadJSReceiver: SPError {
     public override var spCode: String { "sp_metric_unable_to_load_jsreceiver" }
     override public var description: String { "Unable to load the JSReceiver.js resource." }

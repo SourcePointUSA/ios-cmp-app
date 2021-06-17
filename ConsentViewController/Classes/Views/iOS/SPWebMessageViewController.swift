@@ -9,7 +9,6 @@ import Foundation
 import WebKit
 
 @objcMembers class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
-    var timeout: TimeInterval?
     var webviewConfig: WKWebViewConfiguration? { nil }
     let url: URL
     let contents: SPJson
@@ -35,10 +34,10 @@ import WebKit
         return nil
     }()
 
-    init(url: URL, messageId: Int?, contents: SPJson, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
+    init(url: URL, messageId: Int?, contents: SPJson, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?) {
         self.url = url
         self.contents = contents
-        super.init(messageId: messageId, campaignType: campaignType, delegate: delegate)
+        super.init(messageId: messageId, campaignType: campaignType, timeout: timeout, delegate: delegate)
     }
 
     required init?(coder: NSCoder) {
@@ -134,11 +133,11 @@ import WebKit
     var isFirstLayerMessage = true
 
     override func loadMessage() {
-        webview?.load(URLRequest(url: url))
+        webview?.load(URLRequest(url: url, timeoutInterval: timeout))
     }
 
     override func loadPrivacyManager(url: URL) {
-        webview?.load(URLRequest(url: url))
+        webview?.load(URLRequest(url: url, timeoutInterval: timeout))
     }
 
     override func closePrivacyManager() {
