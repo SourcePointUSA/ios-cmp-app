@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// TODO: handle data transition from v5 -> v6
 class SPUserDefaults: SPLocalStorage {
     static public let SP_KEY_PREFIX = "sp_"
     static public let IAB_KEY_PREFIX = "IABTCF_"
