@@ -36,7 +36,7 @@ enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
 }
 
 enum Message: Equatable {
-    case nativePM(_ message: SPPrivacyManagerResponse)
+    case nativePM(_ message: PrivacyManagerViewData)
     case native(_ message: SPJson)
     case web(_ message: SPJson)
     case unknown
@@ -50,7 +50,7 @@ extension Message: Decodable {
     init(type: MessageSubCategory, decoder: Decoder) throws {
         switch type {
         case .NativePMOTT:
-            self = .nativePM(try SPPrivacyManagerResponse(from: decoder))
+            self = .nativePM(try PrivacyManagerViewData(from: try SPPrivacyManagerResponse(from: decoder)))
         case .NativeInApp:
             self = .native(try SPJson(from: decoder))
         default:

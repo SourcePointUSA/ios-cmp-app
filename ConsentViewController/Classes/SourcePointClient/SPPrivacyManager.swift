@@ -8,106 +8,162 @@
 import Foundation
 import UIKit
 
-@objc class PMLongButtonAttributes: NSObject, Codable {
-    let onText: String?
-    let offText: String?
-    let customCategoryText: String?
-    let customVendorText: String?
-
-    init(onText: String?, offText: String, customCategoryText: String?, customVendorText: String) {
-        self.onText = onText
-        self.offText = offText
-        self.customCategoryText = customCategoryText
-        self.customVendorText = customVendorText
-    }
-}
-
-@objc class PMSliderAttributes: NSObject, Codable {
-    let consentText: String?
-    let legitInterestText: String?
-
-    init(consentText: String?, legitInterestText: String) {
-        self.consentText = consentText
-        self.legitInterestText = legitInterestText
-    }
-}
-
-@objc class PMFontAttributes: NSObject, Codable {
+@objcMembers class SPNativeFont: NSObject, Codable {
     let fontSize: CGFloat
     let fontWeight: String
     let color: String?
     let fontFamily: String
-
-    init(fontSize: CGFloat, fontWeight: String, color: String?, fontFamily: String) {
-        self.fontSize = fontSize
-        self.fontWeight = fontWeight
-        self.color = color
-        self.fontFamily = fontFamily
-    }
 }
 
-@objc class PMStyleAttributes: NSObject, Codable {
+@objcMembers class SPNativeStyle: NSObject, Codable {
     let backgroundColor: String?
     let width: Int?
-    let font: PMFontAttributes?
+    let font: SPNativeFont?
     let onFocusBackgroundColor: String?
     let onUnfocusBackgroundColor: String?
     let onFocusTextColor: String?
     let onUnfocusTextColor: String?
     let activeBackgroundColor: String?
-    let activeFont: PMFontAttributes?
+    let activeFont: SPNativeFont?
+}
 
-    init(
-        backgroundColor: String?,
-        width: Int?,
-        font: PMFontAttributes?,
-        onFocusBackgroundColor: String?,
-        onUnfocusBackgroundColor: String?,
-        onFocusTextColor: String?,
-        onUnfocusTextColor: String?,
-        activeBackgroundColor: String,
-        activeFont: PMFontAttributes?
-    ) {
-        self.backgroundColor = backgroundColor
-        self.width = width
-        self.font = font
-        self.onFocusBackgroundColor = onFocusBackgroundColor
-        self.onUnfocusBackgroundColor = onUnfocusBackgroundColor
-        self.onFocusTextColor = onFocusTextColor
-        self.onUnfocusTextColor = onUnfocusTextColor
-        self.activeBackgroundColor = activeBackgroundColor
-        self.activeFont = activeFont
+enum SPNativeUIType: Int, Equatable {
+    case unknown, View, Text, Button, LongButton, Slider
+}
+extension SPNativeUIType: Decodable {
+    public typealias RawValue = String
+
+    public var rawValue: String {
+        switch self {
+        case .View: return "View"
+        case .Text: return "Text"
+        case .Button: return "Button"
+        case .LongButton: return "LongButton"
+        case .Slider: return "Slider"
+        default: return "unknown"
+        }
+    }
+
+    public init(rawValue: String) {
+        switch rawValue {
+        case "View": self = .View
+        case "Text": self = .Text
+        case "Button": self = .Button
+        case "LongButton": self = .LongButton
+        case "Slider": self = .Slider
+        default: self = .unknown
+        }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(rawValue: try container.decode(String.self))
     }
 }
 
-@objc class PMUIComponents: NSObject, Codable {
+class SPNativeUI: NSObject, Decodable {
     let id: String
-    let type: String
-    let text: String?
-    let style: PMStyleAttributes?
-    let src: String?
-    let textDetails: PMLongButtonAttributes?
-    let sliderDetails: PMSliderAttributes?
+    let type: SPNativeUIType
+    let style: SPNativeStyle?
 
-    init(id: String, type: String, text: String?, style: PMStyleAttributes?, src: String?, textDetails: PMLongButtonAttributes?, sliderDetails: PMSliderAttributes?) {
-        self.id = id
-        self.type = type
-        self.text = text
-        self.style = style
-        self.src = src
-        self.textDetails = textDetails
-        self.sliderDetails = sliderDetails
+    public enum CodingKeys: CodingKey {
+        case id, type, style
     }
 }
 
-@objc class SPPrivacyManager: NSObject, Codable {
-    let showPrivacyPolicyBtn: Bool?
-    let style: PMStyleAttributes
-    let components: [PMUIComponents]
+class SPNativeView: SPNativeUI {
+    var components: [SPNativeUI] = []
 
-    init(showPrivacyPolicyBtn: Bool?, style: PMStyleAttributes, components: [PMUIComponents]) {
-        self.showPrivacyPolicyBtn = showPrivacyPolicyBtn
-        self.style = style
-        self.components = components
+    func byId(_ id: String) -> SPNativeUI? {
+        components.first { $0.id == id }
+    }
+
+    required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        var componentsContainer = try container.nestedUnkeyedContainer(forKey: .components)
+        var tempComponentsContainer = componentsContainer
+        while !componentsContainer.isAtEnd {
+            let componentContainer = try componentsContainer.nestedContainer(keyedBy: SPNativeUI.CodingKeys.self)
+            let type = try componentContainer.decode(SPNativeUIType.self, forKey: .type)
+            switch type {
+            case .View:
+                components.append(try tempComponentsContainer.decode(SPNativeView.self))
+            case .Text:
+                components.append(try tempComponentsContainer.decode(SPNativeText.self))
+            case .Button:
+                components.append(try tempComponentsContainer.decode(SPNativeButton.self))
+            case .LongButton:
+                components.append(try tempComponentsContainer.decode(SPNativeLongButton.self))
+            case .Slider:
+                components.append(try tempComponentsContainer.decode(SPNativeSlider.self))
+            default:
+                components.append(try tempComponentsContainer.decode(SPNativeUI.self))
+            }
+        }
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case components
+    }
+}
+
+class SPNativeText: SPNativeUI {
+    let text: String
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        text = try container.decode(String.self, forKey: .text)
+        try super.init(from: decoder)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case text
+    }
+}
+
+class SPNativeButton: SPNativeUI {
+    let text: String
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        text = try container.decode(String.self, forKey: .text)
+        try super.init(from: decoder)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case text
+    }
+}
+
+class SPNativeLongButton: SPNativeUI {
+    let onText, offText, onSubText, offSubText: String
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        onText = try container.decode(String.self, forKey: .onText)
+        offText = try container.decode(String.self, forKey: .offText)
+        onSubText = try container.decode(String.self, forKey: .onSubText)
+        offSubText = try container.decode(String.self, forKey: .offSubText)
+        try super.init(from: decoder)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case onText, offText, onSubText, offSubText
+    }
+}
+
+class SPNativeSlider: SPNativeUI {
+    let offText, onText: String
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        offText = try container.decode(String.self, forKey: .offText)
+        onText = try container.decode(String.self, forKey: .onText)
+        try super.init(from: decoder)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case offText, onText
     }
 }

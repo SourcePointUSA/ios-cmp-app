@@ -31,7 +31,9 @@ extension JSONDecoder {
 }
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
-typealias NativePMHandler = (Result<SPPrivacyManagerResponse, SPError>) -> Void
+typealias MMSMessageHandler = (Result<MMSMessageResponse, SPError>) -> Void
+typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
+typealias NativePMHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<ConsentResponse<T>, SPError>) -> Void
@@ -47,11 +49,18 @@ protocol SourcePointProtocol {
         idfaStaus: SPIDFAStatus,
         handler: @escaping MessagesHandler)
 
-    #if os(tvOS)
     func getNativePrivacyManager(
         withId pmId: String,
         handler: @escaping NativePMHandler)
-    #endif
+
+    func mmsMessage(
+        messageId: Int,
+        handler: @escaping MMSMessageHandler)
+
+    func privacyManagerView(
+        propertyId: Int,
+        consentLanguage: SPMessageLanguage,
+        handler: @escaping PrivacyManagerViewHandler)
 
     func postCCPAAction(
         authId: String?,
@@ -102,13 +111,16 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient: SourcePointProtocol {
-    static let WRAPPER_API = URL(string: "https://cdn.privacy-mgmt.com/wrapper/")!
-    static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let SP_ROOT = URL(string: "https://cdn.privacy-mgmt.com/")!
+    static let WRAPPER_API = URL(string: "./wrapper/", relativeTo: SP_ROOT)!
+    static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: WRAPPER_API)!
     static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=prod", relativeTo: WRAPPER_API)!
     static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
     static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
     static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=prod", relativeTo: WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true", relativeTo: SourcePointClient.WRAPPER_API)!
+    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true", relativeTo: WRAPPER_API)!
+    static let MMS_MESSAGE_URL = URL(string: "./mms/v2/message", relativeTo: SP_ROOT)!
+    static let PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
 
     let accountId: Int
     let propertyName: SPPropertyName
@@ -158,18 +170,45 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    #if os(tvOS)
+    func mmsMessage(messageId: Int, handler: @escaping MMSMessageHandler) {
+        let url = SourcePointClient.MMS_MESSAGE_URL.appendQueryItems(["message_id": String(messageId)])!
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as MMSMessageResponse
+            }.mapError({
+                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+            }))
+        }
+    }
+
+    func privacyManagerView(
+        propertyId: Int,
+        consentLanguage: SPMessageLanguage,
+        handler: @escaping PrivacyManagerViewHandler) {
+        let url = SourcePointClient.PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
+            "siteId": String(propertyId),
+            "consentLanguage": consentLanguage.rawValue
+        ])!
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as PrivacyManagerViewResponse
+            }.mapError({
+                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+            }))
+        }
+    }
+
     func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
         handler(Result {
-            try JSONDecoder().decode(
+            // swiftlint:disable:next force_try
+            return try! PrivacyManagerViewData(from: try! JSONDecoder().decode(
                 SPPrivacyManagerResponse.self,
                 from: MockNativePMResponse.data(using: .utf8)!
-            )
+            ))
         }.mapError {
             InvalidResponseWebMessageError(error: $0)
         })
     }
-    #endif
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }

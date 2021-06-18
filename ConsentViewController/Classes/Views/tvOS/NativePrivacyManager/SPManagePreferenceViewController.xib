@@ -12,14 +12,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPManagePreferenceViewController" customModule="ConsentViewController" customModuleProvider="target">
             <connections>
                 <outlet property="acceptButton" destination="3ab-43-cUI" id="74c-zW-cnf"/>
-                <outlet property="backButton" destination="sk7-Zw-lLu" id="4O8-FL-dFL"/>
+                <outlet property="actionsContainer" destination="i2S-g5-yct" id="d6K-GC-DVk"/>
                 <outlet property="categoriesTableView" destination="qa5-l0-OeM" id="J0w-el-fQb"/>
                 <outlet property="categorySlider" destination="g5R-Ih-zSF" id="FP0-3N-OCd"/>
                 <outlet property="descriptionTextView" destination="rwQ-S8-sv1" id="QWH-T2-QPM"/>
-                <outlet property="logoImageView" destination="2k0-5w-MQt" id="miG-al-1wm"/>
+                <outlet property="header" destination="n1v-b3-Um8" id="awC-Vd-79Q"/>
+                <outlet property="logoImageView" destination="0d5-2y-hex" id="iSz-wb-jEt"/>
                 <outlet property="saveAndExit" destination="NkU-e5-wl4" id="KX2-W9-sdu"/>
-                <outlet property="selectedCategoryTextLabel" destination="BdN-5U-huf" id="HL7-CG-NSu"/>
-                <outlet property="titleLabel" destination="iax-fH-b7c" id="Ogt-GV-Bo7"/>
+                <outlet property="selectedCategoryTextLabel" destination="Sgz-ww-70Y" id="D4q-kE-3BX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
         </placeholder>
@@ -28,121 +28,119 @@
             <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iax-fH-b7c">
-                    <rect key="frame" x="878" y="70" width="164" height="80"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="80" id="AAP-ly-Fkn"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="50"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="g5R-Ih-zSF">
-                    <rect key="frame" x="524" y="180" width="872" height="81"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="80" id="5p9-KN-6Y2"/>
-                    </constraints>
-                    <segments>
-                        <segment title="UserConsent"/>
-                        <segment title="LEGITIMATE INTEREST"/>
-                    </segments>
-                    <connections>
-                        <action selector="onCategorySliderTap:" destination="-1" eventType="valueChanged" id="KTv-iz-H8Q"/>
-                    </connections>
-                </segmentedControl>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-Zw-lLu">
-                    <rect key="frame" x="80" y="70" width="179" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Akb-BO-5P8"/>
-                    </constraints>
-                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                    <state key="normal" title="BACK"/>
-                    <connections>
-                        <action selector="onBackTap:" destination="-1" eventType="primaryActionTriggered" id="bfP-A3-ceE"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-5U-huf" userLabel="SelectedCategoryLabel">
-                    <rect key="frame" x="180" y="589" width="550" height="46"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="550" id="qPh-Fl-iSx"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="abv-wt-Ra2" userLabel="Stack View - ImageView">
-                    <rect key="frame" x="280" y="295" width="265" height="259"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4Of-DB-b8N" userLabel="Stack View - Main">
+                    <rect key="frame" x="80" y="60" width="1760" height="960"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SP_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="2k0-5w-MQt">
-                            <rect key="frame" x="0.0" y="0.0" width="265" height="259"/>
-                        </imageView>
-                    </subviews>
-                </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Yn8-g5-Nex" userLabel="Stack View - Buttons">
-                    <rect key="frame" x="187.5" y="660" width="450" height="197"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ab-43-cUI">
-                            <rect key="frame" x="0.0" y="0.0" width="450" height="86"/>
-                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" title="Accept All"/>
-                            <connections>
-                                <action selector="onAcceptTap:" destination="-1" eventType="primaryActionTriggered" id="bGN-g8-xIF"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NkU-e5-wl4">
-                            <rect key="frame" x="0.0" y="111" width="450" height="86"/>
-                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" title="Save &amp; Exit"/>
-                            <connections>
-                                <action selector="onSaveAndExitTap:" destination="-1" eventType="primaryActionTriggered" id="e09-qC-yKO"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="450" id="21r-u3-e2M"/>
-                    </constraints>
-                </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SI6-Z1-hLd" userLabel="Stack View - Description">
-                    <rect key="frame" x="920" y="310" width="900" height="690"/>
-                    <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet," textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwQ-S8-sv1">
-                            <rect key="frame" x="0.0" y="0.0" width="900" height="100"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n1v-b3-Um8" customClass="SPPMHeader" customModule="ConsentViewController" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="1760" height="100"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="100" id="Aqp-3G-rDg"/>
+                                <constraint firstAttribute="height" constant="100" id="Pty-iG-DUU"/>
                             </constraints>
-                            <color key="textColor" systemColor="labelColor"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        </textView>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="qa5-l0-OeM">
-                            <rect key="frame" x="0.0" y="110" width="900" height="580"/>
-                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </tableView>
+                        </view>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="g5R-Ih-zSF">
+                            <rect key="frame" x="444" y="116" width="872" height="81"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="5p9-KN-6Y2"/>
+                            </constraints>
+                            <segments>
+                                <segment title="UserConsent"/>
+                                <segment title="LEGITIMATE INTEREST"/>
+                            </segments>
+                            <connections>
+                                <action selector="onCategorySliderTap:" destination="-1" eventType="valueChanged" id="KTv-iz-H8Q"/>
+                            </connections>
+                        </segmentedControl>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A7J-Iw-S0w" userLabel="Stack View - Content">
+                            <rect key="frame" x="0.0" y="212" width="1760" height="748"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="6Dj-j9-6q0" userLabel="Stack View - 1st Column">
+                                    <rect key="frame" x="0.0" y="0.0" width="880" height="748"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SP_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="0d5-2y-hex">
+                                            <rect key="frame" x="260" y="0.0" width="360" height="360"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="360" id="ftc-MC-Xw1"/>
+                                                <constraint firstAttribute="height" constant="360" id="yKt-JN-jqo"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="Sgz-ww-70Y" userLabel="SelectedCategoryLabel">
+                                            <rect key="frame" x="165" y="424" width="550" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="550" id="OcY-wM-Ggj"/>
+                                                <constraint firstAttribute="height" constant="80" id="PAz-14-HP9"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="i2S-g5-yct" userLabel="Stack View - Actions">
+                                            <rect key="frame" x="190" y="568" width="500" height="180"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ab-43-cUI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="86"/>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Accept All"/>
+                                                    <connections>
+                                                        <action selector="onAcceptTap:" destination="-1" eventType="primaryActionTriggered" id="bGN-g8-xIF"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NkU-e5-wl4">
+                                                    <rect key="frame" x="0.0" y="94" width="500" height="86"/>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Save &amp; Exit"/>
+                                                    <connections>
+                                                        <action selector="onSaveAndExitTap:" destination="-1" eventType="primaryActionTriggered" id="e09-qC-yKO"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <viewLayoutGuide key="safeArea" id="GRx-Os-Ldt"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="500" id="jqC-kR-DwJ"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4ej-KD-EOf" userLabel="Stack View - 2nd Column">
+                                    <rect key="frame" x="880" y="0.0" width="880" height="748"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet," textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwQ-S8-sv1">
+                                            <rect key="frame" x="0.0" y="0.0" width="880" height="100"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="100" id="Aqp-3G-rDg"/>
+                                            </constraints>
+                                            <color key="textColor" systemColor="labelColor"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="qa5-l0-OeM">
+                                            <rect key="frame" x="0.0" y="100" width="880" height="648"/>
+                                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </tableView>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="4ej-KD-EOf" firstAttribute="width" secondItem="6Dj-j9-6q0" secondAttribute="width" id="Pcv-1E-JWL"/>
+                            </constraints>
+                        </stackView>
                     </subviews>
+                    <viewLayoutGuide key="safeArea" id="9kH-9G-HUv"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="900" id="1xg-F8-Rsc"/>
+                        <constraint firstItem="A7J-Iw-S0w" firstAttribute="leading" secondItem="4Of-DB-b8N" secondAttribute="leading" id="Ggy-zQ-tzJ"/>
+                        <constraint firstItem="n1v-b3-Um8" firstAttribute="width" secondItem="4Of-DB-b8N" secondAttribute="width" id="ZLU-sf-EkP"/>
+                        <constraint firstAttribute="width" constant="1760" id="jmO-lr-NRR"/>
                     </constraints>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="nkI-NY-t1X"/>
             <constraints>
-                <constraint firstItem="g5R-Ih-zSF" firstAttribute="top" secondItem="iax-fH-b7c" secondAttribute="bottom" constant="30" id="1RZ-0x-x6s"/>
-                <constraint firstItem="sk7-Zw-lLu" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" id="5vp-ra-Wqg"/>
-                <constraint firstItem="Yn8-g5-Nex" firstAttribute="centerX" secondItem="abv-wt-Ra2" secondAttribute="centerX" id="8Yw-SO-99J"/>
-                <constraint firstItem="BdN-5U-huf" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" constant="100" id="Dfz-Fc-4lZ"/>
-                <constraint firstItem="nkI-NY-t1X" firstAttribute="trailing" secondItem="SI6-Z1-hLd" secondAttribute="trailing" constant="20" id="MGt-m3-Ofy"/>
-                <constraint firstItem="BdN-5U-huf" firstAttribute="top" secondItem="abv-wt-Ra2" secondAttribute="bottom" constant="35" id="QKU-uP-l32"/>
-                <constraint firstItem="Yn8-g5-Nex" firstAttribute="top" secondItem="BdN-5U-huf" secondAttribute="bottom" constant="25" id="Z38-Q5-6Qw"/>
-                <constraint firstItem="abv-wt-Ra2" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" constant="200" id="aNt-8E-44N"/>
-                <constraint firstItem="iax-fH-b7c" firstAttribute="top" secondItem="sk7-Zw-lLu" secondAttribute="top" id="cjO-Fk-hrn"/>
-                <constraint firstItem="g5R-Ih-zSF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dIv-fp-IiN"/>
-                <constraint firstItem="iax-fH-b7c" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fCe-Zg-I4V"/>
-                <constraint firstItem="SI6-Z1-hLd" firstAttribute="top" secondItem="g5R-Ih-zSF" secondAttribute="bottom" constant="50" id="ibt-ag-4du"/>
-                <constraint firstItem="sk7-Zw-lLu" firstAttribute="top" secondItem="nkI-NY-t1X" secondAttribute="top" constant="10" id="jfv-PZ-p2S"/>
-                <constraint firstItem="abv-wt-Ra2" firstAttribute="top" secondItem="sk7-Zw-lLu" secondAttribute="bottom" constant="175" id="pDo-O6-618"/>
-                <constraint firstItem="nkI-NY-t1X" firstAttribute="bottom" secondItem="SI6-Z1-hLd" secondAttribute="bottom" constant="20" id="pvF-lM-BJx"/>
+                <constraint firstItem="4Of-DB-b8N" firstAttribute="height" secondItem="nkI-NY-t1X" secondAttribute="height" id="0QK-hQ-pTC"/>
+                <constraint firstItem="4Of-DB-b8N" firstAttribute="width" secondItem="nkI-NY-t1X" secondAttribute="width" id="LsK-Xp-trU"/>
+                <constraint firstItem="4Of-DB-b8N" firstAttribute="top" secondItem="nkI-NY-t1X" secondAttribute="top" id="WXF-gF-YpQ"/>
+                <constraint firstItem="4Of-DB-b8N" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" id="szU-po-acu"/>
             </constraints>
             <point key="canvasLocation" x="19" y="-564"/>
         </view>

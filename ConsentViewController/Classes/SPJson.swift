@@ -55,6 +55,10 @@ public enum SPJson: Codable, CustomStringConvertible, Equatable {
         self = .object([:])
     }
 
+    init? (_ object: SPStringifiedJSON) {
+        try? self.init(object.raw)
+    }
+
     public init(from decoder: Decoder) throws {
         if let string = try? decoder.singleValueContainer().decode(String.self) {
             self = .string(string)
