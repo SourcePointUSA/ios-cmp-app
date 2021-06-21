@@ -12,9 +12,9 @@ extension UILabel {
     func setup(from spText: SPNativeText?) {
         if let spText = spText {
             isHidden = false
-            text = spText.text
-            textColor = UIColor(hexString: spText.style?.font?.color)
-            font = UIFont(from: spText.style?.font)
+            text = spText.settings.text
+            textColor = UIColor(hexString: spText.settings.style?.font?.color)
+            font = UIFont(from: spText.settings.style?.font)
         }
     }
 }
@@ -23,11 +23,11 @@ extension UIButton {
     func setup(from spButton: SPNativeButton?) {
         if let spButton = spButton {
             isHidden = false
-            setTitle(spButton.text, for: .normal)
-            setTitleColor(UIColor(hexString: spButton.style?.onUnfocusTextColor), for: .normal)
-            setTitleColor(UIColor(hexString: spButton.style?.onFocusTextColor), for: .focused)
-            backgroundColor = UIColor(hexString: spButton.style?.onUnfocusBackgroundColor)
-            titleLabel?.font = UIFont(from: spButton.style?.font)
+            setTitle(spButton.settings.text, for: .normal)
+            setTitleColor(UIColor(hexString: spButton.settings.style?.onUnfocusTextColor), for: .normal)
+            setTitleColor(UIColor(hexString: spButton.settings.style?.onFocusTextColor), for: .focused)
+            backgroundColor = UIColor(hexString: spButton.settings.style?.onUnfocusBackgroundColor)
+            titleLabel?.font = UIFont(from: spButton.settings.style?.font)
         }
     }
 }

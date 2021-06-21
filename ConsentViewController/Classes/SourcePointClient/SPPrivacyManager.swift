@@ -28,16 +28,16 @@ import UIKit
 }
 
 enum SPNativeUIType: Int, Equatable {
-    case unknown, View, Text, Button, LongButton, Slider
+    case unknown, NativeView, NativeText, NativeButton, LongButton, Slider
 }
 extension SPNativeUIType: Decodable {
     public typealias RawValue = String
 
     public var rawValue: String {
         switch self {
-        case .View: return "View"
-        case .Text: return "Text"
-        case .Button: return "Button"
+        case .NativeView: return "NativeView"
+        case .NativeText: return "NativeText"
+        case .NativeButton: return "NativeButton"
         case .LongButton: return "LongButton"
         case .Slider: return "Slider"
         default: return "unknown"
@@ -46,9 +46,9 @@ extension SPNativeUIType: Decodable {
 
     public init(rawValue: String) {
         switch rawValue {
-        case "View": self = .View
-        case "Text": self = .Text
-        case "Button": self = .Button
+        case "NativeView": self = .NativeView
+        case "NativeText": self = .NativeText
+        case "NativeButton": self = .NativeButton
         case "LongButton": self = .LongButton
         case "Slider": self = .Slider
         default: self = .unknown
@@ -61,109 +61,156 @@ extension SPNativeUIType: Decodable {
     }
 }
 
+class SPNativeUISettings: NSObject, Decodable {
+    let style: SPNativeStyle?
+}
+
+class SPNativeUISettingsText: SPNativeUISettings {
+    let text: String
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        text = try container.decode(String.self, forKey: .text)
+        try super.init(from: decoder)
+    }
+
+    enum Keys: CodingKey {
+        case text
+    }
+}
+
 class SPNativeUI: NSObject, Decodable {
     let id: String
     let type: SPNativeUIType
-    let style: SPNativeStyle?
 
     public enum CodingKeys: CodingKey {
-        case id, type, style
+        case id, type
     }
 }
 
 class SPNativeView: SPNativeUI {
-    var components: [SPNativeUI] = []
+    var children: [SPNativeUI] = []
+    let settings: SPNativeUISettings
 
     func byId(_ id: String) -> SPNativeUI? {
-        components.first { $0.id == id }
+        children.first { $0.id == id }
     }
 
     required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        var componentsContainer = try container.nestedUnkeyedContainer(forKey: .components)
+        settings = try container.decode(SPNativeUISettings.self, forKey: .settings)
+        var componentsContainer = try container.nestedUnkeyedContainer(forKey: .children)
         var tempComponentsContainer = componentsContainer
         while !componentsContainer.isAtEnd {
             let componentContainer = try componentsContainer.nestedContainer(keyedBy: SPNativeUI.CodingKeys.self)
             let type = try componentContainer.decode(SPNativeUIType.self, forKey: .type)
             switch type {
-            case .View:
-                components.append(try tempComponentsContainer.decode(SPNativeView.self))
-            case .Text:
-                components.append(try tempComponentsContainer.decode(SPNativeText.self))
-            case .Button:
-                components.append(try tempComponentsContainer.decode(SPNativeButton.self))
+            case .NativeView:
+                children.append(try tempComponentsContainer.decode(SPNativeView.self))
+            case .NativeText:
+                children.append(try tempComponentsContainer.decode(SPNativeText.self))
+            case .NativeButton:
+                children.append(try tempComponentsContainer.decode(SPNativeButton.self))
             case .LongButton:
-                components.append(try tempComponentsContainer.decode(SPNativeLongButton.self))
+                children.append(try tempComponentsContainer.decode(SPNativeLongButton.self))
             case .Slider:
-                components.append(try tempComponentsContainer.decode(SPNativeSlider.self))
+                children.append(try tempComponentsContainer.decode(SPNativeSlider.self))
             default:
-                components.append(try tempComponentsContainer.decode(SPNativeUI.self))
+                children.append(try tempComponentsContainer.decode(SPNativeUI.self))
             }
         }
+        try super.init(from: decoder)
     }
 
     enum CodingKeys: String, CodingKey {
-        case components
+        case children, settings
     }
 }
 
 class SPNativeText: SPNativeUI {
-    let text: String
+    let settings: SPNativeUISettingsText
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        text = try container.decode(String.self, forKey: .text)
+        settings = try container.decode(SPNativeUISettingsText.self, forKey: .settings)
         try super.init(from: decoder)
     }
 
     enum CodingKeys: String, CodingKey {
-        case text
+        case settings
     }
 }
 
 class SPNativeButton: SPNativeUI {
-    let text: String
+    let settings: SPNativeUISettingsText
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        text = try container.decode(String.self, forKey: .text)
+        settings = try container.decode(SPNativeUISettingsText.self, forKey: .settings)
         try super.init(from: decoder)
     }
 
     enum CodingKeys: String, CodingKey {
-        case text
+        case settings
     }
 }
 
 class SPNativeLongButton: SPNativeUI {
-    let onText, offText, onSubText, offSubText: String
+    class Settings: SPNativeUISettings {
+        let onText, offText, onSubText, offSubText: String
+
+        required init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: Keys.self)
+            onText = try container.decode(String.self, forKey: .onText)
+            offText = try container.decode(String.self, forKey: .offText)
+            onSubText = try container.decode(String.self, forKey: .onSubText)
+            offSubText = try container.decode(String.self, forKey: .offSubText)
+            try super.init(from: decoder)
+        }
+
+        enum Keys: CodingKey {
+            case onText, offText, onSubText, offSubText
+        }
+    }
+
+    let settings: Settings
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        onText = try container.decode(String.self, forKey: .onText)
-        offText = try container.decode(String.self, forKey: .offText)
-        onSubText = try container.decode(String.self, forKey: .onSubText)
-        offSubText = try container.decode(String.self, forKey: .offSubText)
+        settings = try container.decode(Settings.self, forKey: .settings)
         try super.init(from: decoder)
     }
 
     enum CodingKeys: String, CodingKey {
-        case onText, offText, onSubText, offSubText
+        case settings
     }
 }
 
 class SPNativeSlider: SPNativeUI {
-    let offText, onText: String
+    class Settings: SPNativeUISettings {
+        let onText, offText: String
+
+        required init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: Keys.self)
+            onText = try container.decode(String.self, forKey: .onText)
+            offText = try container.decode(String.self, forKey: .offText)
+            try super.init(from: decoder)
+        }
+
+        enum Keys: CodingKey {
+            case onText, offText
+        }
+    }
+
+    let settings: Settings
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        offText = try container.decode(String.self, forKey: .offText)
-        onText = try container.decode(String.self, forKey: .onText)
+        settings = try container.decode(Settings.self, forKey: .settings)
         try super.init(from: decoder)
     }
 
     enum CodingKeys: String, CodingKey {
-        case offText, onText
+        case settings
     }
 }
