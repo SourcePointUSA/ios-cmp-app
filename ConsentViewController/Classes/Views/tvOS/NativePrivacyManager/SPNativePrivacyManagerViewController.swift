@@ -31,8 +31,10 @@ import Foundation
     func setHeader () {
         header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
         header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
-        header.onBackButtonTapped = {
-            self.messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
+        header.onBackButtonTapped = { [weak self] in
+            if let this = self {
+                self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)
+            }
         }
     }
 
@@ -51,7 +53,7 @@ import Foundation
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
-        messageUIDelegate?.action(
+        action(
             SPAction(type: .AcceptAll, id: nil, campaignType: campaignType),
             from: self
         )
@@ -126,7 +128,9 @@ extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
-
+        dismiss(animated: false) {
+            self.messageUIDelegate?.action(action, from: controller)
+        }
     }
 
     func onError(_ error: SPError) {

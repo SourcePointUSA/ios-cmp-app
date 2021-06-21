@@ -34,7 +34,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
     func setHeader () {
         header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
         header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
-        header.onBackButtonTapped = { self.dismiss(animated: true) }
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 
     override func viewDidLoad() {

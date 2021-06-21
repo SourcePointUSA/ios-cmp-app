@@ -32,7 +32,7 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     func setHeader () {
         headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
         headerView.spTitleText = viewData.byId("HeaderText") as? SPNativeText
-        headerView.onBackButtonTapped = { self.dismiss(animated: true) }
+        headerView.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 
     override func setFocusGuides() {
