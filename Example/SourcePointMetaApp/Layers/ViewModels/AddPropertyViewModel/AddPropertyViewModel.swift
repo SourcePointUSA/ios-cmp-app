@@ -48,7 +48,7 @@ class AddPropertyViewModel {
 
     /// It add property item.
     /// - Parameter completionHandler: Completion handler
-    func addproperty(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel], completionHandler: @escaping (SPError?, Bool, NSManagedObjectID?) -> Void) {
+    func addproperty(propertyDetails: PropertyDetailsModel, completionHandler: @escaping (SPError?, Bool, NSManagedObjectID?) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             //Callback for storage coordinator
             let storageCoordinatorCallback: ((NSManagedObjectID?, Bool) -> Void) = { (managedObjectID, executionStatus) in
@@ -64,7 +64,7 @@ class AddPropertyViewModel {
                 }
             }
             // Adding new property item in the storage.
-            self?.storageCoordinator.add(propertyDetails: propertyDetails, targetingParams: targetingParams, completionHandler: storageCoordinatorCallback)
+            self?.storageCoordinator.add(propertyDetails: propertyDetails, completionHandler: storageCoordinatorCallback)
         }
     }
 
@@ -89,10 +89,10 @@ class AddPropertyViewModel {
     ///   - propertyDataModel: property Data Model.
     ///   - managedObjectID: managedObjectID of existing property entity.
     ///   - handler: Callback for the completion event.
-    func update(propertyDetails propertyDataModel: PropertyDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID: NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func update(propertyDetails propertyDataModel: PropertyDetailsModel, whereManagedObjectID managedObjectID: NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            self?.storageCoordinator.update(propertyDetails: propertyDataModel, targetingParams: targetingParams, whereManagedObjectID: managedObjectID, completionHandler: { (optionalpropertyManagedObjectID, _) in
-                if let propertyManagedObjectID = optionalpropertyManagedObjectID {
+            self?.storageCoordinator.update(propertyDetails: propertyDataModel, whereManagedObjectID: managedObjectID, completionHandler: { (optionalPropertyManagedObjectID, _) in
+                if let propertyManagedObjectID = optionalPropertyManagedObjectID {
                     DispatchQueue.main.async {
                         handler(propertyManagedObjectID, true)
                     }
@@ -107,12 +107,12 @@ class AddPropertyViewModel {
     /// - Parameters:
     ///   - propertyDataModel: property Data Model.
     ///   - handler: Callback for the completion event.
-    func  checkExitanceOfData(propertyDetails propertyDataModel: PropertyDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
+    func  checkExitanceOfData(propertyDetails propertyDataModel: PropertyDetailsModel, completionHandler handler : @escaping (Bool) -> Void) {
 
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            self?.storageCoordinator.checkExitanceOfData(propertyDetails: propertyDataModel, targetingParams: targetingParams, completionHandler: { (optionalpropertyManagedObject) in
+            self?.storageCoordinator.checkExitanceOfData(propertyDetails: propertyDataModel, completionHandler: { (optionalPropertyManagedObject) in
                 DispatchQueue.main.async {
-                    handler(optionalpropertyManagedObject)
+                    handler(optionalPropertyManagedObject)
                 }
             })
         }

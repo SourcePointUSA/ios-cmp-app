@@ -30,7 +30,7 @@
         <!--New Property-->
         <scene sceneID="sbr-vP-gOd">
             <objects>
-                <viewController storyboardIdentifier="AddPropertyViewController" id="cyC-sw-8W2" customClass="AddPropertyViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPropertyViewController" id="cyC-sw-8W2" customClass="AddPropertyViewController" customModule="Unified_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ARi-0k-eP1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -153,7 +153,7 @@
                                                     <constraint firstAttribute="height" constant="150" id="Jgf-El-vDi"/>
                                                 </constraints>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignTableViewCell" rowHeight="350" id="5FT-PC-bgJ" customClass="CampaignTableViewCell" customModule="GDPR_MetaApp">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignTableViewCell" rowHeight="350" id="5FT-PC-bgJ" customClass="CampaignTableViewCell" customModule="Unified_MetaApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="24.5" width="335" height="350"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5FT-PC-bgJ" id="hiM-p2-dcZ">
@@ -415,7 +415,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignListCell" rowHeight="250" id="P4G-ju-zL2" customClass="CampaignListCell" customModule="GDPR_MetaApp" customModuleProvider="target">
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignListCell" rowHeight="250" id="P4G-ju-zL2" customClass="CampaignListCell" customModule="Unified_MetaApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="24.5" width="375" height="250"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P4G-ju-zL2" id="ea8-m7-aEF">
@@ -609,7 +609,7 @@
         <!--Property Debug Info-->
         <scene sceneID="5ca-lh-QwF">
             <objects>
-                <viewController storyboardIdentifier="ConsentDetailsViewController" id="Lyi-Xh-6dq" customClass="ConsentDetailsViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConsentDetailsViewController" id="Lyi-Xh-6dq" customClass="ConsentDetailsViewController" customModule="Unified_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GBV-7x-oY4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -685,7 +685,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="493"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="GDPR_MetaApp" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="Unified_MetaApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="24.5" width="375" height="43.5"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dbp-dA-FSM" id="x2W-Ep-CTP">
@@ -785,7 +785,7 @@
         <!--Property List-->
         <scene sceneID="zDA-pX-BuF">
             <objects>
-                <viewController storyboardIdentifier="PropertyListViewController" id="nwW-9M-3Wu" customClass="PropertyListViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PropertyListViewController" id="nwW-9M-3Wu" customClass="PropertyListViewController" customModule="Unified_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="POH-Ao-l0L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -794,7 +794,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="90" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="GDPR_MetaApp" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="90" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="Unified_MetaApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="24.5" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oya-4T-sTe" id="BDy-AV-b9J">

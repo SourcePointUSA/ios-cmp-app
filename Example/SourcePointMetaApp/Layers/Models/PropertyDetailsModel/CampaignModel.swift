@@ -20,7 +20,7 @@ struct CampaignModel {
     let campaignEnv: Int64
 
     /// It holds privacy manager Id
-    let privacyManagerId: String?
+    let pmID: String?
 
     /// It holds pm tab value
     let pmTab: String?
@@ -38,10 +38,10 @@ struct CampaignModel {
     ///   - privacyManagerId: privacyManagerId which is associated with the property
     ///   - pmTab: privacyManager  tab
     ///   - targetingParams: targeting parameters
-    init(campaignName: String?, campaignEnv: Int64, privacyManagerId: String?, pmTab: String?, targetingParams: [TargetingParamModel]?) {
+    init(campaignName: String?, campaignEnv: Int64, pmID: String?, pmTab: String?, targetingParams: [TargetingParamModel]?) {
         self.campaignName = campaignName
         self.campaignEnv = campaignEnv
-        self.privacyManagerId = privacyManagerId
+        self.pmID = pmID
         self.pmTab = pmTab
         self.targetingParams = targetingParams
     }
