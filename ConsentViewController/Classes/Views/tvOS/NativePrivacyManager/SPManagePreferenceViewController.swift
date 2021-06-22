@@ -44,7 +44,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     func setHeader() {
         header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
         header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.onBackButtonTapped = { self.dismiss(animated: true) }
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 
     override func viewDidLoad() {
@@ -65,6 +65,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
+        self.messageUIDelegate?.action(SPAction(type: .AcceptAll, id: nil, campaignType: self.campaignType), from: self)
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {

@@ -387,6 +387,34 @@ extension SPConsentManager: SPMessageUIDelegate {
 }
 
 extension SPConsentManager: SPNativePMDelegate {
+//    func onAcceptAllTap() {
+//        print("Accept All")
+//    }
+//
+//    func onRejectAllTap() {
+//        print("Reject All")
+//    }
+//
+//    func onSaveAndExitTap() {
+//        print("Save And Exit")
+//    }
+//
+//    func onVendorOnTap() {
+//        print("Vendor On")
+//    }
+//
+//    func onVendorOffTap() {
+//        print("Vendor Off")
+//    }
+//
+//    func onCategoryOnTap() {
+//        print("Category On")
+//    }
+//
+//    func onCategoryOffTap() {
+//        print("Category Off")
+//    }
+
     func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler) {
 //        if let messageId = messageId {
 //            spClient.mmsMessage(messageId: messageId) { result in
@@ -399,11 +427,11 @@ extension SPConsentManager: SPNativePMDelegate {
             spClient.privacyManagerView(
                 propertyId: propertyId,
                 consentLanguage: messageLanguage
-            ) { result in
+            ) { [weak self] result in
                 switch result {
-                case .failure(let error): self.onError(error)
+                case .failure(let error): self?.onError(error)
                 case .success(let pmData):
-                    self.pmSecondLayerData = pmData
+                    self?.pmSecondLayerData = pmData
                     handler(result)
                 }
             }
@@ -418,4 +446,11 @@ typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -
 
 protocol SPNativePMDelegate: AnyObject {
     func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
+//    func onAcceptAllTap()
+//    func onRejectAllTap()
+//    func onSaveAndExitTap()
+//    func onVendorOnTap()
+//    func onVendorOffTap()
+//    func onCategoryOnTap()
+//    func onCategoryOffTap()
 }

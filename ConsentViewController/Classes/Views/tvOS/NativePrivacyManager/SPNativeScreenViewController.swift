@@ -109,7 +109,7 @@ class FocusGuideDebugView: UIView {
 }
 
 @objcMembers class SPNativeScreenViewController: SPMessageViewController {
-    var components: [SPNativeUI] { viewData.components }
+    var components: [SPNativeUI] { viewData.children }
     let viewData: SPNativeView
     let pmData: PrivacyManagerViewData
 
@@ -133,8 +133,8 @@ class FocusGuideDebugView: UIView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(hexString: viewData.style?.backgroundColor)
-        view.tintColor = UIColor(hexString: viewData.style?.backgroundColor)
+        view.backgroundColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
+        view.tintColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
         setFocusGuides()
     }
 
@@ -142,11 +142,11 @@ class FocusGuideDebugView: UIView {
     func loadButton(forComponentId id: String, button: UIButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             button.isHidden = false
-            button.titleLabel?.text = action.text
-            button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
-            button.setTitleColor(UIColor(hexString: action.style?.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
-            button.titleLabel?.font = UIFont(from: action.style?.font)
+            button.titleLabel?.text = action.settings.text
+            button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
+            button.titleLabel?.font = UIFont(from: action.settings.style?.font)
         }
         return button
     }
@@ -154,19 +154,19 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            label.text = textDetails.text
-            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
-            label.font = UIFont(from: textDetails.style?.font)
+            label.text = textDetails.settings.text
+            label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
+            label.font = UIFont(from: textDetails.settings.style?.font)
         }
         return label
     }
 
     @discardableResult
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
-        if let textDetails = components.first(where: { $0.id == id }) {
+        if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             label.text = text
-            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
-            label.font = UIFont(from: textDetails.style?.font)
+            label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
+            label.font = UIFont(from: textDetails.settings.style?.font)
         }
         return label
     }
@@ -174,8 +174,8 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadTextView(forComponentId id: String, textView: UITextView) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
-            textView.text = textViewComponent.text
-            textView.textColor = UIColor(hexString: textViewComponent.style?.font?.color)
+            textView.text = textViewComponent.settings.text
+            textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
             textView.showsVerticalScrollIndicator = true
@@ -183,7 +183,7 @@ class FocusGuideDebugView: UIView {
             textView.panGestureRecognizer.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ]
-            textView.font = UIFont(from: textViewComponent.style?.font)
+            textView.font = UIFont(from: textViewComponent.settings.style?.font)
         }
         return textView
     }
@@ -191,13 +191,13 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
-            slider.setTitle(sliderDetails.offText, forSegmentAt: 0)
-            slider.setTitle(sliderDetails.onText, forSegmentAt: 1)
-            slider.backgroundColor = UIColor(hexString: sliderDetails.style?.backgroundColor)
-            let font =  UIFont(from: sliderDetails.style?.font)
+            slider.setTitle(sliderDetails.settings.offText, forSegmentAt: 0)
+            slider.setTitle(sliderDetails.settings.onText, forSegmentAt: 1)
+            slider.backgroundColor = UIColor(hexString: sliderDetails.settings.style?.backgroundColor)
+            let font =  UIFont(from: sliderDetails.settings.style?.font)
             let attributes = [
                 NSAttributedString.Key.font: font as Any,
-                NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.font?.color) as Any
+                NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.settings.style?.font?.color) as Any
             ]
             slider.setTitleTextAttributes(attributes, for: .normal)
             slider.setTitleTextAttributes(attributes, for: .selected)
