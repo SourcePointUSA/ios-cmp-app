@@ -55,7 +55,6 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         categoriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        categoriesTableView.allowsSelection = false
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
     }
@@ -148,5 +147,18 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             break
         }
         return true
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let categoryDetailsVC = SPCategoryDetailsViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: viewData,
+            pmData: pmData,
+            delegate: nil,
+            nibName: "SPCategoryDetailsViewController"
+        )
+        categoryDetailsVC.category = categories[indexPath.row]
+        present(categoryDetailsVC, animated: true)
     }
 }
