@@ -140,7 +140,8 @@ import Foundation
             campaigns: campaigns,
             authId: authId,
             localState: storage.localState,
-            idfaStaus: idfaStatus
+            idfaStaus: idfaStatus,
+            consentLanguage: messageLanguage
         ) { [weak self] result in
             switch result {
             case .success(let messagesResponse):

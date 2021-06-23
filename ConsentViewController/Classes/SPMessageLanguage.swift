@@ -8,7 +8,7 @@
 import Foundation
 
 /// Languages supported by Message and PM
-@objc public enum SPMessageLanguage: Int {
+@objc public enum SPMessageLanguage: Int, Codable {
     case BrowserDefault
     case English
     case Bulgarian

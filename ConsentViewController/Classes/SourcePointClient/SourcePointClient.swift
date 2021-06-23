@@ -47,6 +47,7 @@ protocol SourcePointProtocol {
         authId: String?,
         localState: SPJson,
         idfaStaus: SPIDFAStatus,
+        consentLanguage: SPMessageLanguage,
         handler: @escaping MessagesHandler)
 
     func getNativePrivacyManager(
@@ -150,6 +151,7 @@ class SourcePointClient: SourcePointProtocol {
         authId: String?,
         localState: SPJson,
         idfaStaus: SPIDFAStatus,
+        consentLanguage: SPMessageLanguage,
         handler: @escaping MessagesHandler) {
         _ = JSONEncoder().encodeResult(MessageRequest(
             authId: authId,
@@ -158,6 +160,7 @@ class SourcePointClient: SourcePointProtocol {
             accountId: accountId,
             idfaStatus: idfaStaus,
             localState: localState,
+            consentLanguage: consentLanguage,
             campaigns: CampaignsRequest(from: campaigns)
         )).map { body in
             client.post(urlString: SourcePointClient.GET_MESSAGES_URL.absoluteString, body: body) { result in

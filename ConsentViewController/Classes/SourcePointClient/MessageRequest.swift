@@ -39,6 +39,7 @@ struct MessageRequest: Equatable, Encodable {
     let accountId: Int
     let idfaStatus: SPIDFAStatus
     let localState: SPJson
+    let consentLanguage: SPMessageLanguage
     let campaigns: CampaignsRequest
     let includeData = [
         "localState": ["type": "RecordString"],
