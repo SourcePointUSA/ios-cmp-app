@@ -153,7 +153,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         let categoryDetailsVC = SPCategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
-            viewData: viewData,
+            viewData: pmData.categoryDetailsView,
             pmData: pmData,
             delegate: nil,
             nibName: "SPCategoryDetailsViewController"

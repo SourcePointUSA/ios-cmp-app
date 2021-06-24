@@ -147,6 +147,8 @@ class FocusGuideDebugView: UIView {
             button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
             button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
             button.titleLabel?.font = UIFont(from: action.settings.style?.font)
+        } else {
+            button.isHidden = true
         }
         return button
     }
@@ -191,8 +193,8 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
-            slider.setTitle(sliderDetails.settings.onText, forSegmentAt: 0)
-            slider.setTitle(sliderDetails.settings.offText, forSegmentAt: 1)
+            slider.setTitle(sliderDetails.settings.leftText, forSegmentAt: 0)
+            slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
             if let font = UIFont(from: sliderDetails.settings.style?.font),
                let fontColor = sliderDetails.settings.style?.font?.color {
                 slider.setTitleTextAttributes([

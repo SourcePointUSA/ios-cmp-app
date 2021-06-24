@@ -43,7 +43,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
         loadLabelView(forComponentId: "VendorsHeader", label: partnerLabel)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadSliderButton(forComponentId: "CategoriesSlider", slider: vendorsSlider)
+        loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)
         vendorsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorsTableView.delegate = self
         vendorsTableView.dataSource = self
@@ -116,7 +116,7 @@ extension SPPartnersViewController: UITableViewDelegate {
         let vendorDetailsVC = SPVendorDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
-            viewData: viewData,
+            viewData: pmData.vendorDetailsView,
             pmData: pmData,
             delegate: nil,
             nibName: "SPVendorDetailsViewController"

@@ -12,7 +12,6 @@ import Foundation
     weak var delegate: SPNativePMDelegate?
 
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var subDescriptionTextLabel: UILabel!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: UIButton!
@@ -41,8 +40,7 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadLabelView(forComponentId: "CategoriesSubDescriptionText", label: subDescriptionTextLabel)
-        loadTextView(forComponentId: "CategoriesDescriptionText", textView: descriptionTextView)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
