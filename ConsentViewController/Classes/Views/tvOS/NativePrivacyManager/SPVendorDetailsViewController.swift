@@ -18,6 +18,8 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var vendorDetailsTableView: UITableView!
     @IBOutlet weak var actionsContainer: UIStackView!
 
+    weak var vendorManagerDelegate: PMVendorManager?
+
     let cellReuseIdentifier = "cell"
     var vendor: VendorListVendor?
     var consentCategories: [String] { vendor?.consentCategories.map { $0.name } ?? [] }
@@ -64,11 +66,15 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onOnButtonTap(_ sender: Any) {
-
+        if let vendor = vendor {
+            vendorManagerDelegate?.onVendorOn(vendor)
+        }
     }
 
     @IBAction func onOffButtonTap(_ sender: Any) {
-
+        if let vendor = vendor {
+            vendorManagerDelegate?.onVendorOff(vendor)
+        }
     }
 }
 
@@ -79,25 +85,15 @@ extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDeleg
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
         let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = sections[section]?.settings.text
         label.font = UIFont(from: sections[section]?.settings.style?.font)
         label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
-        if section < 2 {
-            return label
-        } else {
-            label.text = "test"
-            return label
-        }
+        return label
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         50
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section]?.settings.text
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

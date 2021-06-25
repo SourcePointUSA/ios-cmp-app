@@ -14,7 +14,6 @@
                 <outlet property="actionsContainer" destination="fkt-xy-1Gj" id="Ltd-Jb-qc8"/>
                 <outlet property="header" destination="IIU-ZS-feP" id="XaD-1g-uUh"/>
                 <outlet property="logoImageView" destination="Nlg-W0-A4w" id="7Bz-ZU-rWd"/>
-                <outlet property="partnerLabel" destination="YV1-O6-fN3" id="Ssn-TF-jGT"/>
                 <outlet property="saveAndExit" destination="eIA-bC-Rnh" id="j2I-AU-wZr"/>
                 <outlet property="selectedvendorTextLabel" destination="jSe-4i-jyb" id="PQK-hG-rLC"/>
                 <outlet property="vendorsSlider" destination="199-HU-OtX" id="Qec-qC-ncz"/>
@@ -98,17 +97,8 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="T5e-1y-rxW" userLabel="Stack View - 2nd Column">
                                     <rect key="frame" x="880" y="0.0" width="880" height="748"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YV1-O6-fN3">
-                                            <rect key="frame" x="0.0" y="0.0" width="880" height="50"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="poR-zx-HZL"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="W7V-S9-3N2">
-                                            <rect key="frame" x="0.0" y="50" width="880" height="698"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="880" height="748"/>
                                             <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableView>
                                     </subviews>

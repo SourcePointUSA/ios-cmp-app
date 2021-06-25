@@ -113,6 +113,21 @@ public let MockNativePMResponse = """
                 }
              },
              {
+                "id":"CategoriesHeader",
+                "type":"NativeText",
+                "settings":{
+                   "text":"We and our partners process person data to:",
+                   "style":{
+                      "font":{
+                         "fontSize":14,
+                         "fontWeight":"600",
+                         "color":"#22243b",
+                         "fontFamily":"arial, helvetica, sans-serif"
+                      }
+                   }
+                }
+             },
+             {
                 "id":"CategoriesDescriptionText",
                 "type":"NativeText",
                 "settings":{
@@ -765,21 +780,6 @@ public let MockNativePMResponse = """
                 "id":"CategoryDescription",
                 "type":"NativeText",
                 "name":"Categories Description",
-                "settings":{
-                   "text":"",
-                   "style":{
-                      "font":{
-                         "fontSize":10,
-                         "fontWeight":"400",
-                         "color":"#000000",
-                         "fontFamily":"arial, helvetica, sans-serif"
-                      }
-                   }
-                }
-             },
-             {
-                "id":"CategoryDescription",
-                "type":"NativeText",
                 "settings":{
                    "text":"",
                    "style":{

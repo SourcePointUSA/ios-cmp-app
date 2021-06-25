@@ -103,13 +103,15 @@ import Foundation
             return nil
         #if os(tvOS)
         case .nativePM(let content):
-            return SPNativePrivacyManagerViewController(
+            let controller = SPNativePrivacyManagerViewController(
                 messageId: messageId,
                 campaignType: type,
                 viewData: content.homeView,
                 pmData: content,
                 delegate: self
             )
+            controller.vendorGrants = userData.gdpr?.consents?.vendorGrants
+            return controller
         #endif
         #if os(iOS)
         case .web(let content): return GenericWebMessageViewController(

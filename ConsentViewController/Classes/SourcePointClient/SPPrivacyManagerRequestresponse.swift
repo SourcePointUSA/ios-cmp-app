@@ -41,6 +41,7 @@ extension SPCategoryType: Codable {
         let vendorType: SPVendorType
     }
 
+    let iabId: Int?
     let _id, name, description: String
     let type: SPCategoryType?
     let legIntVendors: [Vendor]?

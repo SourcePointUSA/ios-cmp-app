@@ -19,6 +19,8 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
 
+    weak var categoryManagerDelegate: PMCategoryManager?
+
     var categories: [VendorListCategory] = []
     var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
@@ -26,12 +28,26 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     var features: [VendorListShortVendor] = []
     var specialFeatures: [VendorListShortVendor] = []
 
-    let sections = [
-        "Purposes",
-        "Special Purposes",
-        "Features",
-        "Special features"
-    ]
+    var sections: [SPNativeText?] {
+        var sections: [SPNativeText?] = []
+        if userConsentCategories.isNotEmpty() {
+            sections.append(viewData.byId("PurposesHeader") as? SPNativeText)
+            // TODO: add definition
+        }
+        if specialPurposes.isNotEmpty() {
+            sections.append(viewData.byId("SpecialPurposesHeader") as? SPNativeText)
+            // TODO: add definition
+        }
+        if features.isNotEmpty() {
+            sections.append(viewData.byId("FeaturesHeader") as? SPNativeText)
+            // TODO: add definition
+        }
+        if specialFeatures.isNotEmpty() {
+            sections.append(viewData.byId("SpecialFeaturesHeader") as? SPNativeText)
+            // TODO: add definition
+        }
+        return sections
+    }
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
@@ -64,11 +80,11 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
-        self.messageUIDelegate?.action(SPAction(type: .AcceptAll, id: nil, campaignType: self.campaignType), from: self)
+        messageUIDelegate?.action(SPAction(type: .AcceptAll, id: nil, campaignType: campaignType), from: self)
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        dismiss(animated: true)
+        messageUIDelegate?.action(SPAction(type: .SaveAndExit, id: nil, campaignType: campaignType), from: self)
     }
 }
 
@@ -81,21 +97,26 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         }
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch categorySlider.selectedSegmentIndex {
-        case 0: return sections[section]
-        default: return nil
-        }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        label.text = sections[section]?.settings.text
+        label.font = UIFont(from: sections[section]?.settings.style?.font)
+        label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
+        return label
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        50
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            if section == 0 { // purposes
+            if section == 0 {
                 return userConsentCategories.count
-            } else if section == 1 { // special purposes
+            } else if section == 1 {
                 return specialPurposes.count
-            } else if section == 2 { // features
+            } else if section == 2 {
                 return features.count
             } else if section == 3 {
                 return specialFeatures.count
@@ -159,6 +180,19 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             nibName: "SPCategoryDetailsViewController"
         )
         categoryDetailsVC.category = categories[indexPath.row]
+        categoryDetailsVC.categoryManagerDelegate = self
         present(categoryDetailsVC, animated: true)
+    }
+}
+
+extension SPManagePreferenceViewController: PMCategoryManager {
+    func onCategoryOn(_ category: VendorListCategory) {
+        dismiss(animated: true)
+        categoryManagerDelegate?.onCategoryOn(category)
+    }
+
+    func onCategoryOff(_ category: VendorListCategory) {
+        dismiss(animated: true)
+        categoryManagerDelegate?.onCategoryOff(category)
     }
 }
