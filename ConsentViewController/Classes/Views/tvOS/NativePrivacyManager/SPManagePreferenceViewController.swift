@@ -21,6 +21,8 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
 
     weak var categoryManagerDelegate: PMCategoryManager?
 
+    var acceptedCategories: [String: Bool] = [:]
+
     var categories: [VendorListCategory] = []
     var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
@@ -70,7 +72,10 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
-        categoriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        categoriesTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
     }
@@ -134,27 +139,47 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (categoriesTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+//        let cell: UITableViewCell = (categoriesTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+            return UITableViewCell()
+        }
+
         let section = indexPath.section
         let row = indexPath.row
-        var cellText = ""
-        switch categorySlider.selectedSegmentIndex {
-        case 0:
-            if section == 0 { // purposes
-                cellText = userConsentCategories[row].name
-            } else if section == 1 { // special purposes
-                cellText = specialPurposes[row].name
-            } else if section == 2 { // features
-                cellText = features[row].name
-            } else if section == 3 {
-                cellText = specialFeatures[row].name
+        if categorySlider.selectedSegmentIndex == 0 {
+            switch section {
+            case 0:
+                let category = userConsentCategories[row]
+                cell.labelText = category.name
+                cell.isOn = acceptedCategories.keys.contains(category._id)
+                cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
+                cell.selectable = true
+            case 1:
+                let category = specialPurposes[row]
+                cell.labelText = category.name
+                cell.isOn = nil
+                cell.customText = nil
+                cell.selectable = false
+            case 2:
+                let category = features[row]
+                cell.labelText = category.name
+                cell.isOn = nil
+                cell.customText = nil
+                cell.selectable = false
+            case 3:
+                let category = specialFeatures[row]
+                cell.labelText = category.name
+                cell.isOn = nil
+                cell.customText = nil
+                cell.selectable = true
+            default: break
             }
-            cell.textLabel?.text = cellText
-        case 1:
-            cell.textLabel?.text = legIntCategories[indexPath.row].name
-        default:
-            break
+        } else {
+            cell.labelText = legIntCategories[indexPath.row].name
         }
+        cell.onText = "On"
+        cell.offText = "Off"
+        cell.loadUI()
         return cell
     }
 
@@ -179,6 +204,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             delegate: nil,
             nibName: "SPCategoryDetailsViewController"
         )
+        userConsentCategories[indexPath.row]
         categoryDetailsVC.category = categories[indexPath.row]
         categoryDetailsVC.categoryManagerDelegate = self
         present(categoryDetailsVC, animated: true)
