@@ -26,9 +26,16 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     var categories: [VendorListCategory] = []
     var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
-    var specialPurposes: [VendorListShortVendor] = []
-    var features: [VendorListShortVendor] = []
-    var specialFeatures: [VendorListShortVendor] = []
+    var specialPurposes: [VendorListCategory] = []
+    var features: [VendorListCategory] = []
+    var specialFeatures: [VendorListCategory] = []
+
+    var categoriesTable: [[VendorListCategory]] {[
+        userConsentCategories,
+        specialPurposes,
+        features,
+        specialFeatures
+    ]}
 
     var sections: [SPNativeText?] {
         var sections: [SPNativeText?] = []
@@ -111,21 +118,13 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        50
+        return UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            if section == 0 {
-                return userConsentCategories.count
-            } else if section == 1 {
-                return specialPurposes.count
-            } else if section == 2 {
-                return features.count
-            } else if section == 3 {
-                return specialFeatures.count
-            }
+            return categoriesTable[section].count
         case 1:
             return legIntCategories.count
         default:
@@ -139,7 +138,6 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell: UITableViewCell = (categoriesTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             return UITableViewCell()
         }
@@ -147,33 +145,11 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         let section = indexPath.section
         let row = indexPath.row
         if categorySlider.selectedSegmentIndex == 0 {
-            switch section {
-            case 0:
-                let category = userConsentCategories[row]
-                cell.labelText = category.name
-                cell.isOn = acceptedCategories.keys.contains(category._id)
-                cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
-                cell.selectable = true
-            case 1:
-                let category = specialPurposes[row]
-                cell.labelText = category.name
-                cell.isOn = nil
-                cell.customText = nil
-                cell.selectable = false
-            case 2:
-                let category = features[row]
-                cell.labelText = category.name
-                cell.isOn = nil
-                cell.customText = nil
-                cell.selectable = false
-            case 3:
-                let category = specialFeatures[row]
-                cell.labelText = category.name
-                cell.isOn = nil
-                cell.customText = nil
-                cell.selectable = true
-            default: break
-            }
+            let category = categoriesTable[section][row]
+            cell.labelText = category.name
+            cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
+            cell.isOn = section == 0 || section == 3 ? acceptedCategories.keys.contains(category._id) : nil
+            cell.selectable = section != 1
         } else {
             cell.labelText = legIntCategories[indexPath.row].name
         }
@@ -181,6 +157,10 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         cell.offText = "Off"
         cell.loadUI()
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        indexPath.section != 1
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
@@ -195,6 +175,10 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         return true
     }
 
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        indexPath.section == 1 ? nil : indexPath
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let categoryDetailsVC = SPCategoryDetailsViewController(
             messageId: messageId,
@@ -204,7 +188,6 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             delegate: nil,
             nibName: "SPCategoryDetailsViewController"
         )
-        userConsentCategories[indexPath.row]
         categoryDetailsVC.category = categories[indexPath.row]
         categoryDetailsVC.categoryManagerDelegate = self
         present(categoryDetailsVC, animated: true)

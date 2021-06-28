@@ -8,7 +8,7 @@
 import Foundation
 
 @objc public enum SPCategoryType: Int, Equatable {
-    case IAB_PURPOSE, unknown
+    case IAB_PURPOSE, IAB, unknown
 }
 
 extension SPCategoryType: Codable {
@@ -17,6 +17,7 @@ extension SPCategoryType: Codable {
     public var rawValue: String {
         switch self {
         case .IAB_PURPOSE: return "IAB_PURPOSE"
+        case .IAB: return "IAB"
         default: return "unknown"
         }
     }
@@ -24,6 +25,7 @@ extension SPCategoryType: Codable {
     public init(rawValue: String) {
         switch rawValue {
         case "IAB_PURPOSE": self = .IAB_PURPOSE
+        case "IAB": self = .IAB
         default: self = .unknown
         }
     }
@@ -36,9 +38,10 @@ extension SPCategoryType: Codable {
 
 @objcMembers class VendorListCategory: Codable {
     struct Vendor: Codable {
-        let name, vendorId: String
+        let name: String
+        let vendorId: String?
         let policyUrl: URL?
-        let vendorType: SPVendorType
+        let vendorType: SPVendorType?
     }
 
     let iabId: Int?

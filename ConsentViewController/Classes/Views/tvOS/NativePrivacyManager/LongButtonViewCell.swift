@@ -18,7 +18,6 @@ class LongButtonViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var customLabel: UILabel!
     @IBOutlet weak var stateLabel: UILabel!
-    @IBOutlet weak var caretLabel: UILabel!
 
     func loadUI() {
         label.text = labelText
@@ -28,13 +27,20 @@ class LongButtonViewCell: UITableViewCell {
         } else {
             customLabel.isHidden = true
         }
-        caretLabel.isHidden = !selectable
+        accessoryType = selectable ? .disclosureIndicator : .none
         if let isOn = isOn {
             stateLabel.isHidden = false
             stateLabel.text = isOn ? onText : offText
         } else {
             stateLabel.isHidden = true
         }
+    }
+
+    override func prepareForReuse() {
+        labelText = nil
+        isOn = nil
+        selectable = false
+        loadUI()
     }
 
     override func awakeFromNib() {

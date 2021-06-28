@@ -32,23 +32,7 @@ struct VendorListVendor: Decodable {
     let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
 }
 
-struct VendorListShortVendor: Decodable {
-    enum SpecialPurposeType: String, Decodable {
-        case IAB
-    }
-
-    struct Vendor: Decodable {
-        let name: String
-        let policyURL: URL?
-    }
-
-    let _id, name, description: String
-    let type: SpecialPurposeType?
-    let vendors: [Vendor]
-}
-
 struct PrivacyManagerViewResponse: Decodable {
     let vendors: [VendorListVendor]
-    let categories: [VendorListCategory]
-    let specialPurposes, features, specialFeatures: [VendorListShortVendor]
+    let categories, specialPurposes, features, specialFeatures: [VendorListCategory]
 }
