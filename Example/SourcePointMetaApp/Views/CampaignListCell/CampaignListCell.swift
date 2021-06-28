@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CampaignListDelegate: AnyObject {
-    func deleteCampaignButton(sender: CampaignListCell)
+    func deleteCampaign(sender: CampaignListCell)
 }
 
 class CampaignListCell: SourcePointUItablewViewCell {
@@ -34,6 +34,6 @@ class CampaignListCell: SourcePointUItablewViewCell {
     }
 
     @IBAction func onTapDeleteCampaignButton(_ sender: Any) {
-        delegate?.deleteCampaignButton(sender: self)
+        delegate?.deleteCampaign(sender: self)
     }
 }

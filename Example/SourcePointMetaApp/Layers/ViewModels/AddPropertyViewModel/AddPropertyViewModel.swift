@@ -24,9 +24,9 @@ class AddPropertyViewModel {
         Section(campaignTitle: "Add iOS 14 Campaign", expanded: false)]
     
     // Default campaign value is public
-    var ccpaCampaign = SPCampaignEnv.Public
-    var gdprCampaign = SPCampaignEnv.Public
-    var iOS14Campaign = SPCampaignEnv.Public
+    var ccpaCampaignEnv = SPCampaignEnv.Public
+    var gdprCampaignEnv = SPCampaignEnv.Public
+    var iOS14CampaignEnv = SPCampaignEnv.Public
 
     // Will add all the targeting params to this array
     var ccpaTargetingParams = [TargetingParamModel]()
@@ -48,7 +48,7 @@ class AddPropertyViewModel {
 
     /// It add property item.
     /// - Parameter completionHandler: Completion handler
-    func addproperty(propertyDetails: PropertyDetailsModel, completionHandler: @escaping (SPError?, Bool, NSManagedObjectID?) -> Void) {
+    func addproperty(propertyDetails: PropertyDetailsModel, completionHandler: @escaping (SPMetaError?, Bool, NSManagedObjectID?) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             //Callback for storage coordinator
             let storageCoordinatorCallback: ((NSManagedObjectID?, Bool) -> Void) = { (managedObjectID, executionStatus) in
@@ -57,7 +57,7 @@ class AddPropertyViewModel {
                         completionHandler(nil, true, managedObjectID)
                     }
                 } else {
-                    let error = SPError(code: 0, description: SPLiteral.emptyString, message: Alert.messageForUnknownError)
+                    let error = SPMetaError(code: 0, description: SPLiteral.emptyString, message: Alert.messageForUnknownError)
                     DispatchQueue.main.async {
                         completionHandler(error, false, managedObjectID)
                     }
@@ -107,7 +107,7 @@ class AddPropertyViewModel {
     /// - Parameters:
     ///   - propertyDataModel: property Data Model.
     ///   - handler: Callback for the completion event.
-    func  checkExitanceOfData(propertyDetails propertyDataModel: PropertyDetailsModel, completionHandler handler : @escaping (Bool) -> Void) {
+    func  isPropertyStored(propertyDetails propertyDataModel: PropertyDetailsModel, completionHandler handler : @escaping (Bool) -> Void) {
 
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             self?.storageCoordinator.checkExitanceOfData(propertyDetails: propertyDataModel, completionHandler: { (optionalPropertyManagedObject) in
@@ -227,15 +227,15 @@ class AddPropertyViewModel {
 
     func resetFields(cell: CampaignTableViewCell, section: Int) {
         if section == 0 {
-            cell.campaignSwitchOutlet.isOn = (gdprCampaign.rawValue != 1)
+            cell.campaignSwitchOutlet.isOn = (gdprCampaignEnv.rawValue != 1)
             cell.privacyManagerTextField.text = gdprPMID
             cell.pmTabTextField.text = gdprPMTab
         }else if section == 1 {
-            cell.campaignSwitchOutlet.isOn = (ccpaCampaign.rawValue != 1)
+            cell.campaignSwitchOutlet.isOn = (ccpaCampaignEnv.rawValue != 1)
             cell.privacyManagerTextField.text = ccpaPMID
             cell.pmTabTextField.text = ccpaPMTab
         } else if section == 2 {
-            cell.campaignSwitchOutlet.isOn = (iOS14Campaign.rawValue != 1)
+            cell.campaignSwitchOutlet.isOn = (iOS14CampaignEnv.rawValue != 1)
         } else {
             cell.campaignSwitchOutlet.isOn = false
             cell.privacyManagerTextField.text = ""
@@ -278,11 +278,35 @@ class AddPropertyViewModel {
     func updateCampaignEnvironment(sender: CampaignTableViewCell, tableview: UITableView) {
         let indexPath = getIndexPath(sender: sender, tableview: tableview)
         if indexPath?.section == 0 {
-            gdprCampaign = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
+            gdprCampaignEnv = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
         }else if indexPath?.section == 1 {
-            ccpaCampaign = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
+            ccpaCampaignEnv = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
         }else {
-            iOS14Campaign = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
+            iOS14CampaignEnv = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
         }
+    }
+
+    func gdprCampaign() -> SPCampaign {
+        var targetingParams = SPTargetingParams()
+        for targetingParam in gdprTargetingParams {
+            targetingParams[targetingParam.targetingKey] = targetingParam.targetingValue
+        }
+        return SPCampaign(environment: gdprCampaignEnv, targetingParams: targetingParams)
+    }
+
+    func ccpaCampaign() -> SPCampaign {
+        var targetingParams = SPTargetingParams()
+        for targetingParam in ccpaTargetingParams {
+            targetingParams[targetingParam.targetingKey] = targetingParam.targetingValue
+        }
+        return SPCampaign(environment: ccpaCampaignEnv, targetingParams: targetingParams)
+    }
+
+    func iOS14Campaign() -> SPCampaign {
+        var targetingParams = SPTargetingParams()
+        for targetingParam in iOS14TargetingParams {
+            targetingParams[targetingParam.targetingKey] = targetingParam.targetingValue
+        }
+        return SPCampaign(environment: iOS14CampaignEnv, targetingParams: targetingParams)
     }
 }

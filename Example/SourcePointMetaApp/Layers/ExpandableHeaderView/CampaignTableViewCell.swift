@@ -10,7 +10,7 @@ import UIKit
 protocol CampaignTableViewDelegate: AnyObject {
     func updateCampaign(sender: CampaignTableViewCell)
     func addTargetingParams(sender: CampaignTableViewCell)
-    func saveCampaignData(sender: CampaignTableViewCell)
+    func saveCampaign(sender: CampaignTableViewCell)
 }
 
 class CampaignTableViewCell: SourcePointUItablewViewCell, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -73,7 +73,7 @@ class CampaignTableViewCell: SourcePointUItablewViewCell, UITextFieldDelegate, U
     }
 
     @IBAction func onTapSaveCampaignButton(_ sender: Any) {
-        delegate?.saveCampaignData(sender: self)
+        delegate?.saveCampaign(sender: self)
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
