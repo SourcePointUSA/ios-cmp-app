@@ -10,6 +10,7 @@ import UIKit
 import ConsentViewController
 import CoreData
 import WebKit
+import SafariServices
 
 class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
 {
@@ -28,8 +29,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
     /** PM is loaded or not
      */
     var isPMLoaded = false
-    var userConsents: SPGDPRConsent?
-    var consentUUID: String = ""
+    var userData: SPUserData?
     let sections = ["Vendor Consents", "Purpose Consents"]
 
     // MARK: - Initializer
@@ -39,6 +39,21 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
     var targetingParams = [TargetingParamModel]()
     var nativeMessageController: SPNativeMessageViewController?
 
+    //side menu
+    private var sideMenuViewController: SideMenuViewController!
+    private var sideMenuShadowView: UIView!
+    private var sideMenuRevealWidth: CGFloat = 225
+    private let paddingForRotation: CGFloat = 150
+    private var isExpanded: Bool = false
+    private var draggingIsEnabled: Bool = false
+    private var panBaseLocation: CGFloat = 0.0
+
+    // Expand/Collapse the side menu by changing trailing's constant
+    private var sideMenuTrailingConstraint: NSLayoutConstraint!
+
+    private var revealSideMenuOnTop: Bool = true
+    // side menu
+
     override func viewDidLoad() {
         super.viewDidLoad()
         consentTableView.tableFooterView = UIView(frame: .zero)
@@ -47,14 +62,50 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
 //        setTableViewHidden()
         setconsentUUId()
 
-        if let _propertyManagedObjectID = propertyManagedObjectID {
-            self.showIndicator()
-            fetchDataFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: {(propertyDetails, targetingParams) in
-                self.propertyDetails = propertyDetails
-                self.targetingParams = targetingParams
-//                self.loadConsentManager(propertyDetails: propertyDetails, targetingParams: targetingParams)
-            })
+//        if let _propertyManagedObjectID = propertyManagedObjectID {
+//            self.showIndicator()
+//            fetchDataFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: {(propertyDetails, targetingParams) in
+//                self.propertyDetails = propertyDetails
+//                self.targetingParams = targetingParams
+////                self.loadConsentManager(propertyDetails: propertyDetails, targetingParams: targetingParams)
+//            })
+//        }
+
+        //side menu
+        // Shadow Background View
+        self.sideMenuShadowView = UIView(frame: self.view.bounds)
+        self.sideMenuShadowView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.sideMenuShadowView.backgroundColor = .black
+        self.sideMenuShadowView.alpha = 0.0
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TapGestureRecognizer))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        tapGestureRecognizer.delegate = self
+        view.addGestureRecognizer(tapGestureRecognizer)
+        if self.revealSideMenuOnTop {
+            view.insertSubview(self.sideMenuShadowView, at: 1)
         }
+
+        // Side Menu
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        self.sideMenuViewController = storyboard.instantiateViewController(withIdentifier: "SideMenuID") as? SideMenuViewController
+        self.sideMenuViewController.defaultHighlightedCell = 0 // Default Highlighted Cell
+        self.sideMenuViewController.delegate = self
+        view.addSubview(sideMenuViewController.view)
+        self.sideMenuViewController!.didMove(toParent: self)
+
+        // Side Menu AutoLayout
+        self.sideMenuViewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        if self.revealSideMenuOnTop {
+            self.sideMenuTrailingConstraint = self.sideMenuViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: +self.sideMenuRevealWidth + self.paddingForRotation)
+            self.sideMenuTrailingConstraint.isActive = true
+        }
+        NSLayoutConstraint.activate([
+            self.sideMenuViewController.view.widthAnchor.constraint(equalToConstant: self.sideMenuRevealWidth),
+            self.sideMenuViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            self.sideMenuViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
+        ])
+        // side menu end
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,27 +133,44 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
 //    }
 
     func setconsentUUId() {
-        if consentUUID.count > 0 {
-            consentUUIDLabel.text = consentUUID
-            euConsentLabel.text = userConsents?.euconsent
-        } else {
-            consentUUIDLabel.text = SPLiteral.consentUUID
-            euConsentLabel.text = SPLiteral.euConsentID
+//        if consentUUID.count > 0 {
+//            consentUUIDLabel.text = consentUUID
+//            euConsentLabel.text = userConsents?.euconsent
+//        } else {
+//            consentUUIDLabel.text = SPLiteral.consentUUID
+//            euConsentLabel.text = SPLiteral.euConsentID
+//        }
+    }
+
+    // Keep the state of the side menu (expanded or collapse) in rotation
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate { _ in
+            if self.revealSideMenuOnTop {
+                self.sideMenuTrailingConstraint.constant = self.isExpanded ? 0 : (self.sideMenuRevealWidth + self.paddingForRotation)
+            }
+        }
+    }
+
+    func animateShadow(targetPosition: CGFloat) {
+        UIView.animate(withDuration: 0.5) {
+            // When targetPosition is 0, which means side menu is expanded, the shadow opacity is 0.6
+            self.sideMenuShadowView.alpha = (targetPosition == 0) ? 0.6 : 0.0
         }
     }
 
     func fetchDataFromDatabase(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void) {
-        self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
-            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage, messageLanguage: propertyDataModel.messageLanguage, pmTab: propertyDataModel.pmId)
-            var targetingParamsArray = [TargetingParamModel]()
-            if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
-                for targetingParam in targetingParams {
-                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
-                    targetingParamsArray.append(targetingParamModel)
-                }
-            }
-            completionHandler(propertyDetail, targetingParamsArray)
-        })
+//        self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
+//            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage, messageLanguage: propertyDataModel.messageLanguage, pmTab: propertyDataModel.pmId)
+//            var targetingParamsArray = [TargetingParamModel]()
+//            if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
+//                for targetingParam in targetingParams {
+//                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
+//                    targetingParamsArray.append(targetingParamModel)
+//                }
+//            }
+//            completionHandler(propertyDetail, targetingParamsArray)
+//        })
     }
 
 //    func loadConsentManager(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel]) {
@@ -195,19 +263,54 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
     }
 
     @IBAction func showPMAction(_ sender: Any) {
-        self.showIndicator()
+//        self.showIndicator()
 //        let campaign: SPCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
         // optional, set custom targeting parameters supports Strings and Integers
-        var targetingParameters = [String: String]()
-        for targetingParam in targetingParams {
-            targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
-        }
+//        var targetingParameters = [String: String]()
+//        for targetingParam in targetingParams {
+//            targetingParameters[targetingParam.targetingKey] = targetingParam.targetingValue
+//        }
 //        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! SPPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
 //        if let messageLanguage = propertyDetails?.messageLanguage {
 //            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
 //        }
 //        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails?.pmTab ?? "")
 //        consentViewController?.loadPrivacyManager()
+//        consentTableView.isHidden = true
+        self.sideMenuState(expanded: self.isExpanded ? false : true)
+    }
+
+    func sideMenuState(expanded: Bool) {
+        if expanded {
+            self.animateSideMenu(targetPosition: self.revealSideMenuOnTop ? 0 : self.sideMenuRevealWidth) { _ in
+                self.isExpanded = true
+            }
+            // Animate Shadow (Fade In)
+            UIView.animate(withDuration: 0.5) { self.sideMenuShadowView.alpha = 0.6 }
+        }
+        else {
+            self.animateSideMenu(targetPosition: self.revealSideMenuOnTop ? (self.sideMenuRevealWidth + self.paddingForRotation) : 0) { _ in
+                self.isExpanded = false
+            }
+            // Animate Shadow (Fade Out)
+            UIView.animate(withDuration: 0.5) { self.sideMenuShadowView.alpha = 0.0 }
+        }
+    }
+
+    func animateSideMenu(targetPosition: CGFloat, completion: @escaping (Bool) -> ()) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .layoutSubviews, animations: {
+            if self.revealSideMenuOnTop {
+                self.sideMenuTrailingConstraint.constant = targetPosition
+                self.view.layoutIfNeeded()
+            }
+            else {
+                self.view.subviews[1].frame.origin.x = targetPosition
+            }
+        }, completion: completion)
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 
@@ -263,3 +366,39 @@ extension ConsentDetailsViewController: UITableViewDelegate {
         consentTableView.deselectRow(at: indexPath, animated: false)
     }
 }
+
+extension ConsentDetailsViewController: SideMenuViewControllerDelegate {
+    func selectedCell(_ row: Int) {
+        switch row {
+        case 0:
+            print("1")
+        case 1:
+        print("2")
+        case 2:
+            print("3")
+        default:
+            break
+        }
+        // Collapse side menu with animation
+        DispatchQueue.main.async { self.sideMenuState(expanded: false) }
+    }
+}
+
+extension ConsentDetailsViewController: UIGestureRecognizerDelegate {
+    @objc func TapGestureRecognizer(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            if self.isExpanded {
+                self.sideMenuState(expanded: false)
+            }
+        }
+    }
+
+    // Close side menu when you tap on the shadow background view
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if (touch.view?.isDescendant(of: self.sideMenuViewController.view))! {
+            return false
+        }
+        return true
+    }
+}
+

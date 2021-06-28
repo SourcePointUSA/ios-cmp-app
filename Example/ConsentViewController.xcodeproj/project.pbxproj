@@ -100,6 +100,9 @@
 		6DB4C451267FAB0400BA96C7 /* PropertyDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB4C450267FAB0400BA96C7 /* PropertyDetails+CoreDataProperties.swift */; };
 		6DB4C453267FAB0600BA96C7 /* PropertyDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB4C452267FAB0600BA96C7 /* PropertyDetails+CoreDataClass.swift */; };
 		6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB561ED24269470008501AC /* GDPRMessageSpec.swift */; };
+		6DB901D92689FA870023571B /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB901D82689FA860023571B /* SideMenuViewController.swift */; };
+		6DB901DE268A07520023571B /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB901DD268A07520023571B /* SideMenuModel.swift */; };
+		6DB901E1268A08720023571B /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB901E0268A08720023571B /* SideMenuCell.swift */; };
 		6DC1CD412427E7330028F03F /* SPNativeMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1CD402427E7330028F03F /* SPNativeMessageViewControllerSpec.swift */; };
 		6DCFB09B25D40D4E0071A738 /* AuthExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCFB09A25D40D4E0071A738 /* AuthExampleUITests.swift */; };
 		6DEF721B264D3E5C0036DBBF /* ExpandableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF7218264D3E5A0036DBBF /* ExpandableHeaderView.swift */; };
@@ -342,6 +345,9 @@
 		6DB4C450267FAB0400BA96C7 /* PropertyDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6DB4C452267FAB0600BA96C7 /* PropertyDetails+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PropertyDetails+CoreDataClass.swift"; path = "/Users/vilasmane/Desktop/Unified_SDK/Example/SourcePointMetaApp/Layers/CoreDataModels/PropertyDetailsModel/PropertyDetails+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		6DB561ED24269470008501AC /* GDPRMessageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRMessageSpec.swift; sourceTree = "<group>"; };
+		6DB901D82689FA860023571B /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		6DB901DD268A07520023571B /* SideMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
+		6DB901E0268A08720023571B /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
 		6DC1CD402427E7330028F03F /* SPNativeMessageViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPNativeMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		6DCFB09A25D40D4E0071A738 /* AuthExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthExampleUITests.swift; sourceTree = "<group>"; };
 		6DE0222E259B40E100414510 /* SourcePointMetaApp 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SourcePointMetaApp 4.xcdatamodel"; sourceTree = "<group>"; };
@@ -612,7 +618,7 @@
 				1997B68B238FDEA10079AF34 /* BaseWindow */,
 				1997B68D238FDEA10079AF34 /* BaseViewController */,
 				1997B68F238FDEA10079AF34 /* AddPropertyViewController */,
-				1997B691238FDEA10079AF34 /* GDPRConsentViewController */,
+				1997B691238FDEA10079AF34 /* ConsentManagerViewController */,
 				1997B694238FDEA10079AF34 /* PropertyListViewController */,
 			);
 			path = Controllers;
@@ -642,12 +648,13 @@
 			path = AddPropertyViewController;
 			sourceTree = "<group>";
 		};
-		1997B691238FDEA10079AF34 /* GDPRConsentViewController */ = {
+		1997B691238FDEA10079AF34 /* ConsentManagerViewController */ = {
 			isa = PBXGroup;
 			children = (
 				1997B692238FDEA10079AF34 /* ConsentDetailsViewController.swift */,
+				6DB901D82689FA860023571B /* SideMenuViewController.swift */,
 			);
-			path = GDPRConsentViewController;
+			path = ConsentManagerViewController;
 			sourceTree = "<group>";
 		};
 		1997B694238FDEA10079AF34 /* PropertyListViewController */ = {
@@ -661,6 +668,7 @@
 		1997B696238FDEA10079AF34 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6DB901DF268A07A10023571B /* SideMenuCell */,
 				1997B697238FDEA10079AF34 /* PropertyCell */,
 				1997B699238FDEA10079AF34 /* ConsentCell */,
 				1997B69B238FDEA10079AF34 /* CampaignListCell */,
@@ -769,6 +777,7 @@
 		1997B6AF238FDEA10079AF34 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6DB901DC268A072C0023571B /* SideMenuModel */,
 				1997B6B0238FDEA10079AF34 /* PropertyDetailsModel */,
 				1997B6B2238FDEA10079AF34 /* TargetingParamModel */,
 			);
@@ -1025,6 +1034,22 @@
 				6DB4C448267FAA9500BA96C7 /* CampaignDetails+CoreDataProperties.swift */,
 			);
 			path = CampaignDetailsModel;
+			sourceTree = "<group>";
+		};
+		6DB901DC268A072C0023571B /* SideMenuModel */ = {
+			isa = PBXGroup;
+			children = (
+				6DB901DD268A07520023571B /* SideMenuModel.swift */,
+			);
+			path = SideMenuModel;
+			sourceTree = "<group>";
+		};
+		6DB901DF268A07A10023571B /* SideMenuCell */ = {
+			isa = PBXGroup;
+			children = (
+				6DB901E0268A08720023571B /* SideMenuCell.swift */,
+			);
+			path = SideMenuCell;
 			sourceTree = "<group>";
 		};
 		6DEF7217264D3E5A0036DBBF /* ExpandableHeaderView */ = {
@@ -2173,9 +2198,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DB4C449267FAA9500BA96C7 /* CampaignDetails+CoreDataProperties.swift in Sources */,
+				6DB901E1268A08720023571B /* SideMenuCell.swift in Sources */,
 				1997B6E4238FDEA10079AF34 /* AddPropertyViewModel.swift in Sources */,
 				6DB4C44D267FAAD500BA96C7 /* TargetingParams+CoreDataProperties.swift in Sources */,
 				6DB4C44F267FAAD800BA96C7 /* TargetingParams+CoreDataClass.swift in Sources */,
+				6DB901D92689FA870023571B /* SideMenuViewController.swift in Sources */,
 				1997B6C8238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */,
 				1997B6D8238FDEA10079AF34 /* ConsentDetailsViewController.swift in Sources */,
 				1997B6E5238FDEA10079AF34 /* PropertyListViewModel.swift in Sources */,
@@ -2198,6 +2225,7 @@
 				1997B6E7238FDEA10079AF34 /* TargetingParamModel.swift in Sources */,
 				6DEF721B264D3E5C0036DBBF /* ExpandableHeaderView.swift in Sources */,
 				1997B6E6238FDEA10079AF34 /* PropertyDetailsModel.swift in Sources */,
+				6DB901DE268A07520023571B /* SideMenuModel.swift in Sources */,
 				1997B6D5238FDEA10079AF34 /* BaseWindow.swift in Sources */,
 				1997B6D7238FDEA10079AF34 /* AddPropertyViewController.swift in Sources */,
 				1997B6DA238FDEA10079AF34 /* PropertyListViewController.swift in Sources */,
