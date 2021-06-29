@@ -105,7 +105,7 @@ public typealias SPUsPrivacyString = String
     }
 
     open override var description: String {
-        return "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
+        "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
     }
 
     enum CodingKeys: CodingKey {
