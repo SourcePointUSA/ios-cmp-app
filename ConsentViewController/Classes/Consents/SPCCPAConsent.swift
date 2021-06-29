@@ -80,6 +80,8 @@ public typealias SPUsPrivacyString = String
     public let rejectedVendors, rejectedCategories: [String]
     /// the US Privacy String as described by the IAB
     public let uspstring: SPUsPrivacyString
+    /// that's the internal Sourcepoint id we give to this consent profile
+    public var uuid: String?
 
     public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
         status: CCPAConsentStatus.RejectedNone,
@@ -88,7 +90,14 @@ public typealias SPUsPrivacyString = String
         uspstring: ""
     )}
 
-    public init(status: CCPAConsentStatus, rejectedVendors: [String], rejectedCategories: [String], uspstring: SPUsPrivacyString) {
+    public init(
+        uuid: String? = nil,
+        status: CCPAConsentStatus,
+        rejectedVendors: [String],
+        rejectedCategories: [String],
+        uspstring: SPUsPrivacyString
+    ) {
+        self.uuid = uuid
         self.status = status
         self.rejectedVendors = rejectedVendors
         self.rejectedCategories = rejectedCategories
@@ -96,15 +105,16 @@ public typealias SPUsPrivacyString = String
     }
 
     open override var description: String {
-        return "UserConsent(status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
+        return "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
     }
 
     enum CodingKeys: CodingKey {
-        case status, rejectedVendors, rejectedCategories, uspstring
+        case status, rejectedVendors, rejectedCategories, uspstring, uuid
     }
 
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        uuid = try values.decodeIfPresent(String.self, forKey: .uuid)
         rejectedVendors = try values.decode([String].self, forKey: .rejectedVendors)
         rejectedCategories = try values.decode([String].self, forKey: .rejectedCategories)
         uspstring = try values.decode(SPUsPrivacyString.self, forKey: .uspstring)
@@ -123,7 +133,8 @@ public typealias SPUsPrivacyString = String
 
     public override func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPCCPAConsent {
-            return other.rejectedCategories.elementsEqual(rejectedCategories) &&
+            return other.uuid == uuid &&
+                other.rejectedCategories.elementsEqual(rejectedCategories) &&
                 other.rejectedVendors.elementsEqual(rejectedVendors) &&
                 other.status == status &&
                 other.uspstring == uspstring

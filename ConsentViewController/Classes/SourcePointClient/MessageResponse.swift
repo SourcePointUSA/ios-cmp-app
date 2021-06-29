@@ -138,8 +138,8 @@ struct MessagesResponse: Decodable, Equatable {
         while !campaignsContainer.isAtEnd {
             let campaign = try campaignsContainer.decode(Campaign.self)
             switch campaign.userConsent {
-            case .ccpa(_):
-                break
+            case .ccpa(let consents):
+                consents.uuid = localState["ccpa"]?["uuid"]?.stringValue
             case .gdpr(let consents):
                 consents.uuid = localState["gdpr"]?["uuid"]?.stringValue
             default: break
