@@ -182,13 +182,13 @@ import Foundation
         case .ccpa:
             spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
                 switch result {
-                case .success(let consentsResponse):
+                case .success((let localState, let consents)):
                     let userData = SPUserData(
                         gdpr: self?.storage.userData.gdpr,
-                        ccpa: SPConsent(consents: consentsResponse.userConsent, applies: true)
+                        ccpa: SPConsent(consents: consents, applies: true)
                     )
                     self?.storeData(
-                        localState: consentsResponse.localState,
+                        localState: localState,
                         userData: userData
                     )
                     self?.delegate?.onConsentReady?(userData: userData)
@@ -199,13 +199,13 @@ import Foundation
         case .gdpr:
             spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
                 switch result {
-                case .success(let consentsResponse):
+                case .success((let localState, let consents)):
                     let userData = SPUserData(
-                        gdpr: SPConsent(consents: consentsResponse.userConsent, applies: true),
+                        gdpr: SPConsent(consents: consents, applies: true),
                         ccpa: self?.storage.userData.ccpa
                     )
                     self?.storeData(
-                        localState: consentsResponse.localState,
+                        localState: localState,
                         userData: userData
                     )
                     self?.delegate?.onConsentReady?(userData: userData)
@@ -273,6 +273,7 @@ import Foundation
             switch result {
             case .success(let consents):
                 let newGDPRConsents = SPGDPRConsent(
+                    uuid: self?.gdprUUID,
                     vendorGrants: consents.grants,
                     euconsent: self?.storage.userData.gdpr?.consents?.euconsent ?? "",
                     tcfData: self?.storage.userData.gdpr?.consents?.tcfData ?? SPJson()

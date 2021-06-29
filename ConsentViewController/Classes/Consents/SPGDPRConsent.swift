@@ -62,10 +62,15 @@ public typealias SPGDPRPurposeId = String
     /// A dictionary with all TCFv2 related data
     public let tcfData: SPJson
 
+    /// that's the internal Sourcepoint id we give to this consent profile
+    public var uuid: String?
+
     public init(
+        uuid: String? = nil,
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
         tcfData: SPJson) {
+        self.uuid = uuid
         self.vendorGrants = vendorGrants
         self.euconsent = euconsent
         self.tcfData = tcfData
@@ -73,7 +78,8 @@ public typealias SPGDPRPurposeId = String
 
     public override func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPGDPRConsent {
-            return other.euconsent.elementsEqual(euconsent) &&
+            return other.uuid == uuid &&
+                other.euconsent.elementsEqual(euconsent) &&
                 other.vendorGrants.allSatisfy { key, value in vendorGrants[key]?.isEqual(value) ?? false }
         } else {
             return false
@@ -83,6 +89,7 @@ public typealias SPGDPRPurposeId = String
     open override var description: String {
         return """
         UserConsents(
+            uuid: \(uuid ?? "")
             vendorGrants: \(vendorGrants),
             euconsent: \(euconsent)
         )
@@ -90,6 +97,7 @@ public typealias SPGDPRPurposeId = String
     }
 
     enum CodingKeys: String, CodingKey {
+        case uuid
         case euconsent
         case tcfData = "TCData"
         case vendorGrants = "grants"

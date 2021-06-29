@@ -36,7 +36,7 @@ typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPErro
 typealias NativePMHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
-typealias ConsentHandler<T: Decodable & Equatable> = (Result<ConsentResponse<T>, SPError>) -> Void
+typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
@@ -232,7 +232,11 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: consentUrl(SourcePointClient.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as ConsentResponse<SPCCPAConsent>
+                    let response = try result.decoded() as ConsentResponse
+                    switch response.userConsent {
+                    case .ccpa(let consents): return (response.localState, consents)
+                    default: throw InvalidResponseConsentError(campaignType: .ccpa)
+                    }
                 }.mapError {
                     InvalidResponseConsentError(error: $0, campaignType: .ccpa)
                 })
@@ -251,7 +255,11 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: consentUrl(SourcePointClient.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as ConsentResponse<SPGDPRConsent>
+                    let response = try result.decoded() as ConsentResponse
+                    switch response.userConsent {
+                    case .gdpr(let consents): return (response.localState, consents)
+                    default: throw InvalidResponseConsentError(campaignType: .gdpr)
+                    }
                 }.mapError {
                     InvalidResponseConsentError(error: $0, campaignType: .gdpr)
                 })

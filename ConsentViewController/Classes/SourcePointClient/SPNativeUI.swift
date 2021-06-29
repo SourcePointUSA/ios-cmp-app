@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// swiftlint:disable nesting
+
 @objcMembers class SPNativeFont: NSObject, Codable {
     let fontSize: CGFloat
     let fontWeight: String
