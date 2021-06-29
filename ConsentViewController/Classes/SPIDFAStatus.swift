@@ -41,7 +41,7 @@ import AdSupport
 
     public static func current() -> SPIDFAStatus {
         if #available(iOS 14, tvOS 14, *) {
-            return SPIDFAStatus.init(fromApple: ATTrackingManager.trackingAuthorizationStatus)
+            return SPIDFAStatus(fromApple: ATTrackingManager.trackingAuthorizationStatus)
         } else {
             return .unavailable
         }
