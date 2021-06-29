@@ -30,6 +30,7 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
     var propertyDetailsModel: PropertyDetailsModel?
     var targetingKey: String?
     var targetingValue: String?
+    var onConsentReadyCalled = false
 
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
@@ -252,14 +253,17 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
 
     // save property details to database
     func savePropertyToDatabase(propertyDetails: PropertyDetailsModel) {
-        addpropertyViewModel.addproperty(propertyDetails: propertyDetails, completionHandler: { (error, _, _) in
-            if let _error = error {
-                let okHandler = {}
-                AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-            } else {
-                Log.sharedLog.DLog(message: "property details are saved")
-            }
-        })
+        if !onConsentReadyCalled {
+            addpropertyViewModel.addproperty(propertyDetails: propertyDetails, completionHandler: { (error, _, _) in
+                if let _error = error {
+                    let okHandler = {}
+                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+                } else {
+                    self.onConsentReadyCalled = true
+                    Log.sharedLog.DLog(message: "property details are saved")
+                }
+            })
+        }
     }
 
     func loadConsentInfoController(userData: SPUserData) {
@@ -347,7 +351,7 @@ extension AddPropertyViewController {
         showIndicator()
         if let propertyDetails = propertyDetailsModel {
             savePropertyToDatabase(propertyDetails: propertyDetails)
-            loadConsentInfoController(userData: userData)
+            handleMultipleMessages(userData: userData)
         }
         hideIndicator()
     }
@@ -362,6 +366,20 @@ extension AddPropertyViewController {
         let okHandler = {}
         self.hideIndicator()
         AlertView.sharedInstance.showAlertView(title: Alert.alert, message: error?.description ?? "", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+    }
+
+    func handleMultipleMessages(userData: SPUserData) {
+        if !onConsentReadyCalled {
+            if let ccpaApplies = consentManager?.ccpaApplies(), let gdprApplies = consentManager?.gdprApplies() {
+                if !ccpaApplies && gdprApplies || ccpaApplies && !gdprApplies {
+                    loadConsentInfoController(userData: userData)
+                    onConsentReadyCalled = false
+                }
+            }
+        } else {
+            loadConsentInfoController(userData: userData)
+            onConsentReadyCalled = false
+        }
     }
 }
 

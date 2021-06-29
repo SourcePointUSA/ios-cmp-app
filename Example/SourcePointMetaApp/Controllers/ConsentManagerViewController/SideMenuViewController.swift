@@ -21,7 +21,7 @@ class SideMenuViewController: BaseViewController {
     var menu: [SideMenuModel] = [
         SideMenuModel(title: "Load GDPR PM"),
         SideMenuModel(title: "Load CCPA PM"),
-        SideMenuModel(title: "Load Network Call Logs")
+        SideMenuModel(title: "Network Call Logs")
     ]
 
     override func viewDidLoad() {
