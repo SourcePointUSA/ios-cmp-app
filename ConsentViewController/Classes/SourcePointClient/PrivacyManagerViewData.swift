@@ -26,7 +26,7 @@ extension PrivacyManagerViewData {
         categoriesView = try findViewBy(id: "CategoriesView", pmResponse)
         vendorsView = try findViewBy(id: "VendorsView", pmResponse)
         categoryDetailsView = try findViewBy(id: "CategoryDetailsView", pmResponse)
-        vendorDetailsView = try findViewBy(id: "VendorDetails", pmResponse)
+        vendorDetailsView = try findViewBy(id: "VendorDetailsView", pmResponse)
         privacyPolicyView = pmResponse.message.byId("PrivacyPolicyView") as? SPNativeView
         categories = pmResponse.categories
     }
