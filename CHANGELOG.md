@@ -1,3 +1,9 @@
+# 6.0.4 (June, 30, 2021)
+* Added `.uuid` to `SPGDPRConsent` and `SPCCPAConsent` classes. [#315](https://github.com/SourcePointUSA/ios-cmp-app/pull/315)
+* Fixed an issue that would prevent the message from rendering in the right language. [#313](https://github.com/SourcePointUSA/ios-cmp-app/pull/313) (Thank you @mskrischke for reporting the issue and submitting a PR to fix it).
+* Implemented several features for AppleTV - WIP.
+* Improved integration with our Unity SDK.
+
 # 6.0.3 (June, 04, 2021)
 * Configurable timeout. You now can configure a timeout in which either the consent message must be shown or the consent data should be returned to the app (`onConsentReady`) by setting the attribute `.messageTimeoutInSeconds: TimeInterval`. Just make sure to set it _before_ calling `loadMessage` or `loadPrivacyManager`. [#301](https://github.com/SourcePointUSA/ios-cmp-app/pull/301)
 * Updated Apple tracking API request.  [#302](https://github.com/SourcePointUSA/ios-cmp-app/pull/302)
