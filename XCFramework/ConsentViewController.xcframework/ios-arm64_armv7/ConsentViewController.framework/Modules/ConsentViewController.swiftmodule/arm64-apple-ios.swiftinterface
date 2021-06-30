@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
 // swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConsentViewController
 import AdSupport
 import AppTrackingTransparency
@@ -51,6 +51,10 @@ public typealias CustomFields = [Swift.String : Swift.String]
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+}
+public let MockNativePMResponse: Swift.String
+@objc extension NSObject {
+  @objc dynamic public func toJSON() -> Swift.String?
 }
 @objc public enum SPActionType : Swift.Int, Swift.Codable, Swift.CaseIterable, Swift.CustomStringConvertible {
   case SaveAndExit = 1
@@ -144,8 +148,9 @@ public typealias SPUsPrivacyString = Swift.String
   @objc final public let status: ConsentViewController.CCPAConsentStatus
   @objc final public let rejectedVendors: [Swift.String], rejectedCategories: [Swift.String]
   @objc final public let uspstring: ConsentViewController.SPUsPrivacyString
+  @objc public var uuid: Swift.String?
   @objc public static func rejectedNone() -> ConsentViewController.SPCCPAConsent
-  @objc public init(status: ConsentViewController.CCPAConsentStatus, rejectedVendors: [Swift.String], rejectedCategories: [Swift.String], uspstring: ConsentViewController.SPUsPrivacyString)
+  @objc public init(uuid: Swift.String? = nil, status: ConsentViewController.CCPAConsentStatus, rejectedVendors: [Swift.String], rejectedCategories: [Swift.String], uspstring: ConsentViewController.SPUsPrivacyString)
   @objc override dynamic open var description: Swift.String {
     @objc get
   }
@@ -206,6 +211,15 @@ public typealias SPUsPrivacyString = Swift.String
   @objc public var originalError: Swift.Error?
   @objc public var campaignType: ConsentViewController.SPCampaignType
   @objc override dynamic public init(domain: Swift.String, code: Swift.Int, userInfo dict: [Swift.String : Any]? = nil)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class UnableToFindView : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class UnableToLoadJSReceiver : ConsentViewController.SPError {
@@ -388,7 +402,8 @@ public typealias SPGDPRPurposeId = Swift.String
   @objc final public let vendorGrants: ConsentViewController.SPGDPRVendorGrants
   @objc final public let euconsent: Swift.String
   final public let tcfData: ConsentViewController.SPJson
-  public init(vendorGrants: ConsentViewController.SPGDPRVendorGrants, euconsent: Swift.String, tcfData: ConsentViewController.SPJson)
+  @objc public var uuid: Swift.String?
+  public init(uuid: Swift.String? = nil, vendorGrants: ConsentViewController.SPGDPRVendorGrants, euconsent: Swift.String, tcfData: ConsentViewController.SPJson)
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc override dynamic open var description: Swift.String {
     @objc get
@@ -497,7 +512,7 @@ extension SPJson {
 @_hasMissingDesignatedInitializers @objcMembers public class SPMessage {
   @objc deinit
 }
-@objc public enum SPMessageLanguage : Swift.Int {
+@objc public enum SPMessageLanguage : Swift.Int, Swift.Codable {
   case BrowserDefault
   case English
   case Bulgarian
@@ -562,6 +577,17 @@ extension SPJson {
   @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc override dynamic open func viewDidLoad()
   @objc deinit
+}
+@objc public enum SPCategoryType : Swift.Int, Swift.Equatable {
+  case IAB_PURPOSE, unknown
+}
+extension SPCategoryType : Swift.Codable {
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init(rawValue: Swift.String)
+  public init(from decoder: Swift.Decoder) throws
 }
 @objc public enum SPPrivacyManagerTab : Swift.Int {
   case Default
@@ -655,6 +681,8 @@ extension ConsentViewController.SPIDFAStatus : Swift.RawRepresentable {}
 extension ConsentViewController.SPMessageLanguage : Swift.Equatable {}
 extension ConsentViewController.SPMessageLanguage : Swift.Hashable {}
 extension ConsentViewController.SPMessageLanguage : Swift.RawRepresentable {}
+extension ConsentViewController.SPCategoryType : Swift.Hashable {}
+extension ConsentViewController.SPCategoryType : Swift.RawRepresentable {}
 extension ConsentViewController.SPPrivacyManagerTab : Swift.Equatable {}
 extension ConsentViewController.SPPrivacyManagerTab : Swift.Hashable {}
 extension ConsentViewController.SPPrivacyManagerTab : Swift.RawRepresentable {}
