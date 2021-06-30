@@ -42,6 +42,7 @@ struct MessageRequest: Equatable, Encodable {
     let consentLanguage: SPMessageLanguage
     let campaigns: CampaignsRequest
     let includeData = [
+        "customVendorsResponse": ["type": "RecordString"],
         "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"],
         "messageMetaData": ["type": "RecordString"]

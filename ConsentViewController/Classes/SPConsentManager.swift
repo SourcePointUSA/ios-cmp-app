@@ -274,6 +274,11 @@ import Foundation
             case .success(let consents):
                 let newGDPRConsents = SPGDPRConsent(
                     uuid: self?.gdprUUID,
+                    acceptedVendorsPurposes: AcceptedVendorsPurposes(
+                        consentedVendors: consents.vendors,
+                        consentedPurposes: consents.categories,
+                        legIntPurposes: consents.legIntCategories
+                    ),
                     vendorGrants: consents.grants,
                     euconsent: self?.storage.userData.gdpr?.consents?.euconsent ?? "",
                     tcfData: self?.storage.userData.gdpr?.consents?.tcfData ?? SPJson()

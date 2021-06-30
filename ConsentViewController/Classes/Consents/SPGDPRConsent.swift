@@ -15,6 +15,29 @@ public typealias GDPRVendorId = String
 public typealias SPGDPRPurposeGrants = [SPGDPRPurposeId: Bool]
 public typealias SPGDPRPurposeId = String
 
+struct VendorOrPurpose {
+    let _id: String
+}
+extension VendorOrPurpose: Codable {}
+
+struct AcceptedVendorsPurposes: Codable {
+    let consentedVendors, consentedPurposes, legIntPurposes: [VendorOrPurpose]
+}
+
+extension AcceptedVendorsPurposes {
+    init(consentedVendors: [String], consentedPurposes: [String], legIntPurposes: [String]) {
+        self.consentedPurposes = consentedPurposes.map { VendorOrPurpose(_id: $0) }
+        self.consentedVendors = consentedVendors.map { VendorOrPurpose(_id: $0) }
+        self.legIntPurposes = legIntPurposes.map { VendorOrPurpose(_id: $0) }
+    }
+
+    init() {
+        consentedVendors = []
+        consentedPurposes = []
+        legIntPurposes = []
+    }
+}
+
 /// Encapuslates data about a particular vendor being "granted" based on its purposes
 @objcMembers public class SPGDPRVendorGrant: NSObject, Codable {
     /// if all purposes are granted, the vendorGrant will be set to `true`
@@ -49,6 +72,7 @@ public typealias SPGDPRPurposeId = String
 @objcMembers public class SPGDPRConsent: NSObject, Codable {
     public static func empty() -> SPGDPRConsent {
         return SPGDPRConsent(
+            acceptedVendorsPurposes: AcceptedVendorsPurposes(),
             vendorGrants: SPGDPRVendorGrants(),
             euconsent: "",
             tcfData: SPJson())
@@ -65,11 +89,22 @@ public typealias SPGDPRPurposeId = String
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
 
-    public init(
+    let acceptedVendorsPurposes: AcceptedVendorsPurposes
+    public var acceptedVendors: [String] {
+        acceptedVendorsPurposes.consentedVendors.map { $0._id }
+    }
+    public var acceptedCategories: [String] {
+        Array(Set<String>(acceptedVendorsPurposes.consentedPurposes.map { $0._id } +
+                        acceptedVendorsPurposes.legIntPurposes.map { $0._id }))
+    }
+
+    init(
         uuid: String? = nil,
+        acceptedVendorsPurposes: AcceptedVendorsPurposes,
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
         tcfData: SPJson) {
+        self.acceptedVendorsPurposes = acceptedVendorsPurposes
         self.uuid = uuid
         self.vendorGrants = vendorGrants
         self.euconsent = euconsent
@@ -101,5 +136,6 @@ public typealias SPGDPRPurposeId = String
         case euconsent
         case tcfData = "TCData"
         case vendorGrants = "grants"
+        case acceptedVendorsPurposes = "customVendorsResponse"
     }
 }
