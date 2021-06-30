@@ -9,50 +9,49 @@ import UIKit
 import Foundation
 
 class SPVendorDetailsViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var headerView: SPPMHeader!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var barcodeLabel: UILabel!
     @IBOutlet weak var barcodeImageView: UIImageView!
     @IBOutlet weak var onButton: UIButton!
     @IBOutlet weak var offButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-
     @IBOutlet weak var vendorDetailsTableView: UITableView!
+    @IBOutlet weak var actionsContainer: UIStackView!
 
-    let categoryList = [
-        "Store and/or access information on a device",
-        "Select personalized content",
-        "Personalized ads,ad meansurement and audience insights",
-        "Project developement",
-        "Information storage and access",
-        "Ad selection,delivery,reporting",
-        "Measure ad performance",
-        "Develop and improve products",
-        "Use precise geolocation data"
-    ]
     let sections = [
         "Vendor Consents",
         "Special Purposes",
         "Special features"
     ]
     let cellReuseIdentifier = "cell"
+    var vendor: VendorListVendor?
+    var consentCategories: [String] { vendor?.consentCategories.map { $0.name } ?? [] }
+    var specialPurposes: [String] { vendor?.iabSpecialPurposes ?? [] }
+    var specialFeatures: [String] { vendor?.iabSpecialFeatures ?? [] }
+
+    func setHeader () {
+        headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        headerView.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        headerView.titleLabel.text = vendor?.name
+        headerView.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: headerView.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
+        addFocusGuide(from: actionsContainer, to: vendorDetailsTableView, direction: .rightLeft)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView.textContainer.lineFragmentPadding = 0
-        descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: onButton)
         loadButton(forComponentId: "SaveButton", button: offButton)
-        loadButton(forComponentId: "BackButton", button: backButton)
+        vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
-    }
-
-    @IBAction func onBackTap(_ sender: Any) {
-        dismiss(animated: true)
     }
 
     @IBAction func onOnButtonTap(_ sender: Any) {
@@ -65,7 +64,7 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPVendorDetailsViewController: UITableViewDataSource {
+extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
@@ -76,11 +75,13 @@ extension SPVendorDetailsViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 3
+            return consentCategories.count
         } else if section == 1 {
-            return 5
+            return specialPurposes.count
+        } else if section == 2 {
+            return specialFeatures.count
         } else {
-            return 4
+            return 0
         }
     }
 
@@ -90,20 +91,21 @@ extension SPVendorDetailsViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (vendorDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        cell.textLabel?.text = categoryList[indexPath.row]
+        var cellText = ""
+        let section = indexPath.section
+        let row = indexPath.row
+        if section == 0 {
+            cellText = consentCategories[row]
+        } else if section == 1 {
+            cellText = specialPurposes[row]
+        } else if section == 2 {
+            cellText = specialFeatures[row]
+        }
+        cell.textLabel?.text = cellText
         return cell
     }
-}
 
-// MARK: - UITableViewDelegate
-extension SPVendorDetailsViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        present(SPCategoryDetailsViewController(
-            messageId: messageId,
-            campaignType: campaignType,
-            contents: viewData,
-            delegate: nil,
-            nibName: "SPCategoryDetailsViewController"
-        ), animated: true)
+    public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
+        true
     }
 }

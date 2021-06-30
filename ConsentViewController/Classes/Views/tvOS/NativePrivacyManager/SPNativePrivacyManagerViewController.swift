@@ -9,7 +9,8 @@ import UIKit
 import Foundation
 
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
+    weak var delegate: SPNativePMDelegate?
+
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var subDescriptionTextLabel: UILabel!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
@@ -18,98 +19,103 @@ import Foundation
     @IBOutlet weak var managePreferenceButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
 
-    let categoryList = [
-        "Store and/or access information on a device",
-        "Select personalized content",
-        "Personalized ads, ad meansurement and audience insights",
-        "Project developement",
-        "Information storage and access",
-        "Ad selection, delivery, reporting",
-        "Measure ad performance",
-        "Develop and improve products",
-        "Use precise geolocation data"
-    ]
+    @IBOutlet weak var header: SPPMHeader!
+
+    var categories: [VendorListCategory] { pmData.categories }
     let cellReuseIdentifier = "cell"
 
     override var preferredFocusedView: UIView? { acceptButton }
 
-    let privacyManagerViews: SPPrivacyManagerResponse
-
-    init(messageId: Int?, contents: SPPrivacyManagerResponse, campaignType: SPCampaignType, delegate: SPMessageUIDelegate?) {
-        privacyManagerViews = contents
-        super.init(
-            messageId: messageId,
-            campaignType: campaignType,
-            contents: contents.homeView,
-            delegate: delegate,
-            nibName: "SPNativePrivacyManagerViewController"
-        )
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func setHeader () {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in
+            if let this = self {
+                self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)
+            }
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView.textContainer.lineFragmentPadding = 0
-        descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadLabelView(forComponentId: "CategoriesSubDescriptionText", label: subDescriptionTextLabel)
         loadTextView(forComponentId: "CategoriesDescriptionText", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
-        loadButton(forComponentId: "BackButton", button: backButton)
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
     }
 
-    @IBAction func onBackButtonTap(_ sender: Any) {
-        messageUIDelegate?.action(SPAction(type: .Dismiss), from: self)
-    }
-
     @IBAction func onAcceptTap(_ sender: Any) {
-        messageUIDelegate?.action(
+        action(
             SPAction(type: .AcceptAll, id: nil, campaignType: campaignType),
             from: self
         )
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
-        present(SPManagePreferenceViewController(
-            messageId: messageId,
-            campaignType: campaignType,
-            contents: privacyManagerViews.categoriesView,
-            delegate: self,
-            nibName: "SPManagePreferenceViewController"
-        ), animated: true)
+        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                self?.onError(error)
+            case .success(let data):
+                if let strongSelf = self {
+                    let controller = SPManagePreferenceViewController(
+                        messageId: self?.messageId,
+                        campaignType: strongSelf.campaignType,
+                        viewData: strongSelf.pmData.categoriesView,
+                        pmData: strongSelf.pmData,
+                        delegate: self,
+                        nibName: "SPManagePreferenceViewController"
+                    )
+                    controller.categories = data.categories
+                    controller.specialPurposes = data.specialPurposes
+                    controller.features = data.features
+                    controller.specialFeatures = data.specialFeatures
+                    self?.present(controller, animated: true)
+                }
+            }
+        }
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {
-        present(SPPartnersViewController(
-            messageId: messageId,
-            campaignType: campaignType,
-            contents: privacyManagerViews.vendorsView,
-            delegate: self,
-            nibName: "SPPartnersViewController"
-        ), animated: true)
+        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                self?.onError(error)
+            case .success(let data):
+                if let strongSelf = self {
+                    let controller = SPPartnersViewController(
+                        messageId: self?.messageId,
+                        campaignType: strongSelf.campaignType,
+                        viewData: strongSelf.pmData.vendorsView,
+                        pmData: strongSelf.pmData,
+                        delegate: self,
+                        nibName: "SPPartnersViewController"
+                    )
+                    controller.vendors = data.vendors
+                    self?.present(controller, animated: true)
+                }
+            }
+        }
     }
 
     @IBAction func onPrivacyPolicyTap(_ sender: Any) {
-        guard let policyViewData = privacyManagerViews.privacyPolicyView else {
-            // TODO: call onError if privacyManagerViews.privacyPolicyView is empty
+        guard let privacyPolicyView = pmData.privacyPolicyView else {
+            onError(UnableToFindView(withId: "PrivacyPolicyView"))
             return
         }
         present(SPPrivacyPolicyViewController(
             messageId: messageId,
             campaignType: campaignType,
-            contents: policyViewData,
+            viewData: privacyPolicyView,
+            pmData: pmData,
             delegate: self,
             nibName: "SPPrivacyPolicyViewController"
         ), animated: true)
@@ -117,10 +123,14 @@ import Foundation
 }
 
 extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
-    func loaded(_ controller: SPMessageViewController) {}
+    func loaded(_ controller: SPMessageViewController) {
+        messageUIDelegate?.loaded(self)
+    }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
-
+        dismiss(animated: false) {
+            self.messageUIDelegate?.action(action, from: controller)
+        }
     }
 
     func onError(_ error: SPError) {
@@ -133,7 +143,7 @@ extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
 // MARK: UITableViewDataSource
 extension SPNativePrivacyManagerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categoryList.count
+        categories.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -141,23 +151,34 @@ extension SPNativePrivacyManagerViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as UITableViewCell
-        cell.textLabel?.text = categoryList[indexPath.row]
+        let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+        cell.textLabel?.text = categories[indexPath.row].name
         return cell
-    }
-
-    public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        loadLabelText(
-            forComponentId: "CategoriesDescriptionText",
-            labelText: categoryList[indexPath.row],
-            label: selectedCategoryTextLabel
-        )
-        return true
     }
 }
 
 // MARK: - UITableViewDelegate
 extension SPNativePrivacyManagerViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
+        loadLabelText(
+            forComponentId: "CategoriesDescriptionText",
+            labelText: categories[indexPath.row].description,
+            label: selectedCategoryTextLabel
+        )
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
+        if context.nextFocusedIndexPath == nil {
+            loadLabelText(
+                forComponentId: "CategoriesDescriptionText",
+                labelText: "",
+                label: selectedCategoryTextLabel
+            )
+        }
+        return true
+    }
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     }

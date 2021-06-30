@@ -9,48 +9,41 @@ import UIKit
 import Foundation
 
 class SPPartnersViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var partnerLabel: UILabel!
     @IBOutlet weak var selectedvendorTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var vednorsSlider: UISegmentedControl!
+    @IBOutlet weak var vendorsSlider: UISegmentedControl!
     @IBOutlet weak var vendorsTableView: UITableView!
+    @IBOutlet weak var header: SPPMHeader!
+    @IBOutlet weak var actionsContainer: UIStackView!
 
-    let vendorList = [
-        "Arcspire Limited",
-        "Amobee Inc",
-        "AppNexus",
-        "Audiens S.r.l",
-        "Bannerflow AB",
-        "BeeswaxLo Corporation",
-        "Beachfront Media LLC",
-        "Bidstack ltd",
-        "Celtra, Inc", "ChartBeat"
-    ]
-    let ligitimateInterestVendorList = [
-        "Captify Technologs Limited",
-        "Digital Control GmbH & amp CO",
-        "Delta projects AB",
-        "Eyeota Ptd Ltd",
-        "BeeswaxLo Corporation",
-        "AppNexus",
-        "Celtra, Inc",
-        "Amobee Inc",
-        "ChartBeat"
-    ]
+    var vendors: [VendorListVendor] = []
+    var userConsentVendors: [VendorListVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
+    var ligitimateInterestVendorList: [VendorListVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
     let cellReuseIdentifier = "cell"
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: vendorsSlider, to: vendorsTableView, direction: .bottomTop)
+        addFocusGuide(from: vendorsSlider, to: header.backButton, direction: .left)
+        addFocusGuide(from: actionsContainer, to: vendorsTableView, direction: .rightLeft)
+    }
+
+    func setHeader () {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadLabelView(forComponentId: "VendorsHeader", label: partnerLabel)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadButton(forComponentId: "BackButton", button: backButton)
-        loadSliderButton(forComponentId: "CategoriesSlider", slider: vednorsSlider)
+        loadSliderButton(forComponentId: "CategoriesSlider", slider: vendorsSlider)
         vendorsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorsTableView.delegate = self
         vendorsTableView.dataSource = self
@@ -74,11 +67,10 @@ class SPPartnersViewController: SPNativeScreenViewController {
 
 // MARK: UITableViewDataSource
 extension SPPartnersViewController: UITableViewDataSource {
-
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch vednorsSlider.selectedSegmentIndex {
+        switch vendorsSlider.selectedSegmentIndex {
         case 0:
-            return vendorList.count
+            return userConsentVendors.count
         case 1:
             return ligitimateInterestVendorList.count
         default:
@@ -92,11 +84,11 @@ extension SPPartnersViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (self.vendorsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        switch vednorsSlider.selectedSegmentIndex {
+        switch vendorsSlider.selectedSegmentIndex {
         case 0:
-            cell.textLabel?.text = vendorList[indexPath.row]
+            cell.textLabel?.text = userConsentVendors[indexPath.row].name
         case 1:
-            cell.textLabel?.text = ligitimateInterestVendorList[indexPath.row]
+            cell.textLabel?.text = ligitimateInterestVendorList[indexPath.row].name
         default:
             break
         }
@@ -104,11 +96,13 @@ extension SPPartnersViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        switch vednorsSlider.selectedSegmentIndex {
+        switch vendorsSlider.selectedSegmentIndex {
         case 0:
-            loadLabelText(forComponentId: "VendorsHeader", labelText: vendorList[indexPath.row], label: selectedvendorTextLabel)
+            loadLabelText(forComponentId: "VendorsHeader", labelText: "", label: selectedvendorTextLabel)
+                .attributedText = userConsentVendors[indexPath.row].description?.htmlToAttributedString
         case 1:
-            loadLabelText(forComponentId: "VendorsHeader", labelText: ligitimateInterestVendorList[indexPath.row], label: selectedvendorTextLabel)
+            loadLabelText(forComponentId: "VendorsHeader", labelText: "", label: selectedvendorTextLabel)
+                .attributedText = userConsentVendors[indexPath.row].description?.htmlToAttributedString
         default:
             break
         }
@@ -119,7 +113,15 @@ extension SPPartnersViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPPartnersViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let partnersController = SPVendorDetailsViewController(vendorDetailsView: vendorContent, selectedVendor: self.selectedvendorTextLabel.text ?? "")
-//        present(partnersController, animated: true, completion: nil)
+        let vendorDetailsVC = SPVendorDetailsViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: viewData,
+            pmData: pmData,
+            delegate: nil,
+            nibName: "SPVendorDetailsViewController"
+        )
+        vendorDetailsVC.vendor = vendors[indexPath.row]
+        present(vendorDetailsVC, animated: true)
     }
 }

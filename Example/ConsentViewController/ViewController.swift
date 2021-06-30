@@ -100,6 +100,7 @@ extension ViewController {
         case .accepted: idfaStatusLabel.textColor = .systemGreen
         case .denied: idfaStatusLabel.textColor = .systemRed
         case .unavailable: idfaStatusLabel.textColor = .systemGray
+        @unknown default: break
         }
     }
 

@@ -8,12 +8,116 @@
 import Foundation
 import UIKit
 
-@objcMembers class SPNativeScreenViewController: SPMessageViewController {
-    var components: [PMUIComponents] { viewData.components }
-    let viewData: SPPrivacyManager
+enum SPUIRectEdge {
+    case bottomTop, rightLeft, topBottom, leftRight, left, right, top, bottom, all
 
-    init(messageId: Int?, campaignType: SPCampaignType, contents: SPPrivacyManager, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
-        viewData = contents
+    init(from edge: UIRectEdge) {
+        switch edge {
+        case .all: self = .all
+        case .top: self = .top
+        case .bottom: self = .bottom
+        case .left: self = .left
+        case .right: self = .right
+        default:
+            self = .all
+        }
+    }
+}
+
+extension UIFont {
+    convenience init?(from spFont: SPNativeFont?) {
+        let fontSize = spFont?.fontSize ?? UIFont.preferredFont(forTextStyle: .body).pointSize
+        let family = spFont?.fontFamily
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
+            .first { UIFont.familyNames.map { $0.lowercased() }.contains($0) }
+            ?? UIFont.systemFont(ofSize: fontSize).familyName
+        self.init(name: family, size: fontSize)
+    }
+}
+
+extension UIViewController {
+    @discardableResult
+    func addFocusGuide(from origin: UIView?, to destination: UIView?, direction: SPUIRectEdge, debug: Bool = false) -> [UIFocusGuide?] {
+        switch direction {
+        case .bottomTop:
+            return [
+                addFocusGuide(from: origin, to: [destination], direction: .bottom, debug: debug),
+                addFocusGuide(from: destination, to: [origin], direction: .top, debug: debug)
+            ]
+        case .topBottom: return addFocusGuide(from: destination, to: origin, direction: .bottomTop, debug: debug)
+        case .rightLeft:
+            return [
+                addFocusGuide(from: origin, to: [destination], direction: .right, debug: debug),
+                addFocusGuide(from: destination, to: [origin], direction: .left, debug: debug)
+            ]
+        case .leftRight: return addFocusGuide(from: destination, to: origin, direction: .rightLeft, debug: debug)
+        default:
+            return [addFocusGuide(from: origin, to: [destination], direction: direction, debug: debug)]
+        }
+    }
+
+    @discardableResult
+    func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: SPUIRectEdge, debug: Bool = false) -> UIFocusGuide? {
+        if let origin = origin {
+            let destinations = maybeDestinations.filter { $0 != nil }.map { $0! }
+            let focusGuide = UIFocusGuide()
+            view.addLayoutGuide(focusGuide)
+            focusGuide.preferredFocusEnvironments = destinations
+            focusGuide.widthAnchor.constraint(equalTo: origin.widthAnchor).isActive = true
+            focusGuide.heightAnchor.constraint(equalTo: origin.heightAnchor).isActive = true
+
+            switch direction {
+            case .bottom:
+                focusGuide.topAnchor.constraint(equalTo: origin.bottomAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+            case .top:
+                focusGuide.bottomAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+            case .left:
+                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.rightAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+            case .right:
+                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.rightAnchor).isActive = true
+            default:
+                // Not supported :(
+                break
+            }
+
+            if debug {
+                view.addSubview(FocusGuideDebugView(focusGuide: focusGuide))
+            }
+
+            return focusGuide
+        }
+        return nil
+    }
+}
+
+class FocusGuideDebugView: UIView {
+    init(focusGuide: UIFocusGuide) {
+        super.init(frame: focusGuide.layoutFrame)
+        backgroundColor = UIColor.green.withAlphaComponent(0.15)
+        layer.borderColor = UIColor.green.withAlphaComponent(0.3).cgColor
+        layer.borderWidth = 1
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        return nil
+    }
+}
+
+@objcMembers class SPNativeScreenViewController: SPMessageViewController {
+    var components: [SPNativeUI] { viewData.children }
+    let viewData: SPNativeView
+    let pmData: PrivacyManagerViewData
+
+    func setFocusGuides() { }
+
+    init(messageId: Int?, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
+        self.viewData = viewData
+        self.pmData = pmData
         super.init(
             messageId: messageId,
             campaignType: campaignType,
@@ -29,76 +133,75 @@ import UIKit
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(hexString: viewData.style.backgroundColor)
-        self.view.tintColor = UIColor(hexString: viewData.style.backgroundColor)
+        view.backgroundColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
+        view.tintColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
+        setFocusGuides()
     }
 
-    func loadButton(forComponentId id: String, button: UIButton) {
-        if let action =  components.first(where: { $0.id == id }) {
+    @discardableResult
+    func loadButton(forComponentId id: String, button: UIButton) -> UIButton {
+        if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             button.isHidden = false
-            button.titleLabel?.text = action.text
-            button.setTitleColor(UIColor(hexString: action.style?.onUnfocusTextColor), for: .normal)
-            button.setTitleColor(UIColor(hexString: action.style?.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: action.style?.onUnfocusBackgroundColor)
-            if let fontFamily = action.style?.font?.fontFamily,
-               let fontsize = action.style?.font?.fontSize {
-                button.titleLabel?.font = UIFont(name: fontFamily, size: fontsize)
-            }
+            button.titleLabel?.text = action.settings.text
+            button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
+            button.titleLabel?.font = UIFont(from: action.settings.style?.font)
         }
+        return button
     }
 
-    func loadLabelView(forComponentId id: String, label: UILabel) {
-        if let textDetails = components.first(where: { $0.id == id }) {
-            label.text = textDetails.text
-            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
-            if let fontFamily = textDetails.style?.font?.fontFamily,
-               let fontsize = textDetails.style?.font?.fontSize {
-                label.font = UIFont(name: fontFamily, size: fontsize)
-            }
+    @discardableResult
+    func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
+        if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
+            label.text = textDetails.settings.text
+            label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
+            label.font = UIFont(from: textDetails.settings.style?.font)
         }
+        return label
     }
 
-    func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) {
-        if let textDetails = components.first(where: { $0.id == id }) {
+    @discardableResult
+    func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
+        if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             label.text = text
-            label.textColor = UIColor(hexString: textDetails.style?.font?.color)
-            if let fontFamily = textDetails.style?.font?.fontFamily,
-               let fontsize = textDetails.style?.font?.fontSize {
-                label.font = UIFont(name: fontFamily, size: fontsize)
-            }
+            label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
+            label.font = UIFont(from: textDetails.settings.style?.font)
         }
+        return label
     }
 
-    func loadTextView(forComponentId id: String, textView: UITextView) {
-        if let textViewComponent = components.first(where: { $0.id == id }) {
-            textView.text = textViewComponent.text
-            textView.textColor = UIColor(hexString: textViewComponent.style?.font?.color)
-            if let fontFamily = textViewComponent.style?.font?.fontFamily,
-               let fontsize = textViewComponent.style?.font?.fontSize {
-                textView.font = UIFont(name: fontFamily, size: fontsize)
-            }
+    @discardableResult
+    func loadTextView(forComponentId id: String, textView: UITextView) -> UITextView {
+        if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
+            textView.text = textViewComponent.settings.text
+            textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
+            textView.isUserInteractionEnabled = true
+            textView.isScrollEnabled = true
+            textView.showsVerticalScrollIndicator = true
+            textView.bounces = true
+            textView.panGestureRecognizer.allowedTouchTypes = [
+                NSNumber(value: UITouch.TouchType.indirect.rawValue)
+            ]
+            textView.font = UIFont(from: textViewComponent.settings.style?.font)
         }
+        return textView
     }
 
-    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) {
-        if let sliderDetails =  components.first(where: { $0.id == id }) {
-            slider.setTitle(sliderDetails.sliderDetails?.consentText, forSegmentAt: 0)
-            slider.setTitle(sliderDetails.sliderDetails?.legitInterestText, forSegmentAt: 1)
-            slider.backgroundColor = UIColor(hexString: sliderDetails.style?.backgroundColor)
-            if let fontFamily = sliderDetails.style?.font?.fontFamily,
-               let fontsize = sliderDetails.style?.font?.fontSize {
-                let font = UIFont(name: fontFamily, size: fontsize)
-                slider.setTitleTextAttributes(
-                    [
-                        NSAttributedString.Key.font: font ?? "",
-                        NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.font?.color) as Any
-                    ], for: .normal)
-                slider.setTitleTextAttributes(
-                    [
-                        NSAttributedString.Key.font: font ?? "",
-                        NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.style?.activeFont?.color) as Any
-                    ], for: .selected)
-            }
+    @discardableResult
+    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
+        if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
+            slider.setTitle(sliderDetails.settings.offText, forSegmentAt: 0)
+            slider.setTitle(sliderDetails.settings.onText, forSegmentAt: 1)
+            slider.backgroundColor = UIColor(hexString: sliderDetails.settings.style?.backgroundColor)
+            let font =  UIFont(from: sliderDetails.settings.style?.font)
+            let attributes = [
+                NSAttributedString.Key.font: font as Any,
+                NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.settings.style?.font?.color) as Any
+            ]
+            slider.setTitleTextAttributes(attributes, for: .normal)
+            slider.setTitleTextAttributes(attributes, for: .selected)
         }
+        return slider
     }
 }

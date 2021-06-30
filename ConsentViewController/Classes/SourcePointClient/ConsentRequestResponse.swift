@@ -42,7 +42,22 @@ struct CCPAConsentRequest: Encodable, Equatable {
     }
 }
 
-struct ConsentResponse<ConsentType: Decodable & Equatable>: Decodable & Equatable {
+struct ConsentResponse: Decodable & Equatable {
     let localState: SPJson
-    let userConsent: ConsentType
+    let userConsent: Consent
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        localState = try container.decode(SPJson.self, forKey: .localState)
+        userConsent = try container.decode(Consent.self, forKey: .userConsent)
+        switch userConsent {
+        case .gdpr(let consents): consents.uuid = localState["gdpr"]?["uuid"]?.stringValue
+        case .ccpa(let consents): consents.uuid = localState["ccpa"]?["uuid"]?.stringValue
+        default: break
+        }
+    }
+
+    enum Keys: CodingKey {
+        case localState, userConsent
+    }
 }

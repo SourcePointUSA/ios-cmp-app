@@ -9,62 +9,54 @@ import UIKit
 import Foundation
 
 class SPManagePreferenceViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var categorySlider: UISegmentedControl!
     @IBOutlet weak var categoriesTableView: UITableView!
+    @IBOutlet weak var header: SPPMHeader!
+    @IBOutlet weak var actionsContainer: UIStackView!
 
-    let categoryList = [
-        "Store and/or access information on a device",
-        "Select personalized content",
-        "Personalized ads, ad meansurement and audience insights",
-        "Project developement",
-        "Information storage and access",
-        "Ad selection, delivery, reporting",
-        "Measure ad performance",
-        "Develop and improve products",
-        "Use precise geolocation data"
-    ]
-    let ligitimateInterestList = [
-        "Ad selection, delivery, reporting",
-        "Select personalized content",
-        "Personalized ads, ad meansurement and audience insights",
-        "Develop and improve products",
-        "Use precise geolocation data",
-        "Store and/or access information on a device",
-        "Project developement",
-        "Information storage and access",
-        "Measure ad performance"
-    ]
+    var categories: [VendorListCategory] = []
+    var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
+    var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
+    var specialPurposes: [VendorListShortVendor] = []
+    var features: [VendorListShortVendor] = []
+    var specialFeatures: [VendorListShortVendor] = []
+
     let sections = [
-        "Vendor Consents",
+        "Purposes",
         "Special Purposes",
+        "Features",
         "Special features"
     ]
     let cellReuseIdentifier = "cell"
 
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
+        addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
+        addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
+    }
+
+    func setHeader() {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView.textContainer.lineFragmentPadding = 0
-        descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
+        setHeader()
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadButton(forComponentId: "BackButton", button: backButton)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         categoriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
-    }
-
-    @IBAction func onBackTap(_ sender: Any) {
-        dismiss(animated: true)
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {
@@ -72,6 +64,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
+        self.messageUIDelegate?.action(SPAction(type: .AcceptAll, id: nil, campaignType: self.campaignType), from: self)
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
@@ -80,33 +73,35 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPManagePreferenceViewController: UITableViewDataSource {
+extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
+        switch categorySlider.selectedSegmentIndex {
+        case 0: return sections.count
+        default: return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section]
+        switch categorySlider.selectedSegmentIndex {
+        case 0: return sections[section]
+        default: return nil
+        }
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            if section == 0 {
-                return 3
-            } else if section == 1 {
-                return 5
-            } else {
-                return 8
+            if section == 0 { // purposes
+                return userConsentCategories.count
+            } else if section == 1 { // special purposes
+                return specialPurposes.count
+            } else if section == 2 { // features
+                return features.count
+            } else if section == 3 {
+                return specialFeatures.count
             }
         case 1:
-            if section == 0 {
-                return 2
-            } else if section == 1 {
-                return 4
-            } else {
-                return 8
-            }
+            return legIntCategories.count
         default:
             break
         }
@@ -119,11 +114,23 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (categoriesTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+        let section = indexPath.section
+        let row = indexPath.row
+        var cellText = ""
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            cell.textLabel?.text = categoryList[indexPath.row]
+            if section == 0 { // purposes
+                cellText = userConsentCategories[row].name
+            } else if section == 1 { // special purposes
+                cellText = specialPurposes[row].name
+            } else if section == 2 { // features
+                cellText = features[row].name
+            } else if section == 3 {
+                cellText = specialFeatures[row].name
+            }
+            cell.textLabel?.text = cellText
         case 1:
-            cell.textLabel?.text = ligitimateInterestList[indexPath.row]
+            cell.textLabel?.text = legIntCategories[indexPath.row].name
         default:
             break
         }
@@ -133,25 +140,25 @@ extension SPManagePreferenceViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         switch categorySlider.selectedSegmentIndex {
         case 0:
-            self.loadLabelText(forComponentId: "CategoriesHeader", labelText: categoryList[indexPath.row], label: selectedCategoryTextLabel)
+            loadLabelText(forComponentId: "CategoriesHeader", labelText: userConsentCategories[indexPath.row].description, label: selectedCategoryTextLabel)
         case 1:
-            self.loadLabelText(forComponentId: "CategoriesHeader", labelText: ligitimateInterestList[indexPath.row], label: selectedCategoryTextLabel)
+            loadLabelText(forComponentId: "CategoriesHeader", labelText: legIntCategories[indexPath.row].description, label: selectedCategoryTextLabel)
         default:
             break
         }
         return true
     }
-}
 
-// MARK: - UITableViewDelegate
-extension SPManagePreferenceViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        present(SPCategoryDetailsViewController(
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let categoryDetailsVC = SPCategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
-            contents: viewData,
+            viewData: viewData,
+            pmData: pmData,
             delegate: nil,
             nibName: "SPCategoryDetailsViewController"
-        ), animated: true)
+        )
+        categoryDetailsVC.category = categories[indexPath.row]
+        present(categoryDetailsVC, animated: true)
     }
 }

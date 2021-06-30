@@ -9,39 +9,42 @@ import UIKit
 import Foundation
 
 class SPCategoryDetailsViewController: SPNativeScreenViewController {
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var subDescriptionTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var onButton: UIButton!
     @IBOutlet weak var offButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-
+    @IBOutlet weak var actionsContainer: UIStackView!
     @IBOutlet weak var categoryDetailsTableView: UITableView!
 
-    let vendorList = [
-        "Arcspire Limited",
-        "Amobee Inc",
-        "AppNexus",
-        "Audiens S.r.l",
-        "Bannerflow AB",
-        "BeeswaxLo Corporation",
-        "Beachfront Media LLC",
-        "Bidstack ltd",
-        "Celtra, Inc",
-        "ChartBeat"
-    ]
+    var category: VendorListCategory?
+    var partners: [String] {
+        ((category?.requiringConsentVendors ?? []) + (category?.legIntVendors ?? []))
+            .map { $0.name }
+            .reduce([]) { $0.contains($1) ? $0 : $0 + [$1] } // filter duplicates
+    }
     let cellReuseIdentifier = "cell"
+
+    func setHeader() {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.titleLabel.text = category?.name
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: header.backButton, to: categoryDetailsTableView, direction: .right)
+        addFocusGuide(from: actionsContainer, to: categoryDetailsTableView, direction: .rightLeft)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        descriptionTextView.textContainer.lineFragmentPadding = 0
-        descriptionTextView.textContainerInset = .zero
-        loadLabelView(forComponentId: "HeaderText", label: titleLabel)
-        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
+        setHeader()
+        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView).text = category?.description
         loadButton(forComponentId: "AcceptAllButton", button: onButton)
         loadButton(forComponentId: "SaveButton", button: offButton)
-        loadButton(forComponentId: "BackButton", button: backButton)
+        categoryDetailsTableView.allowsSelection = false
         categoryDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryDetailsTableView.delegate = self
         categoryDetailsTableView.dataSource = self
@@ -61,9 +64,9 @@ class SPCategoryDetailsViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPCategoryDetailsViewController: UITableViewDataSource {
+extension SPCategoryDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        vendorList.count
+        partners.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -72,16 +75,12 @@ extension SPCategoryDetailsViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (categoryDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        cell.textLabel?.text = vendorList[indexPath.row]
+        cell.selectionStyle = .none
+        cell.textLabel?.text = partners[indexPath.row]
         return cell
     }
-}
 
-// MARK: - UITableViewDelegate
-extension SPCategoryDetailsViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let partnersController = SPCategoryDetailsViewController(categoriesDetailsView: categoriesView)
-//        partnersController.modalPresentationStyle = .currentContext
-//        present(partnersController, animated: true, completion: nil)
+    public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
+        true
     }
 }

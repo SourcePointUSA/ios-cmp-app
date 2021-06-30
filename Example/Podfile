@@ -24,6 +24,12 @@ target 'SPGDPRExampleAppUITests' do
   pod 'Nimble'
 end
 
+target 'NativePMExampleApp' do
+  platform :tvos, '10.0'
+  pod 'ConsentViewController', :path => '../'
+  pod 'SwiftLint'
+end
+
 target 'NativeMessageExample' do
   pod 'ConsentViewController', :path => '../'
 end
