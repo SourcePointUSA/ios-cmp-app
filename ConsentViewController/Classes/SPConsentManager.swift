@@ -46,13 +46,14 @@ import Foundation
         }
     }
 
-    public convenience init(accountId: Int, propertyName: SPPropertyName, campaigns: SPCampaigns, delegate: SPDelegate?) {
+    public convenience init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv = .Public, campaigns: SPCampaigns, delegate: SPDelegate?) {
         self.init(
             accountId: accountId,
             propertyName: propertyName,
+            campaignEnv: campaignEnv,
             campaigns: campaigns,
             delegate: delegate,
-            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, timeout: SPConsentManager.DefaultTimeout),
+            spClient: SourcePointClient(accountId: accountId, propertyName: propertyName, campaignEnv: campaignEnv, timeout: SPConsentManager.DefaultTimeout),
             storage: SPUserDefaults(storage: UserDefaults.standard)
         )
     }
@@ -60,6 +61,7 @@ import Foundation
     init(
         accountId: Int,
         propertyName: SPPropertyName,
+        campaignEnv: SPCampaignEnv,
         campaigns: SPCampaigns,
         delegate: SPDelegate?,
         spClient: SourcePointProtocol,
