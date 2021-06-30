@@ -4,6 +4,7 @@ PODS:
   - Nimble (9.0.0)
   - Quick (3.0.0)
   - SwiftLint (0.41.0)
+  - Wormholy (1.6.4)
 
 DEPENDENCIES:
   - ConsentViewController (from `../`)
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - Nimble
   - Quick
   - SwiftLint
+  - Wormholy
 
 SPEC REPOS:
   trunk:
@@ -18,6 +20,7 @@ SPEC REPOS:
     - Nimble
     - Quick
     - SwiftLint
+    - Wormholy
 
 EXTERNAL SOURCES:
   ConsentViewController:
@@ -29,7 +32,8 @@ SPEC CHECKSUMS:
   Nimble: 3b4ec3fd40f1dc178058e0981107721c615643d8
   Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
+  Wormholy: 2e70f64227e010d363f8d33268369f77faf12471
 
-PODFILE CHECKSUM: 83362c60da30fd0a58402ed96d5caac37f9b3366
+PODFILE CHECKSUM: fd7b9174181f2833f08e2ad44efb5632c16802de
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1
