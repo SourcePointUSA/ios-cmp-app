@@ -390,9 +390,11 @@ extension SPConsentManager: SPMessageUIDelegate {
             report(action: action)
             finishAndNextIfAny(controller)
         case .ShowPrivacyManager:
-            if let url = action.pmURL {
-                controller.loadPrivacyManager(url: url)
+            guard let url = action.pmURL else {
+                onError(InvalidURLError(urlString: "Empty or invalid PM URL"))
+                return
             }
+            controller.loadPrivacyManager(url: url)
         case .PMCancel:
             controller.closePrivacyManager()
         case .Dismiss:
