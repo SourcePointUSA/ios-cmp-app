@@ -75,6 +75,7 @@
 		6D56EB7F24C8850C009F33D9 /* NativeMessageExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB7E24C8850C009F33D9 /* NativeMessageExampleUITests.swift */; };
 		6D56EB8824C88603009F33D9 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB8724C88603009F33D9 /* CustomMatchers.swift */; };
 		6D56EB8A24C88665009F33D9 /* NativeExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB8924C88665009F33D9 /* NativeExampleApp.swift */; };
+		6D578996268DBB3D00B7909E /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6D578995268DBB3D00B7909E /* ConsentViewController */; };
 		6D605DF12423523700BB3E5F /* MessageWebViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D605DED2423523600BB3E5F /* MessageWebViewControllerSpec.swift */; };
 		6D605DF22423523700BB3E5F /* GDPRConsentViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D605DEE2423523600BB3E5F /* GDPRConsentViewControllerSpec.swift */; };
 		6D605DF42423523700BB3E5F /* GDPRMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D605DF02423523700BB3E5F /* GDPRMessageViewControllerSpec.swift */; };
@@ -484,6 +485,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D578996268DBB3D00B7909E /* ConsentViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1388,6 +1390,9 @@
 			dependencies = (
 			);
 			name = "ObjC-ExampleApp";
+			packageProductDependencies = (
+				6D578995268DBB3D00B7909E /* ConsentViewController */,
+			);
 			productName = "ObjC-ExampleApp";
 			productReference = 6D8046EA25D1A87E0005002B /* ObjC-ExampleApp.app */;
 			productType = "com.apple.product-type.application";
@@ -1662,7 +1667,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				6D84BAAC25E662C9002D6996 /* RemoteSwiftPackageReference */,
+				6D578994268DBB3D00B7909E /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -3884,15 +3889,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6D84BAAC25E662C9002D6996 /* RemoteSwiftPackageReference */ = {
+		6D578994268DBB3D00B7909E /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
-				kind = exactVersion;
-				version = "5.3.6-beta.0";
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6D578995268DBB3D00B7909E /* ConsentViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D578994268DBB3D00B7909E /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
+			productName = ConsentViewController;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		1997B679238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld */ = {
