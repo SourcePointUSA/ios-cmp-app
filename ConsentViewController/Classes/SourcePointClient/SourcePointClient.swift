@@ -40,7 +40,7 @@ typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPErro
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
-    init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval)
+    init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
 
     func getMessages(
         campaigns: SPCampaigns,
@@ -125,20 +125,23 @@ class SourcePointClient: SourcePointProtocol {
 
     let accountId: Int
     let propertyName: SPPropertyName
+    let campaignEnv: SPCampaignEnv
     var client: HttpClient
 
     let requestUUID = UUID()
 
-    init(accountId: Int, propertyName: SPPropertyName, client: HttpClient) {
+    init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, client: HttpClient) {
         self.accountId = accountId
         self.propertyName = propertyName
+        self.campaignEnv = campaignEnv
         self.client = client
     }
 
-    required convenience init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval) {
+    required convenience init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
         self.init(
             accountId: accountId,
             propertyName: propertyName,
+            campaignEnv: campaignEnv,
             client: SimpleClient(timeoutAfter: timeout))
     }
 
@@ -158,6 +161,7 @@ class SourcePointClient: SourcePointProtocol {
             requestUUID: requestUUID,
             propertyHref: propertyName,
             accountId: accountId,
+            campaignEnv: campaignEnv,
             idfaStatus: idfaStaus,
             localState: localState,
             consentLanguage: consentLanguage,
