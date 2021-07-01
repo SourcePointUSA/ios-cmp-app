@@ -143,7 +143,6 @@
 		82F9411824A10379007D30B1 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411724A10379007D30B1 /* CustomMatchers.swift */; };
 		82F9411A24A10416007D30B1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411924A10416007D30B1 /* ExampleApp.swift */; };
 		981A1E76432A3C1CB92B99F3 /* Pods_AuthExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D68262CA7926B0E43A38D6 /* Pods_AuthExample.framework */; };
-		9CEDDED69E6F53F76C42AB6B /* Pods_ObjC_ExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD1B9ED8AE03ECBAB4891B3 /* Pods_ObjC_ExampleApp.framework */; };
 		B2B125848B3233BA2E2EC315 /* Pods_NativeMessageExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A83D750A139E7FE3362BAE1 /* Pods_NativeMessageExample.framework */; };
 		C12B3EE4F3689114E7B0B320 /* Pods_SourcePointMetaAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A889A4C329EA4D3D8DBF71 /* Pods_SourcePointMetaAppUITests.framework */; };
 		DFC1E0DECB625A322F75C57A /* Pods_ConsentViewController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6533806E9A735C5E1C27922 /* Pods_ConsentViewController_Example.framework */; };
@@ -426,13 +425,10 @@
 		9375B76A49392F19B858E630 /* Pods-ConsentViewController_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ConsentViewController_ExampleTests/Pods-ConsentViewController_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96253CFA6FCCB562D840330A /* Pods_NativeMessageExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NativeMessageExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96AABFB6AD025CE121831385 /* Pods-NativeMessageExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeMessageExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-NativeMessageExampleUITests/Pods-NativeMessageExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		A6D4D4DF87804F3BE67B8AB9 /* Pods-ObjC-ExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjC-ExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-ObjC-ExampleApp/Pods-ObjC-ExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
-		AAD1B9ED8AE03ECBAB4891B3 /* Pods_ObjC_ExampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjC_ExampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5AA36A7D29C1E427A75F8D4 /* ConsentViewController.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ConsentViewController.podspec; path = ../ConsentViewController.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B70E176C407AE0BC297B54BE /* Pods-ConsentViewController_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ConsentViewController_ExampleTests/Pods-ConsentViewController_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		BBA5D39FB47A09F2CA32E8D1 /* Pods-ConsentViewController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_Example.release.xcconfig"; path = "Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BCCBB5C95AFD976BBD935B6E /* Pods_ObjC_ExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjC_ExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD1158B2A6F772264196335F /* Pods-ObjC-ExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjC-ExampleApp.release.xcconfig"; path = "Target Support Files/Pods-ObjC-ExampleApp/Pods-ObjC-ExampleApp.release.xcconfig"; sourceTree = "<group>"; };
 		C0A889A4C329EA4D3D8DBF71 /* Pods_SourcePointMetaAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4B4F063983635436B3B09B2 /* Pods_SourcePointMetaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SourcePointMetaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA8E3C73F872948EA8FE661C /* Pods_SPGDPRExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SPGDPRExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -488,7 +484,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CEDDED69E6F53F76C42AB6B /* Pods_ObjC_ExampleApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1084,8 +1079,6 @@
 				96AABFB6AD025CE121831385 /* Pods-NativeMessageExampleUITests.release.xcconfig */,
 				1497E438D70451F7F7FB06DF /* Pods-NativePMExampleApp.debug.xcconfig */,
 				77F7A52F3EA9C43B421A8644 /* Pods-NativePMExampleApp.release.xcconfig */,
-				A6D4D4DF87804F3BE67B8AB9 /* Pods-ObjC-ExampleApp.debug.xcconfig */,
-				BD1158B2A6F772264196335F /* Pods-ObjC-ExampleApp.release.xcconfig */,
 				3F0C4B03E17251B8CDC6B277 /* Pods-ObjC-ExampleAppUITests.debug.xcconfig */,
 				139EAA216EAED94FB94EC0D2 /* Pods-ObjC-ExampleAppUITests.release.xcconfig */,
 				457DCCFCDBF5A38EA5C375F3 /* Pods-SPGDPRExampleAppUITests.debug.xcconfig */,
@@ -1271,7 +1264,6 @@
 				3A83D750A139E7FE3362BAE1 /* Pods_NativeMessageExample.framework */,
 				96253CFA6FCCB562D840330A /* Pods_NativeMessageExampleUITests.framework */,
 				117FE7D31413D8557414220A /* Pods_NativePMExampleApp.framework */,
-				AAD1B9ED8AE03ECBAB4891B3 /* Pods_ObjC_ExampleApp.framework */,
 				BCCBB5C95AFD976BBD935B6E /* Pods_ObjC_ExampleAppUITests.framework */,
 				EA8E3C73F872948EA8FE661C /* Pods_SPGDPRExampleAppUITests.framework */,
 				C4B4F063983635436B3B09B2 /* Pods_SourcePointMetaApp.framework */,
@@ -1387,11 +1379,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D80470225D1A88C0005002B /* Build configuration list for PBXNativeTarget "ObjC-ExampleApp" */;
 			buildPhases = (
-				5329EC4AB6104A3474B82430 /* [CP] Check Pods Manifest.lock */,
 				6D8046E625D1A87E0005002B /* Sources */,
 				6D8046E725D1A87E0005002B /* Frameworks */,
 				6D8046E825D1A87E0005002B /* Resources */,
-				4841E1620AC40893116D8A49 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2040,23 +2030,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4841E1620AC40893116D8A49 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ObjC-ExampleApp/Pods-ObjC-ExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ObjC-ExampleApp/Pods-ObjC-ExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ObjC-ExampleApp/Pods-ObjC-ExampleApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4A600D82DCF2ABFC4E6EB9E5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2095,28 +2068,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-NativePMExampleApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5329EC4AB6104A3474B82430 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ObjC-ExampleApp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3136,7 +3087,6 @@
 		};
 		6D80470025D1A88C0005002B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A6D4D4DF87804F3BE67B8AB9 /* Pods-ObjC-ExampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3168,7 +3118,6 @@
 		};
 		6D80470125D1A88C0005002B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD1158B2A6F772264196335F /* Pods-ObjC-ExampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
