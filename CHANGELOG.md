@@ -1,3 +1,6 @@
+# 6.1.0 (July, 1, 2021)
+* Fixed an issue that would prevent Stage campaigns from being loaded. [#317](https://github.com/SourcePointUSA/ios-cmp-app/pull/317) - This fix changes the constructor of the SDK, adding a new optional parameter: `campaignsEnv = .Public` to it. Refer to the README for more info.
+
 # 6.0.4 (June, 30, 2021)
 * Added `.uuid` to `SPGDPRConsent` and `SPCCPAConsent` classes. [#315](https://github.com/SourcePointUSA/ios-cmp-app/pull/315)
 * Fixed an issue that would prevent the message from rendering in the right language. [#313](https://github.com/SourcePointUSA/ios-cmp-app/pull/313) (Thank you @mskrischke for reporting the issue and submitting a PR to fix it).
