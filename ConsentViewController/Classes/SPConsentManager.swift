@@ -30,7 +30,7 @@ import Foundation
 
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
-    var propertyId: Int?
+    var propertyId: Int? { storage.propertyId }
     var propertyIdString: String { propertyId != nil ? String(propertyId!) : "" }
     var iOSMessagePartitionUUID: String?
 
@@ -126,7 +126,8 @@ import Foundation
         }
     }
 
-    func storeData(localState: SPJson, userData: SPUserData) {
+    func storeData(localState: SPJson, userData: SPUserData, propertyId: Int?) {
+        storage.propertyId = propertyId
         storage.localState = localState
         storage.userData = userData
         if let tcData = userData.gdpr?.consents?.tcfData {
@@ -150,9 +151,9 @@ import Foundation
             case .success(let messagesResponse):
                 self?.storeData(
                     localState: messagesResponse.localState,
-                    userData: SPUserData(from: messagesResponse)
+                    userData: SPUserData(from: messagesResponse),
+                    propertyId: messagesResponse.propertyId
                 )
-                self?.propertyId = messagesResponse.propertyId
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
                     .filter {
@@ -192,7 +193,8 @@ import Foundation
                     )
                     self?.storeData(
                         localState: localState,
-                        userData: userData
+                        userData: userData,
+                        propertyId: self?.propertyId
                     )
                     self?.delegate?.onConsentReady?(userData: userData)
                 case .failure(let error):
@@ -209,7 +211,8 @@ import Foundation
                     )
                     self?.storeData(
                         localState: localState,
-                        userData: userData
+                        userData: userData,
+                        propertyId: self?.propertyId
                     )
                     self?.delegate?.onConsentReady?(userData: userData)
                 case .failure(let error):
