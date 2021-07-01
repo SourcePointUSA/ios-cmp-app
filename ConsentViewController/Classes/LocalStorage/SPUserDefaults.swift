@@ -78,5 +78,6 @@ class SPUserDefaults: SPLocalStorage {
         tcfData = [:]
         usPrivacyString = ""
         userData = SPUserData()
+        propertyId = nil
     }
 }
