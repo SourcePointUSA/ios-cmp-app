@@ -110,7 +110,7 @@ extension SPCampaignEnv : Swift.Codable {
 }
 public typealias SPTargetingParams = [Swift.String : Swift.String]
 @objc @objcMembers public class SPCampaign : ObjectiveC.NSObject {
-  @objc public init(environment: ConsentViewController.SPCampaignEnv = .Public, targetingParams: ConsentViewController.SPTargetingParams = [:])
+  @objc public init(targetingParams: ConsentViewController.SPTargetingParams = [:])
   @objc override dynamic public init()
   @objc deinit
 }
@@ -171,7 +171,7 @@ public typealias SPUsPrivacyString = Swift.String
     @objc get
     @objc set
   }
-  @objc convenience public init(accountId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
+  @objc convenience public init(accountId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaignsEnv: ConsentViewController.SPCampaignEnv = .Public, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
   @objc public var privacyManagerTab: ConsentViewController.SPPrivacyManagerTab
   @objc public var messageLanguage: ConsentViewController.SPMessageLanguage
   @objc public func loadMessage(forAuthId authId: Swift.String? = nil)
