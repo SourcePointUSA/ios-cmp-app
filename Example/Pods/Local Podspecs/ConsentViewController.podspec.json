@@ -32,6 +32,6 @@
       "Pod/Classes/**/*.{storyboard,xib,xcassets,json,imageset,png,js}"
     ]
   },
-  "resources": "ConsentViewController/**/*.{js,json}",
+  "resources": "ConsentViewController/**/*.{js,json,png}",
   "swift_version": "5.0"
 }
