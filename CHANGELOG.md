@@ -1,3 +1,6 @@
+# 6.1.1 (July, 1, 2021)
+* Fixed an issue preventing the Privacy Manager from rendering correctly when using an id of a property group PM.
+
 # 6.1.0 (July, 1, 2021)
 * Fixed an issue that would prevent Stage campaigns from being loaded. [#317](https://github.com/SourcePointUSA/ios-cmp-app/pull/317) - This fix changes the constructor of the SDK, adding a new optional parameter: `campaignsEnv = .Public` to it. Refer to the README for more info.
 
