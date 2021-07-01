@@ -31,6 +31,7 @@ import Foundation
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var propertyId: Int?
+    var propertyIdString: String { propertyId != nil ? String(propertyId!) : "" }
     var iOSMessagePartitionUUID: String?
 
     var pmSecondLayerData: PrivacyManagerViewResponse?
@@ -226,7 +227,7 @@ import Foundation
             "pmTab": tab.rawValue,
             "consentUUID": gdprUUID,
             "idfaStatus": idfaStatus.description,
-            "site_id": propertyId != nil ? String(propertyId!) : ""
+            "site_id": propertyIdString
         ]) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
@@ -259,7 +260,7 @@ import Foundation
             "pmTab": tab.rawValue,
             "ccpaUUID": ccpaUUID,
             "idfaStatus": idfaStatus.description,
-            "site_id": propertyId != nil ? String(propertyId!) : ""
+            "site_id": propertyIdString
         ]) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
@@ -390,7 +391,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             report(action: action)
             finishAndNextIfAny(controller)
         case .ShowPrivacyManager:
-            guard let url = action.pmURL else {
+            guard let url = action.pmURL?.appendQueryItems(["site_id": propertyIdString]) else {
                 onError(InvalidURLError(urlString: "Empty or invalid PM URL"))
                 return
             }
@@ -447,7 +448,6 @@ extension SPConsentManager: SPNativePMDelegate {
 //            }
 //        }
         if let propertyId = propertyId, pmSecondLayerData == nil {
-            print("PROPERTY ID", propertyId)
             spClient.privacyManagerView(
                 propertyId: propertyId,
                 consentLanguage: messageLanguage
