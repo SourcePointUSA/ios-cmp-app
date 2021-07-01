@@ -219,7 +219,16 @@ import Foundation
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
+        guard let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")?.appendQueryItems([
+            "message_id": id,
+            "pmTab": tab.rawValue,
+            "consentUUID": gdprUUID,
+            "idfaStatus": idfaStatus.description,
+            "site_id": propertyId != nil ? String(propertyId!) : ""
+        ]) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
         spClient.getNativePrivacyManager(withId: id) { result in
@@ -243,7 +252,16 @@ import Foundation
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)&idfaStatus=\(idfaStatus)")!
+        guard let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html")?.appendQueryItems([
+            "message_id": id,
+            "pmTab": tab.rawValue,
+            "ccpaUUID": ccpaUUID,
+            "idfaStatus": idfaStatus.description,
+            "site_id": propertyId != nil ? String(propertyId!) : ""
+        ]) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
         loadWebPrivacyManager(.ccpa, pmUrl)
         #elseif os(tvOS)
         /// TODO: load NativePM
