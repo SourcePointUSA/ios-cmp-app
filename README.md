@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.0.3'
+pod 'ConsentViewController', '6.1.0'
 ```
 
 ### Carthage
@@ -56,6 +56,7 @@ class ViewController: UIViewController {
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        campaignsEnv: .Public // optional - Public by default
         campaigns: SPCampaigns(
             gdpr: SPCampaign(), // optional
             ccpa: SPCampaign(), // optional
@@ -112,9 +113,7 @@ extension ViewController: SPDelegate {
 
 SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
-SPCampaign *campaign = [[SPCampaign alloc]
-    initWithEnvironment: SPCampaignEnvPublic
-    targetingParams: [NSDictionary dictionary]];
+SPCampaign *campaign = [[SPCampaign alloc] initWithTargetingParams: [NSDictionary dictionary]];
 
 SPCampaigns *campaigns = [[SPCampaigns alloc]
     initWithGdpr: campaign
@@ -124,6 +123,7 @@ SPCampaigns *campaigns = [[SPCampaigns alloc]
 consentManager = [[SPConsentManager alloc]
     initWithAccountId:22
     propertyName: propertyName
+    campaignsEnv: SPCampaignEnvPublic
     campaigns: campaigns
     delegate: self];
 
@@ -230,19 +230,22 @@ consentManager.messageLanguage = SPMessageLanguageGerman;
 ```
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
 
+## Loading Stage campaigns
+`SPConsentManager`'s constructor accepts an optional parameter called `campaignsEnv: SPCampaignEnv`. This parameter, when omitted will be `.Public` by default. 
+Currently, we don't support loading campaigns of different environments. In other words, you can only load all Stage or Public campaigns.
+
 ## Setting Targeting Parameters
 Targeting params are a set of key/value pairs passed to the scenario. In the scenario you're able to conditionaly show a message or another based on those values.
 You can set targeting params individiually per campaign like so:
 
 ```swift
-let myCampaign = SPCampaign(environment: .Public, targetingParams: ["foo": "bar"])
+let myCampaign = SPCampaign(targetingParams: ["foo": "bar"])
 ```
 
 In Obj-C that'd be:
 ```objc
 SPCampaign *myCampaign = [[SPCampaign alloc]
-    initWithEnvironment: SPCampaignEnvPublic
-    targetingParams: [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1"]
+    initWithTargetingParams: [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1"]
 ];
 ```
 
