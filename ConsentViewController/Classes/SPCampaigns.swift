@@ -12,14 +12,11 @@ public typealias SPTargetingParams = [String: String]
 
 /// Contains information about the property/campaign.
 @objcMembers public class SPCampaign: NSObject {
-    let environment: SPCampaignEnv
     let targetingParams: SPTargetingParams
 
     public init(
-        environment: SPCampaignEnv = .Public,
         targetingParams: SPTargetingParams = [:]
     ) {
-        self.environment = environment
         self.targetingParams = targetingParams
     }
 }
