@@ -59,11 +59,6 @@ target 'SourcePointMetaAppUITests' do
   pod 'Nimble'
 end
 
-target 'ObjC-ExampleApp' do
-  use_frameworks!
-  pod 'ConsentViewController', :path => '../'
-end
-
 target 'ObjC-ExampleAppUITests' do
   # Pods for testing
   pod 'Quick'
