@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Barcode.png</key>
+		<data>
+		p1QFym1jiRQxmkvZScXjBHhxCu8=
+		</data>
 		<key>SPJSReceiver.js</key>
 		<data>
 		B7J168EO01/rXtb4RgQo7PetWUY=
@@ -11,6 +15,18 @@
 		<key>SPJSReceiver.spec.js</key>
 		<data>
 		+4WHti4rYU1VZ79338GbucDYS3Q=
+		</data>
+		<key>SP_Icon.png</key>
+		<data>
+		r/5tTMB88qlCRvp2iNHzoOqA4pg=
+		</data>
+		<key>images/Barcode.png</key>
+		<data>
+		TGc1xIxg34ROBoXDuq+aPSc9KeE=
+		</data>
+		<key>images/SP_Icon.png</key>
+		<data>
+		ruvWGvX+YD27aU7jQNTekEQnbeU=
 		</data>
 		<key>javascript/SPJSReceiver.js</key>
 		<data>
@@ -31,6 +47,17 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Barcode.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			p1QFym1jiRQxmkvZScXjBHhxCu8=
+			</data>
+			<key>hash2</key>
+			<data>
+			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
+			</data>
+		</dict>
 		<key>SPJSReceiver.js</key>
 		<dict>
 			<key>hash</key>
@@ -51,6 +78,39 @@
 			<key>hash2</key>
 			<data>
 			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
+			</data>
+		</dict>
+		<key>SP_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			r/5tTMB88qlCRvp2iNHzoOqA4pg=
+			</data>
+			<key>hash2</key>
+			<data>
+			UTjb3KdhvO5fNSvs7e7haUzRbCsGAr1TFObGFmQkSLs=
+			</data>
+		</dict>
+		<key>images/Barcode.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			TGc1xIxg34ROBoXDuq+aPSc9KeE=
+			</data>
+			<key>hash2</key>
+			<data>
+			GZEWod/T80y1U0nklTPc/TUVp6+hiJddREgh3SvIOIs=
+			</data>
+		</dict>
+		<key>images/SP_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ruvWGvX+YD27aU7jQNTekEQnbeU=
+			</data>
+			<key>hash2</key>
+			<data>
+			WyofguidIhczvwLT6X1o7bFicp1RVdTCn6zsR7iT4Pk=
 			</data>
 		</dict>
 		<key>javascript/SPJSReceiver.js</key>

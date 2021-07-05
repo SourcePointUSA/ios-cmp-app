@@ -22,8 +22,7 @@
     SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
     SPCampaign *campaign = [[SPCampaign alloc]
-                            initWithEnvironment: SPCampaignEnvPublic
-                            targetingParams: [NSDictionary dictionary]];
+                            initWithTargetingParams: [NSDictionary dictionary]];
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
@@ -33,6 +32,7 @@
     consentManager = [[SPConsentManager alloc]
                       initWithAccountId:22
                       propertyName: propertyName
+                      campaignsEnv: SPCampaignEnvPublic
                       campaigns: campaigns
                       delegate: self];
 

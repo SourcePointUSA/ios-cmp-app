@@ -1,3 +1,12 @@
+# 6.1.2 (July, 5, 2021)
+* Enable the SDK to try and open URLs with schemes other than `http://` or `https://`, deep links. If there are no applications able to handle the url scheme, the action will be ignored.
+
+# 6.1.1 (July, 1, 2021)
+* Fixed an issue preventing the Privacy Manager from rendering correctly when using an id of a property group PM.
+
+# 6.1.0 (July, 1, 2021)
+* Fixed an issue that would prevent Stage campaigns from being loaded. [#317](https://github.com/SourcePointUSA/ios-cmp-app/pull/317) - This fix changes the constructor of the SDK, adding a new optional parameter: `campaignsEnv = .Public` to it. Refer to the README for more info.
+
 # 6.0.4 (June, 30, 2021)
 * Added `.uuid` to `SPGDPRConsent` and `SPCCPAConsent` classes. [#315](https://github.com/SourcePointUSA/ios-cmp-app/pull/315)
 * Fixed an issue that would prevent the message from rendering in the right language. [#313](https://github.com/SourcePointUSA/ios-cmp-app/pull/313) (Thank you @mskrischke for reporting the issue and submitting a PR to fix it).

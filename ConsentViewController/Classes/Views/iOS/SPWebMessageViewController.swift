@@ -67,6 +67,17 @@ import WebKit
         fatalError("not implemented")
     }
 
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url,
+           let scheme = url.scheme?.lowercased(),
+           scheme != "https",
+           scheme != "http",
+           UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+        }
+        decisionHandler(.allow)
+    }
+
     // handles links with "target=_blank", forcing them to open in Safari
     // swiftlint:disable:next line_length
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {

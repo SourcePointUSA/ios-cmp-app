@@ -475,12 +475,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-enum SPCampaignEnv : NSInteger;
 
 /// Contains information about the property/campaign.
 SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
-- (nonnull instancetype)initWithEnvironment:(enum SPCampaignEnv)environment targetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -576,7 +575,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (void)clearAllData;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
@@ -1294,12 +1293,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-enum SPCampaignEnv : NSInteger;
 
 /// Contains information about the property/campaign.
 SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
-- (nonnull instancetype)initWithEnvironment:(enum SPCampaignEnv)environment targetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1395,7 +1393,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (void)clearAllData;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
@@ -2113,12 +2111,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-enum SPCampaignEnv : NSInteger;
 
 /// Contains information about the property/campaign.
 SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
-- (nonnull instancetype)initWithEnvironment:(enum SPCampaignEnv)environment targetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2214,7 +2211,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (void)clearAllData;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;

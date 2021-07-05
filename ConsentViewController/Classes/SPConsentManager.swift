@@ -9,7 +9,7 @@
 import Foundation
 
 @objcMembers public class SPConsentManager: NSObject, SPSDK {
-    static public let VERSION = "6.0.4"
+    static public let VERSION = "6.1.2"
 
     static public var shouldCallErrorMetrics = true
 
@@ -30,7 +30,8 @@ import Foundation
 
     var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
-    var propertyId: Int?
+    var propertyId: Int? { storage.propertyId }
+    var propertyIdString: String { propertyId != nil ? String(propertyId!) : "" }
     var iOSMessagePartitionUUID: String?
 
     var pmSecondLayerData: PrivacyManagerViewResponse?
@@ -125,7 +126,8 @@ import Foundation
         }
     }
 
-    func storeData(localState: SPJson, userData: SPUserData) {
+    func storeData(localState: SPJson, userData: SPUserData, propertyId: Int?) {
+        storage.propertyId = propertyId
         storage.localState = localState
         storage.userData = userData
         if let tcData = userData.gdpr?.consents?.tcfData {
@@ -149,9 +151,9 @@ import Foundation
             case .success(let messagesResponse):
                 self?.storeData(
                     localState: messagesResponse.localState,
-                    userData: SPUserData(from: messagesResponse)
+                    userData: SPUserData(from: messagesResponse),
+                    propertyId: messagesResponse.propertyId
                 )
-                self?.propertyId = messagesResponse.propertyId
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
                     .filter {
@@ -191,7 +193,8 @@ import Foundation
                     )
                     self?.storeData(
                         localState: localState,
-                        userData: userData
+                        userData: userData,
+                        propertyId: self?.propertyId
                     )
                     self?.delegate?.onConsentReady?(userData: userData)
                 case .failure(let error):
@@ -208,7 +211,8 @@ import Foundation
                     )
                     self?.storeData(
                         localState: localState,
-                        userData: userData
+                        userData: userData,
+                        propertyId: self?.propertyId
                     )
                     self?.delegate?.onConsentReady?(userData: userData)
                 case .failure(let error):
@@ -221,7 +225,16 @@ import Foundation
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&consentUUID=\(gdprUUID)&idfaStatus=\(idfaStatus)")!
+        guard let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")?.appendQueryItems([
+            "message_id": id,
+            "pmTab": tab.rawValue,
+            "consentUUID": gdprUUID,
+            "idfaStatus": idfaStatus.description,
+            "site_id": propertyIdString
+        ]) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
         spClient.getNativePrivacyManager(withId: id) { result in
@@ -245,7 +258,16 @@ import Foundation
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html?&message_id=\(id)&pmTab=\(tab.rawValue)&ccpaUUID=\(ccpaUUID)&idfaStatus=\(idfaStatus)")!
+        guard let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html")?.appendQueryItems([
+            "message_id": id,
+            "pmTab": tab.rawValue,
+            "ccpaUUID": ccpaUUID,
+            "idfaStatus": idfaStatus.description,
+            "site_id": propertyIdString
+        ]) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
         loadWebPrivacyManager(.ccpa, pmUrl)
         #elseif os(tvOS)
         /// TODO: load NativePM
@@ -372,9 +394,11 @@ extension SPConsentManager: SPMessageUIDelegate {
             report(action: action)
             finishAndNextIfAny(controller)
         case .ShowPrivacyManager:
-            if let url = action.pmURL {
-                controller.loadPrivacyManager(url: url)
+            guard let url = action.pmURL?.appendQueryItems(["site_id": propertyIdString]) else {
+                onError(InvalidURLError(urlString: "Empty or invalid PM URL"))
+                return
             }
+            controller.loadPrivacyManager(url: url)
         case .PMCancel:
             controller.closePrivacyManager()
         case .Dismiss:
@@ -427,7 +451,6 @@ extension SPConsentManager: SPNativePMDelegate {
 //            }
 //        }
         if let propertyId = propertyId, pmSecondLayerData == nil {
-            print("PROPERTY ID", propertyId)
             spClient.privacyManagerView(
                 propertyId: propertyId,
                 consentLanguage: messageLanguage
