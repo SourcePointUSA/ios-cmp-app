@@ -14,7 +14,6 @@ import Nimble
 
 class MessageRequestSpec: QuickSpec {
     let campaign = CampaignRequest(
-        campaignEnv: .Public,
         targetingParams: ["foo": "bar"]
     )
 
@@ -26,8 +25,10 @@ class MessageRequestSpec: QuickSpec {
             requestUUID: reqUUID,
             propertyHref: try! SPPropertyName("demo"),
             accountId: 1,
+            campaignEnv: .Public,
             idfaStatus: .unknown,
             localState: SPJson(),
+            consentLanguage: .Bulgarian,
             campaigns: CampaignsRequest(
                 gdpr: campaign,
                 ccpa: campaign,

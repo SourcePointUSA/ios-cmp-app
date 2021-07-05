@@ -10,6 +10,45 @@ import Foundation
 @testable import ConsentViewController
 
 class SourcePointClientMock: SourcePointProtocol {
+    required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
+    }
+
+    func getMessages(campaigns: SPCampaigns, authId: String?, localState: SPJson, idfaStaus: SPIDFAStatus, consentLanguage: SPMessageLanguage, handler: @escaping MessagesHandler) {
+        print("getMessages")
+    }
+
+    func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
+        print("getNativePrivacyManager")
+    }
+
+    func mmsMessage(messageId: Int, handler: @escaping MMSMessageHandler) {
+        print("mmsMessage")
+    }
+
+    func privacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping PrivacyManagerViewHandler) {
+        print("privacyManagerView")
+    }
+
+    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
+        print("getMessages")
+    }
+
+    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
+        print("postCCPAAction")
+    }
+
+    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
+        print("reportIdfaStatus")
+    }
+
+    func customConsentGDPR(toConsentUUID consentUUID: String, vendors: [String], categories: [String], legIntCategories: [String], propertyId: Int, handler: @escaping CustomConsentHandler) {
+        print("customConsentGDPR")
+    }
+
+    func errorMetrics(_ error: SPError, propertyId: Int?, sdkVersion: String, OSVersion: String, deviceFamily: String, campaignType: SPCampaignType) {
+        print("errorMetrics")
+    }
+
     var customConsentResponse: CustomConsentResponse?
     static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
         Campaign(
@@ -20,26 +59,16 @@ class SourcePointClientMock: SourcePointProtocol {
             messageMetaData: MessageMetaData(
                 categoryId: .unknown,
                 subCategoryId: .TCFv2,
-                messageId: 1
+                messageId: 1,
+                messagePartitionUUID: "1234"
             )
         )
     }
-    var getMessagesResponse = MessagesResponse(
-        campaigns: [
-            SourcePointClientMock.getCampaign(.ccpa, .unknown),
-            SourcePointClientMock.getCampaign(.gdpr, .unknown)
-        ],
-        localState: SPJson()
-    )
 
     var error: SPError?
     var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
-
-    required init(accountId: Int, propertyName: SPPropertyName, timeout: TimeInterval) {
-
-    }
 
     func getMessages(
         campaigns: SPCampaigns,
@@ -51,8 +80,6 @@ class SourcePointClientMock: SourcePointProtocol {
         getMessageCalled = true
         if let error = error {
             handler(.failure(error))
-        } else {
-            handler(.success(self.getMessagesResponse))
         }
     }
 
