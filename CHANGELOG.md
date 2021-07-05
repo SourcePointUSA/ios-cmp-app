@@ -1,3 +1,6 @@
+# 6.1.2 (July, 5, 2021)
+* Enable the SDK to try and open URLs with schemes other than `http://` or `https://`, deep links. If there are no applications able to handle the url scheme, the action will be ignored.
+
 # 6.1.1 (July, 1, 2021)
 * Fixed an issue preventing the Privacy Manager from rendering correctly when using an id of a property group PM.
 
