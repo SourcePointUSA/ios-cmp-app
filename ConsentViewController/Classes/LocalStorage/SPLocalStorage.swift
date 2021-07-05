@@ -46,6 +46,7 @@ protocol SPLocalStorage {
     var usPrivacyString: String? { get set }
     var userData: SPUserData { get set }
     var localState: SPJson { get set }
+    var propertyId: Int? { get set }
 
     func clear()
 
