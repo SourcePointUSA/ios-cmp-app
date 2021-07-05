@@ -1672,7 +1672,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				6D84BAAC25E662C9002D6996 /* RemoteSwiftPackageReference */,
+				6D84BAAC25E662C9002D6996 /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -3935,7 +3935,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6D84BAAC25E662C9002D6996 /* RemoteSwiftPackageReference */ = {
+		6D84BAAC25E662C9002D6996 /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
