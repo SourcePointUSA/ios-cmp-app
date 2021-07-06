@@ -9,8 +9,10 @@
 import Foundation
 
 @objcMembers public class SPConsentManager: NSObject, SPSDK {
-    static public let VERSION = "6.1.2"
+    static let ccpaBaseURL = URL(string: "https://cdn.privacy-mgmt.com/ccpa_pm/index.html")
+    static let gdprBaseURL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")
 
+    static public let VERSION = "6.1.2"
     static public var shouldCallErrorMetrics = true
 
     weak var delegate: SPDelegate?
@@ -43,7 +45,7 @@ import Foundation
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = SPConsentManager.DefaultTimeout {
         didSet {
-            spClient.setRequestTimeout(self.messageTimeoutInSeconds)
+            spClient.setRequestTimeout(messageTimeoutInSeconds)
         }
     }
 
@@ -227,7 +229,7 @@ import Foundation
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        guard let pmUrl = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")?.appendQueryItems([
+        guard let pmUrl = SPConsentManager.gdprBaseURL?.appendQueryItems([
             "message_id": id,
             "pmTab": tab.rawValue,
             "consentUUID": gdprUUID,
@@ -239,7 +241,7 @@ import Foundation
         }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
-        spClient.getNativePrivacyManager(withId: id) { result in
+        spClient.getNativePrivacyManager(withId: id) { [weak self] result in
             switch result {
             case .success(let content):
                 let pmViewController = SPNativePrivacyManagerViewController(
@@ -250,9 +252,9 @@ import Foundation
                     delegate: self
                 )
                 pmViewController.delegate = self
-                self.loaded(pmViewController)
+                self?.loaded(pmViewController)
             case .failure(let error):
-                self.onError(error)
+                self?.onError(error)
             }
         }
         #endif
@@ -260,7 +262,7 @@ import Foundation
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        guard let pmUrl = URL(string: "https://ccpa-inapp-pm.sp-prod.net/ccpa_pm/index.html")?.appendQueryItems([
+        guard let pmUrl = SPConsentManager.ccpaBaseURL?.appendQueryItems([
             "message_id": id,
             "pmTab": tab.rawValue,
             "ccpaUUID": ccpaUUID,
@@ -352,14 +354,14 @@ import Foundation
 
 extension SPConsentManager: SPMessageUIDelegate {
     func loaded(_ controller: SPMessageViewController) {
-        DispatchQueue.main.async {
-            self.delegate?.onSPUIReady(controller)
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onSPUIReady(controller)
         }
     }
 
     func finished(_ vcFinished: SPMessageViewController) {
-        DispatchQueue.main.async {
-            self.delegate?.onSPUIFinished(vcFinished)
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onSPUIFinished(vcFinished)
         }
     }
 
@@ -390,7 +392,7 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
-        self.delegate?.onAction(action, from: controller)
+        delegate?.onAction(action, from: controller)
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             report(action: action)
@@ -406,9 +408,9 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .Dismiss:
             finishAndNextIfAny(controller)
         case .RequestATTAccess:
-            SPIDFAStatus.requestAuthorisation { status in
-                self.reportIdfaStatus(status: status, messageId: controller.messageId)
-                self.finishAndNextIfAny(controller)
+            SPIDFAStatus.requestAuthorisation { [weak self] status in
+                self?.reportIdfaStatus(status: status, messageId: controller.messageId)
+                self?.finishAndNextIfAny(controller)
             }
         default:
             print("[SDK] UNKNOWN Action")
