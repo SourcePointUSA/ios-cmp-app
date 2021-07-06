@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "14967")
+        consentManager.loadCCPAPrivacyManager(withId: "509688")
     }
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
