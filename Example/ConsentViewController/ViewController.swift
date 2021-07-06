@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
+            ccpa: SPCampaign(),
             ios14: SPCampaign()
         ),
         delegate: self

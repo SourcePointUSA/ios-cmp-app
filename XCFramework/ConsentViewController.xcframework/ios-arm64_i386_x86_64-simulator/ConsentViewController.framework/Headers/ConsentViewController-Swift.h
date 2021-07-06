@@ -518,7 +518,8 @@ SWIFT_CLASS("_TtC21ConsentViewController11SPCampaigns")
 
 typedef SWIFT_ENUM(NSInteger, SPCategoryType, open) {
   SPCategoryTypeIAB_PURPOSE = 0,
-  SPCategoryTypeUnknown = 1,
+  SPCategoryTypeIAB = 1,
+  SPCategoryTypeUnknown = 2,
 };
 
 @class SPMessageViewController;
@@ -1336,7 +1337,8 @@ SWIFT_CLASS("_TtC21ConsentViewController11SPCampaigns")
 
 typedef SWIFT_ENUM(NSInteger, SPCategoryType, open) {
   SPCategoryTypeIAB_PURPOSE = 0,
-  SPCategoryTypeUnknown = 1,
+  SPCategoryTypeIAB = 1,
+  SPCategoryTypeUnknown = 2,
 };
 
 @class SPMessageViewController;
@@ -2154,7 +2156,8 @@ SWIFT_CLASS("_TtC21ConsentViewController11SPCampaigns")
 
 typedef SWIFT_ENUM(NSInteger, SPCategoryType, open) {
   SPCategoryTypeIAB_PURPOSE = 0,
-  SPCategoryTypeUnknown = 1,
+  SPCategoryTypeIAB = 1,
+  SPCategoryTypeUnknown = 2,
 };
 
 @class SPMessageViewController;
