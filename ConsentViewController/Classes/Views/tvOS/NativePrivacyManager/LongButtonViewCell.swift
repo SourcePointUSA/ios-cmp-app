@@ -46,5 +46,6 @@ class LongButtonViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         loadUI()
+        selectionStyle = .none
     }
 }
