@@ -141,8 +141,8 @@ extension SPNativePrivacyManagerViewController: PMCategoryManager, PMVendorManag
         print("""
         On Purpose: {
           "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue)",
-          "iabId": \(category.iabId),
+          "type": "\(category.type?.rawValue ?? "")",
+          "iabId": \(category.iabId ?? 99),
           "consent": true,
           "legInt": false
         }
@@ -154,8 +154,8 @@ extension SPNativePrivacyManagerViewController: PMCategoryManager, PMVendorManag
         print("""
         Off Purpose: {
           "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue)",
-          "iabId": \(category.iabId),
+          "type": "\(category.type?.rawValue ?? "")",
+          "iabId": \(category.iabId ?? 99),
           "consent": false,
           "legInt": false
         }
@@ -168,7 +168,7 @@ extension SPNativePrivacyManagerViewController: PMCategoryManager, PMVendorManag
         On Vendor: {
           "_id": "\(vendor.vendorId)",
           "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId),
+          "iabId": \(vendor.iabId ?? 99),
           "consent": true,
           "legInt": false
         }
@@ -181,7 +181,7 @@ extension SPNativePrivacyManagerViewController: PMCategoryManager, PMVendorManag
         Off Vendor: {
           "_id": "\(vendor.vendorId)",
           "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId),
+          "iabId": \(vendor.iabId ?? 99),
           "consent": false,
           "legInt": false
         }
