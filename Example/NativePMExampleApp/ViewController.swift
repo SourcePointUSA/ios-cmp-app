@@ -10,7 +10,7 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
-    var activityIndicator = UIActivityIndicatorView(style: .medium)
+    var activityIndicator = UIActivityIndicatorView(style: .white)
 
     @IBAction func onLoadPMTap(_ sender: Any) {
         consentManager.loadGDPRPrivacyManager(withId: "488393")
