@@ -94,7 +94,7 @@
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		tVV6dRV4Gtuq1/x1L5/VSxPmHJM=
+		EU2SWwdJckXegP8z5h4NU2JTwgo=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -106,7 +106,7 @@
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		tVV6dRV4Gtuq1/x1L5/VSxPmHJM=
+		EU2SWwdJckXegP8z5h4NU2JTwgo=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -170,11 +170,11 @@
 		</data>
 		<key>SPNativeMessageViewController.nib/objects-11.0+.nib</key>
 		<data>
-		swzot4lTcDbbPoJbMGKfMKifVvU=
+		/awYzlJcF3LBiGHuMtsG5TepFoY=
 		</data>
 		<key>SPNativeMessageViewController.nib/runtime.nib</key>
 		<data>
-		1m0VCERvoCZL/8HUFT5fzRQpymA=
+		6YeRCskmQN7Wg9SFzWGPJtYyzvY=
 		</data>
 		<key>SP_Icon.png</key>
 		<data>
@@ -422,11 +422,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tVV6dRV4Gtuq1/x1L5/VSxPmHJM=
+			EU2SWwdJckXegP8z5h4NU2JTwgo=
 			</data>
 			<key>hash2</key>
 			<data>
-			PfwRKTMHiedbR6U4PetPnDm3/r5kmvW+s/Cnha34uYw=
+			GdT1CqExWKghiJjuwGsHqa5Nc+WVxMl5EfvhjZV2LiQ=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftdoc</key>
@@ -455,11 +455,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tVV6dRV4Gtuq1/x1L5/VSxPmHJM=
+			EU2SWwdJckXegP8z5h4NU2JTwgo=
 			</data>
 			<key>hash2</key>
 			<data>
-			PfwRKTMHiedbR6U4PetPnDm3/r5kmvW+s/Cnha34uYw=
+			GdT1CqExWKghiJjuwGsHqa5Nc+WVxMl5EfvhjZV2LiQ=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
@@ -631,22 +631,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			swzot4lTcDbbPoJbMGKfMKifVvU=
+			/awYzlJcF3LBiGHuMtsG5TepFoY=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ec5bXNbZMprySONHbDHV5uB8UB0IY8GYKd04nHWlYQc=
+			GtRC9AHeG7AAx2e7GJEeH4vRItXSe6IJ93hoy2jNP9I=
 			</data>
 		</dict>
 		<key>SPNativeMessageViewController.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1m0VCERvoCZL/8HUFT5fzRQpymA=
+			6YeRCskmQN7Wg9SFzWGPJtYyzvY=
 			</data>
 			<key>hash2</key>
 			<data>
-			kJDhzwzoJb2zZBx66RBPUzNc7DsPhSrzjXv1aweGwKM=
+			o/fSP02d/wu6WFgyRNYLzzbrmslxkFZXjy2PyYlQ6VI=
 			</data>
 		</dict>
 		<key>SP_Icon.png</key>
