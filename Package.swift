@@ -23,7 +23,8 @@ let package = Package(
         "Classes/Views/tvOS/",
       ],
       resources: [
-        .process("Assets/javascript/SPJSReceiver.js")
+        .process("Assets/javascript/SPJSReceiver.js"),
+        .process("Assets/images")
       ]
     )
   ],

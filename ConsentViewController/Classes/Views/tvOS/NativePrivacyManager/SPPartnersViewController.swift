@@ -22,7 +22,9 @@ class SPPartnersViewController: SPNativeScreenViewController {
 
     var vendors: [VendorListVendor] = []
     var userConsentVendors: [VendorListVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
-    var ligitimateInterestVendorList: [VendorListVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
+    var legitimateInterestVendorList: [VendorListVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
+    var acceptedVendors: [String] = []
+
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]
     }
@@ -47,7 +49,10 @@ class SPPartnersViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)
-        vendorsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        vendorsTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
         vendorsTableView.delegate = self
         vendorsTableView.dataSource = self
     }
@@ -92,7 +97,7 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return userConsentVendors.count
         case 1:
-            return ligitimateInterestVendorList.count
+            return legitimateInterestVendorList.count
         default:
             return 0
         }
@@ -103,15 +108,20 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (self.vendorsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        switch vendorsSlider.selectedSegmentIndex {
-        case 0:
-            cell.textLabel?.text = userConsentVendors[indexPath.row].name
-        case 1:
-            cell.textLabel?.text = ligitimateInterestVendorList[indexPath.row].name
-        default:
-            break
+        guard let cell = vendorsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+            return UITableViewCell()
         }
+
+        let vendor = vendorsSlider.selectedSegmentIndex == 0 ?
+            userConsentVendors[indexPath.row] :
+            legitimateInterestVendorList[indexPath.row]
+        cell.labelText = vendor.name
+        cell.customText = vendor.vendorType == .CUSTOM ? nil : "Custom"
+        cell.isOn = acceptedVendors.contains(vendor.vendorId)
+        cell.selectable = true
+        cell.onText = "On"
+        cell.offText = "Off"
+        cell.loadUI()
         return cell
     }
 
