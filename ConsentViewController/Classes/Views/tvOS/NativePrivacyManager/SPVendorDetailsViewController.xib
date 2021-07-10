@@ -90,7 +90,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="V17-6O-rwN" userLabel="Stack View - 2nd Column">
                                     <rect key="frame" x="880" y="0.0" width="880" height="844"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet," textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQL-uQ-3WW">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQL-uQ-3WW">
                                             <rect key="frame" x="0.0" y="0.0" width="880" height="200"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>

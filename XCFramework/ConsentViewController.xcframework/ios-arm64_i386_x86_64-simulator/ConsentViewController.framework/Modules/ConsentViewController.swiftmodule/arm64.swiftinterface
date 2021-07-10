@@ -579,7 +579,7 @@ extension SPJson {
   @objc deinit
 }
 @objc public enum SPCategoryType : Swift.Int, Swift.Equatable {
-  case IAB_PURPOSE, unknown
+  case IAB_PURPOSE, IAB, unknown
 }
 extension SPCategoryType : Swift.Codable {
   public typealias RawValue = Swift.String

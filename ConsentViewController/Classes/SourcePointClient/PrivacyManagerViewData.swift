@@ -16,7 +16,7 @@ private func findViewBy(id: String, _ pmResponse: SPPrivacyManagerResponse) thro
 
 struct PrivacyManagerViewData {
     let categories: [VendorListCategory]
-    let homeView, categoriesView, vendorsView, categoryDetailsView: SPNativeView
+    let homeView, categoriesView, vendorsView, categoryDetailsView, vendorDetailsView: SPNativeView
     let privacyPolicyView: SPNativeView?
 }
 
@@ -26,6 +26,7 @@ extension PrivacyManagerViewData {
         categoriesView = try findViewBy(id: "CategoriesView", pmResponse)
         vendorsView = try findViewBy(id: "VendorsView", pmResponse)
         categoryDetailsView = try findViewBy(id: "CategoryDetailsView", pmResponse)
+        vendorDetailsView = try findViewBy(id: "VendorDetailsView", pmResponse)
         privacyPolicyView = pmResponse.message.byId("PrivacyPolicyView") as? SPNativeView
         categories = pmResponse.categories
     }
@@ -38,6 +39,7 @@ extension PrivacyManagerViewData: Equatable, Decodable {
             lhs.categoriesView == rhs.categoriesView &&
             lhs.vendorsView == rhs.vendorsView &&
             lhs.categoryDetailsView == rhs.categoryDetailsView &&
+            lhs.vendorDetailsView == rhs.vendorDetailsView &&
             lhs.privacyPolicyView == rhs.privacyPolicyView
     }
 }

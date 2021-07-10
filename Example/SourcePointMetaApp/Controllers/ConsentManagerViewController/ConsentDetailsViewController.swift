@@ -12,11 +12,9 @@ import CoreData
 import WebKit
 import SafariServices
 
-class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
-{
+class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 
     @IBOutlet weak var euConsentLabel: UILabel!
-    @IBOutlet weak var consentUUIDLabel: UILabel!
     @IBOutlet weak var consentTableView: UITableView!
     @IBOutlet weak var noDataLabel: UILabel!
 
@@ -26,15 +24,13 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
     // Reference to the selected property managed object ID
     var propertyManagedObjectID: NSManagedObjectID?
 
-    /** PM is loaded or not
-     */
-    var isPMLoaded = false
     var userData: SPUserData?
     let sections = ["Vendor Consents", "Purpose Consents"]
+    var euConsentID: String = ""
 
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
-//    var consentViewController: GDPRConsentViewController?
+    var consentManager: SPConsentManager?
     var propertyDetails: PropertyDetailsModel?
     var targetingParams = [TargetingParamModel]()
     var nativeMessageController: SPNativeMessageViewController?
@@ -53,6 +49,17 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
 
     private var revealSideMenuOnTop: Bool = true
     // side menu
+
+
+    lazy var consentManager1: SPConsentManager = { SPConsentManager(
+        accountId: 22,
+        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        campaigns: SPCampaigns(
+            gdpr: SPCampaign(),
+            ios14: SPCampaign()
+        ),
+        delegate: self
+    )}()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,10 +99,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
         self.sideMenuViewController.delegate = self
         view.addSubview(sideMenuViewController.view)
         self.sideMenuViewController!.didMove(toParent: self)
-
-        // Side Menu AutoLayout
         self.sideMenuViewController.view.translatesAutoresizingMaskIntoConstraints = false
-
         if self.revealSideMenuOnTop {
             self.sideMenuTrailingConstraint = self.sideMenuViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: +self.sideMenuRevealWidth + self.paddingForRotation)
             self.sideMenuTrailingConstraint.isActive = true
@@ -133,13 +137,11 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
 //    }
 
     func setconsentUUId() {
-//        if consentUUID.count > 0 {
-//            consentUUIDLabel.text = consentUUID
-//            euConsentLabel.text = userConsents?.euconsent
-//        } else {
-//            consentUUIDLabel.text = SPLiteral.consentUUID
-//            euConsentLabel.text = SPLiteral.euConsentID
-//        }
+        if euConsentID.count > 0 {
+            euConsentLabel.text = userData?.gdpr?.consents?.euconsent
+        } else {
+            euConsentLabel.text = SPLiteral.euConsentID
+        }
     }
 
     // Keep the state of the side menu (expanded or collapse) in rotation
@@ -314,6 +316,44 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate
     }
 }
 
+// MARK: - SPDelegate implementation
+extension ConsentDetailsViewController: SPDelegate {
+    func onSPUIReady(_ controller: SPMessageViewController) {
+        self.hideIndicator()
+        controller.modalPresentationStyle = .overFullScreen
+        present(controller, animated: true)
+    }
+
+    func onSPUIFinished(_ controller: SPMessageViewController) {
+        dismiss(animated: true)
+    }
+
+    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+        print(action)
+    }
+
+    func onConsentReady(userData: SPUserData) {
+        showIndicator()
+//        if let propertyDetails = propertyDetailsModel {
+//            savePropertyToDatabase(propertyDetails: propertyDetails)
+//            handleMultipleMessages(userData: userData)
+//        }
+        hideIndicator()
+    }
+
+//    func onError(error: SPError) {
+//        self.hideIndicator()
+//        let okHandler = { self.dismiss(animated: false)}
+//        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+//    }
+
+    func showError(error: SPError?) {
+        let okHandler = {}
+        self.hideIndicator()
+        AlertView.sharedInstance.showAlertView(title: Alert.alert, message: error?.description ?? "", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+    }
+}
+
 // MARK: UITableViewDataSource
 extension ConsentDetailsViewController: UITableViewDataSource {
 
@@ -362,20 +402,22 @@ extension ConsentDetailsViewController: UITableViewDataSource {
 extension ConsentDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         consentTableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
 extension ConsentDetailsViewController: SideMenuViewControllerDelegate {
+
     func selectedCell(_ row: Int) {
         switch row {
         case 0:
-            print("1")
+            showIndicator()
+            consentManager1.loadGDPRPrivacyManager(withId: "488393")
         case 1:
-        print("2")
+            showIndicator()
+            consentManager1.loadCCPAPrivacyManager(withId: "14967")
         case 2:
-            print("3")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
         default:
             break
         }
@@ -387,17 +429,13 @@ extension ConsentDetailsViewController: SideMenuViewControllerDelegate {
 extension ConsentDetailsViewController: UIGestureRecognizerDelegate {
     @objc func TapGestureRecognizer(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
-            if self.isExpanded {
-                self.sideMenuState(expanded: false)
-            }
+            if self.isExpanded { self.sideMenuState(expanded: false) }
         }
     }
 
     // Close side menu when you tap on the shadow background view
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if (touch.view?.isDescendant(of: self.sideMenuViewController.view))! {
-            return false
-        }
+        if (touch.view?.isDescendant(of: self.sideMenuViewController.view))! { return false }
         return true
     }
 }

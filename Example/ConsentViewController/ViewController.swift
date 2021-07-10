@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "14967")
+        consentManager.loadCCPAPrivacyManager(withId: "509688")
     }
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
+            ccpa: SPCampaign(),
             ios14: SPCampaign()
         ),
         delegate: self

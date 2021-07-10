@@ -18,16 +18,26 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var vendorDetailsTableView: UITableView!
     @IBOutlet weak var actionsContainer: UIStackView!
 
-    let sections = [
-        "Vendor Consents",
-        "Special Purposes",
-        "Special features"
-    ]
+    weak var vendorManagerDelegate: PMVendorManager?
+
     let cellReuseIdentifier = "cell"
     var vendor: VendorListVendor?
     var consentCategories: [String] { vendor?.consentCategories.map { $0.name } ?? [] }
     var specialPurposes: [String] { vendor?.iabSpecialPurposes ?? [] }
     var specialFeatures: [String] { vendor?.iabSpecialFeatures ?? [] }
+    var sections: [SPNativeText?] {
+        var sections: [SPNativeText?] = []
+        if consentCategories.isNotEmpty() {
+            sections.append(viewData.byId("PurposesText") as? SPNativeText)
+        }
+        if specialPurposes.isNotEmpty() {
+            sections.append(viewData.byId("SpecialPurposes") as? SPNativeText)
+        }
+        if specialFeatures.isNotEmpty() {
+            sections.append(viewData.byId("SpecialFeatures") as? SPNativeText)
+        }
+        return sections
+    }
 
     func setHeader () {
         headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
@@ -45,9 +55,10 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
-        loadButton(forComponentId: "AcceptAllButton", button: onButton)
-        loadButton(forComponentId: "SaveButton", button: offButton)
+        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView)
+        loadLabelView(forComponentId: "QrInstructions", label: barcodeLabel)
+        loadButton(forComponentId: "OnButton", button: onButton)
+        loadButton(forComponentId: "OffButton", button: offButton)
         vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorDetailsTableView.delegate = self
@@ -55,11 +66,15 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onOnButtonTap(_ sender: Any) {
-
+        if let vendor = vendor {
+            vendorManagerDelegate?.onVendorOn(vendor)
+        }
     }
 
     @IBAction func onOffButtonTap(_ sender: Any) {
-
+        if let vendor = vendor {
+            vendorManagerDelegate?.onVendorOff(vendor)
+        }
     }
 }
 
@@ -69,8 +84,16 @@ extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDeleg
         sections.count
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section]
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        label.text = sections[section]?.settings.text
+        label.font = UIFont(from: sections[section]?.settings.style?.font)
+        label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
+        return label
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        50
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

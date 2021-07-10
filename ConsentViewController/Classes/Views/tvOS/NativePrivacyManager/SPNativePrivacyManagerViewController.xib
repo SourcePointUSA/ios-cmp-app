@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPNativePrivacyManagerViewController" customModule="ConsentViewController" customModuleProvider="target">
             <connections>
                 <outlet property="acceptButton" destination="7Jl-Fv-EUl" id="ul7-lI-WPS"/>
+                <outlet property="categoriesExplainerLabel" destination="nEW-fo-PK4" id="68E-ps-rhL"/>
                 <outlet property="categoryTableView" destination="HVs-YH-qhj" id="DIP-H7-MJY"/>
                 <outlet property="descriptionTextView" destination="JAT-0K-Z6o" id="Shc-Rj-GKP"/>
                 <outlet property="header" destination="oRM-Q5-ya9" id="Ejd-R8-DIW"/>
@@ -21,7 +22,6 @@
                 <outlet property="ourPartners" destination="ZAh-er-2XQ" id="1Vx-fk-Qmq"/>
                 <outlet property="privacyPolicyButton" destination="p3s-4F-WQC" id="VCB-gR-wFn"/>
                 <outlet property="selectedCategoryTextLabel" destination="xze-gk-XHF" id="bpw-Bw-lFO"/>
-                <outlet property="subDescriptionTextLabel" destination="zTn-Qk-oMs" id="KXH-B0-VEj"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
         </placeholder>
@@ -119,7 +119,7 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTn-Qk-oMs">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nEW-fo-PK4" userLabel="CategoriesExplainer">
                                             <rect key="frame" x="0.0" y="360" width="880" height="46"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>

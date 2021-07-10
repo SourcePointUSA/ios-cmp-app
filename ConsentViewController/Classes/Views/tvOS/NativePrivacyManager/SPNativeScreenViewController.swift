@@ -147,6 +147,8 @@ class FocusGuideDebugView: UIView {
             button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
             button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
             button.titleLabel?.font = UIFont(from: action.settings.style?.font)
+        } else {
+            button.isHidden = true
         }
         return button
     }
@@ -191,17 +193,24 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
-            slider.setTitle(sliderDetails.settings.offText, forSegmentAt: 0)
-            slider.setTitle(sliderDetails.settings.onText, forSegmentAt: 1)
-            slider.backgroundColor = UIColor(hexString: sliderDetails.settings.style?.backgroundColor)
-            let font =  UIFont(from: sliderDetails.settings.style?.font)
-            let attributes = [
-                NSAttributedString.Key.font: font as Any,
-                NSAttributedString.Key.foregroundColor: UIColor(hexString: sliderDetails.settings.style?.font?.color) as Any
-            ]
-            slider.setTitleTextAttributes(attributes, for: .normal)
-            slider.setTitleTextAttributes(attributes, for: .selected)
+            slider.setTitle(sliderDetails.settings.leftText, forSegmentAt: 0)
+            slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
+            if let font = UIFont(from: sliderDetails.settings.style?.font),
+               let fontColor = sliderDetails.settings.style?.font?.color {
+                slider.setTitleTextAttributes([
+                    NSAttributedString.Key.font: font as Any,
+                    NSAttributedString.Key.foregroundColor: UIColor(hexString: fontColor) as Any
+                ], for: .normal)
+            }
+            if let activeFont = UIFont(from: sliderDetails.settings.style?.activeFont),
+               let activeFontColor = sliderDetails.settings.style?.activeFont?.color {
+                slider.setTitleTextAttributes([
+                    NSAttributedString.Key.font: activeFont as Any,
+                    NSAttributedString.Key.foregroundColor: UIColor(hexString: activeFontColor) as Any
+                ], for: .selected)
+            }
         }
+
         return slider
     }
 }

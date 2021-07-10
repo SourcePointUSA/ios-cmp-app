@@ -8,11 +8,21 @@
 import UIKit
 import Foundation
 
+protocol PMCategoryManager: AnyObject {
+    func onCategoryOn(_ category: VendorListCategory)
+    func onCategoryOff(_ category: VendorListCategory)
+}
+
+protocol PMVendorManager: AnyObject {
+    func onVendorOn(_ vendor: VendorListVendor)
+    func onVendorOff(_ vendor: VendorListVendor)
+}
+
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
     weak var delegate: SPNativePMDelegate?
 
+    @IBOutlet weak var categoriesExplainerLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var subDescriptionTextLabel: UILabel!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: UIButton!
@@ -24,6 +34,7 @@ import Foundation
     @IBOutlet weak var header: SPPMHeader!
 
     var categories: [VendorListCategory] { pmData.categories }
+    var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
     override var preferredFocusedView: UIView? { acceptButton }
@@ -41,12 +52,13 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadLabelView(forComponentId: "CategoriesSubDescriptionText", label: subDescriptionTextLabel)
-        loadTextView(forComponentId: "CategoriesDescriptionText", textView: descriptionTextView)
+        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
+        categoryTableView.allowsSelection = false
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
@@ -78,6 +90,7 @@ import Foundation
                     controller.specialPurposes = data.specialPurposes
                     controller.features = data.features
                     controller.specialFeatures = data.specialFeatures
+                    controller.categoryManagerDelegate = self
                     self?.present(controller, animated: true)
                 }
             }
@@ -100,6 +113,7 @@ import Foundation
                         nibName: "SPPartnersViewController"
                     )
                     controller.vendors = data.vendors
+                    controller.vendorManagerDelegate = self
                     self?.present(controller, animated: true)
                 }
             }
@@ -122,12 +136,70 @@ import Foundation
     }
 }
 
+extension SPNativePrivacyManagerViewController: PMCategoryManager, PMVendorManager {
+    func onCategoryOn(_ category: VendorListCategory) {
+        print("""
+        On Purpose: {
+          "_id": "\(category._id)",
+          "type": "\(category.type?.rawValue ?? "")",
+          "iabId": \(category.iabId ?? 99),
+          "consent": true,
+          "legInt": false
+        }
+        """
+        )
+    }
+
+    func onCategoryOff(_ category: VendorListCategory) {
+        print("""
+        Off Purpose: {
+          "_id": "\(category._id)",
+          "type": "\(category.type?.rawValue ?? "")",
+          "iabId": \(category.iabId ?? 99),
+          "consent": false,
+          "legInt": false
+        }
+        """
+        )
+    }
+
+    func onVendorOn(_ vendor: VendorListVendor) {
+        print("""
+        On Vendor: {
+          "_id": "\(vendor.vendorId)",
+          "vendorType": "\(vendor.vendorType.rawValue)",
+          "iabId": \(vendor.iabId ?? 99),
+          "consent": true,
+          "legInt": false
+        }
+        """
+        )
+    }
+
+    func onVendorOff(_ vendor: VendorListVendor) {
+        print("""
+        Off Vendor: {
+          "_id": "\(vendor.vendorId)",
+          "vendorType": "\(vendor.vendorType.rawValue)",
+          "iabId": \(vendor.iabId ?? 99),
+          "consent": false,
+          "legInt": false
+        }
+        """
+        )
+    }
+}
+
 extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
     func loaded(_ controller: SPMessageViewController) {
         messageUIDelegate?.loaded(self)
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
+        if action.type == .SaveAndExit, let pmPayload = try? SPJson(["foo": "bar"]) {
+            action.pmPayload = pmPayload
+        }
+
         dismiss(animated: false) {
             self.messageUIDelegate?.action(action, from: controller)
         }
@@ -177,9 +249,5 @@ extension SPNativePrivacyManagerViewController: UITableViewDelegate {
             )
         }
         return true
-    }
-
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
     }
 }
