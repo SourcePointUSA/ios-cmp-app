@@ -20,12 +20,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var gdprPMButton: UIButton!
     @IBOutlet weak var ccpaPMButton: UIButton!
 
+    @IBAction func onNetworkCallsTap(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
+    }
+
     @IBAction func onClearConsentTap(_ sender: Any) {
         SPConsentManager.clearAllData()
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "488393", tab: .Vendors)
+        consentManager.loadGDPRPrivacyManager(withId: "488393")
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
@@ -96,6 +100,7 @@ extension ViewController {
         case .accepted: idfaStatusLabel.textColor = .systemGreen
         case .denied: idfaStatusLabel.textColor = .systemRed
         case .unavailable: idfaStatusLabel.textColor = .systemGray
+        @unknown default: break
         }
     }
 

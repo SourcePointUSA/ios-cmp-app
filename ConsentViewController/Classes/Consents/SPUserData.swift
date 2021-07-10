@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objcMembers public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
+public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     public let consents: ConsentType?
     public let applies: Bool
 
@@ -52,5 +52,36 @@ extension SPUserData {
             gdpr: SPConsent<SPGDPRConsent>(from: messageResponse.campaigns.first { campaign in campaign.type == .gdpr }),
             ccpa: SPConsent<SPCCPAConsent>(from: messageResponse.campaigns.first { campaign in campaign.type == .ccpa })
         )
+    }
+}
+
+public protocol SPObjcUserData {
+    func objcGDPRConsents() -> SPGDPRConsent?
+    func objcGDPRApplies() -> Bool
+    func objcCCPAConsents() -> SPCCPAConsent?
+    func objcCCPAApplies() -> Bool
+}
+
+@objc extension SPUserData: SPObjcUserData {
+    /// Returns GDPR consent data if any available.
+    /// - SeeAlso: `SPGDPRConsent`
+    public func objcGDPRConsents() -> SPGDPRConsent? {
+        gdpr?.consents
+    }
+
+    /// Indicates whether GDPR applies based on the VendorList configuration.
+    public func objcGDPRApplies() -> Bool {
+        gdpr?.applies ?? false
+    }
+
+    /// Returns GDPR consent data if any available.
+    /// - SeeAlso: `SPCCPAConsent`
+    public func objcCCPAConsents() -> SPCCPAConsent? {
+        ccpa?.consents
+    }
+
+    /// Indicates whether GDPR applies based on the VendorList configuration.
+    public func objcCCPAApplies() -> Bool {
+        ccpa?.applies ?? false
     }
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 struct CampaignRequest: Encodable, Equatable {
-    let campaignEnv: SPCampaignEnv
     let targetingParams: SPTargetingParams
 }
 
@@ -18,7 +17,6 @@ struct CampaignsRequest: Equatable, Encodable {
     static func spCampaignToRequest(_ campaign: SPCampaign?) -> CampaignRequest? {
         guard let campaign = campaign else { return nil }
         return CampaignRequest(
-            campaignEnv: campaign.environment,
             targetingParams: campaign.targetingParams
         )
     }
@@ -37,8 +35,10 @@ struct MessageRequest: Equatable, Encodable {
     let requestUUID: UUID
     let propertyHref: SPPropertyName
     let accountId: Int
+    let campaignEnv: SPCampaignEnv
     let idfaStatus: SPIDFAStatus
     let localState: SPJson
+    let consentLanguage: SPMessageLanguage
     let campaigns: CampaignsRequest
     let includeData = [
         "localState": ["type": "RecordString"],

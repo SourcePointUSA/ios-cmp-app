@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="18122" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="appleTV" appearance="light"/>
+    <dependencies>
+        <deployment identifier="tvOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPCategoryDetailsViewController" customModule="ConsentViewController" customModuleProvider="target">
+            <connections>
+                <outlet property="actionsContainer" destination="Z9m-j1-qsf" id="B11-gO-1E4"/>
+                <outlet property="categoryDetailsTableView" destination="ScA-yB-tNp" id="HmP-ve-Rva"/>
+                <outlet property="descriptionTextView" destination="ajL-u9-R1Z" id="7Je-mg-csg"/>
+                <outlet property="header" destination="0L6-g6-rVn" id="hKJ-Rg-xIf"/>
+                <outlet property="logoImageView" destination="vb7-1U-5xJ" id="6uv-9f-0zs"/>
+                <outlet property="offButton" destination="0Uh-Kp-cvq" id="RFK-Cw-Q0j"/>
+                <outlet property="onButton" destination="Rpm-y7-mWC" id="UWl-vv-8a7"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="PbN-b8-PsK" userLabel="Stack View - Main">
+                    <rect key="frame" x="80" y="60" width="1760" height="960"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0L6-g6-rVn" customClass="SPPMHeader" customModule="ConsentViewController" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="1760" height="100"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="lWC-wH-OYD"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eqS-Ry-AfJ" userLabel="Stack View - Content">
+                            <rect key="frame" x="0.0" y="116" width="1760" height="844"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="k39-kg-wtW" userLabel="Stack View - 1st Column">
+                                    <rect key="frame" x="0.0" y="0.0" width="880" height="844"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SP_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="vb7-1U-5xJ">
+                                            <rect key="frame" x="260" y="0.0" width="360" height="360"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="360" id="67Q-1H-Ga9"/>
+                                                <constraint firstAttribute="width" constant="360" id="zA3-xf-QpO"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Z9m-j1-qsf" userLabel="Stack View - Actions">
+                                            <rect key="frame" x="190" y="664" width="500" height="180"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rpm-y7-mWC">
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="86"/>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="On"/>
+                                                    <connections>
+                                                        <action selector="onOnButtonTap:" destination="-1" eventType="primaryActionTriggered" id="fnu-qT-62H"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-Kp-cvq">
+                                                    <rect key="frame" x="0.0" y="94" width="500" height="86"/>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Off"/>
+                                                    <connections>
+                                                        <action selector="onOffButtonTap:" destination="-1" eventType="primaryActionTriggered" id="lRj-MM-seu"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <viewLayoutGuide key="safeArea" id="8Gk-ll-QOd"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="500" id="kWS-kE-P2e"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HUv-Pl-Ojx" userLabel="Stack View - 2nd Column">
+                                    <rect key="frame" x="880" y="0.0" width="880" height="844"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do " textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajL-u9-R1Z">
+                                            <rect key="frame" x="0.0" y="0.0" width="880" height="246"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="246" id="WuL-kU-tMa"/>
+                                            </constraints>
+                                            <color key="textColor" systemColor="labelColor"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="ScA-yB-tNp">
+                                            <rect key="frame" x="0.0" y="246" width="880" height="598"/>
+                                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </tableView>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="HUv-Pl-Ojx" firstAttribute="width" secondItem="k39-kg-wtW" secondAttribute="width" id="P0P-T3-ml1"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="PZc-1i-btQ"/>
+                    <constraints>
+                        <constraint firstItem="0L6-g6-rVn" firstAttribute="width" secondItem="PbN-b8-PsK" secondAttribute="width" id="HGX-cv-Hif"/>
+                        <constraint firstAttribute="width" constant="1760" id="TZP-63-nk9"/>
+                        <constraint firstItem="eqS-Ry-AfJ" firstAttribute="leading" secondItem="PbN-b8-PsK" secondAttribute="leading" id="Umv-wT-ULR"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="nkI-NY-t1X"/>
+            <constraints>
+                <constraint firstItem="PbN-b8-PsK" firstAttribute="height" secondItem="nkI-NY-t1X" secondAttribute="height" id="14p-Et-jaL"/>
+                <constraint firstItem="PbN-b8-PsK" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" id="5wN-h8-7he"/>
+                <constraint firstItem="PbN-b8-PsK" firstAttribute="top" secondItem="nkI-NY-t1X" secondAttribute="top" id="VaP-sb-Ji7"/>
+                <constraint firstItem="PbN-b8-PsK" firstAttribute="width" secondItem="nkI-NY-t1X" secondAttribute="width" id="h90-S8-l4v"/>
+            </constraints>
+            <point key="canvasLocation" x="-44" y="-45"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="SP_Icon" width="265" height="259"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

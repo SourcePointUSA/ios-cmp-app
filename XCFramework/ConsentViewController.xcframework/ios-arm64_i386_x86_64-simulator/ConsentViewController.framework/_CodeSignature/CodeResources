@@ -4,21 +4,33 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>ConsentViewController.bundle/GDPRJSReceiver.js</key>
+		<key>Barcode.png</key>
 		<data>
-		gTVoAiC8CuFtU85/zGWrzOyXrZA=
+		p1QFym1jiRQxmkvZScXjBHhxCu8=
 		</data>
-		<key>ConsentViewController.bundle/GDPRJSReceiver.spec.js</key>
+		<key>ConsentViewController.bundle/Barcode.png</key>
 		<data>
-		9IzNupN+1HTnUDlsYuc23TPBgjo=
+		p1QFym1jiRQxmkvZScXjBHhxCu8=
 		</data>
 		<key>ConsentViewController.bundle/Info.plist</key>
 		<data>
-		gLYZcDC3jHRnCylO2DG6bgIU6tA=
+		S0TCmQ5rpLenxvJf8+tud5PFqKU=
+		</data>
+		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
+		<data>
+		B7J168EO01/rXtb4RgQo7PetWUY=
+		</data>
+		<key>ConsentViewController.bundle/SPJSReceiver.spec.js</key>
+		<data>
+		+4WHti4rYU1VZ79338GbucDYS3Q=
+		</data>
+		<key>ConsentViewController.bundle/SP_Icon.png</key>
+		<data>
+		r/5tTMB88qlCRvp2iNHzoOqA4pg=
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeDirectory</key>
 		<data>
-		OaMmR+0JXjA7jEXcOiqbXt0e0vY=
+		V/9rNjTxvUzSXCzsGJnUJvb9STg=
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeRequirements</key>
 		<data>
@@ -26,23 +38,31 @@
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeRequirements-1</key>
 		<data>
-		x6bbLQjlwO/5Po90SzUyWMjsTRU=
+		uiHi0oafQNgZQhql4hrHhZjtGnk=
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeResources</key>
 		<data>
-		5OUDoElqCWvNORNgoXAhgm6CR78=
+		VKxgeMBUhKaQpaWqJbL0M/MB98I=
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeSignature</key>
 		<data>
 		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
 		</data>
-		<key>ConsentViewController.bundle/javascript/GDPRJSReceiver.js</key>
+		<key>ConsentViewController.bundle/images/Barcode.png</key>
 		<data>
-		gTVoAiC8CuFtU85/zGWrzOyXrZA=
+		TGc1xIxg34ROBoXDuq+aPSc9KeE=
 		</data>
-		<key>ConsentViewController.bundle/javascript/GDPRJSReceiver.spec.js</key>
+		<key>ConsentViewController.bundle/images/SP_Icon.png</key>
 		<data>
-		9IzNupN+1HTnUDlsYuc23TPBgjo=
+		ruvWGvX+YD27aU7jQNTekEQnbeU=
+		</data>
+		<key>ConsentViewController.bundle/javascript/SPJSReceiver.js</key>
+		<data>
+		B7J168EO01/rXtb4RgQo7PetWUY=
+		</data>
+		<key>ConsentViewController.bundle/javascript/SPJSReceiver.spec.js</key>
+		<data>
+		+4WHti4rYU1VZ79338GbucDYS3Q=
 		</data>
 		<key>ConsentViewController.bundle/javascript/jest.config.json</key>
 		<data>
@@ -52,109 +72,113 @@
 		<data>
 		SqMNvDh2PQ9nUDqCYTy2EMU+Nqs=
 		</data>
-		<key>GDPRJSReceiver.js</key>
-		<data>
-		gTVoAiC8CuFtU85/zGWrzOyXrZA=
-		</data>
-		<key>GDPRJSReceiver.spec.js</key>
-		<data>
-		9IzNupN+1HTnUDlsYuc23TPBgjo=
-		</data>
-		<key>GDPRNativeMessageViewController.nib/objects-11.0+.nib</key>
-		<data>
-		LN0qorH7E+EnbkJbSu1eMjgXEvU=
-		</data>
-		<key>GDPRNativeMessageViewController.nib/runtime.nib</key>
-		<data>
-		xP7CTeaBIwGPnhke7KCJTdFeF9I=
-		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
-		2bXSmk/wTxASMw24HBDfknM18J0=
+		/nmnvxCmQaecYMP3oO1zNSrOwRY=
 		</data>
-		<key>Headers/ConsentViewController-umbrella.h</key>
+		<key>Headers/ConsentViewController-iOS-umbrella.h</key>
 		<data>
 		Jf8PhsagB0WuK9VDD23Huno3Q0s=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ySX0gNveQ+rALzNbJ9i/UIBz9CU=
+		KORc6h9L9kh9y4ZdFcIqIIJ+17c=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		hhAOKGO6Ocyo4mdueBH28+qoXy8=
+		GjVVewSJ6dNBBKIidU5FbCB0tQ0=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		u3Iy3uXZPcReSPR21nJ4SS6gCdE=
+		sRfe4M4SgcSw956LJo3jkkvbjz8=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		KsHvYLMR4bxtnp2OGx5bg2uZgRA=
+		KwTOZZj3DJ8Pc7Pd09AgLucWwog=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		hhAOKGO6Ocyo4mdueBH28+qoXy8=
+		GjVVewSJ6dNBBKIidU5FbCB0tQ0=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftinterface</key>
 		<data>
-		u3Iy3uXZPcReSPR21nJ4SS6gCdE=
+		sRfe4M4SgcSw956LJo3jkkvbjz8=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		KsHvYLMR4bxtnp2OGx5bg2uZgRA=
+		KwTOZZj3DJ8Pc7Pd09AgLucWwog=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<data>
-		lrjsbME1gkmkAMqTlb+xP0CDC6s=
+		Fv1MRHoInOevNdLt3zC7l3Pvfjs=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftinterface</key>
 		<data>
-		O1v1VjDummCjvGbcJDoEZ2ZW2og=
+		wo/W85n3ApBqBXl/NyzD39OZRc0=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Bn4RKfOJKJAifX5x2HtRpnmX/84=
+		SFQEQJeBxSh3TxMMPqMo2ySLTSU=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftdoc</key>
 		<data>
-		lrjsbME1gkmkAMqTlb+xP0CDC6s=
+		Fv1MRHoInOevNdLt3zC7l3Pvfjs=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftinterface</key>
 		<data>
-		O1v1VjDummCjvGbcJDoEZ2ZW2og=
+		wo/W85n3ApBqBXl/NyzD39OZRc0=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftmodule</key>
 		<data>
-		Bn4RKfOJKJAifX5x2HtRpnmX/84=
+		SFQEQJeBxSh3TxMMPqMo2ySLTSU=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		FTwF2EivE1/2KKipF1qtyXTuJzo=
+		PYyVhzVHFo002DxBu5nIvqPqQVA=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		VQqZziZm7Lw5TWc3XnRsGrJiPDQ=
+		bD+o+ZJURgRwH6S54uZhmVHT/jY=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		7EckN9wPIsP8VYoiWGyDzVqyeJs=
+		eQ7IT6YPJZtMTdnMYlj9NU9dqn4=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		FTwF2EivE1/2KKipF1qtyXTuJzo=
+		PYyVhzVHFo002DxBu5nIvqPqQVA=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		VQqZziZm7Lw5TWc3XnRsGrJiPDQ=
+		bD+o+ZJURgRwH6S54uZhmVHT/jY=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		7EckN9wPIsP8VYoiWGyDzVqyeJs=
+		eQ7IT6YPJZtMTdnMYlj9NU9dqn4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		b3TuGaRGICnYFisuxn73j/NdQDM=
+		+tSVKYcPfedD0ZtjyhA/dC8mWNs=
+		</data>
+		<key>SPJSReceiver.js</key>
+		<data>
+		B7J168EO01/rXtb4RgQo7PetWUY=
+		</data>
+		<key>SPJSReceiver.spec.js</key>
+		<data>
+		+4WHti4rYU1VZ79338GbucDYS3Q=
+		</data>
+		<key>SPNativeMessageViewController.nib/objects-11.0+.nib</key>
+		<data>
+		WgfMADftWn5CguDGWogvfAkzOz4=
+		</data>
+		<key>SPNativeMessageViewController.nib/runtime.nib</key>
+		<data>
+		Sqw/o8Dx8HxUcDAOkCFcf5uNdnw=
+		</data>
+		<key>SP_Icon.png</key>
+		<data>
+		r/5tTMB88qlCRvp2iNHzoOqA4pg=
 		</data>
 		<key>jest.config.json</key>
 		<data>
@@ -163,48 +187,81 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>ConsentViewController.bundle/GDPRJSReceiver.js</key>
+		<key>Barcode.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gTVoAiC8CuFtU85/zGWrzOyXrZA=
+			p1QFym1jiRQxmkvZScXjBHhxCu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			x8uCSSgJmXVs13aerMVqV5nsnJNE+so/mqS/ODeooXU=
+			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
 			</data>
 		</dict>
-		<key>ConsentViewController.bundle/GDPRJSReceiver.spec.js</key>
+		<key>ConsentViewController.bundle/Barcode.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9IzNupN+1HTnUDlsYuc23TPBgjo=
+			p1QFym1jiRQxmkvZScXjBHhxCu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			7a7GaWeic5xtbrBU6vRI/wWFiznfr3MXpSjCkfbBjYM=
+			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gLYZcDC3jHRnCylO2DG6bgIU6tA=
+			S0TCmQ5rpLenxvJf8+tud5PFqKU=
 			</data>
 			<key>hash2</key>
 			<data>
-			hUIr6smhiaFI4LSXb8/ANCUYajXHf7vJZtfi9mmOMq8=
+			mnhPIOfl3fzKqSjTAtdEebjGC5nh5QzzwJfCbEIXqTA=
+			</data>
+		</dict>
+		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			B7J168EO01/rXtb4RgQo7PetWUY=
+			</data>
+			<key>hash2</key>
+			<data>
+			y9sR7Y8AoM5si9bJ9xLnIPOqrTUZrVe6742i/NsPm7U=
+			</data>
+		</dict>
+		<key>ConsentViewController.bundle/SPJSReceiver.spec.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+4WHti4rYU1VZ79338GbucDYS3Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
+			</data>
+		</dict>
+		<key>ConsentViewController.bundle/SP_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			r/5tTMB88qlCRvp2iNHzoOqA4pg=
+			</data>
+			<key>hash2</key>
+			<data>
+			UTjb3KdhvO5fNSvs7e7haUzRbCsGAr1TFObGFmQkSLs=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeDirectory</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OaMmR+0JXjA7jEXcOiqbXt0e0vY=
+			V/9rNjTxvUzSXCzsGJnUJvb9STg=
 			</data>
 			<key>hash2</key>
 			<data>
-			cxKwt0LvPqEniUi9AkcxNrDcGOGGKF3dd60Xef7ze0o=
+			ieVChraHiQEIxN1Na4ov1xF/Q2EhqLFIKaw17GaTLRI=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeRequirements</key>
@@ -222,22 +279,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			x6bbLQjlwO/5Po90SzUyWMjsTRU=
+			uiHi0oafQNgZQhql4hrHhZjtGnk=
 			</data>
 			<key>hash2</key>
 			<data>
-			QU2YGBR7oJ19VjI3AY2OB+xuYUZhm5L+Rom+BV2Y31U=
+			6Nv1+d58182tI8FoYu4ZtL1YfspBzRuKMJBCdmUBo74=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5OUDoElqCWvNORNgoXAhgm6CR78=
+			VKxgeMBUhKaQpaWqJbL0M/MB98I=
 			</data>
 			<key>hash2</key>
 			<data>
-			9ahwUCqQpzX073xPzmjX8+3bPA4VlJN0ej3+sitRoX4=
+			mE73ZaqEkbJ0QhbJOPralh8y4kwlH20eAaFzyh3kBNA=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeSignature</key>
@@ -251,26 +308,48 @@
 			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
 			</data>
 		</dict>
-		<key>ConsentViewController.bundle/javascript/GDPRJSReceiver.js</key>
+		<key>ConsentViewController.bundle/images/Barcode.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gTVoAiC8CuFtU85/zGWrzOyXrZA=
+			TGc1xIxg34ROBoXDuq+aPSc9KeE=
 			</data>
 			<key>hash2</key>
 			<data>
-			x8uCSSgJmXVs13aerMVqV5nsnJNE+so/mqS/ODeooXU=
+			GZEWod/T80y1U0nklTPc/TUVp6+hiJddREgh3SvIOIs=
 			</data>
 		</dict>
-		<key>ConsentViewController.bundle/javascript/GDPRJSReceiver.spec.js</key>
+		<key>ConsentViewController.bundle/images/SP_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9IzNupN+1HTnUDlsYuc23TPBgjo=
+			ruvWGvX+YD27aU7jQNTekEQnbeU=
 			</data>
 			<key>hash2</key>
 			<data>
-			7a7GaWeic5xtbrBU6vRI/wWFiznfr3MXpSjCkfbBjYM=
+			WyofguidIhczvwLT6X1o7bFicp1RVdTCn6zsR7iT4Pk=
+			</data>
+		</dict>
+		<key>ConsentViewController.bundle/javascript/SPJSReceiver.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			B7J168EO01/rXtb4RgQo7PetWUY=
+			</data>
+			<key>hash2</key>
+			<data>
+			y9sR7Y8AoM5si9bJ9xLnIPOqrTUZrVe6742i/NsPm7U=
+			</data>
+		</dict>
+		<key>ConsentViewController.bundle/javascript/SPJSReceiver.spec.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+4WHti4rYU1VZ79338GbucDYS3Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/javascript/jest.config.json</key>
@@ -295,62 +374,18 @@
 			jMTzzVBaz2GZ8L3CwBi6M/evPoSGsz8HtwbYOjR6Qc8=
 			</data>
 		</dict>
-		<key>GDPRJSReceiver.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			gTVoAiC8CuFtU85/zGWrzOyXrZA=
-			</data>
-			<key>hash2</key>
-			<data>
-			x8uCSSgJmXVs13aerMVqV5nsnJNE+so/mqS/ODeooXU=
-			</data>
-		</dict>
-		<key>GDPRJSReceiver.spec.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9IzNupN+1HTnUDlsYuc23TPBgjo=
-			</data>
-			<key>hash2</key>
-			<data>
-			7a7GaWeic5xtbrBU6vRI/wWFiznfr3MXpSjCkfbBjYM=
-			</data>
-		</dict>
-		<key>GDPRNativeMessageViewController.nib/objects-11.0+.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			LN0qorH7E+EnbkJbSu1eMjgXEvU=
-			</data>
-			<key>hash2</key>
-			<data>
-			rTkN6D91QnYC+X2q5ls838ZE08W5qADQ+ggwcguHE9M=
-			</data>
-		</dict>
-		<key>GDPRNativeMessageViewController.nib/runtime.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			xP7CTeaBIwGPnhke7KCJTdFeF9I=
-			</data>
-			<key>hash2</key>
-			<data>
-			7attTJVzvKimHw2m66KD3WZY+zQgU8OrHazTGpnNjfI=
-			</data>
-		</dict>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2bXSmk/wTxASMw24HBDfknM18J0=
+			/nmnvxCmQaecYMP3oO1zNSrOwRY=
 			</data>
 			<key>hash2</key>
 			<data>
-			z2NFYRePvLS0/q820n+zPzaZIv7dv5PVGO0QsANF9oY=
+			jcXezPPFMbVXHNgz2dgc8ko0DVLcy0sdJ9S2wsUyE2U=
 			</data>
 		</dict>
-		<key>Headers/ConsentViewController-umbrella.h</key>
+		<key>Headers/ConsentViewController-iOS-umbrella.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -365,209 +400,264 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hhAOKGO6Ocyo4mdueBH28+qoXy8=
+			GjVVewSJ6dNBBKIidU5FbCB0tQ0=
 			</data>
 			<key>hash2</key>
 			<data>
-			AvBufjoUfVjlKDbdPmGxc2HFtY/JjwrQUap+nzpulNE=
+			ooYl6GCginbRbSeWul3X4JnLEx0qDcuLHM1BSdRQDII=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			u3Iy3uXZPcReSPR21nJ4SS6gCdE=
+			sRfe4M4SgcSw956LJo3jkkvbjz8=
 			</data>
 			<key>hash2</key>
 			<data>
-			0Us8wLRqXPoJLnPd+/8VvVsE3RuXAasQCpTMiHShFzw=
+			3xlv4HPWgxyBXJxIpUaiIXN+dJt+Jg8YumFoQdyIfqo=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KsHvYLMR4bxtnp2OGx5bg2uZgRA=
+			KwTOZZj3DJ8Pc7Pd09AgLucWwog=
 			</data>
 			<key>hash2</key>
 			<data>
-			r9YU4OFtXWAqX+9YnyMIzfK+4T0AzDT/M+BZUQrvyXs=
+			IoDrj0OsNHzWyLRuPLYTy+lVpHfZVUOAQrzl6QoskEw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hhAOKGO6Ocyo4mdueBH28+qoXy8=
+			GjVVewSJ6dNBBKIidU5FbCB0tQ0=
 			</data>
 			<key>hash2</key>
 			<data>
-			AvBufjoUfVjlKDbdPmGxc2HFtY/JjwrQUap+nzpulNE=
+			ooYl6GCginbRbSeWul3X4JnLEx0qDcuLHM1BSdRQDII=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			u3Iy3uXZPcReSPR21nJ4SS6gCdE=
+			sRfe4M4SgcSw956LJo3jkkvbjz8=
 			</data>
 			<key>hash2</key>
 			<data>
-			0Us8wLRqXPoJLnPd+/8VvVsE3RuXAasQCpTMiHShFzw=
+			3xlv4HPWgxyBXJxIpUaiIXN+dJt+Jg8YumFoQdyIfqo=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KsHvYLMR4bxtnp2OGx5bg2uZgRA=
+			KwTOZZj3DJ8Pc7Pd09AgLucWwog=
 			</data>
 			<key>hash2</key>
 			<data>
-			r9YU4OFtXWAqX+9YnyMIzfK+4T0AzDT/M+BZUQrvyXs=
+			IoDrj0OsNHzWyLRuPLYTy+lVpHfZVUOAQrzl6QoskEw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			lrjsbME1gkmkAMqTlb+xP0CDC6s=
+			Fv1MRHoInOevNdLt3zC7l3Pvfjs=
 			</data>
 			<key>hash2</key>
 			<data>
-			3FfXm7tjN0sG07y01j96xyMpIRKUlIv+iAesjvwijbo=
+			W8NfnPLByXDi1bGywA8ABFB7rgeEVj9Guj7fwvoy3FY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			O1v1VjDummCjvGbcJDoEZ2ZW2og=
+			wo/W85n3ApBqBXl/NyzD39OZRc0=
 			</data>
 			<key>hash2</key>
 			<data>
-			fzoR5RUeau62x1+d0Sq6uHAPUx7F0yNZN10xeW+j0zA=
+			uB4YCYZLiFeTOl5+MMtTO/vfDdGVoXlMsPd6BRBRuyo=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Bn4RKfOJKJAifX5x2HtRpnmX/84=
+			SFQEQJeBxSh3TxMMPqMo2ySLTSU=
 			</data>
 			<key>hash2</key>
 			<data>
-			rTigC4j2noecZPAygg5q1xuQNxSGm8n6NkSlInDFRVU=
+			xBJSUbIS/RhOKkJN4ft08v1jztq3EEF+d3kBrS/Hr6E=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			lrjsbME1gkmkAMqTlb+xP0CDC6s=
+			Fv1MRHoInOevNdLt3zC7l3Pvfjs=
 			</data>
 			<key>hash2</key>
 			<data>
-			3FfXm7tjN0sG07y01j96xyMpIRKUlIv+iAesjvwijbo=
+			W8NfnPLByXDi1bGywA8ABFB7rgeEVj9Guj7fwvoy3FY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			O1v1VjDummCjvGbcJDoEZ2ZW2og=
+			wo/W85n3ApBqBXl/NyzD39OZRc0=
 			</data>
 			<key>hash2</key>
 			<data>
-			fzoR5RUeau62x1+d0Sq6uHAPUx7F0yNZN10xeW+j0zA=
+			uB4YCYZLiFeTOl5+MMtTO/vfDdGVoXlMsPd6BRBRuyo=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Bn4RKfOJKJAifX5x2HtRpnmX/84=
+			SFQEQJeBxSh3TxMMPqMo2ySLTSU=
 			</data>
 			<key>hash2</key>
 			<data>
-			rTigC4j2noecZPAygg5q1xuQNxSGm8n6NkSlInDFRVU=
+			xBJSUbIS/RhOKkJN4ft08v1jztq3EEF+d3kBrS/Hr6E=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FTwF2EivE1/2KKipF1qtyXTuJzo=
+			PYyVhzVHFo002DxBu5nIvqPqQVA=
 			</data>
 			<key>hash2</key>
 			<data>
-			jdUpbv10sORFEJIIPYFlPewO/SPj3rDeZ8C7m3Mo2rk=
+			OMzqug7fvGpk/pfup6D82Gy2ugiW2eaNMMQD1DGKFDw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VQqZziZm7Lw5TWc3XnRsGrJiPDQ=
+			bD+o+ZJURgRwH6S54uZhmVHT/jY=
 			</data>
 			<key>hash2</key>
 			<data>
-			6nBjfqwboQ6ihGiBl05fOVGVDCsB8YVcDlJQgPgxd8U=
+			fhrCBs1HAHrsbL50IK62BRycGAjNYaQlOeFPGVpVpKc=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7EckN9wPIsP8VYoiWGyDzVqyeJs=
+			eQ7IT6YPJZtMTdnMYlj9NU9dqn4=
 			</data>
 			<key>hash2</key>
 			<data>
-			RzqGzg8Fdx5O4qZyEtOsMu6EJiBugJ/XqAKIhPgpEEE=
+			1N7h/D8AzOgl/WCnBU+2s8GlpshNneBvQ0qH809//w8=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FTwF2EivE1/2KKipF1qtyXTuJzo=
+			PYyVhzVHFo002DxBu5nIvqPqQVA=
 			</data>
 			<key>hash2</key>
 			<data>
-			jdUpbv10sORFEJIIPYFlPewO/SPj3rDeZ8C7m3Mo2rk=
+			OMzqug7fvGpk/pfup6D82Gy2ugiW2eaNMMQD1DGKFDw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VQqZziZm7Lw5TWc3XnRsGrJiPDQ=
+			bD+o+ZJURgRwH6S54uZhmVHT/jY=
 			</data>
 			<key>hash2</key>
 			<data>
-			6nBjfqwboQ6ihGiBl05fOVGVDCsB8YVcDlJQgPgxd8U=
+			fhrCBs1HAHrsbL50IK62BRycGAjNYaQlOeFPGVpVpKc=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7EckN9wPIsP8VYoiWGyDzVqyeJs=
+			eQ7IT6YPJZtMTdnMYlj9NU9dqn4=
 			</data>
 			<key>hash2</key>
 			<data>
-			RzqGzg8Fdx5O4qZyEtOsMu6EJiBugJ/XqAKIhPgpEEE=
+			1N7h/D8AzOgl/WCnBU+2s8GlpshNneBvQ0qH809//w8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			b3TuGaRGICnYFisuxn73j/NdQDM=
+			+tSVKYcPfedD0ZtjyhA/dC8mWNs=
 			</data>
 			<key>hash2</key>
 			<data>
-			qfBOGmpZuPQHQJz2kbgjYSO8y1dlr08LQcxQXoLq07Q=
+			7JJ0fd+ZJYbrxs21FMbplQZl8s1TXlnejVm9gbKBpMI=
+			</data>
+		</dict>
+		<key>SPJSReceiver.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			B7J168EO01/rXtb4RgQo7PetWUY=
+			</data>
+			<key>hash2</key>
+			<data>
+			y9sR7Y8AoM5si9bJ9xLnIPOqrTUZrVe6742i/NsPm7U=
+			</data>
+		</dict>
+		<key>SPJSReceiver.spec.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+4WHti4rYU1VZ79338GbucDYS3Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
+			</data>
+		</dict>
+		<key>SPNativeMessageViewController.nib/objects-11.0+.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			WgfMADftWn5CguDGWogvfAkzOz4=
+			</data>
+			<key>hash2</key>
+			<data>
+			Rg+A7Me/KXOoFXrwNuEAi3Hsdb6taw1JBCc+DyUUeVQ=
+			</data>
+		</dict>
+		<key>SPNativeMessageViewController.nib/runtime.nib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Sqw/o8Dx8HxUcDAOkCFcf5uNdnw=
+			</data>
+			<key>hash2</key>
+			<data>
+			8/LRvX64MDHBpWoB0IdBJNdynqgVnM5taMLu5tD9t0Q=
+			</data>
+		</dict>
+		<key>SP_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			r/5tTMB88qlCRvp2iNHzoOqA4pg=
+			</data>
+			<key>hash2</key>
+			<data>
+			UTjb3KdhvO5fNSvs7e7haUzRbCsGAr1TFObGFmQkSLs=
 			</data>
 		</dict>
 		<key>jest.config.json</key>

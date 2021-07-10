@@ -61,7 +61,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("ConnectionTimeOutError") {
                 it("has spCode: connection_timeout") {
-                    expect(ConnectionTimeOutError(url: nil, timeout: nil).spCode).to(equal("sp_metric_connection_timeout"))
+                    expect(ConnectionTimeOutError(url: nil, timeout: nil, campaignType: .unknown).spCode).to(equal("sp_metric_connection_timeout"))
                 }
             }
 
@@ -73,7 +73,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("WebViewError") {
                 it("has spCode: web_view_error") {
-                    expect(WebViewError().spCode).to(equal("sp_metric_web_view_error"))
+                    expect(WebViewError(campaignType: .gdpr).spCode).to(equal("sp_metric_web_view_error"))
                 }
             }
 
@@ -103,26 +103,26 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidEventPayloadError") {
                 it("has spCode: invalid_event_payload") {
-                    expect(InvalidEventPayloadError().spCode).to(equal("sp_metric_invalid_event_payload"))
+                    expect(InvalidEventPayloadError(campaignType: .gdpr).spCode).to(equal("sp_metric_invalid_event_payload"))
                 }
             }
 
             describe("InvalidOnActionEventPayloadError") {
                 it("has spCode: invalid_event_payload") {
-                    expect(InvalidOnActionEventPayloadError().spCode).to(equal("sp_metric_invalid_onAction_event_payload"))
+                    expect(InvalidOnActionEventPayloadError(campaignType: .gdpr).spCode).to(equal("sp_metric_invalid_onAction_event_payload"))
                 }
             }
 
             describe("RenderingAppError") {
                 describe("if not code is provided") {
                     it("its spCode should be rendering_app_error") {
-                        expect(RenderingAppError(nil).spCode).to(equal("sp_metric_rendering_app_error"))
+                        expect(RenderingAppError(campaignType: .gdpr, nil).spCode).to(equal("sp_metric_rendering_app_error"))
                     }
                 }
 
                 describe("if a code is provided") {
                     it("its spCode should be the same as the code provided") {
-                        expect(RenderingAppError("foo").spCode).to(equal("foo"))
+                        expect(RenderingAppError(campaignType: .gdpr, "foo").spCode).to(equal("foo"))
                     }
                 }
             }

@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.0.1'
+pod 'ConsentViewController', '6.1.2'
 ```
 
 ### Carthage
@@ -56,10 +56,11 @@ class ViewController: UIViewController {
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        campaignsEnv: .Public // optional - Public by default
         campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
-            ios14: SPCampaign()
+            gdpr: SPCampaign(), // optional
+            ccpa: SPCampaign(), // optional
+            ios14: SPCampaign() // optional
         ),
         delegate: self
     )}()
@@ -112,9 +113,7 @@ extension ViewController: SPDelegate {
 
 SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
-SPCampaign *campaign = [[SPCampaign alloc]
-    initWithEnvironment: SPCampaignEnvPublic
-    targetingParams: [NSDictionary dictionary]];
+SPCampaign *campaign = [[SPCampaign alloc] initWithTargetingParams: [NSDictionary dictionary]];
 
 SPCampaigns *campaigns = [[SPCampaigns alloc]
     initWithGdpr: campaign
@@ -124,6 +123,7 @@ SPCampaigns *campaigns = [[SPCampaigns alloc]
 consentManager = [[SPConsentManager alloc]
     initWithAccountId:22
     propertyName: propertyName
+    campaignsEnv: SPCampaignEnvPublic
     campaigns: campaigns
     delegate: self];
 
@@ -142,8 +142,12 @@ consentManager = [[SPConsentManager alloc]
         [self dismissViewControllerAnimated:true completion:nil];
     }
 
-    - (void)onConsentReadyWithConsents:(SPUserData *)consents {
-        NSLog(@"onConsentReady: %@", consents);
+    - (void)onConsentReadyWithConsents:(SPUserData *)userData {
+        NSLog(@"onConsentReady");
+        NSLog(@"GDPR Applies: %d", userData.objcGDPRApplies);
+        NSLog(@"GDPR: %@", userData.objcGDPRConsents);
+        NSLog(@"CCPA Applies: %d", userData.objcCCPAApplies);
+        NSLog(@"CCPA: %@", userData.objcCCPAConsents);
     }
 @end
 ```
@@ -226,27 +230,43 @@ consentManager.messageLanguage = SPMessageLanguageGerman;
 ```
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
 
+## Loading Stage campaigns
+`SPConsentManager`'s constructor accepts an optional parameter called `campaignsEnv: SPCampaignEnv`. This parameter, when omitted will be `.Public` by default. 
+Currently, we don't support loading campaigns of different environments. In other words, you can only load all Stage or Public campaigns.
+
 ## Setting Targeting Parameters
 Targeting params are a set of key/value pairs passed to the scenario. In the scenario you're able to conditionaly show a message or another based on those values.
 You can set targeting params individiually per campaign like so:
 
 ```swift
-let myCampaign = SPCampaign(environment: .Public, targetingParams: ["foo": "bar"])
+let myCampaign = SPCampaign(targetingParams: ["foo": "bar"])
 ```
 
 In Obj-C that'd be:
 ```objc
 SPCampaign *myCampaign = [[SPCampaign alloc]
-    initWithEnvironment: SPCampaignEnvPublic
-    targetingParams: [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1"]
+    initWithTargetingParams: [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1"]
 ];
 ```
+
+## Configuring the Message/Consents timeout
+Before calling `.loadMessage` or `.loadPrivacyManager`, set the `.messageTimeoutInSeconds` attribute to a time interval that makes most sense for your own application. By default, we set it to 30 seconds.
+
+In case of a timeout error, the `onError` callback will be called and the consent flow will stop there.
 
 ## `pubData`
 When the user takes an action within the consent UI, it's possible to attach an arbitrary payload to the action data an have it sent to our endpoints. For more information on how to do that check our wiki: [Sending arbitrary data when the user takes an action](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Sending-arbitrary-data-when-the-user-takes-an-action.)
 
 ## Rendering the message natively
 Have a look at this neat [wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) we put together.
+
+## App Tracking Transparency
+To display the App Tracking Transparency authorization request for accessing the IDFA, update your `Info.plist`  to add the `NSUserTrackingUsageDescription` key with a custom message describing your usage. Here is an example description text:
+```
+<key>NSUserTrackingUsageDescription</key>
+<string>This identifier will be used to deliver personalized ads to you.</string>
+```
+![App Tracking](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/wiki/assets/AppTracking.png)
 
 ## Frequently Asked Questions
 ### 1. How big is the SDK?

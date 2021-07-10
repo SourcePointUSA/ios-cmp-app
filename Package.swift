@@ -20,6 +20,7 @@ let package = Package(
       exclude: [
         "Assets/javascript/SPJSReceiver.spec.js",
         "Assets/javascript/jest.config.json",
+        "Classes/Views/tvOS/",
       ],
       resources: [
         .process("Assets/javascript/SPJSReceiver.js")

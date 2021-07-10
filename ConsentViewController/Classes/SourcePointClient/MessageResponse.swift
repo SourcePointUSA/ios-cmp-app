@@ -31,14 +31,17 @@ enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
     case PMNonTCF = 9
     case ios = 10
     case CCPAOTT = 11
+    case NativePMOTT = 99
     case unknown
 }
 
 enum Message: Equatable {
+    case nativePM(_ message: PrivacyManagerViewData)
     case native(_ message: SPJson)
     case web(_ message: SPJson)
     case unknown
 }
+
 extension Message: Decodable {
     init(from decoder: Decoder) throws {
         self = .unknown
@@ -46,10 +49,12 @@ extension Message: Decodable {
 
     init(type: MessageSubCategory, decoder: Decoder) throws {
         switch type {
+        case .NativePMOTT:
+            self = .nativePM(try PrivacyManagerViewData(from: try SPPrivacyManagerResponse(from: decoder)))
         case .NativeInApp:
-            self = .native(try SPJson.init(from: decoder))
+            self = .native(try SPJson(from: decoder))
         default:
-            self = .web(try SPJson.init(from: decoder))
+            self = .web(try SPJson(from: decoder))
         }
     }
 }
@@ -69,9 +74,9 @@ extension Consent: Codable {
     }
 
     init(from decoder: Decoder) throws {
-        if let consent = try? SPGDPRConsent.init(from: decoder) {
+        if let consent = try? SPGDPRConsent(from: decoder) {
             self = .gdpr(consents: consent)
-        } else if let consent = try? SPCCPAConsent.init(from: decoder) {
+        } else if let consent = try? SPCCPAConsent(from: decoder) {
             self = .ccpa(consents: consent)
         } else {
             self = .unknown
@@ -83,6 +88,12 @@ struct MessageMetaData: Decodable, Equatable {
     let categoryId: MessageCategory
     let subCategoryId: MessageSubCategory
     let messageId: Int
+    let messagePartitionUUID: String
+
+    enum CodingKeys: String, CodingKey {
+        case categoryId, subCategoryId, messageId
+        case messagePartitionUUID = "prtnUUID"
+    }
 }
 
 struct Campaign: Equatable {
@@ -116,4 +127,29 @@ struct MessagesResponse: Decodable, Equatable {
     let propertyId: Int
     let campaigns: [Campaign]
     let localState: SPJson
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        propertyId = try container.decode(Int.self, forKey: .propertyId)
+        localState = try container.decode(SPJson.self, forKey: .localState)
+
+        var tempCampaigns: [Campaign] = []
+        var campaignsContainer = try container.nestedUnkeyedContainer(forKey: .campaigns)
+        while !campaignsContainer.isAtEnd {
+            let campaign = try campaignsContainer.decode(Campaign.self)
+            switch campaign.userConsent {
+            case .ccpa(let consents):
+                consents.uuid = localState["ccpa"]?["uuid"]?.stringValue
+            case .gdpr(let consents):
+                consents.uuid = localState["gdpr"]?["uuid"]?.stringValue
+            default: break
+            }
+            tempCampaigns.append(campaign)
+        }
+        campaigns = tempCampaigns
+    }
+
+    enum Keys: CodingKey {
+        case propertyId, campaigns, localState
+    }
 }

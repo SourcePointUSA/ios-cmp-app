@@ -10,64 +10,32 @@ import Foundation
 @testable import ConsentViewController
 
 class MockConsentDelegate: SPDelegate {
-    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
 
-    }
-
-    func onSPUIReady(_ viewController: UIViewController) {
-
-    }
-
-    func onSPUIFinished() {
-
-    }
-
-    var isConsentUIWillShowCalled = false
-    var isConsentUIDidDisappearCalled = false
+    var isOnSPUIFinishedCalled = false
+    var isOnSPUIReadyCalled = false
     var isOnErrorCalled = false
     var isOnActionCalled = false
     var isOnConsentReadyCalled = false
-    var isMessageWillShowCalled = false
-    var isMessageDidDisappearCalled = false
-    var isGdprPMWillShowCalled = false
-    var isGdprPMDidDisappearCalled = false
 
     var onActionCalledWith: SPAction!
-
-    public func gdprConsentUIWillShow() {
-        isConsentUIWillShowCalled = true
-    }
-
-    public func consentUIDidDisappear() {
-        isConsentUIDidDisappearCalled = true
-    }
 
     public func onError(error: SPError) {
         isOnErrorCalled = true
     }
 
-    public func onAction(_ action: SPAction) {
+    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
         isOnActionCalled = true
-        onActionCalledWith = action
     }
 
-    public func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
+    func onSPUIReady(_ controller: SPMessageViewController) {
+        isOnSPUIReadyCalled = true
+    }
+
+    func onSPUIFinished(_ controller: SPMessageViewController) {
+        isOnSPUIFinishedCalled = true
+    }
+
+    public func onConsentReady(userData: SPUserData) {
         isOnConsentReadyCalled = true
-    }
-
-    public func messageWillShow() {
-        isMessageWillShowCalled = true
-    }
-
-    public func messageDidDisappear() {
-        isMessageDidDisappearCalled = true
-    }
-
-    public func gdprPMWillShow() {
-        isGdprPMWillShowCalled = true
-    }
-
-    public func gdprPMDidDisappear() {
-        isGdprPMDidDisappearCalled = true
     }
 }

@@ -30,7 +30,7 @@ import AdSupport
     /// - Parameters:
     ///   - handler: receives the IDFA status mapped into SPIDFAStatus
     public static func requestAuthorisation(handler: @escaping (SPIDFAStatus) -> Void) {
-        if #available(iOS 14, *) {
+        if #available(iOS 14, tvOS 14, *) {
             ATTrackingManager.requestTrackingAuthorization { status in
                 handler(SPIDFAStatus(fromApple: status))
             }
@@ -40,8 +40,8 @@ import AdSupport
     }
 
     public static func current() -> SPIDFAStatus {
-        if #available(iOS 14, *) {
-            return SPIDFAStatus.init(fromApple: ATTrackingManager.trackingAuthorizationStatus)
+        if #available(iOS 14, tvOS 14, *) {
+            return SPIDFAStatus(fromApple: ATTrackingManager.trackingAuthorizationStatus)
         } else {
             return .unavailable
         }
@@ -56,7 +56,7 @@ import AdSupport
         }
     }
 
-    @available(iOS 14, *)
+    @available(iOS 14, tvOS 14, *)
     public init(fromApple status: ATTrackingManager.AuthorizationStatus) {
         switch status {
         case .authorized:

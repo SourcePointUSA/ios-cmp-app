@@ -4,21 +4,37 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>GDPRJSReceiver.js</key>
+		<key>Barcode.png</key>
 		<data>
-		gTVoAiC8CuFtU85/zGWrzOyXrZA=
+		p1QFym1jiRQxmkvZScXjBHhxCu8=
 		</data>
-		<key>GDPRJSReceiver.spec.js</key>
+		<key>SPJSReceiver.js</key>
 		<data>
-		9IzNupN+1HTnUDlsYuc23TPBgjo=
+		B7J168EO01/rXtb4RgQo7PetWUY=
 		</data>
-		<key>javascript/GDPRJSReceiver.js</key>
+		<key>SPJSReceiver.spec.js</key>
 		<data>
-		gTVoAiC8CuFtU85/zGWrzOyXrZA=
+		+4WHti4rYU1VZ79338GbucDYS3Q=
 		</data>
-		<key>javascript/GDPRJSReceiver.spec.js</key>
+		<key>SP_Icon.png</key>
 		<data>
-		9IzNupN+1HTnUDlsYuc23TPBgjo=
+		r/5tTMB88qlCRvp2iNHzoOqA4pg=
+		</data>
+		<key>images/Barcode.png</key>
+		<data>
+		TGc1xIxg34ROBoXDuq+aPSc9KeE=
+		</data>
+		<key>images/SP_Icon.png</key>
+		<data>
+		ruvWGvX+YD27aU7jQNTekEQnbeU=
+		</data>
+		<key>javascript/SPJSReceiver.js</key>
+		<data>
+		B7J168EO01/rXtb4RgQo7PetWUY=
+		</data>
+		<key>javascript/SPJSReceiver.spec.js</key>
+		<data>
+		+4WHti4rYU1VZ79338GbucDYS3Q=
 		</data>
 		<key>javascript/jest.config.json</key>
 		<data>
@@ -31,48 +47,92 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>GDPRJSReceiver.js</key>
+		<key>Barcode.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gTVoAiC8CuFtU85/zGWrzOyXrZA=
+			p1QFym1jiRQxmkvZScXjBHhxCu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			x8uCSSgJmXVs13aerMVqV5nsnJNE+so/mqS/ODeooXU=
+			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
 			</data>
 		</dict>
-		<key>GDPRJSReceiver.spec.js</key>
+		<key>SPJSReceiver.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9IzNupN+1HTnUDlsYuc23TPBgjo=
+			B7J168EO01/rXtb4RgQo7PetWUY=
 			</data>
 			<key>hash2</key>
 			<data>
-			7a7GaWeic5xtbrBU6vRI/wWFiznfr3MXpSjCkfbBjYM=
+			y9sR7Y8AoM5si9bJ9xLnIPOqrTUZrVe6742i/NsPm7U=
 			</data>
 		</dict>
-		<key>javascript/GDPRJSReceiver.js</key>
+		<key>SPJSReceiver.spec.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gTVoAiC8CuFtU85/zGWrzOyXrZA=
+			+4WHti4rYU1VZ79338GbucDYS3Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			x8uCSSgJmXVs13aerMVqV5nsnJNE+so/mqS/ODeooXU=
+			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
 			</data>
 		</dict>
-		<key>javascript/GDPRJSReceiver.spec.js</key>
+		<key>SP_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9IzNupN+1HTnUDlsYuc23TPBgjo=
+			r/5tTMB88qlCRvp2iNHzoOqA4pg=
 			</data>
 			<key>hash2</key>
 			<data>
-			7a7GaWeic5xtbrBU6vRI/wWFiznfr3MXpSjCkfbBjYM=
+			UTjb3KdhvO5fNSvs7e7haUzRbCsGAr1TFObGFmQkSLs=
+			</data>
+		</dict>
+		<key>images/Barcode.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			TGc1xIxg34ROBoXDuq+aPSc9KeE=
+			</data>
+			<key>hash2</key>
+			<data>
+			GZEWod/T80y1U0nklTPc/TUVp6+hiJddREgh3SvIOIs=
+			</data>
+		</dict>
+		<key>images/SP_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ruvWGvX+YD27aU7jQNTekEQnbeU=
+			</data>
+			<key>hash2</key>
+			<data>
+			WyofguidIhczvwLT6X1o7bFicp1RVdTCn6zsR7iT4Pk=
+			</data>
+		</dict>
+		<key>javascript/SPJSReceiver.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			B7J168EO01/rXtb4RgQo7PetWUY=
+			</data>
+			<key>hash2</key>
+			<data>
+			y9sR7Y8AoM5si9bJ9xLnIPOqrTUZrVe6742i/NsPm7U=
+			</data>
+		</dict>
+		<key>javascript/SPJSReceiver.spec.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+4WHti4rYU1VZ79338GbucDYS3Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
 			</data>
 		</dict>
 		<key>javascript/jest.config.json</key>
