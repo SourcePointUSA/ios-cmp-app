@@ -23,9 +23,14 @@ import Foundation
     var authId: String?
     let spClient: SourcePointProtocol
     let deviceManager: SPDeviceManager
-    var cleanUserDataOnError = true
     var storage: SPLocalStorage
+
     public var userData: SPUserData { storage.userData }
+
+    /// By default, the SDK will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
+    /// `.loadMessage` is called.
+    /// Set this flag to `false` if you wish to opt-out from this behaviour.
+    public var cleanUserDataOnError: Bool = true
     var messageControllersStack: [SPMessageViewController] = []
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     static let DefaultTimeout = TimeInterval(30)
