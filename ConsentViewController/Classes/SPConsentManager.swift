@@ -25,6 +25,10 @@ import Foundation
     let deviceManager: SPDeviceManager
     var storage: SPLocalStorage
 
+    public var gdprApplies: Bool { storage.userData.gdpr?.applies ?? false }
+
+    public var ccpaApplies: Bool { storage.userData.ccpa?.applies ?? false }
+
     public var userData: SPUserData { storage.userData }
 
     /// By default, the SDK will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
@@ -281,14 +285,6 @@ import Foundation
         #elseif os(tvOS)
         /// TODO: load NativePM
         #endif
-    }
-
-    public func gdprApplies() -> Bool {
-        storage.userData.gdpr?.applies ?? false
-    }
-
-    public func ccpaApplies() -> Bool {
-        storage.userData.ccpa?.applies ?? false
     }
 
     public func customConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {

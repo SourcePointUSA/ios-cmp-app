@@ -9,12 +9,12 @@ import Foundation
 
 @objc public protocol SPCCPA {
     @objc func loadCCPAPrivacyManager(withId: String, tab: SPPrivacyManagerTab)
-    @objc func ccpaApplies() -> Bool
+    @objc var ccpaApplies: Bool { get }
 }
 
 @objc public protocol SPGDPR {
     @objc func loadGDPRPrivacyManager(withId: String, tab: SPPrivacyManagerTab)
-    @objc func gdprApplies() -> Bool
+    @objc var gdprApplies: Bool { get }
 }
 
 @objc public protocol SPSDK: SPGDPR, SPCCPA {
