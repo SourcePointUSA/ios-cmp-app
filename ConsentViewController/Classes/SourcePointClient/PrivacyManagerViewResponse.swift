@@ -12,13 +12,9 @@ enum SPVendorType: String, Codable {
 }
 
 struct VendorListVendor: Decodable {
-    struct SPLegIntCategory: Decodable {
+    struct Category: Decodable {
         let type: SPCategoryType
         let iabId: Int?
-        let name: String
-    }
-    struct SPConsentCategory: Decodable {
-        let type: SPCategoryType
         let name: String
     }
 
@@ -27,12 +23,24 @@ struct VendorListVendor: Decodable {
     let policyUrl: URL?
     let description, cookieHeader: String?
     let vendorType: SPVendorType
-    let legIntCategories: [SPLegIntCategory]
-    let consentCategories: [SPConsentCategory]
+    let consentCategories, legIntCategories: [Category]
     let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
+}
+
+extension VendorListVendor: Identifiable, Equatable, Hashable {
+    var id: String { vendorId }
+
+    static func == (lhs: VendorListVendor, rhs: VendorListVendor) -> Bool {
+        lhs.vendorId == rhs.vendorId
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(vendorId)
+    }
 }
 
 struct PrivacyManagerViewResponse: Decodable {
     let vendors: [VendorListVendor]
     let categories, specialPurposes, features, specialFeatures: [VendorListCategory]
+    var vendorGrants: SPGDPRVendorGrants?
 }

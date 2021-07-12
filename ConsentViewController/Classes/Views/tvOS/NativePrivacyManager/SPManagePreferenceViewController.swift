@@ -189,19 +189,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             nibName: "SPCategoryDetailsViewController"
         )
         categoryDetailsVC.category = categories[indexPath.row]
-        categoryDetailsVC.categoryManagerDelegate = self
+        categoryDetailsVC.categoryManagerDelegate = categoryManagerDelegate
         present(categoryDetailsVC, animated: true)
-    }
-}
-
-extension SPManagePreferenceViewController: PMCategoryManager {
-    func onCategoryOn(_ category: VendorListCategory) {
-        dismiss(animated: true)
-        categoryManagerDelegate?.onCategoryOn(category)
-    }
-
-    func onCategoryOff(_ category: VendorListCategory) {
-        dismiss(animated: true)
-        categoryManagerDelegate?.onCategoryOff(category)
     }
 }

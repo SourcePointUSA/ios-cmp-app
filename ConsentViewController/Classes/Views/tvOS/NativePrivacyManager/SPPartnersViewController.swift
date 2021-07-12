@@ -149,20 +149,7 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
             nibName: "SPVendorDetailsViewController"
         )
         vendorDetailsVC.vendor = vendors[indexPath.row]
-        vendorDetailsVC.vendorManagerDelegate = self
+        vendorDetailsVC.vendorManagerDelegate = vendorManagerDelegate
         present(vendorDetailsVC, animated: true)
-    }
-}
-
-// MARK: - PMVendorManager
-extension SPPartnersViewController: PMVendorManager {
-    func onVendorOn(_ vendor: VendorListVendor) {
-        dismiss(animated: true)
-        vendorManagerDelegate?.onVendorOn(vendor)
-    }
-
-    func onVendorOff(_ vendor: VendorListVendor) {
-        dismiss(animated: true)
-        vendorManagerDelegate?.onVendorOff(vendor)
     }
 }

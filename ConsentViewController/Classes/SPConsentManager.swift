@@ -260,6 +260,7 @@ import Foundation
                     pmData: content,
                     delegate: self
                 )
+                pmViewController.vendorGrants = self?.userData.gdpr?.consents?.vendorGrants
                 pmViewController.delegate = self
                 self?.loaded(pmViewController)
             case .failure(let error):
@@ -455,6 +456,9 @@ extension SPConsentManager: SPNativePMDelegate {
 //                handler(SPJson(response.messageJson) ?? SPJson())
 //            }
 //        }
+        /// TODO: Pass vendorGrants to PM Controller
+        /// TODO: maybe move this logic inside PM Controller
+        
         if let propertyId = propertyId, pmSecondLayerData == nil {
             spClient.privacyManagerView(
                 propertyId: propertyId,
@@ -462,9 +466,10 @@ extension SPConsentManager: SPNativePMDelegate {
             ) { [weak self] result in
                 switch result {
                 case .failure(let error): self?.onError(error)
-                case .success(let pmData):
+                case .success(var pmData):
                     self?.pmSecondLayerData = pmData
-                    handler(result)
+                    pmData.vendorGrants = self?.userData.gdpr?.consents?.vendorGrants
+                    handler(result.map { _ in pmData} )
                 }
             }
         } else {
