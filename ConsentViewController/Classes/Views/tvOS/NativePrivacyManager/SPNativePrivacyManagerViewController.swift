@@ -8,125 +8,6 @@
 import UIKit
 import Foundation
 
-protocol PMCategoryManager: AnyObject {
-    var categories: Set<VendorListCategory> { get set }
-    var specialPurposes: Set<VendorListCategory> { get set }
-    var features: Set<VendorListCategory> { get set }
-    var specialFeatures: Set<VendorListCategory> { get set }
-    var acceptedCategoriesIds: Set<String> { get set }
-    func onCategoryOn(_ category: VendorListCategory)
-    func onCategoryOff(_ category: VendorListCategory)
-}
-
-protocol PMVendorManager: AnyObject {
-    var vendors: Set<VendorListVendor> { get set }
-    var acceptedVendorsIds: Set<String> { get set }
-    func onVendorOn(_ vendor: VendorListVendor)
-    func onVendorOff(_ vendor: VendorListVendor)
-}
-
-class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
-    var grants: SPGDPRVendorGrants
-    var vendors: Set<VendorListVendor>
-    var acceptedVendorsIds: Set<String>
-    var categories, specialPurposes, features, specialFeatures: Set<VendorListCategory>
-    var acceptedCategoriesIds: Set<String>
-
-    var vendorsWhosePurposesAreOff: [String] {
-        acceptedVendorsIds
-            .compactMap { id in vendors.first { $0.vendorId == id } }
-            .filter { vendor in
-                let vendorCategoriesIds = (grants[vendor.vendorId] ?? SPGDPRVendorGrant()).purposeGrants.keys
-                return acceptedCategoriesIds.intersection(vendorCategoriesIds).isEmpty
-            }
-            .map { $0.vendorId }
-    }
-
-    init(
-        grants: SPGDPRVendorGrants,
-        vendors: Set<VendorListVendor>,
-        categories: Set<VendorListCategory>,
-        specialPurposes: Set<VendorListCategory>,
-        features: Set<VendorListCategory>,
-        specialFeatures: Set<VendorListCategory>
-    ) {
-        self.grants = grants
-        self.vendors = vendors
-        self.categories = categories
-        self.specialPurposes = specialPurposes
-        self.features = features
-        self.specialFeatures = specialFeatures
-        acceptedVendorsIds = Set<String>(
-            grants.filter { $0.value.softGranted }.map{ $0.key }
-        )
-        acceptedCategoriesIds = Set<String>(
-            grants.flatMap{ vendors in vendors.value.purposeGrants.filter{$0.value}.keys }
-        )
-    }
-
-    func onCategoryOn(_ category: VendorListCategory) {
-        acceptedCategoriesIds.insert(category._id)
-        acceptedVendorsIds.formUnion(category.uniqueVendorIds)
-
-        print("""
-        On Purpose: {
-          "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue ?? "")",
-          "iabId": \(category.iabId ?? 99),
-          "consent": true,
-          "legInt": false
-        }
-        """
-        )
-    }
-
-    func onCategoryOff(_ category: VendorListCategory) {
-        acceptedCategoriesIds.remove(category._id)
-        acceptedVendorsIds.subtract(vendorsWhosePurposesAreOff)
-
-        print("""
-        Off Purpose: {
-          "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue ?? "")",
-          "iabId": \(category.iabId ?? 99),
-          "consent": false,
-          "legInt": false
-        }
-        """
-        )
-    }
-
-    func onVendorOn(_ vendor: VendorListVendor) {
-        acceptedVendorsIds.insert(vendor.vendorId)
-
-        print("""
-        On Vendor: {
-          "_id": "\(vendor.vendorId)",
-          "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId ?? 99),
-          "consent": true,
-          "legInt": false
-        }
-        """
-        )
-    }
-
-    func onVendorOff(_ vendor: VendorListVendor) {
-        acceptedVendorsIds.remove(vendor.vendorId)
-
-        print("""
-        Off Vendor: {
-          "_id": "\(vendor.vendorId)",
-          "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId ?? 99),
-          "consent": false,
-          "legInt": false
-        }
-        """
-        )
-    }
-}
-
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
     weak var delegate: SPNativePMDelegate?
 
@@ -146,7 +27,7 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
     var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
-    var pmConsentsManager: PMConsentSnaptshot?
+    var snapshot: PMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
 
@@ -197,9 +78,9 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
                         delegate: self,
                         nibName: "SPManagePreferenceViewController"
                     )
-                    if self?.pmConsentsManager == nil {
-                        self?.pmConsentsManager = PMConsentSnaptshot (
-                            grants: data.vendorGrants ?? SPGDPRVendorGrants(),
+                    if self?.snapshot == nil {
+                        self?.snapshot = PMConsentSnaptshot (
+                            grants: data.grants ?? SPGDPRVendorGrants(),
                             vendors: Set<VendorListVendor>(data.vendors),
                             categories: Set<VendorListCategory>(data.categories),
                             specialPurposes: Set<VendorListCategory>(data.specialPurposes),
@@ -208,10 +89,7 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
                         )
                     }
                     controller.categories = data.categories
-                    controller.specialPurposes = data.specialPurposes
-                    controller.features = data.features
-                    controller.specialFeatures = data.specialFeatures
-                    controller.categoryManagerDelegate = self?.pmConsentsManager
+                    controller.consentsSnapshot = strongSelf.snapshot!
                     self?.present(controller, animated: true)
                 }
             }
@@ -225,9 +103,9 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
                 self?.onError(error)
             case .success(let data):
                 if let strongSelf = self {
-                    if self?.pmConsentsManager == nil {
-                        self?.pmConsentsManager = PMConsentSnaptshot (
-                            grants: data.vendorGrants ?? SPGDPRVendorGrants(),
+                    if self?.snapshot == nil {
+                        self?.snapshot = PMConsentSnaptshot (
+                            grants: data.grants ?? SPGDPRVendorGrants(),
                             vendors: Set<VendorListVendor>(data.vendors),
                             categories: Set<VendorListCategory>(data.categories),
                             specialPurposes: Set<VendorListCategory>(data.specialPurposes),
@@ -244,7 +122,7 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
                         nibName: "SPPartnersViewController"
                     )
                     controller.vendors = data.vendors
-                    controller.vendorManagerDelegate = self?.pmConsentsManager
+                    controller.consentsSnapshot = strongSelf.snapshot!
                     self?.present(controller, animated: true)
                 }
             }

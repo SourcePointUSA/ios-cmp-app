@@ -18,12 +18,11 @@ class SPPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
 
-    weak var vendorManagerDelegate: PMVendorManager?
+    var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
 
     var vendors: [VendorListVendor] = []
     var userConsentVendors: [VendorListVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
     var legitimateInterestVendorList: [VendorListVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
-    var acceptedVendors: [String] = []
 
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]
@@ -55,6 +54,9 @@ class SPPartnersViewController: SPNativeScreenViewController {
         )
         vendorsTableView.delegate = self
         vendorsTableView.dataSource = self
+        consentsSnapshot.onConsentsChange = { [weak self] in
+            self?.vendorsTableView.reloadData()
+        }
     }
 
     @IBAction func onBackTap(_ sender: Any) {
@@ -117,7 +119,7 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
             legitimateInterestVendorList[indexPath.row]
         cell.labelText = vendor.name
         cell.customText = vendor.vendorType == .CUSTOM ? nil : "Custom"
-        cell.isOn = acceptedVendors.contains(vendor.vendorId)
+        cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor.vendorId)
         cell.selectable = true
         cell.onText = "On"
         cell.offText = "Off"
@@ -149,7 +151,7 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
             nibName: "SPVendorDetailsViewController"
         )
         vendorDetailsVC.vendor = vendors[indexPath.row]
-        vendorDetailsVC.vendorManagerDelegate = vendorManagerDelegate
+        vendorDetailsVC.vendorManagerDelegate = consentsSnapshot
         present(vendorDetailsVC, animated: true)
     }
 }

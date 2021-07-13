@@ -84,7 +84,7 @@ extension ViewController: SPDelegate {
         print("onConsentReady:", userData)
         let vendorAccepted = userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted ?? false
         updateMyVendorUI(vendorAccepted)
-        updatePMButtons(ccpaApplies: consentManager.ccpaApplies(), gdprApplies: consentManager.gdprApplies())
+        updatePMButtons(ccpaApplies: consentManager.ccpaApplies, gdprApplies: consentManager.gdprApplies)
     }
 
     func onError(error: SPError) {

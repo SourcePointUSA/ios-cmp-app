@@ -63,12 +63,14 @@ class SPCategoryDetailsViewController: SPNativeScreenViewController {
         if let category = category {
             categoryManagerDelegate?.onCategoryOn(category)
         }
+        dismiss(animated: true)
     }
 
     @IBAction func onOffButtonTap(_ sender: Any) {
         if let category = category {
             categoryManagerDelegate?.onCategoryOff(category)
         }
+        dismiss(animated: true)
     }
 }
 

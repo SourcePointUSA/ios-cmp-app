@@ -69,12 +69,14 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
         if let vendor = vendor {
             vendorManagerDelegate?.onVendorOn(vendor)
         }
+        dismiss(animated: true)
     }
 
     @IBAction func onOffButtonTap(_ sender: Any) {
         if let vendor = vendor {
             vendorManagerDelegate?.onVendorOff(vendor)
         }
+        dismiss(animated: true)
     }
 }
 

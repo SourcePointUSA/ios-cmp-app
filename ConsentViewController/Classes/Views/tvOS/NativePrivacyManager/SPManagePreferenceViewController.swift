@@ -19,22 +19,17 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
 
-    weak var categoryManagerDelegate: PMCategoryManager?
-
-    var acceptedCategories: [String: Bool] = [:]
+    var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
 
     var categories: [VendorListCategory] = []
     var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
-    var specialPurposes: [VendorListCategory] = []
-    var features: [VendorListCategory] = []
-    var specialFeatures: [VendorListCategory] = []
 
     var categoriesTable: [[VendorListCategory]] {[
         userConsentCategories,
-        specialPurposes,
-        features,
-        specialFeatures
+        Array(consentsSnapshot.specialPurposes),
+        Array(consentsSnapshot.features),
+        Array(consentsSnapshot.specialFeatures)
     ]}
 
     var sections: [SPNativeText?] {
@@ -43,15 +38,15 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
             sections.append(viewData.byId("PurposesHeader") as? SPNativeText)
             // TODO: add definition
         }
-        if specialPurposes.isNotEmpty() {
+        if consentsSnapshot.specialPurposes.isNotEmpty() {
             sections.append(viewData.byId("SpecialPurposesHeader") as? SPNativeText)
             // TODO: add definition
         }
-        if features.isNotEmpty() {
+        if consentsSnapshot.features.isNotEmpty() {
             sections.append(viewData.byId("FeaturesHeader") as? SPNativeText)
             // TODO: add definition
         }
-        if specialFeatures.isNotEmpty() {
+        if consentsSnapshot.specialFeatures.isNotEmpty() {
             sections.append(viewData.byId("SpecialFeaturesHeader") as? SPNativeText)
             // TODO: add definition
         }
@@ -85,6 +80,9 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         )
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
+        consentsSnapshot.onConsentsChange = { [weak self] in
+            self?.categoriesTableView.reloadData()
+        }
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {
@@ -148,7 +146,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             let category = categoriesTable[section][row]
             cell.labelText = category.name
             cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
-            cell.isOn = section == 0 || section == 3 ? acceptedCategories.keys.contains(category._id) : nil
+            cell.isOn = section == 0 || section == 3 ? consentsSnapshot.acceptedCategoriesIds.contains(category._id) : nil
             cell.selectable = section != 1
         } else {
             cell.labelText = legIntCategories[indexPath.row].name
@@ -189,7 +187,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             nibName: "SPCategoryDetailsViewController"
         )
         categoryDetailsVC.category = categories[indexPath.row]
-        categoryDetailsVC.categoryManagerDelegate = categoryManagerDelegate
+        categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
         present(categoryDetailsVC, animated: true)
     }
 }

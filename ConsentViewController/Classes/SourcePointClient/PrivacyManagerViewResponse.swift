@@ -42,5 +42,5 @@ extension VendorListVendor: Identifiable, Equatable, Hashable {
 struct PrivacyManagerViewResponse: Decodable {
     let vendors: [VendorListVendor]
     let categories, specialPurposes, features, specialFeatures: [VendorListCategory]
-    var vendorGrants: SPGDPRVendorGrants?
+    var grants: SPGDPRVendorGrants?
 }

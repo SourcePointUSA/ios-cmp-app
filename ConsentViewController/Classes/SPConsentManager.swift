@@ -260,7 +260,6 @@ import Foundation
                     pmData: content,
                     delegate: self
                 )
-                pmViewController.vendorGrants = self?.userData.gdpr?.consents?.vendorGrants
                 pmViewController.delegate = self
                 self?.loaded(pmViewController)
             case .failure(let error):
@@ -421,44 +420,7 @@ extension SPConsentManager: SPMessageUIDelegate {
 }
 
 extension SPConsentManager: SPNativePMDelegate {
-//    func onAcceptAllTap() {
-//        print("Accept All")
-//    }
-//
-//    func onRejectAllTap() {
-//        print("Reject All")
-//    }
-//
-//    func onSaveAndExitTap() {
-//        print("Save And Exit")
-//    }
-//
-//    func onVendorOnTap() {
-//        print("Vendor On")
-//    }
-//
-//    func onVendorOffTap() {
-//        print("Vendor Off")
-//    }
-//
-//    func onCategoryOnTap() {
-//        print("Category On")
-//    }
-//
-//    func onCategoryOffTap() {
-//        print("Category Off")
-//    }
-
     func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler) {
-//        if let messageId = messageId {
-//            spClient.mmsMessage(messageId: messageId) { result in
-//                let response = try! result.get()
-//                handler(SPJson(response.messageJson) ?? SPJson())
-//            }
-//        }
-        /// TODO: Pass vendorGrants to PM Controller
-        /// TODO: maybe move this logic inside PM Controller
-        
         if let propertyId = propertyId, pmSecondLayerData == nil {
             spClient.privacyManagerView(
                 propertyId: propertyId,
@@ -467,14 +429,13 @@ extension SPConsentManager: SPNativePMDelegate {
                 switch result {
                 case .failure(let error): self?.onError(error)
                 case .success(var pmData):
+                    pmData.grants = self?.userData.gdpr?.consents?.vendorGrants
                     self?.pmSecondLayerData = pmData
-                    pmData.vendorGrants = self?.userData.gdpr?.consents?.vendorGrants
-                    handler(result.map { _ in pmData} )
+                    handler(result.map { _ in pmData })
                 }
             }
         } else {
-            handler(Result { pmSecondLayerData! }.mapError({ InvalidResponseNativeMessageError(error: $0)
-            }))
+            handler(Result { pmSecondLayerData! }.mapError({ InvalidResponseNativeMessageError(error: $0) }))
         }
     }
 }
@@ -483,11 +444,4 @@ typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -
 
 protocol SPNativePMDelegate: AnyObject {
     func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
-//    func onAcceptAllTap()
-//    func onRejectAllTap()
-//    func onSaveAndExitTap()
-//    func onVendorOnTap()
-//    func onVendorOffTap()
-//    func onCategoryOnTap()
-//    func onCategoryOffTap()
 }
