@@ -23,14 +23,22 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
     @IBOutlet weak var SelectLanguageOutlet: UITextField!
     @IBOutlet weak var campaignsTableView: UITableView!
     @IBOutlet weak var campaignsTableViewHight: NSLayoutConstraint!
+    @IBOutlet weak var isStagingSwitchOutlet: UISwitch!
 
     var messageLanguagePickerView = UIPickerView()
+
+    // Reference to the selected property managed object ID
+    var propertyManagedObjectID: NSManagedObjectID?
 
     // this variable holds the property details entered by user
     var propertyDetailsModel: PropertyDetailsModel?
     var targetingKey: String?
     var targetingValue: String?
     var onConsentReadyCalled = false
+    var isMultipleMessagesAvailable = false
+
+    // Default campaign value is public
+    var campaignEnv = SPCampaignEnv.Public
 
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
@@ -42,6 +50,22 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
         addTapGestureRecognizer()
         campaignListTableview.tableFooterView = UIView(frame: .zero)
         setTableViewHidden()
+
+        if let _propertyManagedObjectID = propertyManagedObjectID {
+            title = "Edit Property"
+            addpropertyViewModel.fetchProperty(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: { [weak self] ( propertyDetailsModel) in
+
+                self?.accountIDTextFieldOutlet.text = String(propertyDetailsModel.accountId)
+                self?.propertyNameTextField.text = propertyDetailsModel.propertyName
+                if let authId = propertyDetailsModel.authId {
+                    self?.authIdTextField.text = authId
+                }
+                self?.SelectLanguageOutlet.text = propertyDetailsModel.messageLanguage
+                self?.isStagingSwitchOutlet.isOn = propertyDetailsModel.campaignEnv == 0 ? true : false
+                self?.campaignListTableview.reloadData()
+                self?.campaignsTableView.reloadData()
+            })
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,6 +105,11 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
         SelectLanguageOutlet.inputAccessoryView = toolBar
     }
 
+    // Set value of staging switch
+    @IBAction func campaignEnvAction(_ sender: UISwitch) {
+        campaignEnv = sender.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
+    }
+
     @objc func done() {
         SelectLanguageOutlet.resignFirstResponder()
     }
@@ -88,18 +117,30 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
     func deleteCampaign(sender: CampaignListCell) {
         let indexPath = addpropertyViewModel.getIndexPath(sender: sender, tableview: campaignListTableview)
         if let row = indexPath?.row {
+            if addpropertyViewModel.allCampaigns[row].campaignName == SPLiteral.gdprCampaign {
+                addpropertyViewModel.gdprPMID = nil
+                addpropertyViewModel.gdprPMTab = addpropertyViewModel.pmTabs[0]
+                addpropertyViewModel.gdprTargetingParams = []
+            } else if addpropertyViewModel.allCampaigns[row].campaignName == SPLiteral.ccpaCampaign {
+                addpropertyViewModel.ccpaPMID = nil
+                addpropertyViewModel.ccpaPMTab = addpropertyViewModel.pmTabs[0]
+                addpropertyViewModel.ccpaTargetingParams = []
+            } else {
+                addpropertyViewModel.iOS14TargetingParams = []
+            }
             addpropertyViewModel.allCampaigns.remove(at: row)
             campaignListTableview.reloadData()
+            campaignsTableView.reloadData()
         }
     }
 
     func hideCampaign(section: Int?) {
         if let section = section {
-            self.addpropertyViewModel.sections[section].expanded = !(self.addpropertyViewModel.sections[section].expanded)
-            self.campaignsTableViewHight.constant = SPLiteral.campaignsTableViewHeight
-            self.campaignsTableView.beginUpdates()
-            self.campaignsTableView.reloadRows(at: [IndexPath(row: 0, section: section)], with: .automatic)
-            self.campaignsTableView.endUpdates()
+            addpropertyViewModel.sections[section].expanded = !(addpropertyViewModel.sections[section].expanded)
+            campaignsTableViewHight.constant = SPLiteral.campaignsTableViewHeight
+            campaignsTableView.beginUpdates()
+            campaignsTableView.reloadRows(at: [IndexPath(row: 0, section: section)], with: .automatic)
+            campaignsTableView.endUpdates()
         }
     }
 
@@ -107,28 +148,30 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
         let alertController = UIAlertController(title: Alert.alert, message: Alert.messageForSaveCampaign, preferredStyle: UIAlertController.Style.alert)
         alertController.view.accessibilityIdentifier = SPLiteral.alertView
         let noAction = UIAlertAction(title: Alert.cancel, style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in })
-        let yesAction = UIAlertAction(title: Alert.ok, style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
-            let indexPath = self.addpropertyViewModel.getIndexPath(sender: sender, tableview: self.campaignsTableView)
-            self.saveCampaignData(sender: sender)
-            self.hideCampaign(section: indexPath?.section)
+        let yesAction = UIAlertAction(title: Alert.ok, style: UIAlertAction.Style.default, handler: { [weak self] (_: UIAlertAction!) in
+            if let tableView = self?.campaignsTableView {
+            let indexPath = self?.addpropertyViewModel.getIndexPath(sender: sender, tableview: tableView)
+            self?.saveCampaignData(sender: sender)
+            self?.hideCampaign(section: indexPath?.section)
+            }
         })
         alertController.addAction(noAction)
         alertController.addAction(yesAction)
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     func saveCampaignData(sender: CampaignTableViewCell) {
         var campaignModel: CampaignModel?
-        let indexPath = self.addpropertyViewModel.getIndexPath(sender: sender, tableview: self.campaignsTableView)
+        let indexPath = addpropertyViewModel.getIndexPath(sender: sender, tableview: campaignsTableView)
         if indexPath?.section == 0 {
             let targetingParams = addTargetingParam(targetingParams: &addpropertyViewModel.gdprTargetingParams)
-            campaignModel = CampaignModel(campaignName: SPLiteral.gdprCampaign, campaignEnv: Int64(addpropertyViewModel.gdprCampaignEnv.rawValue), pmID: addpropertyViewModel.gdprPMID, pmTab: addpropertyViewModel.gdprPMTab, targetingParams: targetingParams)
+            campaignModel = CampaignModel(campaignName: SPLiteral.gdprCampaign, pmID: addpropertyViewModel.gdprPMID, pmTab: addpropertyViewModel.gdprPMTab, targetingParams: targetingParams)
         } else if indexPath?.section == 1 {
             let targetingParams = addTargetingParam(targetingParams: &addpropertyViewModel.ccpaTargetingParams)
-            campaignModel = CampaignModel(campaignName: SPLiteral.ccpaCampaign, campaignEnv: Int64(addpropertyViewModel.ccpaCampaignEnv.rawValue), pmID: addpropertyViewModel.ccpaPMID, pmTab: addpropertyViewModel.ccpaPMTab, targetingParams: targetingParams)
+            campaignModel = CampaignModel(campaignName: SPLiteral.ccpaCampaign, pmID: addpropertyViewModel.ccpaPMID, pmTab: addpropertyViewModel.ccpaPMTab, targetingParams: targetingParams)
         } else if indexPath?.section == 2 {
             let targetingParams = addTargetingParam(targetingParams: &addpropertyViewModel.iOS14TargetingParams)
-            campaignModel = CampaignModel(campaignName: SPLiteral.iOS14Campaign, campaignEnv: Int64(addpropertyViewModel.iOS14CampaignEnv.rawValue), pmID: nil, pmTab: nil, targetingParams: targetingParams)
+            campaignModel = CampaignModel(campaignName: SPLiteral.iOS14Campaign, pmID: nil, pmTab: nil, targetingParams: targetingParams)
         }
         if let campaignModel = campaignModel {
             updateCampaignTableview(campaignModel: campaignModel, section: indexPath?.section)
@@ -159,15 +202,11 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
                     targetingParams.append(targetingParamModel)
                 }
             }
-            targetingKey = ""
-            targetingValue = ""
+            targetingKey = nil
+            targetingValue = nil
             return targetingParams
         }
         return nil
-    }
-
-    func updateCampaign(sender: CampaignTableViewCell) {
-        addpropertyViewModel.updateCampaignEnvironment(sender: sender, tableview: self.campaignsTableView)
     }
 
     func updateCampaignTableview(campaignModel: CampaignModel, section: Int?) {
@@ -180,8 +219,8 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
                 addpropertyViewModel.allCampaigns.append(campaignModel)
             }
         }
-        targetingKey = ""
-        targetingValue = ""
+        targetingKey = nil
+        targetingValue = nil
         campaignsTableView.beginUpdates()
         campaignsTableView.reloadRows(at: [IndexPath(row: 0, section: section ?? 0)], with: .automatic)
         campaignsTableView.endUpdates()
@@ -190,7 +229,7 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
 
     // save property details to database and show SP messages/PM
     @IBAction func savepropertyDetailsAction(_ sender: Any) {
-        self.showIndicator()
+        showIndicator()
         let accountIDString = accountIDTextFieldOutlet.text?.trimmingCharacters(in: .whitespaces)
         let propertyName = propertyNameTextField.text?.trimmingCharacters(in: .whitespaces)
         let messageLanguage = SelectLanguageOutlet.text?.trimmingCharacters(in: .whitespaces)
@@ -201,18 +240,18 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
         if addpropertyViewModel.validatepropertyDetails(accountID: accountIDString, propertyName: propertyName) {
             guard let accountIDText = accountIDString, let accountID = Int64(accountIDText) else {
                 let okHandler = {}
-                self.hideIndicator()
+                hideIndicator()
                 AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForWrongAccountId, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
                 return
             }
-            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyName: propertyName, creationTimestamp: Date(), authId: authId, messageLanguage: messageLanguage, campaignDetails: addpropertyViewModel.allCampaigns)
+            propertyDetailsModel = PropertyDetailsModel(accountId: accountID, propertyName: propertyName, campaignEnv: Int64(campaignEnv.rawValue), creationTimestamp: Date(), authId: authId, messageLanguage: messageLanguage, campaignDetails: addpropertyViewModel.allCampaigns)
 
             if let propertyDetails = propertyDetailsModel {
                 isPropertyStored(propertyDetails: propertyDetails)
             }
         } else {
             let okHandler = {}
-            self.hideIndicator()
+            hideIndicator()
             AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForPropertyUnavailability, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
         }
     }
@@ -240,37 +279,49 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
     func validateProperty(propertyDetails: PropertyDetailsModel) {
         if let propertyName = propertyDetails.propertyName {
             do {
-                consentManager = SPConsentManager(accountId: Int(propertyDetails.accountId), propertyName: try SPPropertyName(propertyName), campaigns: SPCampaigns(
+                consentManager = SPConsentManager(accountId: Int(propertyDetails.accountId), propertyName: try SPPropertyName(propertyName), campaignsEnv: campaignEnv, campaigns: SPCampaigns(
                     gdpr: addpropertyViewModel.gdprCampaign(),
                     ccpa: addpropertyViewModel.ccpaCampaign(),
                     ios14: addpropertyViewModel.iOS14Campaign()
                 ), delegate: self)
             } catch {
-                self.showError(error: error as? SPError)
+                showError(error: error as? SPError)
             }
         }
     }
 
     // save property details to database
     func savePropertyToDatabase(propertyDetails: PropertyDetailsModel) {
-        if !onConsentReadyCalled {
-            addpropertyViewModel.addproperty(propertyDetails: propertyDetails, completionHandler: { (error, _, _) in
-                if let _error = error {
-                    let okHandler = {}
-                    AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-                } else {
-                    self.onConsentReadyCalled = true
-                    Log.sharedLog.DLog(message: "property details are saved")
-                }
-            })
+        if !onConsentReadyCalled && !isMultipleMessagesAvailable {
+            onConsentReadyCalled = true
+            if let _propertyManagedObjectID = propertyManagedObjectID {
+                addpropertyViewModel.update(propertyDetails: propertyDetails, whereManagedObjectID: _propertyManagedObjectID, completionHandler: {(_, executionStatus) in
+                    if executionStatus {
+                        Log.sharedLog.DLog(message: "property details are updated")
+                    } else {
+                        Log.sharedLog.DLog(message: "Failed to update property details")
+                    }
+                })
+            } else {
+                addpropertyViewModel.addproperty(propertyDetails: propertyDetails, completionHandler: { (error, _, _) in
+                    if let _error = error {
+                        let okHandler = {}
+                        AlertView.sharedInstance.showAlertView(title: Alert.message, message: _error.message, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+                    } else {
+                        Log.sharedLog.DLog(message: "property details are saved")
+                    }
+                })
+            }
         }
     }
 
     func loadConsentInfoController(userData: SPUserData) {
+        hideIndicator()
+        consentManager = nil
         if let consentDetailsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentDetailsViewController") as? ConsentDetailsViewController {
             consentDetailsController.userData =  userData
             consentDetailsController.propertyDetails = propertyDetailsModel
-            self.navigationController?.pushViewController(consentDetailsController, animated: false)
+            navigationController?.pushViewController(consentDetailsController, animated: false)
         }
     }
 
@@ -292,7 +343,9 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
         if textField == SelectLanguageOutlet {
             return false
         } else if textField.tag == SPLiteral.targetingValueTextField {
-            targetingValue = textField.text?.trimmingCharacters(in: .whitespaces)
+            if let text = textField.text as NSString? {
+                targetingValue = text.replacingCharacters(in: range, with: string)
+            }
         }
         return true
     }
@@ -327,14 +380,15 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
     }
 
     @objc func touch() {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
 // MARK: - SPDelegate implementation
 extension AddPropertyViewController {
+    
     func onSPUIReady(_ controller: SPMessageViewController) {
-        self.hideIndicator()
+        hideIndicator()
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
@@ -344,7 +398,9 @@ extension AddPropertyViewController {
     }
 
     func onAction(_ action: SPAction, from controller: SPMessageViewController) {
-        print(action)
+        if action.type == .RequestATTAccess {
+          showIndicator()
+        }
     }
 
     func onConsentReady(userData: SPUserData) {
@@ -353,32 +409,34 @@ extension AddPropertyViewController {
             savePropertyToDatabase(propertyDetails: propertyDetails)
             handleMultipleMessages(userData: userData)
         }
-        hideIndicator()
     }
 
     func onError(error: SPError) {
-        self.hideIndicator()
-        let okHandler = { self.dismiss(animated: false)}
+        hideIndicator()
+        let okHandler = { [weak self]() -> Void in self?.dismiss(animated: false)}
         AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 
     func showError(error: SPError?) {
         let okHandler = {}
-        self.hideIndicator()
+        hideIndicator()
         AlertView.sharedInstance.showAlertView(title: Alert.alert, message: error?.description ?? "", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 
     func handleMultipleMessages(userData: SPUserData) {
-        if !onConsentReadyCalled {
+        if onConsentReadyCalled {
             if let ccpaApplies = consentManager?.ccpaApplies(), let gdprApplies = consentManager?.gdprApplies() {
                 if !ccpaApplies && gdprApplies || ccpaApplies && !gdprApplies {
-                    loadConsentInfoController(userData: userData)
                     onConsentReadyCalled = false
+                    loadConsentInfoController(userData: userData)
+                } else if ccpaApplies && gdprApplies {
+                    onConsentReadyCalled = false
+                    isMultipleMessagesAvailable = true
                 }
             }
-        } else {
+        } else if isMultipleMessagesAvailable {
+            isMultipleMessagesAvailable = false
             loadConsentInfoController(userData: userData)
-            onConsentReadyCalled = false
         }
     }
 }
@@ -414,16 +472,23 @@ extension AddPropertyViewController: UITableViewDataSource, ExpandableHeaderView
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView.tag == SPLiteral.campaignsTableView {
             if (addpropertyViewModel.sections[indexPath.section].expanded) {
-                self.campaignsTableViewHight.constant = SPLiteral.campaignsTableViewExpandedHeight
+                campaignsTableViewHight.constant = SPLiteral.campaignsTableViewExpandedHeight
                 if indexPath.section == 2 {
-                    self.campaignsTableViewHight.constant = SPLiteral.iOS14CampaignviewHeight
+                    campaignsTableViewHight.constant = SPLiteral.iOS14CampaignviewHeight
                     return SPLiteral.iOS14CampaignRowHeight
                 }
                 return SPLiteral.campaignsTableViewRowHeight
             }
             return 0
         } else {
-            return SPLiteral.iOS14CampaignRowHeight
+            if let targetingParams = addpropertyViewModel.allCampaigns[indexPath.row].targetingParams, targetingParams.count > 0 {
+                if addpropertyViewModel.allCampaigns[indexPath.row].campaignName == SPLiteral.iOS14Campaign {
+                    return SPLiteral.campaignsTableViewHeight
+                }
+                return SPLiteral.iOS14CampaignRowHeight
+            } else {
+                return SPLiteral.campaignsTableViewHeight
+            }
         }
     }
 
@@ -463,16 +528,21 @@ extension AddPropertyViewController: UITableViewDataSource, ExpandableHeaderView
                 cell.delegate = self
                 cell.targetingParamTextView.isHidden = false
                 cell.campaignNameLabel.text = addpropertyViewModel.allCampaigns[indexPath.row].campaignName
-                cell.campaignEnvLabel.text = addpropertyViewModel.allCampaigns[indexPath.row].campaignEnv == Int64(0) ? "\(SPLiteral.campaign) \(SPLiteral.stageEnv)" : "\(SPLiteral.campaign) \(SPLiteral.publicEnv)"
+                addpropertyViewModel.hidePMDetailsForIOS14Campaign(campaignName: addpropertyViewModel.allCampaigns[indexPath.row].campaignName, cell: cell)
                 if let pmID = addpropertyViewModel.allCampaigns[indexPath.row].pmID, let pmTab = addpropertyViewModel.allCampaigns[indexPath.row].pmTab {
                     cell.pmIDLabel.text = "\(SPLiteral.pmID) \(pmID)"
                     cell.pmTabLabel.text = "\(SPLiteral.pmTab) \(pmTab)"
+                } else {
+                    cell.pmIDLabel.text = "\(SPLiteral.pmID) \(SPLiteral.pmIDNotAvailable)"
+                    cell.pmTabLabel.text = "\(SPLiteral.pmTab) \(addpropertyViewModel.pmTabs[0])"
                 }
                 if let targetingParams = addpropertyViewModel.allCampaigns[indexPath.row].targetingParams {
                     var targetingParamString = ""
                     for targetingParam in targetingParams {
                         let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.targetingKey, targetingParamValue: targetingParam.targetingValue)
-                        targetingParamString += "\(targetingParamModel.targetingKey) : \(targetingParamModel.targetingValue)\n"
+                        if targetingParamModel.targetingKey.count > 0 && targetingParamModel.targetingKey.count > 0 {
+                            targetingParamString += "\(targetingParamModel.targetingKey) : \(targetingParamModel.targetingKey)\n"
+                        }
                     }
                     cell.targetingParamTextView.text = targetingParamString
                 }else {
@@ -492,7 +562,7 @@ extension AddPropertyViewController: UITableViewDataSource, ExpandableHeaderView
 
     func toggleSection(header: ExpandableHeaderView, section: Int) {
         addpropertyViewModel.sections[section].expanded = !addpropertyViewModel.sections[section].expanded
-        self.campaignsTableViewHight.constant = SPLiteral.campaignsTableViewHeight
+        campaignsTableViewHight.constant = SPLiteral.campaignsTableViewHeight
         campaignsTableView.beginUpdates()
         campaignsTableView.reloadRows(at: [IndexPath(row: 0, section: section)], with: .automatic)
         campaignsTableView.endUpdates()

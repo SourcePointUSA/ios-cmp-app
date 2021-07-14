@@ -18,6 +18,9 @@ struct PropertyDetailsModel {
     /// It holds account Id.
     let accountId: Int64
 
+    /// It holds campaign value
+    let campaignEnv: Int64
+
     /// It holds property addded timestamp
     let creationTimestamp: Date
 
@@ -35,12 +38,13 @@ struct PropertyDetailsModel {
     ///
     /// - Parameters:
     ///   - accountId : Customer accountId
-    ///   - property: propertyName.
-    ///   - campaign: stage/public.
+    ///   - propertyName: propertyName.
+    ///   - campaignEnv: stage/public.
     ///   - creationTimestamp: property added in database time
-    init(accountId: Int64, propertyName: String?, creationTimestamp: Date, authId: String?, messageLanguage: String?, campaignDetails: [CampaignModel]?) {
+    init(accountId: Int64, propertyName: String?, campaignEnv: Int64, creationTimestamp: Date, authId: String?, messageLanguage: String?, campaignDetails: [CampaignModel]?) {
         self.accountId = accountId
         self.propertyName = propertyName
+        self.campaignEnv = campaignEnv
         self.creationTimestamp = creationTimestamp
         self.authId = authId
         self.messageLanguage = messageLanguage

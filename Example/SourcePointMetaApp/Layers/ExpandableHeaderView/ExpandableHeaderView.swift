@@ -17,7 +17,7 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction)))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction)))
     }
 
     required init?(coder: NSCoder) {
@@ -30,14 +30,14 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
     }
 
     func customInit(title: String, section: Int, delegate: ExpandableHeaderViewDelegate) {
-        self.textLabel?.text = title
+        textLabel?.text = title
         self.section = section
         self.delegate = delegate
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.textLabel?.textColor = UIColor.black
-        self.contentView.backgroundColor = #colorLiteral(red: 0.2470588235, green: 0.7960784314, blue: 0.5882352941, alpha: 1)
+        textLabel?.textColor = UIColor.black
+        contentView.backgroundColor = #colorLiteral(red: 0.2470588235, green: 0.7960784314, blue: 0.5882352941, alpha: 1)
     }
 }

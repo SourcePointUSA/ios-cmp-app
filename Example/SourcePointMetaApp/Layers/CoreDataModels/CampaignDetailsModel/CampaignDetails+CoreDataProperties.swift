@@ -17,7 +17,6 @@ extension CampaignDetails {
     }
 
     @NSManaged public var campaignName: String?
-    @NSManaged public var campaignEnv: Int64
     @NSManaged public var pmID: String?
     @NSManaged public var pmTab: String?
     @NSManaged public var propertyDetails: PropertyDetails?

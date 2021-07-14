@@ -39,7 +39,7 @@ class PropertyListViewModel {
     /// - Parameters:
     ///   - propertyManagedObject: property ManagedObject.
     ///   - handler: Callback for the completion event. Callback has execution status(success/failure) as argument.
-    func delete(atIndex index: Int, completionHandler handler : @escaping (Bool, SPError?) -> Void) {
+    func delete(atIndex index: Int, completionHandler handler : @escaping (Bool, SPMetaError?) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             if let _properties = self?.properties {
                 let propertyManagedObject = _properties[index]
@@ -50,7 +50,7 @@ class PropertyListViewModel {
                             handler(true, nil)
                         }
                     } else {
-                        let error = SPError(code: 0, description: SPLiteral.emptyString, message: Alert.messageForUnknownError)
+                        let error = SPMetaError(code: 0, description: SPLiteral.emptyString, message: Alert.messageForUnknownError)
                         DispatchQueue.main.async {
                             handler(false, error)
                         }
@@ -81,19 +81,25 @@ class PropertyListViewModel {
     ///
     /// - Parameter index: Index.
     /// - Returns: property details.
-    func propertyDetails(atIndex index: Int) -> (PropertyDetailsModel?, String?) {
+    func propertyDetails(atIndex index: Int) -> (PropertyDetailsModel?) {
         if let _properties = properties, _properties.count > index {
-            var targetingParamString = ""
-            let propertyDataModel = PropertyDetailsModel(accountId: _properties[index].accountId, propertyId: _properties[index].propertyId, propertyName: _properties[index].propertyName, campaign: _properties[index].campaign, privacyManagerId: _properties[index].privacyManagerId, creationTimestamp: _properties[index].creationTimestamp!, authId: _properties[index].authId, nativeMessage: _properties[index].nativeMessage, messageLanguage: _properties[index].messageLanguage, pmTab: _properties[index].pmId)
-            if let targetingParams = _properties[index].manyTargetingParams?.allObjects as! [TargetingParams]? {
-                for targetingParam in targetingParams {
-                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
-                    targetingParamString += "\(targetingParamModel.targetingKey!) : \(targetingParamModel.targetingValue!)\n"
+            var campaignModels: [CampaignModel]?
+            var targetingParamModels = [TargetingParamModel]()
+            if let campaigns = _properties[index].manyCampaigns?.allObjects as? [CampaignDetails] {
+                for campaign in campaigns {
+                    if let targetingParams = campaigns[index].manyTargetingParams?.allObjects as? [TargetingParams] {
+                        for targetingParam in targetingParams {
+                            let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key ?? "", targetingParamValue: targetingParam.value ?? "")
+                            targetingParamModels.append(targetingParamModel)
+                        }
+                    }
+                    campaignModels?.append(CampaignModel(campaignName: campaign.campaignName ?? "", pmID: campaign.pmID, pmTab: campaign.pmTab, targetingParams: targetingParamModels))
                 }
+                let propertyDataModel = PropertyDetailsModel(accountId: _properties[index].accountId, propertyName: _properties[index].propertyName, campaignEnv: _properties[index].campaignEnv, creationTimestamp: _properties[index].creationTimestamp!, authId: _properties[index].authId, messageLanguage: _properties[index].messageLanguage, campaignDetails: campaignModels)
+                return propertyDataModel
             }
-            return (propertyDataModel, targetingParamString)
         }
-        return (nil, nil)
+        return nil
     }
 
     /// It fetch and return ManagedObjectID of the property managed object. It could be useful for other managed object context.

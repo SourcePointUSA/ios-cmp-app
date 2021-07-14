@@ -15,11 +15,11 @@ protocol CampaignListDelegate: AnyObject {
 class CampaignListCell: SourcePointUItablewViewCell {
 
     @IBOutlet weak var campaignNameLabel: UILabel!
-    @IBOutlet weak var campaignEnvLabel: UILabel!
     @IBOutlet weak var pmIDLabel: UILabel!
     @IBOutlet weak var pmTabLabel: UILabel!
     @IBOutlet weak var targetingParamTextView: UITextView!
-
+    @IBOutlet weak var targetingParamTopConstraint: NSLayoutConstraint!
+    
     weak var delegate: CampaignListDelegate?
 
     override func awakeFromNib() {

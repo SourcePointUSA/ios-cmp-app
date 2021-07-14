@@ -14,6 +14,8 @@ import SafariServices
 
 class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 
+    @IBOutlet weak var gdprConsentUUIDLabel: UILabel!
+    @IBOutlet weak var ccpaConsentUUIDLabel: UILabel!
     @IBOutlet weak var euConsentLabel: UILabel!
     @IBOutlet weak var consentTableView: UITableView!
     @IBOutlet weak var noDataLabel: UILabel!
@@ -23,19 +25,15 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 
     // Reference to the selected property managed object ID
     var propertyManagedObjectID: NSManagedObjectID?
-
     var userData: SPUserData?
-    let sections = ["Vendor Consents", "Purpose Consents"]
-    var euConsentID: String = ""
+    var isReset = false
 
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
+    let consentDetailsViewModel: ConsentDetailsViewModel = ConsentDetailsViewModel()
     var consentManager: SPConsentManager?
     var propertyDetails: PropertyDetailsModel?
-    var targetingParams = [TargetingParamModel]()
-    var nativeMessageController: SPNativeMessageViewController?
 
-    //side menu
     private var sideMenuViewController: SideMenuViewController!
     private var sideMenuShadowView: UIView!
     private var sideMenuRevealWidth: CGFloat = 225
@@ -46,70 +44,53 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 
     // Expand/Collapse the side menu by changing trailing's constant
     private var sideMenuTrailingConstraint: NSLayoutConstraint!
-
     private var revealSideMenuOnTop: Bool = true
-    // side menu
-
-
-    lazy var consentManager1: SPConsentManager = { SPConsentManager(
-        accountId: 22,
-        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-        campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ios14: SPCampaign()
-        ),
-        delegate: self
-    )}()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         consentTableView.tableFooterView = UIView(frame: .zero)
-        self.navigationItem.hidesBackButton = true
+        navigationItem.hidesBackButton = true
         navigationSetup()
-//        setTableViewHidden()
+        setTableViewHidden()
         setconsentUUId()
 
-//        if let _propertyManagedObjectID = propertyManagedObjectID {
-//            self.showIndicator()
-//            fetchDataFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: {(propertyDetails, targetingParams) in
-//                self.propertyDetails = propertyDetails
-//                self.targetingParams = targetingParams
-////                self.loadConsentManager(propertyDetails: propertyDetails, targetingParams: targetingParams)
-//            })
-//        }
+        if let _propertyManagedObjectID = propertyManagedObjectID {
+            showIndicator()
+            consentDetailsViewModel.fetchPropertyFromDatabase(propertyManagedObjectID: _propertyManagedObjectID, completionHandler: { [weak self] (propertyDetails) in
+                self?.propertyDetails = propertyDetails
+                self?.loadConsentManager()
+            })
+        }
 
-        //side menu
         // Shadow Background View
-        self.sideMenuShadowView = UIView(frame: self.view.bounds)
-        self.sideMenuShadowView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.sideMenuShadowView.backgroundColor = .black
-        self.sideMenuShadowView.alpha = 0.0
+        sideMenuShadowView = UIView(frame: view.bounds)
+        sideMenuShadowView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        sideMenuShadowView.backgroundColor = .black
+        sideMenuShadowView.alpha = 0.0
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TapGestureRecognizer))
         tapGestureRecognizer.numberOfTapsRequired = 1
         tapGestureRecognizer.delegate = self
         view.addGestureRecognizer(tapGestureRecognizer)
-        if self.revealSideMenuOnTop {
-            view.insertSubview(self.sideMenuShadowView, at: 1)
+        if revealSideMenuOnTop {
+            view.insertSubview(sideMenuShadowView, at: 1)
         }
 
-        // Side Menu
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        self.sideMenuViewController = storyboard.instantiateViewController(withIdentifier: "SideMenuID") as? SideMenuViewController
-        self.sideMenuViewController.defaultHighlightedCell = 0 // Default Highlighted Cell
-        self.sideMenuViewController.delegate = self
+        sideMenuViewController = storyboard.instantiateViewController(withIdentifier: "SideMenuID") as? SideMenuViewController
+        sideMenuViewController.defaultHighlightedCell = 0 // Default Highlighted Cell
+        sideMenuViewController.delegate = self
         view.addSubview(sideMenuViewController.view)
-        self.sideMenuViewController!.didMove(toParent: self)
-        self.sideMenuViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        if self.revealSideMenuOnTop {
-            self.sideMenuTrailingConstraint = self.sideMenuViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: +self.sideMenuRevealWidth + self.paddingForRotation)
-            self.sideMenuTrailingConstraint.isActive = true
+        sideMenuViewController!.didMove(toParent: self)
+        sideMenuViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        if revealSideMenuOnTop {
+            sideMenuTrailingConstraint = sideMenuViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: +sideMenuRevealWidth + paddingForRotation)
+            sideMenuTrailingConstraint.isActive = true
         }
         NSLayoutConstraint.activate([
-            self.sideMenuViewController.view.widthAnchor.constraint(equalToConstant: self.sideMenuRevealWidth),
-            self.sideMenuViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            self.sideMenuViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
+            sideMenuViewController.view.widthAnchor.constraint(equalToConstant: sideMenuRevealWidth),
+            sideMenuViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            sideMenuViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
         ])
-        // side menu end
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -124,23 +105,31 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
         backIcon.addTarget(self, action: #selector(back), for: UIControl.Event.touchUpInside)
         let backIconBarButton: UIBarButtonItem = UIBarButtonItem(customView: backIcon)
         backIcon.sizeToFit()
-        self.navigationItem.leftBarButtonItem = backIconBarButton
+        navigationItem.leftBarButtonItem = backIconBarButton
     }
 
     @objc func back() {
-        _ = self.navigationController?.popToRootViewController(animated: false)
+        _ = navigationController?.popToRootViewController(animated: false)
     }
 
-//    func setTableViewHidden() {
-//        consentTableView.isHidden = !(userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0)
-//        noDataLabel.isHidden = userConsents?.acceptedVendors.count ?? 0 > 0 || userConsents?.acceptedCategories.count ?? 0 > 0
-//    }
+    func setTableViewHidden() {
+        let isConsentsPresent = userData?.gdpr?.consents?.vendorGrants.count ?? 0 > 0 || userData?.ccpa?.consents?.rejectedCategories.count ?? 0 > 0 || userData?.ccpa?.consents?.rejectedVendors.count ?? 0 > 0
+        consentTableView.isHidden = !isConsentsPresent
+        noDataLabel.isHidden = isConsentsPresent
+    }
 
     func setconsentUUId() {
-        if euConsentID.count > 0 {
+        if let gdprUUID = userData?.gdpr?.consents?.uuid {
+            gdprConsentUUIDLabel.text = gdprUUID
             euConsentLabel.text = userData?.gdpr?.consents?.euconsent
         } else {
+            gdprConsentUUIDLabel.text = SPLiteral.gdprConsentUUID
             euConsentLabel.text = SPLiteral.euConsentID
+        }
+        if let ccpaUUID = userData?.ccpa?.consents?.uuid {
+            ccpaConsentUUIDLabel.text = ccpaUUID
+        } else {
+            ccpaConsentUUIDLabel.text = SPLiteral.ccpaConsentUUID
         }
     }
 
@@ -155,158 +144,70 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
     }
 
     func animateShadow(targetPosition: CGFloat) {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
             // When targetPosition is 0, which means side menu is expanded, the shadow opacity is 0.6
-            self.sideMenuShadowView.alpha = (targetPosition == 0) ? 0.6 : 0.0
+            self?.sideMenuShadowView.alpha = (targetPosition == 0) ? 0.6 : 0.0
         }
     }
 
-    func fetchDataFromDatabase(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel, [TargetingParamModel]) -> Void) {
-//        self.addpropertyViewModel.fetch(property: propertyManagedObjectID, completionHandler: {( propertyDataModel) in
-//            let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyId: propertyDataModel.propertyId, propertyName: propertyDataModel.propertyName, campaign: propertyDataModel.campaign, privacyManagerId: propertyDataModel.privacyManagerId, creationTimestamp: propertyDataModel.creationTimestamp!, authId: propertyDataModel.authId, nativeMessage: propertyDataModel.nativeMessage, messageLanguage: propertyDataModel.messageLanguage, pmTab: propertyDataModel.pmId)
-//            var targetingParamsArray = [TargetingParamModel]()
-//            if let targetingParams = propertyDataModel.manyTargetingParams?.allObjects as! [TargetingParams]? {
-//                for targetingParam in targetingParams {
-//                    let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
-//                    targetingParamsArray.append(targetingParamModel)
-//                }
-//            }
-//            completionHandler(propertyDetail, targetingParamsArray)
-//        })
+    func validateProperty() {
+        let campaignEnv: SPCampaignEnv = propertyDetails?.campaignEnv == 0 ? .Stage : .Public
+        if let propertyName = propertyDetails?.propertyName, let accountID = propertyDetails?.accountId {
+            do {
+                consentManager = SPConsentManager(accountId: Int(accountID), propertyName: try SPPropertyName(propertyName), campaignsEnv: campaignEnv, campaigns: SPCampaigns(
+                    gdpr: consentDetailsViewModel.gdprCampaign(),
+                    ccpa: addpropertyViewModel.ccpaCampaign(),
+                    ios14: addpropertyViewModel.iOS14Campaign()
+                ), delegate: self)
+            } catch {
+                showError(error: error as? SPError)
+            }
+        }
+        consentManager?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: propertyDetails?.messageLanguage ?? "")
     }
 
-//    func loadConsentManager(propertyDetails: PropertyDetailsModel, targetingParams: [TargetingParamModel]) {
-//        let campaign: SPCampaignEnv = propertyDetails.campaign == 0 ? .Stage : .Public
-//        // optional, set custom targeting parameters supports Strings and Integers
-//        var targetingParameters = [String: String]()
-//        for targetingParam in targetingParams {
-//            targetingParameters[targetingParam.targetingKey!] = targetingParam.targetingValue
-//        }
-//        consentViewController = GDPRConsentViewController(accountId: Int(propertyDetails.accountId), propertyId: Int(propertyDetails.propertyId), propertyName: try! SPPropertyName(propertyDetails.propertyName!), PMId: propertyDetails.privacyManagerId!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-//        if let messageLanguage = propertyDetails.messageLanguage {
-//            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
-//        }
-//        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails.pmTab ?? "")
-//        propertyDetails.nativeMessage == 1 ? consentViewController?.loadNativeMessage(forAuthId: propertyDetails.authId) :
-//            consentViewController?.loadMessage(forAuthId: propertyDetails.authId)
-//    }
-
-//    func gdprConsentUIWillShow() {
-//        hideIndicator()
-//        if nativeMessageController?.viewIfLoaded?.window != nil {
-//            nativeMessageController?.present(consentViewController!, animated: true, completion: nil)
-//        } else {
-//            present(self.consentViewController!, animated: true, completion: nil)
-//        }
-//    }
-
-    func consentUIDidDisappear() {
-        dismiss(animated: true, completion: nil)
+    func loadConsentManager() {
+        validateProperty()
+        consentManager?.loadMessage(forAuthId: propertyDetails?.authId)
     }
-
-//    func consentUIWillShow(message: GDPRMessage) {
-//        hideIndicator()
-//        if let consentViewController = consentViewController {
-//            nativeMessageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
-//            nativeMessageController?.modalPresentationStyle = .overFullScreen
-//            present(nativeMessageController!, animated: true, completion: nil)
-//        }
-//    }
-
-    /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
-    /// `SPActionType`
-//    func onAction(_ action: SPAction) {
-//        if propertyDetails?.nativeMessage == 1 {
-//            switch action.type {
-//            case .PMCancel:
-//                dismissPrivacyManager()
-//            case .ShowPrivacyManager:
-//                isPMLoaded = true
-//                showIndicator()
-//            case .AcceptAll:
-//                if !isPMLoaded {
-//                    consentViewController?.reportAction(action)
-//                    dismiss(animated: true, completion: nil)
-//                }
-//            case .RejectAll:
-//                if !isPMLoaded {
-//                    consentViewController?.reportAction(action)
-//                    dismiss(animated: true, completion: nil)
-//                }
-//            default:
-//                dismiss(animated: true, completion: nil)
-//            }
-//        }
-//    }
-
-//    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
-//        self.showIndicator()
-//        self.userConsents = userConsent
-//        self.consentUUID = consentUUID
-//        setconsentUUId()
-//        consentTableView.reloadData()
-//        self.hideIndicator()
-//    }
 
     func onError(error: SPError) {
-        let okHandler = {
-            self.hideIndicator()
-            self.dismiss(animated: false, completion: nil)
+        let okHandler = { [weak self] in
+            self?.hideIndicator()
+            self?.dismiss(animated: false, completion: nil)
         }
         AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description , actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 
-    private func dismissPrivacyManager() {
-        if nativeMessageController?.viewIfLoaded?.window != nil {
-            nativeMessageController?.dismiss(animated: true, completion: nil)
-        } else {
-            dismiss(animated: true, completion: nil)
-        }
-    }
-
     @IBAction func showPMAction(_ sender: Any) {
-//        self.showIndicator()
-//        let campaign: SPCampaignEnv = self.propertyDetails?.campaign == 0 ? .Stage : .Public
-        // optional, set custom targeting parameters supports Strings and Integers
-//        var targetingParameters = [String: String]()
-//        for targetingParam in targetingParams {
-//            targetingParameters[targetingParam.targetingKey] = targetingParam.targetingValue
-//        }
-//        consentViewController =  GDPRConsentViewController(accountId: Int(propertyDetails!.accountId), propertyId: Int(propertyDetails!.propertyId), propertyName: try! SPPropertyName((propertyDetails?.propertyName)!), PMId: (propertyDetails?.privacyManagerId)!, campaignEnv: campaign, targetingParams: targetingParameters, consentDelegate: self)
-//        if let messageLanguage = propertyDetails?.messageLanguage {
-//            consentViewController?.messageLanguage = addpropertyViewModel.getMessageLanguage(countryName: messageLanguage)
-//        }
-//        consentViewController?.privacyManagerTab = addpropertyViewModel.getPMTab(pmTab: propertyDetails?.pmTab ?? "")
-//        consentViewController?.loadPrivacyManager()
-//        consentTableView.isHidden = true
-        self.sideMenuState(expanded: self.isExpanded ? false : true)
+        sideMenuState(expanded: isExpanded ? false : true)
     }
 
     func sideMenuState(expanded: Bool) {
         if expanded {
-            self.animateSideMenu(targetPosition: self.revealSideMenuOnTop ? 0 : self.sideMenuRevealWidth) { _ in
-                self.isExpanded = true
+            animateSideMenu(targetPosition: revealSideMenuOnTop ? 0 : sideMenuRevealWidth) { [weak self] _ in
+                self?.isExpanded = true
             }
             // Animate Shadow (Fade In)
-            UIView.animate(withDuration: 0.5) { self.sideMenuShadowView.alpha = 0.6 }
+            UIView.animate(withDuration: 0.5) { [weak self] in self?.sideMenuShadowView.alpha = 0.6 }
         }
         else {
-            self.animateSideMenu(targetPosition: self.revealSideMenuOnTop ? (self.sideMenuRevealWidth + self.paddingForRotation) : 0) { _ in
-                self.isExpanded = false
+            animateSideMenu(targetPosition: revealSideMenuOnTop ? (sideMenuRevealWidth + paddingForRotation) : 0) { [weak self] _ in
+                self?.isExpanded = false
             }
             // Animate Shadow (Fade Out)
-            UIView.animate(withDuration: 0.5) { self.sideMenuShadowView.alpha = 0.0 }
+            UIView.animate(withDuration: 0.5) { [weak self] in self?.sideMenuShadowView.alpha = 0.0 }
         }
     }
 
     func animateSideMenu(targetPosition: CGFloat, completion: @escaping (Bool) -> ()) {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .layoutSubviews, animations: {
-            if self.revealSideMenuOnTop {
-                self.sideMenuTrailingConstraint.constant = targetPosition
-                self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: .layoutSubviews, animations: { [weak self] in
+            if ((self?.revealSideMenuOnTop) != nil) {
+                self?.sideMenuTrailingConstraint.constant = targetPosition
+                self?.view.layoutIfNeeded()
             }
             else {
-                self.view.subviews[1].frame.origin.x = targetPosition
+                self?.view.subviews[1].frame.origin.x = targetPosition
             }
         }, completion: completion)
     }
@@ -319,7 +220,7 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 // MARK: - SPDelegate implementation
 extension ConsentDetailsViewController: SPDelegate {
     func onSPUIReady(_ controller: SPMessageViewController) {
-        self.hideIndicator()
+        hideIndicator()
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
@@ -334,22 +235,36 @@ extension ConsentDetailsViewController: SPDelegate {
 
     func onConsentReady(userData: SPUserData) {
         showIndicator()
-//        if let propertyDetails = propertyDetailsModel {
-//            savePropertyToDatabase(propertyDetails: propertyDetails)
-//            handleMultipleMessages(userData: userData)
-//        }
-        hideIndicator()
+        self.userData = userData
+        handleMultipleMessages(userData: userData)
     }
 
-//    func onError(error: SPError) {
-//        self.hideIndicator()
-//        let okHandler = { self.dismiss(animated: false)}
-//        AlertView.sharedInstance.showAlertView(title: Alert.message, message: error.description, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
-//    }
+    func handleMultipleMessages(userData: SPUserData) {
+        if isReset {
+            if let ccpaApplies = consentManager?.ccpaApplies(), let gdprApplies = consentManager?.gdprApplies() {
+                if !ccpaApplies && gdprApplies || ccpaApplies && !gdprApplies {
+                    updateConsentTableview()
+                    hideIndicator()
+                } else if ccpaApplies && gdprApplies {
+                    showIndicator()
+                    updateConsentTableview()
+                    isReset = false
+                }
+            }
+        } else {
+            updateConsentTableview()
+            hideIndicator()
+        }
+    }
+
+    func updateConsentTableview() {
+        setconsentUUId()
+        consentTableView.reloadData()
+    }
 
     func showError(error: SPError?) {
         let okHandler = {}
-        self.hideIndicator()
+        hideIndicator()
         AlertView.sharedInstance.showAlertView(title: Alert.alert, message: error?.description ?? "", actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
     }
 }
@@ -358,10 +273,10 @@ extension ConsentDetailsViewController: SPDelegate {
 extension ConsentDetailsViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return consentDetailsViewModel.sections(userData: userData)?.count ?? 0
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
+        return consentDetailsViewModel.sections(userData: userData)?[section]
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -375,22 +290,39 @@ extension ConsentDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        setTableViewHidden()
-        if section == 0 {
-//            return userConsents?.acceptedVendors.count ?? 0
-        } else {
-//            return userConsents?.acceptedCategories.count ?? 0
+        setTableViewHidden()
+        if consentDetailsViewModel.sections(userData: userData)?[section] == SPLiteral.gdprConsents {
+            return userData?.gdpr?.consents?.vendorGrants.count ?? 0
+        } else if consentDetailsViewModel.sections(userData: userData)?[section] == SPLiteral.ccpaConsents {
+            if userData?.ccpa?.consents?.rejectedCategories.count ?? 0 > 0 {
+                return (userData?.ccpa?.consents?.rejectedCategories.count ?? 0)
+            } else {
+                return 1
+            }
         }
-        return 1
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ConsentTableViewCell {
-            if indexPath.section == 0 {
-//                cell.consentIDString.text = userConsents?.acceptedVendors[indexPath.row]
+            if indexPath.section == 0 && consentDetailsViewModel.sections(userData: userData)?[0] == SPLiteral.gdprConsents {
+                var vendorGrantsIDs = [String]()
+                userData?.gdpr?.consents?.vendorGrants.forEach {(key, value) in
+                    vendorGrantsIDs.append(key)
+                }
+                cell.consentIDLabel.text = SPLiteral.vendorGrantID
+                cell.consentIDString.text = vendorGrantsIDs[indexPath.row]
             } else {
-//                cell.consentIDString.text = userConsents?.acceptedCategories[indexPath.row]
+                if userData?.ccpa?.consents?.rejectedCategories.count ?? 0 > 0 {
+                    cell.consentIDLabel.text = SPLiteral.rejectedCategoryID
+                    cell.consentIDString.text = userData?.ccpa?.consents?.rejectedCategories[indexPath.row]
+                } else {
+                    if let status = userData?.ccpa?.consents?.status.rawValue {
+                        cell.consentIDLabel.text = SPLiteral.ccpaStatus
+                        cell.consentIDString.text = status
+                    }
+                }
             }
             return cell
         }
@@ -412,30 +344,51 @@ extension ConsentDetailsViewController: SideMenuViewControllerDelegate {
         switch row {
         case 0:
             showIndicator()
-            consentManager1.loadGDPRPrivacyManager(withId: "488393")
+            let pmDetails = consentDetailsViewModel.getPMIDAndTab(campaignName: SPLiteral.gdprCampaign, campaignDetails: propertyDetails?.campaignDetails)
+            if let pmID = pmDetails.pmID, let pmTab = pmDetails.pmTab, pmID.count > 0 {
+                loadPrivacyManager(isGDPRPM: true, pmID: pmID, pmTab: pmTab)
+            } else {
+                let okHandler = { [weak self]() -> Void in self?.hideIndicator() }
+                AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForEmptyPrivacyManagerIDError, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+            }
         case 1:
             showIndicator()
-            consentManager1.loadCCPAPrivacyManager(withId: "14967")
+            let pmDetails = consentDetailsViewModel.getPMIDAndTab(campaignName: SPLiteral.ccpaCampaign, campaignDetails: propertyDetails?.campaignDetails)
+            if let pmID = pmDetails.pmID, let pmTab = pmDetails.pmTab, pmID.count > 0 {
+                loadPrivacyManager(isGDPRPM: false, pmID: pmID, pmTab: pmTab)
+            } else {
+                let okHandler = { [weak self]() -> Void in self?.hideIndicator() }
+                AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForEmptyPrivacyManagerIDError, actions: [okHandler], titles: [Alert.ok], actionStyle: UIAlertController.Style.alert)
+            }
         case 2:
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
         default:
             break
         }
         // Collapse side menu with animation
-        DispatchQueue.main.async { self.sideMenuState(expanded: false) }
+        DispatchQueue.main.async { [weak self] in self?.sideMenuState(expanded: false) }
+    }
+
+    func loadPrivacyManager(isGDPRPM: Bool, pmID: String, pmTab: String) {
+        validateProperty()
+        if isGDPRPM {
+            consentManager?.loadGDPRPrivacyManager(withId: pmID, tab: addpropertyViewModel.getPMTab(pmTab: pmTab))
+        } else {
+            consentManager?.loadCCPAPrivacyManager(withId: pmID, tab: addpropertyViewModel.getPMTab(pmTab: pmTab))
+        }
     }
 }
 
 extension ConsentDetailsViewController: UIGestureRecognizerDelegate {
     @objc func TapGestureRecognizer(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
-            if self.isExpanded { self.sideMenuState(expanded: false) }
+            if isExpanded { sideMenuState(expanded: false) }
         }
     }
 
     // Close side menu when you tap on the shadow background view
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if (touch.view?.isDescendant(of: self.sideMenuViewController.view))! { return false }
+        if ((touch.view?.isDescendant(of: sideMenuViewController.view)) != nil) { return false }
         return true
     }
 }

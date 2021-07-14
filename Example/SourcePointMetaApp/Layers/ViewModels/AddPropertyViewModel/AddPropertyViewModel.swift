@@ -22,11 +22,6 @@ class AddPropertyViewModel {
         Section(campaignTitle: "Add GDPR Campaign", expanded: false),
         Section(campaignTitle: "Add CCPA Campaign", expanded: false),
         Section(campaignTitle: "Add iOS 14 Campaign", expanded: false)]
-    
-    // Default campaign value is public
-    var ccpaCampaignEnv = SPCampaignEnv.Public
-    var gdprCampaignEnv = SPCampaignEnv.Public
-    var iOS14CampaignEnv = SPCampaignEnv.Public
 
     // Will add all the targeting params to this array
     var ccpaTargetingParams = [TargetingParamModel]()
@@ -81,6 +76,41 @@ class AddPropertyViewModel {
                     }
                 }
             })
+        }
+    }
+
+    func fetchProperty(propertyManagedObjectID: NSManagedObjectID, completionHandler: @escaping (PropertyDetailsModel) -> Void) {
+        fetch(property: propertyManagedObjectID, completionHandler: {[weak self] ( propertyDataModel) in
+            var campaignModels = [CampaignModel]()
+            if let campaigns = propertyDataModel.manyCampaigns?.allObjects as? [CampaignDetails] {
+                for campaign in campaigns {
+                    var targetingParamModel = [TargetingParamModel]()
+                    if let targetingParams = campaign.manyTargetingParams?.allObjects as? [TargetingParams] {
+                        for targetingParam in targetingParams {
+                            let targetingParam = TargetingParamModel(targetingParamKey: targetingParam.key ?? "", targetingParamValue: targetingParam.value ?? "")
+                            targetingParamModel.append(targetingParam)
+                        }
+                    }
+                    campaignModels.append(CampaignModel(campaignName: campaign.campaignName ?? "", pmID: campaign.pmID, pmTab: campaign.pmTab, targetingParams: targetingParamModel))
+                    targetingParamModel.removeAll()
+                }
+                let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyName: propertyDataModel.propertyName, campaignEnv: propertyDataModel.campaignEnv, creationTimestamp: propertyDataModel.creationTimestamp!, authId:propertyDataModel.authId , messageLanguage: propertyDataModel.messageLanguage, campaignDetails: campaignModels)
+                self?.allCampaigns = campaignModels
+                self?.updatePMIDAndTab(campaignModels: campaignModels)
+                completionHandler(propertyDetail)
+            }
+        })
+    }
+
+    func updatePMIDAndTab(campaignModels: [CampaignModel]) {
+        for campaign in campaignModels {
+            if campaign.campaignName == SPLiteral.gdprCampaign {
+                gdprPMID = campaign.pmID
+                gdprPMTab = campaign.pmTab
+            } else if campaign.campaignName == SPLiteral.ccpaCampaign {
+                ccpaPMID = campaign.pmID
+                ccpaPMTab = campaign.pmTab
+            }
         }
     }
 
@@ -227,17 +257,12 @@ class AddPropertyViewModel {
 
     func resetFields(cell: CampaignTableViewCell, section: Int) {
         if section == 0 {
-            cell.campaignSwitchOutlet.isOn = (gdprCampaignEnv.rawValue != 1)
             cell.privacyManagerTextField.text = gdprPMID
             cell.pmTabTextField.text = gdprPMTab
         }else if section == 1 {
-            cell.campaignSwitchOutlet.isOn = (ccpaCampaignEnv.rawValue != 1)
             cell.privacyManagerTextField.text = ccpaPMID
             cell.pmTabTextField.text = ccpaPMTab
-        } else if section == 2 {
-            cell.campaignSwitchOutlet.isOn = (iOS14CampaignEnv.rawValue != 1)
         } else {
-            cell.campaignSwitchOutlet.isOn = false
             cell.privacyManagerTextField.text = ""
             cell.pmTabTextField.text = pmTabs[0]
         }
@@ -263,11 +288,17 @@ class AddPropertyViewModel {
         cell.targetingParamTopConstraint.constant = 10
     }
 
-//    func getIndexPath(sender: CampaignListCell, tableview: UITableView) -> IndexPath? {
-//        let cellPosition: CGPoint = sender.convert(sender.bounds.origin, to: tableview)
-//        let indexPath = tableview.indexPathForRow(at: cellPosition)
-//        return indexPath
-//    }
+    func hidePMDetailsForIOS14Campaign(campaignName: String, cell: CampaignListCell) {
+        if campaignName == SPLiteral.iOS14Campaign {
+            cell.pmIDLabel.isHidden = true
+            cell.pmTabLabel.isHidden = true
+            cell.targetingParamTopConstraint.constant = 10
+        }else {
+            cell.pmIDLabel.isHidden = false
+            cell.pmTabLabel.isHidden = false
+            cell.targetingParamTopConstraint.constant = 70
+        }
+    }
 
     func getIndexPath(sender: SourcePointUItablewViewCell, tableview: UITableView) -> IndexPath? {
         let cellPosition: CGPoint = sender.convert(sender.bounds.origin, to: tableview)
@@ -275,23 +306,12 @@ class AddPropertyViewModel {
         return indexPath
     }
 
-    func updateCampaignEnvironment(sender: CampaignTableViewCell, tableview: UITableView) {
-        let indexPath = getIndexPath(sender: sender, tableview: tableview)
-        if indexPath?.section == 0 {
-            gdprCampaignEnv = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
-        }else if indexPath?.section == 1 {
-            ccpaCampaignEnv = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
-        }else {
-            iOS14CampaignEnv = sender.campaignSwitchOutlet.isOn ? SPCampaignEnv.Stage : SPCampaignEnv.Public
-        }
-    }
-
     func gdprCampaign() -> SPCampaign {
         var targetingParams = SPTargetingParams()
         for targetingParam in gdprTargetingParams {
             targetingParams[targetingParam.targetingKey] = targetingParam.targetingValue
         }
-        return SPCampaign(environment: gdprCampaignEnv, targetingParams: targetingParams)
+        return SPCampaign(targetingParams: targetingParams)
     }
 
     func ccpaCampaign() -> SPCampaign {
@@ -299,7 +319,7 @@ class AddPropertyViewModel {
         for targetingParam in ccpaTargetingParams {
             targetingParams[targetingParam.targetingKey] = targetingParam.targetingValue
         }
-        return SPCampaign(environment: ccpaCampaignEnv, targetingParams: targetingParams)
+        return SPCampaign(targetingParams: targetingParams)
     }
 
     func iOS14Campaign() -> SPCampaign {
@@ -307,6 +327,6 @@ class AddPropertyViewModel {
         for targetingParam in iOS14TargetingParams {
             targetingParams[targetingParam.targetingKey] = targetingParam.targetingValue
         }
-        return SPCampaign(environment: iOS14CampaignEnv, targetingParams: targetingParams)
+        return SPCampaign(targetingParams: targetingParams)
     }
 }

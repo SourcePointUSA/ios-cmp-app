@@ -8,14 +8,11 @@
 import UIKit
 
 protocol CampaignTableViewDelegate: AnyObject {
-    func updateCampaign(sender: CampaignTableViewCell)
     func addTargetingParams(sender: CampaignTableViewCell)
     func saveCampaign(sender: CampaignTableViewCell)
 }
 
 class CampaignTableViewCell: SourcePointUItablewViewCell, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
-
-    @IBOutlet weak var campaignSwitchOutlet: UISwitch!
 
     @IBOutlet weak var pmIDLabel: UILabel!
     
@@ -40,9 +37,9 @@ class CampaignTableViewCell: SourcePointUItablewViewCell, UITextFieldDelegate, U
     weak var delegate: CampaignTableViewDelegate?
 
     override func awakeFromNib() {
-        self.pmTabPickerView.delegate = self;
-        self.pmTabPickerView.dataSource = self;
-        let toolBar = UIToolbar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: self.frame.width, height: CGFloat(44))))
+        pmTabPickerView.delegate = self;
+        pmTabPickerView.dataSource = self;
+        let toolBar = UIToolbar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: frame.width, height: CGFloat(44))))
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
@@ -62,10 +59,6 @@ class CampaignTableViewCell: SourcePointUItablewViewCell, UITextFieldDelegate, U
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-    }
-
-    @IBAction func onTapCampaignSwitch(_ sender: Any) {
-        delegate?.updateCampaign(sender: self)
     }
     
     @IBAction func onTapAddTargetingParamButton(_ sender: Any) {
@@ -89,6 +82,6 @@ class CampaignTableViewCell: SourcePointUItablewViewCell, UITextFieldDelegate, U
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.pmTabTextField.text = addpropertyViewModel.pmTabs[row]
+        pmTabTextField.text = addpropertyViewModel.pmTabs[row]
     }
 }

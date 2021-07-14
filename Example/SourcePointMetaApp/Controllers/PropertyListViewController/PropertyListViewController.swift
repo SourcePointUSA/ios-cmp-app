@@ -24,6 +24,7 @@ class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navTitle()
         propertyTableView.tableFooterView = UIView(frame: .zero)
     }
 
@@ -38,12 +39,23 @@ class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITe
         navigationItem.backBarButtonItem = backItem
     }
 
+    func navTitle() {
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 480, height: 44))
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.numberOfLines = 2
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = #colorLiteral(red: 0, green: 0.0186597344, blue: 0.06425330752, alpha: 1)
+        titleLabel.text = "Property List\n ConsentViewController v\(SPConsentManager.VERSION)"
+        navigationItem.titleView = titleLabel
+    }
+
     // This method will fetch all the properties data
     func fetchAllpropertiesData() {
         showIndicator()
-        propertyListViewModel.importAllproperties(executionCompletionHandler: { (_) in
-            self.propertyTableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: { [weak self] in
+        propertyListViewModel.importAllproperties(executionCompletionHandler: { [weak self] (_) in
+            self?.propertyTableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
                 self?.propertyTableView.reloadData()
                 self?.hideIndicator()
             })
@@ -55,10 +67,11 @@ class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITe
         nopropertyDataLabel.isHidden = propertyListViewModel.numberOfproperties() > 0
     }
 
-    func loadConsentDetailsViewController(atIndex index: Int) {
+    func loadConsentDetailsViewController(atIndex index: Int, isReset: Bool) {
         if let consentDetailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConsentDetailsViewController") as? ConsentDetailsViewController {
-            consentDetailsViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: index)
-            self.navigationController!.pushViewController(consentDetailsViewController, animated: false)
+            consentDetailsViewController.propertyManagedObjectID = propertyListViewModel.propertyManagedObjectID(atIndex: index)
+            consentDetailsViewController.isReset = isReset
+            navigationController!.pushViewController(consentDetailsViewController, animated: false)
         }
     }
 }
@@ -72,21 +85,18 @@ extension PropertyListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 90
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PropertyCell {
 
-            if let propertyDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).0 {
-                cell.propertyLabel.text = propertyDetails.propertyName
+            if let propertyDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row) {
+                cell.propertyNameLabel.text = propertyDetails.propertyName
                 cell.accountIDLabel.text = "\(SPLiteral.accountID) \(propertyDetails.accountId)"
-                cell.campaignLabel.text = propertyDetails.campaign == Int64(0) ? "\(SPLiteral.campaign) \(SPLiteral.stageEnv)" : "\(SPLiteral.campaign) \(SPLiteral.publicEnv)"
-                cell.messageType.text = propertyDetails.nativeMessage == Int64(0) ? "\(SPLiteral.webMessage)" : "\(SPLiteral.nativeMessage)"
-            }
-            if let targetingDetails = propertyListViewModel.propertyDetails(atIndex: indexPath.row).1 {
-                cell.targetingParamTextView.text = targetingDetails
+                cell.campaignEnvLabel.text = propertyDetails.campaignEnv == Int64(0) ? "\(SPLiteral.campaignEnv) \(SPLiteral.stageEnv)" : "\(SPLiteral.campaignEnv) \(SPLiteral.publicEnv)"
+                cell.messageLanguage.text = "\(SPLiteral.messageLanguage) \(propertyDetails.messageLanguage ?? "BrowserDefault")"
             }
             return cell
         }
@@ -99,41 +109,39 @@ extension PropertyListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         propertyTableView.deselectRow(at: indexPath, animated: false)
-        loadConsentDetailsViewController(atIndex: indexPath.row)
+        loadConsentDetailsViewController(atIndex: indexPath.row, isReset: false)
     }
 
     // iOS 11 and above for right swipe gesture
     @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .destructive, title: nil) { (_, _, _) in
+        let editAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, _) in
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
-//                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
-
-                self.navigationController!.pushViewController(editpropertyViewController, animated: false)
+                self?.propertyListViewModel.clearUserDefaultsData()
+                editpropertyViewController.propertyManagedObjectID = self?.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
+                self?.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }
         }
-        let resetAction = UIContextualAction(style: .destructive, title: nil) { (_, _, handler) in
-
-            self.hideIndicator()
+        let resetAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, handler) in
+            self?.hideIndicator()
             let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
-
             alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
             alertController.view.accessibilityIdentifier = "alertView"
             let noAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.destructive, handler: {(_: UIAlertAction!) in
-                self.propertyTableView.reloadData()
+                self?.propertyTableView.reloadData()
             })
             let yesAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
-                self.showIndicator()
-                self.propertyListViewModel.clearUserDefaultsData()
-                self.loadConsentDetailsViewController(atIndex: indexPath.row)
-                self.hideIndicator()
+                self?.showIndicator()
+                self?.propertyListViewModel.clearUserDefaultsData()
+                self?.loadConsentDetailsViewController(atIndex: indexPath.row, isReset: true)
+                self?.hideIndicator()
             })
             alertController.addAction(noAction)
             alertController.addAction(yesAction)
-            self.present(alertController, animated: true, completion: nil)
+            self?.present(alertController, animated: true, completion: nil)
 
         }
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, _) in
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, _) in
             let yesHandler = { [weak self]() -> Void in
                 self?.showIndicator()
                 self?.propertyListViewModel.delete(atIndex: indexPath.row, completionHandler: {[weak self] (_, error) in
@@ -148,10 +156,10 @@ extension PropertyListViewController: UITableViewDelegate {
                     }
                 })
             }
-            let noHandler = {
-                self.propertyTableView.reloadData()
+            let noHandler = { [weak self]() -> Void in
+                self?.propertyTableView.reloadData()
             }
-            self.hideIndicator()
+            self?.hideIndicator()
             AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForDeletingPropertyData, actions: [yesHandler, noHandler], titles: [Alert.yes, Alert.no], actionStyle: UIAlertController.Style.alert)
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.2841853499, green: 0.822665453, blue: 0.653732717, alpha: 1)
@@ -167,34 +175,34 @@ extension PropertyListViewController: UITableViewDelegate {
 
     // iOS 10 and below for right swipe gesture
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let editAction = UITableViewRowAction(style: .destructive, title: "Edit") { (_, _) in
+        let editAction = UITableViewRowAction(style: .destructive, title: "Edit") { [weak self] (_, _) in
             if let editpropertyViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPropertyViewController") as? AddPropertyViewController {
-//                editpropertyViewController.propertyManagedObjectID = self.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
-
-                self.navigationController!.pushViewController(editpropertyViewController, animated: false)
+                self?.propertyListViewModel.clearUserDefaultsData()
+                editpropertyViewController.propertyManagedObjectID = self?.propertyListViewModel.propertyManagedObjectID(atIndex: indexPath.row)
+                self?.navigationController!.pushViewController(editpropertyViewController, animated: false)
             }
         }
 
-        let resetAction = UITableViewRowAction(style: .destructive, title: "Reset") { (_, _) in
-            self.hideIndicator()
+        let resetAction = UITableViewRowAction(style: .destructive, title: "Reset") { [weak self] (_, _) in
+            self?.hideIndicator()
             let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
 
             alertController.setValue(SPLiteral.attributedString(), forKey: "attributedTitle")
             let noAction = UIAlertAction(title: "NO", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
-                self.propertyTableView.reloadData()
+                self?.propertyTableView.reloadData()
             })
             let yesAction = UIAlertAction(title: "YES", style: UIAlertAction.Style.default, handler: {(_: UIAlertAction!) in
-                self.showIndicator()
-                self.propertyListViewModel.clearUserDefaultsData()
-                self.loadConsentDetailsViewController(atIndex: indexPath.row)
-                self.hideIndicator()
+                self?.showIndicator()
+                self?.propertyListViewModel.clearUserDefaultsData()
+                self?.loadConsentDetailsViewController(atIndex: indexPath.row, isReset: true)
+                self?.hideIndicator()
             })
             alertController.addAction(noAction)
             alertController.addAction(yesAction)
-            self.present(alertController, animated: true, completion: nil)
+            self?.present(alertController, animated: true, completion: nil)
         }
 
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, _) in
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [weak self] (_, _) in
             let yesHandler = { [weak self]() -> Void in
                 self?.showIndicator()
                 self?.propertyListViewModel.delete(atIndex: indexPath.row, completionHandler: {[weak self] (_, error) in
@@ -208,10 +216,10 @@ extension PropertyListViewController: UITableViewDelegate {
                     }
                 })
             }
-            let noHandler = {
-                self.propertyTableView.reloadData()
+            let noHandler = { [weak self]() -> Void in
+                self?.propertyTableView.reloadData()
             }
-            self.hideIndicator()
+            self?.hideIndicator()
             AlertView.sharedInstance.showAlertView(title: Alert.alert, message: Alert.messageForDeletingPropertyData, actions: [yesHandler, noHandler], titles: [Alert.yes, Alert.no], actionStyle: UIAlertController.Style.alert)
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.822665453, green: 0.07812128419, blue: 0.1612752695, alpha: 0.9916923415)

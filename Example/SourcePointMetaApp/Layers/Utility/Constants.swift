@@ -26,12 +26,13 @@ struct SPMetaError {
 struct SPLiteral {
     static let emptyString = ""
     static let accountID = "Account ID: "
-    static let campaign = "Campaign: "
-    static let consentUUID = "ConsentUUID not available"
+    static let campaignEnv = "Campaign Env: "
+    static let gdprConsentUUID = "GDPR ConsentUUID not available"
+    static let ccpaConsentUUID = "CCPA ConsentUUID not available"
     static let euConsentID = "EUConsent not available"
     static let stageEnv = "Stage"
     static let publicEnv = "Public"
-    static let webMessage = "Web Message"
+    static let messageLanguage = "Message Language:"
     static let nativeMessage = "Native Message"
     static let alertView = "alertView"
     static let gdprCampaign = "GDPR Campaign"
@@ -43,11 +44,17 @@ struct SPLiteral {
     static let ccpaPMId = "CCPA PM ID:"
     static let pmID = "PM ID:"
     static let pmTab = "PM Tab:"
+    static let pmIDNotAvailable = "Not available"
+    static let gdprConsents = "GDPR Consents"
+    static let ccpaConsents = "CCPA Consents"
+    static let vendorGrantID = "Vendor Grant ID:"
+    static let rejectedCategoryID = "Rejected Category ID:"
+    static let ccpaStatus = "CCPA Status:"
     static let campaignsTableViewHeight: CGFloat = 150
-    static let campaignsTableViewExpandedHeight: CGFloat = 500
-    static let iOS14CampaignviewHeight: CGFloat = 400
-    static let campaignsTableViewRowHeight: CGFloat = 350
-    static let iOS14CampaignRowHeight: CGFloat = 250
+    static let campaignsTableViewExpandedHeight: CGFloat = 450
+    static let iOS14CampaignviewHeight: CGFloat = 350
+    static let campaignsTableViewRowHeight: CGFloat = 300
+    static let iOS14CampaignRowHeight: CGFloat = 200
     static let headerViewHeight: CGFloat = 44
     static let campaignsTableView = 1
     static let campaignListTableview = 2
@@ -86,6 +93,7 @@ struct Alert {
     static let messageForEmptyTargetingParamError = NSLocalizedString("Please enter targeting parameter key and value", comment: "")
     static let messageForDeletingPropertyData = NSLocalizedString("Are you sure you want to delete this property?", comment: "")
     static let messageForSaveCampaign = NSLocalizedString("This will save the campaign data \nDo you want to proceed?", comment: "")
+    static let messageForEmptyPrivacyManagerIDError = NSLocalizedString("Please add privacy manager ID while saving the property", comment: "")
 
     // Alert actions
     static let alert = NSLocalizedString("Alert", comment: "")

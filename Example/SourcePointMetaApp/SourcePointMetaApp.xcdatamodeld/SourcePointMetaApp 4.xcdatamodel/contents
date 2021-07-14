@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="CampaignDetails" representedClassName="CampaignDetails" syncable="YES">
-        <attribute name="campaignEnv" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="CampaignDetails" representedClassName=".CampaignDetails" syncable="YES">
         <attribute name="campaignName" optional="YES" attributeType="String"/>
         <attribute name="pmID" optional="YES" attributeType="String"/>
         <attribute name="pmTab" optional="YES" attributeType="String"/>
         <relationship name="manyTargetingParams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TargetingParams" inverseName="campaignDetails" inverseEntity="TargetingParams"/>
         <relationship name="propertyDetails" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PropertyDetails" inverseName="manyCampaigns" inverseEntity="PropertyDetails"/>
     </entity>
-    <entity name="PropertyDetails" representedClassName="PropertyDetails" syncable="YES">
+    <entity name="PropertyDetails" representedClassName=".PropertyDetails" syncable="YES">
         <attribute name="accountId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="authId" optional="YES" attributeType="String"/>
+        <attribute name="campaignEnv" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="creationTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="messageLanguage" optional="YES" attributeType="String"/>
         <attribute name="propertyName" optional="YES" attributeType="String"/>
@@ -22,8 +22,8 @@
         <relationship name="campaignDetails" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CampaignDetails" inverseName="manyTargetingParams" inverseEntity="CampaignDetails"/>
     </entity>
     <elements>
-        <element name="CampaignDetails" positionX="93.01397705078125" positionY="-436.2932739257812" width="128" height="133"/>
+        <element name="CampaignDetails" positionX="93.01397705078125" positionY="-436.2932739257812" width="128" height="104"/>
+        <element name="PropertyDetails" positionX="427.7625732421875" positionY="-441.4219360351562" width="128" height="134"/>
         <element name="TargetingParams" positionX="115.1053466796875" positionY="-125.3492126464844" width="128" height="88"/>
-        <element name="PropertyDetails" positionX="427.7625732421875" positionY="-441.4219360351562" width="128" height="133"/>
     </elements>
 </model>

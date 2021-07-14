@@ -21,6 +21,7 @@ extension PropertyDetails {
     @NSManaged public var creationTimestamp: Date?
     @NSManaged public var messageLanguage: String?
     @NSManaged public var propertyName: String?
+    @NSManaged public var campaignEnv: Int64
     @NSManaged public var manyCampaigns: NSSet?
 
 }

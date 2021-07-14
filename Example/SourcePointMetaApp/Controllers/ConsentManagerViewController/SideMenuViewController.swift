@@ -33,9 +33,9 @@ class SideMenuViewController: BaseViewController {
         sideMenuTableView.separatorStyle = .none
 
         // Set Highlighted Cell
-        DispatchQueue.main.async {
-            let defaultRow = IndexPath(row: self.defaultHighlightedCell, section: 0)
-            self.sideMenuTableView.selectRow(at: defaultRow, animated: false, scrollPosition: .none)
+        DispatchQueue.main.async { [weak self] in
+            let defaultRow = IndexPath(row: self?.defaultHighlightedCell ?? 0, section: 0)
+            self?.sideMenuTableView.selectRow(at: defaultRow, animated: false, scrollPosition: .none)
         }
         sideMenuTableView.reloadData()
     }
@@ -60,9 +60,9 @@ extension SideMenuViewController: UITableViewDataSource {
         cell.titleLabel.text = menu[indexPath.row].title
 
         // Highlighted color
-        let myCustomSelectionColorView = UIView()
-        myCustomSelectionColorView.backgroundColor = #colorLiteral(red: 0.2470588235, green: 0.7960784314, blue: 0.5882352941, alpha: 1)
-        cell.selectedBackgroundView = myCustomSelectionColorView
+        let customSelectionColorView = UIView()
+        customSelectionColorView.backgroundColor = #colorLiteral(red: 0.2470588235, green: 0.7960784314, blue: 0.5882352941, alpha: 1)
+        cell.selectedBackgroundView = customSelectionColorView
         return cell
     }
 
