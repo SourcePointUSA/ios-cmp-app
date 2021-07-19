@@ -39,12 +39,27 @@ struct PMPayload: Codable {
         let _id: String
         let iabId: Int?
         let consent, legInt: Bool
-        let type: SPVendorType?
+        let vendorType: SPVendorType?
+    }
+    struct Feature: Codable {
+        let _id: String
+        let iabId: Int?
     }
     let lan: SPMessageLanguage
     let privacyManagerId: String
     let categories: [Category]
     let vendors: [Vendor]
+    var specialFeatures: [Feature] = []
+
+    func json() -> SPJson? {
+        guard
+            let data = try? JSONEncoder().encode(self),
+            let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+            let json = try? SPJson(object) else {
+            return nil
+        }
+        return json
+    }
 }
 
 class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
@@ -120,7 +135,7 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
                     iabId: vendor.iabId,
                     consent: true,
                     legInt: false,
-                    type: vendor.vendorType
+                    vendorType: vendor.vendorType
                 )
             }
         )
@@ -130,65 +145,21 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
         acceptedCategoriesIds.insert(category._id)
         acceptedVendorsIds.formUnion(category.uniqueVendorIds)
         onConsentsChange()
-
-        print("""
-        On Purpose: {
-          "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue ?? "")",
-          "iabId": \(category.iabId ?? 99),
-          "consent": true,
-          "legInt": false
-        }
-        """
-        )
     }
 
     func onCategoryOff(_ category: VendorListCategory) {
         acceptedCategoriesIds.remove(category._id)
         acceptedVendorsIds.subtract(vendorsWhosePurposesAreOff)
         onConsentsChange()
-
-        print("""
-        Off Purpose: {
-          "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue ?? "")",
-          "iabId": \(category.iabId ?? 99),
-          "consent": false,
-          "legInt": false
-        }
-        """
-        )
     }
 
     func onVendorOn(_ vendor: VendorListVendor) {
         acceptedVendorsIds.insert(vendor.vendorId)
         onConsentsChange()
-
-        print("""
-        On Vendor: {
-          "_id": "\(vendor.vendorId)",
-          "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId ?? 99),
-          "consent": true,
-          "legInt": false
-        }
-        """
-        )
     }
 
     func onVendorOff(_ vendor: VendorListVendor) {
         acceptedVendorsIds.remove(vendor.vendorId)
         onConsentsChange()
-
-        print("""
-        Off Vendor: {
-          "_id": "\(vendor.vendorId)",
-          "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId ?? 99),
-          "consent": false,
-          "legInt": false
-        }
-        """
-        )
     }
 }
