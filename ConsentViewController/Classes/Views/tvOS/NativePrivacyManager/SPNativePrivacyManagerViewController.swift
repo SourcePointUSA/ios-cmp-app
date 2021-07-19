@@ -43,6 +43,10 @@ import Foundation
         }
     }
 
+    override func loadMessage() {
+        loaded(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
@@ -177,10 +181,6 @@ extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
-        if action.type == .SaveAndExit, let pmPayload = try? SPJson(["foo": "bar"]) {
-            action.pmPayload = pmPayload
-        }
-
         dismiss(animated: false) {
             self.messageUIDelegate?.action(action, from: controller)
         }
