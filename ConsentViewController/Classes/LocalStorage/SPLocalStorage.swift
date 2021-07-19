@@ -8,6 +8,7 @@
 import Foundation
 
 protocol Storage {
+    func integer(forKey defaultName: String) -> Int
     func string(forKey defaultName: String) -> String?
     func object<T: Decodable>(ofType type: T.Type, forKey defaultName: String) -> T?
     func set(_ value: Any?, forKey defaultName: String)
