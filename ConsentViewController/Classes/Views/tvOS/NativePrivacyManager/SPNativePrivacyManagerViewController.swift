@@ -23,6 +23,8 @@ import Foundation
 
     @IBOutlet weak var header: SPPMHeader!
 
+    var secondLayerData: PrivacyManagerViewResponse?
+
     var categories: [VendorListCategory] { pmData.categories }
     var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
@@ -64,36 +66,60 @@ import Foundation
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
-        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
-            switch result {
-            case .failure(let error):
-                self?.onError(error)
-            case .success(let data):
-                if let strongSelf = self {
-                    let controller = SPManagePreferenceViewController(
-                        messageId: self?.messageId,
-                        campaignType: strongSelf.campaignType,
-                        viewData: strongSelf.pmData.categoriesView,
-                        pmData: strongSelf.pmData,
-                        delegate: self,
-                        nibName: "SPManagePreferenceViewController"
-                    )
-                    if self?.snapshot == nil {
-                        self?.snapshot = PMConsentSnaptshot (
-                            grants: data.grants ?? SPGDPRVendorGrants(),
-                            vendors: Set<VendorListVendor>(data.vendors),
-                            categories: Set<VendorListCategory>(data.categories),
-                            specialPurposes: Set<VendorListCategory>(data.specialPurposes),
-                            features: Set<VendorListCategory>(data.features),
-                            specialFeatures: Set<VendorListCategory>(data.specialFeatures)
+        guard let secondLayerData = secondLayerData else {
+            delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    self?.onError(error)
+                case .success(let data):
+                    if let strongSelf = self {
+                        let controller = SPManagePreferenceViewController(
+                            messageId: self?.messageId,
+                            campaignType: strongSelf.campaignType,
+                            viewData: strongSelf.pmData.categoriesView,
+                            pmData: strongSelf.pmData,
+                            delegate: self,
+                            nibName: "SPManagePreferenceViewController"
                         )
+                        if self?.snapshot == nil {
+                            self?.snapshot = PMConsentSnaptshot (
+                                grants: data.grants ?? SPGDPRVendorGrants(),
+                                vendors: Set<VendorListVendor>(data.vendors),
+                                categories: Set<VendorListCategory>(data.categories),
+                                specialPurposes: Set<VendorListCategory>(data.specialPurposes),
+                                features: Set<VendorListCategory>(data.features),
+                                specialFeatures: Set<VendorListCategory>(data.specialFeatures)
+                            )
+                        }
+                        controller.categories = data.categories
+                        controller.consentsSnapshot = strongSelf.snapshot!
+                        self?.present(controller, animated: true)
                     }
-                    controller.categories = data.categories
-                    controller.consentsSnapshot = strongSelf.snapshot!
-                    self?.present(controller, animated: true)
                 }
             }
+            return
         }
+        let controller = SPManagePreferenceViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: pmData.categoriesView,
+            pmData: pmData,
+            delegate: self,
+            nibName: "SPManagePreferenceViewController"
+        )
+        if snapshot == nil {
+            snapshot = PMConsentSnaptshot (
+                grants: secondLayerData.grants ?? SPGDPRVendorGrants(),
+                vendors: Set<VendorListVendor>(secondLayerData.vendors),
+                categories: Set<VendorListCategory>(secondLayerData.categories),
+                specialPurposes: Set<VendorListCategory>(secondLayerData.specialPurposes),
+                features: Set<VendorListCategory>(secondLayerData.features),
+                specialFeatures: Set<VendorListCategory>(secondLayerData.specialFeatures)
+            )
+        }
+        controller.categories = secondLayerData.categories
+        controller.consentsSnapshot = snapshot!
+        present(controller, animated: true)
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {

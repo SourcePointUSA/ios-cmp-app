@@ -196,7 +196,6 @@ class SourcePointClient: SourcePointProtocol {
             "siteId": String(propertyId),
             "consentLanguage": consentLanguage.rawValue
         ])!
-        print("PM ENDPOINT CALLED")
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
                 try result.decoded() as PrivacyManagerViewResponse
