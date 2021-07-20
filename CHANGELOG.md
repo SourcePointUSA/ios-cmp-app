@@ -1,3 +1,6 @@
+# 6.1.4 (July, 20, 2021)
+* Fixed an issue preventing consent messages from rendering on iOS 13.3.x
+
 # 6.1.3 (July, 6, 2021)
 * Fixed an issue preventing the CCPA Privacy Manager from rendering.
 

@@ -1,6 +1,6 @@
 var postToWebView = function (webview) {
     return function(name, body) {
-        webview.postMessage({ name: name, body: body || {} });
+        webview.postMessage({ name: name, body: body || {} }, "*");
     };
 }(window.webkit.messageHandlers.SPJSReceiver);
 
@@ -11,7 +11,7 @@ window.SDK = function (postToWebView) {
                 name: "sp.loadMessage",
                 fromNativeSDK: true
             });
-            window.postMessage(messagePayload);
+            window.postMessage(messagePayload, "*");
         },
         readyForPreload: function () {
             postToWebView("readyForPreload");

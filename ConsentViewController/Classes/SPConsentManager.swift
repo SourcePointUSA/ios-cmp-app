@@ -12,7 +12,7 @@ import Foundation
     static let ccpaBaseURL = URL(string: "https://cdn.privacy-mgmt.com/ccpa_pm/index.html")
     static let gdprBaseURL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")
 
-    static public let VERSION = "6.1.3"
+    static public let VERSION = "6.1.4"
     static public var shouldCallErrorMetrics = true
 
     weak var delegate: SPDelegate?
