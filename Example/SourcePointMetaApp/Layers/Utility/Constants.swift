@@ -17,7 +17,7 @@ struct SourcepointNotificationIdentifier {
     static let contextDeletedManagedObjectsNotificationIdentifier = "contextDeletedManagedObjectsNotificationIdentifier"
 }
 
-struct SPError {
+struct SPMetaError {
     var code: Int = 0
     let description: String
     let message: String
@@ -26,13 +26,42 @@ struct SPError {
 struct SPLiteral {
     static let emptyString = ""
     static let accountID = "Account ID: "
-    static let campaign = "Campaign: "
-    static let consentUUID = "ConsentUUID not available"
+    static let campaignEnv = "Campaign Env: "
+    static let gdprConsentUUID = "GDPR ConsentUUID not available"
+    static let ccpaConsentUUID = "CCPA ConsentUUID not available"
     static let euConsentID = "EUConsent not available"
     static let stageEnv = "Stage"
     static let publicEnv = "Public"
-    static let webMessage = "Web Message"
+    static let messageLanguage = "Message Language:"
     static let nativeMessage = "Native Message"
+    static let alertView = "alertView"
+    static let gdprCampaign = "GDPR Campaign"
+    static let ccpaCampaign = "CCPA Campaign"
+    static let iOS14Campaign = "iOS14 Campaign"
+    static let CampaignTableViewCell = "CampaignTableViewCell"
+    static let CampaignListCell = "CampaignListCell"
+    static let gdprPMId = "GDPR PM ID:"
+    static let ccpaPMId = "CCPA PM ID:"
+    static let pmID = "PM ID:"
+    static let pmTab = "PM Tab:"
+    static let pmIDNotAvailable = "Not available"
+    static let gdprConsents = "GDPR Consents"
+    static let ccpaConsents = "CCPA Consents"
+    static let vendorGrantID = "Vendor Grant ID:"
+    static let rejectedCategoryID = "Rejected Category ID:"
+    static let ccpaStatus = "CCPA Status:"
+    static let campaignsTableViewHeight: CGFloat = 150
+    static let campaignsTableViewExpandedHeight: CGFloat = 450
+    static let iOS14CampaignviewHeight: CGFloat = 350
+    static let campaignsTableViewRowHeight: CGFloat = 300
+    static let iOS14CampaignRowHeight: CGFloat = 200
+    static let headerViewHeight: CGFloat = 44
+    static let campaignsTableView = 1
+    static let campaignListTableview = 2
+    static let pmIdTextField = 11
+    static let pmTabTextField = 12
+    static let targetingKeyTextField = 13
+    static let targetingValueTextField = 14
 
     static func attributedString() -> NSMutableAttributedString {
         let attributedText = NSMutableAttributedString(string: "This will clear data for ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
@@ -55,14 +84,16 @@ struct Alert {
 
     static let messageForPropertyUnavailability = NSLocalizedString("Please enter property details", comment: "")
     static let messageForUnknownError = NSLocalizedString("Something went wrong, please try again", comment: "")
-    static let messageForWrongAccountIdAndPropertyId = NSLocalizedString("Please enter correct Account Id/Property Id or both", comment: "")
+    static let messageForWrongAccountId = NSLocalizedString("Please enter correct Account Id", comment: "")
     static let consentMessageShown = NSLocalizedString("Consent message is already shown", comment: "")
-    static let messageForPropertyDataStored = NSLocalizedString("Property details are already stored", comment: "")
+    static let messageForPropertyStored = NSLocalizedString("Property details are already stored", comment: "")
     static let messageStagingCompaignIncorrectData  = NSLocalizedString("Staging compaign data is incorrect", comment: "")
     static let messageAlreadyShown  = NSLocalizedString("There is no message matching the scenario based on the property info and device local data. \nConsider reviewing the property info or clearing the cookies. \nIf that was intended, just ignore this message.", comment: "")
     static let messageAlreadyShownOrIncorrectCampaign  = NSLocalizedString("Message will not be shown.\nEither the scenario decided that no message should be displayed or \n the property you're creating has a public|staging campaign and you set it as staging|public", comment: "")
     static let messageForEmptyTargetingParamError = NSLocalizedString("Please enter targeting parameter key and value", comment: "")
     static let messageForDeletingPropertyData = NSLocalizedString("Are you sure you want to delete this property?", comment: "")
+    static let messageForSaveCampaign = NSLocalizedString("This will save the campaign data \nDo you want to proceed?", comment: "")
+    static let messageForEmptyPrivacyManagerIDError = NSLocalizedString("Please add privacy manager ID while saving the property", comment: "")
 
     // Alert actions
     static let alert = NSLocalizedString("Alert", comment: "")

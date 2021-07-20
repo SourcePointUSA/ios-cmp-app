@@ -2,7 +2,7 @@
 //  PropertyDetails+CoreDataProperties.swift
 //  
 //
-//  Created by Vilas on 29/12/20.
+//  Created by Vilas on 17/06/21.
 //
 //
 
@@ -18,31 +18,27 @@ extension PropertyDetails {
 
     @NSManaged public var accountId: Int64
     @NSManaged public var authId: String?
-    @NSManaged public var campaign: Int64
     @NSManaged public var creationTimestamp: Date?
     @NSManaged public var messageLanguage: String?
-    @NSManaged public var nativeMessage: Int64
-    @NSManaged public var privacyManagerId: String?
-    @NSManaged public var propertyId: Int64
     @NSManaged public var propertyName: String?
-    @NSManaged public var pmId: String?
-    @NSManaged public var manyTargetingParams: NSSet?
+    @NSManaged public var campaignEnv: Int64
+    @NSManaged public var manyCampaigns: NSSet?
 
 }
 
-// MARK: Generated accessors for manyTargetingParams
+// MARK: Generated accessors for manyCampaigns
 extension PropertyDetails {
 
-    @objc(addManyTargetingParamsObject:)
-    @NSManaged public func addToManyTargetingParams(_ value: TargetingParams)
+    @objc(addManyCampaignsObject:)
+    @NSManaged public func addToManyCampaigns(_ value: CampaignDetails)
 
-    @objc(removeManyTargetingParamsObject:)
-    @NSManaged public func removeFromManyTargetingParams(_ value: TargetingParams)
+    @objc(removeManyCampaignsObject:)
+    @NSManaged public func removeFromManyCampaigns(_ value: CampaignDetails)
 
-    @objc(addManyTargetingParams:)
-    @NSManaged public func addToManyTargetingParams(_ values: NSSet)
+    @objc(addManyCampaigns:)
+    @NSManaged public func addToManyCampaigns(_ values: NSSet)
 
-    @objc(removeManyTargetingParams:)
-    @NSManaged public func removeFromManyTargetingParams(_ values: NSSet)
+    @objc(removeManyCampaigns:)
+    @NSManaged public func removeFromManyCampaigns(_ values: NSSet)
 
 }

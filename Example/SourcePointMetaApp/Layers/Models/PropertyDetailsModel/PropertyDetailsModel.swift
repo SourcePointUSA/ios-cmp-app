@@ -18,17 +18,8 @@ struct PropertyDetailsModel {
     /// It holds account Id.
     let accountId: Int64
 
-    /// It holds property Id.
-    let propertyId: Int64
-
     /// It holds campaign value
-    let campaign: Int64
-
-    /// It holds native message value
-    let nativeMessage: Int64
-
-    /// It holds privacy manager Id
-    let privacyManagerId: String?
+    let campaignEnv: Int64
 
     /// It holds property addded timestamp
     let creationTimestamp: Date
@@ -39,8 +30,7 @@ struct PropertyDetailsModel {
     /// It holds message language value
     let messageLanguage: String?
 
-    /// It holds pm tab value
-    let pmTab: String?
+    let campaignDetails: [CampaignModel]?
 
     // MARK: - Initializers
 
@@ -48,21 +38,16 @@ struct PropertyDetailsModel {
     ///
     /// - Parameters:
     ///   - accountId : Customer accountId
-    ///   - propertyId : propertyId
-    ///   - property: propertyName.
-    ///   - campaign: stage/public.
-    ///   - privacyManagerId: privacyManagerId which is associated with the property
+    ///   - propertyName: propertyName.
+    ///   - campaignEnv: stage/public.
     ///   - creationTimestamp: property added in database time
-    init(accountId: Int64, propertyId: Int64, propertyName: String?, campaign: Int64, privacyManagerId: String?, creationTimestamp: Date, authId: String?, nativeMessage: Int64, messageLanguage: String?, pmTab: String?) {
+    init(accountId: Int64, propertyName: String?, campaignEnv: Int64, creationTimestamp: Date, authId: String?, messageLanguage: String?, campaignDetails: [CampaignModel]?) {
         self.accountId = accountId
-        self.propertyId = propertyId
         self.propertyName = propertyName
-        self.campaign = campaign
-        self.privacyManagerId = privacyManagerId
+        self.campaignEnv = campaignEnv
         self.creationTimestamp = creationTimestamp
         self.authId = authId
-        self.nativeMessage = nativeMessage
         self.messageLanguage = messageLanguage
-        self.pmTab = pmTab
+        self.campaignDetails = campaignDetails
     }
 }

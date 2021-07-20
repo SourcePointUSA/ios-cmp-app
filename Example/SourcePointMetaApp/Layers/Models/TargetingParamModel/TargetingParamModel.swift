@@ -13,10 +13,10 @@ struct TargetingParamModel {
     // MARK: - Instance properties
 
     /// It holds targeting key
-    let targetingKey: String?
+    let targetingKey: String
 
     /// It holds targeting value
-    var targetingValue: String?
+    var targetingValue: String
 
     // MARK: - Initializers
 
@@ -26,7 +26,7 @@ struct TargetingParamModel {
     ///   - targetingKey: targeting key name.
     ///   - targetingValue: targeting value.
 
-    init(targetingParamKey key: String?, targetingParamValue value: String?) {
+    init(targetingParamKey key: String, targetingParamValue value: String) {
         targetingKey = key
         targetingValue = value
     }

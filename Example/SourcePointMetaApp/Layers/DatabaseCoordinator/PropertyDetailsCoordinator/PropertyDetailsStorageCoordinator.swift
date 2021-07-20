@@ -16,7 +16,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     // -Parameters:
     //  - executionCompletionHandler: Completion handler; it takes array of all properties to caller.
     func fetchAllproperties(executionCompletionHandler: @escaping([PropertyDetails]?) -> Void) {
-        let managedObjectContext = self.managedObjectContext
+        let managedObjectContext = managedObjectContext
 
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
@@ -39,7 +39,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     ///   - handler: Callback for completion event.
     func fetch(property propertyManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (PropertyDetails?) -> Void) {
 
-        let managedObjectContext = self.managedObjectContext
+        let managedObjectContext = managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
             dbManager.fetchEntity(withManagedObjectID: propertyManagedObjectID, managedObjectContext: managedObjectContext) { (optionalManagedObject) in
@@ -53,7 +53,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     }
 
     func managedObjectID(completionHandler handler: @escaping (NSManagedObjectID) -> Void) {
-        let managedObjectContext = self.managedObjectContext
+        let managedObjectContext = managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
             dbManager.fetchEntity(PropertyDetails.entityName, sortDescriptors: nil, predicate: nil, managedObjectContext: managedObjectContext, completion: { (optionalManagedObject) in
@@ -67,30 +67,37 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     /// - Parameters:
     ///   - propertyDataModel: propertyData Model.
     ///   - handler: Callback for the completion event.
-    func add(propertyDetails propertyDataModel: PropertyDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func add(propertyDetails propertyDataModel: PropertyDetailsModel, completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
 
-        let managedObjectContext = self.managedObjectContext
+        let managedObjectContext = managedObjectContext
         let creationTimestamp = Date()
 
         if let propertyEntity = NSEntityDescription.insertNewObject(forEntityName: PropertyDetails.entityName, into: managedObjectContext) as? PropertyDetails {
             propertyEntity.accountId = propertyDataModel.accountId
-            propertyEntity.propertyId = propertyDataModel.propertyId
             propertyEntity.propertyName = propertyDataModel.propertyName
-            propertyEntity.campaign = propertyDataModel.campaign
-            propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
             propertyEntity.creationTimestamp = creationTimestamp
-            propertyEntity.nativeMessage = propertyDataModel.nativeMessage
             propertyEntity.messageLanguage = propertyDataModel.messageLanguage
-            propertyEntity.pmId = propertyDataModel.pmTab
+            propertyEntity.campaignEnv = propertyDataModel.campaignEnv
             if let authId = propertyDataModel.authId {
                 propertyEntity.authId = authId
             }
-
-            for targetingParam in targetingParams {
-                if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
-                    targteingParamEntity.key = targetingParam.targetingKey
-                    targteingParamEntity.value = targetingParam.targetingValue
-                    propertyEntity.addToManyTargetingParams(targteingParamEntity)
+            if let allCampaigns = propertyDataModel.campaignDetails {
+                for campaign in allCampaigns {
+                    if let campaignEntity = NSEntityDescription.insertNewObject(forEntityName: CampaignDetails.entityName, into: managedObjectContext) as? CampaignDetails {
+                        campaignEntity.campaignName = campaign.campaignName
+                        campaignEntity.pmID = campaign.pmID
+                        campaignEntity.pmTab = campaign.pmTab
+                        if let targetingParams = campaign.targetingParams {
+                            for targetingParam in targetingParams {
+                                if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
+                                    targteingParamEntity.key = targetingParam.targetingKey
+                                    targteingParamEntity.value = targetingParam.targetingValue
+                                    campaignEntity.addToManyTargetingParams(targteingParamEntity)
+                                }
+                            }
+                        }
+                        propertyEntity.addToManyCampaigns(campaignEntity)
+                    }
                 }
             }
 
@@ -114,36 +121,43 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     ///   - propertyDataModel: property Data Model.
     ///   - managedObjectID: managedObjectID of existing property entity.
     ///   - handler: Callback for the completion event.
-    func update(propertyDetails propertyDataModel: PropertyDetailsModel, targetingParams: [TargetingParamModel], whereManagedObjectID managedObjectID: NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
+    func update(propertyDetails propertyDataModel: PropertyDetailsModel, whereManagedObjectID managedObjectID: NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
 
+        let managedObjectContext = managedObjectContext
         fetch(property: managedObjectID) { (optionalpropertyEntity) in
             if let propertyEntity = optionalpropertyEntity {
-
-                let managedObjectContext = self.managedObjectContext
                 let creationTimestamp = Date()
 
                 //Updating property entity
                 propertyEntity.accountId = propertyDataModel.accountId
-                propertyEntity.propertyId = propertyDataModel.propertyId
                 propertyEntity.propertyName = propertyDataModel.propertyName
-                propertyEntity.campaign = propertyDataModel.campaign
-                propertyEntity.privacyManagerId = propertyDataModel.privacyManagerId
                 propertyEntity.creationTimestamp = creationTimestamp
-                propertyEntity.nativeMessage = propertyDataModel.nativeMessage
                 propertyEntity.messageLanguage = propertyDataModel.messageLanguage
-                propertyEntity.pmId = propertyDataModel.pmTab
+                propertyEntity.campaignEnv = propertyDataModel.campaignEnv
                 if let authId = propertyDataModel.authId {
                     propertyEntity.authId = authId
                 }
-                if let targetingparamsSet = propertyEntity.manyTargetingParams {
-                    propertyEntity.removeFromManyTargetingParams(targetingparamsSet)
+                if let allCampaigns = propertyEntity.manyCampaigns {
+                    propertyEntity.removeFromManyCampaigns(allCampaigns)
                 }
 
-                for targetingParam in targetingParams {
-                    if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
-                        targteingParamEntity.key = targetingParam.targetingKey
-                        targteingParamEntity.value = targetingParam.targetingValue
-                        propertyEntity.addToManyTargetingParams(targteingParamEntity)
+                if let allCampaigns = propertyDataModel.campaignDetails {
+                    for campaign in allCampaigns {
+                        if let campaignEntity = NSEntityDescription.insertNewObject(forEntityName: CampaignDetails.entityName, into: managedObjectContext) as? CampaignDetails {
+                            campaignEntity.campaignName = campaign.campaignName
+                            campaignEntity.pmID = campaign.pmID
+                            campaignEntity.pmTab = campaign.pmTab
+                            if let targetingParams = campaign.targetingParams {
+                                for targetingParam in targetingParams {
+                                    if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
+                                        targteingParamEntity.key = targetingParam.targetingKey
+                                        targteingParamEntity.value = targetingParam.targetingValue
+                                        campaignEntity.addToManyTargetingParams(targteingParamEntity)
+                                    }
+                                }
+                            }
+                            propertyEntity.addToManyCampaigns(campaignEntity)
+                        }
                     }
                 }
 
@@ -153,7 +167,6 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
                     if executionStatus == wasMOCChanged {
                         handler(propertyEntity.objectID, true)
                     } else {
-
                         handler(nil, false)
                     }
                 })
@@ -170,7 +183,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     ///   - handler: Callback for the completion event. Callback has execution status(success/failure) as argument.
     func delete(property propertyManagedObject: NSManagedObject, completionHandler handler : @escaping (Bool) -> Void) {
 
-        let managedObjectContext = self.managedObjectContext
+        let managedObjectContext = managedObjectContext
         let dbManager = DBManager.sharedManager
         managedObjectContext.perform {
             dbManager.deleteEntity(propertyManagedObject, usingMOC: managedObjectContext)
@@ -189,73 +202,27 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     /// - Parameters:
     ///   - propertyDataModel: property Data Model.
     ///   - handler: Callback for the completion event.
-    func  checkExitanceOfData(propertyDetails propertyDataModel: PropertyDetailsModel, targetingParams: [TargetingParamModel], completionHandler handler : @escaping (Bool) -> Void) {
+    func  checkExitanceOfData(propertyDetails propertyDataModel: PropertyDetailsModel, completionHandler handler : @escaping (Bool) -> Void) {
 
         var subPredicates: [NSPredicate] = []
         var subPredicate: NSPredicate = NSPredicate()
-        if let authId = propertyDataModel.authId, let pmId = propertyDataModel.privacyManagerId, let propertyName = propertyDataModel.propertyName, let pmTab = propertyDataModel.pmTab  {
-            subPredicate = NSPredicate(format: "propertyName == %@ AND accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND authId == %@ AND pmId == %@", propertyName, pmId, authId, pmTab)
-        } else if let pmId = propertyDataModel.privacyManagerId, let pmTab = propertyDataModel.pmTab, let propertyName = propertyDataModel.propertyName {
-            subPredicate = NSPredicate(format: "propertyName == %@ AND accountId == \(propertyDataModel.accountId) AND propertyId == \(propertyDataModel.propertyId) AND campaign == \(propertyDataModel.campaign) AND nativeMessage == \(propertyDataModel.nativeMessage) AND privacyManagerId == %@ AND pmId == %@", propertyName, pmId, pmTab)
+        if let authId = propertyDataModel.authId, let propertyName = propertyDataModel.propertyName, let messageLanguage = propertyDataModel.messageLanguage {
+            subPredicate = NSPredicate(format: "propertyName == %@ AND accountId == \(propertyDataModel.accountId) AND authId == %@ AND campaignEnv == \(propertyDataModel.campaignEnv) AND messageLanguage == %@", propertyName, authId, messageLanguage)
+        } else if let propertyName = propertyDataModel.propertyName, let messageLanguage = propertyDataModel.messageLanguage  {
+            subPredicate = NSPredicate(format: "propertyName == %@ AND accountId == \(propertyDataModel.accountId) AND campaignEnv == \(propertyDataModel.campaignEnv) AND messageLanguage == %@", propertyName, messageLanguage)
         }
-
         subPredicates.append(subPredicate)
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: PropertyDetails.entityName)
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: subPredicates)
         do {
             let results = try managedObjectContext.fetch(fetchRequest)
             if results.count > 0 {
-                var storedTargetingParamArray = [TargetingParamModel]()
-                var ispropertyDataStored = false
-                for result in results as! [PropertyDetails] {
-                    if let targetingParamItem = result.manyTargetingParams?.allObjects as! [TargetingParams]?, targetingParamItem.count > 0 {
-                        for targetingParam in targetingParamItem {
-                            let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.key, targetingParamValue: targetingParam.value)
-                            storedTargetingParamArray.append(targetingParamModel)
-                        }
-                        if storedTargetingParamArray.count == targetingParams.count {
-                            let isTargetingParamSame = storedTargetingParamArray.sorted {$0.targetingKey! < $1.targetingKey!} == targetingParams.sorted {$0.targetingKey! < $1.targetingKey!}
-                            if result.messageLanguage == propertyDataModel.messageLanguage {
-                                ispropertyDataStored = isTargetingParamSame
-                            } else {
-                                ispropertyDataStored = false
-                            }
-                            storedTargetingParamArray.removeAll()
-                            break
-                        } else {
-                            ispropertyDataStored = false
-                            storedTargetingParamArray.removeAll()
-                        }
-                    } else if let storedTargetingParamItem = result.manyTargetingParams?.allObjects as! [TargetingParams]?, storedTargetingParamItem.count == 0, targetingParams.count == 0 {
-                        if result.messageLanguage == propertyDataModel.messageLanguage {
-                            ispropertyDataStored = true
-                        }
-                        storedTargetingParamArray.removeAll()
-                        break
-                    }
-                }
-                handler(ispropertyDataStored)
+                handler(true)
             } else {
                 handler(false)
             }
         } catch {
             print(error)
         }
-    }
-}
-
-extension TargetingParamModel: Comparable {
-
-    static func < (lhs: TargetingParamModel, rhs: TargetingParamModel) -> Bool {
-        if let lhsTargetingKey = lhs.targetingKey, let rhsTargetingKey = rhs.targetingKey {
-        return lhsTargetingKey < rhsTargetingKey ||
-            (lhs.targetingKey == rhs.targetingKey && lhsTargetingKey < rhsTargetingKey)
-        }
-        return false
-    }
-
-    static func == (lhs: TargetingParamModel, rhs: TargetingParamModel) -> Bool {
-        return lhs.targetingKey == rhs.targetingKey &&
-            lhs.targetingValue == rhs.targetingValue
     }
 }

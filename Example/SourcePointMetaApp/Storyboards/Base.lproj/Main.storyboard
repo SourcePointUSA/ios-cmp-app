@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hcy-kf-t7M">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hcy-kf-t7M">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Bold.otf">
+            <string>SFProText-Bold</string>
+        </array>
         <array key="SF-Pro-Text-Heavy.otf">
             <string>SFProText-Heavy</string>
         </array>
@@ -27,22 +30,22 @@
         <!--New Property-->
         <scene sceneID="sbr-vP-gOd">
             <objects>
-                <viewController storyboardIdentifier="AddPropertyViewController" id="cyC-sw-8W2" customClass="AddPropertyViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPropertyViewController" id="cyC-sw-8W2" customClass="AddPropertyViewController" customModule="Unified_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ARi-0k-eP1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="900"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="mhW-Wn-4Ou">
-                                <rect key="frame" x="0.0" y="44" width="375" height="856"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="1056"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hS7-WV-dXy" userLabel="contentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="953"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="886"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account ID:" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fa1-sV-qzO">
-                                                <rect key="frame" x="20" y="30" width="100" height="30"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account ID:" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fa1-sV-qzO">
+                                                <rect key="frame" x="20" y="30" width="110" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="accountIDLabel" label="accountIDLabel"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="fa7-11-glj"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" id="Whp-2C-EWl"/>
                                                     <constraint firstAttribute="height" constant="30" id="fdm-vV-zVo"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
@@ -50,7 +53,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Account ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VeY-YI-wzN" userLabel="AccountIDTextfield">
-                                                <rect key="frame" x="125" y="28" width="230" height="34"/>
+                                                <rect key="frame" x="135" y="28" width="220" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="accountIDTextFieldOutlet" label="accountIDTextFieldOutlet"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="L1P-Jt-jHw"/>
@@ -62,28 +65,8 @@
                                                     <outlet property="delegate" destination="cyC-sw-8W2" id="lNq-WO-usy"/>
                                                 </connections>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYc-TX-xHH" userLabel="PropertyId:">
-                                                <rect key="frame" x="20" y="79" width="97" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="propertyIdLabel" label="propertyIdLabel"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="wrz-rX-8ML"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Property Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HoB-pj-18x" userLabel="PropertyIdTextfiled">
-                                                <rect key="frame" x="125" y="77" width="230" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="propertyIdTextFieldOutlet" label="propertyIdTextFieldOutlet"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="cyC-sw-8W2" id="e4b-My-CdZ"/>
-                                                </connections>
-                                            </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGV-0o-HrB" userLabel="Property:">
-                                                <rect key="frame" x="20" y="128" width="97" height="30"/>
+                                                <rect key="frame" x="20" y="79" width="107" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="propertyLabel" label="propertyLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="B94-C3-Bh5"/>
@@ -93,7 +76,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Property Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xLh-rs-wyR" userLabel="PropertyTextfiled">
-                                                <rect key="frame" x="125" y="126" width="230" height="34"/>
+                                                <rect key="frame" x="135" y="77" width="220" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="propertyTextFieldOutlet" label="propertyTextFieldOutlet"/>
                                                 <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -102,8 +85,8 @@
                                                     <outlet property="delegate" destination="cyC-sw-8W2" id="PYN-D2-RUM"/>
                                                 </connections>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auth Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnx-Kc-2mw">
-                                                <rect key="frame" x="20" y="177" width="97" height="30"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auth ID:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnx-Kc-2mw">
+                                                <rect key="frame" x="20" y="128" width="107" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="x3l-RW-w5J"/>
@@ -112,8 +95,8 @@
                                                 <color key="textColor" name="customeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Auth Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T1z-3i-XRG" userLabel="AuthIdTextfield">
-                                                <rect key="frame" x="125" y="175" width="230" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Auth ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T1z-3i-XRG" userLabel="AuthIdTextfield">
+                                                <rect key="frame" x="135" y="126" width="220" height="34"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="authIdTextFieldOutlet" label="authIdTextFieldOutlet"/>
                                                 <color key="textColor" name="customeColor"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
@@ -122,28 +105,8 @@
                                                     <outlet property="delegate" destination="cyC-sw-8W2" id="YO6-nh-LvD"/>
                                                 </connections>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM Id:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-Gx-AGf">
-                                                <rect key="frame" x="20" y="231" width="97" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="9Dm-d6-TJn"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Privacy Manager Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ILg-hD-20L" userLabel="PrivacyManagerId">
-                                                <rect key="frame" x="125" y="229" width="230" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="cyC-sw-8W2" id="7Cr-xY-oE2"/>
-                                                </connections>
-                                            </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Language:" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaP-ib-ada">
-                                                <rect key="frame" x="20" y="280" width="154" height="30"/>
+                                                <rect key="frame" x="20" y="177" width="160.5" height="30"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="4Vt-bf-hN4"/>
@@ -153,7 +116,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Message/PM Language" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dWF-o0-t91" userLabel="SelectMessageLanguage">
-                                                <rect key="frame" x="184" y="278" width="171" height="34"/>
+                                                <rect key="frame" x="190.5" y="175" width="164.5" height="34"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
                                                 <constraints>
@@ -163,8 +126,8 @@
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
-                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLp-tn-rB6" userLabel="DropDown">
-                                                <rect key="frame" x="321" y="278" width="34" height="34"/>
+                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLp-tn-rB6" userLabel="SlectMessageDropDown">
+                                                <rect key="frame" x="321" y="175" width="34" height="34"/>
                                                 <color key="backgroundColor" red="0.78367875647668395" green="0.78367875647668395" blue="0.78367875647668395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="WBa-a3-xjs"/>
@@ -172,125 +135,251 @@
                                                 </constraints>
                                                 <state key="normal" image="dropDown"/>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Staging Campaign: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Yc-bl-D6Y">
-                                                <rect key="frame" x="20" y="327" width="273" height="31"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Staging Campaign: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vez-W0-8mV">
+                                                <rect key="frame" x="20" y="224" width="160.5" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="stagingCampaignLabel" label="stagingCampaignLabel"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="31" id="gCd-6o-gPN"/>
+                                                    <constraint firstAttribute="height" constant="31" id="bnL-BI-feJ"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" name="customeColor"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZdE-5Q-Bgq">
-                                                <rect key="frame" x="301" y="332" width="51" height="21"/>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-fL-Bqm">
+                                                <rect key="frame" x="306" y="229" width="51" height="21"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="isStagingSwitchOutlet" label="isStagingSwitchOutlet"/>
                                                 <connections>
-                                                    <action selector="campaignSwitchButtonAction:" destination="cyC-sw-8W2" eventType="valueChanged" id="q6c-Wr-cIZ"/>
+                                                    <action selector="campaignEnvAction:" destination="cyC-sw-8W2" eventType="touchUpInside" id="s8c-I8-tee"/>
                                                 </connections>
                                             </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Native Message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffk-4T-LVH">
-                                                <rect key="frame" x="20" y="373" width="273" height="31"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="stagingCampaignLabel" label="stagingCampaignLabel"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Campaigns" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qp6-Rb-qfg" userLabel="AddCampaignsLabel">
+                                                <rect key="frame" x="20" y="265" width="335" height="30"/>
+                                                <color key="backgroundColor" red="0.29019607843137252" green="0.36078431372549019" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="targetingparameterlist" label="targetingparameterlist"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="31" id="a8t-uq-X9t"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="c1A-9j-KI5" userLabel="NativeMessage">
-                                                <rect key="frame" x="301" y="373" width="51" height="31"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="nativeMessageSwitchOutlet" label="nativeMessageSwitchOutlet"/>
-                                            </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM Tab" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DrC-mT-4f2">
-                                                <rect key="frame" x="20" y="426" width="154" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="xEy-4X-BZw"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select PM Tab" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mLX-Rd-PQt" userLabel="SelectPMTab">
-                                                <rect key="frame" x="184" y="424" width="171" height="34"/>
-                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="FgU-pb-qsE"/>
-                                                </constraints>
-                                                <color key="textColor" name="customeColor"/>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                            </textField>
-                                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lkI-y0-hUJ" userLabel="PMTabDropDown">
-                                                <rect key="frame" x="321" y="424" width="34" height="34"/>
-                                                <color key="backgroundColor" red="0.78367875649999996" green="0.78367875649999996" blue="0.78367875649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="N4W-Bt-kY4"/>
-                                                    <constraint firstAttribute="width" constant="34" id="cFY-E6-uKb"/>
-                                                </constraints>
-                                                <state key="normal" image="dropDown"/>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting Parameter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QN6-iP-uvT">
-                                                <rect key="frame" x="20" y="473" width="335" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="targetingParametrLabel" label="targetingParametrLabel"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="BTn-cj-XOW"/>
+                                                    <constraint firstAttribute="height" constant="30" id="8ji-J4-zDe"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAT-eK-kxm" userLabel="TargetingKeyLabel">
-                                                <rect key="frame" x="20" y="518" width="46" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="targetingKey" label="targetingKey"/>
+                                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EV7-0E-Q9f" userLabel="Table View - Campaigns">
+                                                <rect key="frame" x="20" y="300" width="335" height="150"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="hWr-eL-2u6"/>
+                                                    <constraint firstAttribute="height" constant="150" id="Jgf-El-vDi"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9xQ-qp-kCe" userLabel="KeyTextfiled">
-                                                <rect key="frame" x="74" y="516" width="281" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="targetingParamKeyTextFieldOutlet" label="targetingParamKeyTextFieldOutlet"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="NKB-ep-hyf"/>
-                                                </constraints>
-                                                <color key="textColor" name="customeColor"/>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignTableViewCell" rowHeight="350" id="5FT-PC-bgJ" customClass="CampaignTableViewCell" customModule="Unified_MetaApp" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="24.5" width="335" height="350"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5FT-PC-bgJ" id="hiM-p2-dcZ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="335" height="350"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDPR PM ID:" textAlignment="natural" lineBreakMode="tailTruncation" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Xss-e6-veX">
+                                                                    <rect key="frame" x="5" y="10" width="110" height="30"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="4I4-1P-RBF"/>
+                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" id="HRY-qN-5ZE"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                                    <color key="textColor" name="customeColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Privacy Manager ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fDH-dh-nXN" userLabel="GDPRPrivacyManagerID">
+                                                                    <rect key="frame" x="120" y="10" width="210" height="34"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="34" id="lFJ-Jd-47W"/>
+                                                                    </constraints>
+                                                                    <color key="textColor" name="customeColor"/>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                                    <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="cyC-sw-8W2" id="MAG-Bw-vHD"/>
+                                                                    </connections>
+                                                                </textField>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM Tab" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNl-86-wQW">
+                                                                    <rect key="frame" x="5" y="61" width="105" height="30"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="yJm-cX-IlG"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                                    <color key="textColor" name="customeColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" tag="12" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select PM Tab" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yQL-6f-qJg" userLabel="SelectPMTab">
+                                                                    <rect key="frame" x="120" y="59" width="210" height="34"/>
+                                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="34" id="lAf-Fg-X2c"/>
+                                                                    </constraints>
+                                                                    <color key="textColor" name="customeColor"/>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                                    <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="cyC-sw-8W2" id="mlS-Kx-oaR"/>
+                                                                    </connections>
+                                                                </textField>
+                                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zxa-Gi-zWx" userLabel="PMTabDropDown">
+                                                                    <rect key="frame" x="296" y="59" width="34" height="34"/>
+                                                                    <color key="backgroundColor" red="0.78367875649999996" green="0.78367875649999996" blue="0.78367875649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="34" id="9ZJ-od-eD7"/>
+                                                                        <constraint firstAttribute="width" constant="34" id="OG9-Ed-1xh"/>
+                                                                    </constraints>
+                                                                    <state key="normal" image="dropDown"/>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Targeting Parameter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsw-EF-ws0">
+                                                                    <rect key="frame" x="0.0" y="110" width="315" height="30"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingParametrLabel" label="targetingParametrLabel"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="dcf-ag-raS"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
+                                                                    <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yFp-3Z-tsE" userLabel="TargetingKeyLabel">
+                                                                    <rect key="frame" x="5" y="155" width="49" height="30"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingKey" label="targetingKey"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="vNU-sr-wSz"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rW2-kJ-bfl" userLabel="KeyTextfiled">
+                                                                    <rect key="frame" x="62" y="153" width="268" height="34"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingParamKeyTextFieldOutlet" label="targetingParamKeyTextFieldOutlet"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="34" id="h1c-kd-h0C"/>
+                                                                    </constraints>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                                    <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="cyC-sw-8W2" id="Pch-eH-4oR"/>
+                                                                    </connections>
+                                                                </textField>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VX-to-v6p" userLabel="TargetingValueLabel">
+                                                                    <rect key="frame" x="5" y="204" width="49" height="30"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingValueLabel" label="targetingValueLabel"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="eeY-L1-Qpc"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vsl-Yo-2Be" userLabel="TargetingValueTextField">
+                                                                    <rect key="frame" x="62" y="202" width="268" height="34"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingParamValueTextFieldOutlet" label="targetingParamValueTextFieldOutlet"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="34" id="reQ-Mq-89e"/>
+                                                                    </constraints>
+                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="cyC-sw-8W2" id="OVb-78-bRB"/>
+                                                                    </connections>
+                                                                </textField>
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Dj-B4-xHj" userLabel="AddTargetingParamButton">
+                                                                    <rect key="frame" x="181" y="256" width="149" height="30"/>
+                                                                    <color key="backgroundColor" red="0.2901960784" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="sjB-4E-MWX"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Heavy" family="SF Pro Text" pointSize="15"/>
+                                                                    <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                    <state key="normal" title="Targeting Param" image="AddIcon">
+                                                                        <color key="titleColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="onTapAddTargetingParamButton:" destination="5FT-PC-bgJ" eventType="touchUpInside" id="JD4-GS-dga"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8G-7S-Gzt" userLabel="SaveCampaignButton">
+                                                                    <rect key="frame" x="5" y="256" width="156" height="30"/>
+                                                                    <color key="backgroundColor" red="0.2901960784" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="IO7-pg-kKb"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="SFProText-Heavy" family="SF Pro Text" pointSize="15"/>
+                                                                    <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                    <state key="normal" title="Save Campaign" image="Done">
+                                                                        <color key="titleColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="onTapSaveCampaignButton:" destination="5FT-PC-bgJ" eventType="touchUpInside" id="M1J-1N-YZy"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="Vsl-Yo-2Be" firstAttribute="leading" secondItem="3VX-to-v6p" secondAttribute="trailing" constant="8" symbolic="YES" id="0bs-PT-FHe"/>
+                                                                <constraint firstItem="eNl-86-wQW" firstAttribute="centerY" secondItem="yQL-6f-qJg" secondAttribute="centerY" id="0zV-P2-za6"/>
+                                                                <constraint firstItem="E8G-7S-Gzt" firstAttribute="width" secondItem="4Dj-B4-xHj" secondAttribute="width" multiplier="1.04762" id="4Sa-lZ-SSm"/>
+                                                                <constraint firstItem="E8G-7S-Gzt" firstAttribute="leading" secondItem="hiM-p2-dcZ" secondAttribute="leading" constant="5" id="AT5-57-zad"/>
+                                                                <constraint firstItem="eNl-86-wQW" firstAttribute="leading" secondItem="hiM-p2-dcZ" secondAttribute="leading" constant="5" id="AX2-PM-HyA"/>
+                                                                <constraint firstItem="yFp-3Z-tsE" firstAttribute="top" secondItem="lsw-EF-ws0" secondAttribute="bottom" constant="15" id="AtB-7E-p5V"/>
+                                                                <constraint firstItem="fDH-dh-nXN" firstAttribute="top" secondItem="hiM-p2-dcZ" secondAttribute="top" constant="10" id="EJT-PQ-JVy"/>
+                                                                <constraint firstAttribute="trailing" secondItem="fDH-dh-nXN" secondAttribute="trailing" constant="5" id="GqP-Jj-L1z"/>
+                                                                <constraint firstItem="Vsl-Yo-2Be" firstAttribute="centerY" secondItem="3VX-to-v6p" secondAttribute="centerY" id="M05-SS-B7S"/>
+                                                                <constraint firstAttribute="trailing" secondItem="4Dj-B4-xHj" secondAttribute="trailing" constant="5" id="Msc-DG-8Nd"/>
+                                                                <constraint firstItem="Vsl-Yo-2Be" firstAttribute="top" secondItem="rW2-kJ-bfl" secondAttribute="bottom" constant="15" id="N2b-Fp-QKh"/>
+                                                                <constraint firstItem="rW2-kJ-bfl" firstAttribute="leading" secondItem="Vsl-Yo-2Be" secondAttribute="leading" id="PcH-zW-6YN"/>
+                                                                <constraint firstItem="rW2-kJ-bfl" firstAttribute="centerY" secondItem="yFp-3Z-tsE" secondAttribute="centerY" id="Q5G-GT-3Pl"/>
+                                                                <constraint firstAttribute="trailing" secondItem="yQL-6f-qJg" secondAttribute="trailing" constant="5" id="QiZ-mp-t8A"/>
+                                                                <constraint firstItem="4Dj-B4-xHj" firstAttribute="leading" secondItem="E8G-7S-Gzt" secondAttribute="trailing" constant="20" id="RAp-dt-vdn"/>
+                                                                <constraint firstItem="rW2-kJ-bfl" firstAttribute="leading" secondItem="yFp-3Z-tsE" secondAttribute="trailing" constant="8" symbolic="YES" id="RHM-S2-PbH"/>
+                                                                <constraint firstItem="Xss-e6-veX" firstAttribute="top" secondItem="hiM-p2-dcZ" secondAttribute="top" constant="10" id="Rie-K0-gWG"/>
+                                                                <constraint firstItem="yQL-6f-qJg" firstAttribute="top" secondItem="fDH-dh-nXN" secondAttribute="bottom" constant="15" id="UZh-Hs-5tk"/>
+                                                                <constraint firstItem="lsw-EF-ws0" firstAttribute="leading" secondItem="hiM-p2-dcZ" secondAttribute="leading" id="Yo1-Sp-MV1"/>
+                                                                <constraint firstItem="E8G-7S-Gzt" firstAttribute="centerY" secondItem="4Dj-B4-xHj" secondAttribute="centerY" id="aVe-0B-nn3"/>
+                                                                <constraint firstAttribute="trailing" secondItem="rW2-kJ-bfl" secondAttribute="trailing" constant="5" id="dAy-HP-Rvc"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Zxa-Gi-zWx" secondAttribute="trailing" constant="5" id="dPj-hL-XAa"/>
+                                                                <constraint firstItem="4Dj-B4-xHj" firstAttribute="top" secondItem="Vsl-Yo-2Be" secondAttribute="bottom" constant="20" id="hiK-ob-kXh"/>
+                                                                <constraint firstItem="yFp-3Z-tsE" firstAttribute="leading" secondItem="hiM-p2-dcZ" secondAttribute="leading" constant="5" id="i04-4s-ImH"/>
+                                                                <constraint firstItem="fDH-dh-nXN" firstAttribute="leading" secondItem="Xss-e6-veX" secondAttribute="trailing" constant="5" id="jNx-yo-n8d"/>
+                                                                <constraint firstItem="yQL-6f-qJg" firstAttribute="leading" secondItem="eNl-86-wQW" secondAttribute="trailing" constant="10" id="lPa-tv-XE5"/>
+                                                                <constraint firstItem="Zxa-Gi-zWx" firstAttribute="top" secondItem="fDH-dh-nXN" secondAttribute="bottom" constant="15" id="mXP-Ww-enJ"/>
+                                                                <constraint firstItem="yQL-6f-qJg" firstAttribute="leading" secondItem="fDH-dh-nXN" secondAttribute="leading" id="niI-Gv-YFd"/>
+                                                                <constraint firstItem="Xss-e6-veX" firstAttribute="leading" secondItem="hiM-p2-dcZ" secondAttribute="leading" constant="5" id="oqb-Pf-WOL"/>
+                                                                <constraint firstItem="lsw-EF-ws0" firstAttribute="top" secondItem="hiM-p2-dcZ" secondAttribute="top" constant="110" id="saR-NE-U33"/>
+                                                                <constraint firstItem="3VX-to-v6p" firstAttribute="leading" secondItem="hiM-p2-dcZ" secondAttribute="leading" constant="5" id="uqc-xX-JLT"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Vsl-Yo-2Be" secondAttribute="trailing" constant="5" id="xpF-lR-V6H"/>
+                                                                <constraint firstAttribute="trailing" secondItem="lsw-EF-ws0" secondAttribute="trailing" constant="20" symbolic="YES" id="yUH-qa-Rqh"/>
+                                                                <constraint firstItem="Vsl-Yo-2Be" firstAttribute="height" secondItem="rW2-kJ-bfl" secondAttribute="height" id="ziD-5p-Gge"/>
+                                                            </constraints>
+                                                        </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="pmIDLabel" destination="Xss-e6-veX" id="1QQ-F7-NNe"/>
+                                                            <outlet property="pmTabButton" destination="Zxa-Gi-zWx" id="u8f-og-U5D"/>
+                                                            <outlet property="pmTabLabel" destination="eNl-86-wQW" id="DvW-0f-aHn"/>
+                                                            <outlet property="pmTabTextField" destination="yQL-6f-qJg" id="PGM-hk-aF1"/>
+                                                            <outlet property="privacyManagerTextField" destination="fDH-dh-nXN" id="zEy-vQ-B2e"/>
+                                                            <outlet property="targetingParamKeyTextfield" destination="rW2-kJ-bfl" id="Th3-OY-huA"/>
+                                                            <outlet property="targetingParamTopConstraint" destination="saR-NE-U33" id="80X-Ey-GOC"/>
+                                                            <outlet property="targetingParamValueTextField" destination="Vsl-Yo-2Be" id="cXU-5L-g5C"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
                                                 <connections>
-                                                    <outlet property="delegate" destination="cyC-sw-8W2" id="SSF-QX-iC6"/>
+                                                    <outlet property="dataSource" destination="cyC-sw-8W2" id="Hjg-W7-Bfh"/>
+                                                    <outlet property="delegate" destination="cyC-sw-8W2" id="4br-zb-EzK"/>
                                                 </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c67-NQ-pCu" userLabel="TargetingValueLabel">
-                                                <rect key="frame" x="20" y="562" width="46" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="targetingValueLabel" label="targetingValueLabel"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="q6g-Ct-oiV"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                                <color key="textColor" name="customeColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V8G-su-8BI" userLabel="TargetingValueTextField">
-                                                <rect key="frame" x="74" y="560" width="281" height="34"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="targetingParamValueTextFieldOutlet" label="targetingParamValueTextFieldOutlet"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="34" id="UhL-wi-Id9"/>
-                                                </constraints>
-                                                <color key="textColor" name="customeColor"/>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="cyC-sw-8W2" id="d30-dX-yve"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting Parameter List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8k-6P-4hr">
-                                                <rect key="frame" x="20" y="619" width="267" height="30"/>
+                                            </tableView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campaigns List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8k-6P-4hr">
+                                                <rect key="frame" x="20" y="453" width="335" height="30"/>
+                                                <color key="backgroundColor" red="0.2901960784" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="targetingparameterlist" label="targetingparameterlist"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="P2y-3Y-kgb"/>
@@ -299,88 +388,108 @@
                                                 <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IC5-sE-xTQ" userLabel="AddButton">
-                                                <rect key="frame" x="295" y="619" width="60" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="FkQ-KB-bzP"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="xCE-tU-Nj1"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFProText-Heavy" family="SF Pro Text" pointSize="14"/>
-                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="Add" image="AddIcon">
-                                                    <color key="titleColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="addTargetingParamAction:" destination="cyC-sw-8W2" eventType="touchUpInside" id="MKL-wQ-BrJ"/>
-                                                </connections>
-                                            </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0iU-bH-K9k" userLabel="lineView">
-                                                <rect key="frame" x="20" y="651" width="335" height="1"/>
+                                                <rect key="frame" x="20" y="484" width="335" height="1"/>
                                                 <color key="backgroundColor" name="customeColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="3hZ-Ol-M4f"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qxB-D1-vpN" userLabel="TargetingParamListView">
-                                                <rect key="frame" x="0.0" y="653" width="375" height="300"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qxB-D1-vpN" userLabel="CampaignListView">
+                                                <rect key="frame" x="0.0" y="486" width="375" height="400"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Targeting parameter data is not added" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUc-zL-t7J" userLabel="NoDataLabel">
-                                                        <rect key="frame" x="59.5" y="141" width="256" height="18"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campaigns data is not added" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUc-zL-t7J" userLabel="NoDataLabel">
+                                                        <rect key="frame" x="84.5" y="191" width="206.5" height="18"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                         <color key="textColor" name="customeColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-tI-auQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                                                    <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JeP-tI-auQ" userLabel="CampaignTableview">
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <prototypes>
-                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="targetingParamCell" id="P4G-ju-zL2" customClass="TargetingParamCell" customModule="GDPR_MetaApp" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignListCell" rowHeight="220" id="P4G-ju-zL2" customClass="CampaignListCell" customModule="Unified_MetaApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="24.5" width="375" height="220"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P4G-ju-zL2" id="ea8-m7-aEF">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CMP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JI8-uA-WT7">
-                                                                            <rect key="frame" x="20" y="10" width="307" height="20"/>
-                                                                            <accessibility key="accessibilityConfiguration" identifier="targetingParamName" label="targetingParamName"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <color key="textColor" name="customeColor"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDPR Campaign" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etQ-zV-Tm9">
+                                                                            <rect key="frame" x="118" y="10" width="139.5" height="20"/>
+                                                                            <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="17"/>
+                                                                            <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="maR-Hl-J9w" userLabel="DeleteButton">
-                                                                            <rect key="frame" x="335" y="12" width="20" height="20"/>
-                                                                            <accessibility key="accessibilityConfiguration" identifier="DeleteButton" label="DeleteButton"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PMIDValue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gl8-vg-MNh">
+                                                                            <rect key="frame" x="20" y="40" width="335" height="20"/>
+                                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PMTabValue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcB-T2-vOV">
+                                                                            <rect key="frame" x="20" y="70" width="335" height="20"/>
+                                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Targeting Parameter list" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CxI-9q-PgN">
+                                                                            <rect key="frame" x="20" y="100" width="335" height="75"/>
+                                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="20" id="jkH-RO-CNN"/>
-                                                                                <constraint firstAttribute="width" constant="20" id="leT-wp-wFk"/>
+                                                                                <constraint firstAttribute="height" constant="75" id="xfm-Bl-WId"/>
                                                                             </constraints>
-                                                                            <state key="normal" image="cancel">
-                                                                                <color key="titleColor" name="customeColor"/>
+                                                                            <color key="textColor" systemColor="labelColor"/>
+                                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                                        </textView>
+                                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lmf-Uy-3Ea" userLabel="DeleteCampaign">
+                                                                            <rect key="frame" x="50" y="185" width="275" height="30"/>
+                                                                            <color key="backgroundColor" red="0.2901960784" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                            <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="30" id="JbM-iB-ubI"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" name="SFProText-Heavy" family="SF Pro Text" pointSize="18"/>
+                                                                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                            <state key="normal" title="Delete Campaign">
+                                                                                <color key="titleColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                             </state>
                                                                             <connections>
-                                                                                <action selector="deleteTargetingparamAction:" destination="P4G-ju-zL2" eventType="touchUpInside" id="c5f-27-use"/>
+                                                                                <action selector="onTapDeleteCampaignButton:" destination="P4G-ju-zL2" eventType="touchUpInside" id="UWR-Cc-csF"/>
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <constraints>
-                                                                        <constraint firstItem="JI8-uA-WT7" firstAttribute="top" secondItem="ea8-m7-aEF" secondAttribute="top" constant="10" id="MZC-tz-Nrf"/>
-                                                                        <constraint firstItem="maR-Hl-J9w" firstAttribute="top" secondItem="ea8-m7-aEF" secondAttribute="top" constant="12" id="eEL-HI-405"/>
-                                                                        <constraint firstItem="JI8-uA-WT7" firstAttribute="leading" secondItem="ea8-m7-aEF" secondAttribute="leading" constant="20" id="exd-Mq-rnS"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="maR-Hl-J9w" secondAttribute="trailing" constant="20" id="ifu-jT-2IS"/>
-                                                                        <constraint firstItem="maR-Hl-J9w" firstAttribute="leading" secondItem="JI8-uA-WT7" secondAttribute="trailing" constant="8" symbolic="YES" id="nrT-Tt-wnu"/>
+                                                                        <constraint firstItem="mcB-T2-vOV" firstAttribute="top" secondItem="gl8-vg-MNh" secondAttribute="bottom" constant="10" id="8Q5-tW-5QU"/>
+                                                                        <constraint firstItem="gl8-vg-MNh" firstAttribute="leading" secondItem="ea8-m7-aEF" secondAttribute="leading" constant="20" id="8of-1H-Nyz"/>
+                                                                        <constraint firstItem="gl8-vg-MNh" firstAttribute="top" secondItem="etQ-zV-Tm9" secondAttribute="bottom" constant="10" id="BNM-JF-Cmo"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="Lmf-Uy-3Ea" secondAttribute="bottom" constant="5" id="GSG-eq-ZXC"/>
+                                                                        <constraint firstItem="etQ-zV-Tm9" firstAttribute="centerX" secondItem="ea8-m7-aEF" secondAttribute="centerX" id="IUD-B1-USg"/>
+                                                                        <constraint firstItem="etQ-zV-Tm9" firstAttribute="top" secondItem="ea8-m7-aEF" secondAttribute="top" constant="10" id="Je9-KH-p3U"/>
+                                                                        <constraint firstItem="Lmf-Uy-3Ea" firstAttribute="centerX" secondItem="ea8-m7-aEF" secondAttribute="centerX" id="Qmt-un-bXn"/>
+                                                                        <constraint firstItem="CxI-9q-PgN" firstAttribute="top" secondItem="etQ-zV-Tm9" secondAttribute="bottom" constant="70" id="QvM-US-A3W"/>
+                                                                        <constraint firstItem="CxI-9q-PgN" firstAttribute="leading" secondItem="ea8-m7-aEF" secondAttribute="leading" constant="20" id="Uk4-l7-efu"/>
+                                                                        <constraint firstItem="mcB-T2-vOV" firstAttribute="leading" secondItem="ea8-m7-aEF" secondAttribute="leading" constant="20" id="iK4-Dm-yuM"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="mcB-T2-vOV" secondAttribute="trailing" constant="20" id="jwY-O7-60i"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="gl8-vg-MNh" secondAttribute="trailing" constant="20" id="lUo-rr-ooI"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="Lmf-Uy-3Ea" secondAttribute="trailing" constant="50" id="pdf-1G-WRX"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="CxI-9q-PgN" secondAttribute="trailing" constant="20" id="yWB-cG-3jO"/>
                                                                     </constraints>
                                                                 </tableViewCellContentView>
                                                                 <connections>
-                                                                    <outlet property="targetingParamLabel" destination="JI8-uA-WT7" id="OjG-TC-5Jf"/>
+                                                                    <outlet property="campaignNameLabel" destination="etQ-zV-Tm9" id="Yld-6F-zfy"/>
+                                                                    <outlet property="pmIDLabel" destination="gl8-vg-MNh" id="TFB-YG-exz"/>
+                                                                    <outlet property="pmTabLabel" destination="mcB-T2-vOV" id="kw2-iM-uRH"/>
+                                                                    <outlet property="targetingParamTextView" destination="CxI-9q-PgN" id="9Fj-g6-s02"/>
+                                                                    <outlet property="targetingParamTopConstraint" destination="QvM-US-A3W" id="D5f-oJ-FOk"/>
                                                                 </connections>
                                                             </tableViewCell>
                                                         </prototypes>
                                                         <connections>
-                                                            <outlet property="dataSource" destination="cyC-sw-8W2" id="byz-IM-bRP"/>
-                                                            <outlet property="delegate" destination="cyC-sw-8W2" id="9vT-hk-wWe"/>
+                                                            <outlet property="dataSource" destination="cyC-sw-8W2" id="4og-vT-wvC"/>
+                                                            <outlet property="delegate" destination="cyC-sw-8W2" id="vHv-yA-Leq"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
@@ -390,101 +499,60 @@
                                                     <constraint firstAttribute="trailing" secondItem="JeP-tI-auQ" secondAttribute="trailing" id="I0K-n7-BRD"/>
                                                     <constraint firstItem="nUc-zL-t7J" firstAttribute="centerY" secondItem="qxB-D1-vpN" secondAttribute="centerY" id="M53-bE-ILU"/>
                                                     <constraint firstItem="JeP-tI-auQ" firstAttribute="leading" secondItem="qxB-D1-vpN" secondAttribute="leading" id="XSX-NL-Gsb"/>
-                                                    <constraint firstAttribute="height" constant="300" id="jX6-bN-ovA"/>
+                                                    <constraint firstAttribute="height" constant="400" id="jX6-bN-ovA"/>
                                                     <constraint firstAttribute="bottom" secondItem="JeP-tI-auQ" secondAttribute="bottom" id="rmF-9T-ZNL"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" name="screenColor"/>
                                         <constraints>
-                                            <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="leading" secondItem="0Yc-bl-D6Y" secondAttribute="trailing" constant="8" symbolic="YES" id="0fD-cK-HX4"/>
-                                            <constraint firstItem="QN6-iP-uvT" firstAttribute="top" secondItem="mLX-Rd-PQt" secondAttribute="bottom" constant="15" id="3iC-tK-2Hj"/>
-                                            <constraint firstItem="0Yc-bl-D6Y" firstAttribute="top" secondItem="dWF-o0-t91" secondAttribute="bottom" constant="15" id="42y-9i-WMF"/>
+                                            <constraint firstItem="vLp-tn-rB6" firstAttribute="top" secondItem="T1z-3i-XRG" secondAttribute="bottom" constant="15" id="2Ww-Wk-FiI"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="yGV-0o-HrB" secondAttribute="trailing" constant="8" symbolic="YES" id="4Bt-8u-xgX"/>
-                                            <constraint firstAttribute="trailing" secondItem="HoB-pj-18x" secondAttribute="trailing" constant="20" id="62Q-GM-7rk"/>
-                                            <constraint firstItem="c1A-9j-KI5" firstAttribute="leading" secondItem="Ffk-4T-LVH" secondAttribute="trailing" constant="8" symbolic="YES" id="62b-fl-xU0"/>
-                                            <constraint firstItem="DrC-mT-4f2" firstAttribute="width" secondItem="eaP-ib-ada" secondAttribute="width" id="6TV-wd-N1x"/>
-                                            <constraint firstAttribute="trailing" secondItem="ZdE-5Q-Bgq" secondAttribute="trailing" constant="25" id="6WS-nS-blX"/>
-                                            <constraint firstItem="pAT-eK-kxm" firstAttribute="top" secondItem="QN6-iP-uvT" secondAttribute="bottom" constant="15" id="6n9-YB-Hc3"/>
-                                            <constraint firstItem="9xQ-qp-kCe" firstAttribute="centerY" secondItem="pAT-eK-kxm" secondAttribute="centerY" id="6ya-r2-rjf"/>
                                             <constraint firstItem="fa1-sV-qzO" firstAttribute="top" secondItem="hS7-WV-dXy" secondAttribute="top" constant="30" id="7Df-yd-bku"/>
-                                            <constraint firstItem="ILg-hD-20L" firstAttribute="top" secondItem="T1z-3i-XRG" secondAttribute="bottom" constant="20" id="7pc-cd-qvx"/>
                                             <constraint firstItem="VeY-YI-wzN" firstAttribute="centerY" secondItem="fa1-sV-qzO" secondAttribute="centerY" id="95a-8s-jAj"/>
-                                            <constraint firstItem="V8G-su-8BI" firstAttribute="leading" secondItem="c67-NQ-pCu" secondAttribute="trailing" constant="8" symbolic="YES" id="9IC-j6-1LG"/>
                                             <constraint firstAttribute="trailing" secondItem="0iU-bH-K9k" secondAttribute="trailing" constant="20" id="AP8-vD-PqA"/>
-                                            <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="centerY" secondItem="0Yc-bl-D6Y" secondAttribute="centerY" id="AU0-zo-pvR"/>
-                                            <constraint firstAttribute="trailing" secondItem="mLX-Rd-PQt" secondAttribute="trailing" constant="20" id="An0-Tm-7m8"/>
                                             <constraint firstItem="fnx-Kc-2mw" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="CPH-MD-VMI"/>
                                             <constraint firstAttribute="trailing" secondItem="xLh-rs-wyR" secondAttribute="trailing" constant="20" id="Eyw-uG-2ii"/>
-                                            <constraint firstItem="pAT-eK-kxm" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="FcK-uL-uCi"/>
-                                            <constraint firstItem="0Yc-bl-D6Y" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="HEN-V1-XKm"/>
+                                            <constraint firstAttribute="trailing" secondItem="Qp6-Rb-qfg" secondAttribute="trailing" constant="20" symbolic="YES" id="G0A-Y5-hg7"/>
+                                            <constraint firstItem="Vez-W0-8mV" firstAttribute="top" secondItem="dWF-o0-t91" secondAttribute="bottom" constant="15" id="H2H-6I-JxH"/>
                                             <constraint firstItem="dWF-o0-t91" firstAttribute="leading" secondItem="eaP-ib-ada" secondAttribute="trailing" constant="10" id="HSH-4H-EAr"/>
-                                            <constraint firstAttribute="trailing" secondItem="QN6-iP-uvT" secondAttribute="trailing" constant="20" symbolic="YES" id="I3D-TQ-gmq"/>
                                             <constraint firstItem="qxB-D1-vpN" firstAttribute="top" secondItem="0iU-bH-K9k" secondAttribute="bottom" constant="1" id="Jew-DO-hcL"/>
+                                            <constraint firstItem="Vez-W0-8mV" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="K4p-3s-tiq"/>
                                             <constraint firstAttribute="trailing" secondItem="dWF-o0-t91" secondAttribute="trailing" constant="20" id="K9d-wa-PM3"/>
-                                            <constraint firstItem="Ffk-4T-LVH" firstAttribute="top" secondItem="0Yc-bl-D6Y" secondAttribute="bottom" constant="15" id="KCt-ry-GfI"/>
-                                            <constraint firstItem="DrC-mT-4f2" firstAttribute="centerY" secondItem="mLX-Rd-PQt" secondAttribute="centerY" id="KVy-ww-Kcc"/>
-                                            <constraint firstItem="T1z-3i-XRG" firstAttribute="height" secondItem="ILg-hD-20L" secondAttribute="height" id="KeP-zf-h1F"/>
-                                            <constraint firstItem="9xQ-qp-kCe" firstAttribute="leading" secondItem="pAT-eK-kxm" secondAttribute="trailing" constant="8" symbolic="YES" id="Kf9-pQ-B1K"/>
-                                            <constraint firstItem="VeY-YI-wzN" firstAttribute="height" secondItem="HoB-pj-18x" secondAttribute="height" id="LYL-pf-ppR"/>
-                                            <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="HoB-pj-18x" secondAttribute="leading" id="MCh-oF-Uob"/>
                                             <constraint firstItem="0iU-bH-K9k" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="MhH-z5-yAG"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="centerY" secondItem="yGV-0o-HrB" secondAttribute="centerY" id="NAF-yd-ozu"/>
-                                            <constraint firstItem="NYc-TX-xHH" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="NG1-eX-sdJ"/>
+                                            <constraint firstItem="I8k-6P-4hr" firstAttribute="top" secondItem="EV7-0E-Q9f" secondAttribute="bottom" constant="3" id="PYu-C5-VMl"/>
                                             <constraint firstItem="T1z-3i-XRG" firstAttribute="leading" secondItem="fnx-Kc-2mw" secondAttribute="trailing" constant="8" symbolic="YES" id="RLR-3A-lMh"/>
-                                            <constraint firstItem="c1A-9j-KI5" firstAttribute="centerY" secondItem="Ffk-4T-LVH" secondAttribute="centerY" id="Rdh-ho-VDG"/>
-                                            <constraint firstItem="V8G-su-8BI" firstAttribute="height" secondItem="9xQ-qp-kCe" secondAttribute="height" id="SEB-fl-JIj"/>
-                                            <constraint firstItem="IC5-sE-xTQ" firstAttribute="top" secondItem="V8G-su-8BI" secondAttribute="bottom" constant="25" id="Syd-Wj-hBg"/>
                                             <constraint firstItem="eaP-ib-ada" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="UBW-O2-To3"/>
-                                            <constraint firstItem="HoB-pj-18x" firstAttribute="centerY" secondItem="NYc-TX-xHH" secondAttribute="centerY" id="VmF-OX-rYM"/>
                                             <constraint firstItem="qxB-D1-vpN" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" id="WPy-h2-nl2"/>
-                                            <constraint firstItem="I8k-6P-4hr" firstAttribute="top" secondItem="V8G-su-8BI" secondAttribute="bottom" constant="25" id="X0Z-Pw-BrC"/>
-                                            <constraint firstAttribute="trailing" secondItem="V8G-su-8BI" secondAttribute="trailing" constant="20" id="XOV-zy-ebr"/>
-                                            <constraint firstItem="lkI-y0-hUJ" firstAttribute="top" secondItem="c1A-9j-KI5" secondAttribute="bottom" constant="20" id="XsT-er-U7l"/>
-                                            <constraint firstItem="c1A-9j-KI5" firstAttribute="top" secondItem="ZdE-5Q-Bgq" secondAttribute="bottom" constant="20" id="YLy-yW-ZAc"/>
-                                            <constraint firstAttribute="trailing" secondItem="c1A-9j-KI5" secondAttribute="trailing" constant="25" id="YO0-lK-62P"/>
                                             <constraint firstAttribute="trailing" secondItem="vLp-tn-rB6" secondAttribute="trailing" constant="20" id="Yep-vD-9Xi"/>
-                                            <constraint firstItem="mLX-Rd-PQt" firstAttribute="top" secondItem="c1A-9j-KI5" secondAttribute="bottom" constant="20" id="Z5s-fN-bZ0"/>
                                             <constraint firstItem="I8k-6P-4hr" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="ZKL-l1-cnM"/>
-                                            <constraint firstItem="ZdE-5Q-Bgq" firstAttribute="top" secondItem="dWF-o0-t91" secondAttribute="bottom" constant="20" id="asY-a1-oUk"/>
-                                            <constraint firstItem="lJg-Gx-AGf" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="b3U-oA-vQR"/>
-                                            <constraint firstItem="DrC-mT-4f2" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="bQO-Fh-8Cy"/>
-                                            <constraint firstAttribute="trailing" secondItem="IC5-sE-xTQ" secondAttribute="trailing" constant="20" id="dQz-gS-loS"/>
+                                            <constraint firstItem="xLh-rs-wyR" firstAttribute="leading" secondItem="VeY-YI-wzN" secondAttribute="leading" id="bgZ-Gl-UAI"/>
+                                            <constraint firstItem="EV7-0E-Q9f" firstAttribute="top" secondItem="Qp6-Rb-qfg" secondAttribute="bottom" constant="5" id="cri-mP-wxD"/>
+                                            <constraint firstItem="eCd-fL-Bqm" firstAttribute="top" secondItem="dWF-o0-t91" secondAttribute="bottom" constant="20" id="d8p-sP-enn"/>
                                             <constraint firstItem="eaP-ib-ada" firstAttribute="centerY" secondItem="dWF-o0-t91" secondAttribute="centerY" id="dto-dw-ZI0"/>
-                                            <constraint firstItem="xLh-rs-wyR" firstAttribute="top" secondItem="HoB-pj-18x" secondAttribute="bottom" constant="15" id="eJl-xz-uHM"/>
-                                            <constraint firstItem="vLp-tn-rB6" firstAttribute="top" secondItem="ILg-hD-20L" secondAttribute="bottom" constant="15" id="ecK-Uf-zSv"/>
-                                            <constraint firstItem="V8G-su-8BI" firstAttribute="centerY" secondItem="c67-NQ-pCu" secondAttribute="centerY" id="fHf-Lg-fsQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="I8k-6P-4hr" secondAttribute="trailing" constant="20" symbolic="YES" id="e1u-Jn-6eq"/>
                                             <constraint firstItem="xLh-rs-wyR" firstAttribute="height" secondItem="T1z-3i-XRG" secondAttribute="height" id="gYg-Qb-H0N"/>
-                                            <constraint firstItem="c67-NQ-pCu" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="gfY-7a-waR"/>
-                                            <constraint firstAttribute="trailing" secondItem="lkI-y0-hUJ" secondAttribute="trailing" constant="20" id="gjv-m9-EfZ"/>
-                                            <constraint firstItem="IC5-sE-xTQ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="I8k-6P-4hr" secondAttribute="trailing" constant="8" symbolic="YES" id="gkt-2w-Kc6"/>
-                                            <constraint firstItem="ILg-hD-20L" firstAttribute="leading" secondItem="lJg-Gx-AGf" secondAttribute="trailing" constant="8" symbolic="YES" id="gwu-Ys-OUl"/>
-                                            <constraint firstItem="0iU-bH-K9k" firstAttribute="top" secondItem="IC5-sE-xTQ" secondAttribute="bottom" constant="2" id="hYh-7J-uhx"/>
                                             <constraint firstItem="VeY-YI-wzN" firstAttribute="leading" secondItem="fa1-sV-qzO" secondAttribute="trailing" constant="5" id="i7w-6W-ONS"/>
-                                            <constraint firstItem="dWF-o0-t91" firstAttribute="top" secondItem="ILg-hD-20L" secondAttribute="bottom" constant="15" id="iuy-ch-o5d"/>
                                             <constraint firstAttribute="trailing" secondItem="T1z-3i-XRG" secondAttribute="trailing" constant="20" id="jfJ-P1-3OM"/>
-                                            <constraint firstAttribute="trailing" secondItem="9xQ-qp-kCe" secondAttribute="trailing" constant="20" id="kpb-GW-lB0"/>
                                             <constraint firstAttribute="trailing" secondItem="qxB-D1-vpN" secondAttribute="trailing" id="lfL-P4-NS4"/>
-                                            <constraint firstItem="9xQ-qp-kCe" firstAttribute="leading" secondItem="V8G-su-8BI" secondAttribute="leading" id="nDM-dp-CS5"/>
-                                            <constraint firstItem="V8G-su-8BI" firstAttribute="top" secondItem="9xQ-qp-kCe" secondAttribute="bottom" constant="10" id="okk-ok-6ef"/>
-                                            <constraint firstItem="HoB-pj-18x" firstAttribute="top" secondItem="VeY-YI-wzN" secondAttribute="bottom" constant="15" id="p5i-hd-HiR"/>
+                                            <constraint firstItem="Vez-W0-8mV" firstAttribute="centerY" secondItem="eCd-fL-Bqm" secondAttribute="centerY" id="mnE-j4-e5z"/>
+                                            <constraint firstItem="0iU-bH-K9k" firstAttribute="top" secondItem="I8k-6P-4hr" secondAttribute="bottom" constant="1" id="n14-jD-7oS"/>
+                                            <constraint firstItem="EV7-0E-Q9f" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="oCB-fI-VoZ"/>
                                             <constraint firstItem="yGV-0o-HrB" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="qAQ-WI-OxH"/>
-                                            <constraint firstItem="ILg-hD-20L" firstAttribute="leading" secondItem="T1z-3i-XRG" secondAttribute="leading" id="qFd-Gf-SBL"/>
-                                            <constraint firstItem="Ffk-4T-LVH" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="rYB-RG-ngD"/>
-                                            <constraint firstItem="HoB-pj-18x" firstAttribute="leading" secondItem="VeY-YI-wzN" secondAttribute="leading" id="rr2-4X-ZtL"/>
+                                            <constraint firstAttribute="trailing" secondItem="EV7-0E-Q9f" secondAttribute="trailing" constant="20" id="qcD-QQ-clo"/>
+                                            <constraint firstItem="xLh-rs-wyR" firstAttribute="top" secondItem="VeY-YI-wzN" secondAttribute="bottom" constant="15" id="rSW-LA-qgs"/>
                                             <constraint firstAttribute="bottom" secondItem="qxB-D1-vpN" secondAttribute="bottom" id="s4J-es-8Xe"/>
-                                            <constraint firstAttribute="trailing" secondItem="ILg-hD-20L" secondAttribute="trailing" constant="20" id="sY0-Yu-2Wg"/>
-                                            <constraint firstItem="HoB-pj-18x" firstAttribute="top" secondItem="VeY-YI-wzN" secondAttribute="bottom" constant="15" id="sy1-Pm-iCD"/>
+                                            <constraint firstItem="Qp6-Rb-qfg" firstAttribute="top" secondItem="Vez-W0-8mV" secondAttribute="bottom" constant="10" id="t2D-fy-p8X"/>
                                             <constraint firstItem="T1z-3i-XRG" firstAttribute="leading" secondItem="xLh-rs-wyR" secondAttribute="leading" id="tmW-2U-ZTP"/>
-                                            <constraint firstItem="HoB-pj-18x" firstAttribute="leading" secondItem="NYc-TX-xHH" secondAttribute="trailing" constant="8" symbolic="YES" id="uay-sk-rY1"/>
-                                            <constraint firstItem="HoB-pj-18x" firstAttribute="height" secondItem="xLh-rs-wyR" secondAttribute="height" id="unK-9P-znI"/>
-                                            <constraint firstItem="lJg-Gx-AGf" firstAttribute="centerY" secondItem="ILg-hD-20L" secondAttribute="centerY" id="vtN-WW-r4i"/>
-                                            <constraint firstItem="mLX-Rd-PQt" firstAttribute="leading" secondItem="DrC-mT-4f2" secondAttribute="trailing" constant="10" id="wGa-50-xFm"/>
+                                            <constraint firstAttribute="trailing" secondItem="eCd-fL-Bqm" secondAttribute="trailing" constant="20" id="wOB-o4-lms"/>
                                             <constraint firstAttribute="trailing" secondItem="VeY-YI-wzN" secondAttribute="trailing" constant="20" id="woA-TH-FRQ"/>
-                                            <constraint firstItem="QN6-iP-uvT" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="wvU-xr-iNt"/>
+                                            <constraint firstItem="dWF-o0-t91" firstAttribute="top" secondItem="T1z-3i-XRG" secondAttribute="bottom" constant="15" id="xSr-dd-QOY"/>
+                                            <constraint firstItem="Qp6-Rb-qfg" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="xbe-QC-rBK"/>
                                             <constraint firstItem="fa1-sV-qzO" firstAttribute="leading" secondItem="hS7-WV-dXy" secondAttribute="leading" constant="20" id="xfS-FY-UuS"/>
                                             <constraint firstItem="T1z-3i-XRG" firstAttribute="top" secondItem="xLh-rs-wyR" secondAttribute="bottom" constant="15" id="yZ5-3S-SsH"/>
                                             <constraint firstItem="T1z-3i-XRG" firstAttribute="centerY" secondItem="fnx-Kc-2mw" secondAttribute="centerY" id="yfh-mM-kq8"/>
+                                            <constraint firstItem="Vez-W0-8mV" firstAttribute="trailing" secondItem="eaP-ib-ada" secondAttribute="trailing" id="zGj-Hn-hY6"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -513,87 +581,96 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <size key="freeformSize" width="375" height="900"/>
+                    <size key="freeformSize" width="375" height="1100"/>
                     <connections>
-                        <outlet property="PMTabOutlet" destination="mLX-Rd-PQt" id="wQK-D2-9U0"/>
                         <outlet property="SelectLanguageOutlet" destination="dWF-o0-t91" id="nXZ-Tk-ptQ"/>
                         <outlet property="accountIDTextFieldOutlet" destination="VeY-YI-wzN" id="z2P-jF-nU5"/>
                         <outlet property="authIdTextField" destination="T1z-3i-XRG" id="B8X-cG-iFo"/>
-                        <outlet property="isNativeMessageSwitch" destination="c1A-9j-KI5" id="t5W-8c-DRk"/>
-                        <outlet property="isStagingSwitchOutlet" destination="ZdE-5Q-Bgq" id="pFE-9l-aoe"/>
-                        <outlet property="keyTextFieldOutlet" destination="9xQ-qp-kCe" id="atJ-Um-9Tq"/>
+                        <outlet property="campaignListTableview" destination="JeP-tI-auQ" id="mgg-Mm-aW7"/>
+                        <outlet property="campaignsTableView" destination="EV7-0E-Q9f" id="8m5-ZB-d2q"/>
+                        <outlet property="campaignsTableViewHight" destination="Jgf-El-vDi" id="35a-c5-Qau"/>
+                        <outlet property="isStagingSwitchOutlet" destination="eCd-fL-Bqm" id="fbR-m6-f0p"/>
                         <outlet property="noTargetingParamDataLabel" destination="nUc-zL-t7J" id="E0k-Wx-xbY"/>
-                        <outlet property="privacyManagerTextField" destination="ILg-hD-20L" id="sN7-SN-yyd"/>
-                        <outlet property="propertyIdTextFieldOutlet" destination="HoB-pj-18x" id="7jS-ZP-6jb"/>
                         <outlet property="propertyNameTextField" destination="xLh-rs-wyR" id="79b-8S-Goc"/>
                         <outlet property="scrollView" destination="mhW-Wn-4Ou" id="u2A-Pj-VBm"/>
-                        <outlet property="targetingParamTableview" destination="JeP-tI-auQ" id="hba-Fw-sFB"/>
-                        <outlet property="valueTextFieldOutlet" destination="V8G-su-8BI" id="ejc-au-VRn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tg6-aQ-6x7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2497" y="793"/>
+            <point key="canvasLocation" x="2496.8000000000002" y="792.50374812593714"/>
         </scene>
         <!--Property Debug Info-->
         <scene sceneID="5ca-lh-QwF">
             <objects>
-                <viewController storyboardIdentifier="ConsentDetailsViewController" id="Lyi-Xh-6dq" customClass="ConsentDetailsViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConsentDetailsViewController" id="Lyi-Xh-6dq" customClass="ConsentDetailsViewController" customModule="Unified_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GBV-7x-oY4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="ConsentUUID : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DtM-Ki-fTP">
-                                <rect key="frame" x="10" y="64" width="120" height="40"/>
-                                <accessibility key="accessibilityConfiguration" identifier="ConsentUUID" label="ConsentUUID"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="BK9-Hl-Nyi"/>
-                                    <constraint firstAttribute="height" constant="40" id="YnR-iJ-7Zr"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" name="customeColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="b7c-ec-m48" userLabel="ConsentUUIDString">
-                                <rect key="frame" x="131" y="64" width="234" height="40"/>
-                                <accessibility key="accessibilityConfiguration" identifier="ConsentUUIDString">
-                                    <accessibilityTraits key="traits" notEnabled="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Y8j-js-E2b"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" name="customeColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUConsent :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xls-vD-PnJ">
-                                <rect key="frame" x="15" y="119" width="120" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDPR UUID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBP-Yu-YQL" userLabel="GDPRUUID">
+                                <rect key="frame" x="15" y="119" width="100" height="18"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="P7w-sR-CVk"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="bjz-TP-HQ5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
                                 <color key="textColor" name="customeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="NoData available" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="x7Q-Lj-baY" userLabel="EUConsentString">
-                                <rect key="frame" x="135" y="119" width="230" height="17.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data available" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJU-7s-ZbU" userLabel="GDPRUUIDString">
+                                <rect key="frame" x="120" y="108" width="284" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="vmw-rd-mxb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CCPA UUID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jm1-th-YoO" userLabel="CCPAUUID">
+                                <rect key="frame" x="15" y="169" width="100" height="18"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
+                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
+                                <color key="textColor" name="customeColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data available" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reQ-LF-Yu5" userLabel="CCPAUUIDString">
+                                <rect key="frame" x="120" y="158" width="284" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="fS2-Io-Zbs"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="spg-SG-uHR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUConsent :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xls-vD-PnJ" userLabel="EUConsent">
+                                <rect key="frame" x="15" y="219" width="100" height="18"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
+                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
+                                <color key="textColor" name="customeColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="No Data available" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7Q-Lj-baY" userLabel="EUConsentString">
+                                <rect key="frame" x="120" y="208" width="284" height="40"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EUConsentString">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="IJX-Ww-FuZ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                 <color key="textColor" name="customeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose Consents List" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="huu-nZ-kKX">
-                                <rect key="frame" x="15" y="151.5" width="249" height="19"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Consent List" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="huu-nZ-kKX">
+                                <rect key="frame" x="15" y="263" width="157.5" height="21.5"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Vendor and Purpose Consents List" label="Vendor and Purpose Consents List"/>
-                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="18"/>
                                 <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7M-iD-n1O" userLabel="LineViewForList">
-                                <rect key="frame" x="0.0" y="171.5" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="285.5" width="414" height="1"/>
                                 <viewLayoutGuide key="safeArea" id="7cB-Ea-PZ1"/>
                                 <color key="backgroundColor" name="customeColor"/>
                                 <constraints>
@@ -601,53 +678,57 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocf-eS-t5u" userLabel="ConsentTableView">
-                                <rect key="frame" x="0.0" y="173.5" width="375" height="493.5"/>
+                                <rect key="frame" x="0.0" y="287.5" width="414" height="608.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose consents are not available" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0L-qg-gaa">
-                                        <rect key="frame" x="19" y="237.5" width="337" height="19"/>
+                                        <rect key="frame" x="30" y="294.5" width="354" height="19.5"/>
                                         <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                         <color key="textColor" name="customeColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNV-ao-Wfg">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="493.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="608.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="GDPR_MetaApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="Unified_MetaApp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dbp-dA-FSM" id="x2W-Ep-CTP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="ID : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-K3-8B7">
-                                                            <rect key="frame" x="15" y="13" width="35" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Vendor Grants ID : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-K3-8B7">
+                                                            <rect key="frame" x="15" y="13" width="134" height="18"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="ID" label="ID"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="vCt-KV-XW3"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="vCt-KV-XW3"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                             <color key="textColor" name="customeColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
-                                                            <rect key="frame" x="58" y="13" width="317" height="17.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
+                                                            <rect key="frame" x="157" y="2" width="252" height="40"/>
                                                             <accessibility key="accessibilityConfiguration" identifier="consentID" label="consentID"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="85a-HT-1yz"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                             <color key="textColor" name="customeColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="sOG-oW-c07" secondAttribute="trailing" id="4nQ-N7-bBD"/>
                                                         <constraint firstItem="vQc-K3-8B7" firstAttribute="leading" secondItem="x2W-Ep-CTP" secondAttribute="leading" constant="15" id="RYP-5b-Uie"/>
+                                                        <constraint firstAttribute="trailing" secondItem="sOG-oW-c07" secondAttribute="trailing" constant="5" id="RlU-iL-LKp"/>
                                                         <constraint firstItem="vQc-K3-8B7" firstAttribute="centerY" secondItem="x2W-Ep-CTP" secondAttribute="centerY" id="btv-Kp-HYF"/>
                                                         <constraint firstItem="sOG-oW-c07" firstAttribute="leading" secondItem="vQc-K3-8B7" secondAttribute="trailing" constant="8" symbolic="YES" id="i2D-2M-cht"/>
                                                         <constraint firstItem="sOG-oW-c07" firstAttribute="centerY" secondItem="x2W-Ep-CTP" secondAttribute="centerY" id="xXQ-KK-vNq"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="consentIDLabel" destination="vQc-K3-8B7" id="b9z-jk-rW7"/>
                                                     <outlet property="consentIDString" destination="sOG-oW-c07" id="mlb-L3-9W8"/>
                                                 </connections>
                                             </tableViewCell>
@@ -671,39 +752,48 @@
                         <viewLayoutGuide key="safeArea" id="JPT-Vh-gpO"/>
                         <color key="backgroundColor" name="screenColor"/>
                         <constraints>
-                            <constraint firstItem="huu-nZ-kKX" firstAttribute="top" secondItem="x7Q-Lj-baY" secondAttribute="bottom" constant="15" id="3t0-PO-8yi"/>
+                            <constraint firstItem="Jm1-th-YoO" firstAttribute="width" secondItem="hBP-Yu-YQL" secondAttribute="width" id="2ud-Zm-uxh"/>
                             <constraint firstAttribute="bottom" secondItem="ocf-eS-t5u" secondAttribute="bottom" id="4Zo-cF-dKd"/>
+                            <constraint firstItem="uJU-7s-ZbU" firstAttribute="leading" secondItem="hBP-Yu-YQL" secondAttribute="trailing" constant="5" id="5eh-yM-xot"/>
+                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="width" secondItem="uJU-7s-ZbU" secondAttribute="width" id="5vo-MZ-59Q"/>
                             <constraint firstItem="ocf-eS-t5u" firstAttribute="trailing" secondItem="JPT-Vh-gpO" secondAttribute="trailing" id="6p8-u0-K8N"/>
                             <constraint firstItem="P7M-iD-n1O" firstAttribute="leading" secondItem="GBV-7x-oY4" secondAttribute="leading" id="6sH-zP-pFG"/>
+                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="reQ-LF-Yu5" secondAttribute="trailing" constant="10" id="8Pp-tZ-f45"/>
+                            <constraint firstItem="uJU-7s-ZbU" firstAttribute="top" secondItem="JPT-Vh-gpO" secondAttribute="top" constant="20" id="94k-Wh-FoQ"/>
                             <constraint firstItem="P7M-iD-n1O" firstAttribute="top" secondItem="huu-nZ-kKX" secondAttribute="bottom" constant="1" id="Hy3-gO-Vp5"/>
-                            <constraint firstItem="DtM-Ki-fTP" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="10" id="JHe-R2-B6n"/>
+                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="top" secondItem="reQ-LF-Yu5" secondAttribute="bottom" constant="10" id="ITI-TI-iIZ"/>
                             <constraint firstItem="ocf-eS-t5u" firstAttribute="top" secondItem="P7M-iD-n1O" secondAttribute="bottom" constant="1" id="KTm-P4-Ohv"/>
+                            <constraint firstItem="xls-vD-PnJ" firstAttribute="width" secondItem="hBP-Yu-YQL" secondAttribute="width" id="LYE-uN-TGc"/>
+                            <constraint firstItem="hBP-Yu-YQL" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="Uvf-50-c5L"/>
+                            <constraint firstItem="uJU-7s-ZbU" firstAttribute="centerY" secondItem="hBP-Yu-YQL" secondAttribute="centerY" id="ZYp-eu-P68"/>
+                            <constraint firstItem="xls-vD-PnJ" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="asy-6q-Vi3"/>
                             <constraint firstAttribute="trailing" secondItem="P7M-iD-n1O" secondAttribute="trailing" id="djT-S3-30j"/>
-                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="b7c-ec-m48" secondAttribute="trailing" constant="10" id="e5T-5c-tgX"/>
                             <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="huu-nZ-kKX" secondAttribute="trailing" symbolic="YES" id="gRF-b8-ajx"/>
-                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="x7Q-Lj-baY" secondAttribute="trailing" constant="10" id="iGO-JD-L7K"/>
-                            <constraint firstItem="b7c-ec-m48" firstAttribute="top" secondItem="JPT-Vh-gpO" secondAttribute="top" constant="20" id="mFM-9o-sR1"/>
+                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="centerY" secondItem="xls-vD-PnJ" secondAttribute="centerY" id="hPg-gM-xgM"/>
+                            <constraint firstItem="Jm1-th-YoO" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="iLg-yb-Zho"/>
+                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="uJU-7s-ZbU" secondAttribute="trailing" constant="10" id="jhz-jZ-OdW"/>
+                            <constraint firstItem="huu-nZ-kKX" firstAttribute="top" secondItem="x7Q-Lj-baY" secondAttribute="bottom" constant="15" id="kJu-aV-edw"/>
+                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="x7Q-Lj-baY" secondAttribute="trailing" constant="10" id="ml3-Re-Zr9"/>
                             <constraint firstItem="ocf-eS-t5u" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" id="oSg-tF-HYe"/>
-                            <constraint firstItem="xls-vD-PnJ" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="pEO-Nd-z4Z"/>
-                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="leading" secondItem="xls-vD-PnJ" secondAttribute="trailing" id="qSz-be-XnK"/>
-                            <constraint firstItem="b7c-ec-m48" firstAttribute="leading" secondItem="DtM-Ki-fTP" secondAttribute="trailing" constant="1" id="qU7-Wt-e33"/>
-                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="top" secondItem="b7c-ec-m48" secondAttribute="bottom" constant="15" id="siu-5c-vQc"/>
-                            <constraint firstItem="DtM-Ki-fTP" firstAttribute="top" secondItem="JPT-Vh-gpO" secondAttribute="top" constant="20" id="u1U-6V-E9k"/>
+                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="leading" secondItem="xls-vD-PnJ" secondAttribute="trailing" constant="5" id="pWv-VU-rwi"/>
+                            <constraint firstItem="reQ-LF-Yu5" firstAttribute="top" secondItem="uJU-7s-ZbU" secondAttribute="bottom" constant="10" id="tAX-js-6TK"/>
+                            <constraint firstItem="Jm1-th-YoO" firstAttribute="centerY" secondItem="reQ-LF-Yu5" secondAttribute="centerY" id="vgF-Gq-zQl"/>
+                            <constraint firstItem="reQ-LF-Yu5" firstAttribute="leading" secondItem="Jm1-th-YoO" secondAttribute="trailing" constant="5" id="wI8-cs-lmQ"/>
                             <constraint firstItem="huu-nZ-kKX" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="xhB-WC-2vx"/>
-                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="centerY" secondItem="xls-vD-PnJ" secondAttribute="centerY" id="zMv-db-fBL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Property Debug Info" id="1Mn-Sb-edJ">
-                        <barButtonItem key="rightBarButtonItem" title="Show PM" id="phc-lZ-VCD">
+                        <barButtonItem key="rightBarButtonItem" title="Menu" image="Menu" id="phc-lZ-VCD">
                             <connections>
                                 <action selector="showPMAction:" destination="Lyi-Xh-6dq" id="koK-Av-UIy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="ccpaConsentUUIDLabel" destination="reQ-LF-Yu5" id="ax0-Bw-xtW"/>
                         <outlet property="consentTableView" destination="hNV-ao-Wfg" id="TPh-cs-u4W"/>
-                        <outlet property="consentUUIDLabel" destination="b7c-ec-m48" id="M5Y-Dx-8xP"/>
                         <outlet property="euConsentLabel" destination="x7Q-Lj-baY" id="xVa-xV-uBV"/>
+                        <outlet property="gdprConsentUUIDLabel" destination="uJU-7s-ZbU" id="EUH-nj-We4"/>
                         <outlet property="noDataLabel" destination="D0L-qg-gaa" id="HQa-Jy-ipr"/>
                     </connections>
                 </viewController>
@@ -714,24 +804,24 @@
         <!--Property List-->
         <scene sceneID="zDA-pX-BuF">
             <objects>
-                <viewController storyboardIdentifier="PropertyListViewController" id="nwW-9M-3Wu" customClass="PropertyListViewController" customModule="GDPR_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PropertyListViewController" id="nwW-9M-3Wu" customClass="PropertyListViewController" customModule="Unified_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="POH-Ao-l0L">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7F7-Gu-WQr" userLabel="propertyTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="90" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="GDPR_MetaApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="90"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="90" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="Unified_MetaApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oya-4T-sTe" id="BDy-AV-b9J">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Cybage.sp-demo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bch-vL-bwc" userLabel="Property Name">
-                                                    <rect key="frame" x="20" y="3" width="170.5" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Cybage.sp-demo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bch-vL-bwc" userLabel="PropertyName">
+                                                    <rect key="frame" x="20" y="5" width="185" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="propertyName">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
@@ -740,7 +830,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account ID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lah-ue-N1c" userLabel="AccountId">
-                                                    <rect key="frame" x="20" y="26" width="88.5" height="20"/>
+                                                    <rect key="frame" x="20" y="30" width="92" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="accountIDLabel">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
@@ -751,8 +841,8 @@
                                                     <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Campaign :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="tAJ-BW-CMH">
-                                                    <rect key="frame" x="128.5" y="26" width="221.5" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Campaign :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="tAJ-BW-CMH" userLabel="CampaignEnvLabel">
+                                                    <rect key="frame" x="132" y="30" width="257" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="campaignLabel">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
@@ -763,8 +853,8 @@
                                                     <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Web Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-wB-aP4" userLabel="MessageType">
-                                                    <rect key="frame" x="20" y="47" width="101.5" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-wB-aP4" userLabel="MessageLanguage">
+                                                    <rect key="frame" x="20" y="55" width="146.5" height="20"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="accountIDLabel">
                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                     </accessibility>
@@ -775,21 +865,8 @@
                                                     <color key="textColor" name="customeColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1C-pm-DTM">
-                                                    <rect key="frame" x="18" y="68" width="332" height="20"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="targetingParamTextView">
-                                                        <accessibilityTraits key="traits" notEnabled="YES"/>
-                                                    </accessibility>
-                                                    <color key="textColor" name="customeColor"/>
-                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="nwW-9M-3Wu" id="vsj-OY-gSH"/>
-                                                    </connections>
-                                                </textView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aqt-nl-RJg" userLabel="lineview">
-                                                    <rect key="frame" x="0.0" y="89" width="375" height="1"/>
+                                                    <rect key="frame" x="0.0" y="89" width="414" height="1"/>
                                                     <color key="backgroundColor" name="customeColor"/>
                                                     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -799,23 +876,18 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Bch-vL-bwc" secondAttribute="trailing" constant="20" symbolic="YES" id="1cV-Mj-wig"/>
-                                                <constraint firstItem="X1C-pm-DTM" firstAttribute="top" secondItem="sqW-wB-aP4" secondAttribute="bottom" constant="1" id="60g-uO-lAD"/>
                                                 <constraint firstAttribute="bottom" secondItem="Aqt-nl-RJg" secondAttribute="bottom" id="6qk-aT-EH3"/>
                                                 <constraint firstItem="tAJ-BW-CMH" firstAttribute="leading" secondItem="Lah-ue-N1c" secondAttribute="trailing" constant="20" id="9Mq-KE-iap"/>
                                                 <constraint firstItem="sqW-wB-aP4" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="20" id="D69-hV-liu"/>
                                                 <constraint firstItem="Aqt-nl-RJg" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" id="KZt-Uc-KkP"/>
-                                                <constraint firstItem="sqW-wB-aP4" firstAttribute="top" secondItem="Lah-ue-N1c" secondAttribute="bottom" constant="1" id="VkG-G5-4d3"/>
+                                                <constraint firstItem="sqW-wB-aP4" firstAttribute="top" secondItem="Lah-ue-N1c" secondAttribute="bottom" constant="5" id="VkG-G5-4d3"/>
                                                 <constraint firstItem="Lah-ue-N1c" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="20" id="VzK-oW-8uw"/>
-                                                <constraint firstItem="X1C-pm-DTM" firstAttribute="top" secondItem="sqW-wB-aP4" secondAttribute="bottom" constant="1" id="WYg-RA-qJr"/>
                                                 <constraint firstAttribute="trailing" secondItem="Aqt-nl-RJg" secondAttribute="trailing" id="ZQq-4R-1ch"/>
-                                                <constraint firstItem="X1C-pm-DTM" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="18" id="bbg-Ee-pTx"/>
-                                                <constraint firstItem="Aqt-nl-RJg" firstAttribute="top" secondItem="X1C-pm-DTM" secondAttribute="bottom" constant="1" id="f30-t2-DXe"/>
-                                                <constraint firstItem="Lah-ue-N1c" firstAttribute="top" secondItem="Bch-vL-bwc" secondAttribute="bottom" constant="3" id="gbz-Vz-bm1"/>
+                                                <constraint firstItem="Lah-ue-N1c" firstAttribute="top" secondItem="Bch-vL-bwc" secondAttribute="bottom" constant="5" id="gbz-Vz-bm1"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sqW-wB-aP4" secondAttribute="trailing" constant="50" id="j1F-Gj-uos"/>
-                                                <constraint firstAttribute="trailing" secondItem="X1C-pm-DTM" secondAttribute="trailing" constant="25" id="oVP-Xp-RWi"/>
                                                 <constraint firstAttribute="trailing" secondItem="tAJ-BW-CMH" secondAttribute="trailing" constant="25" id="pde-9T-kUL"/>
-                                                <constraint firstItem="Bch-vL-bwc" firstAttribute="top" secondItem="BDy-AV-b9J" secondAttribute="top" constant="3" id="rgW-qE-eBl"/>
-                                                <constraint firstItem="tAJ-BW-CMH" firstAttribute="top" secondItem="Bch-vL-bwc" secondAttribute="bottom" constant="3" id="roS-Fj-iNw"/>
+                                                <constraint firstItem="Bch-vL-bwc" firstAttribute="top" secondItem="BDy-AV-b9J" secondAttribute="top" constant="5" id="rgW-qE-eBl"/>
+                                                <constraint firstItem="tAJ-BW-CMH" firstAttribute="top" secondItem="Bch-vL-bwc" secondAttribute="bottom" constant="5" id="roS-Fj-iNw"/>
                                                 <constraint firstItem="Bch-vL-bwc" firstAttribute="leading" secondItem="BDy-AV-b9J" secondAttribute="leading" constant="20" id="sep-eq-JdB"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -825,10 +897,9 @@
                                         </accessibility>
                                         <connections>
                                             <outlet property="accountIDLabel" destination="Lah-ue-N1c" id="Iym-Zk-3Tb"/>
-                                            <outlet property="campaignLabel" destination="tAJ-BW-CMH" id="rAA-1g-P2E"/>
-                                            <outlet property="messageType" destination="sqW-wB-aP4" id="D8a-Nz-fZ6"/>
-                                            <outlet property="propertyLabel" destination="Bch-vL-bwc" id="PKe-Y8-q12"/>
-                                            <outlet property="targetingParamTextView" destination="X1C-pm-DTM" id="OPT-3Y-66W"/>
+                                            <outlet property="campaignEnvLabel" destination="tAJ-BW-CMH" id="VCo-4b-mXl"/>
+                                            <outlet property="messageLanguage" destination="sqW-wB-aP4" id="dG8-66-zii"/>
+                                            <outlet property="propertyNameLabel" destination="Bch-vL-bwc" id="Gm2-Fy-k5j"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -838,7 +909,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on + button to add new property" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXj-NC-2l4" userLabel="NoDataLabel">
-                                <rect key="frame" x="41" y="324.5" width="293" height="18"/>
+                                <rect key="frame" x="53" y="439" width="308" height="18"/>
                                 <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                 <color key="textColor" name="customeColor"/>
@@ -878,7 +949,7 @@
                 <navigationController storyboardIdentifier="RootNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hcy-kf-t7M" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DnQ-IN-rkO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.29019607843137252" green="0.36078431372549019" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
@@ -897,7 +968,7 @@
                 <navigationController storyboardIdentifier="ConsentNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="cVI-3x-jZL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="azz-Kx-7Pt">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -909,11 +980,72 @@
             </objects>
             <point key="canvasLocation" x="3366" y="793"/>
         </scene>
+        <!--Side Menu View Controller-->
+        <scene sceneID="2N9-IV-fY6">
+            <objects>
+                <viewController storyboardIdentifier="SideMenuID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iya-4d-bbj" customClass="SideMenuViewController" customModule="Unified_MetaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6ZY-1Z-Vdy">
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5rw-A6-nFl">
+                                <rect key="frame" x="0.0" y="100" width="260" height="762"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SideMenuCell" id="zjO-nT-Ncd" customClass="SideMenuCell" customModule="Unified_MetaApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="260" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zjO-nT-Ncd" id="1rj-wH-Hre">
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRF-s9-1Tb">
+                                                    <rect key="frame" x="109.5" y="12.5" width="41" height="19"/>
+                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="FRF-s9-1Tb" firstAttribute="centerX" secondItem="1rj-wH-Hre" secondAttribute="centerX" id="Ngs-1X-TSF"/>
+                                                <constraint firstItem="FRF-s9-1Tb" firstAttribute="centerY" secondItem="1rj-wH-Hre" secondAttribute="centerY" id="Sd2-Ou-OSr"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="FRF-s9-1Tb" id="l1x-VP-lEy"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="6ZY-1Z-Vdy" id="ajQ-rX-rPV"/>
+                                    <outlet property="delegate" destination="6ZY-1Z-Vdy" id="Cus-t7-typ"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hpZ-7T-18x"/>
+                        <color key="backgroundColor" red="0.73725490199999999" green="0.12941176469999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hpZ-7T-18x" firstAttribute="bottom" secondItem="5rw-A6-nFl" secondAttribute="bottom" id="23Q-1C-TYI"/>
+                            <constraint firstItem="5rw-A6-nFl" firstAttribute="top" secondItem="6ZY-1Z-Vdy" secondAttribute="top" constant="100" id="L6j-2e-dEw"/>
+                            <constraint firstItem="5rw-A6-nFl" firstAttribute="trailing" secondItem="hpZ-7T-18x" secondAttribute="trailing" id="h0Q-i3-3PN"/>
+                            <constraint firstItem="5rw-A6-nFl" firstAttribute="leading" secondItem="hpZ-7T-18x" secondAttribute="leading" id="rcB-cy-OM8"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="260" height="896"/>
+                    <connections>
+                        <outlet property="sideMenuTableView" destination="5rw-A6-nFl" id="dcU-Qc-wjw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iPX-q4-HKA" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3310" y="-40"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="0.24705882352941178" green="0.79607843137254897" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
     <resources>
         <image name="AddIcon" width="20" height="20"/>
-        <image name="cancel" width="14" height="14"/>
+        <image name="Done" width="20" height="20"/>
+        <image name="Menu" width="25" height="25"/>
         <image name="dropDown" width="45" height="45"/>
         <namedColor name="customeColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -921,6 +1053,9 @@
         <namedColor name="screenColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1997B639238FDCE80079AF34"
-               BuildableName = "GDPR-MetaApp.app"
+               BuildableName = "Unified-MetaApp.app"
                BlueprintName = "SourcePointMetaApp"
                ReferencedContainer = "container:ConsentViewController.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1997B639238FDCE80079AF34"
-            BuildableName = "GDPR-MetaApp.app"
+            BuildableName = "Unified-MetaApp.app"
             BlueprintName = "SourcePointMetaApp"
             ReferencedContainer = "container:ConsentViewController.xcodeproj">
          </BuildableReference>
@@ -76,11 +76,18 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1997B639238FDCE80079AF34"
-            BuildableName = "GDPR-MetaApp.app"
+            BuildableName = "Unified-MetaApp.app"
             BlueprintName = "SourcePointMetaApp"
             ReferencedContainer = "container:ConsentViewController.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "WORMHOLY_SHAKE_ENABLED"
+            value = "NO"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -93,7 +100,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1997B639238FDCE80079AF34"
-            BuildableName = "GDPR-MetaApp.app"
+            BuildableName = "Unified-MetaApp.app"
             BlueprintName = "SourcePointMetaApp"
             ReferencedContainer = "container:ConsentViewController.xcodeproj">
          </BuildableReference>

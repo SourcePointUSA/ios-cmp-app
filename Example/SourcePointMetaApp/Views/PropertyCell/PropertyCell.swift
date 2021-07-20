@@ -10,11 +10,11 @@ import UIKit
 
 class PropertyCell: SourcePointUItablewViewCell {
 
-    @IBOutlet weak var propertyLabel: UILabel!
-    @IBOutlet weak var targetingParamTextView: UITextView!
-    @IBOutlet weak var campaignLabel: UILabel!
+    @IBOutlet weak var propertyNameLabel: UILabel!
+    @IBOutlet weak var campaignsTextView: UITextView!
+    @IBOutlet weak var campaignEnvLabel: UILabel!
     @IBOutlet weak var accountIDLabel: UILabel!
-    @IBOutlet weak var messageType: UILabel!
+    @IBOutlet weak var messageLanguage: UILabel!
     // MARK: - Instance Properties.
 
     /// Index of vendro item.
