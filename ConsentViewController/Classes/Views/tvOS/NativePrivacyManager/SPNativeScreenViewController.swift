@@ -26,7 +26,8 @@ enum SPUIRectEdge {
 
 extension UIFont {
     convenience init?(from spFont: SPNativeFont?) {
-        let fontSize = spFont?.fontSize ?? UIFont.preferredFont(forTextStyle: .body).pointSize
+        let magicScalingFactor = CGFloat(1.8)
+        let fontSize = spFont?.fontSize != nil ? spFont!.fontSize * magicScalingFactor : UIFont.preferredFont(forTextStyle: .body).pointSize
         let family = spFont?.fontFamily
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
