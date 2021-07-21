@@ -114,7 +114,7 @@ public let MockNativePMResponse = """
     "type": "NativeImage",
     "name": "Logo",
     "settings": {
-    "url": "https://i.pinimg.com/originals/5a/ae/50/5aae503e4f037a5a4375944d8861fb6a.png",
+    "src": "https://i.pinimg.com/originals/5a/ae/50/5aae503e4f037a5a4375944d8861fb6a.png",
     "style": {
     "width": 170
     }
