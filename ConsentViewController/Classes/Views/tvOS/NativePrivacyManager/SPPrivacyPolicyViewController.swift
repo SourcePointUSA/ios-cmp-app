@@ -25,6 +25,7 @@ import Foundation
         setHeader()
         loadTextView(forComponentId: "Body", textView: descriptionTextView)
         loadButton(forComponentId: "CloseButton", button: closeButton)
+        loadImage(forComponentId: "LogoImage", imageView: logoImageView)
     }
 
     @IBAction func onCloseTap(_ sender: Any) {

@@ -56,6 +56,7 @@ import Foundation
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
+        loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         categoryTableView.allowsSelection = false
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self

@@ -119,6 +119,8 @@ class SPNativeView: SPNativeUI {
                 children.append(try tempComponentsContainer.decode(SPNativeLongButton.self))
             case .Slider:
                 children.append(try tempComponentsContainer.decode(SPNativeSlider.self))
+            case .NativeImage:
+                children.append(try tempComponentsContainer.decode(SPNativeImage.self))
             default:
                 children.append(try tempComponentsContainer.decode(SPNativeUI.self))
             }

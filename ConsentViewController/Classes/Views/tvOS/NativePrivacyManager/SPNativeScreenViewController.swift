@@ -8,6 +8,20 @@
 import Foundation
 import UIKit
 
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
+
 enum SPUIRectEdge {
     case bottomTop, rightLeft, topBottom, leftRight, left, right, top, bottom, all
 
@@ -137,6 +151,18 @@ class FocusGuideDebugView: UIView {
         view.backgroundColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
         view.tintColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
         setFocusGuides()
+    }
+
+    @discardableResult
+    func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView {
+        if let image = components.first(where: { $0.id == id }) as? SPNativeImage,
+           let url = URL(string: image.settings.src) {
+            imageView.isHidden = false
+            imageView.load(url: url)
+        } else {
+            imageView.isHidden = true
+        }
+        return imageView
     }
 
     @discardableResult

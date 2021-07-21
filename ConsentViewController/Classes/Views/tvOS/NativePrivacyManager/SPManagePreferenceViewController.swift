@@ -71,6 +71,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
+        loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier

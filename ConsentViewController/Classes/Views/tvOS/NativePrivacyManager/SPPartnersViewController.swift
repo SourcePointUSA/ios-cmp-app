@@ -53,6 +53,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)
+        loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         vendorsTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
