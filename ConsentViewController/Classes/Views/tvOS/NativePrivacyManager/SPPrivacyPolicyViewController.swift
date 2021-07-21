@@ -16,7 +16,7 @@ import Foundation
 
     func setHeader () {
         header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 

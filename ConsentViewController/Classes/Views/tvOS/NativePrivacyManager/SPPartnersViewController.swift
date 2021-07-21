@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 
 class SPPartnersViewController: SPNativeScreenViewController {
-    @IBOutlet weak var selectedvendorTextLabel: UILabel!
+    @IBOutlet weak var selectedVendorTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
@@ -17,6 +17,11 @@ class SPPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var vendorsTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
+
+    var displayingLegIntVendors: Bool { vendorsSlider.selectedSegmentIndex == 1 }
+    var currentVendors: [VendorListVendor] {
+        displayingLegIntVendors ? legitimateInterestVendorList : userConsentVendors
+    }
 
     var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
 
@@ -38,7 +43,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
 
     func setHeader () {
         header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 
@@ -72,7 +77,13 @@ class SPPartnersViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        messageUIDelegate?.action(SPAction(type: .SaveAndExit, id: nil, campaignType: campaignType), from: self)
+        let pmId = messageId != nil ? String(messageId!) : ""
+        messageUIDelegate?.action(SPAction(
+            type: .SaveAndExit,
+            id: nil,
+            campaignType: campaignType,
+            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: pmId).json()!
+        ), from: self)
     }
 }
 
@@ -91,18 +102,11 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        50
+        60
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch vendorsSlider.selectedSegmentIndex {
-        case 0:
-            return userConsentVendors.count
-        case 1:
-            return legitimateInterestVendorList.count
-        default:
-            return 0
-        }
+        currentVendors.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -114,9 +118,7 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
 
-        let vendor = vendorsSlider.selectedSegmentIndex == 0 ?
-            userConsentVendors[indexPath.row] :
-            legitimateInterestVendorList[indexPath.row]
+        let vendor = currentVendors[indexPath.row]
         cell.labelText = vendor.name
         cell.customText = vendor.vendorType == .CUSTOM ? nil : "Custom"
         cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor.vendorId)
@@ -128,16 +130,11 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        switch vendorsSlider.selectedSegmentIndex {
-        case 0:
-            loadLabelText(forComponentId: "VendorDescription", labelText: "", label: selectedvendorTextLabel)
-                .attributedText = userConsentVendors[indexPath.row].description?.htmlToAttributedString
-        case 1:
-            loadLabelText(forComponentId: "VendorDescription", labelText: "", label: selectedvendorTextLabel)
-                .attributedText = userConsentVendors[indexPath.row].description?.htmlToAttributedString
-        default:
-            break
-        }
+        loadLabelText(
+            forComponentId: "VendorDescription",
+            labelText: "", label: selectedVendorTextLabel
+        ).attributedText = currentVendors[indexPath.row].description?.htmlToAttributedString
+
         return true
     }
 
@@ -150,7 +147,8 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
             delegate: nil,
             nibName: "SPVendorDetailsViewController"
         )
-        vendorDetailsVC.vendor = vendors[indexPath.row]
+
+        vendorDetailsVC.vendor = currentVendors[indexPath.row]
         vendorDetailsVC.vendorManagerDelegate = consentsSnapshot
         present(vendorDetailsVC, animated: true)
     }

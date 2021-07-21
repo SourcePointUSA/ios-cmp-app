@@ -34,8 +34,8 @@ import Foundation
     override var preferredFocusedView: UIView? { acceptButton }
 
     func setHeader () {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in
             if let this = self {
                 self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)

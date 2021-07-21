@@ -15,7 +15,7 @@
                 <outlet property="header" destination="IIU-ZS-feP" id="XaD-1g-uUh"/>
                 <outlet property="logoImageView" destination="Nlg-W0-A4w" id="7Bz-ZU-rWd"/>
                 <outlet property="saveAndExit" destination="eIA-bC-Rnh" id="j2I-AU-wZr"/>
-                <outlet property="selectedvendorTextLabel" destination="jSe-4i-jyb" id="PQK-hG-rLC"/>
+                <outlet property="selectedVendorTextLabel" destination="jSe-4i-jyb" id="PQK-hG-rLC"/>
                 <outlet property="vendorsSlider" destination="199-HU-OtX" id="Qec-qC-ncz"/>
                 <outlet property="vendorsTableView" destination="W7V-S9-3N2" id="GZ6-8e-eNg"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
@@ -85,6 +85,9 @@
                                                     <rect key="frame" x="0.0" y="94" width="500" height="86"/>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Save &amp; Exit"/>
+                                                    <connections>
+                                                        <action selector="onSaveAndExitTap:" destination="-1" eventType="primaryActionTriggered" id="XdG-0W-aqA"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <viewLayoutGuide key="safeArea" id="k6G-6r-ypI"/>
