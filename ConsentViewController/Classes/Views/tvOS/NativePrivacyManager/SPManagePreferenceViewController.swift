@@ -20,6 +20,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var actionsContainer: UIStackView!
 
     var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
+    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
 
     var categories: [VendorListCategory] = []
     var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
@@ -106,11 +107,18 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
 
 // MARK: UITableViewDataSource
 extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
+    func currentCategory(_ index: IndexPath) -> VendorListCategory {
+        displayingLegIntCategories ?
+            legIntCategories[index.row] :
+            categoriesTable[index.section][index.row]
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        switch categorySlider.selectedSegmentIndex {
-        case 0: return sections.count
-        default: return 1
-        }
+        displayingLegIntCategories ? 1 : sections.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -122,19 +130,11 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch categorySlider.selectedSegmentIndex {
-        case 0:
-            return categoriesTable[section].count
-        case 1:
-            return legIntCategories.count
-        default:
-            break
-        }
-        return 0
+        displayingLegIntCategories ? legIntCategories.count : categoriesTable[section].count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -147,16 +147,13 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         }
 
         let section = indexPath.section
-        let row = indexPath.row
-        if categorySlider.selectedSegmentIndex == 0 {
-            let category = categoriesTable[section][row]
-            cell.labelText = category.name
-            cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
-            cell.isOn = section == 0 || section == 3 ? consentsSnapshot.acceptedCategoriesIds.contains(category._id) : nil
-            cell.selectable = section != 1
-        } else {
-            cell.labelText = legIntCategories[indexPath.row].name
-        }
+        let category = currentCategory(indexPath)
+        cell.labelText = category.name
+        cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
+        cell.isOn = section == 0 || section == 3 ?
+            consentsSnapshot.acceptedCategoriesIds.contains(category._id) :
+            nil
+        cell.selectable = section != 1
         cell.onText = "On"
         cell.offText = "Off"
         cell.loadUI()
@@ -168,14 +165,12 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        switch categorySlider.selectedSegmentIndex {
-        case 0:
-            loadLabelText(forComponentId: "CategoriesHeader", labelText: userConsentCategories[indexPath.row].description, label: selectedCategoryTextLabel)
-        case 1:
-            loadLabelText(forComponentId: "CategoriesHeader", labelText: legIntCategories[indexPath.row].description, label: selectedCategoryTextLabel)
-        default:
-            break
-        }
+        let category = currentCategory(indexPath)
+        loadLabelText(
+            forComponentId: "CategoriesHeader",
+            labelText: "",
+            label: selectedCategoryTextLabel
+        ).attributedText = category.description.htmlToAttributedString
         return true
     }
 
@@ -192,7 +187,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             delegate: nil,
             nibName: "SPCategoryDetailsViewController"
         )
-        categoryDetailsVC.category = categories[indexPath.row]
+        categoryDetailsVC.category = currentCategory(indexPath)
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
         present(categoryDetailsVC, animated: true)
     }
