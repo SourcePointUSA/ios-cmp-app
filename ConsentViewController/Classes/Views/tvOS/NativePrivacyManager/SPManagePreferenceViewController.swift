@@ -37,19 +37,15 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         var sections: [SPNativeText?] = []
         if userConsentCategories.isNotEmpty() {
             sections.append(viewData.byId("PurposesHeader") as? SPNativeText)
-            // TODO: add definition
         }
         if consentsSnapshot.specialPurposes.isNotEmpty() {
             sections.append(viewData.byId("SpecialPurposesHeader") as? SPNativeText)
-            // TODO: add definition
         }
         if consentsSnapshot.features.isNotEmpty() {
             sections.append(viewData.byId("FeaturesHeader") as? SPNativeText)
-            // TODO: add definition
         }
         if consentsSnapshot.specialFeatures.isNotEmpty() {
             sections.append(viewData.byId("SpecialFeaturesHeader") as? SPNativeText)
-            // TODO: add definition
         }
         return sections
     }
