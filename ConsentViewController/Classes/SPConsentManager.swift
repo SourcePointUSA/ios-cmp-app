@@ -8,46 +8,17 @@
 
 import Foundation
 
-@objcMembers public class SPConsentManager: NSObject, SPSDK {
+@objcMembers public class SPConsentManager: NSObject {
     static let ccpaBaseURL = URL(string: "https://cdn.privacy-mgmt.com/ccpa_pm/index.html")
     static let gdprBaseURL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")
-
-    static public let VERSION = "6.1.4"
+    static let DefaultTimeout = TimeInterval(30)
     static public var shouldCallErrorMetrics = true
 
-    weak var delegate: SPDelegate?
-    let accountId: Int
-    let propertyName: SPPropertyName
-    let campaigns: SPCampaigns
-
-    var authId: String?
-    let spClient: SourcePointProtocol
-    let deviceManager: SPDeviceManager
-    var storage: SPLocalStorage
-
-    public var gdprApplies: Bool { storage.userData.gdpr?.applies ?? false }
-
-    public var ccpaApplies: Bool { storage.userData.ccpa?.applies ?? false }
-
-    public var userData: SPUserData { storage.userData }
-
+    // MARK: - SPSDK
     /// By default, the SDK will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
     /// `.loadMessage` is called.
     /// Set this flag to `false` if you wish to opt-out from this behaviour.
     public var cleanUserDataOnError: Bool = true
-    var messageControllersStack: [SPMessageViewController] = []
-    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    static let DefaultTimeout = TimeInterval(30)
-
-    var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
-    var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
-    var propertyId: Int? { storage.propertyId }
-    var propertyIdString: String { propertyId != nil ? String(propertyId!) : "" }
-    var iOSMessagePartitionUUID: String?
-
-    public static func clearAllData() {
-        SPUserDefaults(storage: UserDefaults.standard).clear()
-    }
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = SPConsentManager.DefaultTimeout {
@@ -56,7 +27,15 @@ import Foundation
         }
     }
 
-    public convenience init(accountId: Int, propertyName: SPPropertyName, campaignsEnv: SPCampaignEnv = .Public, campaigns: SPCampaigns, delegate: SPDelegate?) {
+    /// Instructs the privacy manager to be displayed with this tab.
+    /// By default the SDK will use the defult tab of PM
+    public var privacyManagerTab = SPPrivacyManagerTab.Default
+
+    /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
+    /// By default the SDK will use the locale defined by the WebView
+    public var messageLanguage = SPMessageLanguage.BrowserDefault
+
+    required public convenience init(accountId: Int, propertyName: SPPropertyName, campaignsEnv: SPCampaignEnv = .Public, campaigns: SPCampaigns, delegate: SPDelegate?) {
         self.init(
             accountId: accountId,
             propertyName: propertyName,
@@ -67,6 +46,24 @@ import Foundation
             storage: SPUserDefaults(storage: UserDefaults.standard)
         )
     }
+    // MARK: - /SPSDK
+
+    let accountId: Int
+    let propertyName: SPPropertyName
+    let campaigns: SPCampaigns
+    let spClient: SourcePointProtocol
+    let deviceManager: SPDeviceManager
+
+    weak var delegate: SPDelegate?
+    var authId: String?
+    var storage: SPLocalStorage
+    var messageControllersStack: [SPMessageViewController] = []
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
+    var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
+    var propertyId: Int? { storage.propertyId }
+    var propertyIdString: String { propertyId != nil ? String(propertyId!) : "" }
+    var iOSMessagePartitionUUID: String?
 
     init(
         accountId: Int,
@@ -86,14 +83,6 @@ import Foundation
         self.storage = storage
         self.deviceManager = deviceManager
     }
-
-    /// Instructs the privacy manager to be displayed with this tab.
-    /// By default the SDK will use the defult tab of PM
-    public var privacyManagerTab = SPPrivacyManagerTab.Default
-
-    /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
-    /// By default the SDK will use the locale defined by the WebView
-    public var messageLanguage = SPMessageLanguage.BrowserDefault
 
     func renderNextMessageIfAny () {
         DispatchQueue.main.async { [weak self] in
@@ -150,6 +139,96 @@ import Foundation
         }
     }
 
+    func report(action: SPAction) {
+        switch action.campaignType {
+        case .ccpa:
+            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+                switch result {
+                case .success((let localState, let consents)):
+                    let userData = SPUserData(
+                        gdpr: self?.storage.userData.gdpr,
+                        ccpa: SPConsent(consents: consents, applies: true)
+                    )
+                    self?.storeData(
+                        localState: localState,
+                        userData: userData,
+                        propertyId: self?.propertyId
+                    )
+                    self?.delegate?.onConsentReady?(userData: userData)
+                case .failure(let error):
+                    self?.onError(error)
+                }
+            }
+        case .gdpr:
+            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+                switch result {
+                case .success((let localState, let consents)):
+                    let userData = SPUserData(
+                        gdpr: SPConsent(consents: consents, applies: true),
+                        ccpa: self?.storage.userData.ccpa
+                    )
+                    self?.storeData(
+                        localState: localState,
+                        userData: userData,
+                        propertyId: self?.propertyId
+                    )
+                    self?.delegate?.onConsentReady?(userData: userData)
+                case .failure(let error):
+                    self?.onError(error)
+                }
+            }
+        default: break
+        }
+    }
+
+    #if os(iOS)
+    func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
+        let messageId = Int(
+            URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
+                .queryItems?
+                .first { $0.name == "message_id"}?
+                .value ?? ""
+        )
+        GenericWebMessageViewController(
+            url: pmURL,
+            messageId: messageId,
+            contents: SPJson(),
+            campaignType: campaignType,
+            timeout: messageTimeoutInSeconds,
+            delegate: self
+        ).loadPrivacyManager(url: pmURL)
+    }
+    #endif
+
+    func onError(_ error: SPError) {
+        spClient.errorMetrics(
+            error,
+            propertyId: propertyId,
+            sdkVersion: SPConsentManager.VERSION,
+            OSVersion: deviceManager.osVersion(),
+            deviceFamily: deviceManager.osVersion(),
+            campaignType: error.campaignType
+        )
+        if cleanUserDataOnError {
+            SPConsentManager.clearAllData()
+        }
+        delegate?.onError?(error: error)
+    }
+}
+
+@objc extension SPConsentManager: SPSDK {
+    public static let VERSION = "6.1.4"
+
+    public static func clearAllData() {
+        SPUserDefaults(storage: UserDefaults.standard).clear()
+    }
+
+    public var gdprApplies: Bool { storage.userData.gdpr?.applies ?? false }
+
+    public var ccpaApplies: Bool { storage.userData.ccpa?.applies ?? false }
+
+    public var userData: SPUserData { storage.userData }
+
     public func loadMessage(forAuthId authId: String? = nil) {
         self.authId = authId
         spClient.getMessages(
@@ -190,48 +269,6 @@ import Foundation
             case .failure(let error):
                 self?.onError(error)
             }
-        }
-    }
-
-    func report(action: SPAction) {
-        switch action.campaignType {
-        case .ccpa:
-            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
-                switch result {
-                case .success((let localState, let consents)):
-                    let userData = SPUserData(
-                        gdpr: self?.storage.userData.gdpr,
-                        ccpa: SPConsent(consents: consents, applies: true)
-                    )
-                    self?.storeData(
-                        localState: localState,
-                        userData: userData,
-                        propertyId: self?.propertyId
-                    )
-                    self?.delegate?.onConsentReady?(userData: userData)
-                case .failure(let error):
-                    self?.onError(error)
-                }
-            }
-        case .gdpr:
-            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
-                switch result {
-                case .success((let localState, let consents)):
-                    let userData = SPUserData(
-                        gdpr: SPConsent(consents: consents, applies: true),
-                        ccpa: self?.storage.userData.ccpa
-                    )
-                    self?.storeData(
-                        localState: localState,
-                        userData: userData,
-                        propertyId: self?.propertyId
-                    )
-                    self?.delegate?.onConsentReady?(userData: userData)
-                case .failure(let error):
-                    self?.onError(error)
-                }
-            }
-        default: break
         }
     }
 
@@ -316,40 +353,6 @@ import Foundation
             }
         }
     }
-
-    #if os(iOS)
-    func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
-        let messageId = Int(
-            URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
-                .queryItems?
-                .first { $0.name == "message_id"}?
-                .value ?? ""
-        )
-        GenericWebMessageViewController(
-            url: pmURL,
-            messageId: messageId,
-            contents: SPJson(),
-            campaignType: campaignType,
-            timeout: messageTimeoutInSeconds,
-            delegate: self
-        ).loadPrivacyManager(url: pmURL)
-    }
-    #endif
-
-    public func onError(_ error: SPError) {
-        spClient.errorMetrics(
-            error,
-            propertyId: propertyId,
-            sdkVersion: SPConsentManager.VERSION,
-            OSVersion: deviceManager.osVersion(),
-            deviceFamily: deviceManager.osVersion(),
-            campaignType: error.campaignType
-        )
-        if cleanUserDataOnError {
-            SPConsentManager.clearAllData()
-        }
-        delegate?.onError?(error: error)
-    }
 }
 
 extension SPConsentManager: SPMessageUIDelegate {
@@ -418,6 +421,12 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 }
 
+typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
+
+protocol SPNativePMDelegate: AnyObject {
+    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
+}
+
 extension SPConsentManager: SPNativePMDelegate {
     func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler) {
         if let propertyId = propertyId {
@@ -434,10 +443,4 @@ extension SPConsentManager: SPNativePMDelegate {
             }
         }
     }
-}
-
-typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
-
-protocol SPNativePMDelegate: AnyObject {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
 }

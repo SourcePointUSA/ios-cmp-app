@@ -40,13 +40,13 @@ class ViewController: UIViewController {
         consentManager.customConsentGDPR(
             vendors: [myVendorId],
             categories: myPurposesId,
-            legIntCategories: []) { consents in
-            let vendorAccepted = consents.vendorGrants[self.myVendorId]?.granted ?? false
-            self.updateMyVendorUI(vendorAccepted)
+            legIntCategories: []) { [weak self] consents in
+            let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted ?? false
+            self?.updateMyVendorUI(vendorAccepted)
         }
     }
 
-    lazy var consentManager: SPConsentManager = { SPConsentManager(
+    lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
