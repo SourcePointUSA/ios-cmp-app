@@ -9,6 +9,7 @@ import Foundation
 
 struct CustomConsentResponse: Codable, Equatable {
     let grants: SPGDPRVendorGrants
+    let categories, vendors, legIntCategories: [String]
 }
 
 struct CustomConsentRequest: Codable, Equatable {
