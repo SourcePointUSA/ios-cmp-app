@@ -17,6 +17,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var vendorsTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
+    var nativeLongButton: SPNativeLongButton?
 
     var displayingLegIntVendors: Bool { vendorsSlider.selectedSegmentIndex == 1 }
     var currentVendors: [VendorListVendor] {
@@ -54,6 +55,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        nativeLongButton = viewData.byId("VendorButton") as? SPNativeLongButton
         vendorsTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
@@ -121,11 +123,10 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
 
         let vendor = currentVendors[indexPath.row]
         cell.labelText = vendor.name
-        cell.customText = vendor.vendorType == .CUSTOM ? nil : "Custom"
         cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor.vendorId)
         cell.selectable = true
-        cell.onText = "On"
-        cell.offText = "Off"
+        cell.isCustom = vendor.vendorType == .CUSTOM
+        cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
     }
@@ -133,8 +134,8 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         loadLabelText(
             forComponentId: "VendorDescription",
-            labelText: "", label: selectedVendorTextLabel
-        ).attributedText = currentVendors[indexPath.row].description?.htmlToAttributedString
+            labelText: currentVendors[indexPath.row].description ?? "", label: selectedVendorTextLabel
+        )
 
         return true
     }

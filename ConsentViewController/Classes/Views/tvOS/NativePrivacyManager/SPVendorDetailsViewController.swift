@@ -11,8 +11,8 @@ import Foundation
 class SPVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var headerView: SPPMHeader!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var barcodeLabel: UILabel!
-    @IBOutlet weak var barcodeImageView: UIImageView!
+//    @IBOutlet weak var barcodeLabel: UILabel!
+//    @IBOutlet weak var barcodeImageView: UIImageView!
     @IBOutlet weak var onButton: UIButton!
     @IBOutlet weak var offButton: UIButton!
     @IBOutlet weak var vendorDetailsTableView: UITableView!
@@ -41,7 +41,7 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
 
     func setHeader () {
         headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        headerView.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        headerView.spTitleText = viewData.byId("Header") as? SPNativeText
         headerView.titleLabel.text = vendor?.name
         headerView.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
@@ -55,8 +55,9 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView)
-        loadLabelView(forComponentId: "QrInstructions", label: barcodeLabel)
+        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
+
+//        loadLabelView(forComponentId: "QrInstructions", label: barcodeLabel)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
         vendorDetailsTableView.allowsSelection = false

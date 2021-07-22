@@ -18,6 +18,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
+    var nativeLongButton: SPNativeLongButton?
 
     var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
     var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
@@ -72,6 +73,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
@@ -146,13 +148,12 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         let section = indexPath.section
         let category = currentCategory(indexPath)
         cell.labelText = category.name
-        cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
         cell.isOn = section == 0 || section == 3 ?
             consentsSnapshot.acceptedCategoriesIds.contains(category._id) :
             nil
         cell.selectable = section != 1
-        cell.onText = "On"
-        cell.offText = "Off"
+        cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
+        cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
     }
@@ -165,9 +166,9 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         let category = currentCategory(indexPath)
         loadLabelText(
             forComponentId: "CategoriesHeader",
-            labelText: "",
+            labelText: category.description,
             label: selectedCategoryTextLabel
-        ).attributedText = category.description.htmlToAttributedString
+        )
         return true
     }
 

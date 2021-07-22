@@ -183,7 +183,8 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            label.text = textDetails.settings.text
+            label.text = ""
+            label.attributedText = textDetails.settings.text.htmlToAttributedString
             label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
             label.font = UIFont(from: textDetails.settings.style?.font)
         }
@@ -193,7 +194,8 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            label.text = text
+            label.text = ""
+            label.attributedText = text.htmlToAttributedString
             label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
             label.font = UIFont(from: textDetails.settings.style?.font)
         }
@@ -201,9 +203,13 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadTextView(forComponentId id: String, textView: UITextView) -> UITextView {
+    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
-            textView.text = textViewComponent.settings.text
+            if let text = text {
+                textView.attributedText = text.htmlToAttributedString
+            } else {
+                textView.text = textViewComponent.settings.text
+            }
             textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
