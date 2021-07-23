@@ -1,3 +1,13 @@
+# 6.1.5 (July, 23, 2021)
+* Expand `SPSDK` protocol to contain all public method/attributes of the SDK.
+  * VERSION: String
+  * clearAllData()
+  * cleanUserDataOnError: Bool
+  * messageTimeoutInSeconds: TimeInterval
+  * privacyManagerTab: SPPrivacyManagerTab
+  * messageLanguage: SPMessageLanguage
+* Added AppleTV native Privacy Manager message flow.
+
 # 6.1.4 (July, 20, 2021)
 * Fixed an issue preventing consent messages from rendering on iOS 13.3.x
 
