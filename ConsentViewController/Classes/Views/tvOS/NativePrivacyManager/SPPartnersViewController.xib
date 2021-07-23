@@ -80,6 +80,9 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="500" height="86"/>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Accept All"/>
+                                                    <connections>
+                                                        <action selector="onAcceptTap:" destination="-1" eventType="primaryActionTriggered" id="acT-Rf-vAc"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIA-bC-Rnh">
                                                     <rect key="frame" x="0.0" y="94" width="500" height="86"/>
