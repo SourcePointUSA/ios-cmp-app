@@ -13,12 +13,12 @@ class ViewController: UIViewController {
     var activityIndicator = UIActivityIndicatorView(style: .white)
 
     @IBAction func onLoadPMTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "488393")
+        consentManager.loadGDPRPrivacyManager(withId: "529562")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
-        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        propertyName: try! SPPropertyName("appletv.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
             ios14: SPCampaign()
@@ -43,7 +43,7 @@ extension ViewController: SPDelegate {
     }
 
     func onSPUIFinished(_ controller: SPMessageViewController) {
-        print("onSPUIReady")
+        print("onSPUIFinished")
         dismiss(animated: true)
     }
 
