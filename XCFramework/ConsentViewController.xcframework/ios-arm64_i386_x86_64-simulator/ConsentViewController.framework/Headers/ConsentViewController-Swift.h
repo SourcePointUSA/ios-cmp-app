@@ -440,8 +440,8 @@ enum SPPrivacyManagerTab : NSInteger;
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPCCPA_")
 @protocol SPCCPA
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)withId tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)ccpaApplies SWIFT_WARN_UNUSED_RESULT;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+@property (nonatomic, readonly) BOOL ccpaApplies;
 @end
 
 
@@ -546,55 +546,70 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17SPConsentDelegate_")
 - (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
 
-
-SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
-@protocol SPGDPR
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)withId tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)gdprApplies SWIFT_WARN_UNUSED_RESULT;
-@end
-
-@class SPGDPRConsent;
-
-SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
-@protocol SPSDK <SPCCPA, SPGDPR>
-@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
-- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
-@end
-
-@class SPPropertyName;
 enum SPMessageLanguage : NSInteger;
+@class SPPropertyName;
 
 SWIFT_CLASS("_TtC21ConsentViewController16SPConsentManager")
-@interface SPConsentManager : NSObject <SPSDK>
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
-+ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
+@interface SPConsentManager : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (BOOL)shouldCallErrorMetrics SWIFT_WARN_UNUSED_RESULT;
 + (void)setShouldCallErrorMetrics:(BOOL)value;
-@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-+ (void)clearAllData;
+/// By default, the SDK will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
+/// <code>.loadMessage</code> is called.
+/// Set this flag to <code>false</code> if you wish to opt-out from this behaviour.
+@property (nonatomic) BOOL cleanUserDataOnError;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
 /// By default the SDK will use the locale defined by the WebView
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)gdprApplies SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)ccpaApplies SWIFT_WARN_UNUSED_RESULT;
-- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
-- (void)onError:(SPError * _Nonnull)error;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
+
+
+SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
+@protocol SPGDPR
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+@property (nonatomic, readonly) BOOL gdprApplies;
+@end
+
+@class SPGDPRConsent;
+
+SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
+@protocol SPSDK <SPCCPA, SPGDPR>
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
++ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
++ (void)clearAllData;
+@property (nonatomic) BOOL cleanUserDataOnError;
+@property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
+@property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
+@property (nonatomic) enum SPMessageLanguage messageLanguage;
+@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+@end
+
+
+@interface SPConsentManager (SWIFT_EXTENSION(ConsentViewController)) <SPSDK>
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
++ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
++ (void)clearAllData;
+@property (nonatomic, readonly) BOOL gdprApplies;
+@property (nonatomic, readonly) BOOL ccpaApplies;
+@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+@end
 
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController19SPConsentUIDelegate_")
@@ -1259,8 +1274,8 @@ enum SPPrivacyManagerTab : NSInteger;
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPCCPA_")
 @protocol SPCCPA
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)withId tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)ccpaApplies SWIFT_WARN_UNUSED_RESULT;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+@property (nonatomic, readonly) BOOL ccpaApplies;
 @end
 
 
@@ -1365,55 +1380,70 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17SPConsentDelegate_")
 - (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
 
-
-SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
-@protocol SPGDPR
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)withId tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)gdprApplies SWIFT_WARN_UNUSED_RESULT;
-@end
-
-@class SPGDPRConsent;
-
-SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
-@protocol SPSDK <SPCCPA, SPGDPR>
-@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
-- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
-@end
-
-@class SPPropertyName;
 enum SPMessageLanguage : NSInteger;
+@class SPPropertyName;
 
 SWIFT_CLASS("_TtC21ConsentViewController16SPConsentManager")
-@interface SPConsentManager : NSObject <SPSDK>
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
-+ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
+@interface SPConsentManager : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (BOOL)shouldCallErrorMetrics SWIFT_WARN_UNUSED_RESULT;
 + (void)setShouldCallErrorMetrics:(BOOL)value;
-@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-+ (void)clearAllData;
+/// By default, the SDK will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
+/// <code>.loadMessage</code> is called.
+/// Set this flag to <code>false</code> if you wish to opt-out from this behaviour.
+@property (nonatomic) BOOL cleanUserDataOnError;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
 /// By default the SDK will use the locale defined by the WebView
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)gdprApplies SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)ccpaApplies SWIFT_WARN_UNUSED_RESULT;
-- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
-- (void)onError:(SPError * _Nonnull)error;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
+
+
+SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
+@protocol SPGDPR
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+@property (nonatomic, readonly) BOOL gdprApplies;
+@end
+
+@class SPGDPRConsent;
+
+SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
+@protocol SPSDK <SPCCPA, SPGDPR>
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
++ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
++ (void)clearAllData;
+@property (nonatomic) BOOL cleanUserDataOnError;
+@property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
+@property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
+@property (nonatomic) enum SPMessageLanguage messageLanguage;
+@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+@end
+
+
+@interface SPConsentManager (SWIFT_EXTENSION(ConsentViewController)) <SPSDK>
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
++ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
++ (void)clearAllData;
+@property (nonatomic, readonly) BOOL gdprApplies;
+@property (nonatomic, readonly) BOOL ccpaApplies;
+@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+@end
 
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController19SPConsentUIDelegate_")
@@ -2078,8 +2108,8 @@ enum SPPrivacyManagerTab : NSInteger;
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPCCPA_")
 @protocol SPCCPA
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)withId tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)ccpaApplies SWIFT_WARN_UNUSED_RESULT;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+@property (nonatomic, readonly) BOOL ccpaApplies;
 @end
 
 
@@ -2184,55 +2214,70 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17SPConsentDelegate_")
 - (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
 
-
-SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
-@protocol SPGDPR
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)withId tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)gdprApplies SWIFT_WARN_UNUSED_RESULT;
-@end
-
-@class SPGDPRConsent;
-
-SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
-@protocol SPSDK <SPCCPA, SPGDPR>
-@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
-- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
-@end
-
-@class SPPropertyName;
 enum SPMessageLanguage : NSInteger;
+@class SPPropertyName;
 
 SWIFT_CLASS("_TtC21ConsentViewController16SPConsentManager")
-@interface SPConsentManager : NSObject <SPSDK>
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
-+ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
+@interface SPConsentManager : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 + (BOOL)shouldCallErrorMetrics SWIFT_WARN_UNUSED_RESULT;
 + (void)setShouldCallErrorMetrics:(BOOL)value;
-@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-+ (void)clearAllData;
+/// By default, the SDK will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
+/// <code>.loadMessage</code> is called.
+/// Set this flag to <code>false</code> if you wish to opt-out from this behaviour.
+@property (nonatomic) BOOL cleanUserDataOnError;
 /// The timeout interval in seconds for the message being displayed
 @property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 /// Instructs the privacy manager to be displayed with this tab.
 /// By default the SDK will use the defult tab of PM
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
 /// By default the SDK will use the locale defined by the WebView
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (BOOL)gdprApplies SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)ccpaApplies SWIFT_WARN_UNUSED_RESULT;
-- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
-- (void)onError:(SPError * _Nonnull)error;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
+
+
+SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
+@protocol SPGDPR
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+@property (nonatomic, readonly) BOOL gdprApplies;
+@end
+
+@class SPGDPRConsent;
+
+SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
+@protocol SPSDK <SPCCPA, SPGDPR>
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
++ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
++ (void)clearAllData;
+@property (nonatomic) BOOL cleanUserDataOnError;
+@property (nonatomic) NSTimeInterval messageTimeoutInSeconds;
+@property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
+@property (nonatomic) enum SPMessageLanguage messageLanguage;
+@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+@end
+
+
+@interface SPConsentManager (SWIFT_EXTENSION(ConsentViewController)) <SPSDK>
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
++ (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
++ (void)clearAllData;
+@property (nonatomic, readonly) BOOL gdprApplies;
+@property (nonatomic, readonly) BOOL ccpaApplies;
+@property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+@end
 
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController19SPConsentUIDelegate_")
