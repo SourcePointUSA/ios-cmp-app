@@ -8,16 +8,6 @@
 import UIKit
 import Foundation
 
-protocol PMCategoryManager: AnyObject {
-    func onCategoryOn(_ category: VendorListCategory)
-    func onCategoryOff(_ category: VendorListCategory)
-}
-
-protocol PMVendorManager: AnyObject {
-    func onVendorOn(_ vendor: VendorListVendor)
-    func onVendorOff(_ vendor: VendorListVendor)
-}
-
 @objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
     weak var delegate: SPNativePMDelegate?
 
@@ -33,20 +23,28 @@ protocol PMVendorManager: AnyObject {
 
     @IBOutlet weak var header: SPPMHeader!
 
+    var secondLayerData: PrivacyManagerViewResponse?
+
     var categories: [VendorListCategory] { pmData.categories }
     var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
+    var snapshot: PMConsentSnaptshot?
+
     override var preferredFocusedView: UIView? { acceptButton }
 
     func setHeader () {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("HeaderText") as? SPNativeText
+        header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in
             if let this = self {
                 self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)
             }
         }
+    }
+
+    override func loadMessage() {
+        loaded(self)
     }
 
     override func viewDidLoad() {
@@ -58,6 +56,7 @@ protocol PMVendorManager: AnyObject {
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
+        loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         categoryTableView.allowsSelection = false
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self
@@ -72,29 +71,60 @@ protocol PMVendorManager: AnyObject {
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
-        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
-            switch result {
-            case .failure(let error):
-                self?.onError(error)
-            case .success(let data):
-                if let strongSelf = self {
-                    let controller = SPManagePreferenceViewController(
-                        messageId: self?.messageId,
-                        campaignType: strongSelf.campaignType,
-                        viewData: strongSelf.pmData.categoriesView,
-                        pmData: strongSelf.pmData,
-                        delegate: self,
-                        nibName: "SPManagePreferenceViewController"
-                    )
-                    controller.categories = data.categories
-                    controller.specialPurposes = data.specialPurposes
-                    controller.features = data.features
-                    controller.specialFeatures = data.specialFeatures
-                    controller.categoryManagerDelegate = self
-                    self?.present(controller, animated: true)
+        guard let secondLayerData = secondLayerData else {
+            delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    self?.onError(error)
+                case .success(let data):
+                    if let strongSelf = self {
+                        let controller = SPManagePreferenceViewController(
+                            messageId: self?.messageId,
+                            campaignType: strongSelf.campaignType,
+                            viewData: strongSelf.pmData.categoriesView,
+                            pmData: strongSelf.pmData,
+                            delegate: self,
+                            nibName: "SPManagePreferenceViewController"
+                        )
+                        if self?.snapshot == nil {
+                            self?.snapshot = PMConsentSnaptshot (
+                                grants: data.grants ?? SPGDPRVendorGrants(),
+                                vendors: Set<VendorListVendor>(data.vendors),
+                                categories: Set<VendorListCategory>(data.categories),
+                                specialPurposes: Set<VendorListCategory>(data.specialPurposes),
+                                features: Set<VendorListCategory>(data.features),
+                                specialFeatures: Set<VendorListCategory>(data.specialFeatures)
+                            )
+                        }
+                        controller.categories = data.categories
+                        controller.consentsSnapshot = strongSelf.snapshot!
+                        self?.present(controller, animated: true)
+                    }
                 }
             }
+            return
         }
+        let controller = SPManagePreferenceViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: pmData.categoriesView,
+            pmData: pmData,
+            delegate: self,
+            nibName: "SPManagePreferenceViewController"
+        )
+        if snapshot == nil {
+            snapshot = PMConsentSnaptshot (
+                grants: secondLayerData.grants ?? SPGDPRVendorGrants(),
+                vendors: Set<VendorListVendor>(secondLayerData.vendors),
+                categories: Set<VendorListCategory>(secondLayerData.categories),
+                specialPurposes: Set<VendorListCategory>(secondLayerData.specialPurposes),
+                features: Set<VendorListCategory>(secondLayerData.features),
+                specialFeatures: Set<VendorListCategory>(secondLayerData.specialFeatures)
+            )
+        }
+        controller.categories = secondLayerData.categories
+        controller.consentsSnapshot = snapshot!
+        present(controller, animated: true)
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {
@@ -104,6 +134,16 @@ protocol PMVendorManager: AnyObject {
                 self?.onError(error)
             case .success(let data):
                 if let strongSelf = self {
+                    if self?.snapshot == nil {
+                        self?.snapshot = PMConsentSnaptshot (
+                            grants: data.grants ?? SPGDPRVendorGrants(),
+                            vendors: Set<VendorListVendor>(data.vendors),
+                            categories: Set<VendorListCategory>(data.categories),
+                            specialPurposes: Set<VendorListCategory>(data.specialPurposes),
+                            features: Set<VendorListCategory>(data.features),
+                            specialFeatures: Set<VendorListCategory>(data.specialFeatures)
+                        )
+                    }
                     let controller = SPPartnersViewController(
                         messageId: self?.messageId,
                         campaignType: strongSelf.campaignType,
@@ -113,7 +153,7 @@ protocol PMVendorManager: AnyObject {
                         nibName: "SPPartnersViewController"
                     )
                     controller.vendors = data.vendors
-                    controller.vendorManagerDelegate = self
+                    controller.consentsSnapshot = strongSelf.snapshot!
                     self?.present(controller, animated: true)
                 }
             }
@@ -136,70 +176,12 @@ protocol PMVendorManager: AnyObject {
     }
 }
 
-extension SPNativePrivacyManagerViewController: PMCategoryManager, PMVendorManager {
-    func onCategoryOn(_ category: VendorListCategory) {
-        print("""
-        On Purpose: {
-          "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue ?? "")",
-          "iabId": \(category.iabId ?? 99),
-          "consent": true,
-          "legInt": false
-        }
-        """
-        )
-    }
-
-    func onCategoryOff(_ category: VendorListCategory) {
-        print("""
-        Off Purpose: {
-          "_id": "\(category._id)",
-          "type": "\(category.type?.rawValue ?? "")",
-          "iabId": \(category.iabId ?? 99),
-          "consent": false,
-          "legInt": false
-        }
-        """
-        )
-    }
-
-    func onVendorOn(_ vendor: VendorListVendor) {
-        print("""
-        On Vendor: {
-          "_id": "\(vendor.vendorId)",
-          "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId ?? 99),
-          "consent": true,
-          "legInt": false
-        }
-        """
-        )
-    }
-
-    func onVendorOff(_ vendor: VendorListVendor) {
-        print("""
-        Off Vendor: {
-          "_id": "\(vendor.vendorId)",
-          "vendorType": "\(vendor.vendorType.rawValue)",
-          "iabId": \(vendor.iabId ?? 99),
-          "consent": false,
-          "legInt": false
-        }
-        """
-        )
-    }
-}
-
 extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
     func loaded(_ controller: SPMessageViewController) {
         messageUIDelegate?.loaded(self)
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
-        if action.type == .SaveAndExit, let pmPayload = try? SPJson(["foo": "bar"]) {
-            action.pmPayload = pmPayload
-        }
-
         dismiss(animated: false) {
             self.messageUIDelegate?.action(action, from: controller)
         }

@@ -31,7 +31,7 @@ enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
     case PMNonTCF = 9
     case ios = 10
     case CCPAOTT = 11
-    case NativePMOTT = 99
+    case NativePMOTT = 14
     case unknown
 }
 

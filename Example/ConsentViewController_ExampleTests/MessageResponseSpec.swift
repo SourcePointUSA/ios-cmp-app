@@ -11,7 +11,7 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_try function_body_length
+// swiftlint:disable function_body_length
 class MessageResponseSpec: QuickSpec {
     override func spec() {
         let response = Result { """

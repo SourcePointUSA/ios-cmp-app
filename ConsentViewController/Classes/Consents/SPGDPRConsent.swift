@@ -21,8 +21,11 @@ public typealias SPGDPRPurposeId = String
     public let granted: Bool
     public let purposeGrants: SPGDPRPurposeGrants
 
+    // returns true if granted or any of its purposes is true
+    var softGranted: Bool { granted || purposeGrants.first { $0.value }?.value ?? false }
+
     public override var description: String {
-        return "VendorGrant(granted: \(granted), purposeGrants: \(purposeGrants))"
+        "VendorGrant(granted: \(granted), purposeGrants: \(purposeGrants))"
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
@@ -32,7 +35,7 @@ public typealias SPGDPRPurposeId = String
         return other.granted == granted && other.purposeGrants == purposeGrants
     }
 
-    public init(granted: Bool, purposeGrants: SPGDPRPurposeGrants) {
+    public init(granted: Bool = false, purposeGrants: SPGDPRPurposeGrants = [:]) {
         self.granted = granted
         self.purposeGrants = purposeGrants
     }
@@ -47,12 +50,11 @@ public typealias SPGDPRPurposeId = String
     SPGDPRConsent encapsulates all consent data from a user.
  */
 @objcMembers public class SPGDPRConsent: NSObject, Codable {
-    public static func empty() -> SPGDPRConsent {
-        return SPGDPRConsent(
-            vendorGrants: SPGDPRVendorGrants(),
-            euconsent: "",
-            tcfData: SPJson())
-    }
+    public static func empty() -> SPGDPRConsent { SPGDPRConsent(
+        vendorGrants: SPGDPRVendorGrants(),
+        euconsent: "",
+        tcfData: SPJson()
+    )}
 
     public let vendorGrants: SPGDPRVendorGrants
 
@@ -69,7 +71,8 @@ public typealias SPGDPRPurposeId = String
         uuid: String? = nil,
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
-        tcfData: SPJson) {
+        tcfData: SPJson
+    ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
         self.euconsent = euconsent
@@ -81,13 +84,12 @@ public typealias SPGDPRPurposeId = String
             return other.uuid == uuid &&
                 other.euconsent.elementsEqual(euconsent) &&
                 other.vendorGrants.allSatisfy { key, value in vendorGrants[key]?.isEqual(value) ?? false }
-        } else {
-            return false
         }
+        return false
     }
 
     open override var description: String {
-        return """
+        """
         UserConsents(
             uuid: \(uuid ?? "")
             vendorGrants: \(vendorGrants),

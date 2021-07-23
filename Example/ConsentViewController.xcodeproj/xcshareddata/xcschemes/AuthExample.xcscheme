@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1210"
+   LastUpgradeVersion = "1250"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6D8047F825D1D0630005002B"
+               BlueprintIdentifier = "6D9053FA25D27ABF00E4B49D"
                BuildableName = "AuthExampleUITests.xctest"
                BlueprintName = "AuthExampleUITests"
                ReferencedContainer = "container:ConsentViewController.xcodeproj">

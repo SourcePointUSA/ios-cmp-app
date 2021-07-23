@@ -9,6 +9,8 @@
 import Foundation
 @testable import ConsentViewController
 
+// swiftlint:disable function_parameter_count
+
 class SourcePointClientMock: SourcePointProtocol {
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
@@ -41,7 +43,13 @@ class SourcePointClientMock: SourcePointProtocol {
         print("reportIdfaStatus")
     }
 
-    func customConsentGDPR(toConsentUUID consentUUID: String, vendors: [String], categories: [String], legIntCategories: [String], propertyId: Int, handler: @escaping CustomConsentHandler) {
+    func customConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping CustomConsentHandler) {
         print("customConsentGDPR")
     }
 

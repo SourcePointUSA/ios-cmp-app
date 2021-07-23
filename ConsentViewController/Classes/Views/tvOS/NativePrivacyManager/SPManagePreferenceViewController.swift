@@ -18,42 +18,35 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
+    var nativeLongButton: SPNativeLongButton?
 
-    weak var categoryManagerDelegate: PMCategoryManager?
-
-    var acceptedCategories: [String: Bool] = [:]
+    var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
+    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
 
     var categories: [VendorListCategory] = []
     var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
-    var specialPurposes: [VendorListCategory] = []
-    var features: [VendorListCategory] = []
-    var specialFeatures: [VendorListCategory] = []
 
     var categoriesTable: [[VendorListCategory]] {[
         userConsentCategories,
-        specialPurposes,
-        features,
-        specialFeatures
+        Array(consentsSnapshot.specialPurposes),
+        Array(consentsSnapshot.features),
+        Array(consentsSnapshot.specialFeatures)
     ]}
 
     var sections: [SPNativeText?] {
         var sections: [SPNativeText?] = []
         if userConsentCategories.isNotEmpty() {
             sections.append(viewData.byId("PurposesHeader") as? SPNativeText)
-            // TODO: add definition
         }
-        if specialPurposes.isNotEmpty() {
+        if consentsSnapshot.specialPurposes.isNotEmpty() {
             sections.append(viewData.byId("SpecialPurposesHeader") as? SPNativeText)
-            // TODO: add definition
         }
-        if features.isNotEmpty() {
+        if consentsSnapshot.features.isNotEmpty() {
             sections.append(viewData.byId("FeaturesHeader") as? SPNativeText)
-            // TODO: add definition
         }
-        if specialFeatures.isNotEmpty() {
+        if consentsSnapshot.specialFeatures.isNotEmpty() {
             sections.append(viewData.byId("SpecialFeaturesHeader") as? SPNativeText)
-            // TODO: add definition
         }
         return sections
     }
@@ -79,12 +72,17 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
+        loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
         )
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
+        consentsSnapshot.onConsentsChange = { [weak self] in
+            self?.categoriesTableView.reloadData()
+        }
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {
@@ -96,17 +94,30 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        messageUIDelegate?.action(SPAction(type: .SaveAndExit, id: nil, campaignType: campaignType), from: self)
+        let pmId = messageId != nil ? String(messageId!) : ""
+        messageUIDelegate?.action(SPAction(
+            type: .SaveAndExit,
+            id: nil,
+            campaignType: campaignType,
+            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: pmId).json()!
+        ), from: self)
     }
 }
 
 // MARK: UITableViewDataSource
 extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
+    func currentCategory(_ index: IndexPath) -> VendorListCategory {
+        displayingLegIntCategories ?
+            legIntCategories[index.row] :
+            categoriesTable[index.section][index.row]
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+
     func numberOfSections(in tableView: UITableView) -> Int {
-        switch categorySlider.selectedSegmentIndex {
-        case 0: return sections.count
-        default: return 1
-        }
+        displayingLegIntCategories ? 1 : sections.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -118,19 +129,11 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch categorySlider.selectedSegmentIndex {
-        case 0:
-            return categoriesTable[section].count
-        case 1:
-            return legIntCategories.count
-        default:
-            break
-        }
-        return 0
+        displayingLegIntCategories ? legIntCategories.count : categoriesTable[section].count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -143,18 +146,14 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
         }
 
         let section = indexPath.section
-        let row = indexPath.row
-        if categorySlider.selectedSegmentIndex == 0 {
-            let category = categoriesTable[section][row]
-            cell.labelText = category.name
-            cell.customText = category.type == .IAB_PURPOSE ? nil : "Custom"
-            cell.isOn = section == 0 || section == 3 ? acceptedCategories.keys.contains(category._id) : nil
-            cell.selectable = section != 1
-        } else {
-            cell.labelText = legIntCategories[indexPath.row].name
-        }
-        cell.onText = "On"
-        cell.offText = "Off"
+        let category = currentCategory(indexPath)
+        cell.labelText = category.name
+        cell.isOn = section == 0 || section == 3 ?
+            consentsSnapshot.acceptedCategoriesIds.contains(category._id) :
+            nil
+        cell.selectable = section != 1
+        cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
+        cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
     }
@@ -164,14 +163,12 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        switch categorySlider.selectedSegmentIndex {
-        case 0:
-            loadLabelText(forComponentId: "CategoriesHeader", labelText: userConsentCategories[indexPath.row].description, label: selectedCategoryTextLabel)
-        case 1:
-            loadLabelText(forComponentId: "CategoriesHeader", labelText: legIntCategories[indexPath.row].description, label: selectedCategoryTextLabel)
-        default:
-            break
-        }
+        let category = currentCategory(indexPath)
+        loadLabelText(
+            forComponentId: "CategoriesHeader",
+            labelText: category.description,
+            label: selectedCategoryTextLabel
+        )
         return true
     }
 
@@ -188,20 +185,8 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             delegate: nil,
             nibName: "SPCategoryDetailsViewController"
         )
-        categoryDetailsVC.category = categories[indexPath.row]
-        categoryDetailsVC.categoryManagerDelegate = self
+        categoryDetailsVC.category = currentCategory(indexPath)
+        categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
         present(categoryDetailsVC, animated: true)
-    }
-}
-
-extension SPManagePreferenceViewController: PMCategoryManager {
-    func onCategoryOn(_ category: VendorListCategory) {
-        dismiss(animated: true)
-        categoryManagerDelegate?.onCategoryOn(category)
-    }
-
-    func onCategoryOff(_ category: VendorListCategory) {
-        dismiss(animated: true)
-        categoryManagerDelegate?.onCategoryOff(category)
     }
 }

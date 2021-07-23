@@ -22,10 +22,10 @@ class SPUserDefaults: SPLocalStorage {
 
     var propertyId: Int? {
         get {
-            storage.object(ofType: Int.self, forKey: SPUserDefaults.PROPERTY_ID)
+            storage.integer(forKey: SPUserDefaults.PROPERTY_ID)
         }
         set {
-            storage.setObject(newValue, forKey: SPUserDefaults.PROPERTY_ID)
+            storage.set(newValue, forKey: SPUserDefaults.PROPERTY_ID)
         }
     }
 

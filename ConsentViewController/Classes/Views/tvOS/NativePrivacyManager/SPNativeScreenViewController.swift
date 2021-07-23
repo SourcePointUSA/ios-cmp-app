@@ -8,6 +8,20 @@
 import Foundation
 import UIKit
 
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
+
 enum SPUIRectEdge {
     case bottomTop, rightLeft, topBottom, leftRight, left, right, top, bottom, all
 
@@ -26,7 +40,8 @@ enum SPUIRectEdge {
 
 extension UIFont {
     convenience init?(from spFont: SPNativeFont?) {
-        let fontSize = spFont?.fontSize ?? UIFont.preferredFont(forTextStyle: .body).pointSize
+        let magicScalingFactor = CGFloat(1.8)
+        let fontSize = spFont?.fontSize != nil ? spFont!.fontSize * magicScalingFactor : UIFont.preferredFont(forTextStyle: .body).pointSize
         let family = spFont?.fontFamily
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
@@ -139,6 +154,18 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
+    func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView {
+        if let image = components.first(where: { $0.id == id }) as? SPNativeImage,
+           let url = URL(string: image.settings.src) {
+            imageView.isHidden = false
+            imageView.load(url: url)
+        } else {
+            imageView.isHidden = true
+        }
+        return imageView
+    }
+
+    @discardableResult
     func loadButton(forComponentId id: String, button: UIButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             button.isHidden = false
@@ -156,7 +183,8 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            label.text = textDetails.settings.text
+            label.text = ""
+            label.attributedText = textDetails.settings.text.htmlToAttributedString
             label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
             label.font = UIFont(from: textDetails.settings.style?.font)
         }
@@ -166,7 +194,8 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            label.text = text
+            label.text = ""
+            label.attributedText = text.htmlToAttributedString
             label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
             label.font = UIFont(from: textDetails.settings.style?.font)
         }
@@ -174,9 +203,13 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadTextView(forComponentId id: String, textView: UITextView) -> UITextView {
+    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
-            textView.text = textViewComponent.settings.text
+            if let text = text {
+                textView.attributedText = text.htmlToAttributedString
+            } else {
+                textView.text = textViewComponent.settings.text
+            }
             textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true

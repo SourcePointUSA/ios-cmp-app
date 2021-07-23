@@ -6,7 +6,7 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try function_body_length
+// swiftlint:disable force_try
 
 import Quick
 import Nimble

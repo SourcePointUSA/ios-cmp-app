@@ -158,6 +158,11 @@ You can load the Privacy Manager (that UI with the toggles) any time, programati
 
 The SDK will follow the same exact same lifecycle as with the 1st layer consent message. First calling the delegate method `onSPUIReady` when the PM is ready, `onAction` when the user takes an action, `onSPUIFinished` when the PM is ready to be removed from the View stack and, finally,  `onConsentReady` once the SDK receives the consent data back from the server.
 
+## What happens in case of an error?
+The SDK will in all cases wrap the error in one of the `SPError` class and eventually call the `func onError(_ error: SPError)` callback. 
+By default, the SDK will also remove all consent data from the device. This _may_ cause a consent message to be shown again, depending on your scenario. This was implemented on purpose to be the most safe possible. Since there are no consents data, vendors should refrain from performing logic that depend on it.
+This behaviour can be opted-out by setting the flag  `consentManager.cleanUserDataOnError` to false, after you initialise `SPConsentManager`.
+
 ## Programatically consenting an user
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
 ```swift

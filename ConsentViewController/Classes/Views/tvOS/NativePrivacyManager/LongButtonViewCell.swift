@@ -10,6 +10,7 @@ import UIKit
 class LongButtonViewCell: UITableViewCell {
     var labelText: String?
     var isOn: Bool?
+    var isCustom: Bool = false
     var onText: String?
     var offText: String?
     var customText: String?
@@ -18,6 +19,12 @@ class LongButtonViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var customLabel: UILabel!
     @IBOutlet weak var stateLabel: UILabel!
+
+    func setup(from nativeCell: SPNativeLongButton?) {
+        customText = isCustom ? nil : nativeCell?.settings.customText ?? "Custom"
+        onText = nativeCell?.settings.onText ?? "On"
+        offText = nativeCell?.settings.offText ?? "Off"
+    }
 
     func loadUI() {
         label.text = labelText

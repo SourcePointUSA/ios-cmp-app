@@ -49,11 +49,23 @@ extension SPCategoryType: Codable {
     let type: SPCategoryType?
     let legIntVendors: [Vendor]?
     let requiringConsentVendors: [Vendor]?
+    var uniqueVendorIds: [String] {
+        Array(Set<String>(
+            (legIntVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? []) +
+                (requiringConsentVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? [])
+        ))
+    }
 }
 
-extension VendorListCategory: Equatable {
+extension VendorListCategory: Identifiable, Hashable, Equatable {
+    var id: String { _id }
+
     static func == (lhs: VendorListCategory, rhs: VendorListCategory) -> Bool {
         lhs._id == rhs._id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(_id)
     }
 }
 
