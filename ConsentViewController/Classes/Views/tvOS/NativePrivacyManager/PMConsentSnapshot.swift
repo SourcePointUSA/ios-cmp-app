@@ -76,7 +76,7 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
             .compactMap { id in vendors.first { $0.vendorId == id } }
             .filter { vendor in
                 let vendorCategoriesIds = (grants[vendor.vendorId] ?? SPGDPRVendorGrant()).purposeGrants.keys
-                return acceptedCategoriesIds.intersection(vendorCategoriesIds).isEmpty
+                return acceptedCategoriesIds.isDisjoint(with: vendorCategoriesIds)
             }
             .map { $0.vendorId }
     }
@@ -96,10 +96,10 @@ class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
         self.features = features
         self.specialFeatures = specialFeatures
         acceptedVendorsIds = Set<String>(
-            grants.filter { $0.value.softGranted }.map{ $0.key }
+            grants.filter { $0.value.softGranted }.map { $0.key }
         )
         acceptedCategoriesIds = Set<String>(
-            grants.flatMap{ vendors in vendors.value.purposeGrants.filter{$0.value}.keys }
+            grants.flatMap { vendors in vendors.value.purposeGrants.filter { $0.value }.keys }
         )
     }
 

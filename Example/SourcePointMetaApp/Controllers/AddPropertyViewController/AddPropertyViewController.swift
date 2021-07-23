@@ -425,7 +425,7 @@ extension AddPropertyViewController {
 
     func handleMultipleMessages(userData: SPUserData) {
         if onConsentReadyCalled {
-            if let ccpaApplies = consentManager?.ccpaApplies(), let gdprApplies = consentManager?.gdprApplies() {
+            if let ccpaApplies = consentManager?.ccpaApplies, let gdprApplies = consentManager?.gdprApplies {
                 if !ccpaApplies && gdprApplies || ccpaApplies && !gdprApplies {
                     onConsentReadyCalled = false
                     loadConsentInfoController(userData: userData)

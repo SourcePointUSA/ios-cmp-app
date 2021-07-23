@@ -87,7 +87,7 @@ import Foundation
                             nibName: "SPManagePreferenceViewController"
                         )
                         if self?.snapshot == nil {
-                            self?.snapshot = PMConsentSnaptshot (
+                            self?.snapshot = PMConsentSnaptshot(
                                 grants: data.grants ?? SPGDPRVendorGrants(),
                                 vendors: Set<VendorListVendor>(data.vendors),
                                 categories: Set<VendorListCategory>(data.categories),
@@ -113,7 +113,7 @@ import Foundation
             nibName: "SPManagePreferenceViewController"
         )
         if snapshot == nil {
-            snapshot = PMConsentSnaptshot (
+            snapshot = PMConsentSnaptshot(
                 grants: secondLayerData.grants ?? SPGDPRVendorGrants(),
                 vendors: Set<VendorListVendor>(secondLayerData.vendors),
                 categories: Set<VendorListCategory>(secondLayerData.categories),
@@ -135,7 +135,7 @@ import Foundation
             case .success(let data):
                 if let strongSelf = self {
                     if self?.snapshot == nil {
-                        self?.snapshot = PMConsentSnaptshot (
+                        self?.snapshot = PMConsentSnaptshot(
                             grants: data.grants ?? SPGDPRVendorGrants(),
                             vendors: Set<VendorListVendor>(data.vendors),
                             categories: Set<VendorListCategory>(data.categories),
