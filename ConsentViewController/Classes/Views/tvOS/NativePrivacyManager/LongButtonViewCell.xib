@@ -18,22 +18,22 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="WX5-Fd-aH5">
-                        <rect key="frame" x="0.0" y="0.0" width="1861" height="46"/>
+                        <rect key="frame" x="20" y="0.0" width="1823.5" height="46"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" text="Vendor or Category name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJe-ad-JWG" userLabel="Label">
-                                <rect key="frame" x="0.0" y="0.0" width="1861" height="46"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1823.5" height="46"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsP-uu-2cN" userLabel="CustomLabel">
-                                <rect key="frame" x="1861" y="0.0" width="0.0" height="46"/>
+                                <rect key="frame" x="1823.5" y="0.0" width="0.0" height="46"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYk-ye-IgP" userLabel="StateLabel">
-                                <rect key="frame" x="1861" y="0.0" width="0.0" height="46"/>
+                                <rect key="frame" x="1823.5" y="0.0" width="0.0" height="46"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -42,10 +42,10 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="leading" secondItem="S0Q-fX-qc8" secondAttribute="leading" id="MIj-4S-i86"/>
                     <constraint firstItem="WX5-Fd-aH5" firstAttribute="height" secondItem="S0Q-fX-qc8" secondAttribute="height" multiplier="1.04545" id="SVL-e7-vOf"/>
-                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="width" secondItem="S0Q-fX-qc8" secondAttribute="width" multiplier="0.99" id="T6X-1B-7tM"/>
+                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="width" secondItem="S0Q-fX-qc8" secondAttribute="width" multiplier="0.97" id="T6X-1B-7tM"/>
                     <constraint firstItem="WX5-Fd-aH5" firstAttribute="top" secondItem="S0Q-fX-qc8" secondAttribute="top" id="gOK-KE-WZ9"/>
+                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="leading" secondItem="S0Q-fX-qc8" secondAttribute="leading" constant="20" symbolic="YES" id="wWx-2g-Q5p"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="1ks-Xo-ai1"/>
