@@ -85,7 +85,7 @@ extension ViewController: SPDelegate {
         dismiss(animated: true)
     }
 
-    func onConsentReady(consents: SPUserData) {
+    func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", consents)
     }
 
