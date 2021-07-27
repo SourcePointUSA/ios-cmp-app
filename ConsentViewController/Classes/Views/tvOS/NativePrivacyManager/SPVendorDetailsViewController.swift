@@ -29,10 +29,10 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
             sections.append(viewData.byId("PurposesText") as? SPNativeText)
         }
         if specialPurposes.isNotEmpty() {
-            sections.append(viewData.byId("SpecialPurposes") as? SPNativeText)
+            sections.append(viewData.byId("SpecialPurposesText") as? SPNativeText)
         }
         if specialFeatures.isNotEmpty() {
-            sections.append(viewData.byId("SpecialFeatures") as? SPNativeText)
+            sections.append(viewData.byId("SpecialFeaturesText") as? SPNativeText)
         }
         return sections
     }
