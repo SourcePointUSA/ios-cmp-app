@@ -214,6 +214,7 @@
 		80DB3E3D4F5FD36BE176F93741182D00 /* Wormholy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0154E456889F35C56896927A6E1E6BD0 /* Wormholy.swift */; };
 		80FCFD8A59BA7DEE0C76B07A38E5A481 /* CustomActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A39534A0A6E24B920239EC07A3B48 /* CustomActivity.swift */; };
 		8193F5963F0BF07DBF0C948BF3FA4B35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6308A7EB527C21AC5ECCE44CEB872D78 /* Foundation.framework */; };
+		82B7BBD726B0207F00F5212F /* SPQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B7BBD626B0207F00F5212F /* SPQRCode.swift */; };
 		8510469EB9B18B318478019A11F7D784 /* SatisfyAllOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3074969AAD0BDDC85342FACB2F9633 /* SatisfyAllOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		854D9E941A47F8E32F8DC9D55CB95ECD /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3DC6EA17B0CFE5DC757F4B9B1B2A1D /* MessageRequest.swift */; };
 		855ABA2BA01AE7ED52DA72D4832E43C2 /* jest.config.json in Resources */ = {isa = PBXBuildFile; fileRef = AA391F08DFB00B174C9F01861E081F8A /* jest.config.json */; };
@@ -816,6 +817,7 @@
 		8077998C0AD486ABC4ADA1BF081B1EAD /* IQInvocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQInvocation.swift; path = IQKeyboardManagerSwift/IQToolbar/IQInvocation.swift; sourceTree = "<group>"; };
 		81691695074ECFAEC61F3E76C9A45F90 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Sources/Quick/Configuration/Configuration.swift; sourceTree = "<group>"; };
 		823B9D161DD5B7E9F156774AAFFD76C0 /* ConsentViewController-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ConsentViewController-iOS-dummy.m"; sourceTree = "<group>"; };
+		82B7BBD626B0207F00F5212F /* SPQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPQRCode.swift; sourceTree = "<group>"; };
 		82C1F0F31FFA602DE6765E8D98999BD9 /* BeAnInstanceOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeAnInstanceOf.swift; path = Sources/Nimble/Matchers/BeAnInstanceOf.swift; sourceTree = "<group>"; };
 		83291D30151D27FD2D6BB853EEB96E9F /* Pods-ObjC-ExampleAppUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ObjC-ExampleAppUITests.modulemap"; sourceTree = "<group>"; };
 		84304F81547E5F11A81CA1156B2EA103 /* MatchError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MatchError.swift; path = Sources/Nimble/Matchers/MatchError.swift; sourceTree = "<group>"; };
@@ -1656,6 +1658,7 @@
 				52C412E74CBFA34A7541F1905E4A5BAA /* SPPrivacyPolicyViewController.xib */,
 				50FD12139B3BF83552424112399849C6 /* SPVendorDetailsViewController.swift */,
 				DBD52A75D88514744C89F81852DDF73A /* SPVendorDetailsViewController.xib */,
+				82B7BBD626B0207F00F5212F /* SPQRCode.swift */,
 			);
 			path = NativePrivacyManager;
 			sourceTree = "<group>";
@@ -2983,6 +2986,7 @@
 				D6F0A99A84517CB32B0BF92F97F44C41 /* SPPropertyName.swift in Sources */,
 				BE6F3BDB46CBDFA9AF8D2DFA74900D5C /* SPSDK.swift in Sources */,
 				6956A752FB0B3C4ECEE0830A063B3E2F /* SPString.swift in Sources */,
+				82B7BBD726B0207F00F5212F /* SPQRCode.swift in Sources */,
 				D2B232D4292216C24856A67424DEEBA6 /* SPStringifiedJSON.swift in Sources */,
 				ECB4F41F257F3CAB032BF388AF0401BF /* SPURLExtensions.swift in Sources */,
 				7FC98771F7F025FAA80D8D10D4670F99 /* SPUserData.swift in Sources */,

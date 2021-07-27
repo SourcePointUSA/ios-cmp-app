@@ -17,6 +17,7 @@
                 <outlet property="headerView" destination="aLv-m7-FYn" id="1Dn-R2-MOG"/>
                 <outlet property="offButton" destination="hDo-eE-jhB" id="JnH-Ut-Etd"/>
                 <outlet property="onButton" destination="JF7-FM-mVV" id="VYa-FB-gWU"/>
+                <outlet property="qrCodeImageView" destination="xUZ-MR-Hik" id="gyb-8I-omG"/>
                 <outlet property="vendorDetailsTableView" destination="eeb-Ha-gIO" id="pgP-kt-55Y"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
@@ -42,42 +43,50 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8dK-VP-t0q" userLabel="Stack View - 1st Column">
                                     <rect key="frame" x="0.0" y="0.0" width="880" height="844"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="center" axis="vertical" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hd1-ep-WaY" userLabel="Stack View - Actions">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qUt-ee-n5o">
                                             <rect key="frame" x="0.0" y="322" width="880" height="200"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-FM-mVV">
-                                                    <rect key="frame" x="240" y="0.0" width="400" height="96"/>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xUZ-MR-Hik">
+                                                    <rect key="frame" x="240" y="0.0" width="400" height="400"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="400" id="uQe-Bi-Iy7"/>
+                                                        <constraint firstAttribute="width" constant="400" id="McS-GQ-FeX"/>
+                                                        <constraint firstAttribute="height" constant="400" id="T8B-Vb-W6y"/>
                                                     </constraints>
-                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                                    <state key="normal" title="On"/>
-                                                    <connections>
-                                                        <action selector="onOnButtonTap:" destination="-1" eventType="primaryActionTriggered" id="xie-am-TKj"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDo-eE-jhB">
-                                                    <rect key="frame" x="240" y="104" width="400" height="96"/>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="center" axis="vertical" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hd1-ep-WaY" userLabel="Stack View - Actions">
+                                                    <rect key="frame" x="240" y="0.0" width="400" height="200"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-FM-mVV">
+                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="96"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="400" id="uQe-Bi-Iy7"/>
+                                                            </constraints>
+                                                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                            <state key="normal" title="On"/>
+                                                            <connections>
+                                                                <action selector="onOnButtonTap:" destination="-1" eventType="primaryActionTriggered" id="xie-am-TKj"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDo-eE-jhB">
+                                                            <rect key="frame" x="0.0" y="104" width="400" height="96"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="400" id="7Lr-2u-ULZ"/>
+                                                            </constraints>
+                                                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                            <state key="normal" title="Off"/>
+                                                            <connections>
+                                                                <action selector="onOffButtonTap:" destination="-1" eventType="primaryActionTriggered" id="T1E-tJ-TRv"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <viewLayoutGuide key="safeArea" id="JCs-7X-27h"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="400" id="7Lr-2u-ULZ"/>
+                                                        <constraint firstAttribute="height" constant="200" id="csU-OQ-o0Z"/>
                                                     </constraints>
-                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                                    <state key="normal" title="Off"/>
-                                                    <connections>
-                                                        <action selector="onOffButtonTap:" destination="-1" eventType="primaryActionTriggered" id="T1E-tJ-TRv"/>
-                                                    </connections>
-                                                </button>
+                                                </stackView>
                                             </subviews>
-                                            <viewLayoutGuide key="safeArea" id="JCs-7X-27h"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="200" id="csU-OQ-o0Z"/>
-                                            </constraints>
                                         </stackView>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="hd1-ep-WaY" firstAttribute="centerX" secondItem="8dK-VP-t0q" secondAttribute="centerX" id="A8C-lT-Q0d"/>
-                                        <constraint firstItem="hd1-ep-WaY" firstAttribute="centerY" secondItem="8dK-VP-t0q" secondAttribute="centerY" id="kRE-1U-otR"/>
-                                    </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="V17-6O-rwN" userLabel="Stack View - 2nd Column">
                                     <rect key="frame" x="880" y="0.0" width="880" height="844"/>

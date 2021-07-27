@@ -10,6 +10,7 @@ import Foundation
 
 class SPVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var headerView: SPPMHeader!
+    @IBOutlet weak var qrCodeImageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var onButton: UIButton!
     @IBOutlet weak var offButton: UIButton!
@@ -22,6 +23,7 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     var vendor: VendorListVendor?
     var consentCategories: [String] { vendor?.consentCategories.map { $0.name } ?? [] }
     var specialPurposes: [String] { vendor?.iabSpecialPurposes ?? [] }
+    var features: [String] { vendor?.iabFeatures ?? [] }
     var specialFeatures: [String] { vendor?.iabSpecialFeatures ?? [] }
     var sections: [SPNativeText?] {
         var sections: [SPNativeText?] = []
@@ -30,6 +32,9 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
         }
         if specialPurposes.isNotEmpty() {
             sections.append(viewData.byId("SpecialPurposesText") as? SPNativeText)
+        }
+        if features.isNotEmpty() {
+            sections.append(viewData.byId("FeaturesText") as? SPNativeText)
         }
         if specialFeatures.isNotEmpty() {
             sections.append(viewData.byId("SpecialFeaturesText") as? SPNativeText)
@@ -56,6 +61,10 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
+        if let vendorUrl = vendor?.policyUrl?.absoluteString {
+            qrCodeImageView.image = QRCode(from: vendorUrl)
+            qrCodeImageView.isHidden = qrCodeImageView.image == nil
+        }
         vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         vendorDetailsTableView.delegate = self
@@ -101,6 +110,8 @@ extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDeleg
         } else if section == 1 {
             return specialPurposes.count
         } else if section == 2 {
+            return features.count
+        } else if section == 3 {
             return specialFeatures.count
         } else {
             return 0
@@ -121,6 +132,8 @@ extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDeleg
         } else if section == 1 {
             cellText = specialPurposes[row]
         } else if section == 2 {
+            cellText = features[row]
+        } else if section == 3 {
             cellText = specialFeatures[row]
         }
         cell.textLabel?.text = cellText
