@@ -9,6 +9,17 @@ import UIKit
 import Foundation
 
 class SPManagePreferenceViewController: SPNativeScreenViewController {
+    struct Section {
+        let header: SPNativeText?
+        let content: [VendorListCategory]
+
+        init? (header: SPNativeText?, content: [VendorListCategory]?) {
+            if content == nil || content!.isEmpty { return nil }
+            self.header = header
+            self.content = content!
+        }
+    }
+
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -27,29 +38,13 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
 
-    var categoriesTable: [[VendorListCategory]] {[
-        userConsentCategories,
-        Array(consentsSnapshot.specialPurposes),
-        Array(consentsSnapshot.features),
-        Array(consentsSnapshot.specialFeatures)
-    ]}
+    var sections: [Section] {[
+        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: userConsentCategories),
+        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialPurposes)),
+        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.features)),
+        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialFeatures))
+    ].compactMap { $0 }}
 
-    var sections: [SPNativeText?] {
-        var sections: [SPNativeText?] = []
-        if userConsentCategories.isNotEmpty() {
-            sections.append(viewData.byId("PurposesHeader") as? SPNativeText)
-        }
-        if consentsSnapshot.specialPurposes.isNotEmpty() {
-            sections.append(viewData.byId("SpecialPurposesHeader") as? SPNativeText)
-        }
-        if consentsSnapshot.features.isNotEmpty() {
-            sections.append(viewData.byId("FeaturesHeader") as? SPNativeText)
-        }
-        if consentsSnapshot.specialFeatures.isNotEmpty() {
-            sections.append(viewData.byId("SpecialFeaturesHeader") as? SPNativeText)
-        }
-        return sections
-    }
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
@@ -109,7 +104,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     func currentCategory(_ index: IndexPath) -> VendorListCategory {
         displayingLegIntCategories ?
             legIntCategories[index.row] :
-            categoriesTable[index.section][index.row]
+            sections[index.section].content[index.row]
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -122,9 +117,9 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        label.text = sections[section]?.settings.text
-        label.font = UIFont(from: sections[section]?.settings.style?.font)
-        label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
+        label.text = sections[section].header?.settings.text
+        label.font = UIFont(from: sections[section].header?.settings.style?.font)
+        label.textColor = UIColor(hexString: sections[section].header?.settings.style?.font?.color)
         return label
     }
 
@@ -133,7 +128,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        displayingLegIntCategories ? legIntCategories.count : categoriesTable[section].count
+        displayingLegIntCategories ? legIntCategories.count : sections[section].content.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
