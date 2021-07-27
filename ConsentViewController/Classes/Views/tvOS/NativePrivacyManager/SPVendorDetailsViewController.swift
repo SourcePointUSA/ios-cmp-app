@@ -9,6 +9,17 @@ import UIKit
 import Foundation
 
 class SPVendorDetailsViewController: SPNativeScreenViewController {
+    struct Section {
+        let header: SPNativeText?
+        let content: [String]
+
+        init? (header: SPNativeText?, content: [String]?) {
+            if content == nil || content!.isEmpty { return nil }
+            self.header = header
+            self.content = content!
+        }
+    }
+
     @IBOutlet weak var headerView: SPPMHeader!
     @IBOutlet weak var qrCodeImageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -21,26 +32,12 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
 
     let cellReuseIdentifier = "cell"
     var vendor: VendorListVendor?
-    var consentCategories: [String] { vendor?.consentCategories.map { $0.name } ?? [] }
-    var specialPurposes: [String] { vendor?.iabSpecialPurposes ?? [] }
-    var features: [String] { vendor?.iabFeatures ?? [] }
-    var specialFeatures: [String] { vendor?.iabSpecialFeatures ?? [] }
-    var sections: [SPNativeText?] {
-        var sections: [SPNativeText?] = []
-        if consentCategories.isNotEmpty() {
-            sections.append(viewData.byId("PurposesText") as? SPNativeText)
-        }
-        if specialPurposes.isNotEmpty() {
-            sections.append(viewData.byId("SpecialPurposesText") as? SPNativeText)
-        }
-        if features.isNotEmpty() {
-            sections.append(viewData.byId("FeaturesText") as? SPNativeText)
-        }
-        if specialFeatures.isNotEmpty() {
-            sections.append(viewData.byId("SpecialFeaturesText") as? SPNativeText)
-        }
-        return sections
-    }
+    var sections: [Section] {[
+        Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.consentCategories.map { $0.name }),
+        Section(header: viewData.byId("SpecialPurposesText") as? SPNativeText, content: vendor?.iabSpecialPurposes),
+        Section(header: viewData.byId("FeaturesText") as? SPNativeText, content: vendor?.iabFeatures),
+        Section(header: viewData.byId("SpecialFeaturesText") as? SPNativeText, content: vendor?.iabSpecialFeatures)
+    ].compactMap { $0 }}
 
     func setHeader () {
         headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
@@ -94,9 +91,9 @@ extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDeleg
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        label.text = sections[section]?.settings.text
-        label.font = UIFont(from: sections[section]?.settings.style?.font)
-        label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
+        label.text = sections[section].header?.settings.text
+        label.font = UIFont(from: sections[section].header?.settings.style?.font)
+        label.textColor = UIColor(hexString: sections[section].header?.settings.style?.font?.color)
         return label
     }
 
@@ -105,17 +102,7 @@ extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDeleg
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return consentCategories.count
-        } else if section == 1 {
-            return specialPurposes.count
-        } else if section == 2 {
-            return features.count
-        } else if section == 3 {
-            return specialFeatures.count
-        } else {
-            return 0
-        }
+        sections[section].content.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -124,19 +111,7 @@ extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDeleg
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (vendorDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        var cellText = ""
-        let section = indexPath.section
-        let row = indexPath.row
-        if section == 0 {
-            cellText = consentCategories[row]
-        } else if section == 1 {
-            cellText = specialPurposes[row]
-        } else if section == 2 {
-            cellText = features[row]
-        } else if section == 3 {
-            cellText = specialFeatures[row]
-        }
-        cell.textLabel?.text = cellText
+        cell.textLabel?.text = sections[indexPath.section].content[indexPath.row]
         return cell
     }
 

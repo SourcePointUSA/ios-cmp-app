@@ -43,21 +43,21 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8dK-VP-t0q" userLabel="Stack View - 1st Column">
                                     <rect key="frame" x="0.0" y="0.0" width="880" height="844"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qUt-ee-n5o">
-                                            <rect key="frame" x="0.0" y="322" width="880" height="200"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="qUt-ee-n5o">
+                                            <rect key="frame" x="0.0" y="342" width="880" height="160"/>
                                             <subviews>
                                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xUZ-MR-Hik">
-                                                    <rect key="frame" x="240" y="0.0" width="400" height="400"/>
+                                                    <rect key="frame" x="230" y="0.0" width="420" height="420"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="400" id="McS-GQ-FeX"/>
-                                                        <constraint firstAttribute="height" constant="400" id="T8B-Vb-W6y"/>
+                                                        <constraint firstAttribute="width" constant="420" id="McS-GQ-FeX"/>
+                                                        <constraint firstAttribute="height" constant="420" id="T8B-Vb-W6y"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="center" axis="vertical" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hd1-ep-WaY" userLabel="Stack View - Actions">
-                                                    <rect key="frame" x="240" y="0.0" width="400" height="200"/>
+                                                    <rect key="frame" x="240" y="0.0" width="400" height="160"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-FM-mVV">
-                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="96"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="76"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="400" id="uQe-Bi-Iy7"/>
                                                             </constraints>
@@ -68,7 +68,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDo-eE-jhB">
-                                                            <rect key="frame" x="0.0" y="104" width="400" height="96"/>
+                                                            <rect key="frame" x="0.0" y="84" width="400" height="76"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="400" id="7Lr-2u-ULZ"/>
                                                             </constraints>
@@ -81,7 +81,7 @@
                                                     </subviews>
                                                     <viewLayoutGuide key="safeArea" id="JCs-7X-27h"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="200" id="csU-OQ-o0Z"/>
+                                                        <constraint firstAttribute="height" constant="160" id="csU-OQ-o0Z"/>
                                                     </constraints>
                                                 </stackView>
                                             </subviews>
