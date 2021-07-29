@@ -7,62 +7,10 @@
 
 import Foundation
 
-protocol PMCategoryManager: AnyObject {
-    var onConsentsChange: () -> Void { get set }
-    var categories: Set<VendorListCategory> { get }
-    var specialPurposes: Set<VendorListCategory> { get }
-    var features: Set<VendorListCategory> { get }
-    var specialFeatures: Set<VendorListCategory> { get }
-    var acceptedCategoriesIds: Set<String> { get set }
+class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
+    typealias VendorType = VendorListVendor
+    typealias CategoryType = VendorListCategory
 
-    func onCategoryOn(_ category: VendorListCategory)
-    func onCategoryOff(_ category: VendorListCategory)
-}
-
-protocol PMVendorManager: AnyObject {
-    var onConsentsChange: () -> Void { get set }
-    var vendors: Set<VendorListVendor> { get }
-    var acceptedVendorsIds: Set<String> { get set }
-
-    func onVendorOn(_ vendor: VendorListVendor)
-    func onVendorOff(_ vendor: VendorListVendor)
-}
-
-struct PMPayload: Codable {
-    struct Category: Codable {
-        let _id: String
-        let iabId: Int?
-        let consent, legInt: Bool
-        let type: SPCategoryType?
-    }
-    struct Vendor: Codable {
-        let _id: String
-        let iabId: Int?
-        let consent, legInt: Bool
-        let vendorType: SPVendorType?
-    }
-    struct Feature: Codable {
-        let _id: String
-        let iabId: Int?
-    }
-    let lan: SPMessageLanguage
-    let privacyManagerId: String
-    let categories: [Category]
-    let vendors: [Vendor]
-    var specialFeatures: [Feature] = []
-
-    func json() -> SPJson? {
-        guard
-            let data = try? JSONEncoder().encode(self),
-            let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
-            let json = try? SPJson(object) else {
-            return nil
-        }
-        return json
-    }
-}
-
-class PMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
     var onConsentsChange: () -> Void = {}
 
     var grants: SPGDPRVendorGrants

@@ -101,7 +101,7 @@ import Foundation
             return nil
         #if os(tvOS)
         case .nativePM(let content):
-            let controller = SPNativePrivacyManagerViewController(
+            let controller = SPGDPRNativePrivacyManagerViewController(
                 messageId: messageId,
                 campaignType: type,
                 viewData: content.homeView,
@@ -289,7 +289,7 @@ import Foundation
         spClient.getNativePrivacyManager(withId: id) { [weak self] result in
             switch result {
             case .success(let content):
-                let pmViewController = SPNativePrivacyManagerViewController(
+                let pmViewController = SPGDPRNativePrivacyManagerViewController(
                     messageId: Int(id),
                     campaignType: .gdpr,
                     viewData: content.homeView,

@@ -70,7 +70,7 @@ extension VendorListCategory: Identifiable, Hashable, Equatable {
 }
 
 @objcMembers class SPPrivacyManagerResponse: NSObject, Decodable {
-    let categories: [VendorListCategory]
+    let categories: [VendorListCategory]?
     let message: SPNativeView
 
     enum CodingKeys: String, CodingKey {

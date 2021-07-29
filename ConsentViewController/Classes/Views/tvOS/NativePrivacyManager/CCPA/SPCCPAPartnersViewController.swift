@@ -1,5 +1,5 @@
 //
-//  SPPartnersViewController.swift
+//  SPCCPAPartnersViewController.swift
 //  ConsentViewController-tvOS
 //
 //  Created by Vilas on 06/05/21.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class SPPartnersViewController: SPNativeScreenViewController {
+class SPCCPAPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var selectedVendorTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
@@ -24,7 +24,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
         displayingLegIntVendors ? legitimateInterestVendorList : userConsentVendors
     }
 
-    var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
+    var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
 
     var vendors: [VendorListVendor] = []
     var userConsentVendors: [VendorListVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
@@ -91,7 +91,7 @@ class SPPartnersViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
+extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
@@ -141,13 +141,13 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vendorDetailsVC = SPVendorDetailsViewController(
+        let vendorDetailsVC = SPCCPAVendorDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
             viewData: pmData.vendorDetailsView,
             pmData: pmData,
             delegate: nil,
-            nibName: "SPVendorDetailsViewController"
+            nibName: "SPCCPAVendorDetailsViewController"
         )
 
         vendorDetailsVC.vendor = currentVendors[indexPath.row]

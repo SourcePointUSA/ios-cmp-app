@@ -1,5 +1,5 @@
 //
-//  SPManagePreferenceViewController.swift
+//  SPCCPAManagePreferenceViewController.swift
 //  ConsentViewController-tvOS
 //
 //  Created by Vilas on 03/05/21.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class SPManagePreferenceViewController: SPNativeScreenViewController {
+class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
         let content: [VendorListCategory]
@@ -31,7 +31,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var actionsContainer: UIStackView!
     var nativeLongButton: SPNativeLongButton?
 
-    var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
+    var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
     var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
 
     var categories: [VendorListCategory] = []
@@ -100,7 +100,7 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
+extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
     func currentCategory(_ index: IndexPath) -> VendorListCategory {
         displayingLegIntCategories ?
             legIntCategories[index.row] :
@@ -172,13 +172,13 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let categoryDetailsVC = SPCategoryDetailsViewController(
+        let categoryDetailsVC = SPCCPACategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
             viewData: pmData.categoryDetailsView,
             pmData: pmData,
             delegate: nil,
-            nibName: "SPCategoryDetailsViewController"
+            nibName: "SPCCPACategoryDetailsViewController"
         )
         categoryDetailsVC.category = currentCategory(indexPath)
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot

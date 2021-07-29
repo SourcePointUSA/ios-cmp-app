@@ -1,5 +1,5 @@
 //
-//  SPNativePrivacyManagerViewController.swift
+//  SPGDPRNativePrivacyManagerViewController.swift
 //  ConsentViewController-tvOS
 //
 //  Created by Vilas on 01/04/21.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-@objcMembers class SPNativePrivacyManagerViewController: SPNativeScreenViewController {
+@objcMembers class SPGDPRNativePrivacyManagerViewController: SPNativeScreenViewController {
     weak var delegate: SPNativePMDelegate?
 
     @IBOutlet weak var categoriesExplainerLabel: UILabel!
@@ -29,7 +29,7 @@ import Foundation
     var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
-    var snapshot: PMConsentSnaptshot?
+    var snapshot: GDPRPMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
 
@@ -78,7 +78,7 @@ import Foundation
                     self?.onError(error)
                 case .success(let data):
                     if let strongSelf = self {
-                        let controller = SPManagePreferenceViewController(
+                        let controller = SPGDPRManagePreferenceViewController(
                             messageId: self?.messageId,
                             campaignType: strongSelf.campaignType,
                             viewData: strongSelf.pmData.categoriesView,
@@ -87,7 +87,7 @@ import Foundation
                             nibName: "SPManagePreferenceViewController"
                         )
                         if self?.snapshot == nil {
-                            self?.snapshot = PMConsentSnaptshot(
+                            self?.snapshot = GDPRPMConsentSnaptshot(
                                 grants: data.grants ?? SPGDPRVendorGrants(),
                                 vendors: Set<VendorListVendor>(data.vendors),
                                 categories: Set<VendorListCategory>(data.categories),
@@ -104,16 +104,16 @@ import Foundation
             }
             return
         }
-        let controller = SPManagePreferenceViewController(
+        let controller = SPGDPRManagePreferenceViewController(
             messageId: messageId,
             campaignType: campaignType,
             viewData: pmData.categoriesView,
             pmData: pmData,
             delegate: self,
-            nibName: "SPManagePreferenceViewController"
+            nibName: "SPGDPRManagePreferenceViewController"
         )
         if snapshot == nil {
-            snapshot = PMConsentSnaptshot(
+            snapshot = GDPRPMConsentSnaptshot(
                 grants: secondLayerData.grants ?? SPGDPRVendorGrants(),
                 vendors: Set<VendorListVendor>(secondLayerData.vendors),
                 categories: Set<VendorListCategory>(secondLayerData.categories),
@@ -135,7 +135,7 @@ import Foundation
             case .success(let data):
                 if let strongSelf = self {
                     if self?.snapshot == nil {
-                        self?.snapshot = PMConsentSnaptshot(
+                        self?.snapshot = GDPRPMConsentSnaptshot(
                             grants: data.grants ?? SPGDPRVendorGrants(),
                             vendors: Set<VendorListVendor>(data.vendors),
                             categories: Set<VendorListCategory>(data.categories),
@@ -144,13 +144,13 @@ import Foundation
                             specialFeatures: Set<VendorListCategory>(data.specialFeatures)
                         )
                     }
-                    let controller = SPPartnersViewController(
+                    let controller = SPGDPRPartnersViewController(
                         messageId: self?.messageId,
                         campaignType: strongSelf.campaignType,
                         viewData: strongSelf.pmData.vendorsView,
                         pmData: strongSelf.pmData,
                         delegate: self,
-                        nibName: "SPPartnersViewController"
+                        nibName: "SPGDPRPartnersViewController"
                     )
                     controller.vendors = data.vendors
                     controller.consentsSnapshot = strongSelf.snapshot!
@@ -176,7 +176,7 @@ import Foundation
     }
 }
 
-extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
+extension SPGDPRNativePrivacyManagerViewController: SPMessageUIDelegate {
     func loaded(_ controller: SPMessageViewController) {
         messageUIDelegate?.loaded(self)
     }
@@ -195,7 +195,7 @@ extension SPNativePrivacyManagerViewController: SPMessageUIDelegate {
 }
 
 // MARK: UITableViewDataSource
-extension SPNativePrivacyManagerViewController: UITableViewDataSource {
+extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categories.count
     }
@@ -212,7 +212,7 @@ extension SPNativePrivacyManagerViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension SPNativePrivacyManagerViewController: UITableViewDelegate {
+extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         loadLabelText(
             forComponentId: "CategoriesDescriptionText",
