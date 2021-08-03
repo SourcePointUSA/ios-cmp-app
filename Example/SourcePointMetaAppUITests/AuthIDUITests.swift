@@ -9,7 +9,7 @@
 import XCTest
 import Quick
 import Nimble
-@testable import GDPR_MetaApp
+@testable import Unified_MetaApp
 
 class AuthIDUITests: QuickSpec {
     var app: MetaApp!
@@ -19,13 +19,13 @@ class AuthIDUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = MetaApp()
-            Nimble.AsyncDefaults.Timeout = 20
-            Nimble.AsyncDefaults.PollInterval = 0.5
+            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
         }
         
         afterSuite {
-            Nimble.AsyncDefaults.Timeout = 1
-            Nimble.AsyncDefaults.PollInterval = 0.01
+            Nimble.AsyncDefaults.timeout = .seconds(1)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
         
         beforeEach {
@@ -77,13 +77,9 @@ class AuthIDUITests: QuickSpec {
             expect(self.app.newProperty).to(showUp())
             self.app.accountIDTextFieldOutlet.tap()
             self.app.accountIDTextFieldOutlet.typeText(self.properyData.accountId)
-            self.app.propertyIdTextFieldOutlet.tap()
-            self.app.propertyIdTextFieldOutlet.typeText(self.properyData.propertyId)
             self.app.propertyTextFieldOutlet.tap()
             self.app.propertyTextFieldOutlet.typeText(self.properyData.propertyName)
             addAuthID()
-            self.app.pmTextFieldOutlet.tap()
-            self.app.pmTextFieldOutlet.typeText(self.properyData.pmID)
             self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingFrenchValue)
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()

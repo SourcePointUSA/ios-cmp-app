@@ -18,7 +18,7 @@ protocol App {
 extension XCUIApplication: App {
     func relaunch(clean: Bool = false) {
         UserDefaults.standard.synchronize()
-        self.terminate()
+        XCUIApplication().terminate()
         clean ?
             launchArguments.append("-cleanAppsData") :
             launchArguments.removeAll { $0 == "-cleanAppsData" }
@@ -36,7 +36,7 @@ class MetaApp: XCUIApplication {
     var properyData = PropertyData()
 
     var propertyList: XCUIElement {
-        staticTexts["Property List"].firstMatch
+        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Property List' ")).firstMatch
     }
 
     var newProperty: XCUIElement {
@@ -56,7 +56,7 @@ class MetaApp: XCUIApplication {
     }
 
     var propertyItem: XCUIElement {
-        staticTexts.containing(NSPredicate(format: "(label CONTAINS[cd] 'tcfv2.automation.testing') OR (label CONTAINS[cd] 'tcfv2.mobile.demo')")).firstMatch
+        staticTexts.containing(NSPredicate(format: "(label CONTAINS[cd] 'unified.meta.com') OR (label CONTAINS[cd] 'tcfv2.mobile.demo')")).firstMatch
     }
 
     var propertyFieldValidationItem: XCUIElement {
@@ -73,6 +73,10 @@ class MetaApp: XCUIApplication {
     
     var wrongPMValidationItem: XCUIElement {
               staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Something went wrong in the SDK'")).firstMatch
+    }
+
+    var addGDPRCampaign: XCUIElement {
+        staticTexts["Add GDPR Campaign"].firstMatch
     }
 
     var deletePropertyButton: XCUIElement {
@@ -103,16 +107,12 @@ class MetaApp: XCUIApplication {
         navigationBars.buttons["Back"].firstMatch
     }
 
-    var showPMButton: XCUIElement {
-        navigationBars.buttons["Show PM"].firstMatch
-    }
+//    var showPMButton: XCUIElement {
+//        navigationBars.buttons["Show PM"].firstMatch
+//    }
 
     var accountIDTextFieldOutlet: XCUIElement {
         textFields["accountIDTextFieldOutlet"].firstMatch
-    }
-
-    var propertyIdTextFieldOutlet: XCUIElement {
-        textFields["propertyIdTextFieldOutlet"].firstMatch
     }
 
     var propertyTextFieldOutlet: XCUIElement {
@@ -128,20 +128,20 @@ class MetaApp: XCUIApplication {
     }
 
     var targetingParamKeyTextFieldOutlet: XCUIElement {
-        textFields["targetingParamKeyTextFieldOutlet"].firstMatch
+        textFields["targetingKeyTextFieldOutlet"].firstMatch
     }
 
     var targetingParamValueTextFieldOutlet: XCUIElement {
-        textFields["targetingParamValueTextFieldOutlet"].firstMatch
+        textFields["targetingValueTextFieldOutlet"].firstMatch
     }
 
     var stagingSwitchOutlet: XCUIElement {
         switches["isStagingSwitchOutlet"].firstMatch
     }
 
-    var nativeMessageSwitchOutlet: XCUIElement {
-        switches["nativeMessageSwitchOutlet"].firstMatch
-    }
+//    var nativeMessageSwitchOutlet: XCUIElement {
+//        switches["nativeMessageSwitchOutlet"].firstMatch
+//    }
 
     var alertYesButton: XCUIElement {
         alerts["alertView"].buttons["YES"].firstMatch
@@ -185,51 +185,27 @@ class MetaApp: XCUIApplication {
         expect(self.newProperty).to(showUp())
         self.accountIDTextFieldOutlet.tap()
         self.accountIDTextFieldOutlet.typeText(self.properyData.accountId)
-        self.propertyIdTextFieldOutlet.tap()
-        self.propertyIdTextFieldOutlet.typeText(self.properyData.propertyId)
         self.propertyTextFieldOutlet.tap()
         self.propertyTextFieldOutlet.typeText(self.properyData.propertyName)
-        self.pmTextFieldOutlet.tap()
-        self.pmTextFieldOutlet.typeText(self.properyData.pmID)
     }
 
-    func addPropertyDetailsForNativeMessage() {
-        deleteProperty()
-        expect(self.propertyList).to(showUp())
-        self.addPropertyButton.tap()
-        expect(self.newProperty).to(showUp())
-        self.accountIDTextFieldOutlet.tap()
-        self.accountIDTextFieldOutlet.typeText(self.properyData.nativeMessageAccountId)
-        self.propertyIdTextFieldOutlet.tap()
-        self.propertyIdTextFieldOutlet.typeText(self.properyData.nativeMessagePropertyId)
-        self.propertyTextFieldOutlet.tap()
-        self.propertyTextFieldOutlet.typeText(self.properyData.nativeMessagePropertyName)
-        self.pmTextFieldOutlet.tap()
-        self.pmTextFieldOutlet.typeText(self.properyData.nativeMessagePMId)
-        self.nativeMessageSwitchOutlet.tap()
-    }
-
-    func addPropertyWithWrongPropertyDetails(accountId : String, propertyId : String, propertyName : String, pmId : String) {
+    func addPropertyWithWrongPropertyDetails(accountId : String, propertyName : String) {
         deleteProperty()
         expect(self.propertyList).to(showUp())
         self.addPropertyButton.tap()
         self.accountIDTextFieldOutlet.tap()
         self.accountIDTextFieldOutlet.typeText(accountId)
-        self.propertyIdTextFieldOutlet.tap()
-        self.propertyIdTextFieldOutlet.typeText(propertyId)
         self.propertyTextFieldOutlet.tap()
         self.propertyTextFieldOutlet.typeText(propertyName)
-        self.pmTextFieldOutlet.tap()
-        self.pmTextFieldOutlet.typeText(pmId)
         self.savePropertyButton.tap()
     }
     
     func addTargetingParameter(targetingKey : String, targetingValue : String) {
         swipeUp()
-        self.targetingParamKeyTextFieldOutlet.tap()
-        self.targetingParamKeyTextFieldOutlet.typeText(targetingKey)
-        self.targetingParamValueTextFieldOutlet.tap()
-        self.targetingParamValueTextFieldOutlet.typeText(targetingValue)
+//        self.targetingParamKeyTextFieldOutlet.tap()
+//        self.targetingParamKeyTextFieldOutlet.typeText(targetingKey)
+//        self.targetingParamValueTextFieldOutlet.tap()
+//        self.targetingParamValueTextFieldOutlet.typeText(targetingValue)
         swipeUp()
         self.addTargetingParamButton.tap()
         self.savePropertyButton.tap()
@@ -237,10 +213,10 @@ class MetaApp: XCUIApplication {
 
     func addTargetingParameterWithWrongDetails(targetingKey : String, targetingValue : String) {
         swipeUp()
-        self.targetingParamKeyTextFieldOutlet.tap()
-        self.targetingParamKeyTextFieldOutlet.typeText(targetingKey)
-        self.targetingParamValueTextFieldOutlet.tap()
-        self.targetingParamValueTextFieldOutlet.typeText(targetingValue)
+//        self.targetingParamKeyTextFieldOutlet.tap()
+//        self.targetingParamKeyTextFieldOutlet.typeText(targetingKey)
+//        self.targetingParamValueTextFieldOutlet.tap()
+//        self.targetingParamValueTextFieldOutlet.typeText(targetingValue)
         swipeUp()
         self.addTargetingParamButton.tap()
     }
@@ -273,16 +249,6 @@ class MetaApp: XCUIApplication {
             expect(self.privacyManager).to(showUp())
         }
     }
-
-    func testNativeMessagePMToggles(value : Int) {
-        if self.PersonalisedAdsSwitch.value != nil {
-            expect(Int(self.PersonalisedAdsSwitch.value as! String) == value).to(beTrue())
-            expect(Int(self.DeviceInformationSwitch.value as! String) == value).to(beTrue())
-        }else {
-            expect(self.privacyManager).to(showUp())
-        }
-    }
-
 }
 
 extension MetaApp: GDPRUI {
@@ -291,11 +257,19 @@ extension MetaApp: GDPRUI {
     }
 
     var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'My Cookie Notice') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'Cookie Notice') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
     }
 
     var consentMessage: XCUIElement {
         webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'ShowOnce')")).firstMatch
+    }
+
+    var attMessage: XCUIElement {
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'ATT pre-prompt'")).firstMatch
+    }
+
+    var ccpaConsentMessage: XCUIElement {
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'SHOW ONLY ONCE MESSAGE')")).firstMatch
     }
 
     var consentMessageInGerman: XCUIElement {
@@ -312,6 +286,10 @@ extension MetaApp: GDPRUI {
 
     var termsAndConditionsWebPageTitle: XCUIElement {
         webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Address'")).firstMatch
+    }
+
+    var bringItOnButton: XCUIElement {
+        attMessage.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Bring it on'")).firstMatch
     }
 
     var acceptAllButton: XCUIElement {

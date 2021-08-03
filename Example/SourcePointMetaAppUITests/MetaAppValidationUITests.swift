@@ -9,110 +9,91 @@
 import XCTest
 import Quick
 import Nimble
-@testable import GDPR_MetaApp
+@testable import Unified_MetaApp
 
 class MetaAppValidationUITests: QuickSpec {
 
     var app: MetaApp!
-        var properyData = PropertyData()
-        
-        override func spec() {
-            beforeSuite {
-                self.continueAfterFailure = false
-                self.app = MetaApp()
-                Nimble.AsyncDefaults.Timeout = 20
-                Nimble.AsyncDefaults.PollInterval = 0.5
-            }
-            
-            afterSuite {
-                Nimble.AsyncDefaults.Timeout = 1
-                Nimble.AsyncDefaults.PollInterval = 0.01
-            }
-            
-            beforeEach {
-                self.app.relaunch(clean: true)
-            }
-            
-            
-            it("Error message with all fields as blank") {
-                self.app.addPropertyWithWrongPropertyDetails(accountId: "",propertyId: "",propertyName:"",pmId:"")
-                expect(self.app.propertyFieldValidationItem).to(showUp())
-            }
-            
-            it("Error message with account ID as blank") {
-                self.app.addPropertyWithWrongPropertyDetails(accountId: "",propertyId: self.properyData.propertyId,propertyName:self.properyData.propertyName,pmId:self.properyData.pmID)
-                expect(self.app.propertyFieldValidationItem).to(showUp())
-            }
-            
-            it("Error message with property ID as blank") {
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId,propertyId: "",propertyName:self.properyData.propertyName,pmId:self.properyData.pmID)
-                expect(self.app.propertyFieldValidationItem).to(showUp())
-            }
-            
-            it("Error message with property Name as blank") {
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId,propertyId:self.properyData.propertyId,propertyName:"",pmId:self.properyData.pmID)
-                expect(self.app.propertyFieldValidationItem).to(showUp())
-            }
-            
-            it("Error message with PM ID as blank") {
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId,propertyId:self.properyData.propertyId,propertyName:self.properyData.propertyName,pmId:"")
-                expect(self.app.propertyFieldValidationItem).to(showUp())
-            }
-            
-            it("Error message for blank targeting parameter fields") {
-                self.app.deleteProperty()
-                expect(self.app.propertyList).to(showUp())
-                self.app.addPropertyButton.tap()
-                self.app.addTargetingParameterWithWrongDetails(targetingKey: "", targetingValue:"")
-                expect(self.app.targetingParameterValidationItem).to(showUp())
-            }
-            
-            it("Error message for blank targeting parameter key fields") {
-                self.app.deleteProperty()
-                expect(self.app.propertyList).to(showUp())
-                self.app.addPropertyButton.tap()
-                self.app.addTargetingParameterWithWrongDetails(targetingKey: "", targetingValue:self.properyData.targetingFrenchValue)
-                expect(self.app.targetingParameterValidationItem).to(showUp())
-            }
-            
-            it("Error message for blank targeting parameter value fields") {
-                self.app.deleteProperty()
-                expect(self.app.propertyList).to(showUp())
-                self.app.addPropertyButton.tap()
-                self.app.addTargetingParameterWithWrongDetails(targetingKey:self.properyData.targetingKey, targetingValue: "")
-                expect(self.app.targetingParameterValidationItem).to(showUp())
-            }
-            
-            it("Check no message displayed for wrong Account Id"){
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.wrongAccountId,propertyId:self.properyData.propertyId,propertyName:self.properyData.propertyName,pmId:self.properyData.pmID)
-                expect(self.app.consentMessage).notTo(showUp())
-                expect(self.app.propertyDebugInfo).to(showUp())
-            }
-            
-            it("Check no message displayed for wrong Property Id"){
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId,propertyId:self.properyData.wrongPropertyId,propertyName:self.properyData.propertyName,pmId:self.properyData.pmID)
-                expect(self.app.wrongPropertyIdValidationItem).to(showUp())
-            }
-            
-            it("Check no message displayed for wrong Property Name"){
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId,propertyId:self.properyData.propertyId,propertyName:self.properyData.wrongPropertyName,pmId:self.properyData.pmID)
-                expect(self.app.consentMessage).notTo(showUp())
-                expect(self.app.propertyDebugInfo).to(showUp())
-            }
-            
-            it("Check message displayed for wrong Privacy Manager"){
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId,propertyId:self.properyData.propertyId,propertyName:self.properyData.propertyName,pmId:self.properyData.wrongPMId)
-                expect(self.app.consentMessage).to(showUp())
-            }
-            
-            it("Check direct PM load for wrong Privacy Manager"){
-                self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId,propertyId:self.properyData.propertyId,propertyName:self.properyData.propertyName,pmId:self.properyData.wrongPMId)
-                expect(self.app.consentMessage).to(showUp())
-                self.app.acceptAllButton.tap()
-                expect(self.app.propertyDebugInfo).to(showUp())
-                self.app.showPMButton.tap()
-                expect(self.app.wrongPMValidationItem).to(showUp())
-            }
-            
+    var properyData = PropertyData()
+
+    override func spec() {
+        beforeSuite {
+            self.continueAfterFailure = false
+            self.app = MetaApp()
+            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
+        }
+
+        afterSuite {
+            Nimble.AsyncDefaults.timeout = .seconds(1)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+        }
+
+        beforeEach {
+            self.app.relaunch(clean: true)
+        }
+
+
+        it("Error message with all fields as blank") {
+            self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName:"")
+            expect(self.app.propertyFieldValidationItem).to(showUp())
+        }
+
+        it("Error message with account ID as blank") {
+            self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName: self.properyData.propertyName)
+            expect(self.app.propertyFieldValidationItem).to(showUp())
+        }
+
+        it("Error message with property Name as blank") {
+            self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId, propertyName:"")
+            expect(self.app.propertyFieldValidationItem).to(showUp())
+        }
+
+        it("Error message for blank targeting parameter fields") {
+            self.app.deleteProperty()
+            expect(self.app.propertyList).to(showUp())
+            self.app.addPropertyButton.tap()
+            self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
+            self.app.swipeUp()
+            let campaigntableviewcellCell = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 0)
+            campaigntableviewcellCell.staticTexts["Targeting Param"].tap()
+            expect(self.app.targetingParameterValidationItem).to(showUp())
+        }
+
+        it("Error message for blank targeting parameter key fields") {
+            self.app.deleteProperty()
+            expect(self.app.propertyList).to(showUp())
+            self.app.addPropertyButton.tap()
+            self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
+            self.app.swipeUp()
+            let campaigntableviewcellCell = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 0)
+            campaigntableviewcellCell.textFields["targetingKeyTextFieldOutlet"].tap()
+            campaigntableviewcellCell.textFields["targetingKeyTextFieldOutlet"].typeText("abc")
+            campaigntableviewcellCell.staticTexts["Targeting Param"].tap()
+            expect(self.app.targetingParameterValidationItem).to(showUp())
+        }
+
+        it("Error message for blank targeting parameter value fields") {
+            self.app.deleteProperty()
+            expect(self.app.propertyList).to(showUp())
+            self.app.addPropertyButton.tap()
+            self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
+            self.app.swipeUp()
+            let campaigntableviewcellCell = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 0)
+            campaigntableviewcellCell.textFields["targetingValueTextFieldOutlet"].tap()
+            campaigntableviewcellCell.textFields["targetingValueTextFieldOutlet"].typeText("abc")
+            campaigntableviewcellCell.staticTexts["Targeting Param"].tap()
+            expect(self.app.targetingParameterValidationItem).to(showUp())
+        }
+
+        it("Check no message displayed for wrong Account Id"){
+            self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.wrongAccountId, propertyName:self.properyData.propertyName)
+            expect(self.app.consentMessage).notTo(showUp())
+        }
+
+        it("Check no message displayed for wrong Property Name"){
+            self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId, propertyName:self.properyData.wrongPropertyName)
+            expect(self.app.consentMessage).notTo(showUp())
         }
     }
+}

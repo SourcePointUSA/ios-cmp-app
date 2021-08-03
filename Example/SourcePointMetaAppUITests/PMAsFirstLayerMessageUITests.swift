@@ -9,7 +9,7 @@
 import XCTest
 import Quick
 import Nimble
-@testable import GDPR_MetaApp
+@testable import Unified_MetaApp
 
 class PMAsFirstLayerMessageUITests: QuickSpec {
     var app: MetaApp!
@@ -19,13 +19,13 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = MetaApp()
-            Nimble.AsyncDefaults.Timeout = 20
-            Nimble.AsyncDefaults.PollInterval = 0.5
+            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
         }
         
         afterSuite {
-            Nimble.AsyncDefaults.Timeout = 1
-            Nimble.AsyncDefaults.PollInterval = 0.01
+            Nimble.AsyncDefaults.timeout = .seconds(1)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
         
         beforeEach {
@@ -67,7 +67,7 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.showPMButton.tap()
+//            self.app.showPMButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.testPMToggles(value: 1)
         }

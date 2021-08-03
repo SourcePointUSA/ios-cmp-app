@@ -500,6 +500,8 @@ extension AddPropertyViewController: UITableViewDataSource, ExpandableHeaderView
         if tableView.tag == SPLiteral.campaignsTableView {
             let header = ExpandableHeaderView()
             header.customInit(title: addpropertyViewModel.sections[section].campaignTitle, section: section, delegate: self)
+            header.isAccessibilityElement = true
+            header.accessibilityLabel = addpropertyViewModel.sections[section].campaignTitle
             return header
         }
         return nil
@@ -541,7 +543,7 @@ extension AddPropertyViewController: UITableViewDataSource, ExpandableHeaderView
                     for targetingParam in targetingParams {
                         let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.targetingKey, targetingParamValue: targetingParam.targetingValue)
                         if targetingParamModel.targetingKey.count > 0 && targetingParamModel.targetingKey.count > 0 {
-                            targetingParamString += "\(targetingParamModel.targetingKey) : \(targetingParamModel.targetingKey)\n"
+                            targetingParamString += "\(targetingParamModel.targetingKey) : \(targetingParamModel.targetingValue)\n"
                         }
                     }
                     cell.targetingParamTextView.text = targetingParamString

@@ -9,8 +9,8 @@
 import XCTest
 
 struct PropertyData {
-    var accountId = "808"
-    var propertyName = "tcfv2.automation.testing"
+    var accountId = "22"
+    var propertyName = "unified.meta.com"
     var propertyId = "7376"
     var pmID = "178786"
     var targetingKey = "language"

@@ -9,7 +9,7 @@
 import XCTest
 import Quick
 import Nimble
-@testable import GDPR_MetaApp
+@testable import Unified_MetaApp
 
 class PrivacyManagerUITests: QuickSpec {
     var app: MetaApp!
@@ -19,13 +19,13 @@ class PrivacyManagerUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = MetaApp()
-            Nimble.AsyncDefaults.Timeout = 20
-            Nimble.AsyncDefaults.PollInterval = 0.5
+            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
         }
 
         afterSuite {
-            Nimble.AsyncDefaults.Timeout = 1
-            Nimble.AsyncDefaults.PollInterval = 0.01
+            Nimble.AsyncDefaults.timeout = .seconds(1)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         beforeEach {

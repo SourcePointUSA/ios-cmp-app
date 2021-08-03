@@ -9,7 +9,7 @@
 import XCTest
 import Quick
 import Nimble
-@testable import GDPR_MetaApp
+@testable import Unified_MetaApp
 
 class SourcePointMetaAppUITests: QuickSpec {
     var app: MetaApp!
@@ -19,13 +19,13 @@ class SourcePointMetaAppUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = MetaApp()
-            Nimble.AsyncDefaults.Timeout = 20
-            Nimble.AsyncDefaults.PollInterval = 0.5
+            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
         }
 
         afterSuite {
-            Nimble.AsyncDefaults.Timeout = 1
-            Nimble.AsyncDefaults.PollInterval = 0.01
+            Nimble.AsyncDefaults.timeout = .seconds(1)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         beforeEach {
@@ -35,12 +35,49 @@ class SourcePointMetaAppUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on Save then expected consent message should display when user select MANAGE PREFERENCES and tap from Accept All button then consent data should display on info screen when user navigate back and tap on the Property again then user should not see message again when user delete cookies for the property then user should see consent message again.
          */
-        it("Show purpose consents after reset cookies") {
+        fit("Show purpose consents after reset cookies") {
             self.app.addPropertyDetails()
-            self.app.addTargetingParameter(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
+            self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
+            self.app.swipeUp()
+            let campaigntableviewcellCell = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 0)
+            campaigntableviewcellCell.textFields["pmTextFieldOutlet"].tap()
+            campaigntableviewcellCell.textFields["pmTextFieldOutlet"].typeText("528826")
+            let doneButton = self.app.toolbars["Toolbar"].buttons["Done"]
+            doneButton.tap()
+            campaigntableviewcellCell.textFields["targetingKeyTextFieldOutlet"].tap()
+            campaigntableviewcellCell.textFields["targetingKeyTextFieldOutlet"].typeText("displayMode")
+            doneButton.tap()
+            campaigntableviewcellCell.textFields["targetingValueTextFieldOutlet"].tap()
+            campaigntableviewcellCell.textFields["targetingValueTextFieldOutlet"].typeText("appLaunch")
+            doneButton.tap()
+            campaigntableviewcellCell.staticTexts["Save Campaign"].tap()
+            let alertView = self.app.alerts["alertView"].scrollViews.otherElements
+            let okButton = alertView.buttons["OK"]
+            okButton.tap()
+            self.app.tables.children(matching: .other)["Add CCPA Campaign"].forceTapElement()
+            let campaigntableviewcellCell1 = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 1)
+            campaigntableviewcellCell1.textFields["pmTextFieldOutlet"].tap()
+            campaigntableviewcellCell1.textFields["pmTextFieldOutlet"].typeText("529554")
+            doneButton.tap()
+            campaigntableviewcellCell1.textFields["targetingKeyTextFieldOutlet"].tap()
+            campaigntableviewcellCell1.textFields["targetingKeyTextFieldOutlet"].typeText("displayMode")
+            doneButton.tap()
+            campaigntableviewcellCell1.textFields["targetingValueTextFieldOutlet"].tap()
+            campaigntableviewcellCell1.textFields["targetingValueTextFieldOutlet"].typeText("appLaunch")
+            doneButton.tap()
+            campaigntableviewcellCell1.staticTexts["Save Campaign"].tap()
+            okButton.tap()
+            self.app.savePropertyButton.tap()
+            expect(self.app.attMessage).to(showUp())
+            self.app.bringItOnButton.tap()
+            if self.app.alerts["Allow “Unified-MetaApp” to track your activity across other companies’ apps and websites?"].exists {
+            self.app.alerts["Allow “Unified-MetaApp” to track your activity across other companies’ apps and websites?"].scrollViews.otherElements.buttons["Allow"].tap()
+            }
             expect(self.app.consentMessage).to(showUp())
             self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.acceptAllButton.tap()
+            expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.backButton.tap()
@@ -112,12 +149,8 @@ class SourcePointMetaAppUITests: QuickSpec {
             expect(self.app.newProperty).to(showUp())
             self.app.accountIDTextFieldOutlet.tap()
             self.app.accountIDTextFieldOutlet.typeText(self.properyData.accountIdOfAccount22)
-            self.app.propertyIdTextFieldOutlet.tap()
-            self.app.propertyIdTextFieldOutlet.typeText(self.properyData.propertyIdOfAccount22)
             self.app.propertyTextFieldOutlet.tap()
             self.app.propertyTextFieldOutlet.typeText(self.properyData.propertyNameOfAccount22)
-            self.app.pmTextFieldOutlet.tap()
-            self.app.pmTextFieldOutlet.typeText(self.properyData.PMIdOfAccount22)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessageForAccount22).to(showUp())
             self.app.showOptionsButtonForAccount22.tap()
@@ -143,5 +176,17 @@ class SourcePointMetaAppUITests: QuickSpec {
             self.app.testPMToggles(value: 1)
         }
 
+    }
+}
+
+extension XCUIElement {
+    func forceTapElement() {
+        if self.isHittable {
+            self.tap()
+        }
+        else {
+            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx:0.0, dy:0.0))
+            coordinate.tap()
+        }
     }
 }
