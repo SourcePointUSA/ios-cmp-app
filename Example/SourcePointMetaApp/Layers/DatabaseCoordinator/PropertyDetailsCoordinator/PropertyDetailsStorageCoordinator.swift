@@ -16,13 +16,12 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     // -Parameters:
     //  - executionCompletionHandler: Completion handler; it takes array of all properties to caller.
     func fetchAllproperties(executionCompletionHandler: @escaping([PropertyDetails]?) -> Void) {
-        let managedObjectContext = managedObjectContext
 
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
 
             let timestampDescriptor = NSSortDescriptor(key: "creationTimestamp", ascending: false)
-            dbManager.fetchEntities(PropertyDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: managedObjectContext, completion: { (propertyDetails) in
+            dbManager.fetchEntities(PropertyDetails.entityName, sortDescriptors: [timestampDescriptor], predicate: nil, managedObjectContext: self.managedObjectContext, completion: { (propertyDetails) in
                 if let allproperties = propertyDetails as? [PropertyDetails] {
                     executionCompletionHandler(allproperties)
                 } else {
@@ -39,10 +38,9 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     ///   - handler: Callback for completion event.
     func fetch(property propertyManagedObjectID: NSManagedObjectID, completionHandler handler: @escaping (PropertyDetails?) -> Void) {
 
-        let managedObjectContext = managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
-            dbManager.fetchEntity(withManagedObjectID: propertyManagedObjectID, managedObjectContext: managedObjectContext) { (optionalManagedObject) in
+            dbManager.fetchEntity(withManagedObjectID: propertyManagedObjectID, managedObjectContext: self.managedObjectContext) { (optionalManagedObject) in
                 if let propertyManagedObject = optionalManagedObject as? PropertyDetails {
                     handler(propertyManagedObject)
                 } else {
@@ -53,10 +51,9 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     }
 
     func managedObjectID(completionHandler handler: @escaping (NSManagedObjectID) -> Void) {
-        let managedObjectContext = managedObjectContext
         managedObjectContext.perform {
             let dbManager = DBManager.sharedManager
-            dbManager.fetchEntity(PropertyDetails.entityName, sortDescriptors: nil, predicate: nil, managedObjectContext: managedObjectContext, completion: { (optionalManagedObject) in
+            dbManager.fetchEntity(PropertyDetails.entityName, sortDescriptors: nil, predicate: nil, managedObjectContext: self.managedObjectContext, completion: { (optionalManagedObject) in
                 handler((optionalManagedObject?.objectID)!)
             })
         }
@@ -69,7 +66,6 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     ///   - handler: Callback for the completion event.
     func add(propertyDetails propertyDataModel: PropertyDetailsModel, completionHandler handler: @escaping (NSManagedObjectID?, Bool) -> Void) {
 
-        let managedObjectContext = managedObjectContext
         let creationTimestamp = Date()
 
         if let propertyEntity = NSEntityDescription.insertNewObject(forEntityName: PropertyDetails.entityName, into: managedObjectContext) as? PropertyDetails {
@@ -123,7 +119,6 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     ///   - handler: Callback for the completion event.
     func update(propertyDetails propertyDataModel: PropertyDetailsModel, whereManagedObjectID managedObjectID: NSManagedObjectID, completionHandler handler : @escaping (NSManagedObjectID?, Bool) -> Void) {
 
-        let managedObjectContext = managedObjectContext
         fetch(property: managedObjectID) { (optionalpropertyEntity) in
             if let propertyEntity = optionalpropertyEntity {
                 let creationTimestamp = Date()
@@ -143,13 +138,13 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
 
                 if let allCampaigns = propertyDataModel.campaignDetails {
                     for campaign in allCampaigns {
-                        if let campaignEntity = NSEntityDescription.insertNewObject(forEntityName: CampaignDetails.entityName, into: managedObjectContext) as? CampaignDetails {
+                        if let campaignEntity = NSEntityDescription.insertNewObject(forEntityName: CampaignDetails.entityName, into: self.managedObjectContext) as? CampaignDetails {
                             campaignEntity.campaignName = campaign.campaignName
                             campaignEntity.pmID = campaign.pmID
                             campaignEntity.pmTab = campaign.pmTab
                             if let targetingParams = campaign.targetingParams {
                                 for targetingParam in targetingParams {
-                                    if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: managedObjectContext) as? TargetingParams {
+                                    if let targteingParamEntity = NSEntityDescription.insertNewObject(forEntityName: TargetingParams.entityName, into: self.managedObjectContext) as? TargetingParams {
                                         targteingParamEntity.key = targetingParam.targetingKey
                                         targteingParamEntity.value = targetingParam.targetingValue
                                         campaignEntity.addToManyTargetingParams(targteingParamEntity)
@@ -163,7 +158,7 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
 
                 let dbManager = DBManager.sharedManager
                 // Pushing managed object context changes in database.
-                dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
+                dbManager.save(managedObjectContext: self.managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                     if executionStatus == wasMOCChanged {
                         handler(propertyEntity.objectID, true)
                     } else {
@@ -183,11 +178,10 @@ class PropertyDetailsStorageCoordinator: BaseStorageCoordinator {
     ///   - handler: Callback for the completion event. Callback has execution status(success/failure) as argument.
     func delete(property propertyManagedObject: NSManagedObject, completionHandler handler : @escaping (Bool) -> Void) {
 
-        let managedObjectContext = managedObjectContext
         let dbManager = DBManager.sharedManager
         managedObjectContext.perform {
-            dbManager.deleteEntity(propertyManagedObject, usingMOC: managedObjectContext)
-            dbManager.save(managedObjectContext: managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
+            dbManager.deleteEntity(propertyManagedObject, usingMOC: self.managedObjectContext)
+            dbManager.save(managedObjectContext: self.managedObjectContext, completion: { (executionStatus, wasMOCChanged) in
                 if executionStatus == wasMOCChanged {
                     handler(true)
                 } else {
