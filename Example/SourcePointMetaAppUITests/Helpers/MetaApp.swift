@@ -241,10 +241,9 @@ class MetaApp: XCUIApplication {
     }
 
     func testPMToggles(value : Int) {
-        if self.PersonalisationSwitch.value != nil {
-            expect(Int(self.PersonalisationSwitch.value as! String) == value).to(beTrue())
+        if self.PersonalisedAdsSwitch.value != nil {
             expect(Int(self.PersonalisedAdsSwitch.value as! String) == value).to(beTrue())
-            expect(Int(self.DeviceInformationSwitch.value as! String) == value).to(beTrue())
+            expect(Int(self.BasicAdsSwitch.value as! String) == value).to(beTrue())
         }else {
             expect(self.privacyManager).to(showUp())
         }
@@ -253,7 +252,7 @@ class MetaApp: XCUIApplication {
 
 extension MetaApp: GDPRUI {
     var consentUI: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'My Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
     }
 
     var privacyManager: XCUIElement {
@@ -269,7 +268,7 @@ extension MetaApp: GDPRUI {
     }
 
     var ccpaConsentMessage: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'SHOW ONLY ONCE MESSAGE')")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'SHOW ONLY ONCE MESSAGE'")).firstMatch
     }
 
     var consentMessageInGerman: XCUIElement {
@@ -296,16 +295,20 @@ extension MetaApp: GDPRUI {
         consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept'")).firstMatch
     }
 
+    var ccpaAcceptAllButton: XCUIElement {
+        ccpaConsentMessage.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept All'")).firstMatch
+    }
+
     var acceptAllButtonInGerman: XCUIElement {
         consentMessageInGerman.buttons["Zustimmen"].firstMatch
     }
 
     var rejectAllButton: XCUIElement {
-        consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Reject'")).firstMatch
+        consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Reject All'")).firstMatch
     }
 
     var showOptionsButton: XCUIElement {
-        consentUI.buttons["MANAGE PREFERENCES"].firstMatch
+        consentUI.buttons["Manage Preferences"].firstMatch
     }
 
     var showOptionsButtonInGerman: XCUIElement {
@@ -325,7 +328,7 @@ extension MetaApp: GDPRUI {
     }
 
     var dismissMessageButton: XCUIElement {
-        staticTexts["X"].firstMatch
+        webViews.staticTexts["X"].firstMatch
     }
 
     var purposesTab: XCUIElement {
@@ -337,15 +340,11 @@ extension MetaApp: GDPRUI {
     }
 
     var PersonalisedAdsSwitch: XCUIElement {
-        consentUI.switches["Select personalised content"].firstMatch
+        consentUI.switches["Create a personalised ads profile"].firstMatch
     }
 
-    var DeviceInformationSwitch: XCUIElement {
-        consentUI.switches["Information storage and access"].firstMatch
-    }
-
-    var PersonalisationSwitch: XCUIElement {
-        consentUI.switches["Personalisation"].firstMatch
+    var BasicAdsSwitch: XCUIElement {
+        consentUI.switches["Select basic ads"].firstMatch
     }
 
     var featuresTab: XCUIElement {
