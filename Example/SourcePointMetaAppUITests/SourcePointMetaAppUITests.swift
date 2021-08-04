@@ -35,7 +35,7 @@ class SourcePointMetaAppUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on Save then expected consent message should display when user select MANAGE PREFERENCES and tap from Accept All button then consent data should display on info screen when user navigate back and tap on the Property again then user should not see message again when user delete cookies for the property then user should see consent message again.
          */
-        fit("Show purpose consents after reset cookies") {
+        it("Show purpose consents after reset cookies") {
             self.app.addPropertyDetails()
             self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
             self.app.swipeUp()
