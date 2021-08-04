@@ -14,7 +14,7 @@ import Nimble
 class MetaAppValidationUITests: QuickSpec {
 
     var app: MetaApp!
-    var properyData = PropertyData()
+    var propertyData = PropertyData()
 
     override func spec() {
         beforeSuite {
@@ -33,66 +33,50 @@ class MetaAppValidationUITests: QuickSpec {
             self.app.relaunch(clean: true)
         }
 
-
         it("Error message with all fields as blank") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName:"")
             expect(self.app.propertyFieldValidationItem).to(showUp())
         }
 
         it("Error message with account ID as blank") {
-            self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName: self.properyData.propertyName)
+            self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName: self.propertyData.propertyName)
             expect(self.app.propertyFieldValidationItem).to(showUp())
         }
 
         it("Error message with property Name as blank") {
-            self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId, propertyName:"")
+            self.app.addPropertyWithWrongPropertyDetails(accountId: self.propertyData.accountId, propertyName:"")
             expect(self.app.propertyFieldValidationItem).to(showUp())
         }
 
         it("Error message for blank targeting parameter fields") {
-            self.app.deleteProperty()
-            expect(self.app.propertyList).to(showUp())
-            self.app.addPropertyButton.tap()
-            self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
-            self.app.swipeUp()
-            let campaigntableviewcellCell = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 0)
-            campaigntableviewcellCell.staticTexts["Targeting Param"].tap()
+            self.app.setupForMetaAppPropertyValidation()
+            self.app.gdprTargetingParamButton.tap()
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }
 
         it("Error message for blank targeting parameter key fields") {
-            self.app.deleteProperty()
-            expect(self.app.propertyList).to(showUp())
-            self.app.addPropertyButton.tap()
-            self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
-            self.app.swipeUp()
-            let campaigntableviewcellCell = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 0)
-            campaigntableviewcellCell.textFields["targetingKeyTextFieldOutlet"].tap()
-            campaigntableviewcellCell.textFields["targetingKeyTextFieldOutlet"].typeText("abc")
-            campaigntableviewcellCell.staticTexts["Targeting Param"].tap()
+            self.app.setupForMetaAppPropertyValidation()
+            self.app.gdprTargetingKeyTextField.tap()
+            self.app.gdprTargetingKeyTextField.typeText(self.propertyData.targetingKey)
+            self.app.gdprTargetingParamButton.tap()
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }
 
         it("Error message for blank targeting parameter value fields") {
-            self.app.deleteProperty()
-            expect(self.app.propertyList).to(showUp())
-            self.app.addPropertyButton.tap()
-            self.app.tables.children(matching: .other)["Add GDPR Campaign"].tap()
-            self.app.swipeUp()
-            let campaigntableviewcellCell = self.app.tables.children(matching: .cell).matching(identifier: "campaignTableViewCell").element(boundBy: 0)
-            campaigntableviewcellCell.textFields["targetingValueTextFieldOutlet"].tap()
-            campaigntableviewcellCell.textFields["targetingValueTextFieldOutlet"].typeText("abc")
-            campaigntableviewcellCell.staticTexts["Targeting Param"].tap()
+            self.app.setupForMetaAppPropertyValidation()
+            self.app.gdprTargetingValueTextField.tap()
+            self.app.gdprTargetingValueTextField.typeText(self.propertyData.targetingValueShowOnce)
+            self.app.gdprTargetingParamButton.tap()
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }
 
         it("Check no message displayed for wrong Account Id") {
-            self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.wrongAccountId, propertyName:self.properyData.propertyName)
+            self.app.addPropertyWithWrongPropertyDetails(accountId: self.propertyData.wrongAccountId, propertyName:self.propertyData.propertyName)
             expect(self.app.consentMessage).notTo(showUp())
         }
 
         it("Check no message displayed for wrong Property Name") {
-            self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId, propertyName:self.properyData.wrongPropertyName)
+            self.app.addPropertyWithWrongPropertyDetails(accountId: self.propertyData.accountId, propertyName:self.propertyData.wrongPropertyName)
             expect(self.app.consentMessage).notTo(showUp())
         }
     }
