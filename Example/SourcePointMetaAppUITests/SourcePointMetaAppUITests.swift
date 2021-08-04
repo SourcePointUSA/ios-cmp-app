@@ -35,8 +35,8 @@ class SourcePointMetaAppUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on Save then expected consent message should display when user tap on  Accept All button then ccpa consent message should display when user tap on accpet all button then consent data should display on info screen when user navigate back and tap on the Property again then user should not see message again when user delete cookies for the property then user should see consent message again.
          */
-        fit("Show purpose consents after reset cookies") {
-            self.app.addPorpertyWithCampaignDetails(targetingKey: self.properyData.targetingKeyShowOnce, targetingValue: self.properyData.targetingValueShowOnce)
+        it("Show purpose consents after reset cookies") {
+            self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.targetingKeyShowOnce, targetingValue: self.properyData.targetingValueShowOnce)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
@@ -62,8 +62,8 @@ class SourcePointMetaAppUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on Save then expected messages should load When user select Reject All then consent information should get stored when user swipe on property and choose to delete user should able to delete the property screen
          */
-        fit("Delete Property from property list") {
-            self.app.addPorpertyWithCampaignDetails(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
+        it("Delete Property from property list") {
+            self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessage).to(showUp())
             self.app.rejectAllButton.tap()
@@ -79,8 +79,8 @@ class SourcePointMetaAppUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on Save then expected messages should load when user select Accept All then consent information should get stored when user swipe on property and edit the key/parameter details then user should see respective message
          */
-        fit("Edit Property from property list") {
-            self.app.addPorpertyWithCampaignDetails(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
+        it("Edit Property from property list") {
+            self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
@@ -103,8 +103,8 @@ class SourcePointMetaAppUITests: QuickSpec {
         /**
          @Description - User submit valid property details tap on Save then expected messages should load When user dismiss the message then user should see info screen with ConsentUUID details
          */
-        fit("Check ConsentUUID on Message Dismiss") {
-            self.app.addPorpertyWithCampaignDetails(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
+        it("Check ConsentUUID on Message Dismiss") {
+            self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessage).to(showUp())
             self.app.dismissMessageButton.tap()
@@ -114,27 +114,23 @@ class SourcePointMetaAppUITests: QuickSpec {
         }
 
         fit("Check feature tab as default PM tab") {
-            self.app.addPorpertyWithCampaignDetails(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
-            self.app.dropDownButton.tap()
-            self.app.defaultPickerWheels.swipeUp()
-            self.app.featuresPickerWheels.tap()
-            self.app.doneButton.tap()
+            self.app.addPropertyWithCampaignDetailsAndFeaturesTab(targetingKey: self.properyData.targetingKey, targetingValue: self.properyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.ccpaAcceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.navigationBars["Property Debug Info"].buttons["Menu"].tap()
-            self.app.tables.staticTexts["Load GDPR PM"].tap()
+            self.app.menuButton.tap()
+            self.app.loadGDPRPM.tap()
             expect(self.app.featuresTab).to(showUp())
         }
 
         /**
          @Description - User submit valid property details and tap on Save then expected consent messages should display when user select Accept all then user will navigate to Site Info screen showing ConsentUUID, EUConsent and all Vendors & Purpose Consents when user navigate back & tap on the site name and select MANAGE PREFERENCES button from consent message view then user will see all vendors & purposes as selected")
          */
-        fit("Accept all from German Message") {
-            self.app.addPorpertyWithCampaignDetails(targetingKey: self.properyData.messageLanguageTargetingKey, targetingValue: self.properyData.messageLanguageTargetingValue)
+        it("Accept all from German Message") {
+            self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.messageLanguageTargetingKey, targetingValue: self.properyData.messageLanguageTargetingValue)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessageInGerman).to(showUp())
             self.app.acceptAllButtonInGerman.tap()

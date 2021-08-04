@@ -179,7 +179,7 @@ class MetaApp: XCUIApplication {
         self.propertyTextFieldOutlet.typeText(self.propertyData.propertyName)
     }
 
-    func addPropertyWithWrongPropertyDetails(accountId : String, propertyName : String) {
+    func addPropertyWithWrongDetails(accountId : String, propertyName : String) {
         deleteProperty()
         expect(self.propertyList).to(showUp())
         self.addPropertyButton.tap()
@@ -190,7 +190,7 @@ class MetaApp: XCUIApplication {
         self.savePropertyButton.tap()
     }
 
-    func addPorpertyWithCampaignDetails(targetingKey: String, targetingValue: String) {
+    func addPropertyWithCampaignDetails(targetingKey: String, targetingValue: String) {
         addPropertyDetails()
         tables.children(matching: .other)[self.propertyData.addGDPRCampaign].tap()
         swipeUp()
@@ -233,6 +233,41 @@ class MetaApp: XCUIApplication {
         saveGDPRCampaign.tap()
         okButton.tap()
         savePropertyButton.tap()
+    }
+
+    func addPropertyWithCampaignDetailsAndFeaturesTab(targetingKey: String, targetingValue: String) {
+        addPropertyDetails()
+        tables.children(matching: .other)[self.propertyData.addGDPRCampaign].tap()
+        swipeUp()
+        gdprCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 0)
+        gdprPMTextField.tap()
+        gdprPMTextField.typeText(self.propertyData.gdprPMID)
+        doneButton.tap()
+        dropDownButton.tap()
+        defaultPickerWheels.swipeUp()
+        featuresPickerWheels.tap()
+        doneButton.tap()
+        gdprTargetingKeyTextField.tap()
+        gdprTargetingKeyTextField.typeText(targetingKey)
+        doneButton.tap()
+        gdprTargetingValueTextField.tap()
+        gdprTargetingValueTextField.typeText(targetingValue)
+        doneButton.tap()
+        saveGDPRCampaign.tap()
+        okButton.tap()
+        tables.children(matching: .other)[self.propertyData.addCCPACampaign].forceTapElement()
+        ccpaCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 1)
+        ccpaPMTextField.tap()
+        ccpaPMTextField.typeText(self.propertyData.ccpaPMID)
+        doneButton.tap()
+        ccpaTargetingKeyTextField.tap()
+        ccpaTargetingKeyTextField.typeText(self.propertyData.targetingKeyShowOnce)
+        doneButton.tap()
+        ccpaTargetingValueTextField.tap()
+        ccpaTargetingValueTextField.typeText(self.propertyData.targetingValueShowOnce)
+        doneButton.tap()
+        saveCCPACampaign.tap()
+        okButton.tap()
     }
     
     func addTargetingParameter(targetingKey : String, targetingValue : String) {
@@ -435,5 +470,13 @@ extension MetaApp: GDPRUI {
 
     var featuresPickerWheels: XCUIElement {
         pickerWheels["Features"].firstMatch
+    }
+
+    var menuButton: XCUIElement {
+        navigationBars["Property Debug Info"].buttons["Menu"].firstMatch
+    }
+
+    var loadGDPRPM: XCUIElement {
+        tables.staticTexts["Load GDPR PM"].firstMatch
     }
 }
