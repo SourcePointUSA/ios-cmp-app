@@ -253,7 +253,7 @@ class MetaApp: XCUIApplication {
 
 extension MetaApp: GDPRUI {
     var consentUI: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'My Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
+        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'Cookie Notice') OR (label CONTAINS[cd] 'ShowOnce') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
     }
 
     var privacyManager: XCUIElement {
@@ -269,7 +269,7 @@ extension MetaApp: GDPRUI {
     }
 
     var ccpaConsentMessage: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'TCFv2 Message Title') OR (label CONTAINS[cd] 'SHOW ONLY ONCE MESSAGE')")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'SHOW ONLY ONCE MESSAGE'")).firstMatch
     }
 
     var consentMessageInGerman: XCUIElement {
@@ -296,16 +296,20 @@ extension MetaApp: GDPRUI {
         consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept'")).firstMatch
     }
 
+    var ccpaAcceptAllButton: XCUIElement {
+        ccpaConsentMessage.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept All'")).firstMatch
+    }
+
     var acceptAllButtonInGerman: XCUIElement {
         consentMessageInGerman.buttons["Zustimmen"].firstMatch
     }
 
     var rejectAllButton: XCUIElement {
-        consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Reject'")).firstMatch
+        consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Reject All'")).firstMatch
     }
 
     var showOptionsButton: XCUIElement {
-        consentUI.buttons["MANAGE PREFERENCES"].firstMatch
+        consentUI.buttons["Manage Preferences"].firstMatch
     }
 
     var showOptionsButtonInGerman: XCUIElement {

@@ -34,22 +34,22 @@ class MetaAppValidationUITests: QuickSpec {
         }
 
 
-        fit("Error message with all fields as blank") {
+        it("Error message with all fields as blank") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName:"")
             expect(self.app.propertyFieldValidationItem).to(showUp())
         }
 
-        fit("Error message with account ID as blank") {
+        it("Error message with account ID as blank") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName: self.properyData.propertyName)
             expect(self.app.propertyFieldValidationItem).to(showUp())
         }
 
-        fit("Error message with property Name as blank") {
+        it("Error message with property Name as blank") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId, propertyName:"")
             expect(self.app.propertyFieldValidationItem).to(showUp())
         }
 
-        fit("Error message for blank targeting parameter fields") {
+        it("Error message for blank targeting parameter fields") {
             self.app.deleteProperty()
             expect(self.app.propertyList).to(showUp())
             self.app.addPropertyButton.tap()
@@ -60,7 +60,7 @@ class MetaAppValidationUITests: QuickSpec {
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }
 
-        fit("Error message for blank targeting parameter key fields") {
+        it("Error message for blank targeting parameter key fields") {
             self.app.deleteProperty()
             expect(self.app.propertyList).to(showUp())
             self.app.addPropertyButton.tap()
@@ -73,7 +73,7 @@ class MetaAppValidationUITests: QuickSpec {
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }
 
-        fit("Error message for blank targeting parameter value fields") {
+        it("Error message for blank targeting parameter value fields") {
             self.app.deleteProperty()
             expect(self.app.propertyList).to(showUp())
             self.app.addPropertyButton.tap()
@@ -86,12 +86,12 @@ class MetaAppValidationUITests: QuickSpec {
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }
 
-        fit("Check no message displayed for wrong Account Id"){
+        it("Check no message displayed for wrong Account Id") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.wrongAccountId, propertyName:self.properyData.propertyName)
             expect(self.app.consentMessage).notTo(showUp())
         }
 
-        fit("Check no message displayed for wrong Property Name"){
+        it("Check no message displayed for wrong Property Name") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: self.properyData.accountId, propertyName:self.properyData.wrongPropertyName)
             expect(self.app.consentMessage).notTo(showUp())
         }
