@@ -35,7 +35,7 @@ class SourcePointMetaAppUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on Save then expected consent message should display when user tap on  Accept All button then ccpa consent message should display when user tap on accpet all button then consent data should display on info screen when user navigate back and tap on the Property again then user should not see message again when user delete cookies for the property then user should see consent message again.
          */
-        fit("Show purpose consents after reset cookies") {
+        it("Show purpose consents after reset cookies") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKeyShowOnce, targetingValue: self.propertyData.targetingValueShowOnce)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessage).to(showUp())
