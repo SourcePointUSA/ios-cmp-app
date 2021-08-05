@@ -221,6 +221,41 @@ class MetaApp: XCUIApplication {
         okButton.tap()
     }
 
+    func addPropertyDetailsForAuthID(targetingKey: String, targetingValue: String) {
+        self.accountIDTextFieldOutlet.tap()
+        self.accountIDTextFieldOutlet.typeText(self.propertyData.accountId)
+        self.propertyTextFieldOutlet.tap()
+        self.propertyTextFieldOutlet.typeText(self.propertyData.propertyName)
+        tables.children(matching: .other)[self.propertyData.addGDPRCampaign].tap()
+        swipeUp()
+        gdprCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 0)
+        gdprPMTextField.tap()
+        gdprPMTextField.typeText(self.propertyData.gdprPMID)
+        doneButton.tap()
+        gdprTargetingKeyTextField.tap()
+        gdprTargetingKeyTextField.typeText(targetingKey)
+        doneButton.tap()
+        gdprTargetingValueTextField.tap()
+        gdprTargetingValueTextField.typeText(targetingValue)
+        doneButton.tap()
+        saveGDPRCampaign.tap()
+        okButton.tap()
+        tables.children(matching: .other)[self.propertyData.addCCPACampaign].forceTapElement()
+        ccpaCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 1)
+        ccpaPMTextField.tap()
+        ccpaPMTextField.typeText(self.propertyData.ccpaPMID)
+        doneButton.tap()
+        ccpaTargetingKeyTextField.tap()
+        ccpaTargetingKeyTextField.typeText(self.propertyData.targetingKeyShowOnce)
+        doneButton.tap()
+        ccpaTargetingValueTextField.tap()
+        ccpaTargetingValueTextField.typeText(self.propertyData.targetingValueShowOnce)
+        doneButton.tap()
+        saveCCPACampaign.tap()
+        okButton.tap()
+    }
+
+
     func addGDPRPropertyDetails(targetingKey: String, targetingValue: String) {
         tables.children(matching: .other)[self.propertyData.addGDPRCampaign].tap()
         swipeUp()

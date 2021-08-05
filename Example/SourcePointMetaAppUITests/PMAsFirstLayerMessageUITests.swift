@@ -42,32 +42,24 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
         }
         
         /**
-         @Description - User submit valid property details for loading PM as first layer message and tap on Save then expected PM should load when user select Accept All then consent should get stored when user tap on the property from list screen and click on Cancel then user should navigate back to the info screen
+         @Description - User submit valid property details for loading PM as first layer message and tap on Save then expected PM should load when user click on Cancel then user should navigate  to the CCPA consent message screen
          */
-        fit("Cancel from PM as first layer Message") {
+        it("Cancel from PM as first layer Message") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
             self.app.savePropertyButton.tap()
             expect(self.app.privacyManager).to(showUp())
-            self.app.acceptAllButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
-            self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
-            self.app.propertyItem.tap()
-            expect(self.app.privacyManager).to(showUp())
             self.app.cancelButton.tap()
-            expect(self.app.ccpaConsentMessage).notTo(showUp())
+            expect(self.app.ccpaConsentMessage).to(showUp())
         }
         
         /**
          @Description - User submit valid property details for loading PM as first layer message and tap on Save then expected PM should load when user select Accept All then consent should get stored when user tap on the Show PM link from the info screen then user should navigate to PM screen showing all toggle as selected
          */
-        fit("Consents for PM as first layer Message") {
+        it("Consents for PM as first layer Message") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
             self.app.savePropertyButton.tap()
             expect(self.app.privacyManager).to(showUp())
-            self.app.acceptAllButton.tap()
+            self.app.acceptAllButton.forceTapElement()
             expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.ccpaAcceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
@@ -80,14 +72,14 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
         /**
          @Description - User submit valid property details for loading PM as first layer message with unique AuthID and tap on Save then expected PM should load when user select Accept All then consent should get stored when user tap on the property from list screen then user should see all toggle as true
          */
-        fit("Consents with AuthID for PM as first layer Message") {
+        it("Consents with AuthID for PM as first layer Message") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.properyData.targetingKeyForPMAsFirstLayer, targetingValue: self.properyData.targetingValueForPMAsFirstLayer)
             self.app.swipeDown()
             self.app.authIdTextFieldOutlet.tap()
             self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
             self.app.savePropertyButton.tap()
             expect(self.app.privacyManager).to(showUp())
-            self.app.acceptAllButton.tap()
+            self.app.acceptAllButton.forceTapElement()
             expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.ccpaAcceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
