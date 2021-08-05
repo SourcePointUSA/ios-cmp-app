@@ -242,7 +242,7 @@
 /* Begin PBXFileReference section */
 		06FF3055BBD086FD32F83522 /* Pods-NativePMExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		09777D81B214ADF39CC9EC18 /* Pods-SourcePointMetaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaApp.debug.xcconfig"; path = "Target Support Files/Pods-SourcePointMetaApp/Pods-SourcePointMetaApp.debug.xcconfig"; sourceTree = "<group>"; };
-		1997B63A238FDCE80079AF34 /* GDPR-MetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "GDPR-MetaApp.app"; path = "Unified-MetaApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1997B63A238FDCE80079AF34 /* Unified-MetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unified-MetaApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1997B64A238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourcePointMetaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1997B655238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -940,7 +940,7 @@
 			children = (
 				607FACD01AFB9204008FA782 /* SPGDPRExampleApp.app */,
 				8231B13D22BA5A6B00D2669B /* AuthExample.app */,
-				1997B63A238FDCE80079AF34 /* GDPR-MetaApp.app */,
+				1997B63A238FDCE80079AF34 /* Unified-MetaApp.app */,
 				1997B64F238FDCF30079AF34 /* SourcePointMetaAppTests.xctest */,
 				82FC4D3A23983231002F08E5 /* ConsentViewController_ExampleTests.xctest */,
 				82D8FEDC23DC753400F28D74 /* NativeMessageExample.app */,
@@ -1356,7 +1356,7 @@
 			);
 			name = SourcePointMetaApp;
 			productName = SourcePointMetaApp;
-			productReference = 1997B63A238FDCE80079AF34 /* GDPR-MetaApp.app */;
+			productReference = 1997B63A238FDCE80079AF34 /* Unified-MetaApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1997B64E238FDCF30079AF34 /* SourcePointMetaAppTests */ = {
@@ -2762,7 +2762,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.1.4;
+				MARKETING_VERSION = 6.1.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.unifiedmetaapp;
@@ -2797,7 +2797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.1.4;
+				MARKETING_VERSION = 6.1.5;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.unifiedmetaapp;
 				PRODUCT_NAME = "Unified-MetaApp";

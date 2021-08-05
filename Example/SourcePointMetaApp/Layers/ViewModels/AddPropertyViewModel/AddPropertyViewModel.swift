@@ -97,9 +97,23 @@ class AddPropertyViewModel {
                 let propertyDetail = PropertyDetailsModel(accountId: propertyDataModel.accountId, propertyName: propertyDataModel.propertyName, campaignEnv: propertyDataModel.campaignEnv, creationTimestamp: propertyDataModel.creationTimestamp!, authId:propertyDataModel.authId , messageLanguage: propertyDataModel.messageLanguage, campaignDetails: campaignModels)
                 self?.allCampaigns = campaignModels
                 self?.updatePMIDAndTab(campaignModels: campaignModels)
+                self?.updateCampaigns(campaignModels: campaignModels)
                 completionHandler(propertyDetail)
             }
         })
+    }
+
+    func updateCampaigns(campaignModels: [CampaignModel]) {
+        for campaign in campaignModels {
+            if campaign.campaignName == SPLiteral.gdprCampaign {
+                gdprTargetingParams = campaign.targetingParams ?? []
+            } else if campaign.campaignName == SPLiteral.ccpaCampaign {
+                ccpaTargetingParams = campaign.targetingParams ?? []
+            }else {
+                iOS14TargetingParams = campaign.targetingParams ?? []
+            }
+        }
+
     }
 
     func updatePMIDAndTab(campaignModels: [CampaignModel]) {
