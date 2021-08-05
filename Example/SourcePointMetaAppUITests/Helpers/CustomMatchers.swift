@@ -15,7 +15,10 @@ import Quick
 public func showUp() -> Predicate<XCUIElement> {
     return Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: Nimble.AsyncDefaults.Timeout))
+        if let timeout = TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout) {
+            return PredicateStatus(bool: actual.waitForExistence(timeout: timeout))
+        }
+        return PredicateStatus(bool: actual.waitForExistence(timeout: 20))
     }
 }
 
@@ -34,9 +37,32 @@ public func disappear() -> Predicate<XCUIElement> {
     return Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual, handler: nil)
-        QuickSpec.current.waitForExpectations(timeout: Nimble.AsyncDefaults.Timeout)
-        return PredicateStatus(bool: !actual.exists)
+        if let timeout = TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout) {
+            QuickSpec.current.waitForExpectations(timeout: timeout)
+            return PredicateStatus(bool: !actual.exists)
+        }
+        return PredicateStatus(bool: actual.waitForExistence(timeout: 20))
     }
 }
+
+extension TimeInterval {
+    init?(dispatchTimeInterval: DispatchTimeInterval) {
+        switch dispatchTimeInterval {
+        case .seconds(let value):
+            self = Double(value)
+        case .milliseconds(let value):
+            self = Double(value)
+        case .microseconds(let value):
+            self = Double(value)
+        case .nanoseconds(let value):
+            self = Double(value)
+        case .never:
+            return nil
+        @unknown default:
+            return nil
+        }
+    }
+}
+
 
 
