@@ -38,7 +38,7 @@ class MetaApp: XCUIApplication {
     var ccpaCampaigntableviewcellCell: XCUIElement!
 
     var propertyList: XCUIElement {
-        staticTexts["Property List"].firstMatch
+        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'Property List'")).firstMatch
     }
 
     var newProperty: XCUIElement {
