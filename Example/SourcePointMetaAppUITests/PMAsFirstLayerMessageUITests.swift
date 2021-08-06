@@ -74,9 +74,9 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
          */
         it("Consents with AuthID for PM as first layer Message") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKeyForPMAsFirstLayer, targetingValue: self.propertyData.targetingValueForPMAsFirstLayer)
-            self.app.swipeDown()
             self.app.authIdTextFieldOutlet.tap()
             self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
+            self.app.doneButton.tap()
             self.app.savePropertyButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.acceptAllButton.forceTapElement()

@@ -342,7 +342,7 @@ extension MetaApp: GDPRUI {
     }
 
     var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "(label CONTAINS[cd] 'Cookie Notice') OR (label CONTAINS[cd] 'Privacy Settings')")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Cookie Notice'")).firstMatch
     }
 
     var consentMessage: XCUIElement {
