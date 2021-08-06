@@ -79,6 +79,7 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
             self.app.doneButton.tap()
             self.app.savePropertyButton.tap()
             expect(self.app.privacyManager).to(showUp())
+            self.app.swipeDown()
             self.app.acceptAllButton.forceTapElement()
             expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.ccpaAcceptAllButton.tap()

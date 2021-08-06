@@ -63,7 +63,7 @@ class PrivacyManagerUITests: QuickSpec {
             expect(self.app.consentMessageInGerman).to(showUp())
             self.app.showOptionsButtonInGerman.forceTapElement()
             expect(self.app.privacyManager).to(showUp())
-            self.app.rejectAllButton.tap()
+            self.app.rejectAllButton.forceTapElement()
             expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.ccpaAcceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
