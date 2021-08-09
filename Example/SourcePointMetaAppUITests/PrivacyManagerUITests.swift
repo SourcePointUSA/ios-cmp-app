@@ -61,7 +61,7 @@ class PrivacyManagerUITests: QuickSpec {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.messageLanguageTargetingKey, targetingValue: self.propertyData.messageLanguageTargetingValue)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessageInGerman).to(showUp())
-            self.app.showOptionsButtonInGerman.forceTapElement()
+            self.app.showOptionsButtonInGerman.doubleTap()
             expect(self.app.privacyManager).to(showUp())
             self.app.rejectAllButton.forceTapElement()
             expect(self.app.ccpaConsentMessage).to(showUp())
@@ -71,7 +71,7 @@ class PrivacyManagerUITests: QuickSpec {
             expect(self.app.propertyList).to(showUp())
             self.app.propertyItem.tap()
             expect(self.app.consentMessageInGerman).to(showUp())
-            self.app.showOptionsButtonInGerman.forceTapElement()
+            self.app.showOptionsButtonInGerman.doubleTap()
             expect(self.app.privacyManager).to(showUp())
             self.app.testPMToggles(value: 0)
         }

@@ -137,21 +137,6 @@ class MetaApp: XCUIApplication {
         alerts["alertView"].buttons["OK"].firstMatch
     }
 
-    var acceptButton: XCUIElement {
-        buttons["Accept"].firstMatch
-    }
-
-    var rejectButton: XCUIElement {
-        buttons["Reject"].firstMatch
-    }
-
-    var showOptions: XCUIElement {
-        buttons["Show Options"].firstMatch
-    }
-    var settingsButton: XCUIElement {
-        buttons["Settings"].firstMatch
-    }
-
     var doneButton: XCUIElement {
         toolbars["Toolbar"].buttons["Done"].firstMatch
     }
@@ -342,7 +327,7 @@ extension MetaApp: GDPRUI {
     }
 
     var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Cookie Notice'")).firstMatch
+        webViews.otherElements["Privacy Manager App"].children(matching: .other).element(boundBy: 0).staticTexts["Cookie Notice"].firstMatch
     }
 
     var consentMessage: XCUIElement {
@@ -398,7 +383,7 @@ extension MetaApp: GDPRUI {
     }
 
     var cancelButton: XCUIElement {
-        privacyManager.buttons["Cancel"].firstMatch
+        consentUI.buttons["Cancel"].firstMatch
     }
 
     var dismissMessageButton: XCUIElement {
