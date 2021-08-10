@@ -1,7 +1,7 @@
 name: Swift
 on:
   push:
-    branches: [ SP-7327_add_ui_tests_for_metaapp ]
+    branches: [ develop ]
   pull_request:
     branches: [ develop ]
 defaults:
