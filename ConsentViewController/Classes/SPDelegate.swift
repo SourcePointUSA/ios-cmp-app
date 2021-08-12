@@ -13,6 +13,9 @@ import UIKit
     /// - Parameters:
     ///   - action: the user action
     @objc func onAction(_ action: SPAction, from controller: SPMessageViewController)
+
+    /// called when the user takes an action in the ATT prompt
+    @objc optional func onIDFAStatusAction()
 }
 
 @objc public protocol SPConsentDelegate {

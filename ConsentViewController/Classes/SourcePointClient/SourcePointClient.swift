@@ -37,6 +37,7 @@ typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
+typealias IDFAStatusHandler = (Result<String, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -79,8 +80,8 @@ protocol SourcePointProtocol {
         messageId: Int?,
         idfaStatus: SPIDFAStatus,
         iosVersion: String,
-        partitionUUID: String?
-    )
+        partitionUUID: String?,
+        handler: @escaping IDFAStatusHandler)
 
     func customConsentGDPR(
         toConsentUUID consentUUID: String,
@@ -254,7 +255,15 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
+    func reportIdfaStatus(
+        propertyId: Int?,
+        uuid: String?,
+        uuidType: SPCampaignType?,
+        messageId: Int?,
+        idfaStatus: SPIDFAStatus,
+        iosVersion: String,
+        partitionUUID: String?,
+        handler: @escaping IDFAStatusHandler) {
         _ = JSONEncoder().encodeResult(IDFAStatusReportRequest(
             accountId: accountId,
             propertyId: propertyId,
@@ -264,7 +273,13 @@ class SourcePointClient: SourcePointProtocol {
             iosVersion: iosVersion,
             appleTracking: AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, messagePartitionUUID: partitionUUID)
         )).map {
-            client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
+            client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: $0) { result in
+                handler(Result {
+                    try result.decoded() as String
+                }.mapError {
+                    InvalidResponseATTMessageError(error: $0, campaignType: .ios14)
+                })
+            }
         }
     }
 

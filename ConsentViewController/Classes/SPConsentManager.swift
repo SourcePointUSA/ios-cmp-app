@@ -391,7 +391,9 @@ extension SPConsentManager: SPMessageUIDelegate {
             idfaStatus: status,
             iosVersion: deviceManager.osVersion(),
             partitionUUID: iOSMessagePartitionUUID
-        )
+        ) { [weak self] _ in
+            self?.delegate?.onIDFAStatusAction?()
+        }
     }
 
     func action(_ action: SPAction, from controller: SPMessageViewController) {
