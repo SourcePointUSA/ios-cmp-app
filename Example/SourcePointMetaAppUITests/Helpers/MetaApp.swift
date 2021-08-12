@@ -367,7 +367,7 @@ extension MetaApp: GDPRUI {
     }
 
     var rejectAllButton: XCUIElement {
-        consentUI.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Reject All'")).firstMatch
+        consentUI.buttons["Reject All"].firstMatch
     }
 
     var showOptionsButton: XCUIElement {
