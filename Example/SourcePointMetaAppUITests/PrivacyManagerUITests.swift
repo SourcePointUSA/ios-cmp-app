@@ -57,25 +57,21 @@ class PrivacyManagerUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on save then the expected consent message should display and when user click on MANAGE PREFERENCES/show options button then user will see Privacy Manager screen when user select reject All then user will navigate to Site Info screen showing ConsentUUID, EUConsent and all Purpose Consents when user navigate back and tap on the site name And click on MANAGE PREFERENCES button from consent message then user should see all purposes are deselected
          */
-        it("Reject all from Privacy Manager via German Message") {
-            self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.messageLanguageTargetingKey, targetingValue: self.propertyData.messageLanguageTargetingValue)
+        ("Reject all from Privacy Manager") {
+            self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingFrenchValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessageInGerman).to(showUp())
-            self.app.showOptionsButtonInGerman.doubleTap()
+            expect(self.app.consentMessage).to(showUp())
+            self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
-            if self.app.rejectAllButton.exists {
-                self.app.rejectAllButton.tap()
-            } else {
-                self.app.saveAndExitButton.tap()
-            }
+            self.app.rejectAllButton.tap()
             expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.ccpaAcceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
             self.app.backButton.tap()
             expect(self.app.propertyList).to(showUp())
             self.app.propertyItem.tap()
-            expect(self.app.consentMessageInGerman).to(showUp())
-            self.app.showOptionsButtonInGerman.doubleTap()
+            expect(self.app.consentMessage).to(showUp())
+            self.app.showOptionsButton.tap()
             expect(self.app.privacyManager).to(showUp())
             self.app.testPMToggles(value: 0)
         }
