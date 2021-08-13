@@ -76,4 +76,3 @@ class PrivacyManagerUITests: QuickSpec {
             self.app.testPMToggles(value: 0)
         }
     }
-}
