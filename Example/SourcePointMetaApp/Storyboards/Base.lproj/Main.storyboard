@@ -118,7 +118,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Message/PM Language" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dWF-o0-t91" userLabel="SelectMessageLanguage">
                                                 <rect key="frame" x="190.5" y="175" width="164.5" height="34"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="meesageTextFieldOutlet" label="meesageTextFieldOutlet"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="lmJ-tn-2Bl"/>
                                                 </constraints>
@@ -179,7 +179,7 @@
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDPR PM ID:" textAlignment="natural" lineBreakMode="tailTruncation" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Xss-e6-veX">
                                                                     <rect key="frame" x="5" y="10" width="110" height="30"/>
-                                                                    <accessibility key="accessibilityConfiguration" identifier="authIdLabel" label="authIdLabel"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="pmIdLabel" label="pmIdLabel"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="4I4-1P-RBF"/>
                                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" id="HRY-qN-5ZE"/>
@@ -214,7 +214,7 @@
                                                                 <textField opaque="NO" tag="12" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select PM Tab" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yQL-6f-qJg" userLabel="SelectPMTab">
                                                                     <rect key="frame" x="120" y="59" width="210" height="34"/>
                                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <accessibility key="accessibilityConfiguration" identifier="pmTextFieldOutlet" label="pmTextFieldOutlet"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="pmTabTextFieldOutlet" label="pmTabTextFieldOutlet"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="34" id="lAf-Fg-X2c"/>
                                                                     </constraints>
@@ -256,7 +256,7 @@
                                                                 </label>
                                                                 <textField opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rW2-kJ-bfl" userLabel="KeyTextfiled">
                                                                     <rect key="frame" x="62" y="153" width="268" height="34"/>
-                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingParamKeyTextFieldOutlet" label="targetingParamKeyTextFieldOutlet"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingKeyTextFieldOutlet" label="targetingKeyTextFieldOutlet"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="34" id="h1c-kd-h0C"/>
                                                                     </constraints>
@@ -279,7 +279,7 @@
                                                                 </label>
                                                                 <textField opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Targeting Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vsl-Yo-2Be" userLabel="TargetingValueTextField">
                                                                     <rect key="frame" x="62" y="202" width="268" height="34"/>
-                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingParamValueTextFieldOutlet" label="targetingParamValueTextFieldOutlet"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="targetingValueTextFieldOutlet" label="targetingValueTextFieldOutlet"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="34" id="reQ-Mq-89e"/>
                                                                     </constraints>
@@ -293,7 +293,7 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Dj-B4-xHj" userLabel="AddTargetingParamButton">
                                                                     <rect key="frame" x="181" y="256" width="149" height="30"/>
                                                                     <color key="backgroundColor" red="0.2901960784" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                                    <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="addTargetingParamButton" label="addTargetingParamButton"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="sjB-4E-MWX"/>
                                                                     </constraints>
@@ -309,7 +309,7 @@
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8G-7S-Gzt" userLabel="SaveCampaignButton">
                                                                     <rect key="frame" x="5" y="256" width="156" height="30"/>
                                                                     <color key="backgroundColor" red="0.2901960784" green="0.36078431370000003" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                                    <accessibility key="accessibilityConfiguration" identifier="addButton" label="addButton"/>
+                                                                    <accessibility key="accessibilityConfiguration" identifier="saveCamapignButton" label="saveCamapignButton"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="IO7-pg-kKb"/>
                                                                     </constraints>
@@ -360,6 +360,9 @@
                                                                 <constraint firstItem="Vsl-Yo-2Be" firstAttribute="height" secondItem="rW2-kJ-bfl" secondAttribute="height" id="ziD-5p-Gge"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
+                                                        <accessibility key="accessibilityConfiguration" identifier="campaignTableViewCell" label="campaignTableViewCell">
+                                                            <bool key="isElement" value="YES"/>
+                                                        </accessibility>
                                                         <connections>
                                                             <outlet property="pmIDLabel" destination="Xss-e6-veX" id="1QQ-F7-NNe"/>
                                                             <outlet property="pmTabButton" destination="Zxa-Gi-zWx" id="u8f-og-U5D"/>
