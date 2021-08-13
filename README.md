@@ -273,6 +273,20 @@ To display the App Tracking Transparency authorization request for accessing the
 ```
 ![App Tracking](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/wiki/assets/AppTracking.png)
 
+## Loading the Messages based on IDFA status
+In order to load the Messages once received IDFA status from user, use  `onIDFAStatusAction` callback method. Example:
+```swift
+func onIDFAStatusAction() {
+    consentManager.loadMessage()
+}
+```
+In Obj-C that'd be:
+```objc
+- (void)onIDFAStatusAction {
+    [consentManager loadMessageForAuthId: NULL];
+}
+```
+
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.

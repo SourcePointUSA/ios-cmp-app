@@ -1,3 +1,6 @@
+# 6.1.6 (August, 13, 2021)
+* Added `onIDFAStatusAction`  callback to load the messages based on IDFA status[#328](https://github.com/SourcePointUSA/ios-cmp-app/pull/328)
+
 # 6.1.5 (July, 23, 2021)
 * Expand `SPSDK` protocol to contain all public method/attributes of the SDK.
   * VERSION: String
