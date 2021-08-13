@@ -64,7 +64,9 @@ class PrivacyManagerUITests: QuickSpec {
             self.app.showOptionsButtonInGerman.doubleTap()
             expect(self.app.privacyManager).to(showUp())
             if self.app.rejectAllButton.exists {
-                self.app.rejectAllButton.forceTapElement()
+                self.app.rejectAllButton.tap()
+            } else {
+                self.app.saveAndExitButton.tap()
             }
             expect(self.app.ccpaConsentMessage).to(showUp())
             self.app.ccpaAcceptAllButton.tap()
