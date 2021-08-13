@@ -57,7 +57,7 @@ class PrivacyManagerUITests: QuickSpec {
         /**
          @Description - User submit valid property details and tap on save then the expected consent message should display and when user click on MANAGE PREFERENCES/show options button then user will see Privacy Manager screen when user select reject All then user will navigate to Site Info screen showing ConsentUUID, EUConsent and all Purpose Consents when user navigate back and tap on the site name And click on MANAGE PREFERENCES button from consent message then user should see all purposes are deselected
          */
-        ("Reject all from Privacy Manager") {
+        it("Reject all from Privacy Manager") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingFrenchValue)
             self.app.savePropertyButton.tap()
             expect(self.app.consentMessage).to(showUp())
@@ -76,3 +76,4 @@ class PrivacyManagerUITests: QuickSpec {
             self.app.testPMToggles(value: 0)
         }
     }
+  }
