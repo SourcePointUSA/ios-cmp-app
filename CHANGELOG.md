@@ -1,3 +1,6 @@
+# 6.1.6 (August, 16, 2021)
+* Added `IDFAAccepted` & `IDFADenied` to `SPAction` to load the messages based on IDFA status [#329](https://github.com/SourcePointUSA/ios-cmp-app/pull/329)
+
 # 6.1.5 (July, 23, 2021)
 * Expand `SPSDK` protocol to contain all public method/attributes of the SDK.
   * VERSION: String

@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.1.5'
+pod 'ConsentViewController', '6.1.6'
 ```
 
 ### Carthage
@@ -272,6 +272,24 @@ To display the App Tracking Transparency authorization request for accessing the
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 ![App Tracking](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/wiki/assets/AppTracking.png)
+
+## Loading the Messages based on IDFA status
+In order to load the Messages once received IDFA status from user, use  `onAction` callback method. Example:
+```swift
+func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+        if action.type == .IDFAAccepted || action.type == .IDFADenied {
+            consentManager.loadMessage()
+    }
+}
+```
+In Obj-C that'd be:
+```objc
+- (void)onAction:(SPAction  _Nonnull)action from:(SPMessageViewController  _Nonnull)controller {
+    if (action.type == SPActionTypeIDFAAccepted || action.type == SPActionTypeIDFADenied) {
+        [consentManager loadMessageForAuthId: NULL];
+    }
+}
+```
 
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
