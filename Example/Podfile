@@ -40,12 +40,6 @@ target 'NativeMessageExampleUITests' do
   pod 'Nimble'
 end
 
-target 'SourcePointMetaApp' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'IQKeyboardManagerSwift'
-  pod 'Wormholy'
-end
-
 target 'SourcePointMetaAppTests' do
   inherit! :search_paths
   # Pods for testing
