@@ -1,6 +1,0 @@
-framework module Pods_SourcePointMetaAppTests {
-  umbrella header "Pods-SourcePointMetaAppTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
