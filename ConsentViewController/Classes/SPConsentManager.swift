@@ -414,6 +414,13 @@ extension SPConsentManager: SPMessageUIDelegate {
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 self?.reportIdfaStatus(status: status, messageId: controller.messageId)
                 self?.finishAndNextIfAny(controller)
+                if status == .accepted {
+                    action.type = .IDFAAccepted
+                    self?.delegate?.onAction(action, from: controller)
+                } else if status == .denied {
+                    action.type = .IDFADenied
+                    self?.delegate?.onAction(action, from: controller)
+                }
             }
         default:
             print("[SDK] UNKNOWN Action")
