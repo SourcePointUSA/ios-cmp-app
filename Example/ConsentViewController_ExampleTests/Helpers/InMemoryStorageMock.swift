@@ -11,14 +11,18 @@ import Foundation
 
 /// A class that uses [String: Any] as its storage
 class InMemoryStorageMock: Storage {
+    func integer(forKey defaultName: String) -> Int {
+        storage[defaultName] as? Int ?? 0
+    }
+
     var storage = [String: Any]()
 
     func string(forKey defaultName: String) -> String? {
-        return storage[defaultName] as? String
+        storage[defaultName] as? String
     }
 
     func object<T>(ofType type: T.Type, forKey defaultName: String) -> T? where T: Decodable {
-        return storage[defaultName] as? T
+        storage[defaultName] as? T
     }
 
     func set(_ value: Any?, forKey defaultName: String) {
@@ -42,6 +46,6 @@ class InMemoryStorageMock: Storage {
     }
 
     func dictionaryRepresentation() -> [String: Any] {
-        return storage
+        storage
     }
 }
