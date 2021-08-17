@@ -101,16 +101,24 @@ import Foundation
             return nil
         #if os(tvOS)
         case .nativePM(let content):
-            let controller = SPGDPRNativePrivacyManagerViewController(
-                messageId: messageId,
-                campaignType: type,
-                viewData: content.homeView,
-                pmData: content,
-                delegate: self
-            )
-            controller.delegate = self
-            controller.vendorGrants = userData.gdpr?.consents?.vendorGrants
-            return controller
+            var controller = (type == .gdpr ?
+                SPGDPRNativePrivacyManagerViewController(
+                    messageId: messageId,
+                    campaignType: type,
+                    viewData: content.homeView,
+                    pmData: content,
+                    delegate: self
+                ) :
+                SPCCPANativePrivacyManagerViewController(
+                    messageId: messageId,
+                    campaignType: type,
+                    viewData: content.homeView,
+                    pmData: content,
+                    delegate: self
+                )) as? SPNativePrivacyManagerHome
+            controller?.delegate = self
+//            controller?.vendorGrants = userData.gdpr?.consents?.vendorGrants
+            return controller as? SPNativeScreenViewController
         #endif
         #if os(iOS)
         case .web(let content): return GenericWebMessageViewController(
@@ -428,16 +436,16 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 }
 
-typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
+typealias SPSecondLayerHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 
 protocol SPNativePMDelegate: AnyObject {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
+    func on2ndLayerNavigating(messageId: Int?, campaignType: SPCampaignType, handler: @escaping SPSecondLayerHandler)
 }
 
 extension SPConsentManager: SPNativePMDelegate {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler) {
+    func on2ndLayerNavigating(messageId: Int?, campaignType: SPCampaignType, handler: @escaping SPSecondLayerHandler) {
         if let propertyId = propertyId {
-            spClient.privacyManagerView(
+            spClient.gdprPrivacyManagerView(
                 propertyId: propertyId,
                 consentLanguage: messageLanguage
             ) { [weak self] result in

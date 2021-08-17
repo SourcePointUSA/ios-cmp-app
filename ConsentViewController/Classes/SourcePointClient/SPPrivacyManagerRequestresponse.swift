@@ -7,11 +7,44 @@
 
 import Foundation
 
-@objc public enum SPCategoryType: Int, Equatable {
-    case IAB_PURPOSE, IAB, unknown
+@objcMembers class GDPRCategory: Codable {
+    @objc public enum CategoryType: Int, Equatable {
+        case IAB_PURPOSE, IAB, unknown
+    }
+
+    struct Vendor: Codable {
+        let name: String
+        let vendorId: String?
+        let policyUrl: URL?
+        let vendorType: GDPRVendor.VendorType?
+    }
+
+    let iabId: Int?
+    let _id, name, description: String
+    let type: GDPRCategory.CategoryType?
+    let legIntVendors: [Vendor]?
+    let requiringConsentVendors: [Vendor]?
+    var uniqueVendorIds: [String] {
+        Array(Set<String>(
+            (legIntVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? []) +
+                (requiringConsentVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? [])
+        ))
+    }
 }
 
-extension SPCategoryType: Codable {
+extension GDPRCategory: Identifiable, Hashable, Equatable {
+    var id: String { _id }
+
+    static func == (lhs: GDPRCategory, rhs: GDPRCategory) -> Bool {
+        lhs._id == rhs._id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(_id)
+    }
+}
+
+extension GDPRCategory.CategoryType: Codable {
     public typealias RawValue = String
 
     public var rawValue: String {
@@ -36,41 +69,8 @@ extension SPCategoryType: Codable {
     }
 }
 
-@objcMembers class VendorListCategory: Codable {
-    struct Vendor: Codable {
-        let name: String
-        let vendorId: String?
-        let policyUrl: URL?
-        let vendorType: SPVendorType?
-    }
-
-    let iabId: Int?
-    let _id, name, description: String
-    let type: SPCategoryType?
-    let legIntVendors: [Vendor]?
-    let requiringConsentVendors: [Vendor]?
-    var uniqueVendorIds: [String] {
-        Array(Set<String>(
-            (legIntVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? []) +
-                (requiringConsentVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? [])
-        ))
-    }
-}
-
-extension VendorListCategory: Identifiable, Hashable, Equatable {
-    var id: String { _id }
-
-    static func == (lhs: VendorListCategory, rhs: VendorListCategory) -> Bool {
-        lhs._id == rhs._id
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(_id)
-    }
-}
-
 @objcMembers class SPPrivacyManagerResponse: NSObject, Decodable {
-    let categories: [VendorListCategory]?
+    let categories: [GDPRCategory]?
     let message: SPNativeView
 
     enum CodingKeys: String, CodingKey {

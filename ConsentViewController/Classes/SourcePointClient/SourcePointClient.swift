@@ -32,6 +32,8 @@ extension JSONDecoder {
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
+typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
+typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias NativePMHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
@@ -53,10 +55,10 @@ protocol SourcePointProtocol {
         withId pmId: String,
         handler: @escaping NativePMHandler)
 
-    func privacyManagerView(
+    func gdprPrivacyManagerView(
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping PrivacyManagerViewHandler)
+        handler: @escaping GDPRPrivacyManagerViewHandler)
 
     func postCCPAAction(
         authId: String?,
@@ -116,7 +118,8 @@ class SourcePointClient: SourcePointProtocol {
     static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=prod", relativeTo: WRAPPER_API)!
     static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true", relativeTo: WRAPPER_API)!
     static let MMS_MESSAGE_URL = URL(string: "./mms/v2/message", relativeTo: SP_ROOT)!
-    static let PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
+    static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
+    static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
 
     let accountId: Int
     let propertyName: SPPropertyName
@@ -172,11 +175,15 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func privacyManagerView(
+    private func privacyManagerView(
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
+        campaignType: SPCampaignType,
         handler: @escaping PrivacyManagerViewHandler) {
-        let url = SourcePointClient.PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
+        let url = (campaignType == .gdpr ?
+            SourcePointClient.GDPR_PRIVACY_MANAGER_VIEW_URL :
+            SourcePointClient.CCPA_PRIVACY_MANAGER_VIEW_URL
+        ).appendQueryItems([
             "siteId": String(propertyId),
             "consentLanguage": consentLanguage.rawValue
         ])!
@@ -186,6 +193,15 @@ class SourcePointClient: SourcePointProtocol {
             }.mapError({
                 InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
             }))
+        }
+    }
+
+    func gdprPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping GDPRPrivacyManagerViewHandler) {
+        privacyManagerView(propertyId: propertyId, consentLanguage: consentLanguage, campaignType: .gdpr) {
+            switch try? $0.get() {
+            case .gdpr(let gdprResponse): handler(Result.success(gdprResponse))
+            default: handler(Result.failure(InvalidResponseWebMessageError(campaignType: .gdpr)))
+            }
         }
     }
 

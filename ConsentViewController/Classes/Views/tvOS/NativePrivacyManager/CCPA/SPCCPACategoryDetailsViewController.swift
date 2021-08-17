@@ -19,7 +19,7 @@ class SPCCPACategoryDetailsViewController: SPNativeScreenViewController {
 
     weak var categoryManagerDelegate: CCPAPMConsentSnaptshot?
 
-    var category: VendorListCategory?
+    var category: GDPRCategory?
     var partners: [String] {
         ((category?.requiringConsentVendors ?? []) + (category?.legIntVendors ?? []))
             .map { $0.name }

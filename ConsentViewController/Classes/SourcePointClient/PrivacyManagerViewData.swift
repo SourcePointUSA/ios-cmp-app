@@ -15,7 +15,7 @@ private func findViewBy(id: String, _ pmResponse: SPPrivacyManagerResponse) thro
 }
 
 struct PrivacyManagerViewData {
-    let categories: [VendorListCategory]
+    let categories: [GDPRCategory]
     let homeView, categoriesView, vendorsView, categoryDetailsView, vendorDetailsView: SPNativeView
     let privacyPolicyView: SPNativeView?
 }

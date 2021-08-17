@@ -27,8 +27,8 @@ class ViewController: UIViewController {
         accountId: 22,
         propertyName: try! SPPropertyName("appletv.demo"),
         campaigns: SPCampaigns(
-//            gdpr: SPCampaign()
-            ccpa: SPCampaign()
+            gdpr: SPCampaign()
+//            ccpa: SPCampaign()
         ),
         delegate: self
     )}()

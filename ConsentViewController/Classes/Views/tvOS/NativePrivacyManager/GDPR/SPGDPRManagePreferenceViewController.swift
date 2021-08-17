@@ -11,9 +11,9 @@ import Foundation
 class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
-        let content: [VendorListCategory]
+        let content: [GDPRCategory]
 
-        init? (header: SPNativeText?, content: [VendorListCategory]?) {
+        init? (header: SPNativeText?, content: [GDPRCategory]?) {
             if content == nil || content!.isEmpty { return nil }
             self.header = header
             self.content = content!
@@ -34,9 +34,9 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var consentsSnapshot: GDPRPMConsentSnaptshot = GDPRPMConsentSnaptshot()
     var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
 
-    var categories: [VendorListCategory] = []
-    var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
-    var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
+    var categories: [GDPRCategory] = []
+    var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
+    var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
 
     var sections: [Section] {[
         Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: userConsentCategories),
@@ -101,7 +101,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 
 // MARK: UITableViewDataSource
 extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
-    func currentCategory(_ index: IndexPath) -> VendorListCategory {
+    func currentCategory(_ index: IndexPath) -> GDPRCategory {
         displayingLegIntCategories ?
             legIntCategories[index.row] :
             sections[index.section].content[index.row]

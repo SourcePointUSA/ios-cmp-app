@@ -31,7 +31,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     weak var vendorManagerDelegate: GDPRPMConsentSnaptshot?
 
     let cellReuseIdentifier = "cell"
-    var vendor: VendorListVendor?
+    var vendor: GDPRVendor?
     var sections: [Section] {[
         Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.consentCategories.map { $0.name }),
         Section(header: viewData.byId("SpecialPurposesText") as? SPNativeText, content: vendor?.iabSpecialPurposes),

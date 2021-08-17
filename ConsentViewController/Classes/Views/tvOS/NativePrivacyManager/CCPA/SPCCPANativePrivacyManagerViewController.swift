@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-@objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController {
+@objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
 
     @IBOutlet weak var categoriesExplainerLabel: UILabel!
@@ -23,9 +23,9 @@ import Foundation
 
     @IBOutlet weak var header: SPPMHeader!
 
-    var secondLayerData: PrivacyManagerViewResponse?
+    var secondLayerData: GDPRPrivacyManagerViewResponse?
 
-    var categories: [VendorListCategory] { pmData.categories }
+    var categories: [GDPRCategory] { pmData.categories }
     var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
@@ -72,7 +72,7 @@ import Foundation
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
         guard let secondLayerData = secondLayerData else {
-            delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+            delegate?.on2ndLayerNavigating(messageId: messageId, campaignType: .ccpa) { [weak self] result in
                 switch result {
                 case .failure(let error):
                     self?.onError(error)
@@ -89,11 +89,11 @@ import Foundation
                         if self?.snapshot == nil {
                             self?.snapshot = CCPAPMConsentSnaptshot(
                                 grants: data.grants ?? SPGDPRVendorGrants(),
-                                vendors: Set<VendorListVendor>(data.vendors),
-                                categories: Set<VendorListCategory>(data.categories),
-                                specialPurposes: Set<VendorListCategory>(data.specialPurposes),
-                                features: Set<VendorListCategory>(data.features),
-                                specialFeatures: Set<VendorListCategory>(data.specialFeatures)
+                                vendors: Set<GDPRVendor>(data.vendors),
+                                categories: Set<GDPRCategory>(data.categories),
+                                specialPurposes: Set<GDPRCategory>(data.specialPurposes),
+                                features: Set<GDPRCategory>(data.features),
+                                specialFeatures: Set<GDPRCategory>(data.specialFeatures)
                             )
                         }
                         controller.categories = data.categories
@@ -115,11 +115,11 @@ import Foundation
         if snapshot == nil {
             snapshot = CCPAPMConsentSnaptshot(
                 grants: secondLayerData.grants ?? SPGDPRVendorGrants(),
-                vendors: Set<VendorListVendor>(secondLayerData.vendors),
-                categories: Set<VendorListCategory>(secondLayerData.categories),
-                specialPurposes: Set<VendorListCategory>(secondLayerData.specialPurposes),
-                features: Set<VendorListCategory>(secondLayerData.features),
-                specialFeatures: Set<VendorListCategory>(secondLayerData.specialFeatures)
+                vendors: Set<GDPRVendor>(secondLayerData.vendors),
+                categories: Set<GDPRCategory>(secondLayerData.categories),
+                specialPurposes: Set<GDPRCategory>(secondLayerData.specialPurposes),
+                features: Set<GDPRCategory>(secondLayerData.features),
+                specialFeatures: Set<GDPRCategory>(secondLayerData.specialFeatures)
             )
         }
         controller.categories = secondLayerData.categories
@@ -128,7 +128,7 @@ import Foundation
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {
-        delegate?.on2ndLayerNavigating(messageId: messageId) { [weak self] result in
+        delegate?.on2ndLayerNavigating(messageId: messageId, campaignType: .ccpa) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.onError(error)
@@ -137,11 +137,11 @@ import Foundation
                     if self?.snapshot == nil {
                         self?.snapshot = CCPAPMConsentSnaptshot(
                             grants: data.grants ?? SPGDPRVendorGrants(),
-                            vendors: Set<VendorListVendor>(data.vendors),
-                            categories: Set<VendorListCategory>(data.categories),
-                            specialPurposes: Set<VendorListCategory>(data.specialPurposes),
-                            features: Set<VendorListCategory>(data.features),
-                            specialFeatures: Set<VendorListCategory>(data.specialFeatures)
+                            vendors: Set<GDPRVendor>(data.vendors),
+                            categories: Set<GDPRCategory>(data.categories),
+                            specialPurposes: Set<GDPRCategory>(data.specialPurposes),
+                            features: Set<GDPRCategory>(data.features),
+                            specialFeatures: Set<GDPRCategory>(data.specialFeatures)
                         )
                     }
                     let controller = SPCCPAPartnersViewController(

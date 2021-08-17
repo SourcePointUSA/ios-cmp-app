@@ -13,6 +13,6 @@ protocol PMVendorManager: AnyObject {
     var vendors: Set<VendorType> { get }
     var acceptedVendorsIds: Set<String> { get set }
 
-    func onVendorOn(_ vendor: VendorListVendor)
-    func onVendorOff(_ vendor: VendorListVendor)
+    func onVendorOn(_ vendor: GDPRVendor)
+    func onVendorOff(_ vendor: GDPRVendor)
 }

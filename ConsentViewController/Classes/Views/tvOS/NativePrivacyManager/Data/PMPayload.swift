@@ -12,13 +12,13 @@ struct PMPayload: Codable {
         let _id: String
         let iabId: Int?
         let consent, legInt: Bool
-        let type: SPCategoryType?
+        let type: GDPRCategory.CategoryType?
     }
     struct Vendor: Codable {
         let _id: String
         let iabId: Int?
         let consent, legInt: Bool
-        let vendorType: SPVendorType?
+        let vendorType: GDPRVendor.VendorType?
     }
     struct Feature: Codable {
         let _id: String

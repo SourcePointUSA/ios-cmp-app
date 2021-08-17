@@ -20,15 +20,15 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
     var nativeLongButton: SPNativeLongButton?
 
     var displayingLegIntVendors: Bool { vendorsSlider.selectedSegmentIndex == 1 }
-    var currentVendors: [VendorListVendor] {
+    var currentVendors: [GDPRVendor] {
         displayingLegIntVendors ? legitimateInterestVendorList : userConsentVendors
     }
 
     var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
 
-    var vendors: [VendorListVendor] = []
-    var userConsentVendors: [VendorListVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
-    var legitimateInterestVendorList: [VendorListVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
+    var vendors: [GDPRVendor] = []
+    var userConsentVendors: [GDPRVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
+    var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
 
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]

@@ -8,15 +8,15 @@
 import Foundation
 
 class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
-    typealias VendorType = VendorListVendor
-    typealias CategoryType = VendorListCategory
+    typealias VendorType = GDPRVendor
+    typealias CategoryType = GDPRCategory
 
     var onConsentsChange: () -> Void = {}
 
     var grants: SPGDPRVendorGrants
-    var vendors: Set<VendorListVendor>
+    var vendors: Set<GDPRVendor>
     var acceptedVendorsIds: Set<String>
-    var categories, specialPurposes, features, specialFeatures: Set<VendorListCategory>
+    var categories, specialPurposes, features, specialFeatures: Set<GDPRCategory>
     var acceptedCategoriesIds: Set<String>
 
     var vendorsWhosePurposesAreOff: [String] {
@@ -31,11 +31,11 @@ class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
 
     init(
         grants: SPGDPRVendorGrants,
-        vendors: Set<VendorListVendor>,
-        categories: Set<VendorListCategory>,
-        specialPurposes: Set<VendorListCategory>,
-        features: Set<VendorListCategory>,
-        specialFeatures: Set<VendorListCategory>
+        vendors: Set<GDPRVendor>,
+        categories: Set<GDPRCategory>,
+        specialPurposes: Set<GDPRCategory>,
+        features: Set<GDPRCategory>,
+        specialFeatures: Set<GDPRCategory>
     ) {
         self.grants = grants
         self.vendors = vendors
@@ -89,24 +89,24 @@ class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
         )
     }
 
-    func onCategoryOn(_ category: VendorListCategory) {
+    func onCategoryOn(_ category: GDPRCategory) {
         acceptedCategoriesIds.insert(category._id)
         acceptedVendorsIds.formUnion(category.uniqueVendorIds)
         onConsentsChange()
     }
 
-    func onCategoryOff(_ category: VendorListCategory) {
+    func onCategoryOff(_ category: GDPRCategory) {
         acceptedCategoriesIds.remove(category._id)
         acceptedVendorsIds.subtract(vendorsWhosePurposesAreOff)
         onConsentsChange()
     }
 
-    func onVendorOn(_ vendor: VendorListVendor) {
+    func onVendorOn(_ vendor: GDPRVendor) {
         acceptedVendorsIds.insert(vendor.vendorId)
         onConsentsChange()
     }
 
-    func onVendorOff(_ vendor: VendorListVendor) {
+    func onVendorOff(_ vendor: GDPRVendor) {
         acceptedVendorsIds.remove(vendor.vendorId)
         onConsentsChange()
     }
