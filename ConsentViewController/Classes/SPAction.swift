@@ -16,6 +16,8 @@ import Foundation
     case RejectAll = 13
     case Dismiss = 15
     case RequestATTAccess = 16
+    case IDFAAccepted = 17
+    case IDFADenied = 18
     case Unknown = 0
 
     public var description: String {
@@ -27,6 +29,8 @@ import Foundation
         case .Dismiss: return "Dismiss"
         case .PMCancel: return "PMCancel"
         case .RequestATTAccess: return "RequestATTAccess"
+        case .IDFAAccepted: return "IDFAAccepted"
+        case .IDFADenied: return "IDFADenied"
         case .Unknown: return "Unkown"
         @unknown default: return "Unknown"
         }
@@ -35,7 +39,7 @@ import Foundation
 
 /// Action consists of `SPActionType` and an id. Those come from each action the user can take in the ConsentUI
 @objcMembers public class SPAction: NSObject {
-    public let type: SPActionType
+    public var type: SPActionType
     public let id: String?
     public let campaignType: SPCampaignType?
     public let consentLanguage: String?

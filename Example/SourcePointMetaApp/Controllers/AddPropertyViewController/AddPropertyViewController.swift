@@ -425,7 +425,7 @@ extension AddPropertyViewController {
 
     func handleMultipleMessages(userData: SPUserData) {
         if onConsentReadyCalled {
-            if let ccpaApplies = consentManager?.ccpaApplies(), let gdprApplies = consentManager?.gdprApplies() {
+            if let ccpaApplies = consentManager?.ccpaApplies, let gdprApplies = consentManager?.gdprApplies {
                 if !ccpaApplies && gdprApplies || ccpaApplies && !gdprApplies {
                     onConsentReadyCalled = false
                     loadConsentInfoController(userData: userData)
@@ -499,6 +499,8 @@ extension AddPropertyViewController: UITableViewDataSource, ExpandableHeaderView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView.tag == SPLiteral.campaignsTableView {
             let header = ExpandableHeaderView()
+            header.isAccessibilityElement = true
+            header.accessibilityLabel = addpropertyViewModel.sections[section].campaignTitle
             header.customInit(title: addpropertyViewModel.sections[section].campaignTitle, section: section, delegate: self)
             return header
         }
@@ -541,7 +543,7 @@ extension AddPropertyViewController: UITableViewDataSource, ExpandableHeaderView
                     for targetingParam in targetingParams {
                         let targetingParamModel = TargetingParamModel(targetingParamKey: targetingParam.targetingKey, targetingParamValue: targetingParam.targetingValue)
                         if targetingParamModel.targetingKey.count > 0 && targetingParamModel.targetingKey.count > 0 {
-                            targetingParamString += "\(targetingParamModel.targetingKey) : \(targetingParamModel.targetingKey)\n"
+                            targetingParamString += "\(targetingParamModel.targetingKey) : \(targetingParamModel.targetingValue)\n"
                         }
                     }
                     cell.targetingParamTextView.text = targetingParamString

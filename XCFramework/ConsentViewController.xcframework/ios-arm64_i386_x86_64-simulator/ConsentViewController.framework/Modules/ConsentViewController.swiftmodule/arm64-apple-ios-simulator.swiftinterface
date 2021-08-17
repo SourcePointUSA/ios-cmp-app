@@ -64,6 +64,8 @@ public let MockNativePMResponse: Swift.String
   case RejectAll = 13
   case Dismiss = 15
   case RequestATTAccess = 16
+  case IDFAAccepted = 17
+  case IDFADenied = 18
   case Unknown = 0
   public var description: Swift.String {
     get
@@ -79,7 +81,7 @@ public let MockNativePMResponse: Swift.String
   }
 }
 @objc @objcMembers public class SPAction : ObjectiveC.NSObject {
-  @objc final public let type: ConsentViewController.SPActionType
+  @objc public var type: ConsentViewController.SPActionType
   @objc final public let id: Swift.String?
   final public let campaignType: ConsentViewController.SPCampaignType?
   @objc final public let consentLanguage: Swift.String?

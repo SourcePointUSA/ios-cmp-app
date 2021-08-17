@@ -31,7 +31,6 @@ extension JSONDecoder {
 }
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
-typealias MMSMessageHandler = (Result<MMSMessageResponse, SPError>) -> Void
 typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
 typealias NativePMHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
@@ -53,10 +52,6 @@ protocol SourcePointProtocol {
     func getNativePrivacyManager(
         withId pmId: String,
         handler: @escaping NativePMHandler)
-
-    func mmsMessage(
-        messageId: Int,
-        handler: @escaping MMSMessageHandler)
 
     func privacyManagerView(
         propertyId: Int,
@@ -174,17 +169,6 @@ class SourcePointClient: SourcePointProtocol {
                     InvalidResponseWebMessageError(error: $0)
                 }))
             }
-        }
-    }
-
-    func mmsMessage(messageId: Int, handler: @escaping MMSMessageHandler) {
-        let url = SourcePointClient.MMS_MESSAGE_URL.appendQueryItems(["message_id": String(messageId)])!
-        client.get(urlString: url.absoluteString) { result in
-            handler(Result {
-                try result.decoded() as MMSMessageResponse
-            }.mapError({
-                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
-            }))
         }
     }
 

@@ -241,7 +241,7 @@ extension ConsentDetailsViewController: SPDelegate {
 
     func handleMultipleMessages(userData: SPUserData) {
         if isReset {
-            if let ccpaApplies = consentManager?.ccpaApplies(), let gdprApplies = consentManager?.gdprApplies() {
+            if let ccpaApplies = consentManager?.ccpaApplies, let gdprApplies = consentManager?.gdprApplies {
                 if !ccpaApplies && gdprApplies || ccpaApplies && !gdprApplies {
                     updateConsentTableview()
                     hideIndicator()
