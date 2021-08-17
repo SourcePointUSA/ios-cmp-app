@@ -414,7 +414,7 @@ enum SPActionType : NSInteger;
 /// Action consists of <code>SPActionType</code> and an id. Those come from each action the user can take in the ConsentUI
 SWIFT_CLASS("_TtC21ConsentViewController8SPAction")
 @interface SPAction : NSObject
-@property (nonatomic, readonly) enum SPActionType type;
+@property (nonatomic) enum SPActionType type;
 @property (nonatomic, readonly, copy) NSString * _Nullable id;
 @property (nonatomic, readonly, copy) NSString * _Nullable consentLanguage;
 @property (nonatomic, copy) NSURL * _Nullable pmURL;
@@ -433,6 +433,8 @@ typedef SWIFT_ENUM(NSInteger, SPActionType, open) {
   SPActionTypeRejectAll = 13,
   SPActionTypeDismiss = 15,
   SPActionTypeRequestATTAccess = 16,
+  SPActionTypeIDFAAccepted = 17,
+  SPActionTypeIDFADenied = 18,
   SPActionTypeUnknown = 0,
 };
 
@@ -1248,7 +1250,7 @@ enum SPActionType : NSInteger;
 /// Action consists of <code>SPActionType</code> and an id. Those come from each action the user can take in the ConsentUI
 SWIFT_CLASS("_TtC21ConsentViewController8SPAction")
 @interface SPAction : NSObject
-@property (nonatomic, readonly) enum SPActionType type;
+@property (nonatomic) enum SPActionType type;
 @property (nonatomic, readonly, copy) NSString * _Nullable id;
 @property (nonatomic, readonly, copy) NSString * _Nullable consentLanguage;
 @property (nonatomic, copy) NSURL * _Nullable pmURL;
@@ -1267,6 +1269,8 @@ typedef SWIFT_ENUM(NSInteger, SPActionType, open) {
   SPActionTypeRejectAll = 13,
   SPActionTypeDismiss = 15,
   SPActionTypeRequestATTAccess = 16,
+  SPActionTypeIDFAAccepted = 17,
+  SPActionTypeIDFADenied = 18,
   SPActionTypeUnknown = 0,
 };
 
@@ -2082,7 +2086,7 @@ enum SPActionType : NSInteger;
 /// Action consists of <code>SPActionType</code> and an id. Those come from each action the user can take in the ConsentUI
 SWIFT_CLASS("_TtC21ConsentViewController8SPAction")
 @interface SPAction : NSObject
-@property (nonatomic, readonly) enum SPActionType type;
+@property (nonatomic) enum SPActionType type;
 @property (nonatomic, readonly, copy) NSString * _Nullable id;
 @property (nonatomic, readonly, copy) NSString * _Nullable consentLanguage;
 @property (nonatomic, copy) NSURL * _Nullable pmURL;
@@ -2101,6 +2105,8 @@ typedef SWIFT_ENUM(NSInteger, SPActionType, open) {
   SPActionTypeRejectAll = 13,
   SPActionTypeDismiss = 15,
   SPActionTypeRequestATTAccess = 16,
+  SPActionTypeIDFAAccepted = 17,
+  SPActionTypeIDFADenied = 18,
   SPActionTypeUnknown = 0,
 };
 

@@ -46,12 +46,6 @@ target 'SourcePointMetaApp' do
   pod 'Wormholy'
 end
 
-target 'SourcePointMetaAppTests' do
-  inherit! :search_paths
-  # Pods for testing
-  pod 'ConsentViewController', :path => '../'
-end
-
 target 'SourcePointMetaAppUITests' do
   inherit! :search_paths
   # Pods for testing

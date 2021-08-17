@@ -217,7 +217,7 @@ import Foundation
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "6.1.5"
+    public static let VERSION = "6.1.6"
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
@@ -414,6 +414,13 @@ extension SPConsentManager: SPMessageUIDelegate {
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 self?.reportIdfaStatus(status: status, messageId: controller.messageId)
                 self?.finishAndNextIfAny(controller)
+                if status == .accepted {
+                    action.type = .IDFAAccepted
+                    self?.delegate?.onAction(action, from: controller)
+                } else if status == .denied {
+                    action.type = .IDFADenied
+                    self?.delegate?.onAction(action, from: controller)
+                }
             }
         default:
             print("[SDK] UNKNOWN Action")
