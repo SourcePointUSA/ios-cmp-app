@@ -67,7 +67,8 @@ public typealias SPGDPRPurposeId = String
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
 
-    /// a list of ids of the categories accepted by the user in all its vendors. If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.
+    /// a list of ids of the categories accepted by the user in all its vendors.
+    /// If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.
     public var acceptedCategories: [String] {
         let categoryGrants = vendorGrants
             .flatMap { $0.value.purposeGrants }
