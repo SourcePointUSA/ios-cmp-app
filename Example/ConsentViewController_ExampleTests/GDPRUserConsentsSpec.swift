@@ -54,6 +54,7 @@ class SPGDPRConsentsSpec: QuickSpec {
                     tcfData: SPJson()
                 )
                 expect(consent.acceptedCategories).to(contain(["purpose1", "purpose3"]))
+                expect(consent.acceptedCategories).notTo(contain(["purpose2"]))
             }
         }
     }
