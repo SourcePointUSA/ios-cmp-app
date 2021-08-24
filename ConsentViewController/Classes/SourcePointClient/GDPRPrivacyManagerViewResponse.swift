@@ -73,4 +73,3 @@ struct CCPAPrivacyManagerViewResponse: Decodable {
     let categories: [GDPRCategory]
     var grants: SPGDPRVendorGrants?
 }
-

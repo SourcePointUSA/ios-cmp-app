@@ -38,7 +38,6 @@
                                         <state key="normal" title="CCPA Privacy Manager"/>
                                         <connections>
                                             <action selector="onCCPATap:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="dEi-iG-dtb"/>
-                                            <action selector="onLoadPMTap:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="nGS-7g-Tp5"/>
                                         </connections>
                                     </button>
                                 </subviews>

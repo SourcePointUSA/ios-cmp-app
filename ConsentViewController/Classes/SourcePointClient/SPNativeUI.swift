@@ -19,7 +19,7 @@ import UIKit
 
 @objcMembers class SPNativeStyle: NSObject, Codable {
     let backgroundColor: String?
-    let width: Int?
+//    let width: Int?
     let font: SPNativeFont?
     let onFocusBackgroundColor: String?
     let onUnfocusBackgroundColor: String?

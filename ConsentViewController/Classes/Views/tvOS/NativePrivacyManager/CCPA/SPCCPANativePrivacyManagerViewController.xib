@@ -13,9 +13,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPCCPANativePrivacyManagerViewController" customModule="ConsentViewController" customModuleProvider="target">
             <connections>
                 <outlet property="acceptButton" destination="7Jl-Fv-EUl" id="ul7-lI-WPS"/>
-                <outlet property="categoriesExplainerLabel" destination="nEW-fo-PK4" id="68E-ps-rhL"/>
-                <outlet property="categoryTableView" destination="HVs-YH-qhj" id="DIP-H7-MJY"/>
+                <outlet property="actionsContainer" destination="KAo-n6-Z8y" id="bpl-ic-Qv7"/>
                 <outlet property="descriptionTextView" destination="JAT-0K-Z6o" id="Shc-Rj-GKP"/>
+                <outlet property="doNotSellTableView" destination="HVs-YH-qhj" id="uYh-GA-Xuy"/>
                 <outlet property="header" destination="oRM-Q5-ya9" id="Ejd-R8-DIW"/>
                 <outlet property="logoImageView" destination="gkm-7r-4K2" id="9sx-wS-b4u"/>
                 <outlet property="managePreferenceButton" destination="NaN-Kj-XpH" id="3Wd-7j-WXE"/>
@@ -63,7 +63,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="Stack View - Actions">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="ActionsContainer">
                                             <rect key="frame" x="190" y="484" width="500" height="368"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl">
@@ -119,14 +119,8 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nEW-fo-PK4" userLabel="CategoriesExplainer">
-                                            <rect key="frame" x="0.0" y="360" width="880" height="46"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="HVs-YH-qhj">
-                                            <rect key="frame" x="0.0" y="406" width="880" height="446"/>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="HVs-YH-qhj" userLabel="DoNotSellTableView">
+                                            <rect key="frame" x="0.0" y="360" width="880" height="492"/>
                                             <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableView>
                                     </subviews>

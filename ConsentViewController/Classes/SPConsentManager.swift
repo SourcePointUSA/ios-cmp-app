@@ -327,7 +327,22 @@ import Foundation
         }
         loadWebPrivacyManager(.ccpa, pmUrl)
         #elseif os(tvOS)
-        /// TODO: load NativePM
+        spClient.getNativePrivacyManager(withId: id) { [weak self] result in
+            switch result {
+            case .success(let content):
+                let pmViewController = SPCCPANativePrivacyManagerViewController(
+                    messageId: Int(id),
+                    campaignType: .ccpa,
+                    viewData: content.homeView,
+                    pmData: content,
+                    delegate: self
+                )
+                pmViewController.delegate = self
+                self?.loaded(pmViewController)
+            case .failure(let error):
+                self?.onError(error)
+            }
+        }
         #endif
     }
 

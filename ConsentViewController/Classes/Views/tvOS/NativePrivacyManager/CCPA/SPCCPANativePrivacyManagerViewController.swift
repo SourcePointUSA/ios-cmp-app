@@ -11,7 +11,6 @@ import Foundation
 @objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
 
-    @IBOutlet weak var categoriesExplainerLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -19,19 +18,24 @@ import Foundation
     @IBOutlet weak var managePreferenceButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
-    @IBOutlet weak var categoryTableView: UITableView!
+    @IBOutlet weak var doNotSellTableView: UITableView!
+    @IBOutlet weak var actionsContainer: UIStackView!
 
     @IBOutlet weak var header: SPPMHeader!
 
-    var secondLayerData: GDPRPrivacyManagerViewResponse?
+    var secondLayerData: CCPAPrivacyManagerViewResponse?
 
-    var categories: [GDPRCategory] { pmData.categories }
     var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
     var snapshot: CCPAPMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: actionsContainer, to: doNotSellTableView, direction: .rightLeft)
+    }
 
     func setHeader () {
         header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
@@ -50,17 +54,16 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
-        categoryTableView.allowsSelection = false
-        categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        categoryTableView.delegate = self
-        categoryTableView.dataSource = self
+        doNotSellTableView.allowsSelection = false
+        doNotSellTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        doNotSellTableView.delegate = self
+        doNotSellTableView.dataSource = self
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -117,9 +120,9 @@ import Foundation
                 grants: secondLayerData.grants ?? SPGDPRVendorGrants(),
                 vendors: Set<GDPRVendor>(secondLayerData.vendors),
                 categories: Set<GDPRCategory>(secondLayerData.categories),
-                specialPurposes: Set<GDPRCategory>(secondLayerData.specialPurposes),
-                features: Set<GDPRCategory>(secondLayerData.features),
-                specialFeatures: Set<GDPRCategory>(secondLayerData.specialFeatures)
+                specialPurposes: Set<GDPRCategory>(),
+                features: Set<GDPRCategory>(),
+                specialFeatures: Set<GDPRCategory>()
             )
         }
         controller.categories = secondLayerData.categories
@@ -197,7 +200,7 @@ extension SPCCPANativePrivacyManagerViewController: SPMessageUIDelegate {
 // MARK: UITableViewDataSource
 extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categories.count
+        1
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -205,8 +208,8 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row].name
+        let cell = doNotSellTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
+        cell.textLabel?.text = "Do not sell" /// TODO: change to real data
         return cell
     }
 }
@@ -214,22 +217,10 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPCCPANativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        loadLabelText(
-            forComponentId: "CategoriesDescriptionText",
-            labelText: categories[indexPath.row].description,
-            label: selectedCategoryTextLabel
-        )
-        return true
+        true
     }
 
     func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
-        if context.nextFocusedIndexPath == nil {
-            loadLabelText(
-                forComponentId: "CategoriesDescriptionText",
-                labelText: "",
-                label: selectedCategoryTextLabel
-            )
-        }
-        return true
+        true
     }
 }
