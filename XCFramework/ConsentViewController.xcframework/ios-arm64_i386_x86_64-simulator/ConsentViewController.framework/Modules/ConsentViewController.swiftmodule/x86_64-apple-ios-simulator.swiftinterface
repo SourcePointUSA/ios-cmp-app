@@ -411,6 +411,9 @@ public typealias SPGDPRPurposeId = Swift.String
   @objc final public let euconsent: Swift.String
   final public let tcfData: ConsentViewController.SPJson
   @objc public var uuid: Swift.String?
+  @objc public var acceptedCategories: [Swift.String] {
+    @objc get
+  }
   public init(uuid: Swift.String? = nil, vendorGrants: ConsentViewController.SPGDPRVendorGrants, euconsent: Swift.String, tcfData: ConsentViewController.SPJson)
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc override dynamic open var description: Swift.String {
