@@ -23,10 +23,6 @@ class SourcePointClientMock: SourcePointProtocol {
         print("getNativePrivacyManager")
     }
 
-    func mmsMessage(messageId: Int, handler: @escaping MMSMessageHandler) {
-        print("mmsMessage")
-    }
-
     func privacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping PrivacyManagerViewHandler) {
         print("privacyManagerView")
     }

@@ -36,5 +36,26 @@ class SPGDPRConsentsSpec: QuickSpec {
                 expect(SPGDPRConsent.CodingKeys.tcfData.rawValue).to(equal("TCData"))
             }
         }
+
+        describe("acceptedCategories") {
+            it("contains all purposes accepted in *all* vendors") {
+                let consent = SPGDPRConsent(
+                    vendorGrants: [
+                        "vendor1": SPGDPRVendorGrant(granted: false, purposeGrants: [
+                            "purpose1": true,
+                            "purpose2": false
+                        ]),
+                        "vendor2": SPGDPRVendorGrant(granted: false, purposeGrants: [
+                            "purpose1": true,
+                            "purpose3": true
+                        ])
+                    ],
+                    euconsent: "",
+                    tcfData: SPJson()
+                )
+                expect(consent.acceptedCategories).to(contain(["purpose1", "purpose3"]))
+                expect(consent.acceptedCategories).notTo(contain(["purpose2"]))
+            }
+        }
     }
 }

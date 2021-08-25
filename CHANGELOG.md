@@ -1,3 +1,7 @@
+# 6.1.7 (August, 25, 2021)
+* Added `acceptedCategories` property to `SPGDPRConsent` class. The `acceptedCategories` is an array of ids of the categories (purposes) consented by the user and that are consented in all vendors involved with it. If a single vendor of a given purpose is disabled by the user, that purpose won't be part of `acceptedCategories`. [#335](https://github.com/SourcePointUSA/ios-cmp-app/pull/335)
+* Fixed an issue preventing using the SDK with Carthage. [#334](https://github.com/SourcePointUSA/ios-cmp-app/pull/334)
+
 # 6.1.6 (August, 17, 2021)
 * Added `IDFAAccepted` & `IDFADenied` to `SPActionType` to load the messages based on IDFA status [#330](https://github.com/SourcePointUSA/ios-cmp-app/pull/330)
 

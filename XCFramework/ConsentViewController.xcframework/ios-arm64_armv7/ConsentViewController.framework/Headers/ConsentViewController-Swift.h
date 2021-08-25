@@ -641,6 +641,9 @@ SWIFT_CLASS("_TtC21ConsentViewController13SPGDPRConsent")
 @property (nonatomic, readonly, copy) NSString * _Nonnull euconsent;
 /// that’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
+/// a list of ids of the categories accepted by the user in all its vendors.
+/// If a category has been rejected in a single vendor, its id won’t part of the <code>acceptedCategories</code> list.
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull acceptedCategories;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1477,6 +1480,9 @@ SWIFT_CLASS("_TtC21ConsentViewController13SPGDPRConsent")
 @property (nonatomic, readonly, copy) NSString * _Nonnull euconsent;
 /// that’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
+/// a list of ids of the categories accepted by the user in all its vendors.
+/// If a category has been rejected in a single vendor, its id won’t part of the <code>acceptedCategories</code> list.
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull acceptedCategories;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
