@@ -11,9 +11,9 @@ import Foundation
 class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
-        let content: [GDPRCategory]
+        let content: [CCPACategory]
 
-        init? (header: SPNativeText?, content: [GDPRCategory]?) {
+        init? (header: SPNativeText?, content: [CCPACategory]?) {
             if content == nil || content!.isEmpty { return nil }
             self.header = header
             self.content = content!
@@ -25,32 +25,25 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
-    @IBOutlet weak var categorySlider: UISegmentedControl!
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
     var nativeLongButton: SPNativeLongButton?
 
     var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
-    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
 
-    var categories: [GDPRCategory] = []
-    var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
-    var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
+    var categories: [CCPACategory] = []
+    var userConsentCategories: [CCPACategory] { categories.filter { $0.requiringConsentVendors.isNotEmpty() } }
+    var legIntCategories: [CCPACategory] { categories.filter { $0.legIntVendors.isNotEmpty() } }
 
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: userConsentCategories),
-        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialPurposes)),
-        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.features)),
-        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialFeatures))
+        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: categories),
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
         addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
-        addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
         addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
     }
 
@@ -66,7 +59,6 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoriesTableView.register(
@@ -78,10 +70,6 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
         consentsSnapshot.onConsentsChange = { [weak self] in
             self?.categoriesTableView.reloadData()
         }
-    }
-
-    @IBAction func onCategorySliderTap(_ sender: Any) {
-        categoriesTableView.reloadData()
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -101,10 +89,8 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
 
 // MARK: UITableViewDataSource
 extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
-    func currentCategory(_ index: IndexPath) -> GDPRCategory {
-        displayingLegIntCategories ?
-            legIntCategories[index.row] :
-            sections[index.section].content[index.row]
+    func currentCategory(_ index: IndexPath) -> CCPACategory {
+        sections[index.section].content[index.row]
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -112,7 +98,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        displayingLegIntCategories ? 1 : sections.count
+        sections.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -128,7 +114,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        displayingLegIntCategories ? legIntCategories.count : sections[section].content.count
+        sections[section].content.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -140,14 +126,11 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
             return UITableViewCell()
         }
 
-        let section = indexPath.section
         let category = currentCategory(indexPath)
         cell.labelText = category.name
-        cell.isOn = section == 0 || section == 3 ?
-            consentsSnapshot.acceptedCategoriesIds.contains(category._id) :
-            nil
-        cell.selectable = section != 1
-        cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
+        cell.isOn = consentsSnapshot.acceptedCategoriesIds.contains(category._id)
+        cell.selectable = true
+        cell.isCustom = false
         cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
@@ -168,7 +151,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        indexPath.section == 1 ? nil : indexPath
+        indexPath
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

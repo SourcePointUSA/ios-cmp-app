@@ -31,12 +31,9 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
     weak var vendorManagerDelegate: CCPAPMConsentSnaptshot?
 
     let cellReuseIdentifier = "cell"
-    var vendor: GDPRVendor?
+    var vendor: CCPAVendor?
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.consentCategories.map { $0.name }),
-        Section(header: viewData.byId("SpecialPurposesText") as? SPNativeText, content: vendor?.iabSpecialPurposes),
-        Section(header: viewData.byId("FeaturesText") as? SPNativeText, content: vendor?.iabFeatures),
-        Section(header: viewData.byId("SpecialFeaturesText") as? SPNativeText, content: vendor?.iabSpecialFeatures)
+        Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.purposes)
     ].compactMap { $0 }}
 
     func setHeader () {
@@ -55,7 +52,7 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
+//        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
         if let vendorUrl = vendor?.policyUrl?.absoluteString {

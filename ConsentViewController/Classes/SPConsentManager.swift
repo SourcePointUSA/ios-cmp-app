@@ -451,14 +451,16 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 }
 
-typealias SPSecondLayerHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
+typealias SPGDPRSecondLayerHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
+typealias SPCCPASecondLayerHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 
 protocol SPNativePMDelegate: AnyObject {
-    func on2ndLayerNavigating(messageId: Int?, campaignType: SPCampaignType, handler: @escaping SPSecondLayerHandler)
+    func onGDPR2ndLayerNavigate(messageId: Int?, handler: @escaping SPGDPRSecondLayerHandler)
+    func onCCPA2ndLayerNavigate(messageId: Int?, handler: @escaping SPCCPASecondLayerHandler)
 }
 
 extension SPConsentManager: SPNativePMDelegate {
-    func on2ndLayerNavigating(messageId: Int?, campaignType: SPCampaignType, handler: @escaping SPSecondLayerHandler) {
+    func onGDPR2ndLayerNavigate(messageId: Int?, handler: @escaping SPGDPRSecondLayerHandler) {
         if let propertyId = propertyId {
             spClient.gdprPrivacyManagerView(
                 propertyId: propertyId,
@@ -468,6 +470,21 @@ extension SPConsentManager: SPNativePMDelegate {
                 case .failure(let error): self?.onError(error)
                 case .success(var pmData):
                     pmData.grants = self?.userData.gdpr?.consents?.vendorGrants
+                    handler(result.map { _ in pmData })
+                }
+            }
+        }
+    }
+
+    func onCCPA2ndLayerNavigate(messageId: Int?, handler: @escaping SPCCPASecondLayerHandler) {
+        if let propertyId = propertyId {
+            spClient.ccpaPrivacyManagerView(
+                propertyId: propertyId,
+                consentLanguage: messageLanguage
+            ) { [weak self] result in
+                switch result {
+                case .failure(let error): self?.onError(error)
+                case .success(let pmData):
                     handler(result.map { _ in pmData })
                 }
             }

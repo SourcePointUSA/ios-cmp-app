@@ -25,7 +25,6 @@ import Foundation
 
     var secondLayerData: CCPAPrivacyManagerViewResponse?
 
-    var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
     var snapshot: CCPAPMConsentSnaptshot?
@@ -75,7 +74,7 @@ import Foundation
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
         guard let secondLayerData = secondLayerData else {
-            delegate?.on2ndLayerNavigating(messageId: messageId, campaignType: .ccpa) { [weak self] result in
+            delegate?.onCCPA2ndLayerNavigate(messageId: messageId) { [weak self] result in
                 switch result {
                 case .failure(let error):
                     self?.onError(error)
@@ -91,12 +90,8 @@ import Foundation
                         )
                         if self?.snapshot == nil {
                             self?.snapshot = CCPAPMConsentSnaptshot(
-                                grants: data.grants ?? SPGDPRVendorGrants(),
-                                vendors: Set<GDPRVendor>(data.vendors),
-                                categories: Set<GDPRCategory>(data.categories),
-                                specialPurposes: Set<GDPRCategory>(data.specialPurposes),
-                                features: Set<GDPRCategory>(data.features),
-                                specialFeatures: Set<GDPRCategory>(data.specialFeatures)
+                                vendors: Set<CCPAVendor>(data.vendors),
+                                categories: Set<CCPACategory>(data.categories)
                             )
                         }
                         controller.categories = data.categories
@@ -117,12 +112,8 @@ import Foundation
         )
         if snapshot == nil {
             snapshot = CCPAPMConsentSnaptshot(
-                grants: secondLayerData.grants ?? SPGDPRVendorGrants(),
-                vendors: Set<GDPRVendor>(secondLayerData.vendors),
-                categories: Set<GDPRCategory>(secondLayerData.categories),
-                specialPurposes: Set<GDPRCategory>(),
-                features: Set<GDPRCategory>(),
-                specialFeatures: Set<GDPRCategory>()
+                vendors: Set<CCPAVendor>(secondLayerData.vendors),
+                categories: Set<CCPACategory>(secondLayerData.categories)
             )
         }
         controller.categories = secondLayerData.categories
@@ -131,7 +122,7 @@ import Foundation
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {
-        delegate?.on2ndLayerNavigating(messageId: messageId, campaignType: .ccpa) { [weak self] result in
+        delegate?.onCCPA2ndLayerNavigate(messageId: messageId) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.onError(error)
@@ -139,12 +130,8 @@ import Foundation
                 if let strongSelf = self {
                     if self?.snapshot == nil {
                         self?.snapshot = CCPAPMConsentSnaptshot(
-                            grants: data.grants ?? SPGDPRVendorGrants(),
-                            vendors: Set<GDPRVendor>(data.vendors),
-                            categories: Set<GDPRCategory>(data.categories),
-                            specialPurposes: Set<GDPRCategory>(data.specialPurposes),
-                            features: Set<GDPRCategory>(data.features),
-                            specialFeatures: Set<GDPRCategory>(data.specialFeatures)
+                            vendors: Set<CCPAVendor>(data.vendors),
+                            categories: Set<CCPACategory>(data.categories)
                         )
                     }
                     let controller = SPCCPAPartnersViewController(

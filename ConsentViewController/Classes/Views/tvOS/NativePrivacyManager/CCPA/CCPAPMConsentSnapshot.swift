@@ -8,58 +8,33 @@
 import Foundation
 
 class CCPAPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
-    typealias VendorType = GDPRVendor
-    typealias CategoryType = GDPRCategory
+    var specialPurposes: Set<CCPACategory> = Set<CCPACategory>()
+    var features: Set<CCPACategory> = Set<CCPACategory>()
+    var specialFeatures: Set<CCPACategory> = Set<CCPACategory>()
+
+    typealias VendorType = CCPAVendor
+    typealias CategoryType = CCPACategory
 
     var onConsentsChange: () -> Void = {}
 
-    var grants: SPGDPRVendorGrants
-    var vendors: Set<GDPRVendor>
-    var acceptedVendorsIds: Set<String>
-    var categories, specialPurposes, features, specialFeatures: Set<GDPRCategory>
-    var acceptedCategoriesIds: Set<String>
-
-    var vendorsWhosePurposesAreOff: [String] {
-        acceptedVendorsIds
-            .compactMap { id in vendors.first { $0.vendorId == id } }
-            .filter { vendor in
-                let vendorCategoriesIds = (grants[vendor.vendorId] ?? SPGDPRVendorGrant()).purposeGrants.keys
-                return acceptedCategoriesIds.isDisjoint(with: vendorCategoriesIds)
-            }
-            .map { $0.vendorId }
-    }
+    var vendors: Set<VendorType>
+    var acceptedVendorsIds: Set<String> = Set<String>()
+    var categories: Set<CategoryType>
+    var acceptedCategoriesIds: Set<String> = Set<String>()
 
     init(
-        grants: SPGDPRVendorGrants,
-        vendors: Set<GDPRVendor>,
-        categories: Set<GDPRCategory>,
-        specialPurposes: Set<GDPRCategory>,
-        features: Set<GDPRCategory>,
-        specialFeatures: Set<GDPRCategory>
+        vendors: Set<VendorType>,
+        categories: Set<CategoryType>
     ) {
-        self.grants = grants
         self.vendors = vendors
         self.categories = categories
-        self.specialPurposes = specialPurposes
-        self.features = features
-        self.specialFeatures = specialFeatures
-        acceptedVendorsIds = Set<String>(
-            grants.filter { $0.value.softGranted }.map { $0.key }
-        )
-        acceptedCategoriesIds = Set<String>(
-            grants.flatMap { vendors in vendors.value.purposeGrants.filter { $0.value }.keys }
-        )
     }
 
     override init() {
-        grants = SPGDPRVendorGrants()
         acceptedCategoriesIds = []
         acceptedVendorsIds = []
         vendors = []
         categories = []
-        specialPurposes = []
-        features = []
-        specialFeatures = []
     }
 
     func toPayload(language: SPMessageLanguage, pmId: String) -> PMPayload {
@@ -67,47 +42,43 @@ class CCPAPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
             lan: language,
             privacyManagerId: pmId,
             categories: acceptedCategoriesIds.compactMap { id in
-                guard let category = categories.first(where: { c in c._id == id }) else { return nil }
                 return PMPayload.Category(
                     _id: id,
-                    iabId: category.iabId,
+                    iabId: 0,
                     consent: true,
                     legInt: false,
-                    type: category.type
+                    type: .none
                 )
             },
             vendors: acceptedVendorsIds.compactMap { id in
-                guard let vendor = vendors.first(where: { v in v.vendorId == id }) else { return nil }
                 return PMPayload.Vendor(
                     _id: id,
-                    iabId: vendor.iabId,
+                    iabId: 0,
                     consent: true,
                     legInt: false,
-                    vendorType: vendor.vendorType
+                    vendorType: .none
                 )
             }
         )
     }
 
-    func onCategoryOn(_ category: GDPRCategory) {
-        acceptedCategoriesIds.insert(category._id)
-        acceptedVendorsIds.formUnion(category.uniqueVendorIds)
+    func onCategoryOn(_ category: CCPACategory) {
+//        acceptedCategoriesIds.insert(category._id)
         onConsentsChange()
     }
 
-    func onCategoryOff(_ category: GDPRCategory) {
-        acceptedCategoriesIds.remove(category._id)
-        acceptedVendorsIds.subtract(vendorsWhosePurposesAreOff)
+    func onCategoryOff(_ category: CCPACategory) {
+//        acceptedCategoriesIds.remove(category._id)
         onConsentsChange()
     }
 
-    func onVendorOn(_ vendor: GDPRVendor) {
-        acceptedVendorsIds.insert(vendor.vendorId)
+    func onVendorOn(_ vendor: CCPAVendor) {
+//        acceptedVendorsIds.insert(vendor.vendorId)
         onConsentsChange()
     }
 
-    func onVendorOff(_ vendor: GDPRVendor) {
-        acceptedVendorsIds.remove(vendor.vendorId)
+    func onVendorOff(_ vendor: CCPAVendor) {
+//        acceptedVendorsIds.remove(vendor.vendorId)
         onConsentsChange()
     }
 }

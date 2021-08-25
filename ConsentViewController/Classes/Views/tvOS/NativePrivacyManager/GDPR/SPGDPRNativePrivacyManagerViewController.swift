@@ -76,7 +76,7 @@ protocol SPNativePrivacyManagerHome {
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
         guard let secondLayerData = secondLayerData else {
-            delegate?.on2ndLayerNavigating(messageId: messageId, campaignType: .gdpr) { [weak self] result in
+            delegate?.onGDPR2ndLayerNavigate(messageId: messageId) { [weak self] result in
                 switch result {
                 case .failure(let error):
                     self?.onError(error)
@@ -132,7 +132,7 @@ protocol SPNativePrivacyManagerHome {
     }
 
     @IBAction func onPartnersTap(_ sender: Any) {
-        delegate?.on2ndLayerNavigating(messageId: messageId, campaignType: .gdpr) { [weak self] result in
+        delegate?.onGDPR2ndLayerNavigate(messageId: messageId) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.onError(error)

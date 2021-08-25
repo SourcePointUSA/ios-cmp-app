@@ -13,22 +13,14 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
-    @IBOutlet weak var vendorsSlider: UISegmentedControl!
     @IBOutlet weak var vendorsTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
     var nativeLongButton: SPNativeLongButton?
 
-    var displayingLegIntVendors: Bool { vendorsSlider.selectedSegmentIndex == 1 }
-    var currentVendors: [GDPRVendor] {
-        displayingLegIntVendors ? legitimateInterestVendorList : userConsentVendors
-    }
-
     var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
 
-    var vendors: [GDPRVendor] = []
-    var userConsentVendors: [GDPRVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
-    var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
+    var vendors: [CCPAVendor] = []
 
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]
@@ -37,8 +29,6 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
 
     override func setFocusGuides() {
         addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: vendorsSlider, to: vendorsTableView, direction: .bottomTop)
-        addFocusGuide(from: vendorsSlider, to: header.backButton, direction: .left)
         addFocusGuide(from: actionsContainer, to: vendorsTableView, direction: .rightLeft)
     }
 
@@ -53,7 +43,6 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
         setHeader()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         nativeLongButton = viewData.byId("VendorButton") as? SPNativeLongButton
         vendorsTableView.register(
@@ -69,10 +58,6 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
 
     @IBAction func onBackTap(_ sender: Any) {
         dismiss(animated: true)
-    }
-
-    @IBAction func onVendorSliderTap(_ sender: Any) {
-        vendorsTableView.reloadData()
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -109,7 +94,7 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        currentVendors.count
+        vendors.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -121,23 +106,18 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
             return UITableViewCell()
         }
 
-        let vendor = currentVendors[indexPath.row]
+        let vendor = vendors[indexPath.row]
         cell.labelText = vendor.name
-        cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor.vendorId)
+        cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor._id)
         cell.selectable = true
-        cell.isCustom = vendor.vendorType == .CUSTOM
+        cell.isCustom = false
         cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        loadLabelText(
-            forComponentId: "VendorDescription",
-            labelText: currentVendors[indexPath.row].description ?? "", label: selectedVendorTextLabel
-        )
-
-        return true
+        true
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -150,7 +130,7 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
             nibName: "SPCCPAVendorDetailsViewController"
         )
 
-        vendorDetailsVC.vendor = currentVendors[indexPath.row]
+        vendorDetailsVC.vendor = vendors[indexPath.row]
         vendorDetailsVC.vendorManagerDelegate = consentsSnapshot
         present(vendorDetailsVC, animated: true)
     }

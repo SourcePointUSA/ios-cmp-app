@@ -68,8 +68,36 @@ struct GDPRPrivacyManagerViewResponse: Decodable {
     var grants: SPGDPRVendorGrants?
 }
 
+struct CCPAVendor: Hashable {
+    let _id, name: String
+    let policyUrl: URL?
+    private let nullablePurposes: [String?]?
+    var purposes: [String] { nullablePurposes?.compactMap { $0 }  ?? [] }
+}
+
+/// TODO: remove if the CCPA Vendors stop returning `null` inside its purposes
+extension CCPAVendor: Decodable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        _id = try container.decode(String.self, forKey: ._id)
+        name = try container.decode(String.self, forKey: .name)
+        policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        nullablePurposes = try container.decodeIfPresent([String?].self, forKey: .nullablePurposes)
+    }
+
+    enum Keys: String, CodingKey {
+        case _id, name, policyUrl
+        case nullablePurposes = "purposes"
+    }
+}
+
+struct CCPACategory: Decodable, Hashable {
+    let _id, name, description: String
+    let requiringConsentVendors, legIntVendors: [CCPAVendor]
+    let defaultOptedIn: Bool
+}
+
 struct CCPAPrivacyManagerViewResponse: Decodable {
-    let vendors: [GDPRVendor]
-    let categories: [GDPRCategory]
-    var grants: SPGDPRVendorGrants?
+    let vendors: [CCPAVendor]
+    let categories: [CCPACategory]
 }
