@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.1.6'
+pod 'ConsentViewController', '6.1.7'
 ```
 
 ### Carthage
@@ -86,7 +86,7 @@ extension ViewController: SPDelegate {
     }
 
     func onConsentReady(userData: SPUserData) {
-        print("onConsentReady:", consents)
+        print("onConsentReady:", userData)
     }
 
     func onError(error: SPError) {
