@@ -12,10 +12,7 @@ protocol PMCategoryManager: AnyObject {
 
     var onConsentsChange: () -> Void { get set }
     var categories: Set<CategoryType> { get }
-    var specialPurposes: Set<CategoryType> { get }
-    var features: Set<CategoryType> { get }
-    var specialFeatures: Set<CategoryType> { get }
-    var acceptedCategoriesIds: Set<String> { get set }
+    var toggledCategoriesIds: Set<String> { get set }
 
     func onCategoryOn(_ category: CategoryType)
     func onCategoryOff(_ category: CategoryType)

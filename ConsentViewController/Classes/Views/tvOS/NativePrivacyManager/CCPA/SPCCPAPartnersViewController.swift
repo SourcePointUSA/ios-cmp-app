@@ -108,7 +108,7 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
 
         let vendor = vendors[indexPath.row]
         cell.labelText = vendor.name
-        cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor._id)
+        cell.isOn = !consentsSnapshot.toggledVendorsIds.contains(vendor._id)
         cell.selectable = true
         cell.isCustom = false
         cell.setup(from: nativeLongButton)

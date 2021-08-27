@@ -91,7 +91,9 @@ import Foundation
                         if self?.snapshot == nil {
                             self?.snapshot = CCPAPMConsentSnaptshot(
                                 vendors: Set<CCPAVendor>(data.vendors),
-                                categories: Set<CCPACategory>(data.categories)
+                                categories: Set<CCPACategory>(data.categories),
+                                rejectedVendors: data.rejectedVendors,
+                                rejectedCategories: data.rejectedCategories
                             )
                         }
                         controller.categories = data.categories
@@ -113,7 +115,9 @@ import Foundation
         if snapshot == nil {
             snapshot = CCPAPMConsentSnaptshot(
                 vendors: Set<CCPAVendor>(secondLayerData.vendors),
-                categories: Set<CCPACategory>(secondLayerData.categories)
+                categories: Set<CCPACategory>(secondLayerData.categories),
+                rejectedVendors: secondLayerData.rejectedVendors,
+                rejectedCategories: secondLayerData.rejectedCategories
             )
         }
         controller.categories = secondLayerData.categories
@@ -131,7 +135,9 @@ import Foundation
                     if self?.snapshot == nil {
                         self?.snapshot = CCPAPMConsentSnaptshot(
                             vendors: Set<CCPAVendor>(data.vendors),
-                            categories: Set<CCPACategory>(data.categories)
+                            categories: Set<CCPACategory>(data.categories),
+                            rejectedVendors: data.rejectedVendors,
+                            rejectedCategories: data.rejectedCategories
                         )
                     }
                     let controller = SPCCPAPartnersViewController(

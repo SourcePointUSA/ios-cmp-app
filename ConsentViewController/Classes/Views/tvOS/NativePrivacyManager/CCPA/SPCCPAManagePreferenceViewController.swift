@@ -37,7 +37,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     var legIntCategories: [CCPACategory] { categories.filter { $0.legIntVendors.isNotEmpty() } }
 
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: categories),
+        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: categories)
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
@@ -128,7 +128,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
 
         let category = currentCategory(indexPath)
         cell.labelText = category.name
-        cell.isOn = consentsSnapshot.acceptedCategoriesIds.contains(category._id)
+        cell.isOn = !consentsSnapshot.toggledCategoriesIds.contains(category._id)
         cell.selectable = true
         cell.isCustom = false
         cell.setup(from: nativeLongButton)

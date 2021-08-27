@@ -123,7 +123,7 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
 
         let vendor = currentVendors[indexPath.row]
         cell.labelText = vendor.name
-        cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor.vendorId)
+        cell.isOn = consentsSnapshot.toggledVendorsIds.contains(vendor.vendorId)
         cell.selectable = true
         cell.isCustom = vendor.vendorType == .CUSTOM
         cell.setup(from: nativeLongButton)

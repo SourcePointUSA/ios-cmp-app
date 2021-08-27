@@ -7,7 +7,11 @@
 
 import Foundation
 
-class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
+protocol ConsentSnapshot {
+    func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble
+}
+
+class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCategoryManager {
     typealias VendorType = GDPRVendor
     typealias CategoryType = GDPRCategory
 
@@ -15,16 +19,16 @@ class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
 
     var grants: SPGDPRVendorGrants
     var vendors: Set<GDPRVendor>
-    var acceptedVendorsIds: Set<String>
+    var toggledVendorsIds: Set<String>
     var categories, specialPurposes, features, specialFeatures: Set<GDPRCategory>
-    var acceptedCategoriesIds: Set<String>
+    var toggledCategoriesIds: Set<String>
 
     var vendorsWhosePurposesAreOff: [String] {
-        acceptedVendorsIds
+        toggledVendorsIds
             .compactMap { id in vendors.first { $0.vendorId == id } }
             .filter { vendor in
                 let vendorCategoriesIds = (grants[vendor.vendorId] ?? SPGDPRVendorGrant()).purposeGrants.keys
-                return acceptedCategoriesIds.isDisjoint(with: vendorCategoriesIds)
+                return toggledCategoriesIds.isDisjoint(with: vendorCategoriesIds)
             }
             .map { $0.vendorId }
     }
@@ -43,18 +47,18 @@ class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
         self.specialPurposes = specialPurposes
         self.features = features
         self.specialFeatures = specialFeatures
-        acceptedVendorsIds = Set<String>(
+        toggledVendorsIds = Set<String>(
             grants.filter { $0.value.softGranted }.map { $0.key }
         )
-        acceptedCategoriesIds = Set<String>(
+        toggledCategoriesIds = Set<String>(
             grants.flatMap { vendors in vendors.value.purposeGrants.filter { $0.value }.keys }
         )
     }
 
     override init() {
         grants = SPGDPRVendorGrants()
-        acceptedCategoriesIds = []
-        acceptedVendorsIds = []
+        toggledCategoriesIds = []
+        toggledVendorsIds = []
         vendors = []
         categories = []
         specialPurposes = []
@@ -62,13 +66,13 @@ class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
         specialFeatures = []
     }
 
-    func toPayload(language: SPMessageLanguage, pmId: String) -> PMPayload {
-        PMPayload(
+    func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble {
+        GDPRPMPayload(
             lan: language,
             privacyManagerId: pmId,
-            categories: acceptedCategoriesIds.compactMap { id in
+            categories: toggledCategoriesIds.compactMap { id in
                 guard let category = categories.first(where: { c in c._id == id }) else { return nil }
-                return PMPayload.Category(
+                return GDPRPMPayload.Category(
                     _id: id,
                     iabId: category.iabId,
                     consent: true,
@@ -76,9 +80,9 @@ class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
                     type: category.type
                 )
             },
-            vendors: acceptedVendorsIds.compactMap { id in
+            vendors: toggledVendorsIds.compactMap { id in
                 guard let vendor = vendors.first(where: { v in v.vendorId == id }) else { return nil }
-                return PMPayload.Vendor(
+                return GDPRPMPayload.Vendor(
                     _id: id,
                     iabId: vendor.iabId,
                     consent: true,
@@ -90,24 +94,24 @@ class GDPRPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
     }
 
     func onCategoryOn(_ category: GDPRCategory) {
-        acceptedCategoriesIds.insert(category._id)
-        acceptedVendorsIds.formUnion(category.uniqueVendorIds)
+        toggledCategoriesIds.insert(category._id)
+        toggledVendorsIds.formUnion(category.uniqueVendorIds)
         onConsentsChange()
     }
 
     func onCategoryOff(_ category: GDPRCategory) {
-        acceptedCategoriesIds.remove(category._id)
-        acceptedVendorsIds.subtract(vendorsWhosePurposesAreOff)
+        toggledCategoriesIds.remove(category._id)
+        toggledVendorsIds.subtract(vendorsWhosePurposesAreOff)
         onConsentsChange()
     }
 
     func onVendorOn(_ vendor: GDPRVendor) {
-        acceptedVendorsIds.insert(vendor.vendorId)
+        toggledVendorsIds.insert(vendor.vendorId)
         onConsentsChange()
     }
 
     func onVendorOff(_ vendor: GDPRVendor) {
-        acceptedVendorsIds.remove(vendor.vendorId)
+        toggledVendorsIds.remove(vendor.vendorId)
         onConsentsChange()
     }
 }

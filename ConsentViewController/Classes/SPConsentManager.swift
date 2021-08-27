@@ -117,7 +117,6 @@ import Foundation
                     delegate: self
                 )) as? SPNativePrivacyManagerHome
             controller?.delegate = self
-//            controller?.vendorGrants = userData.gdpr?.consents?.vendorGrants
             return controller as? SPNativeScreenViewController
         #endif
         #if os(iOS)
@@ -484,7 +483,9 @@ extension SPConsentManager: SPNativePMDelegate {
             ) { [weak self] result in
                 switch result {
                 case .failure(let error): self?.onError(error)
-                case .success(let pmData):
+                case .success(var pmData):
+                    pmData.rejectedCategories = self?.userData.ccpa?.consents?.rejectedCategories
+                    pmData.rejectedVendors = self?.userData.ccpa?.consents?.rejectedVendors
                     handler(result.map { _ in pmData })
                 }
             }

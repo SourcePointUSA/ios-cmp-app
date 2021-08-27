@@ -144,7 +144,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         let category = currentCategory(indexPath)
         cell.labelText = category.name
         cell.isOn = section == 0 || section == 3 ?
-            consentsSnapshot.acceptedCategoriesIds.contains(category._id) :
+            consentsSnapshot.toggledCategoriesIds.contains(category._id) :
             nil
         cell.selectable = section != 1
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE

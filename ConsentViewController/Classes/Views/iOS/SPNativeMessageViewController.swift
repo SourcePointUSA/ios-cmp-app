@@ -50,7 +50,7 @@ import Foundation
 
     func loadOrHideActionButton(actionType: SPActionType, button: UIButton) {
         if let action =  message.actions.first(where: { message in message.choiceType == actionType }) {
-            button.setTitle(action.text, for: .normal) 
+            button.setTitle(action.text, for: .normal)
             button.setTitleColor(hexStringToUIColor(hex: action.style.color), for: .normal)
             button.backgroundColor = hexStringToUIColor(hex: action.style.backgroundColor)
             button.titleLabel?.font = UIFont(

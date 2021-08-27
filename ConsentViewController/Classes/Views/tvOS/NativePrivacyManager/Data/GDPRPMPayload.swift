@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct PMPayload: Codable {
+protocol JSONAble {
+    func json() -> SPJson?
+}
+
+struct GDPRPMPayload: Codable, JSONAble {
     struct Category: Codable {
         let _id: String
         let iabId: Int?
@@ -29,6 +33,23 @@ struct PMPayload: Codable {
     let categories: [Category]
     let vendors: [Vendor]
     var specialFeatures: [Feature] = []
+
+    func json() -> SPJson? {
+        guard
+            let data = try? JSONEncoder().encode(self),
+            let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+            let json = try? SPJson(object) else {
+            return nil
+        }
+        return json
+    }
+}
+
+struct CCPAPMPayload: Codable, JSONAble {
+    let lan: SPMessageLanguage
+    let privacyManagerId: String
+    let rejectedCategories: [String]
+    let rejectedVendors: [String]
 
     func json() -> SPJson? {
         guard

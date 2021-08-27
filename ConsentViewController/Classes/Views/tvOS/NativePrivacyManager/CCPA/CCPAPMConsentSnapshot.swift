@@ -7,78 +7,62 @@
 
 import Foundation
 
-class CCPAPMConsentSnaptshot: NSObject, PMVendorManager, PMCategoryManager {
-    var specialPurposes: Set<CCPACategory> = Set<CCPACategory>()
-    var features: Set<CCPACategory> = Set<CCPACategory>()
-    var specialFeatures: Set<CCPACategory> = Set<CCPACategory>()
-
+class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCategoryManager {
     typealias VendorType = CCPAVendor
     typealias CategoryType = CCPACategory
 
     var onConsentsChange: () -> Void = {}
 
     var vendors: Set<VendorType>
-    var acceptedVendorsIds: Set<String> = Set<String>()
     var categories: Set<CategoryType>
-    var acceptedCategoriesIds: Set<String> = Set<String>()
+    var toggledVendorsIds: Set<String> = Set<String>()
+    var toggledCategoriesIds: Set<String> = Set<String>()
 
     init(
         vendors: Set<VendorType>,
-        categories: Set<CategoryType>
+        categories: Set<CategoryType>,
+        rejectedVendors: [String]?,
+        rejectedCategories: [String]?
     ) {
         self.vendors = vendors
         self.categories = categories
+        toggledVendorsIds = Set<String>(rejectedVendors ?? [])
+        toggledCategoriesIds = Set<String>(rejectedCategories ?? [])
     }
 
     override init() {
-        acceptedCategoriesIds = []
-        acceptedVendorsIds = []
+        toggledCategoriesIds = []
+        toggledVendorsIds = []
         vendors = []
         categories = []
     }
 
-    func toPayload(language: SPMessageLanguage, pmId: String) -> PMPayload {
-        PMPayload(
+    func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble {
+        CCPAPMPayload(
             lan: language,
             privacyManagerId: pmId,
-            categories: acceptedCategoriesIds.compactMap { id in
-                return PMPayload.Category(
-                    _id: id,
-                    iabId: 0,
-                    consent: true,
-                    legInt: false,
-                    type: .none
-                )
-            },
-            vendors: acceptedVendorsIds.compactMap { id in
-                return PMPayload.Vendor(
-                    _id: id,
-                    iabId: 0,
-                    consent: true,
-                    legInt: false,
-                    vendorType: .none
-                )
-            }
+            rejectedCategories: Array(toggledCategoriesIds),
+            rejectedVendors: Array(toggledVendorsIds)
         )
     }
 
     func onCategoryOn(_ category: CCPACategory) {
-//        acceptedCategoriesIds.insert(category._id)
+        toggledCategoriesIds.remove(category._id)
         onConsentsChange()
     }
 
     func onCategoryOff(_ category: CCPACategory) {
-//        acceptedCategoriesIds.remove(category._id)
+        toggledCategoriesIds.insert(category._id)
         onConsentsChange()
     }
 
     func onVendorOn(_ vendor: CCPAVendor) {
-//        acceptedVendorsIds.insert(vendor.vendorId)
+        toggledVendorsIds.remove(vendor._id)
         onConsentsChange()
     }
 
     func onVendorOff(_ vendor: CCPAVendor) {
-//        acceptedVendorsIds.remove(vendor.vendorId)
+        toggledVendorsIds.insert(vendor._id)
         onConsentsChange()
     }
 }
