@@ -76,6 +76,18 @@ import Foundation
         snapshot?.onConsentsChange = { [weak self] in
             self?.doNotSellTableView.reloadData()
         }
+        disableMenuButton()
+    }
+
+    func disableMenuButton() {
+        let menuPressRecognizer = UITapGestureRecognizer()
+        menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
+        menuPressRecognizer.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
+        view.addGestureRecognizer(menuPressRecognizer)
+    }
+
+    @objc func menuButtonAction() {
+        // override in order to disable menu button closing the Privacy Manager
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
