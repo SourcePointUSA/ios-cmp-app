@@ -192,17 +192,20 @@ class SPNativeImage: SPNativeUI {
 class SPNativeLongButton: SPNativeUI {
     class Settings: SPNativeUISettings {
         let onText, offText, customText: String
+        let text: String? /// TODO: remove optional once LongButton contains text attribute
 
         required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
             onText = try container.decode(String.self, forKey: .onText)
             offText = try container.decode(String.self, forKey: .offText)
             customText = try container.decode(String.self, forKey: .customText)
+            text = try container.decodeIfPresent(String.self, forKey: .text) /// TODO: remove optional once LongButton contains text attribute
+
             try super.init(from: decoder)
         }
 
         enum Keys: CodingKey {
-            case onText, offText, customText
+            case onText, offText, customText, text
         }
     }
 

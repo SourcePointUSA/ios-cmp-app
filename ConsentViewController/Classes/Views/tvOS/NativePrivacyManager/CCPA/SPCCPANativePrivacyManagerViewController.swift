@@ -21,6 +21,8 @@ import Foundation
     @IBOutlet weak var doNotSellTableView: UITableView!
     @IBOutlet weak var actionsContainer: UIStackView!
 
+    var doNotSellButton: SPNativeLongButton?
+
     @IBOutlet weak var header: SPPMHeader!
 
     var secondLayerData: CCPAPrivacyManagerViewResponse?
@@ -59,10 +61,17 @@ import Foundation
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
-        doNotSellTableView.allowsSelection = false
-        doNotSellTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        doNotSellButton = viewData.byId("DoNotSellButton") as? SPNativeLongButton
+        doNotSellTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
+        doNotSellTableView.allowsSelection = true
         doNotSellTableView.delegate = self
         doNotSellTableView.dataSource = self
+        snapshot?.onConsentsChange = { [weak self] in
+            self?.doNotSellTableView.reloadData()
+        }
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -93,7 +102,8 @@ import Foundation
                                 vendors: Set<CCPAVendor>(data.vendors),
                                 categories: Set<CCPACategory>(data.categories),
                                 rejectedVendors: data.rejectedVendors,
-                                rejectedCategories: data.rejectedCategories
+                                rejectedCategories: data.rejectedCategories,
+                                consentStatus: data.consentStatus
                             )
                         }
                         controller.categories = data.categories
@@ -117,7 +127,8 @@ import Foundation
                 vendors: Set<CCPAVendor>(secondLayerData.vendors),
                 categories: Set<CCPACategory>(secondLayerData.categories),
                 rejectedVendors: secondLayerData.rejectedVendors,
-                rejectedCategories: secondLayerData.rejectedCategories
+                rejectedCategories: secondLayerData.rejectedCategories,
+                consentStatus: secondLayerData.consentStatus
             )
         }
         controller.categories = secondLayerData.categories
@@ -137,7 +148,7 @@ import Foundation
                             vendors: Set<CCPAVendor>(data.vendors),
                             categories: Set<CCPACategory>(data.categories),
                             rejectedVendors: data.rejectedVendors,
-                            rejectedCategories: data.rejectedCategories
+                            rejectedCategories: data.rejectedCategories, consentStatus: data.consentStatus
                         )
                     }
                     let controller = SPCCPAPartnersViewController(
@@ -201,8 +212,18 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = doNotSellTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        cell.textLabel?.text = "Do not sell" /// TODO: change to real data
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+            let fallBackCell = UITableViewCell()
+            fallBackCell.textLabel?.text = (viewData.byId("DoNotSellButton") as? SPNativeLongButton)?.settings.text ?? "Do not sell"
+            return fallBackCell
+        }
+
+        cell.labelText = doNotSellButton?.settings.text ?? "Do not sell"
+        cell.selectable = false
+        cell.isCustom = false
+        cell.isOn = snapshot?.doNotSell ?? true
+        cell.setup(from: doNotSellButton)
+        cell.loadUI()
         return cell
     }
 }
@@ -215,5 +236,9 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
         true
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        snapshot?.onDoNotSellToggle()
     }
 }

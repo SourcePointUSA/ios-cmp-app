@@ -17,17 +17,20 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     var categories: Set<CategoryType>
     var toggledVendorsIds: Set<String> = Set<String>()
     var toggledCategoriesIds: Set<String> = Set<String>()
+    var doNotSell: Bool = true
 
     init(
         vendors: Set<VendorType>,
         categories: Set<CategoryType>,
         rejectedVendors: [String]?,
-        rejectedCategories: [String]?
+        rejectedCategories: [String]?,
+        consentStatus: CCPAConsentStatus?
     ) {
         self.vendors = vendors
         self.categories = categories
         toggledVendorsIds = Set<String>(rejectedVendors ?? [])
         toggledCategoriesIds = Set<String>(rejectedCategories ?? [])
+        doNotSell = consentStatus == .RejectedAll
     }
 
     override init() {
@@ -35,6 +38,12 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         toggledVendorsIds = []
         vendors = []
         categories = []
+        doNotSell = true
+    }
+
+    convenience init(withStatus status: CCPAConsentStatus?) {
+        self.init()
+        doNotSell = status == .RejectedAll
     }
 
     func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble {
@@ -63,6 +72,11 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
 
     func onVendorOff(_ vendor: CCPAVendor) {
         toggledVendorsIds.insert(vendor._id)
+        onConsentsChange()
+    }
+
+    func onDoNotSellToggle() {
+        doNotSell = !doNotSell
         onConsentsChange()
     }
 }

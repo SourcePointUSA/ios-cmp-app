@@ -101,4 +101,5 @@ struct CCPAPrivacyManagerViewResponse: Decodable {
     let vendors: [CCPAVendor]
     let categories: [CCPACategory]
     var rejectedCategories, rejectedVendors: [String]?
+    var consentStatus: CCPAConsentStatus?
 }

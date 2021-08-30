@@ -337,6 +337,7 @@ import Foundation
                     delegate: self
                 )
                 pmViewController.delegate = self
+                pmViewController.snapshot = CCPAPMConsentSnaptshot(withStatus: self?.userData.ccpa?.consents?.status)
                 self?.loaded(pmViewController)
             case .failure(let error):
                 self?.onError(error)
@@ -486,6 +487,7 @@ extension SPConsentManager: SPNativePMDelegate {
                 case .success(var pmData):
                     pmData.rejectedCategories = self?.userData.ccpa?.consents?.rejectedCategories
                     pmData.rejectedVendors = self?.userData.ccpa?.consents?.rejectedVendors
+                    pmData.consentStatus = self?.userData.ccpa?.consents?.status
                     handler(result.map { _ in pmData })
                 }
             }
