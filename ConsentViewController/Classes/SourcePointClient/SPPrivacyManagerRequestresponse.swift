@@ -70,7 +70,7 @@ extension GDPRCategory.CategoryType: Codable {
 }
 
 @objcMembers class SPPrivacyManagerResponse: NSObject, Decodable {
-    let categories: [GDPRCategory]
+    let categories: [GDPRCategory]?
     let message: SPNativeView
 
     enum CodingKeys: String, CodingKey {

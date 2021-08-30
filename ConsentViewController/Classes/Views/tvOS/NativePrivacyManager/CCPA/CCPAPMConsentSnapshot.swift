@@ -17,7 +17,7 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     var categories: Set<CategoryType>
     var toggledVendorsIds: Set<String> = Set<String>()
     var toggledCategoriesIds: Set<String> = Set<String>()
-    var doNotSell: Bool = true
+    var consentStatus: CCPAConsentStatus = .RejectedNone
 
     init(
         vendors: Set<VendorType>,
@@ -30,7 +30,7 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         self.categories = categories
         toggledVendorsIds = Set<String>(rejectedVendors ?? [])
         toggledCategoriesIds = Set<String>(rejectedCategories ?? [])
-        doNotSell = consentStatus == .RejectedAll
+        self.consentStatus = consentStatus ?? .RejectedNone
     }
 
     override init() {
@@ -38,12 +38,12 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         toggledVendorsIds = []
         vendors = []
         categories = []
-        doNotSell = true
+        consentStatus = .RejectedNone
     }
 
     convenience init(withStatus status: CCPAConsentStatus?) {
         self.init()
-        doNotSell = status == .RejectedAll
+        consentStatus = status ?? .RejectedNone
     }
 
     func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble {
@@ -76,7 +76,9 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     }
 
     func onDoNotSellToggle() {
-        doNotSell = !doNotSell
+        consentStatus = (consentStatus == .ConsentedAll || consentStatus == .RejectedNone || consentStatus == .RejectedSome) ?
+            .RejectedAll :
+            .ConsentedAll
         onConsentsChange()
     }
 }

@@ -17,6 +17,8 @@ import Foundation
     @IBOutlet weak var ourPartners: UIButton!
     @IBOutlet weak var managePreferenceButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak var rejectButton: UIButton!
+    @IBOutlet weak var saveAndExitButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var doNotSellTableView: UITableView!
     @IBOutlet weak var actionsContainer: UIStackView!
@@ -57,6 +59,8 @@ import Foundation
         setHeader()
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
+        loadButton(forComponentId: "RejectAllButton", button: rejectButton)
+        loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
@@ -77,6 +81,21 @@ import Foundation
     @IBAction func onAcceptTap(_ sender: Any) {
         action(
             SPAction(type: .AcceptAll, id: nil, campaignType: campaignType),
+            from: self
+        )
+    }
+
+    @IBAction func onRejectTap(_ sender: Any) {
+        action(
+            SPAction(type: .RejectAll, id: nil, campaignType: campaignType),
+            from: self
+        )
+    }
+
+    @IBAction func onSaveAndExitTap(_ sender: Any) {
+        let actionType: SPActionType = (snapshot?.consentStatus == .RejectedAll) ? .RejectAll : .AcceptAll
+        action(
+            SPAction(type: actionType, id: nil, campaignType: campaignType),
             from: self
         )
     }
@@ -221,7 +240,7 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
         cell.labelText = doNotSellButton?.settings.text ?? "Do not sell"
         cell.selectable = false
         cell.isCustom = false
-        cell.isOn = snapshot?.doNotSell ?? true
+        cell.isOn = snapshot?.consentStatus == .RejectedAll
         cell.setup(from: doNotSellButton)
         cell.loadUI()
         return cell
