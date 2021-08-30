@@ -293,7 +293,7 @@ import Foundation
         }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
-        spClient.getNativePrivacyManager(withId: id) { [weak self] result in
+        spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
             switch result {
             case .success(let content):
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
@@ -326,7 +326,7 @@ import Foundation
         }
         loadWebPrivacyManager(.ccpa, pmUrl)
         #elseif os(tvOS)
-        spClient.getNativePrivacyManager(withId: id) { [weak self] result in
+        spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
             switch result {
             case .success(let content):
                 let pmViewController = SPCCPANativePrivacyManagerViewController(

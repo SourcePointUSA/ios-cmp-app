@@ -153,3 +153,22 @@ struct MessagesResponse: Decodable, Equatable {
         case propertyId, campaigns, localState
     }
 }
+
+struct MessageResponse: Equatable {
+    var message: Message?
+    let messageMetaData: MessageMetaData?
+}
+
+extension MessageResponse: Decodable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
+        if let metaData = messageMetaData {
+            message = try Message(type: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
+        }
+    }
+
+    enum Keys: CodingKey {
+        case message, messageMetaData
+    }
+}
