@@ -92,7 +92,7 @@ import Foundation
         }
     }
 
-    func messageToViewController (_ url: URL, _ messageId: Int, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
+    func messageToViewController (_ url: URL, _ messageId: String, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
         switch message {
         case .native:
             /// TODO: Initialise the Native Message object
@@ -297,7 +297,7 @@ import Foundation
             switch result {
             case .success(let content):
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
-                    messageId: Int(id),
+                    messageId: id,
                     campaignType: .gdpr,
                     viewData: content.homeView,
                     pmData: content,
@@ -330,7 +330,7 @@ import Foundation
             switch result {
             case .success(let content):
                 let pmViewController = SPCCPANativePrivacyManagerViewController(
-                    messageId: Int(id),
+                    messageId: id,
                     campaignType: .ccpa,
                     viewData: content.homeView,
                     pmData: content,
@@ -435,7 +435,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             finishAndNextIfAny(controller)
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
-                self?.reportIdfaStatus(status: status, messageId: controller.messageId)
+                self?.reportIdfaStatus(status: status, messageId: Int(controller.messageId))
                 self?.finishAndNextIfAny(controller)
                 if status == .accepted {
                     action.type = .IDFAAccepted
@@ -455,12 +455,12 @@ typealias SPGDPRSecondLayerHandler = (Result<GDPRPrivacyManagerViewResponse, SPE
 typealias SPCCPASecondLayerHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 
 protocol SPNativePMDelegate: AnyObject {
-    func onGDPR2ndLayerNavigate(messageId: Int?, handler: @escaping SPGDPRSecondLayerHandler)
-    func onCCPA2ndLayerNavigate(messageId: Int?, handler: @escaping SPCCPASecondLayerHandler)
+    func onGDPR2ndLayerNavigate(messageId: String, handler: @escaping SPGDPRSecondLayerHandler)
+    func onCCPA2ndLayerNavigate(messageId: String, handler: @escaping SPCCPASecondLayerHandler)
 }
 
 extension SPConsentManager: SPNativePMDelegate {
-    func onGDPR2ndLayerNavigate(messageId: Int?, handler: @escaping SPGDPRSecondLayerHandler) {
+    func onGDPR2ndLayerNavigate(messageId: String, handler: @escaping SPGDPRSecondLayerHandler) {
         if let propertyId = propertyId {
             spClient.gdprPrivacyManagerView(
                 propertyId: propertyId,
@@ -476,7 +476,7 @@ extension SPConsentManager: SPNativePMDelegate {
         }
     }
 
-    func onCCPA2ndLayerNavigate(messageId: Int?, handler: @escaping SPCCPASecondLayerHandler) {
+    func onCCPA2ndLayerNavigate(messageId: String, handler: @escaping SPCCPASecondLayerHandler) {
         if let propertyId = propertyId {
             spClient.ccpaPrivacyManagerView(
                 propertyId: propertyId,

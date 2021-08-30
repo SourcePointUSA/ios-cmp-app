@@ -109,7 +109,7 @@ import Foundation
                 case .success(let data):
                     if let strongSelf = self {
                         let controller = SPCCPAManagePreferenceViewController(
-                            messageId: self?.messageId,
+                            messageId: strongSelf.messageId,
                             campaignType: strongSelf.campaignType,
                             viewData: strongSelf.pmData.categoriesView,
                             pmData: strongSelf.pmData,
@@ -171,7 +171,7 @@ import Foundation
                         )
                     }
                     let controller = SPCCPAPartnersViewController(
-                        messageId: self?.messageId,
+                        messageId: strongSelf.messageId,
                         campaignType: strongSelf.campaignType,
                         viewData: strongSelf.pmData.vendorsView,
                         pmData: strongSelf.pmData,

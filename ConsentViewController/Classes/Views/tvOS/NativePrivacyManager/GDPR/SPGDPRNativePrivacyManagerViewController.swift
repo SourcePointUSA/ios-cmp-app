@@ -22,6 +22,8 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var ourPartners: UIButton!
     @IBOutlet weak var managePreferenceButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak var rejectButton: UIButton!
+    @IBOutlet weak var saveAndExitButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
 
@@ -57,6 +59,8 @@ protocol SPNativePrivacyManagerHome {
         loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
+        loadButton(forComponentId: "RejectAllButton", button: rejectButton)
+        loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
@@ -74,6 +78,23 @@ protocol SPNativePrivacyManagerHome {
         )
     }
 
+    @IBAction func onRejectTap(_ sender: Any) {
+        action(
+            SPAction(type: .RejectAll, id: nil, campaignType: campaignType),
+            from: self
+        )
+    }
+
+    @IBAction func onSaveAndExitTap(_ sender: Any) {
+        messageUIDelegate?.action(SPAction(
+            type: .SaveAndExit,
+            id: nil,
+            campaignType: campaignType,
+            pmPayload: snapshot?.toPayload(language: .English, pmId: messageId).json() ?? SPJson()
+        ), from: self)
+
+    }
+    
     @IBAction func onManagePreferenceTap(_ sender: Any) {
         guard let secondLayerData = secondLayerData else {
             delegate?.onGDPR2ndLayerNavigate(messageId: messageId) { [weak self] result in
@@ -83,7 +104,7 @@ protocol SPNativePrivacyManagerHome {
                 case .success(let data):
                     if let strongSelf = self {
                         let controller = SPGDPRManagePreferenceViewController(
-                            messageId: self?.messageId,
+                            messageId: strongSelf.messageId,
                             campaignType: strongSelf.campaignType,
                             viewData: strongSelf.pmData.categoriesView,
                             pmData: strongSelf.pmData,
@@ -149,7 +170,7 @@ protocol SPNativePrivacyManagerHome {
                         )
                     }
                     let controller = SPGDPRPartnersViewController(
-                        messageId: self?.messageId,
+                        messageId: strongSelf.messageId,
                         campaignType: strongSelf.campaignType,
                         viewData: strongSelf.pmData.vendorsView,
                         pmData: strongSelf.pmData,

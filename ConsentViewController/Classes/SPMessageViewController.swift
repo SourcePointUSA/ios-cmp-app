@@ -64,10 +64,10 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 @objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp, MessageController {
     weak var messageUIDelegate: SPMessageUIDelegate?
     public var campaignType: SPCampaignType
-    public var messageId: Int?
+    public var messageId: String
     public var timeout: TimeInterval
 
-    init(messageId: Int?, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
+    init(messageId: String, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
         self.messageId = messageId

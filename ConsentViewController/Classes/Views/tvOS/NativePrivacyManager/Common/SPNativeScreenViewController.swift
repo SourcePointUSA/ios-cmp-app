@@ -130,7 +130,7 @@ class FocusGuideDebugView: UIView {
 
     func setFocusGuides() { }
 
-    init(messageId: Int?, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
+    init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.viewData = viewData
         self.pmData = pmData
         super.init(

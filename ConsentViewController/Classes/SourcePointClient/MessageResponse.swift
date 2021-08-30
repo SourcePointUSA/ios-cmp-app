@@ -84,11 +84,21 @@ extension Consent: Codable {
     }
 }
 
-struct MessageMetaData: Decodable, Equatable {
+struct MessageMetaData: Equatable {
     let categoryId: MessageCategory
     let subCategoryId: MessageSubCategory
-    let messageId: Int
-    let messagePartitionUUID: String
+    let messageId: String
+    let messagePartitionUUID: String?
+}
+
+extension MessageMetaData: Decodable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        categoryId = try container.decode(MessageCategory.self, forKey: .categoryId)
+        subCategoryId = try container.decode(MessageSubCategory.self, forKey: .subCategoryId)
+        messageId = String(try container.decode(Int.self, forKey: .messageId))
+        messagePartitionUUID = try container.decodeIfPresent(String.self, forKey: .messagePartitionUUID)
+    }
 
     enum CodingKeys: String, CodingKey {
         case categoryId, subCategoryId, messageId

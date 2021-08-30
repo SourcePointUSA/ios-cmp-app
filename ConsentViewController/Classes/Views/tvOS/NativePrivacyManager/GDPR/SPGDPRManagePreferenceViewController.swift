@@ -89,12 +89,11 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        let pmId = messageId != nil ? String(messageId!) : ""
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
             id: nil,
             campaignType: campaignType,
-            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: pmId).json()!
+            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
         ), from: self)
     }
 }

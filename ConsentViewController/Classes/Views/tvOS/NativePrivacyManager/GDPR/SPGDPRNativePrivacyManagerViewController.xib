@@ -21,6 +21,8 @@
                 <outlet property="managePreferenceButton" destination="NaN-Kj-XpH" id="3Wd-7j-WXE"/>
                 <outlet property="ourPartners" destination="ZAh-er-2XQ" id="1Vx-fk-Qmq"/>
                 <outlet property="privacyPolicyButton" destination="p3s-4F-WQC" id="VCB-gR-wFn"/>
+                <outlet property="rejectButton" destination="ch4-4u-BD5" id="3ab-N1-oPC"/>
+                <outlet property="saveAndExitButton" destination="yPC-Wv-MDC" id="dZJ-dH-NhN"/>
                 <outlet property="selectedCategoryTextLabel" destination="xze-gk-XHF" id="bpw-Bw-lFO"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
@@ -54,7 +56,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="xze-gk-XHF" userLabel="SelectedCategoryLabel">
-                                            <rect key="frame" x="165" y="382" width="550" height="80"/>
+                                            <rect key="frame" x="165" y="360" width="550" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="5KX-6E-tcX"/>
                                                 <constraint firstAttribute="width" constant="550" id="TUV-zS-qAX"/>
@@ -64,18 +66,46 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="Stack View - Actions">
-                                            <rect key="frame" x="190" y="484" width="500" height="368"/>
+                                            <rect key="frame" x="190" y="440" width="500" height="412"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="Gm4-hw-Na6"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Accept All"/>
                                                     <connections>
                                                         <action selector="onAcceptTap:" destination="-1" eventType="primaryActionTriggered" id="kZP-FO-DLP"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch4-4u-BD5" userLabel="Reject All">
+                                                    <rect key="frame" x="0.0" y="70" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="jR1-G0-SJj"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Reject All"/>
+                                                    <connections>
+                                                        <action selector="onRejectTap:" destination="-1" eventType="primaryActionTriggered" id="1Q8-sr-d5t"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPC-Wv-MDC" userLabel="Save &amp; Exit">
+                                                    <rect key="frame" x="0.0" y="140" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="e6B-9R-MPI"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Save &amp; Exit"/>
+                                                    <connections>
+                                                        <action selector="onSaveAndExitTap:" destination="-1" eventType="primaryActionTriggered" id="jnj-7X-MGo"/>
+                                                    </connections>
+                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaN-Kj-XpH">
-                                                    <rect key="frame" x="0.0" y="94" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="210" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="pB1-E6-6ax"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Manage Preference"/>
                                                     <connections>
@@ -83,7 +113,10 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAh-er-2XQ">
-                                                    <rect key="frame" x="0.0" y="188" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="280" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="1wZ-Vq-FDf"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Our Partners"/>
                                                     <connections>
@@ -91,7 +124,10 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-4F-WQC">
-                                                    <rect key="frame" x="0.0" y="282" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="350" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="324-TC-yR6"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Privacy Policy"/>
                                                     <connections>
