@@ -101,23 +101,30 @@ import Foundation
             return nil
         #if os(tvOS)
         case .nativePM(let content):
-            var controller = (type == .gdpr ?
-                SPGDPRNativePrivacyManagerViewController(
+            if type == .gdpr {
+                let controller = SPGDPRNativePrivacyManagerViewController(
                     messageId: messageId,
                     campaignType: type,
                     viewData: content.homeView,
                     pmData: content,
                     delegate: self
-                ) :
-                SPCCPANativePrivacyManagerViewController(
+                )
+                controller.delegate = self
+                return controller
+            }
+            if type == .ccpa {
+                let controller = SPCCPANativePrivacyManagerViewController(
                     messageId: messageId,
                     campaignType: type,
                     viewData: content.homeView,
                     pmData: content,
                     delegate: self
-                )) as? SPNativePrivacyManagerHome
-            controller?.delegate = self
-            return controller as? SPNativeScreenViewController
+                )
+                controller.delegate = self
+                controller.snapshot = CCPAPMConsentSnaptshot()
+                return controller
+            }
+            return nil
         #endif
         #if os(iOS)
         case .web(let content): return GenericWebMessageViewController(
