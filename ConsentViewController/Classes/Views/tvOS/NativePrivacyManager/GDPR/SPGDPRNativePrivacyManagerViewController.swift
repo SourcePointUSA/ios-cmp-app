@@ -115,6 +115,7 @@ protocol SPNativePrivacyManagerHome {
                     self?.onError(error)
                 case .success(let data):
                     if let strongSelf = self {
+                        strongSelf.secondLayerData = data
                         let controller = SPGDPRManagePreferenceViewController(
                             messageId: strongSelf.messageId,
                             campaignType: strongSelf.campaignType,

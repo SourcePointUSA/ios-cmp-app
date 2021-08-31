@@ -120,6 +120,7 @@ import Foundation
                     self?.onError(error)
                 case .success(let data):
                     if let strongSelf = self {
+                        strongSelf.secondLayerData = data
                         let controller = SPCCPAManagePreferenceViewController(
                             messageId: strongSelf.messageId,
                             campaignType: strongSelf.campaignType,
