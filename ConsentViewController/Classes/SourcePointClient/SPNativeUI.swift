@@ -191,16 +191,14 @@ class SPNativeImage: SPNativeUI {
 
 class SPNativeLongButton: SPNativeUI {
     class Settings: SPNativeUISettings {
-        let onText, offText, customText: String
-        let text: String? /// TODO: remove optional once LongButton contains text attribute
+        let onText, offText, customText, text: String
 
         required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
             onText = try container.decode(String.self, forKey: .onText)
             offText = try container.decode(String.self, forKey: .offText)
             customText = try container.decode(String.self, forKey: .customText)
-            text = try container.decodeIfPresent(String.self, forKey: .text) /// TODO: remove optional once LongButton contains text attribute
-
+            text = try container.decode(String.self, forKey: .text)
             try super.init(from: decoder)
         }
 

@@ -245,11 +245,11 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             let fallBackCell = UITableViewCell()
-            fallBackCell.textLabel?.text = (viewData.byId("DoNotSellButton") as? SPNativeLongButton)?.settings.text ?? "Do not sell"
+            fallBackCell.textLabel?.text = (viewData.byId("DoNotSellButton") as? SPNativeLongButton)?.settings.text
             return fallBackCell
         }
 
-        cell.labelText = doNotSellButton?.settings.text ?? "Do not sell"
+        cell.labelText = doNotSellButton?.settings.text
         cell.selectable = false
         cell.isCustom = false
         cell.isOn = snapshot?.consentStatus == .RejectedAll
