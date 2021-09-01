@@ -10,7 +10,7 @@
 	<true/>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.sourcepoint.gdprmetaapp</key>
+		<key>com.sourcepoint.unifiedmetaapp</key>
 		<string>MetaAppStoreProfile</string>
 	</dict>
 </dict>
