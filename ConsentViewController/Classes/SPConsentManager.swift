@@ -217,7 +217,7 @@ import Foundation
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "6.1.6"
+    public static let VERSION = "6.1.7-beta.0"
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()

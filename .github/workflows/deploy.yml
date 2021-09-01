@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ SP-7478_automate_sdk_release ]
 
 jobs:
   deploy:
