@@ -79,7 +79,7 @@ protocol SPNativePrivacyManagerHome {
         view.addGestureRecognizer(menuPressRecognizer)
     }
 
-    @objc func menuButtonAction() {
+    func menuButtonAction() {
         // override in order to disable menu button closing the Privacy Manager
     }
 
@@ -106,7 +106,7 @@ protocol SPNativePrivacyManagerHome {
         ), from: self)
 
     }
-    
+
     @IBAction func onManagePreferenceTap(_ sender: Any) {
         guard let secondLayerData = secondLayerData else {
             delegate?.onGDPR2ndLayerNavigate(messageId: messageId) { [weak self] result in

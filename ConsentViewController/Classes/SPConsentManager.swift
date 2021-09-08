@@ -197,15 +197,13 @@ import Foundation
 
     #if os(iOS)
     func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
-        let messageId = Int(
-            URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
-                .queryItems?
-                .first { $0.name == "message_id"}?
-                .value ?? ""
-        )
+        let pmId = URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
+            .queryItems?
+            .first { $0.name == "message_id"}?
+            .value ?? ""
         GenericWebMessageViewController(
             url: pmURL,
-            messageId: messageId,
+            messageId: pmId,
             contents: SPJson(),
             campaignType: campaignType,
             timeout: messageTimeoutInSeconds,

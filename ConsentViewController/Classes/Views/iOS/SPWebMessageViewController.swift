@@ -34,7 +34,7 @@ import WebKit
         return nil
     }()
 
-    init(url: URL, messageId: Int?, contents: SPJson, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?) {
+    init(url: URL, messageId: String, contents: SPJson, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?) {
         self.url = url
         self.contents = contents
         super.init(messageId: messageId, campaignType: campaignType, timeout: timeout, delegate: delegate)

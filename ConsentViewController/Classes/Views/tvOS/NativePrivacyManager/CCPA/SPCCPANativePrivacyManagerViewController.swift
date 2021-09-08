@@ -86,7 +86,7 @@ import Foundation
         view.addGestureRecognizer(menuPressRecognizer)
     }
 
-    @objc func menuButtonAction() {
+    func menuButtonAction() {
         // override in order to disable menu button closing the Privacy Manager
     }
 
