@@ -16,27 +16,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var ccpaButton: UIButton!
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "529562")
+        consentManager.loadGDPRPrivacyManager(withId: "16879")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "533894")
+        consentManager.loadCCPAPrivacyManager(withId: "16877")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
-        propertyName: try! SPPropertyName("appletv.demo"),
+        propertyName: try! SPPropertyName("appletv.mobile.demo"),
         campaigns: SPCampaigns(
-            gdpr: SPCampaign()
-//            ccpa: SPCampaign()
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign()
         ),
         delegate: self
     )}()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ccpaButton.setTitle("CCPA Privacy Manager (does not apply)", for: .disabled)
-        gdprButton.setTitle("GDPR Privacy Manager (does not apply)", for: .disabled)
+        ccpaButton.setTitle("CCPA (does not apply)", for: .disabled)
+        gdprButton.setTitle("GDPR (does not apply)", for: .disabled)
         updateButtons()
         consentManager.loadMessage()
     }
