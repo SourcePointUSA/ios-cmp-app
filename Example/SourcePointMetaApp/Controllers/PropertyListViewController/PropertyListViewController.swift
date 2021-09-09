@@ -26,6 +26,37 @@ class PropertyListViewController: BaseViewController, WKNavigationDelegate, UITe
         super.viewDidLoad()
         navTitle()
         propertyTableView.tableFooterView = UIView(frame: .zero)
+        let bundleId = Bundle.main.bundleIdentifier ?? ""
+        let appUpdater = AppUpdateManager()
+        let updateStatus = appUpdater.updateStatus(for: bundleId)
+        if let appId = updateStatus.1 {
+            presentUpdateAlertView(for: updateStatus.0, appId: appId)
+        }
+    }
+
+    func presentUpdateAlertView(for status: AppUpdateManager.Status, appId: Int) {
+        if case .optional = status {
+            let alertController = UIAlertController(title: Alert.updateAppAlertTitle, message: Alert.updateAppAlertMessage, preferredStyle: .alert)
+            alertController.addAction(updateAlertAction(appId: appId))
+            alertController.addAction(skipAlertAction())
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    func updateAlertAction(appId: Int) -> UIAlertAction {
+        let action = UIAlertAction(title: Alert.updateButtonTitle, style: .default) { _ in
+            UIApplication.shared.launchAppStore(for: appId)
+            return
+        }
+        return action
+    }
+
+    func skipAlertAction() -> UIAlertAction {
+        let action = UIAlertAction(title: Alert.skipButtonTitle, style: .default) { _ in
+            self.dismiss(animated: true)
+            return
+        }
+        return action
     }
 
     override func viewWillAppear(_ animated: Bool) {
