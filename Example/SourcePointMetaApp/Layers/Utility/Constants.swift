@@ -94,6 +94,10 @@ struct Alert {
     static let messageForDeletingPropertyData = NSLocalizedString("Are you sure you want to delete this property?", comment: "")
     static let messageForSaveCampaign = NSLocalizedString("This will save the campaign data \nDo you want to proceed?", comment: "")
     static let messageForEmptyPrivacyManagerIDError = NSLocalizedString("Please add privacy manager ID while saving the property", comment: "")
+    static let updateAppAlertTitle = "Update Available"
+    static let updateAppAlertMessage = "A new version of Unified-MetaApp is available. Please update to latest version."
+    static let updateButtonTitle = "Update"
+    static let skipButtonTitle = "Skip this version for now"
 
     // Alert actions
     static let alert = NSLocalizedString("Alert", comment: "")
