@@ -19,7 +19,7 @@ import UIKit
 
 @objcMembers class SPNativeStyle: NSObject, Codable {
     let backgroundColor: String?
-    let width: Int?
+//    let width: Int?
     let font: SPNativeFont?
     let onFocusBackgroundColor: String?
     let onUnfocusBackgroundColor: String?
@@ -191,18 +191,19 @@ class SPNativeImage: SPNativeUI {
 
 class SPNativeLongButton: SPNativeUI {
     class Settings: SPNativeUISettings {
-        let onText, offText, customText: String
+        let onText, offText, customText, text: String
 
         required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
             onText = try container.decode(String.self, forKey: .onText)
             offText = try container.decode(String.self, forKey: .offText)
             customText = try container.decode(String.self, forKey: .customText)
+            text = try container.decode(String.self, forKey: .text)
             try super.init(from: decoder)
         }
 
         enum Keys: CodingKey {
-            case onText, offText, customText
+            case onText, offText, customText, text
         }
     }
 

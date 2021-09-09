@@ -21,7 +21,7 @@ class LongButtonViewCell: UITableViewCell {
     @IBOutlet weak var stateLabel: UILabel!
 
     func setup(from nativeCell: SPNativeLongButton?) {
-        customText = isCustom ? nil : nativeCell?.settings.customText ?? "Custom"
+        customText = isCustom ? nativeCell?.settings.customText : nil
         onText = nativeCell?.settings.onText ?? "On"
         offText = nativeCell?.settings.offText ?? "Off"
     }

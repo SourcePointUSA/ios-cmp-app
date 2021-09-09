@@ -92,7 +92,7 @@ import Foundation
         }
     }
 
-    func messageToViewController (_ url: URL, _ messageId: Int, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
+    func messageToViewController (_ url: URL, _ messageId: String, _ message: Message?, _ type: SPCampaignType) -> SPMessageViewController? {
         switch message {
         case .native:
             /// TODO: Initialise the Native Message object
@@ -101,16 +101,30 @@ import Foundation
             return nil
         #if os(tvOS)
         case .nativePM(let content):
-            let controller = SPNativePrivacyManagerViewController(
-                messageId: messageId,
-                campaignType: type,
-                viewData: content.homeView,
-                pmData: content,
-                delegate: self
-            )
-            controller.delegate = self
-            controller.vendorGrants = userData.gdpr?.consents?.vendorGrants
-            return controller
+            if type == .gdpr {
+                let controller = SPGDPRNativePrivacyManagerViewController(
+                    messageId: messageId,
+                    campaignType: type,
+                    viewData: content.homeView,
+                    pmData: content,
+                    delegate: self
+                )
+                controller.delegate = self
+                return controller
+            }
+            if type == .ccpa {
+                let controller = SPCCPANativePrivacyManagerViewController(
+                    messageId: messageId,
+                    campaignType: type,
+                    viewData: content.homeView,
+                    pmData: content,
+                    delegate: self
+                )
+                controller.delegate = self
+                controller.snapshot = CCPAPMConsentSnaptshot()
+                return controller
+            }
+            return nil
         #endif
         #if os(iOS)
         case .web(let content): return GenericWebMessageViewController(
@@ -183,15 +197,13 @@ import Foundation
 
     #if os(iOS)
     func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
-        let messageId = Int(
-            URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
-                .queryItems?
-                .first { $0.name == "message_id"}?
-                .value ?? ""
-        )
+        let pmId = URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
+            .queryItems?
+            .first { $0.name == "message_id"}?
+            .value ?? ""
         GenericWebMessageViewController(
             url: pmURL,
-            messageId: messageId,
+            messageId: pmId,
             contents: SPJson(),
             campaignType: campaignType,
             timeout: messageTimeoutInSeconds,
@@ -286,11 +298,11 @@ import Foundation
         }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
-        spClient.getNativePrivacyManager(withId: id) { [weak self] result in
+        spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
             switch result {
             case .success(let content):
-                let pmViewController = SPNativePrivacyManagerViewController(
-                    messageId: Int(id),
+                let pmViewController = SPGDPRNativePrivacyManagerViewController(
+                    messageId: id,
                     campaignType: .gdpr,
                     viewData: content.homeView,
                     pmData: content,
@@ -319,7 +331,23 @@ import Foundation
         }
         loadWebPrivacyManager(.ccpa, pmUrl)
         #elseif os(tvOS)
-        /// TODO: load NativePM
+        spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
+            switch result {
+            case .success(let content):
+                let pmViewController = SPCCPANativePrivacyManagerViewController(
+                    messageId: id,
+                    campaignType: .ccpa,
+                    viewData: content.homeView,
+                    pmData: content,
+                    delegate: self
+                )
+                pmViewController.delegate = self
+                pmViewController.snapshot = CCPAPMConsentSnaptshot(withStatus: self?.userData.ccpa?.consents?.status)
+                self?.loaded(pmViewController)
+            case .failure(let error):
+                self?.onError(error)
+            }
+        }
         #endif
     }
 
@@ -412,7 +440,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             finishAndNextIfAny(controller)
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
-                self?.reportIdfaStatus(status: status, messageId: controller.messageId)
+                self?.reportIdfaStatus(status: status, messageId: Int(controller.messageId))
                 self?.finishAndNextIfAny(controller)
                 if status == .accepted {
                     action.type = .IDFAAccepted
@@ -428,16 +456,18 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 }
 
-typealias SPSecondLayerHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
+typealias SPGDPRSecondLayerHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
+typealias SPCCPASecondLayerHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 
 protocol SPNativePMDelegate: AnyObject {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler)
+    func onGDPR2ndLayerNavigate(messageId: String, handler: @escaping SPGDPRSecondLayerHandler)
+    func onCCPA2ndLayerNavigate(messageId: String, handler: @escaping SPCCPASecondLayerHandler)
 }
 
 extension SPConsentManager: SPNativePMDelegate {
-    func on2ndLayerNavigating(messageId: Int?, handler: @escaping SPSecondLayerHandler) {
+    func onGDPR2ndLayerNavigate(messageId: String, handler: @escaping SPGDPRSecondLayerHandler) {
         if let propertyId = propertyId {
-            spClient.privacyManagerView(
+            spClient.gdprPrivacyManagerView(
                 propertyId: propertyId,
                 consentLanguage: messageLanguage
             ) { [weak self] result in
@@ -445,6 +475,24 @@ extension SPConsentManager: SPNativePMDelegate {
                 case .failure(let error): self?.onError(error)
                 case .success(var pmData):
                     pmData.grants = self?.userData.gdpr?.consents?.vendorGrants
+                    handler(result.map { _ in pmData })
+                }
+            }
+        }
+    }
+
+    func onCCPA2ndLayerNavigate(messageId: String, handler: @escaping SPCCPASecondLayerHandler) {
+        if let propertyId = propertyId {
+            spClient.ccpaPrivacyManagerView(
+                propertyId: propertyId,
+                consentLanguage: messageLanguage
+            ) { [weak self] result in
+                switch result {
+                case .failure(let error): self?.onError(error)
+                case .success(var pmData):
+                    pmData.rejectedCategories = self?.userData.ccpa?.consents?.rejectedCategories
+                    pmData.rejectedVendors = self?.userData.ccpa?.consents?.rejectedVendors
+                    pmData.consentStatus = self?.userData.ccpa?.consents?.status
                     handler(result.map { _ in pmData })
                 }
             }

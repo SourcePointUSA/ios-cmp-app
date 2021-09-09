@@ -1,5 +1,5 @@
 //
-//  SPCategoryDetailsViewController.swift
+//  SPCCPACategoryDetailsViewController.swift
 //  ConsentViewController-tvOS
 //
 //  Created by Vilas on 11/05/21.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class SPCategoryDetailsViewController: SPNativeScreenViewController {
+class SPCCPACategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -17,9 +17,9 @@ class SPCategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var actionsContainer: UIStackView!
     @IBOutlet weak var categoryDetailsTableView: UITableView!
 
-    weak var categoryManagerDelegate: PMCategoryManager?
+    weak var categoryManagerDelegate: CCPAPMConsentSnaptshot?
 
-    var category: VendorListCategory?
+    var category: CCPACategory?
     var partners: [String] {
         ((category?.requiringConsentVendors ?? []) + (category?.legIntVendors ?? []))
             .map { $0.name }
@@ -76,7 +76,7 @@ class SPCategoryDetailsViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPCategoryDetailsViewController: UITableViewDataSource, UITableViewDelegate {
+extension SPCCPACategoryDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }

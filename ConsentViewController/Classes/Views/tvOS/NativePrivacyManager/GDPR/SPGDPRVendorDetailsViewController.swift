@@ -1,5 +1,5 @@
 //
-//  SPVendorDetailsViewController.swift
+//  SPGDPRVendorDetailsViewController.swift
 //  ConsentViewController-tvOS
 //
 //  Created by Vilas on 11/05/21.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class SPVendorDetailsViewController: SPNativeScreenViewController {
+class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
         let content: [String]
@@ -28,10 +28,10 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var vendorDetailsTableView: UITableView!
     @IBOutlet weak var actionsContainer: UIStackView!
 
-    weak var vendorManagerDelegate: PMVendorManager?
+    weak var vendorManagerDelegate: GDPRPMConsentSnaptshot?
 
     let cellReuseIdentifier = "cell"
-    var vendor: VendorListVendor?
+    var vendor: GDPRVendor?
     var sections: [Section] {[
         Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.consentCategories.map { $0.name }),
         Section(header: viewData.byId("SpecialPurposesText") as? SPNativeText, content: vendor?.iabSpecialPurposes),
@@ -84,7 +84,7 @@ class SPVendorDetailsViewController: SPNativeScreenViewController {
 }
 
 // MARK: UITableViewDataSource
-extension SPVendorDetailsViewController: UITableViewDataSource, UITableViewDelegate {
+extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }

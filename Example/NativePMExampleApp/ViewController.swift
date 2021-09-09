@@ -12,8 +12,15 @@ import ConsentViewController
 class ViewController: UIViewController {
     var activityIndicator = UIActivityIndicatorView(style: .white)
 
-    @IBAction func onLoadPMTap(_ sender: Any) {
+    @IBOutlet weak var gdprButton: UIButton!
+    @IBOutlet weak var ccpaButton: UIButton!
+
+    @IBAction func onGDPRTap(_ sender: Any) {
         consentManager.loadGDPRPrivacyManager(withId: "529562")
+    }
+
+    @IBAction func onCCPATap(_ sender: Any) {
+        consentManager.loadCCPAPrivacyManager(withId: "533894")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
@@ -21,12 +28,16 @@ class ViewController: UIViewController {
         propertyName: try! SPPropertyName("appletv.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign()
+//            ccpa: SPCampaign()
         ),
         delegate: self
     )}()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ccpaButton.setTitle("CCPA Privacy Manager (does not apply)", for: .disabled)
+        gdprButton.setTitle("GDPR Privacy Manager (does not apply)", for: .disabled)
+        updateButtons()
         consentManager.loadMessage()
     }
 }
@@ -48,6 +59,7 @@ extension ViewController: SPDelegate {
 
     func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", userData)
+        updateButtons()
     }
 
     func onError(error: SPError) {
@@ -58,6 +70,11 @@ extension ViewController: SPDelegate {
 
 // MARK: - UI Utils
 extension ViewController {
+    func updateButtons() {
+        ccpaButton.isEnabled = consentManager.ccpaApplies
+        gdprButton.isEnabled = consentManager.gdprApplies
+    }
+
     func showActivityIndicator(on parentView: UIView?) {
         if let containerView = parentView {
             activityIndicator.startAnimating()

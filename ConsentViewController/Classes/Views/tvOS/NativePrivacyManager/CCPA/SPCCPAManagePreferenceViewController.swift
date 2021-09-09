@@ -1,5 +1,5 @@
 //
-//  SPManagePreferenceViewController.swift
+//  SPCCPAManagePreferenceViewController.swift
 //  ConsentViewController-tvOS
 //
 //  Created by Vilas on 03/05/21.
@@ -8,12 +8,12 @@
 import UIKit
 import Foundation
 
-class SPManagePreferenceViewController: SPNativeScreenViewController {
+class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
-        let content: [VendorListCategory]
+        let content: [CCPACategory]
 
-        init? (header: SPNativeText?, content: [VendorListCategory]?) {
+        init? (header: SPNativeText?, content: [CCPACategory]?) {
             if content == nil || content!.isEmpty { return nil }
             self.header = header
             self.content = content!
@@ -25,32 +25,25 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var saveAndExit: UIButton!
-    @IBOutlet weak var categorySlider: UISegmentedControl!
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
     var nativeLongButton: SPNativeLongButton?
 
-    var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
-    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
+    var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
 
-    var categories: [VendorListCategory] = []
-    var userConsentCategories: [VendorListCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
-    var legIntCategories: [VendorListCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
+    var categories: [CCPACategory] = []
+    var userConsentCategories: [CCPACategory] { categories.filter { $0.requiringConsentVendors.isNotEmpty() } }
+    var legIntCategories: [CCPACategory] { categories.filter { $0.legIntVendors.isNotEmpty() } }
 
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: userConsentCategories),
-        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialPurposes)),
-        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.features)),
-        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialFeatures))
+        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: categories)
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
 
     override func setFocusGuides() {
         addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
-        addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
         addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
     }
 
@@ -66,7 +59,6 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
-        loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoriesTableView.register(
@@ -80,31 +72,24 @@ class SPManagePreferenceViewController: SPNativeScreenViewController {
         }
     }
 
-    @IBAction func onCategorySliderTap(_ sender: Any) {
-        categoriesTableView.reloadData()
-    }
-
     @IBAction func onAcceptTap(_ sender: Any) {
         messageUIDelegate?.action(SPAction(type: .AcceptAll, id: nil, campaignType: campaignType), from: self)
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        let pmId = messageId != nil ? String(messageId!) : ""
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
             id: nil,
             campaignType: campaignType,
-            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: pmId).json()!
+            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
         ), from: self)
     }
 }
 
 // MARK: UITableViewDataSource
-extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
-    func currentCategory(_ index: IndexPath) -> VendorListCategory {
-        displayingLegIntCategories ?
-            legIntCategories[index.row] :
-            sections[index.section].content[index.row]
+extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
+    func currentCategory(_ index: IndexPath) -> CCPACategory {
+        sections[index.section].content[index.row]
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -112,7 +97,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        displayingLegIntCategories ? 1 : sections.count
+        sections.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -128,7 +113,7 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        displayingLegIntCategories ? legIntCategories.count : sections[section].content.count
+        sections[section].content.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -140,14 +125,11 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
             return UITableViewCell()
         }
 
-        let section = indexPath.section
         let category = currentCategory(indexPath)
         cell.labelText = category.name
-        cell.isOn = section == 0 || section == 3 ?
-            consentsSnapshot.acceptedCategoriesIds.contains(category._id) :
-            nil
-        cell.selectable = section != 1
-        cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
+        cell.isOn = !consentsSnapshot.toggledCategoriesIds.contains(category._id)
+        cell.selectable = true
+        cell.isCustom = false
         cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
@@ -168,17 +150,17 @@ extension SPManagePreferenceViewController: UITableViewDataSource, UITableViewDe
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        indexPath.section == 1 ? nil : indexPath
+        indexPath
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let categoryDetailsVC = SPCategoryDetailsViewController(
+        let categoryDetailsVC = SPCCPACategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
             viewData: pmData.categoryDetailsView,
             pmData: pmData,
             delegate: nil,
-            nibName: "SPCategoryDetailsViewController"
+            nibName: "SPCCPACategoryDetailsViewController"
         )
         categoryDetailsVC.category = currentCategory(indexPath)
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
