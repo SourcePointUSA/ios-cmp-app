@@ -165,7 +165,6 @@ import WebKit
         else { return nil }
         return SPAction(
             type: type,
-            id: body["id"]?.stringValue,
             campaignType: campaignType,
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: body["payload"] ?? SPJson(),
