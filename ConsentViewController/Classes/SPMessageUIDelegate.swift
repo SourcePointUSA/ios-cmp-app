@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 @objc protocol SPMessageUIDelegate {
-    func loaded(_ controller: SPMessageViewController)
-    func action(_ action: SPAction, from controller: SPMessageViewController)
+    func loaded(_ controller: UIViewController)
+    func action(_ action: SPAction, from controller: UIViewController)
     func onError(_ error: SPError)
-    func finished(_ vcFinished: SPMessageViewController)
+    func finished(_ vcFinished: UIViewController)
 }

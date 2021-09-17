@@ -34,66 +34,34 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: GDPRConsentDelegate {
-    /// called when there's a message to show and its content (`GDPRMessage`) is ready
-    func consentUIWillShow(message: GDPRMessage) {
-        messageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
-        messageController!.modalPresentationStyle = .overFullScreen
-        present(messageController!, animated: true, completion: nil)
-    }
-
-    /// called when the Privacy Manager is ready to be displayed
-    func gdprPMWillShow() {
-        if messageController?.viewIfLoaded?.window != nil {
-            messageController?.present(consentViewController, animated: true, completion: nil)
-        } else {
-            present(consentViewController, animated: true, completion: nil)
-        }
+extension ViewController: SPDelegate {
+    func onSPNativeMessageReady(_ message: SPNativeMessage) {
+        messageController = SPNativeMessageViewController(messageContents: message, sdkDelegate: consentManager)
+        present(messageController, animated: true)
         stopActivityIndicator()
     }
 
-    /// called after an action is taken by the user and the consent info is returned by SourcePoint's endpoints
-    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
-        print("onConsentReady: ", storedSDKData())
-        print("onConsentReady: ", consentUUID, userConsent)
+    func onAction(_ action: SPAction, from controller: UIViewController) {
+        print(action)
     }
 
-    /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
-    /// `SPActionType`
-    func onAction(_ action: SPAction) {
-        switch action.type {
-        case .PMCancel:
-            dismissPrivacyManager()
-        case .ShowPrivacyManager:
-            showActivityIndicator(on: messageController?.view)
-        default:
-            consentViewController.reportAction(action)
-            dismiss(animated: true, completion: nil)
-        }
+    func onSPUIReady(_ controller: UIViewController) {
+        present(controller, animated: true)
+        stopActivityIndicator()
+    }
+
+    func onSPUIFinished(_ controller: UIViewController) {
+        dismiss(animated: true)
     }
 
     func onError(error: SPError) {
+        print(error)
         stopActivityIndicator()
-        print("ERROR: ", error.description )
     }
 }
 
 /// Util methods for ViewController
 extension ViewController {
-    private func dismissPrivacyManager() {
-        if messageController?.viewIfLoaded?.window != nil {
-            messageController?.dismiss(animated: true, completion: nil)
-        } else {
-            dismiss(animated: true, completion: nil)
-        }
-    }
-
-    func storedSDKData() -> [String: Any] {
-        UserDefaults.standard.dictionaryRepresentation().filter { (key, _) in
-            key.starts(with: "sp_gdpr_") || key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX)
-        }
-    }
-
     func showActivityIndicator(on parentView: UIView?) {
         if let containerView = parentView {
             activityIndicator.startAnimating()

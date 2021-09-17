@@ -12,15 +12,15 @@ import UIKit
     /// called when the user takes an action in the SP UI
     /// - Parameters:
     ///   - action: the user action
-    @objc func onAction(_ action: SPAction, from controller: SPMessageViewController)
+    @objc func onAction(_ action: SPAction, from controller: UIViewController)
 }
 
 @objc public protocol SPConsentDelegate {
     /// called when there's a consent Message to be shown
-    @objc func onSPUIReady(_ controller: SPMessageViewController)
+    @objc func onSPUIReady(_ controller: UIViewController)
 
     /// called when the SP UI is finished and can be dismissed
-    @objc func onSPUIFinished(_ controller: SPMessageViewController)
+    @objc func onSPUIFinished(_ controller: UIViewController)
 
     /// called after the user takes an action and the SDK receives consent data back from the server
     /// - Parameters:
