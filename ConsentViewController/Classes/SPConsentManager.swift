@@ -127,10 +127,11 @@ import Foundation
             return nil
         #endif
         #if os(iOS)
-        case .web(let content): return GenericWebMessageViewController(
+        case .web:
+            return GenericWebMessageViewController(
             url: url,
             messageId: messageId,
-            contents: content,
+            contents: try! JSONEncoder().encode(message), // swiftlint:disable:this force_try
             campaignType: type,
             timeout: messageTimeoutInSeconds,
             delegate: self
@@ -204,7 +205,7 @@ import Foundation
         GenericWebMessageViewController(
             url: pmURL,
             messageId: pmId,
-            contents: SPJson(),
+            contents: Data(),
             campaignType: campaignType,
             timeout: messageTimeoutInSeconds,
             delegate: self
@@ -300,7 +301,14 @@ import Foundation
         #elseif os(tvOS)
         spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
             switch result {
-            case .success(let content):
+            case .success(let message):
+                /// TODO: refactor
+                var nativePMMessage: PrivacyManagerViewData?
+                switch message.messageJson {
+                case .nativePM(let content):
+                    nativePMMessage = content
+                default: break
+                }
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
                     messageId: id,
                     campaignType: .gdpr,
