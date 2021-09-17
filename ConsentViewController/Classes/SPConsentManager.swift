@@ -84,7 +84,7 @@ import Foundation
         self.deviceManager = deviceManager
     }
 
-    func renderNextMessageIfAny () {
+    func renderNextMessageIfAny() {
         DispatchQueue.main.async { [weak self] in
             if let ui = self?.messageControllersStack.popLast() {
                 ui.loadMessage()
@@ -304,8 +304,8 @@ import Foundation
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
                     messageId: id,
                     campaignType: .gdpr,
-                    viewData: content.homeView,
-                    pmData: content,
+                    viewData: nativePMMessage!.homeView,
+                    pmData: nativePMMessage!,
                     delegate: self
                 )
                 pmViewController.delegate = self
@@ -333,12 +333,18 @@ import Foundation
         #elseif os(tvOS)
         spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
             switch result {
-            case .success(let content):
+            case .success(let message):
+                var nativePMMessage: PrivacyManagerViewData?
+                switch message.messageJson {
+                case .nativePM(let content):
+                    nativePMMessage = content
+                default: self?.onError(InvalidResponseWebMessageError())
+                }
                 let pmViewController = SPCCPANativePrivacyManagerViewController(
                     messageId: id,
                     campaignType: .ccpa,
-                    viewData: content.homeView,
-                    pmData: content,
+                    viewData: nativePMMessage!.homeView,
+                    pmData: nativePMMessage!,
                     delegate: self
                 )
                 pmViewController.delegate = self

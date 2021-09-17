@@ -68,13 +68,3 @@ extension GDPRCategory.CategoryType: Codable {
         self.init(rawValue: try container.decode(String.self))
     }
 }
-
-@objcMembers class SPPrivacyManagerResponse: NSObject, Decodable {
-    let categories: [GDPRCategory]?
-    let message: SPNativeView
-
-    enum CodingKeys: String, CodingKey {
-        case categories
-        case message = "message_json"
-    }
-}

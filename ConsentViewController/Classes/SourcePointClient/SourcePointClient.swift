@@ -34,7 +34,7 @@ typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
-typealias MessageHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
+typealias MessageHandler = (Result<Message, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
@@ -204,12 +204,7 @@ class SourcePointClient: SourcePointProtocol {
         ])!
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
-                let response = try result.decoded() as MessageResponse
-                switch response.message {
-                case .nativePM(let pmData):
-                    return pmData
-                default: throw InvalidResponseWebMessageError()
-                }
+                (try result.decoded() as MessageResponse).message
             }.mapError({
                 InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
             }))
@@ -230,12 +225,7 @@ class SourcePointClient: SourcePointProtocol {
         ])!
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
-                let response = try result.decoded() as MessageResponse
-                switch response.message {
-                case .nativePM(let pmData):
-                    return pmData
-                default: throw InvalidResponseWebMessageError()
-                }
+                (try result.decoded() as MessageResponse).message
             }.mapError({
                 InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
             }))
@@ -274,7 +264,7 @@ class SourcePointClient: SourcePointProtocol {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
 
         var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
-        components?.queryItems = [URLQueryItem(name: "env", value: "prod")]
+        components?.queryItems = [URLQueryItem(name: "env", value: SourcePointClient.envParam)]
         return components?.url(relativeTo: baseUrl)
     }
 
