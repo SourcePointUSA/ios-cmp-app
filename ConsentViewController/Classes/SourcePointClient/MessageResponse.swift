@@ -20,6 +20,19 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
     case ccpa = 2
     case ios14 = 4
     case unknown
+
+    var campaignType: SPCampaignType {
+        switch self {
+        case .gdpr:
+            return .gdpr
+        case .ccpa:
+            return .ccpa
+        case .ios14:
+            return .ios14
+        default:
+            return .unknown
+        }
+    }
 }
 
 enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
@@ -56,7 +69,7 @@ struct Message: Codable, Equatable {
         self.category = category
         self.subCategory = subCategory
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        messageJson = try MessageJson(type: subCategory, decoder: try container.superDecoder(forKey: .messageJson))
+        messageJson = try MessageJson(type: subCategory, campaignType: category.campaignType, decoder: try container.superDecoder(forKey: .messageJson))
     }
 }
 
@@ -82,12 +95,14 @@ extension MessageJson: Codable {
         self = .unknown
     }
 
-    init(type: MessageSubCategory, decoder: Decoder) throws {
+    init(type: MessageSubCategory, campaignType: SPCampaignType, decoder: Decoder) throws {
         switch type {
         case .NativePMOTT:
             self = .nativePM(try PrivacyManagerViewData(from: try SPNativeView(from: decoder)))
         case .NativeInApp:
-            self = .native(try SPNativeMessage(from: decoder))
+            let nativeMessage = try SPNativeMessage(from: decoder)
+            nativeMessage.campaignType = campaignType
+            self = .native(nativeMessage)
         default:
             self = .web(try SPJson(from: decoder))
         }
