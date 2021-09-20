@@ -10,12 +10,33 @@ import XCTest
 import Nimble
 import Quick
 
+extension DispatchTimeInterval {
+    func toDouble() -> Double? {
+        var result: Double? = 0
+        switch self {
+        case .seconds(let value):
+            result = Double(value)
+        case .milliseconds(let value):
+            result = Double(value)*0.001
+        case .microseconds(let value):
+            result = Double(value)*0.000001
+        case .nanoseconds(let value):
+            result = Double(value)*0.000000001
+        case .never:
+            result = nil
+        @unknown default:
+            result = nil
+        }
+        return result
+    }
+}
+
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
 /// a certain amount of time. 20 seconds by default
 public func showUp() -> Predicate<XCUIElement> {
     return Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: Nimble.AsyncDefaults.Timeout))
+        return PredicateStatus(bool: actual.waitForExistence(timeout: Nimble.AsyncDefaults.timeout.toDouble() ?? 20.0))
     }
 }
 
@@ -34,7 +55,7 @@ public func disappear() -> Predicate<XCUIElement> {
     return Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual, handler: nil)
-        QuickSpec.current.waitForExpectations(timeout: Nimble.AsyncDefaults.Timeout)
+        QuickSpec.current.waitForExpectations(timeout: Double(Nimble.AsyncDefaults.timeout.toDouble() ?? 20.0))
         return PredicateStatus(bool: !actual.exists)
     }
 }
