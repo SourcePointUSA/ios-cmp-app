@@ -9,20 +9,12 @@
 import UIKit
 import Foundation
 
-@objc public protocol GDPRMessageUIDelegate {
-    var consentDelegate: SPDelegate? { get }
-    func loadMessage(fromUrl url: URL)
-    func loadPrivacyManager()
-}
-
-@objcMembers public class SPNativeMessageViewController: SPMessageViewController {
+@objcMembers public class SPNativeMessageViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var showOptionsButton: UIButton!
     @IBOutlet weak var rejectButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
-
-    var shouldCallUIDisappearOnDelegate = true // swiftlint:disable:this weak_delegate
 
     @IBAction func onShowOptionsTap(_ sender: Any) {
         showPrivacyManager()

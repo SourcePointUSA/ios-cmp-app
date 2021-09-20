@@ -31,7 +31,7 @@ protocol SPNativePrivacyManagerHome {
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
-    var categories: [GDPRCategory] { pmData.categories ?? [] }
+    var categories: [GDPRCategory] = []
     var vendorGrants: SPGDPRVendorGrants?
     let cellReuseIdentifier = "cell"
 
