@@ -10,27 +10,28 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
-    var messageController: SPNativeMessageViewController?
+    var messageController: SPNativeMessageViewController!
     var activityIndicator = UIActivityIndicatorView(style: .gray)
 
-    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
+    lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
-        propertyId: 7094,
-        propertyName: try! SPPropertyName("tcfv2.mobile.demo"),
-        PMId: "179657",
-        campaignEnv: .Public,
-        consentDelegate: self
+        propertyName: try! SPPropertyName("andre.native"),
+        campaigns: SPCampaigns(
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign(),
+            ios14: SPCampaign()
+        ),
+        delegate: self
     )}()
 
     @IBAction func onSettingsTap(_ sender: Any) {
-        consentViewController.loadPrivacyManager()
+        consentManager.loadGDPRPrivacyManager(withId: "545465")
         showActivityIndicator(on: view)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        consentViewController.privacyManagerTab = .Vendors
-        consentViewController.loadNativeMessage(forAuthId: nil)
+        consentManager.loadMessage()
     }
 }
 
