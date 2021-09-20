@@ -200,7 +200,8 @@ class SourcePointClient: SourcePointProtocol {
             "env": SourcePointClient.envParam,
             "consentLanguage": consentLanguage.rawValue,
             "propertyId": propertyId,
-            "messageId": messageId
+            "messageId": messageId,
+            "includeData": "{\"categories\": {\"type\": \"RecordString\"}}"
         ])!
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
