@@ -19,6 +19,9 @@ import UIKit
     /// called when there's a consent Message to be shown
     @objc func onSPUIReady(_ controller: UIViewController)
 
+    /// called when the native message object is received and ready to be used
+    @objc func onSPNativeMessageReady(_ message: SPNativeMessage)
+
     /// called when the SP UI is finished and can be dismissed
     @objc func onSPUIFinished(_ controller: UIViewController)
 

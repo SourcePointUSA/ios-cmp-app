@@ -66,6 +66,10 @@ class ViewController: UIViewController {
 
 // MARK: - SPDelegate implementation
 extension ViewController: SPDelegate {
+    func onSPNativeMessageReady(_ message: SPNativeMessage) {
+        // no-op
+    }
+
     func onSPUIReady(_ controller: SPMessageViewController) {
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
