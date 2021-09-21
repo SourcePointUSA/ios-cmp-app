@@ -48,7 +48,9 @@ class AuthIDUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
+            if self.app.backButton.exists {
+                self.app.backButton.forceTapElement()
+            }
             expect(self.app.propertyList).to(showUp())
             if self.app.propertyItem.exists {
                 self.app.propertyItem.swipeLeft()
@@ -70,7 +72,9 @@ class AuthIDUITests: QuickSpec {
             expect(self.app.consentMessage).to(showUp())
             self.app.acceptAllButton.forceTapElement()
             expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
+            if self.app.backButton.exists {
+                self.app.backButton.forceTapElement()
+            }
             expect(self.app.propertyList).to(showUp())
             self.app.addPropertyButton.tap()
             expect(self.app.newProperty).to(showUp())

@@ -82,7 +82,9 @@ class PMAsFirstLayerMessageUITests: QuickSpec {
             self.app.swipeDown()
             self.app.acceptAllButton.forceTapElement()
             expect(self.app.propertyDebugInfo).to(showUp())
-            self.app.backButton.tap()
+            if self.app.backButton.exists {
+                self.app.backButton.forceTapElement()
+            }
             expect(self.app.propertyList).to(showUp())
             self.app.propertyItem.tap()
             expect(self.app.privacyManager).to(showUp())
