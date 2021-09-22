@@ -123,6 +123,7 @@
 		826D31B3249A71E20026A6B9 /* ConnectivityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31B2249A71E20026A6B9 /* ConnectivityMock.swift */; };
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
+		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* ConsentsProfileSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* ConsentsProfileSpec.swift */; };
 		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
@@ -387,6 +388,7 @@
 		826D31B2249A71E20026A6B9 /* ConnectivityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectivityMock.swift; path = Helpers/ConnectivityMock.swift; sourceTree = "<group>"; };
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignEnvSpec.swift; sourceTree = "<group>"; };
+		829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
 		829DA56325D5573800612517 /* ConsentsProfileSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentsProfileSpec.swift; sourceTree = "<group>"; };
 		82A99CC2255D956400A85024 /* 404.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = 404.html; sourceTree = "<group>"; };
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -1209,6 +1211,7 @@
 				82D8FEE723DC753500F28D74 /* Assets.xcassets */,
 				82D8FEE923DC753500F28D74 /* LaunchScreen.storyboard */,
 				82D8FEEC23DC753500F28D74 /* Info.plist */,
+				829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */,
 			);
 			path = NativeMessageExample;
 			sourceTree = "<group>";
@@ -2408,6 +2411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82D8FEE323DC753400F28D74 /* ViewController.swift in Sources */,
+				829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */,
 				82D8FEDF23DC753400F28D74 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

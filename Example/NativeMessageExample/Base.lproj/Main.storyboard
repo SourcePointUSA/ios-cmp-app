@@ -1,78 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JUi-0i-Bhg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TG3-w2-33x">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
-        <scene sceneID="mnz-es-sRY">
-            <objects>
-                <navigationController id="JUi-0i-Bhg" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RNy-Z6-r8z">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="J1c-pa-SCq"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XBY-Qt-13C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-901" y="68"/>
-        </scene>
         <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <scene sceneID="CGu-8I-mBX">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="NativeMessageExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <viewController id="TG3-w2-33x" customClass="ViewController" customModule="SPGDPRExampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uk4-fP-ngi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wph-uU-HY6">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="phM-Zx-bbX">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNB-Xs-VR2">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="ExampleAppTitle"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mPF-6H-Zqt">
-                                        <rect key="frame" x="0.0" y="41" width="414" height="733"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mfP-4b-ICA">
+                                        <rect key="frame" x="169" y="0.0" width="76.5" height="121"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDFA:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzt-Nu-3Iv">
+                                                <rect key="frame" x="0.0" y="0.0" width="57.5" height="121"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VeV-bq-caQ">
+                                                <rect key="frame" x="65.5" y="0.0" width="11" height="121"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lwi-YL-LOd">
+                                        <rect key="frame" x="136.5" y="129" width="141" height="121.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Vendor:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="430-Jk-Ao0">
+                                                <rect key="frame" x="0.0" y="0.0" width="122" height="121.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6P-eE-beP">
+                                                <rect key="frame" x="130" y="0.0" width="11" height="121.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpc-vL-wdf">
+                                        <rect key="frame" x="129" y="258.5" width="156" height="121"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <state key="normal" title="Accept My Vendor"/>
+                                        <connections>
+                                            <action selector="onAcceptMyVendorTap:" destination="TG3-w2-33x" eventType="touchUpInside" id="2EL-ot-cpu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ie1-nJ-GkQ">
+                                        <rect key="frame" x="109" y="387.5" width="196" height="121"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <state key="normal" title="GDPR Privacy Manager"/>
+                                        <connections>
+                                            <action selector="onGDPRPrivacyManagerTap:" destination="TG3-w2-33x" eventType="touchUpInside" id="M3b-3g-PlQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yeY-8R-153">
+                                        <rect key="frame" x="110" y="516.5" width="194" height="121"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <state key="normal" title="CPPA Privacy Manager"/>
+                                        <connections>
+                                            <action selector="onCCPAPrivacyManagerTap:" destination="TG3-w2-33x" eventType="touchUpInside" id="kaZ-f6-7LV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njq-nA-Rxu" userLabel="Network Calls">
+                                        <rect key="frame" x="148.5" y="645.5" width="117" height="121.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <state key="normal" title="Network Calls"/>
+                                        <connections>
+                                            <action selector="onNetworkCallsTap:" destination="TG3-w2-33x" eventType="touchUpInside" id="0D1-YO-wtU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pa-iO-h3Y">
+                                        <rect key="frame" x="158" y="775" width="98" height="121"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="clearConsentButton"/>
+                                        <state key="normal" title="Clear Consent">
+                                            <color key="titleColor" systemColor="systemRedColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onClearConsentTap:" destination="TG3-w2-33x" eventType="touchUpInside" id="3bJ-o8-FtN"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="1Pa-iO-h3Y" firstAttribute="height" secondItem="njq-nA-Rxu" secondAttribute="height" id="BEg-dH-Sp6"/>
+                                    <constraint firstItem="yeY-8R-153" firstAttribute="height" secondItem="mfP-4b-ICA" secondAttribute="height" id="Qgi-9F-pQ1"/>
+                                    <constraint firstItem="xpc-vL-wdf" firstAttribute="height" secondItem="yeY-8R-153" secondAttribute="height" id="diF-ea-wdI"/>
+                                    <constraint firstItem="1Pa-iO-h3Y" firstAttribute="height" secondItem="mfP-4b-ICA" secondAttribute="height" id="fxQ-Eb-op5"/>
+                                    <constraint firstItem="lwi-YL-LOd" firstAttribute="height" secondItem="mfP-4b-ICA" secondAttribute="height" id="g9r-jD-y4z"/>
+                                    <constraint firstItem="Ie1-nJ-GkQ" firstAttribute="height" secondItem="mfP-4b-ICA" secondAttribute="height" id="uW7-4h-Ctq"/>
+                                </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="28A-Hs-R4T"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wph-uU-HY6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6XT-Mn-pJG"/>
-                            <constraint firstItem="wph-uU-HY6" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="6mI-Eq-2Tg"/>
-                            <constraint firstItem="wph-uU-HY6" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" id="qmV-K8-HeK"/>
-                            <constraint firstItem="wph-uU-HY6" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="wxA-Bi-ShK"/>
+                            <constraint firstItem="phM-Zx-bbX" firstAttribute="centerY" secondItem="uk4-fP-ngi" secondAttribute="centerY" id="55t-q9-Ufw"/>
+                            <constraint firstItem="phM-Zx-bbX" firstAttribute="width" secondItem="uk4-fP-ngi" secondAttribute="width" id="6sZ-qB-WKS"/>
+                            <constraint firstItem="phM-Zx-bbX" firstAttribute="centerX" secondItem="uk4-fP-ngi" secondAttribute="centerX" id="YXi-aF-xcQ"/>
+                            <constraint firstItem="phM-Zx-bbX" firstAttribute="height" secondItem="uk4-fP-ngi" secondAttribute="height" id="rgO-ST-sEg"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bz5-O4-B1I">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="Jb7-g2-fI9">
-                            <connections>
-                                <action selector="onSettingsTap:" destination="BYZ-38-t0r" id="ujG-Hm-qdQ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <connections>
+                        <outlet property="acceptMyVendorButton" destination="xpc-vL-wdf" id="rJ0-Ep-raV"/>
+                        <outlet property="ccpaPMButton" destination="yeY-8R-153" id="vvm-AW-NAP"/>
+                        <outlet property="gdprPMButton" destination="Ie1-nJ-GkQ" id="HKr-3q-NBP"/>
+                        <outlet property="idfaStatusLabel" destination="VeV-bq-caQ" id="143-GX-oJ2"/>
+                        <outlet property="myVendorAcceptedLabel" destination="P6P-eE-beP" id="LUJ-9t-FBA"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yx5-ai-BsB" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-70" y="68"/>
+            <point key="canvasLocation" x="104.34782608695653" y="61.956521739130437"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

@@ -38,7 +38,6 @@
 		06BCDAA42193C8C277D80D39CD84E63D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535B2B0942C1CE9BC7A7668A890782D /* Colors.swift */; };
 		06C7909EE075B5131D7E651E1FC960BC /* SPCampaigns.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEAA9CBD0F02E7494381B5EE43405E5 /* SPCampaigns.swift */; };
 		0940909FA4DB1C7CECCA8462BCA2AB92 /* SPURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93597ACC9433B9C6159E4E3CC7D38A29 /* SPURLExtensions.swift */; };
-		094F02AE1007350BF4679647800F758A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6308A7EB527C21AC5ECCE44CEB872D78 /* Foundation.framework */; };
 		096A350DACDDDFF8805FDAEBE86EC2F6 /* NimbleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4C0A5C1CC2BDF3540D0167EF04EB20 /* NimbleEnvironment.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		0A363AD0A93A6F9E8961F52B10580718 /* NMBExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7410C9340F798BA4CD33FBCBE3A69F6 /* NMBExpectation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		0ACA109162A3C4C7E435BEFF4D25267C /* SPNativeMessageViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 7DBD110F8DD732F742A702EFCF94EB4C /* SPNativeMessageViewController.xib */; };
@@ -52,6 +51,7 @@
 		0F64FDE732BCDA205347FE0073E74583 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850FE9DE7C22CC409F9540DA3C9E689F /* MessageRequest.swift */; };
 		102F4487BC4ADC3C2B56A0470E0A9468 /* IQKeyboardManagerConstantsInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF1E9B02FD5F37C52F0D8FEF77AF622 /* IQKeyboardManagerConstantsInternal.swift */; };
 		104C19355074D8F5F7830459D75174C3 /* SPGDPRCategoryDetailsViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = D424913DD46D322A792B21BB4DBD91C1 /* SPGDPRCategoryDetailsViewController.xib */; };
+		10B276F10E818B48D4AD4E024A911C95 /* Pods-NativeMessageExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 02F707564C8DF380734E2A48F75DD02B /* Pods-NativeMessageExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1126E10683633A8503EE54632EE12803 /* Contain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F474DCD49D21C320D22EEF3CFDD7E546 /* Contain.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		113CB0649F1C41E6358C27C4DC19D0A7 /* XCTestObservationCenter+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2949482C6C51750D3C292F28D6268E /* XCTestObservationCenter+Register.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		118C98D2F322104354175D46B44BA587 /* SPJSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = DBAB46AB5DFD64829E7B868DB369445B /* SPJSReceiver.js */; };
@@ -98,7 +98,6 @@
 		2FB4FB84F4A55808F7CCA5CA29958483 /* SPNativeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F145BC06F1C76CF5420149D13D0A4E1E /* SPNativeScreenViewController.swift */; };
 		31DC0069F8270D2E5488C5C57A8CAAB9 /* SPPMHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE59E23C2ACC15CA456FCB102A5739 /* SPPMHeader.swift */; };
 		31F310A182C07209B212AC43C4AD699E /* CwlCatchException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E3D29332BF95447EEA329951E83D06 /* CwlCatchException.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		32BD1B0FF8C858E0391C531727C41B54 /* Pods-NativeMessageExample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E1637C679318777FF815FD69D7C0809 /* Pods-NativeMessageExample-dummy.m */; };
 		33483C1C427390BED308CBAB3EEEE277 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25655C873B950579DD6EB9E0FFD61F7 /* CoreGraphics.framework */; };
 		3368DDBF82646BF7FC5A5B3F72A656B2 /* IDFAStatusReportRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191779D6EED6DB847963964D2174067D /* IDFAStatusReportRequest.swift */; };
 		339B0644BE902CAA6F0FE18D1B269810 /* SPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5E46A08508D98C8195566992115B1F /* SPUserDefaults.swift */; };
@@ -207,6 +206,7 @@
 		7E582C9726C1D22612A831D51A65D9A0 /* SimpleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F153E6D3D4F0A6DBDD64E53ED9639D6 /* SimpleClient.swift */; };
 		7E8A1DE507DED331DC3FDE933BE6ACD2 /* SPCCPAManagePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4903A0D43AF8A530D693EF22F83D5E /* SPCCPAManagePreferenceViewController.swift */; };
 		7EAD00A8354E236B90BB8C3C545EE24D /* GDPRPMConsentSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EB17DFE2981E65885E954DD31A209C /* GDPRPMConsentSnapshot.swift */; };
+		7F18F06B85D1F082DF2145FCC2472AA9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6308A7EB527C21AC5ECCE44CEB872D78 /* Foundation.framework */; };
 		7F23489499DEC789F531CCB422A19351 /* RequestTitleSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3469C7E807ECD3EBBABA9D37395A86 /* RequestTitleSectionView.swift */; };
 		7F56F757854902572C4C0DA7A8C10B6A /* Barcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 99B3608C0EB9749E7C6CA2BF83153481 /* Barcode.png */; };
 		7FA57A4E6F31FBD1C126E7689E1AD61C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81691695074ECFAEC61F3E76C9A45F90 /* Configuration.swift */; };
@@ -227,6 +227,7 @@
 		83D0D27B2D9A1B1E4ECF8C918FBEBEAB /* GDPRPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764039EAB7179801C7F009950C4EEFBB /* GDPRPrivacyManagerViewResponse.swift */; };
 		84319B221E84872D44C036C7281C0D28 /* SPGDPRConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F24A1694D5061C3B095B7D52F2B5C /* SPGDPRConsent.swift */; };
 		8510469EB9B18B318478019A11F7D784 /* SatisfyAllOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3074969AAD0BDDC85342FACB2F9633 /* SatisfyAllOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
+		8601B9314FB27EEA4572FE74D121E506 /* Pods-NativeMessageExample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E1637C679318777FF815FD69D7C0809 /* Pods-NativeMessageExample-dummy.m */; };
 		86D9716ADE347B2916F9CB715A3B26D5 /* CwlCatchException.m in Sources */ = {isa = PBXBuildFile; fileRef = A071D42E46DC9D433034D044D8C5F07F /* CwlCatchException.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		882CA00620E01DE2950BB4003A0438EE /* SPUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6C5363F2C72672232B389BDD372131 /* SPUIColor.swift */; };
 		882DD6743A31EB35A727B7A48A19A41A /* SPWebMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6CC038555D866C5266F61A47E90FAA /* SPWebMessageViewController.swift */; };
@@ -346,7 +347,6 @@
 		DD6E2C60631B139A84E11AB3F6D8F8AE /* SPGDPRVendorDetailsViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = B0A845D83484EC3A2D5F2DE65A4500DE /* SPGDPRVendorDetailsViewController.xib */; };
 		DDE417BA9D13D2BB98316DF0512A1944 /* IQBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2A1ECE0C86594AA13FB14D53E27211 /* IQBarButtonItem.swift */; };
 		DF1A68FD16B42A4C825153B2BB24BE01 /* MessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375C17F608C006404198ADB469E97C5F /* MessageResponse.swift */; };
-		E054B02684F99B3659C2AD379940FCA5 /* Pods-NativeMessageExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 02F707564C8DF380734E2A48F75DD02B /* Pods-NativeMessageExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E0CA5DEBAA68E8E36CFFADC80CA71B17 /* Postman.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11CAAF82FA32A51D58150C3548738DC /* Postman.swift */; };
 		E0E2E724288F13C852B9DB0C323ABBE4 /* BeAnInstanceOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C1F0F31FFA602DE6765E8D98999BD9 /* BeAnInstanceOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		E1F708C047C1B3C52B13F4D322D15F69 /* Equal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9062295F13D75C4901A7A927D481ECA7 /* Equal.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -421,13 +421,6 @@
 			remoteGlobalIDString = 6F13695E06195A78EA8A95F8C7ED0D2F;
 			remoteInfo = Nimble;
 		};
-		2A19D984B6F35A0C6FFA8BB6920C90AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 84E1147DCA59477E2E390B109585DCAF;
-			remoteInfo = "ConsentViewController-iOS";
-		};
 		38033429A2F5A1E3DD030A9BA260C786 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -441,6 +434,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5D0718052BFEE502C9D9BEC44BDCFA76;
 			remoteInfo = "ConsentViewController-tvOS-ConsentViewController";
+		};
+		4E71B2645F3A6F487465E3A3DD34B179 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84E1147DCA59477E2E390B109585DCAF;
+			remoteInfo = "ConsentViewController-iOS";
 		};
 		5AA7A2993146A806F3FB1D012F395410 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -504,6 +504,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = B490E7485944099E16C9CBD79119D1D4;
 			remoteInfo = IQKeyboardManagerSwift;
+		};
+		B04323E6B76BB2E2D741AE153B9E2A04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E73ED39761329414C06DD4486C5058E;
+			remoteInfo = Wormholy;
 		};
 		B20336D97B53703EC361401F463CCB09 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1119,6 +1126,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8036C063576403ACF893011D934A4DBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F18F06B85D1F082DF2145FCC2472AA9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87A84F59BA24E9E42F6ABE4315C589A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1131,14 +1146,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C93CEF84FE3C94714717CE8E4036BF48 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8C9FE4965021A39FE87864F6233C460C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				094F02AE1007350BF4679647800F758A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2051,14 +2058,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C71A80ABB53624B5BBD7C3DDA009E2F /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E054B02684F99B3659C2AD379940FCA5 /* Pods-NativeMessageExample-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8EA28D842BC003811FDEEE44E2271D5E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2086,6 +2085,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AA7E35284F595D392CA651F3F8C7455 /* Pods-ObjC-ExampleAppUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		945867FE9A8848E9671B8243033151B5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10B276F10E818B48D4AD4E024A911C95 /* Pods-NativeMessageExample-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2213,17 +2220,18 @@
 		};
 		2CC86029FB647CA7C509132DAFAD9BC8 /* Pods-NativeMessageExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 99056D19D9F71A78518D62B5AA3E838D /* Build configuration list for PBXNativeTarget "Pods-NativeMessageExample" */;
+			buildConfigurationList = 533693983C1AC80E10E890B683A8BE75 /* Build configuration list for PBXNativeTarget "Pods-NativeMessageExample" */;
 			buildPhases = (
-				8C71A80ABB53624B5BBD7C3DDA009E2F /* Headers */,
-				D256672C9FCB72676A7352F727426C85 /* Sources */,
-				8C9FE4965021A39FE87864F6233C460C /* Frameworks */,
-				3CCDC62F5AD4A537A29591E157DAFC1A /* Resources */,
+				945867FE9A8848E9671B8243033151B5 /* Headers */,
+				BE2E7789A0918A8783941B019BA73C0E /* Sources */,
+				8036C063576403ACF893011D934A4DBB /* Frameworks */,
+				C47FCB2F1094A5D44D84E184DF605C6B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C4AC220A31DE254C818CEB4EA41CDA93 /* PBXTargetDependency */,
+				68F13072CBC4F2500ACF062F036F3C6E /* PBXTargetDependency */,
+				D93AF2C8FCB7D43F5FB2DCE84F0354DF /* PBXTargetDependency */,
 			);
 			name = "Pods-NativeMessageExample";
 			productName = "Pods-NativeMessageExample";
@@ -2613,13 +2621,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3CCDC62F5AD4A537A29591E157DAFC1A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		3E646301AA36BE2BA4DF464F1FF52370 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2696,6 +2697,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF263AEF8E39C81518D032DDEBBEA887 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C47FCB2F1094A5D44D84E184DF605C6B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3069,6 +3077,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BE2E7789A0918A8783941B019BA73C0E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8601B9314FB27EEA4572FE74D121E506 /* Pods-NativeMessageExample-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C255C8D3095A1971F58C3362FFCFAF2B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3090,14 +3106,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CFCC3DC396ACF9521B8EC0E66756344 /* Pods-SourcePointMetaApp-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D256672C9FCB72676A7352F727426C85 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				32BD1B0FF8C858E0391C531727C41B54 /* Pods-NativeMessageExample-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3196,6 +3204,12 @@
 			target = 6F13695E06195A78EA8A95F8C7ED0D2F /* Nimble */;
 			targetProxy = 293E02F7A760BB700AB5AF814EE4EB4C /* PBXContainerItemProxy */;
 		};
+		68F13072CBC4F2500ACF062F036F3C6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ConsentViewController-iOS";
+			target = 84E1147DCA59477E2E390B109585DCAF /* ConsentViewController-iOS */;
+			targetProxy = 4E71B2645F3A6F487465E3A3DD34B179 /* PBXContainerItemProxy */;
+		};
 		77B6CE85FA6F72E12C28D10827B4BEA7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Wormholy;
@@ -3250,12 +3264,6 @@
 			target = 6F13695E06195A78EA8A95F8C7ED0D2F /* Nimble */;
 			targetProxy = 8CED913C9A590AF6B799DB8A4010804F /* PBXContainerItemProxy */;
 		};
-		C4AC220A31DE254C818CEB4EA41CDA93 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ConsentViewController-iOS";
-			target = 84E1147DCA59477E2E390B109585DCAF /* ConsentViewController-iOS */;
-			targetProxy = 2A19D984B6F35A0C6FFA8BB6920C90AD /* PBXContainerItemProxy */;
-		};
 		C73E5978E293DBF1F9AC87AD69607CB7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IQKeyboardManagerSwift;
@@ -3273,6 +3281,12 @@
 			name = Nimble;
 			target = 6F13695E06195A78EA8A95F8C7ED0D2F /* Nimble */;
 			targetProxy = D3E9421A9154E5A1A09737C0F64B169B /* PBXContainerItemProxy */;
+		};
+		D93AF2C8FCB7D43F5FB2DCE84F0354DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Wormholy;
+			target = 3E73ED39761329414C06DD4486C5058E /* Wormholy */;
+			targetProxy = B04323E6B76BB2E2D741AE153B9E2A04 /* PBXContainerItemProxy */;
 		};
 		E4CB19C32B6508E6ACC080FD58E05ABD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3771,6 +3785,44 @@
 			};
 			name = Release;
 		};
+		5FB2C7E7B04A7645DBE9CBBA1E9CE8F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 181F887E04552E908AB420797B8F2361 /* Pods-NativeMessageExample.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		66B6CC184816F770FDCD09F04E52B0C7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 257F3037DCD42174A316974E0F5CB59F /* ConsentViewController-tvOS.release.xcconfig */;
@@ -3812,6 +3864,43 @@
 				);
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-AuthExample/Pods-AuthExample.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		75278DE9A89AC520FB5D49B996307969 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAB68BF6A3CA39F0F3E01572F0C09578 /* Pods-NativeMessageExample.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -4502,44 +4591,6 @@
 			};
 			name = Release;
 		};
-		CC8FD78EA76C6E374DA0EF73E0EC8C44 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 181F887E04552E908AB420797B8F2361 /* Pods-NativeMessageExample.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		CDF1110A3064B9ED1D81A1825BA365D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B6FED877AB4622A2635A9951C8DAFB7C /* Pods-NativePMExampleApp.debug.xcconfig */;
@@ -4748,43 +4799,6 @@
 			};
 			name = Release;
 		};
-		F14AFA928FC1F64E597AA06CEAF34DA1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAB68BF6A3CA39F0F3E01572F0C09578 /* Pods-NativeMessageExample.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4860,6 +4874,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		533693983C1AC80E10E890B683A8BE75 /* Build configuration list for PBXNativeTarget "Pods-NativeMessageExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75278DE9A89AC520FB5D49B996307969 /* Debug */,
+				5FB2C7E7B04A7645DBE9CBBA1E9CE8F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6889553EB5F6B3A0C80B12014F042D6F /* Build configuration list for PBXNativeTarget "Pods-SourcePointMetaApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -4892,15 +4915,6 @@
 			buildConfigurations = (
 				3D9543BCB95FA49B643F0FA3F7C9BB6D /* Debug */,
 				35B7B676B4DC30A8EEACF85A9FBC275C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		99056D19D9F71A78518D62B5AA3E838D /* Build configuration list for PBXNativeTarget "Pods-NativeMessageExample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F14AFA928FC1F64E597AA06CEAF34DA1 /* Debug */,
-				CC8FD78EA76C6E374DA0EF73E0EC8C44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
