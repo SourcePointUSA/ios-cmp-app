@@ -92,14 +92,14 @@ import Foundation
 
     @IBAction func onAcceptTap(_ sender: Any) {
         action(
-            SPAction(type: .AcceptAll, id: nil, campaignType: campaignType),
+            SPAction(type: .AcceptAll, campaignType: campaignType),
             from: self
         )
     }
 
     @IBAction func onRejectTap(_ sender: Any) {
         action(
-            SPAction(type: .RejectAll, id: nil, campaignType: campaignType),
+            SPAction(type: .RejectAll, campaignType: campaignType),
             from: self
         )
     }
@@ -107,7 +107,7 @@ import Foundation
     @IBAction func onSaveAndExitTap(_ sender: Any) {
         let actionType: SPActionType = (snapshot?.consentStatus == .RejectedAll) ? .RejectAll : .AcceptAll
         action(
-            SPAction(type: actionType, id: nil, campaignType: campaignType),
+            SPAction(type: actionType, campaignType: campaignType),
             from: self
         )
     }
@@ -216,11 +216,11 @@ import Foundation
 }
 
 extension SPCCPANativePrivacyManagerViewController: SPMessageUIDelegate {
-    func loaded(_ controller: SPMessageViewController) {
+    func loaded(_ controller: UIViewController) {
         messageUIDelegate?.loaded(self)
     }
 
-    func action(_ action: SPAction, from controller: SPMessageViewController) {
+    func action(_ action: SPAction, from controller: UIViewController) {
         dismiss(animated: false) {
             self.messageUIDelegate?.action(action, from: controller)
         }
@@ -230,7 +230,7 @@ extension SPCCPANativePrivacyManagerViewController: SPMessageUIDelegate {
         messageUIDelegate?.onError(error)
     }
 
-    func finished(_ vcFinished: SPMessageViewController) {}
+    func finished(_ vcFinished: UIViewController) {}
 }
 
 // MARK: UITableViewDataSource

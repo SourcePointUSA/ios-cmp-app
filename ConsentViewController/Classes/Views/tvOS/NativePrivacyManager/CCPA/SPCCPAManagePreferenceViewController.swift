@@ -73,13 +73,12 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
-        messageUIDelegate?.action(SPAction(type: .AcceptAll, id: nil, campaignType: campaignType), from: self)
+        messageUIDelegate?.action(SPAction(type: .AcceptAll, campaignType: campaignType), from: self)
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
-            id: nil,
             campaignType: campaignType,
             pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
         ), from: self)

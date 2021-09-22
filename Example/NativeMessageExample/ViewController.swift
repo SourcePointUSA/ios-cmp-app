@@ -12,6 +12,14 @@ import ConsentViewController
 import UIKit
 import ConsentViewController
 
+let accountId = 22
+let propertyName = try! SPPropertyName("andre.native")
+let campaigns = SPCampaigns(
+    gdpr: SPCampaign(),
+    ccpa: SPCampaign(),
+    ios14: SPCampaign()
+)
+
 class ViewController: UIViewController {
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     let myVendorId = "5ff4d000a228633ac048be41"
@@ -55,13 +63,9 @@ class ViewController: UIViewController {
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
-        accountId: 22,
-        propertyName: try! SPPropertyName("andre.native"),
-        campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
-            ios14: SPCampaign()
-        ),
+        accountId: accountId,
+        propertyName: propertyName,
+        campaigns: campaigns,
         delegate: self
     )}()
 
@@ -75,7 +79,12 @@ class ViewController: UIViewController {
 // MARK: SPDelegate implementation
 extension ViewController: SPDelegate {
     func onSPNativeMessageReady(_ message: SPNativeMessage) {
-        messageController = SPNativeMessageViewController(messageContents: message, sdkDelegate: consentManager)
+        messageController = SPNativeMessageViewController(
+            accountId: accountId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            messageContents: message,
+            sdkDelegate: consentManager)
         present(messageController, animated: true)
         removeSpinner()
     }

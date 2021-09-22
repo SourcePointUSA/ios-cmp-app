@@ -14,7 +14,7 @@ import Foundation
     public var timeout: TimeInterval = 10.0
 
     public func loadMessage() {
-        messageUIDelegate?.loaded(self)
+        messageUIDelegate?.loaded?(self)
     }
 
     public func loadPrivacyManager(url: URL) {
@@ -87,7 +87,7 @@ import Foundation
             try container.encode(choiceType, forKey: .choiceType)
         }
 
-        enum CodingKeys: String, CodingKey {
+        enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
             case text, style, customFields, choiceType, url
         }
     }

@@ -85,14 +85,14 @@ protocol SPNativePrivacyManagerHome {
 
     @IBAction func onAcceptTap(_ sender: Any) {
         action(
-            SPAction(type: .AcceptAll, id: nil, campaignType: campaignType),
+            SPAction(type: .AcceptAll, campaignType: campaignType),
             from: self
         )
     }
 
     @IBAction func onRejectTap(_ sender: Any) {
         action(
-            SPAction(type: .RejectAll, id: nil, campaignType: campaignType),
+            SPAction(type: .RejectAll, campaignType: campaignType),
             from: self
         )
     }
@@ -100,7 +100,6 @@ protocol SPNativePrivacyManagerHome {
     @IBAction func onSaveAndExitTap(_ sender: Any) {
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
-            id: nil,
             campaignType: campaignType,
             pmPayload: snapshot?.toPayload(language: .English, pmId: messageId).json() ?? SPJson()
         ), from: self)
@@ -215,11 +214,13 @@ protocol SPNativePrivacyManagerHome {
 }
 
 extension SPGDPRNativePrivacyManagerViewController: SPMessageUIDelegate {
-    func loaded(_ controller: SPMessageViewController) {
+    func loaded(_ message: SPNativeMessage) {}
+
+    func loaded(_ controller: UIViewController) {
         messageUIDelegate?.loaded(self)
     }
 
-    func action(_ action: SPAction, from controller: SPMessageViewController) {
+    func action(_ action: SPAction, from controller: UIViewController) {
         dismiss(animated: false) {
             self.messageUIDelegate?.action(action, from: controller)
         }
@@ -229,7 +230,7 @@ extension SPGDPRNativePrivacyManagerViewController: SPMessageUIDelegate {
         messageUIDelegate?.onError(error)
     }
 
-    func finished(_ vcFinished: SPMessageViewController) {}
+    func finished(_ vcFinished: UIViewController) {}
 }
 
 // MARK: UITableViewDataSource

@@ -28,22 +28,25 @@ import Foundation
 
     let message: SPNativeMessage
     weak var sdkDelegate: SPSDK?
-    lazy var consentManager: SPConsentManager = { SPConsentManager(
-        accountId: 22,
-        propertyName: try! SPPropertyName("andre.native"),
-        campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
-            ios14: SPCampaign()
-        ),
-        delegate: self
-    )}()
+    var consentManager: SPConsentManager!
 
-    public init(messageContents: SPNativeMessage, sdkDelegate: SPSDK) {
+    public init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        campaigns: SPCampaigns,
+        messageContents: SPNativeMessage,
+        sdkDelegate: SPSDK
+    ) {
         self.sdkDelegate = sdkDelegate
         message = messageContents
         super.init(nibName: "SPNativeMessageViewController", bundle: Bundle.framework)
         modalPresentationStyle = .overFullScreen
+        consentManager = SPConsentManager(
+            accountId: accountId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            delegate: self
+        )
     }
 
     public required init?(coder: NSCoder) {
@@ -61,8 +64,6 @@ import Foundation
 }
 
 extension SPNativeMessageViewController: SPDelegate {
-    public func onSPNativeMessageReady(_ message: SPNativeMessage) {}
-
     public func onAction(_ action: SPAction, from controller: UIViewController) {
         switch action.type {
         case .ShowPrivacyManager:
@@ -70,7 +71,7 @@ extension SPNativeMessageViewController: SPDelegate {
                let id = action.pmId {
                 consentManager.loadGDPRPrivacyManager(withId: id)
             } else {
-                /// TODO: show error message url / pm id is empty
+                // TODO: show error message url / pm id is empty
                 return
             }
         case .PMCancel, .Dismiss: break
@@ -92,7 +93,7 @@ extension SPNativeMessageViewController: SPDelegate {
     }
 }
 
-/// MARK: UI Related
+// MARK: UI Related
 extension SPNativeMessageViewController {
     func loadOrHideActionButton(actionType: SPActionType, button: UIButton) {
         if let action =  message.actions.first(where: { $0.choiceType == actionType }) {

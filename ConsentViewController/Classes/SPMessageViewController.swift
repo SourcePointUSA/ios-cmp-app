@@ -69,7 +69,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 }
 
 @objcMembers public class SPMessageViewController: UIViewController, SPMessageView {
-    public var messageUIDelegate: SPMessageUIDelegate?
+    public weak var messageUIDelegate: SPMessageUIDelegate?
     public var campaignType: SPCampaignType
     public var messageId: String = ""
     public var timeout: TimeInterval = 10.0

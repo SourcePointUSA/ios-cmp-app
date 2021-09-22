@@ -400,7 +400,7 @@ import Foundation
 extension SPConsentManager: SPMessageUIDelegate {
     public func loaded(_ message: SPNativeMessage) {
         DispatchQueue.main.async { [weak self] in
-            self?.delegate?.onSPNativeMessageReady(message)
+            self?.delegate?.onSPNativeMessageReady?(message)
         }
     }
 

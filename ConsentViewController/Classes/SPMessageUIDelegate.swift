@@ -10,7 +10,7 @@ import UIKit
 
 @objc public protocol SPMessageUIDelegate {
     func loaded(_ controller: UIViewController)
-    @objc(loadedWithNativeMessage:) func loaded(_ message: SPNativeMessage)
+    @objc(loadedWithNativeMessage:) optional func loaded(_ message: SPNativeMessage)
     func action(_ action: SPAction, from controller: UIViewController)
     func onError(_ error: SPError)
     func finished(_ vcFinished: UIViewController)
