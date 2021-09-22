@@ -11,7 +11,7 @@ import WebKit
 @objcMembers class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
     var webviewConfig: WKWebViewConfiguration? { nil }
     let url: URL
-    let contents: SPJson
+    let contents: Data
 
     lazy var webview: WKWebView? = {
         if let config = self.webviewConfig {
@@ -34,7 +34,7 @@ import WebKit
         return nil
     }()
 
-    init(url: URL, messageId: String, contents: SPJson, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?) {
+    init(url: URL, messageId: String, contents: Data, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?) {
         self.url = url
         self.contents = contents
         super.init(messageId: messageId, campaignType: campaignType, timeout: timeout, delegate: delegate)
@@ -165,7 +165,6 @@ import WebKit
         else { return nil }
         return SPAction(
             type: type,
-            id: body["id"]?.stringValue,
             campaignType: campaignType,
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: body["payload"] ?? SPJson(),
@@ -175,8 +174,7 @@ import WebKit
 
     func handleMessagePreload() {
         guard
-            let messageData = try? JSONSerialization.data(withJSONObject: contents.dictionaryValue as Any, options: .fragmentsAllowed),
-            let jsonString = String(data: messageData, encoding: .utf8) else {
+            let jsonString = String(data: contents, encoding: .utf8) else {
             messageUIDelegate?.onError(UnableToInjectMessageIntoRenderingApp(campaignType: campaignType))
             return
         }

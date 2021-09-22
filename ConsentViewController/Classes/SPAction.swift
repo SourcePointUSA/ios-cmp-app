@@ -40,16 +40,23 @@ import Foundation
 /// Action consists of `SPActionType` and an id. Those come from each action the user can take in the ConsentUI
 @objcMembers public class SPAction: NSObject {
     public var type: SPActionType
-    public let id: String?
-    public let campaignType: SPCampaignType?
+    public let campaignType: SPCampaignType
     public let consentLanguage: String?
     public var pmURL: URL?
+    public var pmId: String? {
+        if let url = pmURL {
+            return URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems?.first(where: {
+                $0.name == "message_id"
+            })?.value
+        }
+        return nil
+    }
     public var pmPayload: SPJson = SPJson()
     public var publisherData: [String: SPJson?] = [:]
 
     public override var description: String {
         """
-        SPAction(type: \(type), id: \(id ?? ""), consentLanguage: \(consentLanguage ?? ""), \
+        SPAction(type: \(type), consentLanguage: \(consentLanguage ?? ""), \
         payload: \(pmPayload), publisherData: \(String(describing: publisherData))
         """
     }
@@ -59,7 +66,6 @@ import Foundation
             return false
         }
         return other.type == type &&
-            other.id == id &&
             other.consentLanguage == consentLanguage &&
             other.pmURL == pmURL &&
             other.pmPayload == pmPayload &&
@@ -68,13 +74,11 @@ import Foundation
 
     public init(
         type: SPActionType,
-        id: String? = nil,
-        campaignType: SPCampaignType? = nil,
+        campaignType: SPCampaignType = .unknown,
         consentLanguage: String? = nil,
         pmPayload: SPJson = SPJson(),
         pmurl: URL? = nil) {
         self.type = type
-        self.id = id
         self.campaignType = campaignType
         self.consentLanguage = consentLanguage
         self.pmPayload = pmPayload

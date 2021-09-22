@@ -20,6 +20,19 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
     case ccpa = 2
     case ios14 = 4
     case unknown
+
+    var campaignType: SPCampaignType {
+        switch self {
+        case .gdpr:
+            return .gdpr
+        case .ccpa:
+            return .ccpa
+        case .ios14:
+            return .ios14
+        default:
+            return .unknown
+        }
+    }
 }
 
 enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
@@ -35,24 +48,61 @@ enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
     case unknown
 }
 
-enum Message: Equatable {
+struct Message: Codable, Equatable {
+    var messageJson: MessageJson
+    let categories: [GDPRCategory]?
+    let messageChoices: SPJson
+    let propertyId: Int
+    let language: String?
+    var category: MessageCategory = .unknown
+    var subCategory: MessageSubCategory = .unknown
+
+    enum CodingKeys: String, CodingKey {
+        case categories, language
+        case messageJson = "message_json"
+        case messageChoices = "message_choice"
+        case propertyId = "site_id"
+    }
+
+    init(category: MessageCategory, subCategory: MessageSubCategory, decoder: Decoder) throws {
+        try self.init(from: decoder)
+        self.category = category
+        self.subCategory = subCategory
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        messageJson = try MessageJson(type: subCategory, campaignType: category.campaignType, decoder: try container.superDecoder(forKey: .messageJson))
+    }
+}
+
+enum MessageJson: Equatable {
     case nativePM(_ message: PrivacyManagerViewData)
-    case native(_ message: SPJson)
+    case native(_ message: SPNativeMessage)
     case web(_ message: SPJson)
     case unknown
 }
 
-extension Message: Decodable {
+extension MessageJson: Codable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .web(let message):
+            try container.encode(message)
+        default:
+            try container.encodeNil()
+        }
+    }
+
     init(from decoder: Decoder) throws {
         self = .unknown
     }
 
-    init(type: MessageSubCategory, decoder: Decoder) throws {
+    init(type: MessageSubCategory, campaignType: SPCampaignType, decoder: Decoder) throws {
         switch type {
         case .NativePMOTT:
-            self = .nativePM(try PrivacyManagerViewData(from: try SPPrivacyManagerResponse(from: decoder)))
+            self = .nativePM(try PrivacyManagerViewData(from: try SPNativeView(from: decoder)))
         case .NativeInApp:
-            self = .native(try SPJson(from: decoder))
+            let nativeMessage = try SPNativeMessage(from: decoder)
+            nativeMessage.campaignType = campaignType
+            self = .native(nativeMessage)
         default:
             self = .web(try SPJson(from: decoder))
         }
@@ -123,7 +173,7 @@ extension Campaign: Decodable {
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
         userConsent = try Consent(from: try container.superDecoder(forKey: .userConsent))
         if let metaData = messageMetaData {
-            message = try Message(type: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
+            message = try Message(category: metaData.categoryId, subCategory: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
             url = try container.decodeIfPresent(URL.self, forKey: .url)
         }
     }
@@ -165,17 +215,15 @@ struct MessagesResponse: Decodable, Equatable {
 }
 
 struct MessageResponse: Equatable {
-    var message: Message?
-    let messageMetaData: MessageMetaData?
+    let message: Message
+    let messageMetaData: MessageMetaData
 }
 
 extension MessageResponse: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
-        messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
-        if let metaData = messageMetaData {
-            message = try Message(type: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
-        }
+        messageMetaData = try container.decode(MessageMetaData.self, forKey: .messageMetaData)
+        message = try Message(category: messageMetaData.categoryId, subCategory: messageMetaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
     }
 
     enum Keys: CodingKey {

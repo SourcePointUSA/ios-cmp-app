@@ -9,77 +9,48 @@
 import UIKit
 import Foundation
 
-@objc public protocol GDPRMessageUIDelegate {
-    var consentDelegate: SPDelegate? { get }
-    func loadMessage(fromUrl url: URL)
-    func loadPrivacyManager()
-}
-
-@objcMembers public class SPNativeMessageViewController: SPMessageViewController {
+@objcMembers public class SPNativeMessageViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var showOptionsButton: UIButton!
     @IBOutlet weak var rejectButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
 
-    var shouldCallUIDisappearOnDelegate = true // swiftlint:disable:this weak_delegate
-
     @IBAction func onShowOptionsTap(_ sender: Any) {
-        showPrivacyManager()
-        action(.ShowPrivacyManager)
+        onAction(SPAction(type: .ShowPrivacyManager, campaignType: message.campaignType), from: self)
     }
     @IBAction func onRejectTap(_ sender: Any) {
-        action(.RejectAll)
+        onAction(SPAction(type: .RejectAll, campaignType: message.campaignType), from: self)
     }
     @IBAction func onAcceptTap(_ sender: Any) {
-        action(.AcceptAll)
+        onAction(SPAction(type: .AcceptAll, campaignType: message.campaignType), from: self)
     }
 
-    let message: GDPRMessage
-    let consentViewController: GDPRMessageUIDelegate
+    let message: SPNativeMessage
+    weak var sdkDelegate: SPSDK?
+    var consentManager: SPConsentManager!
 
-    public init?(messageContents: GDPRMessage, consentViewController: GDPRMessageUIDelegate) {
+    public init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        campaigns: SPCampaigns,
+        messageContents: SPNativeMessage,
+        sdkDelegate: SPSDK
+    ) {
+        self.sdkDelegate = sdkDelegate
         message = messageContents
-        self.consentViewController = consentViewController
-        super.init(coder: NSCoder())
+        super.init(nibName: "SPNativeMessageViewController", bundle: Bundle.framework)
+        modalPresentationStyle = .overFullScreen
+        consentManager = SPConsentManager(
+            accountId: accountId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            delegate: self
+        )
     }
 
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func loadOrHideActionButton(actionType: SPActionType, button: UIButton) {
-        if let action =  message.actions.first(where: { message in message.choiceType == actionType }) {
-            button.setTitle(action.text, for: .normal)
-            button.setTitleColor(hexStringToUIColor(hex: action.style.color), for: .normal)
-            button.backgroundColor = hexStringToUIColor(hex: action.style.backgroundColor)
-            button.titleLabel?.font = UIFont(
-                name: action.style.fontFamily,
-                size: (CGFloat)(action.style.fontSize)
-            )
-        } else {
-            button.isHidden = true
-        }
-    }
-
-    func loadTitle(forAttribute attr: MessageAttribute, label: UILabel) {
-        label.text = attr.text
-        label.textColor = hexStringToUIColor(hex: attr.style.color)
-        label.backgroundColor = hexStringToUIColor(hex: attr.style.backgroundColor)
-        label.font = UIFont(
-            name: attr.style.fontFamily,
-            size: (CGFloat)(attr.style.fontSize)
-        )
-    }
-
-    func loadBody(forAttribute attr: MessageAttribute, textView: UITextView) {
-        textView.text = attr.text
-        textView.textColor = hexStringToUIColor(hex: attr.style.color)
-        textView.backgroundColor = hexStringToUIColor(hex: attr.style.backgroundColor)
-        textView.font = UIFont(
-            name: attr.style.fontFamily,
-            size: (CGFloat)(attr.style.fontSize)
-        )
     }
 
     override open func viewDidLoad() {
@@ -90,35 +61,71 @@ import Foundation
         loadOrHideActionButton(actionType: .RejectAll, button: rejectButton)
         loadOrHideActionButton(actionType: .ShowPrivacyManager, button: showOptionsButton)
     }
+}
 
-    func action(_ action: SPActionType) {
-        if let messageAction = message.actions.first(where: { message in message.choiceType == action }) {
-            let action = SPAction(type: messageAction.choiceType, id: String(messageAction.choiceId), consentLanguage: Locale.preferredLanguages[0].uppercased())
-            consentViewController.consentDelegate?.onAction(action, from: self)
+extension SPNativeMessageViewController: SPDelegate {
+    public func onAction(_ action: SPAction, from controller: UIViewController) {
+        switch action.type {
+        case .ShowPrivacyManager:
+            if let action = message.actions.first(where: {$0.choiceType == action.type}),
+               let id = action.pmId {
+                consentManager.loadGDPRPrivacyManager(withId: id)
+            } else {
+                // TODO: show error message url / pm id is empty
+                return
+            }
+        case .PMCancel, .Dismiss: break
+        default: sdkDelegate?.action(action, from: self)
         }
     }
 
-    func showPrivacyManager() {
-        consentViewController.loadPrivacyManager()
+    public func onSPUIReady(_ controller: UIViewController) {
+        controller.modalPresentationStyle = .overFullScreen
+        present(controller, animated: true)
     }
 
-    /// It transforms a Hexadecimal color string to UIColor
-    /// - Parameters:
-    ///   - hex: `String` in the format of `#ffffff` (Hexeximal color representation)
-    ///
-    /// Taken from https://stackoverflow.com/a/27203691/1244883)
-    func hexStringToUIColor(hex: String) -> UIColor? {
-        let colorString = String(hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased().dropFirst())
+    public func onSPUIFinished(_ controller: UIViewController) {
+        dismiss(animated: true)
+    }
 
-        if colorString.count != 6 { return nil }
+    public func onError(error: SPError) {
+        print(error)
+    }
+}
 
-        var rgbValue: UInt64 = 0
-        Scanner(string: colorString).scanHexInt64(&rgbValue)
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
+// MARK: UI Related
+extension SPNativeMessageViewController {
+    func loadOrHideActionButton(actionType: SPActionType, button: UIButton) {
+        if let action =  message.actions.first(where: { $0.choiceType == actionType }) {
+            button.setTitle(action.text, for: .normal)
+            button.setTitleColor(UIColor(hexString: action.style.color), for: .normal)
+            button.backgroundColor = UIColor(hexString: action.style.backgroundColor)
+            button.titleLabel?.font = UIFont(
+                name: action.style.fontFamily,
+                size: (CGFloat)(action.style.fontSize)
+            )
+        } else {
+            button.isHidden = true
+        }
+    }
+
+    func loadTitle(forAttribute attr: SPNativeMessage.Attribute, label: UILabel) {
+        label.text = attr.text
+        label.textColor = UIColor(hexString: attr.style.color)
+        label.backgroundColor = UIColor(hexString: attr.style.backgroundColor)
+        label.font = UIFont(
+            name: attr.style.fontFamily,
+            size: (CGFloat)(attr.style.fontSize)
+        )
+    }
+
+    func loadBody(forAttribute attr: SPNativeMessage.Attribute, textView: UITextView) {
+        textView.text = attr.text
+        textView.textColor = UIColor(hexString: attr.style.color)
+        textView.backgroundColor = UIColor(hexString: attr.style.backgroundColor)
+        textView.font = UIFont(
+            name: attr.style.fontFamily,
+            size: (CGFloat)(attr.style.fontSize)
         )
     }
 }

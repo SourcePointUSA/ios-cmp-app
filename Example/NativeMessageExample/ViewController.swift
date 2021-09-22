@@ -9,106 +9,157 @@
 import UIKit
 import ConsentViewController
 
+import UIKit
+import ConsentViewController
+
+let accountId = 22
+let propertyName = try! SPPropertyName("andre.native")
+let campaigns = SPCampaigns(
+    gdpr: SPCampaign(),
+    ccpa: SPCampaign(),
+    ios14: SPCampaign()
+)
+
 class ViewController: UIViewController {
-    var messageController: SPNativeMessageViewController?
-    var activityIndicator = UIActivityIndicatorView(style: .gray)
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    let myVendorId = "5ff4d000a228633ac048be41"
+    let myPurposesId = ["6140b74a5e783f00145e8220", "6140b74a5e783f00145e8218"]
 
-    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
-        accountId: 22,
-        propertyId: 7094,
-        propertyName: try! SPPropertyName("tcfv2.mobile.demo"),
-        PMId: "179657",
-        campaignEnv: .Public,
-        consentDelegate: self
-    )}()
+    @IBOutlet weak var idfaStatusLabel: UILabel!
+    @IBOutlet weak var myVendorAcceptedLabel: UILabel!
+    @IBOutlet weak var acceptMyVendorButton: UIButton!
+    @IBOutlet weak var gdprPMButton: UIButton!
+    @IBOutlet weak var ccpaPMButton: UIButton!
 
-    @IBAction func onSettingsTap(_ sender: Any) {
-        consentViewController.loadPrivacyManager()
-        showActivityIndicator(on: view)
+    var messageController: SPNativeMessageViewController!
+
+    @IBAction func onNetworkCallsTap(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
     }
+
+    @IBAction func onClearConsentTap(_ sender: Any) {
+        SPConsentManager.clearAllData()
+        updateUI()
+    }
+
+    @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
+        consentManager.loadGDPRPrivacyManager(withId: "17257")
+        showSpinner()
+    }
+
+    @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
+        consentManager.loadCCPAPrivacyManager(withId: "17258")
+        showSpinner()
+    }
+
+    @IBAction func onAcceptMyVendorTap(_ sender: Any) {
+        consentManager.customConsentGDPR(
+            vendors: [myVendorId],
+            categories: myPurposesId,
+            legIntCategories: []) { [weak self] consents in
+                let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted
+                self?.updateMyVendorUI(vendorAccepted)
+            }
+    }
+
+    lazy var consentManager: SPConsentManager = { SPConsentManager(
+        accountId: accountId,
+        propertyName: propertyName,
+        campaigns: campaigns,
+        delegate: self
+    )}()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        consentViewController.privacyManagerTab = .Vendors
-        consentViewController.loadNativeMessage(forAuthId: nil)
+        updateUI()
+        consentManager.loadMessage()
     }
 }
 
-extension ViewController: GDPRConsentDelegate {
-    /// called when there's a message to show and its content (`GDPRMessage`) is ready
-    func consentUIWillShow(message: GDPRMessage) {
-        messageController = SPNativeMessageViewController(messageContents: message, consentViewController: consentViewController)
-        messageController!.modalPresentationStyle = .overFullScreen
-        present(messageController!, animated: true, completion: nil)
+// MARK: SPDelegate implementation
+extension ViewController: SPDelegate {
+    func onSPNativeMessageReady(_ message: SPNativeMessage) {
+        messageController = SPNativeMessageViewController(
+            accountId: accountId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            messageContents: message,
+            sdkDelegate: consentManager)
+        present(messageController, animated: true)
+        removeSpinner()
     }
 
-    /// called when the Privacy Manager is ready to be displayed
-    func gdprPMWillShow() {
-        if messageController?.viewIfLoaded?.window != nil {
-            messageController?.present(consentViewController, animated: true, completion: nil)
-        } else {
-            present(consentViewController, animated: true, completion: nil)
-        }
-        stopActivityIndicator()
+    func onAction(_ action: SPAction, from controller: UIViewController) {
+        print(action)
     }
 
-    /// called after an action is taken by the user and the consent info is returned by SourcePoint's endpoints
-    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
-        print("onConsentReady: ", storedSDKData())
-        print("onConsentReady: ", consentUUID, userConsent)
+    func onSPUIReady(_ controller: UIViewController) {
+        present(controller, animated: true)
+        removeSpinner()
     }
 
-    /// called on every Consent Message / PrivacyManager action. For more info on the different kinds of actions check
-    /// `SPActionType`
-    func onAction(_ action: SPAction) {
-        switch action.type {
-        case .PMCancel:
-            dismissPrivacyManager()
-        case .ShowPrivacyManager:
-            showActivityIndicator(on: messageController?.view)
-        default:
-            consentViewController.reportAction(action)
-            dismiss(animated: true, completion: nil)
-        }
+    func onConsentReady(userData: SPUserData) {
+        print("onConsentReady:", userData)
+        let vendorAccepted = userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted ?? false
+        updateMyVendorUI(vendorAccepted)
+        updatePMButtons(ccpaApplies: consentManager.ccpaApplies, gdprApplies: consentManager.gdprApplies)
+    }
+
+    func onSPUIFinished(_ controller: UIViewController) {
+        updateUI()
+        dismiss(animated: true)
     }
 
     func onError(error: SPError) {
-        stopActivityIndicator()
-        print("ERROR: ", error.description )
+        print(error)
+        removeSpinner()
+        updateUI()
     }
 }
 
-/// Util methods for ViewController
+// MARK: - UI methods
 extension ViewController {
-    private func dismissPrivacyManager() {
-        if messageController?.viewIfLoaded?.window != nil {
-            messageController?.dismiss(animated: true, completion: nil)
+    func updateUI() {
+        updateMyVendorUI()
+        updatePMButtons()
+        updateIDFAStatusLabel()
+    }
+
+    func updateIDFAStatusLabel() {
+        idfaStatusLabel.text = idfaStatus.description
+        switch idfaStatus {
+            case .unknown: idfaStatusLabel.textColor = .systemYellow
+            case .accepted: idfaStatusLabel.textColor = .systemGreen
+            case .denied: idfaStatusLabel.textColor = .systemRed
+            case .unavailable: idfaStatusLabel.textColor = .systemGray
+            @unknown default: break
+        }
+    }
+
+    func updateMyVendorUI() {
+        updatePMButtons(ccpaApplies: consentManager.gdprApplies, gdprApplies: consentManager.ccpaApplies)
+    }
+
+    func updatePMButtons() {
+        updateMyVendorUI(
+            consentManager.userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted
+        )
+    }
+
+    func updateMyVendorUI(_ accepted: Bool?) {
+        if let accepted = accepted {
+            myVendorAcceptedLabel.text = accepted ? "accepted" : "rejected"
+            myVendorAcceptedLabel.textColor = accepted ? .systemGreen : .systemRed
+            acceptMyVendorButton.isEnabled = !accepted
         } else {
-            dismiss(animated: true, completion: nil)
+            acceptMyVendorButton.isEnabled = false
+            myVendorAcceptedLabel.text = "unavailable"
+            myVendorAcceptedLabel.textColor = .systemGray
         }
     }
 
-    func storedSDKData() -> [String: Any] {
-        UserDefaults.standard.dictionaryRepresentation().filter { (key, _) in
-            key.starts(with: "sp_gdpr_") || key.starts(with: GDPRConsentViewController.IAB_KEY_PREFIX)
-        }
-    }
-
-    func showActivityIndicator(on parentView: UIView?) {
-        if let containerView = parentView {
-            activityIndicator.startAnimating()
-            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-            activityIndicator.color = .black
-            containerView.addSubview(activityIndicator)
-            NSLayoutConstraint.activate([
-                activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-                activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
-            ])
-        }
-    }
-
-    func stopActivityIndicator() {
-        activityIndicator.stopAnimating()
-        activityIndicator.removeFromSuperview()
+    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool) {
+        gdprPMButton.isEnabled = gdprApplies
+        ccpaPMButton.isEnabled = ccpaApplies
     }
 }

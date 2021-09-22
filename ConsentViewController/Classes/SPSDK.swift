@@ -17,7 +17,7 @@ import Foundation
     @objc var gdprApplies: Bool { get }
 }
 
-@objc public protocol SPSDK: SPGDPR, SPCCPA {
+@objc public protocol SPSDK: SPGDPR, SPCCPA, SPMessageUIDelegate {
     @objc static var VERSION: String { get }
     @objc static func clearAllData()
     @objc var cleanUserDataOnError: Bool { get set }

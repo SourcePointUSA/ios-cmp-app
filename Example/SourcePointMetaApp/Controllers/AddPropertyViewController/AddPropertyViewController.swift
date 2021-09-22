@@ -387,17 +387,17 @@ class AddPropertyViewController: BaseViewController, CampaignListDelegate, Campa
 // MARK: - SPDelegate implementation
 extension AddPropertyViewController {
     
-    func onSPUIReady(_ controller: SPMessageViewController) {
+    func onSPUIReady(_ controller: UIViewController) {
         hideIndicator()
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
 
-    func onSPUIFinished(_ controller: SPMessageViewController) {
+    func onSPUIFinished(_ controller: UIViewController) {
         dismiss(animated: true)
     }
 
-    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+    func onAction(_ action: SPAction, from controller: UIViewController) {
         if action.type == .RequestATTAccess {
           showIndicator()
         }

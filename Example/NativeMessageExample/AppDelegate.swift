@@ -15,9 +15,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         if CommandLine.arguments.contains("-cleanAppsData") {
-            GDPRConsentViewController.clearAllData()
-            GDPRConsentViewController.shouldCallErrorMetrics = false
+            SPConsentManager.clearAllData()
+            SPConsentManager.shouldCallErrorMetrics = false
         }
+        return true
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if let scheme = url.scheme,
+           scheme.localizedCaseInsensitiveCompare("exampleapp") == .orderedSame,
+           let host = url.host, host.localizedCaseInsensitiveCompare("network") == .orderedSame {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
+        }
+
         return true
     }
 
