@@ -15,13 +15,13 @@ end
 target 'ConsentViewController_ExampleTests' do
   pod 'ConsentViewController', :path => '../'
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble', '9.1.0'
 end
 
 target 'SPGDPRExampleAppUITests' do
   pod 'ConsentViewController', :path => '../'
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble', '9.1.0'
 end
 
 target 'NativePMExampleApp' do
@@ -38,7 +38,7 @@ end
 target 'NativeMessageExampleUITests' do
   pod 'ConsentViewController', :path => '../'
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble', '9.1.0'
 end
 
 target 'SourcePointMetaApp' do
@@ -52,19 +52,27 @@ target 'SourcePointMetaAppUITests' do
   # Pods for testing
   pod 'ConsentViewController', :path => '../'
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble', '9.1.0'
 end
 
 target 'ObjC-ExampleAppUITests' do
   # Pods for testing
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble', '9.1.0'
+end
+
+target 'NativePMExampleAppUITests' do
+  platform :tvos, '10.0'
+  inherit! :search_paths
+  # Pods for testing
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble', '9.1.0'
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
         if target.name == "Nimble"
                 xcconfig_path = config.base_configuration_reference.real_path
                 xcconfig = File.read(xcconfig_path)
