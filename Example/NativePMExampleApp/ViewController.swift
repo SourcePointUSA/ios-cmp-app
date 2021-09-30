@@ -16,19 +16,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var ccpaButton: UIButton!
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "529562")
+        consentManager.loadGDPRPrivacyManager(withId: "16879")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "533894")
+        consentManager.loadCCPAPrivacyManager(withId: "16877")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
-        propertyName: try! SPPropertyName("appletv.demo"),
+        propertyName: try! SPPropertyName("appletv.mobile.demo"),
         campaigns: SPCampaigns(
-            gdpr: SPCampaign()
-//            ccpa: SPCampaign()
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign()
         ),
         delegate: self
     )}()
@@ -43,16 +43,16 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: SPDelegate {
-    func onSPUIReady(_ controller: SPMessageViewController) {
+    func onSPUIReady(_ controller: UIViewController) {
         print("onSPUIReady")
         present(controller, animated: true)
     }
 
-    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+    func onAction(_ action: SPAction, from controller: UIViewController) {
         print("onAction:", action)
     }
 
-    func onSPUIFinished(_ controller: SPMessageViewController) {
+    func onSPUIFinished(_ controller: UIViewController) {
         print("onSPUIFinished")
         dismiss(animated: true)
     }
