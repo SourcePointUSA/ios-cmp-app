@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
-        propertyName: try! SPPropertyName("appletv.demo"),
+        propertyName: try! SPPropertyName("appletv.mobile.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
             ccpa: SPCampaign()
