@@ -14,4 +14,7 @@ Pod::Spec.new do |s|
   s.tvos.exclude_files = 'ConsentViewController/Classes/Views/iOS'
   s.resource_bundles = { 'ConsentViewController' => ['ConsentViewController/Assets/**/*', 'Pod/Classes/**/*.{storyboard,xib,xcassets,json,imageset,png,js}'] }
   s.resources = "ConsentViewController/**/*.{js,json,png}"
+  s.info_plist = {
+      'SPEnv' => 'prod'
+  }
 end
