@@ -66,16 +66,16 @@ class ViewController: UIViewController {
 
 // MARK: - SPDelegate implementation
 extension ViewController: SPDelegate {
-    func onSPUIReady(_ controller: SPMessageViewController) {
+    func onSPUIReady(_ controller: UIViewController) {
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
 
-    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+    func onAction(_ action: SPAction, from controller: UIViewController) {
         print(action)
     }
 
-    func onSPUIFinished(_ controller: SPMessageViewController) {
+    func onSPUIFinished(_ controller: UIViewController) {
         updateIDFAStatusLabel()
         dismiss(animated: true)
     }

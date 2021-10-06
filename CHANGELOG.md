@@ -1,3 +1,8 @@
+# 6.2.0 (August, 25, 2021)
+* Officially added support to AppleTV (check our NativePMExample app).
+* The `SPDelegate` protocol has been updated. All methods that expected a `SPMessageViewController` now receive a plain `UIViewController` instead.
+
+
 # 6.1.7 (August, 25, 2021)
 * Added `acceptedCategories` property to `SPGDPRConsent` class. The `acceptedCategories` is an array of ids of the categories (purposes) consented by the user and that are consented in all vendors involved with it. If a single vendor of a given purpose is disabled by the user, that purpose won't be part of `acceptedCategories`. [#335](https://github.com/SourcePointUSA/ios-cmp-app/pull/335)
 * Fixed an issue preventing using the SDK with Carthage. [#334](https://github.com/SourcePointUSA/ios-cmp-app/pull/334)

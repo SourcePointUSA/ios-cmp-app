@@ -83,6 +83,8 @@
 		6D80476D25D1B0E40005002B /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80476C25D1B0E40005002B /* CustomMatchers.swift */; };
 		6D84BB4225E68C6D002D6996 /* ConsentViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; };
 		6D84BB4325E68C6D002D6996 /* ConsentViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6D8E96C526E9261F00641D7A /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8E96C426E9261F00641D7A /* AppInfo.swift */; };
+		6D8E96C726E9264E00641D7A /* AppUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8E96C626E9264E00641D7A /* AppUpdateManager.swift */; };
 		6DA66EA3255D1A690034E11A /* SPMessageLanguageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA66EA2255D1A690034E11A /* SPMessageLanguageSpec.swift */; };
 		6DB2B2222424C52A008F9226 /* ConnectivityManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */; };
 		6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB561ED24269470008501AC /* GDPRMessageSpec.swift */; };
@@ -123,6 +125,7 @@
 		826D31B3249A71E20026A6B9 /* ConnectivityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31B2249A71E20026A6B9 /* ConnectivityMock.swift */; };
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
+		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* ConsentsProfileSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* ConsentsProfileSpec.swift */; };
 		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
@@ -326,6 +329,8 @@
 		6D80473625D1AC3E0005002B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D80476C25D1B0E40005002B /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		6D8047D225D1C76D0005002B /* ConsentViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ConsentViewController.framework; path = Carthage/Build/iOS/ConsentViewController.framework; sourceTree = "<group>"; };
+		6D8E96C426E9261F00641D7A /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
+		6D8E96C626E9264E00641D7A /* AppUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateManager.swift; sourceTree = "<group>"; };
 		6D9053FB25D27ABF00E4B49D /* AuthExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D90541C25D27B0600E4B49D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D90553125D2857700E4B49D /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -387,6 +392,7 @@
 		826D31B2249A71E20026A6B9 /* ConnectivityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectivityMock.swift; path = Helpers/ConnectivityMock.swift; sourceTree = "<group>"; };
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignEnvSpec.swift; sourceTree = "<group>"; };
+		829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
 		829DA56325D5573800612517 /* ConsentsProfileSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentsProfileSpec.swift; sourceTree = "<group>"; };
 		82A99CC2255D956400A85024 /* 404.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = 404.html; sourceTree = "<group>"; };
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -724,6 +730,7 @@
 		1997B6A9238FDEA10079AF34 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
+				6D8E96C326E925E300641D7A /* Update */,
 				6DE11C5C269A2C480058ABE9 /* ExpandableHeaderView */,
 				1997B6AA238FDEA10079AF34 /* ViewModels */,
 				1997B6AF238FDEA10079AF34 /* Models */,
@@ -1015,6 +1022,15 @@
 			path = "ObjC-ExampleAppUITests";
 			sourceTree = "<group>";
 		};
+		6D8E96C326E925E300641D7A /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				6D8E96C426E9261F00641D7A /* AppInfo.swift */,
+				6D8E96C626E9264E00641D7A /* AppUpdateManager.swift */,
+			);
+			path = Update;
+			sourceTree = "<group>";
+		};
 		6D9053FC25D27ABF00E4B49D /* AuthExampleUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1209,6 +1225,7 @@
 				82D8FEE723DC753500F28D74 /* Assets.xcassets */,
 				82D8FEE923DC753500F28D74 /* LaunchScreen.storyboard */,
 				82D8FEEC23DC753500F28D74 /* Info.plist */,
+				829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */,
 			);
 			path = NativeMessageExample;
 			sourceTree = "<group>";
@@ -2259,6 +2276,7 @@
 			files = (
 				1997B6E4238FDEA10079AF34 /* AddPropertyViewModel.swift in Sources */,
 				6D21341D2578BEBF00E0C5E2 /* PropertyDetails+CoreDataClass.swift in Sources */,
+				6D8E96C726E9264E00641D7A /* AppUpdateManager.swift in Sources */,
 				1997B6C8238FDEA10079AF34 /* SourcePointMetaApp.xcdatamodeld in Sources */,
 				1997B6EC238FDEA10079AF34 /* TargetingParams+CoreDataClass.swift in Sources */,
 				6D3597CF269F40B600935D3C /* ConsentDetailsViewModel.swift in Sources */,
@@ -2282,6 +2300,7 @@
 				1997B6EE238FDEA10079AF34 /* SourcePointUITableView.swift in Sources */,
 				1997B6DC238FDEA10079AF34 /* ConsentTableViewCell.swift in Sources */,
 				1997B6E7238FDEA10079AF34 /* TargetingParamModel.swift in Sources */,
+				6D8E96C526E9261F00641D7A /* AppInfo.swift in Sources */,
 				6DE11C60269A2C480058ABE9 /* ExpandableHeaderView.swift in Sources */,
 				1997B6E6238FDEA10079AF34 /* PropertyDetailsModel.swift in Sources */,
 				1997B6D5238FDEA10079AF34 /* BaseWindow.swift in Sources */,
@@ -2408,6 +2427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82D8FEE323DC753400F28D74 /* ViewController.swift in Sources */,
+				829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */,
 				82D8FEDF23DC753400F28D74 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2616,7 +2636,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.1.5;
+				MARKETING_VERSION = 6.1.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.unifiedmetaapp;
@@ -2651,7 +2671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.1.5;
+				MARKETING_VERSION = 6.1.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.unifiedmetaapp;
 				PRODUCT_NAME = "Unified-MetaApp";

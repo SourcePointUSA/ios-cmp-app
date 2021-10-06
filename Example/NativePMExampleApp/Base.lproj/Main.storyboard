@@ -2,8 +2,10 @@
 <document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="18122" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="appleTV" appearance="light"/>
     <dependencies>
+        <deployment identifier="tvOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,22 +21,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVO-tV-IlT">
-                                <rect key="frame" x="734.5" y="497" width="451" height="86"/>
-                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Load Privacy Manager"/>
-                                <connections>
-                                    <action selector="onLoadPMTap:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="28j-KJ-8hL"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0oZ-HI-Wtr">
+                                <rect key="frame" x="726" y="442" width="468" height="196"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVO-tV-IlT" userLabel="GDPR Privacy Manager">
+                                        <rect key="frame" x="0.0" y="0.0" width="468" height="86"/>
+                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                        <state key="normal" title="GDPR Privacy Manager"/>
+                                        <connections>
+                                            <action selector="onGDPRTap:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="TMV-ZD-ikf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGn-pK-dNm">
+                                        <rect key="frame" x="0.0" y="110" width="468" height="86"/>
+                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                        <state key="normal" title="CCPA Privacy Manager"/>
+                                        <connections>
+                                            <action selector="onCCPATap:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="dEi-iG-dtb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wu6-TO-1qx"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="TVO-tV-IlT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="khz-j5-kKh"/>
-                            <constraint firstItem="TVO-tV-IlT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="nr7-WU-YER"/>
+                            <constraint firstItem="0oZ-HI-Wtr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ddB-df-iTo"/>
+                            <constraint firstItem="0oZ-HI-Wtr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="s3t-3m-gq0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="ccpaButton" destination="IGn-pK-dNm" id="yey-bj-Wch"/>
+                        <outlet property="gdprButton" destination="TVO-tV-IlT" id="pJ4-94-6lw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

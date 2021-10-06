@@ -1,5 +1,5 @@
 //
-//  SPPartnersViewController.swift
+//  SPGDPRPartnersViewController.swift
 //  ConsentViewController-tvOS
 //
 //  Created by Vilas on 06/05/21.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class SPPartnersViewController: SPNativeScreenViewController {
+class SPGDPRPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var selectedVendorTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
@@ -20,15 +20,15 @@ class SPPartnersViewController: SPNativeScreenViewController {
     var nativeLongButton: SPNativeLongButton?
 
     var displayingLegIntVendors: Bool { vendorsSlider.selectedSegmentIndex == 1 }
-    var currentVendors: [VendorListVendor] {
+    var currentVendors: [GDPRVendor] {
         displayingLegIntVendors ? legitimateInterestVendorList : userConsentVendors
     }
 
-    var consentsSnapshot: PMConsentSnaptshot = PMConsentSnaptshot()
+    var consentsSnapshot: GDPRPMConsentSnaptshot = GDPRPMConsentSnaptshot()
 
-    var vendors: [VendorListVendor] = []
-    var userConsentVendors: [VendorListVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
-    var legitimateInterestVendorList: [VendorListVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
+    var vendors: [GDPRVendor] = []
+    var userConsentVendors: [GDPRVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
+    var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
 
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]
@@ -76,22 +76,20 @@ class SPPartnersViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
-        messageUIDelegate?.action(SPAction(type: .AcceptAll, id: nil, campaignType: campaignType), from: self)
+        messageUIDelegate?.action(SPAction(type: .AcceptAll, campaignType: campaignType), from: self)
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        let pmId = messageId != nil ? String(messageId!) : ""
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
-            id: nil,
             campaignType: campaignType,
-            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: pmId).json()!
+            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
         ), from: self)
     }
 }
 
 // MARK: UITableViewDataSource
-extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
+extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
@@ -123,7 +121,7 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
 
         let vendor = currentVendors[indexPath.row]
         cell.labelText = vendor.name
-        cell.isOn = consentsSnapshot.acceptedVendorsIds.contains(vendor.vendorId)
+        cell.isOn = consentsSnapshot.toggledVendorsIds.contains(vendor.vendorId)
         cell.selectable = true
         cell.isCustom = vendor.vendorType == .CUSTOM
         cell.setup(from: nativeLongButton)
@@ -141,13 +139,13 @@ extension SPPartnersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vendorDetailsVC = SPVendorDetailsViewController(
+        let vendorDetailsVC = SPGDPRVendorDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
             viewData: pmData.vendorDetailsView,
             pmData: pmData,
             delegate: nil,
-            nibName: "SPVendorDetailsViewController"
+            nibName: "SPGDPRVendorDetailsViewController"
         )
 
         vendorDetailsVC.vendor = currentVendors[indexPath.row]

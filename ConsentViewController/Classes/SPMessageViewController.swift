@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol SPRenderingApp {
+@objc public protocol SPRenderingApp {
     func loadMessage()
     func loadPrivacyManager(url: URL)
     func closePrivacyManager()
@@ -61,13 +61,20 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     func closePrivacyManager()
 }
 
-@objcMembers public class SPMessageViewController: UIViewController, SPRenderingApp, MessageController {
-    weak var messageUIDelegate: SPMessageUIDelegate?
-    public var campaignType: SPCampaignType
-    public var messageId: Int?
-    public var timeout: TimeInterval
+@objc public protocol SPMessageView: SPRenderingApp, MessageController {
+    var messageUIDelegate: SPMessageUIDelegate? { get set }
+    var campaignType: SPCampaignType { get set }
+    var messageId: String { get set }
+    var timeout: TimeInterval { get set }
+}
 
-    init(messageId: Int?, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
+@objcMembers public class SPMessageViewController: UIViewController, SPMessageView {
+    public weak var messageUIDelegate: SPMessageUIDelegate?
+    public var campaignType: SPCampaignType
+    public var messageId: String = ""
+    public var timeout: TimeInterval = 10.0
+
+    init(messageId: String, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.campaignType = campaignType
         self.messageUIDelegate = delegate
         self.messageId = messageId

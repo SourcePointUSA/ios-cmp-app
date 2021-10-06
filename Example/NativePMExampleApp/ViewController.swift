@@ -12,42 +12,54 @@ import ConsentViewController
 class ViewController: UIViewController {
     var activityIndicator = UIActivityIndicatorView(style: .white)
 
-    @IBAction func onLoadPMTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "529562")
+    @IBOutlet weak var gdprButton: UIButton!
+    @IBOutlet weak var ccpaButton: UIButton!
+
+    @IBAction func onGDPRTap(_ sender: Any) {
+        consentManager.loadGDPRPrivacyManager(withId: "561622")
+    }
+
+    @IBAction func onCCPATap(_ sender: Any) {
+        consentManager.loadCCPAPrivacyManager(withId: "562032")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("appletv.demo"),
         campaigns: SPCampaigns(
-            gdpr: SPCampaign()
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign()
         ),
         delegate: self
     )}()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ccpaButton.setTitle("CCPA (does not apply)", for: .disabled)
+        gdprButton.setTitle("GDPR (does not apply)", for: .disabled)
+        updateButtons()
         consentManager.loadMessage()
     }
 }
 
 extension ViewController: SPDelegate {
-    func onSPUIReady(_ controller: SPMessageViewController) {
+    func onSPUIReady(_ controller: UIViewController) {
         print("onSPUIReady")
         present(controller, animated: true)
     }
 
-    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+    func onAction(_ action: SPAction, from controller: UIViewController) {
         print("onAction:", action)
     }
 
-    func onSPUIFinished(_ controller: SPMessageViewController) {
+    func onSPUIFinished(_ controller: UIViewController) {
         print("onSPUIFinished")
         dismiss(animated: true)
     }
 
     func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", userData)
+        updateButtons()
     }
 
     func onError(error: SPError) {
@@ -58,6 +70,11 @@ extension ViewController: SPDelegate {
 
 // MARK: - UI Utils
 extension ViewController {
+    func updateButtons() {
+        ccpaButton.isEnabled = consentManager.ccpaApplies
+        gdprButton.isEnabled = consentManager.gdprApplies
+    }
+
     func showActivityIndicator(on parentView: UIView?) {
         if let containerView = parentView {
             activityIndicator.startAnimating()

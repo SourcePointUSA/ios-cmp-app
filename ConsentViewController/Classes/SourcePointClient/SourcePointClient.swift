@@ -32,7 +32,9 @@ extension JSONDecoder {
 
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
-typealias NativePMHandler = (Result<PrivacyManagerViewData, SPError>) -> Void
+typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
+typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
+typealias MessageHandler = (Result<Message, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
@@ -49,14 +51,29 @@ protocol SourcePointProtocol {
         consentLanguage: SPMessageLanguage,
         handler: @escaping MessagesHandler)
 
-    func getNativePrivacyManager(
-        withId pmId: String,
-        handler: @escaping NativePMHandler)
+    func getGDPRMessage(
+        propertyId: String,
+        consentLanguage: SPMessageLanguage,
+        messageId: String,
+        handler: @escaping MessageHandler
+    )
 
-    func privacyManagerView(
+    func getCCPAMessage(
+        propertyId: String,
+        consentLanguage: SPMessageLanguage,
+        messageId: String,
+        handler: @escaping MessageHandler
+    )
+
+    func gdprPrivacyManagerView(
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping PrivacyManagerViewHandler)
+        handler: @escaping GDPRPrivacyManagerViewHandler)
+
+    func ccpaPrivacyManagerView(
+        propertyId: Int,
+        consentLanguage: SPMessageLanguage,
+        handler: @escaping CCPAPrivacyManagerViewHandler)
 
     func postCCPAAction(
         authId: String?,
@@ -107,16 +124,20 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient: SourcePointProtocol {
+    static let envParam = "prod"
     static let SP_ROOT = URL(string: "https://cdn.privacy-mgmt.com/")!
     static let WRAPPER_API = URL(string: "./wrapper/", relativeTo: SP_ROOT)!
+    static let GDPR_MESSAGE_URL = URL(string: "./v2/message/gdpr", relativeTo: WRAPPER_API)!
+    static let CCPA_MESSAGE_URL = URL(string: "./v2/message/ccpa", relativeTo: WRAPPER_API)!
     static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: WRAPPER_API)!
-    static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=prod", relativeTo: WRAPPER_API)!
+    static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=\(envParam)", relativeTo: WRAPPER_API)!
     static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
     static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
-    static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=prod", relativeTo: WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true", relativeTo: WRAPPER_API)!
+    static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=\(envParam)", relativeTo: WRAPPER_API)!
+    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=\(envParam)&inApp=true", relativeTo: WRAPPER_API)!
     static let MMS_MESSAGE_URL = URL(string: "./mms/v2/message", relativeTo: SP_ROOT)!
-    static let PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
+    static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
+    static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
 
     let accountId: Int
     let propertyName: SPPropertyName
@@ -172,40 +193,82 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func privacyManagerView(
-        propertyId: Int,
+    func getGDPRMessage(
+        propertyId: String,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping PrivacyManagerViewHandler) {
-        let url = SourcePointClient.PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
-            "siteId": String(propertyId),
-            "consentLanguage": consentLanguage.rawValue
+        messageId: String,
+        handler: @escaping MessageHandler
+    ) {
+        let url = SourcePointClient.GDPR_MESSAGE_URL.appendQueryItems([
+            "env": SourcePointClient.envParam,
+            "consentLanguage": consentLanguage.rawValue,
+            "propertyId": propertyId,
+            "messageId": messageId,
+            "includeData": "{\"categories\": {\"type\": \"RecordString\"}}"
         ])!
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
-                try result.decoded() as PrivacyManagerViewResponse
+                (try result.decoded() as MessageResponse).message
             }.mapError({
                 InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
             }))
         }
     }
 
-    func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
-        handler(Result {
-            // swiftlint:disable:next force_try
-            return try! PrivacyManagerViewData(from: try! JSONDecoder().decode(
-                SPPrivacyManagerResponse.self,
-                from: MockNativePMResponse.data(using: .utf8)!
-            ))
-        }.mapError {
-            InvalidResponseWebMessageError(error: $0)
-        })
+    func getCCPAMessage(
+        propertyId: String,
+        consentLanguage: SPMessageLanguage,
+        messageId: String,
+        handler: @escaping MessageHandler
+    ) {
+        let url = SourcePointClient.CCPA_MESSAGE_URL.appendQueryItems([
+            "env": SourcePointClient.envParam,
+            "consentLanguage": consentLanguage.rawValue,
+            "propertyId": propertyId,
+            "messageId": messageId
+        ])!
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                (try result.decoded() as MessageResponse).message
+            }.mapError({
+                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+            }))
+        }
+    }
+
+    func gdprPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping GDPRPrivacyManagerViewHandler) {
+        let url = SourcePointClient.GDPR_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
+            "siteId": String(propertyId),
+            "consentLanguage": consentLanguage.rawValue
+        ])!
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as GDPRPrivacyManagerViewResponse
+            }.mapError({
+                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+            }))
+        }
+    }
+
+    func ccpaPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping CCPAPrivacyManagerViewHandler) {
+            let url = SourcePointClient.CCPA_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
+                "siteId": String(propertyId),
+                "consentLanguage": consentLanguage.rawValue
+            ])!
+            client.get(urlString: url.absoluteString) { result in
+                handler(Result {
+                    try result.decoded() as CCPAPrivacyManagerViewResponse
+                }.mapError({
+                    InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+                }))
+            }
     }
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
 
         var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
-        components?.queryItems = [URLQueryItem(name: "env", value: "prod")]
+        components?.queryItems = [URLQueryItem(name: "env", value: SourcePointClient.envParam)]
         return components?.url(relativeTo: baseUrl)
     }
 

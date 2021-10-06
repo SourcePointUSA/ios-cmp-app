@@ -56,3 +56,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }
+
+extension UIApplication {
+
+    func launchAppStore(for appID: Int) {
+        let appStoreURL = "https://itunes.apple.com/app/id\(appID)"
+        guard let url = URL(string: appStoreURL) else { return }
+        DispatchQueue.main.async {
+            if self.canOpenURL(url) {
+                self.open(url)
+            }
+        }
+    }
+}
