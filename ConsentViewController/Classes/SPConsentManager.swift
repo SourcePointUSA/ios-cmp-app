@@ -9,8 +9,6 @@
 import Foundation
 
 @objcMembers public class SPConsentManager: NSObject {
-    static let ccpaBaseURL = URL(string: "https://cdn.privacy-mgmt.com/ccpa_pm/index.html")
-    static let gdprBaseURL = URL(string: "https://cdn.privacy-mgmt.com/privacy-manager/index.html")
     static let DefaultTimeout = TimeInterval(30)
     static public var shouldCallErrorMetrics = true
 
@@ -286,7 +284,7 @@ import Foundation
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        guard let pmUrl = SPConsentManager.gdprBaseURL?.appendQueryItems([
+        guard let pmUrl = Constants.GDPR_PM_URL.appendQueryItems([
             "message_id": id,
             "pmTab": tab.rawValue,
             "consentUUID": gdprUUID,
@@ -327,7 +325,7 @@ import Foundation
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
-        guard let pmUrl = SPConsentManager.ccpaBaseURL?.appendQueryItems([
+        guard let pmUrl = Constants.CCPA_PM_URL.appendQueryItems([
             "message_id": id,
             "pmTab": tab.rawValue,
             "ccpaUUID": ccpaUUID,
