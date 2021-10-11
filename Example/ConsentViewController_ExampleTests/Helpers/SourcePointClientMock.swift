@@ -15,44 +15,6 @@ class SourcePointClientMock: SourcePointProtocol {
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
 
-    func getMessages(campaigns: SPCampaigns, authId: String?, localState: SPJson, idfaStaus: SPIDFAStatus, consentLanguage: SPMessageLanguage, handler: @escaping MessagesHandler) {
-        print("getMessages")
-    }
-
-    func getNativePrivacyManager(withId pmId: String, handler: @escaping NativePMHandler) {
-        print("getNativePrivacyManager")
-    }
-
-    func privacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping PrivacyManagerViewHandler) {
-        print("privacyManagerView")
-    }
-
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
-        print("getMessages")
-    }
-
-    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
-        print("postCCPAAction")
-    }
-
-    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
-        print("reportIdfaStatus")
-    }
-
-    func customConsentGDPR(
-        toConsentUUID consentUUID: String,
-        vendors: [String],
-        categories: [String],
-        legIntCategories: [String],
-        propertyId: Int,
-        handler: @escaping CustomConsentHandler) {
-        print("customConsentGDPR")
-    }
-
-    func errorMetrics(_ error: SPError, propertyId: Int?, sdkVersion: String, OSVersion: String, deviceFamily: String, campaignType: SPCampaignType) {
-        print("errorMetrics")
-    }
-
     var customConsentResponse: CustomConsentResponse?
     static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
         Campaign(
@@ -63,7 +25,7 @@ class SourcePointClientMock: SourcePointProtocol {
             messageMetaData: MessageMetaData(
                 categoryId: .unknown,
                 subCategoryId: .TCFv2,
-                messageId: 1,
+                messageId: "1",
                 messagePartitionUUID: "1234"
             )
         )
@@ -87,11 +49,51 @@ class SourcePointClientMock: SourcePointProtocol {
         }
     }
 
+    func getGDPRMessage(propertyId: String, consentLanguage: SPMessageLanguage, messageId: String, handler: @escaping MessageHandler) {
+
+    }
+
+    func getCCPAMessage(propertyId: String, consentLanguage: SPMessageLanguage, messageId: String, handler: @escaping MessageHandler) {
+
+    }
+
+    func gdprPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping GDPRPrivacyManagerViewHandler) {
+
+    }
+
+    func ccpaPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping CCPAPrivacyManagerViewHandler) {
+
+    }
+
     func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
 
     }
 
     func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
+
+    }
+
+    func getMessages(campaigns: SPCampaigns, authId: String?, localState: SPJson, idfaStaus: SPIDFAStatus, consentLanguage: SPMessageLanguage, handler: @escaping MessagesHandler) {
+
+    }
+
+    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
+
+    }
+
+    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
+
+    }
+
+    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
+
+    }
+
+    func customConsentGDPR(toConsentUUID consentUUID: String, vendors: [String], categories: [String], legIntCategories: [String], propertyId: Int, handler: @escaping CustomConsentHandler) {
+
+    }
+
+    func errorMetrics(_ error: SPError, propertyId: Int?, sdkVersion: String, OSVersion: String, deviceFamily: String, campaignType: SPCampaignType) {
 
     }
 
