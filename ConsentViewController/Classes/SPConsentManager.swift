@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objcMembers public class SPConsentManager: NSObject {
     static let DefaultTimeout = TimeInterval(30)
