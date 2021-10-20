@@ -69,7 +69,6 @@
 		6D56EB7F24C8850C009F33D9 /* NativeMessageExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB7E24C8850C009F33D9 /* NativeMessageExampleUITests.swift */; };
 		6D56EB8824C88603009F33D9 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB8724C88603009F33D9 /* CustomMatchers.swift */; };
 		6D56EB8A24C88665009F33D9 /* NativeExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB8924C88665009F33D9 /* NativeExampleApp.swift */; };
-		6D578996268DBB3D00B7909E /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6D578995268DBB3D00B7909E /* ConsentViewController */; };
 		6D605DF62423B96C00BB3E5F /* SPErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D605DF52423B96C00BB3E5F /* SPErrorSpec.swift */; };
 		6D687AD724A8F1C1001DFB11 /* MessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D687AD624A8F1C1001DFB11 /* MessageMock.swift */; };
 		6D8046EE25D1A87E0005002B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8046ED25D1A87E0005002B /* AppDelegate.m */; };
@@ -119,6 +118,7 @@
 		8248A497247D17AA00A7D9AD /* SimpleClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A496247D17AA00A7D9AD /* SimpleClientSpec.swift */; };
 		8248A499247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A498247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift */; };
 		824BC0342463F6B0006D3C18 /* SPActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824BC0332463F6B0006D3C18 /* SPActionSpec.swift */; };
+		8258D6242720689F005AAB2E /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 8258D6232720689F005AAB2E /* ConsentViewController */; };
 		82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82665C302444ECF600CCE738 /* SPJsonSpec.swift */; };
 		826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31AC2498DE340026A6B9 /* MockConsentDelegate.swift */; };
 		826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31B0249A46C40026A6B9 /* GDPRUIiDelegateMock.swift */; };
@@ -475,7 +475,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D578996268DBB3D00B7909E /* ConsentViewController in Frameworks */,
+				8258D6242720689F005AAB2E /* ConsentViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1396,7 +1396,7 @@
 			);
 			name = "ObjC-ExampleApp";
 			packageProductDependencies = (
-				6D578995268DBB3D00B7909E /* ConsentViewController */,
+				8258D6232720689F005AAB2E /* ConsentViewController */,
 			);
 			productName = "ObjC-ExampleApp";
 			productReference = 6D8046EA25D1A87E0005002B /* ObjC-ExampleApp.app */;
@@ -3761,14 +3761,14 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.4;
+				kind = exactVersion;
+				version = "6.2.1-beta.0";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6D578995268DBB3D00B7909E /* ConsentViewController */ = {
+		8258D6232720689F005AAB2E /* ConsentViewController */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6D578994268DBB3D00B7909E /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
 			productName = ConsentViewController;
