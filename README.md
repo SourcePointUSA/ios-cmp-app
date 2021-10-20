@@ -89,6 +89,11 @@ extension ViewController: SPDelegate {
 
     func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", userData)
+        // checking if a gdpr vendor is consented
+        userData.gdpr?.consents?.vendorGrants["myVendorId"]?.granted
+
+        // checking if a ccpa vendor is rejected (on ccpa, vendors are accepted by default)
+        userData.ccpa?.consents?.rejectedVendors.contains("myVendorId")
     }
 
     func onError(error: SPError) {
