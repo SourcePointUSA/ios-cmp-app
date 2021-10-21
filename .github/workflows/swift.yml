@@ -22,9 +22,9 @@ jobs:
         - name: ObjC-ExampleApp UI testing -> iPhone 11 (iOS 14.4)
           run: xcodebuild clean test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.4' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
+          if: failure()
+          name: Upload ObjCExampleAppTestResults
           with:
-            if: failure()
-            name: ObjC-ExampleApp
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   meta-app-tests:
       runs-on: macos-latest
@@ -34,7 +34,7 @@ jobs:
           run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.4' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
-          name: ObjC-ExampleApp
+          name: Upload MetaAppUITestResults
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
 
