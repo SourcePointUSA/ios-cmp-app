@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+@import ConsentViewController;
 
 @interface AppDelegate ()
 
@@ -16,7 +17,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    if ([[[NSProcessInfo processInfo] arguments] containsObject:@"-cleanAppsData"]) {
+        [SPConsentManager clearAllData];
+        SPConsentManager.shouldCallErrorMetrics = NO;
+    }
     return YES;
 }
 

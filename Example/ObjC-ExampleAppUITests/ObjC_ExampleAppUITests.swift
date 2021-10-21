@@ -11,25 +11,6 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-class ExampleApp: XCUIApplication {
-
-    var consentMessage: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Message'")).firstMatch
-    }
-
-    var acceptAllButton: XCUIElement {
-        webViews.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept'")).firstMatch
-    }
-
-    func relaunch() {
-        launch()
-    }
-
-    func swipeUpMessage() {
-        swipeUp()
-    }
-}
-
 class ObjC_ExampleAppUITests: QuickSpec {
     var app: ExampleApp!
 
@@ -40,7 +21,7 @@ class ObjC_ExampleAppUITests: QuickSpec {
         }
 
         beforeEach {
-            self.app.relaunch()
+            self.app.relaunch(clean: true)
         }
 
         it("Accept all through message") {
