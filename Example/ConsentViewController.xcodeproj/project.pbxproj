@@ -3761,8 +3761,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
-				kind = exactVersion;
-				version = "6.2.1-beta.0";
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

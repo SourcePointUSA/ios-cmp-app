@@ -14,7 +14,7 @@ import Nimble
 class ExampleApp: XCUIApplication {
 
     var consentMessage: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Notice'")).firstMatch
+        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Message'")).firstMatch
     }
 
     var acceptAllButton: XCUIElement {
@@ -45,9 +45,6 @@ class ObjC_ExampleAppUITests: QuickSpec {
 
         it("Accept all through message") {
             expect(self.app.consentMessage).to(showUp())
-            if self.app.consentMessage.exists {
-                self.app.swipeUpMessage()
-            }
             self.app.acceptAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
         }
