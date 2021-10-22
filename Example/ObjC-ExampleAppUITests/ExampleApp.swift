@@ -28,12 +28,34 @@ extension XCUIApplication: App {
     }
 }
 
+extension XCUIElementQuery {
+    func first(withLabel label: String) -> XCUIElement {
+        containing(NSPredicate(format: "label CONTAINS[cd] '\(label)'")).firstMatch
+    }
+}
+
 class ExampleApp: XCUIApplication {
+    var attNativePrompt: XCUIElement {
+        alerts.first(withLabel: "track your activity")
+    }
+
+    var attNativePromptAllowButton: XCUIElement {
+        attNativePrompt.buttons.first(withLabel: "Allow")
+    }
+
     var consentMessage: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Message'")).firstMatch
+        webViews.first(withLabel: "GDPR Message")
+    }
+
+    var attPrePromptMessage: XCUIElement {
+        webViews.first(withLabel: "ATT pre-promt")
     }
 
     var acceptAllButton: XCUIElement {
-        webViews.buttons.containing(NSPredicate(format: "label CONTAINS[cd] 'Accept'")).firstMatch
+        consentMessage.buttons.first(withLabel: "Accept")
+    }
+
+    var acceptATTButton: XCUIElement {
+        attPrePromptMessage.buttons.first(withLabel: "Bring it on")
     }
 }
