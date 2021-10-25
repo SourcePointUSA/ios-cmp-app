@@ -12,13 +12,16 @@ import Nimble
 protocol App {
     func launch()
     func terminate()
-    func relaunch(clean: Bool)
+    func relaunch(clean: Bool, resetAtt: Bool)
 }
 
 extension XCUIApplication: App {
-    func relaunch(clean: Bool = false) {
+    func relaunch(clean: Bool = false, resetAtt: Bool = false) {
         UserDefaults.standard.synchronize()
         self.terminate()
+        if #available(iOS 15.0, *), resetAtt {
+            resetAuthorizationStatus(for: .userTracking)
+        }
         clean ?
             launchArguments.append("-cleanAppsData") :
             launchArguments.removeAll { $0 == "-cleanAppsData" }
@@ -26,73 +29,80 @@ extension XCUIApplication: App {
     }
 }
 
-protocol GDPRUI {
-    var privacyManager: XCUIElement { get }
-}
-
 class NativeExampleApp: XCUIApplication {
-    var messageTitle: XCUIElement {
-        staticTexts["Personalised Ads"].firstMatch
+    class GDPRPrivacyManager: XCUIApplication {
+        private var container: XCUIElement {
+            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch
+        }
+
+        var messageTitle: XCUIElement {
+            container
+        }
+
+        var purposesTab: XCUIElement {
+            staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
+        }
+
+        var acceptAllButton: XCUIElement {
+            container.buttons["Accept All"].firstMatch
+        }
+
+        var rejectAllButton: XCUIElement {
+            container.buttons["Reject All"].firstMatch
+        }
+
+        var saveAndExitButton: XCUIElement {
+            container.buttons["Save & Exit"].firstMatch
+        }
+
+        var cancelButton: XCUIElement {
+            container.buttons["Cancel"].firstMatch
+        }
     }
 
-    var exampleAppLabel: XCUIElement {
-        staticTexts["Example App"].firstMatch
+    class GDPRMessage: XCUIApplication {
+        var messageTitle: XCUIElement {
+            staticTexts["GDPR Native Message"].firstMatch
+        }
+
+        var acceptButton: XCUIElement {
+            buttons["Accept All"].firstMatch
+        }
+
+        var rejectButton: XCUIElement {
+            buttons["Reject All"].firstMatch
+        }
+
+        var showOptionsButton: XCUIElement {
+            buttons["Show Options"].firstMatch
+        }
     }
 
-    var acceptButton: XCUIElement {
-        buttons["Accept"].firstMatch
+    class ATTPrePrompt: XCUIApplication {
+        private let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+
+        private var container: XCUIElement {
+            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'ATT Pre Prompt'")).firstMatch
+        }
+
+        var okButton: XCUIElement {
+            container.buttons["OK"].firstMatch
+        }
+
+        private var attAlert: XCUIElement {
+            system.alerts.containing(NSPredicate(format: "label CONTAINS[cd] 'track your activity'")).firstMatch
+        }
+
+        var attAlertAllowButton: XCUIElement {
+            attAlert.buttons["Allow"].firstMatch
+        }
     }
 
-    var rejectButton: XCUIElement {
-        buttons["Reject"].firstMatch
-    }
+    let gdprMessage = GDPRMessage()
+    let gdprPM = GDPRPrivacyManager()
+    let attPrePrompt = ATTPrePrompt()
 
-    var showOptionsButton: XCUIElement {
-        buttons["Show Options"].firstMatch
-    }
-    var settingsButton: XCUIElement {
-        buttons["Settings"].firstMatch
-    }
-}
-
-extension NativeExampleApp: GDPRUI {
-    var privacyManager: XCUIElement {
-        webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Privacy Settings'")).firstMatch
-    }
-
-    var purposesTab: XCUIElement {
-        staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
-    }
-
-    var acceptAllButton: XCUIElement {
-        privacyManager.buttons["Accept All"].firstMatch
-    }
-
-    var rejectAllButton: XCUIElement {
-        privacyManager.buttons["Reject All"].firstMatch
-    }
-
-    var saveAndExitButton: XCUIElement {
-        privacyManager.buttons["Save & Exit"].firstMatch
-    }
-
-    var cancelButton: XCUIElement {
-        privacyManager.buttons["Cancel"].firstMatch
-    }
-
-    var DeviceInformationSwitch: XCUIElement {
-        privacyManager.switches["Information storage and access"].firstMatch
-    }
-
-    var PersonalisedContentSwitch: XCUIElement {
-        privacyManager.switches["Select personalised content"].firstMatch
-    }
-
-    var VibrantMediaLimitedVendorSwitch: XCUIElement {
-        privacyManager.switches["Vibrant Media Limited"].firstMatch
-    }
-
-    var GoogleVendorSwitch: XCUIElement {
-        privacyManager.switches["Google, Inc."].firstMatch
+    var gdprPrivacyManagerButton: XCUIElement {
+        buttons["GDPR Privacy Manager"].firstMatch
     }
 }

@@ -14,12 +14,23 @@ import Nimble
 class NativeMessageExampleUITests: QuickSpec {
     var app: NativeExampleApp!
 
+    func acceptAtt() {
+        if #available(iOS 15.0, *) {
+            expect(self.app.attPrePrompt.okButton).to(showUp())
+            app.attPrePrompt.okButton.tap()
+            expect(self.app.attPrePrompt.attAlertAllowButton).to(showUp(in: 1))
+            app.attPrePrompt.attAlertAllowButton.tap()
+        } else {
+            fail("ATT testing are only available in iOS 15")
+        }
+    }
+
     override func spec() {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = NativeExampleApp()
             Nimble.AsyncDefaults.timeout = .seconds(20)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
@@ -28,90 +39,36 @@ class NativeMessageExampleUITests: QuickSpec {
         }
 
         beforeEach {
-            self.app.relaunch(clean: true)
+            self.app.relaunch(clean: true, resetAtt: true)
         }
 
         it("Accept all through message") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.acceptButton.tap()
-            expect(self.app.messageTitle).to(disappear())
-            expect(self.app.exampleAppLabel).to(showUp())
+            self.acceptAtt()
+            expect(self.app.gdprMessage.messageTitle).to(showUp())
+            self.app.gdprMessage.acceptButton.tap()
+            expect(self.app.gdprPrivacyManagerButton).to(showUp())
             self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
+            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
         }
 
-        it("Reject all through message") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.rejectButton.tap()
-            expect(self.app.messageTitle).to(disappear())
-            expect(self.app.exampleAppLabel).to(showUp())
+        it("Accept all through 2nd layer") {
+            self.acceptAtt()
+            expect(self.app.gdprMessage.messageTitle).to(showUp())
+            self.app.gdprMessage.showOptionsButton.tap()
+            expect(self.app.gdprPM.messageTitle).to(showUp())
+            self.app.gdprPM.acceptAllButton.tap()
+            expect(self.app.gdprPrivacyManagerButton).to(showUp())
             self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
+            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
         }
 
-        it("Accept all through privacy manager directly") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.rejectButton.tap()
-            expect(self.app.exampleAppLabel).to(showUp())
-            self.app.settingsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.acceptAllButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
-        }
-
-        it("Reject all through privacy manager directly") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.acceptButton.tap()
-            expect(self.app.exampleAppLabel).to(showUp())
-            self.app.settingsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.rejectAllButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
-        }
-
-        it("Save and Exit through privacy manager directly") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.acceptButton.tap()
-            expect(self.app.exampleAppLabel).to(showUp())
-            self.app.settingsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.saveAndExitButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
-        }
-
-        it("Save and Exit with few vendors through privacy manager directly") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.acceptButton.tap()
-            expect(self.app.exampleAppLabel).to(showUp())
-            self.app.settingsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.GoogleVendorSwitch.tap()
-            self.app.VibrantMediaLimitedVendorSwitch.tap()
-            self.app.saveAndExitButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
-        }
-
-        it("Cancel with few purposes through privacy manager directly") {
-            expect(self.app.messageTitle).to(showUp())
-            self.app.acceptButton.tap()
-            expect(self.app.exampleAppLabel).to(showUp())
-            self.app.settingsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
-            self.app.purposesTab.tap()
-            self.app.PersonalisedContentSwitch.tap()
-            self.app.DeviceInformationSwitch.tap()
-            self.app.cancelButton.tap()
-            expect(self.app.privacyManager).to(disappear())
-            self.app.relaunch()
-            expect(self.app.messageTitle).notTo(showUp())
+        it("Dismissing 2nd layer returns to first layer message") {
+            self.acceptAtt()
+            expect(self.app.gdprMessage.messageTitle).to(showUp())
+            self.app.gdprMessage.showOptionsButton.tap()
+            expect(self.app.gdprPM.messageTitle).to(showUp())
+            self.app.gdprPM.cancelButton.tap()
+            expect(self.app.gdprMessage.messageTitle).to(showUp())
         }
     }
 }
