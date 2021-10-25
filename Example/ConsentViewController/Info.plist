@@ -39,11 +39,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Hey there, we are going to track you!</string>
 	<key>UILaunchStoryboardName</key>

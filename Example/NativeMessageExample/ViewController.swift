@@ -12,18 +12,24 @@ import ConsentViewController
 import UIKit
 import ConsentViewController
 
-let accountId = 22
-let propertyName = try! SPPropertyName("andre.native")
-let campaigns = SPCampaigns(
-    gdpr: SPCampaign(),
-    ccpa: SPCampaign(),
-    ios14: SPCampaign()
-)
-
 class ViewController: UIViewController {
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    let myVendorId = "5ff4d000a228633ac048be41"
-    let myPurposesId = ["6140b74a5e783f00145e8220", "6140b74a5e783f00145e8218"]
+    let myVendorId = "5f23e826b8e05c0c0d4fdb8f" // sourcepoint vendor id
+    let myPurposesId = [
+        "61767550ee493f0617946a3e", // Store and/or access information on a device
+        "61767550ee493f0617946a5b", // Select personalised content
+        "61767550ee493f0617946a66", // Measure content performance
+        "61767550ee493f0617946a71"  // Develop and improve products
+    ]
+    let accountId = 22
+    let propertyName = try! SPPropertyName("ios.native.demo")
+    let campaigns = SPCampaigns(
+        gdpr: SPCampaign(),
+        ccpa: SPCampaign(),
+        ios14: SPCampaign()
+    )
+    let gdprPMId = "566358"
+    let ccpaPMId = "566360"
 
     @IBOutlet weak var idfaStatusLabel: UILabel!
     @IBOutlet weak var myVendorAcceptedLabel: UILabel!
@@ -43,12 +49,12 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "17257")
+        consentManager.loadGDPRPrivacyManager(withId: gdprPMId)
         showSpinner()
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "17258")
+        consentManager.loadCCPAPrivacyManager(withId: ccpaPMId)
         showSpinner()
     }
 
