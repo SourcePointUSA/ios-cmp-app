@@ -8,8 +8,6 @@ on:
 defaults:
   run:
     working-directory: Example
-env:
-  DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
 jobs:
   lint:
     runs-on: macos-11
