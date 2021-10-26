@@ -16,11 +16,11 @@ jobs:
       - name: linting
         run: swiftlint lint
   ObjC-ExampleApp-tests:
-      runs-on: macos-latest
+      runs-on: macos-11
       steps:
         - uses: actions/checkout@v2
         - name: Select Xcode version
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app'
+          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
         - name: ObjC-ExampleApp testing -> iPhone 13 Pro Max (iOS 15.0)
           run: xcodebuild clean test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
@@ -29,11 +29,11 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   NativeMessageExample-tests:
-      runs-on: macos-latest
+      runs-on: macos-11
       steps:
         - uses: actions/checkout@v2
         - name: Select Xcode version
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app'
+          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
         - name: NativeMessageExample testing -> iPhone 13 Pro Max (iOS 15.0)
           run: xcodebuild clean test -scheme NativeMessageExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
@@ -42,11 +42,11 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   meta-app-tests:
-      runs-on: macos-latest
+      runs-on: macos-11
       steps:
         - uses: actions/checkout@v2
         - name: Select Xcode version
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app'
+          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
         - name: SourcePointMetaApp testing -> iPhone 13 Pro Max (iOS 15.0)
           run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
