@@ -19,22 +19,33 @@ jobs:
       runs-on: macos-latest
       steps:
         - uses: actions/checkout@v2
-        - name: ObjC-ExampleApp UI testing -> iPhone 11 (iOS 14.4)
+        - name: ObjC-ExampleApp testing -> iPhone 11 (iOS 14.4)
           run: xcodebuild clean test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.4' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
-          name: Upload ObjCExampleAppTestResults
+          name: Upload ObjCExampleApp tests results
+          with:
+            path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
+NativeMessageExample-tests:
+      runs-on: macos-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: NativeMessageExample testing -> iPhone 11 (iOS 14.4)
+          run: xcodebuild clean test -scheme NativeMessageExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.4' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - uses: actions/upload-artifact@v2
+          if: failure()
+          name: Upload NativeExampleApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   meta-app-tests:
       runs-on: macos-latest
       steps:
         - uses: actions/checkout@v2
-        - name: SourcePointMetaApp UI testing -> iPhone 11 (iOS 14.4)
+        - name: SourcePointMetaApp testing -> iPhone 11 (iOS 14.4)
           run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.4' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
-          name: Upload MetaAppUITestResults
+          name: Upload MetaApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
 
