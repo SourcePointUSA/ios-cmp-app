@@ -15,13 +15,21 @@ class NativeMessageExampleUITests: QuickSpec {
     var app: NativeExampleApp!
 
     func acceptAtt() {
+        expect(self.app.attPrePrompt.okButton).to(showUp())
+        app.attPrePrompt.okButton.tap()
+        expect(self.app.attPrePrompt.attAlertAllowButton).to(showUp(in: 1))
+        app.attPrePrompt.attAlertAllowButton.tap()
+    }
+
+    // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
+    // the ATT expectations run only once per test suite.
+    func runAttScenario() {
         if #available(iOS 15.0, *) {
-            expect(self.app.attPrePrompt.okButton).to(showUp())
-            app.attPrePrompt.okButton.tap()
-            expect(self.app.attPrePrompt.attAlertAllowButton).to(showUp(in: 1))
-            app.attPrePrompt.attAlertAllowButton.tap()
-        } else {
-            fail("ATT testing are only available in iOS 15")
+            acceptAtt()
+        } else if app.shouldRunAttScenario {
+            if #available(iOS 14, *) {
+                acceptAtt()
+            }
         }
     }
 
@@ -43,7 +51,7 @@ class NativeMessageExampleUITests: QuickSpec {
         }
 
         it("Accept all through message") {
-            self.acceptAtt()
+            self.runAttScenario()
             expect(self.app.gdprMessage.messageTitle).to(showUp())
             self.app.gdprMessage.acceptButton.tap()
             expect(self.app.gdprPrivacyManagerButton).to(showUp())
@@ -52,7 +60,7 @@ class NativeMessageExampleUITests: QuickSpec {
         }
 
         it("Accept all through 2nd layer") {
-            self.acceptAtt()
+            self.runAttScenario()
             expect(self.app.gdprMessage.messageTitle).to(showUp())
             self.app.gdprMessage.showOptionsButton.tap()
             expect(self.app.gdprPM.messageTitle).to(showUp())
@@ -63,7 +71,7 @@ class NativeMessageExampleUITests: QuickSpec {
         }
 
         it("Dismissing 2nd layer returns to first layer message") {
-            self.acceptAtt()
+            self.runAttScenario()
             expect(self.app.gdprMessage.messageTitle).to(showUp())
             self.app.gdprMessage.showOptionsButton.tap()
             expect(self.app.gdprPM.messageTitle).to(showUp())
