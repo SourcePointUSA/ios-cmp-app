@@ -1,3 +1,6 @@
+# 6.3.0 (Oct, 26, 2021)
+* Good news, the Native Message is back! For more info make sure to check the [Native Message wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) and our [README](https://github.com/SourcePointUSA/ios-cmp-app#readme).
+
 # 6.2.1 (Oct, 20, 2021)
 * Fix an issue preventing the SDK from being built via SPM
 * Add example on how to use vendor grants on README
