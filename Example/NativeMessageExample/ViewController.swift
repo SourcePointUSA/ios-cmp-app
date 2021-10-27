@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import ConsentViewController
-
-import UIKit
+import Foundation
 import ConsentViewController
 
 class ViewController: UIViewController {
@@ -37,7 +35,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var gdprPMButton: UIButton!
     @IBOutlet weak var ccpaPMButton: UIButton!
 
-    var messageController: SPNativeMessageViewController!
+    var messageController: NativeMessageViewController!
 
     @IBAction func onNetworkCallsTap(_ sender: Any) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
@@ -85,7 +83,7 @@ class ViewController: UIViewController {
 // MARK: SPDelegate implementation
 extension ViewController: SPDelegate {
     func onSPNativeMessageReady(_ message: SPNativeMessage) {
-        messageController = SPNativeMessageViewController(
+        messageController = NativeMessageViewController(
             accountId: accountId,
             propertyName: propertyName,
             campaigns: campaigns,

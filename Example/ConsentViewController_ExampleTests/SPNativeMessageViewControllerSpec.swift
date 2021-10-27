@@ -14,7 +14,7 @@ import Nimble
 
 class SPNativeMessageViewControllerSpec: QuickSpec {
     func xspec() {
-//        describe("SPNativeMessageViewController") {
+//        describe("NativeMessageViewController") {
 //            let customFileds = ["Custom": "Fileds"]
 //            let attributeStyle = SPNativeMessage.AttributeStyle(fontFamily: "System-Font", fontSize: 14, color: "#00FA9A", backgroundColor: "#944488")
 //            let messageAttribute = SPNativeMessage.Attribute(text: "Test GDPR Message", style: attributeStyle, customFields: customFileds)

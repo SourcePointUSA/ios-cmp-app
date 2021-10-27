@@ -118,6 +118,8 @@
 		8248A497247D17AA00A7D9AD /* SimpleClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A496247D17AA00A7D9AD /* SimpleClientSpec.swift */; };
 		8248A499247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A498247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift */; };
 		824BC0342463F6B0006D3C18 /* SPActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824BC0332463F6B0006D3C18 /* SPActionSpec.swift */; };
+		824E88302729507F00B6C9C8 /* NativeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824E882F2729507F00B6C9C8 /* NativeMessageViewController.swift */; };
+		824E88322729516D00B6C9C8 /* NativeMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 824E88312729516D00B6C9C8 /* NativeMessageViewController.xib */; };
 		8258D6242720689F005AAB2E /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 8258D6232720689F005AAB2E /* ConsentViewController */; };
 		8258D626272191A1005AAB2E /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258D625272191A1005AAB2E /* ExampleApp.swift */; };
 		82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82665C302444ECF600CCE738 /* SPJsonSpec.swift */; };
@@ -387,6 +389,8 @@
 		8248A496247D17AA00A7D9AD /* SimpleClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleClientSpec.swift; sourceTree = "<group>"; };
 		8248A498247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRUserConsentsSpec.swift; sourceTree = "<group>"; };
 		824BC0332463F6B0006D3C18 /* SPActionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPActionSpec.swift; sourceTree = "<group>"; };
+		824E882F2729507F00B6C9C8 /* NativeMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeMessageViewController.swift; sourceTree = "<group>"; };
+		824E88312729516D00B6C9C8 /* NativeMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NativeMessageViewController.xib; sourceTree = "<group>"; };
 		8258D625272191A1005AAB2E /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		82665C302444ECF600CCE738 /* SPJsonSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPJsonSpec.swift; sourceTree = "<group>"; };
 		826D31AC2498DE340026A6B9 /* MockConsentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockConsentDelegate.swift; path = Helpers/MockConsentDelegate.swift; sourceTree = "<group>"; };
@@ -1224,6 +1228,8 @@
 			children = (
 				82D8FEDE23DC753400F28D74 /* AppDelegate.swift */,
 				82D8FEE223DC753400F28D74 /* ViewController.swift */,
+				824E882F2729507F00B6C9C8 /* NativeMessageViewController.swift */,
+				824E88312729516D00B6C9C8 /* NativeMessageViewController.xib */,
 				82D8FEE423DC753400F28D74 /* Main.storyboard */,
 				82D8FEE723DC753500F28D74 /* Assets.xcassets */,
 				82D8FEE923DC753500F28D74 /* LaunchScreen.storyboard */,
@@ -1814,6 +1820,7 @@
 				82D8FEEB23DC753500F28D74 /* LaunchScreen.storyboard in Resources */,
 				82D8FEE823DC753500F28D74 /* Assets.xcassets in Resources */,
 				82D8FEE623DC753400F28D74 /* Main.storyboard in Resources */,
+				824E88322729516D00B6C9C8 /* NativeMessageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2430,6 +2437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				824E88302729507F00B6C9C8 /* NativeMessageViewController.swift in Sources */,
 				82D8FEE323DC753400F28D74 /* ViewController.swift in Sources */,
 				829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */,
 				82D8FEDF23DC753400F28D74 /* AppDelegate.swift in Sources */,
