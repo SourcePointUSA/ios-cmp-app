@@ -228,7 +228,7 @@ import UIKit
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "6.2.1"
+    public static let VERSION = "6.3.0"
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
