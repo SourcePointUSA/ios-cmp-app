@@ -588,6 +588,9 @@ extension ConsentViewController.SPJson {
   }
   @objc public class Action : ConsentViewController.SPNativeMessage.Attribute {
     final public let choiceType: ConsentViewController.SPActionType
+    public var pmId: Swift.String? {
+      get
+    }
     public init(text: Swift.String, style: ConsentViewController.SPNativeMessage.AttributeStyle, customFields: ConsentViewController.SPNativeMessage.CustomFields, choiceType: ConsentViewController.SPActionType, url: Foundation.URL?)
     override public func encode(to encoder: Swift.Encoder) throws
     @objc deinit
@@ -599,18 +602,6 @@ extension ConsentViewController.SPJson {
   public init(title: ConsentViewController.SPNativeMessage.Attribute, body: ConsentViewController.SPNativeMessage.Attribute, actions: [ConsentViewController.SPNativeMessage.Action], customFields: ConsentViewController.SPNativeMessage.CustomFields)
   required public init(from decoder: Swift.Decoder) throws
   @objc deinit
-}
-@objc @objcMembers @_Concurrency.MainActor(unsafe) public class SPNativeMessageViewController : UIKit.UIViewController {
-  @objc @_Concurrency.MainActor(unsafe) public init(accountId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, messageContents: ConsentViewController.SPNativeMessage, sdkDelegate: ConsentViewController.SPSDK)
-  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @_Concurrency.MainActor(unsafe) @objc override dynamic open func viewDidLoad()
-  @objc deinit
-}
-extension ConsentViewController.SPNativeMessageViewController : ConsentViewController.SPDelegate {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func onAction(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func onSPUIReady(_ controller: UIKit.UIViewController)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func onSPUIFinished(_ controller: UIKit.UIViewController)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func onError(error: ConsentViewController.SPError)
 }
 @objc public enum SPPrivacyManagerTab : Swift.Int {
   case Default

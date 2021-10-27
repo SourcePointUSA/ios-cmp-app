@@ -735,12 +735,27 @@ SWIFT_CLASS("_TtC21ConsentViewController23SPMessageViewController")
 
 SWIFT_CLASS("_TtC21ConsentViewController15SPNativeMessage")
 @interface SPNativeMessage : NSObject <SPMessageView>
+/// Used to notify the <code>SPConsentManager</code> about its different lifecycle events.
 @property (nonatomic, weak) id <SPMessageUIDelegate> _Nullable messageUIDelegate;
+/// Indicates the type of the campaign for this message
+/// <ul>
+///   <li>
+///     SeeMore: <code>SPCampaignType</code>
+///   </li>
+/// </ul>
 @property (nonatomic) enum SPCampaignType campaignType;
+/// The id of the message received from the server
 @property (nonatomic, copy) NSString * _Nonnull messageId;
+/// Unused by the native message
 @property (nonatomic) NSTimeInterval timeout;
 - (void)loadMessage;
+/// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+/// The will get a call to <code>onSPUIReady(_ controller: UIViewController)</code> when the PM
+/// is ready to be displayed
 - (void)loadPrivacyManagerWithUrl:(NSURL * _Nonnull)url;
+/// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+/// The will get a call to <code>onSPUIFinished(_ controller: UIViewController)</code> when the PM
+/// is ready to be closed
 - (void)closePrivacyManager;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -763,24 +778,6 @@ SWIFT_CLASS("_TtCC21ConsentViewController15SPNativeMessage9Attribute")
 
 SWIFT_CLASS("_TtCC21ConsentViewController15SPNativeMessage6Action")
 @interface Action : Attribute
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController29SPNativeMessageViewController")
-@interface SPNativeMessageViewController : UIViewController
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns messageContents:(SPNativeMessage * _Nonnull)messageContents sdkDelegate:(id <SPSDK> _Nonnull)sdkDelegate OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-- (void)viewDidLoad;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
-@end
-
-
-
-@interface SPNativeMessageViewController (SWIFT_EXTENSION(ConsentViewController)) <SPDelegate>
-- (void)onAction:(SPAction * _Nonnull)action from:(UIViewController * _Nonnull)controller;
-- (void)onSPUIReady:(UIViewController * _Nonnull)controller;
-- (void)onSPUIFinished:(UIViewController * _Nonnull)controller;
-- (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
 
 /// Supported privacy manager tabs in PM
@@ -1624,12 +1621,27 @@ SWIFT_CLASS("_TtC21ConsentViewController23SPMessageViewController")
 
 SWIFT_CLASS("_TtC21ConsentViewController15SPNativeMessage")
 @interface SPNativeMessage : NSObject <SPMessageView>
+/// Used to notify the <code>SPConsentManager</code> about its different lifecycle events.
 @property (nonatomic, weak) id <SPMessageUIDelegate> _Nullable messageUIDelegate;
+/// Indicates the type of the campaign for this message
+/// <ul>
+///   <li>
+///     SeeMore: <code>SPCampaignType</code>
+///   </li>
+/// </ul>
 @property (nonatomic) enum SPCampaignType campaignType;
+/// The id of the message received from the server
 @property (nonatomic, copy) NSString * _Nonnull messageId;
+/// Unused by the native message
 @property (nonatomic) NSTimeInterval timeout;
 - (void)loadMessage;
+/// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+/// The will get a call to <code>onSPUIReady(_ controller: UIViewController)</code> when the PM
+/// is ready to be displayed
 - (void)loadPrivacyManagerWithUrl:(NSURL * _Nonnull)url;
+/// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+/// The will get a call to <code>onSPUIFinished(_ controller: UIViewController)</code> when the PM
+/// is ready to be closed
 - (void)closePrivacyManager;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -1652,24 +1664,6 @@ SWIFT_CLASS("_TtCC21ConsentViewController15SPNativeMessage9Attribute")
 
 SWIFT_CLASS("_TtCC21ConsentViewController15SPNativeMessage6Action")
 @interface Action : Attribute
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController29SPNativeMessageViewController")
-@interface SPNativeMessageViewController : UIViewController
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns messageContents:(SPNativeMessage * _Nonnull)messageContents sdkDelegate:(id <SPSDK> _Nonnull)sdkDelegate OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
-- (void)viewDidLoad;
-- (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
-@end
-
-
-
-@interface SPNativeMessageViewController (SWIFT_EXTENSION(ConsentViewController)) <SPDelegate>
-- (void)onAction:(SPAction * _Nonnull)action from:(UIViewController * _Nonnull)controller;
-- (void)onSPUIReady:(UIViewController * _Nonnull)controller;
-- (void)onSPUIFinished:(UIViewController * _Nonnull)controller;
-- (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
 
 /// Supported privacy manager tabs in PM
