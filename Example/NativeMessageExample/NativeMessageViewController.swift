@@ -91,7 +91,7 @@ extension NativeMessageViewController: SPDelegate {
                     default: break
                 }
             } else {
-                // TODO: show error message url / pm id is empty
+                /// show error message pm id is empty
                 return
             }
         case .PMCancel, .Dismiss: break

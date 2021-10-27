@@ -29,6 +29,13 @@ extension XCUIApplication: App {
     }
 }
 
+class FirstLayerMessage: XCUIApplication {
+    var messageTitle: XCUIElement { staticTexts["Message Title"].firstMatch }
+    var acceptButton: XCUIElement { buttons["Accept All"].firstMatch }
+    var rejectButton: XCUIElement { buttons["Reject All"].firstMatch }
+    var showOptionsButton: XCUIElement { buttons["Show Options"].firstMatch }
+}
+
 class NativeExampleApp: XCUIApplication {
     class GDPRPrivacyManager: XCUIApplication {
         private var container: XCUIElement {
@@ -60,21 +67,15 @@ class NativeExampleApp: XCUIApplication {
         }
     }
 
-    class GDPRMessage: XCUIApplication {
-        var messageTitle: XCUIElement {
+    class GDPRMessage: FirstLayerMessage {
+        override var messageTitle: XCUIElement {
             staticTexts["GDPR Native Message"].firstMatch
         }
+    }
 
-        var acceptButton: XCUIElement {
-            buttons["Accept All"].firstMatch
-        }
-
-        var rejectButton: XCUIElement {
-            buttons["Reject All"].firstMatch
-        }
-
-        var showOptionsButton: XCUIElement {
-            buttons["Show Options"].firstMatch
+    class CCPAMessage: FirstLayerMessage {
+        override var messageTitle: XCUIElement {
+            staticTexts["CCPA Native Message"].firstMatch
         }
     }
 
@@ -99,6 +100,7 @@ class NativeExampleApp: XCUIApplication {
     }
 
     let gdprMessage = GDPRMessage()
+    let ccpaMessage = CCPAMessage()
     let gdprPM = GDPRPrivacyManager()
     let attPrePrompt = ATTPrePrompt()
 
