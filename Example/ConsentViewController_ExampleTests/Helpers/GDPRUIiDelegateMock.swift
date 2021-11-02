@@ -9,7 +9,7 @@
 import Foundation
 @testable import ConsentViewController
 
-//class GDPRUIDelegateMock: SPMessageUIDelegate {
+//  class GDPRUIDelegateMock: SPMessageUIDelegate {
 //    weak var consentDelegate: SPDelegate?
 //    var loadMessageCalled = false
 //    var loadPrivacyManagerCalled = false
@@ -43,4 +43,4 @@ import Foundation
 //    func finished(_ vcFinished: UIViewController) {
 //        <#code#>
 //    }
-//}
+//  }
