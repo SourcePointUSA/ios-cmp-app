@@ -11,6 +11,7 @@ import Foundation
 @objc public enum SPActionType: Int, Codable, CaseIterable, CustomStringConvertible {
     case SaveAndExit = 1
     case PMCancel = 2
+    case Custom = 9
     case AcceptAll = 11
     case ShowPrivacyManager = 12
     case RejectAll = 13
@@ -24,6 +25,7 @@ import Foundation
         switch self {
         case .AcceptAll: return "AcceptAll"
         case .RejectAll: return "RejectAll"
+        case .Custom: return "Custom"
         case .ShowPrivacyManager: return "ShowPrivacyManager"
         case .SaveAndExit: return "SaveAndExit"
         case .Dismiss: return "Dismiss"
@@ -53,11 +55,13 @@ import Foundation
     }
     public var pmPayload: SPJson = SPJson()
     public var publisherData: [String: SPJson?] = [:]
+    public var customActionId: String?
 
     public override var description: String {
         """
         SPAction(type: \(type), consentLanguage: \(consentLanguage ?? ""), \
-        payload: \(pmPayload), publisherData: \(String(describing: publisherData))
+        payload: \(pmPayload), publisherData: \(String(describing: publisherData)),
+        customActionId: \(customActionId ?? ""))
         """
     }
 
@@ -77,11 +81,14 @@ import Foundation
         campaignType: SPCampaignType = .unknown,
         consentLanguage: String? = nil,
         pmPayload: SPJson = SPJson(),
-        pmurl: URL? = nil) {
+        pmurl: URL? = nil,
+        customActionId: String? = nil
+    ) {
         self.type = type
         self.campaignType = campaignType
         self.consentLanguage = consentLanguage
         self.pmPayload = pmPayload
         self.pmURL = pmurl
+        self.customActionId = customActionId
     }
 }
