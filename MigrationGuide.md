@@ -24,7 +24,7 @@ lazy var consentManager: SPConsentManager = { SPConsentManager(
     accountId: 22,
     propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
     campaigns: SPCampaigns(
-        gdpr: SPCampaign(environment: .Public)
+        gdpr: SPCampaign()
     ),
     delegate: self
 )}()
@@ -52,7 +52,7 @@ lazy var consentManager: SPConsentManager = { SPConsentManager(
 ### `gdprConsentUIWillShow()`
 Changed to:
 ```swift
-onSPUIReady(_ controller: SPMessageViewController)
+onSPUIReady(_ controller: UIViewController)
 ```
 The `onSPUIReady` might be called multiple times, one for each message returned by the scenario.
 
@@ -61,7 +61,7 @@ The `onSPUIReady` might be called multiple times, one for each message returned 
 ### `onAction(_ action: GDPRAction)`
 **v6 (Unified SDK)**:
 ```swift
-onAction(_ action: SPAction, from controller: SPMessageViewController)
+onAction(_ action: SPAction, from controller: UIViewController)
 ```
 The `onAction` method hasn't changed much apart from having on extra parameter indicating the `ViewController` in which the user took that action.
 
@@ -70,7 +70,7 @@ The `onAction` method hasn't changed much apart from having on extra parameter i
 ### `consentUIDidDisappear()`
 **v6 (Unified SDK)**:
 ```swift
-onSPUIFinished(_ controller: SPMessageViewController)
+onSPUIFinished(_ controller: UIViewController)
 ```
 The `onSPUIFinished` might be called multiple times, one for each message that needs to be removed from View stack.
 
