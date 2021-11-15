@@ -455,8 +455,6 @@ extension SPConsentManager: SPMessageUIDelegate {
             if let spController = controller as? SPMessageViewController {
                 spController.closePrivacyManager()
             }
-        case .Dismiss:
-            nextMessageIfAny(controller)
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 let spController = controller as? SPMessageViewController
@@ -471,7 +469,7 @@ extension SPConsentManager: SPMessageUIDelegate {
                 }
             }
         default:
-            break
+            nextMessageIfAny(controller)
         }
     }
 }
