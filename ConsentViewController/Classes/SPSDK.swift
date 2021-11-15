@@ -33,7 +33,6 @@ import Foundation
         delegate: SPDelegate?
     )
     @objc func loadMessage(forAuthId authId: String?)
-    @objc func nextMessageIfAny(_ vcFinished: UIViewController)
     @objc func customConsentGDPR(
         vendors: [String],
         categories: [String],

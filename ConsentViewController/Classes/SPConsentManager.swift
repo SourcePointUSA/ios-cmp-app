@@ -91,6 +91,11 @@ import UIKit
         }
     }
 
+    func nextMessageIfAny(_ vcFinished: UIViewController) {
+        finished(vcFinished)
+        renderNextMessageIfAny()
+    }
+
     func messageToViewController(_ url: URL, _ messageId: String, _ message: Message?, _ type: SPCampaignType) -> SPMessageView? {
         switch message?.messageJson {
         case .native(let nativeMessage):
@@ -281,11 +286,6 @@ import UIKit
                 self?.onError(error)
             }
         }
-    }
-
-    public func nextMessageIfAny(_ vcFinished: UIViewController) {
-        finished(vcFinished)
-        renderNextMessageIfAny()
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
