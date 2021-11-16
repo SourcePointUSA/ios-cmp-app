@@ -165,10 +165,40 @@ You can load the Privacy Manager (that UI with the toggles) any time, programati
 
 The SDK will follow the same exact same lifecycle as with the 1st layer consent message. First calling the delegate method `onSPUIReady` when the PM is ready, `onAction` when the user takes an action, `onSPUIFinished` when the PM is ready to be removed from the View stack and, finally,  `onConsentReady` once the SDK receives the consent data back from the server.
 
-## What happens in case of an error?
-The SDK will in all cases wrap the error in one of the `SPError` class and eventually call the `func onError(_ error: SPError)` callback. 
-By default, the SDK will also remove all consent data from the device. This _may_ cause a consent message to be shown again, depending on your scenario. This was implemented on purpose to be the most safe possible. Since there are no consents data, vendors should refrain from performing logic that depend on it.
-This behaviour can be opted-out by setting the flag  `consentManager.cleanUserDataOnError` to false, after you initialise `SPConsentManager`.
+## Understanding the `SPDelegate` protocol (delegate methods)
+
+### onSPUIReady(_ controller: UIViewController)
+The SDK will wrap the web message into a `UIViewController` and call the `onSPUIReady` when there is a message to be displayed.
+
+### optional onSPNativeMessageReady(_ message: SPNativeMessage)
+The `onSPNativeMessageReady` is only called if the scenario returns a native message. It will be up to you to the `message` object on the screen using the layout you best see fit.
+
+### onAction(_ action: SPAction, from controller: UIViewController)
+Whenever the user takes an action (e.g. tapping on a button), the SDK will call the `onAction` passing the `action` as paramter.
+
+#### What's inside `SPAction`
+Among other internal data, you'll find:
+* `type: SPActionType`: an enum signaling the type of action. Use XCode's quick help on `SPActionType` for more info.
+* `campaignType: SPCampaignType`: an enum signaling the type of campaign in which the action was taken (`gdpr, ios14, ccpa, unknown`)
+* `customActionId: String`: if the type of action is `Custom`, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).
+* `publisherPayload: [String: SPJson?]`: also known as `pubData` in some of SP services, this is an arbitrary dictionary of key value pairs (set by your app) to be sent to our servers and later retrieved using the pubData API.
+
+With exception of `PMCancel` and `ShowPrivacyManager` actions, the SDK will call the `onSPUIFinished` after handling the action. 
+
+### onSPUIFinished(_ controller: UIViewController)
+When an action is taken (see above), the SDK will handle it appropriately (sending a consent request to our servers, for example) and call the `onSPUIFinished` to indicate the message can be dismissed by your app.
+
+### optional onConsentReady(userData: SPUserData)
+The `onConsentReady` will be called in two different scenarios:
+1. After `loadMessage` is called but there's no message to be displayed.
+2. After the SDK receives the response for one of its consent requests. This happens after the user has taken a consent action (`AcceptAll`, `RejectAll`, `Save&Exit`) in the message or Privacy Manager.
+
+Make sure to check XCode's quick help of `SPUserData` for more information on what data is available to your app during `onConsentReady`.
+
+### optional onError(error: SPError)
+In case of an error, the SDK will wrap the error in one of the `SPError` classes and eventually call the `onError(_ error: SPError)` callback. 
+By default, the SDK will also remove all consent data from the device. This _may_ cause a consent message to be shown again, depending on your scenario. This was implemented on purpose to be the most compliant as possible. Since there are no consent data, vendors should refrain from performing logic that depend on it.
+This behaviour can be opted-out by setting the flag  `consentManager.cleanUserDataOnError` to `false`, after you initialise `SPConsentManager`.
 
 ## Programatically consenting an user
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
