@@ -301,17 +301,16 @@ import UIKit
             switch result {
             case .success(let message):
                 /// TODO: refactor
-                var nativePMMessage: PrivacyManagerViewData?
-                switch message.messageJson {
-                case .nativePM(let content):
-                    nativePMMessage = content
-                default: break
+                guard case let .nativePM(nativePMMessage) = message.messageJson else {
+                    self?.onError(SPError())
+                    return
                 }
+
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
                     messageId: id,
                     campaignType: .gdpr,
-                    viewData: nativePMMessage!.homeView,
-                    pmData: nativePMMessage!,
+                    viewData: nativePMMessage.homeView,
+                    pmData: nativePMMessage,
                     delegate: self
                 )
                 pmViewController.categories = message.categories ?? []
