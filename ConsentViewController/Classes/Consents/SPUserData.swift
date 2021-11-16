@@ -11,7 +11,9 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     /// The consents data. See: `SPGDPRConsent`, `SPCCPAConsent`
     public let consents: ConsentType?
 
-    /// Indicates whether the legislation applies to the current session or not. This is based on your Vendor List configuration (scope of the vendor list) and will be determined based on the user's IP. **SP does not store the user's IP.**
+    /// Indicates whether the legislation applies to the current session or not.
+    /// This is based on your Vendor List configuration (scope of the vendor list) and will be determined
+    /// based on the user's IP. **SP does not store the user's IP.**
     public let applies: Bool
 
     public init(consents: ConsentType?, applies: Bool) {

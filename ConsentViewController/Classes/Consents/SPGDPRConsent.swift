@@ -70,8 +70,10 @@ public typealias SPGDPRPurposeId = String
     ///     ...
     /// }
     /// ```
-    /// The `granted` attribute indicated whether the vendor has **all** purposes it needs to be considered fully consented. Either via legitimate interest or explicit user consent.
-    /// Each key/value pair of `"purposeId: Bool`, indicates if that purpose has been consented either via leg. interest or explicit user consent.
+    /// The `granted` attribute indicated whether the vendor has **all** purposes it needs to be
+    /// considered fully consented. Either via legitimate interest or explicit user consent.
+    /// Each key/value pair of `"purposeId: Bool`, indicates if that purpose has been consented
+    /// either via leg. interest or explicit user consent.
     public let vendorGrants: SPGDPRVendorGrants
 
     /// The iAB consent string.
