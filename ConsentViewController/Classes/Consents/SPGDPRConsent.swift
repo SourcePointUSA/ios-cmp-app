@@ -50,12 +50,28 @@ public typealias SPGDPRPurposeId = String
     SPGDPRConsent encapsulates all consent data from a user.
  */
 @objcMembers public class SPGDPRConsent: NSObject, Codable {
+    /// Convenience initialiser to return an empty consent object.
     public static func empty() -> SPGDPRConsent { SPGDPRConsent(
         vendorGrants: SPGDPRVendorGrants(),
         euconsent: "",
         tcfData: SPJson()
     )}
 
+    /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
+    ///
+    /// The vendorGrants can be seen as an object in the following shape:
+    /// ```{
+    ///     "vendor1Id": {
+    ///         "granted": true,
+    ///         "purpose1id": true,
+    ///         "purpose2id": true
+    ///         ...
+    ///     },
+    ///     ...
+    /// }
+    /// ```
+    /// The `granted` attribute indicated whether the vendor has **all** purposes it needs to be considered fully consented. Either via legitimate interest or explicit user consent.
+    /// Each key/value pair of `"purposeId: Bool`, indicates if that purpose has been consented either via leg. interest or explicit user consent.
     public let vendorGrants: SPGDPRVendorGrants
 
     /// The iAB consent string.
@@ -64,10 +80,10 @@ public typealias SPGDPRPurposeId = String
     /// A dictionary with all TCFv2 related data
     public let tcfData: SPJson
 
-    /// that's the internal Sourcepoint id we give to this consent profile
+    /// That's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
 
-    /// a list of ids of the categories accepted by the user in all its vendors.
+    /// A list of ids of the categories accepted by the user in all its vendors.
     /// If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.
     public var acceptedCategories: [String] {
         let categoryGrants = vendorGrants
