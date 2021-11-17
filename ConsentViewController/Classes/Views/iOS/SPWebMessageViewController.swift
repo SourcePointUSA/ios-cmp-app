@@ -168,7 +168,8 @@ import WebKit
             campaignType: campaignType,
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: body["payload"] ?? SPJson(),
-            pmurl: URL(string: body["pm_url"]?.stringValue ?? "")
+            pmurl: URL(string: body["pm_url"]?.stringValue ?? ""),
+            customActionId: body["customActionId"]?.stringValue
         )
     }
 

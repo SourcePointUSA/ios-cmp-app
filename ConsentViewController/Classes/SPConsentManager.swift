@@ -91,6 +91,11 @@ import UIKit
         }
     }
 
+    func nextMessageIfAny(_ vcFinished: UIViewController) {
+        finished(vcFinished)
+        renderNextMessageIfAny()
+    }
+
     func messageToViewController(_ url: URL, _ messageId: String, _ message: Message?, _ type: SPCampaignType) -> SPMessageView? {
         switch message?.messageJson {
         case .native(let nativeMessage):
@@ -300,7 +305,6 @@ import UIKit
         spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
             switch result {
             case .success(let message):
-                /// TODO: refactor
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {
                     self?.onError(SPError())
                     return
@@ -340,17 +344,15 @@ import UIKit
         spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
             switch result {
             case .success(let message):
-                var nativePMMessage: PrivacyManagerViewData?
-                switch message.messageJson {
-                case .nativePM(let content):
-                    nativePMMessage = content
-                default: self?.onError(InvalidResponseWebMessageError())
+                guard case let .nativePM(nativePMMessage) = message.messageJson else {
+                    self?.onError(SPError())
+                    return
                 }
                 let pmViewController = SPCCPANativePrivacyManagerViewController(
                     messageId: id,
                     campaignType: .ccpa,
-                    viewData: nativePMMessage!.homeView,
-                    pmData: nativePMMessage!,
+                    viewData: nativePMMessage.homeView,
+                    pmData: nativePMMessage,
                     delegate: self
                 )
                 pmViewController.delegate = self
@@ -414,11 +416,6 @@ extension SPConsentManager: SPMessageUIDelegate {
         }
     }
 
-    func finishAndNextIfAny(_ vcFinished: UIViewController) {
-        finished(vcFinished)
-        renderNextMessageIfAny()
-    }
-
     func reportIdfaStatus(status: SPIDFAStatus, messageId: Int?) {
         var uuid = ""
         var uuidType: SPCampaignType?
@@ -445,7 +442,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             report(action: action)
-            finishAndNextIfAny(controller)
+            nextMessageIfAny(controller)
         case .ShowPrivacyManager:
             guard let url = action.pmURL?.appendQueryItems(["site_id": propertyIdString]) else {
                 onError(InvalidURLError(urlString: "Empty or invalid PM URL"))
@@ -458,13 +455,11 @@ extension SPConsentManager: SPMessageUIDelegate {
             if let spController = controller as? SPMessageViewController {
                 spController.closePrivacyManager()
             }
-        case .Dismiss:
-            finishAndNextIfAny(controller)
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 let spController = controller as? SPMessageViewController
                 self?.reportIdfaStatus(status: status, messageId: Int(spController?.messageId ?? ""))
-                self?.finishAndNextIfAny(controller)
+                self?.nextMessageIfAny(controller)
                 if status == .accepted {
                     action.type = .IDFAAccepted
                     self?.delegate?.onAction(action, from: controller)
@@ -474,7 +469,7 @@ extension SPConsentManager: SPMessageUIDelegate {
                 }
             }
         default:
-            print("[SDK] UNKNOWN Action")
+            nextMessageIfAny(controller)
         }
     }
 }

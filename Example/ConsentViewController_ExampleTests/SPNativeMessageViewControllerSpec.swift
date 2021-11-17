@@ -10,7 +10,7 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable function_body_length
+/// swiftlint:disable function_body_length
 
 class SPNativeMessageViewControllerSpec: QuickSpec {
     func xspec() {

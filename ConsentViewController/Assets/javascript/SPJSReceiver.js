@@ -43,7 +43,8 @@ var getActionFromMessage = function (eventData) {
         id: String(choiceData.choice_id),
         type: choiceData.type,
         pm_url: choiceData.iframe_url,
-        consentLanguage: eventData.consentLanguage
+        consentLanguage: eventData.consentLanguage,
+        customActionId: choiceData.customAction
     };
 };
 
@@ -64,7 +65,8 @@ var handleMessageEvent = function(SDK) {
                     SDK.onAction({
                         type: eventData.actionType,
                         payload: eventData.payload,
-                        consentLanguage: eventData.consentLanguage
+                        consentLanguage: eventData.consentLanguage,
+                        customActionId: eventData.customAction
                     }) :
                     SDK.onAction(getActionFromMessage(eventData));
                 break;

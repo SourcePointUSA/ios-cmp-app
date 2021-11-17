@@ -124,21 +124,6 @@ A Http client for SourcePoint's endpoints
  - Important: it should only be used the SDK as its public API is still in constant development and is probably going to change.
  */
 class SourcePointClient: SourcePointProtocol {
-    static let envParam = "prod"
-    static let SP_ROOT = URL(string: "https://cdn.privacy-mgmt.com/")!
-    static let WRAPPER_API = URL(string: "./wrapper/", relativeTo: SP_ROOT)!
-    static let GDPR_MESSAGE_URL = URL(string: "./v2/message/gdpr", relativeTo: WRAPPER_API)!
-    static let CCPA_MESSAGE_URL = URL(string: "./v2/message/ccpa", relativeTo: WRAPPER_API)!
-    static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: WRAPPER_API)!
-    static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=\(envParam)", relativeTo: WRAPPER_API)!
-    static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
-    static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
-    static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=\(envParam)", relativeTo: WRAPPER_API)!
-    static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=\(envParam)&inApp=true", relativeTo: WRAPPER_API)!
-    static let MMS_MESSAGE_URL = URL(string: "./mms/v2/message", relativeTo: SP_ROOT)!
-    static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
-    static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
-
     let accountId: Int
     let propertyName: SPPropertyName
     let campaignEnv: SPCampaignEnv
@@ -183,7 +168,7 @@ class SourcePointClient: SourcePointProtocol {
             consentLanguage: consentLanguage,
             campaigns: CampaignsRequest(from: campaigns)
         )).map { body in
-            client.post(urlString: SourcePointClient.GET_MESSAGES_URL.absoluteString, body: body) { result in
+            client.post(urlString: Constants.GET_MESSAGES_URL.absoluteString, body: body) { result in
                 handler(Result {
                     try result.decoded() as MessagesResponse
                 }.mapError({
@@ -199,8 +184,8 @@ class SourcePointClient: SourcePointProtocol {
         messageId: String,
         handler: @escaping MessageHandler
     ) {
-        let url = SourcePointClient.GDPR_MESSAGE_URL.appendQueryItems([
-            "env": SourcePointClient.envParam,
+        let url = Constants.GDPR_MESSAGE_URL.appendQueryItems([
+            "env": Constants.envParam,
             "consentLanguage": consentLanguage.rawValue,
             "propertyId": propertyId,
             "messageId": messageId,
@@ -221,8 +206,8 @@ class SourcePointClient: SourcePointProtocol {
         messageId: String,
         handler: @escaping MessageHandler
     ) {
-        let url = SourcePointClient.CCPA_MESSAGE_URL.appendQueryItems([
-            "env": SourcePointClient.envParam,
+        let url = Constants.CCPA_MESSAGE_URL.appendQueryItems([
+            "env": Constants.envParam,
             "consentLanguage": consentLanguage.rawValue,
             "propertyId": propertyId,
             "messageId": messageId
@@ -237,7 +222,7 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func gdprPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping GDPRPrivacyManagerViewHandler) {
-        let url = SourcePointClient.GDPR_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
+        let url = Constants.GDPR_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
             "siteId": String(propertyId),
             "consentLanguage": consentLanguage.rawValue
         ])!
@@ -251,7 +236,7 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func ccpaPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping CCPAPrivacyManagerViewHandler) {
-            let url = SourcePointClient.CCPA_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
+            let url = Constants.CCPA_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
                 "siteId": String(propertyId),
                 "consentLanguage": consentLanguage.rawValue
             ])!
@@ -268,7 +253,7 @@ class SourcePointClient: SourcePointProtocol {
         guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
 
         var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
-        components?.queryItems = [URLQueryItem(name: "env", value: SourcePointClient.envParam)]
+        components?.queryItems = [URLQueryItem(name: "env", value: Constants.envParam)]
         return components?.url(relativeTo: baseUrl)
     }
 
@@ -280,7 +265,7 @@ class SourcePointClient: SourcePointProtocol {
             pmSaveAndExitVariables: action.pmPayload,
             requestUUID: requestUUID
         )).map { body in
-            client.post(urlString: consentUrl(SourcePointClient.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+            client.post(urlString: consentUrl(Constants.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
                     let response = try result.decoded() as ConsentResponse
                     switch response.userConsent {
@@ -303,7 +288,7 @@ class SourcePointClient: SourcePointProtocol {
             publisherData: action.publisherData,
             requestUUID: requestUUID
         )).map { body in
-            client.post(urlString: consentUrl(SourcePointClient.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+            client.post(urlString: consentUrl(Constants.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
                 handler(Result {
                     let response = try result.decoded() as ConsentResponse
                     switch response.userConsent {
@@ -327,7 +312,7 @@ class SourcePointClient: SourcePointProtocol {
             iosVersion: iosVersion,
             appleTracking: AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, messagePartitionUUID: partitionUUID)
         )).map {
-            client.post(urlString: SourcePointClient.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
+            client.post(urlString: Constants.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
         }
     }
 
@@ -345,7 +330,7 @@ class SourcePointClient: SourcePointProtocol {
             categories: categories,
             legIntCategories: legIntCategories
         )).map { body in
-            client.post(urlString: SourcePointClient.CUSTOM_CONSENT_URL.absoluteString, body: body) { result in
+            client.post(urlString: Constants.CUSTOM_CONSENT_URL.absoluteString, body: body) { result in
                 handler(Result {
                     try result.decoded() as CustomConsentResponse
                 }.mapError {
@@ -374,7 +359,7 @@ class SourcePointClient: SourcePointProtocol {
             propertyName: propertyName,
             campaignType: campaignType
         )).map {
-            client.post(urlString: SourcePointClient.ERROR_METRIS_URL.absoluteString, body: $0) { _ in }
+            client.post(urlString: Constants.ERROR_METRIS_URL.absoluteString, body: $0) { _ in }
         }
     }
 }

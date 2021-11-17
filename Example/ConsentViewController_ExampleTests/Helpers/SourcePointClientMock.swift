@@ -89,7 +89,13 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func customConsentGDPR(toConsentUUID consentUUID: String, vendors: [String], categories: [String], legIntCategories: [String], propertyId: Int, handler: @escaping CustomConsentHandler) {
+    func customConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping CustomConsentHandler) {
 
     }
 
