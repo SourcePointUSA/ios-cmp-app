@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConsentViewController
 import AdSupport
 import AppTrackingTransparency
@@ -19,6 +19,7 @@ public let MockNativePMResponse: Swift.String
 @objc public enum SPActionType : Swift.Int, Swift.Codable, Swift.CaseIterable, Swift.CustomStringConvertible {
   case SaveAndExit = 1
   case PMCancel = 2
+  case Custom = 9
   case AcceptAll = 11
   case ShowPrivacyManager = 12
   case RejectAll = 13
@@ -50,11 +51,12 @@ public let MockNativePMResponse: Swift.String
   }
   public var pmPayload: ConsentViewController.SPJson
   public var publisherData: [Swift.String : ConsentViewController.SPJson?]
+  @objc public var customActionId: Swift.String?
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  public init(type: ConsentViewController.SPActionType, campaignType: ConsentViewController.SPCampaignType = .unknown, consentLanguage: Swift.String? = nil, pmPayload: ConsentViewController.SPJson = SPJson(), pmurl: Foundation.URL? = nil)
+  public init(type: ConsentViewController.SPActionType, campaignType: ConsentViewController.SPCampaignType = .unknown, consentLanguage: Swift.String? = nil, pmPayload: ConsentViewController.SPJson = SPJson(), pmurl: Foundation.URL? = nil, customActionId: Swift.String? = nil)
   @objc deinit
 }
 @objc public enum SPCampaignEnv : Swift.Int {

@@ -14,11 +14,11 @@
 		</data>
 		<key>ConsentViewController.bundle/Info.plist</key>
 		<data>
-		qLerolh42yOeCC/Vx6F3atNhfbg=
+		6owefU0w9ogYirEHq9O+EAkLluA=
 		</data>
 		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
 		<data>
-		ni3Odaz2vLn19Sedv4ndT/fX4v4=
+		9bARBpIHGnihZcGrNM+WoDclulg=
 		</data>
 		<key>ConsentViewController.bundle/SPJSReceiver.spec.js</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeDirectory</key>
 		<data>
-		skWNb5DmOx4nvpk94RTASMkhbbo=
+		AipFqjdIYCtEQqirvwzF7qKCv5Q=
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeRequirements</key>
 		<data>
@@ -38,11 +38,11 @@
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeRequirements-1</key>
 		<data>
-		ZFz+byQed27qC672CFqqduJSkk4=
+		/O9YDw7NE3ExN60J6xLHlSyTU6w=
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeResources</key>
 		<data>
-		KuWVLT3phUj2GQ54FHREY1VllaA=
+		ttNX/vR8TDvg+h25W+LY2uQyNF4=
 		</data>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeSignature</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>ConsentViewController.bundle/javascript/SPJSReceiver.js</key>
 		<data>
-		ni3Odaz2vLn19Sedv4ndT/fX4v4=
+		9bARBpIHGnihZcGrNM+WoDclulg=
 		</data>
 		<key>ConsentViewController.bundle/javascript/SPJSReceiver.spec.js</key>
 		<data>
@@ -74,7 +74,7 @@
 		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
-		DQwxmO70Bja+MkeOK9qmQ5I1XkA=
+		wqgxU/pcY5yEKcwe6gp8BAxOKCU=
 		</data>
 		<key>Headers/ConsentViewController-iOS-umbrella.h</key>
 		<data>
@@ -82,79 +82,79 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Z2qReGucgc2+FnuJaCD18OBivlk=
+		j/vmxefjmRzczehrKHsmBsXGH4Q=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		RWWbqtgiRrwDghyVdORomnnAq34=
+		TSxuPLFt10YwWAs+6EFjiJ/GnFg=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		syqLGppTPADhNStFujBZZ4pPouc=
+		nCksq8PhUW1Hu4WVtE6rPj9kxvI=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		EejQ05L4cm/K9not1L8vWzjlXTY=
+		4YmCv96olxiku7a1OOPDfKpzIu8=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		RWWbqtgiRrwDghyVdORomnnAq34=
+		TSxuPLFt10YwWAs+6EFjiJ/GnFg=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftinterface</key>
 		<data>
-		syqLGppTPADhNStFujBZZ4pPouc=
+		nCksq8PhUW1Hu4WVtE6rPj9kxvI=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		EejQ05L4cm/K9not1L8vWzjlXTY=
+		4YmCv96olxiku7a1OOPDfKpzIu8=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<data>
-		VZGXRdfJiCeZVXo+K21D0v6eLqg=
+		HVfN7vdeu0E8+RPdizoV6keWwGI=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftinterface</key>
 		<data>
-		bxc9zUjDRxk5tl3OVn2UNiUqPaU=
+		WydC5PqGJa1B/GmxlKHFZ5zWTzc=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<data>
-		7EB5L3OtJN4BWxqVsjcdUQfqIL8=
+		WWMPoOwZN3tXcEhW5JcfS4lpOrM=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftdoc</key>
 		<data>
-		VZGXRdfJiCeZVXo+K21D0v6eLqg=
+		HVfN7vdeu0E8+RPdizoV6keWwGI=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftinterface</key>
 		<data>
-		bxc9zUjDRxk5tl3OVn2UNiUqPaU=
+		WydC5PqGJa1B/GmxlKHFZ5zWTzc=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftmodule</key>
 		<data>
-		7EB5L3OtJN4BWxqVsjcdUQfqIL8=
+		WWMPoOwZN3tXcEhW5JcfS4lpOrM=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Pt0Y/MU9+habu0JabAH7PTAFpts=
+		S3qMsURWfykOi9eL3o3Th4InFys=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		dKtdukE9y4jlco8R8F8qQxIcaEE=
+		xi7krmFgTYgblDV+7GqLu/Rxixo=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		WkFeR3VI4hAVwljBWEnFINBLMBA=
+		ao5nFxnlgeIyBYDTgC8y4qAkG50=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		Pt0Y/MU9+habu0JabAH7PTAFpts=
+		S3qMsURWfykOi9eL3o3Th4InFys=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		dKtdukE9y4jlco8R8F8qQxIcaEE=
+		xi7krmFgTYgblDV+7GqLu/Rxixo=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		WkFeR3VI4hAVwljBWEnFINBLMBA=
+		ao5nFxnlgeIyBYDTgC8y4qAkG50=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -162,7 +162,7 @@
 		</data>
 		<key>SPJSReceiver.js</key>
 		<data>
-		ni3Odaz2vLn19Sedv4ndT/fX4v4=
+		9bARBpIHGnihZcGrNM+WoDclulg=
 		</data>
 		<key>SPJSReceiver.spec.js</key>
 		<data>
@@ -205,22 +205,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qLerolh42yOeCC/Vx6F3atNhfbg=
+			6owefU0w9ogYirEHq9O+EAkLluA=
 			</data>
 			<key>hash2</key>
 			<data>
-			pMozla5mXFILHETDgXbaG5vPH4KD0PA+VGnAX2l5fSE=
+			T6xUNNEmQAiMPLIjVzZqdcbHA7fsbEchqr7do1LXHqg=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ni3Odaz2vLn19Sedv4ndT/fX4v4=
+			9bARBpIHGnihZcGrNM+WoDclulg=
 			</data>
 			<key>hash2</key>
 			<data>
-			0w1CnzoDSgygQKzrd8cwXQRwfg5BcEvTOiAyPoOAn0M=
+			G7S8xKeukyVxbUpPmKEyTsa2EK7QUGYCnbvNhFJu9zQ=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/SPJSReceiver.spec.js</key>
@@ -249,11 +249,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			skWNb5DmOx4nvpk94RTASMkhbbo=
+			AipFqjdIYCtEQqirvwzF7qKCv5Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			+2+TiZD8W4PbIOZDc1FqULJT9xRsX7CsBiLYuVWFWnc=
+			TaEkln8AswRA+Xi7SmNBXds96DbAFBmUqy65B7LIpu4=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeRequirements</key>
@@ -271,22 +271,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZFz+byQed27qC672CFqqduJSkk4=
+			/O9YDw7NE3ExN60J6xLHlSyTU6w=
 			</data>
 			<key>hash2</key>
 			<data>
-			eFtFf7lWUyXej0H8E/aphdcczk9Kurle/BRDnqLl+Zo=
+			KBDUL9WH+TykwP6T5PuV2NrxKt6xqBbTMbxje2gYKhA=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KuWVLT3phUj2GQ54FHREY1VllaA=
+			ttNX/vR8TDvg+h25W+LY2uQyNF4=
 			</data>
 			<key>hash2</key>
 			<data>
-			Du+3/jknUPwkX8F7HMeQGpVONSaIUHRq+VYBlQxTM+E=
+			7TxQ1PjHej9/+2IwhLhwJLwJMDE4eQnZLf/nzJ1ZgzM=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/_CodeSignature/CodeSignature</key>
@@ -326,11 +326,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ni3Odaz2vLn19Sedv4ndT/fX4v4=
+			9bARBpIHGnihZcGrNM+WoDclulg=
 			</data>
 			<key>hash2</key>
 			<data>
-			0w1CnzoDSgygQKzrd8cwXQRwfg5BcEvTOiAyPoOAn0M=
+			G7S8xKeukyVxbUpPmKEyTsa2EK7QUGYCnbvNhFJu9zQ=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/javascript/SPJSReceiver.spec.js</key>
@@ -370,11 +370,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			DQwxmO70Bja+MkeOK9qmQ5I1XkA=
+			wqgxU/pcY5yEKcwe6gp8BAxOKCU=
 			</data>
 			<key>hash2</key>
 			<data>
-			dzvWnvmo3O4Uj/orZG8yke5p63bAUQhrGvlOl5t4vNI=
+			3zSAXWQPFpKhNCAOujAUs7kHvKcg8D2LnOYNmgwZCD4=
 			</data>
 		</dict>
 		<key>Headers/ConsentViewController-iOS-umbrella.h</key>
@@ -392,198 +392,198 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RWWbqtgiRrwDghyVdORomnnAq34=
+			TSxuPLFt10YwWAs+6EFjiJ/GnFg=
 			</data>
 			<key>hash2</key>
 			<data>
-			Sq9ixg68lij2BB1fcYwQ05QnNCbTW7D8P/UMWgeOWj4=
+			qDld2Vkcsqn2UixjbYty4/hfZFlIjLQ0lxvPCr8YivY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			syqLGppTPADhNStFujBZZ4pPouc=
+			nCksq8PhUW1Hu4WVtE6rPj9kxvI=
 			</data>
 			<key>hash2</key>
 			<data>
-			S7C38OjM+TusmzRUJxFt/qbarGiW5PvI9y9FbLyiKRk=
+			Rgg4GMlAoREh/S/UwMFWcD+H+IJDf+mD9hURwyqSpTc=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EejQ05L4cm/K9not1L8vWzjlXTY=
+			4YmCv96olxiku7a1OOPDfKpzIu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			D2fX/LbIkd1dilzUDMUbTBgQX9a3EzFYkT8+MJMDRss=
+			YTmETukJ4m6VMQii1/ldx/XRUOqo2TPXUJ0iPGBVjAY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			RWWbqtgiRrwDghyVdORomnnAq34=
+			TSxuPLFt10YwWAs+6EFjiJ/GnFg=
 			</data>
 			<key>hash2</key>
 			<data>
-			Sq9ixg68lij2BB1fcYwQ05QnNCbTW7D8P/UMWgeOWj4=
+			qDld2Vkcsqn2UixjbYty4/hfZFlIjLQ0lxvPCr8YivY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			syqLGppTPADhNStFujBZZ4pPouc=
+			nCksq8PhUW1Hu4WVtE6rPj9kxvI=
 			</data>
 			<key>hash2</key>
 			<data>
-			S7C38OjM+TusmzRUJxFt/qbarGiW5PvI9y9FbLyiKRk=
+			Rgg4GMlAoREh/S/UwMFWcD+H+IJDf+mD9hURwyqSpTc=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EejQ05L4cm/K9not1L8vWzjlXTY=
+			4YmCv96olxiku7a1OOPDfKpzIu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			D2fX/LbIkd1dilzUDMUbTBgQX9a3EzFYkT8+MJMDRss=
+			YTmETukJ4m6VMQii1/ldx/XRUOqo2TPXUJ0iPGBVjAY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VZGXRdfJiCeZVXo+K21D0v6eLqg=
+			HVfN7vdeu0E8+RPdizoV6keWwGI=
 			</data>
 			<key>hash2</key>
 			<data>
-			HdRwABPx+PpzGamxGD0vp9xeaL91mlAJ+T4EMl0D7ww=
+			e6ytJwNLStczS19i3THfGcBT7gHRasMNXX+RjsLMqcg=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			bxc9zUjDRxk5tl3OVn2UNiUqPaU=
+			WydC5PqGJa1B/GmxlKHFZ5zWTzc=
 			</data>
 			<key>hash2</key>
 			<data>
-			mzsV3i/6diQDM/ln25KIe3717JgbpBnqLEVbr6f+Oiw=
+			jpEYAWlK8wRyT2Q7c7ClxMR/oPnQ8g5iiyVKTVyMmV0=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7EB5L3OtJN4BWxqVsjcdUQfqIL8=
+			WWMPoOwZN3tXcEhW5JcfS4lpOrM=
 			</data>
 			<key>hash2</key>
 			<data>
-			tM6JTBeNpntWAvMY/VRU9zw5yF1A36ax/k6OLMYNrxA=
+			yfdmg1cP0IHKCtQppJDOV4FI4XF0kIvuipPabx+G5Ik=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VZGXRdfJiCeZVXo+K21D0v6eLqg=
+			HVfN7vdeu0E8+RPdizoV6keWwGI=
 			</data>
 			<key>hash2</key>
 			<data>
-			HdRwABPx+PpzGamxGD0vp9xeaL91mlAJ+T4EMl0D7ww=
+			e6ytJwNLStczS19i3THfGcBT7gHRasMNXX+RjsLMqcg=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			bxc9zUjDRxk5tl3OVn2UNiUqPaU=
+			WydC5PqGJa1B/GmxlKHFZ5zWTzc=
 			</data>
 			<key>hash2</key>
 			<data>
-			mzsV3i/6diQDM/ln25KIe3717JgbpBnqLEVbr6f+Oiw=
+			jpEYAWlK8wRyT2Q7c7ClxMR/oPnQ8g5iiyVKTVyMmV0=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7EB5L3OtJN4BWxqVsjcdUQfqIL8=
+			WWMPoOwZN3tXcEhW5JcfS4lpOrM=
 			</data>
 			<key>hash2</key>
 			<data>
-			tM6JTBeNpntWAvMY/VRU9zw5yF1A36ax/k6OLMYNrxA=
+			yfdmg1cP0IHKCtQppJDOV4FI4XF0kIvuipPabx+G5Ik=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Pt0Y/MU9+habu0JabAH7PTAFpts=
+			S3qMsURWfykOi9eL3o3Th4InFys=
 			</data>
 			<key>hash2</key>
 			<data>
-			lR4IZa89dY69zJl+q/GcYRHO7oezyUiLYsN7Asu8XSQ=
+			jimBX9vYJZO6hOF/DQvKEaKY+2t3Tg+ch9oqDzk/9Go=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dKtdukE9y4jlco8R8F8qQxIcaEE=
+			xi7krmFgTYgblDV+7GqLu/Rxixo=
 			</data>
 			<key>hash2</key>
 			<data>
-			WwhKXembQ3UlPPUWewF0QRjBkh3rWlLOrK8xNa01ASw=
+			lpj6X8B6KJuEbd0/BTb1YycBVYcscl/isbEfIzTiGMY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			WkFeR3VI4hAVwljBWEnFINBLMBA=
+			ao5nFxnlgeIyBYDTgC8y4qAkG50=
 			</data>
 			<key>hash2</key>
 			<data>
-			kSoarpMmh+gmvJTICe2iQPECSLOSfXpsqU8Z6JnNkvE=
+			ZVT5GoSqYoRvqfb51aH8XlIji7TOqwleexFeHgabLoE=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Pt0Y/MU9+habu0JabAH7PTAFpts=
+			S3qMsURWfykOi9eL3o3Th4InFys=
 			</data>
 			<key>hash2</key>
 			<data>
-			lR4IZa89dY69zJl+q/GcYRHO7oezyUiLYsN7Asu8XSQ=
+			jimBX9vYJZO6hOF/DQvKEaKY+2t3Tg+ch9oqDzk/9Go=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dKtdukE9y4jlco8R8F8qQxIcaEE=
+			xi7krmFgTYgblDV+7GqLu/Rxixo=
 			</data>
 			<key>hash2</key>
 			<data>
-			WwhKXembQ3UlPPUWewF0QRjBkh3rWlLOrK8xNa01ASw=
+			lpj6X8B6KJuEbd0/BTb1YycBVYcscl/isbEfIzTiGMY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			WkFeR3VI4hAVwljBWEnFINBLMBA=
+			ao5nFxnlgeIyBYDTgC8y4qAkG50=
 			</data>
 			<key>hash2</key>
 			<data>
-			kSoarpMmh+gmvJTICe2iQPECSLOSfXpsqU8Z6JnNkvE=
+			ZVT5GoSqYoRvqfb51aH8XlIji7TOqwleexFeHgabLoE=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -601,11 +601,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ni3Odaz2vLn19Sedv4ndT/fX4v4=
+			9bARBpIHGnihZcGrNM+WoDclulg=
 			</data>
 			<key>hash2</key>
 			<data>
-			0w1CnzoDSgygQKzrd8cwXQRwfg5BcEvTOiAyPoOAn0M=
+			G7S8xKeukyVxbUpPmKEyTsa2EK7QUGYCnbvNhFJu9zQ=
 			</data>
 		</dict>
 		<key>SPJSReceiver.spec.js</key>
