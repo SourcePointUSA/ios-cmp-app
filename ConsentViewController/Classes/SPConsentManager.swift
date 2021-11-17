@@ -233,7 +233,7 @@ import UIKit
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "6.3.0"
+    public static let VERSION = "6.3.1"
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
@@ -243,6 +243,7 @@ import UIKit
 
     public var ccpaApplies: Bool { storage.userData.ccpa?.applies ?? false }
 
+    /// Returns the user data **stored in the `UserDefaults`**.
     public var userData: SPUserData { storage.userData }
 
     public func loadMessage(forAuthId authId: String? = nil) {

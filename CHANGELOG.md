@@ -1,3 +1,9 @@
+# 6.3.1 (Nov, 17, 2021)
+* Added a new action type, `Custom`. You can be notified when an action is taken by the user via the `onAction` callback, the `Custom` action can be used to trigger any custom flow you have on your app, eg. subscribing, paywall, etc.
+* Added a section on the `SPDelegate` methods to our README.
+* Better document (XCode comments) the `SPUserData` and `SPGDPRConsent` classes.
+* Added a comment to make it more transparent the fact that `SPSDK#userData` accesses `UserDefaults` every time.
+
 # 6.3.0 (Oct, 26, 2021)
 * Good news, the Native Message is back! For more info make sure to check the [Native Message wiki](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Rendering-consent-message-natively) and our [README](https://github.com/SourcePointUSA/ios-cmp-app#readme).
 
