@@ -25,10 +25,9 @@ class ObjC_ExampleAppUITests: QuickSpec {
         }
 
         if #available(iOS 14.0, *) {
-            xit("Accept ATT pre-prompt") {
+            fit("Accept ATT pre-prompt") {
                 expect(self.app.attPrePromptMessage).to(showUp())
                 self.app.acceptATTButton.tap()
-                // TODO: interact with the native ATT alert
             }
         }
 
