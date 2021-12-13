@@ -310,6 +310,12 @@ To display the App Tracking Transparency authorization request for accessing the
 ```
 ![App Tracking](https://github.com/SourcePointUSA/ios-cmp-app/blob/develop/wiki/assets/AppTracking.png)
 
+## Delete user data
+Utilize the following method if an end-user requests to have their data deleted:
+```
+SPConsentManager.clearAllData()
+```
+
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
