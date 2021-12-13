@@ -461,7 +461,7 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 
     public func action(_ action: SPAction, from controller: UIViewController) {
-        delegate?.onAction(action, from: controller)
+        onAction(action, from: controller)
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             report(action: action)
@@ -484,15 +484,21 @@ extension SPConsentManager: SPMessageUIDelegate {
                 self?.reportIdfaStatus(status: status, messageId: Int(spController?.messageId ?? ""))
                 if status == .accepted {
                     action.type = .IDFAAccepted
-                    self?.delegate?.onAction(action, from: controller)
+                    self?.onAction(action, from: controller)
                 } else if status == .denied {
                     action.type = .IDFADenied
-                    self?.delegate?.onAction(action, from: controller)
+                    self?.onAction(action, from: controller)
                 }
                 self?.nextMessageIfAny(controller)
             }
         default:
             nextMessageIfAny(controller)
+        }
+    }
+
+    func onAction(_ action: SPAction, from controller: UIViewController) {
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onAction(action, from: controller)
         }
     }
 }
