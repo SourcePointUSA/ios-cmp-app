@@ -87,6 +87,10 @@ extension ViewController: SPDelegate {
         updatePMButtons(ccpaApplies: consentManager.ccpaApplies, gdprApplies: consentManager.gdprApplies)
     }
 
+    func onSPFinished(userData: SPUserData) {
+        print("SDK DONE")
+    }
+
     func onError(error: SPError) {
         print("Something went wrong: ", error)
     }
