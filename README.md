@@ -333,13 +333,13 @@ The `onAction` delegate method is called once the user takes an action in the fi
 
 The action: `SPAction` parameter, among other data (used internally), contains:
 
-| Parameter                      | Description                                                                                                                                                                                                                                                        |
-|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `Type: SPActionType`           | Indicates the type of action, this is an enumerated value.  For example, a response to the ATT message is `RequestATTAccess` or to show the privacy manager is `ShowPrivacyManager`.                                                                               |
-| `campaignType: SPCampaignType` | Indicates the type of campaign in which the action was taken. This is an enumerated value e.g.  **gdpr, ios14, ccpa, unknown**.                                                                                                                                    |
-| `customActionId: String`       | If the type of action is Custom, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).                                                                                                      |
-| `consentLanguage`              | The language used in the messages.                                                                                                                                                                                                                                 |
-| `publisherData`                | This is an arbitrary dictionary of [String: String] containing data the publisher wishes to send to our servers so it can be retrieved via API later on. The publisher needs to set this field during the callback if they need the data to be sent to our server. |
+| Attribute                        | Description                                                                                                                                                                                                                                                        |
+|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type: SPActionType`             | Indicates the type of action, this is an enumerated value.  For example, a response to the ATT message is `RequestATTAccess` or to show the privacy manager is `ShowPrivacyManager`.                                                                               |
+| `campaignType: SPCampaignType`   | Indicates the type of campaign in which the action was taken. This is an enumerated value e.g.  **gdpr, ios14, ccpa, unknown**.                                                                                                                                    |
+| `customActionId: String`         | If the type of action is Custom, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).                                                                                                      |
+| `consentLanguage`                | The language used in the messages.                                                                                                                                                                                                                                 |
+| `publisherData: [String: String]`| This is an arbitrary dictionary of [String: String] containing data the publisher wishes to send to our servers so it can be retrieved via API later on. The publisher needs to set this field during the callback if they need the data to be sent to our server. |
 
 ### `onSPUIFinished()`
 
@@ -364,7 +364,11 @@ This was implemented on purpose to be the most safe possible. Since there are no
 
 This behaviour can be opted-out by setting the flag `consentManager.cleanUserDataOnError` to false, after you initialise `SPConsentManager`.
 
----
+## Delete user data
+Utilize the following method if an end-user requests to have their data deleted:
+```
+SPConsentManager.clearAllData()
+```
 
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
