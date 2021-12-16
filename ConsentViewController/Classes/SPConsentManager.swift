@@ -63,6 +63,8 @@ import UIKit
     var propertyId: Int? { storage.propertyId }
     var propertyIdString: String { propertyId != nil ? String(propertyId!) : "" }
     var iOSMessagePartitionUUID: String?
+    var messagesToShow = 0
+    var responsesToReceive = 0
 
     init(
         accountId: Int,
@@ -81,6 +83,12 @@ import UIKit
         self.spClient = spClient
         self.storage = storage
         self.deviceManager = deviceManager
+    }
+
+    func handleSDKDone() {
+        if messagesToShow == 0, responsesToReceive == 0 {
+            delegate?.onSPFinished?(userData: userData)
+        }
     }
 
     func renderNextMessageIfAny() {
@@ -158,9 +166,11 @@ import UIKit
     }
 
     func report(action: SPAction) {
+        responsesToReceive += 1
         switch action.campaignType {
         case .ccpa:
             spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+                self?.responsesToReceive -= 1
                 switch result {
                 case .success((let localState, let consents)):
                     let userData = SPUserData(
@@ -172,13 +182,14 @@ import UIKit
                         userData: userData,
                         propertyId: self?.propertyId
                     )
-                    self?.delegate?.onConsentReady?(userData: userData)
+                    self?.onConsentReceived()
                 case .failure(let error):
                     self?.onError(error)
                 }
             }
         case .gdpr:
             spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+                self?.responsesToReceive -= 1
                 switch result {
                 case .success((let localState, let consents)):
                     let userData = SPUserData(
@@ -190,7 +201,7 @@ import UIKit
                         userData: userData,
                         propertyId: self?.propertyId
                     )
-                    self?.delegate?.onConsentReady?(userData: userData)
+                    self?.onConsentReceived()
                 case .failure(let error):
                     self?.onError(error)
                 }
@@ -215,6 +226,11 @@ import UIKit
         ).loadPrivacyManager(url: pmURL)
     }
     #endif
+
+    func onConsentReceived() {
+        delegate?.onConsentReady?(userData: storage.userData)
+        handleSDKDone()
+    }
 
     public func onError(_ error: SPError) {
         spClient.errorMetrics(
@@ -248,6 +264,7 @@ import UIKit
 
     public func loadMessage(forAuthId authId: String? = nil) {
         self.authId = authId
+        responsesToReceive += 1
         spClient.getMessages(
             campaigns: campaigns,
             authId: authId,
@@ -255,6 +272,7 @@ import UIKit
             idfaStaus: idfaStatus,
             consentLanguage: messageLanguage
         ) { [weak self] result in
+            self?.responsesToReceive -= 1
             switch result {
             case .success(let messagesResponse):
                 self?.storeData(
@@ -278,8 +296,9 @@ import UIKit
                         $0.type
                     )}
                     .reversed()
+                    self?.messagesToShow = self?.messageControllersStack.count ?? 0
                 if self?.messageControllersStack.isEmpty ?? true {
-                    self?.delegate?.onConsentReady?(userData: self?.storage.userData ?? SPUserData())
+                    self?.onConsentReceived()
                 } else {
                     self?.renderNextMessageIfAny()
                 }
@@ -290,6 +309,7 @@ import UIKit
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        messagesToShow += 1
         #if os(iOS)
         guard let pmUrl = Constants.GDPR_PM_URL.appendQueryItems([
             "message_id": id,
@@ -310,7 +330,6 @@ import UIKit
                     self?.onError(SPError())
                     return
                 }
-
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
                     messageId: id,
                     campaignType: .gdpr,
@@ -329,6 +348,7 @@ import UIKit
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        messagesToShow += 1
         #if os(iOS)
         guard let pmUrl = Constants.CCPA_PM_URL.appendQueryItems([
             "message_id": id,
@@ -414,6 +434,8 @@ extension SPConsentManager: SPMessageUIDelegate {
     public func finished(_ vcFinished: UIViewController) {
         DispatchQueue.main.async { [weak self] in
             self?.delegate?.onSPUIFinished(vcFinished)
+            self?.messagesToShow -= 1
+            self?.handleSDKDone()
         }
     }
 
@@ -439,7 +461,7 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 
     public func action(_ action: SPAction, from controller: UIViewController) {
-        delegate?.onAction(action, from: controller)
+        onAction(action, from: controller)
         switch action.type {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             report(action: action)
@@ -460,17 +482,23 @@ extension SPConsentManager: SPMessageUIDelegate {
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 let spController = controller as? SPMessageViewController
                 self?.reportIdfaStatus(status: status, messageId: Int(spController?.messageId ?? ""))
-                self?.nextMessageIfAny(controller)
                 if status == .accepted {
                     action.type = .IDFAAccepted
-                    self?.delegate?.onAction(action, from: controller)
+                    self?.onAction(action, from: controller)
                 } else if status == .denied {
                     action.type = .IDFADenied
-                    self?.delegate?.onAction(action, from: controller)
+                    self?.onAction(action, from: controller)
                 }
+                self?.nextMessageIfAny(controller)
             }
         default:
             nextMessageIfAny(controller)
+        }
+    }
+
+    func onAction(_ action: SPAction, from controller: UIViewController) {
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onAction(action, from: controller)
         }
     }
 }

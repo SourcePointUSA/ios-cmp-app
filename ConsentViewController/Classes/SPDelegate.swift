@@ -27,8 +27,13 @@ import UIKit
 
     /// called after the user takes an action and the SDK receives consent data back from the server
     /// - Parameters:
-    ///  - consents: is the consent profile
+    ///  - userData: is the consent profile
     @objc optional func onConsentReady(userData: SPUserData)
+
+    /// called when the SDK is done. That will happen if there's no more messages to be displayed and all network requests are done.
+    /// - Parameters:
+    ///  - userData: is the consent profile
+    @objc optional func onSPFinished(userData: SPUserData)
 
     /// called if something goes wrong during the entire lifecycle of the SDK
     @objc optional func onError(error: SPError)
