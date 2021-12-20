@@ -20,7 +20,7 @@ struct GDPRVendor: Decodable {
 
     let vendorId, name: String
     let iabId: Int?
-    let policyUrl: URL?
+    let policyUrl: String?
     let description, cookieHeader: String?
     let vendorType: VendorType
     let consentCategories, legIntCategories: [Category]

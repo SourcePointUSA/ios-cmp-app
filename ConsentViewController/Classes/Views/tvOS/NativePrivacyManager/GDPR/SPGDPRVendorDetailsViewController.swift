@@ -58,7 +58,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
-        if let vendorUrl = vendor?.policyUrl?.absoluteString {
+        if let vendorUrl = vendor?.policyUrl {
             qrCodeImageView.image = QRCode(from: vendorUrl)
             qrCodeImageView.isHidden = qrCodeImageView.image == nil
         }
