@@ -70,7 +70,7 @@ struct GDPRPrivacyManagerViewResponse: Decodable {
 
 struct CCPAVendor: Hashable {
     let _id, name: String
-    let policyUrl: URL?
+    let policyUrl: String?
     private let nullablePurposes: [String?]?
     var purposes: [String] { nullablePurposes?.compactMap { $0 }  ?? [] }
 }
@@ -81,7 +81,7 @@ extension CCPAVendor: Decodable {
         let container = try decoder.container(keyedBy: Keys.self)
         _id = try container.decode(String.self, forKey: ._id)
         name = try container.decode(String.self, forKey: .name)
-        policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        policyUrl = try container.decodeIfPresent(String.self, forKey: .policyUrl)
         nullablePurposes = try container.decodeIfPresent([String?].self, forKey: .nullablePurposes)
     }
 
