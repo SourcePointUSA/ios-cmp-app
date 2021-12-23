@@ -17,6 +17,24 @@ import Foundation
         let vendorId: String?
         let policyUrl: URL?
         let vendorType: GDPRVendor.VendorType?
+        
+        enum Keys: String, CodingKey {
+            case name
+            case vendorId
+            case policyUrl
+            case vendorType
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: Keys.self)
+            do {
+                policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+            } catch {
+                policyUrl = nil
+            }
+            vendorId = try container.decodeIfPresent(String.self, forKey: .vendorId)
+            name = try container.decode(String.self, forKey: .name)
+            vendorType = try container.decodeIfPresent(GDPRVendor.VendorType.self, forKey: .vendorType)        }
     }
 
     let iabId: Int?
