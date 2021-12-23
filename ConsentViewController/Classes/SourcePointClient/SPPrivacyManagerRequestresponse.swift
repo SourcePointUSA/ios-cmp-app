@@ -15,7 +15,7 @@ import Foundation
     struct Vendor: Codable {
         let name: String
         let vendorId: String?
-        let policyUrl: String?
+        let policyUrl: URL?
         let vendorType: GDPRVendor.VendorType?
     }
 
