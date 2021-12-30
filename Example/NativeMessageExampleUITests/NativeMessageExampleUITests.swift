@@ -37,6 +37,12 @@ class NativeMessageExampleUITests: QuickSpec {
         expect(self.app.gdprPM.messageTitle).to(showUp())
     }
 
+    func showCCPAPMViaFirstLayerMessage() {
+        expect(self.app.ccpaMessage.messageTitle).to(showUp())
+        self.app.ccpaMessage.showOptionsButton.tap()
+        expect(self.app.ccpaPM.messageTitle).to(showUp())
+    }
+    
     // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
     // the ATT expectations run only once per test suite.
     func runAttScenario() {
@@ -77,12 +83,18 @@ class NativeMessageExampleUITests: QuickSpec {
 
         it("Accept all through 2nd layer") {
             self.runAttScenario()
+            
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            self.acceptCCPAMessage()
             expect(self.app.gdprPrivacyManagerButton).to(showUp())
             self.app.relaunch()
             expect(self.app.gdprMessage.messageTitle).notTo(showUp())
+            
+            self.showCCPAPMViaFirstLayerMessage()
+            self.app.ccpaPM.acceptAllButton.tap()
+            expect(self.app.gdprPrivacyManagerButton).to(showUp())  //somehow ccpas' pm is the same as gdprs'
+            self.app.relaunch()
+            expect(self.app.ccpaMessage.messageTitle).notTo(showUp())
         }
 
         it("Dismissing 2nd layer returns to first layer message") {
