@@ -33,21 +33,41 @@ class NativePMApp: XCUIApplication {
     }
 
     var category: XCUIElement {
-        tables.cells.containing(.staticText, identifier:"Category 1").firstMatch
+        tables.cells.containing(.staticText, identifier:"Purpose 1").firstMatch
     }
 
+    var category2: XCUIElement {
+        tables.cells.containing(.staticText, identifier:"Purpose 2").firstMatch
+    }
+    
     var storeAndaccessInformation: XCUIElement {
         tables.cells.containing(.staticText, identifier:"Store and/or access information on a device").firstMatch
+    }
+
+    var createPersonalisedAdsProfile: XCUIElement {
+        tables.cells.containing(.staticText, identifier:"Create a personalised ads profile").firstMatch
+    }
+    
+    var seedtag: XCUIElement {
+        tables.cells.containing(.staticText, identifier:"Seedtag Advertising S.L").firstMatch
     }
 
     var freewheel: XCUIElement {
         tables.cells.containing(.staticText, identifier:"Freewheel").firstMatch
     }
-
+    
     var justpremiumBV: XCUIElement {
         tables.cells.containing(.staticText, identifier:"Justpremium BV").firstMatch
     }
 
+    var loopMe: XCUIElement {
+        tables.cells.containing(.staticText, identifier:"LoopMe Limited").firstMatch
+    }
+    
+    var googleCharts: XCUIElement {
+        tables.cells.containing(.staticText, identifier:"Google Charts").firstMatch
+    }
+    
     var gameAccounts: XCUIElement {
         tables.cells.containing(.staticText, identifier:"Game Accounts").firstMatch
     }
@@ -107,9 +127,35 @@ class NativePMApp: XCUIApplication {
     var ourPartnersButton: XCUIElement {
         buttons["Our Partners"].firstMatch
     }
+    
+    var gdprPrivacyManagerButton: XCUIElement {
+        buttons["GDPR Privacy Manager"].firstMatch
+    }
+    
+    var ccpaPrivacyManagerButton: XCUIElement {
+        buttons["CCPA Privacy Manager"].firstMatch
+    }
 
     func expectedMessageShowUP(element: XCUIElement) {
         expect(element).to(showUp())
         expect(element.hasFocus).to(beTrue())
+    }
+    
+    func clickButtonUntilElementHasFocus(directionBtn: XCUIRemote.Button, element: XCUIElement)
+    {
+        var counter = 0
+        while(!element.hasFocus && counter < 10) {
+            XCUIRemote.shared.press(directionBtn)
+            counter += 1
+        }
+    }
+    
+    func enterPM(element: XCUIElement)
+    {
+        expect(element).to(showUp())
+        clickButtonUntilElementHasFocus(directionBtn: .down, element: element)
+        clickButtonUntilElementHasFocus(directionBtn: .up, element: element)
+        expectedMessageShowUP(element: element)
+        XCUIRemote.shared.press(.select)
     }
 }
