@@ -16,16 +16,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var ccpaButton: UIButton!
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "16879")
+        consentManager.loadGDPRPrivacyManager(withId: "561622")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "16877")
+        consentManager.loadCCPAPrivacyManager(withId: "562032")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
-        propertyName: try! SPPropertyName("appletv.mobile.demo"),
+        propertyName: try! SPPropertyName("appletv.demo"),
+        campaignsEnv: .Stage,
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
             ccpa: SPCampaign()
@@ -64,7 +65,7 @@ extension ViewController: SPDelegate {
 
     func onError(error: SPError) {
         stopActivityIndicator()
-        print("ERROR: ", error.description )
+        print("ERROR: ", error.description)
     }
 }
 
