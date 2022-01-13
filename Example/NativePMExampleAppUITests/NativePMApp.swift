@@ -40,7 +40,7 @@ class NativePMApp: XCUIApplication {
         tables.cells.containing(.staticText, identifier:"Purpose 2").firstMatch
     }
     
-    var storeAndaccessInformation: XCUIElement {
+    var storeAndAccessInformation: XCUIElement {
         tables.cells.containing(.staticText, identifier:"Store and/or access information on a device").firstMatch
     }
 
