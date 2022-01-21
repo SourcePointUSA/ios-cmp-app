@@ -25,6 +25,30 @@ struct GDPRVendor: Decodable {
     let vendorType: VendorType
     let consentCategories, legIntCategories: [Category]
     let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        name = try container.decode(String.self, forKey: .name)
+        if let tempPolicyStr = try container.decodeIfPresent(String.self, forKey: .policyUrl) {
+            policyUrl = URL(string: tempPolicyStr.trimmingCharacters(in: .whitespacesAndNewlines))
+        } else {
+            policyUrl = nil
+        }
+        vendorId = try container.decode(String.self, forKey: .vendorId)
+        vendorType = try container.decode(GDPRVendor.VendorType.self, forKey: .vendorType)
+        iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        cookieHeader = try container.decodeIfPresent(String.self, forKey: .cookieHeader)
+        consentCategories = try container.decode([Category].self, forKey: .consentCategories)
+        legIntCategories = try container.decode([Category].self, forKey: .legIntCategories)
+        iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
+        iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
+        iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
+    }
+
+    enum Keys: String, CodingKey {
+        case vendorId, name, iabId, description, cookieHeader, vendorType, consentCategories, legIntCategories, iabSpecialPurposes, iabFeatures, iabSpecialFeatures, policyUrl
+    }
 }
 
 extension GDPRVendor: Identifiable, Equatable, Hashable {
