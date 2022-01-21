@@ -1,5 +1,5 @@
 //
-//  PrivacyManagerRequestresponse.swift
+//  PrivacyManagerRequestResponse.swift
 //  Pods
 //
 //  Created by Vilas on 15/04/21.
