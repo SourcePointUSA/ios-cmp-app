@@ -208,7 +208,7 @@ class FocusGuideDebugView: UIView {
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
             } else {
-                textView.text = textViewComponent.settings.text
+                textView.text = textViewComponent.settings.text.stripOutHtml()
             }
             textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
             textView.isUserInteractionEnabled = true
