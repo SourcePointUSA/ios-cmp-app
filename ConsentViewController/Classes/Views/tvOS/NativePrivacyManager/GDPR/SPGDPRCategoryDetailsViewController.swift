@@ -105,6 +105,7 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
         let cell: UITableViewCell = (categoryDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         cell.selectionStyle = .none
         cell.textLabel?.text = partners[indexPath.row]
+        cell.textLabel?.SetDefaultTextColorForDarkMode()
         return cell
     }
 

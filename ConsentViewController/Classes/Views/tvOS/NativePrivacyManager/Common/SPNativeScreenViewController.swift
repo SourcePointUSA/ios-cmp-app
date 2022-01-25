@@ -247,3 +247,13 @@ class FocusGuideDebugView: UIView {
         return slider
     }
 }
+
+extension UILabel{
+    func SetDefaultTextColorForDarkMode() {
+        if #available(tvOS 13.0, *) {
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                self.textColor = Constants.defaultFallbackTextColorForDarkMode
+            }
+        }
+    }
+}
