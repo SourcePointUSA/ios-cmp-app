@@ -67,7 +67,7 @@ target 'NativePMExampleAppUITests' do
   # Pods for testing
   pod 'ConsentViewController', :path => '../'
   pod 'Quick'
-  pod 'Nimble', '9.1.0'
+  pod 'Nimble'
 end
 
 post_install do |installer|
