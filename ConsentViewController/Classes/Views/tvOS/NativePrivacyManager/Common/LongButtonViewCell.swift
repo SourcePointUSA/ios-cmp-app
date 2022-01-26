@@ -28,9 +28,9 @@ class LongButtonViewCell: UITableViewCell {
 
     func loadUI() {
         label.text = labelText
-        label.SetDefaultTextColorForDarkMode()
-        customLabel.SetDefaultTextColorForDarkMode()
-        stateLabel.SetDefaultTextColorForDarkMode()
+        label.setDefaultTextColorForDarkMode()
+        customLabel.setDefaultTextColorForDarkMode()
+        stateLabel.setDefaultTextColorForDarkMode()
         if let customText = customText {
             customLabel.isHidden = false
             customLabel.text = customText

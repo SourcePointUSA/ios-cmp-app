@@ -112,7 +112,7 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (vendorDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
         cell.textLabel?.text = sections[indexPath.section].content[indexPath.row]
-        cell.textLabel?.SetDefaultTextColorForDarkMode()
+        cell.textLabel?.setDefaultTextColorForDarkMode()
         return cell
     }
 

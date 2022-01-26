@@ -57,7 +57,7 @@ protocol SPNativePrivacyManagerHome {
         super.viewDidLoad()
         setHeader()
         loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
-        categoriesExplainerLabel.SetDefaultTextColorForDarkMode()
+        categoriesExplainerLabel.setDefaultTextColorForDarkMode()
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
@@ -247,7 +247,7 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         cell.textLabel?.text = categories[indexPath.row].name
-        cell.textLabel?.SetDefaultTextColorForDarkMode()
+        cell.textLabel?.setDefaultTextColorForDarkMode()
         return cell
     }
 }
