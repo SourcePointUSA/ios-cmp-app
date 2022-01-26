@@ -32,12 +32,7 @@ import Foundation
     /// - Throws: `InvalidArgumentError` if the property name contain anything other than letters, numbers, . (dots), : (semicolons) and / (slashes).
     public init(_ rawValue: String) throws {
         var validRawValue = try SPPropertyName.validate(rawValue)
-        if validRawValue.starts(with: "http://") {
-            if let range = validRawValue.range(of: "http://") {
-                validRawValue = validRawValue.replacingCharacters(in: range, with: "")
-            }
-        }
-        if !validRawValue.contains("https://") {
+        if !validRawValue.starts(with: "https://") && !validRawValue.starts(with: "http://") {
             validRawValue = "https://" + validRawValue
         }
         self.rawValue = validRawValue
