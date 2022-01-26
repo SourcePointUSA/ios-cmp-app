@@ -48,7 +48,7 @@ class ExampleApp: XCUIApplication {
     }
 
     var attPrePromptMessage: XCUIElement {
-        webViews.first(withLabel: "ATT pre-promt")
+        webViews.first(withLabel: "ATT pre-prompt")
     }
 
     var acceptAllButton: XCUIElement {
