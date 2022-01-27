@@ -26,6 +26,22 @@ struct GDPRVendor: Decodable {
     let consentCategories, legIntCategories: [Category]
     let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        name = try container.decode(String.self, forKey: .name)
+        policyUrl = try? container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        vendorId = try container.decode(String.self, forKey: .vendorId)
+        vendorType = try container.decode(GDPRVendor.VendorType.self, forKey: .vendorType)
+        iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        cookieHeader = try container.decodeIfPresent(String.self, forKey: .cookieHeader)
+        consentCategories = try container.decode([Category].self, forKey: .consentCategories)
+        legIntCategories = try container.decode([Category].self, forKey: .legIntCategories)
+        iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
+        iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
+        iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
+    }
+
     enum Keys: String, CodingKey {
         case policyUrl, vendorId, name
         case iabId
@@ -33,26 +49,6 @@ struct GDPRVendor: Decodable {
         case description, cookieHeader
         case vendorType
         case consentCategories, legIntCategories
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Keys.self)
-        do {
-            policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
-        } catch {
-            policyUrl = nil
-        }
-        iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)
-        vendorId = try container.decode(String.self, forKey: .vendorId)
-        name = try container.decode(String.self, forKey: .name)
-        iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
-        iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
-        iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
-        description = try container.decodeIfPresent(String.self, forKey: .description)
-        cookieHeader = try container.decodeIfPresent(String.self, forKey: .cookieHeader)
-        vendorType = try container.decode(VendorType.self, forKey: .vendorType)
-        consentCategories = try container.decode([Category].self, forKey: .consentCategories)
-        legIntCategories = try container.decode([Category].self, forKey: .legIntCategories)
     }
 }
 
