@@ -47,7 +47,12 @@ struct GDPRVendor: Decodable {
     }
 
     enum Keys: String, CodingKey {
-        case vendorId, name, iabId, description, cookieHeader, vendorType, consentCategories, legIntCategories, iabSpecialPurposes, iabFeatures, iabSpecialFeatures, policyUrl
+        case policyUrl, vendorId, name
+        case iabId
+        case iabSpecialPurposes, iabFeatures, iabSpecialFeatures
+        case description, cookieHeader
+        case vendorType
+        case consentCategories, legIntCategories
     }
 }
 
@@ -105,7 +110,11 @@ extension CCPAVendor: Decodable {
         let container = try decoder.container(keyedBy: Keys.self)
         _id = try container.decode(String.self, forKey: ._id)
         name = try container.decode(String.self, forKey: .name)
-        policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        do {
+            policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        } catch {
+            policyUrl = nil
+        }
         nullablePurposes = try container.decodeIfPresent([String?].self, forKey: .nullablePurposes)
     }
 

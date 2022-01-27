@@ -37,6 +37,20 @@ class FirstLayerMessage: XCUIApplication {
 }
 
 class NativeExampleApp: XCUIApplication {
+    class CCPAPrivacyManager:XCUIApplication {
+        private var container: XCUIElement {
+            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch     //somehow ccpas' pm is the same as gdprs'
+        }
+
+        var messageTitle: XCUIElement {
+            container
+        }
+        
+        var acceptAllButton: XCUIElement {
+            container.buttons["Accept All"].firstMatch
+        }
+    }
+    
     class GDPRPrivacyManager: XCUIApplication {
         private var container: XCUIElement {
             webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch
@@ -102,12 +116,17 @@ class NativeExampleApp: XCUIApplication {
     let gdprMessage = GDPRMessage()
     let ccpaMessage = CCPAMessage()
     let gdprPM = GDPRPrivacyManager()
+    let ccpaPM = CCPAPrivacyManager()
     let attPrePrompt = ATTPrePrompt()
 
     var gdprPrivacyManagerButton: XCUIElement {
         buttons["GDPR Privacy Manager"].firstMatch
     }
 
+    var ccpaPrivacyManagerButton: XCUIElement {
+        buttons["CCPA Privacy Manager"].firstMatch
+    }
+    
     var shouldRunAttScenario: Bool {
         /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
         /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
