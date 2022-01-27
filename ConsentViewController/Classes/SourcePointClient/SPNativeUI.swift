@@ -163,11 +163,11 @@ class SPNativeButton: SPNativeUI {
 
 class SPNativeImage: SPNativeUI {
     class Settings: SPNativeUISettings {
-        let src: String
+        let src: URL?
         
         required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
-            src = try container.decodeIfPresent(String.self, forKey: .url) ?? (try container.decode(String.self, forKey: .src))
+            src = try? container.decodeIfPresent(URL.self, forKey: .url) ?? (try? container.decodeIfPresent(URL.self, forKey: .src))
             try super.init(from: decoder)
         }
 

@@ -156,7 +156,7 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView {
         if let image = components.first(where: { $0.id == id }) as? SPNativeImage,
-           let url = URL(string: image.settings.src) {
+           let url = image.settings.src {
             imageView.isHidden = false
             imageView.load(url: url)
         } else {
