@@ -21,11 +21,7 @@ import Foundation
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
             name = try container.decode(String.self, forKey: .name)
-            if let tempPolicyStr = try container.decodeIfPresent(String.self, forKey: .policyUrl) {
-                policyUrl = URL(string: tempPolicyStr.trimmingCharacters(in: .whitespacesAndNewlines))
-            } else {
-                policyUrl = nil
-            }
+            policyUrl = try? container.decodeIfPresent(URL.self, forKey: .policyUrl)
             vendorId = try container.decodeIfPresent(String.self, forKey: .vendorId)
             vendorType = try container.decodeIfPresent(GDPRVendor.VendorType.self, forKey: .vendorType)
         }
