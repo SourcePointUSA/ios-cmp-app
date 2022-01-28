@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 @testable import ConsentViewController
 
 class MockConsentDelegate: SPDelegate {
