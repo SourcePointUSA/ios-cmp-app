@@ -1,3 +1,10 @@
+# 6.4.0 (Jan, 31, 2022)
+* Added a brand new delegate method `onSPFinished`. As the name suggests, this method is invoked when the SDK is done displaying messages, sending/receiving consent to our APIs. At this point, the `UserDefaults` is garanteed to have all consent data up to date. #350
+* Fixed an issue preventing the Native Message for AppleTV from showing the correct client logo. #358
+* Fixed an issue with the `SPPropertyName` not behaving correctly when the property name contained `[http|https]://`. #357
+* Fixed other issues regarding the Native AppleTV message. #352 #353 
+* Improved and extended unit as well as UI tests. #356
+
 # 6.3.1 (Nov, 17, 2021)
 * Added a new action type, `Custom`. You can be notified when an action is taken by the user via the `onAction` callback, the `Custom` action can be used to trigger any custom flow you have on your app, eg. subscribing, paywall, etc.
 * Added a section on the `SPDelegate` methods to our README.
