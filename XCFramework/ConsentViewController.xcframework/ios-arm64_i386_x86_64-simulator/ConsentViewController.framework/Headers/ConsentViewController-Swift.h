@@ -506,10 +506,20 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17SPConsentDelegate_")
 ///     Parameters:
 ///   </li>
 ///   <li>
-///     consents: is the consent profile
+///     userData: is the consent profile
 ///   </li>
 /// </ul>
 - (void)onConsentReadyWithUserData:(SPUserData * _Nonnull)userData;
+/// called when the SDK is done. That will happen if there’s no more messages to be displayed and all network requests are done.
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     userData: is the consent profile
+///   </li>
+/// </ul>
+- (void)onSPFinishedWithUserData:(SPUserData * _Nonnull)userData;
 /// called if something goes wrong during the entire lifecycle of the SDK
 - (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
@@ -1412,10 +1422,20 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17SPConsentDelegate_")
 ///     Parameters:
 ///   </li>
 ///   <li>
-///     consents: is the consent profile
+///     userData: is the consent profile
 ///   </li>
 /// </ul>
 - (void)onConsentReadyWithUserData:(SPUserData * _Nonnull)userData;
+/// called when the SDK is done. That will happen if there’s no more messages to be displayed and all network requests are done.
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     userData: is the consent profile
+///   </li>
+/// </ul>
+- (void)onSPFinishedWithUserData:(SPUserData * _Nonnull)userData;
 /// called if something goes wrong during the entire lifecycle of the SDK
 - (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
@@ -2318,10 +2338,20 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17SPConsentDelegate_")
 ///     Parameters:
 ///   </li>
 ///   <li>
-///     consents: is the consent profile
+///     userData: is the consent profile
 ///   </li>
 /// </ul>
 - (void)onConsentReadyWithUserData:(SPUserData * _Nonnull)userData;
+/// called when the SDK is done. That will happen if there’s no more messages to be displayed and all network requests are done.
+/// <ul>
+///   <li>
+///     Parameters:
+///   </li>
+///   <li>
+///     userData: is the consent profile
+///   </li>
+/// </ul>
+- (void)onSPFinishedWithUserData:(SPUserData * _Nonnull)userData;
 /// called if something goes wrong during the entire lifecycle of the SDK
 - (void)onErrorWithError:(SPError * _Nonnull)error;
 @end
