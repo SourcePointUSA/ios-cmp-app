@@ -1,3 +1,6 @@
+# 6.4.1 (Feb, 01, 2022)
+* Fixed an issue (#359) preventing the SDK from being used with SPM. #360
+
 # 6.4.0 (Jan, 31, 2022)
 * Added a brand new delegate method `onSPFinished`. As the name suggests, this method is invoked when the SDK is done displaying messages, sending/receiving consent to our APIs. At this point, the `UserDefaults` is garanteed to have all consent data up to date. #350
 * Fixed an issue preventing the Native Message for AppleTV from showing the correct client logo. #358
