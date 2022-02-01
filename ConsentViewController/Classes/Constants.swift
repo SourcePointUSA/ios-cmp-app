@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol SPUIValues {
     static var defaultFallbackTextColorForDarkMode: UIColor { get }
