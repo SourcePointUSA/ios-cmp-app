@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-// swiftlint:disable nesting
-
 @objcMembers class SPNativeFont: NSObject, Codable {
     let fontSize: CGFloat
     let fontWeight: String
@@ -164,7 +162,7 @@ class SPNativeButton: SPNativeUI {
 class SPNativeImage: SPNativeUI {
     class Settings: SPNativeUISettings {
         let src: URL?
-        
+
         required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
             src = try? container.decodeIfPresent(URL.self, forKey: .url) ?? (try? container.decodeIfPresent(URL.self, forKey: .src))

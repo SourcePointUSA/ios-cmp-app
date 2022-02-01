@@ -25,7 +25,7 @@ struct GDPRVendor: Decodable {
     let vendorType: VendorType
     let consentCategories, legIntCategories: [Category]
     let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         name = try container.decode(String.self, forKey: .name)

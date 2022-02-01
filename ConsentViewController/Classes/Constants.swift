@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol SPUIValues {
+    static var defaultFallbackTextColorForDarkMode: UIColor { get }
+}
+
 let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "staging"
 
 struct Constants {
@@ -26,5 +30,10 @@ struct Constants {
     static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
     static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
     static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
-    static let defaultFallbackTextColorForDarkMode: UIColor = .black
+
+    struct UI {
+        struct DarkMode: SPUIValues {
+            static var defaultFallbackTextColorForDarkMode: UIColor { .black }
+        }
+    }
 }

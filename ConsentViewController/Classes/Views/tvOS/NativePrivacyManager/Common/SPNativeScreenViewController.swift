@@ -252,7 +252,7 @@ extension UILabel {
     func setDefaultTextColorForDarkMode() {
         if #available(tvOS 13.0, *) {
             if UITraitCollection.current.userInterfaceStyle == .dark {
-                self.textColor = Constants.defaultFallbackTextColorForDarkMode
+                self.textColor = Constants.UI.DarkMode.defaultFallbackTextColorForDarkMode
             }
         }
     }
