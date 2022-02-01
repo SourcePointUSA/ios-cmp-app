@@ -177,13 +177,9 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
