@@ -311,7 +311,7 @@ import UIKit
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         messagesToShow += 1
         #if os(iOS)
-        guard let pmUrl = Constants.GDPR_PM_URL.appendQueryItems([
+        guard let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
             "message_id": id,
             "pmTab": tab.rawValue,
             "consentUUID": gdprUUID,
@@ -350,7 +350,7 @@ import UIKit
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         messagesToShow += 1
         #if os(iOS)
-        guard let pmUrl = Constants.CCPA_PM_URL.appendQueryItems([
+        guard let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
             "message_id": id,
             "pmTab": tab.rawValue,
             "ccpaUUID": ccpaUUID,
