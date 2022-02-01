@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     let consentManager = SPConsentManager(
         accountId: 00,
         propertyName: try! SPPropertyName("any"),
-        campaigns: SPCampaigns(),
+        campaigns: SPCampaigns(gdpr: SPCampaign()),
         delegate: nil
     )
 
