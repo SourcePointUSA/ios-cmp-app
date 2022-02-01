@@ -56,8 +56,8 @@ class SourcePointClientSpec: QuickSpec {
 
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
-                expect(Constants.CUSTOM_CONSENT_URL.absoluteURL).to(equal(
-                    URL(string: "https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/custom-consent?inApp=true")!.absoluteURL
+                expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(
+                    URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true")!.absoluteURL
                 ))
             }
         }
