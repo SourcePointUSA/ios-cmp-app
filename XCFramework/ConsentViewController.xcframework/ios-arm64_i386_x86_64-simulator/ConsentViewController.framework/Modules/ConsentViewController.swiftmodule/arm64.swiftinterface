@@ -166,6 +166,7 @@ extension ConsentViewController.SPConsentManager : ConsentViewController.SPMessa
   @objc optional func onSPNativeMessageReady(_ message: ConsentViewController.SPNativeMessage)
   @objc func onSPUIFinished(_ controller: UIKit.UIViewController)
   @objc optional func onConsentReady(userData: ConsentViewController.SPUserData)
+  @objc optional func onSPFinished(userData: ConsentViewController.SPUserData)
   @objc optional func onError(error: ConsentViewController.SPError)
 }
 @objc public protocol SPDelegate : ConsentViewController.SPConsentDelegate, ConsentViewController.SPConsentUIDelegate {

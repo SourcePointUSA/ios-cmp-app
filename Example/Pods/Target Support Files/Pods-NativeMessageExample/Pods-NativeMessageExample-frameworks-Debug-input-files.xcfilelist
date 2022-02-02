@@ -1,3 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework
 ${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework
+${BUILT_PRODUCTS_DIR}/Nimble-iOS/Nimble.framework
+${BUILT_PRODUCTS_DIR}/Quick-iOS/Quick.framework

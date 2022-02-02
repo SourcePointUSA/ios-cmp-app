@@ -17,7 +17,7 @@ import Foundation
         let vendorId: String?
         let policyUrl: URL?
         let vendorType: GDPRVendor.VendorType?
-        
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
             name = try container.decode(String.self, forKey: .name)

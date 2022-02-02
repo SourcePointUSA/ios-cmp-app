@@ -20,7 +20,7 @@ class SPPropertyNameSpec: QuickSpec {
             let spProperty = try! SPPropertyName(property)
             expect(spProperty.rawValue).to(equal(property))
         }
-        
+
         it("https:// in property are not affected") {
             let property = "https://any"
             let spProperty = try! SPPropertyName(property)

@@ -1,7 +1,7 @@
 PODS:
-  - ConsentViewController (6.3.1)
+  - ConsentViewController (6.4.1)
   - IQKeyboardManagerSwift (6.5.6)
-  - Nimble (9.1.0)
+  - Nimble (9.2.0)
   - Quick (4.0.0)
   - SwiftLint (0.43.1)
   - Wormholy (1.6.4)
@@ -10,7 +10,6 @@ DEPENDENCIES:
   - ConsentViewController (from `../`)
   - IQKeyboardManagerSwift
   - Nimble
-  - Nimble (= 9.1.0)
   - Quick
   - SwiftLint
   - Wormholy
@@ -28,13 +27,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: ef75912e9475ca1c7d2c27aff6680f1df699d1d3
+  ConsentViewController: 406c4d7461f7579696c105fb05de779723d11161
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
-  Nimble: 9c3a1e336ea8dcba3747fa0e8bb9299254c972ab
+  Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   Wormholy: 2e70f64227e010d363f8d33268369f77faf12471
 
-PODFILE CHECKSUM: 35e126ed3ff30847e438956263d93710b0516e5b
+PODFILE CHECKSUM: 1d1f692d64ce9fb28f03db5af46e40e5348d1b29
 
 COCOAPODS: 1.10.1

@@ -12,33 +12,25 @@ target 'ConsentViewController_Example' do
   pod 'Wormholy'
 end
 
-target 'ConsentViewController_ExampleTests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble', '9.1.0'
-end
-
-target 'SPGDPRExampleAppUITests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble', '9.1.0'
-end
-
 target 'NativePMExampleApp' do
   platform :tvos, '10.0'
   pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
   pod 'SwiftLint'
 end
 
 target 'NativeMessageExample' do
   pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
   pod 'Wormholy'
+  pod 'SwiftLint'
 end
 
-target 'NativeMessageExampleUITests' do
+target 'ObjC-ExampleApp' do
   pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble', '9.1.0'
+  pod 'SwiftLint'
 end
 
 target 'SourcePointMetaApp' do
@@ -47,18 +39,35 @@ target 'SourcePointMetaApp' do
   pod 'Wormholy'
 end
 
-target 'SourcePointMetaAppUITests' do
-  inherit! :search_paths
-  # Pods for testing
+target 'ConsentViewController_ExampleTests' do
   pod 'ConsentViewController', :path => '../'
   pod 'Quick'
-  pod 'Nimble', '9.1.0'
+  pod 'Nimble'
+end
+
+target 'SPGDPRExampleAppUITests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
+target 'NativeMessageExampleUITests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
+target 'SourcePointMetaAppUITests' do
+  inherit! :search_paths
+  pod 'ConsentViewController', :path => '../'
+  pod 'Quick'
+  pod 'Nimble'
 end
 
 target 'ObjC-ExampleAppUITests' do
-  # Pods for testing
+  pod 'ConsentViewController', :path => '../'
   pod 'Quick'
-  pod 'Nimble', '9.1.0'
+  pod 'Nimble'
 end
 
 target 'NativePMExampleAppUITests' do

@@ -101,7 +101,7 @@ import Foundation
             try container.encode(choiceType, forKey: .choiceType)
         }
 
-        enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
+        enum CodingKeys: String, CodingKey {
             case text, style, customFields, choiceType, url
         }
     }

@@ -17,3 +17,9 @@ identifier_name:
 line_length:
   warning: 180
   error: 220
+type_name:
+  min_length:
+    warning: 1
+nesting:
+  type_level:
+    warning: 3
