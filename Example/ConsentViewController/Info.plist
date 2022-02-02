@@ -33,33 +33,28 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>com.sourcepoint.gdpr.exampleapp</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Hey there, we are going to track you!</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>com.sourcepoint.gdpr.exampleapp</string>
 	</array>
 </dict>
 </plist>

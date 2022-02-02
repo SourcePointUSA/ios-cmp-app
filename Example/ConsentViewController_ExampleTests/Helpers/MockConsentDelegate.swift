@@ -7,10 +7,10 @@
 //
 
 import Foundation
+import UIKit
 @testable import ConsentViewController
 
 class MockConsentDelegate: SPDelegate {
-
     var isOnSPUIFinishedCalled = false
     var isOnSPUIReadyCalled = false
     var isOnErrorCalled = false
@@ -23,16 +23,20 @@ class MockConsentDelegate: SPDelegate {
         isOnErrorCalled = true
     }
 
-    func onAction(_ action: SPAction, from controller: SPMessageViewController) {
+    func onSPUIReady(_ controller: UIViewController) {
+        isOnSPUIReadyCalled = true
+    }
+
+    func onAction(_ action: SPAction, from controller: UIViewController) {
         isOnActionCalled = true
+    }
+
+    func onSPUIFinished(_ controller: UIViewController) {
+        isOnSPUIFinishedCalled = true
     }
 
     func onSPUIReady(_ controller: SPMessageViewController) {
         isOnSPUIReadyCalled = true
-    }
-
-    func onSPUIFinished(_ controller: SPMessageViewController) {
-        isOnSPUIFinishedCalled = true
     }
 
     public func onConsentReady(userData: SPUserData) {

@@ -1,5 +1,5 @@
 //
-//  PrivacyManagerRequestresponse.swift
+//  PrivacyManagerRequestResponse.swift
 //  Pods
 //
 //  Created by Vilas on 15/04/21.
@@ -17,6 +17,18 @@ import Foundation
         let vendorId: String?
         let policyUrl: URL?
         let vendorType: GDPRVendor.VendorType?
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: Keys.self)
+            name = try container.decode(String.self, forKey: .name)
+            policyUrl = try? container.decodeIfPresent(URL.self, forKey: .policyUrl)
+            vendorId = try container.decodeIfPresent(String.self, forKey: .vendorId)
+            vendorType = try container.decodeIfPresent(GDPRVendor.VendorType.self, forKey: .vendorType)
+        }
+
+        enum Keys: String, CodingKey {
+            case name, vendorId, policyUrl, vendorType
+        }
     }
 
     let iabId: Int?

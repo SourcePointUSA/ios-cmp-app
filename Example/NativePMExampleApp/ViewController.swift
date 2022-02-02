@@ -36,8 +36,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ccpaButton.setTitle("CCPA Privacy Manager (does not apply)", for: .disabled)
-        gdprButton.setTitle("GDPR Privacy Manager (does not apply)", for: .disabled)
+        ccpaButton.setTitle("CCPA (does not apply)", for: .disabled)
+        gdprButton.setTitle("GDPR (does not apply)", for: .disabled)
         updateButtons()
         consentManager.loadMessage()
     }

@@ -58,6 +58,7 @@ class MetaAppValidationUITests: QuickSpec {
             self.app.setupForMetaAppPropertyValidation()
             self.app.gdprTargetingKeyTextField.tap()
             self.app.gdprTargetingKeyTextField.typeText(self.propertyData.targetingKey)
+            self.app.authIdTextFieldOutlet.swipeUp()
             self.app.gdprTargetingParamButton.tap()
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }
@@ -66,6 +67,7 @@ class MetaAppValidationUITests: QuickSpec {
             self.app.setupForMetaAppPropertyValidation()
             self.app.gdprTargetingValueTextField.tap()
             self.app.gdprTargetingValueTextField.typeText(self.propertyData.targetingValueShowOnce)
+            self.app.authIdTextFieldOutlet.swipeUp()
             self.app.gdprTargetingParamButton.tap()
             expect(self.app.targetingParameterValidationItem).to(showUp())
         }

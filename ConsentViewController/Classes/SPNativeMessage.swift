@@ -8,18 +8,32 @@
 import Foundation
 
 @objc public class SPNativeMessage: NSObject, Decodable, SPMessageView {
+    /// Used to notify the `SPConsentManager` about its different lifecycle events.
     public weak var messageUIDelegate: SPMessageUIDelegate?
+
+    /// Indicates the type of the campaign for this message
+    /// - SeeMore: `SPCampaignType`
     public var campaignType: SPCampaignType
+
+    /// The id of the message received from the server
     public var messageId: String = ""
+
+    /// Unused by the native message
     public var timeout: TimeInterval = 10.0
 
     public func loadMessage() {
         messageUIDelegate?.loaded?(self)
     }
 
+    /// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+    /// The will get a call to `onSPUIReady(_ controller: UIViewController)` when the PM
+    /// is ready to be displayed
     public func loadPrivacyManager(url: URL) {
     }
 
+    /// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+    /// The will get a call to `onSPUIFinished(_ controller: UIViewController)` when the PM
+    /// is ready to be closed
     public func closePrivacyManager() {
     }
 
@@ -54,7 +68,7 @@ import Foundation
     @objc public class Action: Attribute {
         public let choiceType: SPActionType
         let url: URL?
-        var pmId: String? {
+        public var pmId: String? {
             if let url = url {
                 return URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems?.first(where: {
                     $0.name == "message_id"

@@ -26,8 +26,8 @@
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
-                              ccpa: campaign
-                              ios14: campaign];
+                              ccpa: NULL
+                              ios14: NULL];
 
     consentManager = [[SPConsentManager alloc]
                       initWithAccountId:22

@@ -156,7 +156,7 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView {
         if let image = components.first(where: { $0.id == id }) as? SPNativeImage,
-           let url = URL(string: image.settings.src) {
+           let url = image.settings.src {
             imageView.isHidden = false
             imageView.load(url: url)
         } else {
@@ -208,7 +208,7 @@ class FocusGuideDebugView: UIView {
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
             } else {
-                textView.text = textViewComponent.settings.text
+                textView.text = textViewComponent.settings.text.stripOutHtml()
             }
             textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
             textView.isUserInteractionEnabled = true
@@ -245,5 +245,15 @@ class FocusGuideDebugView: UIView {
         }
 
         return slider
+    }
+}
+
+extension UILabel {
+    func setDefaultTextColorForDarkMode() {
+        if #available(tvOS 13.0, *) {
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                self.textColor = Constants.defaultFallbackTextColorForDarkMode
+            }
+        }
     }
 }

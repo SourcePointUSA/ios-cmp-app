@@ -32,9 +32,9 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "374151914BA6B7C6A7C04A46512F48FA"
+            BlueprintIdentifier = "84E1147DCA59477E2E390B109585DCAF"
             BuildableName = "ConsentViewController.framework"
-            BlueprintName = "ConsentViewController"
+            BlueprintName = "ConsentViewController-iOS"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>

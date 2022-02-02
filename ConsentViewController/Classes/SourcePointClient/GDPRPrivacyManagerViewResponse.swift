@@ -25,6 +25,31 @@ struct GDPRVendor: Decodable {
     let vendorType: VendorType
     let consentCategories, legIntCategories: [Category]
     let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        name = try container.decode(String.self, forKey: .name)
+        policyUrl = try? container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        vendorId = try container.decode(String.self, forKey: .vendorId)
+        vendorType = try container.decode(GDPRVendor.VendorType.self, forKey: .vendorType)
+        iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        cookieHeader = try container.decodeIfPresent(String.self, forKey: .cookieHeader)
+        consentCategories = try container.decode([Category].self, forKey: .consentCategories)
+        legIntCategories = try container.decode([Category].self, forKey: .legIntCategories)
+        iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
+        iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
+        iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
+    }
+
+    enum Keys: String, CodingKey {
+        case policyUrl, vendorId, name
+        case iabId
+        case iabSpecialPurposes, iabFeatures, iabSpecialFeatures
+        case description, cookieHeader
+        case vendorType
+        case consentCategories, legIntCategories
+    }
 }
 
 extension GDPRVendor: Identifiable, Equatable, Hashable {
@@ -81,7 +106,11 @@ extension CCPAVendor: Decodable {
         let container = try decoder.container(keyedBy: Keys.self)
         _id = try container.decode(String.self, forKey: ._id)
         name = try container.decode(String.self, forKey: .name)
-        policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        do {
+            policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        } catch {
+            policyUrl = nil
+        }
         nullablePurposes = try container.decodeIfPresent([String?].self, forKey: .nullablePurposes)
     }
 
