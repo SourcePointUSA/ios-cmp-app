@@ -22,8 +22,6 @@ end
 
 target 'NativeMessageExample' do
   pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
   pod 'Wormholy'
   pod 'SwiftLint'
 end
