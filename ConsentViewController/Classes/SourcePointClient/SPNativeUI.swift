@@ -197,7 +197,7 @@ class SPNativeLongButton: SPNativeUI {
             onText = try container.decode(String.self, forKey: .onText)
             offText = try container.decode(String.self, forKey: .offText)
             customText = try container.decode(String.self, forKey: .customText)
-            text = try container.decodeIfPresent(String.self, forKey: .text)
+            text = try? container.decodeIfPresent(String.self, forKey: .text)
             try super.init(from: decoder)
         }
 

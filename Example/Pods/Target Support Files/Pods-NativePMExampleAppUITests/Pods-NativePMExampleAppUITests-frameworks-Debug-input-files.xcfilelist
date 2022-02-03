@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-NativePMExampleAppUITests/Pods-NativePMExampleAppUITests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/ConsentViewController-tvOS/ConsentViewController.framework
+${BUILT_PRODUCTS_DIR}/Nimble-tvOS/Nimble.framework
+${BUILT_PRODUCTS_DIR}/Quick-tvOS/Quick.framework

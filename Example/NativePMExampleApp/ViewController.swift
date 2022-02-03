@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("appletv.demo"),
+        campaignsEnv: .Stage,
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
             ccpa: SPCampaign()
@@ -64,7 +65,7 @@ extension ViewController: SPDelegate {
 
     func onError(error: SPError) {
         stopActivityIndicator()
-        print("ERROR: ", error.description )
+        print("ERROR: ", error.description)
     }
 }
 
