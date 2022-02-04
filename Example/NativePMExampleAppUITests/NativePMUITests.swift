@@ -36,10 +36,8 @@ class NativePMUITests: QuickSpec {
             self.app.enterPM(element: self.app.ccpaPrivacyManagerButton)
             expect(self.app.acceptButton).to(showUp())
             XCUIRemote.shared.press(.right)
-            
 //            self.app.expectedMessageShowUP(element: self.app.doNotSellMyPersonalInformation)
 //            previous line is commented since appletv.demo "Do Not Sell" button has blank text
-            
             XCUIRemote.shared.press(.select)
             XCUIRemote.shared.press(.left)
             self.app.expectedMessageShowUP(element: self.app.acceptButton)
