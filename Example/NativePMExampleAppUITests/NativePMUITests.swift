@@ -150,10 +150,7 @@ class NativePMUITests: QuickSpec {
             XCUIRemote.shared.press(.down)
             self.app.expectedMessageShowUP(element: self.app.onButton)
             XCUIRemote.shared.press(.select)
-        
-            self.app.expectedMessageShowUP(element: self.app.category) // focus drops to a second purpose; should drop to 1st. bug?
-//            self.app.expectedMessageShowUP(element: self.app.category2) //uncomment this line + comment previous to make the test green again
-        
+            self.app.expectedMessageShowUP(element: self.app.category2)
             XCUIRemote.shared.press(.left)
             self.app.expectedMessageShowUP(element: self.app.acceptAllButton)
             XCUIRemote.shared.press(.down)
