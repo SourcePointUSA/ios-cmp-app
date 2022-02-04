@@ -249,10 +249,7 @@ class NativePMUITests: QuickSpec {
             XCUIRemote.shared.press(.down)
             self.app.expectedMessageShowUP(element: self.app.onButton)
             XCUIRemote.shared.press(.select)
-
-            self.app.expectedMessageShowUP(element: self.app.freewheel) //focus drops to the last cell; should drop to 1st. bug?
-//            self.app.expectedMessageShowUP(element: self.app.seedtag)  //uncomment this line + comment previous to make the test green again
-            
+            self.app.expectedMessageShowUP(element: self.app.seedtag)
             XCUIRemote.shared.press(.left)
             self.app.expectedMessageShowUP(element: self.app.acceptAllButton)
             XCUIRemote.shared.press(.down)
@@ -275,10 +272,7 @@ class NativePMUITests: QuickSpec {
             XCUIRemote.shared.press(.down)
             self.app.expectedMessageShowUP(element: self.app.onButton)
             XCUIRemote.shared.press(.select)
-
-            self.app.expectedMessageShowUP(element: self.app.loopMe) //focus drops to the second cell; should drop to 1st. bug?
-//            self.app.expectedMessageShowUP(element: self.app.googleCharts) //uncomment this line + comment previous to make the test green again
-
+            self.app.expectedMessageShowUP(element: self.app.googleCharts)
             XCUIRemote.shared.press(.left)
             self.app.expectedMessageShowUP(element: self.app.acceptAllButton)
             XCUIRemote.shared.press(.down)
