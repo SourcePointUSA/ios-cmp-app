@@ -60,7 +60,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateIDFAStatusLabel()
-        consentManager.loadMessage()
+        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": "load message"])
     }
 }
 
@@ -72,6 +72,8 @@ extension ViewController: SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
+        print(action)
+        action.publisherData = ["foo": "action"]
         print(action)
     }
 

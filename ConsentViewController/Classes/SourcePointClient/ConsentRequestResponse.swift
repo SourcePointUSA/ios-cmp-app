@@ -12,34 +12,24 @@ struct GDPRConsentRequest: Encodable, Equatable {
     let idfaStatus: SPIDFAStatus
     let localState: SPJson
     let pmSaveAndExitVariables: SPJson?
-    let publisherData: [String: SPJson?]?
+    let pubData: SPPublisherData
     let requestUUID: UUID
     let includeData = [
         "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"]
     ]
-
-    enum CodingKeys: String, CodingKey {
-        case authId, localState, idfaStatus, pmSaveAndExitVariables, requestUUID, includeData
-        case publisherData = "pubData"
-    }
 }
 
 struct CCPAConsentRequest: Encodable, Equatable {
     let authId: String?
     let localState: SPJson
-    let publisherData: [String: SPJson?]?
+    let pubData: SPPublisherData
     let pmSaveAndExitVariables: SPJson?
     let requestUUID: UUID
     let includeData = [
         "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"]
     ]
-
-    enum CodingKeys: String, CodingKey {
-        case authId, localState, pmSaveAndExitVariables, requestUUID, includeData
-        case publisherData = "pubData"
-    }
 }
 
 struct ConsentResponse: Decodable & Equatable {

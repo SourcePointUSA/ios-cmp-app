@@ -36,7 +36,7 @@
                       campaigns: campaigns
                       delegate: self];
 
-    [consentManager loadMessageForAuthId: NULL];
+    [consentManager loadMessageForAuthId: NULL publisherData:NULL];
 }
 
 - (void)onSPUIReady:(SPMessageViewController * _Nonnull)controller {

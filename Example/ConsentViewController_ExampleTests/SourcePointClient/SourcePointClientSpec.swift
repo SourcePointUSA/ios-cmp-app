@@ -44,7 +44,9 @@ class SourcePointClientSpec: QuickSpec {
                     ),
                     ccpa: CampaignRequest(targetingParams: [:]),
                     ios14: CampaignRequest(targetingParams: [:])
-                )))
+                ),
+                pubData: [:]
+            ))
     }
 
     override func spec() {
@@ -71,12 +73,12 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
-                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), idfaStaus: .unknown, consentLanguage: .English) { _ in }
+                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
                     expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message?inApp=true"))
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), idfaStaus: .unknown, consentLanguage: .English) { _ in }
+                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
                     let parsed = httpClient!.postWasCalledWithBody!
                     expect(parsed).toEventually(equal(self.getMessageRequest(client)))
                 }
@@ -96,13 +98,13 @@ class SourcePointClientSpec: QuickSpec {
 
                 it("calls POST on the http client with the right body") {
                     let action = SPAction(type: .AcceptAll, consentLanguage: "EN")
-                    action.publisherData = ["foo": try? SPJson("bar")]
+                    action.publisherData = ["foo": "bar"]
                     let consentRequest = GDPRConsentRequest(
                         authId: nil,
                         idfaStatus: .accepted,
                         localState: SPJson(),
                         pmSaveAndExitVariables: nil,
-                        publisherData: nil,
+                        publisherData: [:],
                         requestUUID: UUID()
                     )
 //                    client.postAction(

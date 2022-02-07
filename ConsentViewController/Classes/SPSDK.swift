@@ -32,7 +32,7 @@ import Foundation
         campaigns: SPCampaigns,
         delegate: SPDelegate?
     )
-    @objc func loadMessage(forAuthId authId: String?)
+    @objc func loadMessage(forAuthId authId: String?, publisherData: SPPublisherData?)
     @objc func customConsentGDPR(
         vendors: [String],
         categories: [String],
@@ -52,8 +52,8 @@ public extension SPSDK {
         self.init(accountId: accountId, propertyName: propertyName, campaignsEnv: campaignsEnv, campaigns: campaigns, delegate: delegate)
     }
 
-    func loadMessage(forAuthId authId: String? = "") {
-        loadMessage(forAuthId: authId)
+    func loadMessage(forAuthId authId: String? = "", pubData: SPPublisherData? = [:]) {
+        loadMessage(forAuthId: authId, publisherData: pubData)
     }
 
     func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
