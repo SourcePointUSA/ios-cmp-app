@@ -497,9 +497,7 @@ extension SPConsentManager: SPMessageUIDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
-        DispatchQueue.main.async { [weak self] in
-            self?.delegate?.onAction(action, from: controller)
-        }
+        delegate?.onAction(action, from: controller)
     }
 }
 
