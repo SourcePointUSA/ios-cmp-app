@@ -47,6 +47,7 @@ protocol SourcePointProtocol {
         campaigns: SPCampaigns,
         authId: String?,
         localState: SPJson,
+        pubData: SPPublisherData,
         idfaStaus: SPIDFAStatus,
         consentLanguage: SPMessageLanguage,
         handler: @escaping MessagesHandler)
@@ -154,6 +155,7 @@ class SourcePointClient: SourcePointProtocol {
         campaigns: SPCampaigns,
         authId: String?,
         localState: SPJson,
+        pubData: SPPublisherData,
         idfaStaus: SPIDFAStatus,
         consentLanguage: SPMessageLanguage,
         handler: @escaping MessagesHandler) {
@@ -166,7 +168,8 @@ class SourcePointClient: SourcePointProtocol {
             idfaStatus: idfaStaus,
             localState: localState,
             consentLanguage: consentLanguage,
-            campaigns: CampaignsRequest(from: campaigns)
+            campaigns: CampaignsRequest(from: campaigns),
+            pubData: pubData
         )).map { body in
             client.post(urlString: Constants.Urls.GET_MESSAGES_URL.absoluteString, body: body) { result in
                 handler(Result {
@@ -261,7 +264,7 @@ class SourcePointClient: SourcePointProtocol {
         _ = JSONEncoder().encodeResult(CCPAConsentRequest(
             authId: authId,
             localState: localState,
-            publisherData: action.publisherData,
+            pubData: action.publisherData,
             pmSaveAndExitVariables: action.pmPayload,
             requestUUID: requestUUID
         )).map { body in
@@ -285,7 +288,7 @@ class SourcePointClient: SourcePointProtocol {
             idfaStatus: SPIDFAStatus.current(),
             localState: localState,
             pmSaveAndExitVariables: action.pmPayload,
-            publisherData: action.publisherData,
+            pubData: action.publisherData,
             requestUUID: requestUUID
         )).map { body in
             client.post(urlString: consentUrl(Constants.Urls.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in

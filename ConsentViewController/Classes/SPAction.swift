@@ -54,7 +54,7 @@ import Foundation
         return nil
     }
     public var pmPayload: SPJson = SPJson()
-    public var publisherData: [String: SPJson?] = [:]
+    public var publisherData: SPPublisherData = [:]
     public var customActionId: String?
 
     public override var description: String {
