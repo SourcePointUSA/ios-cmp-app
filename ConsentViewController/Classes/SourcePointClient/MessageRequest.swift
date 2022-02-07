@@ -40,6 +40,7 @@ struct MessageRequest: Equatable, Encodable {
     let localState: SPJson
     let consentLanguage: SPMessageLanguage
     let campaigns: CampaignsRequest
+    let pubData: SPPublisherData
     let includeData = [
         "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"],
