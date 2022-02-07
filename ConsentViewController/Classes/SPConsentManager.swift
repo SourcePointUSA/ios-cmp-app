@@ -262,13 +262,14 @@ import UIKit
     /// Returns the user data **stored in the `UserDefaults`**.
     public var userData: SPUserData { storage.userData }
 
-    public func loadMessage(forAuthId authId: String? = nil) {
+    public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         self.authId = authId
         responsesToReceive += 1
         spClient.getMessages(
             campaigns: campaigns,
             authId: authId,
             localState: storage.localState,
+            pubData: publisherData ?? [:],
             idfaStaus: idfaStatus,
             consentLanguage: messageLanguage
         ) { [weak self] result in
