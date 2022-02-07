@@ -174,7 +174,7 @@ The SDK will wrap the web message into a `UIViewController` and call the `onSPUI
 The `onSPNativeMessageReady` is only called if the scenario returns a native message. It will be up to you to the `message` object on the screen using the layout you best see fit.
 
 ### onAction(_ action: SPAction, from controller: UIViewController)
-Whenever the user takes an action (e.g. tapping on a button), the SDK will call the `onAction` passing the `action` as paramter.
+Whenever the user takes an action (e.g. tapping on a button), the SDK will call the `onAction` passing the `action` as paramter. **This delegate method runs in the main thread**.
 
 #### What's inside `SPAction`
 Among other internal data, you'll find:
