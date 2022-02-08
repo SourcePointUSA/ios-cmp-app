@@ -79,6 +79,10 @@ class NativePMApp: XCUIApplication {
     var acceptAllButton: XCUIElement {
         buttons["Accept All"].firstMatch
     }
+    
+    var managePreferencesButton: XCUIElement {
+        buttons["Manage Preferences"].firstMatch
+    }
 
     var rejectAllButton: XCUIElement {
         buttons["Reject All"].firstMatch
@@ -106,10 +110,6 @@ class NativePMApp: XCUIApplication {
 
     var offButton: XCUIElement {
         buttons["Off"].firstMatch
-    }
-
-    var ManagePreferencesButton: XCUIElement {
-        buttons["Manage Preferences"].firstMatch
     }
 
     var privacyPolicyButton: XCUIElement {
@@ -140,7 +140,10 @@ class NativePMApp: XCUIApplication {
         expect(element).to(showUp())
         expect(element.hasFocus).to(beTrue())
     }
-    
+}
+
+// MARK: - NativePMApp shenanigans
+extension NativePMApp {
     func clickButtonUntilElementHasFocus(directionBtn: XCUIRemote.Button, element: XCUIElement)
     {
         var counter = 0
@@ -150,12 +153,83 @@ class NativePMApp: XCUIApplication {
         }
     }
     
-    func enterPM(element: XCUIElement)
+    func findAndPress(element: XCUIElement)
     {
         expect(element).to(showUp())
         clickButtonUntilElementHasFocus(directionBtn: .down, element: element)
         clickButtonUntilElementHasFocus(directionBtn: .up, element: element)
         expectedMessageShowUP(element: element)
         XCUIRemote.shared.press(.select)
+    }
+    
+    func pressDoNotSellButton()
+    {
+        XCUIRemote.shared.press(.right)
+//            expectedMessageShowUP(element: doNotSellMyPersonalInformation)
+//            previous line is commented since appletv.demo "Do Not Sell" button has blank text
+        XCUIRemote.shared.press(.select)
+        XCUIRemote.shared.press(.left)
+    }
+    
+    func pressStoreAndAccessInformation()
+    {
+        XCUIRemote.shared.press(.right)
+        XCUIRemote.shared.press(.up)
+        expectedMessageShowUP(element: storeAndAccessInformation)
+        XCUIRemote.shared.press(.select)
+        XCUIRemote.shared.press(.down)
+        XCUIRemote.shared.press(.left)
+    }
+    
+    func pressHomeAndReturnToHomeViewWithFocusOnPrivacyPolicyButton()
+    {
+        expect(self.homeButton).to(showUp())
+        XCUIRemote.shared.press(.select)
+        expectedMessageShowUP(element: privacyPolicyButton)
+    }
+    
+    func pressCategory(element: XCUIElement)
+    {
+        XCUIRemote.shared.press(.down)
+        expectedMessageShowUP(element: acceptAllButton)
+        XCUIRemote.shared.press(.right)
+        expectedMessageShowUP(element: element)
+        XCUIRemote.shared.press(.select)
+    }
+    
+    func pressOnButtonInCategoryDetails(elementToEnsure: XCUIElement)
+    {
+        expectedMessageShowUP(element: backButton)
+        XCUIRemote.shared.press(.down)
+        expectedMessageShowUP(element: onButton)
+        XCUIRemote.shared.press(.select)
+        expectedMessageShowUP(element: elementToEnsure)
+    }
+    
+    func pressOffButtonInCategoryDetails(elementToEnsure: XCUIElement)
+    {
+        expectedMessageShowUP(element: backButton)
+        XCUIRemote.shared.press(.down)
+        expectedMessageShowUP(element: onButton)
+        XCUIRemote.shared.press(.down)
+        expectedMessageShowUP(element: offButton)
+        XCUIRemote.shared.press(.select)
+        expectedMessageShowUP(element: elementToEnsure)
+    }
+    
+    func pressSaveAndExitInCategory()
+    {
+        XCUIRemote.shared.press(.left)
+        expectedMessageShowUP(element: acceptAllButton)
+        XCUIRemote.shared.press(.down)
+        expectedMessageShowUP(element: saveAndExitInternalButton)
+        XCUIRemote.shared.press(.select)
+    }
+    
+    func switchToLegitInterests()
+    {
+        XCUIRemote.shared.press(.right)
+        XCUIRemote.shared.press(.right)
+        expectedMessageShowUP(element: legitimateInterestButton)
     }
 }

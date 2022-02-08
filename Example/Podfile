@@ -15,8 +15,6 @@ end
 target 'NativePMExampleApp' do
   platform :tvos, '10.0'
   pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
   pod 'SwiftLint'
 end
 
