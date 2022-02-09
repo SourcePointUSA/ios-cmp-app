@@ -26,8 +26,8 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var saveAndExitButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
-
     @IBOutlet weak var header: SPPMHeader!
+    @IBOutlet weak var scroll: UIScrollView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
@@ -38,7 +38,7 @@ protocol SPNativePrivacyManagerHome {
     var snapshot: GDPRPMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
-
+    
     func setHeader () {
         header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
         header.spTitleText = viewData.byId("Header") as? SPNativeText
@@ -72,7 +72,11 @@ protocol SPNativePrivacyManagerHome {
         categoryTableView.dataSource = self
         disableMenuButton()
     }
-
+    
+    override func setFocusGuides() {
+        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop, debug: true) // top
+    }
+    
     func disableMenuButton() {
         let menuPressRecognizer = UITapGestureRecognizer()
         menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
@@ -271,6 +275,12 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
                 label: selectedCategoryTextLabel
             )
         }
+        return true
+    }
+}
+
+class FocusableScrollView: UIScrollView {
+    override var canBecomeFocused: Bool {
         return true
     }
 }
