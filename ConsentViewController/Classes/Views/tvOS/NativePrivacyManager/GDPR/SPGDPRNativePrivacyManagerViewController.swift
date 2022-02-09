@@ -74,7 +74,7 @@ protocol SPNativePrivacyManagerHome {
     }
     
     override func setFocusGuides() {
-        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop, debug: true) // top
+        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
     }
     
     func disableMenuButton() {
