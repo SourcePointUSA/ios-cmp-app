@@ -288,5 +288,9 @@ class FocusableScrollView: UIScrollView {
     func setStyle() {
         self.indicatorStyle = .black
         flashScrollIndicators()
+        if let descText = self.subviews.last as? UITextView {
+            descText.indicatorStyle = .black
+            descText.flashScrollIndicators()
+        }
     }
 }
