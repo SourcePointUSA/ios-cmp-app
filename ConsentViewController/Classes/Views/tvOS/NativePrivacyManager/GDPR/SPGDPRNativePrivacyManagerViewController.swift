@@ -27,7 +27,7 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var scroll: UIScrollView!
+    @IBOutlet weak var scroll: FocusableScrollView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
@@ -55,6 +55,7 @@ protocol SPNativePrivacyManagerHome {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        scroll.setStyle()
         setHeader()
         loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
         categoriesExplainerLabel.setDefaultTextColorForDarkMode()
@@ -282,5 +283,10 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
 class FocusableScrollView: UIScrollView {
     override var canBecomeFocused: Bool {
         return true
+    }
+
+    func setStyle() {
+        self.indicatorStyle = .black
+        flashScrollIndicators()
     }
 }
