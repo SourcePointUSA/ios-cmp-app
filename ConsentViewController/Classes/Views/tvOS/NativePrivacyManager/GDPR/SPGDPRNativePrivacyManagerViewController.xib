@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="18122" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="19529" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -23,6 +23,7 @@
                 <outlet property="privacyPolicyButton" destination="p3s-4F-WQC" id="VCB-gR-wFn"/>
                 <outlet property="rejectButton" destination="ch4-4u-BD5" id="3ab-N1-oPC"/>
                 <outlet property="saveAndExitButton" destination="yPC-Wv-MDC" id="dZJ-dH-NhN"/>
+                <outlet property="scroll" destination="GW6-tv-z1g" id="GCW-li-l1b"/>
                 <outlet property="selectedCategoryTextLabel" destination="xze-gk-XHF" id="bpw-Bw-lFO"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
@@ -144,28 +145,53 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="voU-ev-Ret" userLabel="Stack View - 2nd Column">
                                     <rect key="frame" x="880" y="0.0" width="880" height="852"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAT-0K-Z6o">
-                                            <rect key="frame" x="0.0" y="0.0" width="880" height="360"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" indicatorStyle="black" id="GW6-tv-z1g" customClass="FocusableScrollView" customModule="ConsentViewController" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="92" height="0.0"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAT-0K-Z6o">
+                                                    <rect key="frame" x="0.0" y="0.0" width="880" height="360"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="360" id="htD-cK-jRj"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <viewLayoutGuide key="safeArea" id="5B8-BM-nj5"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="360" id="htD-cK-jRj"/>
+                                                <constraint firstItem="JAT-0K-Z6o" firstAttribute="leading" secondItem="GW6-tv-z1g" secondAttribute="leading" id="1TC-o6-DYF"/>
+                                                <constraint firstItem="JAT-0K-Z6o" firstAttribute="top" secondItem="GW6-tv-z1g" secondAttribute="top" id="Hor-Bd-ymP"/>
+                                                <constraint firstAttribute="trailing" secondItem="JAT-0K-Z6o" secondAttribute="trailing" id="Ioe-qX-EcS"/>
+                                                <constraint firstItem="JAT-0K-Z6o" firstAttribute="leading" secondItem="GW6-tv-z1g" secondAttribute="leading" id="KmR-y4-4ET"/>
+                                                <constraint firstItem="JAT-0K-Z6o" firstAttribute="top" secondItem="GW6-tv-z1g" secondAttribute="top" id="UY0-PF-dhn"/>
+                                                <constraint firstAttribute="bottom" secondItem="JAT-0K-Z6o" secondAttribute="bottom" id="ZPt-aU-qSe"/>
+                                                <constraint firstAttribute="trailing" secondItem="JAT-0K-Z6o" secondAttribute="trailing" id="cwI-z3-ysG"/>
+                                                <constraint firstItem="JAT-0K-Z6o" firstAttribute="centerX" secondItem="GW6-tv-z1g" secondAttribute="centerX" id="oej-27-Uw6"/>
+                                                <constraint firstItem="JAT-0K-Z6o" firstAttribute="centerY" secondItem="GW6-tv-z1g" secondAttribute="centerY" id="xy2-Ad-edE"/>
+                                                <constraint firstAttribute="bottom" secondItem="JAT-0K-Z6o" secondAttribute="bottom" id="yTh-HD-51O"/>
                                             </constraints>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                            <color key="textColor" systemColor="labelColor"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
+                                        </scrollView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nEW-fo-PK4" userLabel="CategoriesExplainer">
-                                            <rect key="frame" x="0.0" y="360" width="880" height="46"/>
+                                            <rect key="frame" x="0.0" y="403" width="880" height="46"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="HVs-YH-qhj">
-                                            <rect key="frame" x="0.0" y="406" width="880" height="446"/>
+                                            <rect key="frame" x="0.0" y="449" width="880" height="403"/>
                                             <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="446" id="pOY-ju-XYs"/>
+                                            </constraints>
                                         </tableView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="GW6-tv-z1g" firstAttribute="height" secondItem="HVs-YH-qhj" secondAttribute="height" id="ske-zc-Buc"/>
+                                    </constraints>
                                 </stackView>
                             </subviews>
                             <constraints>

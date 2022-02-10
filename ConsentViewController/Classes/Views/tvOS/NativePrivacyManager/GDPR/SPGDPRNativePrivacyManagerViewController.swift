@@ -26,8 +26,8 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var saveAndExitButton: UIButton!
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
-
     @IBOutlet weak var header: SPPMHeader!
+    @IBOutlet weak var scroll: FocusableScrollView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
@@ -38,7 +38,7 @@ protocol SPNativePrivacyManagerHome {
     var snapshot: GDPRPMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
-
+    
     func setHeader () {
         header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
         header.spTitleText = viewData.byId("Header") as? SPNativeText
@@ -55,6 +55,7 @@ protocol SPNativePrivacyManagerHome {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        scroll.setStyle()
         setHeader()
         loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
         categoriesExplainerLabel.setDefaultTextColorForDarkMode()
@@ -72,7 +73,11 @@ protocol SPNativePrivacyManagerHome {
         categoryTableView.dataSource = self
         disableMenuButton()
     }
-
+    
+    override func setFocusGuides() {
+        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
+    }
+    
     func disableMenuButton() {
         let menuPressRecognizer = UITapGestureRecognizer()
         menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
@@ -272,5 +277,20 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
             )
         }
         return true
+    }
+}
+
+class FocusableScrollView: UIScrollView {
+    override var canBecomeFocused: Bool {
+        return true
+    }
+
+    func setStyle() {
+        self.indicatorStyle = .black
+        flashScrollIndicators()
+        if let descText = self.subviews.last as? UITextView {
+            descText.indicatorStyle = .black
+            descText.flashScrollIndicators()
+        }
     }
 }
