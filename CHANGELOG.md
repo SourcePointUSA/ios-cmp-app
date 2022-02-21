@@ -1,3 +1,10 @@
+# 6.5.0 (Feb, 21, 2022)
+* Added `pubData` to `loadMessage` method. #362
+* Implemented type alias for publisher data `SPPublisherData = [String: String]`
+* Fixed an issue preventing the `pubData` payload from being sent on a consent request. #363
+* Fixed AppleTV layout issues. #364, #361
+* Improved AppleTV UI tests. #355
+
 # 6.4.1 (Feb, 01, 2022)
 * Fixed an issue (#359) preventing the SDK from being used with SPM. #360
 
