@@ -383,6 +383,7 @@ SWIFT_CLASS("_TtC21ConsentViewController8SPAction")
 @property (nonatomic, readonly, copy) NSString * _Nullable consentLanguage;
 @property (nonatomic, copy) NSURL * _Nullable pmURL;
 @property (nonatomic, readonly, copy) NSString * _Nullable pmId;
+@property (nonatomic, copy) NSDictionary<NSString *, NSString *> * _Nonnull publisherData;
 @property (nonatomic, copy) NSString * _Nullable customActionId;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
@@ -592,7 +593,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
@@ -605,7 +606,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly) BOOL ccpaApplies;
 /// Returns the user data <em>stored in the <code>UserDefaults</code></em>.
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
@@ -1299,6 +1300,7 @@ SWIFT_CLASS("_TtC21ConsentViewController8SPAction")
 @property (nonatomic, readonly, copy) NSString * _Nullable consentLanguage;
 @property (nonatomic, copy) NSURL * _Nullable pmURL;
 @property (nonatomic, readonly, copy) NSString * _Nullable pmId;
+@property (nonatomic, copy) NSDictionary<NSString *, NSString *> * _Nonnull publisherData;
 @property (nonatomic, copy) NSString * _Nullable customActionId;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
@@ -1508,7 +1510,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
@@ -1521,7 +1523,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly) BOOL ccpaApplies;
 /// Returns the user data <em>stored in the <code>UserDefaults</code></em>.
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-- (void)loadMessageForAuthId:(NSString * _Nullable)authId;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;

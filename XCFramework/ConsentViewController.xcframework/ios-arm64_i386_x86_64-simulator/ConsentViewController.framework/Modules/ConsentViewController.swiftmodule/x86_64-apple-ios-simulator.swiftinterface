@@ -50,7 +50,7 @@ public let MockNativePMResponse: Swift.String
     @objc get
   }
   public var pmPayload: ConsentViewController.SPJson
-  public var publisherData: [Swift.String : ConsentViewController.SPJson?]
+  @objc public var publisherData: ConsentViewController.SPPublisherData
   @objc public var customActionId: Swift.String?
   @objc override dynamic public var description: Swift.String {
     @objc get
@@ -147,7 +147,7 @@ public typealias SPUsPrivacyString = Swift.String
   @objc dynamic public var userData: ConsentViewController.SPUserData {
     @objc get
   }
-  @objc dynamic public func loadMessage(forAuthId authId: Swift.String? = nil)
+  @objc dynamic public func loadMessage(forAuthId authId: Swift.String? = nil, publisherData: ConsentViewController.SPPublisherData? = [:])
   @objc dynamic public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default)
   @objc dynamic public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default)
   @objc dynamic public func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
@@ -627,6 +627,7 @@ extension ConsentViewController.SPJson {
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc deinit
 }
+public typealias SPPublisherData = [Swift.String : Swift.String]
 @objc public protocol SPCCPA {
   @objc func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab)
   @objc var ccpaApplies: Swift.Bool { get }
@@ -644,12 +645,12 @@ extension ConsentViewController.SPJson {
   @objc var messageLanguage: ConsentViewController.SPMessageLanguage { get set }
   @objc var userData: ConsentViewController.SPUserData { get }
   @objc init(accountId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaignsEnv: ConsentViewController.SPCampaignEnv, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
-  @objc func loadMessage(forAuthId authId: Swift.String?)
+  @objc func loadMessage(forAuthId authId: Swift.String?, publisherData: ConsentViewController.SPPublisherData?)
   @objc func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
 }
 extension ConsentViewController.SPSDK {
   public init(accountId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaignsEnv: ConsentViewController.SPCampaignEnv = .Public, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
-  public func loadMessage(forAuthId authId: Swift.String? = "")
+  public func loadMessage(forAuthId authId: Swift.String? = "", pubData: ConsentViewController.SPPublisherData? = [:])
   public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default)
   public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default)
 }
