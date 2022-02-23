@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var ccpaButton: UIButton!
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "561622")
+        consentManager.loadGDPRPrivacyManager(withId: "611235")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("appletv.demo"),
-        campaignsEnv: .Stage,
+        campaignsEnv: .Public,
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
             ccpa: SPCampaign()
