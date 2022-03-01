@@ -136,6 +136,31 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /message endpoint" }
 }
 
+@objcMembers public class InvalidResponseGetMessagesEndpointMessageError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_get_messages" }
+    override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
+}
+
+@objcMembers public class InvalidResponseMessageGDPREndpointMessageError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_message_gdpr" }
+    override public var description: String { "The SDK got an unexpected response from /message/gdpr endpoint" }
+}
+
+@objcMembers public class InvalidResponseMessageCCPAEndpointMessageError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_message_ccpa" }
+    override public var description: String { "The SDK got an unexpected response from /message/ccpa endpoint" }
+}
+
+@objcMembers public class InvalidResponseGDPRPrivacyManagerViewEndpointMessageError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_privacy_manager_view_gdpr" }
+    override public var description: String { "The SDK got an unexpected response from /consent/tcfv2/privacy-manager/privacy-manager-view endpoint" }
+}
+
+@objcMembers public class InvalidResponseCCPAPrivacyManagerViewEndpointMessageError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_privacy_manager_view_ccpa" }
+    override public var description: String { "The SDK got an unexpected response from /ccpa/privacy-manager/privacy-manager-view endpoint" }
+}
+
 @objcMembers public class InvalidResponseNativeMessageError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_native_message" }
     override public var description: String { "The SDK got an unexpected response from /native-message endpoint" }
