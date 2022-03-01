@@ -19,6 +19,7 @@ func aResponseWith(status: Int) -> HTTPURLResponse {
 }
 
 // swiftlint:disable function_body_length
+// swiftlint:disable trailing_whitespace
 
 class SPErrorSpec: QuickSpec {
     override func spec() {
@@ -142,6 +143,36 @@ class SPErrorSpec: QuickSpec {
             it("Test InvalidArgumentError method") {
                 let errorObject = InvalidArgumentError(message: "The operation couldn't be completed")
                 expect(errorObject.description).to(equal("The operation couldn't be completed"))
+            }
+            
+            describe("InvalidResponseGetMessagesEndpointMessageError") {
+                it("has spCode: sp_metric_invalid_response_get_messages") {
+                    expect(InvalidResponseGetMessagesEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_get_messages"))
+                }
+            }
+            
+            describe("InvalidResponseMessageGDPREndpointMessageError") {
+                it("has spCode: sp_metric_invalid_response_message_gdpr") {
+                    expect(InvalidResponseMessageGDPREndpointMessageError().spCode).to(equal("sp_metric_invalid_response_message_gdpr"))
+                }
+            }
+            
+            describe("InvalidResponseMessageCCPAEndpointMessageError") {
+                it("has spCode: sp_metric_invalid_response_message_ccpa") {
+                    expect(InvalidResponseMessageCCPAEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_message_ccpa"))
+                }
+            }
+            
+            describe("InvalidResponseGDPRPrivacyManagerViewEndpointMessageError") {
+                it("has spCode: sp_metric_invalid_response_privacy_manager_view_gdpr") {
+                    expect(InvalidResponseGDPRPrivacyManagerViewEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_privacy_manager_view_gdpr"))
+                }
+            }
+            
+            describe("InvalidResponseCCPAPrivacyManagerViewEndpointMessageError") {
+                it("has spCode: sp_metric_invalid_response_privacy_manager_view_ccpa") {
+                    expect(InvalidResponseCCPAPrivacyManagerViewEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_privacy_manager_view_ccpa"))
+                }
             }
         }
     }
