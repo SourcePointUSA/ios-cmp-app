@@ -57,7 +57,7 @@ protocol SPNativePrivacyManagerHome {
         setHeader()
         loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
         categoriesExplainerLabel.setDefaultTextColorForDarkMode()
-        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, adjust: descriptionTextView)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, adjust: true)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
