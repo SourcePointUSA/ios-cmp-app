@@ -56,7 +56,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
+        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView, adjust: true)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)

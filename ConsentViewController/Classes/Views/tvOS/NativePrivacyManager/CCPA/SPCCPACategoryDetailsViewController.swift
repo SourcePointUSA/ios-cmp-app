@@ -46,7 +46,7 @@ class SPCCPACategoryDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView, text: category?.description)
+        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView, text: category?.description, adjust: true)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
