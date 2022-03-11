@@ -257,3 +257,37 @@ extension UILabel {
         }
     }
 }
+
+extension UIButton {
+    open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        super.didUpdateFocus(in: context, with: coordinator)
+#if os(tvOS)
+        var view : UIView?
+        if context.nextFocusedView === self {
+            view = UIView(frame: self.bounds)
+            view!.backgroundColor = self.backgroundColor
+            view!.layer.cornerRadius = 13
+            coordinator.addCoordinatedAnimations({
+                UIView.animate(withDuration: 0.15, animations: {
+                    view!.transform = CGAffineTransform(scaleX: 1.06, y: 1.06)
+                    self.insertSubview(view!, at: 0)
+                })
+            }, completion: nil)
+        } else if context.previouslyFocusedView === self {
+            view = self.subviews[0] // 100% previously inserted subview
+            if #available(tvOS 11.0, *) {
+                coordinator.addCoordinatedUnfocusingAnimations({ _ in
+                    UIView.animate(withDuration: 0.15, animations: {
+                        view!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    })
+                }, completion: {
+                    view?.removeFromSuperview()
+                })
+            } else {
+                view!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                view?.removeFromSuperview()
+            }
+        }
+#endif
+    }
+}

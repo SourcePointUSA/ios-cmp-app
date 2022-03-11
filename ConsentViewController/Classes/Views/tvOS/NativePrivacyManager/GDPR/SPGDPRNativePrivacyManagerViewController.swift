@@ -109,7 +109,6 @@ protocol SPNativePrivacyManagerHome {
             campaignType: campaignType,
             pmPayload: snapshot?.toPayload(language: .English, pmId: messageId).json() ?? SPJson()
         ), from: self)
-
     }
 
     @IBAction func onManagePreferenceTap(_ sender: Any) {
