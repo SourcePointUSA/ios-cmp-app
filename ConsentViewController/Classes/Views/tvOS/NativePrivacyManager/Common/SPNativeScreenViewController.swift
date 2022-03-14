@@ -50,7 +50,6 @@ extension UIFont {
         if let adjust = adjust {
             adjust.font = UIFont(name: family, size: fontSize)
             while (adjust.contentSize.height > adjust.frame.size.height) {
-                print(adjust.contentSize.height.description + ">" + adjust.frame.size.height.description)
                 fontSize = CGFloat(fontSize - 0.5)
                 adjust.font = UIFont(name: family, size: fontSize)
             }
