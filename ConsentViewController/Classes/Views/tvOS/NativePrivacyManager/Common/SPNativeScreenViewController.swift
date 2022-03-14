@@ -16,9 +16,9 @@ extension UIImageView {
                     DispatchQueue.main.async {
                         self?.alpha = 0
                         self?.image = image
-                        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+                        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
                             self?.alpha = 1.0
-                        }, completion: nil)
+                        })
                     }
                 }
             }
