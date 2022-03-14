@@ -165,6 +165,25 @@ class FocusGuideDebugView: UIView {
         return imageView
     }
 
+    @nonobjc
+    @discardableResult
+    func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton {
+        if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
+            button.isHidden = false
+            button.setTitle(action.settings.text, for: .normal)
+            button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
+            button.onUnfocusBackgroundColor = button.backgroundColor
+            button.onFocusBackgroundColor = UIColor(hexString: action.settings.style?.onFocusBackgroundColor)
+            button.titleLabel?.font = UIFont(from: action.settings.style?.font)
+            button.layer.cornerRadius = 12
+        } else {
+            button.isHidden = true
+        }
+        return button
+    }
+
     @discardableResult
     func loadButton(forComponentId id: String, button: UIButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
@@ -255,39 +274,5 @@ extension UILabel {
                 self.textColor = Constants.UI.DarkMode.defaultFallbackTextColorForDarkMode
             }
         }
-    }
-}
-
-extension UIButton {
-    open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        super.didUpdateFocus(in: context, with: coordinator)
-#if os(tvOS)
-        var view : UIView?
-        if context.nextFocusedView === self {
-            view = UIView(frame: self.bounds)
-            view!.backgroundColor = self.backgroundColor
-            view!.layer.cornerRadius = 13
-            coordinator.addCoordinatedAnimations({
-                UIView.animate(withDuration: 0.15, animations: {
-                    view!.transform = CGAffineTransform(scaleX: 1.06, y: 1.06)
-                    self.insertSubview(view!, at: 0)
-                })
-            }, completion: nil)
-        } else if context.previouslyFocusedView === self {
-            view = self.subviews[0] // 100% previously inserted subview
-            if #available(tvOS 11.0, *) {
-                coordinator.addCoordinatedUnfocusingAnimations({ _ in
-                    UIView.animate(withDuration: 0.15, animations: {
-                        view!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    })
-                }, completion: {
-                    view?.removeFromSuperview()
-                })
-            } else {
-                view!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                view?.removeFromSuperview()
-            }
-        }
-#endif
     }
 }

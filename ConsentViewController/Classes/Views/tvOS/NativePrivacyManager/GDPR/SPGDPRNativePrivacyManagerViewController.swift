@@ -19,12 +19,12 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var ourPartners: UIButton!
-    @IBOutlet weak var managePreferenceButton: UIButton!
-    @IBOutlet weak var acceptButton: UIButton!
-    @IBOutlet weak var rejectButton: UIButton!
-    @IBOutlet weak var saveAndExitButton: UIButton!
-    @IBOutlet weak var privacyPolicyButton: UIButton!
+    @IBOutlet weak var ourPartners: SPAppleTVButton!
+    @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
+    @IBOutlet weak var acceptButton: SPAppleTVButton!
+    @IBOutlet weak var rejectButton: SPAppleTVButton!
+    @IBOutlet weak var saveAndExitButton: SPAppleTVButton!
+    @IBOutlet weak var privacyPolicyButton: SPAppleTVButton!
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var scroll: FocusableScrollView!
@@ -38,7 +38,7 @@ protocol SPNativePrivacyManagerHome {
     var snapshot: GDPRPMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
-    
+
     func setHeader () {
         header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
         header.spTitleText = viewData.byId("Header") as? SPNativeText
