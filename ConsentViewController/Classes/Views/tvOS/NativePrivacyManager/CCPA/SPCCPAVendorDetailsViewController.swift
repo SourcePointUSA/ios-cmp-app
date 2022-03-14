@@ -23,8 +23,8 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var headerView: SPPMHeader!
     @IBOutlet weak var qrCodeImageView: UIImageView!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var onButton: UIButton!
-    @IBOutlet weak var offButton: UIButton!
+    @IBOutlet weak var onButton: SPAppleTVButton!
+    @IBOutlet weak var offButton: SPAppleTVButton!
     @IBOutlet weak var vendorDetailsTableView: UITableView!
     @IBOutlet weak var actionsContainer: UIStackView!
 

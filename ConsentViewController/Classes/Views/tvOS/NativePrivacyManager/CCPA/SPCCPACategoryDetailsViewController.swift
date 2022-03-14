@@ -12,8 +12,8 @@ class SPCCPACategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var onButton: UIButton!
-    @IBOutlet weak var offButton: UIButton!
+    @IBOutlet weak var onButton: SPAppleTVButton!
+    @IBOutlet weak var offButton: SPAppleTVButton!
     @IBOutlet weak var actionsContainer: UIStackView!
     @IBOutlet weak var categoryDetailsTableView: UITableView!
 

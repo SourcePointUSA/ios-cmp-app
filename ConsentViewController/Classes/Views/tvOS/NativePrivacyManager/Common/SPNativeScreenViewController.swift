@@ -185,21 +185,6 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadButton(forComponentId id: String, button: UIButton) -> UIButton {
-        if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
-            button.isHidden = false
-            button.setTitle(action.settings.text, for: .normal)
-            button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
-            button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
-            button.titleLabel?.font = UIFont(from: action.settings.style?.font)
-        } else {
-            button.isHidden = true
-        }
-        return button
-    }
-
-    @discardableResult
     func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             label.text = ""

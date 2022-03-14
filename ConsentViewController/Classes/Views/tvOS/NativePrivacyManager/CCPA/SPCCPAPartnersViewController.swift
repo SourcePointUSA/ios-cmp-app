@@ -11,8 +11,8 @@ import Foundation
 class SPCCPAPartnersViewController: SPNativeScreenViewController {
     @IBOutlet weak var selectedVendorTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var acceptButton: UIButton!
-    @IBOutlet weak var saveAndExit: UIButton!
+    @IBOutlet weak var acceptButton: SPAppleTVButton!
+    @IBOutlet weak var saveAndExit: SPAppleTVButton!
     @IBOutlet weak var vendorsTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
