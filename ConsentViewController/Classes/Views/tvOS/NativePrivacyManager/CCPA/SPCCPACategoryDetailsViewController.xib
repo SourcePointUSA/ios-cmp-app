@@ -42,7 +42,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="k39-kg-wtW" userLabel="Stack View - 1st Column">
                                     <rect key="frame" x="0.0" y="0.0" width="880" height="844"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SP_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="vb7-1U-5xJ">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vb7-1U-5xJ">
                                             <rect key="frame" x="260" y="0.0" width="360" height="360"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="360" id="67Q-1H-Ga9"/>
@@ -120,7 +120,6 @@
         </view>
     </objects>
     <resources>
-        <image name="SP_Icon" width="265" height="259"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

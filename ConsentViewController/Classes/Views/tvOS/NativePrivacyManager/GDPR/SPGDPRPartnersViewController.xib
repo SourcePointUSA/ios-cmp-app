@@ -56,7 +56,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gcn-TZ-MaO" userLabel="Stack View - 1st Column">
                                     <rect key="frame" x="0.0" y="0.0" width="880" height="748"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SP_Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Nlg-W0-A4w">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nlg-W0-A4w">
                                             <rect key="frame" x="260" y="0.0" width="360" height="360"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="360" id="4TX-uZ-PPX"/>
@@ -133,7 +133,4 @@
             <point key="canvasLocation" x="223" y="-1"/>
         </view>
     </objects>
-    <resources>
-        <image name="SP_Icon" width="265" height="259"/>
-    </resources>
 </document>
