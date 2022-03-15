@@ -11,7 +11,7 @@ import Foundation
 @objcMembers class SPPrivacyPolicyViewController: SPNativeScreenViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var closeButton: SPAppleTVButton!
     @IBOutlet weak var header: SPPMHeader!
 
     func setHeader () {
