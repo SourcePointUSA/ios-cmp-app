@@ -178,7 +178,7 @@ class FocusGuideDebugView: UIView {
             button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
             button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
             button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
-            button.onUnfocusBackgroundColor = button.backgroundColor
+            button.onUnfocusBackgroundColor = button.backgroundColor ?? view.backgroundColor
             button.onFocusBackgroundColor = UIColor(hexString: action.settings.style?.onFocusBackgroundColor)
             button.titleLabel?.font = UIFont(from: action.settings.style?.font)
             button.layer.cornerRadius = 12
