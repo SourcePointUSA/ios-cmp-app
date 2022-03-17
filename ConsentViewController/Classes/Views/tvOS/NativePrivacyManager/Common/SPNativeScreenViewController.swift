@@ -213,7 +213,7 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, adjust: Bool = false) -> UITextView {
+    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, adjust: UITextView? = nil) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
@@ -228,12 +228,7 @@ class FocusGuideDebugView: UIView {
             textView.panGestureRecognizer.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ]
-            if adjust
-            {
-                textView.font = UIFont(from: textViewComponent.settings.style?.font, adjust: textView)
-            }else{
-                textView.font = UIFont(from: textViewComponent.settings.style?.font)
-            }
+            textView.font = UIFont(from: textViewComponent.settings.style?.font, adjust: adjust)
         }
         return textView
     }
