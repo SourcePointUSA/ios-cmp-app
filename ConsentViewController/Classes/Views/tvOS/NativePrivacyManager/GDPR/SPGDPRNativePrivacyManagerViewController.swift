@@ -53,8 +53,6 @@ protocol SPNativePrivacyManagerHome {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
-        categoriesExplainerLabel.setDefaultTextColorForDarkMode()
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
@@ -237,6 +235,21 @@ extension SPGDPRNativePrivacyManagerViewController: SPMessageUIDelegate {
 
 // MARK: UITableViewDataSource
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let categoriesExplainerLabel = UILabel()
+        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
+        categoriesExplainerLabel.setDefaultTextColorForDarkMode()
+        categoriesExplainerLabel.frame = CGRect(x: 5, y: 5, width: headerView.frame.width - 10, height: headerView.frame.height - 10)
+
+        headerView.addSubview(categoriesExplainerLabel)
+        return headerView
+    }
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categories.count
     }
