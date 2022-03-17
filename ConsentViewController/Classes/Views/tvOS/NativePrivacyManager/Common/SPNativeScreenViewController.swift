@@ -39,24 +39,14 @@ enum SPUIRectEdge {
 }
 
 extension UIFont {
-    convenience init?(from spFont: SPNativeFont?, adjust: UITextView? = nil) {
+    convenience init?(from spFont: SPNativeFont?) {
         let magicScalingFactor = CGFloat(1.8)
-        var fontSize = spFont?.fontSize != nil ? spFont!.fontSize * magicScalingFactor : UIFont.preferredFont(forTextStyle: .body).pointSize
+        let fontSize = spFont?.fontSize != nil ? spFont!.fontSize * magicScalingFactor : UIFont.preferredFont(forTextStyle: .body).pointSize
         let family = spFont?.fontFamily
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
             .first { UIFont.familyNames.map { $0.lowercased() }.contains($0) }
             ?? UIFont.systemFont(ofSize: fontSize).familyName
-        if let adjust = adjust {
-            if (adjust.contentSize.height > adjust.frame.size.height) {
-                var fontIncrement = 1.0;
-                while (adjust.contentSize.height > adjust.frame.size.height) {
-                    fontSize = CGFloat(fontSize - fontIncrement)
-                    adjust.font = UIFont(name: family, size: fontSize)
-                    fontIncrement+=1;
-                }
-            }
-        }
         self.init(name: family, size: fontSize)
     }
 }
@@ -213,7 +203,7 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, adjust: UITextView? = nil) -> UITextView {
+    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
@@ -228,7 +218,7 @@ class FocusGuideDebugView: UIView {
             textView.panGestureRecognizer.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ]
-            textView.font = UIFont(from: textViewComponent.settings.style?.font, adjust: adjust)
+            textView.font = UIFont(from: textViewComponent.settings.style?.font)
         }
         return textView
     }
