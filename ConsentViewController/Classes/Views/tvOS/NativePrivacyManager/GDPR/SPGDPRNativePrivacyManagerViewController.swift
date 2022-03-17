@@ -278,17 +278,6 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     }
 }
 
-class FocusableTextView: UITextView {
-    override var canBecomeFocused: Bool {
-        return true
-    }
-
-    open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        if isFocused {
-            self.backgroundColor = .lightGray.withAlphaComponent(0.5)
-            flashScrollIndicators()
-        } else {
-            self.backgroundColor = .clear
-        }
+        true
     }
 }
