@@ -48,11 +48,13 @@ extension UIFont {
             .first { UIFont.familyNames.map { $0.lowercased() }.contains($0) }
             ?? UIFont.systemFont(ofSize: fontSize).familyName
         if let adjust = adjust {
-            adjust.font = UIFont(name: family, size: fontSize)
-            while (adjust.contentSize.height > adjust.frame.size.height) {
-                print(adjust.contentSize.height.description + ">" + adjust.frame.size.height.description)
-                fontSize = CGFloat(fontSize - 0.5)
-                adjust.font = UIFont(name: family, size: fontSize)
+            if (adjust.contentSize.height > adjust.frame.size.height) {
+                var fontIncrement = 1.0;
+                while (adjust.contentSize.height > adjust.frame.size.height) {
+                    fontSize = CGFloat(fontSize - fontIncrement)
+                    adjust.font = UIFont(name: family, size: fontSize)
+                    fontIncrement+=1;
+                }
             }
         }
         self.init(name: family, size: fontSize)
