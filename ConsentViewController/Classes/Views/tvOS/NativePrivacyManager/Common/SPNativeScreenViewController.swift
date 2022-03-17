@@ -14,7 +14,11 @@ extension UIImageView {
             if let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
                     DispatchQueue.main.async {
+                        self?.alpha = 0
                         self?.image = image
+                        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
+                            self?.alpha = 1.0
+                        })
                     }
                 }
             }
@@ -165,15 +169,19 @@ class FocusGuideDebugView: UIView {
         return imageView
     }
 
+    @nonobjc
     @discardableResult
-    func loadButton(forComponentId id: String, button: UIButton) -> UIButton {
+    func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             button.isHidden = false
             button.setTitle(action.settings.text, for: .normal)
             button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
             button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
             button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
+            button.onUnfocusBackgroundColor = button.backgroundColor
+            button.onFocusBackgroundColor = UIColor(hexString: action.settings.style?.onFocusBackgroundColor)
             button.titleLabel?.font = UIFont(from: action.settings.style?.font)
+            button.layer.cornerRadius = 12
         } else {
             button.isHidden = true
         }

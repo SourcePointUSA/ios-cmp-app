@@ -175,7 +175,7 @@ class SourcePointClient: SourcePointProtocol {
                 handler(Result {
                     try result.decoded() as MessagesResponse
                 }.mapError({
-                    InvalidResponseWebMessageError(error: $0)
+                    InvalidResponseGetMessagesEndpointMessageError(error: $0)
                 }))
             }
         }
@@ -198,7 +198,7 @@ class SourcePointClient: SourcePointProtocol {
             handler(Result {
                 (try result.decoded() as MessageResponse).message
             }.mapError({
-                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+                InvalidResponseMessageGDPREndpointMessageError(error: $0)
             }))
         }
     }
@@ -219,7 +219,7 @@ class SourcePointClient: SourcePointProtocol {
             handler(Result {
                 (try result.decoded() as MessageResponse).message
             }.mapError({
-                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+                InvalidResponseMessageCCPAEndpointMessageError(error: $0)
             }))
         }
     }
@@ -233,7 +233,7 @@ class SourcePointClient: SourcePointProtocol {
             handler(Result {
                 try result.decoded() as GDPRPrivacyManagerViewResponse
             }.mapError({
-                InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+                InvalidResponseGDPRPrivacyManagerViewEndpointMessageError(error: $0)
             }))
         }
     }
@@ -247,7 +247,7 @@ class SourcePointClient: SourcePointProtocol {
                 handler(Result {
                     try result.decoded() as CCPAPrivacyManagerViewResponse
                 }.mapError({
-                    InvalidResponseWebMessageError(error: $0) // TODO: create custom error for this case
+                    InvalidResponseCCPAPrivacyManagerViewEndpointMessageError(error: $0)
                 }))
             }
     }

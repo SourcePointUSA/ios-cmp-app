@@ -23,8 +23,8 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var acceptButton: UIButton!
-    @IBOutlet weak var saveAndExit: UIButton!
+    @IBOutlet weak var acceptButton: SPAppleTVButton!
+    @IBOutlet weak var saveAndExit: SPAppleTVButton!
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var actionsContainer: UIStackView!
