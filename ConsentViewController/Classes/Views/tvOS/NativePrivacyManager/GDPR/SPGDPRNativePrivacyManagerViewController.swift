@@ -27,7 +27,6 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var privacyPolicyButton: UIButton!
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var scroll: FocusableScrollView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
@@ -55,11 +54,11 @@ protocol SPNativePrivacyManagerHome {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        scroll.setStyle()
         setHeader()
         loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
         categoriesExplainerLabel.setDefaultTextColorForDarkMode()
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
@@ -280,17 +279,17 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     }
 }
 
-class FocusableScrollView: UIScrollView {
+class FocusableTextView: UITextView {
     override var canBecomeFocused: Bool {
         return true
     }
 
-    func setStyle() {
-        self.indicatorStyle = .black
-        flashScrollIndicators()
-        if let descText = self.subviews.last as? UITextView {
-            descText.indicatorStyle = .black
-            descText.flashScrollIndicators()
+    open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        if isFocused {
+            self.backgroundColor = .lightGray.withAlphaComponent(0.5)
+            flashScrollIndicators()
+        } else {
+            self.backgroundColor = .clear
         }
     }
 }
