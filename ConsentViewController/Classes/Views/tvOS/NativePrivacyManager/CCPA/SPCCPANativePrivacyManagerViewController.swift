@@ -57,7 +57,7 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, adjust: true)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
