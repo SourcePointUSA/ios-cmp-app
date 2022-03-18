@@ -14,8 +14,10 @@ class SPFocusableTextView: UITextView {
         if isFocused {
             backgroundColor = .lightGray.withAlphaComponent(0.5)
             flashScrollIndicators()
+            isScrollEnabled = true
         } else {
             backgroundColor = .clear
+            isScrollEnabled = false
         }
     }
 }

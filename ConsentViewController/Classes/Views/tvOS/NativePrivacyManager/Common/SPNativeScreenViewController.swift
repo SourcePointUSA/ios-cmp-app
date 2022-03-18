@@ -211,7 +211,7 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil) -> UITextView {
+    func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, bounces: Bool = true) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
@@ -222,7 +222,7 @@ class FocusGuideDebugView: UIView {
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
             textView.showsVerticalScrollIndicator = true
-            textView.bounces = true
+            textView.bounces = bounces
             textView.panGestureRecognizer.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ]
