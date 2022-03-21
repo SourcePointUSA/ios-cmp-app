@@ -15,7 +15,9 @@ class SPFocusableTextView: UITextView, UITextViewDelegate {
         if isFocused {
             backgroundColor = .lightGray.withAlphaComponent(0.5)
             flashScrollIndicators()
-            canFocusCategoryTableView = false
+            if (self.contentSize.height > self.frame.size.height) {
+                canFocusCategoryTableView = false
+            }
         } else {
             backgroundColor = .clear
         }
@@ -27,7 +29,16 @@ class SPFocusableTextView: UITextView, UITextViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if contentOffset == .zero {
+        checkIfCategoryTableViewFocusable()
+    }
+
+    func scrollViewWillEndDragging(_: UIScrollView, withVelocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        checkIfCategoryTableViewFocusable()
+    }
+
+    func checkIfCategoryTableViewFocusable()
+    {
+        if contentOffset == .zero || contentOffset.y <= 0 {
             canFocusCategoryTableView = true
         }
     }
