@@ -269,6 +269,6 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        true
+        descriptionTextView.canFocusCategoryTableView
     }
 }

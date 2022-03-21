@@ -7,17 +7,28 @@
 
 import UIKit
 
-class SPFocusableTextView: UITextView {
+class SPFocusableTextView: UITextView, UITextViewDelegate {
     override var canBecomeFocused: Bool { true }
+    public var canFocusCategoryTableView: Bool = true
 
     open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         if isFocused {
             backgroundColor = .lightGray.withAlphaComponent(0.5)
             flashScrollIndicators()
-            isScrollEnabled = true
+            canFocusCategoryTableView = false
         } else {
             backgroundColor = .clear
-            isScrollEnabled = false
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.delegate = self
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if contentOffset == .zero {
+            canFocusCategoryTableView = true
         }
     }
 }
