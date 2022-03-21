@@ -8,14 +8,15 @@
 import UIKit
 
 class SPFocusableTextView: UITextView, UITextViewDelegate {
-    override var canBecomeFocused: Bool { true }
+    override var canBecomeFocused: Bool { isContentBig }
+    var isContentBig: Bool { self.contentSize.height > self.frame.size.height }
     public var canFocusCategoryTableView: Bool = true
 
     open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         if isFocused {
             backgroundColor = .lightGray.withAlphaComponent(0.5)
             flashScrollIndicators()
-            if (self.contentSize.height > self.frame.size.height) {
+            if isContentBig {
                 canFocusCategoryTableView = false
             }
         } else {
