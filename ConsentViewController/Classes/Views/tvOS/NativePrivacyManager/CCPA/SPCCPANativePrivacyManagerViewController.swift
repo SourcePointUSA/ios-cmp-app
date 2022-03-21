@@ -58,6 +58,7 @@ import Foundation
         super.viewDidLoad()
         setHeader()
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
