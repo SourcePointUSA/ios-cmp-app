@@ -10,14 +10,14 @@ import UIKit
 class SPFocusableTextView: UITextView, UITextViewDelegate {
     override var canBecomeFocused: Bool { isContentBig }
     var isContentBig: Bool { self.contentSize.height > self.frame.size.height }
-    public var canFocusCategoryTableView: Bool = true
+    public var contentFitsContainer: Bool = true
 
     open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         if isFocused {
             backgroundColor = .lightGray.withAlphaComponent(0.5)
             flashScrollIndicators()
             if isContentBig {
-                canFocusCategoryTableView = false
+                contentFitsContainer = false
             }
         } else {
             backgroundColor = .clear
@@ -30,17 +30,17 @@ class SPFocusableTextView: UITextView, UITextViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        checkIfCategoryTableViewFocusable()
+        updateContentFitsContainer()
     }
 
     func scrollViewWillEndDragging(_: UIScrollView, withVelocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        checkIfCategoryTableViewFocusable()
+        updateContentFitsContainer()
     }
 
-    func checkIfCategoryTableViewFocusable()
+    func updateContentFitsContainer()
     {
         if contentOffset == .zero || contentOffset.y <= 0 {
-            canFocusCategoryTableView = true
+            contentFitsContainer = true
         }
     }
 }
