@@ -24,7 +24,7 @@ extension UIButton {
         if let spButton = spButton {
             isHidden = false
             setTitle(spButton.settings.text, for: .normal)
-            setTitleColor(UIColor(hexString: spButton.settings.style?.onUnfocusTextColor), for: .normal)
+            setTitleColor(UIColor(hexString: spButton.settings.style?.onUnfocusTextColor) ?? Constants.UI.DarkMode.defaultFallbackTextColorForDarkMode, for: .normal)
             setTitleColor(UIColor(hexString: spButton.settings.style?.onFocusTextColor), for: .focused)
             backgroundColor = UIColor(hexString: spButton.settings.style?.onUnfocusBackgroundColor)
             titleLabel?.font = UIFont(from: spButton.settings.style?.font)
