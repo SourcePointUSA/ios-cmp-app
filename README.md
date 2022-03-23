@@ -8,7 +8,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.5.0'
+pod 'ConsentViewController', '6.5.1'
 ```
 
 ### Carthage
@@ -104,7 +104,6 @@ extension ViewController: SPDelegate {
 
 ### Objective-C
 ```obj-c
-
 #import "ViewController.h"
 @import ConsentViewController;
 
@@ -118,23 +117,23 @@ extension ViewController: SPDelegate {
     - (void)viewDidLoad {
         [super viewDidLoad];
 
-SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
+        SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
-SPCampaign *campaign = [[SPCampaign alloc] initWithTargetingParams: [NSDictionary dictionary]];
+        SPCampaign *campaign = [[SPCampaign alloc] initWithTargetingParams: [NSDictionary dictionary]];
 
-SPCampaigns *campaigns = [[SPCampaigns alloc]
-    initWithGdpr: campaign
-    ccpa: campaign
-    ios14: campaign];
+        SPCampaigns *campaigns = [[SPCampaigns alloc]
+            initWithGdpr: campaign
+            ccpa: campaign
+            ios14: campaign];
 
-consentManager = [[SPConsentManager alloc]
-    initWithAccountId:22
-    propertyName: propertyName
-    campaignsEnv: SPCampaignEnvPublic
-    campaigns: campaigns
-    delegate: self];
+        consentManager = [[SPConsentManager alloc]
+            initWithAccountId:22
+            propertyName: propertyName
+            campaignsEnv: SPCampaignEnvPublic
+            campaigns: campaigns
+            delegate: self];
 
-[consentManager loadMessageForAuthId: NULL];
+        [consentManager loadMessageForAuthId: NULL];
     }
 
     - (void)onSPUIReady:(SPMessageViewController * _Nonnull)controller {
@@ -372,7 +371,7 @@ SPConsentManager.clearAllData()
 
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
-The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
+The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `500 Kb`.
 ### 2. What's the lowest iOS version supported?
 iOS 10 onwards.
 ### 3. What if IDFA is not supported (iOS < 14)
