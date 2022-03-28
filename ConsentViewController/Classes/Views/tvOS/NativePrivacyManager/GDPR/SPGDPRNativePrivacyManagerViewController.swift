@@ -17,7 +17,6 @@ protocol SPNativePrivacyManagerHome {
 
     @IBOutlet weak var categoriesExplainerLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: SPAppleTVButton!
     @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
@@ -73,11 +72,11 @@ protocol SPNativePrivacyManagerHome {
         categoryTableView.dataSource = self
         disableMenuButton()
     }
-    
+
     override func setFocusGuides() {
         addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
     }
-    
+
     func disableMenuButton() {
         let menuPressRecognizer = UITapGestureRecognizer()
         menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
@@ -259,22 +258,10 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        loadLabelText(
-            forComponentId: "CategoriesDescriptionText",
-            labelText: categories[indexPath.row].description,
-            label: selectedCategoryTextLabel
-        )
         return true
     }
 
     func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
-        if context.nextFocusedIndexPath == nil {
-            loadLabelText(
-                forComponentId: "CategoriesDescriptionText",
-                labelText: "",
-                label: selectedCategoryTextLabel
-            )
-        }
         return true
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="19529" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="20037" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -24,7 +24,6 @@
                 <outlet property="rejectButton" destination="ch4-4u-BD5" id="3ab-N1-oPC"/>
                 <outlet property="saveAndExitButton" destination="yPC-Wv-MDC" id="dZJ-dH-NhN"/>
                 <outlet property="scroll" destination="GW6-tv-z1g" id="GCW-li-l1b"/>
-                <outlet property="selectedCategoryTextLabel" destination="xze-gk-XHF" id="bpw-Bw-lFO"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
         </placeholder>
@@ -56,16 +55,6 @@
                                                 <constraint firstAttribute="height" constant="360" id="mff-dr-ljH"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="xze-gk-XHF" userLabel="SelectedCategoryLabel">
-                                            <rect key="frame" x="165" y="360" width="550" height="80"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="5KX-6E-tcX"/>
-                                                <constraint firstAttribute="width" constant="550" id="TUV-zS-qAX"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="Stack View - Actions">
                                             <rect key="frame" x="190" y="440" width="500" height="412"/>
                                             <subviews>
