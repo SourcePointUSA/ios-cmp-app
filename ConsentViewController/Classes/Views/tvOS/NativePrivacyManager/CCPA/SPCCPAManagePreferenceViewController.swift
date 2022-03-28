@@ -45,6 +45,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     override func setFocusGuides() {
         addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
         addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
+        categoriesTableView.remembersLastFocusedIndexPath = true
     }
 
     func setHeader() {

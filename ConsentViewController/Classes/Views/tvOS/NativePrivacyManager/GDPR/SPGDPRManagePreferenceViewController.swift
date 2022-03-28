@@ -52,6 +52,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
         addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
         addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
+        categoriesTableView.remembersLastFocusedIndexPath = true
     }
 
     func setHeader() {
