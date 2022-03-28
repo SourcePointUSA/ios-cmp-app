@@ -70,7 +70,7 @@ protocol SPNativePrivacyManagerHome {
         categoryTableView.dataSource = self
         disableMenuButton()
     }
-    
+
     override func setFocusGuides() {
         addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
     }
@@ -81,7 +81,7 @@ protocol SPNativePrivacyManagerHome {
             addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
         }
     }
-    
+
     func disableMenuButton() {
         let menuPressRecognizer = UITapGestureRecognizer()
         menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
@@ -279,6 +279,10 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        descriptionTextView.contentFitsContainer
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
+        return true
     }
 }
