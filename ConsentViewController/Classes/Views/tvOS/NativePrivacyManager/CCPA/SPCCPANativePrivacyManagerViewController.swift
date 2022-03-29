@@ -11,7 +11,7 @@ import Foundation
 @objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
 
-    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descriptionTextView: SPFocusableTextView!
     @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: SPAppleTVButton!
@@ -57,7 +57,8 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
@@ -272,7 +273,7 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPCCPANativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        true
+        descriptionTextView.contentFitsContainer
     }
 
     func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {

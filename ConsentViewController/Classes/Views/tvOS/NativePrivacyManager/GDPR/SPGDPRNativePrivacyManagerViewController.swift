@@ -15,9 +15,7 @@ protocol SPNativePrivacyManagerHome {
 @objcMembers class SPGDPRNativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
 
-    @IBOutlet weak var categoriesExplainerLabel: UILabel!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var selectedCategoryTextLabel: UILabel!
+    @IBOutlet weak var descriptionTextView: SPFocusableTextView!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: SPAppleTVButton!
     @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
@@ -27,7 +25,6 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var privacyPolicyButton: SPAppleTVButton!
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var scroll: FocusableScrollView!
     @IBOutlet weak var buttonsStack: UIStackView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
@@ -56,11 +53,9 @@ protocol SPNativePrivacyManagerHome {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        scroll.setStyle()
         setHeader()
-        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
-        categoriesExplainerLabel.setDefaultTextColorForDarkMode()
-        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
@@ -249,6 +244,21 @@ extension SPGDPRNativePrivacyManagerViewController: SPMessageUIDelegate {
 
 // MARK: UITableViewDataSource
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let categoriesExplainerLabel = UILabel()
+        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
+        categoriesExplainerLabel.setDefaultTextColorForDarkMode()
+        categoriesExplainerLabel.frame = CGRect(x: 5, y: 5, width: headerView.frame.width - 10, height: headerView.frame.height - 10)
+
+        headerView.addSubview(categoriesExplainerLabel)
+        return headerView
+    }
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categories.count
     }
@@ -269,37 +279,6 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        loadLabelText(
-            forComponentId: "CategoriesDescriptionText",
-            labelText: categories[indexPath.row].description,
-            label: selectedCategoryTextLabel
-        )
-        return true
-    }
-
-    func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
-        if context.nextFocusedIndexPath == nil {
-            loadLabelText(
-                forComponentId: "CategoriesDescriptionText",
-                labelText: "",
-                label: selectedCategoryTextLabel
-            )
-        }
-        return true
-    }
-}
-
-class FocusableScrollView: UIScrollView {
-    override var canBecomeFocused: Bool {
-        return true
-    }
-
-    func setStyle() {
-        self.indicatorStyle = .black
-        flashScrollIndicators()
-        if let descText = self.subviews.last as? UITextView {
-            descText.indicatorStyle = .black
-            descText.flashScrollIndicators()
-        }
+        descriptionTextView.contentFitsContainer
     }
 }
