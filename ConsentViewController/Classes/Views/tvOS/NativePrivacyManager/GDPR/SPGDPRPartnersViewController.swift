@@ -40,6 +40,7 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
         addFocusGuide(from: vendorsSlider, to: vendorsTableView, direction: .bottomTop)
         addFocusGuide(from: vendorsSlider, to: header.backButton, direction: .left)
         addFocusGuide(from: actionsContainer, to: vendorsTableView, direction: .rightLeft)
+        vendorsTableView.remembersLastFocusedIndexPath = true
     }
 
     func setHeader () {

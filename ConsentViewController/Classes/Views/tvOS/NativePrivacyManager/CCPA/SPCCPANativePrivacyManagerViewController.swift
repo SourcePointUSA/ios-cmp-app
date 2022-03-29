@@ -77,6 +77,7 @@ import Foundation
         snapshot?.onConsentsChange = { [weak self] in
             self?.doNotSellTableView.reloadData()
         }
+        setFocusGuidesForButtons()
         disableMenuButton()
     }
 
@@ -89,6 +90,13 @@ import Foundation
 
     func menuButtonAction() {
         // override in order to disable menu button closing the Privacy Manager
+    }
+
+    func setFocusGuidesForButtons(){
+        let visibleButtons: [UIView] = actionsContainer.arrangedSubviews.filter({!$0.isHidden})
+        for i in 0...visibleButtons.count-2 {
+            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
+        }
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -248,6 +256,7 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             let fallBackCell = UITableViewCell()
             fallBackCell.textLabel?.text = (viewData.byId("DoNotSellButton") as? SPNativeLongButton)?.settings.text
+            addFocusGuide(from: acceptButton, to: fallBackCell, direction: .rightLeft)
             return fallBackCell
         }
 
