@@ -28,6 +28,7 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
     @IBOutlet weak var scroll: FocusableScrollView!
+    @IBOutlet weak var buttonsStack: UIStackView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
@@ -67,6 +68,7 @@ protocol SPNativePrivacyManagerHome {
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        setFocusGuidesForButtons()
         categoryTableView.allowsSelection = false
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self
@@ -76,6 +78,13 @@ protocol SPNativePrivacyManagerHome {
     
     override func setFocusGuides() {
         addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
+    }
+
+    func setFocusGuidesForButtons(){
+        let visibleButtons: [UIView] = buttonsStack.arrangedSubviews.filter({!$0.isHidden})
+        for i in 0...visibleButtons.count-2 {
+            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
+        }
     }
     
     func disableMenuButton() {
@@ -252,6 +261,7 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         cell.textLabel?.text = categories[indexPath.row].name
         cell.textLabel?.setDefaultTextColorForDarkMode()
+        addFocusGuide(from: acceptButton, to: cell, direction: .rightLeft)
         return cell
     }
 }
