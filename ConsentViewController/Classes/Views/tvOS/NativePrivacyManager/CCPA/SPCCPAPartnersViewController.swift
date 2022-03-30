@@ -30,6 +30,7 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
     override func setFocusGuides() {
         addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
         addFocusGuide(from: actionsContainer, to: vendorsTableView, direction: .rightLeft)
+        vendorsTableView.remembersLastFocusedIndexPath = true
     }
 
     func setHeader () {

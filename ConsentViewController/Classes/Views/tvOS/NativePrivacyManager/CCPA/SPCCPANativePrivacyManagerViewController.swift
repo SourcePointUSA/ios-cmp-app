@@ -11,7 +11,7 @@ import Foundation
 @objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
 
-    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descriptionTextView: SPFocusableTextView!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: SPAppleTVButton!
     @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
@@ -56,7 +56,8 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
@@ -75,6 +76,7 @@ import Foundation
         snapshot?.onConsentsChange = { [weak self] in
             self?.doNotSellTableView.reloadData()
         }
+        setFocusGuidesForButtons()
         disableMenuButton()
     }
 
@@ -87,6 +89,13 @@ import Foundation
 
     func menuButtonAction() {
         // override in order to disable menu button closing the Privacy Manager
+    }
+
+    func setFocusGuidesForButtons(){
+        let visibleButtons: [UIView] = actionsContainer.arrangedSubviews.filter({!$0.isHidden})
+        for i in 0...visibleButtons.count-2 {
+            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
+        }
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -246,6 +255,7 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             let fallBackCell = UITableViewCell()
             fallBackCell.textLabel?.text = (viewData.byId("DoNotSellButton") as? SPNativeLongButton)?.settings.text
+            addFocusGuide(from: acceptButton, to: fallBackCell, direction: .rightLeft)
             return fallBackCell
         }
 
@@ -262,7 +272,7 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPCCPANativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        true
+        descriptionTextView.contentFitsContainer
     }
 
     func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {

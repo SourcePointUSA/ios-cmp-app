@@ -16,7 +16,7 @@ protocol SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
 
     @IBOutlet weak var categoriesExplainerLabel: UILabel!
-    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descriptionTextView: SPFocusableTextView!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: SPAppleTVButton!
     @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
@@ -26,7 +26,7 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet weak var privacyPolicyButton: SPAppleTVButton!
     @IBOutlet weak var categoryTableView: UITableView!
     @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var scroll: FocusableScrollView!
+    @IBOutlet weak var buttonsStack: UIStackView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
@@ -54,11 +54,9 @@ protocol SPNativePrivacyManagerHome {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        scroll.setStyle()
         setHeader()
-        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
-        categoriesExplainerLabel.setDefaultTextColorForDarkMode()
-        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView)
+        loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "RejectAllButton", button: rejectButton)
         loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
@@ -66,6 +64,7 @@ protocol SPNativePrivacyManagerHome {
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        setFocusGuidesForButtons()
         categoryTableView.allowsSelection = false
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self
@@ -75,6 +74,13 @@ protocol SPNativePrivacyManagerHome {
 
     override func setFocusGuides() {
         addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
+    }
+
+    func setFocusGuidesForButtons(){
+        let visibleButtons: [UIView] = buttonsStack.arrangedSubviews.filter({!$0.isHidden})
+        for i in 0...visibleButtons.count-2 {
+            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
+        }
     }
 
     func disableMenuButton() {
@@ -239,6 +245,21 @@ extension SPGDPRNativePrivacyManagerViewController: SPMessageUIDelegate {
 
 // MARK: UITableViewDataSource
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let categoriesExplainerLabel = UILabel()
+        loadLabelView(forComponentId: "CategoriesHeader", label: categoriesExplainerLabel)
+        categoriesExplainerLabel.setDefaultTextColorForDarkMode()
+        categoriesExplainerLabel.frame = CGRect(x: 5, y: 5, width: headerView.frame.width - 10, height: headerView.frame.height - 10)
+
+        headerView.addSubview(categoriesExplainerLabel)
+        return headerView
+    }
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categories.count
     }
@@ -251,6 +272,7 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         cell.textLabel?.text = categories[indexPath.row].name
         cell.textLabel?.setDefaultTextColorForDarkMode()
+        addFocusGuide(from: acceptButton, to: cell, direction: .rightLeft)
         return cell
     }
 }
@@ -269,14 +291,5 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
 class FocusableScrollView: UIScrollView {
     override var canBecomeFocused: Bool {
         return true
-    }
-
-    func setStyle() {
-        self.indicatorStyle = .black
-        flashScrollIndicators()
-        if let descText = self.subviews.last as? UITextView {
-            descText.indicatorStyle = .black
-            descText.flashScrollIndicators()
-        }
     }
 }
