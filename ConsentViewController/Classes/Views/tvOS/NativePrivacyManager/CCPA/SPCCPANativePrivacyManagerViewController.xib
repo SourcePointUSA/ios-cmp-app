@@ -23,7 +23,6 @@
                 <outlet property="privacyPolicyButton" destination="p3s-4F-WQC" id="VCB-gR-wFn"/>
                 <outlet property="rejectButton" destination="wWr-aU-k6X" id="Rq1-H2-8La"/>
                 <outlet property="saveAndExitButton" destination="LoA-bE-aCY" id="0JD-P1-pRx"/>
-                <outlet property="selectedCategoryTextLabel" destination="xze-gk-XHF" id="bpw-Bw-lFO"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
         </placeholder>
@@ -55,16 +54,6 @@
                                                 <constraint firstAttribute="height" constant="360" id="mff-dr-ljH"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="xze-gk-XHF" userLabel="SelectedCategoryLabel">
-                                            <rect key="frame" x="165" y="360" width="550" height="80"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="5KX-6E-tcX"/>
-                                                <constraint firstAttribute="width" constant="550" id="TUV-zS-qAX"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="ActionsContainer">
                                             <rect key="frame" x="190" y="440" width="500" height="412"/>
                                             <subviews>

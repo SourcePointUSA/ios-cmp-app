@@ -12,7 +12,6 @@ import Foundation
     weak var delegate: SPNativePMDelegate?
 
     @IBOutlet weak var descriptionTextView: SPFocusableTextView!
-    @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var ourPartners: SPAppleTVButton!
     @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
