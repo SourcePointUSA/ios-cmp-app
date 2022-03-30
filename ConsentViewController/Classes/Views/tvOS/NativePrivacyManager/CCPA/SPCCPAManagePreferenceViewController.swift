@@ -21,7 +21,6 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var selectedCategoryTextLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var acceptButton: SPAppleTVButton!
     @IBOutlet weak var saveAndExit: SPAppleTVButton!
@@ -140,12 +139,6 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        let category = currentCategory(indexPath)
-        loadLabelText(
-            forComponentId: "CategoriesHeader",
-            labelText: category.description,
-            label: selectedCategoryTextLabel
-        )
         return true
     }
 
