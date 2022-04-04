@@ -165,6 +165,18 @@ import UIKit
         }
     }
 
+    func saveChildPmId (campaigns: [Campaign]) {
+        for campaign in campaigns {
+            switch campaign.userConsent {
+            case .ccpa(let consents):
+                SPUserDefaults(storage: UserDefaults.standard).setChildPmId(newValue: consents.childPmId, type: .ccpa)
+            case .gdpr(let consents):
+                SPUserDefaults(storage: UserDefaults.standard).setChildPmId(newValue: consents.childPmId, type: .gdpr)
+            default: break
+            }
+        }
+    }
+
     func report(action: SPAction) {
         responsesToReceive += 1
         switch action.campaignType {
@@ -281,6 +293,7 @@ import UIKit
                     userData: SPUserData(from: messagesResponse),
                     propertyId: messagesResponse.propertyId
                 )
+                self?.saveChildPmId(campaigns: messagesResponse.campaigns)
                 self?.messageControllersStack = messagesResponse.campaigns
                     .filter { $0.message != nil }
                     .filter {
@@ -416,6 +429,14 @@ import UIKit
                 self?.onError(error)
             }
         }
+    }
+
+    public func loadCCPAPrivacyManagerChildPM(tab: SPPrivacyManagerTab = .Default) {
+        loadCCPAPrivacyManagerChildPM(tab: tab)
+    }
+
+    public func loadGDPRPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
+        loadGDPRPrivacyManagerChildPM(withFallbackId: id, tab: tab)
     }
 }
 

@@ -8,6 +8,7 @@
 import Foundation
 
 struct CampaignRequest: Encodable, Equatable {
+    let groupPmId: String?
     let targetingParams: SPTargetingParams
 }
 
@@ -17,6 +18,7 @@ struct CampaignsRequest: Equatable, Encodable {
     static func spCampaignToRequest(_ campaign: SPCampaign?) -> CampaignRequest? {
         guard let campaign = campaign else { return nil }
         return CampaignRequest(
+            groupPmId: campaign.groupPmId,
             targetingParams: campaign.targetingParams
         )
     }
