@@ -22,7 +22,8 @@
     SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
     SPCampaign *campaign = [[SPCampaign alloc]
-                            initWithTargetingParams: [NSDictionary dictionary]];
+                            initWithTargetingParams: [NSDictionary dictionary]
+                            groupPmId: nil];
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign

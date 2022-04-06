@@ -16,13 +16,6 @@ public typealias SPTargetingParams = [String: String]
     let groupPmId: String?
 
     public init(
-        targetingParams: SPTargetingParams = [:]
-    ) {
-        self.targetingParams = targetingParams
-        self.groupPmId = nil
-    }
-
-    public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil
     ) {
