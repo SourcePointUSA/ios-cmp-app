@@ -1,3 +1,6 @@
+# 6.5.1 (Apr, 07, 2022)
+We have received a lot of valuable feedback from you and we listened. This release is all about fixing and improving our TvOS UI and layout.
+
 # 6.5.0 (Feb, 21, 2022)
 * Added `pubData` to `loadMessage` method. #362
 * Implemented type alias for publisher data `SPPublisherData = [String: String]`
