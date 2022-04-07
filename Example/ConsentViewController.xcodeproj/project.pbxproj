@@ -71,7 +71,6 @@
 		6D56EB7F24C8850C009F33D9 /* NativeMessageExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB7E24C8850C009F33D9 /* NativeMessageExampleUITests.swift */; };
 		6D56EB8824C88603009F33D9 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB8724C88603009F33D9 /* CustomMatchers.swift */; };
 		6D56EB8A24C88665009F33D9 /* NativeExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56EB8924C88665009F33D9 /* NativeExampleApp.swift */; };
-		6D578996268DBB3D00B7909E /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6D578995268DBB3D00B7909E /* ConsentViewController */; };
 		6D5FB7E92701B92B008F479B /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5FB7E82701B92B008F479B /* CustomMatchers.swift */; };
 		6D5FB7EB2702395D008F479B /* NativePMApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5FB7EA2702395D008F479B /* NativePMApp.swift */; };
 		6D5FB7EF27023C93008F479B /* NativePMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5FB7EE27023C93008F479B /* NativePMUITests.swift */; };
@@ -4071,7 +4070,7 @@
 			repositoryURL = "http://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "6.4.1-beta.0";
+				minimumVersion = "6.5.1-pre.1";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
