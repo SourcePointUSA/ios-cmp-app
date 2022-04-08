@@ -13,11 +13,14 @@ public typealias SPTargetingParams = [String: String]
 /// Contains information about the property/campaign.
 @objcMembers public class SPCampaign: NSObject {
     let targetingParams: SPTargetingParams
+    let groupPmId: String?
 
     public init(
-        targetingParams: SPTargetingParams = [:]
+        targetingParams: SPTargetingParams = [:],
+        groupPmId: String? = nil
     ) {
         self.targetingParams = targetingParams
+        self.groupPmId = groupPmId
     }
 }
 

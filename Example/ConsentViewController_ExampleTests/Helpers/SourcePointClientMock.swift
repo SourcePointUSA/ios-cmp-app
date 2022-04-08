@@ -40,7 +40,9 @@ class SourcePointClientMock: SourcePointProtocol {
         campaigns: SPCampaigns,
         authId: String?,
         localState: SPJson,
+        pubData: SPPublisherData,
         idfaStaus: SPIDFAStatus,
+        consentLanguage: SPMessageLanguage,
         handler: @escaping MessagesHandler
     ) {
         getMessageCalled = true

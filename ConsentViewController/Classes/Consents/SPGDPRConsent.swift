@@ -54,7 +54,8 @@ public typealias SPGDPRPurposeId = String
     public static func empty() -> SPGDPRConsent { SPGDPRConsent(
         vendorGrants: SPGDPRVendorGrants(),
         euconsent: "",
-        tcfData: SPJson()
+        tcfData: SPJson(),
+        childPmId: nil
     )}
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
@@ -85,6 +86,9 @@ public typealias SPGDPRPurposeId = String
     /// That's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
 
+    /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
+    public let childPmId: String?
+
     /// A list of ids of the categories accepted by the user in all its vendors.
     /// If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.
     public var acceptedCategories: [String] {
@@ -102,12 +106,14 @@ public typealias SPGDPRPurposeId = String
         uuid: String? = nil,
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
-        tcfData: SPJson
+        tcfData: SPJson,
+        childPmId: String? = nil
     ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
         self.euconsent = euconsent
         self.tcfData = tcfData
+        self.childPmId = childPmId
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
@@ -134,5 +140,6 @@ public typealias SPGDPRPurposeId = String
         case euconsent
         case tcfData = "TCData"
         case vendorGrants = "grants"
+        case childPmId
     }
 }
