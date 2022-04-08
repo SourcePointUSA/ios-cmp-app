@@ -33,13 +33,13 @@ class NativePMUITests: QuickSpec {
         }
 
         it("Accept all through CCPA & GDPR Privacy Manager") {
-            self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
-            expect(self.app.acceptButton).to(showUp())
-            self.app.pressDoNotSellButton()
-            self.app.findAndPress(element: self.app.acceptButton)
             self.app.findAndPress(element: self.app.gdprPrivacyManagerButton)
             expect(self.app.acceptButton).to(showUp())
             self.app.pressStoreAndAccessInformation()
+            self.app.findAndPress(element: self.app.acceptButton)
+            self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
+            expect(self.app.acceptButton).to(showUp())
+            self.app.pressDoNotSellButton()
             self.app.findAndPress(element: self.app.acceptButton)
         }
 
@@ -79,13 +79,6 @@ class NativePMUITests: QuickSpec {
         }
 
         it("Manage Preferences through CCPA & GDPR Privacy Manager with few purposes ON") {
-            self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
-            self.app.expectedMessageShowUP(element: self.app.acceptButton)
-            self.app.findAndPress(element: self.app.managePreferencesButton)
-            expect(self.app.homeButton).to(showUp())
-            self.app.pressCategory(element: self.app.category)
-            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.category2)
-            self.app.pressSaveAndExitInCategory()
             self.app.findAndPress(element: self.app.gdprPrivacyManagerButton)
             self.app.expectedMessageShowUP(element: self.app.acceptButton)
             self.app.findAndPress(element: self.app.managePreferencesButton)
@@ -93,16 +86,16 @@ class NativePMUITests: QuickSpec {
             self.app.pressCategory(element: self.app.storeAndAccessInformation)
             self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.storeAndAccessInformation)
             self.app.pressSaveAndExitInCategory()
-        }
-
-        it("Manage Preferences through CCPA & GDPR Privacy Manager with few purposes OFF") {
             self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
             self.app.expectedMessageShowUP(element: self.app.acceptButton)
             self.app.findAndPress(element: self.app.managePreferencesButton)
             expect(self.app.homeButton).to(showUp())
             self.app.pressCategory(element: self.app.category)
-            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.category2)
+            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.category2)
             self.app.pressSaveAndExitInCategory()
+        }
+
+        it("Manage Preferences through CCPA & GDPR Privacy Manager with few purposes OFF") {
             self.app.findAndPress(element: self.app.gdprPrivacyManagerButton)
             self.app.expectedMessageShowUP(element: self.app.acceptButton)
             self.app.findAndPress(element: self.app.managePreferencesButton)
@@ -110,16 +103,16 @@ class NativePMUITests: QuickSpec {
             self.app.pressCategory(element: self.app.storeAndAccessInformation)
             self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.storeAndAccessInformation)
             self.app.pressSaveAndExitInCategory()
+            self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
+            self.app.expectedMessageShowUP(element: self.app.acceptButton)
+            self.app.findAndPress(element: self.app.managePreferencesButton)
+            expect(self.app.homeButton).to(showUp())
+            self.app.pressCategory(element: self.app.category)
+            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.category2)
+            self.app.pressSaveAndExitInCategory()
         }
 
         it("Our Partners through CCPA & GDPR Privacy Manager with few purposes On") {
-            self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
-            self.app.expectedMessageShowUP(element: self.app.acceptButton)
-            self.app.findAndPress(element: self.app.ourPartnersButton)
-            expect(self.app.homeButton).to(showUp())
-            self.app.pressCategory(element: self.app.freewheel)
-            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.seedtag)
-            self.app.pressSaveAndExitInCategory()
             self.app.findAndPress(element: self.app.gdprPrivacyManagerButton)
             self.app.expectedMessageShowUP(element: self.app.acceptButton)
             self.app.findAndPress(element: self.app.ourPartnersButton)
@@ -127,22 +120,29 @@ class NativePMUITests: QuickSpec {
             self.app.pressCategory(element: self.app.loopMe)
             self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.googleCharts)
             self.app.pressSaveAndExitInCategory()
-        }
-
-        it("Our Partners through CCPA & GDPR Privacy Manager with few purposes OFF") {
             self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
             self.app.expectedMessageShowUP(element: self.app.acceptButton)
             self.app.findAndPress(element: self.app.ourPartnersButton)
             expect(self.app.homeButton).to(showUp())
             self.app.pressCategory(element: self.app.freewheel)
-            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.seedtag)
+            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.seedtag)
             self.app.pressSaveAndExitInCategory()
+        }
+
+        it("Our Partners through CCPA & GDPR Privacy Manager with few purposes OFF") {
             self.app.findAndPress(element: self.app.gdprPrivacyManagerButton)
             self.app.expectedMessageShowUP(element: self.app.acceptButton)
             self.app.findAndPress(element: self.app.ourPartnersButton)
             expect(self.app.homeButton).to(showUp())
             self.app.pressCategory(element: self.app.loopMe)
             self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.googleCharts)
+            self.app.pressSaveAndExitInCategory()
+            self.app.findAndPress(element: self.app.ccpaPrivacyManagerButton)
+            self.app.expectedMessageShowUP(element: self.app.acceptButton)
+            self.app.findAndPress(element: self.app.ourPartnersButton)
+            expect(self.app.homeButton).to(showUp())
+            self.app.pressCategory(element: self.app.freewheel)
+            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.seedtag)
             self.app.pressSaveAndExitInCategory()
         }
 
