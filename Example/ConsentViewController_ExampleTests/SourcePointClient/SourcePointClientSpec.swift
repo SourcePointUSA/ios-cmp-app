@@ -31,7 +31,7 @@ class SourcePointClientSpec: QuickSpec {
         try! JSONEncoder().encode(
             MessageRequest(
                 authId: "auth id",
-                requestUUID: UUID(),
+                requestUUID: client.requestUUID,
                 propertyHref: propertyName,
                 accountId: accountId,
                 campaignEnv: .Public,
@@ -42,8 +42,8 @@ class SourcePointClientSpec: QuickSpec {
                     gdpr: CampaignRequest(
                         groupPmId: nil, targetingParams: targetingParams
                     ),
-                    ccpa: CampaignRequest(groupPmId: nil, targetingParams: [:]),
-                    ios14: CampaignRequest(groupPmId: nil, targetingParams: [:])
+                    ccpa: nil, // CampaignRequest(groupPmId: nil, targetingParams: [:]),
+                    ios14: nil // CampaignRequest(groupPmId: nil, targetingParams: [:])
                 ),
                 pubData: [:]
             ))
@@ -74,11 +74,11 @@ class SourcePointClientSpec: QuickSpec {
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
                     client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
-                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/message?inApp=true"))
+                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/get_messages/?env=prod"))
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
+                    client.getMessages(campaigns: self.campaigns, authId: "auth id", localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
                     let parsed = httpClient!.postWasCalledWithBody!
                     expect(parsed).toEventually(equal(self.getMessageRequest(client)))
                 }
@@ -87,13 +87,8 @@ class SourcePointClientSpec: QuickSpec {
             describe("postAction") {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = SPAction(type: .AcceptAll)
-//                    client.postAction(
-//                        action: acceptAllAction,
-//                        legislation: .GDPR,
-//                        campaign: self.campaign,
-//                        localState: ""
-//                    ) { _ in }
-                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/unified/v1/gdpr/consent?inApp=true"))
+                    client.postGDPRAction(authId: nil, action: acceptAllAction, localState: SPJson(), idfaStatus: .accepted) { _ in }
+                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/messages/choice/gdpr/11?env=prod"))
                 }
 
                 it("calls POST on the http client with the right body") {

@@ -54,6 +54,25 @@ extension SPConsent {
     }
 
     public override var description: String { "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa))" }
+
+    open override func isEqual(_ object: Any?) -> Bool {
+        if let object = object as? SPUserData {
+            return  self.gdpr?.applies == object.gdpr?.applies &&
+                    self.gdpr?.consents?.uuid == object.gdpr?.consents?.uuid &&
+                    self.gdpr?.consents?.euconsent == object.gdpr?.consents?.euconsent &&
+                    self.gdpr?.consents?.childPmId == object.gdpr?.consents?.childPmId &&
+                    self.gdpr?.consents?.tcfData == object.gdpr?.consents?.tcfData &&
+                    self.gdpr?.consents?.vendorGrants == object.gdpr?.consents?.vendorGrants &&
+                    self.ccpa?.applies == object.ccpa?.applies &&
+                    self.ccpa?.consents?.uuid == object.ccpa?.consents?.uuid &&
+                    self.ccpa?.consents?.childPmId == object.ccpa?.consents?.childPmId &&
+                    self.ccpa?.consents?.status == object.ccpa?.consents?.status &&
+                    self.ccpa?.consents?.uspstring == object.ccpa?.consents?.uspstring &&
+                    self.ccpa?.consents?.rejectedVendors == object.ccpa?.consents?.rejectedVendors
+        } else {
+            return false
+        }
+    }
 }
 
 extension SPUserData {
