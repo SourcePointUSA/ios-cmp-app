@@ -399,11 +399,11 @@ extension MetaApp: GDPRUI {
     }
 
     var PersonalisedAdsSwitch: XCUIElement {
-        consentUI.switches["Create a personalised ads profile"].firstMatch
+        consentUI.switches.element(boundBy: 2) // == "Create a personalised ads profile"
     }
 
     var BasicAdsSwitch: XCUIElement {
-        consentUI.switches["Select basic ads"].firstMatch
+        consentUI.switches.element(boundBy: 1) // == "Select basic ads"
     }
 
     var featuresTab: XCUIElement {
