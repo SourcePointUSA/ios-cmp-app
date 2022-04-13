@@ -185,6 +185,7 @@ class MetaApp: XCUIApplication {
         okButton.tap()
         tables.children(matching: .other)[self.propertyData.addCCPACampaign].forceTapElement()
         ccpaCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 1)
+        expect(self.ccpaPMTextField).to(showUp())
         ccpaPMTextField.tap()
         ccpaPMTextField.typeText(self.propertyData.ccpaPMID)
         doneButton.tap()
