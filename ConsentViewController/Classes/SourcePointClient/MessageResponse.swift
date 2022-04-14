@@ -230,3 +230,25 @@ extension MessageResponse: Decodable {
         case message, messageMetaData
     }
 }
+
+// MARK: - used for Unit Tests
+extension MessagesResponse {
+    init(propertyId: Int, localState: SPJson, campaigns: [Campaign]) {
+        self.propertyId = propertyId
+        self.localState = localState
+        self.campaigns = campaigns
+    }
+}
+
+extension Message {
+    init(propertyId: Int, language: String?, category: MessageCategory, subCategory: MessageSubCategory,
+         messageChoices: SPJson, webMessageJson: SPJson, categories: [GDPRCategory]?) throws {
+        self.propertyId = propertyId
+        self.messageChoices = messageChoices
+        self.category = category
+        self.subCategory = subCategory
+        self.messageJson = .web(webMessageJson)
+        self.language = language
+        self.categories = categories
+    }
+}
