@@ -7,6 +7,7 @@
 //
 
 // swiftlint:disable force_try
+// swiftlint:disable function_body_length
 
 import Quick
 import Nimble
@@ -113,108 +114,119 @@ class SourcePointClientSpec: QuickSpec {
                 }
             }
 
-            xdescribe("customConsent") {
-//                it("makes a POST to SourcePointClient.CUSTOM_CONSENT_URL") {
-//                    let http = MockHttp()
-//                    self.getClient(http).customConsent(toConsentUUID: "", vendors: [], categories: [], legIntCategories: []) { _, _ in }
-//                    expect(http.postWasCalledWithUrl).to(equal(SourcePointClient.CUSTOM_CONSENT_URL.absoluteURL.absoluteString))
-//                }
-//
-//                it("makes a POST with the correct body") {
-//                    let http = MockHttp()
-//                    self.getClient(http).customConsent(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: []) { _, _ in }
-//                    let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-//
-//                    expect((parsedRequest?["consentUUID"] as? String)).to(equal("uuid"))
-//                    expect((parsedRequest?["vendors"] as? [String])).to(equal([]))
-//                    expect((parsedRequest?["categories"] as? [String])).to(equal([]))
-//                    expect((parsedRequest?["legIntCategories"] as? [String])).to(equal([]))
-//                    expect((parsedRequest?["propertyId"] as? Int)).to(equal(SourcePointClientSpec.propertyId))
-//                }
-//
-//                context("on success") {
-//                    beforeEach {
-//                        client = self.getClient(MockHttp(success: """
-//                        {
-//                            "vendors": ["aVendor"],
-//                            "categories": ["aCategory"],
-//                            "legIntCategories": ["aLegIntInterest"],
-//                            "specialFeatures": ["aSpecialFeature"],
-//                            "grants": {
-//                                "vendorId": {
-//                                    "vendorGrant": true,
-//                                    "purposeGrants": {
-//                                        "purposeId": true
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        """.data(using: .utf8)!))
-//                    }
-//
-//                    it("calls the completion handler with a CustomConsentResponse") {
-//                        var consentsResponse: CustomConsentResponse?
-//                        client.customConsent(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: []) { response, _ in
-//                            consentsResponse = response
-//                        }
-//                        expect(consentsResponse).toEventually(equal(CustomConsentResponse(
-//                            vendors: ["aVendor"],
-//                            categories: ["aCategory"],
-//                            legIntCategories: ["aLegIntInterest"],
-//                            specialFeatures: ["aSpecialFeature"],
-//                            grants: [
-//                                "vendorId": GDPRVendorGrant(vendorGrant: true, purposeGrants: ["purposeId": true])
-//                            ]
-//                        )))
-//                    }
-//
-//                    it("calls completion handler with nil as error") {
-//                        var error: SPError? = .none
-//                        client.customConsent(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: []) { _, e in
-//                            error = e
-//                        }
-//                        expect(error).toEventually(beNil())
-//                    }
-//                }
-//
-//                context("on failure") {
-//                    beforeEach {
-//                        client = self.getClient(MockHttp(error: SPError()))
-//                    }
-//
-//                    it("calls the completion handler with an SPError") {
-//                        var error: SPError?
-//                        client.customConsent(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: []) { _, e in
-//                            error = e
-//                        }
-//                        expect(error).toEventually(beAKindOf(SPError.self))
-//                    }
-//                }
-            }
+            describe("customConsent") {
+                it("makes a POST to SourcePointClient.CUSTOM_CONSENT_URL") {
+                    let http = MockHttp()
+                    self.getClient(http).customConsentGDPR(toConsentUUID: "", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { _ in
+                        expect(http.postWasCalledWithUrl).to(equal(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL.absoluteString))
+                    }
+                }
 
-            xdescribe("metrics") {
-//                it("makes a POST to https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics with correct body") {
-//                    let http = MockHttp()
-//                    let error = SPError()
-//                    self.getClient(http).errorMetrics(
-//                        error,
-//                        sdkVersion: "1.2.3",
-//                        OSVersion: "11.0",
-//                        deviceFamily: "iPhone 11 pro",
-//                        campaignType: .GDPR
-//                    )
-//                    let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-//                    expect(http.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"))
-//                    expect((parsedRequest?["code"] as? String)).to(equal(error.spCode))
-//                    expect((parsedRequest?["accountId"] as? String)).to(equal("123"))
-//                    expect((parsedRequest?["propertyHref"] as? String)).to(equal("https://tcfv2.mobile.demo"))
-//                    expect((parsedRequest?["propertyId"] as? String)).to(equal("123"))
-//                    expect((parsedRequest?["description"] as? String)).to(equal(error.description))
-//                    expect((parsedRequest?["scriptVersion"] as? String)).to(equal("1.2.3"))
-//                    expect((parsedRequest?["sdkOSVersion"] as? String)).to(equal("11.0"))
-//                    expect((parsedRequest?["deviceFamily"] as? String)).to(equal("iPhone 11 pro"))
-//                    expect((parsedRequest?["legislation"] as? String)).to(equal("GDPR"))
-//                }
+                it("makes a POST with the correct body") {
+                    let http = MockHttp()
+                    self.getClient(http).customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 123) { _ in }
+                    let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
+
+                    expect((parsedRequest?["consentUUID"] as? String)).to(equal("uuid"))
+                    expect((parsedRequest?["vendors"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["categories"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["legIntCategories"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["propertyId"] as? Int)).to(equal(self.propertyId))
+                }
+
+                context("on success") {
+                    beforeEach {
+                        client = self.getClient(MockHttp(success: """
+                        {
+                            "vendors": ["aVendor"],
+                            "categories": ["aCategory"],
+                            "legIntCategories": ["aLegIntInterest"],
+                            "specialFeatures": ["aSpecialFeature"],
+                            "grants": {
+                                "vendorId": {
+                                    "vendorGrant": true,
+                                    "purposeGrants": {
+                                        "purposeId": true
+                                    }
+                                }
+                            }
+                        }
+                        """.data(using: .utf8)!))
+                    }
+
+                    it("calls the completion handler with a CustomConsentResponse") {
+                        var consentsResponse: CustomConsentResponse?
+                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { result in
+                            switch result {
+                            case .success(let response):
+                                consentsResponse = response
+                            case .failure(_): break
+                            }
+                        }
+                        expect(consentsResponse).toEventually(equal(CustomConsentResponse(
+                            grants: [
+                                "vendorId": SPGDPRVendorGrant(granted: true, purposeGrants: ["purposeId": true])
+                            ]
+                        )))
+                    }
+
+                    it("calls completion handler with nil as error") {
+                        var error: SPError? = .none
+                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { result in
+                            switch result {
+                            case .success(_): break
+                            case .failure(let e):
+                                error = e
+                            }
+                        }
+                        expect(error).toEventually(beNil())
+                    }
+                }
+
+                context("on failure") {
+                    beforeEach {
+                        client = self.getClient(MockHttp(error: SPError()))
+                    }
+
+                    it("calls the completion handler with an SPError") {
+                        var error: SPError?
+                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { result in
+                            switch result {
+                            case .success(_): break
+                            case .failure(let e):
+                                error = e
+                            }
+                        expect(error).toEventually(beAKindOf(SPError.self))
+                        }
+                    }
+                }
+
+                describe("metrics") {
+                    it("makes a POST to https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics with correct body") {
+                        let http = MockHttp()
+                        let error = SPError()
+                        self.getClient(http).errorMetrics(
+                            error,
+                            propertyId: 123,
+                            sdkVersion: "1.2.3",
+                            OSVersion: "11.0",
+                            deviceFamily: "iPhone 11 pro",
+                            campaignType: .gdpr
+                        )
+                        let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
+                        expect(http.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"))
+                        expect((parsedRequest?["code"] as? String)).to(equal(error.spCode))
+                        expect((parsedRequest?["accountId"] as? String)).to(equal("1"))
+                        expect((parsedRequest?["propertyId"] as? String)).to(equal("123"))
+                        expect((parsedRequest?["propertyHref"] as? String)).to(equal("https://test"))
+                        expect((parsedRequest?["propertyId"] as? String)).to(equal("123"))
+                        expect((parsedRequest?["description"] as? String)).to(equal(error.description))
+                        expect((parsedRequest?["scriptVersion"] as? String)).to(equal("1.2.3"))
+                        expect((parsedRequest?["sdkOSVersion"] as? String)).to(equal("11.0"))
+                        expect((parsedRequest?["deviceFamily"] as? String)).to(equal("iPhone 11 pro"))
+                        expect((parsedRequest?["legislation"] as? String)).to(equal("GDPR"))
+                    }
+                }
             }
         }
     }
