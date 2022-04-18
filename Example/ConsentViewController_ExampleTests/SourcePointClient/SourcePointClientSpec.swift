@@ -79,9 +79,10 @@ class SourcePointClientSpec: QuickSpec {
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessages(campaigns: self.campaigns, authId: "auth id", localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
-                    let parsed = httpClient!.postWasCalledWithBody!
-                    expect(parsed).toEventually(equal(self.getMessageRequest(client)))
+                    client.getMessages(campaigns: self.campaigns, authId: "auth id", localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in
+                        let parsed = httpClient!.postWasCalledWithBody!
+                        expect(parsed).toEventually(equal(self.getMessageRequest(client)))
+                    }
                 }
             }
 
@@ -162,12 +163,12 @@ class SourcePointClientSpec: QuickSpec {
                                 consentsResponse = response
                             case .failure(_): break
                             }
+                            expect(consentsResponse).toEventually(equal(CustomConsentResponse(
+                                grants: [
+                                    "vendorId": SPGDPRVendorGrant(granted: true, purposeGrants: ["purposeId": true])
+                                ]
+                            )))
                         }
-                        expect(consentsResponse).toEventually(equal(CustomConsentResponse(
-                            grants: [
-                                "vendorId": SPGDPRVendorGrant(granted: true, purposeGrants: ["purposeId": true])
-                            ]
-                        )))
                     }
 
                     it("calls completion handler with nil as error") {
