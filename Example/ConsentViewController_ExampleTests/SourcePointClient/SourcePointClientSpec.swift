@@ -94,24 +94,21 @@ class SourcePointClientSpec: QuickSpec {
                 }
 
                 it("calls POST on the http client with the right body") {
-                    let action = SPAction(type: .AcceptAll, consentLanguage: "EN")
-                    action.publisherData = ["foo": "bar"]
-                    let consentRequest = GDPRConsentRequest(
+                    let action = SPAction(type: .IDFADenied)
+                    client.postGDPRAction(authId: nil, action: action, localState: SPJson(), idfaStatus: .accepted) { _ in }
+                    var uuid: String = String(data: httpClient!.postWasCalledWithBody!, encoding: .utf8)!
+                    let index = uuid.range(of: "requestUUID\":\"", options: [])?.upperBound
+                    uuid = uuid.substring(from: index!)
+                    let endIndex = uuid.range(of: "\",\"")?.lowerBound
+                    uuid = uuid.substring(to: endIndex!)
+                    expect(httpClient!.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(GDPRConsentRequest(
                         authId: nil,
-                        idfaStatus: .accepted,
+                        idfaStatus: .denied,
                         localState: SPJson(),
-                        pmSaveAndExitVariables: nil,
+                        pmSaveAndExitVariables: SPJson(),
                         pubData: [:],
-                        requestUUID: UUID()
-                    )
-//                    client.postAction(
-//                        action: action,
-//                        campaignType: .GDPR,
-//                        campaign: self.campaign,
-//                        localState: ""
-//                    ) { _ in }
-//                    let parsed = try? JSONDecoder().decode(GDPRConsentRequest.self, from: httpClient!.postWasCalledWithBody ?? "".data(using: .utf8)!).get()
-//                    expect(parsed).toEventually(equal(consentRequest))
+                        requestUUID: UUID(uuidString: uuid)!
+                    ))))
                 }
             }
 
