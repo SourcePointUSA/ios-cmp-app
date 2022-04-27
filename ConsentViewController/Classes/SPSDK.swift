@@ -9,7 +9,7 @@ import Foundation
 
 @objc public protocol SPCCPA {
     @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab)
-    @objc func loadCCPAPrivacyManagerChildPM(tab: SPPrivacyManagerTab)
+    @objc func loadCCPAPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab)
     @objc var ccpaApplies: Bool { get }
 }
 
@@ -66,7 +66,7 @@ public extension SPSDK {
         loadGDPRPrivacyManager(withId: id, tab: tab)
     }
 
-    func loadCCPAPrivacyManagerChildPM(tab: SPPrivacyManagerTab = .Default) {
+    func loadCCPAPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
         fatalError("loadCCPAPrivacyManagerChildPM has not been implemented")
     }
 

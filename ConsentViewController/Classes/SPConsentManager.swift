@@ -431,8 +431,8 @@ import UIKit
         }
     }
 
-    public func loadCCPAPrivacyManagerChildPM(tab: SPPrivacyManagerTab = .Default) {
-        loadCCPAPrivacyManagerChildPM(tab: tab)
+    public func loadCCPAPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
+        loadCCPAPrivacyManagerChildPM(withFallbackId: id, tab: tab)
     }
 
     public func loadGDPRPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
