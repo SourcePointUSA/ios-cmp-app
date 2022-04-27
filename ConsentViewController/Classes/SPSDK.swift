@@ -9,13 +9,11 @@ import Foundation
 
 @objc public protocol SPCCPA {
     @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab)
-    @objc func loadCCPAPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab)
     @objc var ccpaApplies: Bool { get }
 }
 
 @objc public protocol SPGDPR {
     @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab)
-    @objc func loadGDPRPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab)
     @objc var gdprApplies: Bool { get }
 }
 
@@ -58,20 +56,20 @@ public extension SPSDK {
         loadMessage(forAuthId: authId, publisherData: pubData)
     }
 
-    func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadCCPAPrivacyManager(withId: id, tab: tab)
+    func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = true) {
+        if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).ccpaChildPMId {
+            // not available for ccpa
+            fatalError("loadCCPAPrivacyManager with childPmId has not been implemented")
+        } else {
+            loadCCPAPrivacyManager(withId: id, tab: tab)
+        }
     }
 
-    func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadGDPRPrivacyManager(withId: id, tab: tab)
-    }
-
-    func loadCCPAPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
-        fatalError("loadCCPAPrivacyManagerChildPM has not been implemented")
-    }
-
-    func loadGDPRPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
-        let childPmId = SPUserDefaults(storage: UserDefaults.standard).gdprChildPMId
-        loadGDPRPrivacyManager(withId: childPmId ?? id, tab: tab)
+    func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = true) {
+        if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).gdprChildPMId {
+            loadGDPRPrivacyManager(withId: childPmId, tab: tab)
+        } else {
+            loadGDPRPrivacyManager(withId: id, tab: tab)
+        }
     }
 }
