@@ -83,7 +83,11 @@ public typealias SPUsPrivacyString = String
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
-    public let childPmId: String?
+    private let childPmId: String?
+
+    public func getChildPmId() -> String? {
+        childPmId
+    }
 
     public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
         status: CCPAConsentStatus.RejectedNone,
