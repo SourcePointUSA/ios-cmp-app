@@ -56,7 +56,7 @@ public extension SPSDK {
         loadMessage(forAuthId: authId, publisherData: pubData)
     }
 
-    func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = true) {
+    func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).ccpaChildPMId {
             // not available for ccpa
             fatalError("loadCCPAPrivacyManager with childPmId has not been implemented")
@@ -65,7 +65,7 @@ public extension SPSDK {
         }
     }
 
-    func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = true) {
+    func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).gdprChildPMId {
             loadGDPRPrivacyManager(withId: childPmId, tab: tab)
         } else {
