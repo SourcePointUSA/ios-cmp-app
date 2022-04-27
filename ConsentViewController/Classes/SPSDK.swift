@@ -71,7 +71,7 @@ public extension SPSDK {
     }
 
     func loadGDPRPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
-        let childPmId = SPUserDefaults(storage: UserDefaults.standard).getChildPmId(type: .gdpr)
+        let childPmId = SPUserDefaults(storage: UserDefaults.standard).gdprChildPMId
         loadGDPRPrivacyManager(withId: childPmId ?? id, tab: tab)
     }
 }
