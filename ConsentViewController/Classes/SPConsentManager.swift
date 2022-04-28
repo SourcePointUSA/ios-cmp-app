@@ -245,6 +245,14 @@ import UIKit
     }
 
     public func onError(_ error: SPError) {
+        logErrorMetrics(error)
+        if cleanUserDataOnError {
+            SPConsentManager.clearAllData()
+        }
+        delegate?.onError?(error: error)
+    }
+
+    public func logErrorMetrics(_ error: SPError) {
         spClient.errorMetrics(
             error,
             propertyId: propertyId,
@@ -253,10 +261,6 @@ import UIKit
             deviceFamily: deviceManager.osVersion(),
             campaignType: error.campaignType
         )
-        if cleanUserDataOnError {
-            SPConsentManager.clearAllData()
-        }
-        delegate?.onError?(error: error)
     }
 }
 

@@ -1,5 +1,5 @@
 import Foundation
-
+// swiftlint:disable line_length
 @objcMembers public class SPError: NSError, LocalizedError {
     public var spCode: String { "sp_metric_generic_sdk_error" }
     public var spDescription: String { description }
@@ -69,6 +69,23 @@ import Foundation
 
     init(message: String) {
         self.message = message
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+@objcMembers public class LogCustomMetricsChildPmIdError: SPError {
+    override public var spCode: String { "sp_log_child_pm_id_custom_metrics" }
+    override public var description: String { "SDK was called loadPrivacyManager for \(campaignType) campaign with useGroupPmIfAvailable = \(useGroupPmIfAvailable). ID \(usedId) was used. User provided \(fallbackId) as fallback id." }
+    let usedId: String
+    let useGroupPmIfAvailable: Bool
+    let fallbackId: String
+
+    init(fallbackId: String, usedId: String, useGroupPmIfAvailable: Bool) {
+        self.usedId = usedId
+        self.useGroupPmIfAvailable = useGroupPmIfAvailable
+        self.fallbackId = fallbackId
         super.init()
     }
 
