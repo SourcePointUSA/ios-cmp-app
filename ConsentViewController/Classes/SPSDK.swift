@@ -60,21 +60,21 @@ public extension SPSDK {
     func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).ccpaChildPMId {
             // not available for ccpa
-            logErrorMetrics(LogCustomMetricsChildPmIdError(fallbackId: id, usedId: childPmId, useGroupPmIfAvailable: useGroupPmIfAvailable))
+            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: childPmId, useGroupPmIfAvailable: useGroupPmIfAvailable))
             fatalError("loadCCPAPrivacyManager with childPmId has not been implemented")
         } else {
             loadCCPAPrivacyManager(withId: id, tab: tab)
-            logErrorMetrics(LogCustomMetricsChildPmIdError(fallbackId: id, usedId: id, useGroupPmIfAvailable: useGroupPmIfAvailable))
+            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: id, useGroupPmIfAvailable: useGroupPmIfAvailable))
         }
     }
 
     func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).gdprChildPMId {
             loadGDPRPrivacyManager(withId: childPmId, tab: tab)
-            logErrorMetrics(LogCustomMetricsChildPmIdError(fallbackId: id, usedId: childPmId, useGroupPmIfAvailable: useGroupPmIfAvailable))
+            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: childPmId, useGroupPmIfAvailable: useGroupPmIfAvailable))
         } else {
             loadGDPRPrivacyManager(withId: id, tab: tab)
-            logErrorMetrics(LogCustomMetricsChildPmIdError(fallbackId: id, usedId: id, useGroupPmIfAvailable: useGroupPmIfAvailable))
+            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: id, useGroupPmIfAvailable: useGroupPmIfAvailable))
         }
     }
 }
