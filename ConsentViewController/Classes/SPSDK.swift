@@ -8,12 +8,12 @@
 import Foundation
 
 @objc public protocol SPCCPA {
-    @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab)
+    @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
     @objc var ccpaApplies: Bool { get }
 }
 
 @objc public protocol SPGDPR {
-    @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab)
+    @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
     @objc var gdprApplies: Bool { get }
 }
 
@@ -39,7 +39,6 @@ import Foundation
         legIntCategories: [String],
         handler: @escaping (SPGDPRConsent) -> Void
     )
-    @objc func logErrorMetrics(_ error: SPError)
 }
 
 public extension SPSDK {
@@ -58,23 +57,10 @@ public extension SPSDK {
     }
 
     func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
-        if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).ccpaChildPMId {
-            // not available for ccpa
-            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: childPmId, useGroupPmIfAvailable: useGroupPmIfAvailable))
-            fatalError("loadCCPAPrivacyManager with childPmId has not been implemented")
-        } else {
-            loadCCPAPrivacyManager(withId: id, tab: tab)
-            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: id, useGroupPmIfAvailable: useGroupPmIfAvailable))
-        }
+        loadCCPAPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
     }
 
     func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
-        if useGroupPmIfAvailable, let childPmId = SPUserDefaults(storage: UserDefaults.standard).gdprChildPMId {
-            loadGDPRPrivacyManager(withId: childPmId, tab: tab)
-            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: childPmId, useGroupPmIfAvailable: useGroupPmIfAvailable))
-        } else {
-            loadGDPRPrivacyManager(withId: id, tab: tab)
-            logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: id, useGroupPmIfAvailable: useGroupPmIfAvailable))
-        }
+        loadGDPRPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
     }
 }

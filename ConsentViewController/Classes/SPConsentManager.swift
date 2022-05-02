@@ -252,7 +252,7 @@ import UIKit
         delegate?.onError?(error: error)
     }
 
-    public func logErrorMetrics(_ error: SPError) {
+    func logErrorMetrics(_ error: SPError) {
         spClient.errorMetrics(
             error,
             propertyId: propertyId,
@@ -326,11 +326,18 @@ import UIKit
         }
     }
 
-    public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+    public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
+        let usedId: String
+        if useGroupPmIfAvailable, let childPmId = storage.gdprChildPMId {
+            usedId = childPmId
+        } else {
+            usedId = id
+        }
+        logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: usedId, useGroupPmIfAvailable: useGroupPmIfAvailable))
         #if os(iOS)
         guard let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
-            "message_id": id,
+            "message_id": usedId,
             "pmTab": tab.rawValue,
             "consentUUID": gdprUUID,
             "idfaStatus": idfaStatus.description,
@@ -341,7 +348,7 @@ import UIKit
         }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
-        spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
+        spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
             case .success(let message):
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {
@@ -349,7 +356,7 @@ import UIKit
                     return
                 }
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
-                    messageId: id,
+                    messageId: usedId,
                     campaignType: .gdpr,
                     viewData: nativePMMessage.homeView,
                     pmData: nativePMMessage,
@@ -365,11 +372,20 @@ import UIKit
         #endif
     }
 
-    public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+    public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
+        let usedId: String
+        if useGroupPmIfAvailable, let childPmId = storage.ccpaChildPMId {
+            usedId = childPmId
+            // not available for ccpa
+            fatalError("loadCCPAPrivacyManager with childPmId has not been implemented")
+        } else {
+            usedId = id
+        }
+        logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: usedId, useGroupPmIfAvailable: useGroupPmIfAvailable))
         #if os(iOS)
         guard let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
-            "message_id": id,
+            "message_id": usedId,
             "pmTab": tab.rawValue,
             "ccpaUUID": ccpaUUID,
             "idfaStatus": idfaStatus.description,
@@ -380,7 +396,7 @@ import UIKit
         }
         loadWebPrivacyManager(.ccpa, pmUrl)
         #elseif os(tvOS)
-        spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
+        spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
             case .success(let message):
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {
@@ -388,7 +404,7 @@ import UIKit
                     return
                 }
                 let pmViewController = SPCCPANativePrivacyManagerViewController(
-                    messageId: id,
+                    messageId: usedId,
                     campaignType: .ccpa,
                     viewData: nativePMMessage.homeView,
                     pmData: nativePMMessage,
@@ -433,14 +449,6 @@ import UIKit
                 self?.onError(error)
             }
         }
-    }
-
-    public func loadCCPAPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadCCPAPrivacyManagerChildPM(withFallbackId: id, tab: tab)
-    }
-
-    public func loadGDPRPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadGDPRPrivacyManagerChildPM(withFallbackId: id, tab: tab)
     }
 }
 

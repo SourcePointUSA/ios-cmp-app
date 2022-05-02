@@ -67,30 +67,17 @@ class SPUserDefaults: SPLocalStorage {
     }
 
     var gdprChildPMId: String? {
-        get { storage.string(forKey: getChildPmIdKey(type: .gdpr)) }
-        set { storage.set(newValue, forKey: getChildPmIdKey(type: .gdpr)) }
+        get { storage.string(forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(GDPR)childPmId") }
+        set { storage.set(newValue, forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(GDPR)childPmId") }
     }
 
     var ccpaChildPMId: String? {
-        get { storage.string(forKey: getChildPmIdKey(type: .ccpa)) }
-        set { storage.set(newValue, forKey: getChildPmIdKey(type: .ccpa)) }
+        get { storage.string(forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(CCPA)childPmId") }
+        set { storage.set(newValue, forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(CCPA)childPmId") }
     }
 
     required init(storage: Storage = UserDefaults.standard) {
         self.storage = storage
-    }
-
-    private func getChildPmIdKey(type: SPCampaignType) -> String {
-        let prefix: String
-        switch type {
-        case .gdpr:
-            prefix = GDPR
-        case .ccpa:
-            prefix = CCPA
-        default:
-            prefix = UNKNOWN
-        }
-        return "\(SPUserDefaults.SP_KEY_PREFIX)\(prefix)childPmId"
     }
 
     func dictionaryRepresentation() -> [String: Any?] {[
