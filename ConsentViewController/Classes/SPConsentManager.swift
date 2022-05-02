@@ -169,9 +169,9 @@ import UIKit
         for campaign in campaigns {
             switch campaign.userConsent {
             case .ccpa(let consents):
-                storage.ccpaChildPMId = consents.getChildPmId()
+                storage.ccpaChildPMId = consents.childPmId
             case .gdpr(let consents):
-                storage.gdprChildPMId = consents.getChildPmId()
+                storage.gdprChildPMId = consents.childPmId
             default: break
             }
         }
