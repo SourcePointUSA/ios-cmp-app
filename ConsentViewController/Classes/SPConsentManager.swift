@@ -252,7 +252,7 @@ import UIKit
         delegate?.onError?(error: error)
     }
 
-    func logErrorMetrics(_ error: SPError) {
+    private func logErrorMetrics(_ error: SPError) {
         spClient.errorMetrics(
             error,
             propertyId: propertyId,
