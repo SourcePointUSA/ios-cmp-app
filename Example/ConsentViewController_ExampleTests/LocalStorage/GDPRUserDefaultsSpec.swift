@@ -110,14 +110,14 @@ class GDPRUserDefaultsSpec: QuickSpec {
             describe("childPMId") {
                 it("sets gdprChildPMId and checks it") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    userDefaults.gdprChildPMId = "yo"
-                    expect(userDefaults.gdprChildPMId).to(equal("yo"))
+                    userDefaults.gdprChildPmId = "yo"
+                    expect(userDefaults.gdprChildPmId).to(equal("yo"))
                 }
 
                 it("sets ccpaChildPMId and checks it") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    userDefaults.ccpaChildPMId = "yo"
-                    expect(userDefaults.ccpaChildPMId).to(equal("yo"))
+                    userDefaults.ccpaChildPmId = "yo"
+                    expect(userDefaults.ccpaChildPmId).to(equal("yo"))
                 }
             }
         }

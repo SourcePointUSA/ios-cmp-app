@@ -66,12 +66,12 @@ class SPUserDefaults: SPLocalStorage {
         set { storage.setObject(newValue, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
     }
 
-    var gdprChildPMId: String? {
+    var gdprChildPmId: String? {
         get { storage.string(forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(GDPR)childPmId") }
         set { storage.set(newValue, forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(GDPR)childPmId") }
     }
 
-    var ccpaChildPMId: String? {
+    var ccpaChildPmId: String? {
         get { storage.string(forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(CCPA)childPmId") }
         set { storage.set(newValue, forKey: "\(SPUserDefaults.SP_KEY_PREFIX)\(CCPA)childPmId") }
     }
@@ -92,7 +92,7 @@ class SPUserDefaults: SPLocalStorage {
         usPrivacyString = ""
         userData = SPUserData()
         propertyId = nil
-        gdprChildPMId = nil
-        ccpaChildPMId = nil
+        gdprChildPmId = nil
+        ccpaChildPmId = nil
     }
 }
