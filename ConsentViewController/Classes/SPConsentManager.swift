@@ -328,13 +328,14 @@ import UIKit
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
-        let usedId: String
-        if useGroupPmIfAvailable, let childPmId = storage.gdprChildPMId {
-            usedId = childPmId
-        } else {
-            usedId = id
+        var usedId: String = id
+        if useGroupPmIfAvailable {
+            if let childPmId = storage.gdprChildPMId {
+                usedId = childPmId
+            } else if let group = campaigns.gdpr?.groupPmId, group.isNotEmpty() {
+                logErrorMetrics(MissingChildPmIdError(usedId: usedId))
+            }
         }
-        logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: usedId, useGroupPmIfAvailable: useGroupPmIfAvailable))
         #if os(iOS)
         guard let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
             "message_id": usedId,
@@ -374,15 +375,14 @@ import UIKit
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
-        let usedId: String
-        if useGroupPmIfAvailable, let childPmId = storage.ccpaChildPMId {
-            usedId = childPmId
-            // not available for ccpa
-            fatalError("loadCCPAPrivacyManager with childPmId has not been implemented")
-        } else {
-            usedId = id
+        var usedId: String = id
+        if useGroupPmIfAvailable {
+            if let childPmId = storage.ccpaChildPMId {
+                usedId = childPmId
+            } else if let group = campaigns.ccpa?.groupPmId, group.isNotEmpty() {
+                logErrorMetrics(MissingChildPmIdError(usedId: usedId))
+            }
         }
-        logErrorMetrics(MissingChildPmIdError(fallbackId: id, usedId: usedId, useGroupPmIfAvailable: useGroupPmIfAvailable))
         #if os(iOS)
         guard let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
             "message_id": usedId,

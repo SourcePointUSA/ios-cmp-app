@@ -77,15 +77,11 @@ import Foundation
 
 @objcMembers public class MissingChildPmIdError: SPError {
     override public var spCode: String { "sp_log_child_pm_id_custom_metrics" }
-    override public var description: String { "SDK was called loadPrivacyManager for \(campaignType) campaign with useGroupPmIfAvailable = \(useGroupPmIfAvailable). ID \(usedId) was used. User provided \(fallbackId) as fallback id." }
+    override public var description: String { "SDK was called loadPrivacyManager for \(campaignType) campaign with useGroupPmIfAvailable = true. ID \(usedId) was used. CHILD PM ID is missing!!!" }
     let usedId: String
-    let useGroupPmIfAvailable: Bool
-    let fallbackId: String
 
-    init(fallbackId: String, usedId: String, useGroupPmIfAvailable: Bool) {
+    init(usedId: String) {
         self.usedId = usedId
-        self.useGroupPmIfAvailable = useGroupPmIfAvailable
-        self.fallbackId = fallbackId
         super.init()
     }
 
