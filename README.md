@@ -370,6 +370,29 @@ Utilize the following method if an end-user requests to have their data deleted:
 SPConsentManager.clearAllData()
 ```
 
+## Set a Property Group Id
+ Property groups allow your organization to group properties together in order to simplify configurations for  mass campaigns and updates. 
+ In order to use a Property Group Id, you should edit the SDK configuration object as follows:
+ 
+ ```swift
+ lazy var consentManager: SPConsentManager = { SPConsentManager(
+    accountId: 22,
+    propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+    campaigns: SPCampaigns(
+        gdpr: SPCampaign(groupPmId: "123") // <- "123" is the property group id
+    ),
+    delegate: self
+)}()
+ ```
+ 
+ After adding the `Property Group Id` you should set the flag `useGroupPmIfAvailable`, in the `loadGDPRPrivacyManager`, to true:
+
+ ```swift
+consentManager.loadGDPRPrivacyManager(withId: "111", useGroupPmIfAvailable: true)
+ ```
+
+> **Note**: CCPA campaign property group id feature is currently not supported.
+
 ## Frequently Asked Questions
 ### 1. How big is the SDK?
 The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `2 MB`.
