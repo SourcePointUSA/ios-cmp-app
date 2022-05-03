@@ -262,6 +262,19 @@ import UIKit
             campaignType: error.campaignType
         )
     }
+
+    private func selectPrivacyManagerId(fallbackId:String, groupPmId:String?, childPmId:String?) -> String
+    {
+        let hasGroupPmId = groupPmId != nil && groupPmId != ""
+        let hasChildPmId = childPmId != nil && childPmId != ""
+        if hasChildPmId, let childPmId = childPmId {
+            return childPmId
+        }
+        if hasGroupPmId, !hasChildPmId {
+            logErrorMetrics(MissingChildPmIdError(usedId: fallbackId))
+        }
+        return fallbackId
+    }
 }
 
 @objc extension SPConsentManager: SPSDK {
@@ -330,11 +343,7 @@ import UIKit
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
-            if let childPmId = storage.gdprChildPMId {
-                usedId = childPmId
-            } else if let group = campaigns.gdpr?.groupPmId, group.isNotEmpty() {
-                logErrorMetrics(MissingChildPmIdError(usedId: usedId))
-            }
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.gdpr?.groupPmId, childPmId: storage.gdprChildPmId)
         }
         #if os(iOS)
         guard let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
@@ -377,11 +386,7 @@ import UIKit
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
-            if let childPmId = storage.ccpaChildPMId {
-                usedId = childPmId
-            } else if let group = campaigns.ccpa?.groupPmId, group.isNotEmpty() {
-                logErrorMetrics(MissingChildPmIdError(usedId: usedId))
-            }
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
         }
         #if os(iOS)
         guard let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
