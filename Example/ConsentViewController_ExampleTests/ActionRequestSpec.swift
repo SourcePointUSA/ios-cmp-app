@@ -19,7 +19,7 @@ class ActionRequestSpec: QuickSpec {
             idfaStatus: .accepted,
             localState: try! SPJson(["local": "state"]),
             pmSaveAndExitVariables: try! SPJson(["foo": "bar"]),
-            publisherData: ["pubFoo": try? SPJson("pubBar")],
+            pubData: ["pubFoo": "pubBar"],
             requestUUID: requestUUID
         )
         let actionString = """

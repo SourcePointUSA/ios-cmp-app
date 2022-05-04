@@ -14,7 +14,7 @@ import Nimble
 
 class MessageRequestSpec: QuickSpec {
     let campaign = CampaignRequest(
-        targetingParams: ["foo": "bar"]
+        groupPmId: nil, targetingParams: ["foo": "bar"]
     )
 
     // swiftlint:disable function_body_length
@@ -33,7 +33,8 @@ class MessageRequestSpec: QuickSpec {
                 gdpr: campaign,
                 ccpa: campaign,
                 ios14: campaign
-            )
+            ),
+            pubData: [:]
         )
         let messageString = """
         {

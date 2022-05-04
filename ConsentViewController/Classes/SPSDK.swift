@@ -8,12 +8,12 @@
 import Foundation
 
 @objc public protocol SPCCPA {
-    @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab)
+    @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
     @objc var ccpaApplies: Bool { get }
 }
 
 @objc public protocol SPGDPR {
-    @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab)
+    @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
     @objc var gdprApplies: Bool { get }
 }
 
@@ -56,11 +56,11 @@ public extension SPSDK {
         loadMessage(forAuthId: authId, publisherData: pubData)
     }
 
-    func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadCCPAPrivacyManager(withId: id, tab: tab)
+    func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        loadCCPAPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
     }
 
-    func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadGDPRPrivacyManager(withId: id, tab: tab)
+    func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        loadGDPRPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
     }
 }

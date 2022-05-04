@@ -51,10 +51,12 @@ class SPGDPRConsentsSpec: QuickSpec {
                         ])
                     ],
                     euconsent: "",
-                    tcfData: SPJson()
+                    tcfData: SPJson(),
+                    childPmId: "yes"
                 )
                 expect(consent.acceptedCategories).to(contain(["purpose1", "purpose3"]))
                 expect(consent.acceptedCategories).notTo(contain(["purpose2"]))
+                expect(consent.getChildPmId()).to(equal("yes"))
             }
         }
     }

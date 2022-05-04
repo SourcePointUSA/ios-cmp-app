@@ -106,6 +106,20 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     expect(userDefaults.tcfData).to(beEmpty())
                 }
             }
+
+            describe("childPMId") {
+                it("sets gdprChildPMId and checks it") {
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    userDefaults.gdprChildPmId = "yo"
+                    expect(userDefaults.gdprChildPmId).to(equal("yo"))
+                }
+
+                it("sets ccpaChildPMId and checks it") {
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    userDefaults.ccpaChildPmId = "yo"
+                    expect(userDefaults.ccpaChildPmId).to(equal("yo"))
+                }
+            }
         }
     }
 }

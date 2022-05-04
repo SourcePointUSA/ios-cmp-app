@@ -173,6 +173,12 @@ class SPErrorSpec: QuickSpec {
                     expect(InvalidResponseCCPAPrivacyManagerViewEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_privacy_manager_view_ccpa"))
                 }
             }
+
+            describe("MissingChildPmIdError") {
+                it("has spCode: sp_log_child_pm_id_custom_metrics") {
+                    expect(MissingChildPmIdError(fallbackId: "", usedId: "", useGroupPmIfAvailable: true).spCode).to(equal("sp_log_child_pm_id_custom_metrics"))
+                }
+            }
         }
     }
 }

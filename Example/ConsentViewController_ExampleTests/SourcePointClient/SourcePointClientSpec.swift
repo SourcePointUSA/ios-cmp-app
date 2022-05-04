@@ -40,10 +40,10 @@ class SourcePointClientSpec: QuickSpec {
                 consentLanguage: .English,
                 campaigns: CampaignsRequest(
                     gdpr: CampaignRequest(
-                        targetingParams: targetingParams
+                        groupPmId: nil, targetingParams: targetingParams
                     ),
-                    ccpa: CampaignRequest(targetingParams: [:]),
-                    ios14: CampaignRequest(targetingParams: [:])
+                    ccpa: CampaignRequest(groupPmId: nil, targetingParams: [:]),
+                    ios14: CampaignRequest(groupPmId: nil, targetingParams: [:])
                 ),
                 pubData: [:]
             ))
@@ -104,7 +104,7 @@ class SourcePointClientSpec: QuickSpec {
                         idfaStatus: .accepted,
                         localState: SPJson(),
                         pmSaveAndExitVariables: nil,
-                        publisherData: [:],
+                        pubData: [:],
                         requestUUID: UUID()
                     )
 //                    client.postAction(
