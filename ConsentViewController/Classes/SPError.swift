@@ -1,5 +1,5 @@
 import Foundation
-
+// swiftlint:disable line_length
 @objcMembers public class SPError: NSError, LocalizedError {
     public var spCode: String { "sp_metric_generic_sdk_error" }
     public var spDescription: String { description }
@@ -69,6 +69,19 @@ import Foundation
 
     init(message: String) {
         self.message = message
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+@objcMembers public class MissingChildPmIdError: SPError {
+    override public var spCode: String { "sp_log_child_pm_id_custom_metrics" }
+    override public var description: String { "SDK was called loadPrivacyManager for \(campaignType) campaign with useGroupPmIfAvailable = true. ID \(usedId) was used. CHILD PM ID is missing!!!" }
+    let usedId: String
+
+    init(usedId: String) {
+        self.usedId = usedId
         super.init()
     }
 

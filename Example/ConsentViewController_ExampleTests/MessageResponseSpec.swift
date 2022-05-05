@@ -12,14 +12,21 @@ import Nimble
 @testable import ConsentViewController
 
 // swiftlint:disable function_body_length
+// swiftlint:disable force_try
 class MessageResponseSpec: QuickSpec {
     override func spec() {
         let response = Result { """
         {
+            "propertyId": 1,
             "campaigns": [
                 {
-                    "type": "gdpr",
+                    "type": "GDPR",
                     "applies": true,
+                    "message": {
+                        "site_id":1,
+                        "message_json": {},
+                        "message_choice": {}
+                    },
                     "userConsent": {
                         "euconsent": "consent-string",
                         "grants": {
@@ -32,18 +39,21 @@ class MessageResponseSpec: QuickSpec {
                             "foo": "tc-data"
                         }
                     },
-                    "message": {
-                        "foo": "message"
-                    },
                     "messageMetaData": {
                         "messageId": 1,
                         "categoryId": 1,
-                        "subCategoryId": 5
+                        "subCategoryId": 5,
+                        "prtnUUID": "123"
                     }
                 },
                 {
-                    "type": "ccpa",
+                    "type": "CCPA",
                     "applies": true,
+                    "message": {
+                        "site_id":1,
+                        "message_json": {},
+                        "message_choice": {}
+                    },
                     "userConsent": {
                         "status": "rejectedNone",
                         "uspstring": "us-pstring",
@@ -51,13 +61,11 @@ class MessageResponseSpec: QuickSpec {
                         "rejectedCategories": ["rejected-category"]
                     },
                     "meta": "ccpa-meta",
-                    "message": {
-                        "foo": "message"
-                    },
                     "messageMetaData": {
                         "messageId": 1,
                         "categoryId": 1,
-                        "subCategoryId": 5
+                        "subCategoryId": 5,
+                        "prtnUUID": "123"
                     }
                 }
             ],
@@ -74,39 +82,44 @@ class MessageResponseSpec: QuickSpec {
                 messageId: "1",
                 messagePartitionUUID: "123"
             )
-//            expect(try! response.decoded() as MessagesResponse).to(equal(MessagesResponse(
-//                campaigns: [
-//                    Campaign(
-//                        type: .gdpr,
-//                        message: .web(try! SPJson(["foo": "message"])),
-//                        userConsent: .gdpr(consents: SPGDPRConsent(
-//                            vendorGrants: [
-//                                "foo-purpose": SPGDPRVendorGrant(
-//                                    vendorGrant: true,
-//                                    purposeGrants: SPGDPRPurposeGrants()
-//                                )
-//                            ],
-//                            euconsent: "consent-string",
-//                            tcfData: try! SPJson(["foo": "tc-data"])
-//                        )),
-//                        applies: true,
-//                        messageMetaData: metaData
-//                    ),
-//                    Campaign(
-//                        type: .ccpa,
-//                        message: .web(try! SPJson(["foo": "message"])),
-//                        userConsent: .ccpa(consents: SPCCPAConsent(
-//                            status: .RejectedNone,
-//                            rejectedVendors: ["rejected-vendor"],
-//                            rejectedCategories: ["rejected-category"],
-//                            uspstring: "us-pstring"
-//                        )),
-//                        applies: true,
-//                        messageMetaData: metaData
-//                    )
-//                ],
-//                localState: try! SPJson(["local": "state"])
-//            )))
+            let msg: Message = try Message(propertyId: 1, language: nil, category: .gdpr, subCategory: .TCFv2, messageChoices: SPJson(), webMessageJson: SPJson(), categories: nil)
+
+            let msgResponse: MessagesResponse = MessagesResponse(
+                propertyId: 1,
+                localState: try! SPJson(["local": "state"]),
+                campaigns: [
+                        Campaign(
+                            type: .gdpr,
+                            message: msg,
+                            userConsent: .gdpr(consents: SPGDPRConsent(
+                                vendorGrants: [
+                                    "foo-purpose": SPGDPRVendorGrant(
+                                        granted: true,
+                                        purposeGrants: SPGDPRPurposeGrants()
+                                    )
+                                ],
+                                euconsent: "consent-string",
+                                tcfData: try! SPJson(["foo": "tc-data"])
+                            )),
+                            applies: true,
+                            messageMetaData: metaData
+                        ),
+                        Campaign(
+                            type: .ccpa,
+                            message: msg,
+                            userConsent: .ccpa(consents: SPCCPAConsent(
+                                status: .RejectedNone,
+                                rejectedVendors: ["rejected-vendor"],
+                                rejectedCategories: ["rejected-category"],
+                                uspstring: "us-pstring"
+                            )),
+                            applies: true,
+                            messageMetaData: metaData
+                        )
+                    ]
+            )
+            let responseDecoded = try! response.decoded() as MessagesResponse
+            expect(responseDecoded).to(equal(msgResponse))
         }
     }
 }

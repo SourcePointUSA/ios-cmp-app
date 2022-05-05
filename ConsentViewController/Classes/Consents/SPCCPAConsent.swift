@@ -82,6 +82,8 @@ public typealias SPUsPrivacyString = String
     public let uspstring: SPUsPrivacyString
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
+    /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
+    let childPmId: String?
 
     public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
         status: CCPAConsentStatus.RejectedNone,
@@ -95,13 +97,15 @@ public typealias SPUsPrivacyString = String
         status: CCPAConsentStatus,
         rejectedVendors: [String],
         rejectedCategories: [String],
-        uspstring: SPUsPrivacyString
+        uspstring: SPUsPrivacyString,
+        childPmId: String? = nil
     ) {
         self.uuid = uuid
         self.status = status
         self.rejectedVendors = rejectedVendors
         self.rejectedCategories = rejectedCategories
         self.uspstring = uspstring
+        self.childPmId = childPmId
     }
 
     open override var description: String {
@@ -109,7 +113,7 @@ public typealias SPUsPrivacyString = String
     }
 
     enum CodingKeys: CodingKey {
-        case status, rejectedVendors, rejectedCategories, uspstring, uuid
+        case status, rejectedVendors, rejectedCategories, uspstring, uuid, childPmId
     }
 
     required public init(from decoder: Decoder) throws {
@@ -119,6 +123,7 @@ public typealias SPUsPrivacyString = String
         rejectedCategories = try values.decode([String].self, forKey: .rejectedCategories)
         uspstring = try values.decode(SPUsPrivacyString.self, forKey: .uspstring)
         let statusString = try values.decode(String.self, forKey: .status)
+        childPmId = try values.decodeIfPresent(String.self, forKey: .childPmId)
         switch statusString {
         case "rejectedNone": status = .RejectedNone
         case "rejectedSome": status = .RejectedSome

@@ -19,13 +19,19 @@ class ActionRequestSpec: QuickSpec {
             idfaStatus: .accepted,
             localState: try! SPJson(["local": "state"]),
             pmSaveAndExitVariables: try! SPJson(["foo": "bar"]),
-            publisherData: ["pubFoo": try? SPJson("pubBar")],
+            pubData: ["pubFoo": "pubBar"],
             requestUUID: requestUUID
         )
         let actionString = """
         {
+            "authId":"authId",
             "pmSaveAndExitVariables": {
                 "foo": "bar"
+            },
+            "idfaStatus":"accepted",
+            "includeData": {
+                "localState":{"type":"RecordString"},
+                "TCData":{"type":"RecordString"}
             },
             "localState": {
                 "local": "state"

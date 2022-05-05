@@ -14,7 +14,7 @@ import Nimble
 
 class MessageRequestSpec: QuickSpec {
     let campaign = CampaignRequest(
-        targetingParams: ["foo": "bar"]
+        groupPmId: nil, targetingParams: ["foo": "bar"]
     )
 
     // swiftlint:disable function_body_length
@@ -33,33 +33,34 @@ class MessageRequestSpec: QuickSpec {
                 gdpr: campaign,
                 ccpa: campaign,
                 ios14: campaign
-            )
+            ),
+            pubData: [:]
         )
         let messageString = """
         {
             "accountId": 1,
+            "campaignEnv":"prod",
             "campaigns": {
                 "ccpa": {
-                    "campaignEnv": "prod",
                     "targetingParams": {"foo":"bar"}
                 },
                 "gdpr": {
-                    "campaignEnv": "prod",
                     "targetingParams": {"foo":"bar"}
                 },
                 "ios14": {
-                    "campaignEnv": "prod",
                     "targetingParams": {"foo":"bar"}
                 }
             },
+            "consentLanguage":"BG",
             "idfaStatus": "unknown",
             "includeData": {
-                "localState": {"type":"string"},
+                "localState": {"type":"RecordString"},
                 "messageMetaData": {"type":"RecordString"},
                 "TCData": {"type":"RecordString"}
             },
-            "localState": "",
+            "localState": {},
             "propertyHref": "https:\\/\\/demo",
+            "pubData":{},
             "requestUUID": "\(reqUUID.uuidString)"
         }
         """.filter { !" \n\t\r".contains($0) }
