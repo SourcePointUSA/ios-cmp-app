@@ -176,7 +176,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("MissingChildPmIdError") {
                 it("has spCode: sp_log_child_pm_id_custom_metrics") {
-                    expect(MissingChildPmIdError(fallbackId: "", usedId: "", useGroupPmIfAvailable: true).spCode).to(equal("sp_log_child_pm_id_custom_metrics"))
+                    expect(MissingChildPmIdError(usedId: "ololo").spCode).to(equal("sp_log_child_pm_id_custom_metrics"))
                 }
             }
         }
