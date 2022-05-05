@@ -161,13 +161,13 @@ class SPErrorSpec: QuickSpec {
                     expect(InvalidResponseMessageCCPAEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_message_ccpa"))
                 }
             }
-            
+
             describe("InvalidResponseGDPRPrivacyManagerViewEndpointMessageError") {
                 it("has spCode: sp_metric_invalid_response_privacy_manager_view_gdpr") {
                     expect(InvalidResponseGDPRPrivacyManagerViewEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_privacy_manager_view_gdpr"))
                 }
             }
-            
+
             describe("InvalidResponseCCPAPrivacyManagerViewEndpointMessageError") {
                 it("has spCode: sp_metric_invalid_response_privacy_manager_view_ccpa") {
                     expect(InvalidResponseCCPAPrivacyManagerViewEndpointMessageError().spCode).to(equal("sp_metric_invalid_response_privacy_manager_view_ccpa"))
