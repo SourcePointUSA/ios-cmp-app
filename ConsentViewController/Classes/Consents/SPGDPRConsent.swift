@@ -87,7 +87,7 @@ public typealias SPGDPRPurposeId = String
     public var uuid: String?
 
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
-    public let childPmId: String?
+    let childPmId: String?
 
     /// A list of ids of the categories accepted by the user in all its vendors.
     /// If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.

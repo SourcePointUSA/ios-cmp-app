@@ -17,8 +17,8 @@ class SPUserDefaults: SPLocalStorage {
     static let USER_DATA_KEY = "\(SP_KEY_PREFIX)userData"
     static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
-    public let GDPR = "GDPR"
-    public let CCPA = "CCPA"
+    static let GDPR_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)GDPRchildPmId"
+    static let CCPA_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)CCPAchildPmId"
 
     var storage: Storage
 
@@ -65,44 +65,18 @@ class SPUserDefaults: SPLocalStorage {
         set { storage.setObject(newValue, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
     }
 
+    var gdprChildPmId: String? {
+        get { storage.string(forKey: SPUserDefaults.GDPR_CHILD_PM_ID_KEY) }
+        set { storage.set(newValue, forKey: SPUserDefaults.GDPR_CHILD_PM_ID_KEY) }
+    }
+
+    var ccpaChildPmId: String? {
+        get { storage.string(forKey: SPUserDefaults.CCPA_CHILD_PM_ID_KEY) }
+        set { storage.set(newValue, forKey: SPUserDefaults.CCPA_CHILD_PM_ID_KEY) }
+    }
+
     required init(storage: Storage = UserDefaults.standard) {
         self.storage = storage
-    }
-
-    private func getChildPmIdKey(type: SPCampaignType) -> String? {
-        let prefix: String?
-        switch type {
-        case .gdpr:
-            prefix = GDPR
-        case .ccpa:
-            prefix = CCPA
-        default:
-            prefix = nil
-        }
-        if let prefix = prefix {
-            return "\(SPUserDefaults.SP_KEY_PREFIX)\(prefix)childPmId"
-        } else {
-            return nil
-        }
-    }
-
-    public func setChildPmId(newValue: String?, type: SPCampaignType) {
-        let key = getChildPmIdKey(type: type)
-        if let key = key {
-            storage.set(newValue, forKey: key)
-        }
-    }
-
-    public func getChildPmId(type: SPCampaignType) -> String? {
-        let key = getChildPmIdKey(type: type)
-        var value: String?
-        if let key = key {
-            value = storage.string(forKey: key)
-        }
-        if value == "" {
-            value = nil
-        }
-        return value
     }
 
     func dictionaryRepresentation() -> [String: Any?] {[
@@ -117,7 +91,7 @@ class SPUserDefaults: SPLocalStorage {
         usPrivacyString = ""
         userData = SPUserData()
         propertyId = nil
-        setChildPmId(newValue: nil, type: .gdpr)
-        setChildPmId(newValue: nil, type: .ccpa)
+        gdprChildPmId = nil
+        ccpaChildPmId = nil
     }
 }

@@ -169,9 +169,9 @@ import UIKit
         for campaign in campaigns {
             switch campaign.userConsent {
             case .ccpa(let consents):
-                SPUserDefaults(storage: UserDefaults.standard).setChildPmId(newValue: consents.childPmId, type: .ccpa)
+                storage.ccpaChildPmId = consents.childPmId
             case .gdpr(let consents):
-                SPUserDefaults(storage: UserDefaults.standard).setChildPmId(newValue: consents.childPmId, type: .gdpr)
+                storage.gdprChildPmId = consents.childPmId
             default: break
             }
         }
@@ -245,6 +245,14 @@ import UIKit
     }
 
     public func onError(_ error: SPError) {
+        logErrorMetrics(error)
+        if cleanUserDataOnError {
+            SPConsentManager.clearAllData()
+        }
+        delegate?.onError?(error: error)
+    }
+
+    private func logErrorMetrics(_ error: SPError) {
         spClient.errorMetrics(
             error,
             propertyId: propertyId,
@@ -253,10 +261,19 @@ import UIKit
             deviceFamily: deviceManager.osVersion(),
             campaignType: error.campaignType
         )
-        if cleanUserDataOnError {
-            SPConsentManager.clearAllData()
+    }
+
+    private func selectPrivacyManagerId(fallbackId:String, groupPmId:String?, childPmId:String?) -> String
+    {
+        let hasGroupPmId = groupPmId != nil && groupPmId != ""
+        let hasChildPmId = childPmId != nil && childPmId != ""
+        if hasChildPmId, let childPmId = childPmId {
+            return childPmId
         }
-        delegate?.onError?(error: error)
+        if hasGroupPmId, !hasChildPmId {
+            logErrorMetrics(MissingChildPmIdError(usedId: fallbackId))
+        }
+        return fallbackId
     }
 }
 
@@ -322,11 +339,15 @@ import UIKit
         }
     }
 
-    public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+    public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
+        var usedId: String = id
+        if useGroupPmIfAvailable {
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.gdpr?.groupPmId, childPmId: storage.gdprChildPmId)
+        }
         #if os(iOS)
         guard let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
-            "message_id": id,
+            "message_id": usedId,
             "pmTab": tab.rawValue,
             "consentUUID": gdprUUID,
             "idfaStatus": idfaStatus.description,
@@ -337,7 +358,7 @@ import UIKit
         }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
-        spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
+        spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
             case .success(let message):
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {
@@ -345,7 +366,7 @@ import UIKit
                     return
                 }
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
-                    messageId: id,
+                    messageId: usedId,
                     campaignType: .gdpr,
                     viewData: nativePMMessage.homeView,
                     pmData: nativePMMessage,
@@ -361,11 +382,15 @@ import UIKit
         #endif
     }
 
-    public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+    public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
+        var usedId: String = id
+        if useGroupPmIfAvailable {
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
+        }
         #if os(iOS)
         guard let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
-            "message_id": id,
+            "message_id": usedId,
             "pmTab": tab.rawValue,
             "ccpaUUID": ccpaUUID,
             "idfaStatus": idfaStatus.description,
@@ -376,7 +401,7 @@ import UIKit
         }
         loadWebPrivacyManager(.ccpa, pmUrl)
         #elseif os(tvOS)
-        spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: id) { [weak self] result in
+        spClient.getCCPAMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
             case .success(let message):
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {
@@ -384,7 +409,7 @@ import UIKit
                     return
                 }
                 let pmViewController = SPCCPANativePrivacyManagerViewController(
-                    messageId: id,
+                    messageId: usedId,
                     campaignType: .ccpa,
                     viewData: nativePMMessage.homeView,
                     pmData: nativePMMessage,
@@ -429,14 +454,6 @@ import UIKit
                 self?.onError(error)
             }
         }
-    }
-
-    public func loadCCPAPrivacyManagerChildPM(tab: SPPrivacyManagerTab = .Default) {
-        loadCCPAPrivacyManagerChildPM(tab: tab)
-    }
-
-    public func loadGDPRPrivacyManagerChildPM(withFallbackId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadGDPRPrivacyManagerChildPM(withFallbackId: id, tab: tab)
     }
 }
 
