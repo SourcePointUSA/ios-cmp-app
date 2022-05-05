@@ -54,6 +54,32 @@ jobs:
           name: Upload NativeExampleApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
+  ConsentViewController_ExampleTests:
+      runs-on: macos-11
+      steps:
+        - uses: actions/checkout@v2
+        - name: Select Xcode version 13.0
+          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
+        - name: ConsentViewController_ExampleTests Unit & UI testing -> iPhone 13 Pro Max (iOS 15.0)
+          run: xcodebuild clean test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - uses: actions/upload-artifact@v2
+          if: failure()
+          name: Upload ConsentViewController_ExampleTests tests results
+          with:
+            path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
+  NativePMExampleApp:
+      runs-on: macos-11
+      steps:
+        - uses: actions/checkout@v2
+        - name: Select Xcode version 13.0
+          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
+        - name: NativePMExampleApp UI testing -> iPhone 13 Pro Max (iOS 15.0)
+          run: xcodebuild clean test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - uses: actions/upload-artifact@v2
+          if: failure()
+          name: Upload NativePMExampleApp tests results
+          with:
+            path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult           
   meta-app-tests:
       runs-on: macos-11
       steps:
