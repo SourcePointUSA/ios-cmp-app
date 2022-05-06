@@ -30,6 +30,7 @@ class TestWebView: WKWebView, WKNavigationDelegate {
 class GDPRWebViewExtensionsSpec: QuickSpec {
     override func spec() {
         beforeSuite {
+            // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
             AsyncDefaults.timeout = .seconds(5)
             AsyncDefaults.pollInterval = .seconds(1)
         }
