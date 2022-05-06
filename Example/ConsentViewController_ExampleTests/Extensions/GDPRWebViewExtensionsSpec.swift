@@ -29,11 +29,14 @@ class TestWebView: WKWebView, WKNavigationDelegate {
 
 class GDPRWebViewExtensionsSpec: QuickSpec {
     override func spec() {
+        beforeSuite {
+            AsyncDefaults.timeout = .seconds(3)
+        }
+
         describe("getAuthID") {
             it("should evaluate the content of getAuthId.js script") {
                 let webview = TestWebView()
                 var authId: String?
-
                 webview.configuration.userContentController.addUserScript(
                     WKUserScript(
                         source: "document.cookie='authId=foo;'",
@@ -44,16 +47,18 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                     webview.getAuthId { result, _ in authId = result }
                 }
                 webview.loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
-
                 expect(authId).toEventually(equal("foo"))
             }
         }
 
         describe("setAuthId") {
+            beforeSuite {
+                AsyncDefaults.timeout = .seconds(3)
+            }
+
             it("should add the content of setAuthId.js as userContentScript") {
                 let webview = TestWebView()
                 var cookies: String?
-
                 webview.setConsentFor(authId: "foo")
                 webview.onLoaded = {
                     webview.evaluateJavaScript("document.cookie") { result, _ in
@@ -61,7 +66,6 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                     }
                 }
                 webview.loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
-
                 expect(cookies).toEventually(equal("authId=foo"))
             }
         }
