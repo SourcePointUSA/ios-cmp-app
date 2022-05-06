@@ -43,15 +43,17 @@ class SourcePointClientSpec: QuickSpec {
                     gdpr: CampaignRequest(
                         groupPmId: nil, targetingParams: targetingParams
                     ),
-                    ccpa: CampaignRequest(groupPmId: nil, targetingParams: [:]),
-                    ios14: CampaignRequest(groupPmId: nil, targetingParams: [:])
+                    ccpa: nil,
+                    ios14: nil
                 ),
                 pubData: [:]
             ))
     }
 
     override func spec() {
-        Nimble.AsyncDefaults.timeout = .seconds(2)
+        // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
+        Nimble.AsyncDefaults.timeout = .seconds(5)
+        Nimble.AsyncDefaults.pollInterval = .seconds(5)
 
         var client: SourcePointClient!
         var httpClient: MockHttp?
@@ -79,10 +81,11 @@ class SourcePointClientSpec: QuickSpec {
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessages(campaigns: self.campaigns, authId: "auth id", localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in
-                        let parsed = httpClient!.postWasCalledWithBody!
-                        expect(parsed).toEventually(equal(self.getMessageRequest(client)))
-                    }
+                    client.getMessages(campaigns: self.campaigns, authId: "auth id", localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
+                    let parsed = httpClient!.postWasCalledWithBody!
+                    let parsedStr = String(data: parsed, encoding: .utf8)!
+                    let messageRequestStr = String(data: self.getMessageRequest(client), encoding: .utf8)!
+                    expect(parsedStr).toEventually(equal(messageRequestStr))
                 }
             }
 
@@ -123,7 +126,6 @@ class SourcePointClientSpec: QuickSpec {
                     let http = MockHttp()
                     self.getClient(http).customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 123) { _ in }
                     let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-
                     expect((parsedRequest?["consentUUID"] as? String)).to(equal("uuid"))
                     expect((parsedRequest?["vendors"] as? [String])).to(equal([]))
                     expect((parsedRequest?["categories"] as? [String])).to(equal([]))
