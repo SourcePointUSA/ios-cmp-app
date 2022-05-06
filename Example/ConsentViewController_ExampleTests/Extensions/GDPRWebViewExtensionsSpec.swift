@@ -30,7 +30,7 @@ class TestWebView: WKWebView, WKNavigationDelegate {
 class GDPRWebViewExtensionsSpec: QuickSpec {
     override func spec() {
         beforeSuite {
-            AsyncDefaults.timeout = .seconds(3)
+            AsyncDefaults.timeout = .seconds(5)
         }
 
         describe("getAuthID") {
@@ -53,7 +53,7 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
 
         describe("setAuthId") {
             beforeSuite {
-                AsyncDefaults.timeout = .seconds(3)
+                AsyncDefaults.timeout = .seconds(5)
             }
 
             it("should add the content of setAuthId.js as userContentScript") {
