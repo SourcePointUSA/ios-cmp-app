@@ -49,8 +49,7 @@ class ConsentsProfileSpec: QuickSpec {
     )}
     override func spec() {
         it("can be encoded to JSON") {
-            let encoded = String(data: try! JSONEncoder()
-                                    .encodeResult(self.consentsProfile).get(), encoding: .utf8)!
+            let encoded = String(data: try! JSONEncoder().encodeResult(self.consentsProfile).get(), encoding: .utf8)!
             expect(encoded).to(equal(self.jsonData))
         }
 
