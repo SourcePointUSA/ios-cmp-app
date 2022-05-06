@@ -31,6 +31,7 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
     override func spec() {
         beforeSuite {
             AsyncDefaults.timeout = .seconds(5)
+            AsyncDefaults.pollInterval = .seconds(1)
         }
 
         describe("getAuthID") {
