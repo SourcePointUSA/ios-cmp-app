@@ -1,3 +1,5 @@
+# 6.6.0 (May, 06, 2022)
+* Improved support to [property groups](https://documentation.sourcepoint.com/consent_mp/properties-and-property-groups/property-groups/property-group-overview#property-group-limitations) and privacy manager belonging to property groups. For an example on how to use a privacy manager belonging to a a property group, please refer to the README.
 # 6.5.1 (Apr, 07, 2022)
 We have received a lot of valuable feedback from you and we listened. This release is all about fixing and improving our TvOS UI and layout.
 

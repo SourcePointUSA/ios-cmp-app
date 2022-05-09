@@ -376,6 +376,13 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17MessageController_")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController21MissingChildPmIdError")
+@interface MissingChildPmIdError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 @interface NSObject (SWIFT_EXTENSION(ConsentViewController))
 - (NSString * _Nullable)toJSON SWIFT_WARN_UNUSED_RESULT;
 @end
@@ -445,7 +452,7 @@ enum SPPrivacyManagerTab : NSInteger;
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPCCPA_")
 @protocol SPCCPA
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 @property (nonatomic, readonly) BOOL ccpaApplies;
 @end
 
@@ -473,7 +480,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// that’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
 + (SPCCPAConsent * _Nonnull)rejectedNone SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)initWithUuid:(NSString * _Nullable)uuid status:(enum CCPAConsentStatus)status rejectedVendors:(NSArray<NSString *> * _Nonnull)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nonnull)rejectedCategories uspstring:(NSString * _Nonnull)uspstring OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithUuid:(NSString * _Nullable)uuid status:(enum CCPAConsentStatus)status rejectedVendors:(NSArray<NSString *> * _Nonnull)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nonnull)rejectedCategories uspstring:(NSString * _Nonnull)uspstring childPmId:(NSString * _Nullable)childPmId OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -484,7 +491,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Contains information about the property/campaign.
 SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
-- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -611,7 +618,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController19SPMessageUIDelegate_")
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
 @protocol SPGDPR
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 @property (nonatomic, readonly) BOOL gdprApplies;
 @end
 
@@ -642,8 +649,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Returns the user data <em>stored in the <code>UserDefaults</code></em>.
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
@@ -1328,6 +1335,13 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17MessageController_")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController21MissingChildPmIdError")
+@interface MissingChildPmIdError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 @interface NSObject (SWIFT_EXTENSION(ConsentViewController))
 - (NSString * _Nullable)toJSON SWIFT_WARN_UNUSED_RESULT;
 @end
@@ -1397,7 +1411,7 @@ enum SPPrivacyManagerTab : NSInteger;
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPCCPA_")
 @protocol SPCCPA
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 @property (nonatomic, readonly) BOOL ccpaApplies;
 @end
 
@@ -1425,7 +1439,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// that’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
 + (SPCCPAConsent * _Nonnull)rejectedNone SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)initWithUuid:(NSString * _Nullable)uuid status:(enum CCPAConsentStatus)status rejectedVendors:(NSArray<NSString *> * _Nonnull)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nonnull)rejectedCategories uspstring:(NSString * _Nonnull)uspstring OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithUuid:(NSString * _Nullable)uuid status:(enum CCPAConsentStatus)status rejectedVendors:(NSArray<NSString *> * _Nonnull)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nonnull)rejectedCategories uspstring:(NSString * _Nonnull)uspstring childPmId:(NSString * _Nullable)childPmId OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1436,7 +1450,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Contains information about the property/campaign.
 SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
-- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1563,7 +1577,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController19SPMessageUIDelegate_")
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
 @protocol SPGDPR
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 @property (nonatomic, readonly) BOOL gdprApplies;
 @end
 
@@ -1594,8 +1608,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Returns the user data <em>stored in the <code>UserDefaults</code></em>.
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
@@ -2280,6 +2294,13 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17MessageController_")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController21MissingChildPmIdError")
+@interface MissingChildPmIdError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 @interface NSObject (SWIFT_EXTENSION(ConsentViewController))
 - (NSString * _Nullable)toJSON SWIFT_WARN_UNUSED_RESULT;
 @end
@@ -2349,7 +2370,7 @@ enum SPPrivacyManagerTab : NSInteger;
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPCCPA_")
 @protocol SPCCPA
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 @property (nonatomic, readonly) BOOL ccpaApplies;
 @end
 
@@ -2377,7 +2398,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// that’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
 + (SPCCPAConsent * _Nonnull)rejectedNone SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)initWithUuid:(NSString * _Nullable)uuid status:(enum CCPAConsentStatus)status rejectedVendors:(NSArray<NSString *> * _Nonnull)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nonnull)rejectedCategories uspstring:(NSString * _Nonnull)uspstring OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithUuid:(NSString * _Nullable)uuid status:(enum CCPAConsentStatus)status rejectedVendors:(NSArray<NSString *> * _Nonnull)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nonnull)rejectedCategories uspstring:(NSString * _Nonnull)uspstring childPmId:(NSString * _Nullable)childPmId OBJC_DESIGNATED_INITIALIZER;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -2388,7 +2409,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Contains information about the property/campaign.
 SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
-- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2515,7 +2536,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController19SPMessageUIDelegate_")
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
 @protocol SPGDPR
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 @property (nonatomic, readonly) BOOL gdprApplies;
 @end
 
@@ -2546,8 +2567,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// Returns the user data <em>stored in the <code>UserDefaults</code></em>.
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
-- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
-- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab;
+- (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
+- (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 

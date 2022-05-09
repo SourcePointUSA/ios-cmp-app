@@ -2,13 +2,11 @@
 
 ## How to install
 
-> **Note**: Sourcepoint's native message API is currently not supported in iOS SDK v6.1.7.
-
 ### CocoaPods
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.5.1'
+pod 'ConsentViewController', '6.6.0'
 ```
 
 ### Carthage
