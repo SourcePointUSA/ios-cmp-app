@@ -263,8 +263,7 @@ import UIKit
         )
     }
 
-    private func selectPrivacyManagerId(fallbackId:String, groupPmId:String?, childPmId:String?) -> String
-    {
+    private func selectPrivacyManagerId(fallbackId: String, groupPmId: String?, childPmId:String?) -> String {
         let hasGroupPmId = groupPmId != nil && groupPmId != ""
         let hasChildPmId = childPmId != nil && childPmId != ""
         if hasChildPmId, let childPmId = childPmId {

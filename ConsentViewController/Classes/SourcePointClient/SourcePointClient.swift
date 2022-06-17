@@ -50,7 +50,8 @@ protocol SourcePointProtocol {
         pubData: SPPublisherData,
         idfaStaus: SPIDFAStatus,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping MessagesHandler)
+        handler: @escaping MessagesHandler
+    )
 
     func getGDPRMessage(
         propertyId: String,
@@ -69,26 +70,30 @@ protocol SourcePointProtocol {
     func gdprPrivacyManagerView(
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping GDPRPrivacyManagerViewHandler)
+        handler: @escaping GDPRPrivacyManagerViewHandler
+    )
 
     func ccpaPrivacyManagerView(
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping CCPAPrivacyManagerViewHandler)
+        handler: @escaping CCPAPrivacyManagerViewHandler
+    )
 
     func postCCPAAction(
         authId: String?,
         action: SPAction,
         localState: SPJson,
         idfaStatus: SPIDFAStatus,
-        handler: @escaping CCPAConsentHandler)
+        handler: @escaping CCPAConsentHandler
+    )
 
     func postGDPRAction(
         authId: String?,
         action: SPAction,
         localState: SPJson,
         idfaStatus: SPIDFAStatus,
-        handler: @escaping GDPRConsentHandler)
+        handler: @escaping GDPRConsentHandler
+    )
 
     func reportIdfaStatus(
         propertyId: Int?,
@@ -106,7 +111,8 @@ protocol SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping CustomConsentHandler)
+        handler: @escaping CustomConsentHandler
+    )
 
     func errorMetrics(
         _ error: SPError,
