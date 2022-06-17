@@ -454,6 +454,37 @@ import UIKit
             }
         }
     }
+
+    public func deleteCustomConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
+        guard let propertyId = propertyId, !gdprUUID.isEmpty else {
+            onError(PostingConsentWithoutConsentUUID())
+            return
+        }
+        spClient.deleteCustomConsentGDPR(
+            toConsentUUID: gdprUUID,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            propertyId: propertyId
+        ) { [weak self] result in
+            switch result {
+            case .success(let consents):
+                let newGDPRConsents = SPGDPRConsent(
+                    uuid: self?.gdprUUID,
+                    vendorGrants: consents.grants,
+                    euconsent: self?.storage.userData.gdpr?.consents?.euconsent ?? "",
+                    tcfData: self?.storage.userData.gdpr?.consents?.tcfData ?? SPJson()
+                )
+                self?.storage.userData = SPUserData(
+                    gdpr: SPConsent<SPGDPRConsent>(consents: newGDPRConsents, applies: self?.storage.userData.gdpr?.applies ?? false),
+                    ccpa: self?.storage.userData.ccpa
+                )
+                handler(newGDPRConsents)
+            case .failure(let error):
+                self?.onError(error)
+            }
+        }
+    }
 }
 
 extension SPConsentManager: SPMessageUIDelegate {

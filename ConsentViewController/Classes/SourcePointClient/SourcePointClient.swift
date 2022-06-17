@@ -39,6 +39,7 @@ typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
+typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -121,6 +122,15 @@ protocol SourcePointProtocol {
         OSVersion: String,
         deviceFamily: String,
         campaignType: SPCampaignType
+    )
+
+    func deleteCustomConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping DeleteCustomConsentHandler
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -347,6 +357,35 @@ class SourcePointClient: SourcePointProtocol {
                 })
             }
         }
+    }
+
+    func deleteCustomConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String], categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping DeleteCustomConsentHandler) {
+            _ = JSONEncoder().encodeResult(DeleteCustomConsentRequest(
+                vendors: vendors,
+                categories: categories,
+                legIntCategories: legIntCategories
+            )).map { body in
+                client.delete(urlString: deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID)!.absoluteString, body: body) { result in
+                    handler(Result {
+                        try result.decoded() as DeleteCustomConsentResponse
+                    }.mapError {
+                        InvalidResponseDeleteCustomError(error: $0, campaignType: .gdpr)
+                    })
+                }
+            }
+        }
+
+    func deleteCustomConsentUrl(_ baseUrl: URL, _ propertyId: Int, _ consentUUID: String) -> URL? {
+        let propertyIdString = String(propertyId)
+        let urlWithPath = baseUrl.appendingPathComponent(propertyIdString)
+        var components = URLComponents(url: urlWithPath, resolvingAgainstBaseURL: true)
+        components?.queryItems = [URLQueryItem(name: "consentUUID", value: consentUUID)]
+        return components?.url(relativeTo: baseUrl)
     }
 
     func errorMetrics(
