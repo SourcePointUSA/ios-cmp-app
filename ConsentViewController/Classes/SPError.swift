@@ -189,6 +189,11 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /custom-consent endpoint" }
 }
 
+@objcMembers public class InvalidResponseDeleteCustomError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_delete_custom_consent" }
+    override public var description: String { "The SDK got an unexpected response from /consent/tcfv2/consent/v3/custom/ endpoint" }
+}
+
 /// Network Errors
 @objcMembers public class NoInternetConnection: SPError {
     override public var spCode: String { "sp_metric_no_internet_connection" }
