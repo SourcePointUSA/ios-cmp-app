@@ -31,7 +31,7 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
     override func spec() {
         beforeSuite {
             // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
-            AsyncDefaults.timeout = .seconds(5)
+            AsyncDefaults.timeout = .seconds(20)
             AsyncDefaults.pollInterval = .seconds(1)
         }
 
@@ -54,10 +54,6 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
         }
 
         describe("setAuthId") {
-            beforeSuite {
-                AsyncDefaults.timeout = .seconds(5)
-            }
-
             it("should add the content of setAuthId.js as userContentScript") {
                 let webview = TestWebView()
                 var cookies: String?
