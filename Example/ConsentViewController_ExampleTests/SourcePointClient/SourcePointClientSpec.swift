@@ -51,13 +51,21 @@ class SourcePointClientSpec: QuickSpec {
     }
 
     override func spec() {
-        // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
-        Nimble.AsyncDefaults.timeout = .seconds(5)
-        Nimble.AsyncDefaults.pollInterval = .seconds(5)
-
         var client: SourcePointClient!
         var httpClient: MockHttp?
         var mockedResponse: Data?
+
+        beforeSuite {
+            // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
+            AsyncDefaults.timeout = .seconds(20)
+            AsyncDefaults.pollInterval = .seconds(1)
+        }
+
+        afterSuite {
+            // changing AsyncDefaults back to defaults after suite is done
+            AsyncDefaults.timeout = .seconds(1)
+            AsyncDefaults.pollInterval = .milliseconds(10)
+        }
 
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {

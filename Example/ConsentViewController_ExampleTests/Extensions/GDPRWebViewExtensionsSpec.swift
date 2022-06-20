@@ -35,6 +35,12 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
             AsyncDefaults.pollInterval = .seconds(1)
         }
 
+        afterSuite {
+            // changing AsyncDefaults back to defaults after suite is done
+            AsyncDefaults.timeout = .seconds(1)
+            AsyncDefaults.pollInterval = .milliseconds(10)
+        }
+
         describe("getAuthID") {
             it("should evaluate the content of getAuthId.js script") {
                 let webview = TestWebView()
