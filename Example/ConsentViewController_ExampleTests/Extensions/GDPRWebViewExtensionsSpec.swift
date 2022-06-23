@@ -29,11 +29,22 @@ class TestWebView: WKWebView, WKNavigationDelegate {
 
 class GDPRWebViewExtensionsSpec: QuickSpec {
     override func spec() {
+        beforeSuite {
+            // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
+            AsyncDefaults.timeout = .seconds(20)
+            AsyncDefaults.pollInterval = .seconds(1)
+        }
+
+        afterSuite {
+            // changing AsyncDefaults back to defaults after suite is done
+            AsyncDefaults.timeout = .seconds(1)
+            AsyncDefaults.pollInterval = .milliseconds(10)
+        }
+
         describe("getAuthID") {
             it("should evaluate the content of getAuthId.js script") {
                 let webview = TestWebView()
                 var authId: String?
-
                 webview.configuration.userContentController.addUserScript(
                     WKUserScript(
                         source: "document.cookie='authId=foo;'",
@@ -44,7 +55,6 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                     webview.getAuthId { result, _ in authId = result }
                 }
                 webview.loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
-
                 expect(authId).toEventually(equal("foo"))
             }
         }
@@ -53,7 +63,6 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
             it("should add the content of setAuthId.js as userContentScript") {
                 let webview = TestWebView()
                 var cookies: String?
-
                 webview.setConsentFor(authId: "foo")
                 webview.onLoaded = {
                     webview.evaluateJavaScript("document.cookie") { result, _ in
@@ -61,7 +70,6 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                     }
                 }
                 webview.loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
-
                 expect(cookies).toEventually(equal("authId=foo"))
             }
         }

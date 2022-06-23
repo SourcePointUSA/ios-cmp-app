@@ -185,6 +185,7 @@ class MetaApp: XCUIApplication {
         okButton.tap()
         tables.children(matching: .other)[self.propertyData.addCCPACampaign].forceTapElement()
         ccpaCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 1)
+        expect(self.ccpaPMTextField).to(showUp())
         ccpaPMTextField.tap()
         ccpaPMTextField.typeText(self.propertyData.ccpaPMID)
         doneButton.tap()
@@ -399,11 +400,11 @@ extension MetaApp: GDPRUI {
     }
 
     var PersonalisedAdsSwitch: XCUIElement {
-        consentUI.switches["Create a personalised ads profile"].firstMatch
+        consentUI.switches.element(boundBy: 2) // == "Create a personalised ads profile"
     }
 
     var BasicAdsSwitch: XCUIElement {
-        consentUI.switches["Select basic ads"].firstMatch
+        consentUI.switches.element(boundBy: 1) // == "Select basic ads"
     }
 
     var featuresTab: XCUIElement {

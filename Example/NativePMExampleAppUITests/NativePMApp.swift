@@ -155,11 +155,13 @@ extension NativePMApp {
     
     func findAndPress(element: XCUIElement)
     {
-        expect(element).to(showUp())
-        clickButtonUntilElementHasFocus(directionBtn: .down, element: element)
-        clickButtonUntilElementHasFocus(directionBtn: .up, element: element)
-        expectedMessageShowUP(element: element)
-        XCUIRemote.shared.press(.select)
+        if element.exists {
+            expect(element).to(showUp())
+            clickButtonUntilElementHasFocus(directionBtn: .down, element: element)
+            clickButtonUntilElementHasFocus(directionBtn: .up, element: element)
+            expectedMessageShowUP(element: element)
+            XCUIRemote.shared.press(.select)
+        }
     }
     
     func pressDoNotSellButton()
@@ -191,8 +193,10 @@ extension NativePMApp {
     func pressCategory(element: XCUIElement)
     {
         XCUIRemote.shared.press(.down)
-        expectedMessageShowUP(element: acceptAllButton)
-        XCUIRemote.shared.press(.right)
+        if acceptAllButton.hasFocus {
+            expectedMessageShowUP(element: acceptAllButton)
+            XCUIRemote.shared.press(.right)
+        }
         expectedMessageShowUP(element: element)
         XCUIRemote.shared.press(.select)
     }
