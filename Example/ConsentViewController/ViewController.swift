@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var idfaStatusLabel: UILabel!
     @IBOutlet weak var myVendorAcceptedLabel: UILabel!
     @IBOutlet weak var acceptMyVendorButton: UIButton!
+    @IBOutlet weak var deleteMyVendorButton: UIButton!
     @IBOutlet weak var gdprPMButton: UIButton!
     @IBOutlet weak var ccpaPMButton: UIButton!
 
@@ -38,6 +39,16 @@ class ViewController: UIViewController {
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
         consentManager.customConsentGDPR(
+            vendors: [myVendorId],
+            categories: myPurposesId,
+            legIntCategories: []) { [weak self] consents in
+            let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted ?? false
+            self?.updateMyVendorUI(vendorAccepted)
+        }
+    }
+
+    @IBAction func onDeleteMyVendorTap(_ sender: Any) {
+        consentManager.deleteCustomConsentGDPR(
             vendors: [myVendorId],
             categories: myPurposesId,
             legIntCategories: []) { [weak self] consents in
@@ -115,6 +126,7 @@ extension ViewController {
         myVendorAcceptedLabel.text = accepted ? "accepted" : "rejected"
         myVendorAcceptedLabel.textColor = accepted ? .systemGreen : .systemRed
         acceptMyVendorButton.isEnabled = !accepted
+        deleteMyVendorButton.isEnabled = accepted
     }
 
     func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool) {
