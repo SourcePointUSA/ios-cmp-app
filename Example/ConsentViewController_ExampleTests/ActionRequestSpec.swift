@@ -24,8 +24,14 @@ class ActionRequestSpec: QuickSpec {
         )
         let actionString = """
         {
+            "authId":"authId",
             "pmSaveAndExitVariables": {
                 "foo": "bar"
+            },
+            "idfaStatus":"accepted",
+            "includeData": {
+                "localState":{"type":"RecordString"},
+                "TCData":{"type":"RecordString"}
             },
             "localState": {
                 "local": "state"
