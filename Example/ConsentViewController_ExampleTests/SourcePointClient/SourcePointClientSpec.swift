@@ -18,6 +18,7 @@ class SourcePointClientSpec: QuickSpec {
     let propertyId = 123
     let accountId = 1
     let propertyName = try! SPPropertyName("test")
+    let authID = "auth id"
 
     func getClient(_ client: MockHttp) -> SourcePointClient {
         SourcePointClient(accountId: accountId, propertyName: propertyName, campaignEnv: .Public, client: client)
@@ -33,7 +34,7 @@ class SourcePointClientSpec: QuickSpec {
     func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {
         try! JSONEncoder().encode(
             MessageRequest(
-                authId: "auth id",
+                authId: authID,
                 requestUUID: client.requestUUID,
                 propertyHref: propertyName,
                 accountId: accountId,
@@ -95,7 +96,8 @@ class SourcePointClientSpec: QuickSpec {
                 }
 
                 it("calls POST on the http client with the right body") {
-                    client.getMessages(campaigns: self.campaigns, authId: "auth id", localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
+                    let idfa = SPIDFAStatus.unknown, lang = SPMessageLanguage.English
+                    client.getMessages(campaigns: self.campaigns, authId: self.authID, localState: SPJson(), pubData: [:], idfaStaus: idfa, consentLanguage: lang) { _ in }
                     let parsed = httpClient!.postWasCalledWithBody!
                     let parsedStr = String(data: parsed, encoding: .utf8)!
                     let messageRequestStr = String(data: self.getMessageRequest(client), encoding: .utf8)!
@@ -132,13 +134,13 @@ class SourcePointClientSpec: QuickSpec {
             describe("customConsent") {
                 it("makes a POST to SourcePointClient.CUSTOM_CONSENT_URL") {
                     let http = MockHttp()
-                    self.getClient(http).customConsentGDPR(toConsentUUID: "", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { _ in }
+                    self.getClient(http).customConsentGDPR(toConsentUUID: "", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { _ in }
                     expect(http.postWasCalledWithUrl).toEventually(equal(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL.absoluteString))
                 }
 
                 it("makes a POST with the correct body") {
                     let http = MockHttp()
-                    self.getClient(http).customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 123) { _ in }
+                    self.getClient(http).customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { _ in }
                     let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
                     expect((parsedRequest?["consentUUID"] as? String)).to(equal("uuid"))
                     expect((parsedRequest?["vendors"] as? [String])).to(equal([]))
@@ -169,7 +171,7 @@ class SourcePointClientSpec: QuickSpec {
 
                     it("calls the completion handler with a CustomConsentResponse") {
                         var consentsResponse: CustomConsentResponse?
-                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { result in
+                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                             switch result {
                             case .success(let response):
                                 consentsResponse = response
@@ -185,7 +187,7 @@ class SourcePointClientSpec: QuickSpec {
 
                     it("calls completion handler with nil as error") {
                         var error: SPError? = .none
-                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { result in
+                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                             switch result {
                             case .success(_): break
                             case .failure(let e):
@@ -203,7 +205,7 @@ class SourcePointClientSpec: QuickSpec {
 
                     it("calls the completion handler with an SPError") {
                         var error: SPError?
-                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: 1) { result in
+                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                             switch result {
                             case .success(_): break
                             case .failure(let e):
@@ -220,7 +222,7 @@ class SourcePointClientSpec: QuickSpec {
                         let error = SPError()
                         self.getClient(http).errorMetrics(
                             error,
-                            propertyId: 123,
+                            propertyId: self.propertyId,
                             sdkVersion: "1.2.3",
                             OSVersion: "11.0",
                             deviceFamily: "iPhone 11 pro",
@@ -229,10 +231,9 @@ class SourcePointClientSpec: QuickSpec {
                         let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
                         expect(http.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"))
                         expect((parsedRequest?["code"] as? String)).to(equal(error.spCode))
-                        expect((parsedRequest?["accountId"] as? String)).to(equal("1"))
-                        expect((parsedRequest?["propertyId"] as? String)).to(equal("123"))
+                        expect((parsedRequest?["accountId"] as? String)).to(equal("\(self.accountId)"))
+                        expect((parsedRequest?["propertyId"] as? String)).to(equal("\(self.propertyId)"))
                         expect((parsedRequest?["propertyHref"] as? String)).to(equal("https://test"))
-                        expect((parsedRequest?["propertyId"] as? String)).to(equal("123"))
                         expect((parsedRequest?["description"] as? String)).to(equal(error.description))
                         expect((parsedRequest?["scriptVersion"] as? String)).to(equal("1.2.3"))
                         expect((parsedRequest?["sdkOSVersion"] as? String)).to(equal("11.0"))
