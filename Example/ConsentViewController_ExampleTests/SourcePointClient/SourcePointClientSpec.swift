@@ -73,6 +73,10 @@ class SourcePointClientSpec: QuickSpec {
                     URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true")!.absoluteURL
                 ))
             }
+
+            it("DELTE_CUSTOM_CONSENT_URL") {
+                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL).to(equal(URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/")!.absoluteURL))
+            }
         }
 
         describe("SourcePointClient") {
@@ -232,6 +236,90 @@ class SourcePointClientSpec: QuickSpec {
                         expect((parsedRequest?["sdkOSVersion"] as? String)).to(equal("11.0"))
                         expect((parsedRequest?["deviceFamily"] as? String)).to(equal("iPhone 11 pro"))
                         expect((parsedRequest?["legislation"] as? String)).to(equal("GDPR"))
+                    }
+                }
+            }
+
+            describe("deleteCustomConsent") {
+                it("constructsCorrectURL") {
+                    expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, 123, "yo")!.absoluteString).to(
+                        equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/123?consentUUID=yo"))
+                }
+
+                it("makes a DELETE with the correct body") {
+                    let http = MockHttp()
+                    self.getClient(http).deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { _ in }
+                    let parsedRequest = try? JSONSerialization.jsonObject(with: http.deleteWasCalledWithBody!) as? [String: Any]
+                    expect((parsedRequest?["vendors"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["categories"] as? [String])).to(equal([]))
+                    expect((parsedRequest?["legIntCategories"] as? [String])).to(equal([]))
+                }
+
+                context("on success") {
+                    beforeEach {
+                        client = self.getClient(MockHttp(success: """
+                        {
+                            "vendors": ["aVendor"],
+                            "categories": ["aCategory"],
+                            "legIntCategories": ["aLegIntInterest"],
+                            "specialFeatures": ["aSpecialFeature"],
+                            "grants": {
+                                "vendorId": {
+                                    "vendorGrant": false,
+                                    "purposeGrants": {
+                                        "purposeId": false
+                                    }
+                                }
+                            }
+                        }
+                        """.data(using: .utf8)!))
+                    }
+
+                    it("calls the completion handler with a DeleteCustomConsentResponse") {
+                        var consentsResponse: DeleteCustomConsentResponse?
+                        client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                            switch result {
+                            case .success(let response):
+                                consentsResponse = response
+                            case .failure(_): break
+                            }
+                        }
+                        expect(consentsResponse).toEventually(equal(DeleteCustomConsentResponse(
+                                                      grants: [
+                                                          "vendorId": SPGDPRVendorGrant(granted: false, purposeGrants: ["purposeId": false])
+                                                      ]
+                                                  )))
+
+                    }
+
+                    it("calls completion handler with nil as error in case of success") {
+                        var error: SPError? = .none
+                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                            switch result {
+                            case .success(_): break
+                            case .failure(let e):
+                                error = e
+                            }
+                        }
+                        expect(error).toEventually(beNil())
+                    }
+                }
+
+                context("on failure") {
+                    beforeEach {
+                        client = self.getClient(MockHttp(error: SPError()))
+                    }
+
+                    it("calls the completion handler with an InvalidResponseDeleteCustomError") {
+                        var error: SPError?
+                        client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                            switch result {
+                            case .success(_): break
+                            case .failure(let e):
+                                error = e
+                            }
+                        }
+                        expect(error).toEventually(beAKindOf(InvalidResponseDeleteCustomError.self))
                     }
                 }
             }

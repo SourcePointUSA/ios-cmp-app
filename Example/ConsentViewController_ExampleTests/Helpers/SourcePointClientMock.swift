@@ -105,6 +105,14 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
+    func deleteCustomConsentGDPR(toConsentUUID consentUUID: String,
+                                 vendors: [String],
+                                 categories: [String],
+                                 legIntCategories: [String],
+                                 propertyId: Int,
+                                 handler: @escaping DeleteCustomConsentHandler) {
+    }
+
     func customConsent(toConsentUUID consentUUID: String,
                        vendors: [String],
                        categories: [String],
