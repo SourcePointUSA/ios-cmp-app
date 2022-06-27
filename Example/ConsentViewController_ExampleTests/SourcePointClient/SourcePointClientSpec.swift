@@ -8,6 +8,7 @@
 
 // swiftlint:disable force_try
 // swiftlint:disable function_body_length
+// swiftlint:disable type_body_length
 
 import Quick
 import Nimble
@@ -15,7 +16,8 @@ import Nimble
 
 class SourcePointClientSpec: QuickSpec {
     let propertyId = 123
-    let accountId = 1, propertyName = try! SPPropertyName("test")
+    let accountId = 1
+    let propertyName = try! SPPropertyName("test")
 
     func getClient(_ client: MockHttp) -> SourcePointClient {
         SourcePointClient(accountId: accountId, propertyName: propertyName, campaignEnv: .Public, client: client)

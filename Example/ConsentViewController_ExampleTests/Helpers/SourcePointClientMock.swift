@@ -16,6 +16,7 @@ class SourcePointClientMock: SourcePointProtocol {
     }
 
     var customConsentResponse: CustomConsentResponse?
+    
     static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
         Campaign(
             type: type,
