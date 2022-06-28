@@ -312,8 +312,8 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("deleteCustomConsent") {
                 it("constructsCorrectURL") {
-                    expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, 123, "yo")!.absoluteString).to(
-                        equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/123?consentUUID=yo"))
+                    expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, self.propertyId, "yo")!.absoluteString).to(
+                        equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
                 }
 
                 it("makes a DELETE with the correct body") {

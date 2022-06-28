@@ -52,8 +52,8 @@ class ViewController: UIViewController {
             vendors: [myVendorId],
             categories: myPurposesId,
             legIntCategories: []) { [weak self] consents in
-            let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted ?? false
-            self?.updateMyVendorUI(vendorAccepted)
+                let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted ?? false
+                self?.updateMyVendorUI(vendorAccepted)
         }
     }
 
