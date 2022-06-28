@@ -108,6 +108,10 @@ class ExampleApp: XCUIApplication {
         buttons["GDPR Privacy Manager"].firstMatch
     }
 
+    var deleteCustomVendorsButton: XCUIElement {
+        buttons["Delete My Vendor"].firstMatch
+    }
+
     var shouldRunAttScenario: Bool {
         /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
         /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
