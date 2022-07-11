@@ -39,6 +39,7 @@ typealias ResponseHandler = (Result<Data?, SPError>) -> Void
 protocol HttpClient {
     func get(urlString: String, handler: @escaping ResponseHandler)
     func post(urlString: String, body: Data?, handler: @escaping ResponseHandler)
+    func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler)
 }
 
 class SimpleClient: HttpClient {
@@ -133,5 +134,17 @@ class SimpleClient: HttpClient {
             return
         }
         request(URLRequest(url: url), handler)
+    }
+
+    func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
+        guard let url = URL(string: urlString) else {
+            handler(.failure(InvalidURLError(urlString: urlString)))
+            return
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpMethod = "DELETE"
+        urlRequest.httpBody = body
+        request(urlRequest, handler)
     }
 }

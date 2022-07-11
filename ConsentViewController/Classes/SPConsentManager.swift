@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+// swiftlint:disable file_length
 @objcMembers public class SPConsentManager: NSObject {
     static let DefaultTimeout = TimeInterval(30)
     static public var shouldCallErrorMetrics = true
@@ -263,8 +263,7 @@ import UIKit
         )
     }
 
-    private func selectPrivacyManagerId(fallbackId:String, groupPmId:String?, childPmId:String?) -> String
-    {
+    private func selectPrivacyManagerId(fallbackId: String, groupPmId: String?, childPmId: String?) -> String {
         let hasGroupPmId = groupPmId != nil && groupPmId != ""
         let hasChildPmId = childPmId != nil && childPmId != ""
         if hasChildPmId, let childPmId = childPmId {
@@ -431,6 +430,37 @@ import UIKit
             return
         }
         spClient.customConsentGDPR(
+            toConsentUUID: gdprUUID,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            propertyId: propertyId
+        ) { [weak self] result in
+            switch result {
+            case .success(let consents):
+                let newGDPRConsents = SPGDPRConsent(
+                    uuid: self?.gdprUUID,
+                    vendorGrants: consents.grants,
+                    euconsent: self?.storage.userData.gdpr?.consents?.euconsent ?? "",
+                    tcfData: self?.storage.userData.gdpr?.consents?.tcfData ?? SPJson()
+                )
+                self?.storage.userData = SPUserData(
+                    gdpr: SPConsent<SPGDPRConsent>(consents: newGDPRConsents, applies: self?.storage.userData.gdpr?.applies ?? false),
+                    ccpa: self?.storage.userData.ccpa
+                )
+                handler(newGDPRConsents)
+            case .failure(let error):
+                self?.onError(error)
+            }
+        }
+    }
+
+    public func deleteCustomConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
+        guard let propertyId = propertyId, !gdprUUID.isEmpty else {
+            onError(PostingConsentWithoutConsentUUID())
+            return
+        }
+        spClient.deleteCustomConsentGDPR(
             toConsentUUID: gdprUUID,
             vendors: vendors,
             categories: categories,

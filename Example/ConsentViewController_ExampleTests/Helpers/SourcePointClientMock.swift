@@ -16,6 +16,7 @@ class SourcePointClientMock: SourcePointProtocol {
     }
 
     var customConsentResponse: CustomConsentResponse?
+    
     static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
         Campaign(
             type: type,
@@ -103,6 +104,14 @@ class SourcePointClientMock: SourcePointProtocol {
 
     func errorMetrics(_ error: SPError, propertyId: Int?, sdkVersion: String, OSVersion: String, deviceFamily: String, campaignType: SPCampaignType) {
 
+    }
+
+    func deleteCustomConsentGDPR(toConsentUUID consentUUID: String,
+                                 vendors: [String],
+                                 categories: [String],
+                                 legIntCategories: [String],
+                                 propertyId: Int,
+                                 handler: @escaping DeleteCustomConsentHandler) {
     }
 
     func customConsent(toConsentUUID consentUUID: String,

@@ -39,6 +39,12 @@ import Foundation
         legIntCategories: [String],
         handler: @escaping (SPGDPRConsent) -> Void
     )
+    @objc func deleteCustomConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (SPGDPRConsent) -> Void
+    )
 }
 
 public extension SPSDK {

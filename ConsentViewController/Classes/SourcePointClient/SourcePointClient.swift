@@ -6,6 +6,8 @@
 //
 
 // swiftlint:disable function_parameter_count
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 import Foundation
 
@@ -39,6 +41,7 @@ typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
 typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
+typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -50,7 +53,8 @@ protocol SourcePointProtocol {
         pubData: SPPublisherData,
         idfaStaus: SPIDFAStatus,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping MessagesHandler)
+        handler: @escaping MessagesHandler
+    )
 
     func getGDPRMessage(
         propertyId: String,
@@ -69,26 +73,30 @@ protocol SourcePointProtocol {
     func gdprPrivacyManagerView(
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping GDPRPrivacyManagerViewHandler)
+        handler: @escaping GDPRPrivacyManagerViewHandler
+    )
 
     func ccpaPrivacyManagerView(
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
-        handler: @escaping CCPAPrivacyManagerViewHandler)
+        handler: @escaping CCPAPrivacyManagerViewHandler
+    )
 
     func postCCPAAction(
         authId: String?,
         action: SPAction,
         localState: SPJson,
         idfaStatus: SPIDFAStatus,
-        handler: @escaping CCPAConsentHandler)
+        handler: @escaping CCPAConsentHandler
+    )
 
     func postGDPRAction(
         authId: String?,
         action: SPAction,
         localState: SPJson,
         idfaStatus: SPIDFAStatus,
-        handler: @escaping GDPRConsentHandler)
+        handler: @escaping GDPRConsentHandler
+    )
 
     func reportIdfaStatus(
         propertyId: Int?,
@@ -106,7 +114,8 @@ protocol SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping CustomConsentHandler)
+        handler: @escaping CustomConsentHandler
+    )
 
     func errorMetrics(
         _ error: SPError,
@@ -115,6 +124,15 @@ protocol SourcePointProtocol {
         OSVersion: String,
         deviceFamily: String,
         campaignType: SPCampaignType
+    )
+
+    func deleteCustomConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping DeleteCustomConsentHandler
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -341,6 +359,35 @@ class SourcePointClient: SourcePointProtocol {
                 })
             }
         }
+    }
+
+    func deleteCustomConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String], categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping DeleteCustomConsentHandler) {
+            _ = JSONEncoder().encodeResult(DeleteCustomConsentRequest(
+                vendors: vendors,
+                categories: categories,
+                legIntCategories: legIntCategories
+            )).map { body in
+                client.delete(urlString: deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID)!.absoluteString, body: body) { result in
+                    handler(Result {
+                        try result.decoded() as DeleteCustomConsentResponse
+                    }.mapError {
+                        InvalidResponseDeleteCustomError(error: $0, campaignType: .gdpr)
+                    })
+                }
+            }
+        }
+
+    func deleteCustomConsentUrl(_ baseUrl: URL, _ propertyId: Int, _ consentUUID: String) -> URL? {
+        let propertyIdString = String(propertyId)
+        let urlWithPath = baseUrl.appendingPathComponent(propertyIdString)
+        var components = URLComponents(url: urlWithPath, resolvingAgainstBaseURL: true)
+        components?.queryItems = [URLQueryItem(name: "consentUUID", value: consentUUID)]
+        return components?.url(relativeTo: baseUrl)
     }
 
     func errorMetrics(

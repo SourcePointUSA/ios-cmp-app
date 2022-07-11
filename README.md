@@ -197,7 +197,7 @@ In case of an error, the SDK will wrap the error in one of the `SPError` classes
 By default, the SDK will also remove all consent data from the device. This _may_ cause a consent message to be shown again, depending on your scenario. This was implemented on purpose to be the most compliant as possible. Since there are no consent data, vendors should refrain from performing logic that depend on it.
 This behaviour can be opted-out by setting the flag  `consentManager.cleanUserDataOnError` to `false`, after you initialise `SPConsentManager`.
 
-## Programatically consenting an user
+## Adding or Removing custom consents 
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
 ```swift
 func customConsentToGDPR(
@@ -210,7 +210,20 @@ func customConsentToGDPR(
 
 The vendor grants will be re-generated, this time taking into consideration the list of vendors, categories and legitimate interest categories you pass as parameters. The method is asynchronous so you must pass a completion handler that will receive back an instance of `SPGDPRConsent` in case of success or it'll call the delegate method `onError` in case of failure.
 
-It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
+Using the same strategy for the custom consent, it's possible to programmatically delete the current user consent to a list of vendors, categories and legitimate interest categories by using the following method:
+ 
+ ```swift
+func deleteCustomConsentGDPR(
+    vendors: [String], 
+    categories: [String], 
+    legIntCategories: [String], 
+    handler: @escaping (SPGDPRConsent) -> Void
+ )
+ ```
+
+The method is asynchronous so you must pass a completion handler that will receive back an instance of SPGDPRConsent in case of success or it'll call the delegate method onError in case of failure.
+
+It's important to notice, this methods are intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
 
 ## Authenticated Consent
 In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
