@@ -112,7 +112,6 @@
 		822BF2CB2657E29800177B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2C92657E29800177B0E /* Main.storyboard */; };
 		822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CC2657E29900177B0E /* Assets.xcassets */; };
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
-		822BF2DB2657E29900177B0E /* NativePMExampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822BF2DA2657E29900177B0E /* NativePMExampleAppTests.swift */; };
 		822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
@@ -389,8 +388,6 @@
 		822BF2CF2657E29900177B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		822BF2D12657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822BF2D62657E29900177B0E /* NativePMExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		822BF2DA2657E29900177B0E /* NativePMExampleAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativePMExampleAppTests.swift; sourceTree = "<group>"; };
-		822BF2DC2657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRWebViewExtensionsSpec.swift; sourceTree = "<group>"; };
@@ -925,7 +922,6 @@
 				6D80473325D1AC3E0005002B /* ObjC-ExampleAppUITests */,
 				6D9053FC25D27ABF00E4B49D /* AuthExampleUITests */,
 				822BF2C42657E29800177B0E /* NativePMExampleApp */,
-				822BF2D92657E29900177B0E /* NativePMExampleAppTests */,
 				822BF2E42657E29900177B0E /* NativePMExampleAppUITests */,
 				8255B6C927A9661100C9A70D /* SPMBuild */,
 				607FACD11AFB9204008FA782 /* Products */,
@@ -1194,15 +1190,6 @@
 				822BF2D12657E29900177B0E /* Info.plist */,
 			);
 			path = NativePMExampleApp;
-			sourceTree = "<group>";
-		};
-		822BF2D92657E29900177B0E /* NativePMExampleAppTests */ = {
-			isa = PBXGroup;
-			children = (
-				822BF2DA2657E29900177B0E /* NativePMExampleAppTests.swift */,
-				822BF2DC2657E29900177B0E /* Info.plist */,
-			);
-			path = NativePMExampleAppTests;
 			sourceTree = "<group>";
 		};
 		822BF2E42657E29900177B0E /* NativePMExampleAppUITests */ = {
@@ -2588,7 +2575,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				822BF2DB2657E29900177B0E /* NativePMExampleAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
