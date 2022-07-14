@@ -317,6 +317,13 @@ SWIFT_CLASS("_TtC21ConsentViewController26InvalidResponseCustomError")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController32InvalidResponseDeleteCustomError")
+@interface InvalidResponseDeleteCustomError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 SWIFT_CLASS("_TtC21ConsentViewController57InvalidResponseGDPRPrivacyManagerViewEndpointMessageError")
 @interface InvalidResponseGDPRPrivacyManagerViewEndpointMessageError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -637,6 +644,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
 
@@ -652,6 +660,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
 
@@ -890,6 +899,7 @@ SWIFT_CLASS("_TtC21ConsentViewController14SPPropertyName")
 SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
 @interface SPUserData : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1276,6 +1286,13 @@ SWIFT_CLASS("_TtC21ConsentViewController26InvalidResponseCustomError")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController32InvalidResponseDeleteCustomError")
+@interface InvalidResponseDeleteCustomError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 SWIFT_CLASS("_TtC21ConsentViewController57InvalidResponseGDPRPrivacyManagerViewEndpointMessageError")
 @interface InvalidResponseGDPRPrivacyManagerViewEndpointMessageError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -1596,6 +1613,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
 
@@ -1611,6 +1629,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
 
@@ -1849,6 +1868,7 @@ SWIFT_CLASS("_TtC21ConsentViewController14SPPropertyName")
 SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
 @interface SPUserData : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2235,6 +2255,13 @@ SWIFT_CLASS("_TtC21ConsentViewController26InvalidResponseCustomError")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController32InvalidResponseDeleteCustomError")
+@interface InvalidResponseDeleteCustomError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 SWIFT_CLASS("_TtC21ConsentViewController57InvalidResponseGDPRPrivacyManagerViewEndpointMessageError")
 @interface InvalidResponseGDPRPrivacyManagerViewEndpointMessageError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -2555,6 +2582,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyName:(SPPropertyName * _Nonnull)propertyName campaignsEnv:(enum SPCampaignEnv)campaignsEnv campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
 
@@ -2570,6 +2598,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
 
 
@@ -2808,6 +2837,7 @@ SWIFT_CLASS("_TtC21ConsentViewController14SPPropertyName")
 SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
 @interface SPUserData : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
