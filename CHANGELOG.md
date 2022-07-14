@@ -1,3 +1,7 @@
+# 6.7.0 (May, 06, 2022)
+* Implemented `deleteCustomConsentTo` method. Now you're able to remove consent to custom vendors, purposes and legitimate interest purposes using that method. It works similarly to the `customConsentTo` method. For more info, please refer to [this section](https://github.com/SourcePointUSA/ios-cmp-app#adding-or-removing-custom-consents) of the README.
+* Added support to privacy manager from property groups. You can now pass a property pm id to `SPCampaign` constructor. For more info check [this section](https://github.com/SourcePointUSA/ios-cmp-app#set-a-privacy-manager-id-for-the-property-group) of the README.
+* Several testing and QA improvements.
 # 6.6.0 (May, 06, 2022)
 * Improved support to [property groups](https://documentation.sourcepoint.com/consent_mp/properties-and-property-groups/property-groups/property-group-overview#property-group-limitations) and privacy manager belonging to property groups. For an example on how to use a privacy manager belonging to a a property group, please refer to the README.
 # 6.5.1 (Apr, 07, 2022)
