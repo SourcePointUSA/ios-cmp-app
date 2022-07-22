@@ -246,10 +246,17 @@ import UIKit
 
     public func onError(_ error: SPError) {
         logErrorMetrics(error)
-        if cleanUserDataOnError {
-            SPConsentManager.clearAllData()
+        let userData = storage.userData
+        if !userData.isEqual(SPUserData()) {
+            delegate?.onConsentReady?(userData: userData)
         }
-        delegate?.onError?(error: error)
+        else
+        {
+            if cleanUserDataOnError {
+                SPConsentManager.clearAllData()
+            }
+            delegate?.onError?(error: error)
+        }
     }
 
     private func logErrorMetrics(_ error: SPError) {
