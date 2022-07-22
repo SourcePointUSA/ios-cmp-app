@@ -249,9 +249,7 @@ import UIKit
         let userData = storage.userData
         if !userData.isEqual(SPUserData()) {
             delegate?.onConsentReady?(userData: userData)
-        }
-        else
-        {
+        } else {
             if cleanUserDataOnError {
                 SPConsentManager.clearAllData()
             }

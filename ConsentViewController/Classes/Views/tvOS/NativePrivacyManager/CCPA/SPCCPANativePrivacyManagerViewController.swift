@@ -7,6 +7,7 @@
 
 import UIKit
 import Foundation
+//swiftlint:disable function_body_length
 
 @objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
@@ -91,7 +92,7 @@ import Foundation
         // override in order to disable menu button closing the Privacy Manager
     }
 
-    func setFocusGuidesForButtons(){
+    func setFocusGuidesForButtons() {
         let visibleButtons: [UIView] = actionsContainer.arrangedSubviews.filter({!$0.isHidden})
         for i in 0...visibleButtons.count-2 {
             addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
