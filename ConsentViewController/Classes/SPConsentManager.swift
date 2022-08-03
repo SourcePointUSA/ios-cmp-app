@@ -244,7 +244,7 @@ import UIKit
         handleSDKDone()
     }
 
-    public func onError(_ error: SPError) {
+    public func gracefullyDegradeOnError(_ error: SPError) {
         logErrorMetrics(error)
         let userData = storage.userData
         if !userData.isEqual(SPUserData()) {
@@ -255,6 +255,14 @@ import UIKit
             }
             delegate?.onError?(error: error)
         }
+    }
+
+    public func onError(_ error: SPError) {
+        logErrorMetrics(error)
+        if cleanUserDataOnError {
+            SPConsentManager.clearAllData()
+        }
+        delegate?.onError?(error: error)
     }
 
     private func logErrorMetrics(_ error: SPError) {
@@ -338,7 +346,7 @@ import UIKit
                     self?.renderNextMessageIfAny()
                 }
             case .failure(let error):
-                self?.onError(error)
+                self?.gracefullyDegradeOnError(error)
             }
         }
     }
