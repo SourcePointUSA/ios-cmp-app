@@ -194,8 +194,9 @@ Make sure to check XCode's quick help of `SPUserData` for more information on wh
 
 ### optional onError(error: SPError)
 In case of an error, the SDK will wrap the error in one of the `SPError` classes and eventually call the `onError(_ error: SPError)` callback. 
-By default, the SDK will also remove all consent data from the device. This _may_ cause a consent message to be shown again, depending on your scenario. This was implemented on purpose to be the most compliant as possible. Since there are no consent data, vendors should refrain from performing logic that depend on it.
-This behaviour can be opted-out by setting the flag  `consentManager.cleanUserDataOnError` to `false`, after you initialise `SPConsentManager`.
+
+By default, the SDK preservs all user consent data from UserDefaults in case of `OnError` event is called.
+Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
 ## Adding or Removing custom consents 
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
@@ -368,11 +369,8 @@ The `onConsentReady` delegate method sends the consent action to the server and 
 
 ### `onError()`
 
-The SDK will in all cases wrap the error in one of the SPError class and eventually call the func `onError(_ error: SPError)` callback. By default, the SDK will also remove all consent data from the device. This may cause a consent message to be shown again, depending on your scenario.
-
-This was implemented on purpose to be the most safe possible. Since there are no consent data, vendors should refrain from performing logic that depends on it.
-
-This behaviour can be opted-out by setting the flag `consentManager.cleanUserDataOnError` to false, after you initialise `SPConsentManager`.
+The SDK will in all cases wrap the error in one of the SPError class and eventually call the func `onError(_ error: SPError)` callback. By default, the SDK preservs all user consent data from UserDefaults in case of `OnError` event is called.
+Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
 ## Delete user data
 Utilize the following method if an end-user requests to have their data deleted:
