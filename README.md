@@ -415,4 +415,6 @@ We encapsulate the IDFA status in our own enum called `SPIDFAstatus`. In case th
 * `rejected`: User rejected the ATT prompt, denyinh your app access to the IDFA.
 
 We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
+### 3. Are deep links supported?
 
+Sourcepoint does not support deep linking due to an HTML sanitizer used in our message rendering app (used by our in-app SDKs to render messages in a webview). Changing the configuration to our HTML sanitizer would compromise our security and introduce vulnerabilities for cross-site scripting (XSS) attacks.
