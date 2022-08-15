@@ -418,3 +418,14 @@ We'll update this list over time, if you have any questions feel free to open an
 ### 3. Are deep links supported?
 
 Sourcepoint does not support deep linking due to an HTML sanitizer used in our message rendering app (used by our in-app SDKs to render messages in a webview). Changing the configuration to our HTML sanitizer would compromise our security and introduce vulnerabilities for cross-site scripting (XSS) attacks.
+
+Your organization can mirror deep linking by creating a button with a **Custom Action** choice option in your first layer message and leveraging the following code in your implementation:
+
+```swift
+func onAction(_ action: SPAction, from controller: UIViewController) {
+    if action.type == .Custom,
+       action.customActionId == "id-specified-in-portal" {
+        // navigate user to intended page
+    }
+}
+```
