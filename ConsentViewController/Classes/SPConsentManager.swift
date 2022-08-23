@@ -14,10 +14,10 @@ import UIKit
     static public var shouldCallErrorMetrics = true
 
     // MARK: - SPSDK
-    /// By default, the SDK will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
-    /// `.loadMessage` is called.
-    /// Set this flag to `false` if you wish to opt-out from this behaviour.
-    public var cleanUserDataOnError: Bool = true
+    /// By default, the SDK preservs all user consent data from UserDefaults in case `OnError` event happens.
+    /// Set this flag to `true` if you wish to opt-out from this behaviour.
+    /// If set to `true` will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
+    public var cleanUserDataOnError: Bool = false
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = SPConsentManager.DefaultTimeout {
@@ -244,6 +244,19 @@ import UIKit
         handleSDKDone()
     }
 
+    public func gracefullyDegradeOnError(_ error: SPError) {
+        logErrorMetrics(error)
+        let userData = storage.userData
+        if !userData.isEqual(SPUserData()) {
+            delegate?.onConsentReady?(userData: userData)
+        } else {
+            if cleanUserDataOnError {
+                SPConsentManager.clearAllData()
+            }
+            delegate?.onError?(error: error)
+        }
+    }
+
     public func onError(_ error: SPError) {
         logErrorMetrics(error)
         if cleanUserDataOnError {
@@ -333,7 +346,7 @@ import UIKit
                     self?.renderNextMessageIfAny()
                 }
             case .failure(let error):
-                self?.onError(error)
+                self?.gracefullyDegradeOnError(error)
             }
         }
     }
