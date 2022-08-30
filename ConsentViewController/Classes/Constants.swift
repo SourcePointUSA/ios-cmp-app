@@ -16,8 +16,8 @@ let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) !
 
 struct Constants {
     struct Urls {
-        static let envParam = prod ? "prod" : "stage"
-        static let SP_ROOT = URL(string: prod ? "https://cdn.privacy-mgmt.com/" : "https://cdn.sp-stage.net/")!
+        static let envParam = prod ? "localProd" : "stage"
+        static let SP_ROOT = URL(string: prod ? "http://localhost:3000/" : "https://cdn.sp-stage.net/")!
         static let WRAPPER_API = URL(string: "./wrapper/", relativeTo: SP_ROOT)!
         static let GDPR_MESSAGE_URL = URL(string: "./v2/message/gdpr", relativeTo: WRAPPER_API)!
         static let CCPA_MESSAGE_URL = URL(string: "./v2/message/ccpa", relativeTo: WRAPPER_API)!
@@ -33,6 +33,7 @@ struct Constants {
         static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
         static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
         static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
+        static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)", relativeTo: WRAPPER_API)!
     }
 
     struct UI {
