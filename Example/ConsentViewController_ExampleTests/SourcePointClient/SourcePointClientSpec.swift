@@ -78,7 +78,7 @@ class SourcePointClientSpec: QuickSpec {
                 ))
             }
 
-            it("DELTE_CUSTOM_CONSENT_URL") {
+            it("DELETE_CUSTOM_CONSENT_URL") {
                 expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL).to(equal(URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/")!.absoluteURL))
             }
         }
