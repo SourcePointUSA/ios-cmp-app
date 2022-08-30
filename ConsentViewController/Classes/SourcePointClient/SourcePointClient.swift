@@ -138,7 +138,7 @@ protocol SourcePointProtocol {
 
     func consentStatus(
         propertyId: Int,
-        metadata: SPJson,
+        metadata: ConsentStatusMetaData,
         authId: String?,
         handler: @escaping ConsentStatusHandler
     )
@@ -424,14 +424,10 @@ class SourcePointClient: SourcePointProtocol {
 
 // MARK: V7 - cost optimised APIs
 extension SourcePointClient {
-    func consentStatusURLWithParams(propertyId: Int, metadata: SPJson, authId: String?) throws -> URL {
-        guard let data = try? JSONSerialization.data(withJSONObject: metadata.dictionaryValue as Any),
-              let metadataString = String(data: data, encoding: .utf8) else {
-                  throw SPError()
-              }
+    func consentStatusURLWithParams(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?) throws -> URL {
         var url = Constants.Urls.CONSENT_STATUS_URL.appendQueryItems([
             "propertyId": propertyId.description,
-            "metadata": metadataString,
+            "metadata": metadata.stringified(),
             "hasCsp": "true",
             "withSiteActions": "false"
         ])
@@ -441,7 +437,7 @@ extension SourcePointClient {
         return url!
     }
 
-    func consentStatus(propertyId: Int, metadata: SPJson, authId: String?, handler: @escaping ConsentStatusHandler) {
+    func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
         guard let url = try? consentStatusURLWithParams(propertyId: propertyId, metadata: metadata, authId: authId) else {
             handler(Result.failure(SPError()))
             return
