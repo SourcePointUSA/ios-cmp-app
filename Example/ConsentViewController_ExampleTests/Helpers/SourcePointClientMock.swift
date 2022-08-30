@@ -37,7 +37,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
 
-    func consentStatus(propertyId: Int, metadata: SPJson, authId: String?, handler: @escaping ConsentStatusHandler) {
+    func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
 
     }
 
