@@ -24,7 +24,13 @@ class MockHttp: HttpClient {
         self.error = error
     }
 
-    public func get(urlString: String, handler: @escaping ResponseHandler) {}
+    public func get(urlString: String, handler: @escaping ResponseHandler) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1), execute: {
+            self.success != nil ?
+            handler(.success(self.success)) :
+            handler(.failure(SPError(error: self.error!)))
+        })
+    }
 
     func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {}
 

@@ -42,6 +42,7 @@ typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
+typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -133,6 +134,13 @@ protocol SourcePointProtocol {
         legIntCategories: [String],
         propertyId: Int,
         handler: @escaping DeleteCustomConsentHandler
+    )
+
+    func consentStatus(
+        propertyId: Int,
+        metadata: SPJson,
+        authId: String?,
+        handler: @escaping ConsentStatusHandler
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -410,6 +418,41 @@ class SourcePointClient: SourcePointProtocol {
             campaignType: campaignType
         )).map {
             client.post(urlString: Constants.Urls.ERROR_METRIS_URL.absoluteString, body: $0) { _ in }
+        }
+    }
+}
+
+// MARK: V7 - cost optimised APIs
+extension SourcePointClient {
+    func consentStatusURLWithParams(propertyId: Int, metadata: SPJson, authId: String?) throws -> URL {
+        guard let data = try? JSONSerialization.data(withJSONObject: metadata.dictionaryValue as Any),
+              let metadataString = String(data: data, encoding: .utf8) else {
+                  throw SPError()
+              }
+        var url = Constants.Urls.CONSENT_STATUS_URL.appendQueryItems([
+            "propertyId": propertyId.description,
+            "metadata": metadataString,
+            "hasCsp": "true",
+            "withSiteActions": "false"
+        ])
+        if let authId = authId {
+            url = url?.appendQueryItems(["authId": authId])
+        }
+        return url!
+    }
+
+    func consentStatus(propertyId: Int, metadata: SPJson, authId: String?, handler: @escaping ConsentStatusHandler) {
+        guard let url = try? consentStatusURLWithParams(propertyId: propertyId, metadata: metadata, authId: authId) else {
+            handler(Result.failure(SPError()))
+            return
+        }
+
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as ConsentStatusResponse
+            }.mapError {
+                SPError(error: $0)
+            })
         }
     }
 }
