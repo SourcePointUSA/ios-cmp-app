@@ -255,3 +255,11 @@ import Foundation
     // swiftlint:disable:next unused_setter_value
     public override var campaignType: SPCampaignType { get { .gdpr } set {} }
 }
+
+@objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_consent_status_query_params" }
+}
+
+@objcMembers public class InvalidConsentStatusResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_consent_status_response" }
+}
