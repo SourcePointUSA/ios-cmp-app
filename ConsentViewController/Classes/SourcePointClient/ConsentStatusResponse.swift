@@ -29,20 +29,6 @@ struct SPDateCreated: Codable, Equatable {
     }
 }
 
-struct SPConsentStatus: Decodable, Equatable {
-    struct GranularStatus: Decodable, Equatable {
-        enum Status: String, Decodable, Equatable {
-            case ALL, SOME, NONE
-        }
-
-        let vendorConsent, vendorLegInt, purposeConsent, purposeLegInt: Status
-        let previousOptInAll, defaultConsent: Bool
-    }
-
-    let granularStatus: GranularStatus
-    let rejectedAny, rejectedLI, consentedAll, hasConsentData, consentedToAny: Bool
-}
-
 struct ConsentStatusResponse: Decodable, Equatable {
     struct Data: Decodable, Equatable {
         struct GDPR: Decodable, Equatable {
@@ -50,7 +36,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let dateCreated: SPDateCreated
             let uuid, vendorListId, euconsent, addtlConsent: String
             let grants: SPGDPRVendorGrants
-            let consentStatus: SPConsentStatus
+            let consentStatus: ConsentStatus
         }
 
         struct CCPA: Decodable, Equatable {
