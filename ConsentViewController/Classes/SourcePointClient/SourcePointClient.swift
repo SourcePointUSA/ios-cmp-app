@@ -424,7 +424,7 @@ class SourcePointClient: SourcePointProtocol {
 
 // MARK: V7 - cost optimised APIs
 extension SourcePointClient {
-    func consentStatusURLWithParams(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?) throws -> URL {
+    func consentStatusURLWithParams(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?) -> URL? {
         var url = Constants.Urls.CONSENT_STATUS_URL.appendQueryItems([
             "propertyId": propertyId.description,
             "metadata": metadata.stringified(),
@@ -434,11 +434,11 @@ extension SourcePointClient {
         if let authId = authId {
             url = url?.appendQueryItems(["authId": authId])
         }
-        return url!
+        return url
     }
 
     func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
-        guard let url = try? consentStatusURLWithParams(propertyId: propertyId, metadata: metadata, authId: authId) else {
+        guard let url = consentStatusURLWithParams(propertyId: propertyId, metadata: metadata, authId: authId) else {
             handler(Result.failure(SPError()))
             return
         }
