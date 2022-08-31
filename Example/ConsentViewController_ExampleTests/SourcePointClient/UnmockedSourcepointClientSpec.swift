@@ -11,7 +11,7 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_try function_body_length line_length
+// swiftlint:disable force_try line_length
 
 class UnmockedConnectivityManagerSpec: QuickSpec {
     override func spec() {
@@ -44,20 +44,7 @@ class UnmockedConnectivityManagerSpec: QuickSpec {
                     }
                 }
 
-//                // TODO: move this to ConsentStatusMetadataSpec
-//                describe("metadata") {
-//                    it("should be \"stringified\"") {
-//                        let url = try? client.consentStatusURLWithParams(
-//                            propertyId: 123,
-//                            metadata: ,
-//                            authId: nil
-//                        )
-//                        let encodedMetaData = "metadata={\"foo\":{\"bar\":\"baz\"}}".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//                        expect(url?.query).to(contain(encodedMetaData))
-//                    }
-//                }
-
-                it("with authId") {
+                it("should contain all query params") {
                     let url = try? client.consentStatusURLWithParams(propertyId: 123, metadata: emptyMetaData, authId: nil)
                     let paramsRaw = "env=\(Constants.Urls.envParam)&hasCsp=true&metadata={}&propertyId=123&withSiteActions=false"
                     expect(url?.query).to(equal(
