@@ -37,8 +37,7 @@ class SPFocusableTextView: UITextView, UITextViewDelegate {
         updateContentFitsContainer()
     }
 
-    func updateContentFitsContainer()
-    {
+    func updateContentFitsContainer() {
         if contentOffset == .zero || contentOffset.y <= 0 {
             contentFitsContainer = true
         }

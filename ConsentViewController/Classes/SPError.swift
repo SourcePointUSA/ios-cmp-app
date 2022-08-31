@@ -149,27 +149,27 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /message endpoint" }
 }
 
-@objcMembers public class InvalidResponseGetMessagesEndpointMessageError: SPError {
+@objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_get_messages" }
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
-@objcMembers public class InvalidResponseMessageGDPREndpointMessageError: SPError {
+@objcMembers public class InvalidResponseMessageGDPREndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_message_gdpr" }
     override public var description: String { "The SDK got an unexpected response from /message/gdpr endpoint" }
 }
 
-@objcMembers public class InvalidResponseMessageCCPAEndpointMessageError: SPError {
+@objcMembers public class InvalidResponseMessageCCPAEndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_message_ccpa" }
     override public var description: String { "The SDK got an unexpected response from /message/ccpa endpoint" }
 }
 
-@objcMembers public class InvalidResponseGDPRPrivacyManagerViewEndpointMessageError: SPError {
+@objcMembers public class InvalidResponseGDPRPMViewEndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_privacy_manager_view_gdpr" }
     override public var description: String { "The SDK got an unexpected response from /consent/tcfv2/privacy-manager/privacy-manager-view endpoint" }
 }
 
-@objcMembers public class InvalidResponseCCPAPrivacyManagerViewEndpointMessageError: SPError {
+@objcMembers public class InvalidResponseCCPAPMViewEndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_privacy_manager_view_ccpa" }
     override public var description: String { "The SDK got an unexpected response from /ccpa/privacy-manager/privacy-manager-view endpoint" }
 }

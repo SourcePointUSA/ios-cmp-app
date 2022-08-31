@@ -76,7 +76,7 @@ protocol SPNativePrivacyManagerHome {
         addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
     }
 
-    func setFocusGuidesForButtons(){
+    func setFocusGuidesForButtons() {
         let visibleButtons: [UIView] = buttonsStack.arrangedSubviews.filter({!$0.isHidden})
         for i in 0...visibleButtons.count-2 {
             addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
@@ -131,7 +131,7 @@ protocol SPNativePrivacyManagerHome {
                             viewData: strongSelf.pmData.categoriesView,
                             pmData: strongSelf.pmData,
                             delegate: self,
-                            nibName: "SPManagePreferenceViewController"
+                            nibName: "SPGDPRManagePreferenceViewController"
                         )
                         if self?.snapshot == nil {
                             self?.snapshot = GDPRPMConsentSnaptshot(

@@ -100,7 +100,6 @@ struct CCPAVendor: Hashable {
     var purposes: [String] { nullablePurposes?.compactMap { $0 }  ?? [] }
 }
 
-/// TODO: remove if the CCPA Vendors stop returning `null` inside its purposes
 extension CCPAVendor: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)

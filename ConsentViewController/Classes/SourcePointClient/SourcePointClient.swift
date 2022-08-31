@@ -193,7 +193,7 @@ class SourcePointClient: SourcePointProtocol {
                 handler(Result {
                     try result.decoded() as MessagesResponse
                 }.mapError({
-                    InvalidResponseGetMessagesEndpointMessageError(error: $0)
+                    InvalidResponseGetMessagesEndpointError(error: $0)
                 }))
             }
         }
@@ -216,7 +216,7 @@ class SourcePointClient: SourcePointProtocol {
             handler(Result {
                 (try result.decoded() as MessageResponse).message
             }.mapError({
-                InvalidResponseMessageGDPREndpointMessageError(error: $0)
+                InvalidResponseMessageGDPREndpointError(error: $0)
             }))
         }
     }
@@ -237,7 +237,7 @@ class SourcePointClient: SourcePointProtocol {
             handler(Result {
                 (try result.decoded() as MessageResponse).message
             }.mapError({
-                InvalidResponseMessageCCPAEndpointMessageError(error: $0)
+                InvalidResponseMessageCCPAEndpointError(error: $0)
             }))
         }
     }
@@ -251,7 +251,7 @@ class SourcePointClient: SourcePointProtocol {
             handler(Result {
                 try result.decoded() as GDPRPrivacyManagerViewResponse
             }.mapError({
-                InvalidResponseGDPRPrivacyManagerViewEndpointMessageError(error: $0)
+                InvalidResponseGDPRPMViewEndpointError(error: $0)
             }))
         }
     }
@@ -265,7 +265,7 @@ class SourcePointClient: SourcePointProtocol {
                 handler(Result {
                     try result.decoded() as CCPAPrivacyManagerViewResponse
                 }.mapError({
-                    InvalidResponseCCPAPrivacyManagerViewEndpointMessageError(error: $0)
+                    InvalidResponseCCPAPMViewEndpointError(error: $0)
                 }))
             }
     }

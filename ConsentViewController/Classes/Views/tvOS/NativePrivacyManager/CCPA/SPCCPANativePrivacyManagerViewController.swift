@@ -7,7 +7,8 @@
 
 import UIKit
 import Foundation
-//swiftlint:disable function_body_length
+
+// swiftlint:disable function_body_length
 
 @objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
