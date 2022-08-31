@@ -278,6 +278,10 @@
 		82BB0E5D28BCF7C1006FBB60 /* ConsentStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E5B28BCF7C1006FBB60 /* ConsentStatusResponse.swift */; };
 		82BB0E6128BE5E45006FBB60 /* ConsentStatusMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6028BE5E45006FBB60 /* ConsentStatusMetadata.swift */; };
 		82BB0E6228BE5E45006FBB60 /* ConsentStatusMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6028BE5E45006FBB60 /* ConsentStatusMetadata.swift */; };
+		82BB0E6428BF33D6006FBB60 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6328BF33D6006FBB60 /* ConsentStatus.swift */; };
+		82BB0E6528BF33D6006FBB60 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6328BF33D6006FBB60 /* ConsentStatus.swift */; };
+		82BB0E6728BF340F006FBB60 /* SPDateCreated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6628BF340F006FBB60 /* SPDateCreated.swift */; };
+		82BB0E6828BF340F006FBB60 /* SPDateCreated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6628BF340F006FBB60 /* SPDateCreated.swift */; };
 		84F9E2368544A37EB5BCC1AC3C62C65A /* SPNativeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2672BD049D0A905CF133426F02F718B2 /* SPNativeUI.swift */; };
 		850183E681EA4E0B6B87C8C6AC6FFA44 /* SourceLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16039148AA6B35C330E6F6E7AC678EA7 /* SourceLocation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		860352739DC79036690713237E676C76 /* WHCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D800FC6A76C0C7A5DAFE049AEFF3FB /* WHCollectionView.swift */; };
@@ -1013,6 +1017,8 @@
 		8228D2AAA7A1BFC5253A07D853998A6C /* Quick-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Quick-iOS-Info.plist"; sourceTree = "<group>"; };
 		82BB0E5B28BCF7C1006FBB60 /* ConsentStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentStatusResponse.swift; sourceTree = "<group>"; };
 		82BB0E6028BE5E45006FBB60 /* ConsentStatusMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentStatusMetadata.swift; sourceTree = "<group>"; };
+		82BB0E6328BF33D6006FBB60 /* ConsentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentStatus.swift; sourceTree = "<group>"; };
+		82BB0E6628BF340F006FBB60 /* SPDateCreated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreated.swift; sourceTree = "<group>"; };
 		82D00B4D7C5E3AE2F97D45A67F7254A3 /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = Sources/Storage.swift; sourceTree = "<group>"; };
 		82F50E2625A5088613B6AA5F902F05DE /* Await.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Await.swift; path = Sources/Nimble/Utils/Await.swift; sourceTree = "<group>"; };
 		8329634D399AEAAF332FD8B6D4FD352F /* DeleteCustomConsentRequestResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeleteCustomConsentRequestResponse.swift; sourceTree = "<group>"; };
@@ -1952,6 +1958,7 @@
 				F7F276B2A33E837B1A32411F920EF53F /* SPCCPAConsent.swift */,
 				3989555B0FD4C3107B99ECB1ACDA1703 /* SPGDPRConsent.swift */,
 				2C67C83D1B92532964B79C4270CDF096 /* SPUserData.swift */,
+				82BB0E6328BF33D6006FBB60 /* ConsentStatus.swift */,
 			);
 			name = Consents;
 			path = ConsentViewController/Classes/Consents;
@@ -2180,6 +2187,7 @@
 				7309C62C949E86587374479617D0EFC6 /* SPCampaigns.swift */,
 				134B8EA87DD38C8BCA404ECECA57EDDA /* SPCampaignType.swift */,
 				109E61A8A94351CBAE76F46FD7CD90C5 /* SPConsentManager.swift */,
+				82BB0E6628BF340F006FBB60 /* SPDateCreated.swift */,
 				EF5C06A47BD566A8B819CD882D25AF55 /* SPDelegate.swift */,
 				D25CE878A53BEAA40A296AA9F57E0631 /* SPDeviceManager.swift */,
 				4D94B9D42CBC7B810A9FAF15455691B1 /* SPError.swift */,
@@ -3206,6 +3214,8 @@
 				ECA31863A59E9003893686EECA5189A0 /* MessageRequest.swift in Sources */,
 				F869EABF1F9CECF47376D3CEB4769020 /* MessageResponse.swift in Sources */,
 				8C4B2122B2211D59F9091B52F8AF83E6 /* MockNativePMResponse.swift in Sources */,
+				82BB0E6428BF33D6006FBB60 /* ConsentStatus.swift in Sources */,
+				82BB0E6728BF340F006FBB60 /* SPDateCreated.swift in Sources */,
 				90557CEFF0CF19414BE9060861AC24F1 /* NSObjectExtensions.swift in Sources */,
 				C7C04F9B7D1F26D10AF47CEA5DA29F07 /* OSLogger.swift in Sources */,
 				1464475DB59144AFFAABE01D6ECB2F19 /* PrivacyManagerViewData.swift in Sources */,
@@ -3578,6 +3588,7 @@
 				4CE1E3EA8A0408690D247480B536448A /* GDPRPrivacyManagerViewResponse.swift in Sources */,
 				116028363801EDE02E1EE86DBD20C0C0 /* IDFAStatusReportRequest.swift in Sources */,
 				FB2B5D2AF1EB6AD56958AD54892C74C7 /* LongButtonViewCell.swift in Sources */,
+				82BB0E6828BF340F006FBB60 /* SPDateCreated.swift in Sources */,
 				9364E5276A328613431359EC5A6090A8 /* LongButtonViewCell.xib in Sources */,
 				F82B088B741188DD12A91255B1D2A20D /* MessageRequest.swift in Sources */,
 				4CA6D498852C19AEF0A2CF3E5401D577 /* MessageResponse.swift in Sources */,
@@ -3589,6 +3600,7 @@
 				71AB66ED8657FC57CF08C5D6A4A64A13 /* PrivacyManagerViewData.swift in Sources */,
 				38ED6FD6C28079558C8C5B6DF951098B /* SimpleClient.swift in Sources */,
 				3C30E330DE14574FEBFB5FD9FF62BB88 /* SourcePointClient.swift in Sources */,
+				82BB0E6528BF33D6006FBB60 /* ConsentStatus.swift in Sources */,
 				A9DBBD760EC6F1196A20D14E50976087 /* SPAction.swift in Sources */,
 				A0E341F114DA939D88B66628FBFA2AC5 /* SPAppleTVButton.swift in Sources */,
 				C44C65EBD1C0A6BA42881976EA7890DC /* SPCampaignEnv.swift in Sources */,
