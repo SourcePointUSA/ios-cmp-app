@@ -30,4 +30,5 @@ struct ConsentStatusResponse: Decodable, Equatable {
     }
 
     let consentStatusData: Data
+    let localState: SPJson
 }
