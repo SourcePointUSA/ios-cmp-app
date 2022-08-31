@@ -439,7 +439,7 @@ extension SourcePointClient {
 
     func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
         guard let url = consentStatusURLWithParams(propertyId: propertyId, metadata: metadata, authId: authId) else {
-            handler(Result.failure(SPError()))
+            handler(Result.failure(InvalidConsentStatusQueryParamsError()))
             return
         }
 
@@ -447,7 +447,7 @@ extension SourcePointClient {
             handler(Result {
                 try result.decoded() as ConsentStatusResponse
             }.mapError {
-                SPError(error: $0)
+                InvalidConsentStatusResponseError(error: $0)
             })
         }
     }
