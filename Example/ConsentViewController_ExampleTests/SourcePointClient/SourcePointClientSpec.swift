@@ -56,7 +56,7 @@ class SourcePointClientSpec: QuickSpec {
 
     override func spec() {
         var client: SourcePointClient!
-        var httpClient: MockHttp?
+        var httpClient: MockHttp!
         var mockedResponse: Data?
 
         beforeSuite {
@@ -87,19 +87,19 @@ class SourcePointClientSpec: QuickSpec {
             beforeEach {
                 mockedResponse = "{\"url\": \"https://notice.sp-prod.net/?message_id=59706\"}".data(using: .utf8)
                 httpClient = MockHttp(success: mockedResponse)
-                client = self.getClient(httpClient!)
+                client = self.getClient(httpClient)
             }
 
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
                     client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
-                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/get_messages/?env=prod"))
+                    expect(httpClient.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/get_messages/?env=prod"))
                 }
 
                 it("calls POST on the http client with the right body") {
                     let idfa = SPIDFAStatus.unknown, lang = SPMessageLanguage.English
                     client.getMessages(campaigns: self.campaigns, authId: self.authID, localState: SPJson(), pubData: [:], idfaStaus: idfa, consentLanguage: lang) { _ in }
-                    let parsed = httpClient!.postWasCalledWithBody!
+                    let parsed = httpClient.postWasCalledWithBody!
                     let parsedStr = String(data: parsed, encoding: .utf8)!
                     let messageRequestStr = String(data: self.getMessageRequest(client), encoding: .utf8)!
 //                    expect(parsedStr).toEventually(equal(messageRequestStr)) // <- flaky therefore annoying >:c
@@ -175,18 +175,17 @@ class SourcePointClientSpec: QuickSpec {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = SPAction(type: .AcceptAll)
                     client.postGDPRAction(authId: nil, action: acceptAllAction, localState: SPJson(), idfaStatus: .accepted) { _ in }
-                    expect(httpClient?.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/messages/choice/gdpr/11?env=prod"))
+                    expect(httpClient.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/messages/choice/gdpr/11?env=prod"))
                 }
 
                 it("calls POST on the http client with the right body") {
                     let action = SPAction(type: .IDFADenied)
                     client.postGDPRAction(authId: nil, action: action, localState: SPJson(), idfaStatus: .accepted) { _ in }
-                    var uuid: String = String(data: httpClient!.postWasCalledWithBody!, encoding: .utf8)!
-                    let index = uuid.range(of: "requestUUID\":\"", options: [])?.upperBound
-                    uuid = uuid.substring(from: index!)
-                    let endIndex = uuid.range(of: "\",\"")?.lowerBound
-                    uuid = uuid.substring(to: endIndex!)
-                    expect(httpClient!.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(GDPRConsentRequest(
+                    var uuid = String(data: httpClient.postWasCalledWithBody!, encoding: .utf8)!
+                    let index = uuid.range(of: "requestUUID\":\"", options: [])!.upperBound
+                    let endIndex = uuid.range(of: "\",\"")!.lowerBound
+                    uuid = String(uuid[index..<endIndex])
+                    expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(GDPRConsentRequest(
                         authId: nil,
                         idfaStatus: .denied,
                         localState: SPJson(),
