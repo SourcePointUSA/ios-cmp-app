@@ -92,13 +92,13 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.gdprMessage.messageTitle).to(showUp())
         }
 
-        it("DeleteCustomConsents after Accept all") {
+        it("DeleteCustomConsents after Accept all persists after app relaunch") {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
-            expect(self.app.deleteCustomVendorsButton).to(showUp())
+            self.app.deleteCustomVendorsButton.tap()
             self.app.relaunch()
-            expect(self.app.deleteCustomVendorsButton.isEnabled).toNot(beTrue())
+            expect(self.app.deleteCustomVendorsButton).to(beDisabled())
         }
     }
 }

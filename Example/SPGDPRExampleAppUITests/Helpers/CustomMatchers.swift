@@ -53,9 +53,25 @@ public func showUp(in timeout: TimeInterval) -> Predicate<XCUIElement> {
 public func disappear() -> Predicate<XCUIElement> {
     return Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual, handler: nil)
+        QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual)
         QuickSpec.current.waitForExpectations(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)!
         )
         return PredicateStatus(bool: !actual.exists)
+    }
+}
+
+/// A Nimble matcher that succeeds when an XCUIElement is enable
+public func beEnabled() -> Predicate<XCUIElement> {
+    return Predicate.simple("beEnabled") { actualExpression in
+        guard let actual = try actualExpression.evaluate() else { return .fail }
+        return PredicateStatus(bool: actual.isEnabled)
+    }
+}
+
+/// A Nimble matcher that succeeds when an XCUIElement is disabled
+public func beDisabled() -> Predicate<XCUIElement> {
+    return Predicate.simple("beDisabled") { actualExpression in
+        guard let actual = try actualExpression.evaluate() else { return .fail }
+        return PredicateStatus(bool: !actual.isEnabled)
     }
 }
