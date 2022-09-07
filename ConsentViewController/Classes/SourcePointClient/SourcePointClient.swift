@@ -42,7 +42,6 @@ typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPErro
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
-typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {

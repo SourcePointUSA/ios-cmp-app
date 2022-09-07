@@ -33,7 +33,6 @@ struct Constants {
         static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
         static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
         static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)", relativeTo: WRAPPER_API)!
-        static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)", relativeTo: WRAPPER_API)!
         static let GET_MESSAGES_URL = URL(string: "./v2/messages?env=\(envParam)", relativeTo: WRAPPER_API)!
     }
 
