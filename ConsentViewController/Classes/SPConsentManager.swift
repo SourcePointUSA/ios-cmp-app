@@ -306,14 +306,7 @@ import UIKit
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         self.authId = authId
         responsesToReceive += 1
-        spClient.getMessages(
-            campaigns: campaigns,
-            authId: authId,
-            localState: storage.localState,
-            pubData: publisherData ?? [:],
-            idfaStaus: idfaStatus,
-            consentLanguage: messageLanguage
-        ) { [weak self] result in
+        spClient.getMessages(nonKeyedLocalState: SPJson(), body: SPJson(), metadata: SPJson()) { [weak self] result in
             self?.responsesToReceive -= 1
             switch result {
             case .success(let messagesResponse):
