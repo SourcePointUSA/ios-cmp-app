@@ -102,7 +102,23 @@ class MessageResponseSpec: QuickSpec {
                                 tcfData: try! SPJson(["foo": "tc-data"])
                             )),
                             applies: true,
-                            messageMetaData: metaData
+                            messageMetaData: metaData,
+                            consentStatus: ConsentStatus(
+                                granularStatus: ConsentStatus.GranularStatus(
+                                    vendorConsent: .ALL,
+                                    vendorLegInt: .ALL,
+                                    purposeConsent: .ALL,
+                                    purposeLegInt: .ALL,
+                                    previousOptInAll: false,
+                                    defaultConsent: false
+                                ),
+                                rejectedAny: false,
+                                rejectedLI: false,
+                                consentedAll: false,
+                                hasConsentData: false,
+                                consentedToAny: false
+                            ),
+                            dateCreated: SPDateCreated.now()
                         ),
                         Campaign(
                             type: .ccpa,
@@ -114,9 +130,26 @@ class MessageResponseSpec: QuickSpec {
                                 uspstring: "us-pstring"
                             )),
                             applies: true,
-                            messageMetaData: metaData
+                            messageMetaData: metaData,
+                            consentStatus: ConsentStatus(
+                                granularStatus: ConsentStatus.GranularStatus(
+                                    vendorConsent: .ALL,
+                                    vendorLegInt: .ALL,
+                                    purposeConsent: .ALL,
+                                    purposeLegInt: .ALL,
+                                    previousOptInAll: false,
+                                    defaultConsent: false
+                                ),
+                                rejectedAny: false,
+                                rejectedLI: false,
+                                consentedAll: false,
+                                hasConsentData: false,
+                                consentedToAny: false
+                            ),
+                            dateCreated: SPDateCreated.now()
                         )
-                    ]
+                    ],
+                nonKeyedLocalState: SPJson()
             )
             let responseDecoded = try! response.decoded() as MessagesResponse
             expect(responseDecoded).to(equal(msgResponse))
