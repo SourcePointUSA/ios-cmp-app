@@ -11,14 +11,14 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_try line_length
+// swiftlint:disable force_try line_length function_body_length
 
-class UnmockedConnectivityManagerSpec: QuickSpec {
+class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
         let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
         var client: SourcePointClient!
 
-        describe("UnmockedConnectivityManager") {
+        describe("UnmockedSourcepointClient") {
             beforeSuite { AsyncDefaults.timeout = .seconds(20) }
             afterSuite { AsyncDefaults.timeout = .seconds(1) }
 
