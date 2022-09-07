@@ -3,6 +3,8 @@
 # the "github-actions-logging" reporter.
 # Make sure the rules are always in sync with the one from Example/.swiftlint.yml
 
+disabled_rules:
+  - switch_case_alignment
 included: # paths to include during linting. `--path` is ignored if present.
  - ConsentViewController/Classes
  - Example/ConsentViewController_ExampleTests
