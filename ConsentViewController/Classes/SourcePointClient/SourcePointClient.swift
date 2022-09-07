@@ -32,7 +32,6 @@ extension JSONDecoder {
     }
 }
 
-typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
@@ -43,17 +42,16 @@ typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPErro
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
+typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
+typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
 
     func getMessages(
-        campaigns: SPCampaigns,
-        authId: String?,
-        localState: SPJson,
-        pubData: SPPublisherData,
-        idfaStaus: SPIDFAStatus,
-        consentLanguage: SPMessageLanguage,
+        nonKeyedLocalState: SPJson,
+        body: SPJson,
+        metadata: SPJson,
         handler: @escaping MessagesHandler
     )
 
@@ -175,36 +173,6 @@ class SourcePointClient: SourcePointProtocol {
 
     func setRequestTimeout(_ timeout: TimeInterval) {
         client = SimpleClient(timeoutAfter: timeout)
-    }
-
-    func getMessages(
-        campaigns: SPCampaigns,
-        authId: String?,
-        localState: SPJson,
-        pubData: SPPublisherData,
-        idfaStaus: SPIDFAStatus,
-        consentLanguage: SPMessageLanguage,
-        handler: @escaping MessagesHandler) {
-        _ = JSONEncoder().encodeResult(MessageRequest(
-            authId: authId,
-            requestUUID: requestUUID,
-            propertyHref: propertyName,
-            accountId: accountId,
-            campaignEnv: campaignEnv,
-            idfaStatus: idfaStaus,
-            localState: localState,
-            consentLanguage: consentLanguage,
-            campaigns: CampaignsRequest(from: campaigns),
-            pubData: pubData
-        )).map { body in
-            client.post(urlString: Constants.Urls.GET_MESSAGES_URL.absoluteString, body: body) { result in
-                handler(Result {
-                    try result.decoded() as MessagesResponse
-                }.mapError({
-                    InvalidResponseGetMessagesEndpointError(error: $0)
-                }))
-            }
-        }
     }
 
     func getGDPRMessage(
@@ -451,4 +419,35 @@ extension SourcePointClient {
             })
         }
     }
+
+    func getMessagesURLWithParams(_ body: SPJson, _ metadata: SPJson, _ nqlocalState: SPJson) -> URL? {
+        Constants.Urls.GET_MESSAGES_URL.appendQueryItems([
+            "body": body.stringified(),
+            "metadata": metadata.stringified(),
+            "nonKeyedLocalState": nqlocalState.stringified()
+        ])
+    }
+
+    func getMessages(
+        nonKeyedLocalState: SPJson,
+        body: SPJson,
+        metadata: SPJson,
+        handler: @escaping MessagesHandler) {
+
+        guard let url = getMessagesURLWithParams(body, metadata, nonKeyedLocalState) else {
+            handler(Result.failure(SPError())) // TODO: create specific error
+            return
+        }
+
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as MessagesResponse
+            }.mapError {
+                InvalidResponseGetMessagesEndpointError(error: $0)
+            })
+        }
+    }
 }
+
+// TODO: remove after `SPJson` is no longer used as query params
+extension SPJson: QueryParamEncodable {}

@@ -92,13 +92,21 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("getMessage") {
                 it("calls POST on the http client with the right url") {
-                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
+                    client.getMessages(
+                        nonKeyedLocalState: SPJson(),
+                        body: SPJson(),
+                        metadata: SPJson()
+                    ) { _ in }
                     expect(httpClient.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/get_messages/?env=prod"))
                 }
 
                 it("calls POST on the http client with the right body") {
                     let idfa = SPIDFAStatus.unknown, lang = SPMessageLanguage.English
-                    client.getMessages(campaigns: self.campaigns, authId: self.authID, localState: SPJson(), pubData: [:], idfaStaus: idfa, consentLanguage: lang) { _ in }
+                    client.getMessages(
+                        nonKeyedLocalState: SPJson(),
+                        body: SPJson(),
+                        metadata: SPJson()
+                    ) { _ in }
                     let parsed = httpClient.postWasCalledWithBody!
                     let parsedStr = String(data: parsed, encoding: .utf8)!
                     let messageRequestStr = String(data: self.getMessageRequest(client), encoding: .utf8)!
