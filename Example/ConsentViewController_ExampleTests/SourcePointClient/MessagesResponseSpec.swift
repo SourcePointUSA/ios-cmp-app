@@ -14,12 +14,6 @@ import Nimble
 // swiftlint:disable function_body_length
 class MessagesResponseSpec: QuickSpec {
     override func spec() {
-        fdescribe("Matcher") {
-            it("to work") {
-                expect("{").to(decodeTo(MessagesResponse.self))
-            }
-        }
-
         let gdprCampaign = """
         {
             "type": "GDPR",
