@@ -75,6 +75,55 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     }
                 }
             }
+
+            describe("messages") {
+                it("should call the endpoint and parse the response into MessagesResponse") {
+                    waitUntil { done in
+                        client.getMessages(
+                            nonKeyedLocalState: SPJson(),
+                            body: try! SPJson([
+                                "accountId": 22,
+                                "propertyHref": "https://tests.unified-script.com",
+                                "hasCSP": true,
+                                "includeData": [
+                                    "TCData": "RecordString"
+                                ],
+                                "campaigns": [
+                                    "ccpa": [
+                                        "hasLocalData": false,
+                                        "targetingParams": nil,
+                                        "status": nil
+                                    ],
+                                    "gdpr": [
+                                        "hasLocalData": false,
+                                        "targetingParams": nil,
+                                        "consentStatus": [:]
+                                    ]
+                                ],
+                                "localState": nil,
+                                "consentLanguage": "EN",
+                                "campaignEnv": "prod"
+                            ]),
+                            metadata: try! SPJson([
+                                "gdpr": ["applies": true],
+                                "ccpa": ["applies": true]
+                            ])
+                        ) {
+                                switch $0 {
+                                case .success(let response):
+                                    let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsent
+                                    let ccpaConsents = response.campaigns.first { $0.type == .ccpa }?.userConsent
+                                    expect(response).to(beAnInstanceOf(MessagesResponse.self))
+                                    expect(response.campaigns.count).to(equal(2))
+                                        expect(gdprConsents).notTo(beNil())
+                                case .failure(let error):
+                                        fail(error.failureReason)
+                                }
+                                done()
+                            }
+                    }
+                }
+            }
         }
     }
 }
