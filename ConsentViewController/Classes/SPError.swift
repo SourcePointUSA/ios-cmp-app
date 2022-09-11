@@ -256,6 +256,14 @@ import Foundation
     public override var campaignType: SPCampaignType { get { .gdpr } set {} }
 }
 
+@objcMembers public class InvalidMetaDataQueryParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_meta_data_query_params" }
+}
+
+@objcMembers public class InvalidMetaDataQueryResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_meta_data_response" }
+}
+
 @objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
     override public var spCode: String { "sp_metric_invalid_consent_status_query_params" }
 }
