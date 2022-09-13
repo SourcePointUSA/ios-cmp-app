@@ -118,7 +118,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     expect(gdprConsents).notTo(beNil())
                                     expect(ccpaConsents).notTo(beNil())
                                 case .failure(let error):
-                                        fail(error.failureReason)
+                                    fail(error.failureReason)
                                 }
                                 done()
                             }
