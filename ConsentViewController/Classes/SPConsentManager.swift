@@ -306,7 +306,19 @@ import UIKit
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         self.authId = authId
         responsesToReceive += 1
-        spClient.getMessages(nonKeyedLocalState: SPJson(), body: SPJson(), metadata: SPJson()) { [weak self] result in
+        spClient.getMessages(MessagesRequest(
+            body: MessagesRequest.Body(
+                propertyHref: propertyName,
+                accountId: propertyId!,
+                campaigns: MessagesRequest.Body.Campaigns(),
+                localState: nil,
+                consentLanguage: .BrowserDefault,
+                campaignEnv: nil,
+                idfaStatus: nil
+            ),
+            metadata: nil,
+            nonKeyedLocalState: nil
+        )) { [weak self] result in
             self?.responsesToReceive -= 1
             switch result {
             case .success(let messagesResponse):

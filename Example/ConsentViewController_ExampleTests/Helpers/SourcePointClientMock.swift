@@ -57,12 +57,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func getMessages(
-        nonKeyedLocalState: SPJson,
-        body: SPJson,
-        metadata: SPJson,
-        handler: @escaping MessagesHandler
-    ) {
+    func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
         getMessageCalled = true
         if let error = error {
             handler(.failure(error))

@@ -274,6 +274,8 @@
 		8050DBB257EB95C896498947D819DB19 /* HooksPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743643C40C1F987C3FAD789C8DE2B1C5 /* HooksPhase.swift */; };
 		81875B964319868D5AB404F2F91BA9D1 /* SPString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE63BA4AB1EF19193979127C9B9F74D5 /* SPString.swift */; };
 		81B0145987984648991DE9021BE0361B /* AllPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0456B7A2AED8412291FE12F78C5E3D /* AllPass.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
+		827FDDFB28D08D09005CB992 /* MessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827FDDFA28D08D09005CB992 /* MessagesRequest.swift */; };
+		827FDDFC28D08D09005CB992 /* MessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827FDDFA28D08D09005CB992 /* MessagesRequest.swift */; };
 		82A39E5EA67419BEC50788B8DE8D4562 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6350587403D45403E667216ECE104468 /* XCTest.framework */; };
 		850183E681EA4E0B6B87C8C6AC6FFA44 /* SourceLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16039148AA6B35C330E6F6E7AC678EA7 /* SourceLocation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		85A1FA03600EFF1B3FBD2FD4BC2AEC9F /* SP_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3A802844855FBCA1B18685BB0DDDAF7 /* SP_Icon.png */; };
@@ -1023,6 +1025,7 @@
 		81A31BDBDC31CE4F2AAE9953CC5B40D4 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		81ED03AB7884B5D1101A89F720BF884C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8228D2AAA7A1BFC5253A07D853998A6C /* Quick-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Quick-iOS-Info.plist"; sourceTree = "<group>"; };
+		827FDDFA28D08D09005CB992 /* MessagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesRequest.swift; sourceTree = "<group>"; };
 		82D00B4D7C5E3AE2F97D45A67F7254A3 /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = Sources/Storage.swift; sourceTree = "<group>"; };
 		82F50E2625A5088613B6AA5F902F05DE /* Await.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Await.swift; path = Sources/Nimble/Utils/Await.swift; sourceTree = "<group>"; };
 		835672935DFDF859D5307D6C798EBFC4 /* Pods-NativeMessageExampleUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NativeMessageExampleUITests.modulemap"; sourceTree = "<group>"; };
@@ -1556,6 +1559,7 @@
 				77AF0490BE197399224F6D793C7711B9 /* GDPRPrivacyManagerViewResponse.swift */,
 				798B6B2D05689D5E7FEF55EF3BF486B4 /* IDFAStatusReportRequest.swift */,
 				3B8AE043D7DB45534F50CB164B4549F6 /* MessageRequest.swift */,
+				827FDDFA28D08D09005CB992 /* MessagesRequest.swift */,
 				CBAB3D0A6EBC82F591BE31BBE7C0FB25 /* MessagesResponse.swift */,
 				78AB6BACE10965ABD7C41ACC38477FA6 /* MockNativePMResponse.swift */,
 				F29C069CAC073406FF755C8F88B45F2B /* PrivacyManagerViewData.swift */,
@@ -3358,6 +3362,7 @@
 				951ABEF6A53C489D2AD2A3B67DDDC18A /* ConsentStatusMetadata.swift in Sources */,
 				C0D04A4B35E397CEDF058EF20C703459 /* ConsentStatusResponse.swift in Sources */,
 				F8692E2384A12217998986AB2871EF53 /* ConsentViewController-iOS-dummy.m in Sources */,
+				827FDDFB28D08D09005CB992 /* MessagesRequest.swift in Sources */,
 				B2597C8266205B10C3A90444F05A9B05 /* Constants.swift in Sources */,
 				07403135D548CABAF17F00142932C83D /* CustomConsentRequestResponse.swift in Sources */,
 				ADD4063845893F87203247DACA0EB3F7 /* DeleteCustomConsentRequestResponse.swift in Sources */,
@@ -3432,6 +3437,7 @@
 				76E693E0A550391963644DAAAB415073 /* ConsentViewController-tvOS-dummy.m in Sources */,
 				8A6C4B90AD1E09248E461EFD71616D5B /* Constants.swift in Sources */,
 				01AD074CF6CBBF165E5F790515AD033E /* CustomConsentRequestResponse.swift in Sources */,
+				827FDDFC28D08D09005CB992 /* MessagesRequest.swift in Sources */,
 				D307187937D6943DA9BFF001BA46BD67 /* DeleteCustomConsentRequestResponse.swift in Sources */,
 				9F6295A8A3E101372FD6E5C943E2A026 /* ErrorMetricsRequest.swift in Sources */,
 				B5B96EC129C52E765EA278C014DA51C5 /* GDPRPMConsentSnapshot.swift in Sources */,

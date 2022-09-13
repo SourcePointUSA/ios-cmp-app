@@ -7,16 +7,38 @@
 
 import Foundation
 
-struct ConsentStatus: Decodable, Equatable {
-    struct GranularStatus: Decodable, Equatable {
-        enum Status: String, Decodable, Equatable {
+struct ConsentStatus: Codable, Equatable {
+    struct GranularStatus: Codable, Equatable {
+        enum Status: String, Codable, Equatable {
             case ALL, SOME, NONE
         }
 
-        let vendorConsent, vendorLegInt, purposeConsent, purposeLegInt: Status
-        let previousOptInAll, defaultConsent: Bool
+        let vendorConsent, vendorLegInt, purposeConsent, purposeLegInt: Status?
+        let previousOptInAll, defaultConsent: Bool?
     }
 
-    let granularStatus: GranularStatus
-    let rejectedAny, rejectedLI, consentedAll, hasConsentData, consentedToAny: Bool
+    let granularStatus: GranularStatus?
+    let rejectedAny, rejectedLI, consentedAll, hasConsentData, consentedToAny: Bool?
+}
+
+extension ConsentStatus.GranularStatus {
+    init() {
+        previousOptInAll = nil
+        defaultConsent = nil
+        vendorConsent = nil
+        vendorLegInt = nil
+        purposeConsent = nil
+        purposeLegInt = nil
+    }
+}
+
+extension ConsentStatus {
+    init() {
+        rejectedAny = nil
+        rejectedLI = nil
+        consentedAll = nil
+        hasConsentData = nil
+        consentedToAny = nil
+        granularStatus = GranularStatus()
+    }
 }

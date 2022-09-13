@@ -5,9 +5,7 @@
 //  Created by Andre Herculano on 13.03.19.
 //
 
-// swiftlint:disable function_parameter_count
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
+// swiftlint:disable function_parameter_count file_length
 
 import Foundation
 
@@ -47,12 +45,7 @@ typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
 
-    func getMessages(
-        nonKeyedLocalState: SPJson,
-        body: SPJson,
-        metadata: SPJson,
-        handler: @escaping MessagesHandler
-    )
+    func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler)
 
     func getGDPRMessage(
         propertyId: String,
@@ -419,22 +412,9 @@ extension SourcePointClient {
         }
     }
 
-    func getMessagesURLWithParams(_ body: SPJson, _ metadata: SPJson, _ nqlocalState: SPJson) -> URL? {
-        Constants.Urls.GET_MESSAGES_URL.appendQueryItems([
-            "body": body.stringified(),
-            "metadata": metadata.stringified(),
-            "nonKeyedLocalState": nqlocalState.stringified()
-        ])
-    }
-
-    func getMessages(
-        nonKeyedLocalState: SPJson,
-        body: SPJson,
-        metadata: SPJson,
-        handler: @escaping MessagesHandler) {
-
-        guard let url = getMessagesURLWithParams(body, metadata, nonKeyedLocalState) else {
-            handler(Result.failure(SPError())) // TODO: create specific error
+    func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
+        guard let url = Constants.Urls.GET_MESSAGES_URL.appendQueryItems(params.stringifiedParams()) else {
+            handler(Result.failure(InvalidGetMessagesParams()))
             return
         }
 
@@ -447,6 +427,3 @@ extension SourcePointClient {
         }
     }
 }
-
-// TODO: remove after `SPJson` is no longer used as query params
-extension SPJson: QueryParamEncodable {}

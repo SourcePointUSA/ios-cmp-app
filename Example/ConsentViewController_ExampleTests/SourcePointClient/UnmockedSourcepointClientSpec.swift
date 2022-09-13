@@ -16,6 +16,8 @@ import Nimble
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
         let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
+        let propertyName = try! SPPropertyName("tests.unified-script.com")
+        let accountId = 22
         var client: SourcePointClient!
 
         describe("UnmockedSourcepointClient") {
@@ -24,8 +26,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
 
             beforeEach {
                 client = SourcePointClient(
-                    accountId: 22,
-                    propertyName: try! SPPropertyName("test"),
+                    accountId: accountId,
+                    propertyName: propertyName,
                     campaignEnv: .Public,
                     client: SimpleClient(timeoutAfter: TimeInterval(10))
                 )
@@ -76,39 +78,37 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 }
             }
 
-            describe("messages") {
+            describe("getMessages") {
                 it("should call the endpoint and parse the response into MessagesResponse") {
                     waitUntil { done in
-                        client.getMessages(
-                            nonKeyedLocalState: SPJson(),
-                            body: try! SPJson([
-                                "accountId": 22,
-                                "propertyHref": "https://tests.unified-script.com",
-                                "hasCSP": true,
-                                "includeData": [
-                                    "TCData": "RecordString"
-                                ],
-                                "campaigns": [
-                                    "ccpa": [
-                                        "hasLocalData": false,
-                                        "targetingParams": nil,
-                                        "status": nil
-                                    ],
-                                    "gdpr": [
-                                        "hasLocalData": false,
-                                        "targetingParams": nil,
-                                        "consentStatus": [:]
-                                    ]
-                                ],
-                                "localState": nil,
-                                "consentLanguage": "EN",
-                                "campaignEnv": "prod"
-                            ]),
-                            metadata: try! SPJson([
-                                "gdpr": ["applies": true],
-                                "ccpa": ["applies": true]
-                            ])
-                        ) {
+                        client.getMessages(MessagesRequest(
+                            body: MessagesRequest.Body(
+                                propertyHref: propertyName,
+                                accountId: accountId,
+                                campaigns: MessagesRequest.Body.Campaigns(
+                                    ccpa: MessagesRequest.Body.Campaigns.CCPA(
+                                        targetingParams: nil,
+                                        hasLocalData: false,
+                                        status: nil
+                                    ),
+                                    gdpr: MessagesRequest.Body.Campaigns.GDPR(
+                                        targetingParams: nil,
+                                        hasLocalData: false,
+                                        consentStatus: ConsentStatus()
+                                    ),
+                                    ios14: nil
+                                ),
+                                localState: nil,
+                                consentLanguage: .BrowserDefault,
+                                campaignEnv: nil,
+                                idfaStatus: nil
+                            ),
+                            metadata: MessagesRequest.MetaData(
+                                ccpa: MessagesRequest.MetaData.Campaign(applies: true),
+                                gdpr: MessagesRequest.MetaData.Campaign(applies: true)
+                            ),
+                            nonKeyedLocalState: nil
+                        )) {
                                 switch $0 {
                                 case .success(let response):
                                     let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsent
