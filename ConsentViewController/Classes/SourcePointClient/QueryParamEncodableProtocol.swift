@@ -23,10 +23,13 @@ extension QueryParamEncodable {
     }
 
     func stringifiedParams(sorted: Bool = true) -> [String: String] {
-        Mirror(reflecting: self).children.sorted { $0.label ?? "" > $1.label ?? "" }.reduce(into: [:]) { (properties, property) in
-            if let label = property.label, let value = property.value as? QueryParamEncodable {
-                properties[label] = value.stringified()
+        Mirror(reflecting: self)
+            .children
+            .sorted { $0.label ?? "" > $1.label ?? "" }
+            .reduce(into: [:]) { (properties, property) in
+                if let label = property.label, let value = property.value as? QueryParamEncodable {
+                    properties[label] = value.stringified()
+                }
             }
-        }
     }
 }
