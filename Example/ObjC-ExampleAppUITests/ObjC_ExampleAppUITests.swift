@@ -25,7 +25,7 @@ class ObjC_ExampleAppUITests: QuickSpec {
         }
 
         if #available(iOS 14.0, *) {
-            fit("Accept ATT pre-prompt") {
+            it("Accept ATT pre-prompt") {
 //              expect(self.app.attPrePromptMessage).to(showUp())   // <- it is simply does not shown up now
                 if self.app.attPrePromptMessage.exists {
                     self.app.acceptATTButton.tap()

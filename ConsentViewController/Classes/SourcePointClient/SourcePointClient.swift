@@ -5,10 +5,7 @@
 //  Created by Andre Herculano on 13.03.19.
 //
 
-// swiftlint:disable function_parameter_count
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
-
+// swiftlint:disable function_parameter_count file_length
 import Foundation
 
 extension Result where Success == Data? {
@@ -32,7 +29,6 @@ extension JSONDecoder {
     }
 }
 
-typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPError>) -> Void
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
@@ -44,19 +40,12 @@ typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Voi
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
 typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
+typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
 
-    func getMessages(
-        campaigns: SPCampaigns,
-        authId: String?,
-        localState: SPJson,
-        pubData: SPPublisherData,
-        idfaStaus: SPIDFAStatus,
-        consentLanguage: SPMessageLanguage,
-        handler: @escaping MessagesHandler
-    )
+    func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler)
 
     func getGDPRMessage(
         propertyId: String,
@@ -176,36 +165,6 @@ class SourcePointClient: SourcePointProtocol {
 
     func setRequestTimeout(_ timeout: TimeInterval) {
         client = SimpleClient(timeoutAfter: timeout)
-    }
-
-    func getMessages(
-        campaigns: SPCampaigns,
-        authId: String?,
-        localState: SPJson,
-        pubData: SPPublisherData,
-        idfaStaus: SPIDFAStatus,
-        consentLanguage: SPMessageLanguage,
-        handler: @escaping MessagesHandler) {
-        _ = JSONEncoder().encodeResult(MessageRequest(
-            authId: authId,
-            requestUUID: requestUUID,
-            propertyHref: propertyName,
-            accountId: accountId,
-            campaignEnv: campaignEnv,
-            idfaStatus: idfaStaus,
-            localState: localState,
-            consentLanguage: consentLanguage,
-            campaigns: CampaignsRequest(from: campaigns),
-            pubData: pubData
-        )).map { body in
-            client.post(urlString: Constants.Urls.GET_MESSAGES_URL.absoluteString, body: body) { result in
-                handler(Result {
-                    try result.decoded() as MessagesResponse
-                }.mapError({
-                    InvalidResponseGetMessagesEndpointError(error: $0)
-                }))
-            }
-        }
     }
 
     func getGDPRMessage(
@@ -489,7 +448,22 @@ extension SourcePointClient {
             handler(Result {
                 try result.decoded() as MetaDataResponse
             }.mapError {
-                InvalidMetaDataQueryResponseError(error: $0)
+                InvalidMetaDataResponseError(error: $0)
+            })
+        }
+    }
+
+    func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
+        guard let url = Constants.Urls.GET_MESSAGES_URL.appendQueryItems(params.stringifiedParams()) else {
+            handler(Result.failure(InvalidGetMessagesParams()))
+            return
+        }
+
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as MessagesResponse
+            }.mapError {
+                InvalidResponseGetMessagesEndpointError(error: $0)
             })
         }
     }

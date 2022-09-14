@@ -163,6 +163,8 @@ struct Campaign: Equatable {
     let userConsent: Consent
     let applies: Bool?
     let messageMetaData: MessageMetaData?
+    let consentStatus: ConsentStatus?
+    let dateCreated: SPDateCreated
 }
 
 extension Campaign: Decodable {
@@ -171,7 +173,9 @@ extension Campaign: Decodable {
         type = try container.decode(SPCampaignType.self, forKey: .type)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
-        userConsent = try Consent(from: try container.superDecoder(forKey: .userConsent))
+        userConsent = try Consent(from: decoder)
+        consentStatus = try container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus)
+        dateCreated = try container.decode(SPDateCreated.self, forKey: .dateCreated)
         if let metaData = messageMetaData {
             message = try Message(category: metaData.categoryId, subCategory: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
             url = try container.decodeIfPresent(URL.self, forKey: .url)
@@ -179,7 +183,7 @@ extension Campaign: Decodable {
     }
 
     enum Keys: CodingKey {
-        case type, message, userConsent, applies, messageMetaData, url
+        case applies, type, message, messageMetaData, url, consentStatus, dateCreated
     }
 }
 
@@ -187,11 +191,13 @@ struct MessagesResponse: Decodable, Equatable {
     let propertyId: Int
     let campaigns: [Campaign]
     let localState: SPJson
+    let nonKeyedLocalState: SPJson
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         propertyId = try container.decode(Int.self, forKey: .propertyId)
         localState = try container.decode(SPJson.self, forKey: .localState)
+        nonKeyedLocalState = try container.decode(SPJson.self, forKey: .nonKeyedLocalState)
 
         var tempCampaigns: [Campaign] = []
         var campaignsContainer = try container.nestedUnkeyedContainer(forKey: .campaigns)
@@ -210,7 +216,7 @@ struct MessagesResponse: Decodable, Equatable {
     }
 
     enum Keys: CodingKey {
-        case propertyId, campaigns, localState
+        case propertyId, campaigns, localState, nonKeyedLocalState
     }
 }
 
@@ -233,10 +239,11 @@ extension MessageResponse: Decodable {
 
 // MARK: - used for Unit Tests
 extension MessagesResponse {
-    init(propertyId: Int, localState: SPJson, campaigns: [Campaign]) {
+    init(propertyId: Int, localState: SPJson, campaigns: [Campaign], nonKeyedLocalState: SPJson) {
         self.propertyId = propertyId
         self.localState = localState
         self.campaigns = campaigns
+        self.nonKeyedLocalState = nonKeyedLocalState
     }
 }
 

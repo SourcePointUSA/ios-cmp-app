@@ -28,7 +28,23 @@ class SourcePointClientMock: SourcePointProtocol {
                 subCategoryId: .TCFv2,
                 messageId: "1",
                 messagePartitionUUID: "1234"
-            )
+            ),
+            consentStatus: ConsentStatus(
+                granularStatus: ConsentStatus.GranularStatus(
+                    vendorConsent: .ALL,
+                    vendorLegInt: .ALL,
+                    purposeConsent: .ALL,
+                    purposeLegInt: .ALL,
+                    previousOptInAll: false,
+                    defaultConsent: false
+                ),
+                rejectedAny: false,
+                rejectedLI: false,
+                consentedAll: false,
+                hasConsentData: false,
+                consentedToAny: false
+            ),
+            dateCreated: SPDateCreated.now()
         )
     }
 
@@ -41,15 +57,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func getMessages(
-        campaigns: SPCampaigns,
-        authId: String?,
-        localState: SPJson,
-        pubData: SPPublisherData,
-        idfaStaus: SPIDFAStatus,
-        consentLanguage: SPMessageLanguage,
-        handler: @escaping MessagesHandler
-    ) {
+    func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
         getMessageCalled = true
         if let error = error {
             handler(.failure(error))
