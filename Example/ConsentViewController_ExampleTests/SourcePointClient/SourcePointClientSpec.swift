@@ -62,7 +62,7 @@ class SourcePointClientSpec: QuickSpec {
         beforeSuite {
             // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
             AsyncDefaults.timeout = .seconds(20)
-            AsyncDefaults.pollInterval = .seconds(1)
+            AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
@@ -74,12 +74,12 @@ class SourcePointClientSpec: QuickSpec {
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
                 expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(
-                    URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true")!.absoluteURL
+                    URL(string: "http://localhost:3000/wrapper/tcfv2/v1/gdpr/custom-consent?env=localProd&inApp=true")!.absoluteURL
                 ))
             }
 
             it("DELETE_CUSTOM_CONSENT_URL") {
-                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL).to(equal(URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/")!.absoluteURL))
+                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL).to(equal(URL(string: "http://localhost:3000/consent/tcfv2/consent/v3/custom/")!.absoluteURL))
             }
         }
 
@@ -90,84 +90,22 @@ class SourcePointClientSpec: QuickSpec {
                 client = self.getClient(httpClient)
             }
 
-            describe("getMessage") {
-                it("calls POST on the http client with the right url") {
-                    client.getMessages(campaigns: self.campaigns, authId: nil, localState: SPJson(), pubData: [:], idfaStaus: .unknown, consentLanguage: .English) { _ in }
-                    expect(httpClient.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/get_messages/?env=prod"))
-                }
-
-                it("calls POST on the http client with the right body") {
-                    let idfa = SPIDFAStatus.unknown, lang = SPMessageLanguage.English
-                    client.getMessages(campaigns: self.campaigns, authId: self.authID, localState: SPJson(), pubData: [:], idfaStaus: idfa, consentLanguage: lang) { _ in }
-                    let parsed = httpClient.postWasCalledWithBody!
-                    let parsedStr = String(data: parsed, encoding: .utf8)!
-                    let messageRequestStr = String(data: self.getMessageRequest(client), encoding: .utf8)!
-//                    expect(parsedStr).toEventually(equal(messageRequestStr)) // <- flaky therefore annoying >:c
-                    expect(parsedStr.count).toEventually(equal(messageRequestStr.count))
-                    expect(
-                        parsedStr.contains("\"authId\":\"\(self.authID)\"") &&
-                        messageRequestStr.contains("\"authId\":\"\(self.authID)\""
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"accountId\":\(self.accountId)") &&
-                        messageRequestStr.contains("\"accountId\":\(self.accountId)"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"idfaStatus\":\"\(idfa)\"") &&
-                        messageRequestStr.contains("\"idfaStatus\":\"\(idfa)\""
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"includeData\":{") &&
-                        messageRequestStr.contains("\"includeData\":{"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"localState\":{\"type\":\"RecordString\"}") &&
-                        messageRequestStr.contains("\"localState\":{\"type\":\"RecordString\"}"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"TCData\":{\"type\":\"RecordString\"}") &&
-                        messageRequestStr.contains("\"TCData\":{\"type\":\"RecordString\"}"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"messageMetaData\":{\"type\":\"RecordString\"}") &&
-                        messageRequestStr.contains("\"messageMetaData\":{\"type\":\"RecordString\"}"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"propertyHref\":\"https:\\/\\/\(self.propertyName)\"") &&
-                        messageRequestStr.contains("\"propertyHref\":\"https:\\/\\/\(self.propertyName)\""
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"localState\":{}") &&
-                        messageRequestStr.contains("\"localState\":{}"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"pubData\":{}") &&
-                        messageRequestStr.contains("\"pubData\":{}"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"requestUUID\":\"\(client.requestUUID.uuidString)\"") &&
-                        messageRequestStr.contains("\"requestUUID\":\"\(client.requestUUID.uuidString)\""
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"campaignEnv\":\"\(SPCampaignEnv.Public.stringValue!)\"") &&
-                        messageRequestStr.contains("\"campaignEnv\":\"\(SPCampaignEnv.Public.stringValue!)\""
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"consentLanguage\":\"\(lang.rawValue)\"") &&
-                        messageRequestStr.contains("\"consentLanguage\":\"\(lang.rawValue)\""
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"campaigns\":{") &&
-                        messageRequestStr.contains("\"campaigns\":{"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"gdpr\":{") &&
-                        messageRequestStr.contains("\"gdpr\":{"
-                                                  )).toEventually(beTrue())
-                    expect(
-                        parsedStr.contains("\"targetingParams\":{}") &&
-                        messageRequestStr.contains("\"targetingParams\":{}"
-                                                  )).toEventually(beTrue())
+            describe("getMessages") {
+                it("calls GET on the http client with the right URL") {
+                    client.getMessages(MessagesRequest(
+                        body: MessagesRequest.Body(
+                            propertyHref: self.propertyName,
+                            accountId: self.accountId,
+                            campaigns: MessagesRequest.Body.Campaigns(),
+                            localState: nil,
+                            consentLanguage: .BrowserDefault,
+                            campaignEnv: nil,
+                            idfaStatus: nil
+                        ),
+                        metadata: nil,
+                        nonKeyedLocalState: nil
+                    )) { _ in }
+                    expect(httpClient.getWasCalledWithUrl).toEventually(contain("/v2/messages"))
                 }
             }
 
@@ -175,7 +113,7 @@ class SourcePointClientSpec: QuickSpec {
                 it("calls post on the http client with the right url") {
                     let acceptAllAction = SPAction(type: .AcceptAll)
                     client.postGDPRAction(authId: nil, action: acceptAllAction, localState: SPJson(), idfaStatus: .accepted) { _ in }
-                    expect(httpClient.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/messages/choice/gdpr/11?env=prod"))
+                    expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/messages/choice/gdpr/11?env=localProd"))
                 }
 
                 it("calls POST on the http client with the right body") {
@@ -295,7 +233,7 @@ class SourcePointClientSpec: QuickSpec {
                             campaignType: .gdpr
                         )
                         let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-                        expect(http.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"))
+                        expect(http.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/metrics/v1/custom-metrics"))
                         expect((parsedRequest?["code"] as? String)).to(equal(error.spCode))
                         expect((parsedRequest?["accountId"] as? String)).to(equal("\(self.accountId)"))
                         expect((parsedRequest?["propertyId"] as? String)).to(equal("\(self.propertyId)"))
@@ -312,7 +250,7 @@ class SourcePointClientSpec: QuickSpec {
             describe("deleteCustomConsent") {
                 it("constructsCorrectURL") {
                     expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, self.propertyId, "yo")!.absoluteString).to(
-                        equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
+                        equal("http://localhost:3000/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
                 }
 
                 it("makes a DELETE with the correct body") {

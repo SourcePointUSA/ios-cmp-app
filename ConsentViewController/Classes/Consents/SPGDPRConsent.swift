@@ -81,7 +81,7 @@ public typealias SPGDPRPurposeId = String
     public let euconsent: String
 
     /// A dictionary with all TCFv2 related data
-    public let tcfData: SPJson
+    public let tcfData: SPJson?
 
     /// That's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
