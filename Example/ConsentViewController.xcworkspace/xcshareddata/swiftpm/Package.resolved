@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "ConsentViewController",
-        "repositoryURL": "http://github.com/SourcePointUSA/ios-cmp-app.git",
-        "state": {
-          "branch": null,
-          "revision": "5bca08fcd426443e788f04845b24407a392ddbcb",
-          "version": "6.5.1-pre.1"
-        }
+  "pins" : [
+    {
+      "identity" : "ios-cmp-app",
+      "kind" : "remoteSourceControl",
+      "location" : "http://github.com/SourcePointUSA/ios-cmp-app.git",
+      "state" : {
+        "revision" : "5bca08fcd426443e788f04845b24407a392ddbcb",
+        "version" : "6.5.1-pre.1"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }

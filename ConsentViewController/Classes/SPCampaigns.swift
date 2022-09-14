@@ -28,11 +28,18 @@ public typealias SPTargetingParams = [String: String]
 /// It's important to notice the campaign you passed as parameter needs to have
 /// a active vendor list of that legislation.
 @objcMembers public class SPCampaigns: NSObject {
+    let environment: SPCampaignEnv
     let gdpr, ccpa, ios14: SPCampaign?
 
-    public init(gdpr: SPCampaign? = nil, ccpa: SPCampaign? = nil, ios14: SPCampaign? = nil) {
+    public init(
+        gdpr: SPCampaign? = nil,
+        ccpa: SPCampaign? = nil,
+        ios14: SPCampaign? = nil,
+        environment: SPCampaignEnv = .Public
+    ) {
         self.gdpr = gdpr
         self.ccpa = ccpa
         self.ios14 = ios14
+        self.environment = environment
     }
 }
