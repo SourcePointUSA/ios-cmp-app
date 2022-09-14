@@ -16,6 +16,8 @@ import Nimble
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
         let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
+        let propertyName = try! SPPropertyName("tests.unified-script.com")
+        let accountId = 22
         var client: SourcePointClient!
 
         describe("UnmockedSourcepointClient") {
@@ -24,8 +26,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
 
             beforeEach {
                 client = SourcePointClient(
-                    accountId: 22,
-                    propertyName: try! SPPropertyName("test"),
+                    accountId: accountId,
+                    propertyName: propertyName,
                     campaignEnv: .Public,
                     client: SimpleClient(timeoutAfter: TimeInterval(10))
                 )
@@ -67,6 +69,54 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     expect(response).to(beAnInstanceOf(ConsentStatusResponse.self))
                                     expect(response.consentStatusData.gdpr).notTo(beNil())
                                     expect(response.consentStatusData.ccpa).notTo(beNil())
+                                case .failure(let error):
+                                    fail(error.failureReason)
+                                }
+                                done()
+                            }
+                    }
+                }
+            }
+
+            describe("getMessages") {
+                it("should call the endpoint and parse the response into MessagesResponse") {
+                    waitUntil { done in
+                        client.getMessages(MessagesRequest(
+                            body: MessagesRequest.Body(
+                                propertyHref: propertyName,
+                                accountId: accountId,
+                                campaigns: MessagesRequest.Body.Campaigns(
+                                    ccpa: MessagesRequest.Body.Campaigns.CCPA(
+                                        targetingParams: nil,
+                                        hasLocalData: false,
+                                        status: nil
+                                    ),
+                                    gdpr: MessagesRequest.Body.Campaigns.GDPR(
+                                        targetingParams: nil,
+                                        hasLocalData: false,
+                                        consentStatus: ConsentStatus()
+                                    ),
+                                    ios14: nil
+                                ),
+                                localState: nil,
+                                consentLanguage: .BrowserDefault,
+                                campaignEnv: nil,
+                                idfaStatus: nil
+                            ),
+                            metadata: MessagesRequest.MetaData(
+                                ccpa: MessagesRequest.MetaData.Campaign(applies: true),
+                                gdpr: MessagesRequest.MetaData.Campaign(applies: true)
+                            ),
+                            nonKeyedLocalState: nil
+                        )) {
+                                switch $0 {
+                                case .success(let response):
+                                    let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsent
+                                    let ccpaConsents = response.campaigns.first { $0.type == .ccpa }?.userConsent
+                                    expect(response).to(beAnInstanceOf(MessagesResponse.self))
+                                    expect(response.campaigns.count).to(equal(2))
+                                    expect(gdprConsents).notTo(beNil())
+                                    expect(ccpaConsents).notTo(beNil())
                                 case .failure(let error):
                                     fail(error.failureReason)
                                 }

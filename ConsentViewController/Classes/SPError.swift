@@ -154,6 +154,11 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
+@objcMembers public class InvalidGetMessagesParams: SPError {
+    override public var spCode: String { "sp_invalid_get_messages_param" }
+    override public var description: String { "The request params to /messages are invalid" }
+}
+
 @objcMembers public class InvalidResponseMessageGDPREndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_message_gdpr" }
     override public var description: String { "The SDK got an unexpected response from /message/gdpr endpoint" }
@@ -252,7 +257,7 @@ import Foundation
     override public var description: String {
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
     }
-    // swiftlint:disable:next unused_setter_value
+
     public override var campaignType: SPCampaignType { get { .gdpr } set {} }
 }
 

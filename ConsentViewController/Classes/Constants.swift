@@ -22,7 +22,6 @@ struct Constants {
         static let GDPR_MESSAGE_URL = URL(string: "./v2/message/gdpr", relativeTo: WRAPPER_API)!
         static let CCPA_MESSAGE_URL = URL(string: "./v2/message/ccpa", relativeTo: WRAPPER_API)!
         static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics", relativeTo: WRAPPER_API)!
-        static let GET_MESSAGES_URL = URL(string: "./v2/get_messages/?env=\(envParam)", relativeTo: WRAPPER_API)!
         static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/", relativeTo: WRAPPER_API)!
         static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/", relativeTo: WRAPPER_API)!
         static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=\(envParam)", relativeTo: WRAPPER_API)!
@@ -34,6 +33,7 @@ struct Constants {
         static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
         static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
         static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)", relativeTo: WRAPPER_API)!
+        static let GET_MESSAGES_URL = URL(string: "./v2/messages?env=\(envParam)", relativeTo: WRAPPER_API)!
     }
 
     struct UI {
