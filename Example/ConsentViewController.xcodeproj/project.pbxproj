@@ -161,7 +161,6 @@
 		82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */; };
 		82EA4FA42488EB7300BA48BF /* GDPRUserDefaultsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ACF6AB2487E73C006E207A /* GDPRUserDefaultsSpec.swift */; };
 		82EA4FA62489171200BA48BF /* GDPRLocalStorageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4FA52489171200BA48BF /* GDPRLocalStorageSpec.swift */; };
-		82F8B1AA24EBC7560055F430 /* ActionRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */; };
 		82F9411824A10379007D30B1 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411724A10379007D30B1 /* CustomMatchers.swift */; };
 		82F9411A24A10416007D30B1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411924A10416007D30B1 /* ExampleApp.swift */; };
 		83473B82BA18380C9F18C9B0 /* Pods_SourcePointMetaAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC7540AF47BC8816D0FD1C7 /* Pods_SourcePointMetaAppUITests.framework */; };
@@ -435,7 +434,6 @@
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
 		82CC8B8224F6680600D94AA7 /* SPGDPRExampleAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SPGDPRExampleAppDebug.entitlements; sourceTree = "<group>"; };
-		82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequestSpec.swift; sourceTree = "<group>"; };
 		82D8FEDC23DC753400F28D74 /* NativeMessageExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeMessageExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D8FEDE23DC753400F28D74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82D8FEE223DC753400F28D74 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -451,7 +449,6 @@
 		82EA4E332491324400DC01C9 /* GDPRLocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GDPRLocalStorageMock.swift; path = Helpers/GDPRLocalStorageMock.swift; sourceTree = "<group>"; };
 		82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InMemoryStorageMock.swift; path = Helpers/InMemoryStorageMock.swift; sourceTree = "<group>"; };
 		82EA4FA52489171200BA48BF /* GDPRLocalStorageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRLocalStorageSpec.swift; sourceTree = "<group>"; };
-		82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRequestSpec.swift; sourceTree = "<group>"; };
 		82F9411724A10379007D30B1 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		82F9411924A10416007D30B1 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		82FC4D3A23983231002F08E5 /* ConsentViewController_ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController_ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2668,7 +2665,6 @@
 				6D687AD724A8F1C1001DFB11 /* MessageMock.swift in Sources */,
 				82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */,
 				82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */,
-				82CC8CD824ACF6970030B28B /* MessageRequestSpec.swift in Sources */,
 				826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */,
 				829DA56425D5573800612517 /* ConsentsProfileSpec.swift in Sources */,
 				82B224182580D5D60032BC49 /* GDPRURLExtensionsSpec.swift in Sources */,

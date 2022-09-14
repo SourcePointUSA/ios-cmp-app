@@ -31,6 +31,13 @@ class RequestsViewController: WHBaseViewController {
                 self?.collectionView.reloadData()
             }
         }
+
+        /// Handling keyboard notifications
+        ///
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)),
+                    name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
@@ -61,6 +68,9 @@ class RequestsViewController: WHBaseViewController {
             // Fallback
         }
         searchController?.searchBar.placeholder = "Search URL"
+        if let filter = Storage.defaultFilter {
+            searchController?.searchBar.text = filter
+        }
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
@@ -130,6 +140,24 @@ class RequestsViewController: WHBaseViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: newRequestNotification, object: nil)
     }
+
+    // MARK: - Keyboard management
+    @objc
+    func keyboardWillShow(_ notification: NSNotification) {
+        let userInfo = notification.userInfo
+        guard let keyboardFrame = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        let contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.height, right: 0.0)
+        collectionView.contentInset = contentInset
+        collectionView.scrollIndicatorInsets = contentInset
+    }
+
+    @objc
+    func keyboardWillHide(_ notification: NSNotification) {
+        collectionView.contentInset = .zero
+        collectionView.scrollIndicatorInsets = .zero
+    }
+
 }
 
 extension RequestsViewController: UICollectionViewDataSource{

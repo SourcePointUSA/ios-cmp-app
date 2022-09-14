@@ -6,7 +6,6 @@
 //
 
 // swiftlint:disable function_parameter_count file_length
-
 import Foundation
 
 extension Result where Success == Data? {

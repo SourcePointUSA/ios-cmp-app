@@ -20,25 +20,3 @@ struct ConsentStatus: Codable, Equatable {
     var granularStatus: GranularStatus?
     var rejectedAny, rejectedLI, consentedAll, hasConsentData, consentedToAny: Bool?
 }
-
-//extension ConsentStatus.GranularStatus {
-//    init() {
-//        previousOptInAll = nil
-//        defaultConsent = nil
-//        vendorConsent = nil
-//        vendorLegInt = nil
-//        purposeConsent = nil
-//        purposeLegInt = nil
-//    }
-//}
-//
-//extension ConsentStatus {
-//    init() {
-//        rejectedAny = nil
-//        rejectedLI = nil
-//        consentedAll = nil
-//        hasConsentData = nil
-//        consentedToAny = nil
-//        granularStatus = nil
-//    }
-//}

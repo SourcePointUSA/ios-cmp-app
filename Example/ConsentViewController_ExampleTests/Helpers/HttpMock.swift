@@ -28,9 +28,11 @@ class MockHttp: HttpClient {
     public func get(urlString: String, handler: @escaping ResponseHandler) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
             self.getWasCalledWithUrl = urlString
-            self.success != nil ?
-                handler(.success(self.success)) :
+            if self.success != nil {
+                handler(.success(self.success))
+            } else {
                 handler(.failure(SPError(error: self.error!)))
+            }
         }
     }
 
