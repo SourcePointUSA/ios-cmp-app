@@ -143,20 +143,17 @@
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
 		82B224182580D5D60032BC49 /* GDPRURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B224172580D5D60032BC49 /* GDPRURLExtensionsSpec.swift */; };
-		82CC8CD824ACF6970030B28B /* MessageRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */; };
 		82D8FEDF23DC753400F28D74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8FEDE23DC753400F28D74 /* AppDelegate.swift */; };
 		82D8FEE323DC753400F28D74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8FEE223DC753400F28D74 /* ViewController.swift */; };
 		82D8FEE623DC753400F28D74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D8FEE423DC753400F28D74 /* Main.storyboard */; };
 		82D8FEE823DC753500F28D74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D8FEE723DC753500F28D74 /* Assets.xcassets */; };
 		82D8FEEB23DC753500F28D74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82D8FEE923DC753500F28D74 /* LaunchScreen.storyboard */; };
-		82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */; };
 		82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E2F2491019900DC01C9 /* HttpMock.swift */; };
 		82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */; };
 		82EA4E342491324400DC01C9 /* GDPRLocalStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E332491324400DC01C9 /* GDPRLocalStorageMock.swift */; };
 		82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */; };
 		82EA4FA42488EB7300BA48BF /* GDPRUserDefaultsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ACF6AB2487E73C006E207A /* GDPRUserDefaultsSpec.swift */; };
 		82EA4FA62489171200BA48BF /* GDPRLocalStorageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4FA52489171200BA48BF /* GDPRLocalStorageSpec.swift */; };
-		82F8B1AA24EBC7560055F430 /* ActionRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */; };
 		82F9411824A10379007D30B1 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411724A10379007D30B1 /* CustomMatchers.swift */; };
 		82F9411A24A10416007D30B1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411924A10416007D30B1 /* ExampleApp.swift */; };
 		83473B82BA18380C9F18C9B0 /* Pods_SourcePointMetaAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC7540AF47BC8816D0FD1C7 /* Pods_SourcePointMetaAppUITests.framework */; };
@@ -427,7 +424,6 @@
 		82ACF6AB2487E73C006E207A /* GDPRUserDefaultsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRUserDefaultsSpec.swift; sourceTree = "<group>"; };
 		82B224172580D5D60032BC49 /* GDPRURLExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRURLExtensionsSpec.swift; sourceTree = "<group>"; };
 		82CC8B8224F6680600D94AA7 /* SPGDPRExampleAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SPGDPRExampleAppDebug.entitlements; sourceTree = "<group>"; };
-		82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequestSpec.swift; sourceTree = "<group>"; };
 		82D8FEDC23DC753400F28D74 /* NativeMessageExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeMessageExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D8FEDE23DC753400F28D74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82D8FEE223DC753400F28D74 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -435,13 +431,11 @@
 		82D8FEE723DC753500F28D74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		82D8FEEA23DC753500F28D74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82D8FEEC23DC753500F28D74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponseSpec.swift; sourceTree = "<group>"; };
 		82EA4E2F2491019900DC01C9 /* HttpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HttpMock.swift; path = Helpers/HttpMock.swift; sourceTree = "<group>"; };
 		82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourcePointClientMock.swift; path = Helpers/SourcePointClientMock.swift; sourceTree = "<group>"; };
 		82EA4E332491324400DC01C9 /* GDPRLocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GDPRLocalStorageMock.swift; path = Helpers/GDPRLocalStorageMock.swift; sourceTree = "<group>"; };
 		82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InMemoryStorageMock.swift; path = Helpers/InMemoryStorageMock.swift; sourceTree = "<group>"; };
 		82EA4FA52489171200BA48BF /* GDPRLocalStorageSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRLocalStorageSpec.swift; sourceTree = "<group>"; };
-		82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRequestSpec.swift; sourceTree = "<group>"; };
 		82F9411724A10379007D30B1 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		82F9411924A10416007D30B1 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		82FC4D3A23983231002F08E5 /* ConsentViewController_ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController_ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1325,10 +1319,7 @@
 				6D45580C259A446800635952 /* SPPrivacyManagerTabSpec.swift */,
 				8248A498247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift */,
 				82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */,
-				82CC8CD724ACF6970030B28B /* MessageRequestSpec.swift */,
-				82F8B1A924EBC7560055F430 /* ActionRequestSpec.swift */,
 				82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */,
-				82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */,
 				829DA56325D5573800612517 /* ConsentsProfileSpec.swift */,
 				5687C4F127A1B11A003456E7 /* SPPropertyNameSpec.swift */,
 			);
@@ -2631,7 +2622,6 @@
 				6D605DF62423B96C00BB3E5F /* SPErrorSpec.swift in Sources */,
 				822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */,
 				5687C4F227A1B11A003456E7 /* SPPropertyNameSpec.swift in Sources */,
-				82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */,
 				6D45580D259A446800635952 /* SPPrivacyManagerTabSpec.swift in Sources */,
 				82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */,
 				6D554C2224310BF800B15583 /* SourcePointClientSpec.swift in Sources */,
@@ -2644,11 +2634,9 @@
 				82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */,
 				826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */,
 				8248A499247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift in Sources */,
-				82F8B1AA24EBC7560055F430 /* ActionRequestSpec.swift in Sources */,
 				6D687AD724A8F1C1001DFB11 /* MessageMock.swift in Sources */,
 				82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */,
 				82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */,
-				82CC8CD824ACF6970030B28B /* MessageRequestSpec.swift in Sources */,
 				826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */,
 				829DA56425D5573800612517 /* ConsentsProfileSpec.swift in Sources */,
 				82B224182580D5D60032BC49 /* GDPRURLExtensionsSpec.swift in Sources */,

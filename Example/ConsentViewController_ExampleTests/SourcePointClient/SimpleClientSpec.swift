@@ -160,7 +160,7 @@ class SimpleClientSpec: QuickSpec {
                     )
                     client.request(self.exampleRequest) { result in
                         switch result {
-                        case .success(_): fail("call should fail")
+                        case .success: fail("call should fail")
                         case .failure(let e):
                             expect(e).toEventuallyNot(beNil())
                         }
@@ -179,7 +179,7 @@ class SimpleClientSpec: QuickSpec {
                 )
                 client.request(self.exampleRequest) { result in
                     switch result {
-                    case .success(_): fail("call should fail")
+                    case .success: fail("call should fail")
                     case .failure(let e):
                         expect(e).toEventually(beAKindOf(NoInternetConnection.self))
                     }

@@ -252,6 +252,6 @@ import Foundation
     override public var description: String {
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
     }
-    // swiftlint:disable:next unused_setter_value
+
     public override var campaignType: SPCampaignType { get { .gdpr } set {} }
 }

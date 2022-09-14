@@ -240,7 +240,7 @@ class SourcePointClientSpec: QuickSpec {
                             switch result {
                             case .success(let response):
                                 consentsResponse = response
-                            case .failure(_): break
+                            case .failure: break
                             }
                         }
                         expect(consentsResponse).toEventually(equal(CustomConsentResponse(
@@ -255,7 +255,7 @@ class SourcePointClientSpec: QuickSpec {
                         var error: SPError? = .none
                         client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                             switch result {
-                            case .success(_): break
+                            case .success: break
                             case .failure(let e):
                                 error = e
                             }
@@ -273,7 +273,7 @@ class SourcePointClientSpec: QuickSpec {
                         var error: SPError?
                         client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                             switch result {
-                            case .success(_): break
+                            case .success: break
                             case .failure(let e):
                                 error = e
                             }
@@ -350,7 +350,7 @@ class SourcePointClientSpec: QuickSpec {
                             switch result {
                             case .success(let response):
                                 consentsResponse = response
-                            case .failure(_): break
+                            case .failure: break
                             }
                         }
                         expect(consentsResponse).toEventually(equal(DeleteCustomConsentResponse(
@@ -365,7 +365,7 @@ class SourcePointClientSpec: QuickSpec {
                         var error: SPError? = .none
                         client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                             switch result {
-                            case .success(_): break
+                            case .success: break
                             case .failure(let e):
                                 error = e
                             }
@@ -383,7 +383,7 @@ class SourcePointClientSpec: QuickSpec {
                         var error: SPError?
                         client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                             switch result {
-                            case .success(_): break
+                            case .success: break
                             case .failure(let e):
                                 error = e
                             }
