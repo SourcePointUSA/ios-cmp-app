@@ -160,6 +160,8 @@ You can load the Privacy Manager (that UI with the toggles) any time, programati
 * `.loadGDPRPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)` or
 * `.loadCCPAPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)`
 
+> **Note**: The `String` value is the privacy manager ID for the privacy manager you wish to load on demand.
+
 The SDK will follow the same exact same lifecycle as with the 1st layer consent message. First calling the delegate method `onSPUIReady` when the PM is ready, `onAction` when the user takes an action, `onSPUIFinished` when the PM is ready to be removed from the View stack and, finally,  `onConsentReady` once the SDK receives the consent data back from the server.
 
 ## Understanding the `SPDelegate` protocol (delegate methods)
