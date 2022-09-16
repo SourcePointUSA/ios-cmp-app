@@ -11,7 +11,6 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-
 // swiftlint:disable force_try line_length
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {

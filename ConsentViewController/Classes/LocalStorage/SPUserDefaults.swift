@@ -14,6 +14,7 @@ class SPUserDefaults: SPLocalStorage {
 
     static let PROPERTY_ID = "\(SP_KEY_PREFIX)propertyId"
     static let LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)localState"
+    static let NON_KEYED_LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)nonKeyedlocalState"
     static let USER_DATA_KEY = "\(SP_KEY_PREFIX)userData"
     static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
@@ -63,6 +64,13 @@ class SPUserDefaults: SPLocalStorage {
     var localState: SPJson {
         get { storage.object(ofType: SPJson.self, forKey: SPUserDefaults.LOCAL_STATE_KEY) ?? SPJson() }
         set { storage.setObject(newValue, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
+    }
+
+    var nonKeyedLocalStorage: SPJson {
+        get {
+            storage.object(ofType: SPJson.self, forKey: SPUserDefaults.NON_KEYED_LOCAL_STATE_KEY) ?? SPJson()
+        }
+        set { storage.setObject(newValue, forKey: SPUserDefaults.NON_KEYED_LOCAL_STATE_KEY) }
     }
 
     var gdprChildPmId: String? {

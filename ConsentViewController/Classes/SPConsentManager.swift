@@ -153,9 +153,7 @@ import UIKit
         }
     }
 
-    func storeData(localState: SPJson, userData: SPUserData, propertyId: Int?) {
-        storage.propertyId = propertyId
-        storage.localState = localState
+    func storeConsent(userData: SPUserData) {
         storage.userData = userData
         if let tcData = userData.gdpr?.consents?.tcfData {
             storage.tcfData = tcData.dictionaryValue
@@ -189,11 +187,7 @@ import UIKit
                         gdpr: self?.storage.userData.gdpr,
                         ccpa: SPConsent(consents: consents, applies: true)
                     )
-                    self?.storeData(
-                        localState: localState,
-                        userData: userData,
-                        propertyId: self?.propertyId
-                    )
+                    self?.storeConsent(userData: userData)
                     self?.onConsentReceived()
                 case .failure(let error):
                     self?.onError(error)
@@ -208,11 +202,7 @@ import UIKit
                         gdpr: SPConsent(consents: consents, applies: true),
                         ccpa: self?.storage.userData.ccpa
                     )
-                    self?.storeData(
-                        localState: localState,
-                        userData: userData,
-                        propertyId: self?.propertyId
-                    )
+                    self?.storeConsent(userData: userData)
                     self?.onConsentReceived()
                 case .failure(let error):
                     self?.onError(error)
@@ -303,6 +293,26 @@ import UIKit
     /// Returns the user data **stored in the `UserDefaults`**.
     public var userData: SPUserData { storage.userData }
 
+    @nonobjc
+    private func campaignsToMessageControllers(_ campaigns: [Campaign]) -> [SPMessageView] {
+        campaigns
+            .filter { $0.message != nil }
+            .filter {
+                if $0.type == .ios14 {
+                    iOSMessagePartitionUUID = $0.messageMetaData?.messagePartitionUUID
+                }
+                return $0.messageMetaData != nil
+            }
+            .filter { $0.url != nil }
+            .compactMap { messageToViewController(
+                $0.url!,
+                $0.messageMetaData!.messageId,
+                $0.message,
+                $0.type
+            )}
+            .reversed()
+    }
+
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         self.authId = authId
         responsesToReceive += 1
@@ -322,30 +332,11 @@ import UIKit
             self?.responsesToReceive -= 1
             switch result {
             case .success(let messagesResponse):
-                self?.storeData(
-                    localState: messagesResponse.localState,
-                    userData: SPUserData(from: messagesResponse),
-                    propertyId: messagesResponse.propertyId
-                )
+                self?.storeConsent(userData: SPUserData(from: messagesResponse))
                 self?.saveChildPmId(campaigns: messagesResponse.campaigns)
-                self?.messageControllersStack = messagesResponse.campaigns
-                    .filter { $0.message != nil }
-                    .filter {
-                        if $0.type == .ios14 {
-                            self?.iOSMessagePartitionUUID = $0.messageMetaData?.messagePartitionUUID
-                        }
-                        return $0.messageMetaData != nil
-                    }
-                    .filter { $0.url != nil }
-                    .compactMap { self?.messageToViewController(
-                        $0.url!,
-                        $0.messageMetaData!.messageId,
-                        $0.message,
-                        $0.type
-                    )}
-                    .reversed()
-                    self?.messagesToShow = self?.messageControllersStack.count ?? 0
-                if self?.messageControllersStack.isEmpty ?? true {
+                self?.messageControllersStack = self?.campaignsToMessageControllers(messagesResponse.campaigns) ?? []
+                self?.messagesToShow = self?.messageControllersStack.count ?? 0
+                if self?.messageControllersStack.isEmpty == true {
                     self?.onConsentReceived()
                 } else {
                     self?.renderNextMessageIfAny()

@@ -50,6 +50,7 @@ protocol SPLocalStorage {
     var propertyId: Int? { get set }
     var gdprChildPmId: String? { get set }
     var ccpaChildPmId: String? { get set }
+    var nonKeyedLocalStorage: SPJson { get set }
 
     func clear()
 
