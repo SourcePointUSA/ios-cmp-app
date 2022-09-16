@@ -18,6 +18,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
         let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
         let propertyName = try! SPPropertyName("tests.unified-script.com")
         let accountId = 22
+        let propertyId = 123
         var client: SourcePointClient!
 
         describe("UnmockedSourcepointClient") {
@@ -36,20 +37,20 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             describe("consentStatusURLWithParams") {
                 describe("with auth id") {
                     it("should add the authId query param") {
-                        let url = client.consentStatusURLWithParams(propertyId: 123, metadata: emptyMetaData, authId: "john doe")
+                        let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: "john doe")
                         expect(url?.query).to(contain("authId=john%20doe"))
                     }
                 }
 
                 describe("without auth id") {
                     it("should not add the authId query param") {
-                        let url = client.consentStatusURLWithParams(propertyId: 123, metadata: emptyMetaData, authId: nil)
+                        let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: nil)
                         expect(url?.query).notTo(contain("authId="))
                     }
                 }
 
                 it("should contain all query params") {
-                    let url = client.consentStatusURLWithParams(propertyId: 123, metadata: emptyMetaData, authId: nil)
+                    let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: nil)
                     let paramsRaw = "env=\(Constants.Urls.envParam)&hasCsp=true&metadata={}&propertyId=123&withSiteActions=false"
                     expect(url?.query).to(equal(
                         paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -117,6 +118,31 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     expect(response.campaigns.count).to(equal(2))
                                     expect(gdprConsents).notTo(beNil())
                                     expect(ccpaConsents).notTo(beNil())
+                                case .failure(let error):
+                                    fail(error.failureReason)
+                                }
+                                done()
+                            }
+                    }
+                }
+            }
+
+            describe("meta-data") {
+                it("should call the endpoint and parse the response into MetaDataResponse") {
+                    waitUntil { done in
+                        client.metaData(env: .Public,
+                                        accountId: accountId,
+                                        propertyId: propertyId,
+                                        metadata: MetaDataBodyRequest(
+                                            gdpr: MetaDataBodyRequest.Campaign(hasLocalData: true, dateCreated: nil, uuid: nil),
+                                            ccpa: MetaDataBodyRequest.Campaign(hasLocalData: false, dateCreated: nil, uuid: nil))) {
+                                switch $0 {
+                                case .success(let response):
+                                    let GDPR = response.gdpr
+                                    let CCPA = response.ccpa
+                                    expect(response).to(beAnInstanceOf(MetaDataResponse.self))
+                                    expect(GDPR).notTo(beNil())
+                                    expect(CCPA).notTo(beNil())
                                 case .failure(let error):
                                     fail(error.failureReason)
                                 }
