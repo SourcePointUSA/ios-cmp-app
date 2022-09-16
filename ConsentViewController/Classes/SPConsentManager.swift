@@ -182,7 +182,7 @@ import UIKit
             spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
                 self?.responsesToReceive -= 1
                 switch result {
-                case .success((let localState, let consents)):
+                case .success((_, let consents)):
                     let userData = SPUserData(
                         gdpr: self?.storage.userData.gdpr,
                         ccpa: SPConsent(consents: consents, applies: true)
@@ -197,7 +197,7 @@ import UIKit
             spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
                 self?.responsesToReceive -= 1
                 switch result {
-                case .success((let localState, let consents)):
+                case .success((_, let consents)):
                     let userData = SPUserData(
                         gdpr: SPConsent(consents: consents, applies: true),
                         ccpa: self?.storage.userData.ccpa

@@ -39,6 +39,7 @@ typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPErro
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
+typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
@@ -130,6 +131,14 @@ protocol SourcePointProtocol {
         metadata: ConsentStatusMetaData,
         authId: String?,
         handler: @escaping ConsentStatusHandler
+    )
+
+    func metaData(
+        env: SPCampaignEnv,
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest,
+        handler: @escaping MetaDataHandler
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -407,6 +416,47 @@ extension SourcePointClient {
                 try result.decoded() as ConsentStatusResponse
             }.mapError {
                 InvalidConsentStatusResponseError(error: $0)
+            })
+        }
+    }
+
+    func metaDataURLWithParams(
+        env: SPCampaignEnv,
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest
+    ) -> URL? {
+        let url = Constants.Urls.META_DATA_URL.appendQueryItems([
+            "env": env.description,
+            "accountId": String(accountId),
+            "propertyId": String(propertyId),
+            "metadata": metadata.stringified()
+        ])
+        return url
+    }
+
+    public func metaData(
+        env: SPCampaignEnv,
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest,
+        handler: @escaping MetaDataHandler
+    ) {
+        guard let url = metaDataURLWithParams(
+            env: env,
+            accountId: accountId,
+            propertyId: propertyId,
+            metadata: metadata
+        ) else {
+            handler(Result.failure(InvalidMetaDataQueryParamsError()))
+            return
+        }
+
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as MetaDataResponse
+            }.mapError {
+                InvalidMetaDataResponseError(error: $0)
             })
         }
     }
