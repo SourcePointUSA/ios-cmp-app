@@ -133,6 +133,14 @@ protocol SourcePointProtocol {
         handler: @escaping ConsentStatusHandler
     )
 
+    func metaData(
+        env: SPCampaignEnv,
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest,
+        handler: @escaping MetaDataHandler
+    )
+
     func setRequestTimeout(_ timeout: TimeInterval)
 }
 
@@ -416,7 +424,7 @@ extension SourcePointClient {
         env: SPCampaignEnv,
         accountId: Int,
         propertyId: Int,
-        metadata: ConsentStatusMetaData
+        metadata: MetaDataBodyRequest
     ) -> URL? {
         let url = Constants.Urls.META_DATA_URL.appendQueryItems([
             "env": env.description,
@@ -431,7 +439,7 @@ extension SourcePointClient {
         env: SPCampaignEnv,
         accountId: Int,
         propertyId: Int,
-        metadata: ConsentStatusMetaData,
+        metadata: MetaDataBodyRequest,
         handler: @escaping MetaDataHandler
     ) {
         guard let url = metaDataURLWithParams(
