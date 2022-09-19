@@ -41,6 +41,7 @@ typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPEr
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
+typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -134,10 +135,18 @@ protocol SourcePointProtocol {
     )
 
     func pvData(
-            env: SPCampaignEnv,
-            pvDataRequestBody: PvDataRequestBody,
-            handler: @escaping PvDataHandler
-        )
+        env: SPCampaignEnv,
+        pvDataRequestBody: PvDataRequestBody,
+        handler: @escaping PvDataHandler
+    )
+
+    func metaData(
+        env: SPCampaignEnv,
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest,
+        handler: @escaping MetaDataHandler
+    )
 
     func setRequestTimeout(_ timeout: TimeInterval)
 }
@@ -418,6 +427,47 @@ extension SourcePointClient {
         }
     }
 
+    func metaDataURLWithParams(
+        env: SPCampaignEnv,
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest
+    ) -> URL? {
+        let url = Constants.Urls.META_DATA_URL.appendQueryItems([
+            "env": env.description,
+            "accountId": String(accountId),
+            "propertyId": String(propertyId),
+            "metadata": metadata.stringified()
+        ])
+        return url
+    }
+
+    public func metaData(
+        env: SPCampaignEnv,
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest,
+        handler: @escaping MetaDataHandler
+    ) {
+        guard let url = metaDataURLWithParams(
+            env: env,
+            accountId: accountId,
+            propertyId: propertyId,
+            metadata: metadata
+        ) else {
+            handler(Result.failure(InvalidMetaDataQueryParamsError()))
+            return
+        }
+
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                try result.decoded() as MetaDataResponse
+            }.mapError {
+                InvalidMetaDataResponseError(error: $0)
+            })
+        }
+    }
+
     func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
         guard let url = Constants.Urls.GET_MESSAGES_URL.appendQueryItems(params.stringifiedParams()) else {
             handler(Result.failure(InvalidGetMessagesParams()))
@@ -462,5 +512,4 @@ extension SourcePointClient {
             }
         }
     }
-
 }
