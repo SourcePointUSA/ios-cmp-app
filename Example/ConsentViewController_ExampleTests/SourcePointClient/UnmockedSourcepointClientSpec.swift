@@ -125,6 +125,42 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     }
                 }
             }
+
+            describe("pvData") {
+                it("should call the endpoint and parse the response into PvDataResponse") {
+                    waitUntil { done in
+                        client.pvData(
+                            env: .Public,
+                            pvDataRequestBody: PvDataRequestBody(
+                                gdpr: PvDataRequestBody.GDPR(
+                                    applies: true,
+                                    accountId: accountId,
+                                    siteId: 999,
+                                    msgId: 234,
+                                    categoryId: 1,
+                                    subCategoryId: 2,
+                                    fromTest: true,
+                                    prtnUUID: 123,
+                                    consentStatus: PvDataRequestBody.GDPR.ConsentStatus(
+                                        hasConsentData: false,
+                                        consentedToAny: false,
+                                        rejectAny: false
+                                    )
+                                )
+                            )
+                        ) {
+                        switch $0 {
+                        case .success(let response):
+                            expect(response).to(beAnInstanceOf(PvDataResponse.self))
+                            expect(response.gdpr).notTo(beNil())
+                        case .failure(let error):
+                            fail(error.failureReason)
+                            }
+                        done()
+                        }
+                    }
+                }
+            }
         }
     }
 }

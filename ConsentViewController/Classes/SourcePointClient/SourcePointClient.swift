@@ -40,6 +40,7 @@ typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Voi
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
+typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -131,6 +132,12 @@ protocol SourcePointProtocol {
         authId: String?,
         handler: @escaping ConsentStatusHandler
     )
+
+    func pvData(
+            env: SPCampaignEnv,
+            pvDataRequestBody: PvDataRequestBody,
+            handler: @escaping PvDataHandler
+        )
 
     func setRequestTimeout(_ timeout: TimeInterval)
 }
@@ -425,4 +432,35 @@ extension SourcePointClient {
             })
         }
     }
+
+    func pvDataURLWithParams(
+            env: SPCampaignEnv
+        ) -> URL? {
+            let url = Constants.Urls.PV_DATA_URL.appendQueryItems([
+                "env": env.description
+            ])
+            return url
+        }
+
+    public func pvData(env: SPCampaignEnv,
+                       pvDataRequestBody: PvDataRequestBody,
+                       handler: @escaping PvDataHandler) {
+        guard let url = pvDataURLWithParams(
+            env: env
+        ) else {
+            handler(Result.failure(InvalidPvDataQueryParamsError()))
+            return
+        }
+
+        JSONEncoder().encodeResult(pvDataRequestBody).map { body in
+            client.post(urlString: url.absoluteString, body: body) { result in
+                handler(Result {
+                    try result.decoded() as PvDataResponse
+                }.mapError {
+                    InvalidPvDataQueryResponseError(error: $0)
+                })
+            }
+        }
+    }
+
 }
