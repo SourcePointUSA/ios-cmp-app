@@ -195,7 +195,7 @@ Make sure to check XCode's quick help of `SPUserData` for more information on wh
 ### optional onError(error: SPError)
 In case of an error, the SDK will wrap the error in one of the `SPError` classes and eventually call the `onError(_ error: SPError)` callback. 
 
-By default, the SDK preservs all user consent data from UserDefaults in case of `OnError` event is called.
+By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
 Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
 ## Adding or Removing custom consents 
