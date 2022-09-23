@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.7.0'
+pod 'ConsentViewController', '6.7.1'
 ```
 
 ### Carthage
@@ -196,7 +196,7 @@ Make sure to check XCode's quick help of `SPUserData` for more information on wh
 In case of an error, the SDK will wrap the error in one of the `SPError` classes and eventually call the `onError(_ error: SPError)` callback. 
 
 By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
-Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
+Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
 ## Adding or Removing custom consents 
 It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
