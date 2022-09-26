@@ -13,26 +13,43 @@ import WebKit
 @testable import ConsentViewController
 
 class TestWebView: WKWebView, WKNavigationDelegate {
-    var onLoaded = {}
+    let authIdToInject: String?
+    let onLoad: (_ webView: WKWebView) -> Void
 
-    init() {
+    init(authIdToInject: String? = nil, onLoad: @escaping (_ webView: WKWebView) -> Void = { _ in }) {
+        self.authIdToInject = authIdToInject
+        self.onLoad = onLoad
         super.init(frame: CGRect(), configuration: WKWebViewConfiguration())
-        navigationDelegate = self
+        self.navigationDelegate = self
+        if let authIdToInject = authIdToInject {
+            configuration.userContentController.addUserScript(WKUserScript(
+                source: "document.cookie='authId=\(authIdToInject)'",
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: true
+            ))
+        }
+        loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
     }
 
-    required init?(coder: NSCoder) { super.init(coder: coder) }
+    required init?(coder: NSCoder) { fatalError("not implemented") }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        onLoaded()
+        onLoad(webView)
     }
 }
 
 class GDPRWebViewExtensionsSpec: QuickSpec {
+    var webView = TestWebView()
+
+    func resetAuthIdCookie() {
+        self.webView.evaluateJavaScript("document.cookie='authId='")
+    }
+
     override func spec() {
         beforeSuite {
             // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
-            AsyncDefaults.timeout = .seconds(20)
-            AsyncDefaults.pollInterval = .seconds(1)
+            AsyncDefaults.timeout = .seconds(10)
+            AsyncDefaults.pollInterval = .seconds(10)
         }
 
         afterSuite {
@@ -41,36 +58,54 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
             AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
+        beforeEach {
+            self.resetAuthIdCookie()
+        }
+
         describe("getAuthID") {
-            it("should evaluate the content of getAuthId.js script") {
-                let webview = TestWebView()
-                var authId: String?
-                webview.configuration.userContentController.addUserScript(
-                    WKUserScript(
-                        source: "document.cookie='authId=foo;'",
-                        injectionTime: .atDocumentStart,
-                        forMainFrameOnly: true
-                ))
-                webview.onLoaded = {
-                    webview.getAuthId { result, _ in authId = result }
+            it("should get the authId cookie from the webview") {
+                waitUntil { done in
+                    self.webView = TestWebView(authIdToInject: "foo") { $0.getAuthId { authId, error in
+                        expect(authId).to(equal("foo"), description: error.debugDescription)
+                        done()
+                    }}
                 }
-                webview.loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
-                expect(authId).toEventually(equal("foo"))
+            }
+
+            context("when there are no cookies") {
+                it("returns empty string") {
+                    waitUntil { done in
+                        self.webView = TestWebView {
+                            $0.getAuthId { authId, error in
+                                expect(authId).to(beEmpty(), description: error.debugDescription)
+                                done()
+                            }}
+                    }
+                }
+            }
+
+            context("when authId cookie is empty") {
+                it("returns empty string") {
+                    waitUntil { done in
+                        self.webView = TestWebView(authIdToInject: "") {
+                            $0.getAuthId { authId, error in
+                                expect(authId).to(beEmpty(), description: error.debugDescription)
+                                done()
+                            }}
+                    }
+                }
             }
         }
 
         describe("setAuthId") {
             it("should add the content of setAuthId.js as userContentScript") {
-                let webview = TestWebView()
-                var cookies: String?
-                webview.setConsentFor(authId: "foo")
-                webview.onLoaded = {
-                    webview.evaluateJavaScript("document.cookie") { result, _ in
-                        cookies = result as? String
-                    }
+                waitUntil { done in
+                    self.webView = TestWebView { $0.getAuthId { authId, error in
+                        expect(authId).to(equal("another foo"), description: error.debugDescription)
+                        done()
+                    }}
+                    self.webView.setConsentFor(authId: "another foo")
                 }
-                webview.loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
-                expect(cookies).toEventually(equal("authId=foo"))
             }
         }
     }
