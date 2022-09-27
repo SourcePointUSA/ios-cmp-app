@@ -73,8 +73,8 @@ jobs:
         - uses: actions/checkout@v2
         - name: Select Xcode version 14.0.1
           run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
-        - name: NativePMExampleApp UI testing -> Apple TV 4K Simulator (tvOS 16.1)
-          run: xcodebuild clean test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV 4K,OS=16.1' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - name: NativePMExampleApp UI testing -> Apple TV Simulator (tvOS 16.1)
+          run: xcodebuild clean test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload NativePMExampleApp tests results
