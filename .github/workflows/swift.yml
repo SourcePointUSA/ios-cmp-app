@@ -10,84 +10,84 @@ defaults:
     working-directory: Example
 jobs:
   lint:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v2
       - name: linting
         run: swiftlint lint
   BuildSwiftPackage:
-      runs-on: macos-11
+      runs-on: macos-12
       steps:
         - uses: actions/checkout@v2
-        - name: Select Xcode version 13.0
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
+        - name: Select Xcode version 14.0.1
+          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
         - name: Building Swift Package
-          run: xcodebuild clean build -scheme SPMBuild -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+          run: xcodebuild clean build -scheme SPMBuild -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload Swift Package build results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   ObjC-ExampleApp-tests:
-      runs-on: macos-11
+      runs-on: macos-12
       steps:
         - uses: actions/checkout@v2
-        - name: Select Xcode version 13.0
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
-        - name: ObjC-ExampleApp testing -> iPhone 13 Pro Max (iOS 15.0)
-          run: xcodebuild clean test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - name: Select Xcode version 14.0.1
+          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
+        - name: ObjC-ExampleApp testing -> iPhone 14 Pro (iOS 16.0)
+          run: xcodebuild clean test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload ObjCExampleApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   NativeMessageExample-tests:
-      runs-on: macos-11
+      runs-on: macos-12
       steps:
         - uses: actions/checkout@v2
-        - name: Select Xcode version 13.0
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
-        - name: NativeMessageExample testing -> iPhone 13 Pro Max (iOS 15.0)
-          run: xcodebuild clean test -scheme NativeMessageExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - name: Select Xcode version 14.0.1
+          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
+        - name: NativeMessageExample testing -> iPhone 14 Pro (iOS 16.0)
+          run: xcodebuild clean test -scheme NativeMessageExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload NativeExampleApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   ConsentViewController:
-      runs-on: macos-11
+      runs-on: macos-12
       steps:
         - uses: actions/checkout@v2
-        - name: Select Xcode version 13.0
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
-        - name: ConsentViewController_ExampleTests Unit and SPGDPRExampleAppUITests UI testing -> iPhone 13 Pro Max (iOS 15.0)
-          run: xcodebuild clean test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -retry-tests-on-failure -test-iterations 10
+        - name: Select Xcode version 14.0.1
+          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
+        - name: ConsentViewController_ExampleTests Unit and SPGDPRExampleAppUITests UI testing -> iPhone 14 Pro (iOS 16.0)
+          run: xcodebuild clean test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO" -retry-tests-on-failure -test-iterations 10
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload ConsentViewController_ExampleTests tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   NativePMExampleApp:
-      runs-on: macos-11
+      runs-on: macos-12
       steps:
         - uses: actions/checkout@v2
-        - name: Select Xcode version 13.0
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
-        - name: NativePMExampleApp UI testing -> Apple TV 4K Simulator (tvOS 15.0)
-          run: xcodebuild clean test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV 4K,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - name: Select Xcode version 14.0.1
+          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
+        - name: NativePMExampleApp UI testing -> Apple TV Simulator (tvOS 16.1)
+          run: xcodebuild clean test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload NativePMExampleApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult           
   meta-app-tests:
-      runs-on: macos-11
+      runs-on: macos-12
       steps:
         - uses: actions/checkout@v2
-        - name: Select Xcode version 13.0
-          run: sudo xcode-select -s '/Applications/Xcode_13.0.app/Contents/Developer'
-        - name: SourcePointMetaApp testing -> iPhone 13 Pro Max (iOS 15.0)
-          run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+        - name: Select Xcode version 14.0.1
+          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
+        - name: SourcePointMetaApp testing -> iPhone 14 Pro (iOS 16.0)
+          run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload MetaApp tests results
