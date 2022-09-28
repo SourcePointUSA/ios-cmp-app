@@ -15,26 +15,26 @@ class SPGDPRExampleAppUITests: QuickSpec {
     var app: ExampleApp!
 
     func acceptAtt() {
-        expect(self.app.attPrePrompt.okButton).to(showUp())
+        expect(self.app.attPrePrompt.okButton).toEventually(showUp())
         app.attPrePrompt.okButton.tap()
-        expect(self.app.attPrePrompt.attAlertAllowButton).to(showUp(in: 1))
+        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
         app.attPrePrompt.attAlertAllowButton.tap()
     }
 
     func acceptGDPRMessage() {
-        expect(self.app.gdprMessage.messageTitle).to(showUp())
+        expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         self.app.gdprMessage.acceptButton.tap()
     }
 
     func acceptCCPAMessage() {
-        expect(self.app.ccpaMessage.messageTitle).to(showUp())
+        expect(self.app.ccpaMessage.messageTitle).toEventually(showUp())
         self.app.ccpaMessage.acceptButton.tap()
     }
 
     func showGDPRPMViaFirstLayerMessage() {
-        expect(self.app.gdprMessage.messageTitle).to(showUp())
+        expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         self.app.gdprMessage.showOptionsButton.tap()
-        expect(self.app.gdprPM.messageTitle).to(showUp())
+        expect(self.app.gdprPM.messageTitle).toEventually(showUp())
     }
 
     // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
@@ -70,7 +70,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
-            expect(self.app.gdprPrivacyManagerButton).to(showUp())
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             self.app.relaunch()
             expect(self.app.gdprMessage.messageTitle).notTo(showUp())
         }
@@ -80,7 +80,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
             self.acceptCCPAMessage()
-            expect(self.app.gdprPrivacyManagerButton).to(showUp())
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             self.app.relaunch()
             expect(self.app.gdprMessage.messageTitle).notTo(showUp())
         }
@@ -89,7 +89,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.runAttScenario()
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.cancelButton.tap()
-            expect(self.app.gdprMessage.messageTitle).to(showUp())
+            expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
         it("DeleteCustomConsents after Accept all persists after app relaunch") {

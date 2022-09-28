@@ -16,11 +16,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var ccpaButton: UIButton!
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "611235")
+        consentManager.loadGDPRPrivacyManager(withId: "713324")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "562032")
+        consentManager.loadCCPAPrivacyManager(withId: "713327")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(

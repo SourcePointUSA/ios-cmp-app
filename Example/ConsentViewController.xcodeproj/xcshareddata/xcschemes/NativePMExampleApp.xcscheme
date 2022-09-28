@@ -29,17 +29,8 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "822BF2D52657E29900177B0E"
-               BuildableName = "NativePMExampleAppTests.xctest"
-               BlueprintName = "NativePMExampleAppTests"
-               ReferencedContainer = "container:ConsentViewController.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "822BF2E02657E29900177B0E"
