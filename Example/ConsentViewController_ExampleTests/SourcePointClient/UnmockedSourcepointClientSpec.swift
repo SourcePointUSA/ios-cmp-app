@@ -130,9 +130,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             describe("meta-data") {
                 it("should call the endpoint and parse the response into MetaDataResponse") {
                     waitUntil { done in
-                        client.metaData(env: .Public,
-                                        accountId: accountId,
-                                        propertyId: propertyId,
+                        client.metaData(accountId: accountId,
+                                        propertyId: 17801,
                                         metadata: MetaDataBodyRequest(
                                             gdpr: MetaDataBodyRequest.Campaign(hasLocalData: true, dateCreated: nil, uuid: nil),
                                             ccpa: MetaDataBodyRequest.Campaign(hasLocalData: false, dateCreated: nil, uuid: nil))) {

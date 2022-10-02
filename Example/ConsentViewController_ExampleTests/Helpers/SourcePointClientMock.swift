@@ -153,10 +153,9 @@ class SourcePointClientMock: SourcePointProtocol {
     func setRequestTimeout(_ timeout: TimeInterval) {}
 
     public func metaData(
-        env: SPCampaignEnv,
         accountId: Int,
         propertyId: Int,
         metadata: MetaDataBodyRequest,
         handler: @escaping MetaDataHandler
-    ){}
+    ) {}
 }
