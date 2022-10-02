@@ -281,6 +281,6 @@ import Foundation
     override public var spCode: String { "sp_metric_invalid_pv_data_query_params" }
 }
 
-@objcMembers public class InvalidPvDataQueryResponseError: SPError {
+@objcMembers public class InvalidPvDataResponseError: SPError {
     override public var spCode: String { "sp_metric_invalid_pv_data_response" }
 }

@@ -499,7 +499,7 @@ extension SourcePointClient {
                 handler(Result {
                     try result.decoded() as PvDataResponse
                 }.mapError {
-                    InvalidPvDataQueryResponseError(error: $0)
+                    InvalidPvDataResponseError(error: $0)
                 })
             }
         }
