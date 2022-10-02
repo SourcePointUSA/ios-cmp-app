@@ -135,7 +135,6 @@ protocol SourcePointProtocol {
     )
 
     func pvData(
-        env: SPCampaignEnv,
         pvDataRequestBody: PvDataRequestBody,
         handler: @escaping PvDataHandler
     )
@@ -483,21 +482,14 @@ extension SourcePointClient {
         }
     }
 
-    func pvDataURLWithParams(
-            env: SPCampaignEnv
-        ) -> URL? {
-            let url = Constants.Urls.PV_DATA_URL.appendQueryItems([
-                "env": env.description
-            ])
-            return url
+    func pvDataURLWithParams() -> URL? {
+            return Constants.Urls.PV_DATA_URL.absoluteURL
         }
 
-    public func pvData(env: SPCampaignEnv,
-                       pvDataRequestBody: PvDataRequestBody,
+    public func pvData(pvDataRequestBody: PvDataRequestBody,
                        handler: @escaping PvDataHandler) {
-        guard let url = pvDataURLWithParams(
-            env: env
-        ) else {
+        guard let url = pvDataURLWithParams()
+        else {
             handler(Result.failure(InvalidPvDataQueryParamsError()))
             return
         }

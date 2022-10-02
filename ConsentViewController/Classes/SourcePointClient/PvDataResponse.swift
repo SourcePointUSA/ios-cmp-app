@@ -25,24 +25,38 @@ struct PvDataResponse: Decodable, Equatable {
 }
 
 struct PvDataRequestBody: Codable, Equatable {
-    struct GDPR: Codable, Equatable {
-        struct ConsentStatus: Codable, Equatable {
-            let hasConsentData: Bool
-            let consentedToAny: Bool
-            let rejectAny: Bool
-        }
+    struct ConsentStatus: Codable, Equatable {
+        let hasConsentData: Bool
+        let consentedToAny: Bool
+        let rejectAny: Bool
+    }
 
+    struct GDPR: Codable, Equatable {
         let applies: Bool
+        let uuid: String?
         let accountId: Int
         let siteId: Int
-        let msgId: Int
-        let categoryId: Int
-        let subCategoryId: Int
-        let fromTest: Bool
-        let prtnUUID: Int
-
         let consentStatus: ConsentStatus
+        let pubData: [String: String]?
+        let sampleRate: Int
+        let euconsent: String?
+        let msgId: Int?
+        let categoryId: Int?
+        let subCategoryId: Int?
+        let prtnUUID: String?
+    }
+
+    struct CCPA: Codable, Equatable {
+        let applies: Bool
+        let uuid: String?
+        let accountId: Int
+        let siteId: Int
+        let consentStatus: ConsentStatus
+        let pubData: [String: String]?
+        let messageId: Int?
+        let sampleRate: Int
     }
 
     let gdpr: GDPR?
+    let ccpa: CCPA?
 }

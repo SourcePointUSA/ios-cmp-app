@@ -132,23 +132,40 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 it("should call the endpoint and parse the response into PvDataResponse") {
                     waitUntil { done in
                         client.pvData(
-                            env: .Public,
                             pvDataRequestBody: PvDataRequestBody(
-                                gdpr: PvDataRequestBody.GDPR(
+                                 gdpr: PvDataRequestBody.GDPR(
                                     applies: true,
+                                    uuid: nil,
                                     accountId: accountId,
-                                    siteId: 999,
-                                    msgId: 234,
-                                    categoryId: 1,
-                                    subCategoryId: 2,
-                                    fromTest: true,
-                                    prtnUUID: 123,
-                                    consentStatus: PvDataRequestBody.GDPR.ConsentStatus(
+                                    siteId: 17801,
+                                    consentStatus: PvDataRequestBody.ConsentStatus(
                                         hasConsentData: false,
                                         consentedToAny: false,
                                         rejectAny: false
-                                    )
-                                )
+                                    ),
+                                    pubData: nil,
+                                    sampleRate: 5,
+                                    euconsent: nil,
+                                    msgId: nil,
+                                    categoryId: nil,
+                                    subCategoryId: nil,
+                                    prtnUUID: nil
+                                ),
+                                 ccpa: nil
+//                                    PvDataRequestBody.CCPA(
+//                                    applies: true,
+//                                    uuid: nil,
+//                                    accountId: accountId,
+//                                    siteId: 17801,
+//                                    consentStatus: PvDataRequestBody.ConsentStatus(
+//                                        hasConsentData: false,
+//                                        consentedToAny: false,
+//                                        rejectAny: false
+//                                    ),
+//                                    pubData: nil,
+//                                    messageId: nil,
+//                                    sampleRate: 5
+//                                 )
                             )
                         ) {
                         switch $0 {
