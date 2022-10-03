@@ -39,8 +39,9 @@ typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPErro
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
-typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
+typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
+typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -131,6 +132,11 @@ protocol SourcePointProtocol {
         metadata: ConsentStatusMetaData,
         authId: String?,
         handler: @escaping ConsentStatusHandler
+    )
+
+    func pvData(
+        pvDataRequestBody: PvDataRequestBody,
+        handler: @escaping PvDataHandler
     )
 
     func metaData(
@@ -473,6 +479,29 @@ extension SourcePointClient {
             }.mapError {
                 InvalidResponseGetMessagesEndpointError(error: $0)
             })
+        }
+    }
+
+    func pvDataURLWithParams() -> URL? {
+            return Constants.Urls.PV_DATA_URL.absoluteURL
+        }
+
+    public func pvData(pvDataRequestBody: PvDataRequestBody,
+                       handler: @escaping PvDataHandler) {
+        guard let url = pvDataURLWithParams()
+        else {
+            handler(Result.failure(InvalidPvDataQueryParamsError()))
+            return
+        }
+
+        JSONEncoder().encodeResult(pvDataRequestBody).map { body in
+            client.post(urlString: url.absoluteString, body: body) { result in
+                handler(Result {
+                    try result.decoded() as PvDataResponse
+                }.mapError {
+                    InvalidPvDataResponseError(error: $0)
+                })
+            }
         }
     }
 }
