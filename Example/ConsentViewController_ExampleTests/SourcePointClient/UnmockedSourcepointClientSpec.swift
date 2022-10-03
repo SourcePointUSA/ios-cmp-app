@@ -19,6 +19,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
         let propertyName = try! SPPropertyName("tests.unified-script.com")
         let accountId = 22
         let propertyId = 123
+
         var client: SourcePointClient!
 
         describe("UnmockedSourcepointClient") {
@@ -123,6 +124,59 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 }
                                 done()
                             }
+                    }
+                }
+            }
+
+            describe("pvData") {
+                it("should call the endpoint and parse the response into PvDataResponse") {
+                    waitUntil { done in
+                        client.pvData(
+                            pvDataRequestBody: PvDataRequestBody(
+                                 gdpr: PvDataRequestBody.GDPR(
+                                    applies: true,
+                                    uuid: nil,
+                                    accountId: accountId,
+                                    siteId: 17801,
+                                    consentStatus: PvDataRequestBody.ConsentStatus(
+                                        hasConsentData: false,
+                                        consentedToAny: false,
+                                        rejectAny: false
+                                    ),
+                                    pubData: nil,
+                                    sampleRate: 5,
+                                    euconsent: nil,
+                                    msgId: nil,
+                                    categoryId: nil,
+                                    subCategoryId: nil,
+                                    prtnUUID: nil
+                                ),
+                                 ccpa: nil
+//                                    PvDataRequestBody.CCPA(
+//                                    applies: true,
+//                                    uuid: nil,
+//                                    accountId: accountId,
+//                                    siteId: 17801,
+//                                    consentStatus: PvDataRequestBody.ConsentStatus(
+//                                        hasConsentData: false,
+//                                        consentedToAny: false,
+//                                        rejectAny: false
+//                                    ),
+//                                    pubData: nil,
+//                                    messageId: nil,
+//                                    sampleRate: 5
+//                                 )
+                            )
+                        ) {
+                        switch $0 {
+                        case .success(let response):
+                            expect(response).to(beAnInstanceOf(PvDataResponse.self))
+                            expect(response.gdpr).notTo(beNil())
+                        case .failure(let error):
+                            fail(error.failureReason)
+                            }
+                        done()
+                        }
                     }
                 }
             }
