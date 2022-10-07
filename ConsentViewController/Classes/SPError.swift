@@ -276,3 +276,11 @@ import Foundation
 @objcMembers public class InvalidConsentStatusResponseError: SPError {
     override public var spCode: String { "sp_metric_invalid_consent_status_response" }
 }
+
+@objcMembers public class InvalidPvDataQueryParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_pv_data_query_params" }
+}
+
+@objcMembers public class InvalidPvDataResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_pv_data_response" }
+}

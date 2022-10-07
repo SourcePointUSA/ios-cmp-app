@@ -44,6 +44,7 @@ class LongButtonViewCell: UITableViewCell {
         } else {
             stateLabel.isHidden = true
         }
+        accessibilityIdentifier = "\(labelText ?? "") \(stateLabel.text ?? "")"
     }
 
     override func prepareForReuse() {

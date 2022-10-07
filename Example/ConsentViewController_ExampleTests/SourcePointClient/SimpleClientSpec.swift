@@ -106,8 +106,12 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: URLSession.shared,
                     dispatchQueue: queue
                 )
-                client.request(self.exampleRequest) { _ in }
-                expect(queue.asyncCalled).toEventually(beTrue())
+                waitUntil { done in
+                    client.request(self.exampleRequest) { _ in
+                        expect(queue.asyncCalled).to(beTrue())
+                        done()
+                    }
+                }
             }
 
             it("calls resume on the result of the dataTask") {

@@ -15,32 +15,32 @@ class NativeMessageExampleUITests: QuickSpec {
     var app: NativeExampleApp!
 
     func acceptAtt() {
-        expect(self.app.attPrePrompt.okButton).to(showUp())
+        expect(self.app.attPrePrompt.okButton).toEventually(showUp())
         app.attPrePrompt.okButton.tap()
-        expect(self.app.attPrePrompt.attAlertAllowButton).to(showUp(in: 1))
+        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
         app.attPrePrompt.attAlertAllowButton.tap()
     }
 
     func acceptGDPRMessage() {
-        expect(self.app.gdprMessage.messageTitle).to(showUp())
+        expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         self.app.gdprMessage.acceptButton.tap()
     }
 
     func acceptCCPAMessage() {
-        expect(self.app.ccpaMessage.messageTitle).to(showUp())
+        expect(self.app.ccpaMessage.messageTitle).toEventually(showUp())
         self.app.ccpaMessage.acceptButton.tap()
     }
 
     func showGDPRPMViaFirstLayerMessage() {
-        expect(self.app.gdprMessage.messageTitle).to(showUp())
+        expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         self.app.gdprMessage.showOptionsButton.tap()
-        expect(self.app.gdprPM.messageTitle).to(showUp())
+        expect(self.app.gdprPM.messageTitle).toEventually(showUp())
     }
 
     func showCCPAPMViaFirstLayerMessage() {
-        expect(self.app.ccpaMessage.messageTitle).to(showUp())
+        expect(self.app.ccpaMessage.messageTitle).toEventually(showUp())
         self.app.ccpaMessage.showOptionsButton.tap()
-        expect(self.app.ccpaPM.messageTitle).to(showUp())
+        expect(self.app.ccpaPM.messageTitle).toEventually(showUp())
     }
     
     // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
@@ -76,7 +76,7 @@ class NativeMessageExampleUITests: QuickSpec {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
-            expect(self.app.gdprPrivacyManagerButton).to(showUp())
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             self.app.relaunch()
             expect(self.app.gdprMessage.messageTitle).notTo(showUp())
         }
@@ -86,13 +86,13 @@ class NativeMessageExampleUITests: QuickSpec {
             
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            expect(self.app.gdprPrivacyManagerButton).to(showUp())
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             self.app.relaunch()
             expect(self.app.gdprMessage.messageTitle).notTo(showUp())
             
             self.showCCPAPMViaFirstLayerMessage()
             self.app.ccpaPM.acceptAllButton.tap()
-            expect(self.app.gdprPrivacyManagerButton).to(showUp())  //somehow ccpas' pm is the same as gdprs'
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())  //somehow ccpas' pm is the same as gdprs'
             self.app.relaunch()
             expect(self.app.ccpaMessage.messageTitle).notTo(showUp())
         }
@@ -101,7 +101,7 @@ class NativeMessageExampleUITests: QuickSpec {
             self.runAttScenario()
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.cancelButton.tap()
-            expect(self.app.gdprMessage.messageTitle).to(showUp())
+            expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
     }
 }

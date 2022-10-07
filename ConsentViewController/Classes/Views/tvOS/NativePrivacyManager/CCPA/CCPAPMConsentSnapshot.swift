@@ -57,22 +57,34 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
 
     func onCategoryOn(_ category: CCPACategory) {
         toggledCategoriesIds.remove(category._id)
+        updateConsentStatus()
         onConsentsChange()
     }
 
     func onCategoryOff(_ category: CCPACategory) {
         toggledCategoriesIds.insert(category._id)
+        updateConsentStatus()
         onConsentsChange()
     }
 
     func onVendorOn(_ vendor: CCPAVendor) {
         toggledVendorsIds.remove(vendor._id)
+        updateConsentStatus()
         onConsentsChange()
     }
 
     func onVendorOff(_ vendor: CCPAVendor) {
         toggledVendorsIds.insert(vendor._id)
+        updateConsentStatus()
         onConsentsChange()
+    }
+
+    func updateConsentStatus() {
+        if toggledVendorsIds.isEmpty && toggledCategoriesIds.isEmpty {
+            consentStatus = .RejectedNone
+        } else {
+            consentStatus = .RejectedSome
+        }
     }
 
     func onDoNotSellToggle() {

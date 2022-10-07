@@ -20,12 +20,12 @@ class PrivacyManagerUITests: QuickSpec {
             self.continueAfterFailure = false
             self.app = MetaApp()
             Nimble.AsyncDefaults.timeout = .seconds(20)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
             Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
         beforeEach {
@@ -38,19 +38,19 @@ class PrivacyManagerUITests: QuickSpec {
         it("Save and Exit without any purposes selected from Privacy Manager via Message") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingFrenchValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.showOptionsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
+            expect(self.app.privacyManager).toEventually(showUp())
             self.app.saveAndExitButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
+            expect(self.app.propertyList).toEventually(showUp())
             self.app.propertyItem.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.showOptionsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
+            expect(self.app.privacyManager).toEventually(showUp())
             self.app.testPMToggles(value: 0)
         }
 
@@ -60,19 +60,19 @@ class PrivacyManagerUITests: QuickSpec {
         it("Reject all from Privacy Manager") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingFrenchValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.showOptionsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
+            expect(self.app.privacyManager).toEventually(showUp())
             self.app.rejectAllButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
+            expect(self.app.propertyList).toEventually(showUp())
             self.app.propertyItem.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.showOptionsButton.tap()
-            expect(self.app.privacyManager).to(showUp())
+            expect(self.app.privacyManager).toEventually(showUp())
             self.app.testPMToggles(value: 0)
         }
     }

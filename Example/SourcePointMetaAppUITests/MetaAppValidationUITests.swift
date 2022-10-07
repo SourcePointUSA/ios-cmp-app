@@ -21,12 +21,12 @@ class MetaAppValidationUITests: QuickSpec {
             self.continueAfterFailure = false
             self.app = MetaApp()
             Nimble.AsyncDefaults.timeout = .seconds(20)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
             Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
         beforeEach {
@@ -35,23 +35,23 @@ class MetaAppValidationUITests: QuickSpec {
 
         it("Error message with all fields as blank") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName:"")
-            expect(self.app.propertyFieldValidationItem).to(showUp())
+            expect(self.app.propertyFieldValidationItem).toEventually(showUp())
         }
 
         it("Error message with account ID as blank") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: "", propertyName: self.propertyData.propertyName)
-            expect(self.app.propertyFieldValidationItem).to(showUp())
+            expect(self.app.propertyFieldValidationItem).toEventually(showUp())
         }
 
         it("Error message with property Name as blank") {
             self.app.addPropertyWithWrongPropertyDetails(accountId: self.propertyData.accountId, propertyName:"")
-            expect(self.app.propertyFieldValidationItem).to(showUp())
+            expect(self.app.propertyFieldValidationItem).toEventually(showUp())
         }
 
         it("Error message for blank targeting parameter fields") {
             self.app.setupForMetaAppPropertyValidation()
             self.app.gdprTargetingParamButton.tap()
-            expect(self.app.targetingParameterValidationItem).to(showUp())
+            expect(self.app.targetingParameterValidationItem).toEventually(showUp())
         }
 
         it("Error message for blank targeting parameter key fields") {
@@ -60,7 +60,7 @@ class MetaAppValidationUITests: QuickSpec {
             self.app.gdprTargetingKeyTextField.typeText(self.propertyData.targetingKey)
             self.app.authIdTextFieldOutlet.swipeUp()
             self.app.gdprTargetingParamButton.tap()
-            expect(self.app.targetingParameterValidationItem).to(showUp())
+            expect(self.app.targetingParameterValidationItem).toEventually(showUp())
         }
 
         it("Error message for blank targeting parameter value fields") {
@@ -69,7 +69,7 @@ class MetaAppValidationUITests: QuickSpec {
             self.app.gdprTargetingValueTextField.typeText(self.propertyData.targetingValueShowOnce)
             self.app.authIdTextFieldOutlet.swipeUp()
             self.app.gdprTargetingParamButton.tap()
-            expect(self.app.targetingParameterValidationItem).to(showUp())
+            expect(self.app.targetingParameterValidationItem).toEventually(showUp())
         }
 
         it("Check no message displayed for wrong Account Id") {
