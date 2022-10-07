@@ -20,12 +20,12 @@ class SourcePointMetaAppUITests: QuickSpec {
             self.continueAfterFailure = false
             self.app = MetaApp()
             Nimble.AsyncDefaults.timeout = .seconds(20)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
             Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
         beforeEach {
@@ -38,17 +38,17 @@ class SourcePointMetaAppUITests: QuickSpec {
         it("Show purpose consents after reset cookies") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKeyShowOnce, targetingValue: self.propertyData.targetingValueShowOnce)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
+            expect(self.app.propertyList).toEventually(showUp())
             self.app.propertyItem.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
+            expect(self.app.propertyList).toEventually(showUp())
             if self.app.propertyItem.exists {
                 self.app.propertyItem.swipeLeft()
                 self.app.resetPropertyButton.tap()
@@ -56,7 +56,7 @@ class SourcePointMetaAppUITests: QuickSpec {
                     self.app.alertOKButton.tap()
                 }
             }
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
         }
 
         /**
@@ -65,13 +65,13 @@ class SourcePointMetaAppUITests: QuickSpec {
         it("Delete Property from property list") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.rejectAllButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
+            expect(self.app.propertyList).toEventually(showUp())
             self.app.deleteProperty()
             expect(self.app.propertyItem).notTo(showUp())
         }
@@ -82,21 +82,21 @@ class SourcePointMetaAppUITests: QuickSpec {
         it("Edit Property from property list") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
+            expect(self.app.propertyList).toEventually(showUp())
             if self.app.propertyItem.exists {
                 self.app.propertyItem.swipeLeft()
                 self.app.editPropertyButton.tap()
-                expect(self.app.editProperty).to(showUp())
+                expect(self.app.editProperty).toEventually(showUp())
                 self.app.authIdTextFieldOutlet.tap()
                 self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
                 self.app.addGDPRPropertyDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingFrenchValue)
-                expect(self.app.consentMessage).to(showUp())
+                expect(self.app.consentMessage).toEventually(showUp())
             }
         }
 
@@ -106,9 +106,9 @@ class SourcePointMetaAppUITests: QuickSpec {
         it("Check ConsentUUID on Message Dismiss") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.dismissMessageButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.dismissMessageButton.tap()
             expect(self.app.ccpaConsentMessage).notTo(showUp())
         }
@@ -116,14 +116,14 @@ class SourcePointMetaAppUITests: QuickSpec {
         it("Check feature tab as default PM tab") {
             self.app.addPropertyWithCampaignDetailsAndFeaturesTab(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingEnglishValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.menuButton.tap()
             self.app.loadGDPRPM.tap()
-            expect(self.app.featuresTab).to(showUp())
+            expect(self.app.featuresTab).toEventually(showUp())
         }
 
         /**
@@ -132,17 +132,17 @@ class SourcePointMetaAppUITests: QuickSpec {
         it("Accept all from German Message") {
             self.app.addPropertyWithCampaignDetails(targetingKey: self.propertyData.messageLanguageTargetingKey, targetingValue: self.propertyData.messageLanguageTargetingValue)
             self.app.savePropertyButton.tap()
-            expect(self.app.consentMessageInGerman).to(showUp())
+            expect(self.app.consentMessageInGerman).toEventually(showUp())
             self.app.acceptAllButtonInGerman.tap()
-            expect(self.app.ccpaConsentMessage).to(showUp())
+            expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.ccpaAcceptAllButton.tap()
-            expect(self.app.propertyDebugInfo).to(showUp())
+            expect(self.app.propertyDebugInfo).toEventually(showUp())
             self.app.backButton.tap()
-            expect(self.app.propertyList).to(showUp())
+            expect(self.app.propertyList).toEventually(showUp())
             self.app.propertyItem.tap()
-            expect(self.app.consentMessageInGerman).to(showUp())
+            expect(self.app.consentMessageInGerman).toEventually(showUp())
             self.app.showOptionsButtonInGerman.doubleTap()
-            expect(self.app.privacyManager).to(showUp())
+            expect(self.app.privacyManager).toEventually(showUp())
         }
     }
 }

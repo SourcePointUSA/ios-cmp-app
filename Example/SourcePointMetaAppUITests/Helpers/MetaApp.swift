@@ -147,9 +147,9 @@ class MetaApp: XCUIApplication {
 
     func addPropertyDetails() {
         deleteProperty()
-        expect(self.propertyList).to(showUp())
+        expect(self.propertyList).toEventually(showUp())
         self.addPropertyButton.tap()
-        expect(self.newProperty).to(showUp())
+        expect(self.newProperty).toEventually(showUp())
         self.accountIDTextFieldOutlet.tap()
         self.accountIDTextFieldOutlet.typeText(self.propertyData.accountId)
         self.propertyTextFieldOutlet.tap()
@@ -158,7 +158,7 @@ class MetaApp: XCUIApplication {
 
     func addPropertyWithWrongPropertyDetails(accountId : String, propertyName : String) {
         deleteProperty()
-        expect(self.propertyList).to(showUp())
+        expect(self.propertyList).toEventually(showUp())
         self.addPropertyButton.tap()
         self.accountIDTextFieldOutlet.tap()
         self.accountIDTextFieldOutlet.typeText(accountId)
@@ -185,7 +185,7 @@ class MetaApp: XCUIApplication {
         okButton.tap()
         tables.children(matching: .other)[self.propertyData.addCCPACampaign].forceTapElement()
         ccpaCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 1)
-        expect(self.ccpaPMTextField).to(showUp())
+        expect(self.ccpaPMTextField).toEventually(showUp())
         ccpaPMTextField.tap()
         ccpaPMTextField.typeText(self.propertyData.ccpaPMID)
         doneButton.tap()
@@ -284,7 +284,7 @@ class MetaApp: XCUIApplication {
     }
     
     func deleteProperty() {
-        expect(self.propertyList).to(showUp())
+        expect(self.propertyList).toEventually(showUp())
         if self.propertyItem.exists {
             self.propertyItem.swipeLeft()
             self.deletePropertyButton.tap()
@@ -307,13 +307,13 @@ class MetaApp: XCUIApplication {
             expect(Int(self.PersonalisedAdsSwitch.value as! String) == value).to(beTrue())
             expect(Int(self.BasicAdsSwitch.value as! String) == value).to(beTrue())
         }else {
-            expect(self.privacyManager).to(showUp())
+            expect(self.privacyManager).toEventually(showUp())
         }
     }
 
     func setupForMetaAppPropertyValidation() {
         deleteProperty()
-        expect(self.propertyList).to(showUp())
+        expect(self.propertyList).toEventually(showUp())
         addPropertyButton.tap()
         tables.children(matching: .other)[self.propertyData.addGDPRCampaign].tap()
         swipeUp()
@@ -408,7 +408,9 @@ extension MetaApp: GDPRUI {
     }
 
     var featuresTab: XCUIElement {
-        staticTexts["Match and combine offline data sources"].firstMatch
+        staticTexts[
+            "Features are a use of the data that you have already agreed to share with us"
+        ].firstMatch
     }
 
     var gdprTargetingParamButton: XCUIElement {

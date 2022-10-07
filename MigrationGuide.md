@@ -5,6 +5,8 @@ In this guide we will cover how to migrate your app to the latest version of Sou
 2. No longer instantiate a `UIViewController` if there is no message being displayed.
 3. End-users will see a message faster by removing one network call (down from 3 to 2).
 
+>**Note:** In addition to the technical migration below, you will also need to enable the **Multi-Campaign** toggle for the app property within the Sourcepoint portal. 
+
 ## Initialisation:
 
 **Previous version**:

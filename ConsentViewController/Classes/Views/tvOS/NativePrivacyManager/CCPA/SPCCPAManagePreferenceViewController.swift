@@ -126,7 +126,12 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
 
         let category = currentCategory(indexPath)
         cell.labelText = category.name
-        cell.isOn = !consentsSnapshot.toggledCategoriesIds.contains(category._id)
+        switch consentsSnapshot.consentStatus {
+            case .ConsentedAll, .RejectedNone: cell.isOn = true
+            case .RejectedAll: cell.isOn = false
+            case .RejectedSome: cell.isOn = !consentsSnapshot.toggledCategoriesIds.contains(category._id)
+        }
+
         cell.selectable = true
         cell.isCustom = false
         cell.setup(from: nativeLongButton)

@@ -1,3 +1,9 @@
+# 6.7.1 (Sep, 22, 2022)
+* Flipped default value of cleanUserDataOnError from `true` to `false`.
+In the event of an error, the SDK will now, by default, keep consent data unchanged while prior to this release the SDK would remove all its data from the user's device.
+
+We took the decision to switch the default behaviour because it made sense to most use cases in which the App can decide wether to use the locally stored consent data or not when something goes wrong.
+
 # 6.7.0 (May, 06, 2022)
 * Implemented `deleteCustomConsentTo` method. Now you're able to remove consent to custom vendors, purposes and legitimate interest purposes using that method. It works similarly to the `customConsentTo` method. For more info, please refer to [this section](https://github.com/SourcePointUSA/ios-cmp-app#adding-or-removing-custom-consents) of the README.
 * Added support to privacy manager from property groups. You can now pass a property pm id to `SPCampaign` constructor. For more info check [this section](https://github.com/SourcePointUSA/ios-cmp-app#set-a-privacy-manager-id-for-the-property-group) of the README.

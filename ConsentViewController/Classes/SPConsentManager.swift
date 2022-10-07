@@ -290,7 +290,7 @@ import UIKit
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "6.7.0"
+    public static let VERSION = "6.7.1"
 
     public static func clearAllData() {
         SPUserDefaults(storage: UserDefaults.standard).clear()
@@ -433,7 +433,7 @@ import UIKit
                     delegate: self
                 )
                 pmViewController.delegate = self
-                pmViewController.snapshot = CCPAPMConsentSnaptshot(withStatus: self?.userData.ccpa?.consents?.status)
+//                pmViewController.snapshot = CCPAPMConsentSnaptshot(withStatus: self?.userData.ccpa?.consents?.status)
                 self?.loaded(pmViewController)
             case .failure(let error):
                 self?.onError(error)

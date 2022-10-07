@@ -18,23 +18,28 @@ class ObjC_ExampleAppUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = ExampleApp()
+            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+        }
+
+        afterSuite {
+            Nimble.AsyncDefaults.timeout = .seconds(1)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
         beforeEach {
             self.app.relaunch(clean: true)
         }
 
-        if #available(iOS 14.0, *) {
-            it("Accept ATT pre-prompt") {
-//              expect(self.app.attPrePromptMessage).to(showUp())   // <- it is simply does not shown up now
+        it("Accept all through message") {
+            if #available(iOS 14.0, *) {
+                expect(self.app.attPrePromptMessage).toEventually(showUp())
                 if self.app.attPrePromptMessage.exists {
                     self.app.acceptATTButton.tap()
                 }
             }
-        }
 
-        it("Accept all through message") {
-            expect(self.app.consentMessage).to(showUp())
+            expect(self.app.consentMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
         }

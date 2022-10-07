@@ -6,10 +6,7 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try
-// swiftlint:disable function_body_length
-// swiftlint:disable type_body_length
-// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable force_try function_body_length type_body_length
 
 import Quick
 import Nimble
@@ -117,20 +114,25 @@ class SourcePointClientSpec: QuickSpec {
                 }
 
                 it("calls POST on the http client with the right body") {
-                    let action = SPAction(type: .IDFADenied)
-                    client.postGDPRAction(authId: nil, action: action, localState: SPJson(), idfaStatus: .accepted) { _ in }
-                    var uuid = String(data: httpClient.postWasCalledWithBody!, encoding: .utf8)!
-                    let index = uuid.range(of: "requestUUID\":\"", options: [])!.upperBound
-                    let endIndex = uuid.range(of: "\",\"")!.lowerBound
-                    uuid = String(uuid[index..<endIndex])
-                    expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(GDPRConsentRequest(
+                    let action = SPAction(type: .AcceptAll)
+                    client.postGDPRAction(
                         authId: nil,
-                        idfaStatus: .denied,
+                        action: action,
                         localState: SPJson(),
-                        pmSaveAndExitVariables: SPJson(),
-                        pubData: [:],
-                        requestUUID: UUID(uuidString: uuid)!
-                    ))))
+                        idfaStatus: .accepted
+                    ) { _ in }
+                    let body = String(data: httpClient.postWasCalledWithBody!, encoding: .utf8)!
+                    let uuidIndex = body.range(of: "\"requestUUID\":\"", options: [])!.upperBound
+                    let uuidEndIndex = body.range(of: "\",\"")!.lowerBound
+                    let uuid = String(body[uuidIndex..<uuidEndIndex])
+                    expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(GDPRConsentRequest(
+                            authId: nil,
+                            idfaStatus: SPIDFAStatus.current(),
+                            localState: SPJson(),
+                            pmSaveAndExitVariables: SPJson(),
+                            pubData: [:],
+                            requestUUID: UUID(uuidString: uuid)!)
+                    )))
                 }
             }
 
@@ -173,32 +175,20 @@ class SourcePointClientSpec: QuickSpec {
                     }
 
                     it("calls the completion handler with a CustomConsentResponse") {
-                        var consentsResponse: CustomConsentResponse?
-                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
-                            switch result {
-                            case .success(let response):
-                                consentsResponse = response
-                            case .failure: break
+                        waitUntil { done in
+                            client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                                switch result {
+                                case .success(let response):
+                                    expect(response).to(equal(CustomConsentResponse(
+                                        grants: [
+                                            "vendorId": SPGDPRVendorGrant(granted: true, purposeGrants: ["purposeId": true])
+                                        ]
+                                    )))
+                                    done()
+                                case .failure(let error): fail(error.debugDescription)
+                                }
                             }
                         }
-                        expect(consentsResponse).toEventually(equal(CustomConsentResponse(
-                                                      grants: [
-                                                          "vendorId": SPGDPRVendorGrant(granted: true, purposeGrants: ["purposeId": true])
-                                                      ]
-                                                  )))
-
-                    }
-
-                    it("calls completion handler with nil as error") {
-                        var error: SPError? = .none
-                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
-                            switch result {
-                            case .success: break
-                            case .failure(let e):
-                                error = e
-                            }
-                        }
-                        expect(error).toEventually(beNil())
                     }
                 }
 
@@ -208,15 +198,16 @@ class SourcePointClientSpec: QuickSpec {
                     }
 
                     it("calls the completion handler with an SPError") {
-                        var error: SPError?
-                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
-                            switch result {
-                            case .success: break
-                            case .failure(let e):
-                                error = e
+                        waitUntil { done in
+                            client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                                switch result {
+                                case .success: fail("expected to fail but it succeeded")
+                                case .failure(let error):
+                                    expect(error).to(beAKindOf(SPError.self))
+                                    done()
+                                }
                             }
                         }
-                        expect(error).toEventually(beAKindOf(SPError.self))
                     }
                 }
 
@@ -283,32 +274,22 @@ class SourcePointClientSpec: QuickSpec {
                     }
 
                     it("calls the completion handler with a DeleteCustomConsentResponse") {
-                        var consentsResponse: DeleteCustomConsentResponse?
-                        client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
-                            switch result {
-                            case .success(let response):
-                                consentsResponse = response
-                            case .failure: break
+                        waitUntil { done in
+                            client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                                switch result {
+                                case .success(let response):
+                                    expect(response).to(equal(
+                                        DeleteCustomConsentResponse(grants: [
+                                            "vendorId": SPGDPRVendorGrant(
+                                                granted: false,
+                                                purposeGrants: ["purposeId": false]
+                                            )
+                                        ])))
+                                    done()
+                                case .failure: fail()
+                                }
                             }
                         }
-                        expect(consentsResponse).toEventually(equal(DeleteCustomConsentResponse(
-                                                      grants: [
-                                                          "vendorId": SPGDPRVendorGrant(granted: false, purposeGrants: ["purposeId": false])
-                                                      ]
-                                                  )))
-
-                    }
-
-                    it("calls completion handler with nil as error in case of success") {
-                        var error: SPError? = .none
-                        client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
-                            switch result {
-                            case .success: break
-                            case .failure(let e):
-                                error = e
-                            }
-                        }
-                        expect(error).toEventually(beNil())
                     }
                 }
 
@@ -318,15 +299,18 @@ class SourcePointClientSpec: QuickSpec {
                     }
 
                     it("calls the completion handler with an InvalidResponseDeleteCustomError") {
-                        var error: SPError?
-                        client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
-                            switch result {
-                            case .success: break
-                            case .failure(let e):
-                                error = e
+                        waitUntil { done in
+                            client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                                switch result {
+                                case .success: fail("expected call to fail but it succeeded")
+                                case .failure(let error):
+                                    expect(error).to(beAKindOf(
+                                        InvalidResponseDeleteCustomError.self)
+                                    )
+                                    done()
+                                }
                             }
                         }
-                        expect(error).toEventually(beAKindOf(InvalidResponseDeleteCustomError.self))
                     }
                 }
             }
