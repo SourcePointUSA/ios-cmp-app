@@ -59,7 +59,7 @@ class SourcePointClientSpec: QuickSpec {
         beforeSuite {
             // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
             AsyncDefaults.timeout = .seconds(20)
-            AsyncDefaults.pollInterval = .seconds(100)
+            AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {

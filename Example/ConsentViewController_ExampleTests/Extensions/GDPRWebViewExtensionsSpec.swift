@@ -49,7 +49,7 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
         beforeSuite {
             // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
             AsyncDefaults.timeout = .seconds(10)
-            AsyncDefaults.pollInterval = .seconds(10)
+            AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
