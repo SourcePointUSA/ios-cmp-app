@@ -141,7 +141,9 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     consentStatus: PvDataRequestBody.ConsentStatus(
                                         hasConsentData: false,
                                         consentedToAny: false,
-                                        rejectAny: false
+                                        rejectAny: false,
+                                        rejectedVendors: [],
+                                        rejectedCategories: []
                                     ),
                                     pubData: nil,
                                     sampleRate: 5,
@@ -151,21 +153,22 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     subCategoryId: nil,
                                     prtnUUID: nil
                                 ),
-                                 ccpa: nil
-//                                    PvDataRequestBody.CCPA(
-//                                    applies: true,
-//                                    uuid: nil,
-//                                    accountId: accountId,
-//                                    siteId: 17801,
-//                                    consentStatus: PvDataRequestBody.ConsentStatus(
-//                                        hasConsentData: false,
-//                                        consentedToAny: false,
-//                                        rejectAny: false
-//                                    ),
-//                                    pubData: nil,
-//                                    messageId: nil,
-//                                    sampleRate: 5
-//                                 )
+                                 ccpa: PvDataRequestBody.CCPA(
+                                    applies: true,
+                                    uuid: nil,
+                                    accountId: accountId,
+                                    siteId: 17801,
+                                    consentStatus: PvDataRequestBody.ConsentStatus(
+                                        hasConsentData: false,
+                                        consentedToAny: false,
+                                        rejectAny: false,
+                                        rejectedVendors: [],
+                                        rejectedCategories: []
+                                    ),
+                                    pubData: nil,
+                                    messageId: nil,
+                                    sampleRate: 5
+                                 )
                             )
                         ) {
                         switch $0 {

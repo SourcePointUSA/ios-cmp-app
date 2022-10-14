@@ -153,8 +153,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     func setRequestTimeout(_ timeout: TimeInterval) {}
 
-    func pvData(env: SPCampaignEnv,
-                pvDataRequestBody: PvDataRequestBody,
+    func pvData(pvDataRequestBody: PvDataRequestBody,
                 handler: @escaping PvDataHandler) {}
 
     public func metaData(
