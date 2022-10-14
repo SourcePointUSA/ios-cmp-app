@@ -36,6 +36,8 @@ struct Constants {
         static let META_DATA_URL = URL(string: "./v2/meta-data?env=\(envParam)", relativeTo: WRAPPER_API)!
         static let GET_MESSAGES_URL = URL(string: "./v2/messages?env=\(envParam)", relativeTo: WRAPPER_API)!
         static let PV_DATA_URL = URL(string: "./v2/pv-data?env=\(envParam)", relativeTo: WRAPPER_API)!
+        static let CHOICE_REJECT_ALL_URL = URL(string: "./v2/choice/reject-all?env=\(envParam)", relativeTo: WRAPPER_API)!
+        static let CHOICE_CONSENT_ALL_URL = URL(string: "./v2/choice/consent-all?env=\(envParam)", relativeTo: WRAPPER_API)!
     }
 
     struct UI {

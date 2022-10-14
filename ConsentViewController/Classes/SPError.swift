@@ -284,3 +284,11 @@ import Foundation
 @objcMembers public class InvalidPvDataResponseError: SPError {
     override public var spCode: String { "sp_metric_invalid_pv_data_response" }
 }
+
+@objcMembers public class InvalidChoiceAllParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_choice_reject_all_query_params" }
+}
+
+@objcMembers public class InvalidChoiceAllResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_choice_reject_all_response" }
+}
