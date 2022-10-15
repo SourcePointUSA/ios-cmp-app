@@ -477,20 +477,9 @@ extension SourcePointClient {
         }
     }
 
-    func pvDataURLWithParams() -> URL? {
-            return Constants.Urls.PV_DATA_URL.absoluteURL
-        }
-
-    public func pvData(pvDataRequestBody: PvDataRequestBody,
-                       handler: @escaping PvDataHandler) {
-        guard let url = pvDataURLWithParams()
-        else {
-            handler(Result.failure(InvalidPvDataQueryParamsError()))
-            return
-        }
-
-        JSONEncoder().encodeResult(pvDataRequestBody).map { body in
-            client.post(urlString: url.absoluteString, body: body) { result in
+    public func pvData(pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
+        _ = JSONEncoder().encodeResult(pvDataRequestBody).map { body in
+            client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body) { result in
                 handler(Result {
                     try result.decoded() as PvDataResponse
                 }.mapError {

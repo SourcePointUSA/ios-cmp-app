@@ -12,25 +12,16 @@ class SPUserDefaults: SPLocalStorage {
     static public let IAB_KEY_PREFIX = "IABTCF_"
     static public let US_PRIVACY_STRING_KEY = "IABUSPrivacy_String"
 
-    static let PROPERTY_ID = "\(SP_KEY_PREFIX)propertyId"
     static let LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)localState"
-    static let NON_KEYED_LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)nonKeyedlocalState"
     static let USER_DATA_KEY = "\(SP_KEY_PREFIX)userData"
     static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
     static let IAB_CMP_SDK_ID = 6
     static let GDPR_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)GDPRchildPmId"
     static let CCPA_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)CCPAchildPmId"
 
-    var storage: Storage
+    static let SP_STATE_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)state"
 
-    var propertyId: Int? {
-        get {
-            storage.integer(forKey: SPUserDefaults.PROPERTY_ID)
-        }
-        set {
-            storage.set(newValue, forKey: SPUserDefaults.PROPERTY_ID)
-        }
-    }
+    var storage: Storage
 
     var tcfData: [String: Any]? {
         get {
@@ -66,13 +57,6 @@ class SPUserDefaults: SPLocalStorage {
         set { storage.setObject(newValue, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
     }
 
-    var nonKeyedLocalStorage: SPJson {
-        get {
-            storage.object(ofType: SPJson.self, forKey: SPUserDefaults.NON_KEYED_LOCAL_STATE_KEY) ?? SPJson()
-        }
-        set { storage.setObject(newValue, forKey: SPUserDefaults.NON_KEYED_LOCAL_STATE_KEY) }
-    }
-
     var gdprChildPmId: String? {
         get { storage.string(forKey: SPUserDefaults.GDPR_CHILD_PM_ID_KEY) }
         set { storage.set(newValue, forKey: SPUserDefaults.GDPR_CHILD_PM_ID_KEY) }
@@ -81,6 +65,16 @@ class SPUserDefaults: SPLocalStorage {
     var ccpaChildPmId: String? {
         get { storage.string(forKey: SPUserDefaults.CCPA_CHILD_PM_ID_KEY) }
         set { storage.set(newValue, forKey: SPUserDefaults.CCPA_CHILD_PM_ID_KEY) }
+    }
+
+    var spState: SourcepointClientCoordinator.State {
+        get {
+            storage.object(
+                ofType: SourcepointClientCoordinator.State.self,
+                forKey: SPUserDefaults.SP_STATE_KEY
+            ) ?? .init()
+        }
+        set { storage.set(newValue, forKey: SPUserDefaults.SP_STATE_KEY) }
     }
 
     required init(storage: Storage = UserDefaults.standard) {
@@ -98,7 +92,6 @@ class SPUserDefaults: SPLocalStorage {
         tcfData = [:]
         usPrivacyString = ""
         userData = SPUserData()
-        propertyId = nil
         gdprChildPmId = nil
         ccpaChildPmId = nil
     }

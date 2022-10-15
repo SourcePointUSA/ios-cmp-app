@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias MessagesAndConsentHandler = (Result<([MessageToDisplay]?, SPUserData), SPError>) -> Void
+typealias MessagesAndConsentHandler = (Result<([MessageToDisplay], SPUserData), SPError>) -> Void
 
 struct MessageToDisplay {
     let message: Message
@@ -38,32 +38,44 @@ extension MessageToDisplay {
     }
 }
 
-class SourcepointClientCoordinator {
-    struct State {
-        struct GDPRMetaData {
+protocol SPClientCoordinator {
+    var authId: String? { get set }
+
+    func loadMessages(_ handler: @escaping MessagesAndConsentHandler)
+    func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
+}
+
+class SourcepointClientCoordinator: SPClientCoordinator {
+    struct State: Codable {
+        struct GDPRMetaData: Codable {
             var additionsChangeDate, legalBasisChangeDate: SPDateCreated
         }
 
-        struct Campaign<StatusType> {
-            var uuid: String
-            var consentStatus: StatusType
-            var applies: Bool
-            var dateCreated: SPDateCreated
+        struct Campaign: Codable {
+            var uuid: String?
+            var consentStatus: ConsentStatus?
+            var applies: Bool?
+            var dateCreated: SPDateCreated?
+            var ccpaStatus: CCPAConsentStatus?
         }
 
-        let authId: String?
-        var gdpr: Campaign<ConsentStatus>?
-        var ccpa: Campaign<CCPAConsentStatus>?
+        var gdpr, ccpa: Campaign?
         var gdprMetadata: GDPRMetaData?
         var wasSampled: Bool?
+        var localState: SPJson?
+        var nonKeyedLocalState: SPJson?
 
         mutating func udpateGDPRStatus(_ newStatus: ConsentStatus) {
-            guard let gdpr = gdpr, let gdprMetadata = gdprMetadata else { return }
-            if gdpr.dateCreated.date < gdprMetadata.additionsChangeDate.date ||
-                gdpr.dateCreated.date < gdprMetadata.legalBasisChangeDate.date {
+            guard
+                let gdpr = gdpr,
+                let gdprMetadata = gdprMetadata,
+                let dateCreated = gdpr.dateCreated
+            else { return }
+            if dateCreated.date < gdprMetadata.additionsChangeDate.date ||
+                dateCreated.date < gdprMetadata.legalBasisChangeDate.date {
                 if let consentedToAll = newStatus.consentedAll, consentedToAll {
-                    self.gdpr?.consentStatus.granularStatus?.previousOptInAll = true
-                    self.gdpr?.consentStatus.consentedAll = false // TODO: Double check with Dan
+                    self.gdpr?.consentStatus?.granularStatus?.previousOptInAll = true
+                    self.gdpr?.consentStatus?.consentedAll = false
                 }
             }
         }
@@ -71,24 +83,30 @@ class SourcepointClientCoordinator {
 
     let accountId, propertyId: Int
     let propertyName: SPPropertyName
-    let authId: String?
+    var authId: String?
     let language: SPMessageLanguage
     let idfaStatus: SPIDFAStatus
     let campaigns: SPCampaigns
+
     let spClient: SourcePointProtocol
     var storage: SPLocalStorage
+
     var state: State
+
     var localDataComplete: Bool { false }
+
     var shouldCallConsentStatus: Bool {
         authId != nil ||
         ((state.gdpr?.uuid != nil || state.ccpa?.uuid != nil) && !localDataComplete)
     }
+
     var isNewUser: Bool {
         state.gdpr?.uuid == nil && state.ccpa?.uuid == nil // TODO: Check if this logic is correct
     }
+
     var shouldCallMessages: Bool {
         isNewUser ||
-        (state.gdpr?.applies == true && state.gdpr?.consentStatus.consentedAll == false) ||
+        (state.gdpr?.applies == true && state.gdpr?.consentStatus?.consentedAll == false) ||
         state.ccpa?.applies == true ||
         campaigns.ios14 != nil
     }
@@ -112,11 +130,12 @@ class SourcepointClientCoordinator {
         self.campaigns = campaigns
         self.idfaStatus = idfaStatus
         self.storage = storage
+
         self.state = State(
-            authId: authId,
-            gdpr: nil,
-            ccpa: nil
+            gdpr: .init(consentStatus: ConsentStatus()),
+            ccpa: .init()
         )
+
         guard let spClient = spClient else {
             self.spClient = SourcePointClient(
                 accountId: accountId,
@@ -129,40 +148,67 @@ class SourcepointClientCoordinator {
         self.spClient = spClient
     }
 
-    func loadMessage(_ handler: @escaping MessagesAndConsentHandler) {
-        metaData()
-        consentStatus()
-        messages(handler)
+    func loadMessages(_ handler: @escaping MessagesAndConsentHandler) {
+        metaData {
+            self.consentStatus {
+                self.messages(handler)
+            }
+        }
         pvData()
     }
 
-    func metaData() {
-        // spClient.metadata
-        // handle metadata response
-        // - update vendor list info?
-        // - what do I do with this info?
-        // - update localState
+    func metaData(next: @escaping () -> Void) {
+        spClient.metaData(
+            accountId: accountId,
+            propertyId: propertyId,
+            metadata: .init(
+                gdpr: .init(
+                    hasLocalData: state.gdpr?.uuid != nil,
+                    dateCreated: state.gdpr?.dateCreated,
+                    uuid: state.gdpr?.uuid
+                ),
+                ccpa: .init(
+                    hasLocalData: state.ccpa?.uuid != nil,
+                    dateCreated: state.ccpa?.dateCreated,
+                    uuid: state.ccpa?.uuid
+                )
+            )
+        ) { result in
+            switch result {
+                case .success(let metaDataResponse):
+                    if let gdprMetaData = metaDataResponse.gdpr {
+                        self.state.gdpr?.applies = gdprMetaData.applies
+                        // TODO: - update vendor list info?
+                    }
+                    if let ccpaMetaData = metaDataResponse.ccpa {
+                        self.state.ccpa?.applies = ccpaMetaData.applies
+                    }
+                case .failure(let error):
+                    print(error)
+            }
+            next()
+        }
     }
 
-    func consentStatusMetadataFromState<T>(_ campaign: State.Campaign<T>?) -> ConsentStatusMetaData.Campaign? {
+    func consentStatusMetadataFromState(_ campaign: State.Campaign?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
             hasLocalData: false, // TODO: ask Sid what `hadLocalData` mean.
-            applies: campaign.applies,
+            applies: campaign.applies ?? false,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid
         )
     }
 
     func handleConsentStatusResponse(_ response: ConsentStatusResponse) {
-        storage.localState = response.localState
+        state.localState = response.localState
         if state.gdpr?.applies == true,
            let status = response.consentStatusData.gdpr?.consentStatus {
             state.udpateGDPRStatus(status)
         }
     }
 
-    func consentStatus() {
+    func consentStatus(next: @escaping () -> Void) {
         if shouldCallConsentStatus {
             spClient.consentStatus(
                 propertyId: propertyId,
@@ -178,13 +224,16 @@ class SourcepointClientCoordinator {
                     case .failure(let error):
                         print(error)
                 }
+                next()
             }
+        } else {
+            next()
         }
     }
 
     func handleMessagesResponse(_ response: MessagesResponse) {
-        storage.localState = response.localState
-        storage.nonKeyedLocalStorage = response.nonKeyedLocalState
+        state.localState = response.localState
+        state.nonKeyedLocalState = response.nonKeyedLocalState
     }
 
     func messages(_ handler: @escaping MessagesAndConsentHandler) {
@@ -197,7 +246,7 @@ class SourcepointClientCoordinator {
                         ccpa: .init(
                             targetingParams: campaigns.gdpr?.targetingParams,
                             hasLocalData: false,
-                            status: state.ccpa?.consentStatus
+                            status: state.ccpa?.ccpaStatus
                         ),
                         gdpr: .init(
                             targetingParams: campaigns.gdpr?.targetingParams,
@@ -209,7 +258,7 @@ class SourcepointClientCoordinator {
                             idfaSstatus: idfaStatus
                         )
                     ),
-                    localState: storage.localState,
+                    localState: state.localState,
                     consentLanguage: language,
                     campaignEnv: campaigns.environment,
                     idfaStatus: idfaStatus
@@ -218,7 +267,7 @@ class SourcepointClientCoordinator {
                     ccpa: .init(applies: state.ccpa?.applies),
                     gdpr: .init(applies: state.gdpr?.applies)
                 ),
-                nonKeyedLocalState: storage.nonKeyedLocalStorage
+                nonKeyedLocalState: state.nonKeyedLocalState
             )) { [weak self] result in
                 switch result {
                     case .success(let response):
@@ -234,7 +283,7 @@ class SourcepointClientCoordinator {
         } else {
             let consents = SPUserData()
 //            let consents = SPUserData(response.campaigns) // TODO: implement this mapping
-            handler(Result.success((nil, consents)))
+            handler(Result.success(([], consents)))
         }
     }
 

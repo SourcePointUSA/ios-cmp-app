@@ -12,8 +12,9 @@ import Foundation
 class GDPRLocalStorageMock: SPLocalStorage {
     var gdprChildPmId: String?
     var ccpaChildPmId: String?
-    var userData: SPUserData = SPUserData()
-    var localState: SPJson = SPJson()
+    var userData = SPUserData()
+    var localState = SPJson()
+    var nonKeyedLocalState = SPJson()
     var storage: Storage = InMemoryStorageMock()
     var tcfData: [String: Any]? = [:]
     var usPrivacyString: String?

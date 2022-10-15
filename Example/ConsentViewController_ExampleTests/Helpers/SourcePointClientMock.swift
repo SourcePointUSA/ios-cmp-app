@@ -42,7 +42,9 @@ class SourcePointClientMock: SourcePointProtocol {
                 rejectedLI: false,
                 consentedAll: false,
                 hasConsentData: false,
-                consentedToAny: false
+                consentedToAny: false,
+                rejectedVendors: [],
+                rejectedCategories: []
             ),
             dateCreated: SPDateCreated.now()
         )
@@ -152,9 +154,9 @@ class SourcePointClientMock: SourcePointProtocol {
 
     func setRequestTimeout(_ timeout: TimeInterval) {}
 
-    func pvData(env: SPCampaignEnv,
-                pvDataRequestBody: PvDataRequestBody,
-                handler: @escaping PvDataHandler) {}
+    func pvData(pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
+
+    }
 
     public func metaData(
         accountId: Int,

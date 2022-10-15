@@ -164,7 +164,7 @@ struct Campaign: Equatable {
     let applies: Bool?
     let messageMetaData: MessageMetaData?
     let consentStatus: ConsentStatus?
-    let dateCreated: SPDateCreated
+    let dateCreated: SPDateCreated?
 }
 
 extension Campaign: Decodable {
@@ -174,8 +174,8 @@ extension Campaign: Decodable {
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
         userConsent = try Consent(from: decoder)
-        consentStatus = try container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus)
-        dateCreated = try container.decode(SPDateCreated.self, forKey: .dateCreated)
+        consentStatus = try? container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus) ?? ConsentStatus(from: decoder)
+        dateCreated = try container.decodeIfPresent(SPDateCreated.self, forKey: .dateCreated)
         if let metaData = messageMetaData {
             message = try Message(category: metaData.categoryId, subCategory: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
             url = try container.decodeIfPresent(URL.self, forKey: .url)
