@@ -34,7 +34,7 @@ typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias MessageHandler = (Result<Message, SPError>) -> Void
 typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
-typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
+typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
@@ -83,10 +83,8 @@ protocol SourcePointProtocol {
     )
 
     func postGDPRAction(
-        authId: String?,
-        action: SPAction,
-        localState: SPJson,
-        idfaStatus: SPIDFAStatus,
+        actionType: SPActionType,
+        body: GDPRChoiceBody,
         handler: @escaping GDPRConsentHandler
     )
 
@@ -251,12 +249,8 @@ class SourcePointClient: SourcePointProtocol {
             }
     }
 
-    func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
-        guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
-
-        var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
-        components?.queryItems = [URLQueryItem(name: "env", value: Constants.Urls.envParam)]
-        return components?.url(relativeTo: baseUrl)
+    func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL {
+        URL(string: "./\(actionType.rawValue)?env=\(Constants.Urls.envParam)", relativeTo: baseUrl.absoluteURL)!
     }
 
     func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
@@ -267,7 +261,7 @@ class SourcePointClient: SourcePointProtocol {
             pmSaveAndExitVariables: action.pmPayload,
             requestUUID: requestUUID
         )).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+            client.post(urlString: consentUrl(Constants.Urls.CCPA_CONSENT_URL, action.type).absoluteString, body: body) { result in
                 handler(Result {
                     let response = try result.decoded() as ConsentResponse
                     switch response.userConsent {
@@ -281,22 +275,11 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
-        _ = JSONEncoder().encodeResult(GDPRConsentRequest(
-            authId: authId,
-            idfaStatus: SPIDFAStatus.current(),
-            localState: localState,
-            pmSaveAndExitVariables: action.pmPayload,
-            pubData: action.publisherData,
-            requestUUID: requestUUID
-        )).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+    func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
+        _ = JSONEncoder().encodeResult(body).map { body in
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body) { result in
                 handler(Result {
-                    let response = try result.decoded() as ConsentResponse
-                    switch response.userConsent {
-                    case .gdpr(let consents): return (response.localState, consents)
-                    default: throw InvalidResponseConsentError(campaignType: .gdpr)
-                    }
+                    try result.decoded() as GDPRChoiceResponse
                 }.mapError {
                     InvalidResponseConsentError(error: $0, campaignType: .gdpr)
                 })
@@ -410,8 +393,17 @@ extension SourcePointClient {
         return url
     }
 
-    func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
-        guard let url = consentStatusURLWithParams(propertyId: propertyId, metadata: metadata, authId: authId) else {
+    func consentStatus(
+        propertyId: Int,
+        metadata: ConsentStatusMetaData,
+        authId: String?,
+        handler: @escaping ConsentStatusHandler
+    ) {
+        guard let url = consentStatusURLWithParams(
+            propertyId: propertyId,
+            metadata: metadata,
+            authId: authId)
+        else {
             handler(Result.failure(InvalidConsentStatusQueryParamsError()))
             return
         }
@@ -438,7 +430,7 @@ extension SourcePointClient {
         return url
     }
 
-    public func metaData(
+    func metaData(
         accountId: Int,
         propertyId: Int,
         metadata: MetaDataBodyRequest,
@@ -463,7 +455,8 @@ extension SourcePointClient {
     }
 
     func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
-        guard let url = Constants.Urls.GET_MESSAGES_URL.appendQueryItems(params.stringifiedParams()) else {
+        guard let url = Constants.Urls.GET_MESSAGES_URL.appendQueryItems(params.stringifiedParams())
+        else {
             handler(Result.failure(InvalidGetMessagesParams()))
             return
         }
@@ -477,20 +470,9 @@ extension SourcePointClient {
         }
     }
 
-    func pvDataURLWithParams() -> URL? {
-            return Constants.Urls.PV_DATA_URL.absoluteURL
-        }
-
-    public func pvData(pvDataRequestBody: PvDataRequestBody,
-                       handler: @escaping PvDataHandler) {
-        guard let url = pvDataURLWithParams()
-        else {
-            handler(Result.failure(InvalidPvDataQueryParamsError()))
-            return
-        }
-
-        JSONEncoder().encodeResult(pvDataRequestBody).map { body in
-            client.post(urlString: url.absoluteString, body: body) { result in
+    func pvData(pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
+        _ = JSONEncoder().encodeResult(pvDataRequestBody).map { body in
+            client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body) { result in
                 handler(Result {
                     try result.decoded() as PvDataResponse
                 }.mapError {

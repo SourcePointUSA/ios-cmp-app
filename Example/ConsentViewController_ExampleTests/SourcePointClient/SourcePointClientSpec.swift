@@ -108,31 +108,42 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("postAction") {
                 it("calls post on the http client with the right url") {
-                    let acceptAllAction = SPAction(type: .AcceptAll)
-                    client.postGDPRAction(authId: nil, action: acceptAllAction, localState: SPJson(), idfaStatus: .accepted) { _ in }
-                    expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/messages/choice/gdpr/11?env=localProd"))
+                    client.postGDPRAction(
+                        actionType: .AcceptAll,
+                        body: .init(
+                            authId: nil,
+                            uuid: nil,
+                            propertyId: nil,
+                            messageId: nil,
+                            pubData: [:], pmSaveAndExitVariables: nil,
+                            sampleRate: 1,
+                            idfaStatus: nil,
+                            consentAllRef: "",
+                            vendorListId: "",
+                            granularStatus: .init()
+                        )
+                    ) { _ in }
+                    expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/choice/gdpr/11?env=localProd"))
                 }
 
                 it("calls POST on the http client with the right body") {
-                    let action = SPAction(type: .AcceptAll)
-                    client.postGDPRAction(
+                    let body = GDPRChoiceBody(
                         authId: nil,
-                        action: action,
-                        localState: SPJson(),
-                        idfaStatus: .accepted
+                        uuid: nil,
+                        propertyId: nil,
+                        messageId: nil,
+                        pubData: [:], pmSaveAndExitVariables: nil,
+                        sampleRate: 1,
+                        idfaStatus: nil,
+                        consentAllRef: "",
+                        vendorListId: "",
+                        granularStatus: .init()
+                    )
+                    client.postGDPRAction(
+                        actionType: .AcceptAll,
+                        body: body
                     ) { _ in }
-                    let body = String(data: httpClient.postWasCalledWithBody!, encoding: .utf8)!
-                    let uuidIndex = body.range(of: "\"requestUUID\":\"", options: [])!.upperBound
-                    let uuidEndIndex = body.range(of: "\",\"")!.lowerBound
-                    let uuid = String(body[uuidIndex..<uuidEndIndex])
-                    expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(GDPRConsentRequest(
-                            authId: nil,
-                            idfaStatus: SPIDFAStatus.current(),
-                            localState: SPJson(),
-                            pmSaveAndExitVariables: SPJson(),
-                            pubData: [:],
-                            requestUUID: UUID(uuidString: uuid)!)
-                    )))
+                    expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(body)))
                 }
             }
 

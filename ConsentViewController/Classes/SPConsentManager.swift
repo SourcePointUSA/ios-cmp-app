@@ -178,48 +178,48 @@ import UIKit
     }
 
     func report(action: SPAction) {
-        responsesToReceive += 1
-        switch action.campaignType {
-        case .ccpa:
-            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
-                self?.responsesToReceive -= 1
-                switch result {
-                case .success((let localState, let consents)):
-                    let userData = SPUserData(
-                        gdpr: self?.storage.userData.gdpr,
-                        ccpa: SPConsent(consents: consents, applies: true)
-                    )
-                    self?.storeData(
-                        localState: localState,
-                        userData: userData,
-                        propertyId: self?.propertyId
-                    )
-                    self?.onConsentReceived()
-                case .failure(let error):
-                    self?.onError(error)
-                }
-            }
-        case .gdpr:
-            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
-                self?.responsesToReceive -= 1
-                switch result {
-                case .success((let localState, let consents)):
-                    let userData = SPUserData(
-                        gdpr: SPConsent(consents: consents, applies: true),
-                        ccpa: self?.storage.userData.ccpa
-                    )
-                    self?.storeData(
-                        localState: localState,
-                        userData: userData,
-                        propertyId: self?.propertyId
-                    )
-                    self?.onConsentReceived()
-                case .failure(let error):
-                    self?.onError(error)
-                }
-            }
-        default: break
-        }
+//        responsesToReceive += 1
+//        switch action.campaignType {
+//        case .ccpa:
+//            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+//                self?.responsesToReceive -= 1
+//                switch result {
+//                case .success((let localState, let consents)):
+//                    let userData = SPUserData(
+//                        gdpr: self?.storage.userData.gdpr,
+//                        ccpa: SPConsent(consents: consents, applies: true)
+//                    )
+//                    self?.storeData(
+//                        localState: localState,
+//                        userData: userData,
+//                        propertyId: self?.propertyId
+//                    )
+//                    self?.onConsentReceived()
+//                case .failure(let error):
+//                    self?.onError(error)
+//                }
+//            }
+//        case .gdpr:
+//            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+//                self?.responsesToReceive -= 1
+//                switch result {
+//                case .success((let localState, let consents)):
+//                    let userData = SPUserData(
+//                        gdpr: SPConsent(consents: consents, applies: true),
+//                        ccpa: self?.storage.userData.ccpa
+//                    )
+//                    self?.storeData(
+//                        localState: localState,
+//                        userData: userData,
+//                        propertyId: self?.propertyId
+//                    )
+//                    self?.onConsentReceived()
+//                case .failure(let error):
+//                    self?.onError(error)
+//                }
+//            }
+//        default: break
+//        }
     }
 
     #if os(iOS)
