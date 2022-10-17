@@ -46,7 +46,7 @@ protocol SPLocalStorage {
     var tcfData: [String: Any]? { get set }
     var usPrivacyString: String? { get set }
     var userData: SPUserData { get set }
-    var localState: SPJson { get set }
+    var localState: SPJson? { get set }
     var gdprChildPmId: String? { get set }
     var ccpaChildPmId: String? { get set }
 

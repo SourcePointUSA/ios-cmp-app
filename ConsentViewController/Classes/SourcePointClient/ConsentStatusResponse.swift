@@ -12,13 +12,13 @@ struct ConsentStatusResponse: Decodable, Equatable {
         struct GDPR: Decodable, Equatable {
             let gdprApplies, localDataCurrent: Bool
             let dateCreated: SPDateCreated
-            let uuid, vendorListId, euconsent, addtlConsent: String
+            let uuid, euconsent, addtlConsent: String
             let grants: SPGDPRVendorGrants
             let consentStatus: ConsentStatus
         }
 
         struct CCPA: Decodable, Equatable {
-            let ccpaApplies, rejectedAll, newUser: Bool
+            let ccpaApplies, rejectedAll: Bool
             let dateCreated: SPDateCreated
             let uuid, uspstring: String
             let rejectedCategories, rejectedVendors: [String]

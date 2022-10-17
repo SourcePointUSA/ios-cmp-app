@@ -86,8 +86,8 @@ import UIKit
     var storage: SPLocalStorage
     var messageControllersStack: [SPMessageView] = []
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    var ccpaUUID: String { storage.localState["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
-    var gdprUUID: String { storage.localState["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
+    var ccpaUUID: String { storage.localState?["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
+    var gdprUUID: String { storage.localState?["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
     var iOSMessagePartitionUUID: String?
     var messagesToShow = 0
     var responsesToReceive = 0
@@ -207,7 +207,12 @@ import UIKit
         responsesToReceive += 1
         switch action.campaignType {
         case .ccpa:
-            spClient.postCCPAAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+            spClient.postCCPAAction(
+                authId: authId,
+                action: action,
+                localState: storage.localState ?? SPJson(),
+                idfaStatus: idfaStatus
+            ) { [weak self] result in
                 self?.responsesToReceive -= 1
                 switch result {
                 case .success((_, let consents)):
@@ -222,7 +227,12 @@ import UIKit
                 }
             }
         case .gdpr:
-            spClient.postGDPRAction(authId: authId, action: action, localState: storage.localState, idfaStatus: idfaStatus) { [weak self] result in
+            spClient.postGDPRAction(
+                authId: authId,
+                action: action,
+                localState: storage.localState ?? SPJson(),
+                idfaStatus: idfaStatus
+            ) { [weak self] result in
                 self?.responsesToReceive -= 1
                 switch result {
                 case .success((_, let consents)):

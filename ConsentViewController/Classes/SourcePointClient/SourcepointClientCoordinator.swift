@@ -65,18 +65,24 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         var localState: SPJson?
         var nonKeyedLocalState: SPJson?
 
-        mutating func udpateGDPRStatus(_ newStatus: ConsentStatus) {
+        mutating func udpateGDPRStatus() {
             guard
                 let gdpr = gdpr,
                 let gdprMetadata = gdprMetadata,
                 let dateCreated = gdpr.dateCreated
             else { return }
-            if dateCreated.date < gdprMetadata.additionsChangeDate.date ||
-                dateCreated.date < gdprMetadata.legalBasisChangeDate.date {
-                if let consentedToAll = newStatus.consentedAll, consentedToAll {
-                    self.gdpr?.consentStatus?.granularStatus?.previousOptInAll = true
-                    self.gdpr?.consentStatus?.consentedAll = false
-                }
+            if dateCreated.date < gdprMetadata.additionsChangeDate.date {
+                self.gdpr?.consentStatus?.vendorListAdditions = true
+            }
+            if dateCreated.date < gdprMetadata.legalBasisChangeDate.date {
+                self.gdpr?.consentStatus?.legalBasisChanges = true
+            }
+            if let consentedToAll = self.gdpr?.consentStatus?.consentedAll,
+               consentedToAll,
+               (dateCreated.date < gdprMetadata.additionsChangeDate.date ||
+                dateCreated.date < gdprMetadata.legalBasisChangeDate.date) {
+                self.gdpr?.consentStatus?.granularStatus?.previousOptInAll = true
+                self.gdpr?.consentStatus?.consentedAll = false
             }
         }
     }
@@ -93,19 +99,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var state: State
 
-    var localDataComplete: Bool { false }
-
-    var shouldCallConsentStatus: Bool {
-        authId != nil ||
-        ((state.gdpr?.uuid != nil || state.ccpa?.uuid != nil) && !localDataComplete)
+    /// Checks if this user has data from the previous version of the SDK (v6).
+    /// This check should only done once so we remove the data stored by the older SDK and return false after that.
+    var migratingUser: Bool {
+        if storage.localState != nil {
+            storage.localState = nil
+            return true
+        }
+        return false
     }
 
-    var isNewUser: Bool {
-        state.gdpr?.uuid == nil && state.ccpa?.uuid == nil // TODO: Check if this logic is correct
+    var shouldCallConsentStatus: Bool {
+        authId != nil || migratingUser
     }
 
     var shouldCallMessages: Bool {
-        isNewUser ||
         (state.gdpr?.applies == true && state.gdpr?.consentStatus?.consentedAll == false) ||
         state.ccpa?.applies == true ||
         campaigns.ios14 != nil
@@ -151,10 +159,24 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func loadMessages(_ handler: @escaping MessagesAndConsentHandler) {
         metaData {
             self.consentStatus {
+                self.state.udpateGDPRStatus()
                 self.messages(handler)
             }
         }
         pvData()
+    }
+
+    func handleMetaDataResponse(_ response: MetaDataResponse) {
+        if let gdprMetaData = response.gdpr {
+            state.gdpr?.applies = gdprMetaData.applies
+            state.gdprMetadata = .init(
+                additionsChangeDate: gdprMetaData.additionsChangeDate,
+                legalBasisChangeDate: gdprMetaData.legalBasisChangeDate
+            )
+        }
+        if let ccpaMetaData = response.ccpa {
+            state.ccpa?.applies = ccpaMetaData.applies
+        }
     }
 
     func metaData(next: @escaping () -> Void) {
@@ -173,16 +195,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     uuid: state.ccpa?.uuid
                 )
             )
-        ) { result in
+        ) { [weak self] result in
             switch result {
-                case .success(let metaDataResponse):
-                    if let gdprMetaData = metaDataResponse.gdpr {
-                        self.state.gdpr?.applies = gdprMetaData.applies
-                        // TODO: - update vendor list info?
-                    }
-                    if let ccpaMetaData = metaDataResponse.ccpa {
-                        self.state.ccpa?.applies = ccpaMetaData.applies
-                    }
+                case .success(let response):
+                    self?.handleMetaDataResponse(response)
                 case .failure(let error):
                     print(error)
             }
@@ -193,7 +209,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func consentStatusMetadataFromState(_ campaign: State.Campaign?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
-            hasLocalData: false, // TODO: ask Sid what `hadLocalData` mean.
+            hasLocalData: true,
             applies: campaign.applies ?? false,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid
@@ -202,9 +218,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleConsentStatusResponse(_ response: ConsentStatusResponse) {
         state.localState = response.localState
-        if state.gdpr?.applies == true,
-           let status = response.consentStatusData.gdpr?.consentStatus {
-            state.udpateGDPRStatus(status)
+        if let gdpr = response.consentStatusData.gdpr {
+            state.gdpr?.consentStatus = gdpr.consentStatus
+            state.gdpr?.dateCreated = gdpr.dateCreated
+            state.gdpr?.uuid = gdpr.uuid
+            // TODO: update GDPR consents
+        }
+        if let ccpa = response.consentStatusData.ccpa {
+            state.ccpa?.ccpaStatus = ccpa.status
+            state.ccpa?.dateCreated = ccpa.dateCreated
+            state.ccpa?.uuid = ccpa.uuid
+            // TODO: update CCPA consents
         }
     }
 
@@ -245,12 +269,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     campaigns: .init(
                         ccpa: .init(
                             targetingParams: campaigns.gdpr?.targetingParams,
-                            hasLocalData: false,
+                            hasLocalData: state.ccpa?.uuid != nil,
                             status: state.ccpa?.ccpaStatus
                         ),
                         gdpr: .init(
                             targetingParams: campaigns.gdpr?.targetingParams,
-                            hasLocalData: false,
+                            hasLocalData: state.gdpr?.uuid != nil,
                             consentStatus: state.gdpr?.consentStatus
                         ),
                         ios14: .init(

@@ -52,8 +52,8 @@ class SPUserDefaults: SPLocalStorage {
         }
     }
 
-    var localState: SPJson {
-        get { storage.object(ofType: SPJson.self, forKey: SPUserDefaults.LOCAL_STATE_KEY) ?? SPJson() }
+    var localState: SPJson? {
+        get { storage.object(ofType: SPJson.self, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
         set { storage.setObject(newValue, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
     }
 
