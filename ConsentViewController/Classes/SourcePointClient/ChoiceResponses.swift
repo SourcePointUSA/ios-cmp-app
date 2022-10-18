@@ -12,3 +12,8 @@ struct GDPRChoiceResponse: Decodable, Equatable {
     let dateCreated: SPDateCreated
     let TCData: SPJson?
 }
+
+struct CCPAChoiceResponse: Decodable, Equatable {
+    let uuid: String
+    let dateCreated: SPDateCreated
+}

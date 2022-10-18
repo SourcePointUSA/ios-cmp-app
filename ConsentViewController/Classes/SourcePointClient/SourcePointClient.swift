@@ -33,7 +33,7 @@ typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPErro
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias MessageHandler = (Result<Message, SPError>) -> Void
-typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
+typealias CCPAConsentHandler = (Result<CCPAChoiceResponse, SPError>) -> Void
 typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
@@ -75,10 +75,8 @@ protocol SourcePointProtocol {
     )
 
     func postCCPAAction(
-        authId: String?,
-        action: SPAction,
-        localState: SPJson,
-        idfaStatus: SPIDFAStatus,
+        actionType: SPActionType,
+        body: CCPAChoiceBody,
         handler: @escaping CCPAConsentHandler
     )
 
@@ -250,24 +248,14 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL {
-        URL(string: "./\(actionType.rawValue)?env=\(Constants.Urls.envParam)", relativeTo: baseUrl.absoluteURL)!
+        URL(string: "./\(actionType.rawValue)?env=\(Constants.Urls.envParam)", relativeTo: baseUrl)!
     }
 
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
-        _ = JSONEncoder().encodeResult(CCPAConsentRequest(
-            authId: authId,
-            localState: localState,
-            pubData: action.publisherData,
-            pmSaveAndExitVariables: action.pmPayload,
-            requestUUID: requestUUID
-        )).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CCPA_CONSENT_URL, action.type).absoluteString, body: body) { result in
+    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
+        _ = JSONEncoder().encodeResult(body).map { body in
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body) { result in
                 handler(Result {
-                    let response = try result.decoded() as ConsentResponse
-                    switch response.userConsent {
-                    case .ccpa(let consents): return (response.localState, consents)
-                    default: throw InvalidResponseConsentError(campaignType: .ccpa)
-                    }
+                    try result.decoded() as CCPAChoiceResponse
                 }.mapError {
                     InvalidResponseConsentError(error: $0, campaignType: .ccpa)
                 })

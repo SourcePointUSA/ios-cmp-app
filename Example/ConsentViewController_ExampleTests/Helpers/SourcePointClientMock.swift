@@ -80,7 +80,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
 
     }
 

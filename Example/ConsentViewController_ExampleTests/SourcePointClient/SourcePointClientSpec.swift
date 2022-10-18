@@ -107,10 +107,28 @@ class SourcePointClientSpec: QuickSpec {
             }
 
             describe("postAction") {
-                it("calls post on the http client with the right url") {
-                    client.postGDPRAction(
-                        actionType: .AcceptAll,
-                        body: .init(
+                describe("gdpr") {
+                    it("calls post on the http client with the right url") {
+                        client.postGDPRAction(
+                            actionType: .AcceptAll,
+                            body: .init(
+                                authId: nil,
+                                uuid: nil,
+                                propertyId: nil,
+                                messageId: nil,
+                                pubData: [:], pmSaveAndExitVariables: nil,
+                                sampleRate: 1,
+                                idfaStatus: nil,
+                                consentAllRef: "",
+                                vendorListId: "",
+                                granularStatus: .init()
+                            )
+                        ) { _ in }
+                        expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/choice/gdpr/11?env=localProd"))
+                    }
+
+                    it("calls POST on the http client with the right body") {
+                        let body = GDPRChoiceBody(
                             authId: nil,
                             uuid: nil,
                             propertyId: nil,
@@ -122,28 +140,47 @@ class SourcePointClientSpec: QuickSpec {
                             vendorListId: "",
                             granularStatus: .init()
                         )
-                    ) { _ in }
-                    expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/choice/gdpr/11?env=localProd"))
+                        client.postGDPRAction(
+                            actionType: .AcceptAll,
+                            body: body
+                        ) { _ in }
+                        expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(body)))
+                    }
                 }
 
-                it("calls POST on the http client with the right body") {
-                    let body = GDPRChoiceBody(
-                        authId: nil,
-                        uuid: nil,
-                        propertyId: nil,
-                        messageId: nil,
-                        pubData: [:], pmSaveAndExitVariables: nil,
-                        sampleRate: 1,
-                        idfaStatus: nil,
-                        consentAllRef: "",
-                        vendorListId: "",
-                        granularStatus: .init()
-                    )
-                    client.postGDPRAction(
-                        actionType: .AcceptAll,
-                        body: body
-                    ) { _ in }
-                    expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(body)))
+                describe("ccpa") {
+                    it("calls post on the http client with the right url") {
+                        client.postCCPAAction(
+                            actionType: .AcceptAll,
+                            body: .init(
+                                authId: nil,
+                                uuid: nil,
+                                messageId: "",
+                                pubData: [:],
+                                pmSaveAndExitVariables: nil,
+                                sampleRate: 1,
+                                propertyId: 1
+                            )
+                        ) { _ in }
+                        expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/choice/ccpa/11?env=localProd"))
+                    }
+
+                    it("calls POST on the http client with the right body") {
+                        let body = CCPAChoiceBody(
+                            authId: nil,
+                            uuid: nil,
+                            messageId: "",
+                            pubData: [:],
+                            pmSaveAndExitVariables: nil,
+                            sampleRate: 1,
+                            propertyId: 1
+                        )
+                        client.postCCPAAction(
+                            actionType: .AcceptAll,
+                            body: body
+                        ) { _ in }
+                        expect(httpClient.postWasCalledWithBody!).to(equal(try JSONEncoder().encode(body)))
+                    }
                 }
             }
 

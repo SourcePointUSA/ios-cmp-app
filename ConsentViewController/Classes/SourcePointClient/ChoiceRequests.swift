@@ -27,3 +27,20 @@ struct GDPRChoiceBody: Encodable, Equatable {
         "TCData": ["type": "RecordString"]
     ]
 }
+
+struct CCPAChoiceBody: Encodable, Equatable {
+    struct PMSaveAndExitPayload: Encodable, Equatable {
+        let rejectedCategories, rejectedVendors: [String?]
+        let privacyManagerId: String
+    }
+
+    let authId, uuid, messageId: String?
+    let pubData: SPPublisherData
+    let pmSaveAndExitVariables: PMSaveAndExitPayload?
+    let sendPVData = true // TODO: ask Sid/Dan what is this
+    let sampleRate: Int
+    let propertyId: Int // TODO: ask Sid/Dan if this can't be a String (like gdpr choice request)
+    let includeData = [
+        "localState": ["type": "RecordString"]
+    ]
+}
