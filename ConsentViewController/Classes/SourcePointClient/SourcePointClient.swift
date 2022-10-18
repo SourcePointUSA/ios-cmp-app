@@ -498,7 +498,7 @@ extension SourcePointClient {
             return
         }
 
-        JSONEncoder().encodeResult(pvDataRequestBody).map { body in
+        _ = JSONEncoder().encodeResult(pvDataRequestBody).map { body in
             client.post(urlString: url.absoluteString, body: body) { result in
                 handler(Result {
                     try result.decoded() as PvDataResponse
