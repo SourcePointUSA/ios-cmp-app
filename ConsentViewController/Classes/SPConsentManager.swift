@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-// swiftlint:disable file_length
+// swiftlint:disable file_length function_body_length
 @objcMembers public class SPConsentManager: NSObject {
     static let DefaultTimeout = TimeInterval(30)
     static public var shouldCallErrorMetrics = true
