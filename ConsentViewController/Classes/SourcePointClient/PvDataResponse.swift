@@ -29,6 +29,8 @@ struct PvDataRequestBody: Codable, Equatable {
         let hasConsentData: Bool
         let consentedToAny: Bool
         let rejectAny: Bool
+        let rejectedVendors: [String?]
+        let rejectedCategories: [String?]
     }
 
     struct GDPR: Codable, Equatable {

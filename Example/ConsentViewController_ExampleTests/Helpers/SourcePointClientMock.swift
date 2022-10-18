@@ -12,6 +12,7 @@ import Foundation
 // swiftlint:disable function_parameter_count
 
 class SourcePointClientMock: SourcePointProtocol {
+
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
 
@@ -161,5 +162,13 @@ class SourcePointClientMock: SourcePointProtocol {
         propertyId: Int,
         metadata: MetaDataBodyRequest,
         handler: @escaping MetaDataHandler
-    ) {}
+    ) { }
+
+    func choice(
+        action: SPActionType,
+        accountId: Int,
+        propertyId: Int,
+        metadata: ChoiceAllBodyRequest,
+        handler: @escaping ChoiceHandler
+    ) { }
 }

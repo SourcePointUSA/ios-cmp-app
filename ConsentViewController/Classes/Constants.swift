@@ -39,6 +39,8 @@ struct Constants {
         static let CHOICE_BASE_URL = URL(string: "./v2/choice/", relativeTo: WRAPPER_API)!
         static let CHOICE_GDPR_BASE_URL = URL(string: "./gdpr/", relativeTo: CHOICE_BASE_URL)!
         static let CHOICE_CCPA_BASE_URL = URL(string: "./ccpa/", relativeTo: CHOICE_BASE_URL)!
+        static let CHOICE_REJECT_ALL_URL = URL(string: "./reject-all/?env=\(envParam)", relativeTo: CHOICE_BASE_URL)!
+        static let CHOICE_CONSENT_ALL_URL = URL(string: "./consent-all/?env=\(envParam)", relativeTo: CHOICE_BASE_URL)!
     }
 
     struct UI {
