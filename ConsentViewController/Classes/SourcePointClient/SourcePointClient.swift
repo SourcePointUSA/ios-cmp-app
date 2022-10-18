@@ -553,7 +553,6 @@ extension SourcePointClient {
             return
         }
 
-        print(url)
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
                 return try result.decoded() as ChoiceAllResponse

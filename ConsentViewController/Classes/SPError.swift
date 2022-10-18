@@ -286,9 +286,9 @@ import Foundation
 }
 
 @objcMembers public class InvalidChoiceAllParamsError: SPError {
-    override public var spCode: String { "sp_metric_invalid_choice_reject_all_query_params" }
+    override public var spCode: String { "sp_metric_invalid_choice_all_query_params" }
 }
 
 @objcMembers public class InvalidChoiceAllResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_choice_reject_all_response" }
+    override public var spCode: String { "sp_metric_invalid_choice_all_response" }
 }
