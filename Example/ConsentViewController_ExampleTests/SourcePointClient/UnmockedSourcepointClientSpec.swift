@@ -213,10 +213,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     waitUntil { done in
                         client.choiceRejectAll(
                                     accountId: accountId,
-                                    hasCsp: false,
                                     propertyId: propertyId,
-                                    withSiteActions: false,
-                                    includeCustomVendorsRes: false,
                                     metadata: ChoiceAllBodyRequest(
                                         gdpr: ChoiceAllBodyRequest.Campaign(applies: true),
                                         ccpa: ChoiceAllBodyRequest.Campaign(applies: true))) { result in
@@ -239,10 +236,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     waitUntil { done in
                         client.choiceConsentAll(
                                     accountId: accountId,
-                                    hasCsp: false,
                                     propertyId: propertyId,
-                                    withSiteActions: false,
-                                    includeCustomVendorsRes: false,
                                     metadata: ChoiceAllBodyRequest(
                                         gdpr: ChoiceAllBodyRequest.Campaign(applies: true),
                                         ccpa: ChoiceAllBodyRequest.Campaign(applies: true))) { result in

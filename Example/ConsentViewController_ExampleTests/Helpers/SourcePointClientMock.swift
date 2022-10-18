@@ -166,10 +166,7 @@ class SourcePointClientMock: SourcePointProtocol {
     func choice(
         action: SPActionType,
         accountId: Int,
-        hasCsp: Bool,
         propertyId: Int,
-        withSiteActions: Bool,
-        includeCustomVendorsRes: Bool,
         metadata: ChoiceAllBodyRequest,
         handler: @escaping ChoiceHandler
     ) { }

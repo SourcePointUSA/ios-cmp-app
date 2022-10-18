@@ -150,10 +150,7 @@ protocol SourcePointProtocol {
     func choice(
         action: SPActionType,
         accountId: Int,
-        hasCsp: Bool,
         propertyId: Int,
-        withSiteActions: Bool,
-        includeCustomVendorsRes: Bool,
         metadata: ChoiceAllBodyRequest,
         handler: @escaping ChoiceHandler
     )
@@ -488,7 +485,7 @@ extension SourcePointClient {
             })
         }
     }
-    
+
     func pvDataURLWithParams() -> URL? {
             return Constants.Urls.PV_DATA_URL.absoluteURL
         }
@@ -512,7 +509,6 @@ extension SourcePointClient {
         }
     }
 
-
     func choiceRejectAllURLWithParams(
       accountId: Int,
       hasCsp: Bool,
@@ -534,19 +530,16 @@ extension SourcePointClient {
 
     func choiceRejectAll(
         accountId: Int,
-        hasCsp: Bool,
         propertyId: Int,
-        withSiteActions: Bool,
-        includeCustomVendorsRes: Bool,
         metadata: ChoiceAllBodyRequest,
         handler: @escaping ChoiceHandler
     ) {
         guard let url = choiceRejectAllURLWithParams(
             accountId: accountId,
-            hasCsp: hasCsp,
+            hasCsp: true,
             propertyId: propertyId,
-            withSiteActions: withSiteActions,
-            includeCustomVendorsRes: includeCustomVendorsRes,
+            withSiteActions: false,
+            includeCustomVendorsRes: false,
             metadata: metadata
         ) else {
             handler(Result.failure(InvalidChoiceAllParamsError()))
@@ -584,30 +577,21 @@ extension SourcePointClient {
     func choice(
         action: SPActionType,
         accountId: Int,
-        hasCsp: Bool,
         propertyId: Int,
-        withSiteActions: Bool,
-        includeCustomVendorsRes: Bool,
         metadata: ChoiceAllBodyRequest,
         handler: @escaping ChoiceHandler
     ) {
         switch action {
         case .AcceptAll:
             choiceConsentAll(accountId: accountId,
-                             hasCsp: hasCsp,
                              propertyId: propertyId,
-                             withSiteActions: withSiteActions,
-                             includeCustomVendorsRes: includeCustomVendorsRes,
                              metadata: metadata,
                              handler: handler)
         case .RejectAll:
             choiceRejectAll(accountId: accountId,
-                             hasCsp: hasCsp,
-                             propertyId: propertyId,
-                             withSiteActions: withSiteActions,
-                             includeCustomVendorsRes: includeCustomVendorsRes,
-                             metadata: metadata,
-                             handler: handler)
+                            propertyId: propertyId,
+                            metadata: metadata,
+                            handler: handler)
         default:
             print("Choice for such action is not implemented in v7")
         }
@@ -615,19 +599,16 @@ extension SourcePointClient {
 
     func choiceConsentAll(
         accountId: Int,
-        hasCsp: Bool,
         propertyId: Int,
-        withSiteActions: Bool,
-        includeCustomVendorsRes: Bool,
         metadata: ChoiceAllBodyRequest,
         handler: @escaping ChoiceHandler
     ) {
         guard let url = choiceConsentAllURLWithParams(
             accountId: accountId,
-            hasCsp: hasCsp,
+            hasCsp: true,
             propertyId: propertyId,
-            withSiteActions: withSiteActions,
-            includeCustomVendorsRes: includeCustomVendorsRes,
+            withSiteActions: false,
+            includeCustomVendorsRes: false,
             metadata: metadata
         ) else {
             handler(Result.failure(InvalidChoiceAllParamsError()))
