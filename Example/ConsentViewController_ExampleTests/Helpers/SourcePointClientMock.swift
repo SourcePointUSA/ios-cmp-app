@@ -81,7 +81,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
 
     }
 
@@ -97,7 +97,11 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(actionType: ConsentViewController.SPActionType, body: ConsentViewController.GDPRChoiceBody, handler: @escaping ConsentViewController.GDPRConsentHandler) {
+
+    }
+
+    func pvData(pvDataRequestBody: ConsentViewController.PvDataRequestBody, handler: @escaping ConsentViewController.PvDataHandler) {
 
     }
 
@@ -153,10 +157,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     func setRequestTimeout(_ timeout: TimeInterval) {}
 
-    func pvData(pvDataRequestBody: PvDataRequestBody,
-                handler: @escaping PvDataHandler) {}
-
-    public func metaData(
+    func metaData(
         accountId: Int,
         propertyId: Int,
         metadata: MetaDataBodyRequest,
