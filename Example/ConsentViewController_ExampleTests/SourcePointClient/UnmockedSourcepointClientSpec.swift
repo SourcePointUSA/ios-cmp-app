@@ -11,13 +11,14 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_try line_length function_body_length
+// swiftlint:disable force_try line_length function_body_length cyclomatic_complexity
+
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
         let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
         let propertyName = try! SPPropertyName("tests.unified-script.com")
         let accountId = 22
-        let propertyId = 123
+        let propertyId = 17801
 
         var client: SourcePointClient!
 
@@ -51,7 +52,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
 
                 it("should contain all query params") {
                     let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: nil)
-                    let paramsRaw = "env=\(Constants.Urls.envParam)&hasCsp=true&metadata={}&propertyId=123&withSiteActions=false"
+                    let paramsRaw = "env=\(Constants.Urls.envParam)&hasCsp=true&metadata={}&propertyId=17801&withSiteActions=false"
                     expect(url?.query).to(equal(
                         paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                     ))
@@ -62,7 +63,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 it("should call the endpoint and parse the response into ConsentStatusResponse") {
                     waitUntil { done in
                         client.consentStatus(
-                            propertyId: 17801,
+                            propertyId: propertyId,
                             metadata: ConsentStatusMetaData(gdpr: ConsentStatusMetaData.Campaign(hasLocalData: false, applies: true, dateCreated: nil, uuid: nil), ccpa: ConsentStatusMetaData.Campaign(hasLocalData: false, applies: true, dateCreated: nil, uuid: nil)),
                             authId: "user_auth_id") { result in
                                 switch result {
@@ -140,7 +141,9 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     consentStatus: PvDataRequestBody.ConsentStatus(
                                         hasConsentData: false,
                                         consentedToAny: false,
-                                        rejectAny: false
+                                        rejectAny: false,
+                                        rejectedVendors: [],
+                                        rejectedCategories: []
                                     ),
                                     pubData: nil,
                                     sampleRate: 5,
@@ -150,21 +153,22 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     subCategoryId: nil,
                                     prtnUUID: nil
                                 ),
-                                 ccpa: nil
-//                                    PvDataRequestBody.CCPA(
-//                                    applies: true,
-//                                    uuid: nil,
-//                                    accountId: accountId,
-//                                    siteId: 17801,
-//                                    consentStatus: PvDataRequestBody.ConsentStatus(
-//                                        hasConsentData: false,
-//                                        consentedToAny: false,
-//                                        rejectAny: false
-//                                    ),
-//                                    pubData: nil,
-//                                    messageId: nil,
-//                                    sampleRate: 5
-//                                 )
+                                 ccpa: PvDataRequestBody.CCPA(
+                                    applies: true,
+                                    uuid: nil,
+                                    accountId: accountId,
+                                    siteId: 17801,
+                                    consentStatus: PvDataRequestBody.ConsentStatus(
+                                        hasConsentData: false,
+                                        consentedToAny: false,
+                                        rejectAny: false,
+                                        rejectedVendors: [],
+                                        rejectedCategories: []
+                                    ),
+                                    pubData: nil,
+                                    messageId: nil,
+                                    sampleRate: 5
+                                 )
                             )
                         ) {
                         switch $0 {
@@ -200,6 +204,52 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 }
                                 done()
                             }
+                    }
+                }
+            }
+
+            describe("choice/reject-all") {
+                it("should call the endpoint and parse the response into ChoiceAllResponse") {
+                    waitUntil { done in
+                        client.choiceRejectAll(
+                                    accountId: accountId,
+                                    propertyId: propertyId,
+                                    metadata: ChoiceAllBodyRequest(
+                                        gdpr: ChoiceAllBodyRequest.Campaign(applies: true),
+                                        ccpa: ChoiceAllBodyRequest.Campaign(applies: true))) { result in
+                            switch result {
+                            case .success(let response):
+                                expect(response).to(beAnInstanceOf(ChoiceAllResponse.self))
+                                expect(response.gdpr).notTo(beNil())
+                                expect(response.ccpa).notTo(beNil())
+                            case .failure(let error):
+                                fail(error.failureReason)
+                            }
+                            done()
+                        }
+                    }
+                }
+            }
+
+            describe("choice/consent-all") {
+                it("should call the endpoint and parse the response into ChoiceAllResponse") {
+                    waitUntil { done in
+                        client.choiceConsentAll(
+                                    accountId: accountId,
+                                    propertyId: propertyId,
+                                    metadata: ChoiceAllBodyRequest(
+                                        gdpr: ChoiceAllBodyRequest.Campaign(applies: true),
+                                        ccpa: ChoiceAllBodyRequest.Campaign(applies: true))) { result in
+                            switch result {
+                            case .success(let response):
+                                expect(response).to(beAnInstanceOf(ChoiceAllResponse.self))
+                                expect(response.gdpr).notTo(beNil())
+                                expect(response.ccpa).notTo(beNil())
+                            case .failure(let error):
+                                fail(error.failureReason)
+                            }
+                            done()
+                        }
                     }
                 }
             }

@@ -45,6 +45,7 @@ protocol SPClientCoordinator {
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
 }
 
+// swiftlint:disable type_body_length
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
         struct GDPRMetaData: Codable {

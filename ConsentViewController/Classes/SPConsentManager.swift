@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-// swiftlint:disable file_length
+// swiftlint:disable file_length function_body_length type_body_length
 @objcMembers public class SPConsentManager: NSObject {
     static let DefaultTimeout = TimeInterval(30)
     static public var shouldCallErrorMetrics = true
@@ -203,47 +203,99 @@ import UIKit
         }
     }
 
+    // TODO: move this code to SPClientCoordinator
     func report(action: SPAction) {
         responsesToReceive += 1
         switch action.campaignType {
         case .ccpa:
-            spClient.postCCPAAction(
-                authId: authId,
-                action: action,
-                localState: storage.localState ?? SPJson(),
-                idfaStatus: idfaStatus
-            ) { [weak self] result in
-                self?.responsesToReceive -= 1
-                switch result {
-                case .success((_, let consents)):
-                    let userData = SPUserData(
-                        gdpr: self?.storage.userData.gdpr,
-                        ccpa: SPConsent(consents: consents, applies: true)
-                    )
-                    self?.storeConsent(userData: userData)
-                    self?.onConsentReceived()
-                case .failure(let error):
-                    self?.onError(error)
+                var pmPayload: CCPAChoiceBody.PMSaveAndExitPayload?
+                if let rCat = action.pmPayload["rejectedCategories"]?.anyValue as? [String?],
+                   let rVen = action.pmPayload["rejectedVendors"]?.anyValue as? [String?],
+                   let pmId = action.pmPayload["privacyManagerId"]?.anyValue as? String {
+                    pmPayload = .init(rejectedCategories: rCat, rejectedVendors: rVen, privacyManagerId: pmId)
                 }
-            }
+                spClient.postCCPAAction(
+                    actionType: action.type,
+                    body: CCPAChoiceBody(
+                        authId: authId,
+                        uuid: ccpaUUID,
+                        messageId: nil,
+                        pubData: action.publisherData,
+                        pmSaveAndExitVariables: pmPayload,
+                        sampleRate: 1,
+                        propertyId: propertyId
+                    )
+                ) { [weak self] result in
+                    self?.responsesToReceive -= 1
+                    switch result {
+                        case .success(let response):
+                            self?.onConsentReceived(SPUserData(
+                                gdpr: self?.storage.userData.gdpr,
+                                ccpa: SPConsent(
+                                    consents: .init(
+                                        uuid: response.uuid,
+                                        status: .ConsentedAll,
+                                        rejectedVendors: [],
+                                        rejectedCategories: [],
+                                        uspstring: ""
+                                    ),
+                                    applies: true
+                                )
+                            ))
+                        case .failure(let error):
+                            self?.onError(error)
+                    }
+                }
         case .gdpr:
+            var pmPayload: GDPRChoiceBody.PMSaveAndExitPayload?
+            if let spFt = action.pmPayload["specialFeatures"]?.anyValue as? [String?],
+               let cat = action.pmPayload["categories"]?.anyValue as? [String?],
+               let ven = action.pmPayload["vendors"]?.anyValue as? [String?],
+               let pmId = action.pmPayload["vendors"]?.anyValue as? String,
+               let mId = action.pmPayload["messageId"]?.anyValue as? String,
+               let lan = SPMessageLanguage(rawValue: action.pmPayload["language"]?.anyValue as? String ?? "") {
+                pmPayload = .init(
+                    specialFeatures: spFt,
+                    categories: cat,
+                    vendors: ven,
+                    privacyManagerId: pmId,
+                    messageId: mId,
+                    lan: lan
+                )
+            }
             spClient.postGDPRAction(
-                authId: authId,
-                action: action,
-                localState: storage.localState ?? SPJson(),
-                idfaStatus: idfaStatus
+                actionType: action.type,
+                body: GDPRChoiceBody(
+                    authId: authId,
+                    uuid: gdprUUID,
+                    propertyId: String(propertyId),
+                    messageId: nil,
+                    pubData: [:],
+                    pmSaveAndExitVariables: pmPayload,
+                    sampleRate: 1,
+                    idfaStatus: idfaStatus,
+                    consentAllRef: "",
+                    vendorListId: "",
+                    granularStatus: .init()
+                )
             ) { [weak self] result in
                 self?.responsesToReceive -= 1
                 switch result {
-                case .success((_, let consents)):
-                    let userData = SPUserData(
-                        gdpr: SPConsent(consents: consents, applies: true),
-                        ccpa: self?.storage.userData.ccpa
-                    )
-                    self?.storeConsent(userData: userData)
-                    self?.onConsentReceived()
-                case .failure(let error):
-                    self?.onError(error)
+                    case .success(let response):
+                        self?.onConsentReceived(SPUserData(
+                            gdpr: SPConsent(
+                                consents: .init(
+                                    uuid: response.uuid,
+                                    vendorGrants: SPGDPRVendorGrants(),
+                                    euconsent: "",
+                                    tcfData: SPJson()
+                                ),
+                                applies: true
+                            ),
+                            ccpa: self?.storage.userData.ccpa
+                        ))
+                    case .failure(let error):
+                        self?.onError(error)
                 }
             }
         default: break
@@ -267,8 +319,8 @@ import UIKit
     }
     #endif
 
-    func onConsentReceived() {
-        delegate?.onConsentReady?(userData: storage.userData)
+    func onConsentReceived(_ userData: SPUserData) {
+        delegate?.onConsentReady?(userData: userData)
         handleSDKDone()
     }
 
@@ -363,7 +415,7 @@ import UIKit
                         strongSelf.messageControllersStack = strongSelf.messagesToViewController(messages)
                         strongSelf.messagesToShow = strongSelf.messageControllersStack.count
                         if strongSelf.messageControllersStack.isEmpty {
-                            strongSelf.onConsentReceived()
+                            strongSelf.onConsentReceived(strongSelf.storage.userData)
                         } else {
                             strongSelf.renderNextMessageIfAny()
                         }

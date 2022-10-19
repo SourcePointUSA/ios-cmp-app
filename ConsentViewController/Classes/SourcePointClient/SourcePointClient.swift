@@ -33,8 +33,8 @@ typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPErro
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias MessageHandler = (Result<Message, SPError>) -> Void
-typealias CCPAConsentHandler = ConsentHandler<SPCCPAConsent>
-typealias GDPRConsentHandler = ConsentHandler<SPGDPRConsent>
+typealias CCPAConsentHandler = (Result<CCPAChoiceResponse, SPError>) -> Void
+typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
 typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
@@ -42,6 +42,7 @@ typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Voi
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
 typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
+typealias ChoiceHandler = (Result<ChoiceAllResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
@@ -75,18 +76,14 @@ protocol SourcePointProtocol {
     )
 
     func postCCPAAction(
-        authId: String?,
-        action: SPAction,
-        localState: SPJson,
-        idfaStatus: SPIDFAStatus,
+        actionType: SPActionType,
+        body: CCPAChoiceBody,
         handler: @escaping CCPAConsentHandler
     )
 
     func postGDPRAction(
-        authId: String?,
-        action: SPAction,
-        localState: SPJson,
-        idfaStatus: SPIDFAStatus,
+        actionType: SPActionType,
+        body: GDPRChoiceBody,
         handler: @escaping GDPRConsentHandler
     )
 
@@ -144,6 +141,14 @@ protocol SourcePointProtocol {
         propertyId: Int,
         metadata: MetaDataBodyRequest,
         handler: @escaping MetaDataHandler
+    )
+
+    func choice(
+        action: SPActionType,
+        accountId: Int,
+        propertyId: Int,
+        metadata: ChoiceAllBodyRequest,
+        handler: @escaping ChoiceHandler
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -251,29 +256,15 @@ class SourcePointClient: SourcePointProtocol {
             }
     }
 
-    func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL? {
-        guard let actionUrl = URL(string: "\(actionType.rawValue)") else { return nil }
-
-        var components = URLComponents(url: actionUrl, resolvingAgainstBaseURL: true)
-        components?.queryItems = [URLQueryItem(name: "env", value: Constants.Urls.envParam)]
-        return components?.url(relativeTo: baseUrl)
+    func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL {
+        URL(string: "./\(actionType.rawValue)?env=\(Constants.Urls.envParam)", relativeTo: baseUrl)!
     }
 
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
-        _ = JSONEncoder().encodeResult(CCPAConsentRequest(
-            authId: authId,
-            localState: localState,
-            pubData: action.publisherData,
-            pmSaveAndExitVariables: action.pmPayload,
-            requestUUID: requestUUID
-        )).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CCPA_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
+        _ = JSONEncoder().encodeResult(body).map { body in
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body) { result in
                 handler(Result {
-                    let response = try result.decoded() as ConsentResponse
-                    switch response.userConsent {
-                    case .ccpa(let consents): return (response.localState, consents)
-                    default: throw InvalidResponseConsentError(campaignType: .ccpa)
-                    }
+                    try result.decoded() as CCPAChoiceResponse
                 }.mapError {
                     InvalidResponseConsentError(error: $0, campaignType: .ccpa)
                 })
@@ -281,22 +272,11 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
-        _ = JSONEncoder().encodeResult(GDPRConsentRequest(
-            authId: authId,
-            idfaStatus: SPIDFAStatus.current(),
-            localState: localState,
-            pmSaveAndExitVariables: action.pmPayload,
-            pubData: action.publisherData,
-            requestUUID: requestUUID
-        )).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.GDPR_CONSENT_URL, action.type)!.absoluteString, body: body) { result in
+    func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
+        _ = JSONEncoder().encodeResult(body).map { body in
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body) { result in
                 handler(Result {
-                    let response = try result.decoded() as ConsentResponse
-                    switch response.userConsent {
-                    case .gdpr(let consents): return (response.localState, consents)
-                    default: throw InvalidResponseConsentError(campaignType: .gdpr)
-                    }
+                    try result.decoded() as GDPRChoiceResponse
                 }.mapError {
                     InvalidResponseConsentError(error: $0, campaignType: .gdpr)
                 })
@@ -410,8 +390,17 @@ extension SourcePointClient {
         return url
     }
 
-    func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
-        guard let url = consentStatusURLWithParams(propertyId: propertyId, metadata: metadata, authId: authId) else {
+    func consentStatus(
+        propertyId: Int,
+        metadata: ConsentStatusMetaData,
+        authId: String?,
+        handler: @escaping ConsentStatusHandler
+    ) {
+        guard let url = consentStatusURLWithParams(
+            propertyId: propertyId,
+            metadata: metadata,
+            authId: authId)
+        else {
             handler(Result.failure(InvalidConsentStatusQueryParamsError()))
             return
         }
@@ -438,7 +427,7 @@ extension SourcePointClient {
         return url
     }
 
-    public func metaData(
+    func metaData(
         accountId: Int,
         propertyId: Int,
         metadata: MetaDataBodyRequest,
@@ -463,7 +452,8 @@ extension SourcePointClient {
     }
 
     func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
-        guard let url = Constants.Urls.GET_MESSAGES_URL.appendQueryItems(params.stringifiedParams()) else {
+        guard let url = Constants.Urls.GET_MESSAGES_URL.appendQueryItems(params.stringifiedParams())
+        else {
             handler(Result.failure(InvalidGetMessagesParams()))
             return
         }
@@ -477,7 +467,7 @@ extension SourcePointClient {
         }
     }
 
-    public func pvData(pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
+    func pvData(pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
         _ = JSONEncoder().encodeResult(pvDataRequestBody).map { body in
             client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body) { result in
                 handler(Result {
@@ -486,6 +476,120 @@ extension SourcePointClient {
                     InvalidPvDataResponseError(error: $0)
                 })
             }
+        }
+    }
+
+    func choiceRejectAllURLWithParams(
+      accountId: Int,
+      hasCsp: Bool,
+      propertyId: Int,
+      withSiteActions: Bool,
+      includeCustomVendorsRes: Bool,
+      metadata: ChoiceAllBodyRequest
+    ) -> URL? {
+        let url = Constants.Urls.CHOICE_REJECT_ALL_URL.appendQueryItems([
+            "accountId": String(accountId),
+            "hasCsp": hasCsp.description,
+            "propertyId": String(propertyId),
+            "withSiteActions": withSiteActions.description,
+            "includeCustomVendorsRes": includeCustomVendorsRes.description,
+            "metadata": metadata.stringified()
+        ])
+        return url
+    }
+
+    func choiceRejectAll(
+        accountId: Int,
+        propertyId: Int,
+        metadata: ChoiceAllBodyRequest,
+        handler: @escaping ChoiceHandler
+    ) {
+        guard let url = choiceRejectAllURLWithParams(
+            accountId: accountId,
+            hasCsp: true,
+            propertyId: propertyId,
+            withSiteActions: false,
+            includeCustomVendorsRes: false,
+            metadata: metadata
+        ) else {
+            handler(Result.failure(InvalidChoiceAllParamsError()))
+            return
+        }
+
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                return try result.decoded() as ChoiceAllResponse
+            }.mapError {
+                InvalidChoiceAllResponseError(error: $0)
+            })
+        }
+    }
+
+    func choiceConsentAllURLWithParams(
+      accountId: Int,
+      hasCsp: Bool,
+      propertyId: Int,
+      withSiteActions: Bool,
+      includeCustomVendorsRes: Bool,
+      metadata: ChoiceAllBodyRequest
+    ) -> URL? {
+        let url = Constants.Urls.CHOICE_CONSENT_ALL_URL.appendQueryItems([
+            "accountId": String(accountId),
+            "hasCsp": hasCsp.description,
+            "propertyId": String(propertyId),
+            "withSiteActions": withSiteActions.description,
+            "includeCustomVendorsRes": includeCustomVendorsRes.description,
+            "metadata": metadata.stringified()
+        ])
+        return url
+    }
+
+    func choice(
+        action: SPActionType,
+        accountId: Int,
+        propertyId: Int,
+        metadata: ChoiceAllBodyRequest,
+        handler: @escaping ChoiceHandler
+    ) {
+        switch action {
+        case .AcceptAll:
+            choiceConsentAll(accountId: accountId,
+                             propertyId: propertyId,
+                             metadata: metadata,
+                             handler: handler)
+        case .RejectAll:
+            choiceRejectAll(accountId: accountId,
+                            propertyId: propertyId,
+                            metadata: metadata,
+                            handler: handler)
+        default:
+            print("Choice for such action is not implemented in v7")
+        }
+    }
+
+    func choiceConsentAll(
+        accountId: Int,
+        propertyId: Int,
+        metadata: ChoiceAllBodyRequest,
+        handler: @escaping ChoiceHandler
+    ) {
+        guard let url = choiceConsentAllURLWithParams(
+            accountId: accountId,
+            hasCsp: true,
+            propertyId: propertyId,
+            withSiteActions: false,
+            includeCustomVendorsRes: false,
+            metadata: metadata
+        ) else {
+            handler(Result.failure(InvalidChoiceAllParamsError()))
+            return
+        }
+        client.get(urlString: url.absoluteString) { result in
+            handler(Result {
+                return try result.decoded() as ChoiceAllResponse
+            }.mapError {
+                InvalidChoiceAllResponseError(error: $0)
+            })
         }
     }
 }

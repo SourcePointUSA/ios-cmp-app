@@ -8,6 +8,8 @@
 import UIKit
 import Foundation
 
+// swiftlint:disable function_body_length
+
 protocol SPNativePrivacyManagerHome {
     var delegate: SPNativePMDelegate? { get set }
 }

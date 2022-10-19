@@ -13,12 +13,13 @@ class GDPRLocalStorageMock: SPLocalStorage {
     var gdprChildPmId: String?
     var ccpaChildPmId: String?
     var userData = SPUserData()
-    var localState = SPJson()
+    var localState: SPJson?
     var nonKeyedLocalState = SPJson()
     var storage: Storage = InMemoryStorageMock()
     var tcfData: [String: Any]? = [:]
     var usPrivacyString: String?
     var propertyId: Int?
+    var spState = SourcepointClientCoordinator.State()
 
     var clearWasCalled = false
 
