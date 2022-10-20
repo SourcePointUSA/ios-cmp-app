@@ -8,7 +8,6 @@
 import Foundation
 
 typealias MessagesAndConsentHandler = (Result<([MessageToDisplay], SPUserData), SPError>) -> Void
-
 struct MessageToDisplay {
     let message: Message
     let metadata: MessageMetaData
@@ -16,7 +15,6 @@ struct MessageToDisplay {
     let type: SPCampaignType
     let childPmId: String?
 }
-
 extension MessageToDisplay {
     init?(_ campaign: Campaign) {
         guard let message = campaign.message,
@@ -47,20 +45,15 @@ protocol SPClientCoordinator {
 
 // swiftlint:disable type_body_length
 class SourcepointClientCoordinator: SPClientCoordinator {
+    static let sampleRate = 1
+
     struct State: Codable {
         struct GDPRMetaData: Codable {
             var additionsChangeDate, legalBasisChangeDate: SPDateCreated
         }
 
-        struct Campaign: Codable {
-            var uuid: String?
-            var consentStatus: ConsentStatus?
-            var applies: Bool?
-            var dateCreated: SPDateCreated?
-            var ccpaStatus: CCPAConsentStatus?
-        }
-
-        var gdpr, ccpa: Campaign?
+        var gdpr: SPGDPRConsent?
+        var ccpa: SPCCPAConsent?
         var gdprMetadata: GDPRMetaData?
         var wasSampled: Bool?
         var localState: SPJson?
@@ -69,21 +62,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         mutating func udpateGDPRStatus() {
             guard
                 let gdpr = gdpr,
-                let gdprMetadata = gdprMetadata,
-                let dateCreated = gdpr.dateCreated
+                let gdprMetadata = gdprMetadata
             else { return }
-            if dateCreated.date < gdprMetadata.additionsChangeDate.date {
-                self.gdpr?.consentStatus?.vendorListAdditions = true
+            if gdpr.dateCreated.date < gdprMetadata.additionsChangeDate.date {
+                self.gdpr?.consentStatus.vendorListAdditions = true
             }
-            if dateCreated.date < gdprMetadata.legalBasisChangeDate.date {
-                self.gdpr?.consentStatus?.legalBasisChanges = true
+            if gdpr.dateCreated.date < gdprMetadata.legalBasisChangeDate.date {
+                self.gdpr?.consentStatus.legalBasisChanges = true
             }
-            if let consentedToAll = self.gdpr?.consentStatus?.consentedAll,
+            if let consentedToAll = self.gdpr?.consentStatus.consentedAll,
                consentedToAll,
-               (dateCreated.date < gdprMetadata.additionsChangeDate.date ||
-                dateCreated.date < gdprMetadata.legalBasisChangeDate.date) {
-                self.gdpr?.consentStatus?.granularStatus?.previousOptInAll = true
-                self.gdpr?.consentStatus?.consentedAll = false
+               (gdpr.dateCreated.date < gdprMetadata.additionsChangeDate.date ||
+                gdpr.dateCreated.date < gdprMetadata.legalBasisChangeDate.date) {
+                self.gdpr?.consentStatus.granularStatus?.previousOptInAll = true
+                self.gdpr?.consentStatus.consentedAll = false
             }
         }
     }
@@ -115,9 +107,43 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var shouldCallMessages: Bool {
-        (state.gdpr?.applies == true && state.gdpr?.consentStatus?.consentedAll == false) ||
+        (state.gdpr?.applies == true && state.gdpr?.consentStatus.consentedAll == false) ||
         state.ccpa?.applies == true ||
         campaigns.ios14 != nil
+    }
+
+    var pvDataBodyFromState: PvDataRequestBody {
+        var gdpr: PvDataRequestBody.GDPR?
+        var ccpa: PvDataRequestBody.CCPA?
+        if let stateGDPR = state.gdpr {
+            gdpr = PvDataRequestBody.GDPR(
+                applies: stateGDPR.applies,
+                uuid: stateGDPR.uuid,
+                accountId: accountId,
+                siteId: propertyId,
+                consentStatus: stateGDPR.consentStatus,
+                pubData: nil, // TODO: add pubData
+                sampleRate: SourcepointClientCoordinator.sampleRate,
+                euconsent: stateGDPR.euconsent,
+                msgId: stateGDPR.lastMessage?.id,
+                categoryId: stateGDPR.lastMessage?.categoryId,
+                subCategoryId: stateGDPR.lastMessage?.subCategoryId,
+                prtnUUID: stateGDPR.lastMessage?.partitionUUID
+            )
+        }
+        if let stateCCPA = state.ccpa {
+            ccpa = .init(
+                applies: stateCCPA.applies,
+                uuid: stateCCPA.uuid,
+                accountId: accountId,
+                siteId: propertyId,
+                consentStatus: stateCCPA.consentStatus,
+                pubData: nil, // TODO: add pubData
+                messageId: stateCCPA.lastMessage?.id,
+                sampleRate: SourcepointClientCoordinator.sampleRate
+            )
+        }
+        return .init(gdpr: gdpr, ccpa: ccpa)
     }
 
     init(
@@ -141,8 +167,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.storage = storage
 
         self.state = State(
-            gdpr: .init(consentStatus: ConsentStatus()),
-            ccpa: .init()
+            gdpr: campaigns.gdpr != nil ? .empty() : nil,
+            ccpa: campaigns.ccpa != nil ? .empty() : nil
         )
 
         guard let spClient = spClient else {
@@ -207,11 +233,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func consentStatusMetadataFromState(_ campaign: State.Campaign?) -> ConsentStatusMetaData.Campaign? {
+    func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
             hasLocalData: true,
-            applies: campaign.applies ?? false,
+            applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid
         )
@@ -226,7 +252,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             // TODO: update GDPR consents
         }
         if let ccpa = response.consentStatusData.ccpa {
-            state.ccpa?.ccpaStatus = ccpa.status
+            state.ccpa?.status = ccpa.status
             state.ccpa?.dateCreated = ccpa.dateCreated
             state.ccpa?.uuid = ccpa.uuid
             // TODO: update CCPA consents
@@ -271,7 +297,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         ccpa: .init(
                             targetingParams: campaigns.gdpr?.targetingParams,
                             hasLocalData: state.ccpa?.uuid != nil,
-                            status: state.ccpa?.ccpaStatus
+                            status: state.ccpa?.status
                         ),
                         gdpr: .init(
                             targetingParams: campaigns.gdpr?.targetingParams,
@@ -312,7 +338,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func sample(_ lambda: (Bool) -> Void, at percentage: Int = 1) {
+    func sample(_ lambda: (Bool) -> Void, at percentage: Int = sampleRate) {
         let hit = 1...percentage ~= Int.random(in: 1...100)
         lambda(hit)
     }
@@ -321,7 +347,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         guard let wasSampled = state.wasSampled else {
             sample { hit in
                 if hit {
-//                    spClient.pvData()
+                    spClient.pvData(pvDataBodyFromState)
                 }
                 state.wasSampled = hit
             }
@@ -329,7 +355,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         if wasSampled {
-//            spClient.pvData()
+            spClient.pvData(pvDataBodyFromState)
         }
     }
 

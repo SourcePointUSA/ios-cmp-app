@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SPDateCreated: Codable, Equatable {
+public struct SPDateCreated: Codable, Equatable {
     static let format: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -26,13 +26,13 @@ struct SPDateCreated: Codable, Equatable {
         originalDateString = SPDateCreated.format.string(from: date)
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         originalDateString = try container.decode(String.self)
         date = SPDateCreated.format.date(from: originalDateString)!
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(originalDateString)
     }

@@ -131,10 +131,7 @@ protocol SourcePointProtocol {
         handler: @escaping ConsentStatusHandler
     )
 
-    func pvData(
-        pvDataRequestBody: PvDataRequestBody,
-        handler: @escaping PvDataHandler
-    )
+    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler?)
 
     func metaData(
         accountId: Int,
@@ -152,6 +149,12 @@ protocol SourcePointProtocol {
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
+}
+
+extension SourcePointProtocol {
+    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
+        pvData(body, handler: nil)
+    }
 }
 
 /**
@@ -467,10 +470,10 @@ extension SourcePointClient {
         }
     }
 
-    func pvData(pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
-        _ = JSONEncoder().encodeResult(pvDataRequestBody).map { body in
+    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
+        _ = JSONEncoder().encodeResult(body).map { body in
             client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body) { result in
-                handler(Result {
+                handler?(Result {
                     try result.decoded() as PvDataResponse
                 }.mapError {
                     InvalidPvDataResponseError(error: $0)

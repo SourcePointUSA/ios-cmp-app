@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct LastMessageData: Codable {
+    var id, categoryId, subCategoryId: Int
+    var partitionUUID: String
+}
+
 /// A dictionary in which the keys represent the Vendor Id
 public typealias SPGDPRVendorGrants = [GDPRVendorId: SPGDPRVendorGrant]
 public typealias GDPRVendorId = String
@@ -49,7 +54,7 @@ public typealias SPGDPRPurposeId = String
 /**
     SPGDPRConsent encapsulates all consent data from a user.
  */
-@objcMembers public class SPGDPRConsent: NSObject, Codable {
+@objcMembers public class SPGDPRConsent: NSObject, Codable, CampaignConsent {
     /// Convenience initialiser to return an empty consent object.
     public static func empty() -> SPGDPRConsent { SPGDPRConsent(
         vendorGrants: SPGDPRVendorGrants(),
@@ -101,6 +106,16 @@ public typealias SPGDPRPurposeId = String
                     .allSatisfy { $0.value }
             }
     }
+
+    /// The date in which the consent profile was created or updated
+    public var dateCreated = SPDateCreated.now()
+
+    /// Determines if the GDPR legislation applies for this user
+    public var applies = false
+
+    var consentStatus = ConsentStatus()
+
+    var lastMessage: LastMessageData?
 
     public init(
         uuid: String? = nil,

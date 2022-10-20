@@ -57,12 +57,18 @@ import Foundation
 
 public typealias SPUsPrivacyString = String
 
+protocol CampaignConsent {
+    var uuid: String? { get set }
+    var applies: Bool { get set }
+    var dateCreated: SPDateCreated { get set }
+}
+
 /**
  The UserConsent class encapsulates the consent status, rejected vendor ids and rejected categories (purposes) ids.
  - Important: The `rejectedVendors` and `rejectedCategories` arrays will only be populated if the `status` is `.Some`.
  That is, if the user has rejected `.All` or `.None` vendors/categories, those arrays will be empty.
  */
-@objcMembers public class SPCCPAConsent: NSObject, Codable {
+@objcMembers public class SPCCPAConsent: NSObject, Codable, CampaignConsent {
     /// represents the default state of the consumer prior to seeing the consent message
     /// - seealso: https://github.com/InteractiveAdvertisingBureau/USPrivacy/blob/master/CCPA/US%20Privacy%20String.md#us-privacy-string-format
     public static let defaultUsPrivacyString = "1---"
@@ -75,15 +81,29 @@ public typealias SPUsPrivacyString = String
     )}
 
     /// Indicates if the user has rejected `.All`, `.Some` or `.None` of the vendors **and** categories.
-    public let status: CCPAConsentStatus
+    public var status: CCPAConsentStatus
+
     /// The ids of the rejected vendors and categories. These can be found in SourcePoint's dashboard
     public let rejectedVendors, rejectedCategories: [String]
+
     /// the US Privacy String as described by the IAB
     public let uspstring: SPUsPrivacyString
+
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
+
+    /// Determines if the GDPR legislation applies for this user
+    public var applies = false
+
+    /// The date in which the consent profile was created or updated
+    public var dateCreated = SPDateCreated.now()
+
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
     let childPmId: String?
+
+    var lastMessage: LastMessageData?
+
+    var consentStatus = ConsentStatus()
 
     public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
         status: CCPAConsentStatus.RejectedNone,

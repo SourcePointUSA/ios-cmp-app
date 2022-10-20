@@ -1,5 +1,5 @@
 //
-//  PvdataResponse.swift
+//  PvDataRequestResponse.swift
 //  ConsentViewController-iOS
 //
 //  Created by Fedko Dmytro on 14/09/2022.
@@ -25,14 +25,6 @@ struct PvDataResponse: Decodable, Equatable {
 }
 
 struct PvDataRequestBody: Codable, Equatable {
-    struct ConsentStatus: Codable, Equatable {
-        let hasConsentData: Bool
-        let consentedToAny: Bool
-        let rejectAny: Bool
-        let rejectedVendors: [String?]
-        let rejectedCategories: [String?]
-    }
-
     struct GDPR: Codable, Equatable {
         let applies: Bool
         let uuid: String?
