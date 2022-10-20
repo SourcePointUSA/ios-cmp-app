@@ -12,6 +12,15 @@ struct LastMessageData: Codable {
     var partitionUUID: String
 }
 
+extension LastMessageData {
+    init(from metadata: MessageMetaData) {
+        id = Int(metadata.messageId) ?? 0
+        categoryId = metadata.categoryId.rawValue
+        subCategoryId = metadata.subCategoryId.rawValue
+        partitionUUID = metadata.messagePartitionUUID ?? ""
+    }
+}
+
 /// A dictionary in which the keys represent the Vendor Id
 public typealias SPGDPRVendorGrants = [GDPRVendorId: SPGDPRVendorGrant]
 public typealias GDPRVendorId = String
@@ -129,6 +138,21 @@ public typealias SPGDPRPurposeId = String
         self.euconsent = euconsent
         self.tcfData = tcfData
         self.childPmId = childPmId
+    }
+
+    init?(from consentStatusResponse: ConsentStatusResponse.Data.GDPR?) {
+        if let gdpr = consentStatusResponse {
+            uuid = gdpr.uuid
+            vendorGrants = gdpr.grants
+            dateCreated = gdpr.dateCreated
+            euconsent = gdpr.euconsent
+            // tcfData = gdpr.tcfData // TODO: not implemented
+            tcfData = try? SPJson([:])
+            consentStatus = gdpr.consentStatus
+            childPmId = nil
+        } else {
+            return nil
+        }
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
