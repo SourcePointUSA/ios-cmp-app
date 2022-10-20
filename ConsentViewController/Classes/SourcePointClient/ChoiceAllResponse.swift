@@ -8,7 +8,6 @@
 import Foundation
 
 struct ChoiceAllResponse: Decodable {
-
     struct CCPA: Decodable {
         let applies: Bool
         let consentedAll: Bool
