@@ -4,6 +4,7 @@
 //
 //  Created by Andre Herculano on 14.09.22.
 //
+// swiftlint:disable type_body_length file_length
 
 import Foundation
 
@@ -44,7 +45,6 @@ protocol SPClientCoordinator {
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
 }
 
-// swiftlint:disable type_body_length
 class SourcepointClientCoordinator: SPClientCoordinator {
     static let sampleRate = 1
 
@@ -372,17 +372,70 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    func getChoiceAll(_ action: SPAction, handler: @escaping (Result<ChoiceAllResponse?, SPError>) -> Void) {
+        if action.type == .AcceptAll || action.type == .RejectAll {
+            spClient.choiceAll(
+                actionType: action.type,
+                accountId: accountId,
+                propertyId: propertyId,
+                metadata: .init(
+                    gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
+                    ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil
+                )
+            ) { result in handler(Result {
+                    try? result.get()
+                }.mapError { _ in
+                    SPError()
+                }) // TODO: map to correct error
+            }
+        } else {
+            handler(Result {
+                nil
+            }.mapError { _ in
+                SPError()
+            }) // TODO: map to correct error
+        }
+    }
+
+    func postChoice(_ action: SPAction, postPayloadFromGetCall: ChoiceAllResponse.GDPR.PostPayload?, handler: @escaping (Result<String, SPError>) -> Void) {
+        if action.campaignType == .gdpr {
+            spClient.postGDPRAction(
+                actionType: action.type,
+                body: GDPRChoiceBody(
+                    authId: self.authId,
+                    uuid: self.state.gdpr?.uuid,
+                    propertyId: String(self.propertyId),
+                    messageId: String(self.state.gdpr?.lastMessage?.id ?? 0),
+                    consentAllRef: postPayloadFromGetCall?.consentAllRef,
+                    vendorListId: postPayloadFromGetCall?.vendorListId,
+                    pubData: action.publisherData,
+                    pmSaveAndExitVariables: nil,  // TODO: convert pm payload from SPAction to this class
+                    sampleRate: SourcepointClientCoordinator.sampleRate,
+                    idfaStatus: self.idfaStatus,
+                    granularStatus: postPayloadFromGetCall?.granularStatus
+                )
+            ) { result in
+                print(result)
+            }
+        }
+    }
+
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void) {
-        switch action.type {
-            case .AcceptAll, .RejectAll, .SaveAndExit:
-                // spClient.getChoice(action.type, pmPayload) {
-//                    handleChoiceResponse
-//                    handler(Result.success(SPUserData))
-//              }
-//                POST choice
-//                flag if POST failed to sync later
-                print("choice")
-            default: break
+        getChoiceAll(action) { getResult in
+            switch getResult {
+                case .success(let getResponse):
+                    self.postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
+                        switch postResult {
+                            case .success(let response):
+                                print(response)
+                            case .failure(let error):
+                                // flag to sync again later
+                                print(error)
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+            }
         }
     }
 }

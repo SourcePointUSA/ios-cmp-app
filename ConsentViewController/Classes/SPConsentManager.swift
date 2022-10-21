@@ -270,12 +270,12 @@ import UIKit
                     uuid: gdprUUID,
                     propertyId: String(propertyId),
                     messageId: nil,
+                    consentAllRef: nil,
+                    vendorListId: nil,
                     pubData: [:],
                     pmSaveAndExitVariables: pmPayload,
                     sampleRate: 1,
                     idfaStatus: idfaStatus,
-                    consentAllRef: "",
-                    vendorListId: "",
                     granularStatus: .init()
                 )
             ) { [weak self] result in

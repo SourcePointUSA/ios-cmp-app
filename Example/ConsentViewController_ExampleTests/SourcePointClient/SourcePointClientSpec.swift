@@ -116,11 +116,12 @@ class SourcePointClientSpec: QuickSpec {
                                 uuid: nil,
                                 propertyId: nil,
                                 messageId: nil,
-                                pubData: [:], pmSaveAndExitVariables: nil,
+                                consentAllRef: nil,
+                                vendorListId: nil,
+                                pubData: [:],
+                                pmSaveAndExitVariables: nil,
                                 sampleRate: 1,
                                 idfaStatus: nil,
-                                consentAllRef: "",
-                                vendorListId: "",
                                 granularStatus: .init()
                             )
                         ) { _ in }
@@ -133,11 +134,12 @@ class SourcePointClientSpec: QuickSpec {
                             uuid: nil,
                             propertyId: nil,
                             messageId: nil,
-                            pubData: [:], pmSaveAndExitVariables: nil,
+                            consentAllRef: nil,
+                            vendorListId: nil,
+                            pubData: [:],
+                            pmSaveAndExitVariables: nil,
                             sampleRate: 1,
                             idfaStatus: nil,
-                            consentAllRef: "",
-                            vendorListId: "",
                             granularStatus: .init()
                         )
                         client.postGDPRAction(

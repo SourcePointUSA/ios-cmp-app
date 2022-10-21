@@ -14,14 +14,13 @@ struct GDPRChoiceBody: Encodable, Equatable {
         let lan: SPMessageLanguage
     }
 
-    let authId, uuid, propertyId, messageId: String?
+    let authId, uuid, propertyId, messageId, consentAllRef, vendorListId: String?
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: PMSaveAndExitPayload?
     let sendPVData = true // TODO: ask Sid/Dan what is this
     let sampleRate: Int
     let idfaStatus: SPIDFAStatus?
-    let consentAllRef, vendorListId: String
-    let granularStatus: ConsentStatus.GranularStatus
+    let granularStatus: ConsentStatus.GranularStatus?
     let includeData = [
         "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"]

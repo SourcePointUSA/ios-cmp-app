@@ -25,14 +25,6 @@ struct ChoiceAllResponse: Decodable {
     }
 
     struct GDPR: Decodable {
-        struct ConsnentStatus: Decodable {
-            let rejectedAny: Bool
-            let rejectedLI: Bool
-            let consentedAll: Bool
-            let hasConsentData: Bool
-            let consentedToAny: Bool
-            let granularStatus: SPJson?
-        }
         struct Grant: Decodable {
             let vendorGrant: Bool?
             let purposeGrants: [String: Bool]?
@@ -40,7 +32,7 @@ struct ChoiceAllResponse: Decodable {
         struct PostPayload: Decodable {
             let consentAllRef: String?
             let vendorListId: String?
-            let granularStatus: SPJson?
+            let granularStatus: ConsentStatus.GranularStatus?
         }
 
         let addtlConsent: String?
@@ -51,7 +43,7 @@ struct ChoiceAllResponse: Decodable {
         let dateCreated: String?
         let childPmId: String?
         let tcData: SPJson?
-        let consentStatus: ConsnentStatus
+        let consentStatus: ConsentStatus
         let grants: [String: Grant]?
         let postPayload: PostPayload?
     }
