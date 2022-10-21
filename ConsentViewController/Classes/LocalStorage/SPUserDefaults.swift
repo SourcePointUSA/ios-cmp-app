@@ -74,7 +74,7 @@ class SPUserDefaults: SPLocalStorage {
                 forKey: SPUserDefaults.SP_STATE_KEY
             ) ?? .init()
         }
-        set { storage.set(newValue, forKey: SPUserDefaults.SP_STATE_KEY) }
+        set { storage.setObject(newValue, forKey: SPUserDefaults.SP_STATE_KEY) }
     }
 
     required init(storage: Storage = UserDefaults.standard) {

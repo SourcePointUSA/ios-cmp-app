@@ -99,11 +99,11 @@ protocol CampaignConsent {
     public var dateCreated = SPDateCreated.now()
 
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
-    let childPmId: String?
+    var childPmId: String?
 
     var lastMessage: LastMessageData?
 
-    var consentStatus = ConsentStatus()
+    var consentStatus: ConsentStatus
 
     public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
         status: CCPAConsentStatus.RejectedNone,
@@ -112,13 +112,14 @@ protocol CampaignConsent {
         uspstring: ""
     )}
 
-    public init(
+    init(
         uuid: String? = nil,
         status: CCPAConsentStatus,
         rejectedVendors: [String],
         rejectedCategories: [String],
         uspstring: SPUsPrivacyString,
-        childPmId: String? = nil
+        childPmId: String? = nil,
+        consentStatus: ConsentStatus = ConsentStatus()
     ) {
         self.uuid = uuid
         self.status = status
@@ -126,6 +127,7 @@ protocol CampaignConsent {
         self.rejectedCategories = rejectedCategories
         self.uspstring = uspstring
         self.childPmId = childPmId
+        self.consentStatus = consentStatus
     }
 
     init?(from consentStatusResponse: ConsentStatusResponse.Data.CCPA?) {
@@ -151,7 +153,7 @@ protocol CampaignConsent {
     }
 
     enum CodingKeys: CodingKey {
-        case status, rejectedVendors, rejectedCategories, uspstring, uuid, childPmId
+        case status, rejectedVendors, rejectedCategories, uspstring, uuid, childPmId, consentStatus
     }
 
     required public init(from decoder: Decoder) throws {
@@ -162,6 +164,7 @@ protocol CampaignConsent {
         uspstring = try values.decode(SPUsPrivacyString.self, forKey: .uspstring)
         let statusString = try values.decode(String.self, forKey: .status)
         childPmId = try values.decodeIfPresent(String.self, forKey: .childPmId)
+        consentStatus = (try? values.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus()
         switch statusString {
         case "rejectedNone": status = .RejectedNone
         case "rejectedSome": status = .RejectedSome

@@ -113,7 +113,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     )) {
                             switch $0 {
                             case .success(let response):
-                                let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsent
+                                let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsen
                                 let ccpaConsents = response.campaigns.first { $0.type == .ccpa }?.userConsent
                                 expect(response).to(beAnInstanceOf(MessagesResponse.self))
                                 expect(response.campaigns.count).to(equal(2))

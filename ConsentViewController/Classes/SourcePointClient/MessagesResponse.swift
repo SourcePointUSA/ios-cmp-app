@@ -160,7 +160,7 @@ struct Campaign: Equatable {
     let type: SPCampaignType
     var url: URL?
     var message: Message?
-    let userConsent: Consent
+//    let userConsent: Consent
     let applies: Bool?
     let messageMetaData: MessageMetaData?
     let consentStatus: ConsentStatus?
@@ -173,7 +173,7 @@ extension Campaign: Decodable {
         type = try container.decode(SPCampaignType.self, forKey: .type)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
-        userConsent = try Consent(from: decoder)
+//        userConsent = try Consent(from: decoder)
         consentStatus = try? container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus) ?? ConsentStatus(from: decoder)
         dateCreated = try container.decodeIfPresent(SPDateCreated.self, forKey: .dateCreated)
         if let metaData = messageMetaData {
@@ -203,13 +203,13 @@ struct MessagesResponse: Decodable, Equatable {
         var campaignsContainer = try container.nestedUnkeyedContainer(forKey: .campaigns)
         while !campaignsContainer.isAtEnd {
             let campaign = try campaignsContainer.decode(Campaign.self)
-            switch campaign.userConsent {
-            case .ccpa(let consents):
-                consents.uuid = localState["ccpa"]?["uuid"]?.stringValue
-            case .gdpr(let consents):
-                consents.uuid = localState["gdpr"]?["uuid"]?.stringValue
-            default: break
-            }
+//            switch campaign.userConsent {
+//            case .ccpa(let consents):
+//                consents.uuid = localState["ccpa"]?["uuid"]?.stringValue
+//            case .gdpr(let consents):
+//                consents.uuid = localState["gdpr"]?["uuid"]?.stringValue
+//            default: break
+//            }
             tempCampaigns.append(campaign)
         }
         campaigns = tempCampaigns

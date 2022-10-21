@@ -17,11 +17,10 @@ class SourcePointClientMock: SourcePointProtocol {
 
     var customConsentResponse: CustomConsentResponse?
 
-    static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
+    static func getCampaign(_ type: SPCampaignType) -> Campaign {
         Campaign(
             type: type,
             message: .none,
-            userConsent: consent,
             applies: true,
             messageMetaData: MessageMetaData(
                 categoryId: .unknown,
@@ -41,8 +40,8 @@ class SourcePointClientMock: SourcePointProtocol {
                 rejectedAny: false,
                 rejectedLI: false,
                 consentedAll: false,
-                hasConsentData: false,
                 consentedToAny: false,
+                hasConsentData: false,
                 rejectedVendors: [],
                 rejectedCategories: []
             ),

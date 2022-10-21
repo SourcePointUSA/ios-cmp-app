@@ -461,6 +461,7 @@ extension SourcePointClient {
             return
         }
 
+        print("GET_MESSAGES", url.absoluteString)
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
                 try result.decoded() as MessagesResponse
@@ -531,7 +532,7 @@ extension SourcePointClient {
 
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
-                return try result.decoded() as ChoiceAllResponse
+                try result.decoded() as ChoiceAllResponse
             }.mapError {
                 InvalidChoiceAllResponseError(error: $0)
             })

@@ -89,19 +89,19 @@ public typealias SPGDPRPurposeId = String
     /// considered fully consented. Either via legitimate interest or explicit user consent.
     /// Each key/value pair of `"purposeId: Bool`, indicates if that purpose has been consented
     /// either via leg. interest or explicit user consent.
-    public let vendorGrants: SPGDPRVendorGrants
+    public var vendorGrants: SPGDPRVendorGrants
 
     /// The iAB consent string.
-    public let euconsent: String
+    public var euconsent: String
 
     /// A dictionary with all TCFv2 related data
-    public let tcfData: SPJson?
+    public var tcfData: SPJson?
 
     /// That's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
 
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
-    let childPmId: String?
+    var childPmId: String?
 
     /// A list of ids of the categories accepted by the user in all its vendors.
     /// If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.
@@ -122,22 +122,24 @@ public typealias SPGDPRPurposeId = String
     /// Determines if the GDPR legislation applies for this user
     public var applies = false
 
-    var consentStatus = ConsentStatus()
+    var consentStatus: ConsentStatus
 
     var lastMessage: LastMessageData?
 
-    public init(
+    init(
         uuid: String? = nil,
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
         tcfData: SPJson,
-        childPmId: String? = nil
+        childPmId: String? = nil,
+        consentStatus: ConsentStatus = ConsentStatus()
     ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
         self.euconsent = euconsent
         self.tcfData = tcfData
         self.childPmId = childPmId
+        self.consentStatus = consentStatus
     }
 
     init?(from consentStatusResponse: ConsentStatusResponse.Data.GDPR?) {
@@ -180,5 +182,6 @@ public typealias SPGDPRPurposeId = String
         case tcfData = "TCData"
         case vendorGrants = "grants"
         case childPmId
+        case consentStatus
     }
 }

@@ -30,11 +30,13 @@ extension MessageToDisplay {
         self.metadata = metadata
         self.url = url
         self.type = campaign.type
-        switch campaign.userConsent {
-            case .ccpa(let consents): childPmId = consents.childPmId
-            case .gdpr(let consents): childPmId = consents.childPmId
-            default: childPmId = nil
-        }
+        // TODO: add childPMId if possible
+        self.childPmId = nil
+//        switch campaign.userConsent {
+//            case .ccpa(let consents): childPmId = consents.childPmId
+//            case .gdpr(let consents): childPmId = consents.childPmId
+//            default: childPmId = nil
+//        }
     }
 }
 
@@ -72,7 +74,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 shouldUpdateConsentedAll = true
             }
             if self.gdpr?.consentStatus.consentedAll == true, shouldUpdateConsentedAll {
-                self.gdpr?.consentStatus.granularStatus.previousOptInAll = true
+                self.gdpr?.consentStatus.granularStatus?.previousOptInAll = true
                 self.gdpr?.consentStatus.consentedAll = false
             }
         }
@@ -82,7 +84,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     let propertyName: SPPropertyName
     var authId: String?
     let language: SPMessageLanguage
-    let idfaStatus: SPIDFAStatus
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     let campaigns: SPCampaigns
     var pubData: SPPublisherData
 
@@ -213,7 +215,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         authId: String? = nil,
         language: SPMessageLanguage = .BrowserDefault,
         campaigns: SPCampaigns,
-        idfaStatus: SPIDFAStatus = .unknown,
         pubData: SPPublisherData = SPPublisherData(),
         storage: SPLocalStorage = SPUserDefaults(),
         spClient: SourcePointProtocol? = nil
@@ -224,14 +225,16 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.authId = authId
         self.language = language
         self.campaigns = campaigns
-        self.idfaStatus = idfaStatus
         self.pubData = pubData
         self.storage = storage
 
-        self.state = State(
-            gdpr: campaigns.gdpr != nil ? .empty() : nil,
-            ccpa: campaigns.ccpa != nil ? .empty() : nil
-        )
+        self.state = self.storage.spState
+        if campaigns.gdpr != nil, self.state.gdpr == nil {
+            self.state.gdpr = .empty()
+        }
+        if campaigns.ccpa != nil, self.state.ccpa == nil {
+            self.state.ccpa = .empty()
+        }
 
         guard let spClient = spClient else {
             self.spClient = SourcePointClient(
@@ -266,6 +269,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let ccpaMetaData = response.ccpa {
             state.ccpa?.applies = ccpaMetaData.applies
         }
+        storage.spState = state
     }
 
     func metaData(next: @escaping () -> Void) {
@@ -298,6 +302,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.localState = response.localState
         state.gdpr = SPGDPRConsent(from: response.consentStatusData.gdpr)
         state.ccpa = SPCCPAConsent(from: response.consentStatusData.ccpa)
+        storage.spState = state
     }
 
     func consentStatus(next: @escaping () -> Void) {
@@ -334,6 +339,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 state.ccpa?.lastMessage = LastMessageData(from: $0.metadata)
             }
         }
+        // TODO: store consents if any comes in the response
+        storage.spState = state
         return (messages, userData)
     }
 
@@ -373,6 +380,24 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    func handleGetChoices(_ response: ChoiceAllResponse) {
+        if let gdpr = response.gdpr {
+            state.gdpr?.dateCreated = gdpr.dateCreated ?? (state.gdpr?.dateCreated ?? SPDateCreated.now()) // TODO: remove once response.gdpr contains date created
+            state.gdpr?.tcfData = gdpr.tcData
+            state.gdpr?.vendorGrants = gdpr.grants
+            state.gdpr?.euconsent = gdpr.euconsent
+            state.gdpr?.applies = gdpr.applies
+            state.gdpr?.consentStatus = gdpr.consentStatus
+            state.gdpr?.childPmId = gdpr.childPmId
+        }
+        if let ccpa = response.ccpa {
+            state.ccpa?.dateCreated = ccpa.dateCreated
+            state.ccpa?.status = ccpa.status
+            state.ccpa?.applies = ccpa.applies
+        }
+        storage.spState = state
+    }
+
     func getChoiceAll(_ action: SPAction, handler: @escaping (Result<ChoiceAllResponse?, SPError>) -> Void) {
         if action.type == .AcceptAll || action.type == .RejectAll {
             spClient.choiceAll(
@@ -383,59 +408,95 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
                     ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil
                 )
-            ) { result in handler(Result {
-                    try? result.get()
-                }.mapError { _ in
-                    SPError()
-                }) // TODO: map to correct error
+            ) { result in
+                switch result {
+                    case .success(let response):
+                        self.handleGetChoices(response)
+                        handler(Result.success(response))
+                    case .failure(let error):
+                        handler(Result.failure(error))
+                }
             }
         } else {
-            handler(Result {
-                nil
-            }.mapError { _ in
-                SPError()
-            }) // TODO: map to correct error
+            handler(Result.success(nil))
         }
     }
 
-    func postChoice(_ action: SPAction, postPayloadFromGetCall: ChoiceAllResponse.GDPR.PostPayload?, handler: @escaping (Result<String, SPError>) -> Void) {
-        if action.campaignType == .gdpr {
-            spClient.postGDPRAction(
-                actionType: action.type,
-                body: GDPRChoiceBody(
-                    authId: self.authId,
-                    uuid: self.state.gdpr?.uuid,
-                    messageId: String(self.state.gdpr?.lastMessage?.id ?? 0),
-                    consentAllRef: postPayloadFromGetCall?.consentAllRef,
-                    vendorListId: postPayloadFromGetCall?.vendorListId,
-                    pubData: action.publisherData,
-                    pmSaveAndExitVariables: nil,  // TODO: convert pm payload from SPAction to this class
-                    propertyId: self.propertyId,
-                    sampleRate: SourcepointClientCoordinator.sampleRate,
-                    idfaStatus: self.idfaStatus,
-                    granularStatus: postPayloadFromGetCall?.granularStatus
-                )
-            ) { result in
-                print(result)
-            }
-        }
+    func postChoice(
+        _ action: SPAction,
+        postPayloadFromGetCall: ChoiceAllResponse.GDPR.PostPayload?,
+        handler: @escaping (Result<GDPRChoiceResponse, SPError>) -> Void
+    ) {
+        spClient.postGDPRAction(
+            actionType: action.type,
+            body: GDPRChoiceBody(
+                authId: authId,
+                uuid: state.gdpr?.uuid,
+                messageId: String(state.gdpr?.lastMessage?.id ?? 0),
+                consentAllRef: postPayloadFromGetCall?.consentAllRef,
+                vendorListId: postPayloadFromGetCall?.vendorListId,
+                pubData: action.publisherData,
+                pmSaveAndExitVariables: nil,  // TODO: convert pm payload from SPAction to this class
+                propertyId: propertyId,
+                sampleRate: SourcepointClientCoordinator.sampleRate,
+                idfaStatus: idfaStatus,
+                granularStatus: postPayloadFromGetCall?.granularStatus
+            )
+        ) { handler($0) }
+    }
+
+    func postChoice(
+        _ action: SPAction,
+        handler: @escaping (Result<CCPAChoiceResponse, SPError>) -> Void
+    ) {
+        spClient.postCCPAAction(
+            actionType: action.type,
+            body: .init(
+                authId: authId,
+                uuid: state.ccpa?.uuid,
+                messageId: String(state.ccpa?.lastMessage?.id ?? 0),
+                pubData: action.publisherData,
+                pmSaveAndExitVariables: nil, // TODO: convert pm payload from SPAction to this
+                propertyId: propertyId,
+                sampleRate: SourcepointClientCoordinator.sampleRate
+            )
+        ) { handler($0) }
     }
 
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void) {
         getChoiceAll(action) { getResult in
             switch getResult {
                 case .success(let getResponse):
-                    self.postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
-                        switch postResult {
-                            case .success(let response):
-                                print(response)
-                            case .failure(let error):
-                                // flag to sync again later
-                                print(error)
+                    if action.campaignType == .gdpr {
+                        self.postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
+                            switch postResult {
+                                case .success(let response):
+                                    self.state.gdpr?.uuid = response.uuid
+                                    self.state.gdpr?.dateCreated = response.dateCreated
+                                    self.state.gdpr?.tcfData = response.TCData
+                                    self.storage.spState = self.state
+                                    handler(Result.success(self.userData))
+                                case .failure(let error):
+                                    // flag to sync again later
+                                    handler(Result.failure(error))
+                            }
+                        }
+                    } else if action.campaignType == .ccpa {
+                        self.postChoice(action) { postResult in
+                            switch postResult {
+                                case .success(let response):
+                                    self.state.ccpa?.uuid = response.uuid
+                                    self.state.ccpa?.dateCreated = response.dateCreated
+                                    self.storage.spState = self.state
+                                    handler(Result.success(self.userData))
+                                case .failure(let error):
+                                    // flag to sync again later
+                                    handler(Result.failure(error))
+                            }
                         }
                     }
                 case .failure(let error):
-                    print(error)
+                    handler(Result.failure(error))
             }
         }
     }
