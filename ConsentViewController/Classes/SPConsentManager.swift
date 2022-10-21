@@ -222,8 +222,8 @@ import UIKit
                         messageId: nil,
                         pubData: action.publisherData,
                         pmSaveAndExitVariables: pmPayload,
-                        sampleRate: 1,
-                        propertyId: propertyId
+                        propertyId: propertyId,
+                        sampleRate: 1
                     )
                 ) { [weak self] result in
                     self?.responsesToReceive -= 1
@@ -268,12 +268,12 @@ import UIKit
                 body: GDPRChoiceBody(
                     authId: authId,
                     uuid: gdprUUID,
-                    propertyId: String(propertyId),
                     messageId: nil,
                     consentAllRef: nil,
                     vendorListId: nil,
                     pubData: [:],
                     pmSaveAndExitVariables: pmPayload,
+                    propertyId: propertyId,
                     sampleRate: 1,
                     idfaStatus: idfaStatus,
                     granularStatus: .init()

@@ -17,7 +17,8 @@ struct ConsentStatus: Codable, Equatable {
         var previousOptInAll, defaultConsent: Bool?
     }
 
-    var granularStatus: GranularStatus?
-    var rejectedAny, rejectedLI, consentedAll, hasConsentData, consentedToAny, rejectedAll, vendorListAdditions, legalBasisChanges: Bool?
+    var granularStatus = GranularStatus()
+    var rejectedAny, rejectedLI, consentedAll, consentedToAny, rejectedAll, vendorListAdditions, legalBasisChanges: Bool?
+    var hasConsentData = false
     var rejectedVendors, rejectedCategories: [String?]?
 }

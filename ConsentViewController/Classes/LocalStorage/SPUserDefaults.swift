@@ -88,7 +88,7 @@ class SPUserDefaults: SPLocalStorage {
     ].merging(tcfData ?? [:]) { item, _ in item }}
 
     func clear() {
-        localState = SPJson()
+        localState = nil
         tcfData = [:]
         usPrivacyString = ""
         userData = SPUserData()

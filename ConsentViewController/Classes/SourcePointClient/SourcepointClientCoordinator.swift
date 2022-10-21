@@ -72,7 +72,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 shouldUpdateConsentedAll = true
             }
             if self.gdpr?.consentStatus.consentedAll == true, shouldUpdateConsentedAll {
-                self.gdpr?.consentStatus.granularStatus?.previousOptInAll = true
+                self.gdpr?.consentStatus.granularStatus.previousOptInAll = true
                 self.gdpr?.consentStatus.consentedAll = false
             }
         }
@@ -94,11 +94,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     /// Checks if this user has data from the previous version of the SDK (v6).
     /// This check should only done once so we remove the data stored by the older SDK and return false after that.
     var migratingUser: Bool {
-        if storage.localState != nil {
+        if storage.localState == nil || storage.localState == .null {
+            return false
+        } else {
             storage.localState = nil
             return true
         }
-        return false
     }
 
     var shouldCallConsentStatus: Bool {
@@ -404,12 +405,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 body: GDPRChoiceBody(
                     authId: self.authId,
                     uuid: self.state.gdpr?.uuid,
-                    propertyId: String(self.propertyId),
                     messageId: String(self.state.gdpr?.lastMessage?.id ?? 0),
                     consentAllRef: postPayloadFromGetCall?.consentAllRef,
                     vendorListId: postPayloadFromGetCall?.vendorListId,
                     pubData: action.publisherData,
                     pmSaveAndExitVariables: nil,  // TODO: convert pm payload from SPAction to this class
+                    propertyId: self.propertyId,
                     sampleRate: SourcepointClientCoordinator.sampleRate,
                     idfaStatus: self.idfaStatus,
                     granularStatus: postPayloadFromGetCall?.granularStatus

@@ -14,11 +14,11 @@ struct GDPRChoiceBody: Encodable, Equatable {
         let lan: SPMessageLanguage
     }
 
-    let authId, uuid, propertyId, messageId, consentAllRef, vendorListId: String?
+    let authId, uuid, messageId, consentAllRef, vendorListId: String?
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: PMSaveAndExitPayload?
     let sendPVData = true // TODO: ask Sid/Dan what is this
-    let sampleRate: Int
+    let propertyId, sampleRate: Int
     let idfaStatus: SPIDFAStatus?
     let granularStatus: ConsentStatus.GranularStatus?
     let includeData = [
@@ -37,8 +37,7 @@ struct CCPAChoiceBody: Encodable, Equatable {
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: PMSaveAndExitPayload?
     let sendPVData = true // TODO: ask Sid/Dan what is this
-    let sampleRate: Int
-    let propertyId: Int // TODO: ask Sid/Dan if this can't be a String (like gdpr choice request)
+    let propertyId, sampleRate: Int
     let includeData = [
         "localState": ["type": "RecordString"]
     ]
