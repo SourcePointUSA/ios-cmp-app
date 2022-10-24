@@ -112,12 +112,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     )) {
                             switch $0 {
                             case .success(let response):
-                                let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsent
-                                let ccpaConsents = response.campaigns.first { $0.type == .ccpa }?.userConsent
                                 expect(response).to(beAnInstanceOf(MessagesResponse.self))
                                 expect(response.campaigns.count).to(equal(2))
-                                expect(gdprConsents).notTo(beNil())
-                                expect(ccpaConsents).notTo(beNil())
                             case .failure(let error):
                                 fail(error.failureReason)
                             }

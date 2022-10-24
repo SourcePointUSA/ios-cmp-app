@@ -28,6 +28,7 @@ class SPGDPRConsentsSpec: QuickSpec {
                     "euconsent": "ABCD",
                     "grants": {},
                     "childPmId": null,
+                    "consentStatus": {}
                 }
                 """.data(using: .utf8) }
             let consent = try gdprCampaign.decoded() as SPGDPRConsent
