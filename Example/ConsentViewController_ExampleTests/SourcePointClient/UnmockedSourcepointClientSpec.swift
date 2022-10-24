@@ -22,7 +22,6 @@ class UnmockedSourcepointClientSpec: QuickSpec {
 
         var client: SourcePointClient!
 
-
         beforeSuite { AsyncDefaults.timeout = .seconds(20) }
         afterSuite { AsyncDefaults.timeout = .seconds(1) }
 
@@ -113,7 +112,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     )) {
                             switch $0 {
                             case .success(let response):
-                                let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsen
+                                let gdprConsents = response.campaigns.first { $0.type == .gdpr }?.userConsent
                                 let ccpaConsents = response.campaigns.first { $0.type == .ccpa }?.userConsent
                                 expect(response).to(beAnInstanceOf(MessagesResponse.self))
                                 expect(response.campaigns.count).to(equal(2))

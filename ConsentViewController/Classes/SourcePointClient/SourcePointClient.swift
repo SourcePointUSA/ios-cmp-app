@@ -461,7 +461,6 @@ extension SourcePointClient {
             return
         }
 
-        print("GET_MESSAGES", url.absoluteString)
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
                 try result.decoded() as MessagesResponse

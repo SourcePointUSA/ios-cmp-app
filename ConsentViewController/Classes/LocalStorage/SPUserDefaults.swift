@@ -94,5 +94,6 @@ class SPUserDefaults: SPLocalStorage {
         userData = SPUserData()
         gdprChildPmId = nil
         ccpaChildPmId = nil
+        spState = .init()
     }
 }
