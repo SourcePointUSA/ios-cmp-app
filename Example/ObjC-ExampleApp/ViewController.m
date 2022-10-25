@@ -11,6 +11,7 @@
 
 @interface ViewController ()<SPDelegate> {
     SPConsentManager *consentManager;
+    __weak IBOutlet UILabel *idfaValueLabel;
 }
 @end
 
@@ -18,6 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self updateIDFAStatusLabel];
 
     SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
@@ -40,6 +43,10 @@
     [consentManager loadMessageForAuthId: NULL publisherData:NULL];
 }
 
+- (void)updateIDFAStatusLabel {
+    idfaValueLabel.text = [SPIDFAStatusBridge currentString];
+}
+
 - (void)onSPUIReady:(SPMessageViewController * _Nonnull)controller {
     [self presentViewController:controller animated:true completion:NULL];
 }
@@ -49,6 +56,7 @@
 }
 
 - (void)onSPUIFinished:(SPMessageViewController * _Nonnull)controller {
+    [self updateIDFAStatusLabel];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
