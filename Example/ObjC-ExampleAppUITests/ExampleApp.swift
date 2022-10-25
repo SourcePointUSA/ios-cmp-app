@@ -14,16 +14,19 @@ import Nimble
 protocol App {
     func launch()
     func terminate()
-    func relaunch(clean: Bool)
+    func relaunch(clean: Bool, resetAtt: Bool)
 }
 
 extension XCUIApplication: App {
-    func relaunch(clean: Bool = false) {
+    func relaunch(clean: Bool = false, resetAtt: Bool = false) {
         UserDefaults.standard.synchronize()
         self.terminate()
+        if #available(iOS 15.0, *), resetAtt {
+            resetAuthorizationStatus(for: .userTracking)
+        }
         clean ?
-            launchArguments.append("-cleanAppsData") :
-            launchArguments.removeAll { $0 == "-cleanAppsData" }
+        launchArguments.append("-cleanAppsData") :
+        launchArguments.removeAll { $0 == "-cleanAppsData" }
         launch()
     }
 }
@@ -35,27 +38,39 @@ extension XCUIElementQuery {
 }
 
 class ExampleApp: XCUIApplication {
-    var attNativePrompt: XCUIElement {
-        alerts.first(withLabel: "track your activity")
+    class ATTPrePrompt: XCUIApplication {
+        private let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+
+        private var container: XCUIElement {
+            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'ATT pre-prompt'")).firstMatch
+        }
+
+        var okButton: XCUIElement {
+            container.buttons["Bring it on"].firstMatch
+        }
+
+        private var attAlert: XCUIElement {
+            system.alerts.containing(NSPredicate(format: "label CONTAINS[cd] 'track you'")).firstMatch
+        }
+
+        var attAlertAllowButton: XCUIElement {
+            attAlert.buttons["Allow"].firstMatch
+        }
     }
 
-    var attNativePromptAllowButton: XCUIElement {
-        attNativePrompt.buttons.first(withLabel: "Allow")
+    let attPrePrompt = ATTPrePrompt()
+
+    var shouldRunAttScenario: Bool {
+        /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
+        /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
+        staticTexts["unknown"].exists
     }
 
     var consentMessage: XCUIElement {
         webViews.first(withLabel: "GDPR Message")
     }
 
-    var attPrePromptMessage: XCUIElement {
-        webViews.first(withLabel: "ATT pre-prompt")
-    }
-
     var acceptAllButton: XCUIElement {
         consentMessage.buttons.first(withLabel: "Accept")
-    }
-
-    var acceptATTButton: XCUIElement {
-        attPrePromptMessage.buttons.first(withLabel: "Bring it on")
     }
 }

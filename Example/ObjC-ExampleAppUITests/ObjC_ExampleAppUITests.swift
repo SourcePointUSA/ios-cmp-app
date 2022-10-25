@@ -31,14 +31,27 @@ class ObjC_ExampleAppUITests: QuickSpec {
             self.app.relaunch(clean: true)
         }
 
-        it("Accept all through message") {
-            if #available(iOS 14.0, *) {
-                expect(self.app.attPrePromptMessage).toEventually(showUp())
-                if self.app.attPrePromptMessage.exists {
-                    self.app.acceptATTButton.tap()
+        func acceptAtt() {
+            expect(self.app.attPrePrompt.okButton).toEventually(showUp())
+            app.attPrePrompt.okButton.tap()
+            expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
+            app.attPrePrompt.attAlertAllowButton.tap()
+        }
+
+        // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
+        // the ATT expectations run only once per test suite.
+        func runAttScenario() {
+            if #available(iOS 15.0, *) {
+                acceptAtt()
+            } else if app.shouldRunAttScenario {
+                if #available(iOS 14, *) {
+                    acceptAtt()
                 }
             }
+        }
 
+        it("Accept all through message") {
+            runAttScenario()
             expect(self.app.consentMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
