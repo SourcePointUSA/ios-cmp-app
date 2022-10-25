@@ -28,7 +28,7 @@ class ObjC_ExampleAppUITests: QuickSpec {
         }
 
         beforeEach {
-            self.app.relaunch(clean: true)
+            self.app.relaunch(clean: true, resetAtt: true)
         }
 
         func acceptAtt() {
@@ -55,6 +55,8 @@ class ObjC_ExampleAppUITests: QuickSpec {
             expect(self.app.consentMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
             expect(self.app.consentMessage).to(disappear())
+            self.app.relaunch()
+            expect(self.app.sdkStatus).toEventually(containText("Finished"))
         }
     }
 }

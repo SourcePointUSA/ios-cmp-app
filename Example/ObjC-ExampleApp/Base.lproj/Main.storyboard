@@ -17,34 +17,67 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Re3-Mn-76o">
-                                <rect key="frame" x="0.0" y="55.000000000000007" width="390" height="20.333333333333336"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fbe-aV-qFm" userLabel="Container StackView">
+                                <rect key="frame" x="0.0" y="47" width="390" height="128"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDFA: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ud4-zi-Bls" userLabel="IDFAStaticLabel">
-                                        <rect key="frame" x="0.0" y="0.0" width="191" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDN-A0-rd8" userLabel="IDFAValueLabel">
-                                        <rect key="frame" x="199" y="0.0" width="191" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Re3-Mn-76o" userLabel="SDKStatus StackView">
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ud4-zi-Bls" userLabel="SDKStatusStaticLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="191" height="60"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDN-A0-rd8" userLabel="SDKStatusValueLabel">
+                                                <rect key="frame" x="199" y="0.0" width="191" height="60"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="f5S-vn-50Y"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="u33-28-XX1" userLabel="IDFA StackView">
+                                        <rect key="frame" x="0.0" y="68" width="390" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDFA: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Bf-2w-Bk6" userLabel="IDFAStaticLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="191" height="60"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtL-Jg-5PM" userLabel="IDFAValueLabel">
+                                                <rect key="frame" x="199" y="0.0" width="191" height="60"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="On2-Sl-4c9"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="u33-28-XX1" firstAttribute="width" secondItem="fbe-aV-qFm" secondAttribute="width" id="Qkw-jS-suQ"/>
+                                    <constraint firstItem="Re3-Mn-76o" firstAttribute="width" secondItem="fbe-aV-qFm" secondAttribute="width" id="h2n-0E-ddc"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Re3-Mn-76o" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="BN9-HD-Rza"/>
-                            <constraint firstItem="Re3-Mn-76o" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CcX-Je-bkt"/>
-                            <constraint firstItem="Re3-Mn-76o" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="mcc-ah-p0K"/>
+                            <constraint firstItem="fbe-aV-qFm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9J9-u1-8Xl"/>
+                            <constraint firstItem="fbe-aV-qFm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Oiv-9L-JLZ"/>
+                            <constraint firstItem="fbe-aV-qFm" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="zYH-R4-QXs"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="idfaValueLabel" destination="UDN-A0-rd8" id="vml-Pt-Otp"/>
+                        <outlet property="idfaValueLabel" destination="rtL-Jg-5PM" id="AU1-X3-OhJ"/>
+                        <outlet property="sdkStatusLabel" destination="UDN-A0-rd8" id="P7r-gp-p4E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -73,4 +73,8 @@ class ExampleApp: XCUIApplication {
     var acceptAllButton: XCUIElement {
         consentMessage.buttons.first(withLabel: "Accept")
     }
+
+    var sdkStatus: XCUIElement {
+        staticTexts["sdkStatusLabel"]
+    }
 }

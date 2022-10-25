@@ -12,6 +12,15 @@ import Quick
 
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
 /// a certain amount of time. 20 seconds by default
+public func containText(_ text: String) -> Predicate<XCUIElement> {
+    return Predicate.simple("contain text") { actualExpression in
+        guard let actual = try actualExpression.evaluate() else { return .fail }
+        return PredicateStatus(bool: actual.label.contains(text))
+    }
+}
+
+/// A Nimble matcher that succeeds when an XCUIElement shows up after
+/// a certain amount of time. 20 seconds by default
 public func showUp() -> Predicate<XCUIElement> {
     return Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
