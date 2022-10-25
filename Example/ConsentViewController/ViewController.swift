@@ -84,8 +84,6 @@ extension ViewController: SPDelegate {
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
         print(action)
-        action.publisherData = ["foo": "action"]
-        print(action)
     }
 
     func onSPUIFinished(_ controller: UIViewController) {
