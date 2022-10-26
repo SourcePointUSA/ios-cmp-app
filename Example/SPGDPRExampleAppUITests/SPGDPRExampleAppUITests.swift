@@ -53,7 +53,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = ExampleApp()
-            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.timeout = .seconds(30)
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
@@ -72,7 +72,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.acceptCCPAMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             self.app.relaunch()
-            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
         it("Accept all through 2nd layer") {
@@ -82,7 +82,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.acceptCCPAMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             self.app.relaunch()
-            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
         it("Dismissing 2nd layer returns to first layer message") {
