@@ -1,4 +1,4 @@
-![Swift](https://github.com/SourcePointUSA/ios-cmp-app/workflows/Swift/badge.svg?branch=develop)
+[![Test](https://github.com/SourcePointUSA/ios-cmp-app/actions/workflows/swift.yml/badge.svg)](https://github.com/SourcePointUSA/ios-cmp-app/actions/workflows/swift.yml)
 
 ## How to install
 
