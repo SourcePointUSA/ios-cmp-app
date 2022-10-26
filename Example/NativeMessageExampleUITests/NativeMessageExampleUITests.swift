@@ -17,7 +17,7 @@ class NativeMessageExampleUITests: QuickSpec {
     func acceptAtt() {
         expect(self.app.attPrePrompt.okButton).toEventually(showUp())
         app.attPrePrompt.okButton.tap()
-        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
+        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
         app.attPrePrompt.attAlertAllowButton.tap()
     }
 
@@ -78,23 +78,25 @@ class NativeMessageExampleUITests: QuickSpec {
             self.acceptCCPAMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             self.app.relaunch()
-            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
-        it("Accept all through 2nd layer") {
+        it("Accept all GDPR through 2nd layer") {
             self.runAttScenario()
-            
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+            self.acceptCCPAMessage()
             self.app.relaunch()
-            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
-            
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
+        }
+
+        it("Accept all CCPA through 2nd layer") {
+            self.runAttScenario()
+            self.acceptGDPRMessage()
             self.showCCPAPMViaFirstLayerMessage()
             self.app.ccpaPM.acceptAllButton.tap()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())  //somehow ccpas' pm is the same as gdprs'
             self.app.relaunch()
-            expect(self.app.ccpaMessage.messageTitle).notTo(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
         it("Dismissing 2nd layer returns to first layer message") {
