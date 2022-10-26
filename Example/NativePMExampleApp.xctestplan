@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "348F028F-1CFB-49FD-9C91-A07548DCB3DC",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "environmentVariableEntries" : [
+      {
+        "enabled" : false,
+        "key" : "CG_CONTEXT_SHOW_BACKTRACE",
+        "value" : "YES"
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ConsentViewController.xcodeproj",
+      "identifier" : "822BF2C22657E29800177B0E",
+      "name" : "NativePMExampleApp"
+    },
+    "testRepetitionMode" : "retryOnFailure"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ConsentViewController.xcodeproj",
+        "identifier" : "822BF2E02657E29900177B0E",
+        "name" : "NativePMExampleAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

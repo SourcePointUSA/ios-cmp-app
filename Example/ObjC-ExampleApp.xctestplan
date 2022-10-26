@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "7A8BD95E-84A6-4468-96F7-FB25CFAEAEAE",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ConsentViewController.xcodeproj",
+      "identifier" : "6D8046E925D1A87E0005002B",
+      "name" : "ObjC-ExampleApp"
+    },
+    "testRepetitionMode" : "retryOnFailure"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ConsentViewController.xcodeproj",
+        "identifier" : "6D80473125D1AC3E0005002B",
+        "name" : "ObjC-ExampleAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

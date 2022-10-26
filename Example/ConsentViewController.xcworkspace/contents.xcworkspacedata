@@ -7,4 +7,16 @@
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:ConsentViewController_Example.xctestplan">
+   </FileRef>
+   <FileRef
+      location = "group:ObjC-ExampleApp.xctestplan">
+   </FileRef>
+   <FileRef
+      location = "group:NativePMExampleApp.xctestplan">
+   </FileRef>
+   <FileRef
+      location = "group:NativeMessageExample.xctestplan">
+   </FileRef>
 </Workspace>
