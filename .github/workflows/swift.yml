@@ -35,7 +35,7 @@ jobs:
         - name: Select Xcode version 14.0.1
           run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
         - name: ObjC-ExampleApp testing -> iPhone 14 Pro (iOS 16.0)
-          run: xcodebuild test -scheme ObjC-ExampleApp -workspace ./Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
+          run: xcodebuild test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload ObjCExampleApp tests results
@@ -48,7 +48,7 @@ jobs:
         - name: Select Xcode version 14.0.1
           run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
         - name: NativeMessageExample testing -> iPhone 14 Pro (iOS 16.0)
-          run: xcodebuild test -scheme NativeMessageExample -workspace ./Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
+          run: xcodebuild test -scheme NativeMessageExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload NativeMessageExample tests results
@@ -61,7 +61,7 @@ jobs:
         - name: Select Xcode version 14.0.1
           run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
         - name: ConsentViewController testing -> iPhone 14 Pro (iOS 16.0)
-          run: xcodebuild test -scheme ConsentViewController_Example -workspace ./Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
+          run: xcodebuild test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload ConsentViewController tests results
@@ -74,7 +74,7 @@ jobs:
         - name: Select Xcode version 14.0.1
           run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
         - name: ConsentViewController testing -> iPhone 14 Pro (iOS 16.0)
-          run: xcodebuild test -scheme NativePMExampleApp -workspace ./Example/ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1'
+          run: xcodebuild test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1'
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload NativePMExampleApp tests results
@@ -87,7 +87,7 @@ jobs:
   #       - name: Select Xcode version 14.0.1
   #         run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
   #       - name: SourcePointMetaApp testing -> iPhone 14 Pro (iOS 16.0)
-  #         run: xcodebuild test -scheme SourcePointMetaApp -workspace ./Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
+  #         run: xcodebuild test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0'
   #       - uses: actions/upload-artifact@v2
   #         if: failure()
   #         name: Upload SourcePointMetaApp tests results
