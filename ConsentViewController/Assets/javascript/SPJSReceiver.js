@@ -106,7 +106,8 @@ var handleMessageOrPMEvent = function (SDK) {
                 fromPM: isFromPM(data),
                 actionType: data.actionType,
                 payload: data.payload || data.actions || {},
-                consentLanguage: data.consentLanguage
+                consentLanguage: data.consentLanguage,
+                customAction: data.customAction
             });
         } catch (error) {
             SDK.onError(error);
