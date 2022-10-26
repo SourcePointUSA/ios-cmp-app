@@ -85,7 +85,7 @@ jobs:
           name: Upload ConsentViewController tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
-  ConsentViewController:
+  NativePMExampleApp:
       runs-on: macos-12
       steps:
         - uses: actions/checkout@v2
@@ -101,7 +101,7 @@ jobs:
             command: xcodebuild clean test -scheme NativePMExampleApp -workspace ./Example/ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
-          name: Upload ConsentViewController tests results
+          name: Upload NativePMExampleApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult 
   # MetaApp:
