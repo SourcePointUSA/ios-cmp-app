@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "DC117011-A8B1-443C-9C30-DA902E683350",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "maximumTestRepetitions" : 10,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ConsentViewController.xcodeproj",
+      "identifier" : "82D8FEDB23DC753400F28D74",
+      "name" : "NativeMessageExample"
+    },
+    "testRepetitionMode" : "retryOnFailure"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ConsentViewController.xcodeproj",
+        "identifier" : "6D56EB7B24C8850C009F33D9",
+        "name" : "NativeMessageExampleUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,5 +1,6 @@
 use_frameworks!
 platform :ios, '10.0'
+install! 'cocoapods', :share_schemes_for_development_pods => true
 
 target 'AuthExample' do
   pod 'ConsentViewController', :path => '../'

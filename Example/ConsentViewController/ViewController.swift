@@ -10,10 +10,13 @@ import UIKit
 import ConsentViewController
 
 class ViewController: UIViewController {
+    var sdkStatus: SDKStatus = .notStarted
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    var myVendorAccepted: VendorStatus = .Unknown
     let myVendorId = "5ff4d000a228633ac048be41"
     let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
 
+    @IBOutlet weak var sdkStatusLabel: UILabel!
     @IBOutlet weak var idfaStatusLabel: UILabel!
     @IBOutlet weak var myVendorAcceptedLabel: UILabel!
     @IBOutlet weak var acceptMyVendorButton: UIButton!
@@ -27,6 +30,8 @@ class ViewController: UIViewController {
 
     @IBAction func onClearConsentTap(_ sender: Any) {
         SPConsentManager.clearAllData()
+        myVendorAccepted = .Unknown
+        updateUI()
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
@@ -42,8 +47,8 @@ class ViewController: UIViewController {
             vendors: [myVendorId],
             categories: myPurposesId,
             legIntCategories: []) { [weak self] consents in
-            let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted ?? false
-            self?.updateMyVendorUI(vendorAccepted)
+                self?.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self?.myVendorId ?? ""]?.granted)
+                self?.updateUI()
         }
     }
 
@@ -52,8 +57,8 @@ class ViewController: UIViewController {
             vendors: [myVendorId],
             categories: myPurposesId,
             legIntCategories: []) { [weak self] consents in
-                let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted ?? false
-                self?.updateMyVendorUI(vendorAccepted)
+                self?.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self?.myVendorId ?? ""]?.granted)
+                self?.updateUI()
         }
     }
 
@@ -70,8 +75,10 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateIDFAStatusLabel()
+        sdkStatus = .running
+        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": "load message"])
+        updateUI()
     }
 }
 
@@ -87,28 +94,40 @@ extension ViewController: SPDelegate {
     }
 
     func onSPUIFinished(_ controller: UIViewController) {
-        updateIDFAStatusLabel()
+        updateUI()
         dismiss(animated: true)
     }
 
     func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", userData)
-        let vendorAccepted = userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted ?? false
-        updateMyVendorUI(vendorAccepted)
-        updatePMButtons(ccpaApplies: consentManager.ccpaApplies, gdprApplies: consentManager.gdprApplies)
+        myVendorAccepted = VendorStatus(
+            fromBool: userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted
+        )
+        updateUI()
     }
 
     func onSPFinished(userData: SPUserData) {
         print("SDK DONE")
+        sdkStatus = .finished
+        updateUI()
     }
 
     func onError(error: SPError) {
         print("Something went wrong: ", error)
+        sdkStatus = .errored
+        updateUI()
     }
 }
 
 // MARK: - UI methods
 extension ViewController {
+    func updateUI() {
+        updateIDFAStatusLabel()
+        updateMyVendorUI()
+        updatePMButtons(ccpaApplies: consentManager.ccpaApplies, gdprApplies: consentManager.gdprApplies)
+        updateSDKStatusLabel()
+    }
+
     func updateIDFAStatusLabel() {
         idfaStatusLabel.text = idfaStatus.description
         switch idfaStatus {
@@ -120,15 +139,54 @@ extension ViewController {
         }
     }
 
-    func updateMyVendorUI(_ accepted: Bool) {
-        myVendorAcceptedLabel.text = accepted ? "accepted" : "rejected"
-        myVendorAcceptedLabel.textColor = accepted ? .systemGreen : .systemRed
-        acceptMyVendorButton.isEnabled = !accepted
-        deleteMyVendorButton.isEnabled = accepted
+    func updateMyVendorUI() {
+        myVendorAcceptedLabel.text = myVendorAccepted.rawValue
+        switch myVendorAccepted {
+            case .Unknown:
+                myVendorAcceptedLabel.textColor = .systemGray
+                acceptMyVendorButton.isEnabled = false
+                deleteMyVendorButton.isEnabled = false
+            case .Accepted:
+                myVendorAcceptedLabel.textColor = .systemGreen
+                acceptMyVendorButton.isEnabled = false
+                deleteMyVendorButton.isEnabled = true
+            case .Rejected:
+                myVendorAcceptedLabel.textColor = .systemRed
+                acceptMyVendorButton.isEnabled = true
+                deleteMyVendorButton.isEnabled = false
+        }
     }
 
     func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool) {
         gdprPMButton.isEnabled = gdprApplies
         ccpaPMButton.isEnabled = ccpaApplies
     }
+
+    func updateSDKStatusLabel() {
+        sdkStatusLabel.text = sdkStatus.rawValue
+    }
 }
+
+enum VendorStatus: String {
+    case Accepted
+    case Rejected
+    case Unknown
+
+    init(fromBool bool: Bool?) {
+        if bool == nil {
+            self = .Unknown
+        } else if bool == false {
+            self = .Rejected
+        } else {
+            self = .Accepted
+        }
+    }
+}
+
+enum SDKStatus: String {
+    case notStarted = "Not Started"
+    case running = "Running"
+    case finished = "Finished"
+    case errored = "Errored"
+}
+
