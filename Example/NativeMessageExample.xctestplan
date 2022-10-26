@@ -10,6 +10,7 @@
   ],
   "defaultOptions" : {
     "codeCoverage" : false,
+    "maximumTestRepetitions" : 10,
     "targetForVariableExpansion" : {
       "containerPath" : "container:ConsentViewController.xcodeproj",
       "identifier" : "82D8FEDB23DC753400F28D74",

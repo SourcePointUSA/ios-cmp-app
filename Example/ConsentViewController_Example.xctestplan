@@ -29,6 +29,7 @@
         "value" : "NO"
       }
     ],
+    "maximumTestRepetitions" : 10,
     "targetForVariableExpansion" : {
       "containerPath" : "container:ConsentViewController.xcodeproj",
       "identifier" : "607FACCF1AFB9204008FA782",
