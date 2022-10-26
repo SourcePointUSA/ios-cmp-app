@@ -80,18 +80,16 @@ jobs:
           name: Upload NativePMExampleApp tests results
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult           
-  meta-app-tests:
-      runs-on: macos-12
-      steps:
-        - uses: actions/checkout@v2
-        - name: Select Xcode version 14.0.1
-          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
-        - name: SourcePointMetaApp testing -> iPhone 14 Pro (iOS 16.0)
-          run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
-        - uses: actions/upload-artifact@v2
-          if: failure()
-          name: Upload MetaApp tests results
-          with:
-            path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
-
-
+  # meta-app-tests:
+  #     runs-on: macos-12
+  #     steps:
+  #       - uses: actions/checkout@v2
+  #       - name: Select Xcode version 14.0.1
+  #         run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
+  #       - name: SourcePointMetaApp testing -> iPhone 14 Pro (iOS 16.0)
+  #         run: xcodebuild clean test -scheme SourcePointMetaApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+  #       - uses: actions/upload-artifact@v2
+  #         if: failure()
+  #         name: Upload MetaApp tests results
+  #         with:
+  #           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
