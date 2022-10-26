@@ -14,6 +14,7 @@ import SafariServices
 
 class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 
+    @IBOutlet weak var sdkStatusLabel: UILabel!
     @IBOutlet weak var gdprConsentUUIDLabel: UILabel!
     @IBOutlet weak var ccpaConsentUUIDLabel: UILabel!
     @IBOutlet weak var euConsentLabel: UILabel!
@@ -27,6 +28,11 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
     var propertyManagedObjectID: NSManagedObjectID?
     var userData: SPUserData?
     var isReset = false
+    var sdkStatus: SDKStatus = .notStarted {
+        didSet {
+            updateSdkStatusLabel()
+        }
+    }
 
     // MARK: - Initializer
     let addpropertyViewModel: AddPropertyViewModel = AddPropertyViewModel()
@@ -48,11 +54,13 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         consentTableView.tableFooterView = UIView(frame: .zero)
         navigationItem.hidesBackButton = true
         navigationSetup()
         setTableViewHidden()
-        setconsentUUId()
+        setconsentUUID()
+        updateSdkStatusLabel()
 
         if let _propertyManagedObjectID = propertyManagedObjectID {
             showIndicator()
@@ -95,11 +103,10 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setconsentUUId()
+        setconsentUUID()
     }
 
     func navigationSetup() {
-
         let backIcon = UIButton(frame: CGRect.zero)
         backIcon.setImage(UIImage(named: "Back"), for: UIControl.State())
         backIcon.addTarget(self, action: #selector(back), for: UIControl.Event.touchUpInside)
@@ -112,13 +119,17 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
         _ = navigationController?.popToRootViewController(animated: false)
     }
 
+    func updateSdkStatusLabel() {
+        sdkStatusLabel.text = sdkStatus.rawValue
+    }
+
     func setTableViewHidden() {
         let isConsentsPresent = userData?.gdpr?.consents?.vendorGrants.count ?? 0 > 0 || userData?.ccpa?.consents?.rejectedCategories.count ?? 0 > 0 || userData?.ccpa?.consents?.rejectedVendors.count ?? 0 > 0
         consentTableView.isHidden = !isConsentsPresent
         noDataLabel.isHidden = isConsentsPresent
     }
 
-    func setconsentUUId() {
+    func setconsentUUID() {
         if let gdprUUID = userData?.gdpr?.consents?.uuid {
             gdprConsentUUIDLabel.text = gdprUUID
             euConsentLabel.text = userData?.gdpr?.consents?.euconsent
@@ -169,9 +180,11 @@ class ConsentDetailsViewController: BaseViewController, WKNavigationDelegate {
     func loadConsentManager() {
         validateProperty()
         consentManager?.loadMessage(forAuthId: propertyDetails?.authId)
+        sdkStatus = .running
     }
 
     func onError(error: SPError) {
+        sdkStatus = .errored
         let okHandler = { [weak self] in
             self?.hideIndicator()
             self?.dismiss(animated: false, completion: nil)
@@ -239,6 +252,10 @@ extension ConsentDetailsViewController: SPDelegate {
         handleMultipleMessages(userData: userData)
     }
 
+    func onSPFinished(userData: SPUserData) {
+        sdkStatus = .finished
+    }
+
     func handleMultipleMessages(userData: SPUserData) {
         if isReset {
             if let ccpaApplies = consentManager?.ccpaApplies, let gdprApplies = consentManager?.gdprApplies {
@@ -258,7 +275,7 @@ extension ConsentDetailsViewController: SPDelegate {
     }
 
     func updateConsentTableview() {
-        setconsentUUId()
+        setconsentUUID()
         consentTableView.reloadData()
     }
 
@@ -393,3 +410,9 @@ extension ConsentDetailsViewController: UIGestureRecognizerDelegate {
     }
 }
 
+enum SDKStatus: String {
+    case notStarted = "Not Started"
+    case running = "Running"
+    case finished = "Finished"
+    case errored = "Errored"
+}

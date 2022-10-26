@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hcy-kf-t7M">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hcy-kf-t7M">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -171,7 +171,7 @@
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignTableViewCell" rowHeight="350" id="5FT-PC-bgJ" customClass="CampaignTableViewCell" customModule="Unified_MetaApp" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="24.5" width="335" height="350"/>
+                                                        <rect key="frame" x="0.0" y="50" width="335" height="350"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5FT-PC-bgJ" id="hiM-p2-dcZ">
                                                             <rect key="frame" x="0.0" y="0.0" width="335" height="350"/>
@@ -413,7 +413,7 @@
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CampaignListCell" rowHeight="220" id="P4G-ju-zL2" customClass="CampaignListCell" customModule="Unified_MetaApp" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="24.5" width="375" height="220"/>
+                                                                <rect key="frame" x="0.0" y="50" width="375" height="220"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P4G-ju-zL2" id="ea8-m7-aEF">
                                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
@@ -610,179 +610,208 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDPR UUID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBP-Yu-YQL" userLabel="GDPRUUID">
-                                <rect key="frame" x="15" y="119" width="100" height="18"/>
-                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="bjz-TP-HQ5"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" name="customeColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data available" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJU-7s-ZbU" userLabel="GDPRUUIDString">
-                                <rect key="frame" x="120" y="108" width="284" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="vmw-rd-mxb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CCPA UUID :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jm1-th-YoO" userLabel="CCPAUUID">
-                                <rect key="frame" x="15" y="169" width="100" height="18"/>
-                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
-                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" name="customeColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data available" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reQ-LF-Yu5" userLabel="CCPAUUIDString">
-                                <rect key="frame" x="120" y="158" width="284" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="fS2-Io-Zbs"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="spg-SG-uHR"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUConsent :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xls-vD-PnJ" userLabel="EUConsent">
-                                <rect key="frame" x="15" y="219" width="100" height="18"/>
-                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
-                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" name="customeColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="No Data available" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7Q-Lj-baY" userLabel="EUConsentString">
-                                <rect key="frame" x="120" y="208" width="284" height="40"/>
-                                <accessibility key="accessibilityConfiguration" identifier="EUConsentString">
-                                    <accessibilityTraits key="traits" notEnabled="YES"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="IJX-Ww-FuZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <color key="textColor" name="customeColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Consent List" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="huu-nZ-kKX">
-                                <rect key="frame" x="15" y="263" width="157.5" height="21.5"/>
-                                <accessibility key="accessibilityConfiguration" identifier="Vendor and Purpose Consents List" label="Vendor and Purpose Consents List"/>
-                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="18"/>
-                                <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7M-iD-n1O" userLabel="LineViewForList">
-                                <rect key="frame" x="0.0" y="285.5" width="414" height="1"/>
-                                <viewLayoutGuide key="safeArea" id="7cB-Ea-PZ1"/>
-                                <color key="backgroundColor" name="customeColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="BwJ-Fi-p6w"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocf-eS-t5u" userLabel="ConsentTableView">
-                                <rect key="frame" x="0.0" y="287.5" width="414" height="608.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="HKk-np-n5E" userLabel="Main Container Stack View">
+                                <rect key="frame" x="0.0" y="92" width="414" height="770"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vendor and Purpose consents are not available" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0L-qg-gaa">
-                                        <rect key="frame" x="30" y="294.5" width="354" height="19.5"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                        <color key="textColor" name="customeColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNV-ao-Wfg">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="608.5"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="Unified_MetaApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dbp-dA-FSM" id="x2W-Ep-CTP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Vendor Grants ID : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-K3-8B7">
-                                                            <rect key="frame" x="15" y="13" width="134" height="18"/>
-                                                            <accessibility key="accessibilityConfiguration" identifier="ID" label="ID"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="vCt-KV-XW3"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                            <color key="textColor" name="customeColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
-                                                            <rect key="frame" x="157" y="2" width="252" height="40"/>
-                                                            <accessibility key="accessibilityConfiguration" identifier="consentID" label="consentID"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="85a-HT-1yz"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                            <color key="textColor" name="customeColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="vQc-K3-8B7" firstAttribute="leading" secondItem="x2W-Ep-CTP" secondAttribute="leading" constant="15" id="RYP-5b-Uie"/>
-                                                        <constraint firstAttribute="trailing" secondItem="sOG-oW-c07" secondAttribute="trailing" constant="5" id="RlU-iL-LKp"/>
-                                                        <constraint firstItem="vQc-K3-8B7" firstAttribute="centerY" secondItem="x2W-Ep-CTP" secondAttribute="centerY" id="btv-Kp-HYF"/>
-                                                        <constraint firstItem="sOG-oW-c07" firstAttribute="leading" secondItem="vQc-K3-8B7" secondAttribute="trailing" constant="8" symbolic="YES" id="i2D-2M-cht"/>
-                                                        <constraint firstItem="sOG-oW-c07" firstAttribute="centerY" secondItem="x2W-Ep-CTP" secondAttribute="centerY" id="xXQ-KK-vNq"/>
-                                                    </constraints>
-                                                </tableViewCellContentView>
-                                                <connections>
-                                                    <outlet property="consentIDLabel" destination="vQc-K3-8B7" id="b9z-jk-rW7"/>
-                                                    <outlet property="consentIDString" destination="sOG-oW-c07" id="mlb-L3-9W8"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="Lyi-Xh-6dq" id="FB1-8q-bSA"/>
-                                            <outlet property="delegate" destination="Lyi-Xh-6dq" id="UNy-7E-ffm"/>
-                                        </connections>
-                                    </tableView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="wlw-wt-qve" userLabel="GDPR UUID Row Stack View">
+                                        <rect key="frame" x="8" y="8" width="398" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDPR UUID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBP-Yu-YQL" userLabel="GDPRUUID">
+                                                <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="90" id="wR2-j1-QHY"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
+                                                <color key="textColor" name="customeColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data available" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="4" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uJU-7s-ZbU" userLabel="GDPRUUIDString">
+                                                <rect key="frame" x="96" y="0.0" width="302" height="40"/>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="9eu-8m-zQj"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3QD-hH-gKm" userLabel="CCPA UUID Row Stack View">
+                                        <rect key="frame" x="8" y="54" width="398" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CCPA UUID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jm1-th-YoO" userLabel="CCPAUUID">
+                                                <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="90" id="w0F-ft-Hle"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
+                                                <color key="textColor" name="customeColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data available" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="4" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="reQ-LF-Yu5" userLabel="CCPAUUIDString">
+                                                <rect key="frame" x="96" y="0.0" width="302" height="40"/>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="IKx-5W-jwE"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="kMr-9W-kYF" userLabel="EU Consent Row Stack View">
+                                        <rect key="frame" x="8" y="100" width="398" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUConsent:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xls-vD-PnJ" userLabel="EUConsent">
+                                                <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="90" id="qgW-w9-DIa"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
+                                                <color key="textColor" name="customeColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="No Data available" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="4" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x7Q-Lj-baY" userLabel="EUConsentString">
+                                                <rect key="frame" x="96" y="0.0" width="302" height="40"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="EUConsentString">
+                                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                                </accessibility>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="FSf-Pp-Shg"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QbD-on-mJ0" userLabel="UserConsent Stack View">
+                                        <rect key="frame" x="8" y="146" width="398" height="570"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Consent List" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="huu-nZ-kKX">
+                                                <rect key="frame" x="0.0" y="0.0" width="398" height="21.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Vendor and Purpose Consents List" label="Vendor and Purpose Consents List"/>
+                                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="18"/>
+                                                <color key="textColor" red="0.2470588235" green="0.79607843140000001" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P7M-iD-n1O" userLabel="LineViewForList">
+                                                <rect key="frame" x="0.0" y="21.5" width="398" height="1"/>
+                                                <viewLayoutGuide key="safeArea" id="7cB-Ea-PZ1"/>
+                                                <color key="backgroundColor" name="customeColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="BwJ-Fi-p6w"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocf-eS-t5u" userLabel="ConsentTableView">
+                                                <rect key="frame" x="0.0" y="22.5" width="398" height="547.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vendor and Purpose consents are not available" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0L-qg-gaa">
+                                                        <rect key="frame" x="30" y="292.5" width="354" height="19.5"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="noDataLabel" label="noDataLabel"/>
+                                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                                                        <color key="textColor" name="customeColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hNV-ao-Wfg">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="604.5"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <prototypes>
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ConsentCell" id="dbp-dA-FSM" customClass="ConsentTableViewCell" customModule="Unified_MetaApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dbp-dA-FSM" id="x2W-Ep-CTP">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Vendor Grants ID : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-K3-8B7">
+                                                                            <rect key="frame" x="15" y="13" width="134" height="18"/>
+                                                                            <accessibility key="accessibilityConfiguration" identifier="ID" label="ID"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="vCt-KV-XW3"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                                            <color key="textColor" name="customeColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Consent ID" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-oW-c07" userLabel="ConsentIDString">
+                                                                            <rect key="frame" x="157" y="2" width="252" height="40"/>
+                                                                            <accessibility key="accessibilityConfiguration" identifier="consentID" label="consentID"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="40" id="85a-HT-1yz"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                                            <color key="textColor" name="customeColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="vQc-K3-8B7" firstAttribute="leading" secondItem="x2W-Ep-CTP" secondAttribute="leading" constant="15" id="RYP-5b-Uie"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="sOG-oW-c07" secondAttribute="trailing" constant="5" id="RlU-iL-LKp"/>
+                                                                        <constraint firstItem="vQc-K3-8B7" firstAttribute="centerY" secondItem="x2W-Ep-CTP" secondAttribute="centerY" id="btv-Kp-HYF"/>
+                                                                        <constraint firstItem="sOG-oW-c07" firstAttribute="leading" secondItem="vQc-K3-8B7" secondAttribute="trailing" constant="8" symbolic="YES" id="i2D-2M-cht"/>
+                                                                        <constraint firstItem="sOG-oW-c07" firstAttribute="centerY" secondItem="x2W-Ep-CTP" secondAttribute="centerY" id="xXQ-KK-vNq"/>
+                                                                    </constraints>
+                                                                </tableViewCellContentView>
+                                                                <connections>
+                                                                    <outlet property="consentIDLabel" destination="vQc-K3-8B7" id="b9z-jk-rW7"/>
+                                                                    <outlet property="consentIDString" destination="sOG-oW-c07" id="mlb-L3-9W8"/>
+                                                                </connections>
+                                                            </tableViewCell>
+                                                        </prototypes>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="Lyi-Xh-6dq" id="FB1-8q-bSA"/>
+                                                            <outlet property="delegate" destination="Lyi-Xh-6dq" id="UNy-7E-ffm"/>
+                                                        </connections>
+                                                    </tableView>
+                                                </subviews>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="center" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="S48-bG-6jf" userLabel="SDK Status Row Stack">
+                                        <rect key="frame" x="8" y="722" width="398" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnF-Z7-Fzx" userLabel="SDK Status Label">
+                                                <rect key="frame" x="0.0" y="12" width="30" height="16"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="EUConsent" label="EUConsent"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="4" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zK1-PU-5mN" userLabel="SDK Status Value">
+                                                <rect key="frame" x="36" y="12" width="362" height="16"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="EUConsentString">
+                                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                                </accessibility>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="jwB-0o-dzl"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="hNV-ao-Wfg" firstAttribute="leading" secondItem="ocf-eS-t5u" secondAttribute="leading" id="1il-Kh-tMg"/>
-                                    <constraint firstItem="D0L-qg-gaa" firstAttribute="centerY" secondItem="ocf-eS-t5u" secondAttribute="centerY" id="6qa-Vz-oIx"/>
-                                    <constraint firstItem="D0L-qg-gaa" firstAttribute="centerX" secondItem="ocf-eS-t5u" secondAttribute="centerX" id="B0m-ek-S9g"/>
-                                    <constraint firstItem="hNV-ao-Wfg" firstAttribute="top" secondItem="ocf-eS-t5u" secondAttribute="top" id="ISo-FX-Dgj"/>
-                                    <constraint firstAttribute="trailing" secondItem="hNV-ao-Wfg" secondAttribute="trailing" id="vag-oN-tXA"/>
-                                    <constraint firstAttribute="bottom" secondItem="hNV-ao-Wfg" secondAttribute="bottom" id="zor-h7-Qor"/>
+                                    <constraint firstItem="3QD-hH-gKm" firstAttribute="height" secondItem="wlw-wt-qve" secondAttribute="height" id="hry-sR-1tm"/>
+                                    <constraint firstItem="kMr-9W-kYF" firstAttribute="height" secondItem="wlw-wt-qve" secondAttribute="height" id="tVs-W4-fDG"/>
                                 </constraints>
-                            </view>
+                                <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="8" trailing="8"/>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JPT-Vh-gpO"/>
                         <color key="backgroundColor" name="screenColor"/>
                         <constraints>
-                            <constraint firstItem="Jm1-th-YoO" firstAttribute="width" secondItem="hBP-Yu-YQL" secondAttribute="width" id="2ud-Zm-uxh"/>
-                            <constraint firstAttribute="bottom" secondItem="ocf-eS-t5u" secondAttribute="bottom" id="4Zo-cF-dKd"/>
-                            <constraint firstItem="uJU-7s-ZbU" firstAttribute="leading" secondItem="hBP-Yu-YQL" secondAttribute="trailing" constant="5" id="5eh-yM-xot"/>
-                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="width" secondItem="uJU-7s-ZbU" secondAttribute="width" id="5vo-MZ-59Q"/>
-                            <constraint firstItem="ocf-eS-t5u" firstAttribute="trailing" secondItem="JPT-Vh-gpO" secondAttribute="trailing" id="6p8-u0-K8N"/>
-                            <constraint firstItem="P7M-iD-n1O" firstAttribute="leading" secondItem="GBV-7x-oY4" secondAttribute="leading" id="6sH-zP-pFG"/>
-                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="reQ-LF-Yu5" secondAttribute="trailing" constant="10" id="8Pp-tZ-f45"/>
-                            <constraint firstItem="uJU-7s-ZbU" firstAttribute="top" secondItem="JPT-Vh-gpO" secondAttribute="top" constant="20" id="94k-Wh-FoQ"/>
-                            <constraint firstItem="P7M-iD-n1O" firstAttribute="top" secondItem="huu-nZ-kKX" secondAttribute="bottom" constant="1" id="Hy3-gO-Vp5"/>
-                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="top" secondItem="reQ-LF-Yu5" secondAttribute="bottom" constant="10" id="ITI-TI-iIZ"/>
-                            <constraint firstItem="ocf-eS-t5u" firstAttribute="top" secondItem="P7M-iD-n1O" secondAttribute="bottom" constant="1" id="KTm-P4-Ohv"/>
-                            <constraint firstItem="xls-vD-PnJ" firstAttribute="width" secondItem="hBP-Yu-YQL" secondAttribute="width" id="LYE-uN-TGc"/>
-                            <constraint firstItem="hBP-Yu-YQL" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="Uvf-50-c5L"/>
-                            <constraint firstItem="uJU-7s-ZbU" firstAttribute="centerY" secondItem="hBP-Yu-YQL" secondAttribute="centerY" id="ZYp-eu-P68"/>
-                            <constraint firstItem="xls-vD-PnJ" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="asy-6q-Vi3"/>
-                            <constraint firstAttribute="trailing" secondItem="P7M-iD-n1O" secondAttribute="trailing" id="djT-S3-30j"/>
-                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="huu-nZ-kKX" secondAttribute="trailing" symbolic="YES" id="gRF-b8-ajx"/>
-                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="centerY" secondItem="xls-vD-PnJ" secondAttribute="centerY" id="hPg-gM-xgM"/>
-                            <constraint firstItem="Jm1-th-YoO" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="iLg-yb-Zho"/>
-                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="uJU-7s-ZbU" secondAttribute="trailing" constant="10" id="jhz-jZ-OdW"/>
-                            <constraint firstItem="huu-nZ-kKX" firstAttribute="top" secondItem="x7Q-Lj-baY" secondAttribute="bottom" constant="15" id="kJu-aV-edw"/>
-                            <constraint firstItem="JPT-Vh-gpO" firstAttribute="trailing" secondItem="x7Q-Lj-baY" secondAttribute="trailing" constant="10" id="ml3-Re-Zr9"/>
-                            <constraint firstItem="ocf-eS-t5u" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" id="oSg-tF-HYe"/>
-                            <constraint firstItem="x7Q-Lj-baY" firstAttribute="leading" secondItem="xls-vD-PnJ" secondAttribute="trailing" constant="5" id="pWv-VU-rwi"/>
-                            <constraint firstItem="reQ-LF-Yu5" firstAttribute="top" secondItem="uJU-7s-ZbU" secondAttribute="bottom" constant="10" id="tAX-js-6TK"/>
-                            <constraint firstItem="Jm1-th-YoO" firstAttribute="centerY" secondItem="reQ-LF-Yu5" secondAttribute="centerY" id="vgF-Gq-zQl"/>
-                            <constraint firstItem="reQ-LF-Yu5" firstAttribute="leading" secondItem="Jm1-th-YoO" secondAttribute="trailing" constant="5" id="wI8-cs-lmQ"/>
-                            <constraint firstItem="huu-nZ-kKX" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" constant="15" id="xhB-WC-2vx"/>
+                            <constraint firstItem="HKk-np-n5E" firstAttribute="leading" secondItem="JPT-Vh-gpO" secondAttribute="leading" id="Dho-7c-NTr"/>
+                            <constraint firstItem="HKk-np-n5E" firstAttribute="height" secondItem="JPT-Vh-gpO" secondAttribute="height" id="KgT-ow-1kr"/>
+                            <constraint firstItem="HKk-np-n5E" firstAttribute="top" secondItem="JPT-Vh-gpO" secondAttribute="top" id="czI-DH-mNU"/>
+                            <constraint firstItem="HKk-np-n5E" firstAttribute="width" secondItem="JPT-Vh-gpO" secondAttribute="width" id="nUe-AI-vQb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Property Debug Info" id="1Mn-Sb-edJ">
@@ -798,6 +827,7 @@
                         <outlet property="euConsentLabel" destination="x7Q-Lj-baY" id="xVa-xV-uBV"/>
                         <outlet property="gdprConsentUUIDLabel" destination="uJU-7s-ZbU" id="EUH-nj-We4"/>
                         <outlet property="noDataLabel" destination="D0L-qg-gaa" id="HQa-Jy-ipr"/>
+                        <outlet property="sdkStatusLabel" destination="zK1-PU-5mN" id="QOt-8I-ZPS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="voL-ZI-KqR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -817,7 +847,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="propertyCell" rowHeight="90" id="oya-4T-sTe" userLabel="propertyCell" customClass="PropertyCell" customModule="Unified_MetaApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oya-4T-sTe" id="BDy-AV-b9J">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -952,7 +982,7 @@
                 <navigationController storyboardIdentifier="RootNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hcy-kf-t7M" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DnQ-IN-rkO">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.29019607843137252" green="0.36078431372549019" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
@@ -971,7 +1001,7 @@
                 <navigationController storyboardIdentifier="ConsentNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="cVI-3x-jZL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="azz-Kx-7Pt">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -996,7 +1026,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SideMenuCell" id="zjO-nT-Ncd" customClass="SideMenuCell" customModule="Unified_MetaApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="260" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="260" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zjO-nT-Ncd" id="1rj-wH-Hre">
                                             <rect key="frame" x="0.0" y="0.0" width="260" height="43.5"/>
@@ -1057,7 +1087,10 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
