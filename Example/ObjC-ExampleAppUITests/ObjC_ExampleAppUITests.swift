@@ -18,7 +18,7 @@ class ObjC_ExampleAppUITests: QuickSpec {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = ExampleApp()
-            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.timeout = .seconds(30)
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
@@ -34,7 +34,7 @@ class ObjC_ExampleAppUITests: QuickSpec {
         func acceptAtt() {
             expect(self.app.attPrePrompt.okButton).toEventually(showUp())
             app.attPrePrompt.okButton.tap()
-            expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
+            expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
             app.attPrePrompt.attAlertAllowButton.tap()
         }
 

@@ -57,9 +57,8 @@ class NativeMessageExampleUITests: QuickSpec {
 
     override func spec() {
         beforeSuite {
-            self.continueAfterFailure = false
             self.app = NativeExampleApp()
-            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.timeout = .seconds(30)
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
@@ -74,36 +73,26 @@ class NativeMessageExampleUITests: QuickSpec {
 
         it("Accept all through 1st layer messages") {
             self.runAttScenario()
+
+            // assert the PM's cancel button navigates the user back to the 1st layer
+            self.showGDPRPMViaFirstLayerMessage()
+            self.app.gdprPM.cancelButton.tap()
             self.acceptGDPRMessage()
+
             self.acceptCCPAMessage()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
-        it("Accept all GDPR through 2nd layer") {
+        it("Accept all through 2nd layer") {
             self.runAttScenario()
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            self.acceptCCPAMessage()
-            self.app.relaunch()
-            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
-        }
-
-        it("Accept all CCPA through 2nd layer") {
-            self.runAttScenario()
-            self.acceptGDPRMessage()
             self.showCCPAPMViaFirstLayerMessage()
             self.app.ccpaPM.acceptAllButton.tap()
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
-        }
-
-        it("Dismissing 2nd layer returns to first layer message") {
-            self.runAttScenario()
-            self.showGDPRPMViaFirstLayerMessage()
-            self.app.gdprPM.cancelButton.tap()
-            expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
     }
 }
