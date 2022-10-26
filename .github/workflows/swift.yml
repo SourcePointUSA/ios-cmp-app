@@ -35,7 +35,13 @@ jobs:
         - name: Select Xcode version 14.0.1
           run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
         - name: ObjC-ExampleApp testing -> iPhone 14 Pro (iOS 16.0)
-          run: xcodebuild clean test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+          uses: nick-fields/retry@v2
+          with:
+            timeout_minutes: 30
+            max_attempts: 3
+            retry_wait_seconds: 1
+            retry_on: error
+            command: xcodebuild clean test -scheme ObjC-ExampleApp -workspace ./Example/ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
         - uses: actions/upload-artifact@v2
           if: failure()
           name: Upload ObjCExampleApp tests results
