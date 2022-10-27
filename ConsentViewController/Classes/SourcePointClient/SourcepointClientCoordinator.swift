@@ -380,8 +380,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func handleGetChoices(_ response: ChoiceAllResponse) {
-        if let gdpr = response.gdpr {
+    func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
+        if let gdpr = response.gdpr, campaign == .gdpr {
             state.gdpr?.dateCreated = gdpr.dateCreated ?? (state.gdpr?.dateCreated ?? SPDateCreated.now()) // TODO: remove once response.gdpr contains date created
             state.gdpr?.tcfData = gdpr.tcData
             state.gdpr?.vendorGrants = gdpr.grants
@@ -390,7 +390,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.consentStatus = gdpr.consentStatus
             state.gdpr?.childPmId = gdpr.childPmId
         }
-        if let ccpa = response.ccpa {
+        if let ccpa = response.ccpa, campaign == .ccpa {
             state.ccpa?.dateCreated = ccpa.dateCreated
             state.ccpa?.status = ccpa.status
             state.ccpa?.applies = ccpa.applies
@@ -411,7 +411,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             ) { result in
                 switch result {
                     case .success(let response):
-                        self.handleGetChoices(response)
+                        self.handleGetChoices(response, from: action.campaignType)
                         handler(Result.success(response))
                     case .failure(let error):
                         handler(Result.failure(error))
