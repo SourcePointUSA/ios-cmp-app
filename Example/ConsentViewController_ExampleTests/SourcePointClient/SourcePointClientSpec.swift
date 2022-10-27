@@ -114,13 +114,14 @@ class SourcePointClientSpec: QuickSpec {
                             body: .init(
                                 authId: nil,
                                 uuid: nil,
-                                propertyId: nil,
                                 messageId: nil,
-                                pubData: [:], pmSaveAndExitVariables: nil,
+                                consentAllRef: nil,
+                                vendorListId: nil,
+                                pubData: [:],
+                                pmSaveAndExitVariables: nil,
+                                propertyId: 0,
                                 sampleRate: 1,
                                 idfaStatus: nil,
-                                consentAllRef: "",
-                                vendorListId: "",
                                 granularStatus: .init()
                             )
                         ) { _ in }
@@ -131,13 +132,14 @@ class SourcePointClientSpec: QuickSpec {
                         let body = GDPRChoiceBody(
                             authId: nil,
                             uuid: nil,
-                            propertyId: nil,
                             messageId: nil,
-                            pubData: [:], pmSaveAndExitVariables: nil,
+                            consentAllRef: nil,
+                            vendorListId: nil,
+                            pubData: [:],
+                            pmSaveAndExitVariables: nil,
+                            propertyId: 0,
                             sampleRate: 1,
                             idfaStatus: nil,
-                            consentAllRef: "",
-                            vendorListId: "",
                             granularStatus: .init()
                         )
                         client.postGDPRAction(
@@ -158,8 +160,8 @@ class SourcePointClientSpec: QuickSpec {
                                 messageId: "",
                                 pubData: [:],
                                 pmSaveAndExitVariables: nil,
-                                sampleRate: 1,
-                                propertyId: 1
+                                propertyId: 1,
+                                sampleRate: 1
                             )
                         ) { _ in }
                         expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/choice/ccpa/11?env=localProd"))
@@ -172,8 +174,8 @@ class SourcePointClientSpec: QuickSpec {
                             messageId: "",
                             pubData: [:],
                             pmSaveAndExitVariables: nil,
-                            sampleRate: 1,
-                            propertyId: 1
+                            propertyId: 1,
+                            sampleRate: 1
                         )
                         client.postCCPAAction(
                             actionType: .AcceptAll,

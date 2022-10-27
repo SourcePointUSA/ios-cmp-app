@@ -131,10 +131,7 @@ protocol SourcePointProtocol {
         handler: @escaping ConsentStatusHandler
     )
 
-    func pvData(
-        pvDataRequestBody: PvDataRequestBody,
-        handler: @escaping PvDataHandler
-    )
+    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler?)
 
     func metaData(
         accountId: Int,
@@ -143,8 +140,8 @@ protocol SourcePointProtocol {
         handler: @escaping MetaDataHandler
     )
 
-    func choice(
-        action: SPActionType,
+    func choiceAll(
+        actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
         metadata: ChoiceAllBodyRequest,
@@ -152,6 +149,12 @@ protocol SourcePointProtocol {
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
+}
+
+extension SourcePointProtocol {
+    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
+        pvData(body, handler: nil)
+    }
 }
 
 /**
@@ -467,10 +470,10 @@ extension SourcePointClient {
         }
     }
 
-    func pvData(pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
-        _ = JSONEncoder().encodeResult(pvDataRequestBody).map { body in
+    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
+        _ = JSONEncoder().encodeResult(body).map { body in
             client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body) { result in
-                handler(Result {
+                handler?(Result {
                     try result.decoded() as PvDataResponse
                 }.mapError {
                     InvalidPvDataResponseError(error: $0)
@@ -479,15 +482,24 @@ extension SourcePointClient {
         }
     }
 
-    func choiceRejectAllURLWithParams(
-      accountId: Int,
-      hasCsp: Bool,
-      propertyId: Int,
-      withSiteActions: Bool,
-      includeCustomVendorsRes: Bool,
-      metadata: ChoiceAllBodyRequest
+    func choiceAllUrlWithParams(
+        actionType: SPActionType,
+        accountId: Int,
+        hasCsp: Bool,
+        propertyId: Int,
+        withSiteActions: Bool,
+        includeCustomVendorsRes: Bool,
+        metadata: ChoiceAllBodyRequest
     ) -> URL? {
-        let url = Constants.Urls.CHOICE_REJECT_ALL_URL.appendQueryItems([
+        var baseUrl: URL
+        if actionType == .AcceptAll {
+            baseUrl = Constants.Urls.CHOICE_CONSENT_ALL_URL
+        } else if actionType == .RejectAll {
+            baseUrl = Constants.Urls.CHOICE_REJECT_ALL_URL
+        } else {
+            return nil
+        }
+        return baseUrl.appendQueryItems([
             "accountId": String(accountId),
             "hasCsp": hasCsp.description,
             "propertyId": String(propertyId),
@@ -495,16 +507,17 @@ extension SourcePointClient {
             "includeCustomVendorsRes": includeCustomVendorsRes.description,
             "metadata": metadata.stringified()
         ])
-        return url
     }
 
-    func choiceRejectAll(
+    func choiceAll(
+        actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
         metadata: ChoiceAllBodyRequest,
         handler: @escaping ChoiceHandler
     ) {
-        guard let url = choiceRejectAllURLWithParams(
+        guard let url = choiceAllUrlWithParams(
+            actionType: actionType,
             accountId: accountId,
             hasCsp: true,
             propertyId: propertyId,
@@ -518,75 +531,7 @@ extension SourcePointClient {
 
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
-                return try result.decoded() as ChoiceAllResponse
-            }.mapError {
-                InvalidChoiceAllResponseError(error: $0)
-            })
-        }
-    }
-
-    func choiceConsentAllURLWithParams(
-      accountId: Int,
-      hasCsp: Bool,
-      propertyId: Int,
-      withSiteActions: Bool,
-      includeCustomVendorsRes: Bool,
-      metadata: ChoiceAllBodyRequest
-    ) -> URL? {
-        let url = Constants.Urls.CHOICE_CONSENT_ALL_URL.appendQueryItems([
-            "accountId": String(accountId),
-            "hasCsp": hasCsp.description,
-            "propertyId": String(propertyId),
-            "withSiteActions": withSiteActions.description,
-            "includeCustomVendorsRes": includeCustomVendorsRes.description,
-            "metadata": metadata.stringified()
-        ])
-        return url
-    }
-
-    func choice(
-        action: SPActionType,
-        accountId: Int,
-        propertyId: Int,
-        metadata: ChoiceAllBodyRequest,
-        handler: @escaping ChoiceHandler
-    ) {
-        switch action {
-        case .AcceptAll:
-            choiceConsentAll(accountId: accountId,
-                             propertyId: propertyId,
-                             metadata: metadata,
-                             handler: handler)
-        case .RejectAll:
-            choiceRejectAll(accountId: accountId,
-                            propertyId: propertyId,
-                            metadata: metadata,
-                            handler: handler)
-        default:
-            print("Choice for such action is not implemented in v7")
-        }
-    }
-
-    func choiceConsentAll(
-        accountId: Int,
-        propertyId: Int,
-        metadata: ChoiceAllBodyRequest,
-        handler: @escaping ChoiceHandler
-    ) {
-        guard let url = choiceConsentAllURLWithParams(
-            accountId: accountId,
-            hasCsp: true,
-            propertyId: propertyId,
-            withSiteActions: false,
-            includeCustomVendorsRes: false,
-            metadata: metadata
-        ) else {
-            handler(Result.failure(InvalidChoiceAllParamsError()))
-            return
-        }
-        client.get(urlString: url.absoluteString) { result in
-            handler(Result {
-                return try result.decoded() as ChoiceAllResponse
+                try result.decoded() as ChoiceAllResponse
             }.mapError {
                 InvalidChoiceAllResponseError(error: $0)
             })

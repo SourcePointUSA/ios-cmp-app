@@ -160,11 +160,11 @@ struct Campaign: Equatable {
     let type: SPCampaignType
     var url: URL?
     var message: Message?
-    let userConsent: Consent
+//    let userConsent: Consent // TODO: check if we'll need a "default" consent from messages endpoint
     let applies: Bool?
     let messageMetaData: MessageMetaData?
     let consentStatus: ConsentStatus?
-    let dateCreated: SPDateCreated
+    let dateCreated: SPDateCreated?
 }
 
 extension Campaign: Decodable {
@@ -173,9 +173,9 @@ extension Campaign: Decodable {
         type = try container.decode(SPCampaignType.self, forKey: .type)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
-        userConsent = try Consent(from: decoder)
-        consentStatus = try container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus)
-        dateCreated = try container.decode(SPDateCreated.self, forKey: .dateCreated)
+//        userConsent = try Consent(from: decoder)
+        consentStatus = try? container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus) ?? ConsentStatus(from: decoder)
+        dateCreated = try container.decodeIfPresent(SPDateCreated.self, forKey: .dateCreated)
         if let metaData = messageMetaData {
             message = try Message(category: metaData.categoryId, subCategory: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
             url = try container.decodeIfPresent(URL.self, forKey: .url)
@@ -192,32 +192,6 @@ struct MessagesResponse: Decodable, Equatable {
     let campaigns: [Campaign]
     let localState: SPJson
     let nonKeyedLocalState: SPJson
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Keys.self)
-        propertyId = try container.decode(Int.self, forKey: .propertyId)
-        localState = try container.decode(SPJson.self, forKey: .localState)
-        nonKeyedLocalState = try container.decode(SPJson.self, forKey: .nonKeyedLocalState)
-
-        var tempCampaigns: [Campaign] = []
-        var campaignsContainer = try container.nestedUnkeyedContainer(forKey: .campaigns)
-        while !campaignsContainer.isAtEnd {
-            let campaign = try campaignsContainer.decode(Campaign.self)
-            switch campaign.userConsent {
-            case .ccpa(let consents):
-                consents.uuid = localState["ccpa"]?["uuid"]?.stringValue
-            case .gdpr(let consents):
-                consents.uuid = localState["gdpr"]?["uuid"]?.stringValue
-            default: break
-            }
-            tempCampaigns.append(campaign)
-        }
-        campaigns = tempCampaigns
-    }
-
-    enum Keys: CodingKey {
-        case propertyId, campaigns, localState, nonKeyedLocalState
-    }
 }
 
 struct MessageResponse: Equatable {
@@ -229,7 +203,11 @@ extension MessageResponse: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         messageMetaData = try container.decode(MessageMetaData.self, forKey: .messageMetaData)
-        message = try Message(category: messageMetaData.categoryId, subCategory: messageMetaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
+        message = try Message(
+            category: messageMetaData.categoryId,
+            subCategory: messageMetaData.subCategoryId,
+            decoder: try container.superDecoder(forKey: .message)
+        )
     }
 
     enum Keys: CodingKey {

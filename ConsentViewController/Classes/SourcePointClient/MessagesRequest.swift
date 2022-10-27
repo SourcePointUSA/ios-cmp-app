@@ -11,20 +11,20 @@ struct MessagesRequest: QueryParamEncodable {
     struct Body: QueryParamEncodable {
         struct Campaigns: QueryParamEncodable {
             struct CCPA: QueryParamEncodable {
-                let targetingParams: SPJson?
+                let targetingParams: SPTargetingParams?
                 let hasLocalData: Bool
                 let status: CCPAConsentStatus?
             }
 
             struct GDPR: QueryParamEncodable {
-                let targetingParams: SPJson?
+                let targetingParams: SPTargetingParams?
                 let hasLocalData: Bool
-                let consentStatus: ConsentStatus
+                let consentStatus: ConsentStatus?
             }
 
             struct IOS14: QueryParamEncodable {
+                let targetingParams: SPTargetingParams?
                 let idfaSstatus: SPIDFAStatus
-                let targetingParams: SPJson?
             }
 
             let ccpa: CCPA?
@@ -64,5 +64,41 @@ extension MessagesRequest.Body.Campaigns {
         ccpa = nil
         gdpr = nil
         ios14 = nil
+    }
+}
+
+extension MessagesRequest.MetaData.Campaign {
+    init?(applies: Bool?) {
+        guard let applies = applies else { return nil }
+        self.applies = applies
+    }
+}
+
+extension MessagesRequest.Body.Campaigns.GDPR {
+    init?(_ campaign: SPCampaign?, hasLocalData: Bool, consentStatus: ConsentStatus) {
+        guard let campaign = campaign else { return nil }
+
+        self.targetingParams = campaign.targetingParams
+        self.hasLocalData = hasLocalData
+        self.consentStatus = consentStatus
+    }
+}
+
+extension MessagesRequest.Body.Campaigns.CCPA {
+    init?(_ campaign: SPCampaign?, hasLocalData: Bool, status: CCPAConsentStatus) {
+        guard let campaign = campaign else { return nil }
+
+        self.targetingParams = campaign.targetingParams
+        self.hasLocalData = hasLocalData
+        self.status = status
+    }
+}
+
+extension MessagesRequest.Body.Campaigns.IOS14 {
+    init?(_ campaign: SPCampaign?, idfaStatus: SPIDFAStatus) {
+        guard let campaign = campaign else { return nil }
+
+        self.targetingParams = campaign.targetingParams
+        self.idfaSstatus = idfaStatus
     }
 }

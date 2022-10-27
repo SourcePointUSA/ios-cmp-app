@@ -64,6 +64,7 @@ class ViewController: UIViewController {
 
     lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: 22,
+        propertyId: 16893,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
@@ -90,7 +91,7 @@ extension ViewController: SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
-        print(action)
+        action.publisherData = ["foo": "action"]
     }
 
     func onSPUIFinished(_ controller: UIViewController) {

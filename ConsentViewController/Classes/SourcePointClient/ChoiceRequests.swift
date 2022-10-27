@@ -8,20 +8,13 @@
 import Foundation
 
 struct GDPRChoiceBody: Encodable, Equatable {
-    struct PMSaveAndExitPayload: Encodable, Equatable {
-        let specialFeatures, categories, vendors: [String?]
-        let privacyManagerId, messageId: String
-        let lan: SPMessageLanguage
-    }
-
-    let authId, uuid, propertyId, messageId: String?
+    let authId, uuid, messageId, consentAllRef, vendorListId: String?
     let pubData: SPPublisherData
-    let pmSaveAndExitVariables: PMSaveAndExitPayload?
+    let pmSaveAndExitVariables: SPJson?
     let sendPVData = true // TODO: ask Sid/Dan what is this
-    let sampleRate: Int
+    let propertyId, sampleRate: Int
     let idfaStatus: SPIDFAStatus?
-    let consentAllRef, vendorListId: String
-    let granularStatus: ConsentStatus.GranularStatus
+    let granularStatus: ConsentStatus.GranularStatus?
     let includeData = [
         "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"]
@@ -29,17 +22,11 @@ struct GDPRChoiceBody: Encodable, Equatable {
 }
 
 struct CCPAChoiceBody: Encodable, Equatable {
-    struct PMSaveAndExitPayload: Encodable, Equatable {
-        let rejectedCategories, rejectedVendors: [String?]
-        let privacyManagerId: String
-    }
-
     let authId, uuid, messageId: String?
     let pubData: SPPublisherData
-    let pmSaveAndExitVariables: PMSaveAndExitPayload?
+    let pmSaveAndExitVariables: SPJson?
     let sendPVData = true // TODO: ask Sid/Dan what is this
-    let sampleRate: Int
-    let propertyId: Int // TODO: ask Sid/Dan if this can't be a String (like gdpr choice request)
+    let propertyId, sampleRate: Int
     let includeData = [
         "localState": ["type": "RecordString"]
     ]

@@ -12,17 +12,15 @@ import Foundation
 // swiftlint:disable function_parameter_count
 
 class SourcePointClientMock: SourcePointProtocol {
-
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
 
     var customConsentResponse: CustomConsentResponse?
 
-    static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
+    static func getCampaign(_ type: SPCampaignType) -> Campaign {
         Campaign(
             type: type,
             message: .none,
-            userConsent: consent,
             applies: true,
             messageMetaData: MessageMetaData(
                 categoryId: .unknown,
@@ -42,8 +40,10 @@ class SourcePointClientMock: SourcePointProtocol {
                 rejectedAny: false,
                 rejectedLI: false,
                 consentedAll: false,
+                consentedToAny: false,
                 hasConsentData: false,
-                consentedToAny: false
+                rejectedVendors: [],
+                rejectedCategories: []
             ),
             dateCreated: SPDateCreated.now()
         )
@@ -164,8 +164,8 @@ class SourcePointClientMock: SourcePointProtocol {
         handler: @escaping MetaDataHandler
     ) { }
 
-    func choice(
-        action: SPActionType,
+    func choiceAll(
+        actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
         metadata: ChoiceAllBodyRequest,

@@ -8,52 +8,37 @@
 import Foundation
 
 struct ChoiceAllResponse: Decodable {
-
     struct CCPA: Decodable {
         let applies: Bool
         let consentedAll: Bool
-        let dateCreated: String
+        let dateCreated: SPDateCreated
         let rejectedAll: Bool
-        let status: String
+        let status: CCPAConsentStatus
 
-        let uspstring: String?             // does not exist in response, Must be NOT NULLABLE
+        // TODO: change to `String` once the API starts returning it
+        let uspstring: String?
 
-        let rejectedVendors: [String]?
-        let rejectedCategories: [String]?
+        let rejectedVendors: [String?]?
+        let rejectedCategories: [String?]?
         let gpcEnabled: Bool?
         let newUser: Bool?
-        let uuid: String?
     }
 
     struct GDPR: Decodable {
-        struct ConsnentStatus: Decodable {
-            let rejectedAny: Bool
-            let rejectedLI: Bool
-            let consentedAll: Bool
-            let hasConsentData: Bool
-            let consentedToAny: Bool
-            let granularStatus: SPJson?
-        }
-        struct Grant: Decodable {
-            let vendorGrant: Bool?
-            let purposeGrants: [String: Bool]?
-        }
         struct PostPayload: Decodable {
             let consentAllRef: String?
-            let vendorListId: String?
-            let granularStatus: SPJson?
+            let vendorListId: String
+            let granularStatus: ConsentStatus.GranularStatus?
         }
 
-        let addtlConsent: String?
-        let applies: Bool?
-        let euconsent: String?
-
+        let addtlConsent, childPmId: String?
+        let applies: Bool
+        let euconsent: String
         let hasLocalData: Bool?
-        let dateCreated: String?
-        let childPmId: String?
+        let dateCreated: SPDateCreated?
         let tcData: SPJson?
-        let consentStatus: ConsnentStatus
-        let grants: [String: Grant]?
+        let consentStatus: ConsentStatus
+        let grants: SPGDPRVendorGrants
         let postPayload: PostPayload?
     }
 
