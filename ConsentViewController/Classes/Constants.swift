@@ -17,6 +17,8 @@ let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) !
 struct Constants {
     struct Urls {
         static let envParam = prod ? "localProd" : "stage"
+        // TODO: remove SP_ROOT_ORIGINAL before releasing v7
+        static let SP_ROOT_ORIGINAL = URL(string: "https://cdn.privacy-mgmt.com/")!
         static let SP_ROOT = URL(string: prod ? "http://localhost:3000/" : "https://cdn.sp-stage.net/")!
         static let WRAPPER_API = URL(string: "./wrapper/?env=\(envParam)", relativeTo: SP_ROOT)!
         static let GDPR_MESSAGE_URL = URL(string: "./v2/message/gdpr", relativeTo: WRAPPER_API)!
@@ -27,11 +29,10 @@ struct Constants {
         static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=\(envParam)", relativeTo: WRAPPER_API)!
         static let DELETE_CUSTOM_CONSENT_URL = URL(string: "./consent/tcfv2/consent/v3/custom/", relativeTo: SP_ROOT)!
         static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=\(envParam)&inApp=true", relativeTo: WRAPPER_API)!
-        static let MMS_MESSAGE_URL = URL(string: "./mms/v2/message", relativeTo: SP_ROOT)!
         static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
         static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view", relativeTo: SP_ROOT)!
-        static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
-        static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
+        static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT_ORIGINAL)!
+        static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT_ORIGINAL)!
         static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)", relativeTo: WRAPPER_API)!
         static let META_DATA_URL = URL(string: "./v2/meta-data?env=\(envParam)", relativeTo: WRAPPER_API)!
         static let GET_MESSAGES_URL = URL(string: "./v2/messages?env=\(envParam)", relativeTo: WRAPPER_API)!

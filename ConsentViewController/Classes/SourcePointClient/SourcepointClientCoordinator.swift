@@ -32,16 +32,13 @@ extension MessageToDisplay {
         self.type = campaign.type
         // TODO: add childPMId if possible
         self.childPmId = nil
-//        switch campaign.userConsent {
-//            case .ccpa(let consents): childPmId = consents.childPmId
-//            case .gdpr(let consents): childPmId = consents.childPmId
-//            default: childPmId = nil
-//        }
     }
 }
 
 protocol SPClientCoordinator {
     var authId: String? { get set }
+    var gdprUUID: String? { get }
+    var ccpaUUID: String? { get }
 
     func loadMessages(_ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
@@ -92,6 +89,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var storage: SPLocalStorage
 
     var state: State
+
+    var gdprUUID: String? { state.gdpr?.uuid }
+    var ccpaUUID: String? { state.ccpa?.uuid }
 
     /// Checks if this user has data from the previous version of the SDK (v6).
     /// This check should only done once so we remove the data stored by the older SDK and return false after that.
@@ -436,7 +436,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 consentAllRef: postPayloadFromGetCall?.consentAllRef,
                 vendorListId: postPayloadFromGetCall?.vendorListId,
                 pubData: action.publisherData,
-                pmSaveAndExitVariables: nil,  // TODO: convert pm payload from SPAction to this class
+                pmSaveAndExitVariables: action.pmPayload,
                 propertyId: propertyId,
                 sampleRate: SourcepointClientCoordinator.sampleRate,
                 idfaStatus: idfaStatus,
@@ -456,7 +456,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 uuid: state.ccpa?.uuid,
                 messageId: String(state.ccpa?.lastMessage?.id ?? 0),
                 pubData: action.publisherData,
-                pmSaveAndExitVariables: nil, // TODO: convert pm payload from SPAction to this
+                pmSaveAndExitVariables: action.pmPayload,
                 propertyId: propertyId,
                 sampleRate: SourcepointClientCoordinator.sampleRate
             )

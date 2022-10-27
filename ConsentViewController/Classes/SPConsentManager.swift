@@ -86,8 +86,8 @@ import UIKit
     var storage: SPLocalStorage
     var messageControllersStack: [SPMessageView] = []
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    var ccpaUUID: String { storage.localState?["ccpa"]?.dictionaryValue?["uuid"] as? String ?? "" }
-    var gdprUUID: String { storage.localState?["gdpr"]?.dictionaryValue?["uuid"] as? String ?? "" }
+    var ccpaUUID: String? { spCoordinator.ccpaUUID }
+    var gdprUUID: String? { spCoordinator.gdprUUID }
     var iOSMessagePartitionUUID: String?
     var messagesToShow = 0
     var responsesToReceive = 0
@@ -432,7 +432,7 @@ import UIKit
     }
 
     public func customConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
-        guard !gdprUUID.isEmpty else {
+        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
             onError(PostingConsentWithoutConsentUUID())
             return
         }
@@ -463,7 +463,7 @@ import UIKit
     }
 
     public func deleteCustomConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
-        guard !gdprUUID.isEmpty else {
+        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
             onError(PostingConsentWithoutConsentUUID())
             return
         }
@@ -518,10 +518,11 @@ extension SPConsentManager: SPMessageUIDelegate {
     func reportIdfaStatus(status: SPIDFAStatus, messageId: Int?) {
         var uuid = ""
         var uuidType: SPCampaignType?
-        if !gdprUUID.isEmpty {
+        if let gdprUUID = gdprUUID, gdprUUID.isNotEmpty() {
             uuid = gdprUUID
             uuidType = .gdpr
-        } else if !ccpaUUID.isEmpty {
+        }
+        if let ccpaUUID = ccpaUUID, ccpaUUID.isNotEmpty() {
             uuid = ccpaUUID
             uuidType = .ccpa
         }
