@@ -83,3 +83,14 @@ extension SPIDFAStatus: Codable {
         }
     }
 }
+
+// Used as a shim for the methods from `SPIDFAStatus` enum.
+@objcMembers public class SPIDFAStatusBridge: NSObject {
+    public static func current() -> SPIDFAStatus {
+        SPIDFAStatus.current()
+    }
+
+    public static func currentString() -> String {
+        current().description
+    }
+}

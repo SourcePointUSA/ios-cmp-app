@@ -145,6 +145,10 @@ class MetaApp: XCUIApplication {
         alerts["alertView"].scrollViews.otherElements.buttons["OK"].firstMatch
     }
 
+    var sdkStatus: XCUIElement {
+        staticTexts["sdkStatusLabel"]
+    }
+
     func addPropertyDetails() {
         deleteProperty()
         expect(self.propertyList).toEventually(showUp())
@@ -319,7 +323,6 @@ class MetaApp: XCUIApplication {
         swipeUp()
         gdprCampaigntableviewcellCell = tables.children(matching: .cell).matching(identifier: self.propertyData.campaignTableViewCell).element(boundBy: 0)
     }
-
 }
 
 extension MetaApp: GDPRUI {

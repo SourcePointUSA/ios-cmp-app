@@ -1,0 +1,57 @@
+{
+  "configurations" : [
+    {
+      "id" : "B16110D4-4D79-4DBB-9823-E793AD0D1178",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:Pods\/Pods.xcodeproj",
+          "identifier" : "374151914BA6B7C6A7C04A46512F48FA",
+          "name" : "ConsentViewController"
+        }
+      ]
+    },
+    "environmentVariableEntries" : [
+      {
+        "enabled" : false,
+        "key" : "OS_ACTIVITY_MODE",
+        "value" : "disable"
+      },
+      {
+        "key" : "WORMHOLY_SHAKE_ENABLED",
+        "value" : "NO"
+      }
+    ],
+    "maximumTestRepetitions" : 10,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ConsentViewController.xcodeproj",
+      "identifier" : "607FACCF1AFB9204008FA782",
+      "name" : "ConsentViewController_Example"
+    },
+    "testRepetitionMode" : "retryOnFailure"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ConsentViewController.xcodeproj",
+        "identifier" : "82FC4D3923983231002F08E5",
+        "name" : "ConsentViewController_ExampleTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ConsentViewController.xcodeproj",
+        "identifier" : "8214B276249CC13B00167BFE",
+        "name" : "SPGDPRExampleAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

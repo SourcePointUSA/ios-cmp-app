@@ -117,4 +117,8 @@ class ExampleApp: XCUIApplication {
         /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
         staticTexts["unknown"].exists
     }
+
+    var sdkStatusLabel: XCUIElement {
+        staticTexts["sdkStatusLabel"]
+    }
 }

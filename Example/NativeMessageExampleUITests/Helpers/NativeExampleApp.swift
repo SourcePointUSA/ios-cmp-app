@@ -39,7 +39,9 @@ class FirstLayerMessage: XCUIApplication {
 class NativeExampleApp: XCUIApplication {
     class CCPAPrivacyManager:XCUIApplication {
         private var container: XCUIElement {
-            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch     //somehow ccpas' pm is the same as gdprs'
+            // There's a bug in the native message builder for CCPA, only GDPR PMs show as options
+            // This should be fixed once https://sourcepoint.atlassian.net/browse/DIA-1394 is fixed
+            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch
         }
 
         var messageTitle: XCUIElement {
@@ -131,5 +133,9 @@ class NativeExampleApp: XCUIApplication {
         /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
         /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
         staticTexts["unknown"].exists
+    }
+
+    var sdkStatusLabel: XCUIElement {
+        staticTexts["sdkStatusLabel"]
     }
 }

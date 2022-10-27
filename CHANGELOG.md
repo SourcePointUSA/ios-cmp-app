@@ -1,3 +1,6 @@
+# 6.7.2 (Oct, 26, 2022)
+* Added support to custom actions coming from the privacy manager. [#391](https://github.com/SourcePointUSA/ios-cmp-app/pull/391)
+
 # 6.7.1 (Sep, 22, 2022)
 * Flipped default value of cleanUserDataOnError from `true` to `false`.
 In the event of an error, the SDK will now, by default, keep consent data unchanged while prior to this release the SDK would remove all its data from the user's device.

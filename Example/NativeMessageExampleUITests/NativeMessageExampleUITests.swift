@@ -17,7 +17,7 @@ class NativeMessageExampleUITests: QuickSpec {
     func acceptAtt() {
         expect(self.app.attPrePrompt.okButton).toEventually(showUp())
         app.attPrePrompt.okButton.tap()
-        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
+        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
         app.attPrePrompt.attAlertAllowButton.tap()
     }
 
@@ -57,9 +57,8 @@ class NativeMessageExampleUITests: QuickSpec {
 
     override func spec() {
         beforeSuite {
-            self.continueAfterFailure = false
             self.app = NativeExampleApp()
-            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.timeout = .seconds(30)
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
@@ -74,34 +73,26 @@ class NativeMessageExampleUITests: QuickSpec {
 
         it("Accept all through 1st layer messages") {
             self.runAttScenario()
+
+            // assert the PM's cancel button navigates the user back to the 1st layer
+            self.showGDPRPMViaFirstLayerMessage()
+            self.app.gdprPM.cancelButton.tap()
             self.acceptGDPRMessage()
+
             self.acceptCCPAMessage()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+
             self.app.relaunch()
-            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
         it("Accept all through 2nd layer") {
             self.runAttScenario()
-            
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
-            self.app.relaunch()
-            expect(self.app.gdprMessage.messageTitle).notTo(showUp())
-            
             self.showCCPAPMViaFirstLayerMessage()
             self.app.ccpaPM.acceptAllButton.tap()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())  //somehow ccpas' pm is the same as gdprs'
             self.app.relaunch()
-            expect(self.app.ccpaMessage.messageTitle).notTo(showUp())
-        }
-
-        it("Dismissing 2nd layer returns to first layer message") {
-            self.runAttScenario()
-            self.showGDPRPMViaFirstLayerMessage()
-            self.app.gdprPM.cancelButton.tap()
-            expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
     }
 }
