@@ -149,7 +149,7 @@ import UIKit
                     pmData: content,
                     delegate: self
                 )
-                controller.categories = message?.categories ?? []
+                controller.categories = message.categories ?? []
                 controller.delegate = self
                 return controller
             }
@@ -364,7 +364,7 @@ import UIKit
         }
         loadWebPrivacyManager(.gdpr, pmUrl)
         #elseif os(tvOS)
-        spClient.getGDPRMessage(propertyId: propertyIdString, consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
+        spClient.getGDPRMessage(propertyId: String(propertyId), consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
             case .success(let message):
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {

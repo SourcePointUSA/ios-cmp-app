@@ -15,7 +15,8 @@ struct ChoiceAllResponse: Decodable {
         let rejectedAll: Bool
         let status: CCPAConsentStatus
 
-        let uspstring: String?             // does not exist in response, Must be NOT NULLABLE
+        // TODO: change to `String` once the API starts returning it
+        let uspstring: String?
 
         let rejectedVendors: [String?]?
         let rejectedCategories: [String?]?
