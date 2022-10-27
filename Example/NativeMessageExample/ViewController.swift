@@ -28,7 +28,9 @@ class ViewController: UIViewController {
     )
     let gdprPMId = "566358"
     let ccpaPMId = "566360"
+    var sdkStatus: SDKStatus = .notStarted
 
+    @IBOutlet weak var sdkStatusLabel: UILabel!
     @IBOutlet weak var idfaStatusLabel: UILabel!
     @IBOutlet weak var myVendorAcceptedLabel: UILabel!
     @IBOutlet weak var acceptMyVendorButton: UIButton!
@@ -75,8 +77,10 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
+        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         consentManager.loadMessage()
+        sdkStatus = .running
+        updateUI()
     }
 }
 
@@ -114,8 +118,14 @@ extension ViewController: SPDelegate {
         dismiss(animated: true)
     }
 
+    func onSPFinished(userData: SPUserData) {
+        sdkStatus = .finished
+        updateUI()
+    }
+
     func onError(error: SPError) {
         print(error)
+        sdkStatus = .errored
         removeSpinner()
         updateUI()
     }
@@ -127,6 +137,7 @@ extension ViewController {
         updateMyVendorUI()
         updatePMButtons()
         updateIDFAStatusLabel()
+        updateSDKStatusLabel()
     }
 
     func updateIDFAStatusLabel() {
@@ -166,4 +177,15 @@ extension ViewController {
         gdprPMButton.isEnabled = gdprApplies
         ccpaPMButton.isEnabled = ccpaApplies
     }
+
+    func updateSDKStatusLabel() {
+        sdkStatusLabel.text = sdkStatus.rawValue
+    }
+}
+
+enum SDKStatus: String {
+    case notStarted = "Not Started"
+    case running = "Running"
+    case finished = "Finished"
+    case errored = "Errored"
 }

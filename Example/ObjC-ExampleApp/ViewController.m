@@ -7,10 +7,14 @@
 //
 
 #import "ViewController.h"
+#import "SPSdkStatus.h"
 @import ConsentViewController;
 
 @interface ViewController ()<SPDelegate> {
     SPConsentManager *consentManager;
+    SPSdkStatus sdkStatus;
+    __weak IBOutlet UILabel *sdkStatusLabel;
+    __weak IBOutlet UILabel *idfaValueLabel;
 }
 @end
 
@@ -18,6 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupAccessibilityIds];
+
+    sdkStatus = SPSdkStatusNotStarted;
+    [self updateUIFields];
 
     SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
@@ -38,6 +46,33 @@
                       delegate: self];
 
     [consentManager loadMessageForAuthId: NULL publisherData:NULL];
+    sdkStatus = SPSdkStatusRunning;
+    [self updateUIFields];
+}
+
+- (void)setupAccessibilityIds {
+    sdkStatusLabel.accessibilityIdentifier = @"sdkStatusLabel";
+    idfaValueLabel.accessibilityIdentifier = @"idfaStatusLabel";
+    [self setIsAccessibilityElement:false];
+    [self setAccessibilityElements: @[sdkStatusLabel, idfaValueLabel]];
+}
+
+- (void)updateUIFields {
+    idfaValueLabel.text = [SPIDFAStatusBridge currentString];
+    sdkStatusLabel.text = [self sdkStatusToString: sdkStatus];
+}
+
+- (NSString*)sdkStatusToString: (SPSdkStatus)status {
+    switch(status) {
+        case SPSdkStatusNotStarted:
+            return @"Not Started";
+        case SPSdkStatusRunning:
+            return @"Running";
+        case SPSdkStatusFinished:
+            return @"Finished";
+        case SPSdkStatusNotErrored:
+            return @"Errored";
+    }
 }
 
 - (void)onSPUIReady:(SPMessageViewController * _Nonnull)controller {
@@ -49,10 +84,19 @@
 }
 
 - (void)onSPUIFinished:(SPMessageViewController * _Nonnull)controller {
+    [self updateUIFields];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
+- (void)onErrorWithError:(SPError *)error {
+    sdkStatus = SPSdkStatusNotErrored;
+    [self updateUIFields];
+    NSLog(@"Something went wrong: %@", error);
+}
+
 - (void)onConsentReadyWithUserData:(SPUserData *)userData {
+    sdkStatus = SPSdkStatusFinished;
+    [self updateUIFields];
     NSLog(@"GDPR Applies: %d", userData.objcGDPRApplies);
     NSLog(@"GDPR: %@", userData.objcGDPRConsents);
     NSLog(@"CCPA Applies: %d", userData.objcCCPAApplies);

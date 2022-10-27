@@ -73,7 +73,7 @@ class SourcePointMetaAppUITests: QuickSpec {
             self.app.backButton.tap()
             expect(self.app.propertyList).toEventually(showUp())
             self.app.deleteProperty()
-            expect(self.app.propertyItem).notTo(showUp())
+            expect(self.app.propertyItem.exists).to(beFalse())
         }
 
         /**
@@ -96,7 +96,7 @@ class SourcePointMetaAppUITests: QuickSpec {
                 self.app.authIdTextFieldOutlet.tap()
                 self.app.authIdTextFieldOutlet.typeText(self.app.dateFormatterForAuthID())
                 self.app.addGDPRPropertyDetails(targetingKey: self.propertyData.targetingKey, targetingValue: self.propertyData.targetingFrenchValue)
-                expect(self.app.consentMessage).toEventually(showUp())
+                expect(self.app.sdkStatus).toEventually(containText("Finished"))
             }
         }
 
@@ -110,7 +110,7 @@ class SourcePointMetaAppUITests: QuickSpec {
             self.app.dismissMessageButton.tap()
             expect(self.app.ccpaConsentMessage).toEventually(showUp())
             self.app.dismissMessageButton.tap()
-            expect(self.app.ccpaConsentMessage).notTo(showUp())
+            expect(self.app.sdkStatus).toEventually(containText("Finished"))
         }
 
         it("Check feature tab as default PM tab") {
