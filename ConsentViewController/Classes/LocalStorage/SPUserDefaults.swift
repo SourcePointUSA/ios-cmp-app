@@ -67,12 +67,12 @@ class SPUserDefaults: SPLocalStorage {
         set { storage.set(newValue, forKey: SPUserDefaults.CCPA_CHILD_PM_ID_KEY) }
     }
 
-    var spState: SourcepointClientCoordinator.State {
+    var spState: SourcepointClientCoordinator.State? {
         get {
             storage.object(
                 ofType: SourcepointClientCoordinator.State.self,
                 forKey: SPUserDefaults.SP_STATE_KEY
-            ) ?? .init()
+            )
         }
         set { storage.setObject(newValue, forKey: SPUserDefaults.SP_STATE_KEY) }
     }
@@ -94,6 +94,6 @@ class SPUserDefaults: SPLocalStorage {
         userData = SPUserData()
         gdprChildPmId = nil
         ccpaChildPmId = nil
-        spState = .init()
+        spState = nil
     }
 }

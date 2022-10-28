@@ -44,6 +44,12 @@ protocol SPClientCoordinator {
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
     func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String)
+    func deleteCustomConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (Result<SPGDPRConsent, SPError>) -> Void
+    )
 }
 
 class SourcepointClientCoordinator: SPClientCoordinator {
@@ -235,7 +241,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.pubData = pubData
         self.storage = storage
 
-        self.state = self.storage.spState
+        self.state = self.storage.spState ?? .init()
         if campaigns.gdpr != nil, self.state.gdpr == nil {
             self.state.gdpr = .empty()
         }
@@ -544,5 +550,33 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             deviceFamily: deviceFamily,
             campaignType: error.campaignType
         )
+    }
+
+    func deleteCustomConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (Result<SPGDPRConsent, SPError>
+    ) -> Void) {
+        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
+            handler(Result.failure(PostingConsentWithoutConsentUUID()))
+            return
+        }
+        spClient.deleteCustomConsentGDPR(
+            toConsentUUID: gdprUUID,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            propertyId: propertyId
+        ) { result in
+            switch result {
+                case .success(let consents):
+                    self.state.gdpr?.vendorGrants = consents.grants
+                    self.storage.spState = self.state
+                    handler(Result.success(self.state.gdpr ?? .empty()))
+                case .failure(let error):
+                    handler(Result.failure((error)))
+            }
+        }
     }
 }

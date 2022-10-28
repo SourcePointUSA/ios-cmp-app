@@ -450,31 +450,20 @@ import UIKit
         }
     }
 
-    public func deleteCustomConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
-        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
-            onError(PostingConsentWithoutConsentUUID())
-            return
-        }
-        spClient.deleteCustomConsentGDPR(
-            toConsentUUID: gdprUUID,
+    public func deleteCustomConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (SPGDPRConsent) -> Void
+    ) {
+        spCoordinator.deleteCustomConsentGDPR(
             vendors: vendors,
             categories: categories,
-            legIntCategories: legIntCategories,
-            propertyId: propertyId
+            legIntCategories: legIntCategories
         ) { [weak self] result in
             switch result {
-            case .success(let consents):
-                let newGDPRConsents = SPGDPRConsent(
-                    uuid: self?.gdprUUID,
-                    vendorGrants: consents.grants,
-                    euconsent: self?.storage.userData.gdpr?.consents?.euconsent ?? "",
-                    tcfData: self?.storage.userData.gdpr?.consents?.tcfData ?? SPJson()
-                )
-                self?.storage.userData = SPUserData(
-                    gdpr: SPConsent<SPGDPRConsent>(consents: newGDPRConsents, applies: self?.storage.userData.gdpr?.applies ?? false),
-                    ccpa: self?.storage.userData.ccpa
-                )
-                handler(newGDPRConsents)
+            case .success(let result):
+                handler(result)
             case .failure(let error):
                 self?.onError(error)
             }
