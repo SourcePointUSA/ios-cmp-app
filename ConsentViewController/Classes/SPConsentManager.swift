@@ -243,7 +243,7 @@ import UIKit
     }
 
     public func gracefullyDegradeOnError(_ error: SPError) {
-        logErrorMetrics(error)
+        spCoordinator.logErrorMetrics(error, osVersion: deviceManager.osVersion(), deviceFamily: deviceManager.deviceFamily())
         let userData = storage.userData
         if !userData.isEqual(SPUserData()) {
             delegate?.onConsentReady?(userData: userData)
@@ -256,22 +256,11 @@ import UIKit
     }
 
     public func onError(_ error: SPError) {
-        logErrorMetrics(error)
+        spCoordinator.logErrorMetrics(error, osVersion: deviceManager.osVersion(), deviceFamily: deviceManager.deviceFamily())
         if cleanUserDataOnError {
             SPConsentManager.clearAllData()
         }
         delegate?.onError?(error: error)
-    }
-
-    private func logErrorMetrics(_ error: SPError) {
-        spClient.errorMetrics(
-            error,
-            propertyId: propertyId,
-            sdkVersion: SPConsentManager.VERSION,
-            OSVersion: deviceManager.osVersion(),
-            deviceFamily: deviceManager.osVersion(),
-            campaignType: error.campaignType
-        )
     }
 
     private func selectPrivacyManagerId(fallbackId: String, groupPmId: String?, childPmId: String?) -> String {
@@ -281,7 +270,7 @@ import UIKit
             return childPmId
         }
         if hasGroupPmId, !hasChildPmId {
-            logErrorMetrics(MissingChildPmIdError(usedId: fallbackId))
+            spCoordinator.logErrorMetrics(MissingChildPmIdError(usedId: fallbackId), osVersion: deviceManager.osVersion(), deviceFamily: deviceManager.deviceFamily())
         }
         return fallbackId
     }

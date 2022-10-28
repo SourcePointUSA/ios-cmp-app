@@ -43,6 +43,7 @@ protocol SPClientCoordinator {
     func loadMessages(_ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
+    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String)
 }
 
 class SourcepointClientCoordinator: SPClientCoordinator {
@@ -534,4 +535,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
+    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String) {
+        spClient.errorMetrics(
+            error,
+            propertyId: propertyId,
+            sdkVersion: SPConsentManager.VERSION,
+            OSVersion: osVersion,
+            deviceFamily: deviceFamily,
+            campaignType: error.campaignType
+        )
+    }
 }
