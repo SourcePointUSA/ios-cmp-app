@@ -42,6 +42,7 @@ protocol SPClientCoordinator {
 
     func loadMessages(_ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
+    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
 }
 
 class SourcepointClientCoordinator: SPClientCoordinator {
@@ -52,8 +53,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var additionsChangeDate, legalBasisChangeDate: SPDateCreated
         }
 
+        struct AttCampaign: Codable {
+            var lastMessage: LastMessageData?
+        }
+
         var gdpr: SPGDPRConsent?
         var ccpa: SPCCPAConsent?
+        var ios14: AttCampaign?
         var gdprMetadata: GDPRMetaData?
         var wasSampled: Bool?
         var localState: SPJson?
@@ -235,6 +241,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if campaigns.ccpa != nil, self.state.ccpa == nil {
             self.state.ccpa = .empty()
         }
+        if campaigns.ios14 != nil, self.state.ios14 == nil {
+            self.state.ios14 = .init()
+        }
 
         guard let spClient = spClient else {
             self.spClient = SourcePointClient(
@@ -337,6 +346,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 state.gdpr?.lastMessage = LastMessageData(from: $0.metadata)
             } else if $0.type == .ccpa {
                 state.ccpa?.lastMessage = LastMessageData(from: $0.metadata)
+            } else if $0.type == .ios14 {
+                state.ios14?.lastMessage = LastMessageData(from: $0.metadata)
             }
         }
         // TODO: store consents if any comes in the response
@@ -500,4 +511,27 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             }
         }
     }
+
+    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String) {
+        var uuid = ""
+        var uuidType: SPCampaignType?
+        if let gdprUUID = gdprUUID, gdprUUID.isNotEmpty() {
+            uuid = gdprUUID
+            uuidType = .gdpr
+        }
+        if let ccpaUUID = ccpaUUID, ccpaUUID.isNotEmpty() {
+            uuid = ccpaUUID
+            uuidType = .ccpa
+        }
+        spClient.reportIdfaStatus(
+            propertyId: propertyId,
+            uuid: uuid,
+            uuidType: uuidType,
+            messageId: state.ios14?.lastMessage?.id,
+            idfaStatus: status,
+            iosVersion: osVersion,
+            partitionUUID: state.ios14?.lastMessage?.partitionUUID
+        )
+    }
+
 }

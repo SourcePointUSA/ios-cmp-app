@@ -203,7 +203,6 @@ import UIKit
         }
     }
 
-    // TODO: move this code to SPClientCoordinator
     func report(action: SPAction) {
         responsesToReceive += 1
         switch action.campaignType {
@@ -515,28 +514,6 @@ extension SPConsentManager: SPMessageUIDelegate {
         }
     }
 
-    func reportIdfaStatus(status: SPIDFAStatus, messageId: Int?) {
-        var uuid = ""
-        var uuidType: SPCampaignType?
-        if let gdprUUID = gdprUUID, gdprUUID.isNotEmpty() {
-            uuid = gdprUUID
-            uuidType = .gdpr
-        }
-        if let ccpaUUID = ccpaUUID, ccpaUUID.isNotEmpty() {
-            uuid = ccpaUUID
-            uuidType = .ccpa
-        }
-        spClient.reportIdfaStatus(
-            propertyId: propertyId,
-            uuid: uuid,
-            uuidType: uuidType,
-            messageId: messageId,
-            idfaStatus: status,
-            iosVersion: deviceManager.osVersion(),
-            partitionUUID: iOSMessagePartitionUUID
-        )
-    }
-
     public func action(_ action: SPAction, from controller: UIViewController) {
         onAction(action, from: controller)
         switch action.type {
@@ -558,7 +535,10 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 let spController = controller as? SPMessageViewController
-                self?.reportIdfaStatus(status: status, messageId: Int(spController?.messageId ?? ""))
+                self?.spCoordinator.reportIdfaStatus(
+                    status: status,
+                    osVersion: self?.deviceManager.osVersion() ?? ""
+                )
                 if status == .accepted {
                     action.type = .IDFAAccepted
                     self?.onAction(action, from: controller)
