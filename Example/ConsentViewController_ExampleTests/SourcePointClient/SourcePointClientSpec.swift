@@ -229,7 +229,7 @@ class SourcePointClientSpec: QuickSpec {
                             client.customConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
                                 switch result {
                                 case .success(let response):
-                                    expect(response).to(equal(CustomConsentResponse(
+                                    expect(response).to(equal(AddOrDeleteCustomConsentResponse(
                                         grants: [
                                             "vendorId": SPGDPRVendorGrant(granted: true, purposeGrants: ["purposeId": true])
                                         ]
@@ -329,7 +329,7 @@ class SourcePointClientSpec: QuickSpec {
                                 switch result {
                                 case .success(let response):
                                     expect(response).to(equal(
-                                        DeleteCustomConsentResponse(grants: [
+                                        AddOrDeleteCustomConsentResponse(grants: [
                                             "vendorId": SPGDPRVendorGrant(
                                                 granted: false,
                                                 purposeGrants: ["purposeId": false]

@@ -419,34 +419,28 @@ import UIKit
         #endif
     }
 
-    public func customConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
-        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
-            onError(PostingConsentWithoutConsentUUID())
-            return
+    @nonobjc func handleCustomConsentResult(
+        _ result: Result<SPGDPRConsent, SPError>,
+        handler: @escaping (SPGDPRConsent) -> Void
+    ) {
+        switch result {
+            case .success(let result): handler(result)
+            case .failure(let error): onError(error)
         }
-        spClient.customConsentGDPR(
-            toConsentUUID: gdprUUID,
+    }
+
+    public func customConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (SPGDPRConsent) -> Void
+    ) {
+        spCoordinator.customConsentGDPR(
             vendors: vendors,
             categories: categories,
-            legIntCategories: legIntCategories,
-            propertyId: propertyId
+            legIntCategories: legIntCategories
         ) { [weak self] result in
-            switch result {
-            case .success(let consents):
-                let newGDPRConsents = SPGDPRConsent(
-                    uuid: self?.gdprUUID,
-                    vendorGrants: consents.grants,
-                    euconsent: self?.storage.userData.gdpr?.consents?.euconsent ?? "",
-                    tcfData: self?.storage.userData.gdpr?.consents?.tcfData ?? SPJson()
-                )
-                self?.storage.userData = SPUserData(
-                    gdpr: SPConsent<SPGDPRConsent>(consents: newGDPRConsents, applies: self?.storage.userData.gdpr?.applies ?? false),
-                    ccpa: self?.storage.userData.ccpa
-                )
-                handler(newGDPRConsents)
-            case .failure(let error):
-                self?.onError(error)
-            }
+            self?.handleCustomConsentResult(result, handler: handler)
         }
     }
 
@@ -461,12 +455,7 @@ import UIKit
             categories: categories,
             legIntCategories: legIntCategories
         ) { [weak self] result in
-            switch result {
-            case .success(let result):
-                handler(result)
-            case .failure(let error):
-                self?.onError(error)
-            }
+            self?.handleCustomConsentResult(result, handler: handler)
         }
     }
 }

@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = "SwiftLint-tvOS";
+			productName = "SwiftLint-tvOS";
 		};
 		2B03D5FD26A26B7D62142EA4492AEB83 /* SwiftLint-iOS */ = {
 			isa = PBXAggregateTarget;
@@ -24,6 +25,7 @@
 			dependencies = (
 			);
 			name = "SwiftLint-iOS";
+			productName = "SwiftLint-iOS";
 		};
 /* End PBXAggregateTarget section */
 
@@ -36,7 +38,7 @@
 		01BF4E547315CF47EB65F9EC1F16AB63 /* SP_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8673FB85EEFE0B8C2FAE00DDE53F6A06 /* SP_Icon.png */; };
 		021AF1A4B14E13683A2701099605008F /* BeLessThanOrEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DA9D00D410FBEC8D7727DC974F42DB /* BeLessThanOrEqual.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		027087C8E2EEF05E5382DB15E5240843 /* SPNativeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F947D4AC863FAF6C7B7C900F9539F99 /* SPNativeMessage.swift */; };
-		034A7D253EF67D79093F3F3E7CBAF91D /* DeleteCustomConsentRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequestResponse.swift */; };
+		034A7D253EF67D79093F3F3E7CBAF91D /* DeleteCustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequest.swift */; };
 		041B655D7F5932F03A65C154BC02BDAA /* IQInvocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC79A130E1A171B877FD9CCD92B9AE4 /* IQInvocation.swift */; };
 		0496E7FAA26B24DA18937A4524CCCA7F /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C70B48923C8F58937A144330BDB750 /* RequestModel.swift */; };
 		04B0884964D9592302CA654E0B67E80E /* IQUIView+Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD321A99C9D557601AE5721FA117108A /* IQUIView+Hierarchy.swift */; };
@@ -78,7 +80,7 @@
 		1673801F893DD37D8EF0010FB46F7A6E /* CwlCatchException.h in Headers */ = {isa = PBXBuildFile; fileRef = 71E6F5FC29121936842F59490B354F70 /* CwlCatchException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		167AAB25949728F2DDAEB849F507721F /* NMBExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2A8A95FCF27DAE1FFD2B7A5A9C7AE4 /* NMBExpectation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		1740CBB33D469AEDD5D7291A9268FA97 /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5D38DD6E463AE72F57A3061B01BC3 /* IQToolbar.swift */; };
-		174C141A797A9143A2A38748BBB38789 /* DeleteCustomConsentRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequestResponse.swift */; };
+		174C141A797A9143A2A38748BBB38789 /* DeleteCustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequest.swift */; };
 		1762722CED7F11729A0AAA030B957C30 /* ConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694F7F481800CA9751E1750DDA160328 /* ConnectivityManager.swift */; };
 		182FCA31F5F2A0D0EB0688BF8402AAF3 /* Barcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122254B695B43D1F212042ACAC0F340 /* Barcode.png */; };
 		1A9B9579E46EFBA63C5F57A6B17B5ECA /* IQKeyboardManagerSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EE6637159A8B26FD5257C9A2223315 /* IQKeyboardManagerSwift-dummy.m */; };
@@ -284,6 +286,8 @@
 		82A39E5EA67419BEC50788B8DE8D4562 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6350587403D45403E667216ECE104468 /* XCTest.framework */; };
 		82C1DD0B4A8CDF4E61A3C4E71B6CBCD7 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C1E9A89A5AEE672AF2D09FCE45E559 /* Collection.swift */; };
 		82FAA3ADCB51EA2075725FE1255A6B68 /* SPMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3451D9F8D9F515A294D60E1E37B9518F /* SPMessageViewController.swift */; };
+		82FFB412290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FFB411290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift */; };
+		82FFB413290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FFB411290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift */; };
 		83C60180EEA0FD6B7F22FF74E2DCAFC6 /* WormholyMethodSwizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A89CD934DA213E1FF06F9D6E682A979 /* WormholyMethodSwizzling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		83DA063BD3BDD319F4E70E0C8FE58053 /* SPNativeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686429C799F0348FDEF7A28120881C67 /* SPNativeUI.swift */; };
 		841BC9A6B15C2D0EB73A2645E9CC0021 /* RequestResponseExportOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FD881A5AEAEDB740CD432ADF92AE3 /* RequestResponseExportOption.swift */; };
@@ -358,7 +362,7 @@
 		A20ABC648777D13FA9492E559D1498A3 /* ExampleHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECA3F246AD481E919AA461B808E7E9 /* ExampleHooks.swift */; };
 		A3FC28068D62B6D15C383EAD9C3B37CD /* javascript in Resources */ = {isa = PBXBuildFile; fileRef = 39378D7ABA1EA54DCF0C40D503402EC6 /* javascript */; };
 		A41C6A275D182D7DD0E6F852A9EFF182 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E580D0892D2624112A095274EAF1A4 /* DSL.swift */; };
-		A488A3B687E509E425E392A7C45F1ED3 /* CustomConsentRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequestResponse.swift */; };
+		A488A3B687E509E425E392A7C45F1ED3 /* CustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequest.swift */; };
 		A4982B494F2E3CB066938970D6F3F9E1 /* AllPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B198E2E192D8EB20926AF49460BDB6 /* AllPass.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		A4BAEE317BFF650DCC888FC67BFBF7EF /* IQKeyboardManager+UIKeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D813AE579E160E7A152DBEBE716D019 /* IQKeyboardManager+UIKeyboardNotification.swift */; };
 		A4C9EB97F20B7C24E713C0050829D6E2 /* Wormholy-Wormholy in Resources */ = {isa = PBXBuildFile; fileRef = AA92ED38E716E03D3FC758C810953B95 /* Wormholy-Wormholy */; };
@@ -433,7 +437,7 @@
 		C9A1460F2A16077DDB1980B34633C95F /* BeLessThanOrEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DA9D00D410FBEC8D7727DC974F42DB /* BeLessThanOrEqual.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		CAD529C03DE828C7F4BE2D80590835A5 /* ExampleMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D68CAC001F29736340923B9A3B62A8D /* ExampleMetadata.swift */; };
 		CB222EECBF6ADCA2A55496B8233B0EAD /* GDPRPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63C044AB4E6F8936F49848C41F982D9 /* GDPRPrivacyManagerViewResponse.swift */; };
-		CB9CA368EC9B8496AC108D015B39D37C /* CustomConsentRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequestResponse.swift */; };
+		CB9CA368EC9B8496AC108D015B39D37C /* CustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequest.swift */; };
 		CBF5AB34B6558EFDB14CCEE043C1DFEB /* URL+FileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007B41373D0C528605AD88FE9B30AB37 /* URL+FileName.swift */; };
 		CBFE59FE681599FC1BA0968914A3EE9D /* ConsentViewController-tvOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C8E62ED193EEEC5D3B6A840D1E092819 /* ConsentViewController-tvOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE7A5BE80C7E8800D831F3481B0E4A8C /* NMBStringify.m in Sources */ = {isa = PBXBuildFile; fileRef = 29653418C9461921B8F4D8BD1C80FCCB /* NMBStringify.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -849,7 +853,7 @@
 		18EB1134FF10B1DCF8B426BDEC48D3CD /* Pods-SPGDPRExampleAppUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SPGDPRExampleAppUITests-acknowledgements.plist"; sourceTree = "<group>"; };
 		19110D21508DAB9D98C4C5D0BAF23535 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		1A3A7D928D35E82F5DC4D782D0127D46 /* ResourceBundle-ConsentViewController-ConsentViewController-tvOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "ResourceBundle-ConsentViewController-ConsentViewController-tvOS-Info.plist"; path = "../ConsentViewController-tvOS/ResourceBundle-ConsentViewController-ConsentViewController-tvOS-Info.plist"; sourceTree = "<group>"; };
-		1AA2136FE9E3032EE4E9CBC4351CFFD4 /* jest.config.json */ = {isa = PBXFileReference; includeInIndex = 1; path = jest.config.json; sourceTree = "<group>"; };
+		1AA2136FE9E3032EE4E9CBC4351CFFD4 /* jest.config.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = jest.config.json; sourceTree = "<group>"; };
 		1B0B6E9A5B28360775F8A7312D9F58E6 /* SPLocalStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPLocalStorage.swift; sourceTree = "<group>"; };
 		1BD5CEE049159590D73BF9A4FC6D7230 /* SPGDPRCategoryDetailsViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = SPGDPRCategoryDetailsViewController.xib; sourceTree = "<group>"; };
 		1CDB8AF1872E5C29A73A4B90DEBCBB51 /* SuiteHooks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SuiteHooks.swift; path = Sources/Quick/Hooks/SuiteHooks.swift; sourceTree = "<group>"; };
@@ -914,7 +918,7 @@
 		388AA9C6A66C79EDFEFE17F74E314E0B /* SPMessageUIDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPMessageUIDelegate.swift; path = ConsentViewController/Classes/SPMessageUIDelegate.swift; sourceTree = "<group>"; };
 		3890EC0C63EEC6CC8435B9CC1E95F7EB /* SPPublisherData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPPublisherData.swift; sourceTree = "<group>"; };
 		38B28FE43935D366A5BF392BA39D70A7 /* DispatchTimeInterval.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatchTimeInterval.swift; path = Sources/Nimble/Utils/DispatchTimeInterval.swift; sourceTree = "<group>"; };
-		39378D7ABA1EA54DCF0C40D503402EC6 /* javascript */ = {isa = PBXFileReference; includeInIndex = 1; name = javascript; path = ConsentViewController/Assets/javascript; sourceTree = "<group>"; };
+		39378D7ABA1EA54DCF0C40D503402EC6 /* javascript */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = javascript; path = ConsentViewController/Assets/javascript; sourceTree = "<group>"; };
 		3969C09A0A8C5F8653B661881DCFF4C9 /* Pods-NativeMessageExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NativeMessageExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		39C7CC1EC9EB5DC4CDB46848CD90ACBB /* QuickSpecBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QuickSpecBase.m; path = Sources/QuickObjCRuntime/QuickSpecBase.m; sourceTree = "<group>"; };
 		3A638475AA76E8553E7EC7E3EF1860CC /* IQPreviousNextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQPreviousNextView.swift; path = IQKeyboardManagerSwift/IQToolbar/IQPreviousNextView.swift; sourceTree = "<group>"; };
@@ -928,7 +932,7 @@
 		4008009B2C53F9848ACFCF46239F4FD6 /* Nimble-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Nimble-tvOS.debug.xcconfig"; path = "../Nimble-tvOS/Nimble-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		411FCA03CB020373F4B3F77F24262496 /* Pods-NativeMessageExampleUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NativeMessageExampleUITests-Info.plist"; sourceTree = "<group>"; };
 		4122254B695B43D1F212042ACAC0F340 /* Barcode.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = Barcode.png; sourceTree = "<group>"; };
-		41A50B52F65189DCC3A011EBB7361468 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		41A50B52F65189DCC3A011EBB7361468 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		41AE8D60504CB72BD6C89F026B022550 /* ContainElementSatisfying.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContainElementSatisfying.swift; path = Sources/Nimble/Matchers/ContainElementSatisfying.swift; sourceTree = "<group>"; };
 		41E8E4BC042CA8B81CDABE5A0A95B943 /* DSL+Wait.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DSL+Wait.swift"; path = "Sources/Nimble/DSL+Wait.swift"; sourceTree = "<group>"; };
 		4238C1714541C9C0E1EEA2B7BE6D3C13 /* BeginWith.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeginWith.swift; path = Sources/Nimble/Matchers/BeginWith.swift; sourceTree = "<group>"; };
@@ -957,7 +961,7 @@
 		4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController-iOS-ConsentViewController */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "ConsentViewController-iOS-ConsentViewController"; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7B83AE151902F4E6A74F27D267580F /* ConsentViewController-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ConsentViewController-iOS-dummy.m"; sourceTree = "<group>"; };
 		4C8DC190F07373E08A7ADB7F7721AEA1 /* IQKeyboardManagerSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManagerSwift.debug.xcconfig; sourceTree = "<group>"; };
-		4D855E0D565312A92410B2E86216E906 /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		4D855E0D565312A92410B2E86216E906 /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4DC0937CA87BC41CFA433617DFF4C03C /* Pods-NativePMExampleApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NativePMExampleApp-acknowledgements.plist"; sourceTree = "<group>"; };
 		4E7A144F3A8319086419A14963490931 /* ActionableTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = ActionableTableViewCell.xib; path = Sources/UI/Cells/ActionableTableViewCell.xib; sourceTree = "<group>"; };
 		4E87ECE69962B3D2EA237A18A2DD6964 /* Wormholy.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Wormholy.modulemap; sourceTree = "<group>"; };
@@ -1017,9 +1021,9 @@
 		6C08D5BFC23F43C76B78B89B5DCD7A0C /* Pods-NativeMessageExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NativeMessageExample-dummy.m"; sourceTree = "<group>"; };
 		6C148DFC165CEC99176A4896D42A4497 /* WHView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WHView.swift; path = Sources/Subclasses/WHView.swift; sourceTree = "<group>"; };
 		6DA2DE102C789962E346D2F8134D43FD /* SimpleClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SimpleClient.swift; sourceTree = "<group>"; };
-		6DD976C13AF9F0E4418E2D3330A38A07 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		6DD976C13AF9F0E4418E2D3330A38A07 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6EC0B6A01DD8D3DBF631B3883E78017D /* RequestCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = RequestCell.xib; path = Sources/UI/Cells/RequestCell.xib; sourceTree = "<group>"; };
-		6ED3725E254705711C8ED23DE70D534B /* SPJSReceiver.js */ = {isa = PBXFileReference; includeInIndex = 1; path = SPJSReceiver.js; sourceTree = "<group>"; };
+		6ED3725E254705711C8ED23DE70D534B /* SPJSReceiver.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = SPJSReceiver.js; sourceTree = "<group>"; };
 		6F46CEC7FF96495AAB51070D3B79084C /* String+C99ExtendedIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+C99ExtendedIdentifier.swift"; path = "Sources/Quick/String+C99ExtendedIdentifier.swift"; sourceTree = "<group>"; };
 		7123DBB90E064A3DC804A7D74BAA6E2F /* BeWithin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeWithin.swift; path = Sources/Nimble/Matchers/BeWithin.swift; sourceTree = "<group>"; };
 		71619CE1B21E896553D500647F98A8A9 /* SPGDPRManagePreferenceViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPGDPRManagePreferenceViewController.swift; sourceTree = "<group>"; };
@@ -1039,7 +1043,7 @@
 		76A774798E18F29E3649A9609071D00B /* Pods-NativePMExampleApp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NativePMExampleApp.modulemap"; sourceTree = "<group>"; };
 		77127EF08FC2822BFC3988A4F73C29D3 /* Pods-NativeMessageExample-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NativeMessageExample-Info.plist"; sourceTree = "<group>"; };
 		771F57F7CE64E3457CFA1583F8FC2C40 /* Match.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Match.swift; path = Sources/Nimble/Matchers/Match.swift; sourceTree = "<group>"; };
-		7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequestResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CustomConsentRequestResponse.swift; sourceTree = "<group>"; };
+		7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CustomConsentRequest.swift; sourceTree = "<group>"; };
 		77E3B3E65DA28BA7B151342A5651AE55 /* Nimble-iOS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-iOS-prefix.pch"; sourceTree = "<group>"; };
 		77EF19E2B5B51F9BD75153257E153318 /* BeAKindOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeAKindOf.swift; path = Sources/Nimble/Matchers/BeAKindOf.swift; sourceTree = "<group>"; };
 		7845CC0A2FB0FCEA64AFC1EB5340AAA6 /* CwlMachBadInstructionHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CwlMachBadInstructionHandler.m; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/CwlMachBadInstructionHandler.m; sourceTree = "<group>"; };
@@ -1062,6 +1066,7 @@
 		81631080A0BD82ADF0D0D4437C4E27B5 /* Pods-SourcePointMetaAppUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SourcePointMetaAppUITests-umbrella.h"; sourceTree = "<group>"; };
 		81ED03AB7884B5D1101A89F720BF884C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8211ACC4C8A71FFBCB3028F1994C1497 /* Quick-tvOS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Quick-tvOS-prefix.pch"; path = "../Quick-tvOS/Quick-tvOS-prefix.pch"; sourceTree = "<group>"; };
+		82FFB411290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrDeleteCustomConsentResponse.swift; sourceTree = "<group>"; };
 		835672935DFDF859D5307D6C798EBFC4 /* Pods-NativeMessageExampleUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NativeMessageExampleUITests.modulemap"; sourceTree = "<group>"; };
 		841DF5C97898FBFFA8B3F559F4F735E9 /* Pods-NativeMessageExample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-NativeMessageExample.modulemap"; sourceTree = "<group>"; };
 		842037B8EE3CAB22D56265CF9DF362D9 /* Pods-SourcePointMetaApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SourcePointMetaApp-umbrella.h"; sourceTree = "<group>"; };
@@ -1069,7 +1074,7 @@
 		84B4D5019FA8A0B6CE5BBC01EE15F104 /* Nimble-tvOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Nimble-tvOS-Info.plist"; path = "../Nimble-tvOS/Nimble-tvOS-Info.plist"; sourceTree = "<group>"; };
 		85EE636AE5C776C5E38FDEA121D62D43 /* RequestDetailViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestDetailViewController.swift; path = Sources/UI/RequestDetailViewController.swift; sourceTree = "<group>"; };
 		8673FB85EEFE0B8C2FAE00DDE53F6A06 /* SP_Icon.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = SP_Icon.png; sourceTree = "<group>"; };
-		86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequestResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeleteCustomConsentRequestResponse.swift; sourceTree = "<group>"; };
+		86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeleteCustomConsentRequest.swift; sourceTree = "<group>"; };
 		86CFA968E3EB8607536F813E1419EDB3 /* ConsentViewController-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "ConsentViewController-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		87172EF1A345A2D16C53946C51C90897 /* IQUITextFieldView+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQUITextFieldView+Additions.swift"; path = "IQKeyboardManagerSwift/Categories/IQUITextFieldView+Additions.swift"; sourceTree = "<group>"; };
 		87864F6A20D7396C211DF62AB027E80A /* Nimble-tvOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Nimble-tvOS-umbrella.h"; path = "../Nimble-tvOS/Nimble-tvOS-umbrella.h"; sourceTree = "<group>"; };
@@ -1107,7 +1112,7 @@
 		9C832028A44B40F0383B2B8E80367204 /* SPMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPMessage.swift; path = ConsentViewController/Classes/SPMessage.swift; sourceTree = "<group>"; };
 		9D7330FAA96A2655582F16ACD87BCCE5 /* CwlCatchException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CwlCatchException.swift; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchException/CwlCatchException.swift; sourceTree = "<group>"; };
 		9D76D2AAF759795F17D78BD9B137FB61 /* Pods-ObjC-ExampleAppUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ObjC-ExampleAppUITests"; path = Pods_ObjC_ExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DA251272D76442BD2EA92C4B30AEF71 /* SPIDFAStatus.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPIDFAStatus.swift; path = ConsentViewController/Classes/SPIDFAStatus.swift; sourceTree = "<group>"; };
 		9DC05870C9E17E36C1E0D662CB9FF3BE /* Pods-NativeMessageExample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NativeMessageExample-umbrella.h"; sourceTree = "<group>"; };
 		9ED4D99B7A34522AC3E7CA644DB114DE /* Pods-NativePMExampleAppUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NativePMExampleAppUITests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -1150,7 +1155,7 @@
 		B6DA9D00D410FBEC8D7727DC974F42DB /* BeLessThanOrEqual.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeLessThanOrEqual.swift; path = Sources/Nimble/Matchers/BeLessThanOrEqual.swift; sourceTree = "<group>"; };
 		B6F96619CB5ED82D98116B1B2C6E40B3 /* Pods-AuthExample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AuthExample-acknowledgements.markdown"; sourceTree = "<group>"; };
 		B796074263132E7BB352A70CA2C1BB6F /* WHTableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WHTableView.swift; path = Sources/Subclasses/WHTableView.swift; sourceTree = "<group>"; };
-		B815006F87A08778A959EDE8D6C1A923 /* mach_excServer.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mach_excServer.c; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/mach_excServer.c; sourceTree = "<group>"; };
+		B815006F87A08778A959EDE8D6C1A923 /* mach_excServer.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mach_excServer.c; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/mach_excServer.c; sourceTree = "<group>"; };
 		B8228D95CD1CC54D19197EB82CB18A3C /* Pods-ConsentViewController_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ConsentViewController_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		B93541BD91EA7D73E95344E4351D3129 /* IQBarButtonItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQBarButtonItem.swift; path = IQKeyboardManagerSwift/IQToolbar/IQBarButtonItem.swift; sourceTree = "<group>"; };
 		B954E18A202DC8F344B3D73F497F5185 /* BeNil.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeNil.swift; path = Sources/Nimble/Matchers/BeNil.swift; sourceTree = "<group>"; };
@@ -1164,7 +1169,7 @@
 		BE80C44A3F9D22DE8C869217ADB6A7A8 /* ConsentViewController-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "ConsentViewController-iOS.modulemap"; sourceTree = "<group>"; };
 		BF397B02AAF5043FE1963B5B5D2D80A7 /* Contain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Contain.swift; path = Sources/Nimble/Matchers/Contain.swift; sourceTree = "<group>"; };
 		C018DC7C27EE4948284FEDE067108881 /* Pods-NativeMessageExampleUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NativeMessageExampleUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		C0867DF0B2FD75FDA041CC13678006FF /* SPJSReceiver.spec.js */ = {isa = PBXFileReference; includeInIndex = 1; path = SPJSReceiver.spec.js; sourceTree = "<group>"; };
+		C0867DF0B2FD75FDA041CC13678006FF /* SPJSReceiver.spec.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = SPJSReceiver.spec.js; sourceTree = "<group>"; };
 		C0D7D6EE07BDFABE9200F013078DA7A9 /* Pods-SourcePointMetaApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SourcePointMetaApp-dummy.m"; sourceTree = "<group>"; };
 		C0E763D22C2EDB3AFE0B09B1ADA5D883 /* TextTableViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = TextTableViewCell.xib; path = Sources/UI/Cells/TextTableViewCell.xib; sourceTree = "<group>"; };
 		C27FD881A5AEAEDB740CD432ADF92AE3 /* RequestResponseExportOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestResponseExportOption.swift; path = Sources/Utils/RequestResponseExportOption.swift; sourceTree = "<group>"; };
@@ -1277,7 +1282,7 @@
 		FD1C4ED2322A3760E4BFBBF4D4AD47B3 /* Pods-ConsentViewController_ExampleTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ConsentViewController_ExampleTests-frameworks.sh"; sourceTree = "<group>"; };
 		FD61E422F1CD40D5FD00B6CB477B0F50 /* ChoiceRequests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChoiceRequests.swift; sourceTree = "<group>"; };
 		FE8B5F36D1E8C90B2E0485089D5B603B /* NimbleXCTestHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleXCTestHandler.swift; path = Sources/Nimble/Adapters/NimbleXCTestHandler.swift; sourceTree = "<group>"; };
-		FEA3BBD92131ADE6CD963FDBB07FBF59 /* images */ = {isa = PBXFileReference; includeInIndex = 1; name = images; path = ConsentViewController/Assets/images; sourceTree = "<group>"; };
+		FEA3BBD92131ADE6CD963FDBB07FBF59 /* images */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = images; path = ConsentViewController/Assets/images; sourceTree = "<group>"; };
 		FEA69AB4B9C465B936459843FA6EA123 /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = Sources/Storage.swift; sourceTree = "<group>"; };
 		FFC2D528BB1A762E29E6A9F68BBC42C2 /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Sources/Quick/Filter.swift; sourceTree = "<group>"; };
 		FFD4ACE2ED9BBD352EDEB378E78EAF58 /* Nimble-tvOS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Nimble-tvOS-prefix.pch"; path = "../Nimble-tvOS/Nimble-tvOS-prefix.pch"; sourceTree = "<group>"; };
@@ -1550,7 +1555,6 @@
 				016422ECAB921DF0AA5AD5E432316AF0 /* XCTestSuite+QuickTestSuiteBuilder.m */,
 				2FAE59206B2A601371E052F48FDA9CE9 /* Support Files */,
 			);
-			name = Quick;
 			path = Quick;
 			sourceTree = "<group>";
 		};
@@ -1563,8 +1567,8 @@
 				6007061C5588F0AAD307716FEBCD8597 /* ConsentRequestResponse.swift */,
 				E04DFA75403A745701CFCFECE120A311 /* ConsentStatusMetadata.swift */,
 				A353675B81FF1C0A9957221FED50722C /* ConsentStatusResponse.swift */,
-				7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequestResponse.swift */,
-				86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequestResponse.swift */,
+				7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequest.swift */,
+				86B26673AEDF368C95AB4A17F0B02759 /* DeleteCustomConsentRequest.swift */,
 				E6F0163458FBC7CCC4ED50441D809A27 /* ErrorMetricsRequest.swift */,
 				A63C044AB4E6F8936F49848C41F982D9 /* GDPRPrivacyManagerViewResponse.swift */,
 				EDF9F8DEFD6E56F8E730F1A2CCBC05A8 /* IDFAStatusReportRequest.swift */,
@@ -1582,6 +1586,7 @@
 				686429C799F0348FDEF7A28120881C67 /* SPNativeUI.swift */,
 				4258F345CF46D9763A8A87DBE164A0B9 /* SPPrivacyManagerRequestResponse.swift */,
 				3890EC0C63EEC6CC8435B9CC1E95F7EB /* SPPublisherData.swift */,
+				82FFB411290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift */,
 			);
 			name = SourcePointClient;
 			path = ConsentViewController/Classes/SourcePointClient;
@@ -1649,7 +1654,6 @@
 				30ADABE181487DD05EA9F1F4627CEC44 /* SPWebMessageViewController.swift */,
 				1F5CACDB983C084022C8F5CCC6ACABFF /* SPWebViewExtensions.swift */,
 			);
-			name = iOS;
 			path = iOS;
 			sourceTree = "<group>";
 		};
@@ -1675,7 +1679,6 @@
 			children = (
 				CC2FD158D4304AB753A4EBAB1D430525 /* Support Files */,
 			);
-			name = SwiftLint;
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
@@ -1879,7 +1882,6 @@
 				EEFA23F95B7E5CF8790E8704E5E4D090 /* XCTestObservationCenter+Register.m */,
 				A09D57CF80A770B2EF8062960C4A8EC6 /* Support Files */,
 			);
-			name = Nimble;
 			path = Nimble;
 			sourceTree = "<group>";
 		};
@@ -1935,7 +1937,6 @@
 				A3A9473FFC9B945F7891FDFD798A4ECC /* Data */,
 				D175ED508E4B6DB329C9387CAACD2A02 /* GDPR */,
 			);
-			name = NativePrivacyManager;
 			path = NativePrivacyManager;
 			sourceTree = "<group>";
 		};
@@ -1999,7 +2000,6 @@
 				71626764F053470E108AD0A20927D45C /* PMCategoryManager.swift */,
 				13938AFD33BFBC59394155597E40A320 /* PMVendorManager.swift */,
 			);
-			name = Data;
 			path = Data;
 			sourceTree = "<group>";
 		};
@@ -2023,7 +2023,6 @@
 			children = (
 				90AE8C982EFC55DA362FDC2D0EA1BDB0 /* NativePrivacyManager */,
 			);
-			name = tvOS;
 			path = tvOS;
 			sourceTree = "<group>";
 		};
@@ -2069,7 +2068,6 @@
 				556CB9B96E39F1F008E6B513AFB1CDB8 /* SPPrivacyPolicyViewController.xib */,
 				A3BF7A112993A46DA8E9933129C25BCD /* SPQRCode.swift */,
 			);
-			name = Common;
 			path = Common;
 			sourceTree = "<group>";
 		};
@@ -2218,7 +2216,6 @@
 				24DB8EB54142D51AEE5136C2BDF24479 /* SPGDPRVendorDetailsViewController.swift */,
 				62F8CC635F2184EE5DA10B257A829DBB /* SPGDPRVendorDetailsViewController.xib */,
 			);
-			name = GDPR;
 			path = GDPR;
 			sourceTree = "<group>";
 		};
@@ -2250,7 +2247,6 @@
 				E8B0E5C09B32196BAE0EEA33E7701604 /* IQUIViewController+Additions.swift */,
 				AA81D5D64BE0A25B919299DB7FE7387A /* Support Files */,
 			);
-			name = IQKeyboardManagerSwift;
 			path = IQKeyboardManagerSwift;
 			sourceTree = "<group>";
 		};
@@ -2269,7 +2265,6 @@
 				976DB18DF7F13CE75AC652D169C70B63 /* SPCCPAVendorDetailsViewController.swift */,
 				47DDCFF94BC127E85FFF8D99B273EEFF /* SPCCPAVendorDetailsViewController.xib */,
 			);
-			name = CCPA;
 			path = CCPA;
 			sourceTree = "<group>";
 		};
@@ -2344,7 +2339,6 @@
 				1D4708121C6777704ACF00CFB8538D4E /* Resources */,
 				69983607B614E6C6F238F911D51631FC /* Support Files */,
 			);
-			name = Wormholy;
 			path = Wormholy;
 			sourceTree = "<group>";
 		};
@@ -3530,6 +3524,7 @@
 			files = (
 				5CA0A34C15884F2795F9C85B788684B3 /* Bundle+Framework.swift in Sources */,
 				2557A6C4D749BB5A666E519CE0696627 /* ChoiceAllResponse.swift in Sources */,
+				82FFB412290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift in Sources */,
 				EC06A78EAF7B059E83EF5E7C3876052E /* ChoiceRequests.swift in Sources */,
 				69ABA7DE52702F68704C46F2921567A6 /* ChoiceResponses.swift in Sources */,
 				D84F33B89D0771BD07743EF6101261E9 /* Collection.swift in Sources */,
@@ -3540,8 +3535,8 @@
 				F6A39E6465E7EEA394BF50423A4D407F /* ConsentStatusResponse.swift in Sources */,
 				095A852D36890626089CD624D100E529 /* ConsentViewController-iOS-dummy.m in Sources */,
 				C61FA4FC82FB94908E8670E009C6B8BE /* Constants.swift in Sources */,
-				A488A3B687E509E425E392A7C45F1ED3 /* CustomConsentRequestResponse.swift in Sources */,
-				034A7D253EF67D79093F3F3E7CBAF91D /* DeleteCustomConsentRequestResponse.swift in Sources */,
+				A488A3B687E509E425E392A7C45F1ED3 /* CustomConsentRequest.swift in Sources */,
+				034A7D253EF67D79093F3F3E7CBAF91D /* DeleteCustomConsentRequest.swift in Sources */,
 				42E0A24799577EE7982D576ECD38B507 /* ErrorMetricsRequest.swift in Sources */,
 				CB222EECBF6ADCA2A55496B8233B0EAD /* GDPRPrivacyManagerViewResponse.swift in Sources */,
 				D7BD016CC15F31CE94084EC826D92158 /* IDFAStatusReportRequest.swift in Sources */,
@@ -3704,8 +3699,8 @@
 				8C97AFA28D7675E5C102E03998D303F2 /* ConsentStatusResponse.swift in Sources */,
 				DA5C5C67918FC743F97B3BC4E7304085 /* ConsentViewController-tvOS-dummy.m in Sources */,
 				C0682821F44AAE1A620154A3E98A112B /* Constants.swift in Sources */,
-				CB9CA368EC9B8496AC108D015B39D37C /* CustomConsentRequestResponse.swift in Sources */,
-				174C141A797A9143A2A38748BBB38789 /* DeleteCustomConsentRequestResponse.swift in Sources */,
+				CB9CA368EC9B8496AC108D015B39D37C /* CustomConsentRequest.swift in Sources */,
+				174C141A797A9143A2A38748BBB38789 /* DeleteCustomConsentRequest.swift in Sources */,
 				2ED945C2DC1BAC5EA3811BA2399757E3 /* ErrorMetricsRequest.swift in Sources */,
 				28DA05AFBF999227FA1E0D9F7ACB9554 /* GDPRPMConsentSnapshot.swift in Sources */,
 				60D689592880D2B726A21D05B54D94D6 /* GDPRPMPayload.swift in Sources */,
@@ -3773,6 +3768,7 @@
 				83DA063BD3BDD319F4E70E0C8FE58053 /* SPNativeUI.swift in Sources */,
 				3887750265CD1020730EBD46EF4F6B32 /* SPPMHeader.swift in Sources */,
 				BDE0996A22FFB5999E906DE003B691EF /* SPPMHeader.xib in Sources */,
+				82FFB413290C005D00F19836 /* AddOrDeleteCustomConsentResponse.swift in Sources */,
 				DD43C8DFECBA33B2C31728AD317CD02E /* SPPrivacyManagerRequestResponse.swift in Sources */,
 				46B48DF39F470B226B6CCAB03626BBCA /* SPPrivacyManagerTab.swift in Sources */,
 				0BF569996BEF1AE41BA991D3991EF470 /* SPPrivacyPolicyViewController.swift in Sources */,

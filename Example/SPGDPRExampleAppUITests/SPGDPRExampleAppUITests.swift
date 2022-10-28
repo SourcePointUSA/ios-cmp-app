@@ -17,7 +17,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
     func acceptAtt() {
         expect(self.app.attPrePrompt.okButton).toEventually(showUp())
         app.attPrePrompt.okButton.tap()
-        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
+        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
         app.attPrePrompt.attAlertAllowButton.tap()
     }
 
@@ -92,13 +92,22 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
-        it("DeleteCustomConsents after Accept all persists after app relaunch") {
+        fit("Consenting and Deleting custom vendor persist after relaunch") {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
+
             self.app.deleteCustomVendorsButton.tap()
             self.app.relaunch()
-            expect(self.app.deleteCustomVendorsButton).to(beDisabled())
+            expect(self.app.deleteCustomVendorsButton).toEventually(beDisabled())
+            expect(self.app.acceptCustomVendorsButton).toEventually(beEnabled())
+            expect(self.app.customVendorLabel).toEventually(containText("Rejected"))
+
+            self.app.acceptCustomVendorsButton.tap()
+            self.app.relaunch()
+            expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
+            expect(self.app.acceptCustomVendorsButton).toEventually(beDisabled())
+            expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
         }
     }
 }

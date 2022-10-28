@@ -10,6 +10,8 @@ import Foundation
 
 typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
+typealias GDPRCustomConsentHandler = (Result<SPGDPRConsent, SPError>) -> Void
+
 struct MessageToDisplay {
     let message: Message
     let metadata: MessageMetaData
@@ -17,6 +19,7 @@ struct MessageToDisplay {
     let type: SPCampaignType
     let childPmId: String?
 }
+
 extension MessageToDisplay {
     init?(_ campaign: Campaign) {
         guard let message = campaign.message,
@@ -49,6 +52,12 @@ protocol SPClientCoordinator {
         categories: [String],
         legIntCategories: [String],
         handler: @escaping (Result<SPGDPRConsent, SPError>) -> Void
+    )
+    func customConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping GDPRCustomConsentHandler
     )
 }
 
@@ -552,12 +561,26 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
+    func handleAddOrDeleteCustomConsentResponse(
+        _ result: Result<AddOrDeleteCustomConsentResponse, SPError>,
+        handler: @escaping GDPRCustomConsentHandler
+    ) {
+        switch result {
+            case .success(let consents):
+                state.gdpr?.vendorGrants = consents.grants
+                storage.spState = state
+                handler(Result.success(state.gdpr ?? .empty()))
+            case .failure(let error):
+                handler(Result.failure((error)))
+        }
+    }
+
     func deleteCustomConsentGDPR(
         vendors: [String],
         categories: [String],
         legIntCategories: [String],
-        handler: @escaping (Result<SPGDPRConsent, SPError>
-    ) -> Void) {
+        handler: @escaping GDPRCustomConsentHandler
+    ) {
         guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
             handler(Result.failure(PostingConsentWithoutConsentUUID()))
             return
@@ -568,15 +591,29 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             categories: categories,
             legIntCategories: legIntCategories,
             propertyId: propertyId
-        ) { result in
-            switch result {
-                case .success(let consents):
-                    self.state.gdpr?.vendorGrants = consents.grants
-                    self.storage.spState = self.state
-                    handler(Result.success(self.state.gdpr ?? .empty()))
-                case .failure(let error):
-                    handler(Result.failure((error)))
-            }
+        ) {
+            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+        }
+    }
+
+    func customConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping GDPRCustomConsentHandler
+    ) {
+        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
+            handler(Result.failure(PostingConsentWithoutConsentUUID()))
+        return
+        }
+        spClient.customConsentGDPR(
+            toConsentUUID: gdprUUID,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            propertyId: propertyId
+        ) {
+            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
         }
     }
 }

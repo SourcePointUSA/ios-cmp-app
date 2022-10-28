@@ -36,8 +36,7 @@ typealias MessageHandler = (Result<Message, SPError>) -> Void
 typealias CCPAConsentHandler = (Result<CCPAChoiceResponse, SPError>) -> Void
 typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
-typealias CustomConsentHandler = (Result<CustomConsentResponse, SPError>) -> Void
-typealias DeleteCustomConsentHandler = (Result<DeleteCustomConsentResponse, SPError>) -> Void
+typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
@@ -103,7 +102,7 @@ protocol SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping CustomConsentHandler
+        handler: @escaping AddOrDeleteCustomConsentHandler
     )
 
     func errorMetrics(
@@ -121,7 +120,7 @@ protocol SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping DeleteCustomConsentHandler
+        handler: @escaping AddOrDeleteCustomConsentHandler
     )
 
     func consentStatus(
@@ -307,7 +306,7 @@ class SourcePointClient: SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping CustomConsentHandler) {
+        handler: @escaping AddOrDeleteCustomConsentHandler) {
         _ = JSONEncoder().encodeResult(CustomConsentRequest(
             consentUUID: consentUUID,
             propertyId: propertyId,
@@ -317,7 +316,7 @@ class SourcePointClient: SourcePointProtocol {
         )).map { body in
             client.post(urlString: Constants.Urls.CUSTOM_CONSENT_URL.absoluteString, body: body) { result in
                 handler(Result {
-                    try result.decoded() as CustomConsentResponse
+                    try result.decoded() as AddOrDeleteCustomConsentResponse
                 }.mapError {
                     InvalidResponseCustomError(error: $0, campaignType: .gdpr)
                 })
@@ -330,7 +329,7 @@ class SourcePointClient: SourcePointProtocol {
         vendors: [String], categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping DeleteCustomConsentHandler) {
+        handler: @escaping AddOrDeleteCustomConsentHandler) {
             _ = JSONEncoder().encodeResult(DeleteCustomConsentRequest(
                 vendors: vendors,
                 categories: categories,
@@ -338,7 +337,7 @@ class SourcePointClient: SourcePointProtocol {
             )).map { body in
                 client.delete(urlString: deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID)!.absoluteString, body: body) { result in
                     handler(Result {
-                        try result.decoded() as DeleteCustomConsentResponse
+                        try result.decoded() as AddOrDeleteCustomConsentResponse
                     }.mapError {
                         InvalidResponseDeleteCustomError(error: $0, campaignType: .gdpr)
                     })
