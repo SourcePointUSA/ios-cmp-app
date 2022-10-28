@@ -40,8 +40,7 @@ extension MessageToDisplay {
 
 protocol SPClientCoordinator {
     var authId: String? { get set }
-    var gdprUUID: String? { get }
-    var ccpaUUID: String? { get }
+    var userData: SPUserData { get }
 
     func loadMessages(_ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
@@ -59,6 +58,7 @@ protocol SPClientCoordinator {
         legIntCategories: [String],
         handler: @escaping GDPRCustomConsentHandler
     )
+    func setRequestTimeout(_ timeout: TimeInterval)
 }
 
 class SourcepointClientCoordinator: SPClientCoordinator {
@@ -615,5 +615,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         ) {
             self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
         }
+    }
+
+    func setRequestTimeout(_ timeout: TimeInterval) {
+        spClient.setRequestTimeout(timeout)
     }
 }
