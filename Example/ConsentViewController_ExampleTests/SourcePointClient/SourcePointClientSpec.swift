@@ -76,7 +76,7 @@ class SourcePointClientSpec: QuickSpec {
             }
 
             it("DELETE_CUSTOM_CONSENT_URL") {
-                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL).to(equal(URL(string: "http://localhost:3000/consent/tcfv2/consent/v3/custom/")!.absoluteURL))
+                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL).to(equal(URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/")!.absoluteURL))
             }
         }
 
@@ -291,7 +291,7 @@ class SourcePointClientSpec: QuickSpec {
             describe("deleteCustomConsent") {
                 it("constructsCorrectURL") {
                     expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, self.propertyId, "yo")!.absoluteString).to(
-                        equal("http://localhost:3000/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
+                        equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
                 }
 
                 it("makes a DELETE with the correct body") {

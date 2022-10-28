@@ -51,6 +51,7 @@ import ConsentViewController
         modalPresentationStyle = .overFullScreen
         consentManager = SPConsentManager(
             accountId: accountId,
+            propertyId: 21944,
             propertyName: propertyName,
             campaigns: campaigns,
             delegate: self

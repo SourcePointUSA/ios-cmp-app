@@ -36,12 +36,13 @@
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
                               ccpa: NULL
-                              ios14: campaign];
+                              ios14: campaign
+                              environment: SPCampaignEnvPublic];
 
     consentManager = [[SPConsentManager alloc]
                       initWithAccountId:22
+                      propertyId: 16893
                       propertyName: propertyName
-                      campaignsEnv: SPCampaignEnvPublic
                       campaigns: campaigns
                       delegate: self];
 

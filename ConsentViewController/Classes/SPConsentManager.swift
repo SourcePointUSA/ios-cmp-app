@@ -38,14 +38,13 @@ import UIKit
         accountId: Int,
         propertyId: Int,
         propertyName: SPPropertyName,
-        campaignsEnv: SPCampaignEnv = .Public,
         campaigns: SPCampaigns,
         delegate: SPDelegate?
     ) {
         let client = SourcePointClient(
             accountId: accountId,
             propertyName: propertyName,
-            campaignEnv: campaignsEnv,
+            campaignEnv: campaigns.environment,
             timeout: SPConsentManager.DefaultTimeout
         )
         let localStorage = SPUserDefaults(storage: UserDefaults.standard)
@@ -58,7 +57,6 @@ import UIKit
         )
         self.init(
             propertyId: propertyId,
-            campaignsEnv: campaignsEnv,
             campaigns: campaigns,
             delegate: delegate,
             spClient: client,
@@ -90,7 +88,6 @@ import UIKit
 
     init(
         propertyId: Int,
-        campaignsEnv: SPCampaignEnv,
         campaigns: SPCampaigns,
         delegate: SPDelegate?,
         spClient: SourcePointProtocol,
