@@ -50,7 +50,7 @@ protocol SPLocalStorage {
     var gdprChildPmId: String? { get set }
     var ccpaChildPmId: String? { get set }
 
-    var spState: SourcepointClientCoordinator.State { get set }
+    var spState: SourcepointClientCoordinator.State? { get set }
 
     func clear()
 

@@ -78,6 +78,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         sdkStatus = .running
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
+        myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": "load message"])
         updateUI()
     }

@@ -15,7 +15,7 @@ class SourcePointClientMock: SourcePointProtocol {
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
 
-    var customConsentResponse: CustomConsentResponse?
+    var customConsentResponse: AddOrDeleteCustomConsentResponse?
 
     static func getCampaign(_ type: SPCampaignType) -> Campaign {
         Campaign(
@@ -115,7 +115,7 @@ class SourcePointClientMock: SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping CustomConsentHandler) {
+        handler: @escaping AddOrDeleteCustomConsentHandler) {
 
     }
 
@@ -128,14 +128,14 @@ class SourcePointClientMock: SourcePointProtocol {
                                  categories: [String],
                                  legIntCategories: [String],
                                  propertyId: Int,
-                                 handler: @escaping DeleteCustomConsentHandler) {
+                                 handler: @escaping AddOrDeleteCustomConsentHandler) {
     }
 
     func customConsent(toConsentUUID consentUUID: String,
                        vendors: [String],
                        categories: [String],
                        legIntCategories: [String],
-                       completionHandler: @escaping (CustomConsentResponse?, SPError?) -> Void) {
+                       completionHandler: @escaping (AddOrDeleteCustomConsentResponse?, SPError?) -> Void) {
         customConsentWasCalledWith = [
             "consentUUID": consentUUID,
             "vendors": vendors,

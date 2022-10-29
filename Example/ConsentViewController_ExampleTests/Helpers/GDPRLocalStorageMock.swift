@@ -19,7 +19,7 @@ class GDPRLocalStorageMock: SPLocalStorage {
     var tcfData: [String: Any]? = [:]
     var usPrivacyString: String?
     var propertyId: Int?
-    var spState = SourcepointClientCoordinator.State()
+    var spState: SourcepointClientCoordinator.State?
 
     var clearWasCalled = false
 

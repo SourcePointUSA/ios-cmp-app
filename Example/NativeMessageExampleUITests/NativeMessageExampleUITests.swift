@@ -80,6 +80,7 @@ class NativeMessageExampleUITests: QuickSpec {
             self.acceptGDPRMessage()
 
             self.acceptCCPAMessage()
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
 
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))

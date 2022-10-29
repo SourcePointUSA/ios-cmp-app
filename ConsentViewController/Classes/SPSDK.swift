@@ -29,7 +29,6 @@ import Foundation
         accountId: Int,
         propertyId: Int,
         propertyName: SPPropertyName,
-        campaignsEnv: SPCampaignEnv,
         campaigns: SPCampaigns,
         delegate: SPDelegate?
     )
@@ -53,7 +52,6 @@ public extension SPSDK {
         accountId: Int,
         propertyId: Int,
         propertyName: SPPropertyName,
-        campaignsEnv: SPCampaignEnv = .Public,
         campaigns: SPCampaigns,
         delegate: SPDelegate?
     ) {
@@ -61,7 +59,6 @@ public extension SPSDK {
             accountId: accountId,
             propertyId: propertyId,
             propertyName: propertyName,
-            campaignsEnv: campaignsEnv,
             campaigns: campaigns,
             delegate: delegate
         )

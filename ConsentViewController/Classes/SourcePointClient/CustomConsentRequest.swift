@@ -1,15 +1,11 @@
 //
-//  SourcePointRequestsResponses.swift
-//  GDPRConsentViewController
+//  CustomConsentRequest.swift
+//  Pods
 //
 //  Created by Andre Herculano on 15.12.19.
 //
 
 import Foundation
-
-struct CustomConsentResponse: Codable, Equatable {
-    let grants: SPGDPRVendorGrants
-}
 
 struct CustomConsentRequest: Codable, Equatable {
     let consentUUID: String

@@ -70,6 +70,7 @@ class ViewController: UIViewController {
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: accountId,
+        propertyId: 21944,
         propertyName: propertyName,
         campaigns: campaigns,
         delegate: self

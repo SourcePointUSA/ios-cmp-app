@@ -10,6 +10,8 @@ import Foundation
 
 typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
+typealias GDPRCustomConsentHandler = (Result<SPGDPRConsent, SPError>) -> Void
+
 struct MessageToDisplay {
     let message: Message
     let metadata: MessageMetaData
@@ -17,6 +19,7 @@ struct MessageToDisplay {
     let type: SPCampaignType
     let childPmId: String?
 }
+
 extension MessageToDisplay {
     init?(_ campaign: Campaign) {
         guard let message = campaign.message,
@@ -37,11 +40,25 @@ extension MessageToDisplay {
 
 protocol SPClientCoordinator {
     var authId: String? { get set }
-    var gdprUUID: String? { get }
-    var ccpaUUID: String? { get }
+    var userData: SPUserData { get }
 
     func loadMessages(_ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
+    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
+    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String)
+    func deleteCustomConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (Result<SPGDPRConsent, SPError>) -> Void
+    )
+    func customConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping GDPRCustomConsentHandler
+    )
+    func setRequestTimeout(_ timeout: TimeInterval)
 }
 
 class SourcepointClientCoordinator: SPClientCoordinator {
@@ -52,8 +69,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var additionsChangeDate, legalBasisChangeDate: SPDateCreated
         }
 
+        struct AttCampaign: Codable {
+            var lastMessage: LastMessageData?
+        }
+
         var gdpr: SPGDPRConsent?
         var ccpa: SPCCPAConsent?
+        var ios14: AttCampaign?
         var gdprMetadata: GDPRMetaData?
         var wasSampled: Bool?
         var localState: SPJson?
@@ -228,12 +250,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.pubData = pubData
         self.storage = storage
 
-        self.state = self.storage.spState
+        self.state = self.storage.spState ?? .init()
         if campaigns.gdpr != nil, self.state.gdpr == nil {
             self.state.gdpr = .empty()
         }
         if campaigns.ccpa != nil, self.state.ccpa == nil {
             self.state.ccpa = .empty()
+        }
+        if campaigns.ios14 != nil, self.state.ios14 == nil {
+            self.state.ios14 = .init()
         }
 
         guard let spClient = spClient else {
@@ -337,6 +362,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 state.gdpr?.lastMessage = LastMessageData(from: $0.metadata)
             } else if $0.type == .ccpa {
                 state.ccpa?.lastMessage = LastMessageData(from: $0.metadata)
+            } else if $0.type == .ios14 {
+                state.ios14?.lastMessage = LastMessageData(from: $0.metadata)
             }
         }
         // TODO: store consents if any comes in the response
@@ -499,5 +526,98 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     handler(Result.failure(error))
             }
         }
+    }
+
+    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String) {
+        var uuid = ""
+        var uuidType: SPCampaignType?
+        if let gdprUUID = gdprUUID, gdprUUID.isNotEmpty() {
+            uuid = gdprUUID
+            uuidType = .gdpr
+        }
+        if let ccpaUUID = ccpaUUID, ccpaUUID.isNotEmpty() {
+            uuid = ccpaUUID
+            uuidType = .ccpa
+        }
+        spClient.reportIdfaStatus(
+            propertyId: propertyId,
+            uuid: uuid,
+            uuidType: uuidType,
+            messageId: state.ios14?.lastMessage?.id,
+            idfaStatus: status,
+            iosVersion: osVersion,
+            partitionUUID: state.ios14?.lastMessage?.partitionUUID
+        )
+    }
+
+    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String) {
+        spClient.errorMetrics(
+            error,
+            propertyId: propertyId,
+            sdkVersion: SPConsentManager.VERSION,
+            OSVersion: osVersion,
+            deviceFamily: deviceFamily,
+            campaignType: error.campaignType
+        )
+    }
+
+    func handleAddOrDeleteCustomConsentResponse(
+        _ result: Result<AddOrDeleteCustomConsentResponse, SPError>,
+        handler: @escaping GDPRCustomConsentHandler
+    ) {
+        switch result {
+            case .success(let consents):
+                state.gdpr?.vendorGrants = consents.grants
+                storage.spState = state
+                handler(Result.success(state.gdpr ?? .empty()))
+            case .failure(let error):
+                handler(Result.failure((error)))
+        }
+    }
+
+    func deleteCustomConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping GDPRCustomConsentHandler
+    ) {
+        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
+            handler(Result.failure(PostingConsentWithoutConsentUUID()))
+            return
+        }
+        spClient.deleteCustomConsentGDPR(
+            toConsentUUID: gdprUUID,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            propertyId: propertyId
+        ) {
+            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+        }
+    }
+
+    func customConsentGDPR(
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping GDPRCustomConsentHandler
+    ) {
+        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
+            handler(Result.failure(PostingConsentWithoutConsentUUID()))
+        return
+        }
+        spClient.customConsentGDPR(
+            toConsentUUID: gdprUUID,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            propertyId: propertyId
+        ) {
+            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+        }
+    }
+
+    func setRequestTimeout(_ timeout: TimeInterval) {
+        spClient.setRequestTimeout(timeout)
     }
 }
