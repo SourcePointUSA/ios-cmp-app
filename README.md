@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     lazy var consentManager: SPConsentManager = { SPConsentManager(
         accountId: 22,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-        campaignsEnv: .Public // optional - Public by default
+        campaignsEnv: .Public, // optional - Public by default
         campaigns: SPCampaigns(
             gdpr: SPCampaign(), // optional
             ccpa: SPCampaign(), // optional
