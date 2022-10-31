@@ -18,6 +18,38 @@ We also support [Swift Package Manager](https://swift.org/package-manager/). It 
 
 To add our SDK package as dependency to your Xcode project, In Xcode select File > Swift Packages > Add Package Dependency and enter our SDK repository URL.
 
+Or you can use `Package.swift` file and add the dependency there:
+
+```swift
+// swift-tools-version:5.5
+
+import PackageDescription
+
+let package = Package(
+    name: "MyPackage",
+    platforms: [.iOS(.v15), .macOS(.v12)],
+    products: [
+        .library(name: "MyPackage", targets: ["MyPackage"]),
+    ],
+    dependencies: [
+        .package(
+            name: "ConsentViewController",
+            url: "https://github.com/SourcePointUSA/ios-cmp-app",
+                .upToNextMinor(from: "6.7.0")
+        ),
+    ],
+    targets: [
+        .target(
+            name: "MyPackage",
+            dependencies: [
+                "ConsentViewController"
+            ]
+        )
+    ]
+)
+
+```
+
 ### Manually add XCFramework
 If you prefer not to use any of the dependency managers. You can add `ConsentViewController.xcframework` as a library to your project or workspace.
 1. Download the [latest code version](https://github.com/SourcePointUSA/ios-cmp-app.git).
