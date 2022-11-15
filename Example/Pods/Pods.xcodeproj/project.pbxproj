@@ -365,7 +365,7 @@
 		A488A3B687E509E425E392A7C45F1ED3 /* CustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7770716EF8432A28A44024AE7F97C32F /* CustomConsentRequest.swift */; };
 		A4982B494F2E3CB066938970D6F3F9E1 /* AllPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B198E2E192D8EB20926AF49460BDB6 /* AllPass.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		A4BAEE317BFF650DCC888FC67BFBF7EF /* IQKeyboardManager+UIKeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D813AE579E160E7A152DBEBE716D019 /* IQKeyboardManager+UIKeyboardNotification.swift */; };
-		A4C9EB97F20B7C24E713C0050829D6E2 /* Wormholy-Wormholy in Resources */ = {isa = PBXBuildFile; fileRef = AA92ED38E716E03D3FC758C810953B95 /* Wormholy-Wormholy */; };
+		A4C9EB97F20B7C24E713C0050829D6E2 /* Wormholy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA92ED38E716E03D3FC758C810953B95 /* Wormholy.bundle */; };
 		A57CA2963EA88D543295B6EE5B8FBCC0 /* BeginWithPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE4CA0CF095410EB341F18BF74B8C /* BeginWithPrefix.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		A63E618214C11DFD86BEEB5D2DFD0355 /* WHCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A85325C9D0D28AE21BD1D586E8EEBEC /* WHCollectionView.swift */; };
 		A660734A332ACD79CA2AF5E6ABB4629E /* ChoiceAllResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDDDA886125AB1C1D3D7FDABAA3804 /* ChoiceAllResponse.swift */; };
@@ -540,7 +540,7 @@
 		FA72DB4D291ADF29E96C3BEC2560573C /* BeCloseTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E296144F52A19C32767E8C68530DAE24 /* BeCloseTo.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		FB59DAE4DACC16E7A6B1F989FA4608F9 /* SPAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E432F2A6BEE622CB940A8CC7A415FE2B /* SPAction.swift */; };
 		FB6330BC0E667A3977232DDBC1A99DD3 /* SPJSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = 6ED3725E254705711C8ED23DE70D534B /* SPJSReceiver.js */; };
-		FBAA4BFC298CF11AB4ED3C2161787AE6 /* ConsentViewController-iOS-ConsentViewController in Resources */ = {isa = PBXBuildFile; fileRef = 4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController-iOS-ConsentViewController */; };
+		FBAA4BFC298CF11AB4ED3C2161787AE6 /* ConsentViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController.bundle */; };
 		FC79C9A7F1F99616791764C4DC36B1BD /* SPCampaignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100A64CD6BBA9C2847C9E4D44E702774 /* SPCampaignType.swift */; };
 		FCBE3B9829F2DDA6D4DBC1D8E5F51228 /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61E3CC2FC0BEEADD5B9404AFA95ED77 /* Predicate.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		FD0B7EFFA36E27A7248ED70E234EC2D1 /* SPPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2FC8A6BBBD759BD10195FCB6461B53 /* SPPropertyName.swift */; };
@@ -958,7 +958,7 @@
 		4AC28E5BBC68602EA2F583B748C89E13 /* Pods-SourcePointMetaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SourcePointMetaApp.debug.xcconfig"; sourceTree = "<group>"; };
 		4AE30E70EFFBD72D03B409D66D00900A /* ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist"; sourceTree = "<group>"; };
 		4BD4B15A98C0CE7B7E5E3269C1126B9D /* Section.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Section.swift; path = Sources/Models/Section.swift; sourceTree = "<group>"; };
-		4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController-iOS-ConsentViewController */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "ConsentViewController-iOS-ConsentViewController"; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7B83AE151902F4E6A74F27D267580F /* ConsentViewController-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ConsentViewController-iOS-dummy.m"; sourceTree = "<group>"; };
 		4C8DC190F07373E08A7ADB7F7721AEA1 /* IQKeyboardManagerSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManagerSwift.debug.xcconfig; sourceTree = "<group>"; };
 		4D855E0D565312A92410B2E86216E906 /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -1137,7 +1137,7 @@
 		A93E44BDF76334B2E137DFFC55782C4E /* Pods-ObjC-ExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjC-ExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		A9850CD1C533B7407E488CA4FE1013D3 /* Pods-NativeMessageExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NativeMessageExample.release.xcconfig"; sourceTree = "<group>"; };
 		A9B198E2E192D8EB20926AF49460BDB6 /* AllPass.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AllPass.swift; path = Sources/Nimble/Matchers/AllPass.swift; sourceTree = "<group>"; };
-		AA92ED38E716E03D3FC758C810953B95 /* Wormholy-Wormholy */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Wormholy-Wormholy"; path = Wormholy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA92ED38E716E03D3FC758C810953B95 /* Wormholy.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wormholy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA95A29A65AFEC4E2DF61DCF9D8BE22 /* IQKeyboardManagerSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = IQKeyboardManagerSwift.modulemap; sourceTree = "<group>"; };
 		AB8BF2792DB33687BEC114D5625C2620 /* Quick-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Quick-iOS-Info.plist"; sourceTree = "<group>"; };
 		ABF629CA2A1133DE5FC3AEB26B270C05 /* Pods-ObjC-ExampleApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ObjC-ExampleApp-umbrella.h"; sourceTree = "<group>"; };
@@ -1703,7 +1703,7 @@
 			isa = PBXGroup;
 			children = (
 				380358C9A223FE55A10AC25127FF1410 /* ConsentViewController-iOS */,
-				4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController-iOS-ConsentViewController */,
+				4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController.bundle */,
 				5DC2E71595175144336387BD6D2DE6BD /* ConsentViewController-tvOS */,
 				20A4710BBD2EE3CFC496E3AF134BD4FD /* ConsentViewController-tvOS-ConsentViewController */,
 				A8E950A16D00F649C54FFB30F81D7842 /* IQKeyboardManagerSwift */,
@@ -1724,7 +1724,7 @@
 				C8E0F49D3F9CF6715FD8D2D98638F20F /* Quick-iOS */,
 				73F566CFB5F21F61AC2FA68F08AA0B2D /* Quick-tvOS */,
 				2530BC414137FF7A53A0368B476547B9 /* Wormholy */,
-				AA92ED38E716E03D3FC758C810953B95 /* Wormholy-Wormholy */,
+				AA92ED38E716E03D3FC758C810953B95 /* Wormholy.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2828,7 +2828,7 @@
 			);
 			name = "Wormholy-Wormholy";
 			productName = Wormholy;
-			productReference = AA92ED38E716E03D3FC758C810953B95 /* Wormholy-Wormholy */;
+			productReference = AA92ED38E716E03D3FC758C810953B95 /* Wormholy.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		93E6BD3365D71609E2794732B2B09566 /* Pods-NativePMExampleApp */ = {
@@ -2961,7 +2961,7 @@
 			);
 			name = "ConsentViewController-iOS-ConsentViewController";
 			productName = ConsentViewController;
-			productReference = 4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController-iOS-ConsentViewController */;
+			productReference = 4BEAC88AF84CC484F55B8A6C048444D9 /* ConsentViewController.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		FD3FD4FE19FD6802CDB73EF08E3B5650 /* Pods-SourcePointMetaAppUITests */ = {
@@ -3147,7 +3147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4870FCFE27776304FBD2507F76514A1 /* Barcode.png in Resources */,
-				FBAA4BFC298CF11AB4ED3C2161787AE6 /* ConsentViewController-iOS-ConsentViewController in Resources */,
+				FBAA4BFC298CF11AB4ED3C2161787AE6 /* ConsentViewController.bundle in Resources */,
 				96AD1EECD396BAE6524F91EDD78883E9 /* jest.config.json in Resources */,
 				B4E64303527304E86FB4ADD043672E62 /* SP_Icon.png in Resources */,
 				FB6330BC0E667A3977232DDBC1A99DD3 /* SPJSReceiver.js in Resources */,
@@ -3226,7 +3226,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4C9EB97F20B7C24E713C0050829D6E2 /* Wormholy-Wormholy in Resources */,
+				A4C9EB97F20B7C24E713C0050829D6E2 /* Wormholy.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4056,6 +4056,7 @@
 			baseConfigurationReference = 86CFA968E3EB8607536F813E1419EDB3 /* ConsentViewController-iOS.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS";
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = ConsentViewController;
 				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS/ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -4356,6 +4357,7 @@
 			baseConfigurationReference = 2D0D75069B1AB6FABCAFE8FEC88ACF7D /* ConsentViewController-iOS.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS";
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = ConsentViewController;
 				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS/ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -4979,6 +4981,7 @@
 			baseConfigurationReference = 34B7C457D0A714A324AA8965A204EB36 /* Wormholy.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy";
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = Wormholy;
 				INFOPLIST_FILE = "Target Support Files/Wormholy/ResourceBundle-Wormholy-Wormholy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -5257,6 +5260,7 @@
 			baseConfigurationReference = 5BF9877E219A67A2604A1B119C452B1A /* Wormholy.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy";
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = Wormholy;
 				INFOPLIST_FILE = "Target Support Files/Wormholy/ResourceBundle-Wormholy-Wormholy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
