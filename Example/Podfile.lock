@@ -1,6 +1,7 @@
 PODS:
   - ConsentViewController (6.7.2)
   - IQKeyboardManagerSwift (6.5.10)
+  - JSONView (0.0.3)
   - Nimble (10.0.0)
   - Quick (5.0.1)
   - SwiftLint (0.49.1)
@@ -9,6 +10,7 @@ PODS:
 DEPENDENCIES:
   - ConsentViewController (from `../`)
   - IQKeyboardManagerSwift
+  - JSONView
   - Nimble
   - Quick
   - SwiftLint
@@ -17,6 +19,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - IQKeyboardManagerSwift
+    - JSONView
     - Nimble
     - Quick
     - SwiftLint
@@ -29,11 +32,12 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ConsentViewController: b4df321784f235ce5ba98ba3052f73224503a6d4
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
+  JSONView: ba9049102fae7ad70de40234d0b7c60986e61e4c
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   Wormholy: 3252bc3e55a1847ef9a0976c1377bd77bf3635fa
 
-PODFILE CHECKSUM: 6e5f334fd02398b6aa7a91ebf8e94aa56b9e7aa5
+PODFILE CHECKSUM: 2f4a76178300a9b829ca2f2623bbff0710c4b3c4
 
 COCOAPODS: 1.11.3

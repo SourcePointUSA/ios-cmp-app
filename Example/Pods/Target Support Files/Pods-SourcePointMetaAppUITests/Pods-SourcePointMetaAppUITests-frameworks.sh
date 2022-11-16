@@ -176,12 +176,12 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS10.0/ConsentViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble-iOS/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick-iOS/Quick.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS10.0/ConsentViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble-iOS/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick-iOS/Quick.framework"
 fi

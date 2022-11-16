@@ -71,7 +71,7 @@ class SourcePointClientSpec: QuickSpec {
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
                 expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(
-                    URL(string: "http://localhost:3000/wrapper/tcfv2/v1/gdpr/custom-consent?env=localProd&inApp=true")!.absoluteURL
+                    URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true")!.absoluteURL
                 ))
             }
 
@@ -125,7 +125,7 @@ class SourcePointClientSpec: QuickSpec {
                                 granularStatus: .init()
                             )
                         ) { _ in }
-                        expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/choice/gdpr/11?env=localProd"))
+                        expect(httpClient.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/choice/gdpr/11?env=prod"))
                     }
 
                     it("calls POST on the http client with the right body") {
@@ -164,7 +164,7 @@ class SourcePointClientSpec: QuickSpec {
                                 sampleRate: 1
                             )
                         ) { _ in }
-                        expect(httpClient.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/v2/choice/ccpa/11?env=localProd"))
+                        expect(httpClient.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/v2/choice/ccpa/11?env=prod"))
                     }
 
                     it("calls POST on the http client with the right body") {
@@ -274,7 +274,7 @@ class SourcePointClientSpec: QuickSpec {
                             campaignType: .gdpr
                         )
                         let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-                        expect(http.postWasCalledWithUrl).to(equal("http://localhost:3000/wrapper/metrics/v1/custom-metrics"))
+                        expect(http.postWasCalledWithUrl).to(equal("https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"))
                         expect((parsedRequest?["code"] as? String)).to(equal(error.spCode))
                         expect((parsedRequest?["accountId"] as? String)).to(equal("\(self.accountId)"))
                         expect((parsedRequest?["propertyId"] as? String)).to(equal("\(self.propertyId)"))

@@ -138,16 +138,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var metaDataParamsFromState: MetaDataBodyRequest {
         .init(
-            gdpr: .init(
-                hasLocalData: state.gdpr?.uuid != nil,
-                dateCreated: state.gdpr?.dateCreated,
-                uuid: state.gdpr?.uuid
-            ),
-            ccpa: .init(
-                hasLocalData: state.ccpa?.uuid != nil,
-                dateCreated: state.ccpa?.dateCreated,
-                uuid: state.ccpa?.uuid
-            )
+            gdpr: campaigns.gdpr != nil ?
+                    .init(
+                        hasLocalData: state.gdpr?.uuid != nil,
+                        dateCreated: state.gdpr?.dateCreated,
+                        uuid: state.gdpr?.uuid
+                    ) :
+                    nil,
+            ccpa: campaigns.ccpa != nil ?
+                .init(
+                    hasLocalData: state.ccpa?.uuid != nil,
+                    dateCreated: state.ccpa?.dateCreated,
+                    uuid: state.ccpa?.uuid
+                ) :
+                nil
         )
     }
 
@@ -191,20 +195,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 propertyHref: propertyName,
                 accountId: accountId,
                 campaigns: .init(
-                    ccpa: .init(
+                    ccpa: campaigns.ccpa != nil ?
+                    .init(
                         targetingParams: campaigns.gdpr?.targetingParams,
                         hasLocalData: state.ccpa?.uuid != nil,
                         status: state.ccpa?.status
-                    ),
-                    gdpr: .init(
+                    ) : nil,
+                    gdpr: campaigns.gdpr != nil ? .init(
                         targetingParams: campaigns.gdpr?.targetingParams,
                         hasLocalData: state.gdpr?.uuid != nil,
                         consentStatus: state.gdpr?.consentStatus
-                    ),
-                    ios14: .init(
+                    ) : nil,
+                    ios14: campaigns.ios14 != nil ? .init(
                         targetingParams: campaigns.ios14?.targetingParams,
                         idfaSstatus: idfaStatus
-                    )
+                    ) : nil
                 ),
                 localState: state.localState,
                 consentLanguage: language,
@@ -410,7 +415,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
         if let gdpr = response.gdpr, campaign == .gdpr {
             state.gdpr?.dateCreated = gdpr.dateCreated ?? (state.gdpr?.dateCreated ?? SPDateCreated.now()) // TODO: remove once response.gdpr contains date created
-            state.gdpr?.tcfData = gdpr.tcData
+            state.gdpr?.tcfData = gdpr.TCData
             state.gdpr?.vendorGrants = gdpr.grants
             state.gdpr?.euconsent = gdpr.euconsent
             state.gdpr?.applies = gdpr.applies
@@ -501,6 +506,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                                     self.state.gdpr?.uuid = response.uuid
                                     self.state.gdpr?.dateCreated = response.dateCreated
                                     self.state.gdpr?.tcfData = response.TCData
+                                    self.state.gdpr?.consentStatus = response.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
+                                    self.state.gdpr?.euconsent = response.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
+                                    self.state.gdpr?.vendorGrants = response.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
                                     self.storage.spState = self.state
                                     handler(Result.success(self.userData))
                                 case .failure(let error):
@@ -514,6 +522,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                                 case .success(let response):
                                     self.state.ccpa?.uuid = response.uuid
                                     self.state.ccpa?.dateCreated = response.dateCreated
+                                    self.state.ccpa?.status = response.status ?? getResponse?.ccpa?.status ?? .RejectedAll
+                                    self.state.ccpa?.rejectedVendors = response.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
+                                    self.state.ccpa?.rejectedCategories = response.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
+                                    self.state.ccpa?.uspstring = response.uspstring ?? getResponse?.ccpa?.uspstring ?? ""
+
+//                                    self.state.ccpa?.consentStatus
                                     self.storage.spState = self.state
                                     handler(Result.success(self.userData))
                                 case .failure(let error):

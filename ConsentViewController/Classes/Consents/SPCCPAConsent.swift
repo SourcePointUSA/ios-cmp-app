@@ -84,10 +84,10 @@ protocol CampaignConsent {
     public var status: CCPAConsentStatus
 
     /// The ids of the rejected vendors and categories. These can be found in SourcePoint's dashboard
-    public let rejectedVendors, rejectedCategories: [String]
+    public var rejectedVendors, rejectedCategories: [String]
 
     /// the US Privacy String as described by the IAB
-    public let uspstring: SPUsPrivacyString
+    public var uspstring: SPUsPrivacyString
 
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?

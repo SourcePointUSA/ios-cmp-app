@@ -10,7 +10,7 @@ import Foundation
 /// Tells the SDK if we should load stage or public campaigns.
 /// - 0 -> `SPCampaignEnv.Stage`
 /// - 1 -> `SPCampaignEnv.Public`
-@objc public enum SPCampaignEnv: Int {
+@objc public enum SPCampaignEnv: Int, CustomStringConvertible {
     private static let string = [
         "stage": SPCampaignEnv.Stage,
         "prod": SPCampaignEnv.Public
@@ -20,7 +20,8 @@ import Foundation
     case Public = 1
 
     var stringValue: String? { SPCampaignEnv.string.first { $0.value == self }?.key }
-    var description: String { stringValue ?? "unkown" }
+    var name: String { stringValue ?? "unkown" }
+    public var description: String { "SPCampaignEnv.\(name)" }
 
     public init?(stringValue: String) {
         if let env = SPCampaignEnv.string[stringValue] {

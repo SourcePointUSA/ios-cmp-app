@@ -16,10 +16,10 @@ let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) !
 
 struct Constants {
     struct Urls {
-        static let envParam = prod ? "localProd" : "stage"
+        static let envParam = prod ? "prod" : "stage"
         // TODO: remove SP_ROOT_ORIGINAL before releasing v7
         static let SP_ROOT_ORIGINAL = URL(string: "https://cdn.privacy-mgmt.com/")!
-        static let SP_ROOT = URL(string: prod ? "http://localhost:3000/" : "https://cdn.sp-stage.net/")!
+        static let SP_ROOT = SP_ROOT_ORIGINAL //URL(string: prod ? "http://localhost:3000/" : "https://cdn.sp-stage.net/")!
         static let WRAPPER_API = URL(string: "./wrapper/?env=\(envParam)", relativeTo: SP_ROOT)!
         static let GDPR_MESSAGE_URL = URL(string: "./v2/message/gdpr", relativeTo: WRAPPER_API)!
         static let CCPA_MESSAGE_URL = URL(string: "./v2/message/ccpa", relativeTo: WRAPPER_API)!

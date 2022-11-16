@@ -11,9 +11,40 @@ struct GDPRChoiceResponse: Decodable, Equatable {
     let uuid: String
     let dateCreated: SPDateCreated
     let TCData: SPJson?
+    let euconsent: String?
+    let consentStatus: ConsentStatus?
+    let grants: SPGDPRVendorGrants?
 }
 
-struct CCPAChoiceResponse: Decodable, Equatable {
+struct CCPAChoiceResponse: Equatable {
     let uuid: String
     let dateCreated: SPDateCreated
+    let consentedAll: Bool?
+    let rejectedAll: Bool?
+    let status: CCPAConsentStatus?
+    let uspstring: String?
+    let gpcEnabled: Bool? // TODO: check with Sid if this not be optional (it's missing for property 16893)
+    let rejectedVendors: [String]?
+    let rejectedCategories: [String]?
+}
+
+extension CCPAChoiceResponse: Decodable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try self.init(
+            uuid: container.decode(String.self, forKey: .uuid),
+            dateCreated: container.decode(SPDateCreated.self, forKey: .dateCreated),
+            consentedAll: container.decode(Bool.self, forKey: .consentedAll),
+            rejectedAll: container.decode(Bool.self, forKey: .rejectedAll),
+            status: container.decode(CCPAConsentStatus.self, forKey: .status),
+            uspstring: container.decode(String.self, forKey: .uspstring),
+            gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled),
+            rejectedVendors: ((container.decodeIfPresent([String?].self, forKey: .rejectedVendors)) ?? []).compactMap { $0 },
+            rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 }
+        )
+    }
+
+    enum CodingKeys: CodingKey {
+        case uuid, dateCreated, consentedAll, rejectedAll, status, uspstring, rejectedVendors, rejectedCategories, gpcEnabled
+    }
 }

@@ -15,6 +15,10 @@ public typealias SPTargetingParams = [String: String]
     let targetingParams: SPTargetingParams
     let groupPmId: String?
 
+    public override var description: String {
+        "SPCampaign(targetingParams: \(targetingParams), groupPmId: \(groupPmId as Any))"
+    }
+
     public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil
@@ -30,6 +34,16 @@ public typealias SPTargetingParams = [String: String]
 @objcMembers public class SPCampaigns: NSObject {
     let environment: SPCampaignEnv
     let gdpr, ccpa, ios14: SPCampaign?
+
+    public override var description: String {
+        """
+        SPCampaigns
+            - gdpr: \(gdpr as Any)
+            - cppa: \(ccpa as Any)
+            - ios14: \(ios14 as Any)
+            - environment: \(environment)
+        """
+    }
 
     public init(
         gdpr: SPCampaign? = nil,
