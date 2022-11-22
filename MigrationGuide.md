@@ -1,5 +1,5 @@
-# Migrate to v6 (Unified SDK)
-In this guide we will cover how to migrate your app to the latest version of Sourcepoint's SDK (v6). While this migration means more work for you, it also allows for multiple improvements. Below are some reasons to migrate to the latest version of our SDK:
+# Migrate to v7 (Unified SDK)
+In this guide we will cover how to migrate your app to the latest version of Sourcepoint's SDK (v7). While this migration means more work for you, it also allows for multiple improvements. Below are some reasons to migrate to the latest version of our SDK:
 
 1. Your organization no longer needs to integrate with multiple SDKs! The latest version of our SDK supports CCPA, GDPR and ATT pre-prompt message.
 2. No longer instantiate a `UIViewController` if there is no message being displayed.
@@ -20,11 +20,12 @@ lazy var consentViewController: GDPRConsentViewController = { return GDPRConsent
     consentDelegate: self
 )}()
 ```
-**v6 (Unified SDK)**:
+**v7 (Unified SDK)**:
 ```swift
 lazy var consentManager: SPConsentManager = { SPConsentManager(
     accountId: 22,
     propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+    propertyId: 27693,
     campaigns: SPCampaigns(
         gdpr: SPCampaign()
     ),
@@ -42,7 +43,7 @@ lazy var consentManager: SPConsentManager = { SPConsentManager(
 ```swift
 .loadPrivacyManager()
 ```
-**v6 (Unified SDK)**:
+**v7 (Unified SDK)**:
 ```swift
 .loadGDPRPrivacyManager(withId: String, tab: SPPrivacyManagerTab)
 // or
@@ -61,7 +62,7 @@ The `onSPUIReady` might be called multiple times, one for each message returned 
 ***
 
 ### `onAction(_ action: GDPRAction)`
-**v6 (Unified SDK)**:
+**v7 (Unified SDK)**:
 ```swift
 onAction(_ action: SPAction, from controller: UIViewController)
 ```
@@ -70,7 +71,7 @@ The `onAction` method hasn't changed much apart from having on extra parameter i
 ***
 
 ### `consentUIDidDisappear()`
-**v6 (Unified SDK)**:
+**v7 (Unified SDK)**:
 ```swift
 onSPUIFinished(_ controller: UIViewController)
 ```
@@ -79,7 +80,7 @@ The `onSPUIFinished` might be called multiple times, one for each message that n
 ***
 
 ### `onConsentReady(gdprUUID: GDPRUUID, userConsent: GDPRUserConsent)`
-**v6 (Unified SDK)**:
+**v7 (Unified SDK)**:
 ```swift
 onConsentReady(consents: SPUserData) {
 ```
@@ -89,7 +90,7 @@ onConsentReady(consents: SPUserData) {
 ***
 
 ### `onError(error: GDPRConsentViewControllerError)`
-**v6 (Unified SDK)**:
+**v7 (Unified SDK)**:
 ```swift
 onError(error: SPError)
 ```
