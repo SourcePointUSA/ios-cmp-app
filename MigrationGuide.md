@@ -25,7 +25,7 @@ lazy var consentViewController: GDPRConsentViewController = { return GDPRConsent
 lazy var consentManager: SPConsentManager = { SPConsentManager(
     accountId: 22,
     propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-    propertyId: 27693,
+    propertyId: 22932,
     campaigns: SPCampaigns(
         gdpr: SPCampaign()
     ),
