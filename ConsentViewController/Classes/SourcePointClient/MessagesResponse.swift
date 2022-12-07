@@ -161,7 +161,6 @@ struct Campaign: Equatable {
     var url: URL?
     var message: Message?
 //    let userConsent: Consent // TODO: check if we'll need a "default" consent from messages endpoint
-    let applies: Bool?
     let messageMetaData: MessageMetaData?
     let consentStatus: ConsentStatus?
     let dateCreated: SPDateCreated?
@@ -171,7 +170,6 @@ extension Campaign: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         type = try container.decode(SPCampaignType.self, forKey: .type)
-        applies = try container.decodeIfPresent(Bool.self, forKey: .applies)
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
 //        userConsent = try Consent(from: decoder)
         consentStatus = try? container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus) ?? ConsentStatus(from: decoder)
@@ -183,7 +181,7 @@ extension Campaign: Decodable {
     }
 
     enum Keys: CodingKey {
-        case applies, type, message, messageMetaData, url, consentStatus, dateCreated
+        case type, message, messageMetaData, url, consentStatus, dateCreated
     }
 }
 

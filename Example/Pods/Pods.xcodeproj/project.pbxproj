@@ -1419,7 +1419,7 @@
 		DABDAF5A3590D5F3527DA9B846B5BDAF /* Pods-SPGDPRExampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SPGDPRExampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DACD17A21E46451BA4F80C47CEF4079B /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DACE3241A31233F974FC1FC21E437964 /* TextTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextTableViewCell.swift; path = Sources/UI/Cells/TextTableViewCell.swift; sourceTree = "<group>"; };
-		DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController-iOS10.0 */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "ConsentViewController-iOS10.0"; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBCDAC93241330F0834F405C72A15095 /* JSONView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = JSONView.modulemap; sourceTree = "<group>"; };
 		DC01C305272B2675B520F8DC2C067D8F /* SPCCPAVendorDetailsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPCCPAVendorDetailsViewController.swift; sourceTree = "<group>"; };
 		DDC9654B05776E8FF3380A66E968BDAE /* Pods-SourcePointMetaAppUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SourcePointMetaAppUITests.modulemap"; sourceTree = "<group>"; };
@@ -2555,7 +2555,7 @@
 		D7700BF3B6CB7265B98A67FB8E6DF427 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController-iOS10.0 */,
+				DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController.framework */,
 				D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController.bundle */,
 				3199859FB7869D7CCFD28196357A6FFD /* ConsentViewController-iOS13.0 */,
 				9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController.bundle */,
@@ -3289,7 +3289,7 @@
 			);
 			name = "ConsentViewController-iOS10.0";
 			productName = ConsentViewController;
-			productReference = DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController-iOS10.0 */;
+			productReference = DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		A897D2D55F6D87795224F846F8ED3A36 /* Nimble-tvOS */ = {
@@ -6298,11 +6298,11 @@
 			baseConfigurationReference = 202842B5A10A0D4DCD146084A16D9295 /* ConsentViewController-iOS10.0.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -6318,6 +6318,7 @@
 				MODULEMAP_FILE = "Target Support Files/ConsentViewController-iOS10.0/ConsentViewController-iOS10.0.modulemap";
 				PRODUCT_MODULE_NAME = ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -6545,11 +6546,11 @@
 			baseConfigurationReference = 392F6E13985151B5890D7351882396C5 /* ConsentViewController-iOS10.0.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -6565,6 +6566,7 @@
 				MODULEMAP_FILE = "Target Support Files/ConsentViewController-iOS10.0/ConsentViewController-iOS10.0.modulemap";
 				PRODUCT_MODULE_NAME = ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";

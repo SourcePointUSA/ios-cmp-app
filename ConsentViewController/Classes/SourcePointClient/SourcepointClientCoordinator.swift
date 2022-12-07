@@ -418,14 +418,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.tcfData = gdpr.TCData
             state.gdpr?.vendorGrants = gdpr.grants
             state.gdpr?.euconsent = gdpr.euconsent
-            state.gdpr?.applies = gdpr.applies
             state.gdpr?.consentStatus = gdpr.consentStatus
             state.gdpr?.childPmId = gdpr.childPmId
         }
         if let ccpa = response.ccpa, campaign == .ccpa {
             state.ccpa?.dateCreated = ccpa.dateCreated
             state.ccpa?.status = ccpa.status
-            state.ccpa?.applies = ccpa.applies
         }
         storage.spState = state
     }

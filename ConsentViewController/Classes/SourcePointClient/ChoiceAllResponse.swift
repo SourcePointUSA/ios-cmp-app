@@ -9,7 +9,6 @@ import Foundation
 
 struct ChoiceAllResponse: Decodable {
     struct CCPA {
-        let applies: Bool
         let consentedAll: Bool
         let dateCreated: SPDateCreated
         let rejectedAll: Bool
@@ -28,7 +27,6 @@ struct ChoiceAllResponse: Decodable {
         }
 
         let addtlConsent, childPmId: String?
-        let applies: Bool
         let euconsent: String
         let hasLocalData: Bool?
         let dateCreated: SPDateCreated?
@@ -54,7 +52,6 @@ extension ChoiceAllResponse.CCPA: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(
-            applies: container.decode(Bool.self, forKey: .applies),
             consentedAll: container.decode(Bool.self, forKey: .consentedAll),
             dateCreated: container.decode(SPDateCreated.self, forKey: .dateCreated),
             rejectedAll: container.decode(Bool.self, forKey: .rejectedAll),
@@ -67,6 +64,6 @@ extension ChoiceAllResponse.CCPA: Decodable {
     }
 
     enum CodingKeys: CodingKey {
-        case applies, dateCreated, consentedAll, rejectedAll, status, uspstring, rejectedVendors, rejectedCategories, gpcEnabled
+        case dateCreated, consentedAll, rejectedAll, status, uspstring, rejectedVendors, rejectedCategories, gpcEnabled
     }
 }
