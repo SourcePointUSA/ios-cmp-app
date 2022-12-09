@@ -95,6 +95,9 @@ import Foundation
 
     func setFocusGuidesForButtons() {
         let visibleButtons: [UIView] = actionsContainer.arrangedSubviews.filter({!$0.isHidden})
+        if(visibleButtons.count <= 1) {
+            return;
+        }
         for i in 0...visibleButtons.count-2 {
             addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
         }
