@@ -428,7 +428,7 @@ import UIKit
                     delegate: self
                 )
                 pmViewController.delegate = self
-//                pmViewController.snapshot = CCPAPMConsentSnaptshot(withStatus: self?.userData.ccpa?.consents?.status)
+                pmViewController.snapshot = CCPAPMConsentSnaptshot(withStatus: self?.userData.ccpa?.consents?.status)
                 self?.loaded(pmViewController)
             case .failure(let error):
                 self?.onError(error)
