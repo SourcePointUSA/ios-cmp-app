@@ -408,7 +408,7 @@ Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `S
 
 Google additional consent is a concept created by Google and the IAB Framework to pass end-user consent to Google Ad Technology Providers (ATP) despite not adhering to the IAB TCF framework. [Click here](https://docs.sourcepoint.com/hc/en-us/articles/4405115143955) for more information.
 
-Google additional consent is supported in our mobile SDKs and is stored in the `IABTCF_AddtlConsent` key in the user's local storage. Look for the key in the user's local storage and pass the value to Google's SDKs.
+Google additional consent is supported by our mobile SDKs and is stored in the `IABTCF_AddtlConsent` key in the `UserDefaults`. Look for that key in the user's local storage and pass the value to Google's SDKs.
 
 ## Delete user data
 Utilize the following method if an end-user requests to have their data deleted:
