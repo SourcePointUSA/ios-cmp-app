@@ -26,13 +26,14 @@ import Foundation
 
     var doNotSellButton: SPNativeLongButton?
 
+    var ccpaConsents: SPCCPAConsent?
+    private var snapshot: CCPAPMConsentSnaptshot!
+
     @IBOutlet weak var header: SPPMHeader!
 
     var secondLayerData: CCPAPrivacyManagerViewResponse?
 
     let cellReuseIdentifier = "cell"
-
-    var snapshot: CCPAPMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
 
@@ -55,8 +56,32 @@ import Foundation
         loaded(self)
     }
 
+    func setDoNotSellButton() {
+        doNotSellButton = viewData.byId("DoNotSellButton") as? SPNativeLongButton
+        doNotSellTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
+        doNotSellTableView.allowsSelection = true
+        doNotSellTableView.delegate = self
+        doNotSellTableView.dataSource = self
+    }
+
+    func initConsentsSnapshot() {
+        snapshot = CCPAPMConsentSnaptshot(
+            vendors: [],
+            categories: [],
+            rejectedVendors: ccpaConsents?.rejectedVendors,
+            rejectedCategories: ccpaConsents?.rejectedCategories,
+            consentStatus: ccpaConsents?.status)
+        snapshot.onConsentsChange = { [weak self] in
+            self?.doNotSellTableView.reloadData()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        initConsentsSnapshot()
         setHeader()
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
         descriptionTextView.flashScrollIndicators()
@@ -67,17 +92,7 @@ import Foundation
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
-        doNotSellButton = viewData.byId("DoNotSellButton") as? SPNativeLongButton
-        doNotSellTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
-            forCellReuseIdentifier: cellReuseIdentifier
-        )
-        doNotSellTableView.allowsSelection = true
-        doNotSellTableView.delegate = self
-        doNotSellTableView.dataSource = self
-        snapshot?.onConsentsChange = { [weak self] in
-            self?.doNotSellTableView.reloadData()
-        }
+        setDoNotSellButton()
         setFocusGuidesForButtons()
         disableMenuButton()
     }
@@ -115,9 +130,19 @@ import Foundation
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
-        let actionType: SPActionType = (snapshot?.consentStatus == .RejectedAll) ? .RejectAll : .AcceptAll
+        var actionType: SPActionType
+        switch snapshot.consentStatus {
+            case .RejectedSome: actionType = .SaveAndExit
+            case .RejectedAll: actionType = .RejectAll
+            case .ConsentedAll, .RejectedNone: actionType = . AcceptAll
+        }
+
         action(
-            SPAction(type: actionType, campaignType: campaignType),
+            SPAction(
+                type: actionType,
+                campaignType: campaignType,
+                pmPayload: snapshot.toPayload(language: .English, pmId: messageId).json() ?? SPJson()
+            ),
             from: self
         )
     }
@@ -139,15 +164,13 @@ import Foundation
                             delegate: self,
                             nibName: "SPCCPAManagePreferenceViewController"
                         )
-                        if self?.snapshot == nil {
-                            self?.snapshot = CCPAPMConsentSnaptshot(
-                                vendors: Set<CCPAVendor>(data.vendors),
-                                categories: Set<CCPACategory>(data.categories),
-                                rejectedVendors: data.rejectedVendors,
-                                rejectedCategories: data.rejectedCategories,
-                                consentStatus: data.consentStatus
-                            )
-                        }
+                        self?.snapshot = CCPAPMConsentSnaptshot(
+                            vendors: Set<CCPAVendor>(data.vendors),
+                            categories: Set<CCPACategory>(data.categories),
+                            rejectedVendors: data.rejectedVendors,
+                            rejectedCategories: data.rejectedCategories,
+                            consentStatus: data.consentStatus
+                        )
                         controller.categories = data.categories
                         controller.consentsSnapshot = strongSelf.snapshot!
                         self?.present(controller, animated: true)
@@ -164,15 +187,6 @@ import Foundation
             delegate: self,
             nibName: "SPManagePreferenceViewController"
         )
-        if snapshot == nil {
-            snapshot = CCPAPMConsentSnaptshot(
-                vendors: Set<CCPAVendor>(secondLayerData.vendors),
-                categories: Set<CCPACategory>(secondLayerData.categories),
-                rejectedVendors: secondLayerData.rejectedVendors,
-                rejectedCategories: secondLayerData.rejectedCategories,
-                consentStatus: secondLayerData.consentStatus
-            )
-        }
         controller.categories = secondLayerData.categories
         controller.consentsSnapshot = snapshot!
         present(controller, animated: true)
@@ -185,14 +199,12 @@ import Foundation
                 self?.onError(error)
             case .success(let data):
                 if let strongSelf = self {
-                    if self?.snapshot == nil {
-                        self?.snapshot = CCPAPMConsentSnaptshot(
-                            vendors: Set<CCPAVendor>(data.vendors),
-                            categories: Set<CCPACategory>(data.categories),
-                            rejectedVendors: data.rejectedVendors,
-                            rejectedCategories: data.rejectedCategories, consentStatus: data.consentStatus
-                        )
-                    }
+                    self?.snapshot = CCPAPMConsentSnaptshot(
+                        vendors: Set<CCPAVendor>(data.vendors),
+                        categories: Set<CCPACategory>(data.categories),
+                        rejectedVendors: data.rejectedVendors,
+                        rejectedCategories: data.rejectedCategories, consentStatus: data.consentStatus
+                    )
                     let controller = SPCCPAPartnersViewController(
                         messageId: strongSelf.messageId,
                         campaignType: strongSelf.campaignType,
@@ -264,7 +276,7 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
         cell.labelText = doNotSellButton?.settings.text
         cell.selectable = false
         cell.isCustom = false
-        cell.isOn = snapshot?.consentStatus == .RejectedAll
+        cell.isOn = snapshot.consentStatus == .RejectedAll
         cell.setup(from: doNotSellButton)
         cell.loadUI()
         return cell
@@ -282,6 +294,6 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        snapshot?.onDoNotSellToggle()
+        snapshot.onDoNotSellToggle()
     }
 }

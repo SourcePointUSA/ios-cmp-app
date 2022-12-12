@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "713327")
+        consentManager.loadCCPAPrivacyManager(withId: "750805")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
