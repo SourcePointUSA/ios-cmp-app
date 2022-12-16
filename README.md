@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.7.2'
+pod 'ConsentViewController', '6.7.3'
 ```
 
 ### Carthage
@@ -196,7 +196,7 @@ The SDK will follow the same exact same lifecycle as with the 1st layer consent 
 
 ## Understanding the `SPDelegate` protocol (delegate methods)
 
-### onSPUIReady(_ controller: UIViewController)
+### onSPUIReady(_ controller: UIViewController
 The SDK will wrap the web message into a `UIViewController` and call the `onSPUIReady` when there is a message to be displayed.
 
 ### optional onSPNativeMessageReady(_ message: SPNativeMessage)
