@@ -48,12 +48,23 @@ class SPPMHeader: UIView {
             backButton.setup(from: spBackButton)
         }
     }
+
     var spTitleText: SPNativeText? {
         didSet {
             titleLabel.setup(from: spTitleText)
         }
     }
+
     var onBackButtonTapped: (() -> Void)?
+
+    override var isAccessibilityElement: Bool {
+        set {}
+        get { false }
+    }
+    override var accessibilityElements: [Any]? {
+        set {}
+        get { [titleLabel as Any, backButton as Any] }
+    }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -69,6 +80,8 @@ class SPPMHeader: UIView {
         let nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
+        titleLabel.isAccessibilityElement = true
+        backButton.isAccessibilityElement = true
         addSubview(contentView)
     }
 }

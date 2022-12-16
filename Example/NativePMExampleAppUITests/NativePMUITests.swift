@@ -21,13 +21,30 @@ extension XCUIElement {
 
 class NativePMUITests: QuickSpec {
     var app: NativePMApp!
+    var timeout = 20
+    var gdprCategoriesCount = 10
+    var ccpaCategoriesCount = 3
+    var gdprCategoriePlusSpecialFeatures = 11
+
+    override func setUp() {
+        continueAfterFailure = false
+    }
+
+    func waitFor(_ element: XCUIElement) {
+        _ = element.waitForExistence(timeout: TimeInterval(timeout))
+    }
+
+    func checkForAllCategories(on element: XCUIElement, shouldBe onOrOf: String, totalCategories: Int) {
+        waitFor(element.staticTexts["Manage Preferences"].firstMatch)
+        expect(element.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", onOrOf)).count).toEventually(equal(totalCategories))
+    }
 
     override func spec() {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = NativePMApp()
-            Nimble.AsyncDefaults.timeout = .seconds(20)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            Nimble.AsyncDefaults.timeout = .seconds(self.timeout)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(500)
         }
 
         afterSuite {
@@ -41,74 +58,96 @@ class NativePMUITests: QuickSpec {
 
         it("Accept all through CCPA & GDPR Privacy Manager") {
             // Accept all GDPR Message
-            expect(self.app.gdprMessage).toEventually(showUp())
+            self.waitFor(self.app.gdprMessage)
             self.app.gdprMessage.acceptAllButton.remotePress()
 
             // Accept All CCPA Message
-            expect(self.app.ccpaMessage).toEventually(showUp())
+            self.waitFor(self.app.ccpaMessage)
             self.app.ccpaMessage.acceptAllButton.remotePress()
 
             // Wait for the messages to close and PM buttons to show
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
-            expect(self.app.ccpaPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("(SDK done)"))
 
             self.app.relaunch()
 
             // Assert sure no message shows up
-            expect(self.app.gdprMessage.container.exists).toEventually(beFalse())
-            expect(self.app.ccpaMessage.container.exists).toEventually(beFalse())
+            expect(self.app.sdkStatusLabel).toEventually(containText("(SDK done)"))
 
             // Assert all GDPR categories are on
             self.app.gdprPrivacyManagerButton.remotePress()
-            expect(self.app.gdprMessage).toEventually(showUp())
+            self.waitFor(self.app.gdprMessage)
             self.app.gdprMessage.categoriesDetailsButton.remotePress()
-            expect(self.app.gdprMessage.staticTexts["Manage Preferences"].firstMatch).toEventually(showUp())
-            expect(self.app.gdprMessage.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", "On")).count).toEventually(equal(10))
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: self.gdprCategoriesCount)
 
             self.app.relaunch()
 
             // Assert all CCPA categories are on
             self.app.ccpaPrivacyManagerButton.remotePress()
-            expect(self.app.ccpaMessage).toEventually(showUp())
+            self.waitFor(self.app.ccpaMessage)
             self.app.ccpaMessage.categoriesDetailsButton.remotePress()
-            expect(self.app.gdprMessage.staticTexts["Manage Preferences"].firstMatch).toEventually(showUp())
-            expect(self.app.gdprMessage.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", "On")).count).toEventually(equal(3))
+            self.checkForAllCategories(on: self.app.ccpaMessage, shouldBe: "On", totalCategories: self.ccpaCategoriesCount)
         }
 
-        fit("Reject all through CCPA & GDPR Privacy Manager") {
-            // Reject all GDPR Message
-            expect(self.app.gdprMessage).toEventually(showUp())
+        it("Reject all through CCPA & GDPR Privacy Manager") {
+            // Accept all GDPR Message
+            self.waitFor(self.app.gdprMessage)
             self.app.gdprMessage.rejectAllButton.remotePress()
 
-            // Reject All CCPA Message
-            expect(self.app.ccpaMessage).toEventually(showUp())
+            // Accept All CCPA Message
+            self.waitFor(self.app.ccpaMessage)
             self.app.ccpaMessage.rejectAllButton.remotePress()
 
             // Wait for the messages to close and PM buttons to show
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
-            expect(self.app.ccpaPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("(SDK done)"))
 
             self.app.relaunch()
 
             // Assert sure no message shows up
-            expect(self.app.gdprMessage.container.exists).toEventually(beFalse())
-            expect(self.app.ccpaMessage.container.exists).toEventually(beFalse())
+            expect(self.app.sdkStatusLabel).toEventually(containText("(SDK done)"))
 
             // Assert all GDPR categories are on
             self.app.gdprPrivacyManagerButton.remotePress()
-            expect(self.app.gdprMessage).toEventually(showUp())
+            self.waitFor(self.app.gdprMessage)
             self.app.gdprMessage.categoriesDetailsButton.remotePress()
-            expect(self.app.gdprMessage.staticTexts["Manage Preferences"].firstMatch).toEventually(showUp())
-            expect(self.app.gdprMessage.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", "On")).count).toEventually(equal(0))
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "Off", totalCategories: self.gdprCategoriePlusSpecialFeatures)
 
             self.app.relaunch()
 
             // Assert all CCPA categories are on
             self.app.ccpaPrivacyManagerButton.remotePress()
-            expect(self.app.ccpaMessage).toEventually(showUp())
+            self.waitFor(self.app.ccpaMessage)
             self.app.ccpaMessage.categoriesDetailsButton.remotePress()
-            expect(self.app.gdprMessage.staticTexts["Manage Preferences"].firstMatch).toEventually(showUp())
-            expect(self.app.gdprMessage.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", "On")).count).toEventually(equal(0))
+            self.checkForAllCategories(on: self.app.ccpaMessage, shouldBe: "Off", totalCategories: self.ccpaCategoriesCount)
+        }
+
+        it("Do not sell button toggles on/off when rejecting / accepting all") {
+            self.app.relaunch(clean: true, gdpr: false, ccpa: true)
+
+            expect(self.app.ccpaMessage).toEventually(showUp())
+            self.app.remote.press(.right)
+            expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["OFF"]).toEventually(showUp())
+            self.app.ccpaMessage.doNotSellMyInfoButton.remotePress()
+            expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["ON"]).toEventually(showUp())
+            self.app.remote.press(.left)
+            self.app.ccpaMessage.saveAndExitButton.remotePress()
+            expect(self.app.sdkStatusLabel).toEventually(containText("(SDK done)"))
+
+            self.app.relaunch(clean: false, gdpr: false, ccpa: true)
+
+            self.app.ccpaPrivacyManagerButton.remotePress()
+            expect(self.app.ccpaMessage).toEventually(showUp())
+            expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["ON"]).toEventually(showUp())
+            self.app.remote.press(.right)
+            self.app.ccpaMessage.doNotSellMyInfoButton.remotePress()
+            expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["OFF"]).toEventually(showUp())
+            self.app.remote.press(.left)
+            self.app.ccpaMessage.saveAndExitButton.remotePress()
+            expect(self.app.sdkStatusLabel).toEventually(containText("(SDK done)"))
+
+            self.app.relaunch(clean: false, gdpr: false, ccpa: true)
+
+            self.app.ccpaPrivacyManagerButton.remotePress()
+            expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["OFF"]).toEventually(showUp())
         }
 
 //        it("Save and Exit through CCPA & GDPR Privacy Manager") {

@@ -12,16 +12,22 @@ import Nimble
 protocol App {
     func launch()
     func terminate()
-    func relaunch(clean: Bool)
+    func relaunch(clean: Bool, gdpr: Bool, ccpa: Bool)
 }
 
 extension XCUIApplication: App {
-    func relaunch(clean: Bool = false) {
+    func setArgument(_ name: String, _ value: Bool) {
+        value ?
+            launchArguments.append("-\(name)") :
+            launchArguments.removeAll { $0 == "-\(name)" }
+    }
+
+    func relaunch(clean: Bool = false, gdpr: Bool = true, ccpa: Bool = true) {
         UserDefaults.standard.synchronize()
         self.terminate()
-        clean ?
-            launchArguments.append("-cleanAppsData") :
-            launchArguments.removeAll { $0 == "-cleanAppsData" }
+        setArgument("cleanAppsData", clean)
+        setArgument("gdpr", gdpr)
+        setArgument("ccpa", ccpa)
         launch()
     }
 }
@@ -45,10 +51,11 @@ class NativePMApp: XCUIApplication {
         }
 
         var doNotSellMyInfoButton: XCUIElement {
-            container.buttons["Do not sell my personal information"].firstMatch
+            container.cells.containing(.staticText, identifier: "Do Not Sell My Personal Data").firstMatch
         }
         var acceptAllButton: XCUIElement { container.buttons["Accept"].firstMatch }
         var rejectAllButton: XCUIElement { container.buttons["Reject All"].firstMatch }
+        var saveAndExitButton: XCUIElement { container.buttons["Save and Exit"].firstMatch }
         var categoriesDetailsButton: XCUIElement { container.buttons["Manage Preferences"].firstMatch }
         var vendorsDetailsButton: XCUIElement { container.buttons["Our Partners"].firstMatch }
         var privacyPolicyButton: XCUIElement { container.buttons["Privacy Policy"].firstMatch }
@@ -164,6 +171,10 @@ class NativePMApp: XCUIApplication {
     var ccpaPrivacyManagerButton: XCUIElement {
         buttons["CCPA Privacy Manager"].firstMatch
     }
+
+    var sdkStatusLabel: XCUIElement {
+        staticTexts["sdkStatusLabel"]
+    }
 }
 
 // MARK: - NativePMApp actions
@@ -249,8 +260,7 @@ extension XCUIElement {
     }
 
     func remotePress() {
-        if self.exists {
-            expect(self).toEventually(showUp())
+        if waitForExistence(timeout: 5) {
             remotePressUntilFocus(direction: .down)
             remotePressUntilFocus(direction: .up)
             expectToHaveFocus()
