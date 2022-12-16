@@ -173,6 +173,7 @@
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="gFF-c6-c6m"/>
                     <constraints>
+                        <constraint firstItem="oRM-Q5-ya9" firstAttribute="width" secondItem="R0M-NR-37Q" secondAttribute="width" id="4Np-u0-cgR"/>
                         <constraint firstAttribute="width" constant="1760" id="DhD-Ev-UVu"/>
                         <constraint firstItem="2vg-KP-UZ9" firstAttribute="leading" secondItem="R0M-NR-37Q" secondAttribute="leading" id="Ubb-I1-N3h"/>
                         <constraint firstAttribute="height" constant="960" id="hxz-l9-fAr"/>
