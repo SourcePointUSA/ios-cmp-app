@@ -29,6 +29,15 @@ extension TimeInterval {
     }
 }
 
+/// A matcher that checks if a `XCUIElement` contains the given text
+public func containText(_ text: String) -> Predicate<XCUIElement> {
+    return Predicate.simple("contain text") { actualExpression in
+        guard let actual = try? actualExpression.evaluate() else { return .fail }
+        return PredicateStatus(bool: actual.label.contains(text))
+    }
+}
+
+
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
 /// a certain amount of time. 10 seconds by default
 public func showUp() -> Predicate<XCUIElement> {
