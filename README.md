@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.7.2'
+pod 'ConsentViewController', '6.7.3'
 ```
 
 ### Carthage
@@ -196,7 +196,7 @@ The SDK will follow the same exact same lifecycle as with the 1st layer consent 
 
 ## Understanding the `SPDelegate` protocol (delegate methods)
 
-### onSPUIReady(_ controller: UIViewController)
+### onSPUIReady(_ controller: UIViewController
 The SDK will wrap the web message into a `UIViewController` and call the `onSPUIReady` when there is a message to be displayed.
 
 ### optional onSPNativeMessageReady(_ message: SPNativeMessage)
@@ -403,6 +403,12 @@ The `onConsentReady` delegate method sends the consent action to the server and 
 
 The SDK will in all cases wrap the error in one of the SPError class and eventually call the func `onError(_ error: SPError)` callback. By default, the SDK preservs all user consent data from UserDefaults in case of `OnError` event is called.
 Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
+
+## Google Additional Consent (GDPR TCF)
+
+Google additional consent is a concept created by Google and the IAB Framework to pass end-user consent to Google Ad Technology Providers (ATP) despite not adhering to the IAB TCF framework. [Click here](https://docs.sourcepoint.com/hc/en-us/articles/4405115143955) for more information.
+
+Google additional consent is supported by our mobile SDKs and is stored in the `IABTCF_AddtlConsent` key in the `UserDefaults`. Look for that key in the user's local storage and pass the value to Google's SDKs.
 
 ## Delete user data
 Utilize the following method if an end-user requests to have their data deleted:

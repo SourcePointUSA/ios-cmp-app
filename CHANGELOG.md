@@ -1,3 +1,8 @@
+# 6.7.3 (Dec, 16, 2022)
+* Fixed layout issues in the CCPA Native PM for TvOS when the message had less buttons than expected in the default UI. [#401](https://github.com/SourcePointUSA/ios-cmp-app/pull/401), [#397](https://github.com/SourcePointUSA/ios-cmp-app/pull/397)
+* Fixed an issue preventing the "Do not sell information" button in the CCPA Native PM - from working as expected [#400](https://github.com/SourcePointUSA/ios-cmp-app/pull/400)
+* Improved documentation and UI testing on TvOS
+
 # 6.7.2 (Oct, 26, 2022)
 * Added support to custom actions coming from the privacy manager. [#391](https://github.com/SourcePointUSA/ios-cmp-app/pull/391)
 

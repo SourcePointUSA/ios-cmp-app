@@ -14,33 +14,47 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var gdprButton: UIButton!
     @IBOutlet weak var ccpaButton: UIButton!
+    @IBOutlet weak var sdkStatusLabel: UILabel!
 
     @IBAction func onGDPRTap(_ sender: Any) {
         consentManager.loadGDPRPrivacyManager(withId: "713324")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "713327")
+        consentManager.loadCCPAPrivacyManager(withId: "753814")
     }
 
-    lazy var consentManager: SPConsentManager = { SPConsentManager(
-        accountId: 22,
-        propertyId: 17935,
-        propertyName: try! SPPropertyName("appletv.demo"),
-        campaignsEnv: .Public,
-        campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign()
-        ),
-        delegate: self
-    )}()
+    var sdkStatus = SDKStatus.notStarted
+
+    var campaigns: SPCampaigns {
+        var gdpr, ccpa: SPCampaign?
+        if UserDefaults.standard.bool(forKey: "app.campaigns.gdpr") {
+            gdpr = SPCampaign()
+        }
+        if UserDefaults.standard.bool(forKey: "app.campaigns.ccpa") {
+            ccpa = SPCampaign()
+        }
+        return SPCampaigns(gdpr: gdpr, ccpa: ccpa, environment: .Public)
+    }
+
+    lazy var consentManager: SPConsentManager = {
+        return SPConsentManager(
+            accountId: 22,
+            propertyId: 21927,
+            propertyName: try! SPPropertyName("appletv.demo"),
+            campaigns: campaigns,
+            delegate: self
+        )
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         ccpaButton.setTitle("CCPA (does not apply)", for: .disabled)
         gdprButton.setTitle("GDPR (does not apply)", for: .disabled)
         updateButtons()
         consentManager.loadMessage()
+        updateSdkStatus(.running)
     }
 }
 
@@ -67,6 +81,11 @@ extension ViewController: SPDelegate {
     func onError(error: SPError) {
         stopActivityIndicator()
         print("ERROR: ", error.description)
+        updateSdkStatus(.errored)
+    }
+
+    func onSPFinished(userData: SPUserData) {
+        updateSdkStatus(.done)
     }
 }
 
@@ -94,5 +113,17 @@ extension ViewController {
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
     }
+
+    func updateSdkStatus(_ status: SDKStatus) {
+        sdkStatus = status
+        sdkStatusLabel.text = sdkStatus.rawValue
+    }
+}
+
+enum SDKStatus: String {
+    case notStarted = "(SDK not started)"
+    case running = "(SDK running)"
+    case done = "(SDK done)"
+    case errored = "(SDK errored)"
 }
 

@@ -14,12 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         if CommandLine.arguments.contains("-cleanAppsData") {
             SPConsentManager.clearAllData()
             SPConsentManager.shouldCallErrorMetrics = false
         }
+        UserDefaults.standard.set(CommandLine.arguments.contains("-gdpr"), forKey: "app.campaigns.gdpr")
+        UserDefaults.standard.set(CommandLine.arguments.contains("-ccpa"), forKey: "app.campaigns.ccpa")
         return true
     }
 
