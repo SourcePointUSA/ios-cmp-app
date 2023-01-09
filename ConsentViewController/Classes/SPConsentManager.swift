@@ -237,6 +237,7 @@ import UIKit
         )
         if !userData.isEqual(SPUserData()) {
             delegate?.onConsentReady?(userData: userData)
+            handleSDKDone()
         } else {
             if cleanUserDataOnError {
                 SPConsentManager.clearAllData()
