@@ -61,12 +61,37 @@ protocol SPClientCoordinator {
     func setRequestTimeout(_ timeout: TimeInterval)
 }
 
-class SourcepointClientCoordinator: SPClientCoordinator {
-    static let sampleRate = 1
+protocol SPSampleable {
+    var sampleRate: Float { get set }
+    var wasSampled: Bool? { get set }
+    var wasSampledAt: Float? { get set }
+    mutating func updateSampleFields(_ newSampleRate: Float)
+}
 
+extension SPSampleable {
+    mutating func updateSampleFields(_ newSampleRate: Float) {
+        sampleRate = newSampleRate
+        if sampleRate != wasSampledAt {
+            wasSampledAt = sampleRate
+            wasSampled = nil
+        }
+    }
+}
+
+class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
-        struct GDPRMetaData: Codable {
-            var additionsChangeDate, legalBasisChangeDate: SPDateCreated
+        struct GDPRMetaData: Codable, SPSampleable {
+            var additionsChangeDate = SPDateCreated.now()
+            var  legalBasisChangeDate = SPDateCreated.now()
+            var sampleRate = Float(1)
+            var wasSampled: Bool?
+            var wasSampledAt: Float?
+        }
+
+        struct CCPAMetaData: Codable, SPSampleable {
+            var sampleRate = Float(1)
+            var wasSampled: Bool?
+            var wasSampledAt: Float?
         }
 
         struct AttCampaign: Codable {
@@ -76,13 +101,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         var gdpr: SPGDPRConsent?
         var ccpa: SPCCPAConsent?
         var ios14: AttCampaign?
-        var gdprMetadata: GDPRMetaData?
-        var wasSampled: Bool?
+        var gdprMetaData: GDPRMetaData?
+        var ccpaMetaData: CCPAMetaData?
         var localState: SPJson?
         var nonKeyedLocalState: SPJson?
 
         mutating func udpateGDPRStatus() {
-            guard let gdpr = gdpr, let gdprMetadata = gdprMetadata else { return }
+            guard let gdpr = gdpr, let gdprMetadata = gdprMetaData else { return }
             var shouldUpdateConsentedAll = false
             if gdpr.dateCreated.date < gdprMetadata.additionsChangeDate.date {
                 self.gdpr?.consentStatus.vendorListAdditions = true
@@ -155,25 +180,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    var pvDataBodyFromState: PvDataRequestBody {
-        var gdpr: PvDataRequestBody.GDPR?
+    var ccpaPvDataBodyFromState: PvDataRequestBody {
         var ccpa: PvDataRequestBody.CCPA?
-        if let stateGDPR = state.gdpr {
-            gdpr = PvDataRequestBody.GDPR(
-                applies: stateGDPR.applies,
-                uuid: stateGDPR.uuid,
-                accountId: accountId,
-                siteId: propertyId,
-                consentStatus: stateGDPR.consentStatus,
-                pubData: pubData,
-                sampleRate: SourcepointClientCoordinator.sampleRate,
-                euconsent: stateGDPR.euconsent,
-                msgId: stateGDPR.lastMessage?.id,
-                categoryId: stateGDPR.lastMessage?.categoryId,
-                subCategoryId: stateGDPR.lastMessage?.subCategoryId,
-                prtnUUID: stateGDPR.lastMessage?.partitionUUID
-            )
-        }
         if let stateCCPA = state.ccpa {
             ccpa = .init(
                 applies: stateCCPA.applies,
@@ -183,10 +191,30 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 consentStatus: stateCCPA.consentStatus,
                 pubData: pubData,
                 messageId: stateCCPA.lastMessage?.id,
-                sampleRate: SourcepointClientCoordinator.sampleRate
+                sampleRate: state.ccpaMetaData?.sampleRate
             )
         }
-        return .init(gdpr: gdpr, ccpa: ccpa)
+        return .init(ccpa: ccpa)
+    }
+    var gdprPvDataBodyFromState: PvDataRequestBody {
+        var gdpr: PvDataRequestBody.GDPR?
+        if let stateGDPR = state.gdpr {
+            gdpr = PvDataRequestBody.GDPR(
+                applies: stateGDPR.applies,
+                uuid: stateGDPR.uuid,
+                accountId: accountId,
+                siteId: propertyId,
+                consentStatus: stateGDPR.consentStatus,
+                pubData: pubData,
+                sampleRate: state.gdprMetaData?.sampleRate,
+                euconsent: stateGDPR.euconsent,
+                msgId: stateGDPR.lastMessage?.id,
+                categoryId: stateGDPR.lastMessage?.categoryId,
+                subCategoryId: stateGDPR.lastMessage?.subCategoryId,
+                prtnUUID: stateGDPR.lastMessage?.partitionUUID
+            )
+        }
+        return .init(gdpr: gdpr)
     }
 
     var messagesParamsFromState: MessagesRequest {
@@ -258,9 +286,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.state = self.storage.spState ?? .init()
         if campaigns.gdpr != nil, self.state.gdpr == nil {
             self.state.gdpr = .empty()
+            self.state.gdprMetaData = .init()
         }
         if campaigns.ccpa != nil, self.state.ccpa == nil {
             self.state.ccpa = .empty()
+            self.state.ccpaMetaData = .init()
         }
         if campaigns.ios14 != nil, self.state.ios14 == nil {
             self.state.ios14 = .init()
@@ -284,20 +314,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 self.state.udpateGDPRStatus()
                 self.messages(handler)
             }
+            self.pvData()
         }
-        pvData()
     }
 
     func handleMetaDataResponse(_ response: MetaDataResponse) {
         if let gdprMetaData = response.gdpr {
             state.gdpr?.applies = gdprMetaData.applies
-            state.gdprMetadata = .init(
-                additionsChangeDate: gdprMetaData.additionsChangeDate,
-                legalBasisChangeDate: gdprMetaData.legalBasisChangeDate
-            )
+            state.gdprMetaData?.additionsChangeDate = gdprMetaData.additionsChangeDate
+            state.gdprMetaData?.legalBasisChangeDate = gdprMetaData.legalBasisChangeDate
+            state.gdprMetaData?.updateSampleFields(gdprMetaData.sampleRate)
         }
         if let ccpaMetaData = response.ccpa {
             state.ccpa?.applies = ccpaMetaData.applies
+            state.ccpaMetaData?.updateSampleFields(ccpaMetaData.sampleRate)
         }
         storage.spState = state
     }
@@ -391,25 +421,37 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func sample(_ lambda: (Bool) -> Void, at percentage: Int = sampleRate) {
-        let hit = 1...percentage ~= Int.random(in: 1...100)
-        lambda(hit)
+    func sample(at rate: Float) -> Bool {
+        1...Int(rate * 100) ~= Int.random(in: 1...100)
+    }
+
+    /// If campaign is not `nil`, sample it and call pvData in case the sampling was a hit.
+    /// Returns `true` if it hit or `false` otherwise
+    func sampleAndPvData(_ campaign: SPSampleable, body: PvDataRequestBody) -> Bool {
+        if campaign.wasSampled == nil {
+            if sample(at: campaign.sampleRate) {
+                spClient.pvData(body)
+                return true
+            }
+            return false
+        } else if campaign.wasSampled == true {
+            spClient.pvData(body)
+            return true
+        }
+
+        return false
     }
 
     func pvData() {
-        guard let wasSampled = state.wasSampled else {
-            sample { hit in
-                if hit {
-                    spClient.pvData(pvDataBodyFromState)
-                }
-                state.wasSampled = hit
-            }
-            return
+        if let gdprMetadata = state.gdprMetaData {
+            let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBodyFromState)
+            state.gdprMetaData?.wasSampled = sampled
         }
-
-        if wasSampled {
-            spClient.pvData(pvDataBodyFromState)
+        if let ccpaMetadata = state.ccpaMetaData {
+            let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBodyFromState)
+            state.ccpaMetaData?.wasSampled = sampled
         }
+        storage.spState = state
     }
 
     func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
@@ -468,7 +510,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 pubData: action.publisherData,
                 pmSaveAndExitVariables: action.pmPayload,
                 propertyId: propertyId,
-                sampleRate: SourcepointClientCoordinator.sampleRate,
+                sampleRate: state.gdprMetaData?.sampleRate,
                 idfaStatus: idfaStatus,
                 granularStatus: postPayloadFromGetCall?.granularStatus
             )
@@ -488,7 +530,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 pubData: action.publisherData,
                 pmSaveAndExitVariables: action.pmPayload,
                 propertyId: propertyId,
-                sampleRate: SourcepointClientCoordinator.sampleRate
+                sampleRate: state.ccpaMetaData?.sampleRate
             )
         ) { handler($0) }
     }

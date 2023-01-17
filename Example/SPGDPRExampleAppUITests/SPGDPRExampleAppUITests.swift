@@ -92,7 +92,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
-        fit("Consenting and Deleting custom vendor persist after relaunch") {
+        it("Consenting and Deleting custom vendor persist after relaunch") {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
