@@ -32,7 +32,7 @@ struct PvDataRequestBody: Codable, Equatable {
         let siteId: Int
         let consentStatus: ConsentStatus
         let pubData: [String: String]?
-        let sampleRate: Int
+        let sampleRate: Float?
         let euconsent: String?
         let msgId: Int?
         let categoryId: Int?
@@ -48,9 +48,14 @@ struct PvDataRequestBody: Codable, Equatable {
         let consentStatus: ConsentStatus
         let pubData: [String: String]?
         let messageId: Int?
-        let sampleRate: Int
+        let sampleRate: Float?
     }
 
     let gdpr: GDPR?
     let ccpa: CCPA?
+
+    init(gdpr: GDPR? = nil, ccpa: CCPA? = nil) {
+        self.gdpr = gdpr
+        self.ccpa = ccpa
+    }
 }

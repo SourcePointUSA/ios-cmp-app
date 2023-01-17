@@ -12,7 +12,8 @@ struct GDPRChoiceBody: Encodable, Equatable {
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: SPJson?
     let sendPVData = true // TODO: ask Sid/Dan what is this
-    let propertyId, sampleRate: Int
+    let propertyId: Int
+    let sampleRate: Float?
     let idfaStatus: SPIDFAStatus?
     let granularStatus: ConsentStatus.GranularStatus?
     let includeData = [
@@ -26,7 +27,8 @@ struct CCPAChoiceBody: Encodable, Equatable {
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: SPJson?
     let sendPVData = true // TODO: ask Sid/Dan what is this
-    let propertyId, sampleRate: Int
+    let propertyId: Int
+    let sampleRate: Float?
     let includeData = [
         "localState": ["type": "RecordString"]
     ]
