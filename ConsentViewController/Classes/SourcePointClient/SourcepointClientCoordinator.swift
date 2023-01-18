@@ -581,7 +581,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                                 case .success(let response):
                                     self.state.gdpr?.uuid = response.uuid
                                     self.state.gdpr?.dateCreated = response.dateCreated
-                                    self.state.gdpr?.tcfData = response.TCData
+                                    if action.type == .SaveAndExit {
+                                        self.state.gdpr?.tcfData = response.TCData
+                                    }
                                     self.state.gdpr?.consentStatus = response.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
                                     self.state.gdpr?.euconsent = response.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
                                     self.state.gdpr?.vendorGrants = response.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
