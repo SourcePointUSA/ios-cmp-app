@@ -13,6 +13,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let localDataCurrent: Bool
             let dateCreated: SPDateCreated
             let uuid, euconsent, addtlConsent: String
+            let TCData: SPJson
             let grants: SPGDPRVendorGrants
             let consentStatus: ConsentStatus
         }

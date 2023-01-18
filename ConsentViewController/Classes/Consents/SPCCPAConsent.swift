@@ -130,24 +130,6 @@ protocol CampaignConsent {
         self.consentStatus = consentStatus
     }
 
-    init?(from consentStatusResponse: ConsentStatusResponse.Data.CCPA?) {
-        if let ccpa = consentStatusResponse {
-            uuid = ccpa.uuid
-            dateCreated = ccpa.dateCreated
-            status = ccpa.status
-            uspstring = ccpa.uspstring
-            rejectedVendors = ccpa.rejectedVendors
-            rejectedCategories = ccpa.rejectedCategories
-            consentStatus = ConsentStatus(
-                rejectedVendors: ccpa.rejectedVendors,
-                rejectedCategories: ccpa.rejectedCategories
-            )
-            childPmId = nil
-        } else {
-            return nil
-        }
-    }
-
     open override var description: String {
         "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
     }

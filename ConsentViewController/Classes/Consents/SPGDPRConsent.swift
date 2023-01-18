@@ -142,21 +142,6 @@ public typealias SPGDPRPurposeId = String
         self.consentStatus = consentStatus
     }
 
-    init?(from consentStatusResponse: ConsentStatusResponse.Data.GDPR?) {
-        if let gdpr = consentStatusResponse {
-            uuid = gdpr.uuid
-            vendorGrants = gdpr.grants
-            dateCreated = gdpr.dateCreated
-            euconsent = gdpr.euconsent
-            // tcfData = gdpr.tcfData // TODO: not implemented
-            tcfData = try? SPJson([:])
-            consentStatus = gdpr.consentStatus
-            childPmId = nil
-        } else {
-            return nil
-        }
-    }
-
     public override func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPGDPRConsent {
             return other.uuid == uuid &&
