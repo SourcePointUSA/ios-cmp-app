@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="21225" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="appleTV" appearance="light"/>
+    <dependencies>
+        <deployment identifier="tvOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPCCPANativePrivacyManagerViewController" customModule="ConsentViewController" customModuleProvider="target">
+            <connections>
+                <outlet property="acceptButton" destination="7Jl-Fv-EUl" id="ul7-lI-WPS"/>
+                <outlet property="actionsContainer" destination="KAo-n6-Z8y" id="bpl-ic-Qv7"/>
+                <outlet property="descriptionTextView" destination="JAT-0K-Z6o" id="Shc-Rj-GKP"/>
+                <outlet property="doNotSellTableView" destination="HVs-YH-qhj" id="uYh-GA-Xuy"/>
+                <outlet property="header" destination="oRM-Q5-ya9" id="Ejd-R8-DIW"/>
+                <outlet property="logoImageView" destination="gkm-7r-4K2" id="9sx-wS-b4u"/>
+                <outlet property="managePreferenceButton" destination="NaN-Kj-XpH" id="3Wd-7j-WXE"/>
+                <outlet property="ourPartners" destination="ZAh-er-2XQ" id="1Vx-fk-Qmq"/>
+                <outlet property="privacyPolicyButton" destination="p3s-4F-WQC" id="VCB-gR-wFn"/>
+                <outlet property="rejectButton" destination="wWr-aU-k6X" id="Rq1-H2-8La"/>
+                <outlet property="saveAndExitButton" destination="LoA-bE-aCY" id="0JD-P1-pRx"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="R0M-NR-37Q" userLabel="Stack View - Main">
+                    <rect key="frame" x="80" y="60" width="1760" height="960"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oRM-Q5-ya9" customClass="SPPMHeader" customModule="ConsentViewController" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="1760" height="100"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="DhY-0S-Okw"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2vg-KP-UZ9" userLabel="Stack View - Content">
+                            <rect key="frame" x="0.0" y="108" width="1760" height="852"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b6t-bX-jNG" userLabel="1st Column">
+                                    <rect key="frame" x="0.0" y="0.0" width="880" height="852"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gkm-7r-4K2">
+                                            <rect key="frame" x="240" y="0.0" width="400" height="400"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="400" id="QYb-9O-LSz"/>
+                                                <constraint firstAttribute="width" constant="400" id="dbF-fc-VEI"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="ActionsContainer">
+                                            <rect key="frame" x="190" y="432" width="500" height="420"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="rg2-Sf-ObF"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Accept All"/>
+                                                    <connections>
+                                                        <action selector="onAcceptTap:" destination="-1" eventType="primaryActionTriggered" id="kZP-FO-DLP"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWr-aU-k6X" userLabel="Reject All" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="70" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="GeS-pe-NgB"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Reject All"/>
+                                                    <connections>
+                                                        <action selector="onRejectTap:" destination="-1" eventType="primaryActionTriggered" id="clx-v5-XaV"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoA-bE-aCY" userLabel="Save &amp; Exit" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="qXb-3y-oe0"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Save &amp; Exit"/>
+                                                    <connections>
+                                                        <action selector="onSaveAndExitTap:" destination="-1" eventType="primaryActionTriggered" id="GcH-67-O1V"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaN-Kj-XpH" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="0HQ-jQ-rvk"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Manage Preference"/>
+                                                    <connections>
+                                                        <action selector="onManagePreferenceTap:" destination="-1" eventType="primaryActionTriggered" id="oZQ-PN-Mh8"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAh-er-2XQ" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="cVL-Lc-jZS"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Our Partners"/>
+                                                    <connections>
+                                                        <action selector="onPartnersTap:" destination="-1" eventType="primaryActionTriggered" id="ddN-GT-VO2"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-4F-WQC" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="jVm-rj-ic1"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Privacy Policy"/>
+                                                    <connections>
+                                                        <action selector="onPrivacyPolicyTap:" destination="-1" eventType="primaryActionTriggered" id="EAf-xR-d5U"/>
+                                                    </connections>
+                                                </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRh-hi-Kqi" userLabel="Spacer">
+                                                    <rect key="frame" x="0.0" y="140" width="500" height="280"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="420" id="2hV-jR-gFy"/>
+                                                <constraint firstAttribute="width" constant="500" id="DJX-4e-9AZ"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="880" id="D4f-te-IB7"/>
+                                        <constraint firstItem="gkm-7r-4K2" firstAttribute="centerX" secondItem="b6t-bX-jNG" secondAttribute="centerX" id="QYX-KK-CeY"/>
+                                        <constraint firstItem="gkm-7r-4K2" firstAttribute="top" secondItem="b6t-bX-jNG" secondAttribute="top" id="YAq-Hf-83X"/>
+                                        <constraint firstAttribute="height" constant="852" id="clW-Ls-srb"/>
+                                        <constraint firstItem="KAo-n6-Z8y" firstAttribute="centerX" secondItem="b6t-bX-jNG" secondAttribute="centerX" id="gnW-64-uLa"/>
+                                        <constraint firstAttribute="bottom" secondItem="KAo-n6-Z8y" secondAttribute="bottom" id="ifV-G5-umk"/>
+                                    </constraints>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="voU-ev-Ret" userLabel="Stack View - 2nd Column">
+                                    <rect key="frame" x="880" y="0.0" width="880" height="852"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" indicatorStyle="black" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAT-0K-Z6o" customClass="SPFocusableTextView" customModule="ConsentViewController" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="880" height="360"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="360" id="htD-cK-jRj"/>
+                                            </constraints>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                            <color key="textColor" systemColor="labelColor"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="HVs-YH-qhj" userLabel="DoNotSellTableView">
+                                            <rect key="frame" x="0.0" y="360" width="880" height="492"/>
+                                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </tableView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="852" id="PAN-AN-l3u"/>
+                                        <constraint firstAttribute="width" constant="880" id="sXQ-cT-ZOt"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="gFF-c6-c6m"/>
+                    <constraints>
+                        <constraint firstItem="oRM-Q5-ya9" firstAttribute="width" secondItem="R0M-NR-37Q" secondAttribute="width" id="4Np-u0-cgR"/>
+                        <constraint firstAttribute="width" constant="1760" id="DhD-Ev-UVu"/>
+                        <constraint firstItem="2vg-KP-UZ9" firstAttribute="leading" secondItem="R0M-NR-37Q" secondAttribute="leading" id="Ubb-I1-N3h"/>
+                        <constraint firstAttribute="height" constant="960" id="hxz-l9-fAr"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="nkI-NY-t1X"/>
+            <color key="backgroundColor" red="0.89803921568627454" green="0.90980392156862744" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="R0M-NR-37Q" firstAttribute="height" secondItem="nkI-NY-t1X" secondAttribute="height" id="5Im-hp-aRa"/>
+                <constraint firstItem="R0M-NR-37Q" firstAttribute="top" secondItem="nkI-NY-t1X" secondAttribute="top" id="LGx-CN-gZ7"/>
+                <constraint firstItem="R0M-NR-37Q" firstAttribute="width" secondItem="nkI-NY-t1X" secondAttribute="width" id="fHl-xk-G5g"/>
+                <constraint firstItem="R0M-NR-37Q" firstAttribute="leading" secondItem="nkI-NY-t1X" secondAttribute="leading" id="pQy-W8-Qp4"/>
+            </constraints>
+            <point key="canvasLocation" x="175" y="104"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

@@ -15,7 +15,6 @@
 			dependencies = (
 			);
 			name = "SwiftLint-tvOS10.0";
-			productName = "SwiftLint-tvOS10.0";
 		};
 		69FC4E50EA95C1C9F59F58B1B05D4C8F /* SwiftLint-iOS10.0 */ = {
 			isa = PBXAggregateTarget;
@@ -25,7 +24,6 @@
 			dependencies = (
 			);
 			name = "SwiftLint-iOS10.0";
-			productName = "SwiftLint-iOS10.0";
 		};
 		AA7C598CCABA4A883635A2EB0A552FF6 /* SwiftLint-iOS13.0 */ = {
 			isa = PBXAggregateTarget;
@@ -35,7 +33,6 @@
 			dependencies = (
 			);
 			name = "SwiftLint-iOS13.0";
-			productName = "SwiftLint-iOS13.0";
 		};
 /* End PBXAggregateTarget section */
 
@@ -263,7 +260,7 @@
 		5B66F66B3DAE06CBC61F2E121F0C6E26 /* SPUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5431519F66D317002628F2508BA3764 /* SPUserData.swift */; };
 		5BAFAAAA27E11E86C53297F8F8F9565A /* MetaDataRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278000B420D136FE493F97546B7792A3 /* MetaDataRequestResponse.swift */; };
 		5CC01EE11B9E271ACD0177DABEA253DB /* SPCampaignEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B722327A1E356F38CC2C84125EC0C14 /* SPCampaignEnv.swift */; };
-		5D4700F67B5E78FD2F44D067A812462F /* ConsentViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController.bundle */; };
+		5D4700F67B5E78FD2F44D067A812462F /* ConsentViewController-iOS13.0-ConsentViewController in Resources */ = {isa = PBXBuildFile; fileRef = 9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController-iOS13.0-ConsentViewController */; };
 		5D55D159DC44E6056135471D2D41EAA6 /* SPJSReceiver.spec.js in Resources */ = {isa = PBXBuildFile; fileRef = CDA7BF0E8284AF7FC404781A894109D3 /* SPJSReceiver.spec.js */; };
 		5DDE274FF0CD1DCE229F8974D243723A /* Quick.h in Headers */ = {isa = PBXBuildFile; fileRef = 0236FAFD9755E7B451A443F1D4970CA6 /* Quick.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DF674AF1663283EA99F786EA8A8CADD /* QCKDSL.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DDEB43208DE32F290DE205048D1301E /* QCKDSL.m */; };
@@ -466,7 +463,7 @@
 		AAA3BCB34F10035339FED0874FC57508 /* NSURLSessionConfiguration+Wormholy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E96550110A2800AA6EFDBF869E04E69 /* NSURLSessionConfiguration+Wormholy.m */; };
 		AB5E2044FA88C0AF65E5E4F30A81C439 /* NSObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE3616868A1CA1104036602449CC72 /* NSObjectExtensions.swift */; };
 		AB8BDBBC439A10125AE675B6A55AC198 /* SPPublisherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3F60F5A5389FCA90D4E0BBDEADF0D8 /* SPPublisherData.swift */; };
-		AC91317089B2EF521949768916061772 /* ConsentViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController.bundle */; };
+		AC91317089B2EF521949768916061772 /* ConsentViewController-iOS10.0-ConsentViewController in Resources */ = {isa = PBXBuildFile; fileRef = D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController-iOS10.0-ConsentViewController */; };
 		AE029A1BF86B6DEE65A9ABF28A6AA3F6 /* NMBExceptionCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B9711C5DD2841C020C0C42805F48F6 /* NMBExceptionCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AF28067741ECE83C1292C78A71936835 /* BeLogical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3129B6C7F362017798C94E7BF1C19AFB /* BeLogical.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		AFB61058B5B66AE981CF5A6FD4B1E137 /* DSL.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF7831CF7203B57F0DE295732B65127 /* DSL.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -603,7 +600,7 @@
 		E2F968BF17202092C3C81E139035DD38 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857F351887A8B4D4DFB7F1CD0FDF089 /* DSL.swift */; };
 		E348D0FBA7F1B0C20456BB21F4974790 /* ActionableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947B03792A5767C783ACA341AA8A52F1 /* ActionableTableViewCell.swift */; };
 		E4651D8450CD368B0D3F96202A2608EA /* SPStringifiedJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F29281FB2001B9F07D53E5DA00410A7 /* SPStringifiedJSON.swift */; };
-		E466D89EB4D16283BE31A35B8ABE0629 /* Wormholy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7AEA76D3DDD61A96A77730AD072A330D /* Wormholy.bundle */; };
+		E466D89EB4D16283BE31A35B8ABE0629 /* Wormholy-iOS10.0-Wormholy in Resources */ = {isa = PBXBuildFile; fileRef = 7AEA76D3DDD61A96A77730AD072A330D /* Wormholy-iOS10.0-Wormholy */; };
 		E4B6625C9283A74E78BC1A5457630040 /* WHLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7C454D58D84A62056D7549C4CB483F /* WHLabel.swift */; };
 		E580E27D24B1DFCFC1B7574DBDA8822A /* WHCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2667A435303B9316E17E1EABD0CFFC /* WHCollectionView.swift */; };
 		E59F22B87A79D44586B6537D559CAF96 /* BeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCA2434BE61F6494B095233A0BED174 /* BeResult.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -674,7 +671,7 @@
 		F747BCC57B4F3BDE66813DD7A274A4A0 /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94688BB48CCC45143CAB47F0D1566AB9 /* Behavior.swift */; };
 		F7804259C3B9FE3B35B954210998EC45 /* javascript in Resources */ = {isa = PBXBuildFile; fileRef = 702B481598E44BA78DE2EDFA19A36484 /* javascript */; };
 		F7A32A6ED89E742CEEE0E3A71A4285C1 /* RequestTitleSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A7F35E61576A07604215E2C2C7A9454 /* RequestTitleSectionView.xib */; };
-		F813D937963557E2C84AE1573EFA284B /* Wormholy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B42794299CCE5319C7949A71AB18FA83 /* Wormholy.bundle */; };
+		F813D937963557E2C84AE1573EFA284B /* Wormholy-iOS13.0-Wormholy in Resources */ = {isa = PBXBuildFile; fileRef = B42794299CCE5319C7949A71AB18FA83 /* Wormholy-iOS13.0-Wormholy */; };
 		F8730329CCB538604FA7D82D81A30F7B /* ThrowAssertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CDBF6F986A96A77317719C3C25C551 /* ThrowAssertion.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		F8C1660DB82A169D6F855FA0EE0C1DB1 /* PostNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C43519EC855C8B11459545496F0439 /* PostNotification.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		F92B590F4C82D77A0E921C50BE61D587 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A43D3F5E105FCB822C84E791C1921A /* Constants.swift */; };
@@ -972,10 +969,10 @@
 		008B76C65F92BDC6EDFFEB8D71C66EDB /* Pods-SourcePointMetaAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SourcePointMetaAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		00A4BD36111FD7B6F415158F888FA515 /* GDPRPMPayload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GDPRPMPayload.swift; sourceTree = "<group>"; };
 		00E2385263B9387876B21D06E4813C3D /* PMVendorManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PMVendorManager.swift; sourceTree = "<group>"; };
-		02360A7CFE3EBCA49C2E03794316B24D /* mach_excServer.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mach_excServer.c; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/mach_excServer.c; sourceTree = "<group>"; };
+		02360A7CFE3EBCA49C2E03794316B24D /* mach_excServer.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mach_excServer.c; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/mach_excServer.c; sourceTree = "<group>"; };
 		0236FAFD9755E7B451A443F1D4970CA6 /* Quick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Quick.h; path = Sources/QuickObjectiveC/Quick.h; sourceTree = "<group>"; };
 		024250092F73D58218FE1A5B62D6E3C8 /* Wormholy-iOS10.0.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Wormholy-iOS10.0.modulemap"; sourceTree = "<group>"; };
-		030B6E76F261F0BB232CC57FA6D2CB9C /* jest.config.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = jest.config.json; sourceTree = "<group>"; };
+		030B6E76F261F0BB232CC57FA6D2CB9C /* jest.config.json */ = {isa = PBXFileReference; includeInIndex = 1; path = jest.config.json; sourceTree = "<group>"; };
 		03139F066BC7249572C46163BC745CA7 /* Pods-ConsentViewController_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ConsentViewController_Example-umbrella.h"; sourceTree = "<group>"; };
 		034BAF0AFAEDD60E380B671E6EE16290 /* Pods-SPGDPRExampleAppUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SPGDPRExampleAppUITests-dummy.m"; sourceTree = "<group>"; };
 		035493DD8C53F9642CF0A9909056F789 /* Nimble-tvOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; name = "Nimble-tvOS.modulemap"; path = "../Nimble-tvOS/Nimble-tvOS.modulemap"; sourceTree = "<group>"; };
@@ -1175,7 +1172,7 @@
 		6CCCAD310FCE7F4E2040A41B98C7A081 /* Config.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Config.swift; path = "Sources/Support Files/Config.swift"; sourceTree = "<group>"; };
 		6D56502C1924650DF7FDCAC5D68CB7D8 /* RequestsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestsViewController.swift; path = Sources/UI/RequestsViewController.swift; sourceTree = "<group>"; };
 		6DDEB43208DE32F290DE205048D1301E /* QCKDSL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QCKDSL.m; path = Sources/QuickObjectiveC/DSL/QCKDSL.m; sourceTree = "<group>"; };
-		702B481598E44BA78DE2EDFA19A36484 /* javascript */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = javascript; path = ConsentViewController/Assets/javascript; sourceTree = "<group>"; };
+		702B481598E44BA78DE2EDFA19A36484 /* javascript */ = {isa = PBXFileReference; includeInIndex = 1; name = javascript; path = ConsentViewController/Assets/javascript; sourceTree = "<group>"; };
 		717DE16222C7EAC3194A5A2FE0FE6FD9 /* RequestModelBeautifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestModelBeautifier.swift; path = Sources/Utils/RequestModelBeautifier.swift; sourceTree = "<group>"; };
 		7324B5B901487E31294DEE742AA7C525 /* Barcode.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = Barcode.png; sourceTree = "<group>"; };
 		734B2AAC05D3B61C300A6AC3EE6D2D0B /* Pods-ConsentViewController_ExampleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ConsentViewController_ExampleTests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -1197,13 +1194,13 @@
 		7A46A865ED7BF44D7F03AB84CFBD8F4D /* SPConsentManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPConsentManager.swift; path = ConsentViewController/Classes/SPConsentManager.swift; sourceTree = "<group>"; };
 		7A54438A4762E8787A28DFA95EA361D3 /* IQKeyboardManagerConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManagerConstants.swift; path = IQKeyboardManagerSwift/Constants/IQKeyboardManagerConstants.swift; sourceTree = "<group>"; };
 		7AE4E42C3AAB7CF99714B218EC52DEAA /* SPMessageUIDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPMessageUIDelegate.swift; path = ConsentViewController/Classes/SPMessageUIDelegate.swift; sourceTree = "<group>"; };
-		7AEA76D3DDD61A96A77730AD072A330D /* Wormholy.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wormholy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AEA76D3DDD61A96A77730AD072A330D /* Wormholy-iOS10.0-Wormholy */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Wormholy-iOS10.0-Wormholy"; path = Wormholy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B440D1D982AAC6A0B13C7426D0F61F7 /* JSONView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JSONView.debug.xcconfig; sourceTree = "<group>"; };
 		7B4951DA02D4251DB485EF485816EAFB /* DeleteCustomConsentRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeleteCustomConsentRequest.swift; sourceTree = "<group>"; };
 		7B86B21EECD521261C522EB4EC2BA45D /* JSONView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONView-umbrella.h"; sourceTree = "<group>"; };
 		7BA3ABBBEE80498E34E0176C5BEACB32 /* SPCCPANativePrivacyManagerViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = SPCCPANativePrivacyManagerViewController.xib; sourceTree = "<group>"; };
 		7D0599D8151580326F79DBC67AE3CD9D /* Pods-SourcePointMetaApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SourcePointMetaApp-acknowledgements.markdown"; sourceTree = "<group>"; };
-		7D7EC768EEDC9037F402588949A4501E /* images */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = images; path = ConsentViewController/Assets/images; sourceTree = "<group>"; };
+		7D7EC768EEDC9037F402588949A4501E /* images */ = {isa = PBXFileReference; includeInIndex = 1; name = images; path = ConsentViewController/Assets/images; sourceTree = "<group>"; };
 		7E47AFABE150F98E74CB31C4B533F4BC /* SPLocalStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPLocalStorage.swift; sourceTree = "<group>"; };
 		7F578D96D66D94D59EE70FBACD50ED98 /* Quick-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Quick-iOS-Info.plist"; sourceTree = "<group>"; };
 		7F5ED06A5FA20BA2764AAB853CA21FE7 /* QCKConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QCKConfiguration.swift; path = Sources/Quick/Configuration/QCKConfiguration.swift; sourceTree = "<group>"; };
@@ -1263,7 +1260,7 @@
 		962F92BC6E8293FDEDF365992BC64E8F /* RequestTitleSectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestTitleSectionView.swift; path = Sources/UI/Sections/RequestTitleSectionView.swift; sourceTree = "<group>"; };
 		970617D8CD8DB278A10123BC1D9C2004 /* IQToolbar.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQToolbar.swift; path = IQKeyboardManagerSwift/IQToolbar/IQToolbar.swift; sourceTree = "<group>"; };
 		97B78649D7A11C4E670BAB865B6B73B5 /* Nimble-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Nimble-iOS.modulemap"; sourceTree = "<group>"; };
-		97BD0C724D72B0B43B90D4C17A20E978 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		97BD0C724D72B0B43B90D4C17A20E978 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		97CEA598BDC4C7B91C794603DA50126A /* SPMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPMessage.swift; path = ConsentViewController/Classes/SPMessage.swift; sourceTree = "<group>"; };
 		97D1D4D92B4B203E71D6700F2A07BD95 /* ErrorUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ErrorUtility.swift; path = Sources/Quick/ErrorUtility.swift; sourceTree = "<group>"; };
 		985336D0AD76123A48B8A5B2693510AC /* Wormholy-iOS10.0-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Wormholy-iOS10.0-dummy.m"; sourceTree = "<group>"; };
@@ -1276,10 +1273,10 @@
 		9AA53B1DF7B10AB1675A1A97634070F8 /* Pods-SPGDPRExampleAppUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SPGDPRExampleAppUITests-umbrella.h"; sourceTree = "<group>"; };
 		9B096DECFA18AE753D5D1CA4FAC619B5 /* Pods-AuthExample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AuthExample.modulemap"; sourceTree = "<group>"; };
 		9B38663688368328F46B7422C0F617C4 /* Wormholy-iOS13.0 */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Wormholy-iOS13.0"; path = Wormholy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController-iOS13.0-ConsentViewController */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "ConsentViewController-iOS13.0-ConsentViewController"; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D56B16291748C0748CC46827957696A /* ChoiceRequests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChoiceRequests.swift; sourceTree = "<group>"; };
 		9D76D2AAF759795F17D78BD9B137FB61 /* Pods-ObjC-ExampleAppUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ObjC-ExampleAppUITests"; path = Pods_ObjC_ExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DC05870C9E17E36C1E0D662CB9FF3BE /* Pods-NativeMessageExample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NativeMessageExample-umbrella.h"; sourceTree = "<group>"; };
 		9DF39D160E56A00372AB4157F1C38A45 /* SatisfyAllOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SatisfyAllOf.swift; path = Sources/Nimble/Matchers/SatisfyAllOf.swift; sourceTree = "<group>"; };
 		9E262F422E59A4A080402CC874CBF58B /* IQKeyboardManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IQKeyboardManager.swift; path = IQKeyboardManagerSwift/IQKeyboardManager.swift; sourceTree = "<group>"; };
@@ -1322,10 +1319,10 @@
 		AEC4F809F65E0F6E0E8E95834B1E4449 /* SPPrivacyPolicyViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPPrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		AFCA2434BE61F6494B095233A0BED174 /* BeResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeResult.swift; path = Sources/Nimble/Matchers/BeResult.swift; sourceTree = "<group>"; };
 		B0BAD393287C3EE277123598FDECB9F4 /* Async.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Async.swift; path = Sources/Nimble/Matchers/Async.swift; sourceTree = "<group>"; };
-		B2A195FCCFC6852A3834874DF5F1D96F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B2A195FCCFC6852A3834874DF5F1D96F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		B2CC1A1C9ED8BF4B0052D258EB030FD6 /* Pods-ConsentViewController_ExampleTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ConsentViewController_ExampleTests.modulemap"; sourceTree = "<group>"; };
 		B3D7C81B1195009BD083A49869466EC8 /* Postman.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Postman.swift; path = Sources/Models/Postman/Postman.swift; sourceTree = "<group>"; };
-		B42794299CCE5319C7949A71AB18FA83 /* Wormholy.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wormholy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B42794299CCE5319C7949A71AB18FA83 /* Wormholy-iOS13.0-Wormholy */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Wormholy-iOS13.0-Wormholy"; path = Wormholy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B54550CC64AE9B395F0663FB5D728306 /* Equal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Equal.swift; path = Sources/Nimble/Matchers/Equal.swift; sourceTree = "<group>"; };
 		B66A38B502937F3A1E69A78F5710A4F0 /* ErrorMetricsRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ErrorMetricsRequest.swift; sourceTree = "<group>"; };
 		B67177683F7BB3DDA452EB8C4E38F1A8 /* Wormholy-iOS13.0-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Wormholy-iOS13.0-umbrella.h"; path = "../Wormholy-iOS13.0/Wormholy-iOS13.0-umbrella.h"; sourceTree = "<group>"; };
@@ -1381,14 +1378,14 @@
 		CAEA285DACFED563DC456C78F35A66CF /* Pods-SourcePointMetaAppUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SourcePointMetaAppUITests"; path = Pods_SourcePointMetaAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAEA8A5D7206C5D9B829B382221AE71F /* Pods-ObjC-ExampleApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ObjC-ExampleApp-dummy.m"; sourceTree = "<group>"; };
 		CB1019277CEA56E70C8591723BB07C3E /* QuickObjCRuntime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QuickObjCRuntime.h; path = Sources/QuickObjCRuntime/include/QuickObjCRuntime.h; sourceTree = "<group>"; };
-		CB98D35288FFB42CE04773BA00C301D9 /* SPJSReceiver.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = SPJSReceiver.js; sourceTree = "<group>"; };
+		CB98D35288FFB42CE04773BA00C301D9 /* SPJSReceiver.js */ = {isa = PBXFileReference; includeInIndex = 1; path = SPJSReceiver.js; sourceTree = "<group>"; };
 		CBE735E236105F620A72D0891C735B3A /* Callsite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Callsite.swift; path = Sources/Quick/Callsite.swift; sourceTree = "<group>"; };
 		CC0B3B72C91635B760967CFCF53420C4 /* Nimble-iOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-iOS-umbrella.h"; sourceTree = "<group>"; };
 		CCDED490FE8F1835D6B6B2E7444A9F72 /* ThrowError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThrowError.swift; path = Sources/Nimble/Matchers/ThrowError.swift; sourceTree = "<group>"; };
 		CD678609F71A9FF45106FDEBA1035A31 /* ConsentViewController-tvOS10.0-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ConsentViewController-tvOS10.0-umbrella.h"; path = "../ConsentViewController-tvOS10.0/ConsentViewController-tvOS10.0-umbrella.h"; sourceTree = "<group>"; };
 		CD87B8767FCCEF0C36C822037AB94B07 /* WHTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WHTextView.swift; path = Sources/Subclasses/WHTextView.swift; sourceTree = "<group>"; };
 		CDA6738A438BA6DED6E8E26C0FABA128 /* SPGDPRNativePrivacyManagerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPGDPRNativePrivacyManagerViewController.swift; sourceTree = "<group>"; };
-		CDA7BF0E8284AF7FC404781A894109D3 /* SPJSReceiver.spec.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = SPJSReceiver.spec.js; sourceTree = "<group>"; };
+		CDA7BF0E8284AF7FC404781A894109D3 /* SPJSReceiver.spec.js */ = {isa = PBXFileReference; includeInIndex = 1; path = SPJSReceiver.spec.js; sourceTree = "<group>"; };
 		CE41809C2A5CD34460855B9D56D2D7A0 /* InputStream+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "InputStream+Utils.swift"; path = "Sources/Utils/InputStream+Utils.swift"; sourceTree = "<group>"; };
 		CEAB06CCBE1BEB4CD800A52787B77DBD /* Pods-ObjC-ExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjC-ExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF2667A435303B9316E17E1EABD0CFFC /* WHCollectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WHCollectionView.swift; path = Sources/Subclasses/WHCollectionView.swift; sourceTree = "<group>"; };
@@ -1414,12 +1411,12 @@
 		D7A9AA076DA425A2B99F760A9A9B1823 /* Errors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = Sources/Nimble/Utils/Errors.swift; sourceTree = "<group>"; };
 		D8A24752CFA4B837B1D84135C047FC62 /* Expression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Expression.swift; path = Sources/Nimble/Expression.swift; sourceTree = "<group>"; };
 		D8F6576969D9CC555F353260157E1983 /* QCKDSL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QCKDSL.h; path = Sources/QuickObjectiveC/DSL/QCKDSL.h; sourceTree = "<group>"; };
-		D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController-iOS10.0-ConsentViewController */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "ConsentViewController-iOS10.0-ConsentViewController"; path = ConsentViewController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA790F982F7B7488D988CC1C969B0EC0 /* SPCampaignType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SPCampaignType.swift; path = ConsentViewController/Classes/SPCampaignType.swift; sourceTree = "<group>"; };
 		DABDAF5A3590D5F3527DA9B846B5BDAF /* Pods-SPGDPRExampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SPGDPRExampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		DACD17A21E46451BA4F80C47CEF4079B /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DACD17A21E46451BA4F80C47CEF4079B /* ConsentViewController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ConsentViewController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DACE3241A31233F974FC1FC21E437964 /* TextTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextTableViewCell.swift; path = Sources/UI/Cells/TextTableViewCell.swift; sourceTree = "<group>"; };
-		DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController-iOS10.0 */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "ConsentViewController-iOS10.0"; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBCDAC93241330F0834F405C72A15095 /* JSONView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = JSONView.modulemap; sourceTree = "<group>"; };
 		DC01C305272B2675B520F8DC2C067D8F /* SPCCPAVendorDetailsViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SPCCPAVendorDetailsViewController.swift; sourceTree = "<group>"; };
 		DDC9654B05776E8FF3380A66E968BDAE /* Pods-SourcePointMetaAppUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SourcePointMetaAppUITests.modulemap"; sourceTree = "<group>"; };
@@ -1772,6 +1769,7 @@
 				6A30DA607AE566A7FE7533D7589C94EF /* XCTestSuite+QuickTestSuiteBuilder.m */,
 				C2E8588B9720160E7F393360A297A9E0 /* Support Files */,
 			);
+			name = Quick;
 			path = Quick;
 			sourceTree = "<group>";
 		};
@@ -1860,6 +1858,7 @@
 				D1F287C27D633E649A2D5B3B86DF6590 /* XCTestObservationCenter+Register.m */,
 				58C6F4A129F518772DF1847057860179 /* Support Files */,
 			);
+			name = Nimble;
 			path = Nimble;
 			sourceTree = "<group>";
 		};
@@ -1890,6 +1889,7 @@
 				B6F39FDE79474DE825785E94FD3B619A /* JSONView.swift */,
 				B897877C41B8F707937CE242E93828E3 /* Support Files */,
 			);
+			name = JSONView;
 			path = JSONView;
 			sourceTree = "<group>";
 		};
@@ -1898,6 +1898,7 @@
 			children = (
 				DAA6355AE3FC436E9059675BCA107AE4 /* Support Files */,
 			);
+			name = SwiftLint;
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
@@ -1992,6 +1993,7 @@
 				08BA6DA9634195C5D6B88E33CBAF000A /* SPGDPRVendorDetailsViewController.swift */,
 				C0660014484E774BE38C2E41037147A3 /* SPGDPRVendorDetailsViewController.xib */,
 			);
+			name = GDPR;
 			path = GDPR;
 			sourceTree = "<group>";
 		};
@@ -2000,6 +2002,7 @@
 			children = (
 				7BD678F0B166193547BA3C1D727BB25A /* NativePrivacyManager */,
 			);
+			name = tvOS;
 			path = tvOS;
 			sourceTree = "<group>";
 		};
@@ -2185,6 +2188,7 @@
 				84ABDEC5C14351E7A913038E7E22B0C0 /* Data */,
 				3CB37750917BAA2AF8F897322ADE285F /* GDPR */,
 			);
+			name = NativePrivacyManager;
 			path = NativePrivacyManager;
 			sourceTree = "<group>";
 		};
@@ -2219,6 +2223,7 @@
 				8054FA12D054E9EF788325F617C294A9 /* PMCategoryManager.swift */,
 				00E2385263B9387876B21D06E4813C3D /* PMVendorManager.swift */,
 			);
+			name = Data;
 			path = Data;
 			sourceTree = "<group>";
 		};
@@ -2342,6 +2347,7 @@
 				ADAA89C156A64D2ACCA8194F5297364B /* Resources */,
 				7E48E364DFEC192767D8F404CD0C80C5 /* Support Files */,
 			);
+			name = Wormholy;
 			path = Wormholy;
 			sourceTree = "<group>";
 		};
@@ -2378,6 +2384,7 @@
 				9A37BD81B146CB47DF4607AC01293E3C /* SPPrivacyPolicyViewController.xib */,
 				D212DC54461337D3CBF00BACD68BE332 /* SPQRCode.swift */,
 			);
+			name = Common;
 			path = Common;
 			sourceTree = "<group>";
 		};
@@ -2396,6 +2403,7 @@
 				DC01C305272B2675B520F8DC2C067D8F /* SPCCPAVendorDetailsViewController.swift */,
 				E285F60A90B7BD762A4DF7810CFF941C /* SPCCPAVendorDetailsViewController.xib */,
 			);
+			name = CCPA;
 			path = CCPA;
 			sourceTree = "<group>";
 		};
@@ -2405,6 +2413,7 @@
 				D47F26B73CABF25A275847F38874CDE6 /* SPWebMessageViewController.swift */,
 				60F6B0488D8BE49B945C093338B6D4B9 /* SPWebViewExtensions.swift */,
 			);
+			name = iOS;
 			path = iOS;
 			sourceTree = "<group>";
 		};
@@ -2555,10 +2564,10 @@
 		D7700BF3B6CB7265B98A67FB8E6DF427 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController.framework */,
-				D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController.bundle */,
+				DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController-iOS10.0 */,
+				D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController-iOS10.0-ConsentViewController */,
 				3199859FB7869D7CCFD28196357A6FFD /* ConsentViewController-iOS13.0 */,
-				9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController.bundle */,
+				9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController-iOS13.0-ConsentViewController */,
 				42D93D328ADDBDEBD34257040046F455 /* ConsentViewController-tvOS10.0 */,
 				11F5BF7A6A1E93E995DE78856F12F7D2 /* ConsentViewController-tvOS10.0-ConsentViewController */,
 				A8E950A16D00F649C54FFB30F81D7842 /* IQKeyboardManagerSwift */,
@@ -2580,9 +2589,9 @@
 				C8E0F49D3F9CF6715FD8D2D98638F20F /* Quick-iOS */,
 				73F566CFB5F21F61AC2FA68F08AA0B2D /* Quick-tvOS */,
 				CA198EBB758DE10AD45BCEA52E6016F7 /* Wormholy-iOS10.0 */,
-				7AEA76D3DDD61A96A77730AD072A330D /* Wormholy.bundle */,
+				7AEA76D3DDD61A96A77730AD072A330D /* Wormholy-iOS10.0-Wormholy */,
 				9B38663688368328F46B7422C0F617C4 /* Wormholy-iOS13.0 */,
-				B42794299CCE5319C7949A71AB18FA83 /* Wormholy.bundle */,
+				B42794299CCE5319C7949A71AB18FA83 /* Wormholy-iOS13.0-Wormholy */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2629,6 +2638,7 @@
 				432DBA3E4E3D7943AEF17549FF4EA694 /* IQUIViewController+Additions.swift */,
 				B973241BD708D70D9DC6F723782D9863 /* Support Files */,
 			);
+			name = IQKeyboardManagerSwift;
 			path = IQKeyboardManagerSwift;
 			sourceTree = "<group>";
 		};
@@ -3139,7 +3149,7 @@
 			);
 			name = "Wormholy-iOS13.0-Wormholy";
 			productName = Wormholy;
-			productReference = B42794299CCE5319C7949A71AB18FA83 /* Wormholy.bundle */;
+			productReference = B42794299CCE5319C7949A71AB18FA83 /* Wormholy-iOS13.0-Wormholy */;
 			productType = "com.apple.product-type.bundle";
 		};
 		831E1CA628EB60DFE40497E2BA3ADC69 /* ConsentViewController-iOS13.0-ConsentViewController */ = {
@@ -3156,7 +3166,7 @@
 			);
 			name = "ConsentViewController-iOS13.0-ConsentViewController";
 			productName = ConsentViewController;
-			productReference = 9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController.bundle */;
+			productReference = 9D05DC0F9D281A981D895F0625B9EED4 /* ConsentViewController-iOS13.0-ConsentViewController */;
 			productType = "com.apple.product-type.bundle";
 		};
 		87FA50A50FCF60B621EBD0A0BEA484C5 /* ConsentViewController-iOS10.0-ConsentViewController */ = {
@@ -3173,7 +3183,7 @@
 			);
 			name = "ConsentViewController-iOS10.0-ConsentViewController";
 			productName = ConsentViewController;
-			productReference = D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController.bundle */;
+			productReference = D971C2CEF1CD14F42C9ED5026FC256D4 /* ConsentViewController-iOS10.0-ConsentViewController */;
 			productType = "com.apple.product-type.bundle";
 		};
 		89B29D1C701EFC639B36BC482FE72F13 /* Quick-iOS */ = {
@@ -3270,7 +3280,7 @@
 			);
 			name = "Wormholy-iOS10.0-Wormholy";
 			productName = Wormholy;
-			productReference = 7AEA76D3DDD61A96A77730AD072A330D /* Wormholy.bundle */;
+			productReference = 7AEA76D3DDD61A96A77730AD072A330D /* Wormholy-iOS10.0-Wormholy */;
 			productType = "com.apple.product-type.bundle";
 		};
 		9BFB298BDD00E6C08D7AFEFD8ACAF752 /* ConsentViewController-iOS10.0 */ = {
@@ -3289,7 +3299,7 @@
 			);
 			name = "ConsentViewController-iOS10.0";
 			productName = ConsentViewController;
-			productReference = DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController.framework */;
+			productReference = DB5FA5A49EF31D5E9E85BAC17EE4D924 /* ConsentViewController-iOS10.0 */;
 			productType = "com.apple.product-type.framework";
 		};
 		A897D2D55F6D87795224F846F8ED3A36 /* Nimble-tvOS */ = {
@@ -3621,7 +3631,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E466D89EB4D16283BE31A35B8ABE0629 /* Wormholy.bundle in Resources */,
+				E466D89EB4D16283BE31A35B8ABE0629 /* Wormholy-iOS10.0-Wormholy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3630,7 +3640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFF450B1F2B564F829D076EDAC928C6C /* Barcode.png in Resources */,
-				AC91317089B2EF521949768916061772 /* ConsentViewController.bundle in Resources */,
+				AC91317089B2EF521949768916061772 /* ConsentViewController-iOS10.0-ConsentViewController in Resources */,
 				DC82A6C76D1BCA232DBED437D3C09FA0 /* jest.config.json in Resources */,
 				EBB2C41AD20705B97EA1AED047A40D04 /* SP_Icon.png in Resources */,
 				B37BB0AF1F9EBAF47116B330344A3716 /* SPJSReceiver.js in Resources */,
@@ -3654,7 +3664,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F813D937963557E2C84AE1573EFA284B /* Wormholy.bundle in Resources */,
+				F813D937963557E2C84AE1573EFA284B /* Wormholy-iOS13.0-Wormholy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3677,7 +3687,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0052E785EC8D78FC1D3EC4DDB278436 /* Barcode.png in Resources */,
-				5D4700F67B5E78FD2F44D067A812462F /* ConsentViewController.bundle in Resources */,
+				5D4700F67B5E78FD2F44D067A812462F /* ConsentViewController-iOS13.0-ConsentViewController in Resources */,
 				8B4AC22890086810700024296042B53A /* jest.config.json in Resources */,
 				FBDDB608158182136B2A369BD4AB1A0E /* SP_Icon.png in Resources */,
 				E1458ADDB970B58CEBCE438D5E118BE8 /* SPJSReceiver.js in Resources */,
@@ -4834,7 +4844,6 @@
 			baseConfigurationReference = C237877768D2C1C1FDEE3207D7B7ADCE /* Wormholy-iOS13.0.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy-iOS13.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = Wormholy;
 				INFOPLIST_FILE = "Target Support Files/Wormholy-iOS13.0/ResourceBundle-Wormholy-Wormholy-iOS13.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -4964,7 +4973,6 @@
 			baseConfigurationReference = 392F6E13985151B5890D7351882396C5 /* ConsentViewController-iOS10.0.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS10.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = ConsentViewController;
 				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS10.0/ResourceBundle-ConsentViewController-ConsentViewController-iOS10.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -5293,7 +5301,6 @@
 			baseConfigurationReference = 8E8D899C65A2C56C957BB4A8983438A5 /* Wormholy-iOS10.0.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy-iOS10.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = Wormholy;
 				INFOPLIST_FILE = "Target Support Files/Wormholy-iOS10.0/ResourceBundle-Wormholy-Wormholy-iOS10.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -5382,7 +5389,6 @@
 			baseConfigurationReference = 202842B5A10A0D4DCD146084A16D9295 /* ConsentViewController-iOS10.0.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS10.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = ConsentViewController;
 				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS10.0/ResourceBundle-ConsentViewController-ConsentViewController-iOS10.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -5713,7 +5719,6 @@
 			baseConfigurationReference = 53DCB06BA8AF1A8D44D69DC97B65074F /* ConsentViewController-iOS13.0.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS13.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = ConsentViewController;
 				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS13.0/ResourceBundle-ConsentViewController-ConsentViewController-iOS13.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -5730,7 +5735,6 @@
 			baseConfigurationReference = 1C73FABD343CB7E40040D4C04B7FAC6A /* ConsentViewController-iOS13.0.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS13.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = ConsentViewController;
 				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS13.0/ResourceBundle-ConsentViewController-ConsentViewController-iOS13.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -5747,7 +5751,6 @@
 			baseConfigurationReference = D1944DBA49A90591422C87E9095778CA /* Wormholy-iOS13.0.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy-iOS13.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = Wormholy;
 				INFOPLIST_FILE = "Target Support Files/Wormholy-iOS13.0/ResourceBundle-Wormholy-Wormholy-iOS13.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -6298,11 +6301,11 @@
 			baseConfigurationReference = 202842B5A10A0D4DCD146084A16D9295 /* ConsentViewController-iOS10.0.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -6318,7 +6321,6 @@
 				MODULEMAP_FILE = "Target Support Files/ConsentViewController-iOS10.0/ConsentViewController-iOS10.0.modulemap";
 				PRODUCT_MODULE_NAME = ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -6408,7 +6410,6 @@
 			baseConfigurationReference = C22B473D21B376033FE3D1DFD714B440 /* Wormholy-iOS10.0.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy-iOS10.0";
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				IBSC_MODULE = Wormholy;
 				INFOPLIST_FILE = "Target Support Files/Wormholy-iOS10.0/ResourceBundle-Wormholy-Wormholy-iOS10.0-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -6546,11 +6547,11 @@
 			baseConfigurationReference = 392F6E13985151B5890D7351882396C5 /* ConsentViewController-iOS10.0.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -6566,7 +6567,6 @@
 				MODULEMAP_FILE = "Target Support Files/ConsentViewController-iOS10.0/ConsentViewController-iOS10.0.modulemap";
 				PRODUCT_MODULE_NAME = ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
