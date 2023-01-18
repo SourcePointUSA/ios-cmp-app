@@ -384,7 +384,8 @@ extension SourcePointClient {
             "propertyId": propertyId.description,
             "metadata": metadata.stringified(),
             "hasCsp": "true",
-            "withSiteActions": "false"
+            "withSiteActions": "false",
+            "includeData": "{\"TCData\":{\"type\":\"RecordString\"}}"
         ])
         if let authId = authId {
             url = url?.appendQueryItems(["authId": authId])
@@ -504,7 +505,8 @@ extension SourcePointClient {
             "propertyId": String(propertyId),
             "withSiteActions": withSiteActions.description,
             "includeCustomVendorsRes": includeCustomVendorsRes.description,
-            "metadata": metadata.stringified()
+            "metadata": metadata.stringified(),
+            "includeData": "{\"TCData\":{\"type\":\"RecordString\"}}"
         ])
     }
 

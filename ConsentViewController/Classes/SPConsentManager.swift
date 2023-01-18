@@ -306,7 +306,7 @@ import UIKit
         responsesToReceive += 1
 
         // TODO: - add message language to loadMessages
-        spCoordinator.loadMessages { [weak self] result in
+        spCoordinator.loadMessages(forAuthId: authId) { [weak self] result in
             if let strongSelf = self {
                 strongSelf.responsesToReceive -= 1
                 switch result {

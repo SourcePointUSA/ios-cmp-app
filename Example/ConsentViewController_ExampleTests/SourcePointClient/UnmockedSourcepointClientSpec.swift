@@ -51,7 +51,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
 
             it("should contain all query params") {
                 let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: nil)
-                let paramsRaw = "env=\(Constants.Urls.envParam)&hasCsp=true&metadata={}&propertyId=17801&withSiteActions=false"
+                let paramsRaw = "env=\(Constants.Urls.envParam)&hasCsp=true&includeData={\"TCData\":{\"type\":\"RecordString\"}}&metadata={}&propertyId=17801&withSiteActions=false"
                 expect(url?.query).to(equal(
                     paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 ))
