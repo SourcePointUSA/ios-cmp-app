@@ -42,7 +42,7 @@ protocol SPClientCoordinator {
     var authId: String? { get set }
     var userData: SPUserData { get }
 
-    func loadMessages(_ handler: @escaping MessagesAndConsentsHandler)
+    func loadMessages(forAuthId: String?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
     func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String)
@@ -264,10 +264,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns, authId: String?) -> State {
+    static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns) -> State {
         var localState = localStorage.spState ?? .init()
-        localState = localState.storedAuthId != authId ? .init() : localState // reset local data if authId change
-        localState.storedAuthId = authId
         if localCampaigns.gdpr != nil, localState.gdpr == nil {
             localState.gdpr = .empty()
             localState.gdprMetaData = .init()
@@ -286,7 +284,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         accountId: Int,
         propertyName: SPPropertyName,
         propertyId: Int,
-        authId: String? = nil,
         language: SPMessageLanguage = .BrowserDefault,
         campaigns: SPCampaigns,
         pubData: SPPublisherData = SPPublisherData(),
@@ -296,7 +293,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.accountId = accountId
         self.propertyId = propertyId
         self.propertyName = propertyName
-        self.authId = authId
         self.language = language
         self.campaigns = campaigns
         self.pubData = pubData
@@ -308,13 +304,29 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             timeout: SPConsentManager.DefaultTimeout
         )
 
-        self.state = SourcepointClientCoordinator.setupState(from: storage, campaigns: campaigns, authId: authId)
+        self.state = SourcepointClientCoordinator.setupState(from: storage, campaigns: campaigns)
         self.storage.spState = self.state
     }
 
-    func loadMessages(_ handler: @escaping MessagesAndConsentsHandler) {
+    func resetStateIfAuthIdChanged(_ authId: String?) {
+        if authId != state.storedAuthId {
+            state.storedAuthId = authId
+            if campaigns.gdpr != nil {
+                state.gdpr = .empty()
+                state.gdprMetaData = .init()
+            }
+            if campaigns.ccpa != nil {
+                state.ccpa = .empty()
+                state.ccpaMetaData = .init()
+            }
+            storage.spState = state
+        }
+    }
+
+    func loadMessages(forAuthId authId: String?, _ handler: @escaping MessagesAndConsentsHandler) {
+        resetStateIfAuthIdChanged(authId)
         metaData {
-            self.consentStatus {
+            self.consentStatus(forAuthId: authId) {
                 self.state.udpateGDPRStatus()
                 self.messages(handler)
             }
@@ -389,7 +401,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func consentStatus(next: @escaping () -> Void) {
+    func consentStatus(forAuthId authId: String?, next: @escaping () -> Void) {
         if shouldCallConsentStatus {
             spClient.consentStatus(
                 propertyId: propertyId,
