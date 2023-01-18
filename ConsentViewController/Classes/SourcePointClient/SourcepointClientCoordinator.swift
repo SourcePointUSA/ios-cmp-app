@@ -147,6 +147,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if storage.localState == nil || storage.localState == .null {
             return false
         } else {
+            state.gdpr?.uuid = storage.localState?["gdpr"]?["uuid"]?.stringValue
+            state.ccpa?.uuid = storage.localState?["ccpa"]?["uuid"]?.stringValue
             storage.localState = nil
             return true
         }
@@ -367,7 +369,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
-            hasLocalData: true,
+            hasLocalData: false,
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid
