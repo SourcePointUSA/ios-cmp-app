@@ -26,6 +26,7 @@ import Foundation
         loadTextView(forComponentId: "Body", textView: descriptionTextView)
         loadButton(forComponentId: "CloseButton", button: closeButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        addFocusGuide(from: header, to: descriptionTextView, direction: .rightLeft)
     }
 
     @IBAction func onCloseTap(_ sender: Any) {
