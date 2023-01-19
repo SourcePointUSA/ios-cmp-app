@@ -29,10 +29,10 @@ class SourcePointClientMock: SourcePointProtocol {
             ),
             consentStatus: ConsentStatus(
                 granularStatus: ConsentStatus.GranularStatus(
-                    vendorConsent: .ALL,
-                    vendorLegInt: .ALL,
-                    purposeConsent: .ALL,
-                    purposeLegInt: .ALL,
+                    vendorConsent: "",
+                    vendorLegInt: "",
+                    purposeConsent: "",
+                    purposeLegInt: "",
                     previousOptInAll: false,
                     defaultConsent: false
                 ),
