@@ -9,11 +9,7 @@ import Foundation
 
 public struct ConsentStatus: Codable, Equatable {
     struct GranularStatus: Codable, Equatable {
-        enum Status: String, Codable, Equatable {
-            case ALL, SOME, NONE
-        }
-
-        var vendorConsent, vendorLegInt, purposeConsent, purposeLegInt: Status?
+        var vendorConsent, vendorLegInt, purposeConsent, purposeLegInt: String?
         var previousOptInAll, defaultConsent: Bool?
     }
 
