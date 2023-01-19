@@ -95,17 +95,27 @@ extension MessageJson: Codable {
         self = .unknown
     }
 
+    static func messageFromStringified<T: Decodable>(_ decoder: Decoder) throws -> T {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let stringifiedMessage = try container.decode(String.self, forKey: .message_json_string)
+        return try JSONDecoder().decode(T.self, from: stringifiedMessage.data(using: .utf8)!)
+    }
+
     init(type: MessageSubCategory, campaignType: SPCampaignType, decoder: Decoder) throws {
         switch type {
         case .NativePMOTT:
-            self = .nativePM(try PrivacyManagerViewData(from: try SPNativeView(from: decoder)))
+            self = .nativePM(try PrivacyManagerViewData(from: try MessageJson.messageFromStringified(decoder)))
         case .NativeInApp:
-            let nativeMessage = try SPNativeMessage(from: decoder)
+            let nativeMessage: SPNativeMessage = try MessageJson.messageFromStringified(decoder)
             nativeMessage.campaignType = campaignType
             self = .native(nativeMessage)
         default:
             self = .web(try SPJson(from: decoder))
         }
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case message_json_string
     }
 }
 
