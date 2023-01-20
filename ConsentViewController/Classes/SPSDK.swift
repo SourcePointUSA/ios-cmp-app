@@ -27,8 +27,8 @@ import Foundation
     @objc var userData: SPUserData { get }
     @objc init(
         accountId: Int,
+        propertyId: Int,
         propertyName: SPPropertyName,
-        campaignsEnv: SPCampaignEnv,
         campaigns: SPCampaigns,
         delegate: SPDelegate?
     )
@@ -50,12 +50,18 @@ import Foundation
 public extension SPSDK {
     init(
         accountId: Int,
+        propertyId: Int,
         propertyName: SPPropertyName,
-        campaignsEnv: SPCampaignEnv = .Public,
         campaigns: SPCampaigns,
         delegate: SPDelegate?
     ) {
-        self.init(accountId: accountId, propertyName: propertyName, campaignsEnv: campaignsEnv, campaigns: campaigns, delegate: delegate)
+        self.init(
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            delegate: delegate
+        )
     }
 
     func loadMessage(forAuthId authId: String? = "", pubData: SPPublisherData? = [:]) {

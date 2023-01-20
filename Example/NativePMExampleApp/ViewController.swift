@@ -34,14 +34,14 @@ class ViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: "app.campaigns.ccpa") {
             ccpa = SPCampaign()
         }
-        return SPCampaigns(gdpr: gdpr, ccpa: ccpa)
+        return SPCampaigns(gdpr: gdpr, ccpa: ccpa, environment: .Public)
     }
 
     lazy var consentManager: SPConsentManager = {
         return SPConsentManager(
             accountId: 22,
+            propertyId: 21927,
             propertyName: try! SPPropertyName("appletv.demo"),
-            campaignsEnv: .Public,
             campaigns: campaigns,
             delegate: self
         )

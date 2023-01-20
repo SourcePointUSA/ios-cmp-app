@@ -112,6 +112,10 @@ class ExampleApp: XCUIApplication {
         buttons["Delete My Vendor"].firstMatch
     }
 
+    var acceptCustomVendorsButton: XCUIElement {
+        buttons["Accept My Vendor"].firstMatch
+    }
+
     var shouldRunAttScenario: Bool {
         /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
         /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
@@ -120,5 +124,9 @@ class ExampleApp: XCUIApplication {
 
     var sdkStatusLabel: XCUIElement {
         staticTexts["sdkStatusLabel"]
+    }
+
+    var customVendorLabel: XCUIElement {
+        staticTexts["customVendorLabel"]
     }
 }

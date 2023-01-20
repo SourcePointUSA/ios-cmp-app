@@ -12,50 +12,45 @@ import Quick
 import Nimble
 @testable import ConsentViewController
 
-// swiftlint:disable force_try
 class ConsentsProfileSpec: QuickSpec {
-    let gdprProfile = SPConsent<SPGDPRConsent>(
-        consents: SPGDPRConsent.empty(),
-        applies: true
-    )
-    let ccpaProfile = SPConsent<SPCCPAConsent>(
-        consents: SPCCPAConsent.empty(),
-        applies: true
-    )
-    let jsonData = """
+    let ccpaConsents = """
         {
-            "ccpa": {
-                "applies": true,
-                "consents": {
-                    "status": "rejectedNone",
-                    "rejectedVendors": [],
-                    "rejectedCategories": [],
-                    "uspstring": "1---"
-                }
-            },
-            "gdpr": {
-                "applies": true,
-                "consents": {
-                    "grants": {},
-                    "TCData": {},
-                    "euconsent": ""
-                }
+            "applies": true,
+            "consents": {
+                "status": "rejectedNone",
+                "rejectedVendors": [],
+                "rejectedCategories": [],
+                "uspstring": "1---",
+                "consentStatus": {}
             }
         }
-    """.filter { !" \n\t\r".contains($0) }
-    var consentsProfile: SPUserData { SPUserData(
-        gdpr: gdprProfile,
-        ccpa: ccpaProfile
-    )}
-    override func spec() {
-        it("can be encoded to JSON") {
-            let encoded = String(data: try! JSONEncoder().encodeResult(self.consentsProfile).get(), encoding: .utf8)!
-            expect(encoded).to(equal(self.jsonData))
-        }
+    """
 
-        it("can be decoded from JSON") {
-            let decoded = try! JSONDecoder().decode(SPUserData.self, from: self.jsonData.data(using: .utf8)!).get()
-            expect(decoded).to(equal(self.consentsProfile))
+    let gdprConsents = """
+        {
+            "applies": true,
+            "consents": {
+                "grants": {},
+                "TCData": {},
+                "euconsent": "",
+                "consentStatus": {}
+            }
+        }
+    """
+
+    override func spec() {
+        describe("SPConsents") {
+            describe("GDPR") {
+                it("can be decode from JSON") {
+                    expect(self.gdprConsents).to(decodeTo(SPConsent<SPGDPRConsent>.self))
+                }
+            }
+
+            describe("CCPA") {
+                it("can be decode from JSON") {
+                    expect(self.ccpaConsents).to(decodeTo(SPConsent<SPCCPAConsent>.self))
+                }
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
     func acceptAtt() {
         expect(self.app.attPrePrompt.okButton).toEventually(showUp())
         app.attPrePrompt.okButton.tap()
-        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp(in: 1))
+        expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
         app.attPrePrompt.attAlertAllowButton.tap()
     }
 
@@ -49,6 +49,16 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
     }
 
+    /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
+    func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
+        waitUntil(timeout: .seconds(delay * 2)) { done in
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+                execute()
+                done()
+            }
+        }
+    }
+
     override func spec() {
         beforeSuite {
             self.continueAfterFailure = false
@@ -71,6 +81,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
@@ -81,6 +92,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app.gdprPM.acceptAllButton.tap()
             self.acceptCCPAMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
@@ -92,13 +104,30 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
-        it("DeleteCustomConsents after Accept all persists after app relaunch") {
+        it("Consenting and Deleting custom vendor persist after relaunch") {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
+
             self.app.deleteCustomVendorsButton.tap()
-            self.app.relaunch()
-            expect(self.app.deleteCustomVendorsButton).to(beDisabled())
+
+            self.waitForUserDefaultsToPersist {
+                self.app.relaunch()
+            }
+
+            expect(self.app.deleteCustomVendorsButton).toEventually(beDisabled())
+            expect(self.app.acceptCustomVendorsButton).toEventually(beEnabled())
+            expect(self.app.customVendorLabel).toEventually(containText("Rejected"))
+
+            self.app.acceptCustomVendorsButton.tap()
+
+            self.waitForUserDefaultsToPersist {
+                self.app.relaunch()
+            }
+
+            expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
+            expect(self.app.acceptCustomVendorsButton).toEventually(beDisabled())
+            expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
         }
     }
 }

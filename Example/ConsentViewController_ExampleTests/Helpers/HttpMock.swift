@@ -13,6 +13,7 @@ class MockHttp: HttpClient {
     var postWasCalledWithUrl: String!
     var postWasCalledWithBody: Data?
     var deleteWasCalledWithBody: Data?
+    var getWasCalledWithUrl: String?
     var success: Data?
     var error: Error?
 
@@ -24,26 +25,35 @@ class MockHttp: HttpClient {
         self.error = error
     }
 
-    public func get(urlString: String, handler: @escaping ResponseHandler) {}
+    public func get(urlString: String, handler: @escaping ResponseHandler) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+            self.getWasCalledWithUrl = urlString
+            if self.success != nil {
+                handler(.success(self.success))
+            } else {
+                handler(.failure(SPError(error: self.error!)))
+            }
+        }
+    }
 
     func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {}
 
     public func post(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
         postWasCalledWithUrl = urlString
         postWasCalledWithBody = body
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
             self.success != nil ?
                 handler(.success(self.success)) :
                 handler(.failure(InvalidURLError(urlString: urlString)))
-        })
+        }
     }
 
     public func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
         self.deleteWasCalledWithBody = body
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
             self.success != nil ?
                 handler(.success(self.success)) :
                 handler(.failure(InvalidURLError(urlString: urlString)))
-        })
+        }
     }
 }

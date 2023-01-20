@@ -39,9 +39,7 @@ class FirstLayerMessage: XCUIApplication {
 class NativeExampleApp: XCUIApplication {
     class CCPAPrivacyManager:XCUIApplication {
         private var container: XCUIElement {
-            // There's a bug in the native message builder for CCPA, only GDPR PMs show as options
-            // This should be fixed once https://sourcepoint.atlassian.net/browse/DIA-1394 is fixed
-            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch
+            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'CCPA PM'")).firstMatch
         }
 
         var messageTitle: XCUIElement {

@@ -154,6 +154,11 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
+@objcMembers public class InvalidGetMessagesParams: SPError {
+    override public var spCode: String { "sp_invalid_get_messages_param" }
+    override public var description: String { "The request params to /messages are invalid" }
+}
+
 @objcMembers public class InvalidResponseMessageGDPREndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_message_gdpr" }
     override public var description: String { "The SDK got an unexpected response from /message/gdpr endpoint" }
@@ -254,4 +259,36 @@ import Foundation
     }
 
     public override var campaignType: SPCampaignType { get { .gdpr } set {} }
+}
+
+@objcMembers public class InvalidMetaDataQueryParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_meta_data_query_params" }
+}
+
+@objcMembers public class InvalidMetaDataResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_meta_data_response" }
+}
+
+@objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_consent_status_query_params" }
+}
+
+@objcMembers public class InvalidConsentStatusResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_consent_status_response" }
+}
+
+@objcMembers public class InvalidPvDataQueryParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_pv_data_query_params" }
+}
+
+@objcMembers public class InvalidPvDataResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_pv_data_response" }
+}
+
+@objcMembers public class InvalidChoiceAllParamsError: SPError {
+    override public var spCode: String { "sp_metric_invalid_choice_all_query_params" }
+}
+
+@objcMembers public class InvalidChoiceAllResponseError: SPError {
+    override public var spCode: String { "sp_metric_invalid_choice_all_response" }
 }

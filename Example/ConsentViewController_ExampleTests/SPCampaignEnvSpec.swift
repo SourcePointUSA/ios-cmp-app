@@ -22,7 +22,7 @@ class SPCampaignEnvSpec: QuickSpec {
                 }
 
                 it("has its description as 'stage'") {
-                    expect(SPCampaignEnv.Stage.description).to(equal("stage"))
+                    expect(SPCampaignEnv.Stage.description).to(equal("SPCampaignEnv.stage"))
                 }
 
                 it("can be created with a string") {
@@ -36,7 +36,7 @@ class SPCampaignEnvSpec: QuickSpec {
                 }
 
                 it("has its description as 'prod'") {
-                    expect(SPCampaignEnv.Public.description).to(equal("prod"))
+                    expect(SPCampaignEnv.Public.description).to(equal("SPCampaignEnv.prod"))
                 }
 
                 it("can be created with a string") {

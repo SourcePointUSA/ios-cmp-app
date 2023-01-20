@@ -64,6 +64,7 @@ class ViewController: UIViewController {
 
     lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: 22,
+        propertyId: 16893,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
@@ -77,6 +78,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         sdkStatus = .running
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
+        myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": "load message"])
         updateUI()
     }
@@ -90,7 +92,7 @@ extension ViewController: SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
-        print(action)
+        action.publisherData = ["foo": "action"]
     }
 
     func onSPUIFinished(_ controller: UIViewController) {

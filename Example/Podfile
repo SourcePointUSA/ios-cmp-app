@@ -9,6 +9,7 @@ end
 
 target 'ConsentViewController_Example' do
   pod 'ConsentViewController', :path => '../'
+  pod 'JSONView'
   pod 'SwiftLint'
   pod 'Wormholy'
 end

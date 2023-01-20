@@ -7,6 +7,20 @@
 
 import Foundation
 
+struct LastMessageData: Codable {
+    var id, categoryId, subCategoryId: Int
+    var partitionUUID: String
+}
+
+extension LastMessageData {
+    init(from metadata: MessageMetaData) {
+        id = Int(metadata.messageId) ?? 0
+        categoryId = metadata.categoryId.rawValue
+        subCategoryId = metadata.subCategoryId.rawValue
+        partitionUUID = metadata.messagePartitionUUID ?? ""
+    }
+}
+
 /// A dictionary in which the keys represent the Vendor Id
 public typealias SPGDPRVendorGrants = [GDPRVendorId: SPGDPRVendorGrant]
 public typealias GDPRVendorId = String
@@ -49,7 +63,7 @@ public typealias SPGDPRPurposeId = String
 /**
     SPGDPRConsent encapsulates all consent data from a user.
  */
-@objcMembers public class SPGDPRConsent: NSObject, Codable {
+@objcMembers public class SPGDPRConsent: NSObject, Codable, CampaignConsent {
     /// Convenience initialiser to return an empty consent object.
     public static func empty() -> SPGDPRConsent { SPGDPRConsent(
         vendorGrants: SPGDPRVendorGrants(),
@@ -75,19 +89,19 @@ public typealias SPGDPRPurposeId = String
     /// considered fully consented. Either via legitimate interest or explicit user consent.
     /// Each key/value pair of `"purposeId: Bool`, indicates if that purpose has been consented
     /// either via leg. interest or explicit user consent.
-    public let vendorGrants: SPGDPRVendorGrants
+    public var vendorGrants: SPGDPRVendorGrants
 
     /// The iAB consent string.
-    public let euconsent: String
+    public var euconsent: String
 
     /// A dictionary with all TCFv2 related data
-    public let tcfData: SPJson
+    public var tcfData: SPJson?
 
     /// That's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
 
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
-    let childPmId: String?
+    var childPmId: String?
 
     /// A list of ids of the categories accepted by the user in all its vendors.
     /// If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.
@@ -102,18 +116,30 @@ public typealias SPGDPRPurposeId = String
             }
     }
 
-    public init(
+    /// The date in which the consent profile was created or updated
+    public var dateCreated = SPDateCreated.now()
+
+    /// Determines if the GDPR legislation applies for this user
+    public var applies = false
+
+    var consentStatus: ConsentStatus
+
+    var lastMessage: LastMessageData?
+
+    init(
         uuid: String? = nil,
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
         tcfData: SPJson,
-        childPmId: String? = nil
+        childPmId: String? = nil,
+        consentStatus: ConsentStatus = ConsentStatus()
     ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
         self.euconsent = euconsent
         self.tcfData = tcfData
         self.childPmId = childPmId
+        self.consentStatus = consentStatus
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
@@ -141,5 +167,6 @@ public typealias SPGDPRPurposeId = String
         case tcfData = "TCData"
         case vendorGrants = "grants"
         case childPmId
+        case consentStatus
     }
 }

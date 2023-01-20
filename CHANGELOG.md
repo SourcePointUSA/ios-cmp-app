@@ -1,3 +1,31 @@
+# 7.0.0 (Jan, 20, 2023)
+We have rewritten the network layer of the SDK almost in its entirety.
+Version 7 of the SDK uses new, "CDNed", heavily cached, endpoints and, as a result, it is now faster and less effected by service outages.
+On top of that, we have expanded our suit of tests as well as re-rewritten the majority of our UI specs to run faster and be less prone to "test flakiness".
+## Migrating from version 6.x.y
+We worked hard to keep the public API as close as possible to the previous version in order to keep your migration effort to a minimum.
+```diff
+// constructor
+SPConsentManager(
+    accountId: 123,
++   propertyId: 123
+    propertyName: try! SPPropertyName("myPropertyName"),
+-   campaignsEnv: .Public, // optional - Public by default
+    campaigns: SPCampaigns(
+        gdpr: SPCampaign(),   // optional
+        ccpa: SPCampaign(),   // optional
+        ios14: SPCampaign(),  // optional
++       environment: .Public  // optional - .Public by default
+    ),
+    delegate: self
+)
+```
+And that's it!
+
+**Notice:** the internal data structure kept by the SDK in the `UserDefaults` has changed. If your app relied on data that was not publicly available through the `SPDelegate` protocol, you might face some issues. That does not impact the data described by the [TCF spec](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details) (ie. data keyed and prefixed by `IABTCF_`).
+
+⚠️ We are currently working on supporting TvOS in the next patch release. In other words, if you use our TvOS product, you should not upgrade to version 7.0.0 just yet.
+
 # 6.7.3 (Dec, 16, 2022)
 * Fixed layout issues in the CCPA Native PM for TvOS when the message had less buttons than expected in the default UI. [#401](https://github.com/SourcePointUSA/ios-cmp-app/pull/401), [#397](https://github.com/SourcePointUSA/ios-cmp-app/pull/397)
 * Fixed an issue preventing the "Do not sell information" button in the CCPA Native PM - from working as expected [#400](https://github.com/SourcePointUSA/ios-cmp-app/pull/400)
@@ -32,7 +60,7 @@ We have received a lot of valuable feedback from you and we listened. This relea
 * Fixed an issue (#359) preventing the SDK from being used with SPM. #360
 
 # 6.4.0 (Jan, 31, 2022)
-* Added a brand new delegate method `onSPFinished`. As the name suggests, this method is invoked when the SDK is done displaying messages, sending/receiving consent to our APIs. At this point, the `UserDefaults` is garanteed to have all consent data up to date. #350
+* Added a brand new delegate method `onSPFinished`. As the name suggests, this method is invoked when the SDK is done displaying messages, sending/receiving consent to our APIs. At this point, the `UserDefaults` is guaranteed to have all consent data up to date. #350
 * Fixed an issue preventing the Native Message for AppleTV from showing the correct client logo. #358
 * Fixed an issue with the `SPPropertyName` not behaving correctly when the property name contained `[http|https]://`. #357
 * Fixed other issues regarding the Native AppleTV message. #352 #353 
@@ -171,10 +199,10 @@ As always, don't hesitate to reach out to us either via GitHub issues, slack or 
 * increase test and code coverage
 
 ## 5.2.3 (Jun, 09, 2020)
-* Fixed an issue that'd prevent the user from interacting with the app when the PMId passed to the SDK was wrong. We now encapuslate that in a `WebViewError` and call the `onError` callback on the `ConsentDelegate`.
+* Fixed an issue that'd prevent the user from interacting with the app when the PMId passed to the SDK was wrong. We now encapsulate that in a `WebViewError` and call the `onError` callback on the `ConsentDelegate`.
 
 ## 5.2.2 (Jun, 04, 2020)
-* Add `vendorGrants` attribute to `GDPRUserConsent` class. The `vendorGrants` attribute, simply put, is an dictionary reprensenting the consent state (on a legal basis) of all vendors and its purposes for the current user. For example:
+* Add `vendorGrants` attribute to `GDPRUserConsent` class. The `vendorGrants` attribute, simply put, is a dictionary representing the consent state (on a legal basis) of all vendors and its purposes for the current user. For example:
 ```swift
 [
   "vendorId1": VendorGrant(
@@ -196,9 +224,9 @@ The `vendorGrant` attribute is derived from `purposeGrants` and will be `true` i
 * Fixed an issue that would in some cases show the consent message for logged in users. #144
 
 ## 5.2.0 (May, 15, 2020)
-* Added the method `customConsentTo` to `GDPRConsentViewController`. It's now possible to programatically consent the current user to a list of vendors, categories and legitimate interest caregories. The ids passed will be appended to the list of already accepted vendors, categories and leg. int. categories. The method is asynchronous so you must pass a completion handler that will receive back an instance of `GDPRUserConsent` in case of success or it'll call the delegate method `onError` in case of failure. It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes it's still required to get consent via the consent message or privacy manager. #139
+* Added the method `customConsentTo` to `GDPRConsentViewController`. It's now possible to programmatically consent the current user to a list of vendors, categories and legitimate interest categories. The ids passed will be appended to the list of already accepted vendors, categories and leg. int. categories. The method is asynchronous so you must pass a completion handler that will receive back an instance of `GDPRUserConsent` in case of success or it'll call the delegate method `onError` in case of failure. It's important to notice, this method is intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes it's still required to get consent via the consent message or privacy manager. #139
 * Fix an issue preventing consent data from being completely removed when calling `clearAllData` #141
-* Removed one (and hopfeully the last one) retaining cycle from our SDK #136
+* Removed one (and hopefully the last one) retaining cycle from our SDK #136
 
 
 ## 5.1.0 (April, 16, 2020)
@@ -213,7 +241,7 @@ This is big one. We're moving more and more towards a stable API, so bare with u
 * `GDPRUserConsent.tcfData` has changed types from `[String: StringOrInt]` to `SPGDPRArbitraryJson`. It can be used as a dictionary by calling its `.dictionaryValue -> [String: Any]?` property.
 
 ## 5.0.3 (April, 03, 2020)
-* Storing IAB consent data ealier by persisting it at the very first http call #109
+* Storing IAB consent data earlier by persisting it at the very first http call #109
 * Added Swiftlint pod and to GitHub workflow #107
 * Fixed a ton of lint issues including one forced unwrap #107
 * Fixed an issue that was causing the Example app to crash on iPad 75e5472
@@ -257,7 +285,7 @@ As usual, if you see something wrong or have a question feel free to create an i
 ## 3.1.0 (December, 4, 2019)
 * Added support to Carthage
 * In order to maintain compliance even in the event of an outage on our side, we’re now clearing all local consent information of a user on onErrorOccurred. This behaviour is opt-in be default but can be opted-out by setting flag .shouldCleanConsentOnError = false
-* changed initialisation params from siteId and siteName to propertyId and property (after all, it makes no sense to have “site” inside our apps…)
+* changed initialization params from siteId and siteName to propertyId and property (after all, it makes no sense to have “site” inside our apps…)
 * fix two memory leaks due to retaining cycle and WKWebView (thanks to [@victorbenning](https://github.com/victorbenning))
 * Improved test coverage
 
@@ -265,7 +293,7 @@ As usual, if you see something wrong or have a question feel free to create an i
 Oh wow, time flies when we're having fun huh? This is a major release and, with major releases comes major ~~responsibilities~~ changes.
 
 ### New Message script
-Our Web Team worked pretty hard to slim down our consent message platform and improve its perfomance. In this release we make use of the new message script.
+Our Web Team worked pretty hard to slim down our consent message platform and improve its performance. In this release we make use of the new message script.
 
 **It's important to notice, SDK version 3 onwards will only be compatible with messages built using the new message builder.**
 
@@ -309,16 +337,16 @@ In order to support the Plug & Play Privacy Manager and the `ConsentDelegate` pr
 ## 2.3.0 (May, 20, 2019)
 * `ConsentViewController.getCustom*Consents` now always return an collection of Consents rather than an `Optional`
 * Pod is able to be built on Swift 5 projects (thanks to @pwallrich)
-* The example app is now simplied and the README has been updated
+* The example app is now simplified and the README has been updated
 
 ## 2.2.4 (April 20, 2019)
-* Moved  the API calls on secondary thread to keep main thread independent and free for UI opertaion.
+* Moved  the API calls on secondary thread to keep main thread independent and free for UI operation.
 
 ## 2.2.3 (April 09, 2019)
 * fix an issue that'd crash the client app if subclassing `ConsentViewController`
 
 ## 2.2.2 (April 08, 2019)
-* add the `ConsentViewController.messageTimeoutInSeconds` - used to controll the timeout between first load of the webview and `onMessageReady` callback
+* add the `ConsentViewController.messageTimeoutInSeconds` - used to control the timeout between first load of the webview and `onMessageReady` callback
 
 ## 2.1.2 (April 08, 2019)
 * fixed the interface for Objective-C, allowing the ConsentViewController to be used in Obj-c projects.
@@ -328,7 +356,7 @@ In order to support the Plug & Play Privacy Manager and the `ConsentDelegate` pr
 
 ## 2.1.0 (March 29, 2019)
 * load the webview in a separate function and call onMessageReady when the message is ready to be shown.
-* no longer add/remove the view from the superview. it's up to the parent to decide if/when the view should be added (we recommend using onMessageReady to add it and onInteractionComplete to remove it)
+* no longer add/remove the view from the super view. it's up to the parent to decide if/when the view should be added (we recommend using onMessageReady to add it and onInteractionComplete to remove it)
 
 ## 2.0.1 (March 21, 2019)
 * We now call `done()` always **after** `onErrorOccurred`

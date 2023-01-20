@@ -15,20 +15,36 @@ class SourcePointClientMock: SourcePointProtocol {
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
 
-    var customConsentResponse: CustomConsentResponse?
+    var customConsentResponse: AddOrDeleteCustomConsentResponse?
 
-    static func getCampaign(_ type: SPCampaignType, _ consent: Consent) -> Campaign {
+    static func getCampaign(_ type: SPCampaignType) -> Campaign {
         Campaign(
             type: type,
             message: .none,
-            userConsent: consent,
-            applies: true,
             messageMetaData: MessageMetaData(
                 categoryId: .unknown,
                 subCategoryId: .TCFv2,
                 messageId: "1",
                 messagePartitionUUID: "1234"
-            )
+            ),
+            consentStatus: ConsentStatus(
+                granularStatus: ConsentStatus.GranularStatus(
+                    vendorConsent: "",
+                    vendorLegInt: "",
+                    purposeConsent: "",
+                    purposeLegInt: "",
+                    previousOptInAll: false,
+                    defaultConsent: false
+                ),
+                rejectedAny: false,
+                rejectedLI: false,
+                consentedAll: false,
+                consentedToAny: false,
+                hasConsentData: false,
+                rejectedVendors: [],
+                rejectedCategories: []
+            ),
+            dateCreated: SPDateCreated.now()
         )
     }
 
@@ -37,15 +53,11 @@ class SourcePointClientMock: SourcePointProtocol {
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
 
-    func getMessages(
-        campaigns: SPCampaigns,
-        authId: String?,
-        localState: SPJson,
-        pubData: SPPublisherData,
-        idfaStaus: SPIDFAStatus,
-        consentLanguage: SPMessageLanguage,
-        handler: @escaping MessagesHandler
-    ) {
+    func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
+
+    }
+
+    func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
         getMessageCalled = true
         if let error = error {
             handler(.failure(error))
@@ -68,7 +80,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
 
     }
 
@@ -84,7 +96,11 @@ class SourcePointClientMock: SourcePointProtocol {
 
     }
 
-    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(actionType: ConsentViewController.SPActionType, body: ConsentViewController.GDPRChoiceBody, handler: @escaping ConsentViewController.GDPRConsentHandler) {
+
+    }
+
+    func pvData(pvDataRequestBody: ConsentViewController.PvDataRequestBody, handler: @escaping ConsentViewController.PvDataHandler) {
 
     }
 
@@ -98,7 +114,7 @@ class SourcePointClientMock: SourcePointProtocol {
         categories: [String],
         legIntCategories: [String],
         propertyId: Int,
-        handler: @escaping CustomConsentHandler) {
+        handler: @escaping AddOrDeleteCustomConsentHandler) {
 
     }
 
@@ -111,14 +127,14 @@ class SourcePointClientMock: SourcePointProtocol {
                                  categories: [String],
                                  legIntCategories: [String],
                                  propertyId: Int,
-                                 handler: @escaping DeleteCustomConsentHandler) {
+                                 handler: @escaping AddOrDeleteCustomConsentHandler) {
     }
 
     func customConsent(toConsentUUID consentUUID: String,
                        vendors: [String],
                        categories: [String],
                        legIntCategories: [String],
-                       completionHandler: @escaping (CustomConsentResponse?, SPError?) -> Void) {
+                       completionHandler: @escaping (AddOrDeleteCustomConsentResponse?, SPError?) -> Void) {
         customConsentWasCalledWith = [
             "consentUUID": consentUUID,
             "vendors": vendors,
@@ -139,4 +155,19 @@ class SourcePointClientMock: SourcePointProtocol {
     }
 
     func setRequestTimeout(_ timeout: TimeInterval) {}
+
+    func metaData(
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataBodyRequest,
+        handler: @escaping MetaDataHandler
+    ) { }
+
+    func choiceAll(
+        actionType: SPActionType,
+        accountId: Int,
+        propertyId: Int,
+        metadata: ChoiceAllBodyRequest,
+        handler: @escaping ChoiceHandler
+    ) { }
 }

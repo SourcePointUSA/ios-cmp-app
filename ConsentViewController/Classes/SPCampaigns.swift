@@ -15,6 +15,10 @@ public typealias SPTargetingParams = [String: String]
     let targetingParams: SPTargetingParams
     let groupPmId: String?
 
+    public override var description: String {
+        "SPCampaign(targetingParams: \(targetingParams), groupPmId: \(groupPmId as Any))"
+    }
+
     public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil
@@ -28,11 +32,28 @@ public typealias SPTargetingParams = [String: String]
 /// It's important to notice the campaign you passed as parameter needs to have
 /// a active vendor list of that legislation.
 @objcMembers public class SPCampaigns: NSObject {
+    let environment: SPCampaignEnv
     let gdpr, ccpa, ios14: SPCampaign?
 
-    public init(gdpr: SPCampaign? = nil, ccpa: SPCampaign? = nil, ios14: SPCampaign? = nil) {
+    public override var description: String {
+        """
+        SPCampaigns
+            - gdpr: \(gdpr as Any)
+            - cppa: \(ccpa as Any)
+            - ios14: \(ios14 as Any)
+            - environment: \(environment)
+        """
+    }
+
+    public init(
+        gdpr: SPCampaign? = nil,
+        ccpa: SPCampaign? = nil,
+        ios14: SPCampaign? = nil,
+        environment: SPCampaignEnv = .Public
+    ) {
         self.gdpr = gdpr
         self.ccpa = ccpa
         self.ios14 = ios14
+        self.environment = environment
     }
 }

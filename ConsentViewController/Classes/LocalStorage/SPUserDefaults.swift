@@ -12,7 +12,6 @@ class SPUserDefaults: SPLocalStorage {
     static public let IAB_KEY_PREFIX = "IABTCF_"
     static public let US_PRIVACY_STRING_KEY = "IABUSPrivacy_String"
 
-    static let PROPERTY_ID = "\(SP_KEY_PREFIX)propertyId"
     static let LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)localState"
     static let USER_DATA_KEY = "\(SP_KEY_PREFIX)userData"
     static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
@@ -20,16 +19,9 @@ class SPUserDefaults: SPLocalStorage {
     static let GDPR_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)GDPRchildPmId"
     static let CCPA_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)CCPAchildPmId"
 
-    var storage: Storage
+    static let SP_STATE_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)state"
 
-    var propertyId: Int? {
-        get {
-            storage.integer(forKey: SPUserDefaults.PROPERTY_ID)
-        }
-        set {
-            storage.set(newValue, forKey: SPUserDefaults.PROPERTY_ID)
-        }
-    }
+    var storage: Storage
 
     var tcfData: [String: Any]? {
         get {
@@ -60,8 +52,8 @@ class SPUserDefaults: SPLocalStorage {
         }
     }
 
-    var localState: SPJson {
-        get { storage.object(ofType: SPJson.self, forKey: SPUserDefaults.LOCAL_STATE_KEY) ?? SPJson() }
+    var localState: SPJson? {
+        get { storage.object(ofType: SPJson.self, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
         set { storage.setObject(newValue, forKey: SPUserDefaults.LOCAL_STATE_KEY) }
     }
 
@@ -75,6 +67,16 @@ class SPUserDefaults: SPLocalStorage {
         set { storage.set(newValue, forKey: SPUserDefaults.CCPA_CHILD_PM_ID_KEY) }
     }
 
+    var spState: SourcepointClientCoordinator.State? {
+        get {
+            storage.object(
+                ofType: SourcepointClientCoordinator.State.self,
+                forKey: SPUserDefaults.SP_STATE_KEY
+            )
+        }
+        set { storage.setObject(newValue, forKey: SPUserDefaults.SP_STATE_KEY) }
+    }
+
     required init(storage: Storage = UserDefaults.standard) {
         self.storage = storage
     }
@@ -86,12 +88,12 @@ class SPUserDefaults: SPLocalStorage {
     ].merging(tcfData ?? [:]) { item, _ in item }}
 
     func clear() {
-        localState = SPJson()
+        localState = nil
         tcfData = [:]
         usPrivacyString = ""
         userData = SPUserData()
-        propertyId = nil
         gdprChildPmId = nil
         ccpaChildPmId = nil
+        spState = nil
     }
 }
