@@ -8,7 +8,6 @@ target 'AuthExample' do
 end
 
 target 'ConsentViewController_Example' do
-  platform :ios, '13.0'
   pod 'ConsentViewController', :path => '../'
   pod 'JSONView'
   pod 'SwiftLint'

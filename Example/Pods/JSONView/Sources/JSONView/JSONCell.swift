@@ -32,20 +32,14 @@ public struct JSONCell: View {
             return AnyView(keyValueView(treeView: JSONTreeView(array, prefix: key)))
         case let dictionary as JSON: // NSDictionary
             return AnyView(keyValueView(treeView: JSONTreeView(dictionary, prefix: key)))
-        case let bool as Bool:
-            return AnyView(leafView(String(describing: bool)))
         case let number as NSNumber: // NSNumber
             return AnyView(leafView(number.stringValue))
         case let string as String: // NSString
             return AnyView(leafView(string))
-        case let hashables as [AnyHashable]:
-            let strings = hashables.map { $0.description }.joined(separator: ", ")
-            return AnyView(leafView("[\(strings)]"))
         case is NSNull: // NSNull
             return AnyView(leafView("null"))
         default:
-            return AnyView(leafView("Ooops"))
-//            fatalError()
+            fatalError()
         }
     }
     

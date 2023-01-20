@@ -41,8 +41,7 @@ public struct JSONView: View {
     public var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             JSONTreeView(rootArray ?? rootDictionary)
-                .padding(.top, 10)
-                .padding(.bottom, 60)
+                .padding([.top, .bottom], 10)
                 .padding(.trailing, 10)
         }
     }
