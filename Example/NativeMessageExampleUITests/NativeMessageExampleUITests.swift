@@ -103,7 +103,7 @@ class NativeMessageExampleUITests: QuickSpec {
             self.showCCPAPMViaFirstLayerMessage()
             self.app.ccpaPM.acceptAllButton.tap()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
-            self.waitForUserDefaultsToPersist {
+            self.waitForUserDefaultsToPersist(20) {
                 self.app.relaunch()
             }
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
