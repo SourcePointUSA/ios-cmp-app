@@ -188,7 +188,7 @@ extension ViewController: SPDelegate {
 @end
 ```
 ## Loading the Privacy Manager on demand
-You can load the Privacy Manager (that UI with the toggles) any time, programatically, by calling either
+You can load the Privacy Manager (that UI with the toggles) any time, programmatically, by calling either
 * `.loadGDPRPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)` or
 * `.loadCCPAPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)`
 
@@ -203,7 +203,7 @@ The SDK will wrap the web message into a `UIViewController` and call the `onSPUI
 The `onSPNativeMessageReady` is only called if the scenario returns a native message. It will be up to you to the `message` object on the screen using the layout you best see fit.
 
 ### onAction(_ action: SPAction, from controller: UIViewController)
-Whenever the user takes an action (e.g. tapping on a button), the SDK will call the `onAction` passing the `action` as paramter. **This delegate method runs in the main thread**.
+Whenever the user takes an action (e.g. tapping on a button), the SDK will call the `onAction` passing the `action` as parameter. **This delegate method runs in the main thread**.
 
 #### What's inside `SPAction`
 Among other internal data, you'll find:
@@ -228,10 +228,10 @@ Make sure to check XCode's quick help of `SPUserData` for more information on wh
 In case of an error, the SDK will wrap the error in one of the `SPError` classes and eventually call the `onError(_ error: SPError)` callback. 
 
 By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
-Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. This _may_ cause a consent message to be shown again, depending on your scenario. 
+Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
 ## Adding or Removing custom consents 
-It's possible to programatically consent the current user to a list of custom vendors, categories and legitimate interest caregories with the method:
+It's possible to programmatically consent the current user to a list of custom vendors, categories and legitimate interest categories with the method:
 ```swift
 func customConsentToGDPR(
     vendors: [String],
@@ -284,7 +284,7 @@ The authId will then assume 1 of the 3 values below:
 In that case the `authId` is going to be that user id.
 2. **User is _not_ authenticated and I'm only interested in using consent in this app.**
 We recommend using a randomly generated `UUID` as `authId`. Make sure to persist this `authId` and always call the `.loadMessage(forAuthId: String)`
-3. **User is _not_ authenticated and I want the consent to be shared _across_ apps I controll.**
+3. **User is _not_ authenticated and I want the consent to be shared _across_ apps I control.**
 In this case, you'll need an identifier that is guaranteed to be the same across apps you control. That's exactly what the [IDFV](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor) (Identifier for Vendor) is for. You don't need to store this id as it remains the same across app launches.
 
 ### Example
@@ -303,7 +303,7 @@ A few remarks:
 2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
 
 ## Overwriting default language
-By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behaviour and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `SPConsentManager` _before_ calling `.loadMessage() / .loadPrivacyManager()`. 
+By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behavior and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `SPConsentManager` _before_ calling `.loadMessage() / .loadPrivacyManager()`. 
 ```swift
 consentManager.messageLanguage = .German
 consentManager.loadMessage()
@@ -320,8 +320,8 @@ It's important to notice that if any of the components of the message doesn't ha
 Currently, we don't support loading campaigns of different environments. In other words, you can only load all Stage or Public campaigns.
 
 ## Setting Targeting Parameters
-Targeting params are a set of key/value pairs passed to the scenario. In the scenario you're able to conditionaly show a message or another based on those values.
-You can set targeting params individiually per campaign like so:
+Targeting params are a set of key/value pairs passed to the scenario. In the scenario you're able to conditionally show a message or another based on those values.
+You can set targeting params individually per campaign like so:
 
 ```swift
 let myCampaign = SPCampaign(targetingParams: ["foo": "bar"])
@@ -401,8 +401,8 @@ The `onConsentReady` delegate method sends the consent action to the server and 
 
 ### `onError()`
 
-The SDK will in all cases wrap the error in one of the SPError class and eventually call the func `onError(_ error: SPError)` callback. By default, the SDK preservs all user consent data from UserDefaults in case of `OnError` event is called.
-Set `consentManager.cleanUserDataOnError` flag to `true` after you initialise `SPConsentManager` if you wish to opt-out from this behaviour. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
+The SDK will in all cases wrap the error in one of the SPError class and eventually call the func `onError(_ error: SPError)` callback. By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
+Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
 ## Google Additional Consent (GDPR TCF)
 
@@ -448,9 +448,9 @@ iOS 10 onwards.
 We encapsulate the IDFA status in our own enum called `SPIDFAstatus`. In case the SDK is running on an iOS version that does not support IDFA, the status will be `unavailable`. Otherwise, it'll assume one of the 3 values:
 * `unknown`: User has never been prompted to accept/reject tracking (the native iOS ATT prompt).
 * `accepted`: User accepted the ATT prompt, giving your app access to the IDFA.
-* `rejected`: User rejected the ATT prompt, denyinh your app access to the IDFA.
+* `rejected`: User rejected the ATT prompt, denying your app access to the IDFA.
 
-We'll update this list over time, if you have any questions feel free to open an issue or concact your SourcePoint account manager.
+We'll update this list over time, if you have any questions feel free to open an issue or contact your SourcePoint account manager.
 ### 3. Are deep links supported?
 
 Sourcepoint does not support deep linking due to an HTML sanitizer used in our message rendering app (used by our in-app SDKs to render messages in a webview). Changing the configuration to our HTML sanitizer would compromise our security and introduce vulnerabilities for cross-site scripting (XSS) attacks.
