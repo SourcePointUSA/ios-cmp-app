@@ -1,0 +1,872 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConsentViewController
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AdSupport
+import AppTrackingTransparency
+@_exported import ConsentViewController
+import Foundation
+import Foundation/*.Bundle*/
+import Swift
+import SystemConfiguration
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import os
+public struct ConsentStatus : Swift.Codable, Swift.Equatable {
+  public static func == (a: ConsentViewController.ConsentStatus, b: ConsentViewController.ConsentStatus) -> Swift.Bool
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public let MockNativePMResponse: Swift.String
+@objc extension ObjectiveC.NSObject {
+  @objc dynamic public func toJSON() -> Swift.String?
+}
+@objc public enum SPActionType : Swift.Int, Swift.Codable, Swift.CaseIterable, Swift.CustomStringConvertible {
+  case SaveAndExit = 1
+  case PMCancel = 2
+  case Custom = 9
+  case AcceptAll = 11
+  case ShowPrivacyManager = 12
+  case RejectAll = 13
+  case Dismiss = 15
+  case RequestATTAccess = 16
+  case IDFAAccepted = 17
+  case IDFADenied = 18
+  case Unknown = 0
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [ConsentViewController.SPActionType]
+  public typealias RawValue = Swift.Int
+  public static var allCases: [ConsentViewController.SPActionType] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @objcMembers public class SPAction : ObjectiveC.NSObject {
+  @objc public var type: ConsentViewController.SPActionType
+  @objc final public let campaignType: ConsentViewController.SPCampaignType
+  @objc final public let consentLanguage: Swift.String?
+  @objc public var pmURL: Foundation.URL?
+  @objc public var pmId: Swift.String? {
+    @objc get
+  }
+  public var pmPayload: ConsentViewController.SPJson
+  @objc public var publisherData: ConsentViewController.SPPublisherData
+  @objc public var customActionId: Swift.String?
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  public init(type: ConsentViewController.SPActionType, campaignType: ConsentViewController.SPCampaignType = .unknown, consentLanguage: Swift.String? = nil, pmPayload: ConsentViewController.SPJson = SPJson(), pmurl: Foundation.URL? = nil, customActionId: Swift.String? = nil)
+  @objc deinit
+}
+@objc public enum SPCampaignEnv : Swift.Int, Swift.CustomStringConvertible {
+  case Stage = 0
+  case Public = 1
+  public var description: Swift.String {
+    get
+  }
+  public init?(stringValue: Swift.String)
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension ConsentViewController.SPCampaignEnv : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public typealias SPTargetingParams = [Swift.String : Swift.String]
+@objc @objcMembers public class SPCampaign : ObjectiveC.NSObject {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil)
+  @objc deinit
+}
+@objc @objcMembers public class SPCampaigns : ObjectiveC.NSObject {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public init(gdpr: ConsentViewController.SPCampaign? = nil, ccpa: ConsentViewController.SPCampaign? = nil, ios14: ConsentViewController.SPCampaign? = nil, environment: ConsentViewController.SPCampaignEnv = .Public)
+  @objc deinit
+}
+@objc public enum SPCampaignType : Swift.Int, Swift.Equatable {
+  case gdpr, ios14, ccpa, unknown
+}
+extension ConsentViewController.SPCampaignType : Swift.Codable {
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init(rawValue: Swift.String)
+  public init(from decoder: Swift.Decoder) throws
+}
+@objc public enum CCPAConsentStatus : Swift.Int, Swift.Codable {
+  case RejectedNone
+  case RejectedSome
+  case RejectedAll
+  case ConsentedAll
+  public typealias RawValue = Swift.String
+  public var rawValue: ConsentViewController.CCPAConsentStatus.RawValue {
+    get
+  }
+  public init?(rawValue: ConsentViewController.CCPAConsentStatus.RawValue)
+}
+public typealias SPUsPrivacyString = Swift.String
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SPCCPAConsent : ObjectiveC.NSObject, Swift.Codable {
+  @objc public static let defaultUsPrivacyString: Swift.String
+  @objc public static func empty() -> ConsentViewController.SPCCPAConsent
+  @objc public var status: ConsentViewController.CCPAConsentStatus
+  @objc public var rejectedVendors: [Swift.String], rejectedCategories: [Swift.String]
+  @objc public var uspstring: ConsentViewController.SPUsPrivacyString
+  @objc public var uuid: Swift.String?
+  @objc public var applies: Swift.Bool
+  public var dateCreated: ConsentViewController.SPDateCreated
+  @objc public static func rejectedNone() -> ConsentViewController.SPCCPAConsent
+  @objc override dynamic open var description: Swift.String {
+    @objc get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SPConsentManager : ObjectiveC.NSObject {
+  @objc public static var shouldCallErrorMetrics: Swift.Bool
+  @objc public var cleanUserDataOnError: Swift.Bool
+  @objc public var messageTimeoutInSeconds: Foundation.TimeInterval {
+    @objc get
+    @objc set
+  }
+  @objc public var privacyManagerTab: ConsentViewController.SPPrivacyManagerTab
+  @objc public var messageLanguage: ConsentViewController.SPMessageLanguage
+  @objc required convenience public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
+  @objc public func gracefullyDegradeOnError(_ error: ConsentViewController.SPError)
+  @objc public func onError(_ error: ConsentViewController.SPError)
+  @objc deinit
+}
+@objc extension ConsentViewController.SPConsentManager : ConsentViewController.SPSDK {
+  @objc public static let VERSION: Swift.String
+  @objc public static func clearAllData()
+  @objc dynamic public var gdprApplies: Swift.Bool {
+    @objc get
+  }
+  @objc dynamic public var ccpaApplies: Swift.Bool {
+    @objc get
+  }
+  @objc dynamic public var userData: ConsentViewController.SPUserData {
+    @objc get
+  }
+  @objc dynamic public func loadMessage(forAuthId authId: Swift.String? = nil, publisherData: ConsentViewController.SPPublisherData? = [:])
+  @objc dynamic public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
+  @objc dynamic public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
+  @objc dynamic public func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
+  @objc dynamic public func deleteCustomConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
+}
+extension ConsentViewController.SPConsentManager : ConsentViewController.SPMessageUIDelegate {
+  @objc dynamic public func loaded(_ message: ConsentViewController.SPNativeMessage)
+  @objc dynamic public func loaded(_ controller: UIKit.UIViewController)
+  @objc dynamic public func finished(_ vcFinished: UIKit.UIViewController)
+  @objc dynamic public func action(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
+}
+public struct SPDateCreated : Swift.Codable, Swift.Equatable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  public static func == (a: ConsentViewController.SPDateCreated, b: ConsentViewController.SPDateCreated) -> Swift.Bool
+}
+@objc public protocol SPConsentUIDelegate {
+  @objc func onAction(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
+}
+@objc public protocol SPConsentDelegate {
+  @objc func onSPUIReady(_ controller: UIKit.UIViewController)
+  @objc optional func onSPNativeMessageReady(_ message: ConsentViewController.SPNativeMessage)
+  @objc func onSPUIFinished(_ controller: UIKit.UIViewController)
+  @objc optional func onConsentReady(userData: ConsentViewController.SPUserData)
+  @objc optional func onSPFinished(userData: ConsentViewController.SPUserData)
+  @objc optional func onError(error: ConsentViewController.SPError)
+}
+@objc public protocol SPDelegate : ConsentViewController.SPConsentDelegate, ConsentViewController.SPConsentUIDelegate {
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SPError : Foundation.NSError, Foundation.LocalizedError {
+  @objc public var spCode: Swift.String {
+    @objc get
+  }
+  @objc public var spDescription: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public var failureReason: Swift.String {
+    @objc get
+  }
+  @objc public var originalError: Swift.Error?
+  @objc public var campaignType: ConsentViewController.SPCampaignType
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class UnableToFindView : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class UnableToLoadJSReceiver : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class WebViewError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class InvalidArgumentError : ConsentViewController.SPError {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class MissingChildPmIdError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class InvalidEventPayloadError : ConsentViewController.SPError {
+  @objc override public var failureReason: Swift.String {
+    @objc get
+  }
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidOnActionEventPayloadError : ConsentViewController.InvalidEventPayloadError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class InvalidURLError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class RenderingAppError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc final public let renderingAppErrorCode: Swift.String?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class UnableToInjectMessageIntoRenderingApp : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseWebMessageError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseGetMessagesEndpointError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidGetMessagesParams : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseMessageGDPREndpointError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseMessageCCPAEndpointError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseGDPRPMViewEndpointError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseCCPAPMViewEndpointError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseNativeMessageError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseConsentError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseCustomError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidResponseDeleteCustomError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class NoInternetConnection : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class ConnectionTimeOutError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class GenericNetworkError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InternalServerError : ConsentViewController.GenericNetworkError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class ResourceNotFoundError : ConsentViewController.GenericNetworkError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidRequestError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class PostingConsentWithoutConsentUUID : ConsentViewController.InvalidRequestError {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc override public var campaignType: ConsentViewController.SPCampaignType {
+    @objc get
+    @objc set
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidMetaDataQueryParamsError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidMetaDataResponseError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidConsentStatusQueryParamsError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidConsentStatusResponseError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidPvDataQueryParamsError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidPvDataResponseError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidChoiceAllParamsError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class InvalidChoiceAllResponseError : ConsentViewController.SPError {
+  @objc override public var spCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+}
+public typealias SPGDPRVendorGrants = [ConsentViewController.GDPRVendorId : ConsentViewController.SPGDPRVendorGrant]
+public typealias GDPRVendorId = Swift.String
+public typealias SPGDPRPurposeGrants = [ConsentViewController.SPGDPRPurposeId : Swift.Bool]
+public typealias SPGDPRPurposeId = Swift.String
+@objc @objcMembers public class SPGDPRVendorGrant : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let granted: Swift.Bool
+  @objc final public let purposeGrants: ConsentViewController.SPGDPRPurposeGrants
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc public init(granted: Swift.Bool = false, purposeGrants: ConsentViewController.SPGDPRPurposeGrants = [:])
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SPGDPRConsent : ObjectiveC.NSObject, Swift.Codable {
+  @objc public static func empty() -> ConsentViewController.SPGDPRConsent
+  @objc public var vendorGrants: ConsentViewController.SPGDPRVendorGrants
+  @objc public var euconsent: Swift.String
+  public var tcfData: ConsentViewController.SPJson?
+  @objc public var uuid: Swift.String?
+  @objc public var acceptedCategories: [Swift.String] {
+    @objc get
+  }
+  public var dateCreated: ConsentViewController.SPDateCreated
+  @objc public var applies: Swift.Bool
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc override dynamic open var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc public enum SPIDFAStatus : Swift.Int, Swift.CaseIterable, Swift.CustomStringConvertible {
+  case unknown = 0
+  case accepted = 1
+  case denied = 2
+  case unavailable = 3
+  public static func requestAuthorisation(handler: @escaping (ConsentViewController.SPIDFAStatus) -> Swift.Void)
+  public static func current() -> ConsentViewController.SPIDFAStatus
+  public var description: Swift.String {
+    get
+  }
+  @available(iOS 14, tvOS 14, *)
+  public init(fromApple status: AppTrackingTransparency.ATTrackingManager.AuthorizationStatus)
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [ConsentViewController.SPIDFAStatus]
+  public typealias RawValue = Swift.Int
+  public static var allCases: [ConsentViewController.SPIDFAStatus] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension ConsentViewController.SPIDFAStatus : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class SPIDFAStatusBridge : ObjectiveC.NSObject {
+  @objc public static func current() -> ConsentViewController.SPIDFAStatus
+  @objc public static func currentString() -> Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum SPJson : Swift.Codable, Swift.CustomStringConvertible, Swift.Equatable {
+  public var description: Swift.String {
+    get
+  }
+  public struct Key : Swift.CodingKey, Swift.Hashable, Swift.CustomStringConvertible {
+    public var description: Swift.String {
+      get
+    }
+    public let stringValue: Swift.String
+    public init(_ string: Swift.String)
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+    public func hash(into hasher: inout Swift.Hasher)
+    public static func == (a: ConsentViewController.SPJson.Key, b: ConsentViewController.SPJson.Key) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  case string(Swift.String)
+  case number(Swift.Double)
+  case object([ConsentViewController.SPJson.Key : ConsentViewController.SPJson])
+  case array([ConsentViewController.SPJson])
+  case bool(Swift.Bool)
+  case null
+  public init()
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  public var objectValue: [Swift.String : ConsentViewController.SPJson]? {
+    get
+  }
+  public var arrayValue: [ConsentViewController.SPJson]? {
+    get
+  }
+  public subscript(key: Swift.String) -> ConsentViewController.SPJson? {
+    get
+  }
+  public var stringValue: Swift.String? {
+    get
+  }
+  public var nullValue: Any? {
+    get
+  }
+  public var doubleValue: Swift.Double? {
+    get
+  }
+  public var intValue: Swift.Int? {
+    get
+  }
+  public subscript(index: Swift.Int) -> ConsentViewController.SPJson? {
+    get
+  }
+  public var boolValue: Swift.Bool? {
+    get
+  }
+  public var anyValue: Any? {
+    get
+  }
+  public var dictionaryValue: [Swift.String : Any]? {
+    get
+  }
+  public subscript(dynamicMember member: Swift.String) -> ConsentViewController.SPJson {
+    get
+  }
+  public static func == (a: ConsentViewController.SPJson, b: ConsentViewController.SPJson) -> Swift.Bool
+}
+extension ConsentViewController.SPJson {
+  public init(_ value: Any) throws
+}
+@_hasMissingDesignatedInitializers @objcMembers public class SPMessage {
+  @objc deinit
+}
+@objc public enum SPMessageLanguage : Swift.Int, Swift.Codable {
+  case BrowserDefault
+  case English
+  case Bulgarian
+  case Catalan
+  case Chinese
+  case Croatian
+  case Czech
+  case Danish
+  case Dutch
+  case Estonian
+  case Finnish
+  case French
+  case Gaelic
+  case German
+  case Greek
+  case Hungarian
+  case Icelandic
+  case Italian
+  case Japanese
+  case Latvian
+  case Lithuanian
+  case Norwegian
+  case Polish
+  case Portuguese
+  case Romanian
+  case Russian
+  case Serbian_Cyrillic
+  case Serbian_Latin
+  case Slovakian
+  case Slovenian
+  case Spanish
+  case Swedish
+  case Turkish
+  public typealias RawValue = Swift.String
+  public var rawValue: ConsentViewController.SPMessageLanguage.RawValue {
+    get
+  }
+  public init?(rawValue: ConsentViewController.SPMessageLanguage.RawValue)
+}
+@objc public protocol SPMessageUIDelegate {
+  @objc func loaded(_ controller: UIKit.UIViewController)
+  @objc(loadedWithNativeMessage:) optional func loaded(_ message: ConsentViewController.SPNativeMessage)
+  @objc func action(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
+  @objc func onError(_ error: ConsentViewController.SPError)
+  @objc func finished(_ vcFinished: UIKit.UIViewController)
+}
+@objc public protocol SPRenderingApp {
+  @objc func loadMessage()
+  @objc func loadPrivacyManager(url: Foundation.URL)
+  @objc func closePrivacyManager()
+}
+@objc public protocol MessageController {
+  @objc func loadMessage()
+  @objc func loadPrivacyManager(url: Foundation.URL)
+  @objc func closePrivacyManager()
+}
+@objc public protocol SPMessageView : ConsentViewController.MessageController, ConsentViewController.SPRenderingApp {
+  @objc var messageUIDelegate: ConsentViewController.SPMessageUIDelegate? { get set }
+  @objc var campaignType: ConsentViewController.SPCampaignType { get set }
+  @objc var messageId: Swift.String { get set }
+  @objc var timeout: Foundation.TimeInterval { get set }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class SPMessageViewController : UIKit.UIViewController, ConsentViewController.SPMessageView {
+  @_Concurrency.MainActor(unsafe) @objc weak public var messageUIDelegate: ConsentViewController.SPMessageUIDelegate?
+  @_Concurrency.MainActor(unsafe) @objc public var campaignType: ConsentViewController.SPCampaignType
+  @_Concurrency.MainActor(unsafe) @objc public var messageId: Swift.String
+  @_Concurrency.MainActor(unsafe) @objc public var timeout: Swift.Double
+  @_Concurrency.MainActor(unsafe) @objc public func loadMessage()
+  @_Concurrency.MainActor(unsafe) @objc public func loadPrivacyManager(url: Foundation.URL)
+  @_Concurrency.MainActor(unsafe) @objc public func closePrivacyManager()
+  @objc deinit
+}
+@objc public class SPNativeMessage : ObjectiveC.NSObject, Swift.Decodable, ConsentViewController.SPMessageView {
+  @objc weak public var messageUIDelegate: ConsentViewController.SPMessageUIDelegate?
+  @objc public var campaignType: ConsentViewController.SPCampaignType
+  @objc public var messageId: Swift.String
+  @objc public var timeout: Swift.Double
+  @objc public func loadMessage()
+  @objc public func loadPrivacyManager(url: Foundation.URL)
+  @objc public func closePrivacyManager()
+  public typealias CustomFields = [Swift.String : Swift.String]
+  @objc public class AttributeStyle : ObjectiveC.NSObject, Swift.Codable {
+    final public let fontFamily: Swift.String
+    final public let fontSize: Swift.Int
+    final public let color: Swift.String
+    final public let backgroundColor: Swift.String
+    public init(fontFamily: Swift.String, fontSize: Swift.Int, color: Swift.String, backgroundColor: Swift.String)
+    @objc deinit
+    public func encode(to encoder: Swift.Encoder) throws
+    required public init(from decoder: Swift.Decoder) throws
+  }
+  @objc public class Attribute : ObjectiveC.NSObject, Swift.Codable {
+    final public let text: Swift.String
+    final public let style: ConsentViewController.SPNativeMessage.AttributeStyle
+    final public let customFields: ConsentViewController.SPNativeMessage.CustomFields
+    public init(text: Swift.String, style: ConsentViewController.SPNativeMessage.AttributeStyle, customFields: ConsentViewController.SPNativeMessage.CustomFields)
+    @objc deinit
+    public func encode(to encoder: Swift.Encoder) throws
+    required public init(from decoder: Swift.Decoder) throws
+  }
+  @objc public class Action : ConsentViewController.SPNativeMessage.Attribute {
+    final public let choiceType: ConsentViewController.SPActionType
+    public var pmId: Swift.String? {
+      get
+    }
+    public init(text: Swift.String, style: ConsentViewController.SPNativeMessage.AttributeStyle, customFields: ConsentViewController.SPNativeMessage.CustomFields, choiceType: ConsentViewController.SPActionType, url: Foundation.URL?)
+    override public func encode(to encoder: Swift.Encoder) throws
+    @objc deinit
+  }
+  final public let title: ConsentViewController.SPNativeMessage.Attribute
+  final public let body: ConsentViewController.SPNativeMessage.Attribute
+  final public let actions: [ConsentViewController.SPNativeMessage.Action]
+  final public let customFields: ConsentViewController.SPNativeMessage.CustomFields
+  public init(title: ConsentViewController.SPNativeMessage.Attribute, body: ConsentViewController.SPNativeMessage.Attribute, actions: [ConsentViewController.SPNativeMessage.Action], customFields: ConsentViewController.SPNativeMessage.CustomFields)
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+}
+@objc public enum SPPrivacyManagerTab : Swift.Int {
+  case Default
+  case Purposes
+  case Vendors
+  case Features
+  public typealias RawValue = Swift.String
+  public var rawValue: ConsentViewController.SPPrivacyManagerTab.RawValue {
+    get
+  }
+  public init?(rawValue: ConsentViewController.SPPrivacyManagerTab.RawValue)
+}
+@objc @objcMembers open class SPPropertyName : ObjectiveC.NSObject, Swift.Codable {
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc public init(_ rawValue: Swift.String) throws
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc deinit
+}
+public typealias SPPublisherData = [Swift.String : Swift.String]
+@objc public protocol SPCCPA {
+  @objc func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab, useGroupPmIfAvailable: Swift.Bool)
+  @objc var ccpaApplies: Swift.Bool { get }
+}
+@objc public protocol SPGDPR {
+  @objc func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab, useGroupPmIfAvailable: Swift.Bool)
+  @objc var gdprApplies: Swift.Bool { get }
+}
+@objc public protocol SPSDK : ConsentViewController.SPCCPA, ConsentViewController.SPGDPR, ConsentViewController.SPMessageUIDelegate {
+  @objc static var VERSION: Swift.String { get }
+  @objc static func clearAllData()
+  @objc var cleanUserDataOnError: Swift.Bool { get set }
+  @objc var messageTimeoutInSeconds: Foundation.TimeInterval { get set }
+  @objc var privacyManagerTab: ConsentViewController.SPPrivacyManagerTab { get set }
+  @objc var messageLanguage: ConsentViewController.SPMessageLanguage { get set }
+  @objc var userData: ConsentViewController.SPUserData { get }
+  @objc init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
+  @objc func loadMessage(forAuthId authId: Swift.String?, publisherData: ConsentViewController.SPPublisherData?)
+  @objc func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
+  @objc func deleteCustomConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
+}
+extension ConsentViewController.SPSDK {
+  public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
+  public func loadMessage(forAuthId authId: Swift.String? = "", pubData: ConsentViewController.SPPublisherData? = [:])
+  public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
+  public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
+}
+extension UIKit.UIColor {
+  convenience public init?(hexString: Swift.String?)
+}
+public class SPConsent<ConsentType> : ObjectiveC.NSObject, Swift.Codable where ConsentType : Swift.Decodable, ConsentType : Swift.Encodable, ConsentType : Swift.Equatable {
+  final public let consents: ConsentType?
+  final public let applies: Swift.Bool
+  public init(consents: ConsentType?, applies: Swift.Bool)
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @objcMembers public class SPUserData : ObjectiveC.NSObject, Swift.Codable {
+  final public let gdpr: ConsentViewController.SPConsent<ConsentViewController.SPGDPRConsent>?
+  final public let ccpa: ConsentViewController.SPConsent<ConsentViewController.SPCCPAConsent>?
+  public init(gdpr: ConsentViewController.SPConsent<ConsentViewController.SPGDPRConsent>? = nil, ccpa: ConsentViewController.SPConsent<ConsentViewController.SPCCPAConsent>? = nil)
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  @objc override dynamic open func isEqual(_ object: Any?) -> Swift.Bool
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+public protocol SPObjcUserData {
+  func objcGDPRConsents() -> ConsentViewController.SPGDPRConsent?
+  func objcGDPRApplies() -> Swift.Bool
+  func objcCCPAConsents() -> ConsentViewController.SPCCPAConsent?
+  func objcCCPAApplies() -> Swift.Bool
+}
+@objc extension ConsentViewController.SPUserData : ConsentViewController.SPObjcUserData {
+  @objc dynamic public func objcGDPRConsents() -> ConsentViewController.SPGDPRConsent?
+  @objc dynamic public func objcGDPRApplies() -> Swift.Bool
+  @objc dynamic public func objcCCPAConsents() -> ConsentViewController.SPCCPAConsent?
+  @objc dynamic public func objcCCPAApplies() -> Swift.Bool
+}
+@objc extension WebKit.WKWebView {
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func getAuthId(handler: @escaping (_ authId: Swift.String?, _ error: Swift.Error?) -> Swift.Void)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func setConsentFor(authId: Swift.String)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func setCookie(_ name: Swift.String, _ value: Swift.String)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func getCookies(_ handler: @escaping (_ cookies: [Swift.String : Swift.String], _ error: Swift.Error?) -> Swift.Void)
+}
+extension ConsentViewController.SPActionType : Swift.Equatable {}
+extension ConsentViewController.SPActionType : Swift.Hashable {}
+extension ConsentViewController.SPActionType : Swift.RawRepresentable {}
+extension ConsentViewController.SPCampaignEnv : Swift.Equatable {}
+extension ConsentViewController.SPCampaignEnv : Swift.Hashable {}
+extension ConsentViewController.SPCampaignEnv : Swift.RawRepresentable {}
+extension ConsentViewController.SPCampaignType : Swift.Hashable {}
+extension ConsentViewController.SPCampaignType : Swift.RawRepresentable {}
+extension ConsentViewController.CCPAConsentStatus : Swift.Equatable {}
+extension ConsentViewController.CCPAConsentStatus : Swift.Hashable {}
+extension ConsentViewController.CCPAConsentStatus : Swift.RawRepresentable {}
+extension ConsentViewController.SPIDFAStatus : Swift.Equatable {}
+extension ConsentViewController.SPIDFAStatus : Swift.Hashable {}
+extension ConsentViewController.SPIDFAStatus : Swift.RawRepresentable {}
+extension ConsentViewController.SPMessageLanguage : Swift.Equatable {}
+extension ConsentViewController.SPMessageLanguage : Swift.Hashable {}
+extension ConsentViewController.SPMessageLanguage : Swift.RawRepresentable {}
+extension ConsentViewController.SPPrivacyManagerTab : Swift.Equatable {}
+extension ConsentViewController.SPPrivacyManagerTab : Swift.Hashable {}
+extension ConsentViewController.SPPrivacyManagerTab : Swift.RawRepresentable {}
