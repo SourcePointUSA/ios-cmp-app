@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.7.3'
+pod 'ConsentViewController', '7.0.0'
 ```
 
 ### Carthage
@@ -35,7 +35,7 @@ let package = Package(
         .package(
             name: "ConsentViewController",
             url: "https://github.com/SourcePointUSA/ios-cmp-app",
-                .upToNextMinor(from: "6.7.0")
+                .upToNextMinor(from: "7.0.0")
         ),
     ],
     targets: [
@@ -66,7 +66,6 @@ It's pretty simple, here are 5 easy steps for you:
 2. instantiate the `SPConsentManager` with your Account ID, property name, campaigns and an instance of `SPDelegate`
 3. call `.loadMessage()`
 4. present the controller when the message is ready to be displayed (`onSPUIReady`).
-5. profit!
 
 ### Swift
 ```swift
@@ -85,14 +84,14 @@ class ViewController: UIViewController {
         consentManager.loadCCPAPrivacyManager(withId: "14967")
     }
 
-    lazy var consentManager: SPConsentManager = { SPConsentManager(
+    lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: 22,
+        propertyId: 16893,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-        campaignsEnv: .Public, // optional - Public by default
         campaigns: SPCampaigns(
-            gdpr: SPCampaign(), // optional
-            ccpa: SPCampaign(), // optional
-            ios14: SPCampaign() // optional
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign(),
+            ios14: SPCampaign()
         ),
         delegate: self
     )}()
@@ -126,6 +125,10 @@ extension ViewController: SPDelegate {
         userData.ccpa?.consents?.rejectedVendors.contains("myVendorId")
     }
 
+    func onSPFinished(userData: SPUserData) {
+        print("sourcepoint sdk done")
+    }
+
     func onError(error: SPError) {
         print("Something went wrong: ", error)
     }
@@ -154,12 +157,13 @@ extension ViewController: SPDelegate {
         SPCampaigns *campaigns = [[SPCampaigns alloc]
             initWithGdpr: campaign
             ccpa: campaign
-            ios14: campaign];
+            ios14: campaign
+            environment: SPCampaignEnvPublic];
 
         consentManager = [[SPConsentManager alloc]
             initWithAccountId:22
+            propertyId: 16893
             propertyName: propertyName
-            campaignsEnv: SPCampaignEnvPublic
             campaigns: campaigns
             delegate: self];
 
@@ -184,6 +188,10 @@ extension ViewController: SPDelegate {
         NSLog(@"GDPR: %@", userData.objcGDPRConsents);
         NSLog(@"CCPA Applies: %d", userData.objcCCPAApplies);
         NSLog(@"CCPA: %@", userData.objcCCPAConsents);
+    }
+
+    - (void)onSPUIFinished:(SPMessageViewController * _Nonnull)controller {
+        NSLog(@"sourcepoint sdk done");
     }
 @end
 ```
