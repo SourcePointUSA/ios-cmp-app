@@ -58,7 +58,7 @@ class NativeMessageExampleUITests: QuickSpec {
     override func spec() {
         beforeSuite {
             self.app = NativeExampleApp()
-            Nimble.AsyncDefaults.timeout = .seconds(30)
+            Nimble.AsyncDefaults.timeout = .seconds(20)
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
@@ -92,6 +92,7 @@ class NativeMessageExampleUITests: QuickSpec {
             self.app.gdprPM.acceptAllButton.tap()
             self.showCCPAPMViaFirstLayerMessage()
             self.app.ccpaPM.acceptAllButton.tap()
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
