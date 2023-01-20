@@ -51,7 +51,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
 
     /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
     func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
-        waitUntil { done in
+        waitUntil(timeout: .seconds(delay + 1)) { done in
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
                 execute()
                 done()
