@@ -55,6 +55,16 @@ class NativeMessageExampleUITests: QuickSpec {
         }
     }
 
+    /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
+    func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
+        waitUntil { done in
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+                execute()
+                done()
+            }
+        }
+    }
+
     override func spec() {
         beforeSuite {
             self.app = NativeExampleApp()
@@ -93,7 +103,9 @@ class NativeMessageExampleUITests: QuickSpec {
             self.showCCPAPMViaFirstLayerMessage()
             self.app.ccpaPM.acceptAllButton.tap()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
-            self.app.relaunch()
+            self.waitForUserDefaultsToPersist {
+                self.app.relaunch()
+            }
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
     }
