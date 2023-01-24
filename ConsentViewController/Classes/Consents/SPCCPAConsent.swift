@@ -24,33 +24,34 @@ import Foundation
     /// consent to all vendors and purposes.
     case ConsentedAll
 
+    case LinkedNoAction
+
+    /// If there's a new value introduced in the backend and we don't know how to parse it
+    case Unknown
+
     public typealias RawValue = String
 
     public var rawValue: RawValue {
         switch self {
-        case .ConsentedAll:
-            return "consentedAll"
-        case .RejectedAll:
-            return "rejectedAll"
-        case .RejectedSome:
-            return "rejectedSome"
-        case .RejectedNone:
-            return "rejectedNone"
+        case .ConsentedAll: return "consentedAll"
+        case .RejectedAll: return "rejectedAll"
+        case .RejectedSome: return "rejectedSome"
+        case .RejectedNone: return "rejectedNone"
+        case .LinkedNoAction: return "linkedNoAction"
+        case .Unknown: return "unknown"
+        default: return "unknown"
         }
     }
 
     public init?(rawValue: RawValue) {
         switch rawValue {
-        case "consentedAll":
-            self = .ConsentedAll
-        case "rejectedAll":
-            self = .RejectedAll
-        case "rejectedSome":
-            self = .RejectedSome
-        case "rejectedNone":
-            self = .RejectedNone
-        default:
-            return nil
+        case "consentedAll": self = .ConsentedAll
+        case "rejectedAll": self = .RejectedAll
+        case "rejectedSome": self = .RejectedSome
+        case "rejectedNone": self = .RejectedNone
+        case "linkedNoAction": self = .LinkedNoAction
+        case "unknown": self = .Unknown
+        default: self = .Unknown
         }
     }
 }
