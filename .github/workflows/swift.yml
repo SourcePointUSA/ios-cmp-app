@@ -2,9 +2,9 @@ name: Test
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
+    branches: [ develop, legacy/v6 ]
   pull_request:
-    branches: [ develop ]
+    branches: [ develop, legacy/v6 ]
 defaults:
   run:
     working-directory: Example
