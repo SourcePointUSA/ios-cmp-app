@@ -187,7 +187,7 @@ import UIKit
                 case .success((let localState, let consents)):
                     let userData = SPUserData(
                         gdpr: self?.storage.userData.gdpr,
-                        ccpa: SPConsent(consents: consents, applies: true)
+                        ccpa: SPConsent(consents: consents, applies: self?.storage.userData.ccpa?.applies ?? false)
                     )
                     self?.storeData(
                         localState: localState,
@@ -205,7 +205,7 @@ import UIKit
                 switch result {
                 case .success((let localState, let consents)):
                     let userData = SPUserData(
-                        gdpr: SPConsent(consents: consents, applies: true),
+                        gdpr: SPConsent(consents: consents, applies: self?.storage.userData.gdpr?.applies ?? false),
                         ccpa: self?.storage.userData.ccpa
                     )
                     self?.storeData(
