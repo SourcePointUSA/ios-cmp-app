@@ -130,6 +130,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
             case .ConsentedAll, .RejectedNone: cell.isOn = true
             case .RejectedAll: cell.isOn = false
             case .RejectedSome: cell.isOn = !consentsSnapshot.toggledCategoriesIds.contains(category._id)
+            default: cell.isOn = nil
         }
 
         cell.selectable = true

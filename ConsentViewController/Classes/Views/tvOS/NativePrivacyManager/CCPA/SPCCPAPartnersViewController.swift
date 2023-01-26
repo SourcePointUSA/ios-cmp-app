@@ -111,6 +111,7 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
             case .ConsentedAll, .RejectedNone: cell.isOn = true
             case .RejectedAll: cell.isOn = false
             case .RejectedSome: cell.isOn = !consentsSnapshot.toggledVendorsIds.contains(vendor._id)
+            default: cell.isOn = nil
         }
         cell.selectable = true
         cell.isCustom = false
