@@ -22,6 +22,11 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     }
 
     public override var description: String { "applies: \(applies), consents: \(String(describing: consents))" }
+
+    override public func isEqual(_ object: Any?) -> Bool {
+        guard let other = object as? Self else { return false }
+        return other.applies == applies && other.consents == consents
+    }
 }
 
 @objcMembers public class SPUserData: NSObject, Codable {

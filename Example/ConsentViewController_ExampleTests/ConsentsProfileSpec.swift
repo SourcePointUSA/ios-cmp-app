@@ -42,13 +42,17 @@ class ConsentsProfileSpec: QuickSpec {
         describe("SPConsents") {
             describe("GDPR") {
                 it("can be decode from JSON") {
-                    expect(self.gdprConsents).to(decodeTo(SPConsent<SPGDPRConsent>.self))
+                    expect(self.gdprConsents).to(decodeToValue(
+                        SPConsent<SPGDPRConsent>(consents: .empty(), applies: true)
+                    ))
                 }
             }
 
             describe("CCPA") {
                 it("can be decode from JSON") {
-                    expect(self.ccpaConsents).to(decodeTo(SPConsent<SPCCPAConsent>.self))
+                    expect(self.ccpaConsents).to(decodeToValue(
+                        SPConsent<SPCCPAConsent>(consents: .empty(), applies: true)
+                    ))
                 }
             }
         }

@@ -24,34 +24,40 @@ import Foundation
     /// consent to all vendors and purposes.
     case ConsentedAll
 
+    case LinkedNoAction
+
+    /// If there's a new value introduced in the backend and we don't know how to parse it
+    case Unknown
+
     public typealias RawValue = String
 
     public var rawValue: RawValue {
         switch self {
-        case .ConsentedAll:
-            return "consentedAll"
-        case .RejectedAll:
-            return "rejectedAll"
-        case .RejectedSome:
-            return "rejectedSome"
-        case .RejectedNone:
-            return "rejectedNone"
+            case .ConsentedAll: return "consentedAll"
+            case .RejectedAll: return "rejectedAll"
+            case .RejectedSome: return "rejectedSome"
+            case .RejectedNone: return "rejectedNone"
+            case .LinkedNoAction: return "linkedNoAction"
+            case .Unknown: return "unknown"
+            default: return "unknown"
         }
     }
 
     public init?(rawValue: RawValue) {
         switch rawValue {
-        case "consentedAll":
-            self = .ConsentedAll
-        case "rejectedAll":
-            self = .RejectedAll
-        case "rejectedSome":
-            self = .RejectedSome
-        case "rejectedNone":
-            self = .RejectedNone
-        default:
-            return nil
+            case "consentedAll": self = .ConsentedAll
+            case "rejectedAll": self = .RejectedAll
+            case "rejectedSome": self = .RejectedSome
+            case "rejectedNone": self = .RejectedNone
+            case "linkedNoAction": self = .LinkedNoAction
+            case "unknown": self = .Unknown
+            default: self = .Unknown
         }
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self = .init(rawValue: try container.decode(String.self)) ?? .Unknown
     }
 }
 
@@ -138,34 +144,13 @@ protocol CampaignConsent {
         case status, rejectedVendors, rejectedCategories, uspstring, uuid, childPmId, consentStatus
     }
 
-    required public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        uuid = try values.decodeIfPresent(String.self, forKey: .uuid)
-        rejectedVendors = try values.decode([String].self, forKey: .rejectedVendors)
-        rejectedCategories = try values.decode([String].self, forKey: .rejectedCategories)
-        uspstring = try values.decode(SPUsPrivacyString.self, forKey: .uspstring)
-        let statusString = try values.decode(String.self, forKey: .status)
-        childPmId = try values.decodeIfPresent(String.self, forKey: .childPmId)
-        consentStatus = (try? values.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus()
-        switch statusString {
-        case "rejectedNone": status = .RejectedNone
-        case "rejectedSome": status = .RejectedSome
-        case "rejectedAll":  status = .RejectedAll
-        case "consentedAll": status = .ConsentedAll
-        default: throw DecodingError.dataCorruptedError(
-            forKey: CodingKeys.status,
-            in: values,
-            debugDescription: "Unknown Status: \(statusString)")
-        }
-    }
-
     public override func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPCCPAConsent {
             return other.uuid == uuid &&
-                other.rejectedCategories.elementsEqual(rejectedCategories) &&
-                other.rejectedVendors.elementsEqual(rejectedVendors) &&
-                other.status == status &&
-                other.uspstring == uspstring
+            other.rejectedCategories.elementsEqual(rejectedCategories) &&
+            other.rejectedVendors.elementsEqual(rejectedVendors) &&
+            other.status == status &&
+            other.uspstring == uspstring
         } else {
             return false
         }
