@@ -1,3 +1,8 @@
+# 6.7.4 (Jan, 26, 2023)
+* Fixed an issue causing the ccpa applies flag to erroneously switch to `true` after interacting with the privacy manager.
+* Fixed an issue causing the SDK to call the error callback for certain CCPA users if their consent status was unknown.
+* Improved and expanded unit tests
+
 # 6.7.3 (Dec, 16, 2022)
 * Fixed layout issues in the CCPA Native PM for TvOS when the message had less buttons than expected in the default UI. [#401](https://github.com/SourcePointUSA/ios-cmp-app/pull/401), [#397](https://github.com/SourcePointUSA/ios-cmp-app/pull/397)
 * Fixed an issue preventing the "Do not sell information" button in the CCPA Native PM - from working as expected [#400](https://github.com/SourcePointUSA/ios-cmp-app/pull/400)

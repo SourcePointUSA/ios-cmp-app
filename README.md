@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '6.7.3'
+pod 'ConsentViewController', '6.7.4'
 ```
 
 ### Carthage
