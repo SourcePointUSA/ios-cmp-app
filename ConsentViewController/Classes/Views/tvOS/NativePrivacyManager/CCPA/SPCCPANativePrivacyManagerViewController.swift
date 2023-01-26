@@ -137,7 +137,8 @@ import Foundation
         switch snapshot.consentStatus {
             case .RejectedSome: actionType = .SaveAndExit
             case .RejectedAll: actionType = .RejectAll
-            case .ConsentedAll, .RejectedNone: actionType = . AcceptAll
+            case .ConsentedAll, .RejectedNone: actionType = .AcceptAll
+            default: actionType = .AcceptAll
         }
 
         action(
