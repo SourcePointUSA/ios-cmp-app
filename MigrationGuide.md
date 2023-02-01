@@ -1,4 +1,28 @@
-# Migrate to v6 (Unified SDK)
+# Migrating from v6 to v7
+We worked hard to keep the public API as close as possible to the previous version in order to keep your migration effort to a minimum.
+```diff
+// constructor
+SPConsentManager(
+    accountId: 123,
++   propertyId: 123
+    propertyName: try! SPPropertyName("myPropertyName"),
+-   campaignsEnv: .Public, // optional - Public by default
+    campaigns: SPCampaigns(
+        gdpr: SPCampaign(),   // optional
+        ccpa: SPCampaign(),   // optional
+        ios14: SPCampaign(),  // optional
++       environment: .Public  // optional - .Public by default
+    ),
+    delegate: self
+)
+```
+And that's it!
+
+**Notice:** the internal data structure kept by the SDK in the `UserDefaults` has changed. If your app relied on data that was not publicly available through the `SPDelegate` protocol, you might face some issues. That does not impact the data described by the [TCF spec](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details) (ie. data keyed and prefixed by `IABTCF_`).
+
+⚠️ We are currently working on supporting TvOS in the next patch release. In other words, if you use our TvOS product, you should not upgrade to version 7.0.0 just yet.
+
+# Migrating from v5 to v6 (Unified SDK)
 In this guide we will cover how to migrate your app to the latest version of Sourcepoint's SDK (v6). While this migration means more work for you, it also allows for multiple improvements. Below are some reasons to migrate to the latest version of our SDK:
 
 1. Your organization no longer needs to integrate with multiple SDKs! The latest version of our SDK supports CCPA, GDPR and ATT pre-prompt message.
