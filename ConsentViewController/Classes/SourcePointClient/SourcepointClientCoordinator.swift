@@ -494,7 +494,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
         if let gdpr = response.gdpr, campaign == .gdpr {
-            state.gdpr?.dateCreated = gdpr.dateCreated ?? (state.gdpr?.dateCreated ?? SPDateCreated.now()) // TODO: remove once response.gdpr contains date created
+            state.gdpr?.dateCreated = gdpr.dateCreated
             state.gdpr?.tcfData = gdpr.TCData
             state.gdpr?.vendorGrants = gdpr.grants
             state.gdpr?.euconsent = gdpr.euconsent

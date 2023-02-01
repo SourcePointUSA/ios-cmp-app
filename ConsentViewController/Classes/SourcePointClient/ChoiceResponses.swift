@@ -23,7 +23,7 @@ struct CCPAChoiceResponse: Equatable {
     let rejectedAll: Bool?
     let status: CCPAConsentStatus?
     let uspstring: String?
-    let gpcEnabled: Bool? // TODO: check with Sid if this not be optional (it's missing for property 16893)
+    let gpcEnabled: Bool?
     let rejectedVendors: [String]?
     let rejectedCategories: [String]?
 }

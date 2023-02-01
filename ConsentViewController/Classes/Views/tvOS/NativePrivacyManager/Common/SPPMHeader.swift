@@ -58,12 +58,12 @@ class SPPMHeader: UIView {
     var onBackButtonTapped: (() -> Void)?
 
     override var isAccessibilityElement: Bool {
-        set {}
         get { false }
+        set {}
     }
     override var accessibilityElements: [Any]? {
-        set {}
         get { [titleLabel as Any, backButton as Any] }
+        set {}
     }
 
     required init?(coder: NSCoder) {

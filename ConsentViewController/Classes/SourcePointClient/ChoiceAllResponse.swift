@@ -13,10 +13,10 @@ struct ChoiceAllResponse: Decodable {
         let dateCreated: SPDateCreated
         let rejectedAll: Bool
         let status: CCPAConsentStatus
-        let uspstring: String? // TODO: this should be returned by the API
+        let uspstring: String
         let rejectedVendors: [String]
         let rejectedCategories: [String]
-        let gpcEnabled: Bool? // TODO: check with Sid if this not be optional (it's missing for property 16893)
+        let gpcEnabled: Bool?
     }
 
     struct GDPR: Decodable {
@@ -29,8 +29,8 @@ struct ChoiceAllResponse: Decodable {
         let addtlConsent, childPmId: String?
         let euconsent: String
         let hasLocalData: Bool?
-        let dateCreated: SPDateCreated?
-        let TCData: SPJson? // TODO: this should be not empty
+        let dateCreated: SPDateCreated
+        let TCData: SPJson
         let consentStatus: ConsentStatus
         let grants: SPGDPRVendorGrants
         let postPayload: PostPayload?
@@ -56,14 +56,15 @@ extension ChoiceAllResponse.CCPA: Decodable {
             dateCreated: container.decode(SPDateCreated.self, forKey: .dateCreated),
             rejectedAll: container.decode(Bool.self, forKey: .rejectedAll),
             status: container.decode(CCPAConsentStatus.self, forKey: .status),
-            uspstring: container.decodeIfPresent(String.self, forKey: .uspstring),
+            uspstring: container.decode(String.self, forKey: .uspstring),
             rejectedVendors: ((container.decodeIfPresent([String?].self, forKey: .rejectedVendors)) ?? []).compactMap { $0 },
             rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 },
             gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled)
         )
     }
 
-    enum CodingKeys: CodingKey {
-        case dateCreated, consentedAll, rejectedAll, status, uspstring, rejectedVendors, rejectedCategories, gpcEnabled
+    enum CodingKeys: String, CodingKey {
+        case dateCreated, consentedAll, rejectedAll, status, rejectedVendors, rejectedCategories, gpcEnabled
+        case uspstring = "uspString"
     }
 }

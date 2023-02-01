@@ -4078,7 +4078,7 @@
 			repositoryURL = "http://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "6.7.2-pre.1";
+				minimumVersion = 7.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

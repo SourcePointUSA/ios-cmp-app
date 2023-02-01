@@ -8,8 +8,6 @@
 import UIKit
 import Foundation
 
-// swiftlint:disable function_body_length
-
 @objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
 
@@ -110,8 +108,8 @@ import Foundation
 
     func setFocusGuidesForButtons() {
         let visibleButtons: [UIView] = actionsContainer.arrangedSubviews.filter({!$0.isHidden})
-        if(visibleButtons.count <= 1) {
-            return;
+        if visibleButtons.count <= 1 {
+            return
         }
         for i in 0...visibleButtons.count-2 {
             addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
@@ -138,7 +136,6 @@ import Foundation
             case .RejectedSome: actionType = .SaveAndExit
             case .RejectedAll: actionType = .RejectAll
             case .ConsentedAll, .RejectedNone: actionType = .AcceptAll
-            case .LinkedNoAction, .Unknown: fallthrough
             default: actionType = .SaveAndExit
         }
 

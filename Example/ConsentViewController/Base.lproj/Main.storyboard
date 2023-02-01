@@ -97,7 +97,7 @@
                                             <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="ek9-iH-xEJ" kind="show" id="T6j-6s-wuU"/>
+                                            <segue destination="ek9-iH-xEJ" kind="presentation" id="T6j-6s-wuU"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NqR-fe-FML" userLabel="Network Calls">
@@ -191,34 +191,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOq-bM-t3z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1071" y="62"/>
-        </scene>
-        <!--Local Data View Controller-->
-        <scene sceneID="xzb-av-qSL">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3sw-Js-j8v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tableViewController id="UWc-Tz-Uxt" customClass="LocalDataViewController" customModule="SPGDPRExampleApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="Rjp-ic-Yqt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="vdm-kH-Mb2">
-                                <rect key="frame" x="20" y="55.5" width="374" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vdm-kH-Mb2" id="0qD-9i-HJg">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="UWc-Tz-Uxt" id="4n6-cH-rTZ"/>
-                            <outlet property="delegate" destination="UWc-Tz-Uxt" id="SHy-dE-fuh"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="pTu-hW-BlE"/>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="2030" y="62"/>
         </scene>
     </scenes>
     <resources>
