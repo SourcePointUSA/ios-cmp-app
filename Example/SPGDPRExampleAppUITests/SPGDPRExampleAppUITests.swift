@@ -131,6 +131,13 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.acceptCustomVendorsButton).toEventually(beDisabled())
             expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
         }
+
+        it("Shows a translated message") {
+            self.app.relaunch(clean: true, resetAtt: true, args: [
+                "language": SPMessageLanguage.Spanish.rawValue
+            ])
+            expect(self.app.gdprMessage.spanishMessageTitle).toEventually(showUp())
+        }
     }
 }
 

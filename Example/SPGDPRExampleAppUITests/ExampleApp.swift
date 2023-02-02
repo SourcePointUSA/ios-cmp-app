@@ -78,6 +78,10 @@ class ExampleApp: XCUIApplication {
         override var messageTitle: XCUIElement {
             staticTexts["GDPR Message"].firstMatch
         }
+
+        var spanishMessageTitle: XCUIElement {
+            staticTexts["Mensaje GDPR"]
+        }
     }
 
     class CCPAMessage: FirstLayerMessage {
