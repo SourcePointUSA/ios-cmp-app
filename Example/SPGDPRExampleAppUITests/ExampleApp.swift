@@ -12,19 +12,26 @@ import Nimble
 protocol App {
     func launch()
     func terminate()
-    func relaunch(clean: Bool, resetAtt: Bool)
+    func relaunch(clean: Bool, resetAtt: Bool, args: [String: Any])
 }
 
 extension XCUIApplication: App {
-    func relaunch(clean: Bool = false, resetAtt: Bool = false) {
+    func relaunch(
+        clean: Bool = false,
+        resetAtt: Bool = false,
+        args: [String: Any] = [:]
+    ){
         UserDefaults.standard.synchronize()
         self.terminate()
         if #available(iOS 15.0, *), resetAtt {
             resetAuthorizationStatus(for: .userTracking)
         }
         clean ?
-        launchArguments.append("-cleanAppsData") :
-        launchArguments.removeAll { $0 == "-cleanAppsData" }
+            launchArguments.append("-cleanAppsData") :
+            launchArguments.removeAll { $0 == "-cleanAppsData" }
+        args.forEach { key, value in
+            launchArguments.append("-\(key)=\(value)")
+        }
         launch()
     }
 }

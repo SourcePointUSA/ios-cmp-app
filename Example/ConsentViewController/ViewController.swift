@@ -62,17 +62,30 @@ class ViewController: UIViewController {
         }
     }
 
-    lazy var consentManager: SPSDK = { SPConsentManager(
-        accountId: 22,
-        propertyId: 16893,
-        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-        campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
-            ios14: SPCampaign()
-        ),
-        delegate: self
-    )}()
+    lazy var consentManager: SPSDK = {
+        let config = Config(storedWithDefaults: Config(
+            accountId: 22,
+            propertyId: 16893,
+            propertyName: "mobile.multicampaign.demo",
+            gdpr: true,
+            ccpa: true,
+            att: true,
+            language: .BrowserDefault)
+        )
+        let manager = SPConsentManager(
+            accountId: config.accountId,
+            propertyId: config.propertyId,
+            propertyName: try! SPPropertyName(config.propertyName),
+            campaigns: SPCampaigns(
+                gdpr: config.gdpr ? SPCampaign() : nil,
+                ccpa: config.ccpa ? SPCampaign() : nil,
+                ios14: config.att ? SPCampaign() : nil
+            ),
+            delegate: self
+        )
+        manager.messageLanguage = config.language
+        return manager
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,5 +203,29 @@ enum SDKStatus: String {
     case running = "Running"
     case finished = "Finished"
     case errored = "Errored"
+}
+
+struct Config: Codable {
+    let accountId, propertyId: Int
+    let propertyName: String
+    let gdpr, ccpa, att: Bool
+    let language: SPMessageLanguage
+
+    enum Keys: String, CaseIterable {
+        case accountId, propertyId, propertyName, gdpr, ccpa, att, language
+    }
+}
+
+extension Config {
+    init(storedWithDefaults defaults: Config) {
+        let values = UserDefaults.standard.dictionaryRepresentation()
+        accountId = (values["accountId"] as? NSString)?.integerValue ?? defaults.accountId
+        propertyId = (values["propertyId"] as? NSString)?.integerValue ?? defaults.propertyId
+        propertyName = values["propertyName"] as? String ?? defaults.propertyName
+        gdpr = (values["gdpr"] as? NSString)?.boolValue ?? defaults.gdpr
+        ccpa = (values["ccpa"] as? NSString)?.boolValue ?? defaults.ccpa
+        att = (values["att"] as? NSString)?.boolValue ?? defaults.att
+        language = SPMessageLanguage(rawValue: values["language"] as? String ?? "xx") ?? defaults.language
+    }
 }
 
