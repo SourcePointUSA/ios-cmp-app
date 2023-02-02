@@ -9,6 +9,17 @@
 import Foundation
 import Nimble
 
+extension URL {
+    public var queryParams: [String: String]? {
+        guard
+            let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
+            let queryItems = components.queryItems else { return nil }
+        return queryItems.reduce(into: [String: String]()) { (result, item) in
+            result[item.name] = item.value
+        }
+    }
+}
+
 private func assertDecode<T: Decodable>(_ expected: T.Type, _ actual: Data) -> (Bool, String) {
     do {
         _ = try JSONDecoder().decode(expected, from: actual)
@@ -90,6 +101,41 @@ public func encodeToValue<T: Encodable>(_ expected: String) -> Predicate<T> {
             return PredicateResult(bool: false, message: .fail("could not convert string into Data").appendedBeNilHint())
         }
         let (pass, message) = assertEncodeToValue(actual, data)
+        return PredicateResult(bool: pass, message: .fail(message))
+    }
+}
+
+/// expect(url).to(containQueryParam("foo"))
+public func containQueryParam(_ expected: String) -> Predicate<URL> {
+    Predicate { actual in
+        guard let actual = try actual.evaluate(),
+              let params = actual.queryParams
+        else {
+            return PredicateResult(bool: false, message: .fail("could not get query params from URL"))
+        }
+        return PredicateResult(bool: params.keys.contains(expected), message: .fail("\(actual) does not contain \(expected) query param."))
+    }
+}
+
+/// expect(url).to(containQueryParam(("name", "value")))
+public func containQueryParam(_ expected: (name: String, value: String)) -> Predicate<URL> {
+    Predicate { actual in
+        guard let actual = try actual.evaluate(),
+              let params = actual.queryParams
+        else {
+            return PredicateResult(bool: false, message: .fail("could not get query params from URL"))
+        }
+        var pass = false
+        var message = ""
+        if params.keys.contains(expected.name) {
+            if params.values.contains(expected.value) {
+                pass = true
+            } else {
+                message = "Expected param \(expected.name) to equal \(expected.value), but found \(params[expected.name] ?? "")"
+            }
+        } else {
+            message = "Could not find query param with name \(expected.name) in \(actual.absoluteString)"
+        }
         return PredicateResult(bool: pass, message: .fail(message))
     }
 }

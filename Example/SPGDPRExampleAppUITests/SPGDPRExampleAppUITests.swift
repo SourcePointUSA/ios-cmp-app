@@ -72,11 +72,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
             Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
-        beforeEach {
-            self.app.relaunch(clean: true, resetAtt: true)
-        }
-
         it("Accept all through 1st layer messages") {
+            self.app.relaunch(clean: true, resetAtt: true)
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
@@ -87,7 +84,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Accept all through 2nd layer") {
-            self.runAttScenario()
+            self.app.relaunch(clean: true, resetAtt: true, args: ["att": false])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
             self.acceptCCPAMessage()
@@ -98,21 +95,26 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Dismissing 2nd layer returns to first layer message") {
-            self.runAttScenario()
+            self.app.relaunch(clean: true, resetAtt: true, args: [
+                "att": false,
+                "ccpa": false
+            ])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.cancelButton.tap()
             expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
         it("Consenting and Deleting custom vendor persist after relaunch") {
-            self.runAttScenario()
+            self.app.relaunch(clean: true, resetAtt: true, args: [
+                "att": false,
+                "ccpa": false
+            ])
             self.acceptGDPRMessage()
-            self.acceptCCPAMessage()
 
             self.app.deleteCustomVendorsButton.tap()
 
             self.waitForUserDefaultsToPersist {
-                self.app.relaunch()
+                self.app.relaunch(args: ["att": false, "ccpa": false])
             }
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beDisabled())
@@ -122,12 +124,19 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app.acceptCustomVendorsButton.tap()
 
             self.waitForUserDefaultsToPersist {
-                self.app.relaunch()
+                self.app.relaunch(args: ["att": false, "ccpa": false])
             }
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
             expect(self.app.acceptCustomVendorsButton).toEventually(beDisabled())
             expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
+        }
+
+        it("Shows a translated message") {
+            self.app.relaunch(clean: true, resetAtt: true, args: [
+                "language": SPMessageLanguage.Spanish.rawValue
+            ])
+            expect(self.app.gdprMessage.spanishMessageTitle).toEventually(showUp())
         }
     }
 }

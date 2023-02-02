@@ -9,16 +9,46 @@
 import UIKit
 import ConsentViewController
 
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    func resetStoredConfig() {
+        Config.Keys.allCases.forEach { UserDefaults.standard.removeObject(forKey: $0.rawValue) }
+    }
+
+    func setArgs() {
+        CommandLine
+            .arguments
+            .map { $0.dropFirst().split(separator: "=") }
+            .reduce(into: [String: Any?]()) { result, current in
+                if current.count == 2 {
+                    let key = String(current[0])
+                    let value = String(current[1])
+                    result[key] = value
+                }
+            }
+            .filter {
+                Config.Keys.allCases.map({ $0.rawValue }).contains($0.key)
+            }
+            .forEach {
+                UserDefaults.standard.set($0.value, forKey: $0.key)
+            }
+    }
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
         if CommandLine.arguments.contains("-cleanAppsData") {
             SPConsentManager.clearAllData()
             SPConsentManager.shouldCallErrorMetrics = false
         }
+
+        resetStoredConfig()
+        setArgs()
+
         return true
     }
 

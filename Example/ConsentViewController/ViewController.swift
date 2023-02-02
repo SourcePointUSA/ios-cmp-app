@@ -13,8 +13,6 @@ class ViewController: UIViewController {
     var sdkStatus: SDKStatus = .notStarted
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     var myVendorAccepted: VendorStatus = .Unknown
-    let myVendorId = "5ff4d000a228633ac048be41"
-    let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
 
     @IBOutlet weak var sdkStatusLabel: UILabel!
     @IBOutlet weak var idfaStatusLabel: UILabel!
@@ -35,42 +33,55 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "488393")
+        consentManager.loadGDPRPrivacyManager(withId: config.gdprPmId!)
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "509688")
+        consentManager.loadCCPAPrivacyManager(withId: config.ccpaPmId!)
     }
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
         consentManager.customConsentGDPR(
-            vendors: [myVendorId],
-            categories: myPurposesId,
-            legIntCategories: []) { [weak self] consents in
-                self?.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self?.myVendorId ?? ""]?.granted)
-                self?.updateUI()
+            vendors: [config.myVendorId],
+            categories: config.myPurposesId,
+            legIntCategories: []) { consents in
+                self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
+                self.updateUI()
         }
     }
 
     @IBAction func onDeleteMyVendorTap(_ sender: Any) {
         consentManager.deleteCustomConsentGDPR(
-            vendors: [myVendorId],
-            categories: myPurposesId,
-            legIntCategories: []) { [weak self] consents in
-                self?.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self?.myVendorId ?? ""]?.granted)
-                self?.updateUI()
+            vendors: [config.myVendorId],
+            categories: config.myPurposesId,
+            legIntCategories: []) { consents in
+                self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
+                self.updateUI()
         }
     }
 
-    lazy var consentManager: SPSDK = { SPConsentManager(
+    lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
         propertyId: 16893,
-        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        propertyName: "mobile.multicampaign.demo",
+        gdpr: true,
+        ccpa: true,
+        att: true,
+        language: .BrowserDefault,
+        gdprPmId: "488393",
+        ccpaPmId: "509688"
+    ))}()
+
+    lazy var consentManager: SPSDK = { SPConsentManager(
+        accountId: config.accountId,
+        propertyId: config.propertyId,
+        propertyName: try! SPPropertyName(config.propertyName),
         campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
-            ios14: SPCampaign()
+            gdpr: config.gdpr ? SPCampaign() : nil,
+            ccpa: config.ccpa ? SPCampaign() : nil,
+            ios14: config.att ? SPCampaign() : nil
         ),
+        language: config.language,
         delegate: self
     )}()
 
@@ -103,7 +114,7 @@ extension ViewController: SPDelegate {
     func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", userData)
         myVendorAccepted = VendorStatus(
-            fromBool: userData.gdpr?.consents?.vendorGrants[myVendorId]?.granted
+            fromBool: userData.gdpr?.consents?.vendorGrants[config.myVendorId]?.granted
         )
         updateUI()
     }
@@ -168,27 +179,3 @@ extension ViewController {
         sdkStatusLabel.text = sdkStatus.rawValue
     }
 }
-
-enum VendorStatus: String {
-    case Accepted
-    case Rejected
-    case Unknown
-
-    init(fromBool bool: Bool?) {
-        if bool == nil {
-            self = .Unknown
-        } else if bool == false {
-            self = .Rejected
-        } else {
-            self = .Accepted
-        }
-    }
-}
-
-enum SDKStatus: String {
-    case notStarted = "Not Started"
-    case running = "Running"
-    case finished = "Finished"
-    case errored = "Errored"
-}
-
