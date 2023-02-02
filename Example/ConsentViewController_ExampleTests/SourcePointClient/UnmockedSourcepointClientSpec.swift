@@ -100,7 +100,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 ios14: nil
                             ),
                             localState: nil,
-                            consentLanguage: .BrowserDefault,
+                            consentLanguage: .Spanish,
                             campaignEnv: nil,
                             idfaStatus: nil
                         ),
@@ -114,6 +114,9 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             case .success(let response):
                                 expect(response).to(beAnInstanceOf(MessagesResponse.self))
                                 expect(response.campaigns.count).to(equal(2))
+                                response.campaigns.forEach { campaign in
+                                    expect(campaign.url).to(containQueryParam(("consentLanguage", "ES")))
+                                }
                             case .failure(let error):
                                 fail(error.failureReason)
                             }
