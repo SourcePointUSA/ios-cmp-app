@@ -41,6 +41,7 @@ extension MessageToDisplay {
 protocol SPClientCoordinator {
     var authId: String? { get set }
     var userData: SPUserData { get }
+    var language: SPMessageLanguage { get set }
 
     func loadMessages(forAuthId: String?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
@@ -128,7 +129,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     let accountId, propertyId: Int
     let propertyName: SPPropertyName
     var authId: String?
-    let language: SPMessageLanguage
+    var language: SPMessageLanguage
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     let campaigns: SPCampaigns
     var pubData: SPPublisherData

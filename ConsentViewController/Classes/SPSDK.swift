@@ -30,6 +30,7 @@ import Foundation
         propertyId: Int,
         propertyName: SPPropertyName,
         campaigns: SPCampaigns,
+        language: SPMessageLanguage,
         delegate: SPDelegate?
     )
     @objc func loadMessage(forAuthId authId: String?, publisherData: SPPublisherData?)
@@ -53,6 +54,7 @@ public extension SPSDK {
         propertyId: Int,
         propertyName: SPPropertyName,
         campaigns: SPCampaigns,
+        language: SPMessageLanguage = .BrowserDefault,
         delegate: SPDelegate?
     ) {
         self.init(
@@ -60,6 +62,7 @@ public extension SPSDK {
             propertyId: propertyId,
             propertyName: propertyName,
             campaigns: campaigns,
+            language: language,
             delegate: delegate
         )
     }

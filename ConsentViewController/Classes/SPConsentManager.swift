@@ -32,13 +32,18 @@ import UIKit
 
     /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
     /// By default the SDK will use the locale defined by the WebView
-    public var messageLanguage = SPMessageLanguage.BrowserDefault
+    public var messageLanguage: SPMessageLanguage {
+        didSet {
+            spCoordinator.language = messageLanguage
+        }
+    }
 
     required public convenience init(
         accountId: Int,
         propertyId: Int,
         propertyName: SPPropertyName,
         campaigns: SPCampaigns,
+        language: SPMessageLanguage = .BrowserDefault,
         delegate: SPDelegate?
     ) {
         let client = SourcePointClient(
@@ -52,12 +57,14 @@ import UIKit
             accountId: accountId,
             propertyName: propertyName,
             propertyId: propertyId,
+            language: language,
             campaigns: campaigns,
             storage: localStorage
         )
         self.init(
             propertyId: propertyId,
             campaigns: campaigns,
+            language: language,
             delegate: delegate,
             spClient: client,
             storage: localStorage,
@@ -89,6 +96,7 @@ import UIKit
     init(
         propertyId: Int,
         campaigns: SPCampaigns,
+        language: SPMessageLanguage,
         delegate: SPDelegate?,
         spClient: SourcePointProtocol,
         storage: SPLocalStorage,
@@ -97,6 +105,7 @@ import UIKit
     ) {
         self.propertyId = propertyId
         self.campaigns = campaigns
+        self.messageLanguage = language
         self.delegate = delegate
         self.spClient = spClient
         self.storage = storage
@@ -305,7 +314,6 @@ import UIKit
         self.authId = authId
         responsesToReceive += 1
 
-        // TODO: - add message language to loadMessages
         spCoordinator.loadMessages(forAuthId: authId) { [weak self] result in
             if let strongSelf = self {
                 strongSelf.responsesToReceive -= 1
