@@ -13,7 +13,8 @@ import ConsentViewController
 
 class ViewController: UIViewController {
     let consentManager = SPConsentManager(
-        accountId: 00,
+        accountId: 0,
+        propertyId: 0,
         propertyName: try! SPPropertyName("any"),
         campaigns: SPCampaigns(gdpr: SPCampaign()),
         delegate: nil

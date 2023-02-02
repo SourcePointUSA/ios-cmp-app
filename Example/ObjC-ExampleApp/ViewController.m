@@ -44,6 +44,7 @@
                       propertyId: 16893
                       propertyName: propertyName
                       campaigns: campaigns
+                      language: SPMessageLanguageBrowserDefault
                       delegate: self];
 
     [consentManager loadMessageForAuthId: NULL publisherData:NULL];

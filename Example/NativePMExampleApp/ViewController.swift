@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         return SPCampaigns(gdpr: gdpr, ccpa: ccpa, environment: .Public)
     }
 
-    lazy var consentManager: SPConsentManager = {
+    lazy var consentManager: SPSDK = {
         return SPConsentManager(
             accountId: 22,
             propertyId: 21927,
