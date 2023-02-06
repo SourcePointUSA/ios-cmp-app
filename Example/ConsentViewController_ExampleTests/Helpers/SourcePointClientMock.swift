@@ -21,6 +21,7 @@ class SourcePointClientMock: SourcePointProtocol {
         Campaign(
             type: type,
             message: .none,
+            userConsent: .unknown,
             messageMetaData: MessageMetaData(
                 categoryId: .unknown,
                 subCategoryId: .TCFv2,

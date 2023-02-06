@@ -62,5 +62,21 @@ class CampaignSpec: QuickSpec {
             expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedVendors).to(equal([]))
             expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedCategories).to(equal([]))
         }
+
+        it("ccpa campaign can be decoded into SPCCPAConsent") {
+            let ccpaCampaign = """
+            {
+                "type": "CCPA",
+                "dateCreated": "2023-02-06T16:20:53.707Z",
+                "consentedAll": false,
+                "rejectedCategories": [],
+                "rejectedVendors": [],
+                "rejectedAll": false,
+                "status": "rejectedNone",
+                "uspstring": "1YNN"
+            }
+            """
+            expect(ccpaCampaign).to(decodeTo(SPCCPAConsent.self))
+        }
     }
 }
