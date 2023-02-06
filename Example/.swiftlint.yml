@@ -2,6 +2,8 @@
 # It needs to be called from the Example folder "xcode" reporter.
 # Make sure the rules are always in sync with the one from ../.swiftlint.yml
 
+disabled_rules:
+  - switch_case_alignment
 included: # paths to include during linting. `--path` is ignored if present.
  - ../ConsentViewController/Classes
  - ConsentViewController_ExampleTests

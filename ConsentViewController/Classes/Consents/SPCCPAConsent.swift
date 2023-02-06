@@ -155,4 +155,15 @@ protocol CampaignConsent {
             return false
         }
     }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        status = try container.decode(CCPAConsentStatus.self, forKey: .status)
+        rejectedVendors = try container.decode([String].self, forKey: .rejectedVendors)
+        rejectedCategories = try container.decode([String].self, forKey: .rejectedCategories)
+        uspstring = try container.decode(SPUsPrivacyString.self, forKey: .uspstring)
+        uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
+        childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
+        consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
+    }
 }

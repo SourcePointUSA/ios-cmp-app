@@ -440,7 +440,35 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 state.ios14?.lastMessage = LastMessageData(from: $0.metadata)
             }
         }
-        // TODO: store consents if any comes in the response
+
+        response.campaigns.forEach {
+            if $0.type == .gdpr {
+                switch $0.userConsent {
+                    case .gdpr(let consents):
+                        state.gdpr?.uuid = consents.uuid
+                        state.gdpr?.dateCreated = consents.dateCreated
+                        state.gdpr?.tcfData = consents.tcfData
+                        state.gdpr?.vendorGrants = consents.vendorGrants
+                        state.gdpr?.euconsent = consents.euconsent
+                        state.gdpr?.consentStatus = consents.consentStatus
+                        state.gdpr?.childPmId = consents.childPmId
+                    default: break
+                }
+            } else if $0.type == .ccpa {
+                switch $0.userConsent {
+                    case .ccpa(let consents):
+                        state.ccpa?.uuid = consents.uuid
+                        state.ccpa?.dateCreated = consents.dateCreated
+                        state.ccpa?.status = consents.status
+                        state.ccpa?.rejectedVendors = consents.rejectedVendors
+                        state.ccpa?.rejectedCategories = consents.rejectedCategories
+                        state.ccpa?.uspstring = consents.uspstring
+                        state.ccpa?.childPmId = consents.childPmId
+                    default: break
+                }
+            }
+        }
+
         storage.spState = state
         return (messages, userData)
     }
@@ -607,8 +635,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                                     self.state.ccpa?.rejectedVendors = response.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
                                     self.state.ccpa?.rejectedCategories = response.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
                                     self.state.ccpa?.uspstring = response.uspstring ?? getResponse?.ccpa?.uspstring ?? ""
-
-//                                    self.state.ccpa?.consentStatus
                                     self.storage.spState = self.state
                                     handler(Result.success(self.userData))
                                 case .failure(let error):

@@ -113,6 +113,7 @@
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
 		8225BAB0298BF0E300C2E5FA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8225BAAF298BF0E300C2E5FA /* Config.swift */; };
 		8225BAB2298BF1F200C2E5FA /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8225BAB1298BF1F200C2E5FA /* Statuses.swift */; };
+		8229C6162991390300F755AA /* SPClientCoordinatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8229C6152991390300F755AA /* SPClientCoordinatorSpec.swift */; };
 		822BF2C62657E29800177B0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822BF2C52657E29800177B0E /* AppDelegate.swift */; };
 		822BF2C82657E29800177B0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822BF2C72657E29800177B0E /* ViewController.swift */; };
 		822BF2CB2657E29800177B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2C92657E29800177B0E /* Main.storyboard */; };
@@ -389,6 +390,7 @@
 		8214B27B249CC13B00167BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8225BAAF298BF0E300C2E5FA /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		8225BAB1298BF1F200C2E5FA /* Statuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
+		8229C6152991390300F755AA /* SPClientCoordinatorSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPClientCoordinatorSpec.swift; sourceTree = "<group>"; };
 		822BF2C32657E29800177B0E /* NativePMExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativePMExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2C52657E29800177B0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		822BF2C72657E29800177B0E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -1193,6 +1195,15 @@
 			path = SPGDPRExampleAppUITests;
 			sourceTree = "<group>";
 		};
+		8229C614299138E400F755AA /* SPClientCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				825F4B7F2487B5D100769B6A /* SourcePointClient */,
+				8229C6152991390300F755AA /* SPClientCoordinatorSpec.swift */,
+			);
+			path = SPClientCoordinator;
+			sourceTree = "<group>";
+		};
 		822BF2C42657E29800177B0E /* NativePMExampleApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1331,9 +1342,9 @@
 		82FC4D3B23983231002F08E5 /* ConsentViewController_ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				8229C614299138E400F755AA /* SPClientCoordinator */,
 				82B224162580D5B50032BC49 /* Extensions */,
 				82EA4E2E249100B800DC01C9 /* Helpers */,
-				825F4B7F2487B5D100769B6A /* SourcePointClient */,
 				825F4B802487B5DB00769B6A /* LocalStorage */,
 				6D605DF52423B96C00BB3E5F /* SPErrorSpec.swift */,
 				6DB561ED24269470008501AC /* GDPRMessageSpec.swift */,
@@ -2668,6 +2679,7 @@
 				6DB561EE24269470008501AC /* GDPRMessageSpec.swift in Sources */,
 				6DC1CD412427E7330028F03F /* SPNativeMessageViewControllerSpec.swift in Sources */,
 				82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */,
+				8229C6162991390300F755AA /* SPClientCoordinatorSpec.swift in Sources */,
 				826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */,
 				8248A499247E5FCC00A7D9AD /* GDPRUserConsentsSpec.swift in Sources */,
 				82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */,
