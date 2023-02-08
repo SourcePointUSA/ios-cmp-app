@@ -1,3 +1,7 @@
+# 7.0.1 (Feb, 08, 2023)
+* Fixed an issue preventing the SDK from overwriting the language setting of the 1st layer message. [#414](https://github.com/SourcePointUSA/ios-cmp-app/pull/414) [DIA-1770](https://sourcepoint.atlassian.net/browse/DIA-1770)
+* Fixed an issue that would cause some users of a CCPA campaign to have their data reset after taking a consent action. [#413](https://github.com/SourcePointUSA/ios-cmp-app/pull/413) [DIA-1694](https://sourcepoint.atlassian.net/browse/DIA-1694)
+* Fixed an issue that would cause CCPA campaigns without message to result in empty consent object. [#415](https://github.com/SourcePointUSA/ios-cmp-app/pull/415) [DIA-1789](https://sourcepoint.atlassian.net/browse/DIA-1789)
 # 7.0.0 (Jan, 20, 2023)
 We have rewritten the network layer of the SDK almost in its entirety.
 Version 7 of the SDK uses new, "CDNed", heavily cached, endpoints and, as a result, it is now faster and less effected by service outages.
