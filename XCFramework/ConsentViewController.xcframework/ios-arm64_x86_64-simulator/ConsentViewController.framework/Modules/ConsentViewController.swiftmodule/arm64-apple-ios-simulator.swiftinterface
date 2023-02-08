@@ -114,11 +114,14 @@ extension ConsentViewController.SPCampaignType : Swift.Codable {
   case RejectedSome
   case RejectedAll
   case ConsentedAll
+  case LinkedNoAction
+  case Unknown
   public typealias RawValue = Swift.String
   public var rawValue: ConsentViewController.CCPAConsentStatus.RawValue {
     get
   }
   public init?(rawValue: ConsentViewController.CCPAConsentStatus.RawValue)
+  public init(from decoder: Swift.Decoder) throws
 }
 public typealias SPUsPrivacyString = Swift.String
 @objc @_hasMissingDesignatedInitializers @objcMembers public class SPCCPAConsent : ObjectiveC.NSObject, Swift.Codable {
@@ -134,8 +137,8 @@ public typealias SPUsPrivacyString = Swift.String
   @objc override dynamic open var description: Swift.String {
     @objc get
   }
-  required public init(from decoder: Swift.Decoder) throws
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  required public init(from decoder: Swift.Decoder) throws
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
 }
@@ -147,8 +150,11 @@ public typealias SPUsPrivacyString = Swift.String
     @objc set
   }
   @objc public var privacyManagerTab: ConsentViewController.SPPrivacyManagerTab
-  @objc public var messageLanguage: ConsentViewController.SPMessageLanguage
-  @objc required convenience public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
+  @objc public var messageLanguage: ConsentViewController.SPMessageLanguage {
+    @objc get
+    @objc set
+  }
+  @objc required convenience public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, language: ConsentViewController.SPMessageLanguage = .BrowserDefault, delegate: ConsentViewController.SPDelegate?)
   @objc public func gracefullyDegradeOnError(_ error: ConsentViewController.SPError)
   @objc public func onError(_ error: ConsentViewController.SPError)
   @objc deinit
@@ -795,13 +801,13 @@ public typealias SPPublisherData = [Swift.String : Swift.String]
   @objc var privacyManagerTab: ConsentViewController.SPPrivacyManagerTab { get set }
   @objc var messageLanguage: ConsentViewController.SPMessageLanguage { get set }
   @objc var userData: ConsentViewController.SPUserData { get }
-  @objc init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
+  @objc init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, language: ConsentViewController.SPMessageLanguage, delegate: ConsentViewController.SPDelegate?)
   @objc func loadMessage(forAuthId authId: Swift.String?, publisherData: ConsentViewController.SPPublisherData?)
   @objc func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
   @objc func deleteCustomConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
 }
 extension ConsentViewController.SPSDK {
-  public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, delegate: ConsentViewController.SPDelegate?)
+  public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, language: ConsentViewController.SPMessageLanguage = .BrowserDefault, delegate: ConsentViewController.SPDelegate?)
   public func loadMessage(forAuthId authId: Swift.String? = "", pubData: ConsentViewController.SPPublisherData? = [:])
   public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
@@ -816,6 +822,7 @@ public class SPConsent<ConsentType> : ObjectiveC.NSObject, Swift.Codable where C
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws

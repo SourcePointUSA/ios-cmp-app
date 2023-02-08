@@ -268,6 +268,9 @@ typedef SWIFT_ENUM(NSInteger, CCPAConsentStatus, open) {
 /// <code>RejectedNone</code>, the <code>ConsentedAll</code> indicates the user has taken an action to
 /// consent to all vendors and purposes.
   CCPAConsentStatusConsentedAll = 3,
+  CCPAConsentStatusLinkedNoAction = 4,
+/// If there’s a new value introduced in the backend and we don’t know how to parse it
+  CCPAConsentStatusUnknown = 5,
 };
 
 @class NSString;
@@ -695,7 +698,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
 /// By default the SDK will use the locale defined by the WebView
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns language:(enum SPMessageLanguage)language delegate:(id <SPDelegate> _Nullable)delegate;
 - (void)gracefullyDegradeOnError:(SPError * _Nonnull)error;
 - (void)onError:(SPError * _Nonnull)error;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -742,7 +745,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns language:(enum SPMessageLanguage)language delegate:(id <SPDelegate> _Nullable)delegate;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
@@ -1354,6 +1357,9 @@ typedef SWIFT_ENUM(NSInteger, CCPAConsentStatus, open) {
 /// <code>RejectedNone</code>, the <code>ConsentedAll</code> indicates the user has taken an action to
 /// consent to all vendors and purposes.
   CCPAConsentStatusConsentedAll = 3,
+  CCPAConsentStatusLinkedNoAction = 4,
+/// If there’s a new value introduced in the backend and we don’t know how to parse it
+  CCPAConsentStatusUnknown = 5,
 };
 
 @class NSString;
@@ -1781,7 +1787,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL shouldCallErrorMetrics;)
 /// Instructs the message to be displayed in this language. If the translation is missing, the fallback will be English.
 /// By default the SDK will use the locale defined by the WebView
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns language:(enum SPMessageLanguage)language delegate:(id <SPDelegate> _Nullable)delegate;
 - (void)gracefullyDegradeOnError:(SPError * _Nonnull)error;
 - (void)onError:(SPError * _Nonnull)error;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1828,7 +1834,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic) enum SPPrivacyManagerTab privacyManagerTab;
 @property (nonatomic) enum SPMessageLanguage messageLanguage;
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
-- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns delegate:(id <SPDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns language:(enum SPMessageLanguage)language delegate:(id <SPDelegate> _Nullable)delegate;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
