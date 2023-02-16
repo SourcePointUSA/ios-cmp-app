@@ -17,7 +17,7 @@ import UIKit
 }
 
 enum RenderingAppEvents {
-    case readyForPreload, onMessageReady, onPMReady, onAction, onError
+    case readyForPreload, onMessageReady, onPMReady, onAction, onError, readyForConsentPreload
     case unknown(String?)
 }
 
@@ -31,6 +31,7 @@ extension RenderingAppEvents: RawRepresentable {
     var rawValue: String {
         switch self {
             case .readyForPreload: return "readyForPreload"
+            case .readyForConsentPreload: return "readyForConsentPreload"
             case .onMessageReady: return "onMessageReady"
             case .onPMReady: return "onPMReady"
             case .onAction: return "onAction"
@@ -42,6 +43,7 @@ extension RenderingAppEvents: RawRepresentable {
     init?(rawValue: String) {
         switch rawValue {
         case "readyForPreload": self = .readyForPreload
+        case "readyForConsentPreload": self = .readyForConsentPreload
         case "onMessageReady": self = .onMessageReady
         case "onPMReady": self = .onPMReady
         case "onAction": self = .onAction

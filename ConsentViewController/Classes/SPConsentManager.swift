@@ -484,12 +484,20 @@ extension SPConsentManager: SPMessageUIDelegate {
             nextMessageIfAny(controller)
 
         case .ShowPrivacyManager:
-            guard let url = action.pmURL?.appendQueryItems(["site_id": String(propertyId)]) else {
+            guard let url = action.pmURL?.appendQueryItems([
+                "site_id": String(propertyId),
+                "preload_consent": "true"
+            ]) else {
                 onError(InvalidURLError(urlString: "Empty or invalid PM URL"))
                 return
             }
+                let preprodUrl = URL(string: url.absoluteString.replacingOccurrences(
+                    of: "notice.sp-prod.net",
+                    with: "preprod-cdn.privacy-mgmt.com"
+                ))!
+                print("loading:", preprodUrl)
             if let spController = controller as? SPMessageViewController {
-                spController.loadPrivacyManager(url: url)
+                spController.loadPrivacyManager(url: preprodUrl)
             }
 
         case .PMCancel:

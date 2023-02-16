@@ -13,8 +13,18 @@ window.SDK = function (postToWebView) {
             });
             window.postMessage(messagePayload, "*");
         },
+        loadConsents: function(consents) {
+            var consentsPayload = Object.assign({}, {
+                name: "sp.loadConsent",
+                consents: consents
+            });
+            window.postMessage(consentsPayload, "*");
+        },
         readyForPreload: function () {
             postToWebView("readyForPreload");
+        },
+        readyForConsentPreload: function () {
+            postToWebView("readyForConsentPreload");
         },
         onMessageReady: function() {
             postToWebView("onMessageReady");
@@ -30,7 +40,8 @@ window.SDK = function (postToWebView) {
         },
         onMessageEvent: function(payload) {
             postToWebView("onMessageEvent", payload);
-        }
+        },
+
     };
 }(postToWebView);
 
@@ -53,6 +64,9 @@ var handleMessageEvent = function(SDK) {
         switch(eventData.name) {
             case "sp.readyForPreload":
                 SDK.readyForPreload();
+                break;
+            case "sp.readyForPreloadConsent":
+                SDK.readyForConsentPreload();
                 break;
             case "sp.loadMessage":
                 /* do nothing */

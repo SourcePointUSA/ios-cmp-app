@@ -197,6 +197,24 @@ import WebKit
         }
     }
 
+    func handleConsentPreload() {
+        let consents = """
+        {
+          "categories": [],
+          "legIntCategories": [],
+          "vendors": [],
+          "legIntVendors": [],
+          "specialFeatures": [],
+          "hasConsentData": true
+        }
+        """
+        DispatchQueue.main.async {
+            self.webview?.evaluateJavaScript("""
+                window.SDK.loadConsents(\(consents));
+            """)
+        }
+    }
+
     override func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if
             let messageBody = try? SPJson(message.body),
@@ -205,12 +223,15 @@ import WebKit
         {
             OSLogger.standard.debug("RenderingApp - event: \(eventName.rawValue), payload: \(body)")
             switch eventName {
-            case .readyForPreload: handleMessagePreload()
+            case .readyForPreload:
+                    handleMessagePreload()
+
+            case .readyForConsentPreload:
+                    handleConsentPreload()
 
             case .onMessageReady:
-                timeoutWorkItem.cancel()
-                messageUIDelegate?.loaded(self)
-
+                    timeoutWorkItem.cancel()
+                    messageUIDelegate?.loaded(self)
             case .onAction:
                 if let action = getActionFrom(body: body) {
                     messageUIDelegate?.action(action, from: self)
