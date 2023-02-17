@@ -111,7 +111,7 @@ import UIKit
                             consentStatus: data.consentStatus
                         )
                         controller.categories = data.categories
-                        controller.consentsSnapshot = strongSelf.snapshot!
+                        controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
                         self?.present(controller, animated: true)
                     }
                 }
@@ -127,7 +127,7 @@ import UIKit
             nibName: "SPManagePreferenceViewController"
         )
         controller.categories = secondLayerData.categories
-        controller.consentsSnapshot = snapshot!
+        controller.consentsSnapshot = snapshot! // swiftlint:disable:this force_unwrapping
         present(controller, animated: true)
     }
 
@@ -154,7 +154,7 @@ import UIKit
                         nibName: "SPPartnersViewController"
                     )
                     controller.vendors = data.vendors
-                    controller.consentsSnapshot = strongSelf.snapshot!
+                    controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
                     self?.present(controller, animated: true)
                 }
             }

@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable colon
+// swiftlint:disable colon force_unwrapping
 
 class CCPAConsentStatusSpec: QuickSpec {
     override func spec() {

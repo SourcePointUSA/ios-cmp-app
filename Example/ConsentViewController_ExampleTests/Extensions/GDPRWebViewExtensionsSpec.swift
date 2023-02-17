@@ -28,6 +28,7 @@ class TestWebView: WKWebView, WKNavigationDelegate {
                 forMainFrameOnly: true
             ))
         }
+        // swiftlint:disable:next force_unwrapping
         loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
     }
 

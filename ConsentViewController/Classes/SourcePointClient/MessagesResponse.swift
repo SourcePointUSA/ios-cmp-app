@@ -11,6 +11,7 @@ protocol Defaultable: Decodable & CaseIterable & RawRepresentable
 where RawValue: Decodable, AllCases: BidirectionalCollection { }
 extension Defaultable {
     init(from decoder: Decoder) throws {
+        // swiftlint:disable:next force_unwrapping
         self = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? Self.allCases.last!
     }
 }
@@ -110,6 +111,7 @@ extension MessageJson: Codable {
     static func messageFromStringified<T: Decodable>(_ decoder: Decoder) throws -> T {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let stringifiedMessage = try container.decode(String.self, forKey: .message_json_string)
+        // swiftlint:disable:next force_unwrapping
         return try JSONDecoder().decode(T.self, from: stringifiedMessage.data(using: .utf8)!)
     }
 

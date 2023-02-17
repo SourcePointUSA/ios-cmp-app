@@ -82,7 +82,7 @@ extension UIViewController {
     @discardableResult
     func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: SPUIRectEdge, debug: Bool = false) -> UIFocusGuide? {
         if let origin = origin {
-            let destinations = maybeDestinations.filter { $0 != nil }.map { $0! }
+            let destinations = maybeDestinations.compactMap { $0 }
             let focusGuide = UIFocusGuide()
             view.addLayoutGuide(focusGuide)
             focusGuide.preferredFocusEnvironments = destinations

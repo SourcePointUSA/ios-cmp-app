@@ -43,9 +43,9 @@ extension SPCampaignEnv: Codable {
     public init(from decoder: Decoder) throws {
         do {
             if #available(iOS 11, *) {
-                self = try SPCampaignEnv.decodeFromSingleValue(decoder)!
+                self = try SPCampaignEnv.decodeFromSingleValue(decoder)
             } else {
-                self = try SPCampaignEnv.decodeFromArray(decoder)!
+                self = try SPCampaignEnv.decodeFromArray(decoder)
             }
         } catch {
             throw DecodingError.dataCorrupted(DecodingError.Context(
@@ -55,14 +55,14 @@ extension SPCampaignEnv: Codable {
         }
     }
 
-    static func decodeFromSingleValue(_ decoder: Decoder) throws -> SPCampaignEnv? {
+    static func decodeFromSingleValue(_ decoder: Decoder) throws -> SPCampaignEnv {
         let container = try decoder.singleValueContainer()
-        return SPCampaignEnv(stringValue: try container.decode(String.self))
+        return SPCampaignEnv(stringValue: try container.decode(String.self)) ?? .Public
     }
 
-    static func decodeFromArray(_ decoder: Decoder) throws -> SPCampaignEnv? {
+    static func decodeFromArray(_ decoder: Decoder) throws -> SPCampaignEnv {
         var container = try decoder.unkeyedContainer()
-        return SPCampaignEnv(stringValue: try container.decode(String.self))
+        return SPCampaignEnv(stringValue: try container.decode(String.self)) ?? .Public
     }
 
     public func encode(to encoder: Encoder) throws {

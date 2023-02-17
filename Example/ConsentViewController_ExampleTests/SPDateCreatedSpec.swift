@@ -12,14 +12,14 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try
+// swiftlint:disable force_try force_unwrapping
 
 class SPDateCreatedSpec: QuickSpec {
     override func spec() {
-        func dateFromString(_ date: String) -> Date {
+        func dateFromString(_ date: String) -> Date? {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            return formatter.date(from: date)!
+            return formatter.date(from: date)
         }
 
         describe("SPDateCreated") {

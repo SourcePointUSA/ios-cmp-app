@@ -53,7 +53,8 @@ extension RenderingAppEvents: RawRepresentable {
 
 extension RenderingAppEvents: ExpressibleByStringLiteral {
     init(stringLiteral value: String) {
-        self.init(rawValue: value)!
+        let event = RenderingAppEvents(rawValue: value)
+        self = event ?? .unknown(value)
     }
 }
 

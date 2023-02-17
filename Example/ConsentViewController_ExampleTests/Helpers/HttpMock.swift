@@ -31,6 +31,7 @@ class MockHttp: HttpClient {
             if self.success != nil {
                 handler(.success(self.success))
             } else {
+                // swiftlint:disable:next force_unwrapping
                 handler(.failure(SPError(error: self.error!)))
             }
         }

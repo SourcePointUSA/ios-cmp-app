@@ -14,9 +14,9 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         let content: [GDPRCategory]
 
         init? (header: SPNativeText?, content: [GDPRCategory]?) {
-            if content == nil || content!.isEmpty { return nil }
+            if content == nil || content?.isEmpty == true { return nil }
             self.header = header
-            self.content = content!
+            self.content = content! // swiftlint:disable:this force_unwrapping
         }
     }
 

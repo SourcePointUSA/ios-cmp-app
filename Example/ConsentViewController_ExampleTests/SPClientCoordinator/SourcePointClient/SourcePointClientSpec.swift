@@ -6,7 +6,7 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try function_body_length type_body_length
+// swiftlint:disable force_try function_body_length type_body_length force_unwrapping
 
 @testable import ConsentViewController
 import Nimble
@@ -292,7 +292,7 @@ class SourcePointClientSpec: QuickSpec {
 
             describe("deleteCustomConsent") {
                 it("constructsCorrectURL") {
-                    expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, self.propertyId, "yo")!.absoluteString).to(
+                    expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, self.propertyId, "yo").absoluteString).to(
                         equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
                 }
 

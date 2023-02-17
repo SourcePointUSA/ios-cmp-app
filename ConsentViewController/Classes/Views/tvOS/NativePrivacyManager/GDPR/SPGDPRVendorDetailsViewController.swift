@@ -14,9 +14,9 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         let content: [String]
 
         init? (header: SPNativeText?, content: [String]?) {
-            if content == nil || content!.isEmpty { return nil }
+            if content == nil || content?.isEmpty == true { return nil }
             self.header = header
-            self.content = content!
+            self.content = content! // swiftlint:disable:this force_unwrapping
         }
     }
 
@@ -110,7 +110,7 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (vendorDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+        let cell: UITableViewCell = (vendorDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?) ?? UITableViewCell()
         cell.textLabel?.text = sections[indexPath.section].content[indexPath.row]
         cell.textLabel?.setDefaultTextColorForDarkMode()
         return cell

@@ -11,11 +11,11 @@ import Nimble
 import Quick
 
 func emptyRequest() -> URLRequest {
-    URLRequest(url: URL(string: "/")!)
+    URLRequest(url: URL(string: "/")!) // swiftlint:disable:this force_unwrapping
 }
 
 func aResponseWith(status: Int) -> HTTPURLResponse {
-    HTTPURLResponse(url: URL(string: "/")!, statusCode: status, httpVersion: nil, headerFields: nil)!
+    HTTPURLResponse(url: URL(string: "/")!, statusCode: status, httpVersion: nil, headerFields: nil)! // swiftlint:disable:this force_unwrapping
 }
 
 // swiftlint:disable function_body_length

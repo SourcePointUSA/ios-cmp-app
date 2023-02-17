@@ -29,7 +29,7 @@ class SPJsonSpec: QuickSpec {
     }
     """
     var json: Any {
-        try! JSONSerialization.jsonObject(with: jsonSample.data(using: .utf8)!)
+        try! JSONSerialization.jsonObject(with: jsonSample.data(using: .utf8)!) // swiftlint:disable:this force_unwrapping
     }
 
     override func spec() {
@@ -63,8 +63,8 @@ class SPJsonSpec: QuickSpec {
             }
 
             it("empty constructor instantiates an equivalent to empty object") {
-                expect(SPJson().dictionaryValue!).to(beAKindOf([String: Any].self))
-                expect(SPJson().dictionaryValue!).to(beEmpty())
+                expect(SPJson().dictionaryValue).to(beAKindOf([String: Any].self))
+                expect(SPJson().dictionaryValue).to(beEmpty())
             }
         }
     }

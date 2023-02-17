@@ -111,7 +111,7 @@ protocol SPNativePrivacyManagerHome {
                             )
                         }
                         controller.categories = data.categories
-                        controller.consentsSnapshot = strongSelf.snapshot!
+                        controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
                         self?.present(controller, animated: true)
                     }
                 }
@@ -137,7 +137,7 @@ protocol SPNativePrivacyManagerHome {
             )
         }
         controller.categories = secondLayerData.categories
-        controller.consentsSnapshot = snapshot!
+        controller.consentsSnapshot = snapshot! // swiftlint:disable:this force_unwrapping
         present(controller, animated: true)
     }
 
@@ -168,7 +168,7 @@ protocol SPNativePrivacyManagerHome {
                         nibName: "SPGDPRPartnersViewController"
                     )
                     controller.vendors = data.vendors
-                    controller.consentsSnapshot = strongSelf.snapshot!
+                    controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
                     self?.present(controller, animated: true)
                 }
             }

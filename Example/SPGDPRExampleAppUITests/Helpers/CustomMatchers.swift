@@ -11,7 +11,7 @@ import Quick
 import XCTest
 
 extension TimeInterval {
-    init?(dispatchTimeInterval: DispatchTimeInterval) {
+    init(dispatchTimeInterval: DispatchTimeInterval) {
         switch dispatchTimeInterval {
         case .seconds(let value):
             self = Double(value)
@@ -26,9 +26,9 @@ extension TimeInterval {
             self = Double(value) / 1_000_000_000
 
         case .never:
-            return nil
+            self = 1_000_000_000
         @unknown default:
-            return nil
+            self = 1_000_000_000
         }
     }
 }
@@ -46,6 +46,7 @@ public func containText(_ text: String) -> Predicate<XCUIElement> {
 public func showUp() -> Predicate<XCUIElement> {
     Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
+        // swiftlint:disable:next force_unwrapping
         return PredicateStatus(bool: actual.waitForExistence(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)!
         ))
     }
@@ -66,7 +67,7 @@ public func disappear() -> Predicate<XCUIElement> {
     Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual)
-        QuickSpec.current.waitForExpectations(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)!
+        QuickSpec.current.waitForExpectations(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)
         )
         return PredicateStatus(bool: !actual.exists)
     }

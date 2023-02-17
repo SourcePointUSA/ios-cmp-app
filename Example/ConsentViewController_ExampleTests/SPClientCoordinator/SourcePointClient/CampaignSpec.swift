@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try function_body_length
+// swiftlint:disable force_try function_body_length force_unwrapping
 
 class CampaignSpec: QuickSpec {
     override func spec() {

@@ -14,9 +14,9 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
         let content: [CCPACategory]
 
         init? (header: SPNativeText?, content: [CCPACategory]?) {
-            if content == nil || content!.isEmpty { return nil }
+            if content == nil || content?.isEmpty == true { return nil }
             self.header = header
-            self.content = content!
+            self.content = content! // swiftlint:disable:this force_unwrapping
         }
     }
 
