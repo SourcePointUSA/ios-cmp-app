@@ -40,6 +40,7 @@ import WebKit
         super.init(messageId: messageId, campaignType: campaignType, timeout: timeout, delegate: delegate)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -64,7 +65,7 @@ import WebKit
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        fatalError("not implemented")
+        print("not implemented")
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -95,7 +96,7 @@ import WebKit
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return nil
+        nil
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -104,8 +105,10 @@ import WebKit
             switch error.code {
             case .timedOut:
                 spError = ConnectionTimeOutError(url: error.failingURL, timeout: timeout, campaignType: campaignType)
+
             case .networkConnectionLost, .notConnectedToInternet:
                 spError = NoInternetConnection(campaignType: campaignType)
+
             default:
                 spError = WebViewError(campaignType: campaignType, code: error.code.rawValue, title: error.localizedDescription)
             }
@@ -116,14 +119,6 @@ import WebKit
 
 @objcMembers class GenericWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
-
-    override func viewWillDisappear(_ animated: Bool) {
-        messageUIDelegate = nil
-        if let contentController = webview?.configuration.userContentController {
-            contentController.removeScriptMessageHandler(forName: GenericWebMessageViewController.MESSAGE_HANDLER_NAME)
-            contentController.removeAllUserScripts()
-        }
-    }
 
     override var webviewConfig: WKWebViewConfiguration? {
         let config = WKWebViewConfiguration()
@@ -142,6 +137,14 @@ import WebKit
     }
 
     var isFirstLayerMessage = true
+
+    override func viewWillDisappear(_ animated: Bool) {
+        messageUIDelegate = nil
+        if let contentController = webview?.configuration.userContentController {
+            contentController.removeScriptMessageHandler(forName: Self.MESSAGE_HANDLER_NAME)
+            contentController.removeAllUserScripts()
+        }
+    }
 
     override func loadMessage() {
         webview?.load(URLRequest(url: url, timeoutInterval: timeout))
@@ -195,6 +198,7 @@ import WebKit
             switch eventName {
             case .readyForPreload: handleMessagePreload()
             case .onMessageReady: messageUIDelegate?.loaded(self)
+
             case .onAction:
                 if let action = getActionFrom(body: body) {
                     messageUIDelegate?.action(action, from: self)
@@ -207,6 +211,7 @@ import WebKit
                     )
                 }
             case .onError: messageUIDelegate?.onError(RenderingAppError(campaignType: campaignType, body["error"]?.stringValue ?? ""))
+
             case .onPMReady:
                 if isFirstLayerMessage {
                     messageUIDelegate?.loaded(self)

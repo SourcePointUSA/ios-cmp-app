@@ -6,11 +6,11 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
-import WebKit
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
+import WebKit
 
 class TestWebView: WKWebView, WKNavigationDelegate {
     let authIdToInject: String?
@@ -31,6 +31,7 @@ class TestWebView: WKWebView, WKNavigationDelegate {
         loadHTMLString("", baseURL: URL(string: "https://sourcepoint.com")!)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError("not implemented") }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -68,7 +69,8 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                     self.webView = TestWebView(authIdToInject: "foo") { $0.getAuthId { authId, error in
                         expect(authId).to(equal("foo"), description: error.debugDescription)
                         done()
-                    }}
+                    }
+                    }
                 }
             }
 
@@ -79,7 +81,8 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                             $0.getAuthId { authId, error in
                                 expect(authId).to(beEmpty(), description: error.debugDescription)
                                 done()
-                            }}
+                            }
+                        }
                     }
                 }
             }
@@ -91,7 +94,8 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                             $0.getAuthId { authId, error in
                                 expect(authId).to(beEmpty(), description: error.debugDescription)
                                 done()
-                            }}
+                            }
+                        }
                     }
                 }
             }
@@ -103,7 +107,8 @@ class GDPRWebViewExtensionsSpec: QuickSpec {
                     self.webView = TestWebView { $0.getAuthId { authId, error in
                         expect(authId).to(equal("another foo"), description: error.debugDescription)
                         done()
-                    }}
+                    }
+                    }
                     self.webView.setConsentFor(authId: "another foo")
                 }
             }

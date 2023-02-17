@@ -5,8 +5,8 @@
 //  Created by Vilas on 01/04/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 // swiftlint:disable function_body_length
 
@@ -16,19 +16,6 @@ protocol SPNativePrivacyManagerHome {
 
 @objcMembers class SPGDPRNativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
-
-    @IBOutlet weak var categoriesExplainerLabel: UILabel!
-    @IBOutlet weak var descriptionTextView: SPFocusableTextView!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var ourPartners: SPAppleTVButton!
-    @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
-    @IBOutlet weak var acceptButton: SPAppleTVButton!
-    @IBOutlet weak var rejectButton: SPAppleTVButton!
-    @IBOutlet weak var saveAndExitButton: SPAppleTVButton!
-    @IBOutlet weak var privacyPolicyButton: SPAppleTVButton!
-    @IBOutlet weak var categoryTableView: UITableView!
-    @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var buttonsStack: UIStackView!
 
     var secondLayerData: GDPRPrivacyManagerViewResponse?
 
@@ -40,19 +27,18 @@ protocol SPNativePrivacyManagerHome {
 
     override var preferredFocusedView: UIView? { acceptButton }
 
-    func setHeader () {
-        header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.onBackButtonTapped = { [weak self] in
-            if let this = self {
-                self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)
-            }
-        }
-    }
-
-    override func loadMessage() {
-        loaded(self)
-    }
+    @IBOutlet var categoriesExplainerLabel: UILabel!
+    @IBOutlet var descriptionTextView: SPFocusableTextView!
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var ourPartners: SPAppleTVButton!
+    @IBOutlet var managePreferenceButton: SPAppleTVButton!
+    @IBOutlet var acceptButton: SPAppleTVButton!
+    @IBOutlet var rejectButton: SPAppleTVButton!
+    @IBOutlet var saveAndExitButton: SPAppleTVButton!
+    @IBOutlet var privacyPolicyButton: SPAppleTVButton!
+    @IBOutlet var categoryTableView: UITableView!
+    @IBOutlet var header: SPPMHeader!
+    @IBOutlet var buttonsStack: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,28 +58,6 @@ protocol SPNativePrivacyManagerHome {
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
         disableMenuButton()
-    }
-
-    override func setFocusGuides() {
-        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
-    }
-
-    func setFocusGuidesForButtons() {
-        let visibleButtons: [UIView] = buttonsStack.arrangedSubviews.filter({!$0.isHidden})
-        for i in 0...visibleButtons.count-2 {
-            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
-        }
-    }
-
-    func disableMenuButton() {
-        let menuPressRecognizer = UITapGestureRecognizer()
-        menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
-        menuPressRecognizer.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
-        view.addGestureRecognizer(menuPressRecognizer)
-    }
-
-    func menuButtonAction() {
-        // override in order to disable menu button closing the Privacy Manager
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -124,6 +88,7 @@ protocol SPNativePrivacyManagerHome {
                 switch result {
                 case .failure(let error):
                     self?.onError(error)
+
                 case .success(let data):
                     if let strongSelf = self {
                         strongSelf.secondLayerData = data
@@ -181,6 +146,7 @@ protocol SPNativePrivacyManagerHome {
             switch result {
             case .failure(let error):
                 self?.onError(error)
+
             case .success(let data):
                 if let strongSelf = self {
                     if self?.snapshot == nil {
@@ -222,6 +188,42 @@ protocol SPNativePrivacyManagerHome {
             delegate: self,
             nibName: "SPPrivacyPolicyViewController"
         ), animated: true)
+    }
+
+    func setHeader () {
+        header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in
+            if let this = self {
+                self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)
+            }
+        }
+    }
+
+    override func loadMessage() {
+        loaded(self)
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
+    }
+
+    func setFocusGuidesForButtons() {
+        let visibleButtons: [UIView] = buttonsStack.arrangedSubviews.filter({ !$0.isHidden })
+        for i in 0...visibleButtons.count - 2 {
+            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i + 1], direction: .bottomTop)
+        }
+    }
+
+    func disableMenuButton() {
+        let menuPressRecognizer = UITapGestureRecognizer()
+        menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
+        menuPressRecognizer.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
+        view.addGestureRecognizer(menuPressRecognizer)
+    }
+
+    func menuButtonAction() {
+        // override in order to disable menu button closing the Privacy Manager
     }
 }
 
@@ -282,16 +284,16 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        return true
+        true
     }
 
     func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
-        return true
+        true
     }
 }
 
 class FocusableScrollView: UIScrollView {
     override var canBecomeFocused: Bool {
-        return true
+        true
     }
 }

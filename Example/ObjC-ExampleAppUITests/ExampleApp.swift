@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import XCTest
-import Quick
 import Nimble
+import Quick
+import XCTest
 
 protocol App {
     func launch()
@@ -25,8 +25,8 @@ extension XCUIApplication: App {
             resetAuthorizationStatus(for: .userTracking)
         }
         clean ?
-        launchArguments.append("-cleanAppsData") :
-        launchArguments.removeAll { $0 == "-cleanAppsData" }
+            launchArguments.append("-cleanAppsData") :
+            launchArguments.removeAll { $0 == "-cleanAppsData" }
         launch()
     }
 }
@@ -61,8 +61,8 @@ class ExampleApp: XCUIApplication {
     let attPrePrompt = ATTPrePrompt()
 
     var shouldRunAttScenario: Bool {
-        /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
-        /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
+        // Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
+        // So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
         staticTexts["unknown"].exists
     }
 

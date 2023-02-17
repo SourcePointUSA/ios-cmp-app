@@ -6,10 +6,10 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 class MessageResponseSpec: QuickSpec {
     override func spec() {

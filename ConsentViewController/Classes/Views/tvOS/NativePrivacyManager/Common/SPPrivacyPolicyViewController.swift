@@ -5,22 +5,16 @@
 //  Created by Vilas on 03/05/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 @objcMembers class SPPrivacyPolicyViewController: SPNativeScreenViewController {
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var closeButton: SPAppleTVButton!
-    @IBOutlet weak var header: SPPMHeader!
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var closeButton: SPAppleTVButton!
+    @IBOutlet var header: SPPMHeader!
 
-    func setHeader () {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
-    }
-
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
         loadTextView(forComponentId: "Body", textView: descriptionTextView)
@@ -31,5 +25,11 @@ import Foundation
 
     @IBAction func onCloseTap(_ sender: Any) {
         dismiss(animated: true)
+    }
+
+    func setHeader () {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 }

@@ -22,11 +22,14 @@ import Foundation
         originalError = error
         self.campaignType = campaignType
     }
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }
 
 @objcMembers public class UnableToFindView: SPError {
-    public override var spCode: String { "sp_metric_unable_to_find_view" }
+    override public var spCode: String { "sp_metric_unable_to_find_view" }
     override public var description: String { "Unable to find view with id: (\(viewId))" }
 
     let viewId: String
@@ -36,11 +39,12 @@ import Foundation
         super.init()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 @objcMembers public class UnableToLoadJSReceiver: SPError {
-    public override var spCode: String { "sp_metric_unable_to_load_jsreceiver" }
+    override public var spCode: String { "sp_metric_unable_to_load_jsreceiver" }
     override public var description: String { "Unable to load the JSReceiver.js resource." }
 }
 
@@ -60,6 +64,7 @@ import Foundation
         self.campaignType = campaignType
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
@@ -72,6 +77,7 @@ import Foundation
         super.init()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
@@ -85,14 +91,15 @@ import Foundation
         super.init()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 /// Invalid Rendering App (JSReceiver) event payloads
 @objcMembers public class InvalidEventPayloadError: SPError {
-    public override var failureReason: String { description }
-    public override var spCode: String { "sp_metric_invalid_event_payload" }
-    public override var description: String {
+    override public var failureReason: String { description }
+    override public var spCode: String { "sp_metric_invalid_event_payload" }
+    override public var description: String {
         "Could not parse the event: \(name) with body: \(body)"
     }
 
@@ -104,11 +111,12 @@ import Foundation
         super.init()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 @objcMembers public class InvalidOnActionEventPayloadError: InvalidEventPayloadError {
-    public override var spCode: String { "sp_metric_invalid_onAction_event_payload" }
+    override public var spCode: String { "sp_metric_invalid_onAction_event_payload" }
 }
 
 @objcMembers public class InvalidURLError: SPError {
@@ -122,11 +130,12 @@ import Foundation
         super.init()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 @objcMembers public class RenderingAppError: SPError {
-    public override var spCode: String { renderingAppErrorCode ?? "sp_metric_rendering_app_error" }
+    override public var spCode: String { renderingAppErrorCode ?? "sp_metric_rendering_app_error" }
     public let renderingAppErrorCode: String?
 
     init(campaignType: SPCampaignType, _ renderingAppErrorCode: String?) {
@@ -135,11 +144,12 @@ import Foundation
         self.campaignType = campaignType
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 @objcMembers public class UnableToInjectMessageIntoRenderingApp: SPError {
-    public override var spCode: String { "sp_metric_unable_to_stringify_msgJSON" }
+    override public var spCode: String { "sp_metric_unable_to_stringify_msgJSON" }
     override public var description: String { "The SDK could convert the message into JSON." }
 }
 
@@ -219,6 +229,7 @@ import Foundation
         self.campaignType = campaignType
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
@@ -237,6 +248,7 @@ import Foundation
         super.init()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
@@ -258,7 +270,7 @@ import Foundation
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
     }
 
-    public override var campaignType: SPCampaignType { get { .gdpr } set {} }
+    override public var campaignType: SPCampaignType { get { .gdpr } set {} }
 }
 
 @objcMembers public class InvalidMetaDataQueryParamsError: SPError {

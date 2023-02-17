@@ -6,10 +6,12 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
-import Quick
-import Nimble
+// swiftlint:disable function_body_length
+
 @testable import NativePMExampleApp
+import Nimble
+import Quick
+import XCTest
 
 extension QuickSpec {
     var remote: XCUIRemote { XCUIRemote.shared }

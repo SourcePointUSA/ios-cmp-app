@@ -46,7 +46,7 @@ import WebKit
                 handler(cookies
                     .components(separatedBy: "; ")
                     .compactMap { $0.components(separatedBy: "=") }
-                    .reduce(into: [String: String]()) { (all, pair) in
+                    .reduce(into: [String: String]()) { all, pair in
                         all[pair[0]] = pair[1]
                     }, nil)
             } else {

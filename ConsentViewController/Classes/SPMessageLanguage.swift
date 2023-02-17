@@ -185,6 +185,7 @@ import Foundation
             self = .Swedish
         case "TR":
             self = .Turkish
+
         default:
             return nil
         }

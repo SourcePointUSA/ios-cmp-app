@@ -9,7 +9,7 @@
 import XCTest
 
 class AuthExampleUITests: XCTestCase {
-    var app: XCUIApplication!
+    private var app: XCUIApplication!
 
     override func setUpWithError() throws {
         continueAfterFailure = false

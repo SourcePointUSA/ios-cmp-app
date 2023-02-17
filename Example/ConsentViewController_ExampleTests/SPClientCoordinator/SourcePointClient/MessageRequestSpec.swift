@@ -6,9 +6,9 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 // swiftlint:disable force_try
 
@@ -69,7 +69,7 @@ class MessageRequestSpec: QuickSpec {
             let encoder = JSONEncoder()
             if #available(iOS 11.0, *) { encoder.outputFormatting = .sortedKeys }
             let messageEncoded = String(data: try! encoder.encode(message), encoding: .utf8)
-            expect(messageString).to(equal(messageEncoded))
+            expect(messageString) == messageEncoded
         }
     }
 }

@@ -5,29 +5,16 @@
 //  Created by Vilas on 01/04/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 @objcMembers class SPCCPANativePrivacyManagerViewController: SPNativeScreenViewController, SPNativePrivacyManagerHome {
     weak var delegate: SPNativePMDelegate?
-
-    @IBOutlet weak var descriptionTextView: SPFocusableTextView!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var ourPartners: SPAppleTVButton!
-    @IBOutlet weak var managePreferenceButton: SPAppleTVButton!
-    @IBOutlet weak var acceptButton: SPAppleTVButton!
-    @IBOutlet weak var rejectButton: SPAppleTVButton!
-    @IBOutlet weak var saveAndExitButton: SPAppleTVButton!
-    @IBOutlet weak var privacyPolicyButton: SPAppleTVButton!
-    @IBOutlet weak var doNotSellTableView: UITableView!
-    @IBOutlet weak var actionsContainer: UIStackView!
 
     var doNotSellButton: SPNativeLongButton?
 
     var ccpaConsents: SPCCPAConsent?
     private var snapshot: CCPAPMConsentSnaptshot!
-
-    @IBOutlet weak var header: SPPMHeader!
 
     var secondLayerData: CCPAPrivacyManagerViewResponse?
 
@@ -35,47 +22,17 @@ import Foundation
 
     override var preferredFocusedView: UIView? { acceptButton }
 
-    override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: actionsContainer, to: doNotSellTableView, direction: .rightLeft)
-    }
-
-    func setHeader () {
-        header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.onBackButtonTapped = { [weak self] in
-            if let this = self {
-                self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)
-            }
-        }
-    }
-
-    override func loadMessage() {
-        loaded(self)
-    }
-
-    func setDoNotSellButton() {
-        doNotSellButton = viewData.byId("DoNotSellButton") as? SPNativeLongButton
-        doNotSellTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
-            forCellReuseIdentifier: cellReuseIdentifier
-        )
-        doNotSellTableView.allowsSelection = true
-        doNotSellTableView.delegate = self
-        doNotSellTableView.dataSource = self
-    }
-
-    func initConsentsSnapshot() {
-        snapshot = CCPAPMConsentSnaptshot(
-            vendors: [],
-            categories: [],
-            rejectedVendors: ccpaConsents?.rejectedVendors,
-            rejectedCategories: ccpaConsents?.rejectedCategories,
-            consentStatus: ccpaConsents?.status)
-        snapshot.onConsentsChange = { [weak self] in
-            self?.doNotSellTableView.reloadData()
-        }
-    }
+    @IBOutlet var header: SPPMHeader!
+    @IBOutlet var descriptionTextView: SPFocusableTextView!
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var ourPartners: SPAppleTVButton!
+    @IBOutlet var managePreferenceButton: SPAppleTVButton!
+    @IBOutlet var acceptButton: SPAppleTVButton!
+    @IBOutlet var rejectButton: SPAppleTVButton!
+    @IBOutlet var saveAndExitButton: SPAppleTVButton!
+    @IBOutlet var privacyPolicyButton: SPAppleTVButton!
+    @IBOutlet var doNotSellTableView: UITableView!
+    @IBOutlet var actionsContainer: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,27 +50,6 @@ import Foundation
         setDoNotSellButton()
         setFocusGuidesForButtons()
         disableMenuButton()
-    }
-
-    func disableMenuButton() {
-        let menuPressRecognizer = UITapGestureRecognizer()
-        menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
-        menuPressRecognizer.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
-        view.addGestureRecognizer(menuPressRecognizer)
-    }
-
-    func menuButtonAction() {
-        // override in order to disable menu button closing the Privacy Manager
-    }
-
-    func setFocusGuidesForButtons() {
-        let visibleButtons: [UIView] = actionsContainer.arrangedSubviews.filter({!$0.isHidden})
-        if visibleButtons.count <= 1 {
-            return
-        }
-        for i in 0...visibleButtons.count-2 {
-            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i+1], direction: .bottomTop)
-        }
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -155,6 +91,7 @@ import Foundation
                 switch result {
                 case .failure(let error):
                     self?.onError(error)
+
                 case .success(let data):
                     if let strongSelf = self {
                         strongSelf.secondLayerData = data
@@ -199,6 +136,7 @@ import Foundation
             switch result {
             case .failure(let error):
                 self?.onError(error)
+
             case .success(let data):
                 if let strongSelf = self {
                     self?.snapshot = CCPAPMConsentSnaptshot(
@@ -236,6 +174,69 @@ import Foundation
             delegate: self,
             nibName: "SPPrivacyPolicyViewController"
         ), animated: true)
+    }
+
+    func setHeader () {
+        header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in
+            if let this = self {
+                self?.messageUIDelegate?.action(SPAction(type: .Dismiss), from: this)
+            }
+        }
+    }
+
+    func setDoNotSellButton() {
+        doNotSellButton = viewData.byId("DoNotSellButton") as? SPNativeLongButton
+        doNotSellTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
+        doNotSellTableView.allowsSelection = true
+        doNotSellTableView.delegate = self
+        doNotSellTableView.dataSource = self
+    }
+
+    func initConsentsSnapshot() {
+        snapshot = CCPAPMConsentSnaptshot(
+            vendors: [],
+            categories: [],
+            rejectedVendors: ccpaConsents?.rejectedVendors,
+            rejectedCategories: ccpaConsents?.rejectedCategories,
+            consentStatus: ccpaConsents?.status)
+        snapshot.onConsentsChange = { [weak self] in
+            self?.doNotSellTableView.reloadData()
+        }
+    }
+
+    func disableMenuButton() {
+        let menuPressRecognizer = UITapGestureRecognizer()
+        menuPressRecognizer.addTarget(self, action: #selector(menuButtonAction))
+        menuPressRecognizer.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
+        view.addGestureRecognizer(menuPressRecognizer)
+    }
+
+    func menuButtonAction() {
+        // override in order to disable menu button closing the Privacy Manager
+    }
+
+    func setFocusGuidesForButtons() {
+        let visibleButtons: [UIView] = actionsContainer.arrangedSubviews.filter({ !$0.isHidden })
+        if visibleButtons.count <= 1 {
+            return
+        }
+        for i in 0...visibleButtons.count - 2 {
+            addFocusGuide(from: visibleButtons[i], to: visibleButtons[i + 1], direction: .bottomTop)
+        }
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: actionsContainer, to: doNotSellTableView, direction: .rightLeft)
+    }
+
+    override func loadMessage() {
+        loaded(self)
     }
 }
 

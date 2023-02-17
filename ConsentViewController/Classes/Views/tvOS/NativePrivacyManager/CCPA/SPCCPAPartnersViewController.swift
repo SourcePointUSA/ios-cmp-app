@@ -5,39 +5,29 @@
 //  Created by Vilas on 06/05/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 class SPCCPAPartnersViewController: SPNativeScreenViewController {
-    @IBOutlet weak var selectedVendorTextLabel: UILabel!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var acceptButton: SPAppleTVButton!
-    @IBOutlet weak var saveAndExit: SPAppleTVButton!
-    @IBOutlet weak var vendorsTableView: UITableView!
-    @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var actionsContainer: UIStackView!
     var nativeLongButton: SPNativeLongButton?
 
-    var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
+    var consentsSnapshot = CCPAPMConsentSnaptshot()
 
     var vendors: [CCPAVendor] = []
 
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]
     }
+
     let cellReuseIdentifier = "cell"
 
-    override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: actionsContainer, to: vendorsTableView, direction: .rightLeft)
-        vendorsTableView.remembersLastFocusedIndexPath = true
-    }
-
-    func setHeader () {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
-    }
+    @IBOutlet var selectedVendorTextLabel: UILabel!
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var acceptButton: SPAppleTVButton!
+    @IBOutlet var saveAndExit: SPAppleTVButton!
+    @IBOutlet var vendorsTableView: UITableView!
+    @IBOutlet var header: SPPMHeader!
+    @IBOutlet var actionsContainer: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +62,18 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
             pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
         ), from: self)
     }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: actionsContainer, to: vendorsTableView, direction: .rightLeft)
+        vendorsTableView.remembersLastFocusedIndexPath = true
+    }
+
+    func setHeader () {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -81,7 +83,7 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = "\(sections[section]?.settings.text ?? "Partners")"
         label.font = UIFont(from: sections[section]?.settings.style?.font)
         label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)

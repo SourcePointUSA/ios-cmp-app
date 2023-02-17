@@ -15,7 +15,7 @@ public typealias SPTargetingParams = [String: String]
     let targetingParams: SPTargetingParams
     let groupPmId: String?
 
-    public override var description: String {
+    override public var description: String {
         "SPCampaign(targetingParams: \(targetingParams), groupPmId: \(groupPmId as Any))"
     }
 
@@ -35,7 +35,7 @@ public typealias SPTargetingParams = [String: String]
     let environment: SPCampaignEnv
     let gdpr, ccpa, ios14: SPCampaign?
 
-    public override var description: String {
+    override public var description: String {
         """
         SPCampaigns
             - gdpr: \(gdpr as Any)

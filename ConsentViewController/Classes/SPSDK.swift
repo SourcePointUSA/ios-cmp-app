@@ -8,18 +8,19 @@
 import Foundation
 
 @objc public protocol SPCCPA {
-    @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
     @objc var ccpaApplies: Bool { get }
+
+    @objc func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
 }
 
 @objc public protocol SPGDPR {
-    @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
     @objc var gdprApplies: Bool { get }
+
+    @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
 }
 
 @objc public protocol SPSDK: SPGDPR, SPCCPA, SPMessageUIDelegate {
     @objc static var VERSION: String { get }
-    @objc static func clearAllData()
     @objc var cleanUserDataOnError: Bool { get set }
     @objc var messageTimeoutInSeconds: TimeInterval { get set }
     @objc var privacyManagerTab: SPPrivacyManagerTab { get set }
@@ -33,6 +34,7 @@ import Foundation
         language: SPMessageLanguage,
         delegate: SPDelegate?
     )
+    @objc static func clearAllData()
     @objc func loadMessage(forAuthId authId: String?, publisherData: SPPublisherData?)
     @objc func customConsentGDPR(
         vendors: [String],

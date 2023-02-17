@@ -53,27 +53,16 @@ import Foundation
         }
         return nil
     }
-    public var pmPayload: SPJson = SPJson()
+    public var pmPayload = SPJson()
     public var publisherData: SPPublisherData = [:]
     public var customActionId: String?
 
-    public override var description: String {
+    override public var description: String {
         """
         SPAction(type: \(type), consentLanguage: \(consentLanguage ?? ""), \
         payload: \(pmPayload), publisherData: \(String(describing: publisherData)),
         customActionId: \(customActionId ?? ""))
         """
-    }
-
-    public override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? SPAction else {
-            return false
-        }
-        return other.type == type &&
-            other.consentLanguage == consentLanguage &&
-            other.pmURL == pmURL &&
-            other.pmPayload == pmPayload &&
-            other.publisherData == publisherData
     }
 
     public init(
@@ -90,5 +79,16 @@ import Foundation
         self.pmPayload = pmPayload
         self.pmURL = pmurl
         self.customActionId = customActionId
+    }
+
+    override public func isEqual(_ object: Any?) -> Bool {
+        guard let other = object as? SPAction else {
+            return false
+        }
+        return other.type == type &&
+        other.consentLanguage == consentLanguage &&
+        other.pmURL == pmURL &&
+        other.pmPayload == pmPayload &&
+        other.publisherData == publisherData
     }
 }

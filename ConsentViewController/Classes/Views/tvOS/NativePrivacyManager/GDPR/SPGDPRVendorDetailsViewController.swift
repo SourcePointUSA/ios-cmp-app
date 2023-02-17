@@ -5,8 +5,8 @@
 //  Created by Vilas on 11/05/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     struct Section {
@@ -20,14 +20,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         }
     }
 
-    @IBOutlet weak var headerView: SPPMHeader!
-    @IBOutlet weak var qrCodeImageView: UIImageView!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var onButton: SPAppleTVButton!
-    @IBOutlet weak var offButton: SPAppleTVButton!
-    @IBOutlet weak var vendorDetailsTableView: UITableView!
-    @IBOutlet weak var actionsContainer: UIStackView!
-
     weak var vendorManagerDelegate: GDPRPMConsentSnaptshot?
 
     let cellReuseIdentifier = "cell"
@@ -39,18 +31,13 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         Section(header: viewData.byId("SpecialFeaturesText") as? SPNativeText, content: vendor?.iabSpecialFeatures)
     ].compactMap { $0 }}
 
-    func setHeader () {
-        headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        headerView.spTitleText = viewData.byId("Header") as? SPNativeText
-        headerView.titleLabel.text = vendor?.name
-        headerView.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
-    }
-
-    override func setFocusGuides() {
-        addFocusGuide(from: headerView.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
-        addFocusGuide(from: actionsContainer, to: vendorDetailsTableView, direction: .rightLeft)
-    }
+    @IBOutlet var headerView: SPPMHeader!
+    @IBOutlet var qrCodeImageView: UIImageView!
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var onButton: SPAppleTVButton!
+    @IBOutlet var offButton: SPAppleTVButton!
+    @IBOutlet var vendorDetailsTableView: UITableView!
+    @IBOutlet var actionsContainer: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +68,19 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         }
         dismiss(animated: true)
     }
+
+    func setHeader () {
+        headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        headerView.spTitleText = viewData.byId("Header") as? SPNativeText
+        headerView.titleLabel.text = vendor?.name
+        headerView.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: headerView.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
+        addFocusGuide(from: actionsContainer, to: vendorDetailsTableView, direction: .rightLeft)
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -90,7 +90,7 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = sections[section].header?.settings.text
         label.font = UIFont(from: sections[section].header?.settings.style?.font)
         label.textColor = UIColor(hexString: sections[section].header?.settings.style?.font?.color)

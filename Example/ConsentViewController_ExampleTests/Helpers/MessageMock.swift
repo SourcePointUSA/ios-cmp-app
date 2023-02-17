@@ -6,9 +6,9 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
+@testable import ConsentViewController
 import Foundation
 import WebKit
-@testable import ConsentViewController
 
 class WebViewMock: WKWebView {
     var loadCalledWith: URLRequest!
@@ -23,7 +23,7 @@ class MessageMock: WKScriptMessage {
     var _body: Any
     override var body: Any {
         get {
-            return _body
+            _body
         }
         set {
             _body = newValue

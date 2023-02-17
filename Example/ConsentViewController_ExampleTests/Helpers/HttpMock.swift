@@ -6,8 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import ConsentViewController
+import Foundation
 
 class MockHttp: HttpClient {
     var postWasCalledWithUrl: String!

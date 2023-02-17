@@ -28,6 +28,10 @@ extension SPStringifiedJSON: Collection {
     var startIndex: Index { raw.startIndex }
     var endIndex: Index { raw.endIndex }
 
+    func index(after i: SPStringifiedJSON.DictionaryType.Index) -> SPStringifiedJSON.DictionaryType.Index {
+        raw.index(after: i)
+    }
+
     subscript(index: Index) -> DictionaryType.Element {
         raw[index]
     }
@@ -39,9 +43,5 @@ extension SPStringifiedJSON: Collection {
         set {
             raw[key] = newValue
         }
-    }
-
-    func index(after i: SPStringifiedJSON.DictionaryType.Index) -> SPStringifiedJSON.DictionaryType.Index {
-        raw.index(after: i)
     }
 }

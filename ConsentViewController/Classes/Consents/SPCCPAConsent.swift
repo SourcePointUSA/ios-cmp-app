@@ -75,16 +75,13 @@ protocol CampaignConsent {
  That is, if the user has rejected `.All` or `.None` vendors/categories, those arrays will be empty.
  */
 @objcMembers public class SPCCPAConsent: NSObject, Codable, CampaignConsent {
+    enum CodingKeys: CodingKey {
+        case status, rejectedVendors, rejectedCategories, uspstring, uuid, childPmId, consentStatus
+    }
+
     /// represents the default state of the consumer prior to seeing the consent message
     /// - seealso: https://github.com/InteractiveAdvertisingBureau/USPrivacy/blob/master/CCPA/US%20Privacy%20String.md#us-privacy-string-format
     public static let defaultUsPrivacyString = "1---"
-
-    public static func empty() -> SPCCPAConsent { SPCCPAConsent(
-        status: .RejectedNone,
-        rejectedVendors: [],
-        rejectedCategories: [],
-        uspstring: defaultUsPrivacyString
-    )}
 
     /// Indicates if the user has rejected `.All`, `.Some` or `.None` of the vendors **and** categories.
     public var status: CCPAConsentStatus
@@ -111,12 +108,9 @@ protocol CampaignConsent {
 
     var consentStatus: ConsentStatus
 
-    public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
-        status: CCPAConsentStatus.RejectedNone,
-        rejectedVendors: [],
-        rejectedCategories: [],
-        uspstring: ""
-    )}
+    override open var description: String {
+        "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
+    }
 
     init(
         uuid: String? = nil,
@@ -136,26 +130,6 @@ protocol CampaignConsent {
         self.consentStatus = consentStatus
     }
 
-    open override var description: String {
-        "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
-    }
-
-    enum CodingKeys: CodingKey {
-        case status, rejectedVendors, rejectedCategories, uspstring, uuid, childPmId, consentStatus
-    }
-
-    public override func isEqual(_ object: Any?) -> Bool {
-        if let other = object as? SPCCPAConsent {
-            return other.uuid == uuid &&
-            other.rejectedCategories.elementsEqual(rejectedCategories) &&
-            other.rejectedVendors.elementsEqual(rejectedVendors) &&
-            other.status == status &&
-            other.uspstring == uspstring
-        } else {
-            return false
-        }
-    }
-
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         status = try container.decode(CCPAConsentStatus.self, forKey: .status)
@@ -165,5 +139,31 @@ protocol CampaignConsent {
         uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
         childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
+    }
+
+    public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
+        status: CCPAConsentStatus.RejectedNone,
+        rejectedVendors: [],
+        rejectedCategories: [],
+        uspstring: ""
+    )}
+
+    public static func empty() -> SPCCPAConsent { SPCCPAConsent(
+        status: .RejectedNone,
+        rejectedVendors: [],
+        rejectedCategories: [],
+        uspstring: defaultUsPrivacyString
+    )}
+
+    override public func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? SPCCPAConsent {
+            return other.uuid == uuid &&
+            other.rejectedCategories.elementsEqual(rejectedCategories) &&
+            other.rejectedVendors.elementsEqual(rejectedVendors) &&
+            other.status == status &&
+            other.uspstring == uspstring
+        } else {
+            return false
+        }
     }
 }

@@ -6,36 +6,35 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 class SPPrivacyManagerTabSpec: QuickSpec {
     override func spec() {
-
         describe("SPPrivacyManagerTab") {
             context("Default") {
                 it("has the empty raw value") {
-                    expect(SPPrivacyManagerTab.Default.rawValue).to(equal(""))
+                    expect(SPPrivacyManagerTab.Default.rawValue) == ""
                 }
             }
 
             context("Purposes") {
                 it("has the raw value 'purposes'") {
-                    expect(SPPrivacyManagerTab.Purposes.rawValue).to(equal("purposes"))
+                    expect(SPPrivacyManagerTab.Purposes.rawValue) == "purposes"
                 }
             }
 
             context("Vendors") {
                 it("has the raw value 'vendors'") {
-                    expect(SPPrivacyManagerTab.Vendors.rawValue).to(equal("vendors"))
+                    expect(SPPrivacyManagerTab.Vendors.rawValue) == "vendors"
                 }
             }
 
             context("Features") {
                 it("has the raw value 'features'") {
-                    expect(SPPrivacyManagerTab.Features.rawValue).to(equal("features"))
+                    expect(SPPrivacyManagerTab.Features.rawValue) == "features"
                 }
             }
         }

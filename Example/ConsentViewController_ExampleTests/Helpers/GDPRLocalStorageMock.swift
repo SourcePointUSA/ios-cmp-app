@@ -6,8 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import ConsentViewController
+import Foundation
 
 class GDPRLocalStorageMock: SPLocalStorage {
     var gdprChildPmId: String?
@@ -23,12 +23,12 @@ class GDPRLocalStorageMock: SPLocalStorage {
 
     var clearWasCalled = false
 
+    required init(storage: Storage = InMemoryStorageMock()) {
+        self.storage = storage
+    }
+
     func clear() {
         clearWasCalled = true
         storage = InMemoryStorageMock()
-    }
-
-    required init(storage: Storage = InMemoryStorageMock()) {
-        self.storage = storage
     }
 }

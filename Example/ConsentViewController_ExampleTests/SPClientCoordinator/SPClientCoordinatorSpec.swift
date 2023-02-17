@@ -6,10 +6,10 @@
 //  Copyright © 2023 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 // swiftlint:disable force_try
 
@@ -21,7 +21,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             let coordinator: SPClientCoordinator = SourcepointClientCoordinator(
                 accountId: 22,
                 propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-                propertyId: 16893,
+                propertyId: 16_893,
                 campaigns: SPCampaigns(
                     gdpr: SPCampaign(),
                     ccpa: SPCampaign()
@@ -36,12 +36,12 @@ class SPClientCoordinatorSpec: QuickSpec {
                         coordinator.loadMessages(forAuthId: nil) { result in
                             switch result {
                                 case .success(let (messages, consents)):
-                                    expect(messages.count).to(equal(2))
+                                    expect(messages.count) == 2
                                     expect(consents.gdpr?.consents?.euconsent).notTo(beEmpty())
                                     expect(consents.gdpr?.consents?.vendorGrants).notTo(beEmpty())
-                                    expect(consents.ccpa?.consents?.uspstring).to(equal("1YNN"))
-                                    expect(defaults.integer(forKey: "IABTCF_gdprApplies")).to(equal(1))
-                                    expect(defaults.string(forKey: "IABUSPrivacy_String")).to(equal("1YNN"))
+                                    expect(consents.ccpa?.consents?.uspstring) == "1YNN"
+                                    expect(defaults.integer(forKey: "IABTCF_gdprApplies")) == 1
+                                    expect(defaults.string(forKey: "IABUSPrivacy_String")) == "1YNN"
                                 case .failure(let error):
                                     fail(error.failureReason)
                             }

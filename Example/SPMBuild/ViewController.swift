@@ -6,8 +6,8 @@
 //  Copyright © 2022 CocoaPods. All rights reserved.
 //
 
-import UIKit
 import ConsentViewController
+import UIKit
 
 /// This App exists solely to make sure our SPM package is building
 
@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     let consentManager = SPConsentManager(
         accountId: 0,
         propertyId: 0,
+        // swiftlint:disable:next force_try
         propertyName: try! SPPropertyName("any"),
         campaigns: SPCampaigns(gdpr: SPCampaign()),
         delegate: nil
@@ -25,4 +26,3 @@ class ViewController: UIViewController {
         consentManager.loadMessage()
     }
 }
-

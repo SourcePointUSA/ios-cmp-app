@@ -6,16 +6,14 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 class ConnectivityManagerSpec: QuickSpec {
-
     override func spec() {
         let connectivityManager = ConnectivityManager()
         describe("Test ConnectivityManager") {
-
             it("Test isConnectedToNetwork method") {
                 let networkStatus = connectivityManager.isConnectedToNetwork()
                 if networkStatus == true {

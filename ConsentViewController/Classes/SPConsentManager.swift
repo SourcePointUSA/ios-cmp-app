@@ -11,13 +11,13 @@ import UIKit
 // swiftlint:disable file_length
 @objcMembers public class SPConsentManager: NSObject {
     static let DefaultTimeout = TimeInterval(30)
-    static public var shouldCallErrorMetrics = true
+    public static var shouldCallErrorMetrics = true
 
     // MARK: - SPSDK
     /// By default, the SDK preservs all user consent data from UserDefaults in case `OnError` event happens.
     /// Set this flag to `true` if you wish to opt-out from this behaviour.
     /// If set to `true` will remove all user consent data from UserDefaults, possibly triggering a message to be displayed again next time
-    public var cleanUserDataOnError: Bool = false
+    public var cleanUserDataOnError = false
 
     /// The timeout interval in seconds for the message being displayed
     public var messageTimeoutInSeconds = SPConsentManager.DefaultTimeout {
@@ -38,7 +38,27 @@ import UIKit
         }
     }
 
-    required public convenience init(
+    let propertyId: Int
+    let campaigns: SPCampaigns
+    let spClient: SourcePointProtocol
+    var spCoordinator: SPClientCoordinator
+    let deviceManager: SPDeviceManager
+
+    weak var delegate: SPDelegate?
+    var authId: String? {
+        didSet {
+            spCoordinator.authId = authId
+        }
+    }
+    var storage: SPLocalStorage
+    var messageControllersStack: [SPMessageView] = []
+    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
+    var ccpaUUID: String? { spCoordinator.userData.ccpa?.consents?.uuid }
+    var gdprUUID: String? { spCoordinator.userData.gdpr?.consents?.uuid }
+    var messagesToShow = 0
+    var responsesToReceive = 0
+
+    public required convenience init(
         accountId: Int,
         propertyId: Int,
         propertyName: SPPropertyName,
@@ -50,7 +70,7 @@ import UIKit
             accountId: accountId,
             propertyName: propertyName,
             campaignEnv: campaigns.environment,
-            timeout: SPConsentManager.DefaultTimeout
+            timeout: Self.DefaultTimeout
         )
         let localStorage = SPUserDefaults(storage: UserDefaults.standard)
         let coordinator = SourcepointClientCoordinator(
@@ -71,27 +91,6 @@ import UIKit
             spCoordinator: coordinator
         )
     }
-    // MARK: - /SPSDK
-
-    let propertyId: Int
-    let campaigns: SPCampaigns
-    let spClient: SourcePointProtocol
-    var spCoordinator: SPClientCoordinator
-    let deviceManager: SPDeviceManager
-
-    weak var delegate: SPDelegate?
-    var authId: String? {
-        didSet {
-            spCoordinator.authId = authId
-        }
-    }
-    var storage: SPLocalStorage
-    var messageControllersStack: [SPMessageView] = []
-    var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    var ccpaUUID: String? { spCoordinator.userData.ccpa?.consents?.uuid }
-    var gdprUUID: String? { spCoordinator.userData.gdpr?.consents?.uuid }
-    var messagesToShow = 0
-    var responsesToReceive = 0
 
     init(
         propertyId: Int,
@@ -138,6 +137,7 @@ import UIKit
             nativeMessage.messageUIDelegate = self
             return nativeMessage
         #if os(tvOS)
+
         case .nativePM(let content):
             if type == .gdpr {
                 let controller = SPGDPRNativePrivacyManagerViewController(
@@ -166,6 +166,7 @@ import UIKit
             return nil
         #endif
         #if os(iOS)
+
         case .web:
             return GenericWebMessageViewController(
                 url: url,
@@ -176,6 +177,7 @@ import UIKit
                 delegate: self
             )
         #endif
+
         default:
             return nil
         }
@@ -219,7 +221,7 @@ import UIKit
     func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
         let pmId = URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
             .queryItems?
-            .first { $0.name == "message_id"}?
+            .first { $0.name == "message_id" }?
             .value ?? ""
         GenericWebMessageViewController(
             url: pmURL,
@@ -249,7 +251,7 @@ import UIKit
             handleSDKDone()
         } else {
             if cleanUserDataOnError {
-                SPConsentManager.clearAllData()
+                Self.clearAllData()
             }
             delegate?.onError?(error: error)
         }
@@ -262,7 +264,7 @@ import UIKit
             deviceFamily: deviceManager.deviceFamily()
         )
         if cleanUserDataOnError {
-            SPConsentManager.clearAllData()
+            Self.clearAllData()
         }
         delegate?.onError?(error: error)
     }
@@ -285,16 +287,16 @@ import UIKit
 @objc extension SPConsentManager: SPSDK {
     public static let VERSION = "7.0.1"
 
-    public static func clearAllData() {
-        SPUserDefaults(storage: UserDefaults.standard).clear()
-    }
-
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
     public var ccpaApplies: Bool { spCoordinator.userData.ccpa?.applies ?? false }
 
     /// Returns the user data **stored in the `UserDefaults`**.
     public var userData: SPUserData { spCoordinator.userData }
+
+    public static func clearAllData() {
+        SPUserDefaults(storage: UserDefaults.standard).clear()
+    }
 
     @nonobjc
     private func messagesToViewController(_ messages: [MessageToDisplay]) -> [SPMessageView] {
@@ -328,6 +330,7 @@ import UIKit
                         } else {
                             strongSelf.renderNextMessageIfAny()
                         }
+
                     case .failure(let error):
                         strongSelf.gracefullyDegradeOnError(error)
                 }
@@ -371,6 +374,7 @@ import UIKit
                 pmViewController.categories = message.categories ?? []
                 pmViewController.delegate = self
                 self?.loaded(pmViewController)
+
             case .failure(let error):
                 self?.onError(error)
             }
@@ -414,6 +418,7 @@ import UIKit
                 pmViewController.delegate = self
                 pmViewController.ccpaConsents = self?.userData.ccpa?.consents
                 self?.loaded(pmViewController)
+
             case .failure(let error):
                 self?.onError(error)
             }
@@ -489,6 +494,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .AcceptAll, .RejectAll, .SaveAndExit:
             report(action: action)
             nextMessageIfAny(controller)
+
         case .ShowPrivacyManager:
             guard let url = action.pmURL?.appendQueryItems(["site_id": String(propertyId)]) else {
                 onError(InvalidURLError(urlString: "Empty or invalid PM URL"))
@@ -497,10 +503,12 @@ extension SPConsentManager: SPMessageUIDelegate {
             if let spController = controller as? SPMessageViewController {
                 spController.loadPrivacyManager(url: url)
             }
+
         case .PMCancel:
             if let spController = controller as? SPMessageViewController {
                 spController.closePrivacyManager()
             }
+
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 self?.spCoordinator.reportIdfaStatus(
@@ -516,6 +524,7 @@ extension SPConsentManager: SPMessageUIDelegate {
                 }
                 self?.nextMessageIfAny(controller)
             }
+
         default:
             nextMessageIfAny(controller)
         }
@@ -542,6 +551,7 @@ extension SPConsentManager: SPNativePMDelegate {
         ) { [weak self] result in
             switch result {
             case .failure(let error): self?.onError(error)
+
             case .success(var pmData):
                 pmData.grants = self?.userData.gdpr?.consents?.vendorGrants
                 handler(result.map { _ in pmData })
@@ -556,6 +566,7 @@ extension SPConsentManager: SPNativePMDelegate {
         ) { [weak self] result in
             switch result {
             case .failure(let error): self?.onError(error)
+
             case .success(var pmData):
                 pmData.rejectedCategories = self?.userData.ccpa?.consents?.rejectedCategories
                 pmData.rejectedVendors = self?.userData.ccpa?.consents?.rejectedVendors

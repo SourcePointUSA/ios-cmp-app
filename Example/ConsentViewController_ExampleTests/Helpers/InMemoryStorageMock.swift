@@ -6,16 +6,16 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import ConsentViewController
+import Foundation
 
 /// A class that uses [String: Any] as its storage
 class InMemoryStorageMock: Storage {
+    var storage = [String: Any]()
+
     func integer(forKey defaultName: String) -> Int {
         storage[defaultName] as? Int ?? 0
     }
-
-    var storage = [String: Any]()
 
     func string(forKey defaultName: String) -> String? {
         storage[defaultName] as? String

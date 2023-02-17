@@ -8,9 +8,9 @@
 import Foundation
 
 class SPUserDefaults: SPLocalStorage {
-    static public let SP_KEY_PREFIX = "sp_"
-    static public let IAB_KEY_PREFIX = "IABTCF_"
-    static public let US_PRIVACY_STRING_KEY = "IABUSPrivacy_String"
+    public static let SP_KEY_PREFIX = "sp_"
+    public static let IAB_KEY_PREFIX = "IABTCF_"
+    public static let US_PRIVACY_STRING_KEY = "IABUSPrivacy_String"
 
     static let LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)localState"
     static let USER_DATA_KEY = "\(SP_KEY_PREFIX)userData"
@@ -82,9 +82,9 @@ class SPUserDefaults: SPLocalStorage {
     }
 
     func dictionaryRepresentation() -> [String: Any?] {[
-        SPUserDefaults.USER_DATA_KEY: userData,
-        SPUserDefaults.US_PRIVACY_STRING_KEY: usPrivacyString,
-        SPUserDefaults.LOCAL_STATE_KEY: localState
+        Self.USER_DATA_KEY: userData,
+        Self.US_PRIVACY_STRING_KEY: usPrivacyString,
+        Self.LOCAL_STATE_KEY: localState
     ].merging(tcfData ?? [:]) { item, _ in item }}
 
     func clear() {

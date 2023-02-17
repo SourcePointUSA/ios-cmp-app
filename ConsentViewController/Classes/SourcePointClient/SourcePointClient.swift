@@ -248,7 +248,7 @@ class SourcePointClient: SourcePointProtocol {
         let url = Constants.Urls.CCPA_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
                 "siteId": String(propertyId),
                 "consentLanguage": consentLanguage.rawValue
-            ])!
+        ])!
             client.get(urlString: url.absoluteString) { result in
                 handler(Result {
                     try result.decoded() as CCPAPrivacyManagerViewResponse

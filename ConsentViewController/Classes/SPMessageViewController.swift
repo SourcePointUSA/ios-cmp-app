@@ -5,6 +5,8 @@
 //  Created by Andre Herculano on 03.03.21.
 //
 
+// swiftlint:disable unavailable_function
+
 import Foundation
 import UIKit
 
@@ -26,6 +28,17 @@ extension RenderingAppEvents: RawRepresentable {
 
     typealias RawValue = String
 
+    var rawValue: String {
+        switch self {
+            case .readyForPreload: return "readyForPreload"
+            case .onMessageReady: return "onMessageReady"
+            case .onPMReady: return "onPMReady"
+            case .onAction: return "onAction"
+            case .onError: return "onError"
+            case let .unknown(event): return event ?? ""
+        }
+    }
+
     init?(rawValue: String) {
         switch rawValue {
         case "readyForPreload": self = .readyForPreload
@@ -34,17 +47,6 @@ extension RenderingAppEvents: RawRepresentable {
         case "onAction": self = .onAction
         case "onError": self = .onError
         case let event: self = .unknown(event)
-        }
-    }
-
-    var rawValue: String {
-        switch self {
-        case .readyForPreload: return "readyForPreload"
-        case .onMessageReady: return "onMessageReady"
-        case .onPMReady: return "onPMReady"
-        case .onAction: return "onAction"
-        case .onError: return "onError"
-        case let .unknown(event): return event ?? ""
         }
     }
 }

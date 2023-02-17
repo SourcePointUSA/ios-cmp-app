@@ -6,10 +6,14 @@
 //  Copyright © 2023 CocoaPods. All rights reserved.
 //
 
-import Foundation
 import ConsentViewController
+import Foundation
 
 struct Config {
+    enum Keys: String, CaseIterable {
+        case accountId, propertyId, propertyName, gdpr, ccpa, att, language, gdprPmId, ccpaPmId
+    }
+
     let accountId, propertyId: Int
     let propertyName: String
     let gdpr, ccpa, att: Bool
@@ -18,10 +22,6 @@ struct Config {
 
     let myVendorId = "5ff4d000a228633ac048be41"
     let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
-
-    enum Keys: String, CaseIterable {
-        case accountId, propertyId, propertyName, gdpr, ccpa, att, language, gdprPmId, ccpaPmId
-    }
 }
 
 extension Config {
@@ -38,4 +38,3 @@ extension Config {
         ccpaPmId = defaults.ccpaPmId
     }
 }
-

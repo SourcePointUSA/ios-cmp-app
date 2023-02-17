@@ -39,6 +39,7 @@ import Foundation
             self = .Vendors
         case "features":
             self = .Features
+
         default:
             return nil
         }

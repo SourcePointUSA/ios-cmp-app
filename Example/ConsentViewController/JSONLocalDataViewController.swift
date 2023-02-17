@@ -7,14 +7,13 @@
 //
 
 import Foundation
-import UIKit
 import JSONView
 import SwiftUI
+import UIKit
 
 func toHashable(_ data: Any) -> AnyHashable {
     if let data = data as? Data,
-       let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? AnyHashable
-    {
+       let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? AnyHashable {
         return jsonData
     } else {
         return String(describing: data)
@@ -22,12 +21,12 @@ func toHashable(_ data: Any) -> AnyHashable {
 }
 
 class JSONLocalDataViewController: UIViewController {
-    @IBOutlet weak var containerView: UIView!
-    
+    @IBOutlet var containerView: UIView!
+
     override func viewDidLoad() {
         let data: [String: AnyHashable] = UserDefaults.standard.dictionaryRepresentation()
             .filter { $0.key.starts(with: "sp_") || $0.key.starts(with: "IAB") }
-            .reduce(into: [String: AnyHashable]()) { (acc, element) in
+            .reduce(into: [String: AnyHashable]()) { acc, element in
                 if let newValue = element.value as? AnyHashable {
                     acc[element.key] = toHashable(newValue)
                 }

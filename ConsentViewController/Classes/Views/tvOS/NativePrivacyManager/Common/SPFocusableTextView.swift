@@ -10,9 +10,14 @@ import UIKit
 class SPFocusableTextView: UITextView, UITextViewDelegate {
     override var canBecomeFocused: Bool { isContentBig }
     var isContentBig: Bool { self.contentSize.height > self.frame.size.height }
-    public var contentFitsContainer: Bool = true
+    public var contentFitsContainer = true
 
-    open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.delegate = self
+    }
+
+    override open func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         if isFocused {
             backgroundColor = .lightGray.withAlphaComponent(0.5)
             flashScrollIndicators()
@@ -22,11 +27,6 @@ class SPFocusableTextView: UITextView, UITextViewDelegate {
         } else {
             backgroundColor = .clear
         }
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.delegate = self
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

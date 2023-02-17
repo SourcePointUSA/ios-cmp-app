@@ -6,10 +6,12 @@
 //  Copyright © 2020 All rights reserved.
 //
 
-import XCTest
-import Quick
-import Nimble
+// swiftlint:disable function_body_length
+
 @testable import ConsentViewController
+import Nimble
+import Quick
+import XCTest
 
 class SPGDPRExampleAppUITests: QuickSpec {
     var app: ExampleApp!
@@ -140,4 +142,3 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
     }
 }
-

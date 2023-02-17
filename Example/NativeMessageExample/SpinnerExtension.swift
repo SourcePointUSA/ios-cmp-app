@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-fileprivate var aiView: UIView?
+private var aiView: UIView?
 
 extension UIViewController {
     func showSpinner() {

@@ -6,8 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import ConsentViewController
+import Foundation
 
 class ConnectivityMock: Connectivity {
     let isConnected: Bool
@@ -15,6 +15,6 @@ class ConnectivityMock: Connectivity {
         isConnected = connected
     }
     func isConnectedToNetwork() -> Bool {
-        return isConnected
+        isConnected
     }
 }

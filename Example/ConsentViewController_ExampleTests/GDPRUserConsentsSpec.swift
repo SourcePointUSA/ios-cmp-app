@@ -6,10 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 class SPGDPRConsentsSpec: QuickSpec {
     override func spec() {
@@ -30,10 +30,11 @@ class SPGDPRConsentsSpec: QuickSpec {
                     "childPmId": null,
                     "consentStatus": {}
                 }
-                """.data(using: .utf8) }
+                """.data(using: .utf8)
+            }
             let consent = try gdprCampaign.decoded() as SPGDPRConsent
-            expect(consent.euconsent).to(equal("ABCD"))
-            expect(consent.vendorGrants).to(equal(SPGDPRVendorGrants()))
+            expect(consent.euconsent) == "ABCD"
+            expect(consent.vendorGrants) == SPGDPRVendorGrants()
             expect(consent.childPmId).to(beNil())
         }
 
@@ -56,7 +57,7 @@ class SPGDPRConsentsSpec: QuickSpec {
                 )
                 expect(consent.acceptedCategories).to(contain(["purpose1", "purpose3"]))
                 expect(consent.acceptedCategories).notTo(contain(["purpose2"]))
-                expect(consent.childPmId).to(equal("yes"))
+                expect(consent.childPmId) == "yes"
             }
         }
     }

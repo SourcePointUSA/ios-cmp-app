@@ -6,14 +6,12 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 class GDPRMessageSpec: QuickSpec {
-
     override func spec() {
-
         describe("Test GDPRMessage") {
             var attributeStyle: SPNativeMessage.AttributeStyle?
             var messageAttribute: SPNativeMessage.Attribute?
@@ -29,19 +27,19 @@ class GDPRMessageSpec: QuickSpec {
             }
 
             it("Test AttributeStyle method") {
-                expect(attributeStyle?.backgroundColor).to(equal("#944488"))
+                expect(attributeStyle?.backgroundColor) == "#944488"
             }
 
             it("Test MessageAction method") {
-                expect(messageAttribute?.style.backgroundColor).to(equal("#944488"))
+                expect(messageAttribute?.style.backgroundColor) == "#944488"
             }
 
             it("Test MessageAction method") {
-                expect(messageAction?.choiceType).to(equal(SPActionType.AcceptAll))
+                expect(messageAction?.choiceType) == SPActionType.AcceptAll
             }
 
             it("Test GDPRMessage method") {
-                expect(gdprMessage?.title.style.color).to(equal("#00FA9A"))
+                expect(gdprMessage?.title.style.color) == "#00FA9A"
             }
         }
     }

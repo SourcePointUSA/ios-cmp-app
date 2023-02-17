@@ -5,6 +5,8 @@
 //  Created by Andre Herculano on 22.09.21.
 //
 
+// swiftlint:disable force_unwrapping
+
 import Foundation
 import UIKit
 

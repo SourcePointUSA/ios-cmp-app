@@ -6,21 +6,25 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import XCTest
 import Nimble
 import Quick
+import XCTest
 
 extension TimeInterval {
     init?(dispatchTimeInterval: DispatchTimeInterval) {
         switch dispatchTimeInterval {
         case .seconds(let value):
             self = Double(value)
+
         case .milliseconds(let value):
             self = Double(value) / 1_000
+
         case .microseconds(let value):
             self = Double(value) / 1_000_000
+
         case .nanoseconds(let value):
             self = Double(value) / 1_000_000_000
+
         case .never:
             return nil
         @unknown default:
@@ -31,7 +35,7 @@ extension TimeInterval {
 
 /// A matcher that checks if a `XCUIElement` contains the given text
 public func containText(_ text: String) -> Predicate<XCUIElement> {
-    return Predicate.simple("contain text") { actualExpression in
+    Predicate.simple("contain text") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         return PredicateStatus(bool: actual.label.contains(text))
     }
@@ -40,7 +44,7 @@ public func containText(_ text: String) -> Predicate<XCUIElement> {
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
 /// a certain amount of time. 10 seconds by default
 public func showUp() -> Predicate<XCUIElement> {
-    return Predicate.simple("show up") { actualExpression in
+    Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         return PredicateStatus(bool: actual.waitForExistence(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)!
         ))
@@ -50,7 +54,7 @@ public func showUp() -> Predicate<XCUIElement> {
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
 /// a certain amount of time.
 public func showUp(in timeout: TimeInterval) -> Predicate<XCUIElement> {
-    return Predicate.simple("show up") { actualExpression in
+    Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         return PredicateStatus(bool: actual.waitForExistence(timeout: timeout))
     }
@@ -59,7 +63,7 @@ public func showUp(in timeout: TimeInterval) -> Predicate<XCUIElement> {
 /// A Nimble matcher that succeeds when an XCUIElement no longer exists. Due to its async nature, it should
 /// be used together with `.toEventually`.
 public func disappear() -> Predicate<XCUIElement> {
-    return Predicate.simple("disappear") { actualExpression in
+    Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual)
         QuickSpec.current.waitForExpectations(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)!
@@ -70,7 +74,7 @@ public func disappear() -> Predicate<XCUIElement> {
 
 /// A Nimble matcher that succeeds when an XCUIElement is enable
 public func beEnabled() -> Predicate<XCUIElement> {
-    return Predicate.simple("beEnabled") { actualExpression in
+    Predicate.simple("beEnabled") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         return PredicateStatus(bool: actual.isEnabled)
     }
@@ -78,7 +82,7 @@ public func beEnabled() -> Predicate<XCUIElement> {
 
 /// A Nimble matcher that succeeds when an XCUIElement is disabled
 public func beDisabled() -> Predicate<XCUIElement> {
-    return Predicate.simple("beDisabled") { actualExpression in
+    Predicate.simple("beDisabled") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         return PredicateStatus(bool: !actual.isEnabled)
     }

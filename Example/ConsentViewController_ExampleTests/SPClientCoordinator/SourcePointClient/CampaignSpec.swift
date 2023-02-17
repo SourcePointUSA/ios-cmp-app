@@ -6,10 +6,10 @@
 //  Copyright © 2022 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 // swiftlint:disable force_try function_body_length
 
@@ -49,18 +49,18 @@ class CampaignSpec: QuickSpec {
         """.data(using: .utf8)!).get()
 
         it("can be decoded with keyed consentStatus") {
-            expect(campaignWithKeydConsentStatus.consentStatus?.rejectedAny).to(beTrue())
-            expect(campaignWithKeydConsentStatus.consentStatus?.rejectedLI).to(beFalse())
-            expect(campaignWithKeydConsentStatus.consentStatus?.consentedAll).to(beFalse())
-            expect(campaignWithKeydConsentStatus.consentStatus?.hasConsentData).to(beFalse())
-            expect(campaignWithKeydConsentStatus.consentStatus?.consentedToAny).to(beFalse())
+            expect(campaignWithKeydConsentStatus.consentStatus?.rejectedAny) == true
+            expect(campaignWithKeydConsentStatus.consentStatus?.rejectedLI) == false
+            expect(campaignWithKeydConsentStatus.consentStatus?.consentedAll) == false
+            expect(campaignWithKeydConsentStatus.consentStatus?.hasConsentData) == false
+            expect(campaignWithKeydConsentStatus.consentStatus?.consentedToAny) == false
         }
 
         it("can be decoded with non keyed consentStatus") {
-            expect(campaignWithNonKeyedConsentStatus.consentStatus?.consentedAll).to(beFalse())
-            expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedAll).to(beFalse())
-            expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedVendors).to(equal([]))
-            expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedCategories).to(equal([]))
+            expect(campaignWithNonKeyedConsentStatus.consentStatus?.consentedAll) == false
+            expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedAll) == false
+            expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedVendors) == []
+            expect(campaignWithNonKeyedConsentStatus.consentStatus?.rejectedCategories) == []
         }
 
         it("ccpa campaign can be decoded into SPCCPAConsent") {

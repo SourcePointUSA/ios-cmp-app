@@ -30,4 +30,3 @@ enum SDKStatus: String {
     case finished = "Finished"
     case errored = "Errored"
 }
-

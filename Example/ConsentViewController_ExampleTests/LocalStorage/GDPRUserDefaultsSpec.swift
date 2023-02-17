@@ -6,9 +6,9 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 // swiftlint:disable force_cast function_body_length
 
@@ -34,28 +34,28 @@ class GDPRUserDefaultsSpec: QuickSpec {
                 it("gets its value from the local storage") {
                     localStorage.storage = [SPUserDefaults.IAB_CMP_SDK_ID_KEY: 99]
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    expect(userDefaults.tcfData?[SPUserDefaults.IAB_CMP_SDK_ID_KEY] as? Int).to(equal(99))
+                    expect(userDefaults.tcfData?[SPUserDefaults.IAB_CMP_SDK_ID_KEY] as? Int) == 99
                 }
 
                 it("persists the value in the local storage") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     userDefaults.tcfData = [SPUserDefaults.IAB_CMP_SDK_ID_KEY: 99]
                     let stored = localStorage.storage[SPUserDefaults.IAB_CMP_SDK_ID_KEY] as! Int
-                    expect(stored).to(equal(99))
+                    expect(stored) == 99
                 }
             }
 
             describe("userData") {
                 it("is empty SPUserData by default") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    expect(userDefaults.userData).to(equal(SPUserData()))
+                    expect(userDefaults.userData) == SPUserData()
                 }
 
                 it("gets its value from the local storage") {
                     let userData = SPUserData()
                     localStorage.storage = [SPUserDefaults.USER_DATA_KEY: userData]
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    expect(userDefaults.userData).to(equal(userData))
+                    expect(userDefaults.userData) == userData
                 }
 
                 it("persists the value in the local storage") {
@@ -63,7 +63,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     userDefaults.userData = userData
                     let stored = localStorage.storage[SPUserDefaults.USER_DATA_KEY] as! SPUserData
-                    expect(stored).to(equal(userData))
+                    expect(stored) == userData
                 }
             }
 
@@ -75,8 +75,8 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     userDefaults.userData = userData
                     userDefaults.tcfData = tcfData
                     let dict = userDefaults.dictionaryRepresentation()
-                    expect((dict[SPUserDefaults.USER_DATA_KEY] as? SPUserData)).to(equal(userData))
-                    expect((dict["\(SPUserDefaults.IAB_KEY_PREFIX)foo"] as? String)).to(equal("bar"))
+                    expect((dict[SPUserDefaults.USER_DATA_KEY] as? SPUserData)) == userData
+                    expect((dict["\(SPUserDefaults.IAB_KEY_PREFIX)foo"] as? String)) == "bar"
                 }
 
                 it("returns a dictionary containing only its attributes") {
@@ -96,7 +96,7 @@ class GDPRUserDefaultsSpec: QuickSpec {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     userDefaults.userData = self.randomUserConsents()
                     userDefaults.clear()
-                    expect(userDefaults.userData).to(equal(SPUserData()))
+                    expect(userDefaults.userData) == SPUserData()
                 }
 
                 it("sets tcfData back to its default value") {
@@ -111,13 +111,13 @@ class GDPRUserDefaultsSpec: QuickSpec {
                 it("sets gdprChildPMId and checks it") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     userDefaults.gdprChildPmId = "yo"
-                    expect(userDefaults.gdprChildPmId).to(equal("yo"))
+                    expect(userDefaults.gdprChildPmId) == "yo"
                 }
 
                 it("sets ccpaChildPMId and checks it") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     userDefaults.ccpaChildPmId = "yo"
-                    expect(userDefaults.ccpaChildPmId).to(equal("yo"))
+                    expect(userDefaults.ccpaChildPmId) == "yo"
                 }
             }
         }

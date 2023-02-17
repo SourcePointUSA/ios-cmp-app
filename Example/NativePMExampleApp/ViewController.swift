@@ -6,24 +6,11 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import UIKit
 import ConsentViewController
+import UIKit
 
 class ViewController: UIViewController {
     var activityIndicator = UIActivityIndicatorView(style: .white)
-
-    @IBOutlet weak var gdprButton: UIButton!
-    @IBOutlet weak var ccpaButton: UIButton!
-    @IBOutlet weak var sdkStatusLabel: UILabel!
-
-    @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "713324")
-    }
-
-    @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "753814")
-    }
-
     var sdkStatus = SDKStatus.notStarted
 
     var campaigns: SPCampaigns {
@@ -38,14 +25,19 @@ class ViewController: UIViewController {
     }
 
     lazy var consentManager: SPSDK = {
-        return SPConsentManager(
+        SPConsentManager(
             accountId: 22,
             propertyId: 21927,
+            // swiftlint:disable:next force_try
             propertyName: try! SPPropertyName("appletv.demo"),
             campaigns: campaigns,
             delegate: self
         )
     }()
+
+    @IBOutlet var gdprButton: UIButton!
+    @IBOutlet var ccpaButton: UIButton!
+    @IBOutlet var sdkStatusLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +47,14 @@ class ViewController: UIViewController {
         updateButtons()
         consentManager.loadMessage()
         updateSdkStatus(.running)
+    }
+
+    @IBAction func onGDPRTap(_ sender: Any) {
+        consentManager.loadGDPRPrivacyManager(withId: "713324")
+    }
+
+    @IBAction func onCCPATap(_ sender: Any) {
+        consentManager.loadCCPAPrivacyManager(withId: "753814")
     }
 }
 
@@ -126,4 +126,3 @@ enum SDKStatus: String {
     case done = "(SDK done)"
     case errored = "(SDK errored)"
 }
-

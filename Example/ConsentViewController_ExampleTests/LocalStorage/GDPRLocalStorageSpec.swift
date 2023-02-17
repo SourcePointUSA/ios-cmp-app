@@ -6,17 +6,17 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 class CodableMock: Codable, Equatable {
-    static func == (lhs: CodableMock, rhs: CodableMock) -> Bool {
-        return lhs.attribute == rhs.attribute
-    }
     let attribute: Int
     init(_ attr: Int) {
         attribute = attr
+    }
+    static func == (lhs: CodableMock, rhs: CodableMock) -> Bool {
+        lhs.attribute == rhs.attribute
     }
 }
 
@@ -27,7 +27,7 @@ class GDPRLocalStorageSpec: QuickSpec {
                 let original = CodableMock(42)
                 UserDefaults.standard.setObject(original, forKey: "a_codable")
                 let stored = UserDefaults.standard.object(ofType: CodableMock.self, forKey: "a_codable")
-                expect(stored).to(equal(original))
+                expect(stored) == original
             }
         }
     }
