@@ -38,9 +38,9 @@ import Foundation
     let requiringConsentVendors: [Vendor]?
     var uniqueVendorIds: [String] {
         Array(Set<String>(
-            (legIntVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? []) +
-                (requiringConsentVendors?.filter { $0.vendorId != nil }.map { $0.vendorId! } ?? [])
-        ))
+            ((legIntVendors ?? []).compactMap { $0.vendorId } +
+             ((requiringConsentVendors ?? []).compactMap { $0.vendorId })
+        )))
     }
 }
 
