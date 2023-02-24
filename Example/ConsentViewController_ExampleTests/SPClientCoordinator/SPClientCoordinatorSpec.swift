@@ -15,7 +15,7 @@ import Quick
 
 class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
-        describe("a property without campaigns") {
+        describe("a property with GDPR and CCPA campaigns") {
             SPConsentManager.clearAllData()
 
             let coordinator: SPClientCoordinator = SourcepointClientCoordinator(
@@ -37,6 +37,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                             switch result {
                                 case .success(let (messages, consents)):
                                     expect(messages.count) == 2
+                                    expect(consents.gdpr?.consents?.applies).to(beTrue())
                                     expect(consents.gdpr?.consents?.euconsent).notTo(beEmpty())
                                     expect(consents.gdpr?.consents?.vendorGrants).notTo(beEmpty())
                                     expect(consents.ccpa?.consents?.uspstring) == "1YNN"
