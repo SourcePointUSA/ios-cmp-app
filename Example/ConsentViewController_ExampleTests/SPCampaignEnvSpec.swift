@@ -60,8 +60,10 @@ class SPCampaignEnvSpec: QuickSpec {
                 it("can be decoded from JSON") {
                     var decoded: SPCampaignEnv?
                     if #available(iOS 11, *) {
+                        // swiftlint:disable:next force_unwrapping
                         decoded = try? JSONDecoder().decode(SPCampaignEnv.self, from: "\"stage\"".data(using: .utf8)!)
                     } else {
+                        // swiftlint:disable:next force_unwrapping
                         decoded = try? JSONDecoder().decode(SPCampaignEnv.self, from: "[\"stage\"]".data(using: .utf8)!)
                     }
                     expect(decoded) == .Stage

@@ -46,8 +46,7 @@ public func containText(_ text: String) -> Predicate<XCUIElement> {
 public func showUp() -> Predicate<XCUIElement> {
     Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        // swiftlint:disable:next force_unwrapping
-        return PredicateStatus(bool: actual.waitForExistence(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)!
+        return PredicateStatus(bool: actual.waitForExistence(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)
         ))
     }
 }

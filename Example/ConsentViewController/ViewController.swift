@@ -6,6 +6,8 @@
 //  Copyright © 2019 sourcepoint. All rights reserved.
 //
 
+// swiftlint:disable force_unwrapping
+
 import ConsentViewController
 import UIKit
 
