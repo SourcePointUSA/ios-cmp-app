@@ -57,7 +57,7 @@ class NativeMessageExampleUITests: QuickSpec {
 
     /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
     func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
-        waitUntil(timeout: .seconds(delay * 2)) { done in
+        waitUntil(timeout: .seconds(delay + 3)) { done in
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
                 execute()
                 done()

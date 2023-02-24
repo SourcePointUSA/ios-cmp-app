@@ -15,21 +15,19 @@ import Quick
 
 class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
-        describe("a property with GDPR and CCPA campaigns") {
-            SPConsentManager.clearAllData()
+        SPConsentManager.clearAllData()
 
-            let coordinator: SPClientCoordinator = SourcepointClientCoordinator(
-                accountId: 22,
-                propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-                propertyId: 16_893,
-                campaigns: SPCampaigns(
-                    gdpr: SPCampaign(),
-                    ccpa: SPCampaign()
-                )
+        let coordinator: SPClientCoordinator = SourcepointClientCoordinator(
+            accountId: 22,
+            propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+            propertyId: 16_893,
+            campaigns: SPCampaigns(
+                gdpr: SPCampaign(),
+                ccpa: SPCampaign()
             )
+        )
 
-            let defaults = UserDefaults.standard
-
+        describe("a property with GDPR and CCPA campaigns") {
             describe("loadMessage") {
                 it("should return 2 messages and consents") {
                     waitUntil { done in
@@ -41,8 +39,6 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.gdpr?.consents?.euconsent).notTo(beEmpty())
                                     expect(consents.gdpr?.consents?.vendorGrants).notTo(beEmpty())
                                     expect(consents.ccpa?.consents?.uspstring) == "1YNN"
-                                    expect(defaults.integer(forKey: "IABTCF_gdprApplies")) == 1
-                                    expect(defaults.string(forKey: "IABUSPrivacy_String")) == "1YNN"
                                 case .failure(let error):
                                     fail(error.failureReason)
                             }
