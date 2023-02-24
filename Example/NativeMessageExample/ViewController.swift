@@ -6,9 +6,9 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import UIKit
-import Foundation
 import ConsentViewController
+import Foundation
+import UIKit
 
 class ViewController: UIViewController {
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         "61767550ee493f0617946a71"  // Develop and improve products
     ]
     let accountId = 22
+    // swiftlint:disable:next force_try
     let propertyName = try! SPPropertyName("ios.native.demo")
     let campaigns = SPCampaigns(
         gdpr: SPCampaign(),
@@ -29,15 +30,30 @@ class ViewController: UIViewController {
     let gdprPMId = "566358"
     let ccpaPMId = "566360"
     var sdkStatus: SDKStatus = .notStarted
-
-    @IBOutlet weak var sdkStatusLabel: UILabel!
-    @IBOutlet weak var idfaStatusLabel: UILabel!
-    @IBOutlet weak var myVendorAcceptedLabel: UILabel!
-    @IBOutlet weak var acceptMyVendorButton: UIButton!
-    @IBOutlet weak var gdprPMButton: UIButton!
-    @IBOutlet weak var ccpaPMButton: UIButton!
-
     var messageController: NativeMessageViewController!
+
+    lazy var consentManager: SPConsentManager = { SPConsentManager(
+        accountId: accountId,
+        propertyId: 21_944,
+        propertyName: propertyName,
+        campaigns: campaigns,
+        delegate: self
+    )}()
+
+    @IBOutlet var sdkStatusLabel: UILabel!
+    @IBOutlet var idfaStatusLabel: UILabel!
+    @IBOutlet var myVendorAcceptedLabel: UILabel!
+    @IBOutlet var acceptMyVendorButton: UIButton!
+    @IBOutlet var gdprPMButton: UIButton!
+    @IBOutlet var ccpaPMButton: UIButton!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
+        consentManager.loadMessage()
+        sdkStatus = .running
+        updateUI()
+    }
 
     @IBAction func onNetworkCallsTap(_ sender: Any) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
@@ -66,22 +82,6 @@ class ViewController: UIViewController {
                 let vendorAccepted = consents.vendorGrants[self?.myVendorId ?? ""]?.granted
                 self?.updateMyVendorUI(vendorAccepted)
             }
-    }
-
-    lazy var consentManager: SPConsentManager = { SPConsentManager(
-        accountId: accountId,
-        propertyId: 21944,
-        propertyName: propertyName,
-        campaigns: campaigns,
-        delegate: self
-    )}()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
-        consentManager.loadMessage()
-        sdkStatus = .running
-        updateUI()
     }
 }
 

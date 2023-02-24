@@ -5,8 +5,8 @@
 //  Created by Vilas on 03/05/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
@@ -14,23 +14,15 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         let content: [GDPRCategory]
 
         init? (header: SPNativeText?, content: [GDPRCategory]?) {
-            if content == nil || content!.isEmpty { return nil }
+            if content == nil || content?.isEmpty == true { return nil }
             self.header = header
-            self.content = content!
+            self.content = content! // swiftlint:disable:this force_unwrapping
         }
     }
 
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var acceptButton: SPAppleTVButton!
-    @IBOutlet weak var saveAndExit: SPAppleTVButton!
-    @IBOutlet weak var categorySlider: UISegmentedControl!
-    @IBOutlet weak var categoriesTableView: UITableView!
-    @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var actionsContainer: UIStackView!
     var nativeLongButton: SPNativeLongButton?
 
-    var consentsSnapshot: GDPRPMConsentSnaptshot = GDPRPMConsentSnaptshot()
+    var consentsSnapshot = GDPRPMConsentSnaptshot()
     var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
 
     var categories: [GDPRCategory] = []
@@ -46,19 +38,14 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 
     let cellReuseIdentifier = "cell"
 
-    override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
-        addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
-        addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
-        categoriesTableView.remembersLastFocusedIndexPath = true
-    }
-
-    func setHeader() {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
-    }
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var acceptButton: SPAppleTVButton!
+    @IBOutlet var saveAndExit: SPAppleTVButton!
+    @IBOutlet var categorySlider: UISegmentedControl!
+    @IBOutlet var categoriesTableView: UITableView!
+    @IBOutlet var header: SPPMHeader!
+    @IBOutlet var actionsContainer: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,11 +76,29 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
+        guard let pmPayload = consentsSnapshot.toPayload(language: .English, pmId: messageId).json() else {
+            messageUIDelegate?.onError(UnableToConvertConsentSnapshotIntoJsonError(campaignType: .gdpr))
+            return
+        }
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
             campaignType: campaignType,
-            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
+            pmPayload: pmPayload
         ), from: self)
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
+        addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
+        addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
+        categoriesTableView.remembersLastFocusedIndexPath = true
+    }
+
+    func setHeader() {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 }
 
@@ -114,7 +119,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = sections[section].header?.settings.text
         label.font = UIFont(from: sections[section].header?.settings.style?.font)
         label.textColor = UIColor(hexString: sections[section].header?.settings.style?.font?.color)
@@ -156,7 +161,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        return true
+        true
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

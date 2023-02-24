@@ -6,10 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import XCTest
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
+import XCTest
 
 class NativeMessageExampleUITests: QuickSpec {
     var app: NativeExampleApp!
@@ -42,7 +42,7 @@ class NativeMessageExampleUITests: QuickSpec {
         self.app.ccpaMessage.showOptionsButton.tap()
         expect(self.app.ccpaPM.messageTitle).toEventually(showUp())
     }
-    
+
     // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
     // the ATT expectations run only once per test suite.
     func runAttScenario() {
@@ -57,7 +57,7 @@ class NativeMessageExampleUITests: QuickSpec {
 
     /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
     func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
-        waitUntil(timeout: .seconds(delay * 2)) { done in
+        waitUntil(timeout: .seconds(delay + 3)) { done in
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
                 execute()
                 done()

@@ -6,10 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 class SPDeviceSpec: QuickSpec {
     override func spec() {
@@ -31,7 +31,7 @@ class SPDeviceSpec: QuickSpec {
                 } else if  #available(iOS 10, *) {
                     expect(version).to(contain("10."))
                 } else {
-                    expect(version).to(equal("apple-unknown"))
+                    expect(version) == "apple-unknown"
                 }
             }
         }

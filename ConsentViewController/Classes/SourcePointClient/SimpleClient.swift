@@ -22,7 +22,7 @@ protocol SPDispatchQueue {
 
 extension URLSession: SPURLSession {
     func dataTask(_ request: URLRequest, completionHandler: @escaping DataTaskResult) -> SPURLSessionDataTask {
-        return dataTask(with: request, completionHandler: completionHandler)
+        dataTask(with: request, completionHandler: completionHandler)
     }
 }
 
@@ -48,24 +48,7 @@ class SimpleClient: HttpClient {
     let session: SPURLSession
     let dispatchQueue: SPDispatchQueue
 
-    let logCalls: Bool = false
-
-    func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {
-        if logCalls, let method = request.httpMethod, let url = request.url {
-            logger.debug("\(type) \(method) \(url)")
-            if let body = body, let bodyString = String(data: body, encoding: .utf8) {
-                logger.debug(bodyString)
-            }
-        }
-    }
-
-    func logRequest(_ request: URLRequest, _ body: Data?) {
-        logRequest("REQUEST", request, body)
-    }
-
-    func logResponse(_ request: URLRequest, _ response: Data?) {
-        logRequest("RESPONSE", request, response)
-    }
+    let logCalls = false
 
     init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession, dispatchQueue: SPDispatchQueue) {
         self.connectivityManager = connectivityManager
@@ -85,6 +68,23 @@ class SimpleClient: HttpClient {
         )
     }
 
+    func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {
+        if logCalls, let method = request.httpMethod, let url = request.url {
+            logger.debug("\(type) \(method) \(url)")
+            if let body = body, let bodyString = String(data: body, encoding: .utf8) {
+                logger.debug(bodyString)
+            }
+        }
+    }
+
+    func logRequest(_ request: URLRequest, _ body: Data?) {
+        logRequest("REQUEST", request, body)
+    }
+
+    func logResponse(_ request: URLRequest, _ response: Data?) {
+        logRequest("RESPONSE", request, response)
+    }
+
     func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {
         logRequest(urlRequest, urlRequest.httpBody)
         guard connectivityManager.isConnectedToNetwork() else {
@@ -102,8 +102,10 @@ class SimpleClient: HttpClient {
                         switch response.statusCode {
                         case 400...499:
                             spError = ResourceNotFoundError(request: urlRequest, response: response)
+
                         case 500...599:
                             spError = InternalServerError(request: urlRequest, response: response)
+
                         default:
                             spError = GenericNetworkError(request: urlRequest, response: response)
                         }

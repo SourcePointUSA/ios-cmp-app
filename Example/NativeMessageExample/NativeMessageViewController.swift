@@ -6,27 +6,11 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import UIKit
-import Foundation
 import ConsentViewController
+import Foundation
+import UIKit
 
 @objcMembers public class NativeMessageViewController: UIViewController {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var showOptionsButton: UIButton!
-    @IBOutlet weak var rejectButton: UIButton!
-    @IBOutlet weak var acceptButton: UIButton!
-
-    @IBAction func onShowOptionsTap(_ sender: Any) {
-        onAction(SPAction(type: .ShowPrivacyManager, campaignType: message.campaignType), from: self)
-    }
-    @IBAction func onRejectTap(_ sender: Any) {
-        onAction(SPAction(type: .RejectAll, campaignType: message.campaignType), from: self)
-    }
-    @IBAction func onAcceptTap(_ sender: Any) {
-        onAction(SPAction(type: .AcceptAll, campaignType: message.campaignType), from: self)
-    }
-
     /// Holds the contents of the message. Title, body, actions, etc.
     let message: SPNativeMessage
 
@@ -37,6 +21,12 @@ import ConsentViewController
     /// Even though the native message only uses native components, the Privacy Manager is only available in a web form
     /// That's why we need to use the `SPConsentManager`, so we can display the PM whenever necessary
     var consentManager: SPConsentManager!
+
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var showOptionsButton: UIButton!
+    @IBOutlet var rejectButton: UIButton!
+    @IBOutlet var acceptButton: UIButton!
 
     public init(
         accountId: Int,
@@ -51,13 +41,14 @@ import ConsentViewController
         modalPresentationStyle = .overFullScreen
         consentManager = SPConsentManager(
             accountId: accountId,
-            propertyId: 21944,
+            propertyId: 21_944,
             propertyName: propertyName,
             campaigns: campaigns,
             delegate: self
         )
     }
 
+    @available(*, unavailable)
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -69,6 +60,16 @@ import ConsentViewController
         loadOrHideActionButton(actionType: .AcceptAll, button: acceptButton)
         loadOrHideActionButton(actionType: .RejectAll, button: rejectButton)
         loadOrHideActionButton(actionType: .ShowPrivacyManager, button: showOptionsButton)
+    }
+
+    @IBAction func onShowOptionsTap(_ sender: Any) {
+        onAction(SPAction(type: .ShowPrivacyManager, campaignType: message.campaignType), from: self)
+    }
+    @IBAction func onRejectTap(_ sender: Any) {
+        onAction(SPAction(type: .RejectAll, campaignType: message.campaignType), from: self)
+    }
+    @IBAction func onAcceptTap(_ sender: Any) {
+        onAction(SPAction(type: .AcceptAll, campaignType: message.campaignType), from: self)
     }
 }
 
@@ -84,7 +85,7 @@ extension NativeMessageViewController: SPDelegate {
     public func onAction(_ action: SPAction, from controller: UIViewController) {
         switch action.type {
         case .ShowPrivacyManager:
-            if let messageAction = message.actions.first(where: {$0.choiceType == action.type}),
+            if let messageAction = message.actions.first(where: { $0.choiceType == action.type }),
                let id = messageAction.pmId {
                 switch message.campaignType {
                     case .gdpr: consentManager.loadGDPRPrivacyManager(withId: id)
@@ -120,7 +121,7 @@ extension NativeMessageViewController: SPDelegate {
 // MARK: UI Related
 extension NativeMessageViewController {
     func loadOrHideActionButton(actionType: SPActionType, button: UIButton) {
-        if let action =  message.actions.first(where: { $0.choiceType == actionType }) {
+        if let action = message.actions.first(where: { $0.choiceType == actionType }) {
             button.setTitle(action.text, for: .normal)
             button.setTitleColor(UIColor(hexString: action.style.color), for: .normal)
             button.backgroundColor = UIColor(hexString: action.style.backgroundColor)

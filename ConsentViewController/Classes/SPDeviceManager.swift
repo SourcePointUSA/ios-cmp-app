@@ -17,7 +17,7 @@ struct SPDevice: SPDeviceManager {
     /// Returns the Version of the OS. E.g 1.2
     /// - SeeAlso: UIDevice.current.systemVersion
     func osVersion() -> String {
-        return UIDevice.current.systemVersion
+        UIDevice.current.systemVersion
     }
 
     /// Tries to get the device family from its unix. If none can be found it returns `apple-unknown`.

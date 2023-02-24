@@ -29,6 +29,10 @@ struct CCPAChoiceResponse: Equatable {
 }
 
 extension CCPAChoiceResponse: Decodable {
+    enum CodingKeys: CodingKey {
+        case uuid, dateCreated, consentedAll, rejectedAll, status, uspstring, rejectedVendors, rejectedCategories, gpcEnabled
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(
@@ -42,9 +46,5 @@ extension CCPAChoiceResponse: Decodable {
             rejectedVendors: ((container.decodeIfPresent([String?].self, forKey: .rejectedVendors)) ?? []).compactMap { $0 },
             rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 }
         )
-    }
-
-    enum CodingKeys: CodingKey {
-        case uuid, dateCreated, consentedAll, rejectedAll, status, uspstring, rejectedVendors, rejectedCategories, gpcEnabled
     }
 }

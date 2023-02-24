@@ -34,15 +34,6 @@ extension UIButton {
 
 @IBDesignable
 class SPPMHeader: UIView {
-    @IBOutlet var contentView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var backButton: UIButton!
-    @IBAction func onBackButtonPressed(_ sender: Any) {
-        if let callback = onBackButtonTapped {
-            callback()
-        }
-    }
-
     var spBackButton: SPNativeButton? {
         didSet {
             backButton.setup(from: spBackButton)
@@ -61,10 +52,15 @@ class SPPMHeader: UIView {
         get { false }
         set {}
     }
+
     override var accessibilityElements: [Any]? {
         get { [titleLabel as Any, backButton as Any] }
         set {}
     }
+
+    @IBOutlet var contentView: UIView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var backButton: UIButton!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -74,6 +70,12 @@ class SPPMHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadSubViews()
+    }
+
+    @IBAction func onBackButtonPressed(_ sender: Any) {
+        if let callback = onBackButtonTapped {
+            callback()
+        }
     }
 
     func loadSubViews() {

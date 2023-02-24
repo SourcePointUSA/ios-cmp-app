@@ -6,8 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
 @testable import ConsentViewController
+import Foundation
 
 class MockHttp: HttpClient {
     var postWasCalledWithUrl: String!
@@ -31,6 +31,7 @@ class MockHttp: HttpClient {
             if self.success != nil {
                 handler(.success(self.success))
             } else {
+                // swiftlint:disable:next force_unwrapping
                 handler(.failure(SPError(error: self.error!)))
             }
         }

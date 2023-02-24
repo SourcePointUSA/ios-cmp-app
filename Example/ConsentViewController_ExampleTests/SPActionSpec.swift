@@ -8,17 +8,16 @@
 
 // swiftlint:disable function_body_length
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 class SPActionSpec: QuickSpec {
     override func spec() {
-
         describe("SPAction") {
             it("publisherData is set to empty dictionary by default") {
-                expect(SPAction(type: .AcceptAll).publisherData).to(equal([:]))
+                expect(SPAction(type: .AcceptAll).publisherData) == [:]
             }
 
             describe("init") {
@@ -28,14 +27,14 @@ class SPActionSpec: QuickSpec {
                     let consentLanguage = "EN"
                     let action = SPAction(type: .AcceptAll, consentLanguage: "EN", pmPayload: payload)
 
-                    expect(action.type).to(equal(type))
-                    expect(action.pmPayload).to(equal(payload))
-                    expect(action.consentLanguage).to(equal(consentLanguage))
+                    expect(action.type) == type
+                    expect(action.pmPayload) == payload
+                    expect(action.consentLanguage) == consentLanguage
                 }
 
                 it("initialises data to data encoded \"{}\" by default") {
                     let action = SPAction(type: .AcceptAll)
-                    expect(action.pmPayload).to(equal(SPJson()))
+                    expect(action.pmPayload) == SPJson()
                 }
 
                 it("initialises consentLanguage to nil by default") {
@@ -48,61 +47,61 @@ class SPActionSpec: QuickSpec {
         describe("SPActionType") {
             describe("SaveAndExit") {
                 it("has the raw value of 1") {
-                    expect(SPActionType.SaveAndExit.rawValue).to(equal(1))
+                    expect(SPActionType.SaveAndExit.rawValue) == 1
                 }
 
                 it("has its description as 'SaveAndExit'") {
-                    expect(SPActionType.SaveAndExit.description).to(equal("SaveAndExit"))
+                    expect(SPActionType.SaveAndExit.description) == "SaveAndExit"
                 }
             }
 
             describe("PMCancel") {
                 it("has the raw value of 2") {
-                    expect(SPActionType.PMCancel.rawValue).to(equal(2))
+                    expect(SPActionType.PMCancel.rawValue) == 2
                 }
 
                 it("has its description as 'PMCancel'") {
-                    expect(SPActionType.PMCancel.description).to(equal("PMCancel"))
+                    expect(SPActionType.PMCancel.description) == "PMCancel"
                 }
             }
 
             describe("AcceptAll") {
                 it("has the raw value of 11") {
-                    expect(SPActionType.AcceptAll.rawValue).to(equal(11))
+                    expect(SPActionType.AcceptAll.rawValue) == 11
                 }
 
                 it("has its description as 'AcceptAll'") {
-                    expect(SPActionType.AcceptAll.description).to(equal("AcceptAll"))
+                    expect(SPActionType.AcceptAll.description) == "AcceptAll"
                 }
             }
 
             describe("ShowPrivacyManager") {
                 it("has the raw value of 12") {
-                    expect(SPActionType.ShowPrivacyManager.rawValue).to(equal(12))
+                    expect(SPActionType.ShowPrivacyManager.rawValue) == 12
                 }
 
                 it("has its description as 'ShowPrivacyManager'") {
-                    expect(SPActionType.ShowPrivacyManager.description).to(equal("ShowPrivacyManager"))
+                    expect(SPActionType.ShowPrivacyManager.description) == "ShowPrivacyManager"
                 }
             }
 
             describe("RejectAll") {
                 it("has the raw value of 13") {
-                    expect(SPActionType.RejectAll.rawValue).to(equal(13))
+                    expect(SPActionType.RejectAll.rawValue) == 13
                 }
 
                 it("has its description as 'RejectAll'") {
-                    expect(SPActionType.RejectAll.description).to(equal("RejectAll"))
+                    expect(SPActionType.RejectAll.description) == "RejectAll"
                 }
             }
 
             describe("Dismiss") {
                 it("has the raw value of 15") {
-                    expect(SPActionType.Dismiss.rawValue).to(equal(15))
+                    expect(SPActionType.Dismiss.rawValue) == 15
                 }
 
                 it("has its description as 'Dismiss'") {
-                    expect(SPActionType.Dismiss.description).to(equal("Dismiss"))
+                    expect(SPActionType.Dismiss.description) == "Dismiss"
                 }
             }
         }

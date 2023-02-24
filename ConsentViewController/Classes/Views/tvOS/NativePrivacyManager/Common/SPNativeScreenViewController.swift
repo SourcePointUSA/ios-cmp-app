@@ -36,6 +36,7 @@ enum SPUIRectEdge {
         case .bottom: self = .bottom
         case .left: self = .left
         case .right: self = .right
+
         default:
             self = .all
         }
@@ -45,7 +46,9 @@ enum SPUIRectEdge {
 extension UIFont {
     convenience init?(from spFont: SPNativeFont?) {
         let magicScalingFactor = CGFloat(1.8)
-        let fontSize = spFont?.fontSize != nil ? spFont!.fontSize * magicScalingFactor : UIFont.preferredFont(forTextStyle: .body).pointSize
+        let fontSize = spFont?.fontSize != nil ? // swiftlint:disable:next force_unwrapping
+            spFont!.fontSize * magicScalingFactor :
+            UIFont.preferredFont(forTextStyle: .body).pointSize
         let family = spFont?.fontFamily
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
@@ -65,12 +68,14 @@ extension UIViewController {
                 addFocusGuide(from: destination, to: [origin], direction: .top, debug: debug)
             ]
         case .topBottom: return addFocusGuide(from: destination, to: origin, direction: .bottomTop, debug: debug)
+
         case .rightLeft:
             return [
                 addFocusGuide(from: origin, to: [destination], direction: .right, debug: debug),
                 addFocusGuide(from: destination, to: [origin], direction: .left, debug: debug)
             ]
         case .leftRight: return addFocusGuide(from: destination, to: origin, direction: .rightLeft, debug: debug)
+
         default:
             return [addFocusGuide(from: origin, to: [destination], direction: direction, debug: debug)]
         }
@@ -79,7 +84,7 @@ extension UIViewController {
     @discardableResult
     func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: SPUIRectEdge, debug: Bool = false) -> UIFocusGuide? {
         if let origin = origin {
-            let destinations = maybeDestinations.filter { $0 != nil }.map { $0! }
+            let destinations = maybeDestinations.compactMap { $0 }
             let focusGuide = UIFocusGuide()
             view.addLayoutGuide(focusGuide)
             focusGuide.preferredFocusEnvironments = destinations
@@ -90,15 +95,19 @@ extension UIViewController {
             case .bottom:
                 focusGuide.topAnchor.constraint(equalTo: origin.bottomAnchor).isActive = true
                 focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+
             case .top:
                 focusGuide.bottomAnchor.constraint(equalTo: origin.topAnchor).isActive = true
                 focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+
             case .left:
                 focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
                 focusGuide.rightAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+
             case .right:
                 focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
                 focusGuide.leftAnchor.constraint(equalTo: origin.rightAnchor).isActive = true
+
             default:
                 // Not supported :(
                 break
@@ -123,7 +132,7 @@ class FocusGuideDebugView: UIView {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        return nil
+        nil
     }
 }
 
@@ -131,8 +140,6 @@ class FocusGuideDebugView: UIView {
     var components: [SPNativeUI] { viewData.children }
     let viewData: SPNativeView
     let pmData: PrivacyManagerViewData
-
-    func setFocusGuides() { }
 
     init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.viewData = viewData
@@ -146,6 +153,7 @@ class FocusGuideDebugView: UIView {
         modalPresentationStyle = .currentContext
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -156,6 +164,8 @@ class FocusGuideDebugView: UIView {
         view.tintColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
         setFocusGuides()
     }
+
+    func setFocusGuides() { }
 
     @discardableResult
     func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView {

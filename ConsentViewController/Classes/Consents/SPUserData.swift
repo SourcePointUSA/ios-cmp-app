@@ -16,12 +16,12 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     /// based on the user's IP. **SP does not store the user's IP.**
     public let applies: Bool
 
+    override public var description: String { "applies: \(applies), consents: \(String(describing: consents))" }
+
     public init(consents: ConsentType?, applies: Bool) {
         self.consents = consents
         self.applies = applies
     }
-
-    public override var description: String { "applies: \(applies), consents: \(String(describing: consents))" }
 
     override public func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? Self else { return false }
@@ -38,6 +38,8 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     /// - SeeAlso: `SPCCPAConsent`
     public let ccpa: SPConsent<SPCCPAConsent>?
 
+    override public var description: String { "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa))" }
+
     public init(
         gdpr: SPConsent<SPGDPRConsent>? = nil,
         ccpa: SPConsent<SPCCPAConsent>? = nil
@@ -46,9 +48,7 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
         self.ccpa = ccpa
     }
 
-    public override var description: String { "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa))" }
-
-    open override func isEqual(_ object: Any?) -> Bool {
+    override open func isEqual(_ object: Any?) -> Bool {
         if let object = object as? SPUserData {
             return  self.gdpr?.applies == object.gdpr?.applies &&
                     self.gdpr?.consents?.uuid == object.gdpr?.consents?.uuid &&

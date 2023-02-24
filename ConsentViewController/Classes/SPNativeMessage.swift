@@ -8,36 +8,11 @@
 import Foundation
 
 @objc public class SPNativeMessage: NSObject, Decodable, SPMessageView {
-    /// Used to notify the `SPConsentManager` about its different lifecycle events.
-    public weak var messageUIDelegate: SPMessageUIDelegate?
-
-    /// Indicates the type of the campaign for this message
-    /// - SeeMore: `SPCampaignType`
-    public var campaignType: SPCampaignType
-
-    /// The id of the message received from the server
-    public var messageId: String = ""
-
-    /// Unused by the native message
-    public var timeout: TimeInterval = 10.0
-
-    public func loadMessage() {
-        messageUIDelegate?.loaded?(self)
-    }
-
-    /// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
-    /// The will get a call to `onSPUIReady(_ controller: UIViewController)` when the PM
-    /// is ready to be displayed
-    public func loadPrivacyManager(url: URL) {
-    }
-
-    /// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
-    /// The will get a call to `onSPUIFinished(_ controller: UIViewController)` when the PM
-    /// is ready to be closed
-    public func closePrivacyManager() {
-    }
-
     public typealias CustomFields = [String: String]
+
+    enum CodingKeys: String, CodingKey {
+        case title, body, actions, customFields
+    }
 
     @objc public class AttributeStyle: NSObject, Codable {
         public let fontFamily: String
@@ -94,7 +69,7 @@ import Foundation
             )
         }
 
-        public override func encode(to encoder: Encoder) throws {
+        override public func encode(to encoder: Encoder) throws {
             try super.encode(to: encoder)
 
             var container = encoder.container(keyedBy: CodingKeys.self)
@@ -105,6 +80,19 @@ import Foundation
             case text, style, customFields, choiceType, url
         }
     }
+
+    /// Used to notify the `SPConsentManager` about its different lifecycle events.
+    public weak var messageUIDelegate: SPMessageUIDelegate?
+
+    /// Indicates the type of the campaign for this message
+    /// - SeeMore: `SPCampaignType`
+    public var campaignType: SPCampaignType
+
+    /// The id of the message received from the server
+    public var messageId: String = ""
+
+    /// Unused by the native message
+    public var timeout: TimeInterval = 10.0
 
     public let title: Attribute
     public let body: Attribute
@@ -128,7 +116,19 @@ import Foundation
         campaignType = .unknown
     }
 
-    enum CodingKeys: String, CodingKey {
-        case title, body, actions, customFields
+    public func loadMessage() {
+        messageUIDelegate?.loaded?(self)
+    }
+
+    /// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+    /// The will get a call to `onSPUIReady(_ controller: UIViewController)` when the PM
+    /// is ready to be displayed
+    public func loadPrivacyManager(url: URL) {
+    }
+
+    /// no-op the SPNativeMessage class is not responsible for loading the Privacy Manager
+    /// The will get a call to `onSPUIFinished(_ controller: UIViewController)` when the PM
+    /// is ready to be closed
+    public func closePrivacyManager() {
     }
 }

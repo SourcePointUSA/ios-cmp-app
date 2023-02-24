@@ -6,10 +6,12 @@
 //  Copyright © 2020 All rights reserved.
 //
 
-import XCTest
-import Quick
-import Nimble
+// swiftlint:disable function_body_length
+
 @testable import ConsentViewController
+import Nimble
+import Quick
+import XCTest
 
 class SPGDPRExampleAppUITests: QuickSpec {
     var app: ExampleApp!
@@ -50,8 +52,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
     }
 
     /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
-    func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
-        waitUntil(timeout: .seconds(delay * 2)) { done in
+    func waitForUserDefaultsToPersist(_ delay: Int = 10, execute: @escaping () -> Void) {
+        waitUntil(timeout: .seconds(delay + 5)) { done in
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
                 execute()
                 done()
@@ -133,11 +135,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Shows a translated message") {
-            self.app.relaunch(clean: true, resetAtt: true, args: [
+            self.app.relaunch(clean: true, resetAtt: false, args: [
+                "att": false,
                 "language": SPMessageLanguage.Spanish.rawValue
             ])
             expect(self.app.gdprMessage.spanishMessageTitle).toEventually(showUp())
         }
     }
 }
-

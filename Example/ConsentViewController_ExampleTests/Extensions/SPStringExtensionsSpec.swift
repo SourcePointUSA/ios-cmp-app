@@ -6,10 +6,10 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 class SPStringExtensionsSpec: QuickSpec {
     override func spec() {
@@ -28,7 +28,7 @@ class SPStringExtensionsSpec: QuickSpec {
                 </head>
                 """
                 let stripped = cssHtml.stripOutHtml()
-                expect(stripped).to(equal("\nHTML - head tag\nstrongbolditalic\n\n\n\n\n\nYour browser does not support javascript.\n"))
+                expect(stripped) == "\nHTML - head tag\nstrongbolditalic\n\n\n\n\n\nYour browser does not support javascript.\n"
             }
         }
     }

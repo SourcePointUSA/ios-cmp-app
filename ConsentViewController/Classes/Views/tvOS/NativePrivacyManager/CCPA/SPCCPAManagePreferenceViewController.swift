@@ -5,8 +5,8 @@
 //  Created by Vilas on 03/05/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
@@ -14,22 +14,15 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
         let content: [CCPACategory]
 
         init? (header: SPNativeText?, content: [CCPACategory]?) {
-            if content == nil || content!.isEmpty { return nil }
+            if content == nil || content?.isEmpty == true { return nil }
             self.header = header
-            self.content = content!
+            self.content = content! // swiftlint:disable:this force_unwrapping
         }
     }
 
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var acceptButton: SPAppleTVButton!
-    @IBOutlet weak var saveAndExit: SPAppleTVButton!
-    @IBOutlet weak var categoriesTableView: UITableView!
-    @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var actionsContainer: UIStackView!
     var nativeLongButton: SPNativeLongButton?
 
-    var consentsSnapshot: CCPAPMConsentSnaptshot = CCPAPMConsentSnaptshot()
+    var consentsSnapshot = CCPAPMConsentSnaptshot()
 
     var categories: [CCPACategory] = []
     var userConsentCategories: [CCPACategory] { categories.filter { $0.requiringConsentVendors.isNotEmpty() } }
@@ -41,17 +34,13 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
 
     let cellReuseIdentifier = "cell"
 
-    override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
-        categoriesTableView.remembersLastFocusedIndexPath = true
-    }
-
-    func setHeader() {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
-    }
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var acceptButton: SPAppleTVButton!
+    @IBOutlet var saveAndExit: SPAppleTVButton!
+    @IBOutlet var categoriesTableView: UITableView!
+    @IBOutlet var header: SPPMHeader!
+    @IBOutlet var actionsContainer: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,11 +66,27 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
+        guard let pmPayload = consentsSnapshot.toPayload(language: .English, pmId: messageId).json() else {
+            messageUIDelegate?.onError(UnableToConvertConsentSnapshotIntoJsonError(campaignType: .ccpa))
+            return
+        }
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
             campaignType: campaignType,
-            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
+            pmPayload: pmPayload
         ), from: self)
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
+        categoriesTableView.remembersLastFocusedIndexPath = true
+    }
+
+    func setHeader() {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
 }
 
@@ -100,7 +105,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = sections[section].header?.settings.text
         label.font = UIFont(from: sections[section].header?.settings.style?.font)
         label.textColor = UIColor(hexString: sections[section].header?.settings.style?.font?.color)
@@ -144,7 +149,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        return true
+        true
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

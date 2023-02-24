@@ -12,7 +12,11 @@ class SPStringifiedJSON: Codable {
     var raw = DictionaryType()
 
     required init(from decoder: Decoder) throws {
-        let data = try decoder.singleValueContainer().decode(String.self).data(using: .utf8)!
+        guard let data = try decoder.singleValueContainer().decode(String.self).data(using: .utf8) else {
+            throw DecodingError.dataCorrupted(DecodingError.Context(
+                codingPath: [], debugDescription: "Unable to transform string field into Data"
+            ))
+        }
         raw = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] ?? [:]
     }
 
@@ -28,6 +32,10 @@ extension SPStringifiedJSON: Collection {
     var startIndex: Index { raw.startIndex }
     var endIndex: Index { raw.endIndex }
 
+    func index(after i: SPStringifiedJSON.DictionaryType.Index) -> SPStringifiedJSON.DictionaryType.Index {
+        raw.index(after: i)
+    }
+
     subscript(index: Index) -> DictionaryType.Element {
         raw[index]
     }
@@ -39,9 +47,5 @@ extension SPStringifiedJSON: Collection {
         set {
             raw[key] = newValue
         }
-    }
-
-    func index(after i: SPStringifiedJSON.DictionaryType.Index) -> SPStringifiedJSON.DictionaryType.Index {
-        raw.index(after: i)
     }
 }

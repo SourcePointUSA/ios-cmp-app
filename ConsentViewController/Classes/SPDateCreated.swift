@@ -17,19 +17,19 @@ public struct SPDateCreated: Codable, Equatable {
     let originalDateString: String
     let date: Date
 
-    static func now() -> SPDateCreated {
-        SPDateCreated(date: Date())
-    }
-
     private init(date: Date) {
         self.date = date
-        originalDateString = SPDateCreated.format.string(from: date)
+        originalDateString = Self.format.string(from: date)
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         originalDateString = try container.decode(String.self)
-        date = SPDateCreated.format.date(from: originalDateString)!
+        date = Self.format.date(from: originalDateString) ?? Date()
+    }
+
+    static func now() -> SPDateCreated {
+        SPDateCreated(date: Date())
     }
 
     public func encode(to encoder: Encoder) throws {

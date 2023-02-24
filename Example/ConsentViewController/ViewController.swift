@@ -6,21 +6,57 @@
 //  Copyright © 2019 sourcepoint. All rights reserved.
 //
 
-import UIKit
+// swiftlint:disable force_unwrapping
+
 import ConsentViewController
+import UIKit
 
 class ViewController: UIViewController {
     var sdkStatus: SDKStatus = .notStarted
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     var myVendorAccepted: VendorStatus = .Unknown
+    lazy var config = { Config(fromStorageWithDefaults: Config(
+        accountId: 22,
+        propertyId: 16893,
+        propertyName: "mobile.multicampaign.demo",
+        gdpr: true,
+        ccpa: true,
+        att: true,
+        language: .BrowserDefault,
+        gdprPmId: "488393",
+        ccpaPmId: "509688"
+    ))}()
 
-    @IBOutlet weak var sdkStatusLabel: UILabel!
-    @IBOutlet weak var idfaStatusLabel: UILabel!
-    @IBOutlet weak var myVendorAcceptedLabel: UILabel!
-    @IBOutlet weak var acceptMyVendorButton: UIButton!
-    @IBOutlet weak var deleteMyVendorButton: UIButton!
-    @IBOutlet weak var gdprPMButton: UIButton!
-    @IBOutlet weak var ccpaPMButton: UIButton!
+    lazy var consentManager: SPSDK = { SPConsentManager(
+        accountId: config.accountId,
+        propertyId: config.propertyId,
+        // swiftlint:disable:next force_try
+        propertyName: try! SPPropertyName(config.propertyName),
+        campaigns: SPCampaigns(
+            gdpr: config.gdpr ? SPCampaign() : nil,
+            ccpa: config.ccpa ? SPCampaign() : nil,
+            ios14: config.att ? SPCampaign() : nil
+        ),
+        language: config.language,
+        delegate: self
+    )}()
+
+    @IBOutlet var sdkStatusLabel: UILabel!
+    @IBOutlet var idfaStatusLabel: UILabel!
+    @IBOutlet var myVendorAcceptedLabel: UILabel!
+    @IBOutlet var acceptMyVendorButton: UIButton!
+    @IBOutlet var deleteMyVendorButton: UIButton!
+    @IBOutlet var gdprPMButton: UIButton!
+    @IBOutlet var ccpaPMButton: UIButton!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sdkStatus = .running
+        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
+        myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
+        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": "load message"])
+        updateUI()
+    }
 
     @IBAction func onNetworkCallsTap(_ sender: Any) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
@@ -47,7 +83,7 @@ class ViewController: UIViewController {
             legIntCategories: []) { consents in
                 self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
                 self.updateUI()
-        }
+            }
     }
 
     @IBAction func onDeleteMyVendorTap(_ sender: Any) {
@@ -57,41 +93,7 @@ class ViewController: UIViewController {
             legIntCategories: []) { consents in
                 self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
                 self.updateUI()
-        }
-    }
-
-    lazy var config = { Config(fromStorageWithDefaults: Config(
-        accountId: 22,
-        propertyId: 16893,
-        propertyName: "mobile.multicampaign.demo",
-        gdpr: true,
-        ccpa: true,
-        att: true,
-        language: .BrowserDefault,
-        gdprPmId: "488393",
-        ccpaPmId: "509688"
-    ))}()
-
-    lazy var consentManager: SPSDK = { SPConsentManager(
-        accountId: config.accountId,
-        propertyId: config.propertyId,
-        propertyName: try! SPPropertyName(config.propertyName),
-        campaigns: SPCampaigns(
-            gdpr: config.gdpr ? SPCampaign() : nil,
-            ccpa: config.ccpa ? SPCampaign() : nil,
-            ios14: config.att ? SPCampaign() : nil
-        ),
-        language: config.language,
-        delegate: self
-    )}()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        sdkStatus = .running
-        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
-        myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
-        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": "load message"])
-        updateUI()
+            }
     }
 }
 
@@ -159,10 +161,12 @@ extension ViewController {
                 myVendorAcceptedLabel.textColor = .systemGray
                 acceptMyVendorButton.isEnabled = false
                 deleteMyVendorButton.isEnabled = false
+
             case .Accepted:
                 myVendorAcceptedLabel.textColor = .systemGreen
                 acceptMyVendorButton.isEnabled = false
                 deleteMyVendorButton.isEnabled = true
+
             case .Rejected:
                 myVendorAcceptedLabel.textColor = .systemRed
                 acceptMyVendorButton.isEnabled = true

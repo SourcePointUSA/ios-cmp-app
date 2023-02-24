@@ -11,7 +11,7 @@ struct GDPRChoiceBody: Encodable, Equatable {
     let authId, uuid, messageId, consentAllRef, vendorListId: String?
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: SPJson?
-    let sendPVData = true // TODO: ask Sid/Dan what is this
+    let sendPVData: Bool
     let propertyId: Int
     let sampleRate: Float?
     let idfaStatus: SPIDFAStatus?
@@ -26,7 +26,7 @@ struct CCPAChoiceBody: Encodable, Equatable {
     let authId, uuid, messageId: String?
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: SPJson?
-    let sendPVData = true // TODO: ask Sid/Dan what is this
+    let sendPVData: Bool
     let propertyId: Int
     let sampleRate: Float?
     let includeData = [

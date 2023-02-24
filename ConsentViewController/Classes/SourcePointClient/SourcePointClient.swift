@@ -12,8 +12,12 @@ extension Result where Success == Data? {
     func decoded<T: Decodable>(
         using decoder: JSONDecoder = .init()
     ) throws -> T {
-        let data = try get()
-        return try decoder.decode(T.self, from: data!)
+        let result = try get()
+        if let data = result {
+            return try decoder.decode(T.self, from: data)
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Failed converting Result into Data"))
+        }
     }
 }
 
@@ -199,7 +203,7 @@ class SourcePointClient: SourcePointProtocol {
             "propertyId": propertyId,
             "messageId": messageId,
             "includeData": "{\"categories\": {\"type\": \"RecordString\"}}"
-        ])!
+        ])! // swiftlint:disable:this force_unwrapping
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
                 (try result.decoded() as MessageResponse).message
@@ -220,7 +224,7 @@ class SourcePointClient: SourcePointProtocol {
             "consentLanguage": consentLanguage.rawValue,
             "propertyId": propertyId,
             "messageId": messageId
-        ])!
+        ])! // swiftlint:disable:this force_unwrapping
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
                 (try result.decoded() as MessageResponse).message
@@ -234,7 +238,7 @@ class SourcePointClient: SourcePointProtocol {
         let url = Constants.Urls.GDPR_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
             "siteId": String(propertyId),
             "consentLanguage": consentLanguage.rawValue
-        ])!
+        ])! // swiftlint:disable:this force_unwrapping
         client.get(urlString: url.absoluteString) { result in
             handler(Result {
                 try result.decoded() as GDPRPrivacyManagerViewResponse
@@ -248,7 +252,7 @@ class SourcePointClient: SourcePointProtocol {
         let url = Constants.Urls.CCPA_PRIVACY_MANAGER_VIEW_URL.appendQueryItems([
                 "siteId": String(propertyId),
                 "consentLanguage": consentLanguage.rawValue
-            ])!
+        ])! // swiftlint:disable:this force_unwrapping
             client.get(urlString: url.absoluteString) { result in
                 handler(Result {
                     try result.decoded() as CCPAPrivacyManagerViewResponse
@@ -259,6 +263,7 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL {
+        // swiftlint:disable:next force_unwrapping
         URL(string: "./\(actionType.rawValue)?env=\(Constants.Urls.envParam)", relativeTo: baseUrl)!
     }
 
@@ -335,7 +340,7 @@ class SourcePointClient: SourcePointProtocol {
                 categories: categories,
                 legIntCategories: legIntCategories
             )).map { body in
-                client.delete(urlString: deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID)!.absoluteString, body: body) { result in
+                client.delete(urlString: deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID).absoluteString, body: body) { result in
                     handler(Result {
                         try result.decoded() as AddOrDeleteCustomConsentResponse
                     }.mapError {
@@ -345,12 +350,14 @@ class SourcePointClient: SourcePointProtocol {
             }
         }
 
-    func deleteCustomConsentUrl(_ baseUrl: URL, _ propertyId: Int, _ consentUUID: String) -> URL? {
+    func deleteCustomConsentUrl(_ baseUrl: URL, _ propertyId: Int, _ consentUUID: String) -> URL {
         let propertyIdString = String(propertyId)
         let urlWithPath = baseUrl.appendingPathComponent(propertyIdString)
-        var components = URLComponents(url: urlWithPath, resolvingAgainstBaseURL: true)
-        components?.queryItems = [URLQueryItem(name: "consentUUID", value: consentUUID)]
-        return components?.url(relativeTo: baseUrl)
+        // swiftlint:disable:next force_unwrapping
+        var components = URLComponents(url: urlWithPath, resolvingAgainstBaseURL: true)!
+        components.queryItems = [URLQueryItem(name: "consentUUID", value: consentUUID)]
+        // swiftlint:disable:next force_unwrapping
+        return components.url(relativeTo: baseUrl)!
     }
 
     func errorMetrics(
@@ -368,7 +375,7 @@ class SourcePointClient: SourcePointProtocol {
             sdkVersion: sdkVersion,
             OSVersion: OSVersion,
             deviceFamily: deviceFamily,
-            propertyId: propertyId != nil ? String(propertyId!) : "",
+            propertyId: propertyId != nil ? String(propertyId!) : "", // swiftlint:disable:this force_unwrapping
             propertyName: propertyName,
             campaignType: campaignType
         )).map {

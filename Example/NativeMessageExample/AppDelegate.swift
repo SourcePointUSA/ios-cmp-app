@@ -6,8 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import UIKit
+// swiftlint:disable line_length
+
 import ConsentViewController
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         if let scheme = url.scheme,
            scheme.localizedCaseInsensitiveCompare("exampleapp") == .orderedSame,
            let host = url.host, host.localizedCaseInsensitiveCompare("network") == .orderedSame {

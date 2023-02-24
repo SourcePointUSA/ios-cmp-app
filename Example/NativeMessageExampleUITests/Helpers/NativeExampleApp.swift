@@ -6,8 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import XCTest
 import Nimble
+import XCTest
 
 protocol App {
     func launch()
@@ -37,7 +37,7 @@ class FirstLayerMessage: XCUIApplication {
 }
 
 class NativeExampleApp: XCUIApplication {
-    class CCPAPrivacyManager:XCUIApplication {
+    class CCPAPrivacyManager: XCUIApplication {
         private var container: XCUIElement {
             webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'CCPA PM'")).firstMatch
         }
@@ -45,12 +45,12 @@ class NativeExampleApp: XCUIApplication {
         var messageTitle: XCUIElement {
             container
         }
-        
+
         var acceptAllButton: XCUIElement {
             container.buttons["Accept All"].firstMatch
         }
     }
-    
+
     class GDPRPrivacyManager: XCUIApplication {
         private var container: XCUIElement {
             webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch
@@ -126,10 +126,10 @@ class NativeExampleApp: XCUIApplication {
     var ccpaPrivacyManagerButton: XCUIElement {
         buttons["CCPA Privacy Manager"].firstMatch
     }
-    
+
     var shouldRunAttScenario: Bool {
-        /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
-        /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
+        // Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
+        // So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
         staticTexts["unknown"].exists
     }
 

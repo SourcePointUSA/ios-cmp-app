@@ -6,10 +6,10 @@
 //  Copyright © 2022 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 // swiftlint:disable function_body_length
 class MessagesResponseSpec: QuickSpec {

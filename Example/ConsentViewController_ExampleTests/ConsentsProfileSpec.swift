@@ -8,9 +8,9 @@
 
 import Foundation
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 class ConsentsProfileSpec: QuickSpec {
     let ccpaConsents = """

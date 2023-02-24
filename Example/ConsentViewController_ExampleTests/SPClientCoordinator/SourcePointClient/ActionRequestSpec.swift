@@ -6,9 +6,9 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 // swiftlint:disable force_try
 class ActionRequestSpec: QuickSpec {
@@ -45,7 +45,7 @@ class ActionRequestSpec: QuickSpec {
 
         it("can be encoded to JSON") {
             let actionEncoded = String(data: try! JSONEncoder().encode(request), encoding: .utf8)
-            expect(actionString).to(equal(actionEncoded))
+            expect(actionString) == actionEncoded
         }
     }
 }

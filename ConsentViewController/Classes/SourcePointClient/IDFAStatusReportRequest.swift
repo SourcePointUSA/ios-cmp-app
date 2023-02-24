@@ -8,14 +8,14 @@
 import Foundation
 
 struct AppleTrackingPayload: Codable {
-    let appleChoice: SPIDFAStatus
-    let appleMsgId: Int?
-    let messagePartitionUUID: String?
-
     enum CodingKeys: String, CodingKey {
         case appleChoice, appleMsgId
         case messagePartitionUUID = "partition_uuid"
     }
+
+    let appleChoice: SPIDFAStatus
+    let appleMsgId: Int?
+    let messagePartitionUUID: String?
 }
 
 struct IDFAStatusReportRequest: Codable {

@@ -6,10 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 // swiftlint:disable force_try
 
@@ -18,29 +18,29 @@ class SPCampaignEnvSpec: QuickSpec {
         describe("SPCampaignEnv") {
             describe("Stage") {
                 it("has the raw value of 0") {
-                    expect(SPCampaignEnv.Stage.rawValue).to(equal(0))
+                    expect(SPCampaignEnv.Stage.rawValue) == 0
                 }
 
                 it("has its description as 'stage'") {
-                    expect(SPCampaignEnv.Stage.description).to(equal("SPCampaignEnv.stage"))
+                    expect(SPCampaignEnv.Stage.description) == "SPCampaignEnv.stage"
                 }
 
                 it("can be created with a string") {
-                    expect(SPCampaignEnv(stringValue: "stage")).to(equal(SPCampaignEnv.Stage))
+                    expect(SPCampaignEnv(stringValue: "stage")) == SPCampaignEnv.Stage
                 }
             }
 
             describe("Public") {
                 it("has the raw value of 1") {
-                    expect(SPCampaignEnv.Public.rawValue).to(equal(1))
+                    expect(SPCampaignEnv.Public.rawValue) == 1
                 }
 
                 it("has its description as 'prod'") {
-                    expect(SPCampaignEnv.Public.description).to(equal("SPCampaignEnv.prod"))
+                    expect(SPCampaignEnv.Public.description) == "SPCampaignEnv.prod"
                 }
 
                 it("can be created with a string") {
-                    expect(SPCampaignEnv(stringValue: "prod")).to(equal(SPCampaignEnv.Public))
+                    expect(SPCampaignEnv(stringValue: "prod")) == SPCampaignEnv.Public
                 }
             }
 
@@ -50,9 +50,9 @@ class SPCampaignEnvSpec: QuickSpec {
                         let encoded = try! JSONEncoder().encodeResult(SPCampaignEnv.Stage).get()
                         let encodedString = String(data: encoded, encoding: .utf8)
                         if #available(iOS 11, *) {
-                            expect(encodedString).to(equal("\"stage\""))
+                            expect(encodedString) == "\"stage\""
                         } else {
-                            expect(encodedString).to(equal("[\"stage\"]"))
+                            expect(encodedString) == "[\"stage\"]"
                         }
                     }
                 }
@@ -60,11 +60,13 @@ class SPCampaignEnvSpec: QuickSpec {
                 it("can be decoded from JSON") {
                     var decoded: SPCampaignEnv?
                     if #available(iOS 11, *) {
+                        // swiftlint:disable:next force_unwrapping
                         decoded = try? JSONDecoder().decode(SPCampaignEnv.self, from: "\"stage\"".data(using: .utf8)!)
                     } else {
+                        // swiftlint:disable:next force_unwrapping
                         decoded = try? JSONDecoder().decode(SPCampaignEnv.self, from: "[\"stage\"]".data(using: .utf8)!)
                     }
-                    expect(decoded).to(equal(.Stage))
+                    expect(decoded) == .Stage
                 }
             }
         }

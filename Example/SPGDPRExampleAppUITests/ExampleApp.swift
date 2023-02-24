@@ -6,8 +6,8 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import XCTest
 import Nimble
+import XCTest
 
 protocol App {
     func launch()
@@ -20,7 +20,7 @@ extension XCUIApplication: App {
         clean: Bool = false,
         resetAtt: Bool = false,
         args: [String: Any] = [:]
-    ){
+    ) {
         UserDefaults.standard.synchronize()
         self.terminate()
         if #available(iOS 15.0, *), resetAtt {
@@ -128,8 +128,8 @@ class ExampleApp: XCUIApplication {
     }
 
     var shouldRunAttScenario: Bool {
-        /// Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
-        /// So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
+        // Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
+        // So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
         staticTexts["unknown"].exists
     }
 

@@ -12,6 +12,15 @@ struct GDPRVendor: Decodable {
         case IAB, CUSTOM
     }
 
+    enum Keys: String, CodingKey {
+        case policyUrl, vendorId, name
+        case iabId
+        case iabSpecialPurposes, iabFeatures, iabSpecialFeatures
+        case description, cookieHeader
+        case vendorType
+        case consentCategories, legIntCategories
+    }
+
     struct Category: Decodable {
         let type: GDPRCategory.CategoryType
         let iabId: Int?
@@ -31,7 +40,7 @@ struct GDPRVendor: Decodable {
         name = try container.decode(String.self, forKey: .name)
         policyUrl = try? container.decodeIfPresent(URL.self, forKey: .policyUrl)
         vendorId = try container.decode(String.self, forKey: .vendorId)
-        vendorType = try container.decode(GDPRVendor.VendorType.self, forKey: .vendorType)
+        vendorType = try container.decode(Self.VendorType.self, forKey: .vendorType)
         iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)
         description = try container.decodeIfPresent(String.self, forKey: .description)
         cookieHeader = try container.decodeIfPresent(String.self, forKey: .cookieHeader)
@@ -40,15 +49,6 @@ struct GDPRVendor: Decodable {
         iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
         iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
         iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
-    }
-
-    enum Keys: String, CodingKey {
-        case policyUrl, vendorId, name
-        case iabId
-        case iabSpecialPurposes, iabFeatures, iabSpecialFeatures
-        case description, cookieHeader
-        case vendorType
-        case consentCategories, legIntCategories
     }
 }
 
@@ -79,8 +79,10 @@ extension PrivacyManagerViewResponse: Decodable {
         switch campaignType {
         case .gdpr:
             self = .gdpr(try GDPRPrivacyManagerViewResponse(from: decoder))
+
         case .ccpa:
             self = .ccpa(try CCPAPrivacyManagerViewResponse(from: decoder))
+
         default:
             self = .unknown
         }
@@ -101,6 +103,11 @@ struct CCPAVendor: Hashable {
 }
 
 extension CCPAVendor: Decodable {
+    enum Keys: String, CodingKey {
+        case _id, name, policyUrl
+        case nullablePurposes = "purposes"
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         _id = try container.decode(String.self, forKey: ._id)
@@ -111,11 +118,6 @@ extension CCPAVendor: Decodable {
             policyUrl = nil
         }
         nullablePurposes = try container.decodeIfPresent([String?].self, forKey: .nullablePurposes)
-    }
-
-    enum Keys: String, CodingKey {
-        case _id, name, policyUrl
-        case nullablePurposes = "purposes"
     }
 }
 

@@ -5,18 +5,10 @@
 //  Created by Vilas on 11/05/21.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
-    @IBOutlet weak var header: SPPMHeader!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var onButton: SPAppleTVButton!
-    @IBOutlet weak var offButton: SPAppleTVButton!
-    @IBOutlet weak var actionsContainer: UIStackView!
-    @IBOutlet weak var categoryDetailsTableView: UITableView!
-
     weak var categoryManagerDelegate: GDPRPMConsentSnaptshot?
 
     var category: GDPRCategory?
@@ -30,18 +22,13 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     }
     let cellReuseIdentifier = "cell"
 
-    func setHeader() {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
-        header.spTitleText = viewData.byId("Header") as? SPNativeText
-        header.titleLabel.text = category?.name
-        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
-    }
-
-    override func setFocusGuides() {
-        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: header.backButton, to: categoryDetailsTableView, direction: .right)
-        addFocusGuide(from: actionsContainer, to: categoryDetailsTableView, direction: .rightLeft)
-    }
+    @IBOutlet var header: SPPMHeader!
+    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var onButton: SPAppleTVButton!
+    @IBOutlet var offButton: SPAppleTVButton!
+    @IBOutlet var actionsContainer: UIStackView!
+    @IBOutlet var categoryDetailsTableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +60,19 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
         }
         dismiss(animated: true)
     }
+
+    func setHeader() {
+        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        header.spTitleText = viewData.byId("Header") as? SPNativeText
+        header.titleLabel.text = category?.name
+        header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
+
+    override func setFocusGuides() {
+        addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
+        addFocusGuide(from: header.backButton, to: categoryDetailsTableView, direction: .right)
+        addFocusGuide(from: actionsContainer, to: categoryDetailsTableView, direction: .rightLeft)
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -82,7 +82,7 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = "\(sections[section]?.settings.text ?? "Partners") (\(partners.count))"
         label.font = UIFont(from: sections[section]?.settings.style?.font)
         label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
@@ -102,7 +102,7 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (categoryDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
+        let cell: UITableViewCell = (categoryDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?) ?? UITableViewCell()
         cell.selectionStyle = .none
         cell.textLabel?.text = partners[indexPath.row]
         cell.textLabel?.setDefaultTextColorForDarkMode()

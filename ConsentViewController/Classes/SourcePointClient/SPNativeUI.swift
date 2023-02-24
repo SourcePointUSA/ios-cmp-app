@@ -68,6 +68,10 @@ class SPNativeUISettings: NSObject, Decodable {
 }
 
 class SPNativeUISettingsText: SPNativeUISettings {
+    enum Keys: CodingKey {
+        case text
+    }
+
     let text: String
 
     required init(from decoder: Decoder) throws {
@@ -75,28 +79,24 @@ class SPNativeUISettingsText: SPNativeUISettings {
         text = try container.decode(String.self, forKey: .text)
         try super.init(from: decoder)
     }
-
-    enum Keys: CodingKey {
-        case text
-    }
 }
 
 class SPNativeUI: NSObject, Decodable {
-    let id: String
-    let type: SPNativeUIType
-
     public enum CodingKeys: CodingKey {
         case id, type
     }
+
+    let id: String
+    let type: SPNativeUIType
 }
 
 class SPNativeView: SPNativeUI {
+    enum CodingKeys: String, CodingKey {
+        case children, settings
+    }
+
     var children: [SPNativeUI] = []
     let settings: SPNativeUISettings
-
-    func byId(_ id: String) -> SPNativeUI? {
-        children.first { $0.id == id }
-    }
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -109,16 +109,22 @@ class SPNativeView: SPNativeUI {
             switch type {
             case .NativeView:
                 children.append(try tempComponentsContainer.decode(SPNativeView.self))
+
             case .NativeText:
                 children.append(try tempComponentsContainer.decode(SPNativeText.self))
+
             case .NativeButton:
                 children.append(try tempComponentsContainer.decode(SPNativeButton.self))
+
             case .LongButton:
                 children.append(try tempComponentsContainer.decode(SPNativeLongButton.self))
+
             case .Slider:
                 children.append(try tempComponentsContainer.decode(SPNativeSlider.self))
+
             case .NativeImage:
                 children.append(try tempComponentsContainer.decode(SPNativeImage.self))
+
             default:
                 children.append(try tempComponentsContainer.decode(SPNativeUI.self))
             }
@@ -126,41 +132,45 @@ class SPNativeView: SPNativeUI {
         try super.init(from: decoder)
     }
 
-    enum CodingKeys: String, CodingKey {
-        case children, settings
+    func byId(_ id: String) -> SPNativeUI? {
+        children.first { $0.id == id }
     }
 }
 
 class SPNativeText: SPNativeUI {
+    enum CodingKeys: String, CodingKey {
+        case settings
+    }
+
     let settings: SPNativeUISettingsText
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         settings = try container.decode(SPNativeUISettingsText.self, forKey: .settings)
         try super.init(from: decoder)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case settings
     }
 }
 
 class SPNativeButton: SPNativeUI {
+    enum CodingKeys: String, CodingKey {
+        case settings
+    }
+
     let settings: SPNativeUISettingsText
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         settings = try container.decode(SPNativeUISettingsText.self, forKey: .settings)
         try super.init(from: decoder)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case settings
     }
 }
 
 class SPNativeImage: SPNativeUI {
     class Settings: SPNativeUISettings {
+        enum Keys: CodingKey {
+            case src, url
+        }
+
         let src: URL?
 
         required init(from decoder: Decoder) throws {
@@ -168,10 +178,10 @@ class SPNativeImage: SPNativeUI {
             src = try? container.decodeIfPresent(URL.self, forKey: .url) ?? (try? container.decodeIfPresent(URL.self, forKey: .src))
             try super.init(from: decoder)
         }
+    }
 
-        enum Keys: CodingKey {
-            case src, url
-        }
+    enum CodingKeys: String, CodingKey {
+        case settings
     }
 
     let settings: Settings
@@ -180,10 +190,6 @@ class SPNativeImage: SPNativeUI {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         settings = try container.decode(Settings.self, forKey: .settings)
         try super.init(from: decoder)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case settings
     }
 }
 
@@ -206,6 +212,10 @@ class SPNativeLongButton: SPNativeUI {
         }
     }
 
+    enum CodingKeys: String, CodingKey {
+        case settings
+    }
+
     let settings: Settings
 
     required init(from decoder: Decoder) throws {
@@ -213,14 +223,14 @@ class SPNativeLongButton: SPNativeUI {
         settings = try container.decode(Settings.self, forKey: .settings)
         try super.init(from: decoder)
     }
-
-    enum CodingKeys: String, CodingKey {
-        case settings
-    }
 }
 
 class SPNativeSlider: SPNativeUI {
     class Settings: SPNativeUISettings {
+        enum Keys: CodingKey {
+            case leftText, rightText
+        }
+
         let rightText, leftText: String
 
         required init(from decoder: Decoder) throws {
@@ -229,10 +239,10 @@ class SPNativeSlider: SPNativeUI {
             rightText = try container.decode(String.self, forKey: .rightText)
             try super.init(from: decoder)
         }
+    }
 
-        enum Keys: CodingKey {
-            case leftText, rightText
-        }
+    enum CodingKeys: String, CodingKey {
+        case settings
     }
 
     let settings: Settings
@@ -241,9 +251,5 @@ class SPNativeSlider: SPNativeUI {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         settings = try container.decode(Settings.self, forKey: .settings)
         try super.init(from: decoder)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case settings
     }
 }

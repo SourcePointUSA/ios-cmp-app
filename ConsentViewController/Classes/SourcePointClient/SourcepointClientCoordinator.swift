@@ -267,22 +267,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns) -> State {
-        var localState = localStorage.spState ?? .init()
-        if localCampaigns.gdpr != nil, localState.gdpr == nil {
-            localState.gdpr = .empty()
-            localState.gdprMetaData = .init()
-        }
-        if localCampaigns.ccpa != nil, localState.ccpa == nil {
-            localState.ccpa = .empty()
-            localState.ccpaMetaData = .init()
-        }
-        if localCampaigns.ios14 != nil, localState.ios14 == nil {
-            localState.ios14 = .init()
-        }
-        return localState
-    }
-
     init(
         accountId: Int,
         propertyName: SPPropertyName,
@@ -307,8 +291,24 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             timeout: SPConsentManager.DefaultTimeout
         )
 
-        self.state = SourcepointClientCoordinator.setupState(from: storage, campaigns: campaigns)
+        self.state = Self.setupState(from: storage, campaigns: campaigns)
         self.storage.spState = self.state
+    }
+
+    static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns) -> State {
+        var localState = localStorage.spState ?? .init()
+        if localCampaigns.gdpr != nil, localState.gdpr == nil {
+            localState.gdpr = .empty()
+            localState.gdprMetaData = .init()
+        }
+        if localCampaigns.ccpa != nil, localState.ccpa == nil {
+            localState.ccpa = .empty()
+            localState.ccpaMetaData = .init()
+        }
+        if localCampaigns.ios14 != nil, localState.ios14 == nil {
+            localState.ios14 = .init()
+        }
+        return localState
     }
 
     func resetStateIfAuthIdChanged(_ authId: String?) {
@@ -360,6 +360,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             switch result {
                 case .success(let response):
                     self.handleMetaDataResponse(response)
+
                 case .failure(let error):
                     print(error)
             }
@@ -417,6 +418,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 switch result {
                     case .success(let response):
                         self.handleConsentStatusResponse(response)
+
                     case .failure(let error):
                         print(error)
                 }
@@ -479,6 +481,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 switch result {
                     case .success(let response):
                         handler(Result.success(self.handleMessagesResponse(response)))
+
                     case .failure(let error):
                         handler(Result.failure(error))
                 }
@@ -552,6 +555,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     case .success(let response):
                         self.handleGetChoices(response, from: action.campaignType)
                         handler(Result.success(response))
+
                     case .failure(let error):
                         handler(Result.failure(error))
                 }
@@ -576,6 +580,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 vendorListId: postPayloadFromGetCall?.vendorListId,
                 pubData: action.publisherData,
                 pmSaveAndExitVariables: action.pmPayload,
+                sendPVData: state.gdprMetaData?.wasSampled ?? false,
                 propertyId: propertyId,
                 sampleRate: state.gdprMetaData?.sampleRate,
                 idfaStatus: idfaStatus,
@@ -596,6 +601,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 messageId: String(state.ccpa?.lastMessage?.id ?? 0),
                 pubData: action.publisherData,
                 pmSaveAndExitVariables: action.pmPayload,
+                sendPVData: state.ccpaMetaData?.wasSampled ?? false,
                 propertyId: propertyId,
                 sampleRate: state.ccpaMetaData?.sampleRate
             )
@@ -620,6 +626,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                                     self.state.gdpr?.vendorGrants = response.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
                                     self.storage.spState = self.state
                                     handler(Result.success(self.userData))
+
                                 case .failure(let error):
                                     // flag to sync again later
                                     handler(Result.failure(error))
@@ -637,12 +644,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                                     self.state.ccpa?.uspstring = response.uspstring ?? getResponse?.ccpa?.uspstring ?? ""
                                     self.storage.spState = self.state
                                     handler(Result.success(self.userData))
+
                                 case .failure(let error):
                                     // flag to sync again later
                                     handler(Result.failure(error))
                             }
                         }
                     }
+
                 case .failure(let error):
                     handler(Result.failure(error))
             }
@@ -691,6 +700,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 state.gdpr?.vendorGrants = consents.grants
                 storage.spState = state
                 handler(Result.success(state.gdpr ?? .empty()))
+
             case .failure(let error):
                 handler(Result.failure((error)))
         }

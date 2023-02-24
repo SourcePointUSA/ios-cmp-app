@@ -8,5 +8,4 @@
 import Foundation
 
 @objcMembers public class SPMessage {
-
 }

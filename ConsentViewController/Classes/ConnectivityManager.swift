@@ -13,7 +13,6 @@ protocol Connectivity {
 }
 
 final class ConnectivityManager: Connectivity {
-
     /// Initializer support for Instance.
     public init() {}
 

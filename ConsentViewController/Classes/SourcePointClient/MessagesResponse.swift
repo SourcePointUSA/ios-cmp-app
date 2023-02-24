@@ -11,6 +11,7 @@ protocol Defaultable: Decodable & CaseIterable & RawRepresentable
 where RawValue: Decodable, AllCases: BidirectionalCollection { }
 extension Defaultable {
     init(from decoder: Decoder) throws {
+        // swiftlint:disable:next force_unwrapping
         self = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? Self.allCases.last!
     }
 }
@@ -25,10 +26,13 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
         switch self {
         case .gdpr:
             return .gdpr
+
         case .ccpa:
             return .ccpa
+
         case .ios14:
             return .ios14
+
         default:
             return .unknown
         }
@@ -49,6 +53,13 @@ enum MessageSubCategory: Int, Decodable, Defaultable, Equatable {
 }
 
 struct Message: Codable, Equatable {
+    enum CodingKeys: String, CodingKey {
+        case categories, language
+        case messageJson = "message_json"
+        case messageChoices = "message_choice"
+        case propertyId = "site_id"
+    }
+
     var messageJson: MessageJson
     let categories: [GDPRCategory]?
     let messageChoices: SPJson
@@ -56,13 +67,6 @@ struct Message: Codable, Equatable {
     let language: String?
     var category: MessageCategory = .unknown
     var subCategory: MessageSubCategory = .unknown
-
-    enum CodingKeys: String, CodingKey {
-        case categories, language
-        case messageJson = "message_json"
-        case messageChoices = "message_choice"
-        case propertyId = "site_id"
-    }
 
     init(category: MessageCategory, subCategory: MessageSubCategory, decoder: Decoder) throws {
         try self.init(from: decoder)
@@ -81,41 +85,45 @@ enum MessageJson: Equatable {
 }
 
 extension MessageJson: Codable {
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        switch self {
-        case .web(let message):
-            try container.encode(message)
-        default:
-            try container.encodeNil()
-        }
+    enum CodingKeys: String, CodingKey {
+        case message_json_string
     }
 
     init(from decoder: Decoder) throws {
         self = .unknown
     }
 
-    static func messageFromStringified<T: Decodable>(_ decoder: Decoder) throws -> T {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let stringifiedMessage = try container.decode(String.self, forKey: .message_json_string)
-        return try JSONDecoder().decode(T.self, from: stringifiedMessage.data(using: .utf8)!)
-    }
-
     init(type: MessageSubCategory, campaignType: SPCampaignType, decoder: Decoder) throws {
         switch type {
-        case .NativePMOTT:
-            self = .nativePM(try PrivacyManagerViewData(from: try MessageJson.messageFromStringified(decoder)))
-        case .NativeInApp:
-            let nativeMessage: SPNativeMessage = try MessageJson.messageFromStringified(decoder)
-            nativeMessage.campaignType = campaignType
-            self = .native(nativeMessage)
-        default:
-            self = .web(try SPJson(from: decoder))
+            case .NativePMOTT:
+                self = .nativePM(try PrivacyManagerViewData(from: try MessageJson.messageFromStringified(decoder)))
+
+            case .NativeInApp:
+                let nativeMessage: SPNativeMessage = try MessageJson.messageFromStringified(decoder)
+                nativeMessage.campaignType = campaignType
+                self = .native(nativeMessage)
+
+            default:
+                self = .web(try SPJson(from: decoder))
         }
     }
 
-    enum CodingKeys: String, CodingKey {
-        case message_json_string
+    static func messageFromStringified<T: Decodable>(_ decoder: Decoder) throws -> T {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let stringifiedMessage = try container.decode(String.self, forKey: .message_json_string)
+        // swiftlint:disable:next force_unwrapping
+        return try JSONDecoder().decode(T.self, from: stringifiedMessage.data(using: .utf8)!)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+            case .web(let message):
+                try container.encode(message)
+
+            default:
+                try container.encodeNil()
+        }
     }
 }
 
@@ -125,14 +133,6 @@ enum Consent: Equatable {
     case unknown
 }
 extension Consent: Codable {
-    func encode(to encoder: Encoder) throws {
-        switch self {
-        case .ccpa(let consents): try consents.encode(to: encoder)
-        case .gdpr(let consents): try consents.encode(to: encoder)
-        default: break
-        }
-    }
-
     init(from decoder: Decoder) throws {
         if let consent = try? SPGDPRConsent(from: decoder) {
             self = .gdpr(consents: consent)
@@ -140,6 +140,14 @@ extension Consent: Codable {
             self = .ccpa(consents: consent)
         } else {
             self = .unknown
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        switch self {
+        case .ccpa(let consents): try consents.encode(to: encoder)
+        case .gdpr(let consents): try consents.encode(to: encoder)
+        default: break
         }
     }
 }
@@ -152,17 +160,17 @@ struct MessageMetaData: Equatable {
 }
 
 extension MessageMetaData: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case categoryId, subCategoryId, messageId
+        case messagePartitionUUID = "prtnUUID"
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         categoryId = try container.decode(MessageCategory.self, forKey: .categoryId)
         subCategoryId = try container.decode(MessageSubCategory.self, forKey: .subCategoryId)
         messageId = String(try container.decode(Int.self, forKey: .messageId))
         messagePartitionUUID = try container.decodeIfPresent(String.self, forKey: .messagePartitionUUID)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case categoryId, subCategoryId, messageId
-        case messagePartitionUUID = "prtnUUID"
     }
 }
 
@@ -177,6 +185,10 @@ struct Campaign: Equatable {
 }
 
 extension Campaign: Decodable {
+    enum Keys: CodingKey {
+        case type, message, messageMetaData, url, consentStatus, dateCreated
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         type = try container.decode(SPCampaignType.self, forKey: .type)
@@ -188,10 +200,6 @@ extension Campaign: Decodable {
             message = try Message(category: metaData.categoryId, subCategory: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
             url = try container.decodeIfPresent(URL.self, forKey: .url)
         }
-    }
-
-    enum Keys: CodingKey {
-        case type, message, messageMetaData, url, consentStatus, dateCreated
     }
 }
 
@@ -208,6 +216,10 @@ struct MessageResponse: Equatable {
 }
 
 extension MessageResponse: Decodable {
+    enum Keys: CodingKey {
+        case message, messageMetaData
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         messageMetaData = try container.decode(MessageMetaData.self, forKey: .messageMetaData)
@@ -216,10 +228,6 @@ extension MessageResponse: Decodable {
             subCategory: messageMetaData.subCategoryId,
             decoder: try container.superDecoder(forKey: .message)
         )
-    }
-
-    enum Keys: CodingKey {
-        case message, messageMetaData
     }
 }
 

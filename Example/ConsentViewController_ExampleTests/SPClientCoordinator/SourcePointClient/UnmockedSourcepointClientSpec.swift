@@ -6,10 +6,10 @@
 //  Copyright © 2022 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 // swiftlint:disable force_try line_length function_body_length cyclomatic_complexity
 
@@ -18,7 +18,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
         let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
         let propertyName = try! SPPropertyName("tests.unified-script.com")
         let accountId = 22
-        let propertyId = 17801
+        let propertyId = 17_801
 
         var client: SourcePointClient!
 
@@ -52,9 +52,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             it("should contain all query params") {
                 let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: nil)
                 let paramsRaw = "env=\(Constants.Urls.envParam)&hasCsp=true&includeData={\"TCData\":{\"type\":\"RecordString\"}}&metadata={}&propertyId=17801&withSiteActions=false"
-                expect(url?.query).to(equal(
-                    paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                ))
+                expect(url?.query) == paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
             }
         }
 
@@ -70,11 +68,12 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(response).to(beAnInstanceOf(ConsentStatusResponse.self))
                                 expect(response.consentStatusData.gdpr).notTo(beNil())
                                 expect(response.consentStatusData.ccpa).notTo(beNil())
+
                             case .failure(let error):
                                 fail(error.failureReason)
                             }
                             done()
-                        }
+                    }
                 }
             }
         }
@@ -113,15 +112,16 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             switch $0 {
                             case .success(let response):
                                 expect(response).to(beAnInstanceOf(MessagesResponse.self))
-                                expect(response.campaigns.count).to(equal(2))
+                                expect(response.campaigns.count) == 2
                                 response.campaigns.forEach { campaign in
                                     expect(campaign.url).to(containQueryParam(("consentLanguage", "ES")))
                                 }
+
                             case .failure(let error):
                                 fail(error.failureReason)
                             }
                             done()
-                        }
+                    }
                 }
             }
         }
@@ -135,7 +135,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 applies: true,
                                 uuid: nil,
                                 accountId: accountId,
-                                siteId: 17801,
+                                siteId: 17_801,
                                 consentStatus: ConsentStatus(),
                                 pubData: nil,
                                 sampleRate: 5,
@@ -149,7 +149,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 applies: true,
                                 uuid: nil,
                                 accountId: accountId,
-                                siteId: 17801,
+                                siteId: 17_801,
                                 consentStatus: ConsentStatus(rejectedVendors: [], rejectedCategories: []),
                                 pubData: nil,
                                 messageId: nil,
@@ -161,6 +161,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         case .success(let response):
                             expect(response).to(beAnInstanceOf(PvDataResponse.self))
                             expect(response.gdpr).notTo(beNil())
+
                         case .failure(let error):
                             fail(error.failureReason)
                         }
@@ -174,7 +175,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             it("should call the endpoint and parse the response into MetaDataResponse") {
                 waitUntil { done in
                     client.metaData(accountId: accountId,
-                                    propertyId: 17801,
+                                    propertyId: 17_801,
                                     metadata: MetaDataBodyRequest(
                                         gdpr: MetaDataBodyRequest.Campaign(hasLocalData: true, dateCreated: nil, uuid: nil),
                                         ccpa: MetaDataBodyRequest.Campaign(hasLocalData: false, dateCreated: nil, uuid: nil))) {
@@ -185,11 +186,12 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(response).to(beAnInstanceOf(MetaDataResponse.self))
                                 expect(GDPR).notTo(beNil())
                                 expect(CCPA).notTo(beNil())
+
                             case .failure(let error):
                                 fail(error.failureReason)
                             }
                             done()
-                        }
+                    }
                 }
             }
         }
@@ -211,6 +213,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response).to(beAnInstanceOf(ChoiceAllResponse.self))
                             expect(response.gdpr).notTo(beNil())
                             expect(response.ccpa).notTo(beNil())
+
                         case .failure(let error):
                             fail(error.failureReason)
                         }
@@ -237,6 +240,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response).to(beAnInstanceOf(ChoiceAllResponse.self))
                             expect(response.gdpr).notTo(beNil())
                             expect(response.ccpa).notTo(beNil())
+
                         case .failure(let error):
                             fail(error.failureReason)
                         }

@@ -6,8 +6,8 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
 import Nimble
+import XCTest
 
 protocol App {
     func launch()
@@ -248,7 +248,7 @@ extension NativePMApp {
 extension XCUIElement {
     func remotePressUntilFocus(direction: XCUIRemote.Button) {
         var counter = 0
-        while(!self.hasFocus && counter < 10) {
+        while !self.hasFocus && counter < 10 {
             remote.press(direction)
             counter += 1
         }
@@ -256,7 +256,7 @@ extension XCUIElement {
 
     func expectToHaveFocus() {
         expect(self).toEventually(showUp())
-        expect(self.hasFocus).to(beTrue())
+        expect(self.hasFocus) == true
     }
 
     func remotePress() {

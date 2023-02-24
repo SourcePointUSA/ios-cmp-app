@@ -20,6 +20,7 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction)))
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

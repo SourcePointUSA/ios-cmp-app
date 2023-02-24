@@ -49,6 +49,11 @@ struct ChoiceAllBodyRequest: QueryParamEncodable {
 }
 
 extension ChoiceAllResponse.CCPA: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case dateCreated, consentedAll, rejectedAll, status, rejectedVendors, rejectedCategories, gpcEnabled
+        case uspstring = "uspString"
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(
@@ -61,10 +66,5 @@ extension ChoiceAllResponse.CCPA: Decodable {
             rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 },
             gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled)
         )
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case dateCreated, consentedAll, rejectedAll, status, rejectedVendors, rejectedCategories, gpcEnabled
-        case uspstring = "uspString"
     }
 }

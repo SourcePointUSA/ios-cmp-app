@@ -6,10 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 class SPURLExtensions: QuickSpec {
     override func spec() {
@@ -17,7 +17,7 @@ class SPURLExtensions: QuickSpec {
             it("should append a query param at the end of the URL while keeping the URL intact") {
                 var url = URL(string: "https://example.com?foo=bar")
                 url = url?.appendQueryItems(["a": "b", "c": "d"])
-                expect(url).to(equal(URL(string: "https://example.com?foo=bar&a=b&c=d")))
+                expect(url) == URL(string: "https://example.com?foo=bar&a=b&c=d")
             }
         }
     }

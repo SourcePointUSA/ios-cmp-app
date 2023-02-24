@@ -10,15 +10,15 @@ import UIKit
 class LongButtonViewCell: UITableViewCell {
     var labelText: String?
     var isOn: Bool?
-    var isCustom: Bool = false
+    var isCustom = false
     var onText: String?
     var offText: String?
     var customText: String?
-    var selectable: Bool = false
+    var selectable = false
 
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var customLabel: UILabel!
-    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var customLabel: UILabel!
+    @IBOutlet var stateLabel: UILabel!
 
 //    override var isAccessibilityElement: Bool { set {} get { false }}
 //    override var accessibilityElements: [Any]? { set {} get {[

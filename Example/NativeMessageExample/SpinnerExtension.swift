@@ -9,18 +9,20 @@
 import Foundation
 import UIKit
 
-fileprivate var aiView: UIView?
+private var aiView: UIView?
 
 extension UIViewController {
     func showSpinner() {
         let ai = UIActivityIndicatorView(style: .gray)
         aiView = UIView(frame: view.bounds)
         aiView?.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        ai.center = aiView!.center
+        ai.center = aiView?.center ?? .zero
         ai.startAnimating()
         ai.color = .black
         aiView?.addSubview(ai)
-        view.addSubview(aiView!)
+        if aiView != nil {
+            view.addSubview(aiView!) // swiftlint:disable:this force_unwrapping
+        }
     }
 
     func removeSpinner() {

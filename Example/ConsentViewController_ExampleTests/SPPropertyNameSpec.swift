@@ -8,9 +8,9 @@
 
 import Foundation
 
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
 
 // swiftlint:disable force_try
 class SPPropertyNameSpec: QuickSpec {
@@ -18,19 +18,19 @@ class SPPropertyNameSpec: QuickSpec {
         it("http:// in property are not affected") {
             let property = "http://any"
             let spProperty = try! SPPropertyName(property)
-            expect(spProperty.rawValue).to(equal(property))
+            expect(spProperty.rawValue) == property
         }
 
         it("https:// in property are not affected") {
             let property = "https://any"
             let spProperty = try! SPPropertyName(property)
-            expect(spProperty.rawValue).to(equal(property))
+            expect(spProperty.rawValue) == property
         }
 
         it("https:// prefix is added to property name if not present") {
             let property = "any"
             let spProperty = try! SPPropertyName(property)
-            expect(spProperty.rawValue).to(equal("https://any"))
+            expect(spProperty.rawValue) == "https://any"
         }
     }
 }

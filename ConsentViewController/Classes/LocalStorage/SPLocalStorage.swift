@@ -52,7 +52,7 @@ protocol SPLocalStorage {
 
     var spState: SourcepointClientCoordinator.State? { get set }
 
-    func clear()
-
     init(storage: Storage)
+
+    func clear()
 }

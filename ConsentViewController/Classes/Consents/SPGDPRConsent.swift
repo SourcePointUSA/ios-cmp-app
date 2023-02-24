@@ -31,6 +31,11 @@ public typealias SPGDPRPurposeId = String
 
 /// Encapuslates data about a particular vendor being "granted" based on its purposes
 @objcMembers public class SPGDPRVendorGrant: NSObject, Codable {
+    enum CodingKeys: String, CodingKey {
+        case purposeGrants
+        case granted = "vendorGrant"
+    }
+
     /// if all purposes are granted, the vendorGrant will be set to `true`
     public let granted: Bool
     public let purposeGrants: SPGDPRPurposeGrants
@@ -38,15 +43,8 @@ public typealias SPGDPRPurposeId = String
     // returns true if granted or any of its purposes is true
     var softGranted: Bool { granted || purposeGrants.first { $0.value }?.value ?? false }
 
-    public override var description: String {
+    override public var description: String {
         "VendorGrant(granted: \(granted), purposeGrants: \(purposeGrants))"
-    }
-
-    public override func isEqual(_ object: Any?) -> Bool {
-        guard let other = object as? SPGDPRVendorGrant else {
-            return false
-        }
-        return other.granted == granted && other.purposeGrants == purposeGrants
     }
 
     public init(granted: Bool = false, purposeGrants: SPGDPRPurposeGrants = [:]) {
@@ -54,9 +52,11 @@ public typealias SPGDPRPurposeId = String
         self.purposeGrants = purposeGrants
     }
 
-    enum CodingKeys: String, CodingKey {
-        case purposeGrants
-        case granted = "vendorGrant"
+    override public func isEqual(_ object: Any?) -> Bool {
+        guard let other = object as? SPGDPRVendorGrant else {
+            return false
+        }
+        return other.granted == granted && other.purposeGrants == purposeGrants
     }
 }
 
@@ -64,13 +64,14 @@ public typealias SPGDPRPurposeId = String
     SPGDPRConsent encapsulates all consent data from a user.
  */
 @objcMembers public class SPGDPRConsent: NSObject, Codable, CampaignConsent {
-    /// Convenience initialiser to return an empty consent object.
-    public static func empty() -> SPGDPRConsent { SPGDPRConsent(
-        vendorGrants: SPGDPRVendorGrants(),
-        euconsent: "",
-        tcfData: SPJson(),
-        childPmId: nil
-    )}
+    enum CodingKeys: String, CodingKey {
+        case uuid
+        case euconsent
+        case tcfData = "TCData"
+        case vendorGrants = "grants"
+        case childPmId
+        case consentStatus
+    }
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
     ///
@@ -126,6 +127,16 @@ public typealias SPGDPRPurposeId = String
 
     var lastMessage: LastMessageData?
 
+    override open var description: String {
+        """
+        UserConsents(
+            uuid: \(uuid ?? "")
+            vendorGrants: \(vendorGrants),
+            euconsent: \(euconsent)
+        )
+        """
+    }
+
     init(
         uuid: String? = nil,
         vendorGrants: SPGDPRVendorGrants,
@@ -142,31 +153,20 @@ public typealias SPGDPRPurposeId = String
         self.consentStatus = consentStatus
     }
 
-    public override func isEqual(_ object: Any?) -> Bool {
+    /// Convenience initialiser to return an empty consent object.
+    public static func empty() -> SPGDPRConsent { SPGDPRConsent(
+        vendorGrants: SPGDPRVendorGrants(),
+        euconsent: "",
+        tcfData: SPJson(),
+        childPmId: nil
+    )}
+
+    override public func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPGDPRConsent {
             return other.uuid == uuid &&
-                other.euconsent.elementsEqual(euconsent) &&
-                other.vendorGrants.allSatisfy { key, value in vendorGrants[key]?.isEqual(value) ?? false }
+            other.euconsent.elementsEqual(euconsent) &&
+            other.vendorGrants.allSatisfy { key, value in vendorGrants[key]?.isEqual(value) ?? false }
         }
         return false
-    }
-
-    open override var description: String {
-        """
-        UserConsents(
-            uuid: \(uuid ?? "")
-            vendorGrants: \(vendorGrants),
-            euconsent: \(euconsent)
-        )
-        """
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case uuid
-        case euconsent
-        case tcfData = "TCData"
-        case vendorGrants = "grants"
-        case childPmId
-        case consentStatus
     }
 }

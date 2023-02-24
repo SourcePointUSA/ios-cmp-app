@@ -33,6 +33,10 @@ struct CCPAConsentRequest: Encodable, Equatable {
 }
 
 struct ConsentResponse: Decodable & Equatable {
+    enum Keys: CodingKey {
+        case localState, userConsent
+    }
+
     let localState: SPJson
     let userConsent: Consent
 
@@ -45,9 +49,5 @@ struct ConsentResponse: Decodable & Equatable {
         case .ccpa(let consents): consents.uuid = localState["ccpa"]?["uuid"]?.stringValue
         default: break
         }
-    }
-
-    enum Keys: CodingKey {
-        case localState, userConsent
     }
 }

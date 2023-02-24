@@ -6,9 +6,9 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
+@testable import ConsentViewController
 import Foundation
 import UIKit
-@testable import ConsentViewController
 
 class MockConsentDelegate: SPDelegate {
     var isOnSPUIFinishedCalled = false

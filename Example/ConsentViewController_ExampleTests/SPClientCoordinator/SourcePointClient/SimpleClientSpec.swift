@@ -6,10 +6,10 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Foundation
+import Nimble
+import Quick
 
 // swiftlint:disable force_cast function_body_length
 
@@ -28,12 +28,6 @@ class URLSessionMock: SPURLSession {
     let error: Error?
     var dataTaskCalledWith: URLRequest?
 
-    func dataTask(_ request: URLRequest, completionHandler: @escaping DataTaskResult) -> SPURLSessionDataTask {
-        dataTaskCalledWith = request
-        completionHandler(result, URLResponse(), error)
-        return dataTaskResult
-    }
-
     init(
         configuration: URLSessionConfiguration = URLSessionConfiguration.default,
         dataTaskResult: SPURLSessionDataTask = URLSessionDataTaskMock(),
@@ -44,6 +38,12 @@ class URLSessionMock: SPURLSession {
         self.error = error
         self.dataTaskResult = dataTaskResult
         result = data
+    }
+
+    func dataTask(_ request: URLRequest, completionHandler: @escaping DataTaskResult) -> SPURLSessionDataTask {
+        dataTaskCalledWith = request
+        completionHandler(result, URLResponse(), error)
+        return dataTaskResult
     }
 }
 
@@ -57,18 +57,19 @@ class DispatchQueueMock: SPDispatchQueue {
 }
 
 class SimpleClientSpec: QuickSpec {
+    // swiftlint:disable:next force_unwrapping
     let exampleRequest = URLRequest(url: URL(string: "http://example")!)
 
     override func spec() {
         describe("init(timeoutAfter: TimeInterval)") {
             it("sets the dispatchQueue to DispatchQueue.main") {
                 let dispatchQueue = SimpleClient(timeoutAfter: 1).dispatchQueue as! DispatchQueue
-                expect(dispatchQueue).to(equal(DispatchQueue.main))
+                expect(dispatchQueue) == DispatchQueue.main
             }
 
             it("sets the timeout in its URLSession") {
                 let session = SimpleClient(timeoutAfter: 10.0).session as! URLSession
-                expect(session.configuration.timeoutIntervalForResource).to(equal(10.0))
+                expect(session.configuration.timeoutIntervalForResource) == 10.0
             }
         }
 
@@ -82,7 +83,7 @@ class SimpleClientSpec: QuickSpec {
                     dispatchQueue: DispatchQueue.main
                 )
                 client.request(self.exampleRequest) { _ in }
-                expect(session.dataTaskCalledWith).to(equal(self.exampleRequest))
+                expect(session.dataTaskCalledWith) == self.exampleRequest
             }
 
             it("calls requestCachePolicy on its urlSession configuration") {
@@ -95,7 +96,7 @@ class SimpleClientSpec: QuickSpec {
                     dispatchQueue: DispatchQueue.main
                 )
                 client.request(self.exampleRequest) { _ in }
-                expect(session.configuration.requestCachePolicy).to(equal(.reloadIgnoringLocalCacheData))
+                expect(session.configuration.requestCachePolicy) == .reloadIgnoringLocalCacheData
             }
 
             it("calls async on its dispatchQueue with the result of the dataTask") {
@@ -108,7 +109,7 @@ class SimpleClientSpec: QuickSpec {
                 )
                 waitUntil { done in
                     client.request(self.exampleRequest) { _ in
-                        expect(queue.asyncCalled).to(beTrue())
+                        expect(queue.asyncCalled) == true
                         done()
                     }
                 }
@@ -127,7 +128,7 @@ class SimpleClientSpec: QuickSpec {
                     dispatchQueue: DispatchQueue.main
                 )
                 client.request(self.exampleRequest) { _ in }
-                expect(dataTaskResult.resumeWasCalled).to(beTrue())
+                expect(dataTaskResult.resumeWasCalled) == true
             }
 
             describe("when the result data from the call is different than nil") {
@@ -154,6 +155,7 @@ class SimpleClientSpec: QuickSpec {
                     let session = URLSessionMock(
                         configuration: URLSessionConfiguration.default,
                         data: nil,
+                        // swiftlint:disable:next force_unwrapping
                         error: GenericNetworkError(request: URLRequest(url: URL(string: "/")!), response: nil)
                     )
                     let client = SimpleClient(
@@ -165,6 +167,7 @@ class SimpleClientSpec: QuickSpec {
                     client.request(self.exampleRequest) { result in
                         switch result {
                         case .success: fail("call should fail")
+
                         case .failure(let e):
                             expect(e).toEventuallyNot(beNil())
                         }
@@ -184,6 +187,7 @@ class SimpleClientSpec: QuickSpec {
                 client.request(self.exampleRequest) { result in
                     switch result {
                     case .success: fail("call should fail")
+
                     case .failure(let e):
                         expect(e).toEventually(beAKindOf(NoInternetConnection.self))
                     }

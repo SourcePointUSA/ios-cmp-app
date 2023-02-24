@@ -6,12 +6,12 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import XCTest
-import Quick
-import Nimble
 @testable import ConsentViewController
+import Nimble
+import Quick
+import XCTest
 
-class ObjC_ExampleAppUITests: QuickSpec {
+class ObjCExampleAppUITests: QuickSpec {
     var app: ExampleApp!
 
     override func spec() {
