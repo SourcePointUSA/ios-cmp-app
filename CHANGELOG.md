@@ -1,3 +1,9 @@
+# 7.0.2 (Feb, 24, 2023)
+* Fixed an issue with our linting config preventing our CI from pointing out force unwrapping
+* Removed all forced unwraps from the SDK's code
+* Fixed an issue that would in some cases cause the app to crash [#416](https://github.com/SourcePointUSA/ios-cmp-app/pull/416) [DIA-1842](https://sourcepoint.atlassian.net/browse/DIA-1842)
+* ⚠️ Deployment target 10 is no longer supported by XCode and global usage of iOS 10 and below is very low. We are strongly considering bumping the iOS deployment target from 10 to 11 in the next minor release.
+
 # 7.0.1 (Feb, 08, 2023)
 * Fixed an issue preventing the SDK from overwriting the language setting of the 1st layer message. [#414](https://github.com/SourcePointUSA/ios-cmp-app/pull/414) [DIA-1770](https://sourcepoint.atlassian.net/browse/DIA-1770)
 * Fixed an issue that would cause some users of a CCPA campaign to have their data reset after taking a consent action. [#413](https://github.com/SourcePointUSA/ios-cmp-app/pull/413) [DIA-1694](https://sourcepoint.atlassian.net/browse/DIA-1694)
