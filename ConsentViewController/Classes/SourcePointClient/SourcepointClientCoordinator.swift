@@ -580,6 +580,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 vendorListId: postPayloadFromGetCall?.vendorListId,
                 pubData: action.publisherData,
                 pmSaveAndExitVariables: action.pmPayload,
+                sendPVData: state.gdprMetaData?.wasSampled ?? false,
                 propertyId: propertyId,
                 sampleRate: state.gdprMetaData?.sampleRate,
                 idfaStatus: idfaStatus,
@@ -600,6 +601,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 messageId: String(state.ccpa?.lastMessage?.id ?? 0),
                 pubData: action.publisherData,
                 pmSaveAndExitVariables: action.pmPayload,
+                sendPVData: state.ccpaMetaData?.wasSampled ?? false,
                 propertyId: propertyId,
                 sampleRate: state.ccpaMetaData?.sampleRate
             )

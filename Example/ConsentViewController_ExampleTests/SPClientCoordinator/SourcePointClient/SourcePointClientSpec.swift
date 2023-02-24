@@ -119,6 +119,7 @@ class SourcePointClientSpec: QuickSpec {
                                 vendorListId: nil,
                                 pubData: [:],
                                 pmSaveAndExitVariables: nil,
+                                sendPVData: true,
                                 propertyId: 0,
                                 sampleRate: 1,
                                 idfaStatus: nil,
@@ -137,6 +138,7 @@ class SourcePointClientSpec: QuickSpec {
                             vendorListId: nil,
                             pubData: [:],
                             pmSaveAndExitVariables: nil,
+                            sendPVData: true,
                             propertyId: 0,
                             sampleRate: 1,
                             idfaStatus: nil,
@@ -161,6 +163,7 @@ class SourcePointClientSpec: QuickSpec {
                                 messageId: "",
                                 pubData: [:],
                                 pmSaveAndExitVariables: nil,
+                                sendPVData: true,
                                 propertyId: 1,
                                 sampleRate: 1
                             )
@@ -175,6 +178,7 @@ class SourcePointClientSpec: QuickSpec {
                             messageId: "",
                             pubData: [:],
                             pmSaveAndExitVariables: nil,
+                            sendPVData: true,
                             propertyId: 1,
                             sampleRate: 1
                         )
