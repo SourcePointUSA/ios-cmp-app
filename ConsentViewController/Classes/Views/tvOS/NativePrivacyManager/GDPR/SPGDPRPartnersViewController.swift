@@ -69,10 +69,14 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
+        guard let pmPayload = consentsSnapshot.toPayload(language: .English, pmId: messageId).json() else {
+            messageUIDelegate?.onError(UnableToConvertConsentSnapshotIntoJsonError(campaignType: .gdpr))
+            return
+        }
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
             campaignType: campaignType,
-            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
+            pmPayload: pmPayload
         ), from: self)
     }
 

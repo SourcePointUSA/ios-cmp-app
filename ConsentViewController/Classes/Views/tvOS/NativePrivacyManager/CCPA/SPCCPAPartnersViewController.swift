@@ -56,10 +56,14 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onSaveAndExitTap(_ sender: Any) {
+        guard let pmPayload = consentsSnapshot.toPayload(language: .English, pmId: messageId).json() else {
+            messageUIDelegate?.onError(UnableToConvertConsentSnapshotIntoJsonError(campaignType: .ccpa))
+            return
+        }
         messageUIDelegate?.action(SPAction(
             type: .SaveAndExit,
             campaignType: campaignType,
-            pmPayload: consentsSnapshot.toPayload(language: .English, pmId: messageId).json()!
+            pmPayload: pmPayload
         ), from: self)
     }
 

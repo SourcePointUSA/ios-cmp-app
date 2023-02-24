@@ -12,7 +12,11 @@ class SPStringifiedJSON: Codable {
     var raw = DictionaryType()
 
     required init(from decoder: Decoder) throws {
-        let data = try decoder.singleValueContainer().decode(String.self).data(using: .utf8)!
+        guard let data = try decoder.singleValueContainer().decode(String.self).data(using: .utf8) else {
+            throw DecodingError.dataCorrupted(DecodingError.Context(
+                codingPath: [], debugDescription: "Unable to transform string field into Data"
+            ))
+        }
         raw = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] ?? [:]
     }
 

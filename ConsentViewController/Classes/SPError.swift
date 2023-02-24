@@ -304,3 +304,8 @@ import Foundation
 @objcMembers public class InvalidChoiceAllResponseError: SPError {
     override public var spCode: String { "sp_metric_invalid_choice_all_response" }
 }
+
+// swiftlint:disable:next type_name
+@objcMembers public class UnableToConvertConsentSnapshotIntoJsonError: SPError {
+    override public var spCode: String { "sp_metric_error_converting_consent_snapshot_to_json" }
+}
