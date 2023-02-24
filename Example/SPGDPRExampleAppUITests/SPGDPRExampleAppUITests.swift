@@ -135,7 +135,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Shows a translated message") {
-            self.app.relaunch(clean: true, resetAtt: true, args: [
+            self.app.relaunch(clean: true, resetAtt: false, args: [
+                "att": false,
                 "language": SPMessageLanguage.Spanish.rawValue
             ])
             expect(self.app.gdprMessage.spanishMessageTitle).toEventually(showUp())
