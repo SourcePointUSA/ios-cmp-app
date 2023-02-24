@@ -21,7 +21,7 @@ extension UIViewController {
         ai.color = .black
         aiView?.addSubview(ai)
         if aiView != nil {
-            view.addSubview(aiView!)
+            view.addSubview(aiView!) // swiftlint:disable:this force_unwrapping
         }
     }
 
