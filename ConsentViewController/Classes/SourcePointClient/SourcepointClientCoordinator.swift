@@ -243,7 +243,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         idfaSstatus: idfaStatus
                     ) : nil
                 ),
-                localState: state.localState,
                 consentLanguage: language,
                 campaignEnv: campaigns.environment,
                 idfaStatus: idfaStatus
@@ -252,7 +251,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 ccpa: .init(applies: state.ccpa?.applies),
                 gdpr: .init(applies: state.gdpr?.applies)
             ),
-            nonKeyedLocalState: state.nonKeyedLocalState
+            localState: .init(localState: state.localState),
+            nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState)
         )
     }
 
