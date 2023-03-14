@@ -52,13 +52,13 @@ struct MessagesRequest: QueryParamEncodable {
 
         let ccpa, gdpr: Campaign?
     }
-    
+
     struct LocalState: QueryParamEncodable {
         let ccpa: SPJson?
         let gdpr: SPJson?
         let ios14: SPJson?
     }
-    
+
     struct NonKeyedLocalState: QueryParamEncodable {
         let ccpa: SPJson?
         let gdpr: SPJson?
