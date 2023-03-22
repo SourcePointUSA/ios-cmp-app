@@ -94,13 +94,13 @@ class SourcePointClientSpec: QuickSpec {
                             propertyHref: self.propertyName,
                             accountId: self.accountId,
                             campaigns: MessagesRequest.Body.Campaigns(),
-                            localState: nil,
                             consentLanguage: .BrowserDefault,
                             campaignEnv: nil,
                             idfaStatus: nil
                         ),
                         metadata: nil,
-                        nonKeyedLocalState: nil
+                        localState: MessagesRequest.LocalState(localState: SPJson()),
+                        nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
                     )) { _ in }
                     expect(httpClient.getWasCalledWithUrl).toEventually(contain("/v2/messages"))
                 }

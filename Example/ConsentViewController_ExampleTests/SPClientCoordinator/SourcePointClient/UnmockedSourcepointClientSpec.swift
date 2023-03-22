@@ -98,7 +98,6 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 ),
                                 ios14: nil
                             ),
-                            localState: nil,
                             consentLanguage: .Spanish,
                             campaignEnv: nil,
                             idfaStatus: nil
@@ -107,7 +106,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             ccpa: MessagesRequest.MetaData.Campaign(applies: true),
                             gdpr: MessagesRequest.MetaData.Campaign(applies: true)
                         ),
-                        nonKeyedLocalState: nil
+                        localState: MessagesRequest.LocalState(localState: SPJson()),
+                        nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
                     )) {
                             switch $0 {
                             case .success(let response):
