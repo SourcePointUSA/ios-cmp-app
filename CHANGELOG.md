@@ -1,3 +1,7 @@
+# 7.0.3 (Mar, 23, 2023)
+* Fixed an issue leading to abnormal "page views" reporting on Sourcepoint's dashboard. [DIA-1964](https://sourcepoint.atlassian.net/browse/DIA-1964)
+* Fixed an issue causing scenarios that included "Show Message Once" to not work. [#420](https://github.com/SourcePointUSA/ios-cmp-app/pull/420) [DIA-1915](https://sourcepoint.atlassian.net/browse/DIA-1915)
+
 # 7.0.2 (Feb, 24, 2023)
 * Fixed an issue with our linting config preventing our CI from pointing out force unwrapping
 * Removed all forced unwraps from the SDK's code
