@@ -4295,6 +4295,23 @@
 			};
 			name = Debug;
 		};
+		1DF8CE98E09B7590E95B6DBD871CD8E1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B9DB77DECF56D3A77A75A2913B03888 /* ConsentViewController-iOS.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS";
+				IBSC_MODULE = ConsentViewController;
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS/ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_NAME = ConsentViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		205F154B0E69F3555D1D3BF9D0B0F807 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A9850CD1C533B7407E488CA4FE1013D3 /* Pods-NativeMessageExample.release.xcconfig */;
@@ -4330,6 +4347,40 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		2258DC9E54FBE0D6140B1E67A19A8766 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7E00AFCC40AF2C0ED35A5AEEB43A1DD /* Wormholy.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy";
+				IBSC_MODULE = Wormholy;
+				INFOPLIST_FILE = "Target Support Files/Wormholy/ResourceBundle-Wormholy-Wormholy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PRODUCT_NAME = Wormholy;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		249A2B18AA823E46D11598FE41D5F60E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD9E567E5957CF3F6B4F49F1877D3777 /* Wormholy.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy";
+				IBSC_MODULE = Wormholy;
+				INFOPLIST_FILE = "Target Support Files/Wormholy/ResourceBundle-Wormholy-Wormholy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PRODUCT_NAME = Wormholy;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -4650,6 +4701,23 @@
 			};
 			name = Release;
 		};
+		52A16DDA8F762C3B3692351517B366BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41FE932814CB172C8B4EDA18A3309130 /* ConsentViewController-tvOS.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-tvOS";
+				IBSC_MODULE = ConsentViewController;
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController-tvOS/ResourceBundle-ConsentViewController-ConsentViewController-tvOS-Info.plist";
+				PRODUCT_NAME = ConsentViewController;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		550E0F2E44A2A928287AEDD9CE70FB44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 311575CF97150D0D730F30F0557FCF59 /* Pods-AuthExample.debug.xcconfig */;
@@ -4684,6 +4752,23 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		56BD5140F6BF8B49E7A8E496D49CC8CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A9F0505EC7AE3E4516952B47E187EA6 /* ConsentViewController-tvOS.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-tvOS";
+				IBSC_MODULE = ConsentViewController;
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController-tvOS/ResourceBundle-ConsentViewController-ConsentViewController-tvOS-Info.plist";
+				PRODUCT_NAME = ConsentViewController;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -4792,22 +4877,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		60D0AA2FF2E8707A23873159FAF6983C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 41FE932814CB172C8B4EDA18A3309130 /* ConsentViewController-tvOS.release.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-tvOS";
-				IBSC_MODULE = ConsentViewController;
-				INFOPLIST_FILE = "Target Support Files/ConsentViewController-tvOS/ResourceBundle-ConsentViewController-ConsentViewController-tvOS-Info.plist";
-				PRODUCT_NAME = ConsentViewController;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
 		};
 		65205A188656B883537EA60B1529DD25 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -4950,38 +5019,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		7102C0294B5E96B5A861F2D0BB17967B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7E00AFCC40AF2C0ED35A5AEEB43A1DD /* Wormholy.debug.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy";
-				IBSC_MODULE = Wormholy;
-				INFOPLIST_FILE = "Target Support Files/Wormholy/ResourceBundle-Wormholy-Wormholy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				PRODUCT_NAME = Wormholy;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		7106510459C5E73579AC73E7DF7BB5A1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD9E567E5957CF3F6B4F49F1877D3777 /* Wormholy.release.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Wormholy";
-				IBSC_MODULE = Wormholy;
-				INFOPLIST_FILE = "Target Support Files/Wormholy/ResourceBundle-Wormholy-Wormholy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				PRODUCT_NAME = Wormholy;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
 		};
 		799C76EF532413DAA33CBB117A3AC7FE /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -5351,6 +5388,23 @@
 			};
 			name = Release;
 		};
+		A093FB7B32C62067F33C89CD2E8F8760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F9670EA4FCBF49F3AE6CCD64A2B9704E /* ConsentViewController-iOS.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS";
+				IBSC_MODULE = ConsentViewController;
+				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS/ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PRODUCT_NAME = ConsentViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		A25B2EC18B365A1C2769B116B852AA2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3EC891A1CB585BBAADF7C585FC049D01 /* Pods-ObjC-ExampleAppUITests.debug.xcconfig */;
@@ -5497,22 +5551,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		B9BA7661E8CA40CBC372A80FF5A58EA0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A9F0505EC7AE3E4516952B47E187EA6 /* ConsentViewController-tvOS.debug.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-tvOS";
-				IBSC_MODULE = ConsentViewController;
-				INFOPLIST_FILE = "Target Support Files/ConsentViewController-tvOS/ResourceBundle-ConsentViewController-ConsentViewController-tvOS-Info.plist";
-				PRODUCT_NAME = ConsentViewController;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
 		};
 		BA3D16E8A5C864B26AE6A1CCC67DDB8E /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -5735,22 +5773,6 @@
 			};
 			name = Debug;
 		};
-		EA761B587841FB598A95C7E364D65B44 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9670EA4FCBF49F3AE6CCD64A2B9704E /* ConsentViewController-iOS.release.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS";
-				IBSC_MODULE = ConsentViewController;
-				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS/ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				PRODUCT_NAME = ConsentViewController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
 		EBE972E4A362D3BBE5EB2F5B6B2B2C65 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5849,22 +5871,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		F3FAFA130FFC8AA01BA3D220AF5D3D10 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B9DB77DECF56D3A77A75A2913B03888 /* ConsentViewController-iOS.debug.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ConsentViewController-iOS";
-				IBSC_MODULE = ConsentViewController;
-				INFOPLIST_FILE = "Target Support Files/ConsentViewController-iOS/ResourceBundle-ConsentViewController-ConsentViewController-iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				PRODUCT_NAME = ConsentViewController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -6010,8 +6016,8 @@
 		14C7FE6365F60E9BBE1CBAEE9B5B6E90 /* Build configuration list for PBXNativeTarget "Wormholy-Wormholy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7102C0294B5E96B5A861F2D0BB17967B /* Debug */,
-				7106510459C5E73579AC73E7DF7BB5A1 /* Release */,
+				2258DC9E54FBE0D6140B1E67A19A8766 /* Debug */,
+				249A2B18AA823E46D11598FE41D5F60E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -6037,8 +6043,8 @@
 		293812999DD526F36ECE410FA00721A7 /* Build configuration list for PBXNativeTarget "ConsentViewController-iOS-ConsentViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F3FAFA130FFC8AA01BA3D220AF5D3D10 /* Debug */,
-				EA761B587841FB598A95C7E364D65B44 /* Release */,
+				1DF8CE98E09B7590E95B6DBD871CD8E1 /* Debug */,
+				A093FB7B32C62067F33C89CD2E8F8760 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -6100,8 +6106,8 @@
 		6B9CC83A37462767732CFA637378F7E3 /* Build configuration list for PBXNativeTarget "ConsentViewController-tvOS-ConsentViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B9BA7661E8CA40CBC372A80FF5A58EA0 /* Debug */,
-				60D0AA2FF2E8707A23873159FAF6983C /* Release */,
+				56BD5140F6BF8B49E7A8E496D49CC8CB /* Debug */,
+				52A16DDA8F762C3B3692351517B366BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
