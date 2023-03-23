@@ -83,7 +83,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
         struct GDPRMetaData: Codable, SPSampleable {
             var additionsChangeDate = SPDateCreated.now()
-            var  legalBasisChangeDate = SPDateCreated.now()
+            var legalBasisChangeDate = SPDateCreated.now()
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
@@ -331,9 +331,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         metaData {
             self.consentStatus(forAuthId: authId) {
                 self.state.udpateGDPRStatus()
-                self.messages(handler)
+                self.messages {
+                    handler($0)
+                    self.pvData()
+                }
             }
-            self.pvData()
         }
     }
 
