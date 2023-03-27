@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if canImport(WebKit)
 import WebKit
 
 @objc public extension WKWebView {
@@ -59,3 +60,5 @@ import WebKit
         getCookies { handler($0[name, default: ""], $1) }
     }
 }
+
+#endif
