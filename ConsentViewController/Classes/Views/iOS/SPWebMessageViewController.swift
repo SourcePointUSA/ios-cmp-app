@@ -6,6 +6,7 @@
 //
 
 import Foundation
+#if canImport(WebKit)
 import WebKit
 
 @objcMembers class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
@@ -223,3 +224,5 @@ import WebKit
         }
     }
 }
+
+#endif
