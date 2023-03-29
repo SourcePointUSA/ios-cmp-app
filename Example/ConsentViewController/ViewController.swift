@@ -16,15 +16,15 @@ class ViewController: UIViewController {
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     var myVendorAccepted: VendorStatus = .Unknown
     lazy var config = { Config(fromStorageWithDefaults: Config(
-        accountId: 22,
-        propertyId: 16893,
-        propertyName: "mobile.multicampaign.demo",
+        accountId: 1112,
+        propertyId: 30107,
+        propertyName: "test.skystore.de.ios",
         gdpr: true,
-        ccpa: true,
-        att: true,
+        ccpa: false,
+        att: false,
         language: .BrowserDefault,
-        gdprPmId: "488393",
-        ccpaPmId: "509688"
+        gdprPmId: "768779",
+        ccpaPmId: ""
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
