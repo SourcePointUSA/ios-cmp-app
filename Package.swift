@@ -1,10 +1,11 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 import PackageDescription
 
 let package = Package(
   name: "ConsentViewController",
   platforms: [
-    .iOS(.v10)
+    .iOS(.v11),
+    .tvOS(.v11)
   ],
   products: [
     .library(
@@ -19,8 +20,7 @@ let package = Package(
       path: "ConsentViewController",
       exclude: [
         "Assets/javascript/SPJSReceiver.spec.js",
-        "Assets/javascript/jest.config.json",
-        "Classes/Views/tvOS/",
+        "Assets/javascript/jest.config.json"
       ],
       resources: [
         .process("Assets/javascript/SPJSReceiver.js"),
