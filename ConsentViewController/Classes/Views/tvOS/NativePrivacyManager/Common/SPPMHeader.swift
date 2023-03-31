@@ -32,6 +32,7 @@ extension UIButton {
     }
 }
 
+@objc(ObjCSPPMHeader)
 @IBDesignable
 @objcMembers class SPPMHeader: UIView {
     @IBOutlet var contentView: UIView!
