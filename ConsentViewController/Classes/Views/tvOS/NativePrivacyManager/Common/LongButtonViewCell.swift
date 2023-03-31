@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LongButtonViewCell: UITableViewCell {
+@objcMembers class LongButtonViewCell: UITableViewCell {
     var labelText: String?
     var isOn: Bool?
     var isCustom: Bool = false
