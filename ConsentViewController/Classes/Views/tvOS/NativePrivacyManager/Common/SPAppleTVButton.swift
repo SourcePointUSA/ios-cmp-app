@@ -15,7 +15,8 @@ extension UIView {
     }
 }
 
-class SPAppleTVButton: UIButton {
+@objc(ObjCSPAppleTVButton)
+@objcMembers class SPAppleTVButton: UIButton {
     var viewBeforeUITitleView: UIView? { allSubviews.dropFirst(allSubviews.count - 2).first }
 
     var onFocusBackgroundColor: UIColor?

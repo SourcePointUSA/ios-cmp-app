@@ -7,7 +7,8 @@
 
 import UIKit
 
-class LongButtonViewCell: UITableViewCell {
+@objc(ObjCLongButtonViewCell)
+@objcMembers class LongButtonViewCell: UITableViewCell {
     var labelText: String?
     var isOn: Bool?
     var isCustom: Bool = false
@@ -19,13 +20,6 @@ class LongButtonViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var customLabel: UILabel!
     @IBOutlet weak var stateLabel: UILabel!
-
-//    override var isAccessibilityElement: Bool { set {} get { false }}
-//    override var accessibilityElements: [Any]? { set {} get {[
-//        label as Any,
-//        customLabel as Any,
-//        stateLabel as Any
-//    ]}}
 
     func setup(from nativeCell: SPNativeLongButton?) {
         customText = isCustom ? nativeCell?.settings.customText : nil
