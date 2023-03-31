@@ -114,7 +114,7 @@ extension UIViewController {
     }
 }
 
-@objcMembers class FocusGuideDebugView: UIView {
+class FocusGuideDebugView: UIView {
     init(focusGuide: UIFocusGuide) {
         super.init(frame: focusGuide.layoutFrame)
         backgroundColor = UIColor.green.withAlphaComponent(0.15)

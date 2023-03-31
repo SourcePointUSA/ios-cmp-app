@@ -7,8 +7,7 @@
 
 import UIKit
 
-@objc(ObjCSPFocusableTextView)
-@objcMembers class SPFocusableTextView: UITextView, UITextViewDelegate {
+class SPFocusableTextView: UITextView, UITextViewDelegate {
     override var canBecomeFocused: Bool { isContentBig }
     var isContentBig: Bool { self.contentSize.height > self.frame.size.height }
     public var contentFitsContainer: Bool = true

@@ -32,9 +32,8 @@ extension UIButton {
     }
 }
 
-@objc(ObjCSPPMHeader)
 @IBDesignable
-@objcMembers class SPPMHeader: UIView {
+class SPPMHeader: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
