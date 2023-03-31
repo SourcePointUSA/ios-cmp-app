@@ -5,6 +5,7 @@
 //  Created by Andre Herculano on 17.03.22.
 //
 
+import Foundation
 import UIKit
 
 @objc(ObjCSPFocusableTextView)

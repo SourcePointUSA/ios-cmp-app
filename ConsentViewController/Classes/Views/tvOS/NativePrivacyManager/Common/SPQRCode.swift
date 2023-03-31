@@ -6,10 +6,8 @@
 //
 
 import Foundation
-
-#if !canImport(WebKit)
 import UIKit
-#endif
+
 
 @objc(ObjCQRCode)
 @objcMembers class QRCode: UIImage {

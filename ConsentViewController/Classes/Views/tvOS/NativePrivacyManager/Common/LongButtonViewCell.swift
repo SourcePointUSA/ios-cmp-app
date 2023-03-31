@@ -5,6 +5,7 @@
 //  Created by Andre Herculano on 25.06.21.
 //
 
+import Foundation
 import UIKit
 
 @objc(ObjCLongButtonViewCell)
