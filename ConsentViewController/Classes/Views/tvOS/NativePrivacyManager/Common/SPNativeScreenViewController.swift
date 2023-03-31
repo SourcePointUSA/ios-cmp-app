@@ -258,7 +258,7 @@ extension UIViewController {
 
 extension UILabel {
     func setDefaultTextColorForDarkMode() {
-        if #available(tvOS 13.0, *) {
+        if #available(tvOS 13.0, *), #available(iOS 13.0, *) {
             if UITraitCollection.current.userInterfaceStyle == .dark {
                 self.textColor = Constants.UI.DarkMode.defaultFallbackTextColorForDarkMode
             }
