@@ -7,6 +7,7 @@
 
 import UIKit
 
+@objc(ObjCLongButtonViewCell)
 @objcMembers class LongButtonViewCell: UITableViewCell {
     var labelText: String?
     var isOn: Bool?

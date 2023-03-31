@@ -26,7 +26,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="8an-JK-h4N" userLabel="Stack View - Main">
                     <rect key="frame" x="80" y="60" width="1760" height="960"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYu-e7-hDj" customClass="SPPMHeader" customModule="ConsentViewController" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYu-e7-hDj" customClass="ObjCSPPMHeader">
                             <rect key="frame" x="0.0" y="0.0" width="1760" height="100"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -46,7 +46,7 @@
                                                 <constraint firstAttribute="height" constant="480" id="cIN-lp-hlp"/>
                                             </constraints>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcC-YE-YoY" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcC-YE-YoY" customClass="ObjCSPAppleTVButton">
                                             <rect key="frame" x="140" y="590" width="600" height="120"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="600" id="DCZ-LX-whk"/>
