@@ -5,7 +5,7 @@ let package = Package(
   name: "ConsentViewController",
   platforms: [
     .iOS(.v10),
-    .tvOS(.v11)
+    .tvOS(.v10)
   ],
   products: [
     .library(
