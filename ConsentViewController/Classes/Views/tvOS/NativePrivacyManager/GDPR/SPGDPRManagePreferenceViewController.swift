@@ -69,10 +69,10 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
-        categoriesTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
-            forCellReuseIdentifier: cellReuseIdentifier
-        )
+//        categoriesTableView.register(
+//            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+//            forCellReuseIdentifier: cellReuseIdentifier
+//        )
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
         consentsSnapshot.onConsentsChange = { [weak self] in

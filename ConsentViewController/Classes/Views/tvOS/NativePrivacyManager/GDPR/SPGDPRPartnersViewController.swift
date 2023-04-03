@@ -57,10 +57,10 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
         loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         nativeLongButton = viewData.byId("VendorButton") as? SPNativeLongButton
-        vendorsTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
-            forCellReuseIdentifier: cellReuseIdentifier
-        )
+//        vendorsTableView.register(
+//            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+//            forCellReuseIdentifier: cellReuseIdentifier
+//        )
         vendorsTableView.delegate = self
         vendorsTableView.dataSource = self
         consentsSnapshot.onConsentsChange = { [weak self] in

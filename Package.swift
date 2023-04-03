@@ -16,15 +16,27 @@ let package = Package(
   targets: [
     .target(
       name: "ConsentViewController",
-      dependencies: [],
+      dependencies: [
+        .target(name: "ConsentViewController-tvOS", condition: .when(platforms: [.tvOS]))
+      ],
       path: "ConsentViewController",
       exclude: [
         "Assets/javascript/SPJSReceiver.spec.js",
-        "Assets/javascript/jest.config.json"
+        "Assets/javascript/jest.config.json",
+        "Classes/Views/tvOS/NativePrivacyManager/xibs"
       ],
       resources: [
         .process("Assets/javascript/SPJSReceiver.js"),
         .process("Assets/images")
+      ]
+    ),
+    .target(
+      name: "ConsentViewController-tvOS",
+      dependencies: [],
+      path: "ConsentViewController/Classes/Views/tvOS/NativePrivacyManager/xibs",
+      exclude: [],
+      resources: [
+        .process("./"),
       ]
     )
   ],
