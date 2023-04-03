@@ -35,9 +35,7 @@ let package = Package(
       dependencies: [],
       path: "ConsentViewController/Classes/Views/tvOS/NativePrivacyManager/xibs",
       exclude: [],
-      resources: [
-        .process("./"),
-      ]
+      resources: []
     )
   ],
   swiftLanguageVersions: [.v5]
