@@ -5,7 +5,6 @@
 //  Created by Andre Herculano on 25.06.21.
 //
 
-#if os(tvOS)
 import Foundation
 import UIKit
 
@@ -63,4 +62,3 @@ import UIKit
         selectionStyle = .none
     }
 }
-#endif
