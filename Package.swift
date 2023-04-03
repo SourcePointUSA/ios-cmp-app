@@ -10,15 +10,16 @@ let package = Package(
   products: [
     .library(
       name: "ConsentViewController",
-      targets: ["ConsentViewController"]),
+      targets: ["ConsentViewController-shared"]),
+    .library(
+      name: "ConsentViewController-tvOS",
+      targets: ["ConsentViewController-tvOS"])
   ],
   dependencies: [],
   targets: [
     .target(
-      name: "ConsentViewController",
-      dependencies: [
-        .target(name: "ConsentViewController-tvOS", condition: .when(platforms: [.tvOS]))
-      ],
+      name: "ConsentViewController-shared",
+      dependencies: [],
       path: "ConsentViewController",
       exclude: [
         "Assets/javascript/SPJSReceiver.spec.js",
@@ -32,7 +33,9 @@ let package = Package(
     ),
     .target(
       name: "ConsentViewController-tvOS",
-      dependencies: [],
+      dependencies: [
+        .target(name: "ConsentViewController-shared")
+      ],
       path: "ConsentViewController/Classes/Views/tvOS/NativePrivacyManager/xibs",
       exclude: [],
       resources: []
