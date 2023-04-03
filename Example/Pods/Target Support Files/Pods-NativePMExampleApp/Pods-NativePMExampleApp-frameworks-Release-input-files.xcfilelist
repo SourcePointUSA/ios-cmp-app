@@ -1,2 +1,2 @@
 ${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks.sh
-${BUILT_PRODUCTS_DIR}/ConsentViewController-tvOS/ConsentViewController.framework
+${BUILT_PRODUCTS_DIR}/ConsentViewController-tvOS10.0/ConsentViewController.framework
