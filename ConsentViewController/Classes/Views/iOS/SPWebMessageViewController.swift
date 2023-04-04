@@ -182,9 +182,9 @@ import WebKit
         }
         DispatchQueue.main.async {
             OSLogger.standard.debug("RenderingApp - injecting message json")
-//            self.webview?.evaluateJavaScript("""
-//                window.SDK.loadMessage(\(jsonString));
-//            """)
+            self.webview?.evaluateJavaScript("""
+                window.SDK.loadMessage(\(jsonString));
+            """)
         }
     }
 
