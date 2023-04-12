@@ -160,9 +160,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var shouldCallMessages: Bool {
-        (state.gdpr?.applies == true && state.gdpr?.consentStatus.consentedAll != true) ||
-        state.ccpa?.applies == true ||
-        campaigns.ios14 != nil
+        (campaigns.gdpr != nil && state.gdpr?.consentStatus.consentedAll != true) ||
+        campaigns.ccpa != nil ||
+        (campaigns.ios14 != nil /*&& state.ios14?.status != .accepted*/)
     }
 
     var metaDataParamsFromState: MetaDataBodyRequest {
