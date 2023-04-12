@@ -229,7 +229,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 campaigns: .init(
                     ccpa: campaigns.ccpa != nil ?
                     .init(
-                        targetingParams: campaigns.gdpr?.targetingParams,
+                        targetingParams: campaigns.ccpa?.targetingParams,
                         hasLocalData: state.ccpa?.uuid != nil,
                         status: state.ccpa?.status
                     ) : nil,
