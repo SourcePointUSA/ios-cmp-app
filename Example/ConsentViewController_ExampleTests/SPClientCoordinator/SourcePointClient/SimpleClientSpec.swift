@@ -78,7 +78,7 @@ class SimpleClientSpec: QuickSpec {
                 let session = URLSessionMock()
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: true),
-                    logger: OSLogger(),
+                    logger: SPLoggerMock(),
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
@@ -91,7 +91,7 @@ class SimpleClientSpec: QuickSpec {
                 session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: true),
-                    logger: OSLogger(),
+                    logger: SPLoggerMock(),
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
@@ -103,7 +103,7 @@ class SimpleClientSpec: QuickSpec {
                 let queue = DispatchQueueMock()
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: true),
-                    logger: OSLogger(),
+                    logger: SPLoggerMock(),
                     urlSession: URLSession.shared,
                     dispatchQueue: queue
                 )
@@ -123,7 +123,7 @@ class SimpleClientSpec: QuickSpec {
                 )
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: true),
-                    logger: OSLogger(),
+                    logger: SPLoggerMock(),
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
@@ -141,7 +141,7 @@ class SimpleClientSpec: QuickSpec {
                     )
                     let client = SimpleClient(
                         connectivityManager: ConnectivityMock(connected: true),
-                        logger: OSLogger(),
+                        logger: SPLoggerMock(),
                         urlSession: session,
                         dispatchQueue: DispatchQueueMock()
                     )
@@ -160,7 +160,7 @@ class SimpleClientSpec: QuickSpec {
                     )
                     let client = SimpleClient(
                         connectivityManager: ConnectivityMock(connected: true),
-                        logger: OSLogger(),
+                        logger: SPLoggerMock(),
                         urlSession: session,
                         dispatchQueue: DispatchQueueMock()
                     )
@@ -180,7 +180,7 @@ class SimpleClientSpec: QuickSpec {
             it("calls the completionHandler with an NoInternetConnection error") {
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: false),
-                    logger: OSLogger(),
+                    logger: SPLoggerMock(),
                     urlSession: URLSession.shared,
                     dispatchQueue: DispatchQueue.main
                 )

@@ -23,8 +23,15 @@ struct OSLogger: SPLogger {
     static let category = "SPSDK"
     static var standard: OSLogger { OSLogger() }
 
+    private init () {}
+
     let consentLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: OSLogger.category)
-    let level = SPLogLevel(rawValue: Bundle.framework.object(forInfoDictionaryKey: "SPLogLevel") as? String ?? "debug")
+    
+    let level = SPLogLevel(rawValue:
+        Bundle.main.object(forInfoDictionaryKey: "SPLogLevel") as? String ??
+        Bundle.framework.object(forInfoDictionaryKey: "SPLogLevel") as? String ??
+        "prod"
+    )
 
     func log(_ message: String) {
         if level == .debug {
