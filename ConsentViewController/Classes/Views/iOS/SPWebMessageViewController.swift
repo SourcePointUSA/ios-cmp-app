@@ -83,11 +83,7 @@ import WebKit
     // swiftlint:disable:next line_length
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         guard let url = navigationAction.request.url else { return nil }
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
         return nil
     }
 
@@ -147,10 +143,12 @@ import WebKit
     }
 
     override func loadMessage() {
+        OSLogger.standard.debug("RenderingApp - loading: \(url.absoluteString)")
         webview?.load(URLRequest(url: url, timeoutInterval: timeout))
     }
 
     override func loadPrivacyManager(url: URL) {
+        OSLogger.standard.debug("RenderingApp - loading: \(url.absoluteString)")
         webview?.load(URLRequest(url: url, timeoutInterval: timeout))
     }
 
@@ -183,6 +181,7 @@ import WebKit
             return
         }
         DispatchQueue.main.async {
+            OSLogger.standard.debug("RenderingApp - injecting message json")
             self.webview?.evaluateJavaScript("""
                 window.SDK.loadMessage(\(jsonString));
             """)
@@ -195,6 +194,7 @@ import WebKit
             let eventName = RenderingAppEvents(rawValue: messageBody["name"]?.stringValue ?? ""),
             let body = messageBody["body"]
         {
+            OSLogger.standard.debug("RenderingApp - event: \(eventName.rawValue), payload: \(body)")
             switch eventName {
             case .readyForPreload: handleMessagePreload()
             case .onMessageReady: messageUIDelegate?.loaded(self)
@@ -219,7 +219,7 @@ import WebKit
             case .unknown: break
             }
         } else {
-            print("[RenderingApp] UnknownBody(\(message.body))")
+            OSLogger.standard.error("RenderingApp - UnknownBody(\(message.body))")
         }
     }
 }

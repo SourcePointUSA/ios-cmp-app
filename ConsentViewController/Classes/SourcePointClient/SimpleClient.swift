@@ -48,8 +48,6 @@ class SimpleClient: HttpClient {
     let session: SPURLSession
     let dispatchQueue: SPDispatchQueue
 
-    let logCalls = false
-
     init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession, dispatchQueue: SPDispatchQueue) {
         self.connectivityManager = connectivityManager
         self.logger = logger
@@ -62,14 +60,14 @@ class SimpleClient: HttpClient {
         config.timeoutIntervalForResource = timeout
         self.init(
             connectivityManager: ConnectivityManager(),
-            logger: OSLogger(),
+            logger: OSLogger.standard,
             urlSession: URLSession(configuration: config),
             dispatchQueue: DispatchQueue.main
         )
     }
 
     func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {
-        if logCalls, let method = request.httpMethod, let url = request.url {
+        if let method = request.httpMethod, let url = request.url {
             logger.debug("\(type) \(method) \(url)")
             if let body = body, let bodyString = String(data: body, encoding: .utf8) {
                 logger.debug(bodyString)
@@ -78,11 +76,11 @@ class SimpleClient: HttpClient {
     }
 
     func logRequest(_ request: URLRequest, _ body: Data?) {
-        logRequest("REQUEST", request, body)
+        logRequest("request -", request, body)
     }
 
     func logResponse(_ request: URLRequest, _ response: Data?) {
-        logRequest("RESPONSE", request, response)
+        logRequest("response -", request, response)
     }
 
     func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {

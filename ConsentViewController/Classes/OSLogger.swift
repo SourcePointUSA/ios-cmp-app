@@ -14,34 +14,44 @@ protocol SPLogger {
     func error(_ message: String)
 }
 
+enum SPLogLevel: String {
+    case debug
+    case prod
+}
+
 struct OSLogger: SPLogger {
     static let category = "SPSDK"
+    static var standard: OSLogger { OSLogger() }
 
-    var consentLog: OSLog? {
-        if #available(iOS 10.0, *) {
-            return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: OSLogger.category)
-        } else {
-            return nil
-        }
-    }
+    private init () {}
+
+    let consentLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: OSLogger.category)
+    
+    let level = SPLogLevel(rawValue:
+        Bundle.main.object(forInfoDictionaryKey: "SPLogLevel") as? String ??
+        Bundle.framework.object(forInfoDictionaryKey: "SPLogLevel") as? String ??
+        "prod"
+    )
 
     func log(_ message: String) {
-        osLog("%s", message)
+        if level == .debug {
+            osLog("%s", message)
+        }
     }
 
     func debug(_ message: String) {
-        osLog("%s", message)
+        if level == .debug {
+            osLog("%s", message)
+        }
     }
 
     func error(_ message: String) {
-        osLog("%s", message)
+        if level == .debug {
+            osLog("%s", message)
+        }
     }
 
     private func osLog(_ message: StaticString, _ args: CVarArg) {
-        if #available(iOS 10, *), let consentLog = consentLog {
-            os_log(message, log: consentLog, type: .default, args)
-        } else {
-            print(message, args)
-        }
+        os_log(message, log: consentLog, type: .default, args)
     }
 }

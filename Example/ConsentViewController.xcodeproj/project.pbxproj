@@ -164,6 +164,7 @@
 		82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */; };
 		82E3D60528C64528004B1189 /* MessagesResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */; };
 		82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E3D60628C8F39B004B1189 /* CustomMatchers.swift */; };
+		82E5DBBC29E5A4C30083A054 /* SPLoggerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5DBBB29E5A4C30083A054 /* SPLoggerMock.swift */; };
 		82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E2F2491019900DC01C9 /* HttpMock.swift */; };
 		82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */; };
 		82EA4E342491324400DC01C9 /* GDPRLocalStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E332491324400DC01C9 /* GDPRLocalStorageMock.swift */; };
@@ -454,6 +455,7 @@
 		82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponseSpec.swift; sourceTree = "<group>"; };
 		82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesResponseSpec.swift; sourceTree = "<group>"; };
 		82E3D60628C8F39B004B1189 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomMatchers.swift; path = Helpers/CustomMatchers.swift; sourceTree = "<group>"; };
+		82E5DBBB29E5A4C30083A054 /* SPLoggerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPLoggerMock.swift; sourceTree = "<group>"; };
 		82EA4E2F2491019900DC01C9 /* HttpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HttpMock.swift; path = Helpers/HttpMock.swift; sourceTree = "<group>"; };
 		82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourcePointClientMock.swift; path = Helpers/SourcePointClientMock.swift; sourceTree = "<group>"; };
 		82EA4E332491324400DC01C9 /* GDPRLocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GDPRLocalStorageMock.swift; path = Helpers/GDPRLocalStorageMock.swift; sourceTree = "<group>"; };
@@ -1268,6 +1270,7 @@
 				82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */,
 				82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */,
 				82C4935F28F17A2D00898E7A /* CampaignSpec.swift */,
+				82E5DBBB29E5A4C30083A054 /* SPLoggerMock.swift */,
 			);
 			path = SourcePointClient;
 			sourceTree = "<group>";
@@ -2665,6 +2668,7 @@
 				82EA4E342491324400DC01C9 /* GDPRLocalStorageMock.swift in Sources */,
 				6D605DF62423B96C00BB3E5F /* SPErrorSpec.swift in Sources */,
 				822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */,
+				82E5DBBC29E5A4C30083A054 /* SPLoggerMock.swift in Sources */,
 				5687C4F227A1B11A003456E7 /* SPPropertyNameSpec.swift in Sources */,
 				82E3D60528C64528004B1189 /* MessagesResponseSpec.swift in Sources */,
 				82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */,
