@@ -97,6 +97,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         struct AttCampaign: Codable {
             var lastMessage: LastMessageData?
+            var status: SPIDFAStatus { SPIDFAStatus.current() }
         }
 
         var gdpr: SPGDPRConsent?
@@ -162,7 +163,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var shouldCallMessages: Bool {
         (campaigns.gdpr != nil && state.gdpr?.consentStatus.consentedAll != true) ||
         campaigns.ccpa != nil ||
-        (campaigns.ios14 != nil /*&& state.ios14?.status != .accepted*/)
+        (campaigns.ios14 != nil && state.ios14?.status != .accepted)
     }
 
     var metaDataParamsFromState: MetaDataBodyRequest {
