@@ -5,6 +5,7 @@ install! 'cocoapods', :share_schemes_for_development_pods => true
 target 'AuthExample' do
   pod 'ConsentViewController', :path => '../'
   pod 'SwiftLint'
+  pod 'Wormholy'
 end
 
 target 'ConsentViewController_Example' do

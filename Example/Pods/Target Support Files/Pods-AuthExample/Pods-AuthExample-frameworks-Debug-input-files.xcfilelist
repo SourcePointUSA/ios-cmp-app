@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-AuthExample/Pods-AuthExample-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework
+${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework

@@ -87,8 +87,6 @@
 		6D8046FF25D1A88C0005002B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8046FE25D1A88C0005002B /* main.m */; };
 		6D80473525D1AC3E0005002B /* ObjC_ExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80473425D1AC3E0005002B /* ObjC_ExampleAppUITests.swift */; };
 		6D80476D25D1B0E40005002B /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D80476C25D1B0E40005002B /* CustomMatchers.swift */; };
-		6D84BB4225E68C6D002D6996 /* ConsentViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; };
-		6D84BB4325E68C6D002D6996 /* ConsentViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8047D225D1C76D0005002B /* ConsentViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D8E96C526E9261F00641D7A /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8E96C426E9261F00641D7A /* AppInfo.swift */; };
 		6D8E96C726E9264E00641D7A /* AppUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8E96C626E9264E00641D7A /* AppUpdateManager.swift */; };
 		6DA66EA3255D1A690034E11A /* SPMessageLanguageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA66EA2255D1A690034E11A /* SPMessageLanguageSpec.swift */; };
@@ -119,7 +117,7 @@
 		822BF2CB2657E29800177B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2C92657E29800177B0E /* Main.storyboard */; };
 		822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CC2657E29900177B0E /* Assets.xcassets */; };
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
-		822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */; };
+		822E21FB255EB5CA00DA02D6 /* SPWebViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E21FA255EB5CA00DA02D6 /* SPWebViewExtensionsSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
@@ -150,7 +148,7 @@
 		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
-		82B224182580D5D60032BC49 /* GDPRURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B224172580D5D60032BC49 /* GDPRURLExtensionsSpec.swift */; };
+		82B224182580D5D60032BC49 /* SPURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */; };
 		82BB0E5F28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */; };
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
@@ -236,20 +234,6 @@
 			remoteInfo = ConsentViewController_Example;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6D84BB4425E68C6D002D6996 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6D84BB4325E68C6D002D6996 /* ConsentViewController.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0909C3E990EBFEEA4FEEF2F3 /* Pods-NativePMExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleApp.release.xcconfig"; path = "Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -402,7 +386,7 @@
 		822BF2D62657E29900177B0E /* NativePMExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRWebViewExtensionsSpec.swift; sourceTree = "<group>"; };
+		822E21FA255EB5CA00DA02D6 /* SPWebViewExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPWebViewExtensionsSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8231B14122BA5A6B00D2669B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -438,7 +422,7 @@
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceSpec.swift; sourceTree = "<group>"; };
 		82ACF6AB2487E73C006E207A /* GDPRUserDefaultsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRUserDefaultsSpec.swift; sourceTree = "<group>"; };
-		82B224172580D5D60032BC49 /* GDPRURLExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRURLExtensionsSpec.swift; sourceTree = "<group>"; };
+		82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPURLExtensionsSpec.swift; sourceTree = "<group>"; };
 		82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmockedSourcepointClientSpec.swift; sourceTree = "<group>"; };
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
@@ -577,7 +561,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D84BB4225E68C6D002D6996 /* ConsentViewController.framework in Frameworks */,
 				6A3115461222481B6800930B /* Pods_AuthExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1296,8 +1279,8 @@
 		82B224162580D5B50032BC49 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				822E21FA255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift */,
-				82B224172580D5D60032BC49 /* GDPRURLExtensionsSpec.swift */,
+				822E21FA255EB5CA00DA02D6 /* SPWebViewExtensionsSpec.swift */,
+				82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1616,7 +1599,6 @@
 				8231B13A22BA5A6B00D2669B /* Frameworks */,
 				8231B13B22BA5A6B00D2669B /* Resources */,
 				6DCFAEEA25D3D2CC0071A738 /* ShellScript */,
-				6D84BB4425E68C6D002D6996 /* Embed Frameworks */,
 				E07AB985909DE072FBBFD918 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -2667,7 +2649,7 @@
 				82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */,
 				82EA4E342491324400DC01C9 /* LocalStorageMock.swift in Sources */,
 				6D605DF62423B96C00BB3E5F /* SPErrorSpec.swift in Sources */,
-				822E21FB255EB5CA00DA02D6 /* GDPRWebViewExtensionsSpec.swift in Sources */,
+				822E21FB255EB5CA00DA02D6 /* SPWebViewExtensionsSpec.swift in Sources */,
 				82E5DBBC29E5A4C30083A054 /* SPLoggerMock.swift in Sources */,
 				5687C4F227A1B11A003456E7 /* SPPropertyNameSpec.swift in Sources */,
 				82E3D60528C64528004B1189 /* MessagesResponseSpec.swift in Sources */,
@@ -2692,7 +2674,7 @@
 				82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */,
 				826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */,
 				829DA56425D5573800612517 /* ConsentsProfileSpec.swift in Sources */,
-				82B224182580D5D60032BC49 /* GDPRURLExtensionsSpec.swift in Sources */,
+				82B224182580D5D60032BC49 /* SPURLExtensionsSpec.swift in Sources */,
 				82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
