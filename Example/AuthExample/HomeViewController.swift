@@ -16,12 +16,13 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var webview: WKWebView!
 
-    var authId: String!
+    var userData: SPUserData!
 
     override func viewDidLoad() {
-        webview.setConsentFor(authId: authId)
+        webview.cleanCache()
         webview.navigationDelegate = self
         webview.load(URLRequest(url: HomeViewController.webviewUrl))
+        webview.preloadConsent(from: userData)
     }
 }
 
@@ -29,13 +30,10 @@ extension HomeViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         webview.loadHTMLString(try! String(contentsOfFile: HomeViewController.notFoundHtml), baseURL: nil)
     }
+}
 
-    /// Get the value of authId cookie from the document
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.getAuthId { authId, error in
-            error != nil ?
-                print(error.debugDescription) :
-                print("AuthId:", authId ?? "No AuthId")
-        }
+extension WKWebView {
+    func cleanCache() {
+        WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache], modifiedSince: Date(timeIntervalSince1970: 0)) {}
     }
 }

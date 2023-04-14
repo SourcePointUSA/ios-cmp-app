@@ -14,13 +14,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var consentTableView: UITableView!
     @IBOutlet weak var authIdLabel: UILabel!
 
-    lazy var consentViewController: GDPRConsentViewController = { return GDPRConsentViewController(
+    lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: 22,
-        propertyId: 7639,
-        propertyName: try! SPPropertyName("tcfv2.mobile.webview"),
-        PMId: "122058",
-        campaignEnv: .Public,
-        consentDelegate: self 
+        propertyId: 16893,
+        // swiftlint:disable:next force_try
+        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        campaigns: SPCampaigns(
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign()
+        ),
+        delegate: self
     )}()
 
     /// Use a random generated `UUID` if you don't intend to share consent among different apps
@@ -39,44 +42,44 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func onSettingsPress(_ sender: Any) {
         initData()
-        consentViewController.loadPrivacyManager()
+        consentManager.loadGDPRPrivacyManager(withId: "488393")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         authId = UserDefaults.standard.string(forKey: "MyAppsAuthId") ?? UUID().uuidString
         initData()
-        consentViewController.loadMessage(forAuthId: authId)
+        consentManager.loadMessage(forAuthId: authId)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let homeController = segue.destination as? HomeViewController
-        homeController?.authId = authId
+        homeController?.userData = consentManager.userData
     }
 }
 
-extension LoginViewController: GDPRConsentDelegate {
-    func gdprConsentUIWillShow() {
-        present(consentViewController, animated: true, completion: nil)
+extension LoginViewController: SPDelegate {
+    func onSPUIReady(_ controller: UIViewController) {
+        present(controller, animated: true)
     }
 
-    func consentUIDidDisappear() {
-        dismiss(animated: true, completion: nil)
+    func onSPUIFinished(_ controller: UIViewController) {
+        dismiss(animated: true)
     }
 
-    func onConsentReady(consentUUID: SPConsentUUID, userConsent: SPGDPRConsent) {
-        userData = [
-            "ConsentUUID: \(consentUUID)",
-            "Consent String: \(userConsent.euconsent)"
+    func onConsentReady(userData: SPUserData) {
+        self.userData = [
+            "Consent String: \(userData.gdpr?.consents?.euconsent ?? "")"
         ]
-        consents =
-            userConsent.acceptedVendors.map({ v in return "Vendor: \(v)"}) +
-            userConsent.acceptedCategories.map({ c in return "Purpose: \(c)"})
         consentTableView.reloadData()
     }
 
-    func onError(error: SPError?) {
-        print(error.debugDescription)
+    func onAction(_ action: ConsentViewController.SPAction, from controller: UIViewController) {
+        print("Action - ", action.type)
+    }
+
+    func onError(error: SPError) {
+        print(error)
     }
 }
 
