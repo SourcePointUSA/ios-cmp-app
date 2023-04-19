@@ -16,6 +16,8 @@ extension Defaultable {
     }
 }
 
+public typealias SPWebConsentPayload = String
+
 enum MessageCategory: Int, Codable, Defaultable, Equatable {
     case gdpr = 1
     case ccpa = 2

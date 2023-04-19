@@ -76,7 +76,9 @@ protocol CampaignConsent {
  */
 @objcMembers public class SPCCPAConsent: NSObject, Codable, CampaignConsent {
     enum CodingKeys: CodingKey {
-        case status, rejectedVendors, rejectedCategories, uspstring, uuid, childPmId, consentStatus
+        case status, rejectedVendors, rejectedCategories,
+             uspstring, uuid, childPmId, consentStatus,
+             webConsentPayload
     }
 
     /// represents the default state of the consumer prior to seeing the consent message
@@ -104,9 +106,14 @@ protocol CampaignConsent {
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
     var childPmId: String?
 
+    /// Required by SP endpoints
     var lastMessage: LastMessageData?
 
+    /// Required by SP endpoints
     var consentStatus: ConsentStatus
+
+    /// Used by the rendering app
+    var webConsentPayload: SPWebConsentPayload?
 
     override open var description: String {
         "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
@@ -119,7 +126,8 @@ protocol CampaignConsent {
         rejectedCategories: [String],
         uspstring: SPUsPrivacyString,
         childPmId: String? = nil,
-        consentStatus: ConsentStatus = ConsentStatus()
+        consentStatus: ConsentStatus = ConsentStatus(),
+        webConsentPayload: SPWebConsentPayload? = nil
     ) {
         self.uuid = uuid
         self.status = status
@@ -128,6 +136,7 @@ protocol CampaignConsent {
         self.uspstring = uspstring
         self.childPmId = childPmId
         self.consentStatus = consentStatus
+        self.webConsentPayload = webConsentPayload
     }
 
     public required init(from decoder: Decoder) throws {
@@ -139,6 +148,7 @@ protocol CampaignConsent {
         uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
         childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
+        webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
     }
 
     public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
