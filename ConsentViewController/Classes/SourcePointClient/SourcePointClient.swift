@@ -392,7 +392,7 @@ extension SourcePointClient {
             "metadata": metadata.stringified(),
             "hasCsp": "true",
             "withSiteActions": "false",
-            "includeData": "{\"TCData\":{\"type\":\"RecordString\"}}"
+            "includeData": IncludeData.string
         ])
         if let authId = authId {
             url = url?.appendQueryItems(["authId": authId])
@@ -513,7 +513,7 @@ extension SourcePointClient {
             "withSiteActions": withSiteActions.description,
             "includeCustomVendorsRes": includeCustomVendorsRes.description,
             "metadata": metadata.stringified(),
-            "includeData": "{\"TCData\":{\"type\":\"RecordString\"}}"
+            "includeData": IncludeData.string
         ])
     }
 

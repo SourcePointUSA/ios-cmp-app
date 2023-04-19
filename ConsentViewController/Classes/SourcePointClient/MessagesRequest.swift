@@ -39,10 +39,7 @@ struct MessagesRequest: QueryParamEncodable {
         let hasCSP = true
         let campaignEnv: SPCampaignEnv?
         let idfaStatus: SPIDFAStatus?
-        let includeData = try? SPJson([
-            "localState": ["type": "RecordString"],
-            "TCData": ["type": "RecordString"]
-        ])
+        let includeData = IncludeData.string
     }
 
     struct MetaData: QueryParamEncodable {
