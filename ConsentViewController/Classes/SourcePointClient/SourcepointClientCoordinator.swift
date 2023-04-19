@@ -11,6 +11,7 @@ import Foundation
 typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
 typealias GDPRCustomConsentHandler = (Result<SPGDPRConsent, SPError>) -> Void
+typealias ActionHandler = (Result<SPUserData, SPError>) -> Void
 
 struct MessageToDisplay {
     let message: Message
@@ -403,6 +404,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.tcfData = gdpr.TCData
             state.gdpr?.consentStatus = gdpr.consentStatus
             state.gdpr?.childPmId = nil
+            state.gdpr?.webConsentPayload = gdpr.webConsentPayload
         }
         if let ccpa = response.consentStatusData.ccpa {
             state.ccpa?.uuid = ccpa.uuid
@@ -416,6 +418,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 rejectedCategories: ccpa.rejectedCategories
             )
             state.ccpa?.childPmId = nil
+            state.ccpa?.webConsentPayload = ccpa.webConsentPayload
         }
         storage.spState = state
     }
@@ -469,6 +472,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         state.gdpr?.euconsent = consents.euconsent
                         state.gdpr?.consentStatus = consents.consentStatus
                         state.gdpr?.childPmId = consents.childPmId
+                        state.gdpr?.webConsentPayload = $0.webConsentPayload
                     default: break
                 }
             } else if $0.type == .ccpa {
@@ -481,6 +485,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         state.ccpa?.rejectedCategories = consents.rejectedCategories
                         state.ccpa?.uspstring = consents.uspstring
                         state.ccpa?.childPmId = consents.childPmId
+                        state.ccpa?.webConsentPayload = $0.webConsentPayload
                     default: break
                 }
             }
@@ -660,48 +665,59 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         ) { handler($0) }
     }
 
-    func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void) {
+    func reportGDPRAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+        postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
+            switch postResult {
+                case .success(let response):
+                    if action.type == .SaveAndExit {
+                        self.state.gdpr?.tcfData = response.TCData
+                    }
+                    self.state.gdpr?.uuid = response.uuid
+                    self.state.gdpr?.dateCreated = response.dateCreated
+                    self.state.gdpr?.consentStatus = response.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
+                    self.state.gdpr?.euconsent = response.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
+                    self.state.gdpr?.vendorGrants = response.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
+                    self.state.gdpr?.webConsentPayload = response.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
+                    self.storage.spState = self.state
+
+                    handler(Result.success(self.userData))
+
+                case .failure(let error):
+                    // flag to sync again later
+                    handler(Result.failure(error))
+            }
+        }
+    }
+
+    func reportCCPAAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+        self.postChoice(action) { postResult in
+            switch postResult {
+                case .success(let response):
+                    self.state.ccpa?.uuid = response.uuid
+                    self.state.ccpa?.dateCreated = response.dateCreated
+                    self.state.ccpa?.status = response.status ?? getResponse?.ccpa?.status ?? .RejectedAll
+                    self.state.ccpa?.rejectedVendors = response.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
+                    self.state.ccpa?.rejectedCategories = response.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
+                    self.state.ccpa?.uspstring = response.uspstring ?? getResponse?.ccpa?.uspstring ?? ""
+                    self.state.ccpa?.webConsentPayload = response.webConsentPayload ?? getResponse?.ccpa?.webConsentPayload
+                    self.storage.spState = self.state
+                    handler(Result.success(self.userData))
+
+                case .failure(let error):
+                    // flag to sync again later
+                    handler(Result.failure(error))
+            }
+        }
+    }
+
+    func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
         getChoiceAll(action) { getResult in
             switch getResult {
                 case .success(let getResponse):
                     if action.campaignType == .gdpr {
-                        self.postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
-                            switch postResult {
-                                case .success(let response):
-                                    self.state.gdpr?.uuid = response.uuid
-                                    self.state.gdpr?.dateCreated = response.dateCreated
-                                    if action.type == .SaveAndExit {
-                                        self.state.gdpr?.tcfData = response.TCData
-                                    }
-                                    self.state.gdpr?.consentStatus = response.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
-                                    self.state.gdpr?.euconsent = response.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
-                                    self.state.gdpr?.vendorGrants = response.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
-                                    self.storage.spState = self.state
-                                    handler(Result.success(self.userData))
-
-                                case .failure(let error):
-                                    // flag to sync again later
-                                    handler(Result.failure(error))
-                            }
-                        }
+                        self.reportGDPRAction(action, getResponse, handler)
                     } else if action.campaignType == .ccpa {
-                        self.postChoice(action) { postResult in
-                            switch postResult {
-                                case .success(let response):
-                                    self.state.ccpa?.uuid = response.uuid
-                                    self.state.ccpa?.dateCreated = response.dateCreated
-                                    self.state.ccpa?.status = response.status ?? getResponse?.ccpa?.status ?? .RejectedAll
-                                    self.state.ccpa?.rejectedVendors = response.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
-                                    self.state.ccpa?.rejectedCategories = response.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
-                                    self.state.ccpa?.uspstring = response.uspstring ?? getResponse?.ccpa?.uspstring ?? ""
-                                    self.storage.spState = self.state
-                                    handler(Result.success(self.userData))
-
-                                case .failure(let error):
-                                    // flag to sync again later
-                                    handler(Result.failure(error))
-                            }
-                        }
+                        self.reportCCPAAction(action, getResponse, handler)
                     }
 
                 case .failure(let error):
