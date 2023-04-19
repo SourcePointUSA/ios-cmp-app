@@ -17,6 +17,7 @@ struct ChoiceAllResponse: Decodable {
         let rejectedVendors: [String]
         let rejectedCategories: [String]
         let gpcEnabled: Bool?
+        let webConsentPayload: SPWebConsentPayload?
     }
 
     struct GDPR: Decodable {
@@ -34,6 +35,7 @@ struct ChoiceAllResponse: Decodable {
         let consentStatus: ConsentStatus
         let grants: SPGDPRVendorGrants
         let postPayload: PostPayload?
+        let webConsentPayload: SPWebConsentPayload?
     }
 
     let gdpr: GDPR?
@@ -50,7 +52,9 @@ struct ChoiceAllBodyRequest: QueryParamEncodable {
 
 extension ChoiceAllResponse.CCPA: Decodable {
     enum CodingKeys: String, CodingKey {
-        case dateCreated, consentedAll, rejectedAll, status, rejectedVendors, rejectedCategories, gpcEnabled
+        case dateCreated, consentedAll, rejectedAll,
+             status, rejectedVendors, rejectedCategories,
+             gpcEnabled, webConsentPayload
         case uspstring = "uspString"
     }
 
@@ -64,7 +68,8 @@ extension ChoiceAllResponse.CCPA: Decodable {
             uspstring: container.decode(String.self, forKey: .uspstring),
             rejectedVendors: ((container.decodeIfPresent([String?].self, forKey: .rejectedVendors)) ?? []).compactMap { $0 },
             rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 },
-            gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled)
+            gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled),
+            webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         )
     }
 }

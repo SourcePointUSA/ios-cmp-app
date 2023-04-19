@@ -184,11 +184,12 @@ struct Campaign: Equatable {
     let messageMetaData: MessageMetaData?
     let consentStatus: ConsentStatus?
     let dateCreated: SPDateCreated?
+    let webConsentPayload: SPWebConsentPayload?
 }
 
 extension Campaign: Decodable {
     enum Keys: CodingKey {
-        case type, message, messageMetaData, url, consentStatus, dateCreated
+        case type, message, messageMetaData, url, consentStatus, dateCreated, webConsentPayload
     }
 
     init(from decoder: Decoder) throws {
@@ -198,6 +199,7 @@ extension Campaign: Decodable {
         userConsent = try Consent(from: decoder)
         consentStatus = try? container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus) ?? ConsentStatus(from: decoder)
         dateCreated = try container.decodeIfPresent(SPDateCreated.self, forKey: .dateCreated)
+        webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         if let metaData = messageMetaData {
             message = try Message(category: metaData.categoryId, subCategory: metaData.subCategoryId, decoder: try container.superDecoder(forKey: .message))
             url = try container.decodeIfPresent(URL.self, forKey: .url)
