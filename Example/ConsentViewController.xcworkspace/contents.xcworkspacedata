@@ -5,6 +5,9 @@
       location = "group:ConsentViewController.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:ConsentViewController_Example.xctestplan">
    </FileRef>
    <FileRef
@@ -15,8 +18,5 @@
    </FileRef>
    <FileRef
       location = "group:NativeMessageExample.xctestplan">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
