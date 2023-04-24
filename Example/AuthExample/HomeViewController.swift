@@ -11,7 +11,7 @@ import WebKit
 import ConsentViewController
 
 class HomeViewController: UIViewController {
-    static let webviewUrl = URL(string: "http://localhost:8080/")!
+    static let webviewUrl = URL(string: "https://sourcepointusa.github.io/sdks-auth-consent-test-page/?_sp_version=DIA-1874&_sp_pass_consent=true")!
     static let notFoundHtml = Bundle.main.path(forResource: "webserver/404", ofType: "html")!
 
     @IBOutlet weak var webview: WKWebView!
