@@ -9,7 +9,7 @@
 @testable import ConsentViewController
 import Foundation
 
-class GDPRLocalStorageMock: SPLocalStorage {
+class LocalStorageMock: SPLocalStorage {
     var gdprChildPmId: String?
     var ccpaChildPmId: String?
     var userData = SPUserData()
