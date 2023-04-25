@@ -312,9 +312,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         return localState
     }
 
-    func resetStateIfAuthIdChanged(_ authId: String?) {
-        if authId != state.storedAuthId {
-            state.storedAuthId = authId
+    /// Resets state if the authId has changed, except if the stored auth id was empty.
+    func resetStateIfAuthIdChanged(_ currentAuthId: String?) {
+        guard let currentAuthId = currentAuthId else { return }
+
+        let previousAuthId = state.storedAuthId
+        authId = currentAuthId
+        state.storedAuthId = currentAuthId
+
+        if previousAuthId != currentAuthId {
             if campaigns.gdpr != nil {
                 state.gdpr = .empty()
                 state.gdprMetaData = .init()
@@ -330,7 +336,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func loadMessages(forAuthId authId: String?, _ handler: @escaping MessagesAndConsentsHandler) {
         resetStateIfAuthIdChanged(authId)
         metaData {
-            self.consentStatus(forAuthId: authId) {
+            self.consentStatus {
                 self.state.udpateGDPRStatus()
                 self.messages {
                     handler($0)
@@ -374,7 +380,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
-            hasLocalData: false,
+            hasLocalData: false, // campaign.uuid != nil,
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid
@@ -408,7 +414,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func consentStatus(forAuthId authId: String?, next: @escaping () -> Void) {
+    func consentStatus(next: @escaping () -> Void) {
         if shouldCallConsentStatus {
             spClient.consentStatus(
                 propertyId: propertyId,
