@@ -156,7 +156,7 @@ protocol SourcePointProtocol {
 
 extension SourcePointProtocol {
     func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
-        pvData(body, handler: nil)
+        pvData(body, handler: handler)
     }
 }
 

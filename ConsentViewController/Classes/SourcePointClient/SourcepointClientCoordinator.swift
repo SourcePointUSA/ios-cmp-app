@@ -82,7 +82,7 @@ extension SPSampleable {
 
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
-        struct GDPRMetaData: Codable, SPSampleable {
+        struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var additionsChangeDate = SPDateCreated.now()
             var legalBasisChangeDate = SPDateCreated.now()
             var sampleRate = Float(1)
@@ -90,7 +90,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var wasSampledAt: Float?
         }
 
-        struct CCPAMetaData: Codable, SPSampleable {
+        struct CCPAMetaData: Codable, SPSampleable, Equatable {
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
@@ -342,9 +342,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         metaData {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
-                self.messages {
-                    handler($0)
-                    self.pvData()
+                self.messages { messagesResponse in
+                    self.pvData {
+                        handler(messagesResponse)
+                    }
                 }
             }
         }
@@ -508,33 +509,67 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         1...Int(rate * 100) ~= Int.random(in: 1...100)
     }
 
-    /// If campaign is not `nil`, sample it and call pvData in case the sampling was a hit.
-    /// Returns `true` if it hit or `false` otherwise
-    func sampleAndPvData(_ campaign: SPSampleable, body: PvDataRequestBody) -> Bool {
-        if campaign.wasSampled == nil {
-            if sample(at: campaign.sampleRate) {
-                spClient.pvData(body)
-                return true
-            }
-            return false
-        } else if campaign.wasSampled == true {
-            spClient.pvData(body)
-            return true
-        }
+    func handlePvDataResponse(_ response: Result<PvDataResponse, SPError>) {
+        switch response {
+            case .success(let pvDataData):
+                if let gdpr = pvDataData.gdpr {
+                    state.gdpr?.uuid = gdpr.uuid
+                }
+                if let ccpa = pvDataData.ccpa {
+                    state.ccpa?.uuid = ccpa.uuid
+                }
 
-        return false
+            case .failure(let error): logErrorMetrics(error)
+        }
     }
 
-    func pvData() {
+    /// If campaign is not `nil`, sample it and call pvData in case the sampling was a hit.
+    /// Returns `true` if it hit or `false` otherwise
+    func sampleAndPvData(_ campaign: SPSampleable, body: PvDataRequestBody, handler: @escaping () -> Void) -> Bool {
+        if campaign.wasSampled == nil {
+            if sample(at: campaign.sampleRate) {
+                spClient.pvData(body) {
+                    self.handlePvDataResponse($0)
+                    handler()
+                }
+                return true
+            } else {
+                handler()
+                return false
+            }
+        } else if campaign.wasSampled == true {
+            spClient.pvData(body) {
+                self.handlePvDataResponse($0)
+                handler()
+            }
+            return true
+        } else {
+            handler()
+            return false
+        }
+    }
+
+    func pvData(_ handler: @escaping () -> Void) {
+        let pvDataGroup = DispatchGroup()
         if let gdprMetadata = state.gdprMetaData {
-            let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBodyFromState)
+            pvDataGroup.enter()
+            let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBodyFromState) {
+                pvDataGroup.leave()
+            }
             state.gdprMetaData?.wasSampled = sampled
         }
         if let ccpaMetadata = state.ccpaMetaData {
-            let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBodyFromState)
+            pvDataGroup.enter()
+            let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBodyFromState) {
+                pvDataGroup.leave()
+            }
             state.ccpaMetaData?.wasSampled = sampled
         }
-        storage.spState = state
+
+        pvDataGroup.notify(queue: .main) {
+            self.storage.spState = self.state
+            handler()
+        }
     }
 
     func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
