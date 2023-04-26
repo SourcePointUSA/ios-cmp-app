@@ -40,13 +40,14 @@ extension MessageToDisplay {
 
 protocol SPClientCoordinator {
     var authId: String? { get set }
+    var deviceManager: SPDeviceManager { get set }
     var userData: SPUserData { get }
     var language: SPMessageLanguage { get set }
 
     func loadMessages(forAuthId: String?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
-    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String)
+    func logErrorMetrics(_ error: SPError)
     func deleteCustomConsentGDPR(
         vendors: [String],
         categories: [String],
@@ -135,6 +136,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     let campaigns: SPCampaigns
     var pubData: SPPublisherData
 
+    var deviceManager: SPDeviceManager
     let spClient: SourcePointProtocol
     var storage: SPLocalStorage
 
@@ -276,7 +278,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         campaigns: SPCampaigns,
         pubData: SPPublisherData = SPPublisherData(),
         storage: SPLocalStorage = SPUserDefaults(),
-        spClient: SourcePointProtocol? = nil
+        spClient: SourcePointProtocol? = nil,
+        deviceManager: SPDeviceManager = SPDevice.standard
     ) {
         self.accountId = accountId
         self.propertyId = propertyId
@@ -291,6 +294,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             campaignEnv: campaigns.environment,
             timeout: SPConsentManager.DefaultTimeout
         )
+        self.deviceManager = deviceManager
 
         self.state = Self.setupState(from: storage, campaigns: campaigns)
         self.storage.spState = self.state
@@ -689,13 +693,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String) {
+    func logErrorMetrics(_ error: SPError) {
         spClient.errorMetrics(
             error,
             propertyId: propertyId,
             sdkVersion: SPConsentManager.VERSION,
-            OSVersion: osVersion,
-            deviceFamily: deviceFamily,
+            OSVersion: deviceManager.osVersion,
+            deviceFamily: deviceManager.deviceFamily,
             campaignType: error.campaignType
         )
     }

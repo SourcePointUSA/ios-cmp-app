@@ -100,7 +100,7 @@ import UIKit
         spClient: SourcePointProtocol,
         storage: SPLocalStorage,
         spCoordinator: SPClientCoordinator,
-        deviceManager: SPDeviceManager = SPDevice()
+        deviceManager: SPDeviceManager = SPDevice.standard
     ) {
         self.propertyId = propertyId
         self.campaigns = campaigns
@@ -241,11 +241,7 @@ import UIKit
     }
 
     public func gracefullyDegradeOnError(_ error: SPError) {
-        spCoordinator.logErrorMetrics(
-            error,
-            osVersion: deviceManager.osVersion(),
-            deviceFamily: deviceManager.deviceFamily()
-        )
+        spCoordinator.logErrorMetrics(error)
         if !userData.isEqual(SPUserData()) {
             delegate?.onConsentReady?(userData: userData)
             handleSDKDone()
@@ -258,11 +254,7 @@ import UIKit
     }
 
     public func onError(_ error: SPError) {
-        spCoordinator.logErrorMetrics(
-            error,
-            osVersion: deviceManager.osVersion(),
-            deviceFamily: deviceManager.deviceFamily()
-        )
+        spCoordinator.logErrorMetrics(error)
         if cleanUserDataOnError {
             Self.clearAllData()
         }
@@ -275,11 +267,7 @@ import UIKit
             return childPmId
         }
 
-        spCoordinator.logErrorMetrics(
-            MissingChildPmIdError(usedId: fallbackId),
-            osVersion: deviceManager.osVersion(),
-            deviceFamily: deviceManager.deviceFamily()
-        )
+        spCoordinator.logErrorMetrics(MissingChildPmIdError(usedId: fallbackId))
         return fallbackId
     }
 }
@@ -513,7 +501,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 self?.spCoordinator.reportIdfaStatus(
                     status: status,
-                    osVersion: self?.deviceManager.osVersion() ?? ""
+                    osVersion: self?.deviceManager.osVersion ?? ""
                 )
                 if status == .accepted {
                     action.type = .IDFAAccepted
