@@ -125,7 +125,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        fdescribe("authenticated consent") {
+        describe("authenticated consent") {
             it("only changes consent uuid after a different auth id is used") {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil) { guestUserResponse in
