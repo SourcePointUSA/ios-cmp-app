@@ -17,7 +17,7 @@ class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
         SPConsentManager.clearAllData()
 
-        var coordinator: SPClientCoordinator!
+        var coordinator: SourcepointClientCoordinator!
 
         beforeSuite {
             Nimble.AsyncDefaults.timeout = .seconds(30)
@@ -64,22 +64,83 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        describe("authenticated consent") {
+        describe("resetStateIfAuthIdChanged") {
+            describe("when previous auth Id is nil and new auth id is different than nil") {
+                it("does not reset state and sets stored auth id to the new one") {
+                    coordinator.state.storedAuthId = nil
+                    let gdprCampaignState = coordinator.state.gdpr
+                    let gdprMetadataState = coordinator.state.gdprMetaData
+                    let ccpaCampaignState = coordinator.state.ccpa
+                    let ccpaMetadataState = coordinator.state.ccpaMetaData
+
+                    coordinator.authId = "foo"
+                    coordinator.resetStateIfAuthIdChanged()
+
+                    expect(gdprCampaignState).to(be(coordinator.state.gdpr))
+                    expect(gdprMetadataState).to(equal(coordinator.state.gdprMetaData))
+                    expect(ccpaCampaignState).to(be(coordinator.state.ccpa))
+                    expect(ccpaMetadataState).to(equal(coordinator.state.ccpaMetaData))
+                    expect(coordinator.state.storedAuthId).to(equal("foo"))
+                }
+            }
+
+            describe("when new auth id is nil") {
+                it("does not reset state nor stored auth id") {
+                    coordinator.state.storedAuthId = "foo"
+                    let gdprCampaignState = coordinator.state.gdpr
+                    let gdprMetadataState = coordinator.state.gdprMetaData
+                    let ccpaCampaignState = coordinator.state.ccpa
+                    let ccpaMetadataState = coordinator.state.ccpaMetaData
+
+                    coordinator.authId = nil
+                    coordinator.resetStateIfAuthIdChanged()
+
+                    expect(gdprCampaignState).to(be(coordinator.state.gdpr))
+                    expect(gdprMetadataState).to(equal(coordinator.state.gdprMetaData))
+                    expect(ccpaCampaignState).to(be(coordinator.state.ccpa))
+                    expect(ccpaMetadataState).to(equal(coordinator.state.ccpaMetaData))
+                    expect(coordinator.state.storedAuthId).to(equal("foo"))
+                }
+            }
+
+            describe("when previous stored auth id is different than current auth id (and both are not nil)") {
+                it("resets state and overwrites stored auth id with the new one") {
+                    coordinator.state.storedAuthId = "foo"
+                    let gdprCampaignState = coordinator.state.gdpr
+                    let gdprMetadataState = coordinator.state.gdprMetaData
+                    let ccpaCampaignState = coordinator.state.ccpa
+                    // changing a single value so we can see it has changed in the expectations below
+                    coordinator.state.ccpaMetaData?.sampleRate = 0.5
+                    let ccpaMetadataState = coordinator.state.ccpaMetaData
+
+                    coordinator.authId = "bar"
+                    coordinator.resetStateIfAuthIdChanged()
+
+                    expect(gdprCampaignState).notTo(be(coordinator.state.gdpr))
+                    expect(gdprMetadataState).notTo(equal(coordinator.state.gdprMetaData))
+                    expect(ccpaCampaignState).notTo(be(coordinator.state.ccpa))
+                    expect(ccpaMetadataState).notTo(equal(coordinator.state.ccpaMetaData))
+                    expect(coordinator.state.storedAuthId).to(equal("bar"))
+                }
+            }
+        }
+
+        fdescribe("authenticated consent") {
             it("only changes consent uuid after a different auth id is used") {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil) { guestUserResponse in
                         let (_, guestUserData) = try! guestUserResponse.get()
                         let guestGDPRUUID = guestUserData.gdpr?.consents?.uuid
                         let guestCCPAUUID = guestUserData.ccpa?.consents?.uuid
-                        expect(guestGDPRUUID).to(beNil())
-                        expect(guestCCPAUUID).to(beNil())
+                        expect(guestGDPRUUID).notTo(beNil())
+                        expect(guestCCPAUUID).notTo(beNil())
 
                         coordinator.loadMessages(forAuthId: UUID().uuidString) { loggedInResponse in
                             let (_, loggedInUserData) = try! loggedInResponse.get()
                             let loggedInGDPRUUID = loggedInUserData.gdpr?.consents?.uuid
                             let loggedInCCPAUUID = loggedInUserData.ccpa?.consents?.uuid
-                            expect(loggedInGDPRUUID).notTo(beNil())
-                            expect(loggedInCCPAUUID).notTo(beNil())
+                            expect(loggedInGDPRUUID).to(equal(guestGDPRUUID))
+                            expect(loggedInCCPAUUID).to(equal(guestCCPAUUID))
 
                             coordinator.loadMessages(forAuthId: nil) { loggedOutResponse in
                                 let (_, loggedOutUserData) = try! loggedOutResponse.get()

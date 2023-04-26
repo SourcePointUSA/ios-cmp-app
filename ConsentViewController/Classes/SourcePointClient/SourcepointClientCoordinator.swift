@@ -317,14 +317,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     /// Resets state if the authId has changed, except if the stored auth id was empty.
-    func resetStateIfAuthIdChanged(_ currentAuthId: String?) {
-        guard let currentAuthId = currentAuthId else { return }
+    func resetStateIfAuthIdChanged() {
+        if state.storedAuthId == nil {
+            state.storedAuthId = authId
+        }
 
-        let previousAuthId = state.storedAuthId
-        authId = currentAuthId
-        state.storedAuthId = currentAuthId
-
-        if previousAuthId != currentAuthId {
+        if authId != nil, state.storedAuthId != authId {
+            state.storedAuthId = authId
             if campaigns.gdpr != nil {
                 state.gdpr = .empty()
                 state.gdprMetaData = .init()
@@ -333,12 +332,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 state.ccpa = .empty()
                 state.ccpaMetaData = .init()
             }
-            storage.spState = state
         }
+
+        storage.spState = state
     }
 
     func loadMessages(forAuthId authId: String?, _ handler: @escaping MessagesAndConsentsHandler) {
-        resetStateIfAuthIdChanged(authId)
+        self.authId = authId
+        resetStateIfAuthIdChanged()
         metaData {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
@@ -376,7 +377,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     self.handleMetaDataResponse(response)
 
                 case .failure(let error):
-                    print(error)
+                    self.logErrorMetrics(error)
             }
             next()
         }
@@ -434,7 +435,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         self.handleConsentStatusResponse(response)
 
                     case .failure(let error):
-                        print(error)
+                        self.logErrorMetrics(error)
                 }
                 next()
             }
@@ -505,6 +506,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    /// rate is a float ranging from 0.0 to 1.0
+    /// sample will generate a number from 1 to 100 and if that number
+    /// is inside the given range 1...rate*100, it returns `true` otherwise `false`
     func sample(at rate: Float) -> Bool {
         1...Int(rate * 100) ~= Int.random(in: 1...100)
     }
