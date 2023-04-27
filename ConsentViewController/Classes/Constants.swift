@@ -33,8 +33,8 @@ struct Constants {
         static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=\(envParam)&inApp=true&\(additionalData)", relativeTo: WRAPPER_API)!
         static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
         static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
-        static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html?\(additionalData)", relativeTo: SP_ROOT)!
-        static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html?\(additionalData)", relativeTo: SP_ROOT)!
+        static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
+        static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
         static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let META_DATA_URL = URL(string: "./v2/meta-data?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let GET_MESSAGES_URL = URL(string: "./v2/messages?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
