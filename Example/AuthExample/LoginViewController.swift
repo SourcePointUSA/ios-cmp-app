@@ -18,14 +18,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     var sdkStatus: SDKStatus = .notStarted
 
+    var campaigns: SPCampaigns { SPCampaigns(
+        gdpr: SPCampaign(),
+        ccpa: SPCampaign()
+    )}
+
     lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: 22,
         propertyId: 16893,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-        campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign()
-        ),
+        campaigns: campaigns,
         delegate: self
     )}()
 
@@ -43,8 +45,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var sdkData: [String: String?] = [:]
 
     @IBAction func onSettingsPress(_ sender: Any) {
-        sdkLoading()
-        consentManager.loadGDPRPrivacyManager(withId: "488393")
+        let ac = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
+        if campaigns.gdpr != nil {
+            ac.addAction(UIAlertAction(title: "GDPR PM", style: .default, handler: { _ in
+                self.sdkLoading()
+                self.consentManager.loadGDPRPrivacyManager(withId: "488393")
+            }))
+        }
+        if campaigns.ccpa != nil {
+            ac.addAction(UIAlertAction(title: "CCPA PM", style: .default, handler: { _ in
+                self.sdkLoading()
+                self.consentManager.loadCCPAPrivacyManager(withId: "509688")
+            }))
+        }
+        ac.addAction(UIAlertAction(title: "Network Calls", style: .default, handler: { _ in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
     }
 
     override func viewDidLoad() {
@@ -95,7 +113,7 @@ extension LoginViewController: SPDelegate {
 
     func onError(error: SPError) {
         print(error)
-        sdkDone()
+        sdkDone(failed: true)
     }
 }
 
