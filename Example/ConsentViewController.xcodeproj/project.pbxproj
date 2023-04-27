@@ -145,6 +145,8 @@
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
 		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* ConsentsProfileSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* ConsentsProfileSpec.swift */; };
+		829E851729FA9A6500BE5E65 /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829E851629FA9A6500BE5E65 /* Statuses.swift */; };
+		829E851929FA9ED000BE5E65 /* KeyValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829E851829FA9ED000BE5E65 /* KeyValueTableViewCell.swift */; };
 		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
@@ -418,6 +420,8 @@
 		828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPAConsentStatusSpec.swift; sourceTree = "<group>"; };
 		829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
 		829DA56325D5573800612517 /* ConsentsProfileSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentsProfileSpec.swift; sourceTree = "<group>"; };
+		829E851629FA9A6500BE5E65 /* Statuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
+		829E851829FA9ED000BE5E65 /* KeyValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueTableViewCell.swift; sourceTree = "<group>"; };
 		82A99CC2255D956400A85024 /* 404.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = 404.html; sourceTree = "<group>"; };
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceSpec.swift; sourceTree = "<group>"; };
@@ -1220,6 +1224,8 @@
 				8231B13F22BA5A6B00D2669B /* AppDelegate.swift */,
 				8231B14122BA5A6B00D2669B /* LoginViewController.swift */,
 				8277C33B22BBD22C00F1607F /* HomeViewController.swift */,
+				829E851629FA9A6500BE5E65 /* Statuses.swift */,
+				829E851829FA9ED000BE5E65 /* KeyValueTableViewCell.swift */,
 				8231B14322BA5A6B00D2669B /* Main.storyboard */,
 				8231B14622BA5A6C00D2669B /* Assets.xcassets */,
 				8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */,
@@ -2609,6 +2615,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */,
+				829E851729FA9A6500BE5E65 /* Statuses.swift in Sources */,
+				829E851929FA9ED000BE5E65 /* KeyValueTableViewCell.swift in Sources */,
 				8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */,
 				8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */,
 			);
