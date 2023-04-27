@@ -14,7 +14,7 @@ protocol SPUIValues {
     static var defaultFallbackTextColorForDarkMode: UIColor { get }
 }
 
-let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) == "staging"
+let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
 
 struct Constants {
     struct Urls {
