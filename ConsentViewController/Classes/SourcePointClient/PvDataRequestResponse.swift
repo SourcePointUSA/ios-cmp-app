@@ -8,20 +8,12 @@
 import Foundation
 
 struct PvDataResponse: Decodable, Equatable {
-    struct GDPR: Decodable, Equatable {
-        struct Cookie: Decodable, Equatable {
-            let key: String
-            let value: String
-            let maxAge: Int
-            let shareRootDomain: Bool
-            let session: Bool
-        }
-
+    struct Campaign: Decodable, Equatable {
         let uuid: String
-        let cookies: [Cookie]
     }
 
-    let gdpr: GDPR?
+    let gdpr: Campaign?
+    let ccpa: Campaign?
 }
 
 struct PvDataRequestBody: Codable, Equatable {

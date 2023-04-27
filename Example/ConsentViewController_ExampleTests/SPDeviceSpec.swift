@@ -15,7 +15,7 @@ class SPDeviceSpec: QuickSpec {
     override func spec() {
         describe("osVersion") {
             it("should contain the major version in its return") {
-                let version = SPDevice().osVersion()
+                let version = SPDevice.standard.osVersion
                 if #available(iOS 16, *) {
                     expect(version).to(contain("16."))
                 } else if #available(iOS 15, *) {
@@ -38,7 +38,7 @@ class SPDeviceSpec: QuickSpec {
 
         describe("deviceFamily") {
             it("should include iphone on its return") {
-                expect(SPDevice().deviceFamily()).to(contain("iPhone"))
+                expect(SPDevice.standard.deviceFamily).to(contain("iPhone"))
             }
         }
     }
