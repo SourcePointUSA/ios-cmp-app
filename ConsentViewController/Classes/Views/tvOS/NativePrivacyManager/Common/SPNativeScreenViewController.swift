@@ -216,7 +216,7 @@ extension UIViewController {
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
             } else {
-                textView.text = textViewComponent.settings.text.stripOutHtml()
+                textView.attributedText = textViewComponent.settings.text.htmlToAttributedString
             }
             textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
             textView.isUserInteractionEnabled = true
