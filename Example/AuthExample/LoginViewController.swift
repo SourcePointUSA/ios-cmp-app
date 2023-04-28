@@ -67,6 +67,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         authId = UserDefaults.standard.string(forKey: "MyAppsAuthId") ?? UUID().uuidString
         initData()
         sdkLoading()

@@ -6,28 +6,75 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
+@testable import ConsentViewController
+import Nimble
+import Quick
 import XCTest
 
-class AuthExampleUITests: XCTestCase {
-    private var app: XCUIApplication!
+class AuthExampleUITests: QuickSpec {
+    var app: AuthExampleApp!
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        app = XCUIApplication()
-        app.launch()
+    /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
+    func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
+        waitUntil(timeout: .seconds(delay + 3)) { done in
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+                execute()
+                done()
+            }
+        }
     }
 
-    override func tearDownWithError() throws {
-    }
+    override func spec() {
+        beforeSuite {
+            self.app = AuthExampleApp()
+            Nimble.AsyncDefaults.timeout = .seconds(20)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+        }
 
-    func testAcceptAllMessage() throws {
-        let webViewsQuery = XCUIApplication().webViews
-        let webMessageTitle = webViewsQuery.staticTexts["Privacy Notice"]
-        let exists = NSPredicate(format: "exists == 1")
-        expectation(for: exists, evaluatedWith: webMessageTitle, handler: nil)
-        waitForExpectations(timeout: 30, handler: nil)
-        XCTAssert(webMessageTitle.exists)
-        webMessageTitle.swipeUp()
-        webViewsQuery.buttons["Accept"].tap()
+        afterSuite {
+            Nimble.AsyncDefaults.timeout = .seconds(1)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
+        }
+
+        beforeEach {
+            self.app.relaunch(clean: true, resetAtt: true)
+        }
+
+        func acceptGDPRMessage() {
+            expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
+            self.app.gdprMessage.acceptButton.tap()
+        }
+
+        func acceptCCPAMessage() {
+            expect(self.app.ccpaMessage.messageTitle).toEventually(showUp())
+            self.app.ccpaMessage.acceptButton.tap()
+        }
+
+        func waitForSdkToFinish() {
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
+        }
+
+        func navigateToWebView() {
+            self.app.webViewButton.tap()
+        }
+
+        func waitForWebViewToSettle(handler: () -> Void) {
+            if self.app.webViewOnConsentReadyCalls.element.waitForExistence(
+                timeout: Nimble.AsyncDefaults.timeout.toDouble()
+            ) {
+                handler()
+            }
+        }
+
+        it("Accepting all via native screen should prevent messages from showing on the webview screen") {
+            acceptGDPRMessage()
+            acceptCCPAMessage()
+            waitForSdkToFinish()
+            navigateToWebView()
+            waitForWebViewToSettle {
+                expect(self.app.webViewOnConsentReadyCalls.count).to(equal(2))
+            }
+        }
     }
 }
+
