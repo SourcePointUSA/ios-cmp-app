@@ -9,20 +9,22 @@ import Foundation
 import UIKit
 
 protocol SPDeviceManager {
-    func osVersion () -> String
-    func deviceFamily () -> String
+    var osVersion: String { get }
+    var deviceFamily: String { get }
 }
 
 struct SPDevice: SPDeviceManager {
+    static var standard: SPDevice { SPDevice() }
+
     /// Returns the Version of the OS. E.g 1.2
     /// - SeeAlso: UIDevice.current.systemVersion
-    func osVersion() -> String {
+    var osVersion: String {
         UIDevice.current.systemVersion
     }
 
     /// Tries to get the device family from its unix. If none can be found it returns `apple-unknown`.
     /// Example: iphone-11.5
-    func deviceFamily() -> String {
+    var deviceFamily: String {
         if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
             return simulatorModelIdentifier
         }

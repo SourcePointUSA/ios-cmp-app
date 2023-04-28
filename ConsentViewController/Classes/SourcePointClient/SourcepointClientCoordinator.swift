@@ -40,13 +40,14 @@ extension MessageToDisplay {
 
 protocol SPClientCoordinator {
     var authId: String? { get set }
+    var deviceManager: SPDeviceManager { get set }
     var userData: SPUserData { get }
     var language: SPMessageLanguage { get set }
 
     func loadMessages(forAuthId: String?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
-    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String)
+    func logErrorMetrics(_ error: SPError)
     func deleteCustomConsentGDPR(
         vendors: [String],
         categories: [String],
@@ -81,7 +82,7 @@ extension SPSampleable {
 
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
-        struct GDPRMetaData: Codable, SPSampleable {
+        struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var additionsChangeDate = SPDateCreated.now()
             var legalBasisChangeDate = SPDateCreated.now()
             var sampleRate = Float(1)
@@ -89,7 +90,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var wasSampledAt: Float?
         }
 
-        struct CCPAMetaData: Codable, SPSampleable {
+        struct CCPAMetaData: Codable, SPSampleable, Equatable {
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
@@ -135,6 +136,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     let campaigns: SPCampaigns
     var pubData: SPPublisherData
 
+    var deviceManager: SPDeviceManager
     let spClient: SourcePointProtocol
     var storage: SPLocalStorage
 
@@ -276,7 +278,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         campaigns: SPCampaigns,
         pubData: SPPublisherData = SPPublisherData(),
         storage: SPLocalStorage = SPUserDefaults(),
-        spClient: SourcePointProtocol? = nil
+        spClient: SourcePointProtocol? = nil,
+        deviceManager: SPDeviceManager = SPDevice.standard
     ) {
         self.accountId = accountId
         self.propertyId = propertyId
@@ -291,6 +294,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             campaignEnv: campaigns.environment,
             timeout: SPConsentManager.DefaultTimeout
         )
+        self.deviceManager = deviceManager
 
         self.state = Self.setupState(from: storage, campaigns: campaigns)
         self.storage.spState = self.state
@@ -312,8 +316,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         return localState
     }
 
-    func resetStateIfAuthIdChanged(_ authId: String?) {
-        if authId != state.storedAuthId {
+    /// Resets state if the authId has changed, except if the stored auth id was empty.
+    func resetStateIfAuthIdChanged() {
+        if state.storedAuthId == nil {
+            state.storedAuthId = authId
+        }
+
+        if authId != nil, state.storedAuthId != authId {
             state.storedAuthId = authId
             if campaigns.gdpr != nil {
                 state.gdpr = .empty()
@@ -323,18 +332,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 state.ccpa = .empty()
                 state.ccpaMetaData = .init()
             }
-            storage.spState = state
         }
+
+        storage.spState = state
     }
 
     func loadMessages(forAuthId authId: String?, _ handler: @escaping MessagesAndConsentsHandler) {
-        resetStateIfAuthIdChanged(authId)
+        self.authId = authId
+        resetStateIfAuthIdChanged()
         metaData {
-            self.consentStatus(forAuthId: authId) {
+            self.consentStatus {
                 self.state.udpateGDPRStatus()
-                self.messages {
-                    handler($0)
-                    self.pvData()
+                self.messages { messagesResponse in
+                    self.pvData {
+                        handler(messagesResponse)
+                    }
                 }
             }
         }
@@ -365,7 +377,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     self.handleMetaDataResponse(response)
 
                 case .failure(let error):
-                    print(error)
+                    self.logErrorMetrics(error)
             }
             next()
         }
@@ -374,7 +386,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
-            hasLocalData: false,
+            hasLocalData: false, // campaign.uuid != nil,
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid
@@ -408,7 +420,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func consentStatus(forAuthId authId: String?, next: @escaping () -> Void) {
+    func consentStatus(next: @escaping () -> Void) {
         if shouldCallConsentStatus {
             spClient.consentStatus(
                 propertyId: propertyId,
@@ -423,7 +435,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         self.handleConsentStatusResponse(response)
 
                     case .failure(let error):
-                        print(error)
+                        self.logErrorMetrics(error)
                 }
                 next()
             }
@@ -494,37 +506,74 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    /// rate is a float ranging from 0.0 to 1.0
+    /// sample will generate a number from 1 to 100 and if that number
+    /// is inside the given range 1...rate*100, it returns `true` otherwise `false`
     func sample(at rate: Float) -> Bool {
         1...Int(rate * 100) ~= Int.random(in: 1...100)
     }
 
-    /// If campaign is not `nil`, sample it and call pvData in case the sampling was a hit.
-    /// Returns `true` if it hit or `false` otherwise
-    func sampleAndPvData(_ campaign: SPSampleable, body: PvDataRequestBody) -> Bool {
-        if campaign.wasSampled == nil {
-            if sample(at: campaign.sampleRate) {
-                spClient.pvData(body)
-                return true
-            }
-            return false
-        } else if campaign.wasSampled == true {
-            spClient.pvData(body)
-            return true
-        }
+    func handlePvDataResponse(_ response: Result<PvDataResponse, SPError>) {
+        switch response {
+            case .success(let pvDataData):
+                if let gdpr = pvDataData.gdpr {
+                    state.gdpr?.uuid = gdpr.uuid
+                }
+                if let ccpa = pvDataData.ccpa {
+                    state.ccpa?.uuid = ccpa.uuid
+                }
 
-        return false
+            case .failure(let error): logErrorMetrics(error)
+        }
     }
 
-    func pvData() {
+    /// If campaign is not `nil`, sample it and call pvData in case the sampling was a hit.
+    /// Returns `true` if it hit or `false` otherwise
+    func sampleAndPvData(_ campaign: SPSampleable, body: PvDataRequestBody, handler: @escaping () -> Void) -> Bool {
+        if campaign.wasSampled == nil {
+            if sample(at: campaign.sampleRate) {
+                spClient.pvData(body) {
+                    self.handlePvDataResponse($0)
+                    handler()
+                }
+                return true
+            } else {
+                handler()
+                return false
+            }
+        } else if campaign.wasSampled == true {
+            spClient.pvData(body) {
+                self.handlePvDataResponse($0)
+                handler()
+            }
+            return true
+        } else {
+            handler()
+            return false
+        }
+    }
+
+    func pvData(_ handler: @escaping () -> Void) {
+        let pvDataGroup = DispatchGroup()
         if let gdprMetadata = state.gdprMetaData {
-            let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBodyFromState)
+            pvDataGroup.enter()
+            let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBodyFromState) {
+                pvDataGroup.leave()
+            }
             state.gdprMetaData?.wasSampled = sampled
         }
         if let ccpaMetadata = state.ccpaMetaData {
-            let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBodyFromState)
+            pvDataGroup.enter()
+            let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBodyFromState) {
+                pvDataGroup.leave()
+            }
             state.ccpaMetaData?.wasSampled = sampled
         }
-        storage.spState = state
+
+        pvDataGroup.notify(queue: .main) {
+            self.storage.spState = self.state
+            handler()
+        }
     }
 
     func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
@@ -683,13 +732,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    func logErrorMetrics(_ error: SPError, osVersion: String, deviceFamily: String) {
+    func logErrorMetrics(_ error: SPError) {
         spClient.errorMetrics(
             error,
             propertyId: propertyId,
             sdkVersion: SPConsentManager.VERSION,
-            OSVersion: osVersion,
-            deviceFamily: deviceFamily,
+            OSVersion: deviceManager.osVersion,
+            deviceFamily: deviceManager.deviceFamily,
             campaignType: error.campaignType
         )
     }
