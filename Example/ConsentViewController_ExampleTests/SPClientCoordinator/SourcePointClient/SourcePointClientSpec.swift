@@ -70,13 +70,13 @@ class SourcePointClientSpec: QuickSpec {
 
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
-                expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(
-                    URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true")!.absoluteURL
-                ))
+                let expectedUrl  = URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
+                expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(expectedUrl))
             }
 
             it("DELETE_CUSTOM_CONSENT_URL") {
-                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL) == URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/")!.absoluteURL
+                let expectedUrl = URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
+                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL) == expectedUrl
             }
         }
 
@@ -280,7 +280,8 @@ class SourcePointClientSpec: QuickSpec {
                             campaignType: .gdpr
                         )
                         let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-                        expect(http.postWasCalledWithUrl) == "https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics"
+                        let expectedUrl = "https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
+                        expect(http.postWasCalledWithUrl) == expectedUrl
                         expect((parsedRequest?["code"] as? String)) == error.spCode
                         expect((parsedRequest?["accountId"] as? String)) == "\(self.accountId)"
                         expect((parsedRequest?["propertyId"] as? String)) == "\(self.propertyId)"
