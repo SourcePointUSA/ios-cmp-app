@@ -19,4 +19,7 @@
    <FileRef
       location = "group:NativeMessageExample.xctestplan">
    </FileRef>
+   <FileRef
+      location = "group:AuthExample.xctestplan">
+   </FileRef>
 </Workspace>
