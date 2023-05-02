@@ -53,7 +53,6 @@ class AuthExampleApp: XCUIApplication {
     let gdprMessage = GDPRMessage()
     let ccpaMessage = CCPAMessage()
 
-
     var webViewButton: XCUIElement {
         buttons["WebView"]
     }
@@ -67,4 +66,3 @@ class AuthExampleApp: XCUIApplication {
         staticTexts["sdkStatusLabel"]
     }
 }
-

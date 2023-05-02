@@ -6,7 +6,7 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try function_body_length type_body_length force_unwrapping
+// swiftlint:disable force_try function_body_length type_body_length force_unwrapping line_length
 
 @testable import ConsentViewController
 import Nimble
