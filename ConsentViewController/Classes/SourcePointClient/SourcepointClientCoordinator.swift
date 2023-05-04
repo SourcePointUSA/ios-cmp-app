@@ -339,6 +339,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func loadMessages(forAuthId authId: String?, _ handler: @escaping MessagesAndConsentsHandler) {
+        state = Self.setupState(from: storage, campaigns: campaigns)
+        storage.spState = state
+
         self.authId = authId
         resetStateIfAuthIdChanged()
         metaData {

@@ -21,8 +21,33 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="a0l-4e-Max">
                                 <rect key="frame" x="20" y="112" width="374" height="730"/>
                                 <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g47-dc-L6Y">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="auth id" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="iSp-iH-tUv" userLabel="AuthId TextField">
+                                                <rect key="frame" x="0.0" y="0.0" width="344.5" height="40"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <action selector="onAuthIdChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="bt8-j0-70L"/>
+                                                    <action selector="onDonePress:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="6pY-35-0yt"/>
+                                                </connections>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u9r-IF-22g" userLabel="Load Message Button">
+                                                <rect key="frame" x="344.5" y="0.0" width="29.5" height="40"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="8"/>
+                                                <state key="normal" image="Reset"/>
+                                                <connections>
+                                                    <action selector="onRefreshButtonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qR6-al-JYf"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="dT8-dl-IOg"/>
+                                        </constraints>
+                                    </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="5mz-Qp-Zwh">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="694"/>
+                                        <rect key="frame" x="0.0" y="60" width="374" height="634"/>
                                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="KeyValueTableViewCell" id="N6x-o9-WoV" userLabel="KeyValueTableViewCell" customClass="KeyValueTableViewCell" customModule="AuthExample" customModuleProvider="target">
@@ -113,6 +138,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="authIdTextField" destination="iSp-iH-tUv" id="n5J-Ln-f4w"/>
                         <outlet property="consentTableView" destination="5mz-Qp-Zwh" id="CSu-p4-BdK"/>
                         <outlet property="loginButton" destination="QTh-CO-AwZ" id="umL-j1-TeK"/>
                         <outlet property="sdkStatusLabel" destination="EdD-Yi-LTa" id="SXm-T1-oXc"/>
@@ -180,6 +206,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Reset" width="29.5" height="29.5"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

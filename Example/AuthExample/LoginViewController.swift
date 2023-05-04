@@ -14,7 +14,20 @@ import ConsentViewController
 class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var sdkStatusLabel: UILabel!
     @IBOutlet var loginButton: UIButton!
+    @IBOutlet weak var authIdTextField: UITextField!
     @IBOutlet var consentTableView: UITableView!
+
+    @IBAction func onAuthIdChanged(_ sender: Any) {
+        authId = authIdTextField.text
+        authId = authId == "" ? nil : authId
+    }
+
+    @IBAction func onDonePress(_ sender: Any) {
+        self.messageFlow()
+    }
+    @IBAction func onRefreshButtonPress(_ sender: Any) {
+        self.messageFlow()
+    }
 
     var sdkStatus: SDKStatus = .notStarted
 
@@ -61,17 +74,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         ac.addAction(UIAlertAction(title: "Network Calls", style: .default, handler: { _ in
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
         }))
+        ac.addAction(UIAlertAction(title: "Reset Data & Load Message", style: .destructive, handler: { _ in
+            SPConsentManager.clearAllData()
+            self.messageFlow()
+        }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
+    }
+
+    func messageFlow() {
+        initData()
+        sdkLoading()
+        consentManager.loadMessage(forAuthId: authId)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
-        authId = UserDefaults.standard.string(forKey: "MyAppsAuthId") ?? UUID().uuidString
-        initData()
-        sdkLoading()
-        consentManager.loadMessage(forAuthId: authId)
+        // dismiss keyboard when tapping outside the authId text field
+        view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing)))
+        authId = UserDefaults.standard.string(forKey: "MyAppsAuthId")
+        messageFlow()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -95,34 +118,40 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
 extension LoginViewController: SPDelegate {
     func onSPUIReady(_ controller: UIViewController) {
+        print("== onSPUIReady ==")
         present(controller, animated: true)
     }
 
     func onSPUIFinished(_ controller: UIViewController) {
+        print("== onSPUIFinished ==")
         dismiss(animated: true)
     }
 
     func onAction(_ action: ConsentViewController.SPAction, from controller: UIViewController) {
-        print("Action - ", action.type)
+        print("== onAction ==", action.type)
+    }
+
+    func onConsentReady(userData: SPUserData) {
+        print("== onConsentReady ==")
     }
 
     func onSPFinished(userData: SPUserData) {
         sdkData["gdpr uuid"] = userData.gdpr?.consents?.uuid
         sdkData["ccpa uuid"] = userData.ccpa?.consents?.uuid
         sdkDone()
+        print("== onSPFinished ==")
     }
 
     func onError(error: SPError) {
-        print(error)
+        print("== onError ==", error)
         sdkDone(failed: true)
     }
 }
 
 extension LoginViewController: UITableViewDataSource {
     func initData() {
-        sdkData = [
-            "authId": authId
-        ]
+        sdkData = [:]
+        consentTableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
