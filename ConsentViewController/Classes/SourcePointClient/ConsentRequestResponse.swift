@@ -14,7 +14,7 @@ struct GDPRConsentRequest: Encodable, Equatable {
     let pmSaveAndExitVariables: SPJson?
     let pubData: SPPublisherData
     let requestUUID: UUID
-    let includeData = IncludeData.dictionary
+    let includeData = IncludeData()
 }
 
 struct CCPAConsentRequest: Encodable, Equatable {
@@ -23,7 +23,7 @@ struct CCPAConsentRequest: Encodable, Equatable {
     let pubData: SPPublisherData
     let pmSaveAndExitVariables: SPJson?
     let requestUUID: UUID
-    let includeData = IncludeData.dictionary
+    let includeData = IncludeData()
 }
 
 struct ConsentResponse: Decodable & Equatable {

@@ -43,5 +43,5 @@ struct MessageRequest: Equatable, Encodable {
     let consentLanguage: SPMessageLanguage
     let campaigns: CampaignsRequest
     let pubData: SPPublisherData
-    let includeData = IncludeData.dictionary
+    let includeData = IncludeData()
 }

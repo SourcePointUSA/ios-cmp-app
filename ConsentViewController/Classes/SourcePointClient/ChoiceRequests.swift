@@ -16,7 +16,7 @@ struct GDPRChoiceBody: Encodable, Equatable {
     let sampleRate: Float?
     let idfaStatus: SPIDFAStatus?
     let granularStatus: ConsentStatus.GranularStatus?
-    let includeData = IncludeData.dictionary
+    let includeData = IncludeData()
 }
 
 struct CCPAChoiceBody: Encodable, Equatable {
@@ -26,5 +26,5 @@ struct CCPAChoiceBody: Encodable, Equatable {
     let sendPVData: Bool
     let propertyId: Int
     let sampleRate: Float?
-    let includeData = IncludeData.dictionary
+    let includeData = IncludeData()
 }
