@@ -80,19 +80,19 @@ jobs:
         name: Upload ConsentViewController tests results
         with:
           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
-  # NativePMExampleApp:
-  #     runs-on: macos-12
-  #     steps:
-  #       - uses: actions/checkout@v2
-  #       - name: Select Xcode version 14.0.1
-  #         run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
-  #       - name: ConsentViewController testing -> iPhone 14 Pro (iOS 16.0)
-  #         run: xcodebuild test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1'
-  #       - uses: actions/upload-artifact@v2
-  #         if: failure()
-  #         name: Upload NativePMExampleApp tests results
-  #         with:
-  #           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult 
+  NativePMExampleApp:
+      runs-on: macos-12
+      steps:
+        - uses: actions/checkout@v2
+        - name: Select Xcode version 14.0.1
+          run: sudo xcode-select -s '/Applications/Xcode_14.0.1.app/Contents/Developer'
+        - name: ConsentViewController testing -> Apple TV (tvOS 16.1)
+          run: xcodebuild test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1'
+        - uses: actions/upload-artifact@v2
+          if: failure()
+          name: Upload NativePMExampleApp tests results
+          with:
+            path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult 
   # MetaApp:
   #     runs-on: macos-12
   #     steps:
