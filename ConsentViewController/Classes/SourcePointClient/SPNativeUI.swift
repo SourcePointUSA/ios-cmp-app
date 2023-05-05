@@ -67,88 +67,17 @@ class SPNativeUISettings: NSObject, Decodable {
     let style: SPNativeStyle?
 }
 
-struct DecodedSettingsTextArray: Decodable {
-    var array: [String: LanguageUISettingsText]
-
-    private struct DynamicCodingKeys: CodingKey {
-        var stringValue: String
-        init?(stringValue: String) {
-            self.stringValue = stringValue
-        }
-        var intValue: Int?
-        init?(intValue: Int) {
-            return nil
-        }
-    }
-    init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
-        var tempArray = [String: LanguageUISettingsText]()
-            for key in container.allKeys {
-                let decodedObject = try container.decode(LanguageUISettingsText.self, forKey: DynamicCodingKeys(stringValue: key.stringValue)!)
-                tempArray[key.stringValue]=decodedObject
-            }
-            array = tempArray
-        }
-}
-
-struct LanguageUISettingsText: Decodable {
-    let text: String?
-}
-
-struct DecodedSliderTextArray: Decodable {
-    var array: [String: LanguageSliderText]
-
-    private struct DynamicCodingKeys: CodingKey {
-        var stringValue: String
-        init?(stringValue: String) {
-            self.stringValue = stringValue
-        }
-        var intValue: Int?
-        init?(intValue: Int) {
-            return nil
-        }
-    }
-    init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
-        var tempArray = [String: LanguageSliderText]()
-            for key in container.allKeys {
-                let decodedObject = try container.decode(LanguageSliderText.self, forKey: DynamicCodingKeys(stringValue: key.stringValue)!)
-                tempArray[key.stringValue]=decodedObject
-            }
-            array = tempArray
-        }
-}
-
-struct LanguageSliderText: Decodable {
-    let leftText: String?
-    let rightText: String?
-}
-
 class SPNativeUISettingsText: SPNativeUISettings {
-    var text: String
-    let selectedLanguage: String
+    let text: String
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         text = try container.decode(String.self, forKey: .text)
-        selectedLanguage = try container.decode(String.self, forKey: .selectedLanguage)
-        if container.contains(.languages){
-            let languageContainer = try DecodedSettingsTextArray(from: container.superDecoder(forKey: .languages))
-            if let data = languageContainer.array[selectedLanguage]?.text{
-                text = data
-            }
-        }
         try super.init(from: decoder)
     }
 
     enum Keys: CodingKey {
         case text
-        case selectedLanguage
-        case languages
-    }
-
-    enum KeysL: CodingKey{
-        case languages
     }
 }
 
@@ -292,28 +221,17 @@ class SPNativeLongButton: SPNativeUI {
 
 class SPNativeSlider: SPNativeUI {
     class Settings: SPNativeUISettings {
-        var rightText, leftText: String
-        let selectedLanguage: String
+        let rightText, leftText: String
 
         required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: Keys.self)
             leftText = try container.decode(String.self, forKey: .leftText)
             rightText = try container.decode(String.self, forKey: .rightText)
-            selectedLanguage = try container.decode(String.self, forKey: .selectedLanguage)
-            if container.contains(.languages){
-                let languageContainer = try DecodedSliderTextArray(from: container.superDecoder(forKey: .languages))
-                if let data = languageContainer.array[selectedLanguage]{
-                    leftText = data.leftText ?? leftText
-                    rightText = data.rightText ?? rightText
-                }
-            }
             try super.init(from: decoder)
         }
 
         enum Keys: CodingKey {
             case leftText, rightText
-            case selectedLanguage
-            case languages
         }
     }
 
