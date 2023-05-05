@@ -24,6 +24,7 @@ extension XCUIApplication: App {
     }
 
     func setArgument(_ name: String, _ value: String) {
+        launchArguments.removeAll { $0.starts(with: "-\(name)=") }
         launchArguments.append("-\(name)=\(value)")
     }
 

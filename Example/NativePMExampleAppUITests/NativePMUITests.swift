@@ -152,7 +152,7 @@ class NativePMUITests: QuickSpec {
             expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["OFF"]).toEventually(showUp())
         }
 
-        fit("Handles message translation") {
+        it("Handles message translation") {
             self.app.relaunch(clean: true, language: .Spanish)
 
             // Message content is translated
