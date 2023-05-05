@@ -54,11 +54,9 @@ class NativePMUITests: QuickSpec {
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
-        beforeEach {
-            self.app.relaunch(clean: true)
-        }
-
         it("Accept all through CCPA & GDPR Privacy Manager") {
+            self.app.relaunch(clean: true)
+
             // Accept all GDPR Message
             self.waitFor(self.app.gdprMessage)
             self.app.gdprMessage.acceptAllButton.remotePress()
@@ -91,6 +89,8 @@ class NativePMUITests: QuickSpec {
         }
 
         it("Reject all through CCPA & GDPR Privacy Manager") {
+            self.app.relaunch(clean: true)
+
             // Accept all GDPR Message
             self.waitFor(self.app.gdprMessage)
             self.app.gdprMessage.rejectAllButton.remotePress()
@@ -150,6 +150,16 @@ class NativePMUITests: QuickSpec {
 
             self.app.ccpaPrivacyManagerButton.remotePress()
             expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["OFF"]).toEventually(showUp())
+        }
+
+        fit("Handles message translation") {
+            self.app.relaunch(clean: true, language: .Spanish)
+
+            // Message content is translated
+            expect(self.app.gdprMessage.headerTitle).toEventually(containText("Mensage GDPR"))
+
+            // as well as categories
+            expect(self.app.gdprMessage.categoriesList.staticTexts["Almacenar o acceder a información en un dispositivo"].exists).toEventually(beTrue())
         }
 
 //        it("Save and Exit through CCPA & GDPR Privacy Manager") {

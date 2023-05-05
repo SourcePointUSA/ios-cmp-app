@@ -43,6 +43,7 @@ class SPPMHeader: UIView {
     var spTitleText: SPNativeText? {
         didSet {
             titleLabel.setup(from: spTitleText)
+            titleLabel.text = titleLabel.text?.trimmingCharacters(in: .newlines)
         }
     }
 
@@ -82,7 +83,9 @@ class SPPMHeader: UIView {
         let nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
+        titleLabel.accessibilityIdentifier = "Header Title"
         titleLabel.isAccessibilityElement = true
+        backButton.accessibilityIdentifier = "Back Button"
         backButton.isAccessibilityElement = true
         addSubview(contentView)
     }

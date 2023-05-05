@@ -8,11 +8,12 @@
 
 import Nimble
 import XCTest
+import ConsentViewController
 
 protocol App {
     func launch()
     func terminate()
-    func relaunch(clean: Bool, gdpr: Bool, ccpa: Bool)
+    func relaunch(clean: Bool, gdpr: Bool, ccpa: Bool, language: SPMessageLanguage)
 }
 
 extension XCUIApplication: App {
@@ -22,12 +23,17 @@ extension XCUIApplication: App {
             launchArguments.removeAll { $0 == "-\(name)" }
     }
 
-    func relaunch(clean: Bool = false, gdpr: Bool = true, ccpa: Bool = true) {
+    func setArgument(_ name: String, _ value: String) {
+        launchArguments.append("-\(name)=\(value)")
+    }
+
+    func relaunch(clean: Bool = false, gdpr: Bool = true, ccpa: Bool = true, language: SPMessageLanguage = .BrowserDefault) {
         UserDefaults.standard.synchronize()
         self.terminate()
         setArgument("cleanAppsData", clean)
         setArgument("gdpr", gdpr)
         setArgument("ccpa", ccpa)
+        setArgument("lang", language.rawValue)
         launch()
     }
 }
@@ -35,14 +41,15 @@ extension XCUIApplication: App {
 class NativePMApp: XCUIApplication {
     class GDPRMessage: XCUIApplication {
         var container: XCUIElement {
-            windows.containing(.staticText, identifier: "GDPR Message").firstMatch
+            otherElements["GDPR Message"]
         }
-
+        var headerTitle: XCUIElement { container.staticTexts["Header Title"] }
         var acceptAllButton: XCUIElement { container.buttons["Accept"].firstMatch }
-        var rejectAllButton: XCUIElement { container.buttons["Reject All"].firstMatch }
-        var categoriesDetailsButton: XCUIElement { container.buttons["Manage Preferences"].firstMatch }
-        var vendorsDetailsButton: XCUIElement { container.buttons["Our Partners"].firstMatch }
-        var privacyPolicyButton: XCUIElement { container.buttons["Privacy Policy"].firstMatch }
+        var rejectAllButton: XCUIElement { container.buttons["Reject All"] }
+        var categoriesDetailsButton: XCUIElement { container.buttons["Manage Preferences"] }
+        var vendorsDetailsButton: XCUIElement { container.buttons["Our Partners"] }
+        var privacyPolicyButton: XCUIElement { container.buttons["Privacy Policy"] }
+        var categoriesList: XCUIElement { container.tables["Categories List"] }
     }
 
     class CCPAMessage: XCUIApplication {
@@ -53,12 +60,12 @@ class NativePMApp: XCUIApplication {
         var doNotSellMyInfoButton: XCUIElement {
             container.cells.containing(.staticText, identifier: "Do Not Sell My Personal Data").firstMatch
         }
-        var acceptAllButton: XCUIElement { container.buttons["Accept"].firstMatch }
-        var rejectAllButton: XCUIElement { container.buttons["Reject All"].firstMatch }
-        var saveAndExitButton: XCUIElement { container.buttons["Save and Exit"].firstMatch }
-        var categoriesDetailsButton: XCUIElement { container.buttons["Manage Preferences"].firstMatch }
-        var vendorsDetailsButton: XCUIElement { container.buttons["Our Partners"].firstMatch }
-        var privacyPolicyButton: XCUIElement { container.buttons["Privacy Policy"].firstMatch }
+        var acceptAllButton: XCUIElement { container.buttons["Accept"] }
+        var rejectAllButton: XCUIElement { container.buttons["Reject All"] }
+        var saveAndExitButton: XCUIElement { container.buttons["Save and Exit"] }
+        var categoriesDetailsButton: XCUIElement { container.buttons["Manage Preferences"] }
+        var vendorsDetailsButton: XCUIElement { container.buttons["Our Partners"] }
+        var privacyPolicyButton: XCUIElement { container.buttons["Privacy Policy"] }
     }
 
     let gdprMessage = GDPRMessage()
@@ -109,67 +116,67 @@ class NativePMApp: XCUIApplication {
     }
 
     var acceptButton: XCUIElement {
-        buttons["Accept"].firstMatch
+        buttons["Accept"]
     }
 
     var acceptAllButton: XCUIElement {
-        buttons["Accept All"].firstMatch
+        buttons["Accept All"]
     }
 
     var managePreferencesButton: XCUIElement {
-        buttons["Manage Preferences"].firstMatch
+        buttons["Manage Preferences"]
     }
 
     var rejectAllButton: XCUIElement {
-        buttons["Reject All"].firstMatch
+        buttons["Reject All"]
     }
 
     var saveAndExitButton: XCUIElement {
-        buttons["Save and Exit"].firstMatch
+        buttons["Save and Exit"]
     }
 
     var saveAndExitInternalButton: XCUIElement {
-        buttons["Save & Exit"].firstMatch
+        buttons["Save & Exit"]
     }
 
     var homeButton: XCUIElement {
-        buttons["Home"].firstMatch
+        buttons["Home"]
     }
 
     var backButton: XCUIElement {
-        buttons["Back"].firstMatch
+        buttons["Back"]
     }
 
     var onButton: XCUIElement {
-        buttons["On"].firstMatch
+        buttons["On"]
     }
 
     var offButton: XCUIElement {
-        buttons["Off"].firstMatch
+        buttons["Off"]
     }
 
     var privacyPolicyButton: XCUIElement {
-        buttons["Privacy Policy"].firstMatch
+        buttons["Privacy Policy"]
     }
 
     var consentButton: XCUIElement {
-        buttons["CONSENT"].firstMatch
+        buttons["CONSENT"]
     }
 
     var legitimateInterestButton: XCUIElement {
-        buttons["LEGITIMATE INTEREST"].firstMatch
+        buttons["LEGITIMATE INTEREST"]
     }
 
     var ourPartnersButton: XCUIElement {
-        buttons["Our Partners"].firstMatch
+        buttons["Our Partners"]
     }
 
     var gdprPrivacyManagerButton: XCUIElement {
-        buttons["GDPR Privacy Manager"].firstMatch
+        buttons["GDPR Privacy Manager"]
     }
 
     var ccpaPrivacyManagerButton: XCUIElement {
-        buttons["CCPA Privacy Manager"].firstMatch
+        buttons["CCPA Privacy Manager"]
     }
 
     var sdkStatusLabel: XCUIElement {
@@ -181,8 +188,6 @@ class NativePMApp: XCUIApplication {
 extension NativePMApp {
     func pressDoNotSellButton() {
         remote.press(.right)
-//            expectedMessageShowUP(element: doNotSellMyPersonalInformation)
-//            previous line is commented since appletv.demo "Do Not Sell" button has blank text
         remote.press(.select)
         remote.press(.left)
     }
