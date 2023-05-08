@@ -98,7 +98,7 @@ class SourcePointClientSpec: QuickSpec {
                             campaignEnv: nil,
                             idfaStatus: nil
                         ),
-                        metadata: nil,
+                        metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil),
                         localState: MessagesRequest.LocalState(localState: SPJson()),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
                     )) { _ in }
