@@ -27,10 +27,11 @@ class ViewController: UIViewController {
     lazy var consentManager: SPSDK = {
         SPConsentManager(
             accountId: 22,
-            propertyId: 21927,
+            propertyId: 17935,
             // swiftlint:disable:next force_try
             propertyName: try! SPPropertyName("appletv.demo"),
             campaigns: campaigns,
+            language: SPMessageLanguage(rawValue: UserDefaults.standard.string(forKey: "app.lang") ?? "")!,
             delegate: self
         )
     }()
@@ -50,11 +51,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "713324")
+        consentManager.loadGDPRPrivacyManager(withId: "529561")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "753814")
+        consentManager.loadCCPAPrivacyManager(withId: "753802")
     }
 }
 

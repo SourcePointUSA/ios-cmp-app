@@ -42,6 +42,7 @@ protocol SPNativePrivacyManagerHome {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "GDPR Message"
         setHeader()
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
         descriptionTextView.flashScrollIndicators()
@@ -53,6 +54,7 @@ protocol SPNativePrivacyManagerHome {
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         setFocusGuidesForButtons()
+        categoryTableView.accessibilityIdentifier = "Categories List"
         categoryTableView.allowsSelection = false
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryTableView.delegate = self

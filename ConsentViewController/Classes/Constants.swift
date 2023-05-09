@@ -22,8 +22,8 @@ struct Constants {
         static let additionalData: String = "scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
         static let SP_ROOT = URL(string: prod ? "https://cdn.privacy-mgmt.com/" : "https://preprod-cdn.privacy-mgmt.com/")!
         static let WRAPPER_API = URL(string: "./wrapper/?env=\(envParam)", relativeTo: SP_ROOT)!
-        static let GDPR_MESSAGE_URL = URL(string: "./v2/message/gdpr?\(additionalData)", relativeTo: WRAPPER_API)!
-        static let CCPA_MESSAGE_URL = URL(string: "./v2/message/ccpa?\(additionalData)", relativeTo: WRAPPER_API)!
+        static let GDPR_MESSAGE_URL = URL(string: "./v2/message/v2/gdpr?\(additionalData)", relativeTo: WRAPPER_API)!
+        static let CCPA_MESSAGE_URL = URL(string: "./v2/message/v2/ccpa?\(additionalData)", relativeTo: WRAPPER_API)!
         static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics?\(additionalData)", relativeTo: WRAPPER_API)!
         static let GDPR_CONSENT_URL = URL(string: "./v2/messages/choice/gdpr/?\(additionalData)", relativeTo: WRAPPER_API)!
         static let CCPA_CONSENT_URL = URL(string: "./v2/messages/choice/ccpa/?\(additionalData)", relativeTo: WRAPPER_API)!

@@ -39,7 +39,7 @@ struct MessagesRequest: QueryParamEncodable {
         let hasCSP = true
         let campaignEnv: SPCampaignEnv?
         let idfaStatus: SPIDFAStatus?
-        let includeData = IncludeData.string
+        let includeData = IncludeData()
     }
 
     struct MetaData: QueryParamEncodable {

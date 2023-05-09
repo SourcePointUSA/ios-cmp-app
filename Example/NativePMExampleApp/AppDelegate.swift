@@ -22,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         UserDefaults.standard.set(CommandLine.arguments.contains("-gdpr"), forKey: "app.campaigns.gdpr")
         UserDefaults.standard.set(CommandLine.arguments.contains("-ccpa"), forKey: "app.campaigns.ccpa")
+        let language = CommandLine.arguments
+            .first(where: { $0.starts(with: "-lang=")})?
+            .replacingOccurrences(of: "-lang=", with: "")
+        UserDefaults.standard.set(language, forKey: "app.lang")
         return true
     }
 
