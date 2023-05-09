@@ -66,7 +66,7 @@ struct MessagesRequest: QueryParamEncodable {
     }
 
     let body: Body
-    let metadata: MetaData?
+    let metadata: MetaData
     let localState: LocalState
     let nonKeyedLocalState: NonKeyedLocalState
 }
