@@ -46,6 +46,7 @@ struct MessageRequest: Equatable, Encodable {
     let includeData = [
         "localState": ["type": "RecordString"],
         "TCData": ["type": "RecordString"],
-        "messageMetaData": ["type": "RecordString"]
+        "messageMetaData": ["type": "RecordString"],
+        "translateMessage": ["type": "true"]
     ]
 }
