@@ -1,5 +1,5 @@
 PODS:
-  - ConsentViewController (7.0.3)
+  - ConsentViewController (7.1.0)
   - IQKeyboardManagerSwift (6.5.10)
   - JSONView (0.0.3)
   - Nimble (10.0.0)
@@ -30,7 +30,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: 48e47c56939b85676afc361c4c60ee06ac1ec455
+  ConsentViewController: b0c072a5d8bd28a23b8259328bccaaa62e0e5dbb
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
   JSONView: ba9049102fae7ad70de40234d0b7c60986e61e4c
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
