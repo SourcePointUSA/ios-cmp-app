@@ -16,6 +16,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let TCData: SPJson
             let grants: SPGDPRVendorGrants
             let consentStatus: ConsentStatus
+            let webConsentPayload: SPWebConsentPayload?
         }
 
         struct CCPA: Decodable, Equatable {
@@ -24,6 +25,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let uuid, uspstring: String
             let rejectedCategories, rejectedVendors: [String]
             let status: CCPAConsentStatus
+            let webConsentPayload: SPWebConsentPayload?
         }
 
         let gdpr: GDPR?

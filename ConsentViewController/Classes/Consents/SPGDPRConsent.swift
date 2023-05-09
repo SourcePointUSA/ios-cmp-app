@@ -71,6 +71,7 @@ public typealias SPGDPRPurposeId = String
         case vendorGrants = "grants"
         case childPmId
         case consentStatus
+        case webConsentPayload
     }
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
@@ -123,9 +124,14 @@ public typealias SPGDPRPurposeId = String
     /// Determines if the GDPR legislation applies for this user
     public var applies = false
 
+    /// Required by SP endpoints
     var consentStatus: ConsentStatus
 
+    /// Required by SP endpoints
     var lastMessage: LastMessageData?
+
+    /// Used by the rendering app
+    var webConsentPayload: SPWebConsentPayload?
 
     override open var description: String {
         """
@@ -143,7 +149,8 @@ public typealias SPGDPRPurposeId = String
         euconsent: String,
         tcfData: SPJson,
         childPmId: String? = nil,
-        consentStatus: ConsentStatus = ConsentStatus()
+        consentStatus: ConsentStatus = ConsentStatus(),
+        webConsentPayload: SPWebConsentPayload? = nil
     ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
@@ -151,6 +158,7 @@ public typealias SPGDPRPurposeId = String
         self.tcfData = tcfData
         self.childPmId = childPmId
         self.consentStatus = consentStatus
+        self.webConsentPayload = webConsentPayload
     }
 
     /// Convenience initialiser to return an empty consent object.

@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "3132E781-C8FD-434C-8202-206ACF96FA80",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "maximumTestRepetitions" : 10,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ConsentViewController.xcodeproj",
+      "identifier" : "8231B13C22BA5A6B00D2669B",
+      "name" : "AuthExample"
+    },
+    "testRepetitionMode" : "retryOnFailure"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ConsentViewController.xcodeproj",
+        "identifier" : "6D9053FA25D27ABF00E4B49D",
+        "name" : "AuthExampleUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

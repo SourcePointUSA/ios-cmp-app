@@ -31,7 +31,7 @@ extension String {
         let noCSS = decoded.replacingOccurrences(of: "<style>[^>]+</style>", with: "", options: .regularExpression, range: nil)
         // removes any HTML tags
         var result = noCSS
-        if(stripHtml){
+        if stripHtml {
             result = result.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         }
         return result

@@ -7,6 +7,28 @@
 
 import Foundation
 
+public struct SPWebConsents: Codable, Equatable {
+    public struct SPWebConsent: Codable, Equatable {
+        let uuid: String
+        let webConsentPayload: SPWebConsentPayload?
+
+        public init?(uuid: String?, webConsentPayload: SPWebConsentPayload?) {
+            guard let uuid = uuid else { return nil }
+
+            self.uuid = uuid
+            self.webConsentPayload = webConsentPayload
+        }
+    }
+
+    let gdpr: SPWebConsent?
+    let ccpa: SPWebConsent?
+
+    public init(gdpr: SPWebConsent? = nil, ccpa: SPWebConsent? = nil) {
+        self.gdpr = gdpr
+        self.ccpa = ccpa
+    }
+}
+
 public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     /// The consents data. See: `SPGDPRConsent`, `SPCCPAConsent`
     public let consents: ConsentType?
@@ -38,7 +60,14 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     /// - SeeAlso: `SPCCPAConsent`
     public let ccpa: SPConsent<SPCCPAConsent>?
 
-    override public var description: String { "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa))" }
+    var webConsents: SPWebConsents { SPWebConsents(
+        gdpr: .init(uuid: gdpr?.consents?.uuid, webConsentPayload: gdpr?.consents?.webConsentPayload),
+        ccpa: .init(uuid: ccpa?.consents?.uuid, webConsentPayload: ccpa?.consents?.webConsentPayload)
+    )}
+
+    override public var description: String {
+        "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa))"
+    }
 
     public init(
         gdpr: SPConsent<SPGDPRConsent>? = nil,

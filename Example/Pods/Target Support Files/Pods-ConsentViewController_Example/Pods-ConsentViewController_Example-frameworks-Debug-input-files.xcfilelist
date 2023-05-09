@@ -1,4 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-ConsentViewController_Example/Pods-ConsentViewController_Example-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework
-${BUILT_PRODUCTS_DIR}/JSONView/JSONView.framework
 ${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework
+${BUILT_PRODUCTS_DIR}/JSONView/JSONView.framework

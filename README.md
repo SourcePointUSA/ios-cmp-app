@@ -267,6 +267,9 @@ The method is asynchronous so you must pass a completion handler that will recei
 It's important to notice, this methods are intended to be used for **custom** vendors and purposes only. For IAB vendors and purposes, it's still required to get consent via the consent message or privacy manager.
 
 ## Authenticated Consent
+
+This feature makes use of what we call [Authenticated Consent](https://documentation.sourcepoint.com/consent_mp/authenticated-consent/authenticated-consent-overview). In a nutshell, you provide an identifier for the current user (username, user id, uuid or any unique string) and we'll take care of associating the consent profile to that identifier.
+
 In order to use the authenticated consent all you need to do is replace `.loadMessage()` with `.loadMessage(forAuthId: String)`. Example:
 ```swift
 consentManager.loadMessage(forAuthId: "JohnDoe")
@@ -276,39 +279,22 @@ In Obj-C that'd be:
 [consentManager loadMessage forAuthId: @"JohnDoe"]
 ```
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
-More about the `authId` below.
 
 ## Sharing consent with a `WKWebView`
+After going through the message and consent flow (ie. after `onConsentReady`) the SDK will store the consent data in the `UserDefaults`. That data can then be injected into `WKWebView`s so the web portion of your app doesn't show a consent dialog and it'll contain the same consent data as the native part.
+
+Example:
 ```swift
+// after onConsentReady was called
 let webview = WKWebView()
-webview.setConsentFor(authId: String)
-webview.load(URLRequest)
+webview.load(URLRequest(URL(string: "https://my-url.com/?_sp_pass_consent=true")!))
+webview.preloadConsent(authId: String)
 ```
 
-### The `authId`:
-This feature makes use of what we call [Authenticated Consent](https://documentation.sourcepoint.com/consent_mp/authenticated-consent/authenticated-consent-overview). In a nutshell, you provide an identifier for the current user (username, user id, uuid or any unique string) and we'll take care of associating the consent profile to that identifier.
-The authId will then assume 1 of the 3 values below:
-1. **User is authenticated and have an id:**
-In that case the `authId` is going to be that user id.
-2. **User is _not_ authenticated and I'm only interested in using consent in this app.**
-We recommend using a randomly generated `UUID` as `authId`. Make sure to persist this `authId` and always call the `.loadMessage(forAuthId: String)`
-3. **User is _not_ authenticated and I want the consent to be shared _across_ apps I control.**
-In this case, you'll need an identifier that is guaranteed to be the same across apps you control. That's exactly what the [IDFV](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor) (Identifier for Vendor) is for. You don't need to store this id as it remains the same across app launches.
-
-### Example
-```swift
-// let authId = // my user id
-// let authId = // stored uuid || UUID().uuidString
-let authId = UIDevice().identifierForVendor
-consentManager.loadMessage(forAuthId: myAuthId)
-
-// after the `onConsentReady` is called
-myWebView.setConsentFor(authId: authid)
-myWebView.load(urlRequest)
-```
 A few remarks:
 1. The web content being loaded (web property) needs to share the same vendor list as the app.
 2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
+3. Your web content needs to be loaded (or loading) on the webview and our [web SDK](https://docs.sourcepoint.com/hc/en-us/articles/8073421891091-GDPR-TCF-and-U-S-Privacy-CCPA-implementation-guide-web-) should be included in it. Furthermore, you need to add the query param `_sp_pass_consent=true` to your URL, this will signal to Sourcepoint's web SDK it needs to wait for the consent data to be injected from the native code, instead of immediately querying it from our servers.
 
 ## Overwriting default language
 By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behavior and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `SPConsentManager` _before_ calling `.loadMessage() / .loadPrivacyManager()`. 

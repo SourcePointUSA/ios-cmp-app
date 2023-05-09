@@ -14,6 +14,7 @@ struct GDPRChoiceResponse: Decodable, Equatable {
     let euconsent: String?
     let consentStatus: ConsentStatus?
     let grants: SPGDPRVendorGrants?
+    let webConsentPayload: SPWebConsentPayload?
 }
 
 struct CCPAChoiceResponse: Equatable {
@@ -26,11 +27,14 @@ struct CCPAChoiceResponse: Equatable {
     let gpcEnabled: Bool?
     let rejectedVendors: [String]?
     let rejectedCategories: [String]?
+    let webConsentPayload: SPWebConsentPayload?
 }
 
 extension CCPAChoiceResponse: Decodable {
     enum CodingKeys: CodingKey {
-        case uuid, dateCreated, consentedAll, rejectedAll, status, uspstring, rejectedVendors, rejectedCategories, gpcEnabled
+        case uuid, dateCreated, consentedAll, rejectedAll,
+             status, uspstring, rejectedVendors, rejectedCategories,
+             gpcEnabled, webConsentPayload
     }
 
     init(from decoder: Decoder) throws {
@@ -44,7 +48,8 @@ extension CCPAChoiceResponse: Decodable {
             uspstring: container.decode(String.self, forKey: .uspstring),
             gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled),
             rejectedVendors: ((container.decodeIfPresent([String?].self, forKey: .rejectedVendors)) ?? []).compactMap { $0 },
-            rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 }
+            rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 },
+            webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         )
     }
 }

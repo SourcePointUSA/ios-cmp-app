@@ -69,7 +69,7 @@ public extension SPSDK {
         )
     }
 
-    func loadMessage(forAuthId authId: String? = "", pubData: SPPublisherData? = [:]) {
+    func loadMessage(forAuthId authId: String? = nil, pubData: SPPublisherData? = [:]) {
         loadMessage(forAuthId: authId, publisherData: pubData)
     }
 

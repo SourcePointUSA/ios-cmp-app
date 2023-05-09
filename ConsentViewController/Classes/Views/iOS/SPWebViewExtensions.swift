@@ -9,20 +9,69 @@ import Foundation
 import WebKit
 
 @objc public extension WKWebView {
+    /// Injects Sourcepoint's user data into the webview.
+    /// This method is used in cases when your app has a web-based portion that also needs consent information. Make sure to check the discussion below.
+    ///
+    /// There are a few things to notice:
+    /// * the web page should countain Sourcepoint's web script in it
+    /// * you should append query param `_sp_pass_consent=true` to your page (so the our web script knows it should wait for consent data)
+    /// * you need to call `preloadConsent` only _after_ the url been loaded into the webview (ie. after `.load(URLRequest)`)
+    func preloadConsent(from consents: SPUserData) {
+        let readyEventName = "sp.readyForConsent"
+        let preloadEventName = "sp.loadConsent"
+        if let consentsData = try? JSONEncoder().encode(consents.webConsents),
+           let consents = String(data: consentsData, encoding: .utf8) {
+            configuration.userContentController.addUserScript(WKUserScript(source: """
+                window.postMessage({
+                    name: "\(preloadEventName)",
+                    consent: \(consents)
+                }, "*")
+                window.addEventListener('message', (event) => {
+                    if(event && event.data && event.data.name === "\(readyEventName)") {
+                        window.postMessage({
+                            name: "\(preloadEventName)",
+                            consent: \(consents)
+                        }, "*")
+                    }
+                })
+                """,
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: true
+            ))
+            evaluateJavaScript("""
+                window.postMessage({
+                    name: "\(preloadEventName)",
+                    consent: \(consents)
+                }, "*")
+                window.addEventListener('message', (event) => {
+                    if(event && event.data && event.data.name === "\(readyEventName)") {
+                        window.postMessage({
+                            name: "\(preloadEventName)",
+                            consent: \(consents)
+                        }, "*")
+                    }
+                })
+            """)
+        }
+    }
+
+    // MARK: Deprecated
     /// Reads the value of the cookie authId
+    @available(*, deprecated, message: "This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.")
     func getAuthId(handler: @escaping (_ authId: String?, _ error: Error?) -> Void) {
         getCookie("authId", handler)
     }
 
     /// Injects the cookie `authId` in the webview before loading its content.
     /// SourcePoint's web SDK reads the `authId` cookie and set everything up in the webview context.
+    @available(*, deprecated, message: "This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.")
     func setConsentFor(authId: String) {
         setCookie("authId", authId)
     }
 
     /// Injects the cookie `authId` in the webview before loading its content.
     /// SourcePoint's web SDK reads the `authId` cookie and set everything up in the webview context.
-    func setCookie(_ name: String, _ value: String) {
+    private func setCookie(_ name: String, _ value: String) {
         configuration.userContentController.addUserScript(WKUserScript(
             source: "document.cookie='\(name)=\(value)'",
             injectionTime: .atDocumentStart,
@@ -40,7 +89,7 @@ import WebKit
         }
     }
 
-    func getCookies(_ handler: @escaping (_ cookies: [String: String], _ error: Error?) -> Void) {
+    private func getCookies(_ handler: @escaping (_ cookies: [String: String], _ error: Error?) -> Void) {
         getCookiesString { cookies, error in
             if let cookies = cookies, !cookies.isEmpty {
                 handler(cookies

@@ -32,8 +32,8 @@ public typealias SPTargetingParams = [String: String]
 /// It's important to notice the campaign you passed as parameter needs to have
 /// a active vendor list of that legislation.
 @objcMembers public class SPCampaigns: NSObject {
-    let environment: SPCampaignEnv
-    let gdpr, ccpa, ios14: SPCampaign?
+    public let environment: SPCampaignEnv
+    public let gdpr, ccpa, ios14: SPCampaign?
 
     override public var description: String {
         """
