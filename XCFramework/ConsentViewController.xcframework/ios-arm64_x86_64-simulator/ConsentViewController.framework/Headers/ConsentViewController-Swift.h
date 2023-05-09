@@ -632,6 +632,10 @@ typedef SWIFT_ENUM(NSInteger, SPCampaignType, open) {
 /// a active vendor list of that legislation.
 SWIFT_CLASS("_TtC21ConsentViewController11SPCampaigns")
 @interface SPCampaigns : NSObject
+@property (nonatomic, readonly) enum SPCampaignEnv environment;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable gdpr;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable ccpa;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable ios14;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)initWithGdpr:(SPCampaign * _Nullable)gdpr ccpa:(SPCampaign * _Nullable)ccpa ios14:(SPCampaign * _Nullable)ios14 environment:(enum SPCampaignEnv)environment OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1067,15 +1071,26 @@ SWIFT_CLASS("_TtC21ConsentViewController22UnableToLoadJSReceiver")
 
 
 @interface WKWebView (SWIFT_EXTENSION(ConsentViewController))
+/// Injects Sourcepoint’s user data into the webview.
+/// This method is used in cases when your app has a web-based portion that also needs consent information. Make sure to check the discussion below.
+/// There are a few things to notice:
+/// <ul>
+///   <li>
+///     the web page should countain Sourcepoint’s web script in it
+///   </li>
+///   <li>
+///     you should append query param <code>_sp_pass_consent=true</code> to your page (so the our web script knows it should wait for consent data)
+///   </li>
+///   <li>
+///     you need to call <code>preloadConsent</code> only <em>after</em> the url been loaded into the webview (ie. after <code>.load(URLRequest)</code>)
+///   </li>
+/// </ul>
+- (void)preloadConsentFrom:(SPUserData * _Nonnull)consents;
 /// Reads the value of the cookie authId
-- (void)getAuthIdWithHandler:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))handler;
+- (void)getAuthIdWithHandler:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))handler SWIFT_DEPRECATED_MSG("This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.");
 /// Injects the cookie <code>authId</code> in the webview before loading its content.
 /// SourcePoint’s web SDK reads the <code>authId</code> cookie and set everything up in the webview context.
-- (void)setConsentForAuthId:(NSString * _Nonnull)authId;
-/// Injects the cookie <code>authId</code> in the webview before loading its content.
-/// SourcePoint’s web SDK reads the <code>authId</code> cookie and set everything up in the webview context.
-- (void)setCookie:(NSString * _Nonnull)name :(NSString * _Nonnull)value;
-- (void)getCookies:(void (^ _Nonnull)(NSDictionary<NSString *, NSString *> * _Nonnull, NSError * _Nullable))handler;
+- (void)setConsentForAuthId:(NSString * _Nonnull)authId SWIFT_DEPRECATED_MSG("This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.");
 @end
 
 
@@ -1727,6 +1742,10 @@ typedef SWIFT_ENUM(NSInteger, SPCampaignType, open) {
 /// a active vendor list of that legislation.
 SWIFT_CLASS("_TtC21ConsentViewController11SPCampaigns")
 @interface SPCampaigns : NSObject
+@property (nonatomic, readonly) enum SPCampaignEnv environment;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable gdpr;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable ccpa;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable ios14;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)initWithGdpr:(SPCampaign * _Nullable)gdpr ccpa:(SPCampaign * _Nullable)ccpa ios14:(SPCampaign * _Nullable)ios14 environment:(enum SPCampaignEnv)environment OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -2162,15 +2181,26 @@ SWIFT_CLASS("_TtC21ConsentViewController22UnableToLoadJSReceiver")
 
 
 @interface WKWebView (SWIFT_EXTENSION(ConsentViewController))
+/// Injects Sourcepoint’s user data into the webview.
+/// This method is used in cases when your app has a web-based portion that also needs consent information. Make sure to check the discussion below.
+/// There are a few things to notice:
+/// <ul>
+///   <li>
+///     the web page should countain Sourcepoint’s web script in it
+///   </li>
+///   <li>
+///     you should append query param <code>_sp_pass_consent=true</code> to your page (so the our web script knows it should wait for consent data)
+///   </li>
+///   <li>
+///     you need to call <code>preloadConsent</code> only <em>after</em> the url been loaded into the webview (ie. after <code>.load(URLRequest)</code>)
+///   </li>
+/// </ul>
+- (void)preloadConsentFrom:(SPUserData * _Nonnull)consents;
 /// Reads the value of the cookie authId
-- (void)getAuthIdWithHandler:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))handler;
+- (void)getAuthIdWithHandler:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))handler SWIFT_DEPRECATED_MSG("This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.");
 /// Injects the cookie <code>authId</code> in the webview before loading its content.
 /// SourcePoint’s web SDK reads the <code>authId</code> cookie and set everything up in the webview context.
-- (void)setConsentForAuthId:(NSString * _Nonnull)authId;
-/// Injects the cookie <code>authId</code> in the webview before loading its content.
-/// SourcePoint’s web SDK reads the <code>authId</code> cookie and set everything up in the webview context.
-- (void)setCookie:(NSString * _Nonnull)name :(NSString * _Nonnull)value;
-- (void)getCookies:(void (^ _Nonnull)(NSDictionary<NSString *, NSString *> * _Nonnull, NSError * _Nullable))handler;
+- (void)setConsentForAuthId:(NSString * _Nonnull)authId SWIFT_DEPRECATED_MSG("This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.");
 @end
 
 

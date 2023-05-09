@@ -19,6 +19,7 @@ public struct ConsentStatus : Swift.Codable, Swift.Equatable {
   public func encode(to encoder: Swift.Encoder) throws
   public init(from decoder: Swift.Decoder) throws
 }
+public typealias SPWebConsentPayload = Swift.String
 public let MockNativePMResponse: Swift.String
 @objc extension ObjectiveC.NSObject {
   @objc dynamic public func toJSON() -> Swift.String?
@@ -92,6 +93,8 @@ public typealias SPTargetingParams = [Swift.String : Swift.String]
   @objc deinit
 }
 @objc @objcMembers public class SPCampaigns : ObjectiveC.NSObject {
+  @objc final public let environment: ConsentViewController.SPCampaignEnv
+  @objc final public let gdpr: ConsentViewController.SPCampaign?, ccpa: ConsentViewController.SPCampaign?, ios14: ConsentViewController.SPCampaign?
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
@@ -814,12 +817,24 @@ public typealias SPPublisherData = [Swift.String : Swift.String]
 }
 extension ConsentViewController.SPSDK {
   public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, language: ConsentViewController.SPMessageLanguage = .BrowserDefault, delegate: ConsentViewController.SPDelegate?)
-  public func loadMessage(forAuthId authId: Swift.String? = "", pubData: ConsentViewController.SPPublisherData? = [:])
+  public func loadMessage(forAuthId authId: Swift.String? = nil, pubData: ConsentViewController.SPPublisherData? = [:])
   public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
 }
 extension UIKit.UIColor {
   convenience public init?(hexString: Swift.String?)
+}
+public struct SPWebConsents : Swift.Codable, Swift.Equatable {
+  public struct SPWebConsent : Swift.Codable, Swift.Equatable {
+    public init?(uuid: Swift.String?, webConsentPayload: ConsentViewController.SPWebConsentPayload?)
+    public static func == (a: ConsentViewController.SPWebConsents.SPWebConsent, b: ConsentViewController.SPWebConsents.SPWebConsent) -> Swift.Bool
+    public func encode(to encoder: Swift.Encoder) throws
+    public init(from decoder: Swift.Decoder) throws
+  }
+  public init(gdpr: ConsentViewController.SPWebConsents.SPWebConsent? = nil, ccpa: ConsentViewController.SPWebConsents.SPWebConsent? = nil)
+  public static func == (a: ConsentViewController.SPWebConsents, b: ConsentViewController.SPWebConsents) -> Swift.Bool
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
 }
 public class SPConsent<ConsentType> : ObjectiveC.NSObject, Swift.Codable where ConsentType : Swift.Decodable, ConsentType : Swift.Encodable, ConsentType : Swift.Equatable {
   final public let consents: ConsentType?
@@ -858,10 +873,11 @@ public protocol SPObjcUserData {
   @objc dynamic public func objcCCPAApplies() -> Swift.Bool
 }
 @objc extension WebKit.WKWebView {
-  @objc @_Concurrency.MainActor(unsafe) dynamic public func getAuthId(handler: @escaping (_ authId: Swift.String?, _ error: Swift.Error?) -> Swift.Void)
-  @objc @_Concurrency.MainActor(unsafe) dynamic public func setConsentFor(authId: Swift.String)
-  @objc @_Concurrency.MainActor(unsafe) dynamic public func setCookie(_ name: Swift.String, _ value: Swift.String)
-  @objc @_Concurrency.MainActor(unsafe) dynamic public func getCookies(_ handler: @escaping (_ cookies: [Swift.String : Swift.String], _ error: Swift.Error?) -> Swift.Void)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func preloadConsent(from consents: ConsentViewController.SPUserData)
+  @objc @available(*, deprecated, message: "This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.")
+  @_Concurrency.MainActor(unsafe) dynamic public func getAuthId(handler: @escaping (_ authId: Swift.String?, _ error: Swift.Error?) -> Swift.Void)
+  @objc @available(*, deprecated, message: "This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.")
+  @_Concurrency.MainActor(unsafe) dynamic public func setConsentFor(authId: Swift.String)
 }
 extension ConsentViewController.SPActionType : Swift.Equatable {}
 extension ConsentViewController.SPActionType : Swift.Hashable {}
