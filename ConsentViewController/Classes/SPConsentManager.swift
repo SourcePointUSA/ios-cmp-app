@@ -349,7 +349,7 @@ import UIKit
             switch result {
             case .success(let message):
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {
-                    self?.onError(SPError())
+                    self?.onError(InvalidJSONEncodeResult())
                     return
                 }
                 let pmViewController = SPGDPRNativePrivacyManagerViewController(
@@ -393,7 +393,7 @@ import UIKit
             switch result {
             case .success(let message):
                 guard case let .nativePM(nativePMMessage) = message.messageJson else {
-                    self?.onError(SPError())
+                    self?.onError(InvalidJSONEncodeResult())
                     return
                 }
                 let pmViewController = SPCCPANativePrivacyManagerViewController(

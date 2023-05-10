@@ -309,3 +309,7 @@ import Foundation
 @objcMembers public class UnableToConvertConsentSnapshotIntoJsonError: SPError {
     override public var spCode: String { "sp_metric_error_converting_consent_snapshot_to_json" }
 }
+
+@objcMembers public class InvalidJSONEncodeResult: SPError {
+    override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
+}
