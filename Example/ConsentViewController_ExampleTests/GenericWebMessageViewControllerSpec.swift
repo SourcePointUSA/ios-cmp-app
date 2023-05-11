@@ -14,23 +14,6 @@ import Nimble
 import Quick
 @testable import ConsentViewController
 
-class UIDelegateMock: SPMessageUIDelegate {
-    var loadedWasCalled = false
-    var onErrorWasCalled = false
-
-    func loaded(_ controller: UIViewController) {
-        loadedWasCalled = true
-    }
-
-    func action(_ action: ConsentViewController.SPAction, from controller: UIViewController) {}
-
-    func onError(_ error: ConsentViewController.SPError) {
-        onErrorWasCalled = true
-    }
-
-    func finished(_ vcFinished: UIViewController) {}
-}
-
 func renderingAppMock(messageReadyDelayInSeconds: Int) -> String {
     """
         <html>
@@ -53,7 +36,7 @@ func renderingAppMock(messageReadyDelayInSeconds: Int) -> String {
 class FaultyRenderingAppMock: WKWebView {
     override func load(_ request: URLRequest) -> WKNavigation? {
         loadHTMLString(
-            renderingAppMock(messageReadyDelayInSeconds: 3),
+            renderingAppMock(messageReadyDelayInSeconds: 1),
             baseURL: URL(string: "https://example.com")!
         )
     }
@@ -62,20 +45,20 @@ class FaultyRenderingAppMock: WKWebView {
 class RenderingAppMock: WKWebView {
     override func load(_ request: URLRequest) -> WKNavigation? {
         loadHTMLString(
-            renderingAppMock(messageReadyDelayInSeconds: 1),
+            renderingAppMock(messageReadyDelayInSeconds: 0),
             baseURL: URL(string: "https://example.com")!
         )
     }
 }
 
-func loadMessage(withRenderingApp RenderingAppClass: WKWebView.Type) -> UIDelegateMock {
-    let delegate = UIDelegateMock()
+func loadMessage(with RenderingAppClass: WKWebView.Type) -> MessageUIDelegate {
+    let delegate = MessageUIDelegate()
     let controller = GenericWebMessageViewController(
         url: URL(string: "https://example.com")!,
         messageId: "",
         contents: Data(),
         campaignType: .unknown,
-        timeout: 2.0,
+        timeout: 1.0,
         delegate: delegate
     )
     controller.webview = RenderingAppClass.init(frame: .zero, configuration: controller.webviewConfig!)
@@ -86,24 +69,18 @@ func loadMessage(withRenderingApp RenderingAppClass: WKWebView.Type) -> UIDelega
 class GenericWebMessageViewControllerSpec: QuickSpec {
     override func spec() {
         it("calls loaded when the rendering app dispatches a sp.showMessage event") {
-            let delegate = loadMessage(withRenderingApp: RenderingAppMock.self)
-            waitUntil { done in
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                    expect(delegate.loadedWasCalled).to(beTrue())
-                    expect(delegate.onErrorWasCalled).to(beFalse())
-                    done()
-                }
+            let delegate = loadMessage(with: RenderingAppMock.self)
+            after(.seconds(2)) {
+                expect(delegate.loadedWasCalled).to(beTrue())
+                expect(delegate.onErrorWasCalled).to(beFalse())
             }
         }
 
         it("calls onError if .loaded() is not called on the delegate before the timeout") {
-            let delegate = loadMessage(withRenderingApp: FaultyRenderingAppMock.self)
-            waitUntil { done in
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                    expect(delegate.loadedWasCalled).to(beFalse())
-                    expect(delegate.onErrorWasCalled).to(beTrue())
-                    done()
-                }
+            let delegate = loadMessage(with: FaultyRenderingAppMock.self)
+            after(.seconds(2)) {
+                expect(delegate.loadedWasCalled).to(beFalse())
+                expect(delegate.onErrorWasCalled).to(beTrue())
             }
         }
     }
