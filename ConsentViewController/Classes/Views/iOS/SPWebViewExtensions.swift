@@ -4,6 +4,7 @@
 //
 //  Created by Andre Herculano on 13.11.20.
 //
+// swiftlint:disable line_length
 
 import Foundation
 import WebKit

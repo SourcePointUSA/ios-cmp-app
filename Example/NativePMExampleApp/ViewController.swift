@@ -31,7 +31,7 @@ class ViewController: UIViewController {
             // swiftlint:disable:next force_try
             propertyName: try! SPPropertyName("appletv.demo"),
             campaigns: campaigns,
-            language: SPMessageLanguage(rawValue: UserDefaults.standard.string(forKey: "app.lang") ?? "")!,
+            language: SPMessageLanguage(rawValue: UserDefaults.standard.string(forKey: "app.lang") ?? "") ?? .BrowserDefault,
             delegate: self
         )
     }()
