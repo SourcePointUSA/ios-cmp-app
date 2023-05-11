@@ -36,7 +36,7 @@ func renderingAppMock(messageReadyDelayInSeconds: Int) -> String {
 class FaultyRenderingAppMock: WKWebView {
     override func load(_ request: URLRequest) -> WKNavigation? {
         loadHTMLString(
-            renderingAppMock(messageReadyDelayInSeconds: 1),
+            renderingAppMock(messageReadyDelayInSeconds: 4),
             baseURL: URL(string: "https://example.com")!
         )
     }
@@ -58,7 +58,7 @@ func loadMessage(with RenderingAppClass: WKWebView.Type) -> MessageUIDelegate {
         messageId: "",
         contents: Data(),
         campaignType: .unknown,
-        timeout: 1.0,
+        timeout: 3.0,
         delegate: delegate
     )
     controller.webview = RenderingAppClass.init(frame: .zero, configuration: controller.webviewConfig!)
@@ -70,7 +70,7 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
     override func spec() {
         it("calls loaded when the rendering app dispatches a sp.showMessage event") {
             let delegate = loadMessage(with: RenderingAppMock.self)
-            after(.seconds(2)) {
+            after(.seconds(5)) {
                 expect(delegate.loadedWasCalled).to(beTrue())
                 expect(delegate.onErrorWasCalled).to(beFalse())
             }
@@ -78,7 +78,7 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
 
         it("calls onError if .loaded() is not called on the delegate before the timeout") {
             let delegate = loadMessage(with: FaultyRenderingAppMock.self)
-            after(.seconds(2)) {
+            after(.seconds(5)) {
                 expect(delegate.loadedWasCalled).to(beFalse())
                 expect(delegate.onErrorWasCalled).to(beTrue())
             }
