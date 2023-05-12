@@ -109,6 +109,8 @@
 		71F0930571CB8351E8BD5541 /* Pods_NativePMExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED42ED30F5FB710D166C76A /* Pods_NativePMExampleApp.framework */; };
 		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
 		7EB50C9C352487B08739414C /* Pods_ConsentViewController_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6780CD2BEC66C09DC8DA41 /* Pods_ConsentViewController_ExampleTests.framework */; };
+		820EF1792A0D28F9009D9941 /* After.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF1782A0D28F9009D9941 /* After.swift */; };
+		820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
 		8216F2EE29FAB4B400133C69 /* AuthExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2ED29FAB4B400133C69 /* AuthExampleApp.swift */; };
 		8216F2F029FAB60400133C69 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2EF29FAB60400133C69 /* CustomMatchers.swift */; };
@@ -120,6 +122,7 @@
 		822BF2CB2657E29800177B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2C92657E29800177B0E /* Main.storyboard */; };
 		822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CC2657E29900177B0E /* Assets.xcassets */; };
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
+		822FD7E02A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
@@ -376,6 +379,8 @@
 		7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaAppValidationUITests.swift; sourceTree = "<group>"; };
 		7B64545F27CBFCAA12937C1D /* Pods-ObjC-ExampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjC-ExampleAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-ObjC-ExampleAppUITests/Pods-ObjC-ExampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		80A5A481B97C11AC27421C73 /* Pods_ObjC_ExampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjC_ExampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		820EF1782A0D28F9009D9941 /* After.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = After.swift; path = Helpers/After.swift; sourceTree = "<group>"; };
+		820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageUIDelegateMock.swift; sourceTree = "<group>"; };
 		8214B277249CC13B00167BFE /* SPGDPRExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPGDPRExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGDPRExampleAppUITests.swift; sourceTree = "<group>"; };
 		8214B27B249CC13B00167BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -394,6 +399,7 @@
 		822BF2D62657E29900177B0E /* NativePMExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8231B14122BA5A6B00D2669B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1329,6 +1335,8 @@
 				826D31AC2498DE340026A6B9 /* MockConsentDelegate.swift */,
 				826D31B2249A71E20026A6B9 /* ConnectivityMock.swift */,
 				82E3D60628C8F39B004B1189 /* CustomMatchers.swift */,
+				820EF1782A0D28F9009D9941 /* After.swift */,
+				820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1344,6 +1352,7 @@
 		82FC4D3B23983231002F08E5 /* ConsentViewController_ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */,
 				8229C614299138E400F755AA /* SPClientCoordinator */,
 				82B224162580D5B50032BC49 /* Extensions */,
 				82EA4E2E249100B800DC01C9 /* Helpers */,
@@ -2714,8 +2723,11 @@
 				82E5DBBC29E5A4C30083A054 /* SPLoggerMock.swift in Sources */,
 				5687C4F227A1B11A003456E7 /* SPPropertyNameSpec.swift in Sources */,
 				82E3D60528C64528004B1189 /* MessagesResponseSpec.swift in Sources */,
+				822FD7E02A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift in Sources */,
 				82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */,
+				820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */,
 				6D45580D259A446800635952 /* SPPrivacyManagerTabSpec.swift in Sources */,
+				820EF1792A0D28F9009D9941 /* After.swift in Sources */,
 				82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */,
 				6D554C2224310BF800B15583 /* SourcePointClientSpec.swift in Sources */,
 				6DB2B2222424C52A008F9226 /* ConnectivityManagerSpec.swift in Sources */,

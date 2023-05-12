@@ -134,6 +134,14 @@ import WebKit
 
     var isFirstLayerMessage = true
 
+    lazy var timeoutWorkItem: DispatchWorkItem = {
+        DispatchWorkItem { [weak self] in
+            self?.messageUIDelegate?.onError(RenderingAppTimeoutError())
+            // remove messageUIDelegate so we don't call .loaded on it
+            self?.messageUIDelegate = nil
+        }
+    }()
+
     override func viewWillDisappear(_ animated: Bool) {
         messageUIDelegate = nil
         if let contentController = webview?.configuration.userContentController {
@@ -145,6 +153,7 @@ import WebKit
     override func loadMessage() {
         OSLogger.standard.debug("RenderingApp - loading: \(url.absoluteString)")
         webview?.load(URLRequest(url: url, timeoutInterval: timeout))
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeout, execute: timeoutWorkItem)
     }
 
     override func loadPrivacyManager(url: URL) {
@@ -197,7 +206,10 @@ import WebKit
             OSLogger.standard.debug("RenderingApp - event: \(eventName.rawValue), payload: \(body)")
             switch eventName {
             case .readyForPreload: handleMessagePreload()
-            case .onMessageReady: messageUIDelegate?.loaded(self)
+
+            case .onMessageReady:
+                timeoutWorkItem.cancel()
+                messageUIDelegate?.loaded(self)
 
             case .onAction:
                 if let action = getActionFrom(body: body) {
@@ -210,12 +222,15 @@ import WebKit
                         InvalidOnActionEventPayloadError(campaignType: campaignType, eventName.rawValue, body: body.description)
                     )
                 }
+
             case .onError: messageUIDelegate?.onError(RenderingAppError(campaignType: campaignType, body["error"]?.stringValue ?? ""))
 
             case .onPMReady:
+                timeoutWorkItem.cancel()
                 if isFirstLayerMessage {
                     messageUIDelegate?.loaded(self)
                 }
+
             case .unknown: break
             }
         } else {

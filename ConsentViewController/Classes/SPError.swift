@@ -148,6 +148,11 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
+@objcMembers public class RenderingAppTimeoutError: SPError {
+    override public var spCode: String { "sp_metric_rendering_app_timeout" }
+    override public var description: String { "Something went wrong while loading the Rendering App. onMessageReady was not called within the specified timeout." }
+}
+
 @objcMembers public class UnableToInjectMessageIntoRenderingApp: SPError {
     override public var spCode: String { "sp_metric_unable_to_stringify_msgJSON" }
     override public var description: String { "The SDK could convert the message into JSON." }
