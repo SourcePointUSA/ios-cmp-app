@@ -165,7 +165,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_get_messages" }
+    override public var spCode: String { NetworkCallErrorsCode().getError(code: .MESSAGES) }
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
@@ -200,7 +200,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidResponseConsentError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_consent" }
+    override public var spCode: String { NetworkCallErrorsCode().getError(code: .CONSENT_STATUS) }
     override public var description: String { "The SDK got an unexpected response from /consent endpoint" }
 }
 
@@ -283,7 +283,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidMetaDataResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_meta_data_response" }
+    override public var spCode: String { NetworkCallErrorsCode().getError(code: .META_DATA) }
 }
 
 @objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
@@ -291,7 +291,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidConsentStatusResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_consent_status_response" }
+    override public var spCode: String { NetworkCallErrorsCode().getError(code: .CONSENT_STATUS) }
 }
 
 @objcMembers public class InvalidPvDataQueryParamsError: SPError {
@@ -299,7 +299,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidPvDataResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_pv_data_response" }
+    override public var spCode: String { NetworkCallErrorsCode().getError(code: .PV_DATA) }
 }
 
 @objcMembers public class InvalidChoiceAllParamsError: SPError {
@@ -315,6 +315,20 @@ import Foundation
     override public var spCode: String { "sp_metric_error_converting_consent_snapshot_to_json" }
 }
 
-@objcMembers public class InvalidJSONEncodeResult: SPError {
-    override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
+internal class NetworkCallErrorsCode {
+    enum InvalidResponsAPICode: String {
+        case META_DATA = "_meta-data"
+        case CONSENT_STATUS = "_consent-status"
+        case PV_DATA = "_pv-data"
+        case MESSAGES = "_messages"
+    }
+    var startPointError: String = "sp_metric_invalid_responce_api"
+    func getError(code: InvalidResponsAPICode) -> String {
+        switch code {
+        case .META_DATA: return startPointError+InvalidResponsAPICode.META_DATA.rawValue
+        case .CONSENT_STATUS: return startPointError+InvalidResponsAPICode.CONSENT_STATUS.rawValue
+        case .PV_DATA: return startPointError+InvalidResponsAPICode.PV_DATA.rawValue
+        case .MESSAGES: return startPointError+InvalidResponsAPICode.MESSAGES.rawValue
+        }
+    }
 }

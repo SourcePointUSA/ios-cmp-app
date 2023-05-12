@@ -91,7 +91,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidResponseConsentError") {
                 it("has spCode: invalid_response_consent") {
-                    expect(InvalidResponseConsentError().spCode) == "sp_metric_invalid_response_consent"
+                    expect(InvalidResponseConsentError().spCode) == NetworkCallErrorsCode().getError(code: .CONSENT_STATUS)
                 }
             }
 
@@ -146,7 +146,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidResponseGetMessagesEndpointError") {
                 it("has spCode: sp_metric_invalid_response_get_messages") {
-                    expect(InvalidResponseGetMessagesEndpointError().spCode) == "sp_metric_invalid_response_get_messages"
+                    expect(InvalidResponseGetMessagesEndpointError().spCode) == NetworkCallErrorsCode().getError(code: .MESSAGES)
                 }
             }
 
