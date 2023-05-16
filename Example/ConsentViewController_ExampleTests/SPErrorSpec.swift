@@ -91,7 +91,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidResponseConsentError") {
                 it("has spCode: invalid_response_consent") {
-                    expect(InvalidResponseConsentError().spCode) == NetworkCallErrorsCode().getError(code: .CONSENT_STATUS)
+                    expect(InvalidResponseConsentError().spCode) == "sp_metric_invalid_response_consent"
                 }
             }
 
@@ -116,7 +116,7 @@ class SPErrorSpec: QuickSpec {
             describe("RenderingAppError") {
                 describe("if not code is provided") {
                     it("its spCode should be rendering_app_error") {
-                        expect(RenderingAppError(campaignType: .gdpr, nil).spCode) == "sp_metric_rendering_app_error"
+                        expect(RenderingAppError(campaignType: .gdpr, nil).spCode) == "sp_metric_webview_creation_error"
                     }
                 }
 

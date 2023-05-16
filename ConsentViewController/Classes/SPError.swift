@@ -69,6 +69,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidArgumentError: SPError {
+    override public var spCode: String { "sp_metric_invalid_local_data" }
     override public var description: String { message }
     let message: String
 
@@ -135,7 +136,7 @@ import Foundation
 }
 
 @objcMembers public class RenderingAppError: SPError {
-    override public var spCode: String { renderingAppErrorCode ?? "sp_metric_rendering_app_error" }
+    override public var spCode: String { renderingAppErrorCode ?? "sp_metric_webview_creation_error" }
     public let renderingAppErrorCode: String?
 
     init(campaignType: SPCampaignType, _ renderingAppErrorCode: String?) {
@@ -200,7 +201,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidResponseConsentError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getError(code: .CONSENT_STATUS) }
+    override public var spCode: String { "sp_metric_invalid_response_consent" }
     override public var description: String { "The SDK got an unexpected response from /consent endpoint" }
 }
 
