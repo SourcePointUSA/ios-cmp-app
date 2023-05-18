@@ -258,20 +258,8 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class InternalServerError: GenericNetworkError {
-    override public var spCode: String { "sp_metric_internal_server_error_\(response?.statusCode ?? 500)" }
-}
-
-@objcMembers public class ResourceNotFoundError: GenericNetworkError {
-    override public var spCode: String { "sp_metric_resource_not_found_\(response?.statusCode ?? 400)" }
-}
-
-/// Invalid Request Error
-@objcMembers public class InvalidRequestError: SPError {
+@objcMembers public class PostingConsentWithoutConsentUUID: SPError {
     override public var spCode: String { "sp_metric_invalid_request_error" }
-}
-
-@objcMembers public class PostingConsentWithoutConsentUUID: InvalidRequestError {
     override public var description: String {
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
     }

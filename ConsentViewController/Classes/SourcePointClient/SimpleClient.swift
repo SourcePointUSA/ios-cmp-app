@@ -97,16 +97,7 @@ class SimpleClient: HttpClient {
                 if error != nil {
                     var spError = GenericNetworkError(request: urlRequest, response: response as? HTTPURLResponse)
                     if let response = response as? HTTPURLResponse {
-                        switch response.statusCode {
-                        case 400...499:
-                            spError = ResourceNotFoundError(request: urlRequest, response: response)
-
-                        case 500...599:
-                            spError = InternalServerError(request: urlRequest, response: response)
-
-                        default:
-                            spError = GenericNetworkError(request: urlRequest, response: response)
-                        }
+                        spError = GenericNetworkError(request: urlRequest, response: response)
                     }
                     handler(.failure(spError))
                 } else {

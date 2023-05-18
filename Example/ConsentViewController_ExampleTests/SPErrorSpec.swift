@@ -45,20 +45,6 @@ class SPErrorSpec: QuickSpec {
                 }
             }
 
-            describe("InternalServerError") {
-                it("has spCode: internal_server_error_{response.statusCode}") {
-                    let error = InternalServerError(request: emptyRequest(), response: aResponseWith(status: 502))
-                    expect(error.spCode) == "sp_metric_internal_server_error_502"
-                }
-            }
-
-            describe("ResourceNotFoundError") {
-                it("has spCode: resource_not_found_{response.statusCode}") {
-                    let error = ResourceNotFoundError(request: emptyRequest(), response: aResponseWith(status: 404))
-                    expect(error.spCode) == "sp_metric_resource_not_found_404"
-                }
-            }
-
             describe("ConnectionTimeOutError") {
                 it("has spCode: connection_timeout") {
                     expect(ConnectionTimeOutError(url: nil, timeout: nil, campaignType: .unknown).spCode) == "sp_metric_connection_timeout"
@@ -129,7 +115,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidRequestError") {
                 it("has spCode: invalid_request_error") {
-                    expect(InvalidRequestError().spCode) == "sp_metric_invalid_request_error"
+                    expect(PostingConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_request_error"
                 }
             }
 
