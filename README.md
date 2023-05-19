@@ -285,10 +285,20 @@ After going through the message and consent flow (ie. after `onConsentReady`) th
 
 Example:
 ```swift
-// after onConsentReady was called
+// somewhere earlier in your app's lifecycle
+var userConsents: SPUserData?
+
+func onSPFinished(userData: SPUserData) {
+    userConsents = userData
+}
+
 let webview = WKWebView()
-webview.load(URLRequest(URL(string: "https://my-url.com/?_sp_pass_consent=true")!))
-webview.preloadConsent(authId: String)
+if let userConsents = userConsents {
+    webview.load(URLRequest(URL(string: "https://my-url.com/?_sp_pass_consent=true")!))
+    webview.preloadConsent(from: userConsents)
+} else {
+    webview.load(URLRequest(URL(string: "https://my-url.com/")!)) // load url without _sp_pass_consent=true
+}
 ```
 
 A few remarks:
