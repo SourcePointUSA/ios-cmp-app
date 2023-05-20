@@ -240,7 +240,7 @@ import Foundation
 }
 
 @objcMembers public class GenericNetworkError: SPError {
-    override public var spCode: String { "sp_metric_generic_network_request_\(response?.statusCode ?? 999)" }
+    override public var spCode: String { "sp_metric_url_loading_error" }
     override public var description: String {
         "The server responsed with \(response?.statusCode ?? 999) when performing \(request.httpMethod ?? "<no verb>") \(response?.url?.absoluteString ?? "<no url>")"
     }
