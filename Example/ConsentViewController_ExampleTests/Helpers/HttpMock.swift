@@ -25,7 +25,7 @@ class MockHttp: HttpClient {
         self.error = error
     }
 
-    public func get(urlString: String, handler: @escaping ResponseHandler) {
+    public func get(urlString: String, apiCode: ConsentViewController.NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
             self.getWasCalledWithUrl = urlString
             if self.success != nil {
@@ -37,9 +37,9 @@ class MockHttp: HttpClient {
         }
     }
 
-    func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {}
+    func request(_ urlRequest: URLRequest, apiCode: ConsentViewController.NetworkCallErrorsCode.InvalidResponsAPICode?, _ handler: @escaping ResponseHandler) {}
 
-    public func post(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
+    public func post(urlString: String, body: Data?, apiCode: ConsentViewController.NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         postWasCalledWithUrl = urlString
         postWasCalledWithBody = body
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
@@ -49,7 +49,7 @@ class MockHttp: HttpClient {
         }
     }
 
-    public func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
+    public func delete(urlString: String, body: Data?, apiCode: ConsentViewController.NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         self.deleteWasCalledWithBody = body
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
             self.success != nil ?

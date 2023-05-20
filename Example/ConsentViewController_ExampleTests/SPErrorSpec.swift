@@ -27,14 +27,7 @@ class SPErrorSpec: QuickSpec {
                 context("when no response object is provided") {
                     it("has spCode: generic_network_request_999") {
                         let error = GenericNetworkError(request: emptyRequest(), response: nil)
-                        expect(error.spCode) == "sp_metric_generic_network_request_999"
-                    }
-                }
-
-                context("when we know the response status") {
-                    it("has spCode: generic_network_request_{response.status}") {
-                        let error = GenericNetworkError(request: emptyRequest(), response: aResponseWith(status: 500))
-                        expect(error.spCode) == "sp_metric_generic_network_request_500"
+                        expect(error.spCode) == "sp_metric_url_loading_error"
                     }
                 }
             }
@@ -115,7 +108,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidRequestError") {
                 it("has spCode: invalid_request_error") {
-                    expect(PostingConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_request_error"
+                    expect(PostingConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_consent_UUID"
                 }
             }
 
@@ -132,7 +125,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidResponseGetMessagesEndpointError") {
                 it("has spCode: sp_metric_invalid_response_get_messages") {
-                    expect(InvalidResponseGetMessagesEndpointError().spCode) == NetworkCallErrorsCode().getError(code: .MESSAGES)
+                    expect(InvalidResponseGetMessagesEndpointError().spCode) == NetworkCallErrorsCode().getMetricInvalidResponseError(code: .MESSAGES)
                 }
             }
 

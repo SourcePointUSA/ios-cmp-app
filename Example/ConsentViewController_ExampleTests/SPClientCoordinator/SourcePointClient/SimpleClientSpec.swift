@@ -82,7 +82,7 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { _ in }
+                client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
                 expect(session.dataTaskCalledWith) == self.exampleRequest
             }
 
@@ -95,7 +95,7 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { _ in }
+                client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
                 expect(session.configuration.requestCachePolicy) == .reloadIgnoringLocalCacheData
             }
 
@@ -108,7 +108,7 @@ class SimpleClientSpec: QuickSpec {
                     dispatchQueue: queue
                 )
                 waitUntil { done in
-                    client.request(self.exampleRequest) { _ in
+                    client.request(self.exampleRequest, apiCode: .EMPTY) { _ in
                         expect(queue.asyncCalled) == true
                         done()
                     }
@@ -127,7 +127,7 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: session,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { _ in }
+                client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
                 expect(dataTaskResult.resumeWasCalled) == true
             }
 
@@ -145,7 +145,7 @@ class SimpleClientSpec: QuickSpec {
                         urlSession: session,
                         dispatchQueue: DispatchQueueMock()
                     )
-                    client.request(self.exampleRequest) { result = $0 }
+                    client.request(self.exampleRequest, apiCode: .EMPTY) { result = $0 }
                     expect(result).toEventuallyNot(beNil())
                 }
             }
@@ -164,7 +164,7 @@ class SimpleClientSpec: QuickSpec {
                         urlSession: session,
                         dispatchQueue: DispatchQueueMock()
                     )
-                    client.request(self.exampleRequest) { result in
+                    client.request(self.exampleRequest, apiCode: .EMPTY) { result in
                         switch result {
                         case .success: fail("call should fail")
 
@@ -184,7 +184,7 @@ class SimpleClientSpec: QuickSpec {
                     urlSession: URLSession.shared,
                     dispatchQueue: DispatchQueue.main
                 )
-                client.request(self.exampleRequest) { result in
+                client.request(self.exampleRequest, apiCode: .EMPTY) { result in
                     switch result {
                     case .success: fail("call should fail")
 
