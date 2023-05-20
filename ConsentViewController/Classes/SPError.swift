@@ -259,7 +259,7 @@ import Foundation
 }
 
 @objcMembers public class PostingConsentWithoutConsentUUID: SPError {
-    override public var spCode: String { "sp_metric_invalid_request_error" }
+    override public var spCode: String { "sp_metric_invalid_consent_UUID" }
     override public var description: String {
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
     }
