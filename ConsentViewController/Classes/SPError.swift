@@ -166,7 +166,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getError(code: .MESSAGES) }
+    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .MESSAGES) }
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
@@ -258,6 +258,17 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
+@objcMembers public class ConnectionTimeoutAPIError: SPError {
+    override public var spCode: String { "sp_metric_connection_timeout\(NetworkCallErrorsCode().getError(apiCode: apiCode))" }
+    let apiCode: NetworkCallErrorsCode.InvalidResponsAPICode
+    init(apiCode: NetworkCallErrorsCode.InvalidResponsAPICode) {
+        self.apiCode = apiCode
+        super.init()
+    }
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
 @objcMembers public class PostingConsentWithoutConsentUUID: SPError {
     override public var spCode: String { "sp_metric_invalid_consent_UUID" }
     override public var description: String {
@@ -272,7 +283,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidMetaDataResponseError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getError(code: .META_DATA) }
+    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .META_DATA) }
 }
 
 @objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
@@ -280,7 +291,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidConsentStatusResponseError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getError(code: .CONSENT_STATUS) }
+    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .CONSENT_STATUS) }
 }
 
 @objcMembers public class InvalidPvDataQueryParamsError: SPError {
@@ -288,7 +299,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidPvDataResponseError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getError(code: .PV_DATA) }
+    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .PV_DATA) }
 }
 
 @objcMembers public class InvalidChoiceAllParamsError: SPError {
@@ -304,20 +315,26 @@ import Foundation
     override public var spCode: String { "sp_metric_error_converting_consent_snapshot_to_json" }
 }
 
-internal class NetworkCallErrorsCode {
+public class NetworkCallErrorsCode {
     enum InvalidResponsAPICode: String {
         case META_DATA = "_meta-data"
         case CONSENT_STATUS = "_consent-status"
         case PV_DATA = "_pv-data"
         case MESSAGES = "_messages"
+        case EMPTY = ""
     }
-    var startPointError: String = "sp_metric_invalid_responce_api"
-    func getError(code: InvalidResponsAPICode) -> String {
-        switch code {
-        case .META_DATA: return startPointError+InvalidResponsAPICode.META_DATA.rawValue
-        case .CONSENT_STATUS: return startPointError+InvalidResponsAPICode.CONSENT_STATUS.rawValue
-        case .PV_DATA: return startPointError+InvalidResponsAPICode.PV_DATA.rawValue
-        case .MESSAGES: return startPointError+InvalidResponsAPICode.MESSAGES.rawValue
+    var invalidResponseText: String = "sp_metric_invalid_response_api"
+    var connectionTimeoutText: String = "sp_metric_connection_timeout"
+    func getError(apiCode: InvalidResponsAPICode) -> String {
+        switch apiCode {
+        case .META_DATA: return InvalidResponsAPICode.META_DATA.rawValue
+        case .CONSENT_STATUS: return InvalidResponsAPICode.CONSENT_STATUS.rawValue
+        case .PV_DATA: return InvalidResponsAPICode.PV_DATA.rawValue
+        case .MESSAGES: return InvalidResponsAPICode.MESSAGES.rawValue
+        case .EMPTY: return InvalidResponsAPICode.EMPTY.rawValue
         }
+    }
+    func getMetricInvalidResponseError(code: InvalidResponsAPICode) -> String {
+        return invalidResponseText+getError(apiCode: code)
     }
 }

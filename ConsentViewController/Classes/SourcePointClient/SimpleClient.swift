@@ -37,9 +37,9 @@ extension DispatchQueue: SPDispatchQueue {
 typealias ResponseHandler = (Result<Data?, SPError>) -> Void
 
 protocol HttpClient {
-    func get(urlString: String, handler: @escaping ResponseHandler)
-    func post(urlString: String, body: Data?, handler: @escaping ResponseHandler)
-    func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler)
+    func get(urlString: String, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler)
+    func post(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler)
+    func delete(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler)
 }
 
 class SimpleClient: HttpClient {
@@ -83,7 +83,7 @@ class SimpleClient: HttpClient {
         logRequest("response -", request, response)
     }
 
-    func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {
+    func request(_ urlRequest: URLRequest, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode, _ handler: @escaping ResponseHandler) {
         logRequest(urlRequest, urlRequest.httpBody)
         guard connectivityManager.isConnectedToNetwork() else {
             handler(.failure(NoInternetConnection()))
@@ -95,11 +95,15 @@ class SimpleClient: HttpClient {
                 self?.logResponse(urlRequest, data)
 
                 if error != nil {
-                    var spError = GenericNetworkError(request: urlRequest, response: response as? HTTPURLResponse)
                     if let response = response as? HTTPURLResponse {
-                        spError = GenericNetworkError(request: urlRequest, response: response)
+                        switch response.statusCode {
+                        case 408:
+                            handler(.failure(ConnectionTimeoutAPIError(apiCode: apiCode)))
+
+                        default:
+                            handler(.failure(GenericNetworkError(request: urlRequest, response: response)))
+                        }
                     }
-                    handler(.failure(spError))
                 } else {
                     handler(.success(data))
                 }
@@ -107,7 +111,7 @@ class SimpleClient: HttpClient {
         }.resume()
     }
 
-    func post(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
+    func post(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
@@ -116,18 +120,18 @@ class SimpleClient: HttpClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = body
-        request(urlRequest, handler)
+        request(urlRequest, apiCode: apiCode ?? .EMPTY, handler)
     }
 
-    func get(urlString: String, handler: @escaping ResponseHandler) {
+    func get(urlString: String, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
         }
-        request(URLRequest(url: url), handler)
+        request(URLRequest(url: url), apiCode: apiCode ?? .EMPTY, handler)
     }
 
-    func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
+    func delete(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
@@ -136,6 +140,6 @@ class SimpleClient: HttpClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "DELETE"
         urlRequest.httpBody = body
-        request(urlRequest, handler)
+        request(urlRequest, apiCode: apiCode ?? .EMPTY, handler)
     }
 }

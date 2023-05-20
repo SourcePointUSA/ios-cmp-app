@@ -204,7 +204,7 @@ class SourcePointClient: SourcePointProtocol {
             "messageId": messageId,
             "includeData": "{\"categories\": {\"type\": \"RecordString\"}}"
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString) { result in
+        client.get(urlString: url.absoluteString, apiCode: nil) { result in
             handler(Result {
                 (try result.decoded() as MessageResponse).message
             }.mapError({
@@ -225,7 +225,7 @@ class SourcePointClient: SourcePointProtocol {
             "propertyId": propertyId,
             "messageId": messageId
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString) { result in
+        client.get(urlString: url.absoluteString, apiCode: nil) { result in
             handler(Result {
                 (try result.decoded() as MessageResponse).message
             }.mapError({
@@ -239,7 +239,7 @@ class SourcePointClient: SourcePointProtocol {
             "siteId": String(propertyId),
             "consentLanguage": consentLanguage.rawValue
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString) { result in
+        client.get(urlString: url.absoluteString, apiCode: nil) { result in
             handler(Result {
                 try result.decoded() as GDPRPrivacyManagerViewResponse
             }.mapError({
@@ -253,7 +253,7 @@ class SourcePointClient: SourcePointProtocol {
                 "siteId": String(propertyId),
                 "consentLanguage": consentLanguage.rawValue
         ])! // swiftlint:disable:this force_unwrapping
-            client.get(urlString: url.absoluteString) { result in
+            client.get(urlString: url.absoluteString, apiCode: nil) { result in
                 handler(Result {
                     try result.decoded() as CCPAPrivacyManagerViewResponse
                 }.mapError({
@@ -269,7 +269,7 @@ class SourcePointClient: SourcePointProtocol {
 
     func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
         _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body) { result in
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body, apiCode: nil) { result in
                 handler(Result {
                     try result.decoded() as CCPAChoiceResponse
                 }.mapError {
@@ -281,7 +281,7 @@ class SourcePointClient: SourcePointProtocol {
 
     func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
         _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body) { result in
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body, apiCode: nil) { result in
                 handler(Result {
                     try result.decoded() as GDPRChoiceResponse
                 }.mapError {
@@ -301,7 +301,7 @@ class SourcePointClient: SourcePointProtocol {
             iosVersion: iosVersion,
             appleTracking: AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, messagePartitionUUID: partitionUUID)
         )).map {
-            client.post(urlString: Constants.Urls.IDFA_RERPORT_URL.absoluteString, body: $0) { _ in }
+            client.post(urlString: Constants.Urls.IDFA_RERPORT_URL.absoluteString, body: $0, apiCode: nil) { _ in }
         }
     }
 
@@ -319,7 +319,7 @@ class SourcePointClient: SourcePointProtocol {
             categories: categories,
             legIntCategories: legIntCategories
         )).map { body in
-            client.post(urlString: Constants.Urls.CUSTOM_CONSENT_URL.absoluteString, body: body) { result in
+            client.post(urlString: Constants.Urls.CUSTOM_CONSENT_URL.absoluteString, body: body, apiCode: nil) { result in
                 handler(Result {
                     try result.decoded() as AddOrDeleteCustomConsentResponse
                 }.mapError {
@@ -340,7 +340,7 @@ class SourcePointClient: SourcePointProtocol {
                 categories: categories,
                 legIntCategories: legIntCategories
             )).map { body in
-                client.delete(urlString: deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID).absoluteString, body: body) { result in
+                client.delete(urlString: deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID).absoluteString, body: body, apiCode: nil) { result in
                     handler(Result {
                         try result.decoded() as AddOrDeleteCustomConsentResponse
                     }.mapError {
@@ -379,7 +379,7 @@ class SourcePointClient: SourcePointProtocol {
             propertyName: propertyName,
             campaignType: campaignType
         )).map {
-            client.post(urlString: Constants.Urls.ERROR_METRIS_URL.absoluteString, body: $0) { _ in }
+            client.post(urlString: Constants.Urls.ERROR_METRIS_URL.absoluteString, body: $0, apiCode: nil) { _ in }
         }
     }
 }
@@ -415,7 +415,7 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString) { result in
+        client.get(urlString: url.absoluteString, apiCode: .CONSENT_STATUS) { result in
             handler(Result {
                 try result.decoded() as ConsentStatusResponse
             }.mapError {
@@ -452,7 +452,7 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString) { result in
+        client.get(urlString: url.absoluteString, apiCode: .META_DATA) { result in
             handler(Result {
                 try result.decoded() as MetaDataResponse
             }.mapError {
@@ -468,7 +468,7 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString) { result in
+        client.get(urlString: url.absoluteString, apiCode: .MESSAGES) { result in
             handler(Result {
                 try result.decoded() as MessagesResponse
             }.mapError {
@@ -479,7 +479,7 @@ extension SourcePointClient {
 
     func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
         _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body) { result in
+            client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body, apiCode: .PV_DATA) { result in
                 handler?(Result {
                     try result.decoded() as PvDataResponse
                 }.mapError {
@@ -537,7 +537,7 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString) { result in
+        client.get(urlString: url.absoluteString, apiCode: nil) { result in
             handler(Result {
                 try result.decoded() as ChoiceAllResponse
             }.mapError {
