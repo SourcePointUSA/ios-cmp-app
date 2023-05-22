@@ -315,6 +315,10 @@ import Foundation
     override public var spCode: String { "sp_metric_error_converting_consent_snapshot_to_json" }
 }
 
+@objcMembers public class InvalidJSONEncodeResult: SPError {
+    override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
+}
+
 public enum InvalidResponsAPICode: String {
     case META_DATA = "_meta-data"
     case CONSENT_STATUS = "_consent-status"
