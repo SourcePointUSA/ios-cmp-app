@@ -100,11 +100,12 @@ class SimpleClientSpec: QuickSpec {
             }
 
             it("calls async on its dispatchQueue with the result of the dataTask") {
+                let session = URLSessionMock()
                 let queue = DispatchQueueMock()
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: true),
                     logger: SPLoggerMock(),
-                    urlSession: URLSession.shared,
+                    urlSession: session,
                     dispatchQueue: queue
                 )
                 waitUntil { done in
