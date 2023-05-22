@@ -166,7 +166,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .MESSAGES) }
+    override public var spCode: String { InvalidResponsAPICode.MESSAGES.code }
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
@@ -259,9 +259,9 @@ import Foundation
 }
 
 @objcMembers public class ConnectionTimeoutAPIError: SPError {
-    override public var spCode: String { "sp_metric_connection_timeout\(NetworkCallErrorsCode().getError(apiCode: apiCode))" }
-    let apiCode: NetworkCallErrorsCode.InvalidResponsAPICode
-    init(apiCode: NetworkCallErrorsCode.InvalidResponsAPICode) {
+    override public var spCode: String { "sp_metric_connection_timeout\(apiCode.code))" }
+    let apiCode: InvalidResponsAPICode
+    init(apiCode: InvalidResponsAPICode) {
         self.apiCode = apiCode
         super.init()
     }
@@ -272,7 +272,7 @@ import Foundation
 @objcMembers public class PostingConsentWithoutConsentUUID: SPError {
     override public var spCode: String { "sp_metric_invalid_consent_UUID" }
     override public var description: String {
-        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
+        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadGDPRPrivacyManager or loadCCPAPrivacyManager."
     }
 
     override public var campaignType: SPCampaignType { get { .gdpr } set {} }
@@ -283,7 +283,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidMetaDataResponseError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .META_DATA) }
+    override public var spCode: String { InvalidResponsAPICode.META_DATA.code }
 }
 
 @objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
@@ -291,7 +291,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidConsentStatusResponseError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .CONSENT_STATUS) }
+    override public var spCode: String { InvalidResponsAPICode.CONSENT_STATUS.code }
 }
 
 @objcMembers public class InvalidPvDataQueryParamsError: SPError {
@@ -299,7 +299,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidPvDataResponseError: SPError {
-    override public var spCode: String { NetworkCallErrorsCode().getMetricInvalidResponseError(code: .PV_DATA) }
+    override public var spCode: String { InvalidResponsAPICode.PV_DATA.code }
 }
 
 @objcMembers public class InvalidChoiceAllParamsError: SPError {
@@ -315,26 +315,13 @@ import Foundation
     override public var spCode: String { "sp_metric_error_converting_consent_snapshot_to_json" }
 }
 
-public class NetworkCallErrorsCode {
-    enum InvalidResponsAPICode: String {
-        case META_DATA = "_meta-data"
-        case CONSENT_STATUS = "_consent-status"
-        case PV_DATA = "_pv-data"
-        case MESSAGES = "_messages"
-        case EMPTY = ""
-    }
-    var invalidResponseText: String = "sp_metric_invalid_response_api"
-    var connectionTimeoutText: String = "sp_metric_connection_timeout"
-    func getError(apiCode: InvalidResponsAPICode) -> String {
-        switch apiCode {
-        case .META_DATA: return InvalidResponsAPICode.META_DATA.rawValue
-        case .CONSENT_STATUS: return InvalidResponsAPICode.CONSENT_STATUS.rawValue
-        case .PV_DATA: return InvalidResponsAPICode.PV_DATA.rawValue
-        case .MESSAGES: return InvalidResponsAPICode.MESSAGES.rawValue
-        case .EMPTY: return InvalidResponsAPICode.EMPTY.rawValue
-        }
-    }
-    func getMetricInvalidResponseError(code: InvalidResponsAPICode) -> String {
-        return invalidResponseText+getError(apiCode: code)
+public enum InvalidResponsAPICode: String {
+    case META_DATA = "_meta-data"
+    case CONSENT_STATUS = "_consent-status"
+    case PV_DATA = "_pv-data"
+    case MESSAGES = "_messages"
+    case EMPTY = ""
+    var code: String {
+        "sp_metric_invalid_response_api\(rawValue)"
     }
 }

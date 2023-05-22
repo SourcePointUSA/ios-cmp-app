@@ -106,7 +106,7 @@ class SPErrorSpec: QuickSpec {
                 }
             }
 
-            describe("InvalidRequestError") {
+            describe("sp_metric_invalid_consent_UUID") {
                 it("has spCode: invalid_request_error") {
                     expect(PostingConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_consent_UUID"
                 }
@@ -125,7 +125,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidResponseGetMessagesEndpointError") {
                 it("has spCode: sp_metric_invalid_response_get_messages") {
-                    expect(InvalidResponseGetMessagesEndpointError().spCode) == NetworkCallErrorsCode().getMetricInvalidResponseError(code: .MESSAGES)
+                    expect(InvalidResponseGetMessagesEndpointError().spCode) == InvalidResponsAPICode.MESSAGES.code
                 }
             }
 

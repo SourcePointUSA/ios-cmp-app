@@ -37,9 +37,9 @@ extension DispatchQueue: SPDispatchQueue {
 typealias ResponseHandler = (Result<Data?, SPError>) -> Void
 
 protocol HttpClient {
-    func get(urlString: String, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler)
-    func post(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler)
-    func delete(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler)
+    func get(urlString: String, apiCode: InvalidResponsAPICode?, handler: @escaping ResponseHandler)
+    func post(urlString: String, body: Data?, apiCode: InvalidResponsAPICode?, handler: @escaping ResponseHandler)
+    func delete(urlString: String, body: Data?, apiCode: InvalidResponsAPICode?, handler: @escaping ResponseHandler)
 }
 
 class SimpleClient: HttpClient {
@@ -83,7 +83,7 @@ class SimpleClient: HttpClient {
         logRequest("response -", request, response)
     }
 
-    func request(_ urlRequest: URLRequest, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode, _ handler: @escaping ResponseHandler) {
+    func request(_ urlRequest: URLRequest, apiCode: InvalidResponsAPICode, _ handler: @escaping ResponseHandler) {
         logRequest(urlRequest, urlRequest.httpBody)
         guard connectivityManager.isConnectedToNetwork() else {
             handler(.failure(NoInternetConnection()))
@@ -111,7 +111,7 @@ class SimpleClient: HttpClient {
         }.resume()
     }
 
-    func post(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
+    func post(urlString: String, body: Data?, apiCode: InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
@@ -123,7 +123,7 @@ class SimpleClient: HttpClient {
         request(urlRequest, apiCode: apiCode ?? .EMPTY, handler)
     }
 
-    func get(urlString: String, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
+    func get(urlString: String, apiCode: InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
@@ -131,7 +131,7 @@ class SimpleClient: HttpClient {
         request(URLRequest(url: url), apiCode: apiCode ?? .EMPTY, handler)
     }
 
-    func delete(urlString: String, body: Data?, apiCode: NetworkCallErrorsCode.InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
+    func delete(urlString: String, body: Data?, apiCode: InvalidResponsAPICode?, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
