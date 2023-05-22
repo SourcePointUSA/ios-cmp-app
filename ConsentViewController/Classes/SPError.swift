@@ -136,7 +136,7 @@ import Foundation
 }
 
 @objcMembers public class RenderingAppError: SPError {
-    override public var spCode: String { renderingAppErrorCode ?? "sp_metric_webview_creation_error" }
+    override public var spCode: String { renderingAppErrorCode ?? "sp_metric_rendering_app_error" }
     public let renderingAppErrorCode: String?
 
     init(campaignType: SPCampaignType, _ renderingAppErrorCode: String?) {
