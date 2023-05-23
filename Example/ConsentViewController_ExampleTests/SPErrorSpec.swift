@@ -125,7 +125,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("InvalidResponseGetMessagesEndpointError") {
                 it("has spCode: sp_metric_invalid_response_get_messages") {
-                    expect(InvalidResponseGetMessagesEndpointError().spCode) == InvalidResponsAPICode.MESSAGES.code
+                    expect(InvalidResponseGetMessagesEndpointError().spCode) == "sp_metric_invalid_response_api_messages"
                 }
             }
 
