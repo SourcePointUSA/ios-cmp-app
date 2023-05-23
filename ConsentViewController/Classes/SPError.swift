@@ -166,7 +166,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
-    override public var spCode: String { InvalidResponsAPICode.MESSAGES.code }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.MESSAGES.code)" }
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
@@ -269,6 +269,17 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
+@objcMembers public class InvalidResponseAPIError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_api\(apiCode.code))" }
+    let apiCode: InvalidResponsAPICode
+    init(apiCode: InvalidResponsAPICode) {
+        self.apiCode = apiCode
+        super.init()
+    }
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
 @objcMembers public class PostingConsentWithoutConsentUUID: SPError {
     override public var spCode: String { "sp_metric_invalid_consent_UUID" }
     override public var description: String {
@@ -283,7 +294,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidMetaDataResponseError: SPError {
-    override public var spCode: String { InvalidResponsAPICode.META_DATA.code }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.META_DATA.code)" }
 }
 
 @objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
@@ -291,7 +302,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidConsentStatusResponseError: SPError {
-    override public var spCode: String { InvalidResponsAPICode.CONSENT_STATUS.code }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.CONSENT_STATUS.code)" }
 }
 
 @objcMembers public class InvalidPvDataQueryParamsError: SPError {
@@ -299,7 +310,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidPvDataResponseError: SPError {
-    override public var spCode: String { InvalidResponsAPICode.PV_DATA.code }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.PV_DATA.code)" }
 }
 
 @objcMembers public class InvalidChoiceAllParamsError: SPError {
@@ -337,6 +348,6 @@ public enum InvalidResponsAPICode: String {
     case DELETE_CUSTOM_CONSENT = "_delete-custom-consent-GDPR"
     case EMPTY = ""
     var code: String {
-        "sp_metric_invalid_response_api\(rawValue)"
+        "\(rawValue)"
     }
 }
