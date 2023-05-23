@@ -38,7 +38,7 @@ import Foundation
     private static func validate(_ string: String) throws -> String {
         let regex = try NSRegularExpression(pattern: validPattern, options: [])
         if regex.matches(in: string, options: [], range: NSRange(location: 0, length: string.count)).isEmpty {
-            throw InvalidArgumentError(message: "PropertyName can only include letters, numbers, '.', ':', '-' and '/'. \(string) passed is invalid")
+            throw InvalidPropertyNameError(message: "PropertyName can only include letters, numbers, '.', ':', '-' and '/'. \(string) passed is invalid")
         } else {
             return string
         }

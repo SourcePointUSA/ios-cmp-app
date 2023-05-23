@@ -68,8 +68,8 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class InvalidArgumentError: SPError {
-    override public var spCode: String { "sp_metric_invalid_local_data" }
+@objcMembers public class InvalidPropertyNameError: SPError {
+    override public var spCode: String { "sp_metric_invalid_property_name" }
     override public var description: String { message }
     let message: String
 

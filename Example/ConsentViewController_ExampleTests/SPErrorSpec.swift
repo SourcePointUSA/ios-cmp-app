@@ -118,8 +118,8 @@ class SPErrorSpec: QuickSpec {
                 }
             }
 
-            it("Test InvalidArgumentError method") {
-                let errorObject = InvalidArgumentError(message: "The operation couldn't be completed")
+            it("Test InvalidPropertyNameError method") {
+                let errorObject = InvalidPropertyNameError(message: "The operation couldn't be completed")
                 expect(errorObject.description) == "The operation couldn't be completed"
             }
 
