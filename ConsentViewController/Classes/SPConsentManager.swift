@@ -192,14 +192,9 @@ import UIKit
         }
     }
 
-    func saveChildPmId(_ messages: [MessageToDisplay]) {
-        for message in messages {
-            switch message.type {
-                case .ccpa: storage.ccpaChildPmId = message.childPmId
-                case .gdpr: storage.ccpaChildPmId = message.childPmId
-                default: break
-            }
-        }
+    func saveChildPmId(_ messages: SPUserData) {
+        storage.ccpaChildPmId = messages.ccpa?.consents?.childPmId
+        storage.gdprChildPmId = messages.gdpr?.consents?.childPmId
     }
 
     func report(action: SPAction) {
@@ -310,7 +305,7 @@ import UIKit
                 switch result {
                     case .success(let (messages, consents)):
                         strongSelf.storeLegislationConsent(userData: consents)
-                        strongSelf.saveChildPmId(messages)
+                        strongSelf.saveChildPmId(consents)
                         strongSelf.messageControllersStack = strongSelf.messagesToViewController(messages)
                         strongSelf.messagesToShow = strongSelf.messageControllersStack.count
                         if strongSelf.messageControllersStack.isEmpty {

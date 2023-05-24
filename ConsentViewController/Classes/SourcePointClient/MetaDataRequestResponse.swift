@@ -18,6 +18,7 @@ struct MetaDataResponse: Decodable, Equatable {
         let legalBasisChangeDate: SPDateCreated
         let version: Int
         let _id: String
+        let childPmId: String?
         let applies: Bool
         let sampleRate: Float
     }
@@ -28,6 +29,7 @@ struct MetaDataResponse: Decodable, Equatable {
 
 struct MetaDataBodyRequest: QueryParamEncodable {
     struct Campaign: Encodable {
+        let groupPmId: String?
         let hasLocalData: Bool
         let dateCreated: SPDateCreated?
         let uuid: String?

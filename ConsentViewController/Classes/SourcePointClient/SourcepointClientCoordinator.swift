@@ -173,6 +173,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         .init(
             gdpr: campaigns.gdpr != nil ?
                     .init(
+                        groupPmId: campaigns.gdpr?.groupPmId,
                         hasLocalData: state.gdpr?.uuid != nil,
                         dateCreated: state.gdpr?.dateCreated,
                         uuid: state.gdpr?.uuid
@@ -180,6 +181,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     nil,
             ccpa: campaigns.ccpa != nil ?
                 .init(
+                    groupPmId: campaigns.ccpa?.groupPmId,
                     hasLocalData: state.ccpa?.uuid != nil,
                     dateCreated: state.ccpa?.dateCreated,
                     uuid: state.ccpa?.uuid
