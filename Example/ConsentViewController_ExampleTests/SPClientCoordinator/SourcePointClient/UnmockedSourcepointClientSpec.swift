@@ -177,8 +177,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     client.metaData(accountId: accountId,
                                     propertyId: 17_801,
                                     metadata: MetaDataBodyRequest(
-                                        gdpr: MetaDataBodyRequest.Campaign(hasLocalData: true, dateCreated: nil, uuid: nil),
-                                        ccpa: MetaDataBodyRequest.Campaign(hasLocalData: false, dateCreated: nil, uuid: nil))) {
+                                        gdpr: MetaDataBodyRequest.Campaign(groupPmId: nil, hasLocalData: true, dateCreated: nil, uuid: nil),
+                                        ccpa: MetaDataBodyRequest.Campaign(groupPmId: nil, hasLocalData: false, dateCreated: nil, uuid: nil))) {
                             switch $0 {
                             case .success(let response):
                                 let GDPR = response.gdpr
