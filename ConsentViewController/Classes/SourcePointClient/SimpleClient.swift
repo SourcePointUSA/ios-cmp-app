@@ -37,9 +37,9 @@ extension DispatchQueue: SPDispatchQueue {
 typealias ResponseHandler = (Result<Data?, SPError>) -> Void
 
 protocol HttpClient {
-    func get(urlString: String, handler: @escaping ResponseHandler)
-    func post(urlString: String, body: Data?, handler: @escaping ResponseHandler)
-    func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler)
+    func get(urlString: String, apiCode: InvalidResponsAPICode, handler: @escaping ResponseHandler)
+    func post(urlString: String, body: Data?, apiCode: InvalidResponsAPICode, handler: @escaping ResponseHandler)
+    func delete(urlString: String, body: Data?, apiCode: InvalidResponsAPICode, handler: @escaping ResponseHandler)
 }
 
 class SimpleClient: HttpClient {
@@ -83,7 +83,7 @@ class SimpleClient: HttpClient {
         logRequest("response -", request, response)
     }
 
-    func request(_ urlRequest: URLRequest, _ handler: @escaping ResponseHandler) {
+    func request(_ urlRequest: URLRequest, apiCode: InvalidResponsAPICode, _ handler: @escaping ResponseHandler) {
         logRequest(urlRequest, urlRequest.httpBody)
         guard connectivityManager.isConnectedToNetwork() else {
             handler(.failure(NoInternetConnection()))
@@ -95,20 +95,16 @@ class SimpleClient: HttpClient {
                 self?.logResponse(urlRequest, data)
 
                 if error != nil {
-                    var spError = GenericNetworkError(request: urlRequest, response: response as? HTTPURLResponse)
                     if let response = response as? HTTPURLResponse {
                         switch response.statusCode {
-                        case 400...499:
-                            spError = ResourceNotFoundError(request: urlRequest, response: response)
-
-                        case 500...599:
-                            spError = InternalServerError(request: urlRequest, response: response)
-
+                        case 408:
+                            handler(.failure(ConnectionTimeoutAPIError(apiCode: apiCode)))
+                        case 400...407,409...499,500...599:
+                            handler(.failure(InvalidResponseAPIError(apiCode: apiCode)))
                         default:
-                            spError = GenericNetworkError(request: urlRequest, response: response)
+                            handler(.failure(GenericNetworkError(request: urlRequest, response: response)))
                         }
                     }
-                    handler(.failure(spError))
                 } else {
                     handler(.success(data))
                 }
@@ -116,7 +112,7 @@ class SimpleClient: HttpClient {
         }.resume()
     }
 
-    func post(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
+    func post(urlString: String, body: Data?, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
@@ -125,18 +121,18 @@ class SimpleClient: HttpClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = body
-        request(urlRequest, handler)
+        request(urlRequest, apiCode: apiCode , handler)
     }
 
-    func get(urlString: String, handler: @escaping ResponseHandler) {
+    func get(urlString: String, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
         }
-        request(URLRequest(url: url), handler)
+        request(URLRequest(url: url), apiCode: apiCode , handler)
     }
 
-    func delete(urlString: String, body: Data?, handler: @escaping ResponseHandler) {
+    func delete(urlString: String, body: Data?, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
         guard let url = URL(string: urlString) else {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
@@ -145,6 +141,6 @@ class SimpleClient: HttpClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "DELETE"
         urlRequest.httpBody = body
-        request(urlRequest, handler)
+        request(urlRequest, apiCode: apiCode , handler)
     }
 }

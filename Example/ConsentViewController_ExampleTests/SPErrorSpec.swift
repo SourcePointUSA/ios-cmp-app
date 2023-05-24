@@ -27,14 +27,7 @@ class SPErrorSpec: QuickSpec {
                 context("when no response object is provided") {
                     it("has spCode: generic_network_request_999") {
                         let error = GenericNetworkError(request: emptyRequest(), response: nil)
-                        expect(error.spCode) == "sp_metric_generic_network_request_999"
-                    }
-                }
-
-                context("when we know the response status") {
-                    it("has spCode: generic_network_request_{response.status}") {
-                        let error = GenericNetworkError(request: emptyRequest(), response: aResponseWith(status: 500))
-                        expect(error.spCode) == "sp_metric_generic_network_request_500"
+                        expect(error.spCode) == "sp_metric_url_loading_error"
                     }
                 }
             }
@@ -42,20 +35,6 @@ class SPErrorSpec: QuickSpec {
             describe("NoInternetConnection") {
                 it("has spCode: no_internet_connection") {
                     expect(NoInternetConnection().spCode) == "sp_metric_no_internet_connection"
-                }
-            }
-
-            describe("InternalServerError") {
-                it("has spCode: internal_server_error_{response.statusCode}") {
-                    let error = InternalServerError(request: emptyRequest(), response: aResponseWith(status: 502))
-                    expect(error.spCode) == "sp_metric_internal_server_error_502"
-                }
-            }
-
-            describe("ResourceNotFoundError") {
-                it("has spCode: resource_not_found_{response.statusCode}") {
-                    let error = ResourceNotFoundError(request: emptyRequest(), response: aResponseWith(status: 404))
-                    expect(error.spCode) == "sp_metric_resource_not_found_404"
                 }
             }
 
@@ -127,9 +106,9 @@ class SPErrorSpec: QuickSpec {
                 }
             }
 
-            describe("InvalidRequestError") {
+            describe("sp_metric_invalid_consent_UUID") {
                 it("has spCode: invalid_request_error") {
-                    expect(InvalidRequestError().spCode) == "sp_metric_invalid_request_error"
+                    expect(PostingConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_consent_UUID"
                 }
             }
 
@@ -139,14 +118,14 @@ class SPErrorSpec: QuickSpec {
                 }
             }
 
-            it("Test InvalidArgumentError method") {
-                let errorObject = InvalidArgumentError(message: "The operation couldn't be completed")
+            it("Test InvalidPropertyNameError method") {
+                let errorObject = InvalidPropertyNameError(message: "The operation couldn't be completed")
                 expect(errorObject.description) == "The operation couldn't be completed"
             }
 
             describe("InvalidResponseGetMessagesEndpointError") {
                 it("has spCode: sp_metric_invalid_response_get_messages") {
-                    expect(InvalidResponseGetMessagesEndpointError().spCode) == "sp_metric_invalid_response_get_messages"
+                    expect(InvalidResponseGetMessagesEndpointError().spCode) == "sp_metric_invalid_response_api_messages"
                 }
             }
 

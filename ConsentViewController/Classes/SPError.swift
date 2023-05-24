@@ -68,7 +68,8 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class InvalidArgumentError: SPError {
+@objcMembers public class InvalidPropertyNameError: SPError {
+    override public var spCode: String { "sp_metric_invalid_property_name" }
     override public var description: String { message }
     let message: String
 
@@ -165,7 +166,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_get_messages" }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.MESSAGES.code)" }
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
 }
 
@@ -239,7 +240,7 @@ import Foundation
 }
 
 @objcMembers public class GenericNetworkError: SPError {
-    override public var spCode: String { "sp_metric_generic_network_request_\(response?.statusCode ?? 999)" }
+    override public var spCode: String { "sp_metric_url_loading_error" }
     override public var description: String {
         "The server responsed with \(response?.statusCode ?? 999) when performing \(request.httpMethod ?? "<no verb>") \(response?.url?.absoluteString ?? "<no url>")"
     }
@@ -257,22 +258,32 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class InternalServerError: GenericNetworkError {
-    override public var spCode: String { "sp_metric_internal_server_error_\(response?.statusCode ?? 500)" }
+@objcMembers public class ConnectionTimeoutAPIError: SPError {
+    override public var spCode: String { "sp_metric_connection_timeout\(apiCode.code))" }
+    let apiCode: InvalidResponsAPICode
+    init(apiCode: InvalidResponsAPICode) {
+        self.apiCode = apiCode
+        super.init()
+    }
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class ResourceNotFoundError: GenericNetworkError {
-    override public var spCode: String { "sp_metric_resource_not_found_\(response?.statusCode ?? 400)" }
+@objcMembers public class InvalidResponseAPIError: SPError {
+    override public var spCode: String { "sp_metric_invalid_response_api\(apiCode.code))" }
+    let apiCode: InvalidResponsAPICode
+    init(apiCode: InvalidResponsAPICode) {
+        self.apiCode = apiCode
+        super.init()
+    }
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-/// Invalid Request Error
-@objcMembers public class InvalidRequestError: SPError {
-    override public var spCode: String { "sp_metric_invalid_request_error" }
-}
-
-@objcMembers public class PostingConsentWithoutConsentUUID: InvalidRequestError {
+@objcMembers public class PostingConsentWithoutConsentUUID: SPError {
+    override public var spCode: String { "sp_metric_invalid_consent_UUID" }
     override public var description: String {
-        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadPrivacyManager first."
+        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadGDPRPrivacyManager or loadCCPAPrivacyManager."
     }
 
     override public var campaignType: SPCampaignType { get { .gdpr } set {} }
@@ -283,7 +294,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidMetaDataResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_meta_data_response" }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.META_DATA.code)" }
 }
 
 @objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
@@ -291,7 +302,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidConsentStatusResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_consent_status_response" }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.CONSENT_STATUS.code)" }
 }
 
 @objcMembers public class InvalidPvDataQueryParamsError: SPError {
@@ -299,7 +310,7 @@ import Foundation
 }
 
 @objcMembers public class InvalidPvDataResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_pv_data_response" }
+    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.PV_DATA.code)" }
 }
 
 @objcMembers public class InvalidChoiceAllParamsError: SPError {
@@ -317,4 +328,26 @@ import Foundation
 
 @objcMembers public class InvalidJSONEncodeResult: SPError {
     override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
+}
+
+public enum InvalidResponsAPICode: String {
+    case META_DATA = "_meta-data"
+    case CONSENT_STATUS = "_consent-status"
+    case PV_DATA = "_pv-data"
+    case MESSAGES = "_messages"
+    case CUSTOM_CONSENT = "_custom-consent-GDPR"
+    case ERROR_METRICS = "_error-metrics"
+    case CCPA_ACTION = "_CCPA-action"
+    case GDPR_ACTION = "_GDPR-action"
+    case IDFA_STATUS = "_IDFA-status"
+    case CCPA_PRIVACY_MANAGER = "_CCPA-privacy-manager"
+    case CHOICE_ALL = "_choice-all"
+    case GDPR_PRIVACY_MANAGER = "_GDPR-privacy-manager"
+    case CCPA_MESSAGE = "_CCPA-message"
+    case GDPR_MESSAGE = "_GDPR-message"
+    case DELETE_CUSTOM_CONSENT = "_delete-custom-consent-GDPR"
+    case EMPTY = ""
+    var code: String {
+        "\(rawValue)"
+    }
 }
