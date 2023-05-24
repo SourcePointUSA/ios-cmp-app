@@ -22,6 +22,41 @@ And that's it!
 
 ⚠️ We are currently working on supporting TvOS in the next patch release. In other words, if you use our TvOS product, you should not upgrade to version 7.0.0 just yet.
 
+### Passing consent between webview and native
+
+Historically, when using Sourcepoint's iOS SDK v6, passing consent between native and webview portions of an app was handled by implementing authenticated consent.
+
+In iOS SDK v7, the authenticated consent workflow for passing consent between native and webview portions of an app is deprecated and replaced by the following `WKWebView` implementation.
+
+#### Sharing consent with a `WKWebView`
+
+After going through the message and consent flow (ie. after `onConsentReady`) the SDK will store the consent data in the `UserDefaults`. That data can then be injected into `WKWebView`s so the web portion of your app doesn't show a consent dialog and it'll contain the same consent data as the native part.
+
+Example:
+
+```swift
+// somewhere earlier in your app's lifecycle
+var userConsents: SPUserData?
+
+func onSPFinished(userData: SPUserData) {
+    userConsents = userData
+}
+
+let webview = WKWebView()
+if let userConsents = userConsents {
+    webview.load(URLRequest(URL(string: "https://my-url.com/?_sp_pass_consent=true")!))
+    webview.preloadConsent(from: userConsents)
+} else {
+    webview.load(URLRequest(URL(string: "https://my-url.com/")!)) // load url without _sp_pass_consent=true
+}
+```
+
+A few remarks:
+
+1. The web content being loaded (web property) needs to share the same vendor list as the app.
+2. The vendor list's consent scope needs to be set to _Shared Site_ instead of _Single Site_
+3. Your web content needs to be loaded (or loading) on the webview and our [web SDK](https://docs.sourcepoint.com/hc/en-us/articles/8073421891091-GDPR-TCF-and-U-S-Privacy-CCPA-implementation-guide-web-) should be included in it. Furthermore, you need to add the query param `_sp_pass_consent=true` to your URL, this will signal to Sourcepoint's web SDK it needs to wait for the consent data to be injected from the native code, instead of immediately querying it from our servers.
+
 # Migrating from v5 to v6 (Unified SDK)
 In this guide we will cover how to migrate your app to the latest version of Sourcepoint's SDK (v6). While this migration means more work for you, it also allows for multiple improvements. Below are some reasons to migrate to the latest version of our SDK:
 
