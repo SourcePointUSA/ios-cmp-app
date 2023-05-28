@@ -196,6 +196,28 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             }
         }
 
+        describe("meta-data_groupPmId") {
+            it("Check if groupPmId echo") {
+                waitUntil { done in
+                    client.metaData(accountId: accountId,
+                                    propertyId: 17_801,
+                                    metadata: MetaDataBodyRequest(
+                                        gdpr: MetaDataBodyRequest.Campaign(groupPmId: "99999999999", hasLocalData: true, dateCreated: nil, uuid: nil),
+                                        ccpa: MetaDataBodyRequest.Campaign(groupPmId: nil, hasLocalData: false, dateCreated: nil, uuid: nil))) {
+                            switch $0 {
+                            case .success(let response):
+                                let GDPR = response.gdpr
+                                expect(GDPR?.childPmId)=="99999999999"
+
+                            case .failure(let error):
+                                fail(error.failureReason)
+                            }
+                            done()
+                    }
+                }
+            }
+        }
+
         describe("choice/reject-all") {
             it("should call the endpoint and parse the response into ChoiceAllResponse") {
                 waitUntil { done in
