@@ -99,8 +99,10 @@ class SimpleClient: HttpClient {
                         switch response.statusCode {
                         case 408:
                             handler(.failure(ConnectionTimeoutAPIError(apiCode: apiCode)))
-                        case 400...407,409...499,500...599:
+
+                        case 400...407, 409...499, 500...599:
                             handler(.failure(InvalidResponseAPIError(apiCode: apiCode)))
+
                         default:
                             handler(.failure(GenericNetworkError(request: urlRequest, response: response)))
                         }
@@ -121,7 +123,7 @@ class SimpleClient: HttpClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = body
-        request(urlRequest, apiCode: apiCode , handler)
+        request(urlRequest, apiCode: apiCode, handler)
     }
 
     func get(urlString: String, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
@@ -129,7 +131,7 @@ class SimpleClient: HttpClient {
             handler(.failure(InvalidURLError(urlString: urlString)))
             return
         }
-        request(URLRequest(url: url), apiCode: apiCode , handler)
+        request(URLRequest(url: url), apiCode: apiCode, handler)
     }
 
     func delete(urlString: String, body: Data?, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
@@ -141,6 +143,6 @@ class SimpleClient: HttpClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "DELETE"
         urlRequest.httpBody = body
-        request(urlRequest, apiCode: apiCode , handler)
+        request(urlRequest, apiCode: apiCode, handler)
     }
 }
