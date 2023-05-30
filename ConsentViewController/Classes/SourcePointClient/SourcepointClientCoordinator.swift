@@ -364,7 +364,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdprMetaData?.additionsChangeDate = gdprMetaData.additionsChangeDate
             state.gdprMetaData?.legalBasisChangeDate = gdprMetaData.legalBasisChangeDate
             state.gdprMetaData?.updateSampleFields(gdprMetaData.sampleRate)
-            storage.gdprChildPmId = gdprMetaData.childPmId ?? ""
+            if campaigns.gdpr?.groupPmId != gdprMetaData.childPmId {
+                storage.gdprChildPmId = gdprMetaData.childPmId ?? ""
+            }
         }
         if let ccpaMetaData = response.ccpa {
             state.ccpa?.applies = ccpaMetaData.applies
