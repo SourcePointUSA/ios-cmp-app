@@ -338,7 +338,8 @@ import UIKit
             "pmTab": tab.rawValue,
             "consentUUID": gdprUUID,
             "idfaStatus": idfaStatus.description,
-            "site_id": String(propertyId)
+            "site_id": String(propertyId),
+            "consentLanguage": messageLanguage.rawValue
         ]) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
@@ -382,7 +383,8 @@ import UIKit
             "pmTab": tab.rawValue,
             "ccpaUUID": ccpaUUID,
             "idfaStatus": idfaStatus.description,
-            "site_id": String(propertyId)
+            "site_id": String(propertyId),
+            "consentLanguage": messageLanguage.rawValue
         ]) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
