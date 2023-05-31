@@ -44,6 +44,39 @@ class SPClientCoordinatorSpec: QuickSpec {
 
         describe("a property with GDPR and CCPA campaigns") {
             describe("loadMessage") {
+                it("should return gpoupPmId from metaData and save") {
+                    coordinator = SourcepointClientCoordinator(
+                        accountId: 22,
+                        propertyName: try! SPPropertyName("mobile.prop-1"),
+                        propertyId: 24188,
+                        campaigns: SPCampaigns(
+                            gdpr: SPCampaign(groupPmId: "613056"),
+                            ccpa: SPCampaign()
+                        ),
+                        storage: LocalStorageMock()
+                    )
+                    waitUntil { done in
+                        coordinator.loadMessages(forAuthId: nil) { result in
+                            switch result {
+                            case .success(let (_, consents)):
+                                    expect(consents.gdpr?.consents?.applies).to(beTrue())
+                                    expect(consents.gdpr?.consents?.euconsent).notTo(beEmpty())
+                                    expect(consents.gdpr?.consents?.vendorGrants).notTo(beEmpty())
+                                    expect(consents.ccpa?.consents?.uspstring) == "1---"
+                                case .failure(let error):
+                                    fail(error.failureReason)
+                            }
+                            expect(coordinator.storage.gdprChildPmId)=="613057"
+                            // TODO: add handle childPmId response from messages
+                            done()
+                        }
+                    }
+                }
+            }
+        }
+
+        describe("a property with GDPR and CCPA campaigns") {
+            describe("loadMessage") {
                 it("should return 2 messages and consents") {
                     waitUntil { done in
                         coordinator.loadMessages(forAuthId: nil) { result in
