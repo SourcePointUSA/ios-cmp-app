@@ -251,7 +251,7 @@ import UIKit
         delegate?.onError?(error: error)
     }
 
-    private func selectPrivacyManagerId(fallbackId: String, groupPmId: String?, childPmId: String?) -> String {
+    func selectPrivacyManagerId(fallbackId: String, groupPmId: String?, childPmId: String?) -> String {
         if let groupPmId = groupPmId, groupPmId.isNotEmpty(),
            let childPmId = childPmId, childPmId.isNotEmpty() {
             return childPmId
