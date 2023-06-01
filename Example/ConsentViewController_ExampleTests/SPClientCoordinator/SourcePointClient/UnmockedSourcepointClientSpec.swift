@@ -194,9 +194,6 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     }
                 }
             }
-        }
-
-        describe("meta-data_groupPmId") {
             it("Check if groupPmId echo") {
                 waitUntil { done in
                     client.metaData(accountId: accountId,

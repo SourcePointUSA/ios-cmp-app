@@ -41,7 +41,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                 storage: LocalStorageMock()
             )
         }
-        
+
         describe("selectPrivacyManagerId") {
             it("сhecks logic of selectPrivacyManagerId") {
                 var manager = SPConsentManager(accountId: 1, propertyId: 1, propertyName: coordinator.propertyName, campaigns: coordinator.campaigns, delegate: nil)
@@ -77,16 +77,10 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     fail(error.failureReason)
                             }
                             expect(coordinator.storage.gdprChildPmId)=="613057"
-                            // TODO: add handle childPmId response from messages
                             done()
                         }
                     }
                 }
-            }
-        }
-
-        describe("a property with GDPR and CCPA campaigns") {
-            describe("loadMessage") {
                 it("should return 2 messages and consents") {
                     waitUntil { done in
                         coordinator.loadMessages(forAuthId: nil) { result in
