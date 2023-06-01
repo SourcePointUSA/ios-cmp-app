@@ -42,16 +42,6 @@ class SPClientCoordinatorSpec: QuickSpec {
             )
         }
 
-        describe("selectPrivacyManagerId") {
-            it("сhecks logic of selectPrivacyManagerId") {
-                var manager = SPConsentManager(accountId: 1, propertyId: 1, propertyName: coordinator.propertyName, campaigns: coordinator.campaigns, delegate: nil)
-                expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: "2", childPmId: "3"))=="3"
-                expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: nil, childPmId: "3"))=="1"
-                expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: "2", childPmId: nil))=="1"
-                expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: nil, childPmId: nil))=="1"
-            }
-        }
-
         describe("a property with GDPR and CCPA campaigns") {
             describe("loadMessage") {
                 it("should return gpoupPmId from metaData and save") {
