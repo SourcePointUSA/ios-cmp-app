@@ -9,7 +9,6 @@
 // swiftlint:disable force_try function_body_length type_body_length force_unwrapping line_length
 
 @testable import ConsentViewController
-import Foundation
 import Nimble
 import Quick
 
@@ -78,18 +77,6 @@ class SourcePointClientSpec: QuickSpec {
             it("DELETE_CUSTOM_CONSENT_URL") {
                 let expectedUrl = URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
                 expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL) == expectedUrl
-            }
-
-            it("check if language is .Spanish then ES value is included in URL") {
-                let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
-                    "message_id": "111",
-                    "pmTab": "",
-                    "consentUUID": "xxxxxx-xxxx-xxxx-8xxxxad-xxxxxxx",
-                    "idfaStatus": "accepted",
-                    "site_id": "111",
-                    "consentLanguage": SPMessageLanguage.Spanish.rawValue
-                ])
-                expect(pmUrl?.absoluteString) == "https://cdn.privacy-mgmt.com/privacy-manager/index.html?consentLanguage=ES&consentUUID=xxxxxx-xxxx-xxxx-8xxxxad-xxxxxxx&idfaStatus=accepted&message_id=111&pmTab=&site_id=111"
             }
         }
 

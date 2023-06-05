@@ -315,6 +315,18 @@ import UIKit
         }
     }
 
+    func buildGDPRPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default) -> URL? {
+        let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
+            "message_id": usedId,
+            "pmTab": pmTab.rawValue,
+            "consentUUID": gdprUUID,
+            "idfaStatus": idfaStatus.description,
+            "site_id": String(propertyId),
+            "consentLanguage": messageLanguage.rawValue
+        ])
+        return pmUrl
+    }
+
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
         var usedId: String = id
@@ -322,14 +334,7 @@ import UIKit
             usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.gdpr?.groupPmId, childPmId: storage.gdprChildPmId)
         }
         #if os(iOS)
-        guard let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
-            "message_id": usedId,
-            "pmTab": tab.rawValue,
-            "consentUUID": gdprUUID,
-            "idfaStatus": idfaStatus.description,
-            "site_id": String(propertyId),
-            "consentLanguage": messageLanguage.rawValue
-        ]) else {
+        guard let pmUrl = buildGDPRPmUrl(usedId: usedId, pmTab: tab) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
@@ -360,6 +365,18 @@ import UIKit
         #endif
     }
 
+    func buildCCPAPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default) -> URL? {
+        let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
+            "message_id": usedId,
+            "pmTab": pmTab.rawValue,
+            "consentUUID": gdprUUID,
+            "idfaStatus": idfaStatus.description,
+            "site_id": String(propertyId),
+            "consentLanguage": messageLanguage.rawValue
+        ])
+        return pmUrl
+    }
+
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         messagesToShow += 1
         var usedId: String = id
@@ -367,14 +384,7 @@ import UIKit
             usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
         }
         #if os(iOS)
-        guard let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
-            "message_id": usedId,
-            "pmTab": tab.rawValue,
-            "ccpaUUID": ccpaUUID,
-            "idfaStatus": idfaStatus.description,
-            "site_id": String(propertyId),
-            "consentLanguage": messageLanguage.rawValue
-        ]) else {
+        guard let pmUrl = buildCCPAPmUrl(usedId: usedId, pmTab: tab) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }

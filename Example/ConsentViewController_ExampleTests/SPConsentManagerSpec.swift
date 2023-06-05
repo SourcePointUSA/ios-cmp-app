@@ -51,5 +51,26 @@ class SPConsentManagerSpec: QuickSpec {
                 expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: nil, childPmId: nil))=="1"
             }
         }
+
+        describe("buildPrivacyManagerUrl") {
+            describe("gdpr") {
+                it("build URL with the right parameters") {
+                    var manager = SPConsentManager(accountId: 1, propertyId: 1, propertyName: coordinator.propertyName, campaigns: coordinator.campaigns, delegate: nil)
+                    manager.messageLanguage = .Spanish
+                    var pmUrl = manager.buildGDPRPmUrl(usedId: "1")
+
+                    expect(pmUrl?.absoluteString)=="https://cdn.privacy-mgmt.com/privacy-manager/index.html?consentLanguage=ES&consentUUID&idfaStatus=accepted&message_id=1&pmTab=&site_id=1"
+                }
+            }
+            describe("ccpa") {
+                it("build URL with the right parameters") {
+                    var manager = SPConsentManager(accountId: 1, propertyId: 1, propertyName: coordinator.propertyName, campaigns: coordinator.campaigns, delegate: nil)
+                    manager.messageLanguage = .Spanish
+                    var pmUrl = manager.buildCCPAPmUrl(usedId: "1")
+
+                    expect(pmUrl?.absoluteString)=="https://cdn.privacy-mgmt.com/ccpa_pm/index.html?consentLanguage=ES&consentUUID&idfaStatus=accepted&message_id=1&pmTab=&site_id=1"
+                }
+            }
+        }
     }
 }
