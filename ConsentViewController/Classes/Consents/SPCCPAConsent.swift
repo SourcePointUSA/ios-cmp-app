@@ -4,7 +4,6 @@
 //
 //  Created by Andre Herculano on 08.02.21.
 //
-// swiftlint:disable line_length
 
 import Foundation
 
@@ -118,7 +117,6 @@ protocol CampaignConsent {
     public var rejectedVendors, rejectedCategories: [String]
 
     /// the US Privacy String as described by the IAB
-//    public var uspstring: SPUsPrivacyString
     public var uspstring: String { ccpaString.string }
 
     /// that's the internal Sourcepoint id we give to this consent profile
@@ -149,7 +147,16 @@ protocol CampaignConsent {
     }
 
     override open var description: String {
-        "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring), signedLspa: \(signedLspa)"
+        """
+        UserConsent(
+            - uuid: \(uuid ?? "")
+            - status: \(status.rawValue)
+            - rejectedVendors: \(rejectedVendors)
+            - rejectedCategories: \(rejectedCategories)
+            - uspstring: \(uspstring)
+            - signedLspa: \(signedLspa)
+        )
+        """
     }
 
     init(
