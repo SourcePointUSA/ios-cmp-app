@@ -413,7 +413,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.uuid = ccpa.uuid
             state.ccpa?.dateCreated = ccpa.dateCreated
             state.ccpa?.status = ccpa.status
-//            state.ccpa?.uspstring = ccpa.uspstring
             state.ccpa?.rejectedVendors = ccpa.rejectedVendors
             state.ccpa?.rejectedCategories = ccpa.rejectedCategories
             state.ccpa?.consentStatus = ConsentStatus(
