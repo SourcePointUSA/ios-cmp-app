@@ -181,6 +181,7 @@
 		92ECD25BA20E75498CE72BAD /* Pods_ObjC_ExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FA8476B429828C66D868F0B /* Pods_ObjC_ExampleAppUITests.framework */; };
 		B6CA565AA8A83C920FA9B78E /* Pods_ObjC_ExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A5A481B97C11AC27421C73 /* Pods_ObjC_ExampleApp.framework */; };
 		E89FF825267FCAEEA7A7EC1B /* Pods_SourcePointMetaAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E4BCEF766E3BF0AA1BEF95 /* Pods_SourcePointMetaAppUITests.framework */; };
+		EDD01F432A2A07B700590772 /* SPConsentManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD01F422A2A07B700590772 /* SPConsentManagerSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -482,6 +483,7 @@
 		D764CD5796A005D4E0CF7F71 /* Pods_SPGDPRExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SPGDPRExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7826F6727CB618982D4059E /* Pods-ObjC-ExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjC-ExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-ObjC-ExampleApp/Pods-ObjC-ExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E49091D4B33C20F5A885F560 /* Pods-ConsentViewController_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ConsentViewController_ExampleTests/Pods-ConsentViewController_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EDD01F422A2A07B700590772 /* SPConsentManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPConsentManagerSpec.swift; sourceTree = "<group>"; };
 		F09E82E9DEE8A7F3ED401EB2 /* Pods-NativePMExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-NativePMExampleAppUITests/Pods-NativePMExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F8A9B179B610867B5905C68D /* Pods-SPGDPRExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SPGDPRExampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-SPGDPRExampleAppUITests/Pods-SPGDPRExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1352,6 +1354,7 @@
 		82FC4D3B23983231002F08E5 /* ConsentViewController_ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				EDD01F422A2A07B700590772 /* SPConsentManagerSpec.swift */,
 				822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */,
 				8229C614299138E400F755AA /* SPClientCoordinator */,
 				82B224162580D5B50032BC49 /* Extensions */,
@@ -2718,6 +2721,7 @@
 				6DA66EA3255D1A690034E11A /* SPMessageLanguageSpec.swift in Sources */,
 				82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */,
 				82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */,
+				EDD01F432A2A07B700590772 /* SPConsentManagerSpec.swift in Sources */,
 				82EA4E342491324400DC01C9 /* LocalStorageMock.swift in Sources */,
 				6D605DF62423B96C00BB3E5F /* SPErrorSpec.swift in Sources */,
 				82E5DBBC29E5A4C30083A054 /* SPLoggerMock.swift in Sources */,
