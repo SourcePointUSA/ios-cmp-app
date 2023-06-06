@@ -390,7 +390,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
-            hasLocalData: false, // campaign.uuid != nil,
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid

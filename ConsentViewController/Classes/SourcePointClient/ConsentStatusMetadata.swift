@@ -10,7 +10,7 @@ import Foundation
 /// Data Transfer Class used to encapsulate the meta data of `/consent-status` network call
 struct ConsentStatusMetaData: QueryParamEncodable {
     struct Campaign: Encodable {
-        let hasLocalData, applies: Bool
+        let applies: Bool
         let dateCreated: SPDateCreated?
         let uuid: String?
     }
