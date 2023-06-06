@@ -395,7 +395,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
-            hasLocalData: false, // campaign.uuid != nil,
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid
@@ -418,7 +417,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.uuid = ccpa.uuid
             state.ccpa?.dateCreated = ccpa.dateCreated
             state.ccpa?.status = ccpa.status
-            state.ccpa?.uspstring = ccpa.uspstring
             state.ccpa?.rejectedVendors = ccpa.rejectedVendors
             state.ccpa?.rejectedCategories = ccpa.rejectedCategories
             state.ccpa?.consentStatus = ConsentStatus(
@@ -491,7 +489,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         state.ccpa?.status = consents.status
                         state.ccpa?.rejectedVendors = consents.rejectedVendors
                         state.ccpa?.rejectedCategories = consents.rejectedCategories
-                        state.ccpa?.uspstring = consents.uspstring
                         state.ccpa?.childPmId = consents.childPmId
                         state.ccpa?.webConsentPayload = $0.webConsentPayload
                     default: break
@@ -706,7 +703,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     self.state.ccpa?.status = response.status ?? getResponse?.ccpa?.status ?? .RejectedAll
                     self.state.ccpa?.rejectedVendors = response.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
                     self.state.ccpa?.rejectedCategories = response.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
-                    self.state.ccpa?.uspstring = response.uspstring ?? getResponse?.ccpa?.uspstring ?? ""
                     self.state.ccpa?.webConsentPayload = response.webConsentPayload ?? getResponse?.ccpa?.webConsentPayload
                     self.storage.spState = self.state
                     handler(Result.success(self.userData))

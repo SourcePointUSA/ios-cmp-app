@@ -61,7 +61,32 @@ import Foundation
     }
 }
 
-public typealias SPUsPrivacyString = String
+struct SPUSPString {
+    let version = 1
+    let hadChanceToOptOut = true
+    let signedLspa: Bool
+    let status: CCPAConsentStatus
+    let applies: Bool
+
+    var string: String {
+        applies ?
+            "\(version)" +
+            (hadChanceToOptOut ? "Y" : "N") +
+            (signedLspa ? "Y" : "N") +
+            (status == .RejectedAll || status == .RejectedSome ? "Y" : "N")
+        : "\(version)---"
+    }
+}
+
+extension SPUSPString {
+    init(from consents: SPCCPAConsent?) {
+        self.init(
+            signedLspa: consents?.signedLspa ?? false,
+            status: consents?.status ?? .RejectedNone,
+            applies: consents?.applies ?? false
+        )
+    }
+}
 
 protocol CampaignConsent {
     var uuid: String? { get set }
@@ -77,8 +102,8 @@ protocol CampaignConsent {
 @objcMembers public class SPCCPAConsent: NSObject, Codable, CampaignConsent {
     enum CodingKeys: CodingKey {
         case status, rejectedVendors, rejectedCategories,
-             uspstring, uuid, childPmId, consentStatus,
-             webConsentPayload
+             uuid, childPmId, consentStatus,
+             webConsentPayload, signedLspa
     }
 
     /// represents the default state of the consumer prior to seeing the consent message
@@ -92,7 +117,7 @@ protocol CampaignConsent {
     public var rejectedVendors, rejectedCategories: [String]
 
     /// the US Privacy String as described by the IAB
-    public var uspstring: SPUsPrivacyString
+    public var uspstring: String { ccpaString.string }
 
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
@@ -115,8 +140,23 @@ protocol CampaignConsent {
     /// Used by the rendering app
     var webConsentPayload: SPWebConsentPayload?
 
+    var signedLspa: Bool = false
+
+    var ccpaString: SPUSPString {
+        SPUSPString(from: self)
+    }
+
     override open var description: String {
-        "UserConsent(uuid: \(uuid ?? ""), status: \(status.rawValue), rejectedVendors: \(rejectedVendors), rejectedCategories: \(rejectedCategories), uspstring: \(uspstring))"
+        """
+        UserConsent(
+            - uuid: \(uuid ?? "")
+            - status: \(status.rawValue)
+            - rejectedVendors: \(rejectedVendors)
+            - rejectedCategories: \(rejectedCategories)
+            - uspstring: \(uspstring)
+            - signedLspa: \(signedLspa)
+        )
+        """
     }
 
     init(
@@ -124,7 +164,7 @@ protocol CampaignConsent {
         status: CCPAConsentStatus,
         rejectedVendors: [String],
         rejectedCategories: [String],
-        uspstring: SPUsPrivacyString,
+        signedLspa: Bool,
         childPmId: String? = nil,
         consentStatus: ConsentStatus = ConsentStatus(),
         webConsentPayload: SPWebConsentPayload? = nil
@@ -133,7 +173,7 @@ protocol CampaignConsent {
         self.status = status
         self.rejectedVendors = rejectedVendors
         self.rejectedCategories = rejectedCategories
-        self.uspstring = uspstring
+        self.signedLspa = signedLspa
         self.childPmId = childPmId
         self.consentStatus = consentStatus
         self.webConsentPayload = webConsentPayload
@@ -144,25 +184,18 @@ protocol CampaignConsent {
         status = try container.decode(CCPAConsentStatus.self, forKey: .status)
         rejectedVendors = try container.decode([String].self, forKey: .rejectedVendors)
         rejectedCategories = try container.decode([String].self, forKey: .rejectedCategories)
-        uspstring = try container.decode(SPUsPrivacyString.self, forKey: .uspstring)
+        signedLspa = try container.decode(Bool.self, forKey: .signedLspa)
         uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
         childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
     }
 
-    public static func rejectedNone () -> SPCCPAConsent { SPCCPAConsent(
-        status: CCPAConsentStatus.RejectedNone,
-        rejectedVendors: [],
-        rejectedCategories: [],
-        uspstring: ""
-    )}
-
     public static func empty() -> SPCCPAConsent { SPCCPAConsent(
         status: .RejectedNone,
         rejectedVendors: [],
         rejectedCategories: [],
-        uspstring: defaultUsPrivacyString
+        signedLspa: false
     )}
 
     override public func isEqual(_ object: Any?) -> Bool {
@@ -171,7 +204,7 @@ protocol CampaignConsent {
             other.rejectedCategories.elementsEqual(rejectedCategories) &&
             other.rejectedVendors.elementsEqual(rejectedVendors) &&
             other.status == status &&
-            other.uspstring == uspstring
+            other.signedLspa == signedLspa
         } else {
             return false
         }

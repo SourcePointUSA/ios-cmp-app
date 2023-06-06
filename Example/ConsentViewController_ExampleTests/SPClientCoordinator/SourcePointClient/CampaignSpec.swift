@@ -73,7 +73,8 @@ class CampaignSpec: QuickSpec {
                 "rejectedVendors": [],
                 "rejectedAll": false,
                 "status": "rejectedNone",
-                "uspstring": "1YNN"
+                "uspstring": "1YNN",
+                "signedLspa": true
             }
             """
             expect(ccpaCampaign).to(decodeTo(SPCCPAConsent.self))
