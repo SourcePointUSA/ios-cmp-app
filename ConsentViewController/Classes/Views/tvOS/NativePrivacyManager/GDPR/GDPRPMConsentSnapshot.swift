@@ -47,6 +47,17 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         self.specialPurposes = specialPurposes
         self.features = features
         self.specialFeatures = specialFeatures
+        let disclosureCategories = categories.filter { $0.disclosureOnly==true }
+        var disclosureVendors: [GDPRCategory.Vendor]
+        disclosureVendors=[]
+        if disclosureCategories.isNotEmpty() {
+            for category in disclosureCategories {
+                disclosureVendors.append(contentsOf: category.disclosureOnlyVendors!)
+            }
+            self.specialPurposes.insert(
+                GDPRCategory(name: "Disclosure-Test", description: "Disclosure Test", disclosureOnly: true, legIntVendors: disclosureVendors, requiringConsentVendors: nil, disclosureOnlyVendors: nil)
+            )
+        }
         toggledVendorsIds = Set<String>(
             grants.filter { $0.value.softGranted }.map { $0.key }
         )

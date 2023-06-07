@@ -29,7 +29,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet var offButton: SPAppleTVButton!
     @IBOutlet var actionsContainer: UIStackView!
     @IBOutlet var categoryDetailsTableView: UITableView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
@@ -37,6 +37,9 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
+        if category?.disclosureOnly ?? false {
+            hideOnOffButtons()
+        }
         categoryDetailsTableView.allowsSelection = false
         categoryDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         categoryDetailsTableView.delegate = self
@@ -59,6 +62,12 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
             categoryManagerDelegate?.onCategoryOff(category)
         }
         dismiss(animated: true)
+    }
+    
+    func hideOnOffButtons() {
+        onButton.isHidden = true
+        offButton.isHidden = true
+        addFocusGuide(from: header.backButton, to: categoryDetailsTableView, direction: .rightLeft)
     }
 
     func setHeader() {

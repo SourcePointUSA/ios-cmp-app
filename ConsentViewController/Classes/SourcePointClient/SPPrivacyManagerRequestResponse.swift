@@ -67,6 +67,19 @@ import Foundation
         self.requiringConsentVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .requiringConsentVendors)
         self.disclosureOnlyVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .disclosureOnlyVendors)
     }
+
+    init(name: String, description: String, disclosureOnly: Bool, legIntVendors: [Vendor]?, requiringConsentVendors: [Vendor]?, disclosureOnlyVendors: [Vendor]?){
+        self.iabId = 0
+        self._id = "id"
+        self.name = name
+        self.description = description
+        self.type = GDPRCategory.CategoryType.CUSTOM
+        self.disclosureOnly = disclosureOnly
+        self.requireConsent = false
+        self.legIntVendors = legIntVendors
+        self.requiringConsentVendors = requiringConsentVendors
+        self.disclosureOnlyVendors = disclosureOnlyVendors
+    }
 }
 
 extension GDPRCategory: Identifiable, Hashable, Equatable {

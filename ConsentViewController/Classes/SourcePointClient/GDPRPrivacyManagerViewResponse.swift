@@ -33,7 +33,7 @@ struct GDPRVendor: Decodable {
     let description, cookieHeader: String?
     let vendorType: VendorType
     let consentCategories, legIntCategories, disclosureOnlyCategories: [Category]
-    let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
+    var iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
@@ -48,6 +48,9 @@ struct GDPRVendor: Decodable {
         legIntCategories = try container.decode([Category].self, forKey: .legIntCategories)
         disclosureOnlyCategories = try container.decode([Category].self, forKey: .disclosureOnlyCategories)
         iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
+        if disclosureOnlyCategories.isNotEmpty() {
+            iabSpecialPurposes.append("Disclosure-Test")
+        }
         iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
         iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
     }
