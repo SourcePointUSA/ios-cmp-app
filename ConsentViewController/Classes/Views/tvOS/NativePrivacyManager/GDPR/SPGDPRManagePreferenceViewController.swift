@@ -14,7 +14,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         let contentConsent: [GDPRCategory]
         let contentLegIntCategory: [GDPRCategory]?
 
-        init? (header: SPNativeText?, contentConsent: [GDPRCategory]?, contentLegIntCategory: [GDPRCategory]?) {
+        init? (header: SPNativeText?, contentConsent: [GDPRCategory]?, contentLegIntCategory: [GDPRCategory]? = nil) {
             if contentConsent == nil || contentConsent?.isEmpty == true { return nil }
             self.header = header
             self.contentConsent = contentConsent! // swiftlint:disable:this force_unwrapping
@@ -35,8 +35,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var sections: [Section] {[
         Section(header: viewData.byId("PurposesHeader") as? SPNativeText, contentConsent: userConsentCategories, contentLegIntCategory: legIntCategories),
         Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialPurposes), contentLegIntCategory: legIntSpecialPurposes),
-        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.features), contentLegIntCategory: nil),
-        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialFeatures), contentLegIntCategory: nil)
+        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.features)),
+        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialFeatures))
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
@@ -152,7 +152,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         cell.isOn = section == 0 || section == 3 ?
             consentsSnapshot.toggledCategoriesIds.contains(category._id) :
             nil
-        cell.selectable = true
+        cell.selectable = section != 1 || category.disclosureOnly == true
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
         cell.loadUI()
@@ -160,7 +160,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return true
+        let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell
+        return indexPath.section != 1 || cell?.selectable ?? false
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
@@ -168,7 +169,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return indexPath
+        let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell
+        return indexPath.section != 1 || cell?.selectable ?? false ? indexPath : nil
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

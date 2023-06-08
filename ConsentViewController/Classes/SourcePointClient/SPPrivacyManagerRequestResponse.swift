@@ -68,7 +68,7 @@ import Foundation
         self.disclosureOnlyVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .disclosureOnlyVendors)
     }
 
-    init(name: String, description: String, disclosureOnly: Bool, legIntVendors: [Vendor]?, requiringConsentVendors: [Vendor]?, disclosureOnlyVendors: [Vendor]?){
+    init(name: String, description: String = "", disclosureOnly: Bool = false, legIntVendors: [Vendor]? = nil, requiringConsentVendors: [Vendor]? = nil, disclosureOnlyVendors: [Vendor]? = nil){
         self.iabId = 0
         self._id = "id"
         self.name = name

@@ -49,7 +49,9 @@ struct GDPRVendor: Decodable {
         disclosureOnlyCategories = try container.decode([Category].self, forKey: .disclosureOnlyCategories)
         iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
         if disclosureOnlyCategories.isNotEmpty() {
-            iabSpecialPurposes.append("Disclosure-Test")
+            for category in disclosureOnlyCategories {
+                iabSpecialPurposes.append(category.name)
+            }
         }
         iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
         iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
