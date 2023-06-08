@@ -21,7 +21,8 @@ class ConsentsProfileSpec: QuickSpec {
                 "rejectedVendors": [],
                 "rejectedCategories": [],
                 "uspstring": "1---",
-                "consentStatus": {}
+                "consentStatus": {},
+                "signedLspa": false
             }
         }
     """
