@@ -21,7 +21,7 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
 
     var vendors: [GDPRVendor] = []
     var userConsentVendors: [GDPRVendor] { vendors.filter { !$0.consentCategories.isEmpty || !$0.disclosureOnlyCategories.isEmpty } }
-    var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
+    var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty || !$0.disclosureOnlyCategories.isEmpty } }
     var disclosureOnlyVendors: [GDPRVendor] { vendors.filter { !$0.disclosureOnlyCategories.isEmpty } }
 
     var sections: [SPNativeText?] {
