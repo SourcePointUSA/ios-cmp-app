@@ -299,22 +299,16 @@ SWIFT_CLASS("_TtC21ConsentViewController22ConnectionTimeOutError")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController25ConnectionTimeoutAPIError")
+@interface ConnectionTimeoutAPIError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@end
+
+
 
 SWIFT_CLASS("_TtC21ConsentViewController19GenericNetworkError")
 @interface GenericNetworkError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController19InternalServerError")
-@interface InternalServerError : GenericNetworkError
-@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController20InvalidArgumentError")
-@interface InvalidArgumentError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @end
 
@@ -359,6 +353,12 @@ SWIFT_CLASS("_TtC21ConsentViewController24InvalidGetMessagesParams")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController23InvalidJSONEncodeResult")
+@interface InvalidJSONEncodeResult : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@end
+
+
 SWIFT_CLASS("_TtC21ConsentViewController31InvalidMetaDataQueryParamsError")
 @interface InvalidMetaDataQueryParamsError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -377,6 +377,13 @@ SWIFT_CLASS("_TtC21ConsentViewController32InvalidOnActionEventPayloadError")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController24InvalidPropertyNameError")
+@interface InvalidPropertyNameError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 SWIFT_CLASS("_TtC21ConsentViewController29InvalidPvDataQueryParamsError")
 @interface InvalidPvDataQueryParamsError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -389,9 +396,8 @@ SWIFT_CLASS("_TtC21ConsentViewController26InvalidPvDataResponseError")
 @end
 
 
-/// Invalid Request Error
-SWIFT_CLASS("_TtC21ConsentViewController19InvalidRequestError")
-@interface InvalidRequestError : SPError
+SWIFT_CLASS("_TtC21ConsentViewController23InvalidResponseAPIError")
+@interface InvalidResponseAPIError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
 @end
 
@@ -504,7 +510,8 @@ SWIFT_CLASS("_TtC21ConsentViewController20NoInternetConnection")
 
 
 SWIFT_CLASS("_TtC21ConsentViewController32PostingConsentWithoutConsentUUID")
-@interface PostingConsentWithoutConsentUUID : InvalidRequestError
+@interface PostingConsentWithoutConsentUUID : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @property (nonatomic) enum SPCampaignType campaignType;
 @end
@@ -517,9 +524,10 @@ SWIFT_CLASS("_TtC21ConsentViewController17RenderingAppError")
 @end
 
 
-SWIFT_CLASS("_TtC21ConsentViewController21ResourceNotFoundError")
-@interface ResourceNotFoundError : GenericNetworkError
+SWIFT_CLASS("_TtC21ConsentViewController24RenderingAppTimeoutError")
+@interface RenderingAppTimeoutError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @end
 
 enum SPActionType : NSInteger;
@@ -582,13 +590,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// The ids of the rejected vendors and categories. These can be found in SourcePoint’s dashboard
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull rejectedCategories;
 /// the US Privacy String as described by the IAB
-@property (nonatomic, copy) NSString * _Nonnull uspstring;
+@property (nonatomic, readonly, copy) NSString * _Nonnull uspstring;
 /// that’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
 /// Determines if the GDPR legislation applies for this user
 @property (nonatomic) BOOL applies;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
-+ (SPCCPAConsent * _Nonnull)rejectedNone SWIFT_WARN_UNUSED_RESULT;
 + (SPCCPAConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -1409,22 +1416,16 @@ SWIFT_CLASS("_TtC21ConsentViewController22ConnectionTimeOutError")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController25ConnectionTimeoutAPIError")
+@interface ConnectionTimeoutAPIError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@end
+
+
 
 SWIFT_CLASS("_TtC21ConsentViewController19GenericNetworkError")
 @interface GenericNetworkError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController19InternalServerError")
-@interface InternalServerError : GenericNetworkError
-@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController20InvalidArgumentError")
-@interface InvalidArgumentError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @end
 
@@ -1469,6 +1470,12 @@ SWIFT_CLASS("_TtC21ConsentViewController24InvalidGetMessagesParams")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController23InvalidJSONEncodeResult")
+@interface InvalidJSONEncodeResult : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@end
+
+
 SWIFT_CLASS("_TtC21ConsentViewController31InvalidMetaDataQueryParamsError")
 @interface InvalidMetaDataQueryParamsError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -1487,6 +1494,13 @@ SWIFT_CLASS("_TtC21ConsentViewController32InvalidOnActionEventPayloadError")
 @end
 
 
+SWIFT_CLASS("_TtC21ConsentViewController24InvalidPropertyNameError")
+@interface InvalidPropertyNameError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
+
+
 SWIFT_CLASS("_TtC21ConsentViewController29InvalidPvDataQueryParamsError")
 @interface InvalidPvDataQueryParamsError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -1499,9 +1513,8 @@ SWIFT_CLASS("_TtC21ConsentViewController26InvalidPvDataResponseError")
 @end
 
 
-/// Invalid Request Error
-SWIFT_CLASS("_TtC21ConsentViewController19InvalidRequestError")
-@interface InvalidRequestError : SPError
+SWIFT_CLASS("_TtC21ConsentViewController23InvalidResponseAPIError")
+@interface InvalidResponseAPIError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
 @end
 
@@ -1614,7 +1627,8 @@ SWIFT_CLASS("_TtC21ConsentViewController20NoInternetConnection")
 
 
 SWIFT_CLASS("_TtC21ConsentViewController32PostingConsentWithoutConsentUUID")
-@interface PostingConsentWithoutConsentUUID : InvalidRequestError
+@interface PostingConsentWithoutConsentUUID : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @property (nonatomic) enum SPCampaignType campaignType;
 @end
@@ -1627,9 +1641,10 @@ SWIFT_CLASS("_TtC21ConsentViewController17RenderingAppError")
 @end
 
 
-SWIFT_CLASS("_TtC21ConsentViewController21ResourceNotFoundError")
-@interface ResourceNotFoundError : GenericNetworkError
+SWIFT_CLASS("_TtC21ConsentViewController24RenderingAppTimeoutError")
+@interface RenderingAppTimeoutError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @end
 
 enum SPActionType : NSInteger;
@@ -1692,13 +1707,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 /// The ids of the rejected vendors and categories. These can be found in SourcePoint’s dashboard
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull rejectedCategories;
 /// the US Privacy String as described by the IAB
-@property (nonatomic, copy) NSString * _Nonnull uspstring;
+@property (nonatomic, readonly, copy) NSString * _Nonnull uspstring;
 /// that’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
 /// Determines if the GDPR legislation applies for this user
 @property (nonatomic) BOOL applies;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
-+ (SPCCPAConsent * _Nonnull)rejectedNone SWIFT_WARN_UNUSED_RESULT;
 + (SPCCPAConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;

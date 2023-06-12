@@ -4558,12 +4558,10 @@
             "mangledName": "$s21ConsentViewController13SPCCPAConsentC9uspstringSSvp",
             "moduleName": "ConsentViewController",
             "declAttributes": [
-              "HasStorage",
               "AccessControl",
               "RawDocComment",
               "ObjC"
             ],
-            "hasStorage": true,
             "accessors": [
               {
                 "kind": "Accessor",
@@ -4581,56 +4579,10 @@
                 "usr": "c:@M@ConsentViewController@objc(cs)SPCCPAConsent(im)uspstring",
                 "mangledName": "$s21ConsentViewController13SPCCPAConsentC9uspstringSSvg",
                 "moduleName": "ConsentViewController",
-                "implicit": true,
                 "declAttributes": [
                   "ObjC"
                 ],
                 "accessorKind": "get"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Set",
-                "printedName": "Set()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "c:@M@ConsentViewController@objc(cs)SPCCPAConsent(im)setUspstring:",
-                "mangledName": "$s21ConsentViewController13SPCCPAConsentC9uspstringSSvs",
-                "moduleName": "ConsentViewController",
-                "implicit": true,
-                "declAttributes": [
-                  "ObjC"
-                ],
-                "accessorKind": "set"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Modify",
-                "printedName": "Modify()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:21ConsentViewController13SPCCPAConsentC9uspstringSSvM",
-                "mangledName": "$s21ConsentViewController13SPCCPAConsentC9uspstringSSvM",
-                "moduleName": "ConsentViewController",
-                "implicit": true,
-                "accessorKind": "_modify"
               }
             ]
           },
@@ -5012,30 +4964,6 @@
             ],
             "throwing": true,
             "init_kind": "Designated"
-          },
-          {
-            "kind": "Function",
-            "name": "rejectedNone",
-            "printedName": "rejectedNone()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "SPCCPAConsent",
-                "printedName": "ConsentViewController.SPCCPAConsent",
-                "usr": "c:@M@ConsentViewController@objc(cs)SPCCPAConsent"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "c:@M@ConsentViewController@objc(cs)SPCCPAConsent(cm)rejectedNone",
-            "mangledName": "$s21ConsentViewController13SPCCPAConsentC12rejectedNoneACyFZ",
-            "moduleName": "ConsentViewController",
-            "static": true,
-            "declAttributes": [
-              "Final",
-              "AccessControl",
-              "ObjC"
-            ],
-            "funcSelfKind": "NonMutating"
           },
           {
             "kind": "Function",
@@ -8356,9 +8284,58 @@
       },
       {
         "kind": "TypeDecl",
-        "name": "InvalidArgumentError",
-        "printedName": "InvalidArgumentError",
+        "name": "InvalidPropertyNameError",
+        "printedName": "InvalidPropertyNameError",
         "children": [
+          {
+            "kind": "Var",
+            "name": "spCode",
+            "printedName": "spCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)InvalidPropertyNameError(py)spCode",
+            "mangledName": "$s21ConsentViewController24InvalidPropertyNameErrorC6spCodeSSvp",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "objc_name": "spCode",
+            "declAttributes": [
+              "ObjC",
+              "AccessControl",
+              "Override"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)InvalidPropertyNameError(im)spCode",
+                "mangledName": "$s21ConsentViewController24InvalidPropertyNameErrorC6spCodeSSvg",
+                "moduleName": "ConsentViewController",
+                "overriding": true,
+                "objc_name": "spCode",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
           {
             "kind": "Var",
             "name": "description",
@@ -8372,8 +8349,8 @@
               }
             ],
             "declKind": "Var",
-            "usr": "c:@M@ConsentViewController@objc(cs)InvalidArgumentError(py)description",
-            "mangledName": "$s21ConsentViewController20InvalidArgumentErrorC11descriptionSSvp",
+            "usr": "c:@M@ConsentViewController@objc(cs)InvalidPropertyNameError(py)description",
+            "mangledName": "$s21ConsentViewController24InvalidPropertyNameErrorC11descriptionSSvp",
             "moduleName": "ConsentViewController",
             "overriding": true,
             "objc_name": "description",
@@ -8397,8 +8374,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "c:@M@ConsentViewController@objc(cs)InvalidArgumentError(im)description",
-                "mangledName": "$s21ConsentViewController20InvalidArgumentErrorC11descriptionSSvg",
+                "usr": "c:@M@ConsentViewController@objc(cs)InvalidPropertyNameError(im)description",
+                "mangledName": "$s21ConsentViewController24InvalidPropertyNameErrorC11descriptionSSvg",
                 "moduleName": "ConsentViewController",
                 "overriding": true,
                 "objc_name": "description",
@@ -8412,8 +8389,8 @@
           }
         ],
         "declKind": "Class",
-        "usr": "c:@M@ConsentViewController@objc(cs)InvalidArgumentError",
-        "mangledName": "$s21ConsentViewController20InvalidArgumentErrorC",
+        "usr": "c:@M@ConsentViewController@objc(cs)InvalidPropertyNameError",
+        "mangledName": "$s21ConsentViewController24InvalidPropertyNameErrorC",
         "moduleName": "ConsentViewController",
         "declAttributes": [
           "AccessControl",
@@ -9413,6 +9390,202 @@
         ],
         "superclassUsr": "c:@M@ConsentViewController@objc(cs)SPError",
         "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ConsentViewController.SPError",
+          "Foundation.NSError",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "LocalizedError",
+            "printedName": "LocalizedError",
+            "usr": "s:10Foundation14LocalizedErrorP",
+            "mangledName": "$s10Foundation14LocalizedErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RenderingAppTimeoutError",
+        "printedName": "RenderingAppTimeoutError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "spCode",
+            "printedName": "spCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)RenderingAppTimeoutError(py)spCode",
+            "mangledName": "$s21ConsentViewController24RenderingAppTimeoutErrorC6spCodeSSvp",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "objc_name": "spCode",
+            "declAttributes": [
+              "ObjC",
+              "AccessControl",
+              "Override"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)RenderingAppTimeoutError(im)spCode",
+                "mangledName": "$s21ConsentViewController24RenderingAppTimeoutErrorC6spCodeSSvg",
+                "moduleName": "ConsentViewController",
+                "overriding": true,
+                "objc_name": "spCode",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)RenderingAppTimeoutError(py)description",
+            "mangledName": "$s21ConsentViewController24RenderingAppTimeoutErrorC11descriptionSSvp",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "objc_name": "description",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl",
+              "Override"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)RenderingAppTimeoutError(im)description",
+                "mangledName": "$s21ConsentViewController24RenderingAppTimeoutErrorC11descriptionSSvg",
+                "moduleName": "ConsentViewController",
+                "overriding": true,
+                "objc_name": "description",
+                "declAttributes": [
+                  "Dynamic",
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@ConsentViewController@objc(cs)RenderingAppTimeoutError",
+        "mangledName": "$s21ConsentViewController24RenderingAppTimeoutErrorC",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:@M@ConsentViewController@objc(cs)SPError",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
         "superclassNames": [
           "ConsentViewController.SPError",
           "Foundation.NSError",
@@ -12433,8 +12606,8 @@
       },
       {
         "kind": "TypeDecl",
-        "name": "InternalServerError",
-        "printedName": "InternalServerError",
+        "name": "ConnectionTimeoutAPIError",
+        "printedName": "ConnectionTimeoutAPIError",
         "children": [
           {
             "kind": "Var",
@@ -12449,8 +12622,8 @@
               }
             ],
             "declKind": "Var",
-            "usr": "c:@M@ConsentViewController@objc(cs)InternalServerError(py)spCode",
-            "mangledName": "$s21ConsentViewController19InternalServerErrorC6spCodeSSvp",
+            "usr": "c:@M@ConsentViewController@objc(cs)ConnectionTimeoutAPIError(py)spCode",
+            "mangledName": "$s21ConsentViewController25ConnectionTimeoutAPIErrorC6spCodeSSvp",
             "moduleName": "ConsentViewController",
             "overriding": true,
             "objc_name": "spCode",
@@ -12473,8 +12646,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "c:@M@ConsentViewController@objc(cs)InternalServerError(im)spCode",
-                "mangledName": "$s21ConsentViewController19InternalServerErrorC6spCodeSSvg",
+                "usr": "c:@M@ConsentViewController@objc(cs)ConnectionTimeoutAPIError(im)spCode",
+                "mangledName": "$s21ConsentViewController25ConnectionTimeoutAPIErrorC6spCodeSSvg",
                 "moduleName": "ConsentViewController",
                 "overriding": true,
                 "objc_name": "spCode",
@@ -12487,310 +12660,160 @@
           }
         ],
         "declKind": "Class",
-        "usr": "c:@M@ConsentViewController@objc(cs)InternalServerError",
-        "mangledName": "$s21ConsentViewController19InternalServerErrorC",
+        "usr": "c:@M@ConsentViewController@objc(cs)ConnectionTimeoutAPIError",
+        "mangledName": "$s21ConsentViewController25ConnectionTimeoutAPIErrorC",
         "moduleName": "ConsentViewController",
         "declAttributes": [
           "AccessControl",
           "ObjCMembers",
-          "ObjC"
-        ],
-        "superclassUsr": "c:@M@ConsentViewController@objc(cs)GenericNetworkError",
-        "hasMissingDesignatedInitializers": true,
-        "inheritsConvenienceInitializers": true,
-        "superclassNames": [
-          "ConsentViewController.GenericNetworkError",
-          "ConsentViewController.SPError",
-          "Foundation.NSError",
-          "ObjectiveC.NSObject"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "LocalizedError",
-            "printedName": "LocalizedError",
-            "usr": "s:10Foundation14LocalizedErrorP",
-            "mangledName": "$s10Foundation14LocalizedErrorP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sendable",
-            "printedName": "Sendable",
-            "usr": "s:s8SendableP",
-            "mangledName": "$ss8SendableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Equatable",
-            "printedName": "Equatable",
-            "usr": "s:SQ",
-            "mangledName": "$sSQ"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Hashable",
-            "printedName": "Hashable",
-            "usr": "s:SH",
-            "mangledName": "$sSH"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CVarArg",
-            "printedName": "CVarArg",
-            "usr": "s:s7CVarArgP",
-            "mangledName": "$ss7CVarArgP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_KeyValueCodingAndObservingPublishing",
-            "printedName": "_KeyValueCodingAndObservingPublishing",
-            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
-            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_KeyValueCodingAndObserving",
-            "printedName": "_KeyValueCodingAndObserving",
-            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
-            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomStringConvertible",
-            "printedName": "CustomStringConvertible",
-            "usr": "s:s23CustomStringConvertibleP",
-            "mangledName": "$ss23CustomStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomDebugStringConvertible",
-            "printedName": "CustomDebugStringConvertible",
-            "usr": "s:s28CustomDebugStringConvertibleP",
-            "mangledName": "$ss28CustomDebugStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Error",
-            "printedName": "Error",
-            "usr": "s:s5ErrorP",
-            "mangledName": "$ss5ErrorP"
-          }
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "ResourceNotFoundError",
-        "printedName": "ResourceNotFoundError",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "spCode",
-            "printedName": "spCode",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "c:@M@ConsentViewController@objc(cs)ResourceNotFoundError(py)spCode",
-            "mangledName": "$s21ConsentViewController21ResourceNotFoundErrorC6spCodeSSvp",
-            "moduleName": "ConsentViewController",
-            "overriding": true,
-            "objc_name": "spCode",
-            "declAttributes": [
-              "ObjC",
-              "AccessControl",
-              "Override"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "c:@M@ConsentViewController@objc(cs)ResourceNotFoundError(im)spCode",
-                "mangledName": "$s21ConsentViewController21ResourceNotFoundErrorC6spCodeSSvg",
-                "moduleName": "ConsentViewController",
-                "overriding": true,
-                "objc_name": "spCode",
-                "declAttributes": [
-                  "ObjC"
-                ],
-                "accessorKind": "get"
-              }
-            ]
-          }
-        ],
-        "declKind": "Class",
-        "usr": "c:@M@ConsentViewController@objc(cs)ResourceNotFoundError",
-        "mangledName": "$s21ConsentViewController21ResourceNotFoundErrorC",
-        "moduleName": "ConsentViewController",
-        "declAttributes": [
-          "AccessControl",
-          "ObjCMembers",
-          "ObjC"
-        ],
-        "superclassUsr": "c:@M@ConsentViewController@objc(cs)GenericNetworkError",
-        "hasMissingDesignatedInitializers": true,
-        "inheritsConvenienceInitializers": true,
-        "superclassNames": [
-          "ConsentViewController.GenericNetworkError",
-          "ConsentViewController.SPError",
-          "Foundation.NSError",
-          "ObjectiveC.NSObject"
-        ],
-        "conformances": [
-          {
-            "kind": "Conformance",
-            "name": "LocalizedError",
-            "printedName": "LocalizedError",
-            "usr": "s:10Foundation14LocalizedErrorP",
-            "mangledName": "$s10Foundation14LocalizedErrorP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sendable",
-            "printedName": "Sendable",
-            "usr": "s:s8SendableP",
-            "mangledName": "$ss8SendableP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Equatable",
-            "printedName": "Equatable",
-            "usr": "s:SQ",
-            "mangledName": "$sSQ"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Hashable",
-            "printedName": "Hashable",
-            "usr": "s:SH",
-            "mangledName": "$sSH"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CVarArg",
-            "printedName": "CVarArg",
-            "usr": "s:s7CVarArgP",
-            "mangledName": "$ss7CVarArgP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_KeyValueCodingAndObservingPublishing",
-            "printedName": "_KeyValueCodingAndObservingPublishing",
-            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
-            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "_KeyValueCodingAndObserving",
-            "printedName": "_KeyValueCodingAndObserving",
-            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
-            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomStringConvertible",
-            "printedName": "CustomStringConvertible",
-            "usr": "s:s23CustomStringConvertibleP",
-            "mangledName": "$ss23CustomStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "CustomDebugStringConvertible",
-            "printedName": "CustomDebugStringConvertible",
-            "usr": "s:s28CustomDebugStringConvertibleP",
-            "mangledName": "$ss28CustomDebugStringConvertibleP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Error",
-            "printedName": "Error",
-            "usr": "s:s5ErrorP",
-            "mangledName": "$ss5ErrorP"
-          }
-        ]
-      },
-      {
-        "kind": "TypeDecl",
-        "name": "InvalidRequestError",
-        "printedName": "InvalidRequestError",
-        "children": [
-          {
-            "kind": "Var",
-            "name": "spCode",
-            "printedName": "spCode",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "c:@M@ConsentViewController@objc(cs)InvalidRequestError(py)spCode",
-            "mangledName": "$s21ConsentViewController19InvalidRequestErrorC6spCodeSSvp",
-            "moduleName": "ConsentViewController",
-            "overriding": true,
-            "objc_name": "spCode",
-            "declAttributes": [
-              "ObjC",
-              "AccessControl",
-              "Override"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "c:@M@ConsentViewController@objc(cs)InvalidRequestError(im)spCode",
-                "mangledName": "$s21ConsentViewController19InvalidRequestErrorC6spCodeSSvg",
-                "moduleName": "ConsentViewController",
-                "overriding": true,
-                "objc_name": "spCode",
-                "declAttributes": [
-                  "ObjC"
-                ],
-                "accessorKind": "get"
-              }
-            ]
-          }
-        ],
-        "declKind": "Class",
-        "usr": "c:@M@ConsentViewController@objc(cs)InvalidRequestError",
-        "mangledName": "$s21ConsentViewController19InvalidRequestErrorC",
-        "moduleName": "ConsentViewController",
-        "declAttributes": [
-          "AccessControl",
-          "ObjCMembers",
-          "RawDocComment",
           "ObjC"
         ],
         "superclassUsr": "c:@M@ConsentViewController@objc(cs)SPError",
         "hasMissingDesignatedInitializers": true,
-        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ConsentViewController.SPError",
+          "Foundation.NSError",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "LocalizedError",
+            "printedName": "LocalizedError",
+            "usr": "s:10Foundation14LocalizedErrorP",
+            "mangledName": "$s10Foundation14LocalizedErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "InvalidResponseAPIError",
+        "printedName": "InvalidResponseAPIError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "spCode",
+            "printedName": "spCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)InvalidResponseAPIError(py)spCode",
+            "mangledName": "$s21ConsentViewController23InvalidResponseAPIErrorC6spCodeSSvp",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "objc_name": "spCode",
+            "declAttributes": [
+              "ObjC",
+              "AccessControl",
+              "Override"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)InvalidResponseAPIError(im)spCode",
+                "mangledName": "$s21ConsentViewController23InvalidResponseAPIErrorC6spCodeSSvg",
+                "moduleName": "ConsentViewController",
+                "overriding": true,
+                "objc_name": "spCode",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@ConsentViewController@objc(cs)InvalidResponseAPIError",
+        "mangledName": "$s21ConsentViewController23InvalidResponseAPIErrorC",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:@M@ConsentViewController@objc(cs)SPError",
+        "hasMissingDesignatedInitializers": true,
         "superclassNames": [
           "ConsentViewController.SPError",
           "Foundation.NSError",
@@ -12874,6 +12897,55 @@
         "name": "PostingConsentWithoutConsentUUID",
         "printedName": "PostingConsentWithoutConsentUUID",
         "children": [
+          {
+            "kind": "Var",
+            "name": "spCode",
+            "printedName": "spCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)PostingConsentWithoutConsentUUID(py)spCode",
+            "mangledName": "$s21ConsentViewController07Postinga7WithoutA4UUIDC6spCodeSSvp",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "objc_name": "spCode",
+            "declAttributes": [
+              "ObjC",
+              "AccessControl",
+              "Override"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)PostingConsentWithoutConsentUUID(im)spCode",
+                "mangledName": "$s21ConsentViewController07Postinga7WithoutA4UUIDC6spCodeSSvg",
+                "moduleName": "ConsentViewController",
+                "overriding": true,
+                "objc_name": "spCode",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
           {
             "kind": "Var",
             "name": "description",
@@ -13031,11 +13103,10 @@
           "ObjCMembers",
           "ObjC"
         ],
-        "superclassUsr": "c:@M@ConsentViewController@objc(cs)InvalidRequestError",
+        "superclassUsr": "c:@M@ConsentViewController@objc(cs)SPError",
         "hasMissingDesignatedInitializers": true,
         "inheritsConvenienceInitializers": true,
         "superclassNames": [
-          "ConsentViewController.InvalidRequestError",
           "ConsentViewController.SPError",
           "Foundation.NSError",
           "ObjectiveC.NSObject"
@@ -14416,6 +14487,868 @@
             "printedName": "Error",
             "usr": "s:s5ErrorP",
             "mangledName": "$ss5ErrorP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "InvalidJSONEncodeResult",
+        "printedName": "InvalidJSONEncodeResult",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "spCode",
+            "printedName": "spCode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)InvalidJSONEncodeResult(py)spCode",
+            "mangledName": "$s21ConsentViewController23InvalidJSONEncodeResultC6spCodeSSvp",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "objc_name": "spCode",
+            "declAttributes": [
+              "ObjC",
+              "AccessControl",
+              "Override"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)InvalidJSONEncodeResult(im)spCode",
+                "mangledName": "$s21ConsentViewController23InvalidJSONEncodeResultC6spCodeSSvg",
+                "moduleName": "ConsentViewController",
+                "overriding": true,
+                "objc_name": "spCode",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@ConsentViewController@objc(cs)InvalidJSONEncodeResult",
+        "mangledName": "$s21ConsentViewController23InvalidJSONEncodeResultC",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:@M@ConsentViewController@objc(cs)SPError",
+        "hasMissingDesignatedInitializers": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ConsentViewController.SPError",
+          "Foundation.NSError",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "LocalizedError",
+            "printedName": "LocalizedError",
+            "usr": "s:10Foundation14LocalizedErrorP",
+            "mangledName": "$s10Foundation14LocalizedErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "InvalidResponsAPICode",
+        "printedName": "InvalidResponsAPICode",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "META_DATA",
+            "printedName": "META_DATA",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO9META_DATAyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO9META_DATAyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "CONSENT_STATUS",
+            "printedName": "CONSENT_STATUS",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO14CONSENT_STATUSyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO14CONSENT_STATUSyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "PV_DATA",
+            "printedName": "PV_DATA",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO7PV_DATAyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO7PV_DATAyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "MESSAGES",
+            "printedName": "MESSAGES",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO8MESSAGESyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO8MESSAGESyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "CUSTOM_CONSENT",
+            "printedName": "CUSTOM_CONSENT",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO14CUSTOM_CONSENTyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO14CUSTOM_CONSENTyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "ERROR_METRICS",
+            "printedName": "ERROR_METRICS",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO13ERROR_METRICSyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO13ERROR_METRICSyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "CCPA_ACTION",
+            "printedName": "CCPA_ACTION",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO11CCPA_ACTIONyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO11CCPA_ACTIONyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "GDPR_ACTION",
+            "printedName": "GDPR_ACTION",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO11GDPR_ACTIONyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO11GDPR_ACTIONyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "IDFA_STATUS",
+            "printedName": "IDFA_STATUS",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO11IDFA_STATUSyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO11IDFA_STATUSyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "CCPA_PRIVACY_MANAGER",
+            "printedName": "CCPA_PRIVACY_MANAGER",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO20CCPA_PRIVACY_MANAGERyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO20CCPA_PRIVACY_MANAGERyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "CHOICE_ALL",
+            "printedName": "CHOICE_ALL",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO10CHOICE_ALLyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO10CHOICE_ALLyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "GDPR_PRIVACY_MANAGER",
+            "printedName": "GDPR_PRIVACY_MANAGER",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO20GDPR_PRIVACY_MANAGERyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO20GDPR_PRIVACY_MANAGERyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "CCPA_MESSAGE",
+            "printedName": "CCPA_MESSAGE",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO12CCPA_MESSAGEyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO12CCPA_MESSAGEyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "GDPR_MESSAGE",
+            "printedName": "GDPR_MESSAGE",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO12GDPR_MESSAGEyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO12GDPR_MESSAGEyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "DELETE_CUSTOM_CONSENT",
+            "printedName": "DELETE_CUSTOM_CONSENT",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO21DELETE_CUSTOM_CONSENTyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO21DELETE_CUSTOM_CONSENTyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Var",
+            "name": "EMPTY",
+            "printedName": "EMPTY",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.InvalidResponsAPICode.Type) -> ConsentViewController.InvalidResponsAPICode",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "InvalidResponsAPICode",
+                        "printedName": "ConsentViewController.InvalidResponsAPICode",
+                        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO5EMPTYyA2CmF",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO5EMPTYyA2CmF",
+            "moduleName": "ConsentViewController"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(rawValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.InvalidResponsAPICode?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "InvalidResponsAPICode",
+                    "printedName": "ConsentViewController.InvalidResponsAPICode",
+                    "usr": "s:21ConsentViewController21InvalidResponsAPICodeO"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO8rawValueACSgSS_tcfc",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO8rawValueACSgSS_tcfc",
+            "moduleName": "ConsentViewController",
+            "implicit": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "rawValue",
+            "printedName": "rawValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController21InvalidResponsAPICodeO8rawValueSSvp",
+            "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO8rawValueSSvp",
+            "moduleName": "ConsentViewController",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController21InvalidResponsAPICodeO8rawValueSSvg",
+                "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO8rawValueSSvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:21ConsentViewController21InvalidResponsAPICodeO",
+        "mangledName": "$s21ConsentViewController21InvalidResponsAPICodeO",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "enumRawTypeName": "String",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
           }
         ]
       },
@@ -28775,22 +29708,43 @@
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPCCPAConsent.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2159,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPCCPAConsent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2189,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPCCPAConsent.swift",
       "kind": "StringLiteral",
-      "offset": 3197,
+      "offset": 3837,
       "length": 6,
       "value": "\"1---\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPCCPAConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 3810,
+      "offset": 4461,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPCCPAConsent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 4963,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPCCPAConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2680,
+      "offset": 3319,
       "length": 13,
       "value": "\"ConsentViewController.SPCCPAConsent\""
     },
@@ -28888,28 +29842,28 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "StringLiteral",
-      "offset": 9223,
+      "offset": 8888,
       "length": 7,
-      "value": "\"7.1.0\""
+      "value": "\"7.1.1\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "Dictionary",
-      "offset": 10119,
+      "offset": 9784,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 11348,
+      "offset": 11405,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 13181,
+      "offset": 13493,
       "length": 5,
       "value": "false"
     },
@@ -28945,50 +29899,288 @@
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
       "kind": "StringLiteral",
       "offset": 2426,
-      "length": 20,
-      "value": "\"ConsentViewController.InvalidArgumentError\""
+      "length": 24,
+      "value": "\"ConsentViewController.InvalidPropertyNameError\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
       "kind": "StringLiteral",
-      "offset": 2786,
+      "offset": 2867,
       "length": 21,
       "value": "\"ConsentViewController.MissingChildPmIdError\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
       "kind": "StringLiteral",
-      "offset": 3417,
+      "offset": 3498,
       "length": 24,
       "value": "\"ConsentViewController.InvalidEventPayloadError\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
       "kind": "StringLiteral",
-      "offset": 4266,
+      "offset": 4347,
       "length": 15,
       "value": "\"ConsentViewController.InvalidURLError\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
       "kind": "StringLiteral",
-      "offset": 4725,
+      "offset": 4806,
       "length": 17,
       "value": "\"ConsentViewController.RenderingAppError\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
       "kind": "StringLiteral",
-      "offset": 8884,
+      "offset": 9300,
       "length": 22,
       "value": "\"ConsentViewController.ConnectionTimeOutError\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
       "kind": "StringLiteral",
-      "offset": 9563,
+      "offset": 9979,
       "length": 19,
       "value": "\"ConsentViewController.GenericNetworkError\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 10679,
+      "length": 25,
+      "value": "\"ConsentViewController.ConnectionTimeoutAPIError\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 11106,
+      "length": 23,
+      "value": "\"ConsentViewController.InvalidResponseAPIError\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13728,
+      "length": 12,
+      "value": "\"_meta-data\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13767,
+      "length": 17,
+      "value": "\"_consent-status\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13804,
+      "length": 10,
+      "value": "\"_pv-data\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13835,
+      "length": 11,
+      "value": "\"_messages\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13873,
+      "length": 22,
+      "value": "\"_custom-consent-GDPR\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13921,
+      "length": 16,
+      "value": "\"_error-metrics\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13961,
+      "length": 14,
+      "value": "\"_CCPA-action\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13999,
+      "length": 14,
+      "value": "\"_GDPR-action\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14037,
+      "length": 14,
+      "value": "\"_IDFA-status\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14084,
+      "length": 23,
+      "value": "\"_CCPA-privacy-manager\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14130,
+      "length": 13,
+      "value": "\"_choice-all\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14176,
+      "length": 23,
+      "value": "\"_GDPR-privacy-manager\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14224,
+      "length": 15,
+      "value": "\"_CCPA-message\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14264,
+      "length": 15,
+      "value": "\"_GDPR-message\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14313,
+      "length": 29,
+      "value": "\"_delete-custom-consent-GDPR\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14360,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13728,
+      "length": 12,
+      "value": "\"_meta-data\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13767,
+      "length": 17,
+      "value": "\"_consent-status\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13804,
+      "length": 10,
+      "value": "\"_pv-data\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13835,
+      "length": 11,
+      "value": "\"_messages\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13873,
+      "length": 22,
+      "value": "\"_custom-consent-GDPR\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13921,
+      "length": 16,
+      "value": "\"_error-metrics\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13961,
+      "length": 14,
+      "value": "\"_CCPA-action\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 13999,
+      "length": 14,
+      "value": "\"_GDPR-action\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14037,
+      "length": 14,
+      "value": "\"_IDFA-status\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14084,
+      "length": 23,
+      "value": "\"_CCPA-privacy-manager\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14130,
+      "length": 13,
+      "value": "\"_choice-all\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14176,
+      "length": 23,
+      "value": "\"_GDPR-privacy-manager\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14224,
+      "length": 15,
+      "value": "\"_CCPA-message\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14264,
+      "length": 15,
+      "value": "\"_GDPR-message\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14313,
+      "length": 29,
+      "value": "\"_delete-custom-consent-GDPR\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPError.swift",
+      "kind": "StringLiteral",
+      "offset": 14360,
+      "length": 2,
+      "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPFocusableTextView.swift",
