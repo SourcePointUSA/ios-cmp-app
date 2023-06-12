@@ -1,3 +1,10 @@
+# 7.1.1 (June, 12, 2023)
+* [DIA-2193](https://sourcepoint.atlassian.net/browse/DIA-2193) Fixed an issue that would cause the consent string for CCPA to be incorrect if the user moves to an area where CCPA does not apply. [#448](https://github.com/SourcePointUSA/ios-cmp-app/pull/448)
+* [DIA-2061](https://sourcepoint.atlassian.net/browse/DIA-2061) Re-introduce support to group PMs. [#444](https://github.com/SourcePointUSA/ios-cmp-app/pull/444)
+* [DIA-2137](https://sourcepoint.atlassian.net/browse/DIA-2137) Update error codes (used internally). [#442](https://github.com/SourcePointUSA/ios-cmp-app/pull/442)
+* [DIA-2136](https://sourcepoint.atlassian.net/browse/DIA-2136) Fixed an issue that could cause the user to be stuck in the webview where the message was loaded. [#441](https://github.com/SourcePointUSA/ios-cmp-app/pull/441)
+* [DIA-2136](https://sourcepoint.atlassian.net/browse/DIA-2136) Fixed an issue that could cause the user to be stuck in the webview where the message was loaded. [#441](https://github.com/SourcePointUSA/ios-cmp-app/pull/441)
+
 # 7.1.0 (May, 09, 2023)
 * [DIA-2080](https://sourcepoint.atlassian.net/browse/DIA-2080) Fixed an issue preventing the GDPR Message from showing on iOS 14.2, due to a bug on iOS itself. [#439](https://github.com/SourcePointUSA/ios-cmp-app/pull/439)
 * [DIA-2049](https://sourcepoint.atlassian.net/browse/DIA-2049) Fixed a bug causing the SDK to use targeting params from GDPR campaign instead of CCPA. [#426](https://github.com/SourcePointUSA/ios-cmp-app/pull/426)
