@@ -29,7 +29,6 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     @IBOutlet var offButton: SPAppleTVButton!
     @IBOutlet var actionsContainer: UIStackView!
     @IBOutlet var categoryDetailsTableView: UITableView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()

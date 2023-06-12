@@ -47,7 +47,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         self.specialPurposes = specialPurposes
         self.features = features
         self.specialFeatures = specialFeatures
-        let disclosureCategories = categories.filter { $0.disclosureOnly==true }
+        let disclosureCategories = categories.filter { $0.disclosureOnly == true }
         if disclosureCategories.isNotEmpty() {
             for category in disclosureCategories {
                 self.specialPurposes.insert(
