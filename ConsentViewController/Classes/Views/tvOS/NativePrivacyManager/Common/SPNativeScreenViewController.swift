@@ -246,6 +246,9 @@ class FocusGuideDebugView: UIView {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
             slider.setTitle(sliderDetails.settings.leftText, forSegmentAt: 0)
             slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
+            if #available(tvOS 14.0, *) {
+                backgroundFor_v14(slider: slider, backgroundHex: sliderDetails.settings.style?.backgroundColor, activeBackground: sliderDetails.settings.style?.activeBackgroundColor)
+            }
             if let font = UIFont(from: sliderDetails.settings.style?.font),
                let fontColor = sliderDetails.settings.style?.font?.color {
                 slider.setTitleTextAttributes([
@@ -274,4 +277,24 @@ extension UILabel {
             }
         }
     }
+}
+
+func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
+    let rect = CGRectMake(0, 0, size.width, size.height)
+    UIGraphicsBeginImageContextWithOptions(size, false, 0)
+    color.setFill()
+    UIRectFill(rect)
+    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    UIGraphicsEndImageContext()
+    return image
+}
+
+//setting background as imge for slider, v14 and above
+func backgroundFor_v14(slider: UISegmentedControl, backgroundHex: String?, activeBackground: String?) {
+    let backgroundColor = getImageWithColor(color: UIColor(hexString: backgroundHex) ?? .red)
+    let activeBackgroundColor = getImageWithColor(color: UIColor(hexString: activeBackground) ?? .red)
+    slider.setBackgroundImage(backgroundColor, for: .normal, barMetrics: .default)
+    slider.setBackgroundImage(activeBackgroundColor, for: .selected, barMetrics: .default)
+    slider.layer.cornerRadius = 12
+    slider.layer.masksToBounds = true
 }
