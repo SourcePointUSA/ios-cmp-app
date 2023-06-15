@@ -207,7 +207,7 @@ protocol SPNativePrivacyManagerHome {
     }
 
     override func setFocusGuides() {
-        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
+        addFocusGuide(from: buttonsStack, to: categoryTableView, direction: .rightLeft)
     }
 
     func setFocusGuidesForButtons() {
@@ -267,7 +267,6 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         cell.textLabel?.text = categories[indexPath.row].name
         cell.textLabel?.setDefaultTextColorForDarkMode()
-        addFocusGuide(from: acceptButton, to: cell, direction: .rightLeft)
         return cell
     }
 }
