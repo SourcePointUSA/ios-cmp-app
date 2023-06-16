@@ -16,8 +16,8 @@ struct PvDataResponse: Decodable, Equatable {
     let ccpa: Campaign?
 }
 
-struct PvDataRequestBody: Codable, Equatable {
-    struct GDPR: Codable, Equatable {
+struct PvDataRequestBody: Encodable, Equatable {
+    struct GDPR: Encodable, Equatable {
         let applies: Bool
         let uuid: String?
         let accountId: Int
@@ -32,7 +32,7 @@ struct PvDataRequestBody: Codable, Equatable {
         let prtnUUID: String?
     }
 
-    struct CCPA: Codable, Equatable {
+    struct CCPA: Encodable, Equatable {
         let applies: Bool
         let uuid: String?
         let accountId: Int
