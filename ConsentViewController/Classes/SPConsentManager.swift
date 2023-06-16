@@ -294,7 +294,7 @@ import UIKit
         self.authId = authId
         responsesToReceive += 1
 
-        spCoordinator.loadMessages(forAuthId: authId) { [weak self] result in
+        spCoordinator.loadMessages(forAuthId: authId, pubData: publisherData) { [weak self] result in
             if let strongSelf = self {
                 strongSelf.responsesToReceive -= 1
                 switch result {
@@ -369,7 +369,7 @@ import UIKit
         let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
             "message_id": usedId,
             "pmTab": pmTab.rawValue,
-            "consentUUID": gdprUUID,
+            "consentUUID": ccpaUUID,
             "idfaStatus": idfaStatus.description,
             "site_id": String(propertyId),
             "consentLanguage": messageLanguage.rawValue
