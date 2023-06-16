@@ -18,7 +18,6 @@ struct MessageToDisplay {
     let metadata: MessageMetaData
     let url: URL
     let type: SPCampaignType
-    let childPmId: String?
 }
 
 extension MessageToDisplay {
@@ -34,8 +33,6 @@ extension MessageToDisplay {
         self.metadata = metadata
         self.url = url
         self.type = campaign.type
-        // TODO: add childPMId if possible
-        self.childPmId = nil
     }
 }
 
