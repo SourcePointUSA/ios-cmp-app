@@ -42,7 +42,7 @@ protocol SPClientCoordinator {
     var userData: SPUserData { get }
     var language: SPMessageLanguage { get set }
 
-    func loadMessages(forAuthId: String?, _ handler: @escaping MessagesAndConsentsHandler)
+    func loadMessages(forAuthId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
     func logErrorMetrics(_ error: SPError)
@@ -132,7 +132,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var language: SPMessageLanguage
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     let campaigns: SPCampaigns
-    var pubData: SPPublisherData
 
     var deviceManager: SPDeviceManager
     let spClient: SourcePointProtocol
@@ -187,43 +186,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    var ccpaPvDataBodyFromState: PvDataRequestBody {
-        var ccpa: PvDataRequestBody.CCPA?
-        if let stateCCPA = state.ccpa {
-            ccpa = .init(
-                applies: stateCCPA.applies,
-                uuid: stateCCPA.uuid,
-                accountId: accountId,
-                siteId: propertyId,
-                consentStatus: stateCCPA.consentStatus,
-                pubData: pubData,
-                messageId: stateCCPA.lastMessage?.id,
-                sampleRate: state.ccpaMetaData?.sampleRate
-            )
-        }
-        return .init(ccpa: ccpa)
-    }
-    var gdprPvDataBodyFromState: PvDataRequestBody {
-        var gdpr: PvDataRequestBody.GDPR?
-        if let stateGDPR = state.gdpr {
-            gdpr = PvDataRequestBody.GDPR(
-                applies: stateGDPR.applies,
-                uuid: stateGDPR.uuid,
-                accountId: accountId,
-                siteId: propertyId,
-                consentStatus: stateGDPR.consentStatus,
-                pubData: pubData,
-                sampleRate: state.gdprMetaData?.sampleRate,
-                euconsent: stateGDPR.euconsent,
-                msgId: stateGDPR.lastMessage?.id,
-                categoryId: stateGDPR.lastMessage?.categoryId,
-                subCategoryId: stateGDPR.lastMessage?.subCategoryId,
-                prtnUUID: stateGDPR.lastMessage?.partitionUUID
-            )
-        }
-        return .init(gdpr: gdpr)
-    }
-
     var messagesParamsFromState: MessagesRequest {
         .init(
             body: .init(
@@ -276,7 +238,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         propertyId: Int,
         language: SPMessageLanguage = .BrowserDefault,
         campaigns: SPCampaigns,
-        pubData: SPPublisherData = SPPublisherData(),
         storage: SPLocalStorage = SPUserDefaults(),
         spClient: SourcePointProtocol? = nil,
         deviceManager: SPDeviceManager = SPDevice.standard
@@ -286,7 +247,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.propertyName = propertyName
         self.language = language
         self.campaigns = campaigns
-        self.pubData = pubData
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,
@@ -316,6 +276,44 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         return localState
     }
 
+    func ccpaPvDataBody(from state: State, pubData: SPPublisherData?) -> PvDataRequestBody {
+        var ccpa: PvDataRequestBody.CCPA?
+        if let stateCCPA = state.ccpa {
+            ccpa = .init(
+                applies: stateCCPA.applies,
+                uuid: stateCCPA.uuid,
+                accountId: accountId,
+                siteId: propertyId,
+                consentStatus: stateCCPA.consentStatus,
+                pubData: pubData,
+                messageId: stateCCPA.lastMessage?.id,
+                sampleRate: state.ccpaMetaData?.sampleRate
+            )
+        }
+        return .init(ccpa: ccpa)
+    }
+
+    func gdprPvDataBody(from state: State, pubData: SPPublisherData?) -> PvDataRequestBody {
+        var gdpr: PvDataRequestBody.GDPR?
+        if let stateGDPR = state.gdpr {
+            gdpr = PvDataRequestBody.GDPR(
+                applies: stateGDPR.applies,
+                uuid: stateGDPR.uuid,
+                accountId: accountId,
+                siteId: propertyId,
+                consentStatus: stateGDPR.consentStatus,
+                pubData: pubData,
+                sampleRate: state.gdprMetaData?.sampleRate,
+                euconsent: stateGDPR.euconsent,
+                msgId: stateGDPR.lastMessage?.id,
+                categoryId: stateGDPR.lastMessage?.categoryId,
+                subCategoryId: stateGDPR.lastMessage?.subCategoryId,
+                prtnUUID: stateGDPR.lastMessage?.partitionUUID
+            )
+        }
+        return .init(gdpr: gdpr)
+    }
+
     /// Resets state if the authId has changed, except if the stored auth id was empty.
     func resetStateIfAuthIdChanged() {
         if state.storedAuthId == nil {
@@ -337,7 +335,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func loadMessages(forAuthId authId: String?, _ handler: @escaping MessagesAndConsentsHandler) {
+    func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
         state = Self.setupState(from: storage, campaigns: campaigns)
         storage.spState = state
 
@@ -347,7 +345,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
                 self.messages { messagesResponse in
-                    self.pvData {
+                    self.pvData(pubData: pubData) {
                         handler(messagesResponse)
                     }
                 }
@@ -560,18 +558,18 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func pvData(_ handler: @escaping () -> Void) {
+    func pvData(pubData: SPPublisherData?, _ handler: @escaping () -> Void) {
         let pvDataGroup = DispatchGroup()
         if let gdprMetadata = state.gdprMetaData {
             pvDataGroup.enter()
-            let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBodyFromState) {
+            let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.gdprMetaData?.wasSampled = sampled
         }
         if let ccpaMetadata = state.ccpaMetaData {
             pvDataGroup.enter()
-            let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBodyFromState) {
+            let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.ccpaMetaData?.wasSampled = sampled
