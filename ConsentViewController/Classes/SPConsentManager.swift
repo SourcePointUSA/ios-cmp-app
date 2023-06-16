@@ -290,6 +290,10 @@ import UIKit
             .reversed()
     }
 
+    public func loadMessage(forAuthId authId: String? = nil, publisherData: [String: String]? = [:]) {
+        loadMessage(forAuthId: authId, publisherData: publisherData?.mapValues { AnyEncodable($0) })
+    }
+
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         self.authId = authId
         responsesToReceive += 1
