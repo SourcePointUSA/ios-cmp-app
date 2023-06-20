@@ -85,12 +85,6 @@ class SourcePointClientMock: SourcePointProtocol {
     func getMessages(campaigns: SPCampaigns, authId: String?, localState: SPJson, idfaStaus: SPIDFAStatus, consentLanguage: SPMessageLanguage, handler: @escaping MessagesHandler) {
     }
 
-    func postCCPAAction(authId: String?, action: SPAction, localState: SPJson, idfaStatus: SPIDFAStatus, handler: @escaping CCPAConsentHandler) {
-    }
-
-    func postGDPRAction(actionType: ConsentViewController.SPActionType, body: ConsentViewController.GDPRChoiceBody, handler: @escaping ConsentViewController.GDPRConsentHandler) {
-    }
-
     func pvData(pvDataRequestBody: ConsentViewController.PvDataRequestBody, handler: @escaping ConsentViewController.PvDataHandler) {
     }
 
