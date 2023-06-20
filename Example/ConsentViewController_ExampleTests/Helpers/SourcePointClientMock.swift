@@ -14,9 +14,12 @@ import Foundation
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: AddOrDeleteCustomConsentResponse?
     var error: SPError?
-    var postActionCalled = false, getMessageCalled = false, customConsentCalled = false
+    var postGDPRActionCalled = false, postCCPAActionCalled = false,
+        getMessageCalled = false, customConsentCalled = false
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
+    var postGDPRActionCalledWith: [String: Any?]!
+    var postCCPAActionCalledWith: [String: Any?]!
 
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
@@ -77,9 +80,50 @@ class SourcePointClientMock: SourcePointProtocol {
     }
 
     func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
+        postCCPAActionCalled = true
+        postCCPAActionCalledWith = [
+            "actionType": actionType,
+            "body": body,
+            "handler": handler
+        ]
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(CCPAChoiceResponse(
+                uuid: "",
+                dateCreated: .now(),
+                consentedAll: nil,
+                rejectedAll: nil,
+                status: nil,
+                uspstring: nil,
+                gpcEnabled: nil,
+                rejectedVendors: nil,
+                rejectedCategories: nil,
+                webConsentPayload: nil
+            )))
+        }
     }
 
-    func postGDPRAction(authId: String?, action: SPAction, localState: SPJson, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
+        postGDPRActionCalled = true
+        postGDPRActionCalledWith = [
+            "actionType": actionType,
+            "body": body,
+            "handler": handler
+        ]
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(GDPRChoiceResponse(
+                uuid: "",
+                dateCreated: .now(),
+                TCData: nil,
+                euconsent: nil,
+                consentStatus: nil,
+                grants: nil,
+                webConsentPayload: nil
+            )))
+        }
     }
 
     func getMessages(campaigns: SPCampaigns, authId: String?, localState: SPJson, idfaStaus: SPIDFAStatus, consentLanguage: SPMessageLanguage, handler: @escaping MessagesHandler) {
@@ -150,5 +194,7 @@ class SourcePointClientMock: SourcePointProtocol {
         propertyId: Int,
         metadata: ChoiceAllBodyRequest,
         handler: @escaping ChoiceHandler
-    ) { }
+    ) {
+        handler(.success(ChoiceAllResponse(gdpr: nil, ccpa: nil)))
+    }
 }

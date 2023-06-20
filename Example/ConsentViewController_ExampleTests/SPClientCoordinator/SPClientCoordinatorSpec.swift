@@ -17,6 +17,10 @@ class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
         SPConsentManager.clearAllData()
 
+        let accountId = 22, propertyId = 16_893
+        let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
+        let campaigns = SPCampaigns(gdpr: SPCampaign(), ccpa: SPCampaign())
+        var spClientMock: SourcePointClientMock!
         var coordinator: SourcepointClientCoordinator!
 
         beforeSuite {
@@ -31,13 +35,10 @@ class SPClientCoordinatorSpec: QuickSpec {
 
         beforeEach {
             coordinator = SourcepointClientCoordinator(
-                accountId: 22,
-                propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-                propertyId: 16_893,
-                campaigns: SPCampaigns(
-                    gdpr: SPCampaign(),
-                    ccpa: SPCampaign()
-                ),
+                accountId: accountId,
+                propertyName: propertyName,
+                propertyId: propertyId,
+                campaigns: campaigns,
                 storage: LocalStorageMock()
             )
         }
@@ -83,6 +84,63 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.ccpa?.consents?.uspstring) == "1YNN"
                                 case .failure(let error):
                                     fail(error.failureReason)
+                            }
+                            done()
+                        }
+                    }
+                }
+            }
+
+            describe("reportAction") {
+                beforeEach {
+                    spClientMock = SourcePointClientMock(
+                        accountId: accountId,
+                        propertyName: propertyName,
+                        campaignEnv: .Public,
+                        timeout: 999
+                    )
+                    coordinator = SourcepointClientCoordinator(
+                        accountId: accountId,
+                        propertyName: propertyName,
+                        propertyId: propertyId,
+                        campaigns: campaigns,
+                        storage: LocalStorageMock(),
+                        spClient: spClientMock
+                    )
+                }
+
+                it("should include pubData in its payload for GDPR") {
+                    let gdprAction = SPAction(type: .AcceptAll, campaignType: .gdpr)
+                    gdprAction.encodablePubData = ["foo": .init("gdpr")]
+
+                    waitUntil { done in
+                        coordinator.reportAction(gdprAction) { response in
+                            switch response {
+                                case .failure: fail("failed reporting gdpr action")
+
+                                case .success:
+                                    expect(spClientMock.postGDPRActionCalled).to(beTrue())
+                                    let body = spClientMock.postGDPRActionCalledWith["body"] as? GDPRChoiceBody
+                                    expect(body?.pubData).to(equal(gdprAction.encodablePubData))
+                            }
+                            done()
+                        }
+                    }
+                }
+
+                it("should include pubData in its payload for CCPA") {
+                    let ccpaAction = SPAction(type: .AcceptAll, campaignType: .ccpa)
+                    ccpaAction.encodablePubData = ["foo": .init("ccpa")]
+
+                    waitUntil { done in
+                        coordinator.reportAction(ccpaAction) { response in
+                            switch response {
+                                case .failure: fail("failed reporting ccpa action")
+
+                                case .success:
+                                    expect(spClientMock.postCCPAActionCalled).to(beTrue())
+                                    let body = spClientMock.postCCPAActionCalledWith["body"] as? CCPAChoiceBody
+                                    expect(body?.pubData).to(equal(ccpaAction.encodablePubData))
                             }
                             done()
                         }

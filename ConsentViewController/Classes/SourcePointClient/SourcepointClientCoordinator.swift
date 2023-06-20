@@ -41,6 +41,7 @@ protocol SPClientCoordinator {
     var deviceManager: SPDeviceManager { get set }
     var userData: SPUserData { get }
     var language: SPMessageLanguage { get set }
+    var spClient: SourcePointProtocol { get }
 
     func loadMessages(forAuthId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
