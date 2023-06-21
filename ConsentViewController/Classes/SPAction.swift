@@ -54,7 +54,13 @@ import Foundation
         return nil
     }
     public var pmPayload = SPJson()
-    public var publisherData: SPPublisherData = [:]
+    public var publisherData: [String: String] = [:] {
+        didSet {
+            encodablePubData = publisherData.mapValues { AnyEncodable($0) }
+        }
+    }
+    /// This property will be renamed to `publisherData` in the next major release
+    public var encodablePubData: SPPublisherData = [:]
     public var customActionId: String?
 
     override public var description: String {

@@ -35,7 +35,8 @@ import Foundation
         delegate: SPDelegate?
     )
     @objc static func clearAllData()
-    @objc func loadMessage(forAuthId authId: String?, publisherData: SPPublisherData?)
+    @objc func loadMessage(forAuthId authId: String?, publisherData: [String: String]?)
+    @objc(loadMessageForAuthId:spPublisherData:) func loadMessage(forAuthId authId: String?, publisherData: SPPublisherData?)
     @objc func customConsentGDPR(
         vendors: [String],
         categories: [String],

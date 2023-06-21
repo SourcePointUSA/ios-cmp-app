@@ -23,7 +23,7 @@ struct PvDataRequestBody: Encodable, Equatable {
         let accountId: Int
         let siteId: Int
         let consentStatus: ConsentStatus
-        let pubData: [String: String]?
+        let pubData: SPPublisherData?
         let sampleRate: Float?
         let euconsent: String?
         let msgId: Int?
@@ -38,7 +38,7 @@ struct PvDataRequestBody: Encodable, Equatable {
         let accountId: Int
         let siteId: Int
         let consentStatus: ConsentStatus
-        let pubData: [String: String]?
+        let pubData: SPPublisherData?
         let messageId: Int?
         let sampleRate: Float?
     }
