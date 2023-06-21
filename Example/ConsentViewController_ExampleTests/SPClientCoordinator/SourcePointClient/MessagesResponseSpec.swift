@@ -61,7 +61,6 @@ class MessagesResponseSpec: QuickSpec {
             "rejectedVendors": [],
             "rejectedAll": false,
             "status": "rejectedNone",
-            "uspstring": "1YNN",
             "message": {
                 "message_json": {},
                 "message_choice": [],

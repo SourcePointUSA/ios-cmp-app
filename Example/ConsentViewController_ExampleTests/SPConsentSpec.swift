@@ -12,7 +12,7 @@ import Foundation
 import Nimble
 import Quick
 
-class ConsentsProfileSpec: QuickSpec {
+class SPConsentSpec: QuickSpec {
     let ccpaConsents = """
         {
             "applies": true,
@@ -20,7 +20,6 @@ class ConsentsProfileSpec: QuickSpec {
                 "status": "rejectedNone",
                 "rejectedVendors": [],
                 "rejectedCategories": [],
-                "uspstring": "1---",
                 "consentStatus": {},
                 "signedLspa": false
             }
@@ -40,7 +39,7 @@ class ConsentsProfileSpec: QuickSpec {
     """
 
     override func spec() {
-        describe("SPConsents") {
+        describe("SPConsent") {
             describe("GDPR") {
                 it("can be decode from JSON") {
                     expect(self.gdprConsents).to(decodeToValue(
