@@ -25,6 +25,7 @@ class SPGDPRConsentsSpec: QuickSpec {
         it("is Codable") {
             let gdprCampaign = Result { """
                 {
+                    "applies": true,
                     "euconsent": "ABCD",
                     "grants": {},
                     "childPmId": null,
@@ -36,6 +37,7 @@ class SPGDPRConsentsSpec: QuickSpec {
             expect(consent.euconsent) == "ABCD"
             expect(consent.vendorGrants) == SPGDPRVendorGrants()
             expect(consent.childPmId).to(beNil())
+            expect(consent.applies).to(beTrue())
         }
 
         describe("acceptedCategories") {
