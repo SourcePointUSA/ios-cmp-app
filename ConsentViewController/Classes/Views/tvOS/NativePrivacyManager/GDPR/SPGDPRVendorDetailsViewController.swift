@@ -45,6 +45,9 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
+        if vendor?.disclosureOnlyCategories.isNotEmpty() ?? false {
+            hideOnOffButtons()
+        }
         if let vendorUrl = vendor?.policyUrl?.absoluteString {
             qrCodeImageView.image = QRCode(from: vendorUrl)
             qrCodeImageView.isHidden = qrCodeImageView.image == nil
@@ -67,6 +70,12 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             vendorManagerDelegate?.onVendorOff(vendor)
         }
         dismiss(animated: true)
+    }
+
+    func hideOnOffButtons() {
+        onButton.isHidden = true
+        offButton.isHidden = true
+        addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .rightLeft)
     }
 
     func setHeader () {

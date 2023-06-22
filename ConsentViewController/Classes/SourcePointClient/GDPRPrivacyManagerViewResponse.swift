@@ -18,7 +18,7 @@ struct GDPRVendor: Decodable {
         case iabSpecialPurposes, iabFeatures, iabSpecialFeatures
         case description, cookieHeader
         case vendorType
-        case consentCategories, legIntCategories
+        case consentCategories, legIntCategories, disclosureOnlyCategories
     }
 
     struct Category: Decodable {
@@ -32,8 +32,8 @@ struct GDPRVendor: Decodable {
     let policyUrl: URL?
     let description, cookieHeader: String?
     let vendorType: VendorType
-    let consentCategories, legIntCategories: [Category]
-    let iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
+    let consentCategories, legIntCategories, disclosureOnlyCategories: [Category]
+    var iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
@@ -46,7 +46,13 @@ struct GDPRVendor: Decodable {
         cookieHeader = try container.decodeIfPresent(String.self, forKey: .cookieHeader)
         consentCategories = try container.decode([Category].self, forKey: .consentCategories)
         legIntCategories = try container.decode([Category].self, forKey: .legIntCategories)
+        disclosureOnlyCategories = try container.decode([Category].self, forKey: .disclosureOnlyCategories)
         iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
+        if disclosureOnlyCategories.isNotEmpty() {
+            for category in disclosureOnlyCategories {
+                iabSpecialPurposes.append(category.name)
+            }
+        }
         iabFeatures = try container.decode([String].self, forKey: .iabFeatures)
         iabSpecialFeatures = try container.decode([String].self, forKey: .iabSpecialFeatures)
     }
