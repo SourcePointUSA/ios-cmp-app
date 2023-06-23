@@ -255,6 +255,14 @@ using UInt = size_t;
 
 #if defined(__OBJC__)
 
+SWIFT_CLASS("_TtC21ConsentViewController12AnyEncodable")
+@interface AnyEncodable : NSObject
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
 /// Indicates the consent status of a given user.
 typedef SWIFT_ENUM(NSInteger, CCPAConsentStatus, open) {
 /// Indicates the user has rejected none of the vendors or purposes (categories)
@@ -541,6 +549,8 @@ SWIFT_CLASS("_TtC21ConsentViewController8SPAction")
 @property (nonatomic, copy) NSURL * _Nullable pmURL;
 @property (nonatomic, readonly, copy) NSString * _Nullable pmId;
 @property (nonatomic, copy) NSDictionary<NSString *, NSString *> * _Nonnull publisherData;
+/// This property will be renamed to <code>publisherData</code> in the next major release
+@property (nonatomic, copy) NSDictionary<NSString *, AnyEncodable *> * _Nonnull encodablePubData;
 @property (nonatomic, copy) NSString * _Nullable customActionId;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
@@ -758,6 +768,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns language:(enum SPMessageLanguage)language delegate:(id <SPDelegate> _Nullable)delegate;
 + (void)clearAllData;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId spPublisherData:(NSDictionary<NSString *, AnyEncodable *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
@@ -772,6 +783,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 + (void)clearAllData;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId spPublisherData:(NSDictionary<NSString *, AnyEncodable *> * _Nullable)publisherData;
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
@@ -1372,6 +1384,14 @@ using UInt = size_t;
 
 #if defined(__OBJC__)
 
+SWIFT_CLASS("_TtC21ConsentViewController12AnyEncodable")
+@interface AnyEncodable : NSObject
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
 /// Indicates the consent status of a given user.
 typedef SWIFT_ENUM(NSInteger, CCPAConsentStatus, open) {
 /// Indicates the user has rejected none of the vendors or purposes (categories)
@@ -1658,6 +1678,8 @@ SWIFT_CLASS("_TtC21ConsentViewController8SPAction")
 @property (nonatomic, copy) NSURL * _Nullable pmURL;
 @property (nonatomic, readonly, copy) NSString * _Nullable pmId;
 @property (nonatomic, copy) NSDictionary<NSString *, NSString *> * _Nonnull publisherData;
+/// This property will be renamed to <code>publisherData</code> in the next major release
+@property (nonatomic, copy) NSDictionary<NSString *, AnyEncodable *> * _Nonnull encodablePubData;
 @property (nonatomic, copy) NSString * _Nullable customActionId;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
@@ -1875,6 +1897,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (nonnull instancetype)initWithAccountId:(NSInteger)accountId propertyId:(NSInteger)propertyId propertyName:(SPPropertyName * _Nonnull)propertyName campaigns:(SPCampaigns * _Nonnull)campaigns language:(enum SPMessageLanguage)language delegate:(id <SPDelegate> _Nullable)delegate;
 + (void)clearAllData;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId spPublisherData:(NSDictionary<NSString *, AnyEncodable *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 @end
@@ -1889,6 +1912,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 + (void)clearAllData;
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId publisherData:(NSDictionary<NSString *, NSString *> * _Nullable)publisherData;
+- (void)loadMessageForAuthId:(NSString * _Nullable)authId spPublisherData:(NSDictionary<NSString *, AnyEncodable *> * _Nullable)publisherData;
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;

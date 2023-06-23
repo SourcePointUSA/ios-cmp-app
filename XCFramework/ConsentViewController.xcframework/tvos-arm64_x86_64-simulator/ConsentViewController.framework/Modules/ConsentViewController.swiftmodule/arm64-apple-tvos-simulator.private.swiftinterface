@@ -58,7 +58,11 @@ public let MockNativePMResponse: Swift.String
     @objc get
   }
   public var pmPayload: ConsentViewController.SPJson
-  @objc public var publisherData: ConsentViewController.SPPublisherData
+  @objc public var publisherData: [Swift.String : Swift.String] {
+    @objc get
+    @objc set
+  }
+  @objc public var encodablePubData: ConsentViewController.SPPublisherData
   @objc public var customActionId: Swift.String?
   @objc override dynamic public var description: Swift.String {
     @objc get
@@ -174,6 +178,7 @@ extension ConsentViewController.SPCampaignType : Swift.Codable {
     @objc get
   }
   @objc public static func clearAllData()
+  @objc dynamic public func loadMessage(forAuthId authId: Swift.String? = nil, publisherData: [Swift.String : Swift.String]? = [:])
   @objc dynamic public func loadMessage(forAuthId authId: Swift.String? = nil, publisherData: ConsentViewController.SPPublisherData? = [:])
   @objc dynamic public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   @objc dynamic public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
@@ -581,11 +586,11 @@ public typealias SPGDPRPurposeId = Swift.String
   @objc override dynamic open var description: Swift.String {
     @objc get
   }
+  required public init(from decoder: Swift.Decoder) throws
   @objc public static func empty() -> ConsentViewController.SPGDPRConsent
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
 }
 @objc public enum SPIDFAStatus : Swift.Int, Swift.CaseIterable, Swift.CustomStringConvertible {
   case unknown = 0
@@ -831,7 +836,13 @@ extension ConsentViewController.SPJson {
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc deinit
 }
-public typealias SPPublisherData = [Swift.String : Swift.String]
+public typealias SPPublisherData = [Swift.String : ConsentViewController.AnyEncodable]
+@objc @objcMembers public class AnyEncodable : ObjectiveC.NSObject, Swift.Encodable {
+  public init(_ value: Swift.Encodable?)
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+  @objc deinit
+}
 @objc public protocol SPCCPA {
   @objc var ccpaApplies: Swift.Bool { get }
   @objc func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab, useGroupPmIfAvailable: Swift.Bool)
@@ -849,7 +860,8 @@ public typealias SPPublisherData = [Swift.String : Swift.String]
   @objc var userData: ConsentViewController.SPUserData { get }
   @objc init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, language: ConsentViewController.SPMessageLanguage, delegate: ConsentViewController.SPDelegate?)
   @objc static func clearAllData()
-  @objc func loadMessage(forAuthId authId: Swift.String?, publisherData: ConsentViewController.SPPublisherData?)
+  @objc func loadMessage(forAuthId authId: Swift.String?, publisherData: [Swift.String : Swift.String]?)
+  @objc(loadMessageForAuthId:spPublisherData:) func loadMessage(forAuthId authId: Swift.String?, publisherData: ConsentViewController.SPPublisherData?)
   @objc func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
   @objc func deleteCustomConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
 }
