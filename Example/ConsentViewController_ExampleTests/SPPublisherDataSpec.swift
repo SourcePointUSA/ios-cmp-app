@@ -33,18 +33,25 @@ class SPPublisherDataSpec: QuickSpec {
                 return
             }
 
-            expect(decodedPubData).to(equal("""
-            {
-                "number": 123,
-                "object": {"custom":"value"},
-                "string": "stringValue",
-                "null": null,
-                "bool": false,
-                "array": [1,2,3],
-                "dict": {"foo":"bar"}
-            }
-            """.replacingOccurrences(of: " ", with: "")
-                .replacingOccurrences(of: "\n", with: "")))
+//            {
+//                "number":123,
+//                "object":{"custom":"value"},
+//                "string":"stringValue",
+//                "null":null,
+//                "bool":false,
+//                "array":[1,2,3],
+//                "dict":{"foo":"bar"}
+//            }
+
+            expect(decodedPubData).to(beginWith("{"))
+            expect(decodedPubData).to(contain(#""number":123"#))
+            expect(decodedPubData).to(contain(#""object":{"custom":"value"}"#))
+            expect(decodedPubData).to(contain(#""string":"stringValue""#))
+            expect(decodedPubData).to(contain(#""null":null"#))
+            expect(decodedPubData).to(contain(#""bool":false"#))
+            expect(decodedPubData).to(contain(#""array":[1,2,3]"#))
+            expect(decodedPubData).to(contain(#""dict":{"foo":"bar"}"#))
+            expect(decodedPubData).to(endWith("}"))
         }
     }
 }

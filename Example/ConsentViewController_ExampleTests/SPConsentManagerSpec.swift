@@ -15,11 +15,14 @@ import Quick
 
 class SPConsentManagerSpec: QuickSpec {
     override func spec() {
-        SPConsentManager.clearAllData()
+        let accountId = 22, propertyId = 16_893
+        let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
+        let campaigns = SPCampaigns(gdpr: SPCampaign(), ccpa: SPCampaign())
 
-        var coordinator: SourcepointClientCoordinator!
+        var manager: SPConsentManager!
 
         beforeSuite {
+            SPConsentManager.clearAllData()
             Nimble.AsyncDefaults.timeout = .seconds(30)
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
@@ -30,21 +33,17 @@ class SPConsentManagerSpec: QuickSpec {
         }
 
         beforeEach {
-            coordinator = SourcepointClientCoordinator(
-                accountId: 22,
-                propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
-                propertyId: 16_893,
-                campaigns: SPCampaigns(
-                    gdpr: SPCampaign(),
-                    ccpa: SPCampaign()
-                ),
-                storage: LocalStorageMock()
+            manager = SPConsentManager(
+                accountId: accountId,
+                propertyId: propertyId,
+                propertyName: propertyName,
+                campaigns: campaigns,
+                delegate: nil
             )
         }
 
         describe("selectPrivacyManagerId") {
             it("сhecks logic of selectPrivacyManagerId") {
-                let manager = SPConsentManager(accountId: 1, propertyId: 1, propertyName: coordinator.propertyName, campaigns: coordinator.campaigns, delegate: nil)
                 expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: "2", childPmId: "3")).to(equal("3"))
                 expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: nil, childPmId: "3")).to(equal("1"))
                 expect(manager.selectPrivacyManagerId(fallbackId: "1", groupPmId: "2", childPmId: nil)).to(equal("1"))
@@ -55,31 +54,85 @@ class SPConsentManagerSpec: QuickSpec {
         describe("buildPrivacyManagerUrl") {
             describe("gdpr") {
                 it("build URL with the right parameters") {
-                    let manager = SPConsentManager(accountId: 1, propertyId: 1, propertyName: coordinator.propertyName, campaigns: coordinator.campaigns, delegate: nil)
                     manager.messageLanguage = .Spanish
                     let idfaStatus = manager.idfaStatus.description
                     let pmUrl = manager.buildGDPRPmUrl(usedId: "1")
                     let uuid = manager.userData.gdpr?.consents?.uuid
                     let uuidParam = uuid != nil ? "=\(uuid!)" : ""
 
-                    let testUrl = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?consentLanguage=ES&consentUUID\(uuidParam )&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=1"
+                    let testUrl = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?consentLanguage=ES&consentUUID\(uuidParam )&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
 
                     expect(pmUrl?.absoluteString).to(equal(testUrl))
                 }
             }
             describe("ccpa") {
                 it("build URL with the right parameters") {
-                    let manager = SPConsentManager(accountId: 1, propertyId: 1, propertyName: coordinator.propertyName, campaigns: coordinator.campaigns, delegate: nil)
                     manager.messageLanguage = .Spanish
                     let idfaStatus = manager.idfaStatus.description
                     let pmUrl = manager.buildCCPAPmUrl(usedId: "1")
                     let uuid = manager.userData.ccpa?.consents?.uuid
                     let uuidParam = uuid != nil ? "=\(uuid!)" : ""
 
-                    let testUrl = "https://cdn.privacy-mgmt.com/ccpa_pm/index.html?consentLanguage=ES&consentUUID\(uuidParam)&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=1"
+                    let testUrl = "https://cdn.privacy-mgmt.com/ccpa_pm/index.html?consentLanguage=ES&consentUUID\(uuidParam)&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
 
                     expect(pmUrl?.absoluteString).to(equal(testUrl))
                 }
+            }
+        }
+
+        describe("userData") {
+            it("has default data before loadMessage is called") {
+                let userData = manager.userData
+                expect(userData.gdpr).to(equal(SPConsent(consents: SPGDPRConsent.empty(), applies: false)))
+                expect(userData.ccpa).to(equal(SPConsent(consents: SPCCPAConsent.empty(), applies: false)))
+            }
+
+            it("returns cached data if there's some") {
+                let cachedUserData = SPUserData(
+                    gdpr: .init(
+                        consents: .init(
+                            uuid: "GDPR uuid",
+                            vendorGrants: [:],
+                            euconsent: "",
+                            tcfData: SPJson()
+                        ),
+                        applies: true
+                    ),
+                    ccpa: .init(
+                        consents: .init(
+                            uuid: "CCPA uuid",
+                            status: .Unknown,
+                            rejectedVendors: [],
+                            rejectedCategories: [],
+                            signedLspa: true
+                        ),
+                        applies: true
+                    )
+                )
+                let mockStorage = LocalStorageMock()
+                mockStorage.userData = cachedUserData
+                let mockCoordinator = SourcepointClientCoordinator(
+                    accountId: accountId,
+                    propertyName: propertyName,
+                    propertyId: propertyId,
+                    campaigns: campaigns,
+                    storage: mockStorage
+                )
+                manager = SPConsentManager(
+                    propertyId: propertyId,
+                    campaigns: campaigns,
+                    language: .BrowserDefault,
+                    delegate: nil,
+                    spClient: SourcePointClientMock(
+                        accountId: accountId,
+                        propertyName: propertyName,
+                        campaignEnv: .Public,
+                        timeout: 999
+                    ),
+                    storage: mockStorage,
+                    spCoordinator: mockCoordinator
+                )
+                expect(manager.userData).to(equal(cachedUserData))
             }
         }
     }

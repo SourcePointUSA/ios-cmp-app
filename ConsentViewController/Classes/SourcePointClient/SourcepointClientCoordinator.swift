@@ -264,11 +264,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns) -> State {
         var localState = localStorage.spState ?? .init()
         if localCampaigns.gdpr != nil, localState.gdpr == nil {
-            localState.gdpr = .empty()
+            localState.gdpr = localStorage.userData.gdpr?.consents ?? .empty()
+            localState.gdpr?.applies = localStorage.userData.gdpr?.applies ?? false
             localState.gdprMetaData = .init()
         }
         if localCampaigns.ccpa != nil, localState.ccpa == nil {
-            localState.ccpa = .empty()
+            localState.ccpa = localStorage.userData.ccpa?.consents ?? .empty()
+            localState.ccpa?.applies = localStorage.userData.ccpa?.applies ?? false
             localState.ccpaMetaData = .init()
         }
         if localCampaigns.ios14 != nil, localState.ios14 == nil {

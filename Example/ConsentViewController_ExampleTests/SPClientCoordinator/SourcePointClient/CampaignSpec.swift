@@ -73,7 +73,6 @@ class CampaignSpec: QuickSpec {
                 "rejectedVendors": [],
                 "rejectedAll": false,
                 "status": "rejectedNone",
-                "uspstring": "1YNN",
                 "signedLspa": true
             }
             """

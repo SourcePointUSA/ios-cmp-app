@@ -65,6 +65,7 @@ public typealias SPGDPRPurposeId = String
  */
 @objcMembers public class SPGDPRConsent: NSObject, Codable, CampaignConsent {
     enum CodingKeys: String, CodingKey {
+        case applies
         case uuid
         case euconsent
         case tcfData = "TCData"
@@ -141,6 +142,18 @@ public typealias SPGDPRPurposeId = String
             euconsent: \(euconsent)
         )
         """
+    }
+
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
+        self.uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
+        self.euconsent = try container.decode(String.self, forKey: .euconsent)
+        self.tcfData = try container.decodeIfPresent(SPJson.self, forKey: .tcfData)
+        self.vendorGrants = try container.decode(SPGDPRVendorGrants.self, forKey: .vendorGrants)
+        self.childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
+        self.consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
+        self.webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
     }
 
     init(

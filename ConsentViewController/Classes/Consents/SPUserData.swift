@@ -33,6 +33,7 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     /// The consents data. See: `SPGDPRConsent`, `SPCCPAConsent`
     public let consents: ConsentType?
 
+    // TODO: deprecate this attribute in favour of ConsentType.applies
     /// Indicates whether the legislation applies to the current session or not.
     /// This is based on your Vendor List configuration (scope of the vendor list) and will be determined
     /// based on the user's IP. **SP does not store the user's IP.**
@@ -79,18 +80,10 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
 
     override open func isEqual(_ object: Any?) -> Bool {
         if let object = object as? SPUserData {
-            return  self.gdpr?.applies == object.gdpr?.applies &&
-                    self.gdpr?.consents?.uuid == object.gdpr?.consents?.uuid &&
-                    self.gdpr?.consents?.euconsent == object.gdpr?.consents?.euconsent &&
-                    self.gdpr?.consents?.childPmId == object.gdpr?.consents?.childPmId &&
-                    self.gdpr?.consents?.tcfData == object.gdpr?.consents?.tcfData &&
-                    self.gdpr?.consents?.vendorGrants == object.gdpr?.consents?.vendorGrants &&
-                    self.ccpa?.applies == object.ccpa?.applies &&
-                    self.ccpa?.consents?.uuid == object.ccpa?.consents?.uuid &&
-                    self.ccpa?.consents?.childPmId == object.ccpa?.consents?.childPmId &&
-                    self.ccpa?.consents?.status == object.ccpa?.consents?.status &&
-                    self.ccpa?.consents?.uspstring == object.ccpa?.consents?.uspstring &&
-                    self.ccpa?.consents?.rejectedVendors == object.ccpa?.consents?.rejectedVendors
+            return  gdpr?.applies == object.gdpr?.applies &&
+                    gdpr?.consents == object.gdpr?.consents &&
+                    ccpa?.applies == object.ccpa?.applies &&
+                    ccpa?.consents == object.ccpa?.consents
         } else {
             return false
         }
