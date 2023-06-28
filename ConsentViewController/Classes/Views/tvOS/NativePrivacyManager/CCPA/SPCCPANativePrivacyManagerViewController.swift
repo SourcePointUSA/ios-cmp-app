@@ -31,6 +31,7 @@ import UIKit
     @IBOutlet var rejectButton: SPAppleTVButton!
     @IBOutlet var saveAndExitButton: SPAppleTVButton!
     @IBOutlet var privacyPolicyButton: SPAppleTVButton!
+    @IBOutlet var customViewButton: SPAppleTVButton!
     @IBOutlet var doNotSellTableView: UITableView!
     @IBOutlet var actionsContainer: UIStackView!
 
