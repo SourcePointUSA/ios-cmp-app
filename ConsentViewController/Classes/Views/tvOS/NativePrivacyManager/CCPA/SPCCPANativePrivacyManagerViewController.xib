@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="21225" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="21507" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="acceptButton" destination="7Jl-Fv-EUl" id="ul7-lI-WPS"/>
                 <outlet property="actionsContainer" destination="KAo-n6-Z8y" id="bpl-ic-Qv7"/>
+                <outlet property="customViewButton" destination="y42-Fe-M6A" id="wQo-ZQ-9r9"/>
                 <outlet property="descriptionTextView" destination="JAT-0K-Z6o" id="Shc-Rj-GKP"/>
                 <outlet property="doNotSellTableView" destination="HVs-YH-qhj" id="uYh-GA-Xuy"/>
                 <outlet property="header" destination="oRM-Q5-ya9" id="Ejd-R8-DIW"/>
@@ -48,19 +49,19 @@
                                     <rect key="frame" x="0.0" y="0.0" width="880" height="852"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gkm-7r-4K2">
-                                            <rect key="frame" x="240" y="0.0" width="400" height="400"/>
+                                            <rect key="frame" x="260" y="0.0" width="360" height="360"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="400" id="QYb-9O-LSz"/>
-                                                <constraint firstAttribute="width" constant="400" id="dbF-fc-VEI"/>
+                                                <constraint firstAttribute="height" constant="360" id="QYb-9O-LSz"/>
+                                                <constraint firstAttribute="width" constant="360" id="dbF-fc-VEI"/>
                                             </constraints>
                                         </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="ActionsContainer">
-                                            <rect key="frame" x="190" y="432" width="500" height="420"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="ActionsContainer">
+                                            <rect key="frame" x="190" y="422" width="500" height="526"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="62"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="60"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="62" id="rg2-Sf-ObF"/>
+                                                        <constraint firstAttribute="height" constant="60" id="rg2-Sf-ObF"/>
                                                     </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Accept All"/>
@@ -69,9 +70,9 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWr-aU-k6X" userLabel="Reject All" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="70" width="500" height="62"/>
+                                                    <rect key="frame" x="0.0" y="68" width="500" height="60"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="62" id="GeS-pe-NgB"/>
+                                                        <constraint firstAttribute="height" constant="60" id="GeS-pe-NgB"/>
                                                     </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Reject All"/>
@@ -79,10 +80,10 @@
                                                         <action selector="onRejectTap:" destination="-1" eventType="primaryActionTriggered" id="clx-v5-XaV"/>
                                                     </connections>
                                                 </button>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoA-bE-aCY" userLabel="Save &amp; Exit" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoA-bE-aCY" userLabel="Save &amp; Exit" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="136" width="500" height="60"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="62" id="qXb-3y-oe0"/>
+                                                        <constraint firstAttribute="height" constant="60" id="qXb-3y-oe0"/>
                                                     </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Save &amp; Exit"/>
@@ -90,10 +91,10 @@
                                                         <action selector="onSaveAndExitTap:" destination="-1" eventType="primaryActionTriggered" id="GcH-67-O1V"/>
                                                     </connections>
                                                 </button>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaN-Kj-XpH" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NaN-Kj-XpH" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="204" width="500" height="60"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="62" id="0HQ-jQ-rvk"/>
+                                                        <constraint firstAttribute="height" constant="60" id="0HQ-jQ-rvk"/>
                                                     </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Manage Preference"/>
@@ -101,10 +102,10 @@
                                                         <action selector="onManagePreferenceTap:" destination="-1" eventType="primaryActionTriggered" id="oZQ-PN-Mh8"/>
                                                     </connections>
                                                 </button>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAh-er-2XQ" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZAh-er-2XQ" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="272" width="500" height="60"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="62" id="cVL-Lc-jZS"/>
+                                                        <constraint firstAttribute="height" constant="60" id="cVL-Lc-jZS"/>
                                                     </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Our Partners"/>
@@ -112,10 +113,10 @@
                                                         <action selector="onPartnersTap:" destination="-1" eventType="primaryActionTriggered" id="ddN-GT-VO2"/>
                                                     </connections>
                                                 </button>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-4F-WQC" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="136" width="500" height="62"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-4F-WQC" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="340" width="500" height="60"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="62" id="jVm-rj-ic1"/>
+                                                        <constraint firstAttribute="height" constant="60" id="jVm-rj-ic1"/>
                                                     </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Privacy Policy"/>
@@ -123,13 +124,24 @@
                                                         <action selector="onPrivacyPolicyTap:" destination="-1" eventType="primaryActionTriggered" id="EAf-xR-d5U"/>
                                                     </connections>
                                                 </button>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRh-hi-Kqi" userLabel="Spacer">
-                                                    <rect key="frame" x="0.0" y="140" width="500" height="280"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y42-Fe-M6A" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="408" width="500" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="gkW-7k-9iG"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                    <state key="normal" title="Custom View"/>
+                                                    <connections>
+                                                        <action selector="onCustomViewTap:" destination="-1" eventType="primaryActionTriggered" id="atU-kM-GBv"/>
+                                                        <action selector="onPrivacyPolicyTap:" destination="-1" eventType="primaryActionTriggered" id="LaG-OY-Dmp"/>
+                                                    </connections>
+                                                </button>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRh-hi-Kqi" userLabel="Spacer">
+                                                    <rect key="frame" x="0.0" y="476" width="500" height="50"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="420" id="2hV-jR-gFy"/>
                                                 <constraint firstAttribute="width" constant="500" id="DJX-4e-9AZ"/>
                                             </constraints>
                                         </stackView>

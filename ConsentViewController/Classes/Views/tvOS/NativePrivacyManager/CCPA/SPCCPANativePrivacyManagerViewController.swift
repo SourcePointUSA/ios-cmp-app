@@ -39,14 +39,16 @@ import UIKit
         super.viewDidLoad()
         initConsentsSnapshot()
         setHeader()
+        let showBtn = pmData.rootView.settingsRoot
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
         descriptionTextView.flashScrollIndicators()
-        loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
-        loadButton(forComponentId: "RejectAllButton", button: rejectButton)
-        loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton)
-        loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
-        loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
-        loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
+        loadButton(forComponentId: "AcceptAllButton", button: acceptButton, show: showBtn.showAcceptAllBtn)
+        loadButton(forComponentId: "RejectAllButton", button: rejectButton, show: showBtn.showRejectAllBtn)
+        loadButton(forComponentId: "SaveAndExitButton", button: saveAndExitButton, show: showBtn.showSaveAndExitBtn)
+        loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton, show: showBtn.showCategoriesBtn)
+        loadButton(forComponentId: "NavVendorsButton", button: ourPartners, show: showBtn.showVendorsBtn)
+        loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton, show: showBtn.showPrivacyPolicyBtn)
+        loadButton(forComponentId: "NavCustomButton", button: customViewButton, show: showBtn.showCustomBtn)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         setDoNotSellButton()
         setFocusGuidesForButtons()
@@ -174,6 +176,21 @@ import UIKit
             pmData: pmData,
             delegate: self,
             nibName: "SPPrivacyPolicyViewController"
+        ), animated: true)
+    }
+    
+    @IBAction func onCustomViewTap(_ sender: Any) {
+        guard let customView = pmData.customView else {
+            onError(UnableToFindView(withId: "CustomView"))
+            return
+        }
+        present(SPPrivacyPolicyViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: customView,
+            pmData: pmData,
+            delegate: self,
+            nibName: "SPCustomViewController"
         ), animated: true)
     }
 

@@ -67,6 +67,16 @@ class SPNativeUISettings: NSObject, Decodable {
     let style: SPNativeStyle?
 }
 
+class SPNativeUIRootSettings: NSObject, Decodable {
+    let showCategoriesBtn: Bool?
+    let showVendorsBtn: Bool?
+    let showPrivacyPolicyBtn: Bool?
+    let showCustomBtn: Bool?
+    let showRejectAllBtn: Bool?
+    let showSaveAndExitBtn: Bool?
+    let showAcceptAllBtn: Bool?
+}
+
 class SPNativeUISettingsText: SPNativeUISettings {
     enum Keys: CodingKey {
         case text
@@ -134,6 +144,20 @@ class SPNativeView: SPNativeUI {
 
     func byId(_ id: String) -> SPNativeUI? {
         children.first { $0.id == id }
+    }
+}
+
+class SPNativeRootView: SPNativeView {
+    
+    enum CodingKeys: String, CodingKey {
+        case settings
+    }
+    var settingsRoot: SPNativeUIRootSettings
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        settingsRoot = try container.decode(SPNativeUIRootSettings.self, forKey: .settings)
+        try super.init(from: decoder)
     }
 }
 
