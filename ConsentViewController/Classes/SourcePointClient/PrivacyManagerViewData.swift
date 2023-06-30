@@ -18,7 +18,6 @@ struct PrivacyManagerViewData {
     var rootView: SPNativeRootView
     let homeView, categoriesView, vendorsView, categoryDetailsView, vendorDetailsView: SPNativeView
     let privacyPolicyView, customView: SPNativeView?
-    //let settings: SPNativeUIRootSettings?
 }
 
 extension PrivacyManagerViewData {

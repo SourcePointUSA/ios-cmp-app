@@ -181,8 +181,8 @@ class FocusGuideDebugView: UIView {
 
     @nonobjc
     @discardableResult
-    func loadButton(forComponentId id: String, button: SPAppleTVButton, show: Bool? = true) -> UIButton {
-        if let action = components.first(where: { $0.id == id }) as? SPNativeButton, show ?? true {
+    func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton {
+        if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             button.isHidden = false
             button.setTitle(action.settings.text, for: .normal)
             button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
