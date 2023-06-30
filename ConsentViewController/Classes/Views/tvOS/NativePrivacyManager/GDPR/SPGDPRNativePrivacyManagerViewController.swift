@@ -45,7 +45,6 @@ protocol SPNativePrivacyManagerHome {
         super.viewDidLoad()
         view.accessibilityIdentifier = "GDPR Message"
         setHeader()
-        let showBtn = pmData.rootView.settingsRoot
         loadTextView(forComponentId: "PublisherDescription", textView: descriptionTextView, bounces: false)
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
