@@ -67,7 +67,7 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
     }
 
     func setHeader () {
-        headerView.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        loadButton(forComponentId: "BackButton", button: headerView.backButton)
         headerView.spTitleText = viewData.byId("Header") as? SPNativeText
         headerView.titleLabel.text = vendor?.name
         headerView.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }

@@ -96,7 +96,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     func setHeader() {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        loadButton(forComponentId: "BackButton", button: header.backButton)
         header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }

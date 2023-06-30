@@ -193,7 +193,7 @@ protocol SPNativePrivacyManagerHome {
     }
 
     func setHeader () {
-        header.spBackButton = viewData.byId("CloseButton") as? SPNativeButton
+        loadButton(forComponentId: "BackButton", button: header.backButton)
         header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in
             if let this = self {

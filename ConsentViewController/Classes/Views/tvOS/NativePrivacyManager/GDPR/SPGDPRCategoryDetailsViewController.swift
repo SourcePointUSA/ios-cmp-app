@@ -62,7 +62,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     }
 
     func setHeader() {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        loadButton(forComponentId: "BackButton", button: header.backButton)
         header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.titleLabel.text = category?.name
         header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
