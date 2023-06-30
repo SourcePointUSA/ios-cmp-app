@@ -178,19 +178,38 @@ class FocusGuideDebugView: UIView {
         }
         return imageView
     }
-
+    
+    func getStyle(newStyle: SPNativeStyle?, standart: Bool = false) -> Constants.UI.StandartStyle {
+        if (newStyle != nil) || !standart {
+            var style = Constants.UI.StandartStyle()
+            let newStyle = newStyle!
+            style.backgroundColor = newStyle.backgroundColor ?? style.backgroundColor
+            style.activeBackgroundColor = newStyle.activeBackgroundColor ?? style.activeBackgroundColor
+            style.onFocusTextColor = newStyle.onFocusTextColor ?? style.onFocusTextColor
+            style.onUnfocusTextColor = newStyle.onUnfocusTextColor ?? style.onUnfocusTextColor
+            style.onFocusBackgroundColor = newStyle.onFocusBackgroundColor ?? style.onFocusBackgroundColor
+            style.onUnfocusBackgroundColor = newStyle.onUnfocusBackgroundColor ?? style.onUnfocusBackgroundColor
+            style.font = newStyle.font ?? style.font
+            style.activeFont = newStyle.activeFont ?? style.activeFont
+            return style
+        } else {
+            return Constants.UI.StandartStyle()
+        }
+    }
+    
     @nonobjc
     @discardableResult
     func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
+            let style = getStyle(newStyle: action.settings.style)
             button.isHidden = false
             button.setTitle(action.settings.text, for: .normal)
-            button.setTitleColor(UIColor(hexString: action.settings.style?.onUnfocusTextColor), for: .normal)
-            button.setTitleColor(UIColor(hexString: action.settings.style?.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: action.settings.style?.onUnfocusBackgroundColor)
-            button.onUnfocusBackgroundColor = button.backgroundColor ?? view.backgroundColor
-            button.onFocusBackgroundColor = UIColor(hexString: action.settings.style?.onFocusBackgroundColor)
-            button.titleLabel?.font = UIFont(from: action.settings.style?.font)
+            button.setTitleColor(UIColor(hexString: style.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: style.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: style.onUnfocusBackgroundColor)
+            button.onUnfocusBackgroundColor = button.backgroundColor
+            button.onFocusBackgroundColor = UIColor(hexString: style.onFocusBackgroundColor)
+            button.titleLabel?.font = UIFont(from: style.font)
             button.layer.cornerRadius = 12
         } else {
             button.isHidden = true

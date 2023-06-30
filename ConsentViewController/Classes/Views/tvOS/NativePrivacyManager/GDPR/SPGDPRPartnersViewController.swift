@@ -40,7 +40,6 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        //loadButton(forComponentId: "BackButton", button: header.spBackButton as! SPAppleTVButton)
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)

@@ -9,22 +9,28 @@ import Foundation
 import UIKit
 
 @objcMembers class SPNativeFont: NSObject, Codable {
-    let fontSize: CGFloat
-    let fontWeight: String
-    let color: String?
-    let fontFamily: String
+    var fontSize: CGFloat
+    var fontWeight: String
+    var color: String?
+    var fontFamily: String
+    
+    init(fontSize: CGFloat, fontWeight: String, fontFamily: String) {
+        self.fontSize = fontSize
+        self.fontWeight = fontWeight
+        self.fontFamily = fontFamily
+    }
 }
 
 @objcMembers class SPNativeStyle: NSObject, Codable {
-    let backgroundColor: String?
+    var backgroundColor: String?
 //    let width: Int?
-    let font: SPNativeFont?
-    let onFocusBackgroundColor: String?
-    let onUnfocusBackgroundColor: String?
-    let onFocusTextColor: String?
-    let onUnfocusTextColor: String?
-    let activeBackgroundColor: String?
-    let activeFont: SPNativeFont?
+    var font: SPNativeFont?
+    var onFocusBackgroundColor: String?
+    var onUnfocusBackgroundColor: String?
+    var onFocusTextColor: String?
+    var onUnfocusTextColor: String?
+    var activeBackgroundColor: String?
+    var activeFont: SPNativeFont?
 }
 
 enum SPNativeUIType: Int, Equatable {
