@@ -382,6 +382,8 @@
 		A947E91D304F0EF7932F96962316067A /* Pods-ObjC-ExampleAppUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAFEE9F8D9EE1D309453F1F7B3350B6 /* Pods-ObjC-ExampleAppUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9CC52FBD38BC896C8E0092D040B53D4 /* MetaDataRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AFD31AA72D022ED6847FF6D786C87F /* MetaDataRequestResponse.swift */; };
 		A9DDBF47B6A3A38A8244DE1FAFE1254B /* CCPAPMConsentSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B92DA0CE8431B0FEE9602E5C273DA5 /* CCPAPMConsentSnapshot.swift */; };
+		AABEAF402A4C348300E2884F /* SPCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABEAF3E2A4C348300E2884F /* SPCustomViewController.swift */; };
+		AABEAF412A4C348300E2884F /* SPCustomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AABEAF3F2A4C348300E2884F /* SPCustomViewController.xib */; };
 		AAF35204BCEE0940392182AC2C3BD433 /* SPDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C226166F091FB10B72528347C16166C /* SPDelegate.swift */; };
 		AD093644A6A013EC69FBCEFEAC2020C7 /* SPPMHeader.xib in Sources */ = {isa = PBXBuildFile; fileRef = A316EDE8B1EC9F35474F7D9302DDC5A9 /* SPPMHeader.xib */; };
 		AD339269E07492BECD8651EEDA0C2ACA /* SPJSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = D7B79DC7F681FB430A19707DCB2587D0 /* SPJSReceiver.js */; };
@@ -1201,7 +1203,9 @@
 		AA419EAEB778AA2B235EC76B0B4139C2 /* BeGreaterThan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeGreaterThan.swift; path = Sources/Nimble/Matchers/BeGreaterThan.swift; sourceTree = "<group>"; };
 		AA92ED38E716E03D3FC758C810953B95 /* Wormholy-Wormholy */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Wormholy-Wormholy"; path = Wormholy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAAF3B77E24437588DD0C1AC5865AAF0 /* IDFAStatusReportRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IDFAStatusReportRequest.swift; sourceTree = "<group>"; };
-		AB2550CBFD5F8584C33E5494713B4AEE /* jest.config.json */ = {isa = PBXFileReference; includeInIndex = 1; path = jest.config.json; sourceTree = "<group>"; };
+		AABEAF3E2A4C348300E2884F /* SPCustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCustomViewController.swift; sourceTree = "<group>"; };
+		AABEAF3F2A4C348300E2884F /* SPCustomViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCustomViewController.xib; sourceTree = "<group>"; };
+		AB2550CBFD5F8584C33E5494713B4AEE /* jest.config.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = jest.config.json; sourceTree = "<group>"; };
 		ABD6628D8C0F2EF1B89427447D9CC83D /* Pods-ObjC-ExampleApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ObjC-ExampleApp-acknowledgements.markdown"; sourceTree = "<group>"; };
 		AC2AC20448D5E51CE5E19444A588F7FD /* ConsentStatus.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsentStatus.swift; sourceTree = "<group>"; };
 		AC426A9D72F2B0F3506325D00A187126 /* HaveCount.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HaveCount.swift; path = Sources/Nimble/Matchers/HaveCount.swift; sourceTree = "<group>"; };
@@ -1890,6 +1894,8 @@
 				C29921C26EA356DDC4F2F1256F538EFA /* SPNativeScreenViewController.swift */,
 				9F06D0CA333241996CA4921B22E71EA5 /* SPPMHeader.swift */,
 				A316EDE8B1EC9F35474F7D9302DDC5A9 /* SPPMHeader.xib */,
+				AABEAF3E2A4C348300E2884F /* SPCustomViewController.swift */,
+				AABEAF3F2A4C348300E2884F /* SPCustomViewController.xib */,
 				88A070563EB21A02A860371B940DF4C0 /* SPPrivacyPolicyViewController.swift */,
 				3D3E1FC734E28F9955F063C636A9645D /* SPPrivacyPolicyViewController.xib */,
 				BDBB4D738D988D7EF15E49543CDE0C42 /* SPQRCode.swift */,
@@ -3409,6 +3415,7 @@
 				278F3580394056F0A414394AD7CA4CDC /* ConsentViewController-tvOS-ConsentViewController in Resources */,
 				D0E5B47F5293EDD20E38C51F6E29BA04 /* jest.config.json in Resources */,
 				B62E2535B7E9AC18D7845CA3CCCA6550 /* SP_Icon.png in Resources */,
+				AABEAF412A4C348300E2884F /* SPCustomViewController.xib in Resources */,
 				AD339269E07492BECD8651EEDA0C2ACA /* SPJSReceiver.js in Resources */,
 				0C00D29FADC002B064E360453E7D13FD /* SPJSReceiver.spec.js in Resources */,
 			);
@@ -3987,6 +3994,7 @@
 				99E4B8AF7A7AEF885CA46FDB4AE8925D /* SPGDPRPartnersViewController.xib in Sources */,
 				5B019CDF963454B38EFDE58CDF8F9E36 /* SPGDPRVendorDetailsViewController.swift in Sources */,
 				8E1B04BD3102F1C949EBAD104A0594E1 /* SPGDPRVendorDetailsViewController.xib in Sources */,
+				AABEAF402A4C348300E2884F /* SPCustomViewController.swift in Sources */,
 				791511215B44211FB7251C23FA9D8368 /* SPIDFAStatus.swift in Sources */,
 				4D58695F82D6B13A8FE2F0EE4A28F94A /* SPJson.swift in Sources */,
 				142CB3187A40D00280D74410EF192CA6 /* SPLocalStorage.swift in Sources */,
