@@ -179,8 +179,8 @@ class FocusGuideDebugView: UIView {
         return imageView
     }
     
-    func getStyle(newStyle: SPNativeStyle?, standart: Bool = false) -> Constants.UI.StandartStyle {
-        if (newStyle != nil) || !standart {
+    func getStyle(newStyle: SPNativeStyle?) -> Constants.UI.StandartStyle {
+        if (newStyle != nil) {
             var style = Constants.UI.StandartStyle()
             let newStyle = newStyle!
             style.backgroundColor = newStyle.backgroundColor ?? style.backgroundColor
@@ -220,10 +220,11 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
+            let style = getStyle(newStyle: textDetails.settings.style)
             label.text = ""
             label.attributedText = textDetails.settings.text.htmlToAttributedString
-            label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
-            label.font = UIFont(from: textDetails.settings.style?.font)
+            label.textColor = UIColor(hexString: style.font.color)
+            label.font = UIFont(from: style.font)
         }
         return label
     }
@@ -231,10 +232,11 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
+            let style = getStyle(newStyle: textDetails.settings.style)
             label.text = ""
             label.attributedText = text.htmlToAttributedString
-            label.textColor = UIColor(hexString: textDetails.settings.style?.font?.color)
-            label.font = UIFont(from: textDetails.settings.style?.font)
+            label.textColor = UIColor(hexString: style.font.color)
+            label.font = UIFont(from: style.font)
         }
         return label
     }
@@ -242,12 +244,13 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, bounces: Bool = true) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
+            let style = getStyle(newStyle: textViewComponent.settings.style)
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
             } else {
                 textView.attributedText = textViewComponent.settings.text.htmlToAttributedString
             }
-            textView.textColor = UIColor(hexString: textViewComponent.settings.style?.font?.color)
+            textView.textColor = UIColor(hexString: style.font.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
             textView.showsVerticalScrollIndicator = true
@@ -255,7 +258,7 @@ class FocusGuideDebugView: UIView {
             textView.panGestureRecognizer.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ]
-            textView.font = UIFont(from: textViewComponent.settings.style?.font)
+            textView.font = UIFont(from: style.font)
         }
         return textView
     }
@@ -265,18 +268,19 @@ class FocusGuideDebugView: UIView {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
             slider.setTitle(sliderDetails.settings.leftText, forSegmentAt: 0)
             slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
+            let style = getStyle(newStyle: sliderDetails.settings.style)
             if #available(tvOS 14.0, *) {
-                backgroundFor_v14(slider: slider, backgroundHex: sliderDetails.settings.style?.backgroundColor, activeBackground: sliderDetails.settings.style?.activeBackgroundColor)
+                backgroundFor_v14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
             }
-            if let font = UIFont(from: sliderDetails.settings.style?.font),
-               let fontColor = sliderDetails.settings.style?.font?.color {
+            if let font = UIFont(from: style.font),
+               let fontColor = style.font.color {
                 slider.setTitleTextAttributes([
                     NSAttributedString.Key.font: font as Any,
                     NSAttributedString.Key.foregroundColor: UIColor(hexString: fontColor) as Any
                 ], for: .normal)
             }
-            if let activeFont = UIFont(from: sliderDetails.settings.style?.activeFont),
-               let activeFontColor = sliderDetails.settings.style?.activeFont?.color {
+            if let activeFont = UIFont(from: style.activeFont),
+               let activeFontColor = style.activeFont.color {
                 slider.setTitleTextAttributes([
                     NSAttributedString.Key.font: activeFont as Any,
                     NSAttributedString.Key.foregroundColor: UIColor(hexString: activeFontColor) as Any
