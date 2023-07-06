@@ -56,8 +56,8 @@ struct Constants {
             public var onUnfocusTextColor: String = "#ffffff"
             public var onFocusBackgroundColor: String = "#ffffff"
             public var onUnfocusBackgroundColor: String = "#575757"
-            public var font: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif")
-            public var activeFont: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif")
+            public var font: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif", color: "#ffffff")
+            public var activeFont: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif", color: "#000000")
         }
     }
 }

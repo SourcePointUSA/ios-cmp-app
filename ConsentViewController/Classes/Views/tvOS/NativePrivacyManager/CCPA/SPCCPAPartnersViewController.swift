@@ -90,7 +90,7 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = "\(sections[section]?.settings.text ?? "Partners")"
         label.font = UIFont(from: sections[section]?.settings.style?.font)
-        label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
+        label.textColor = UIColor(hexString: sections[section]?.settings.style?.font.color)
         return label
     }
 

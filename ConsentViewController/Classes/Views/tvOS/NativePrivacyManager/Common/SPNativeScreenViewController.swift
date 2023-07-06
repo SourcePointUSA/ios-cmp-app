@@ -178,38 +178,20 @@ class FocusGuideDebugView: UIView {
         }
         return imageView
     }
-    
-    func getStyle(newStyle: SPNativeStyle?) -> Constants.UI.StandartStyle {
-        if (newStyle != nil) {
-            var style = Constants.UI.StandartStyle()
-            let newStyle = newStyle!
-            style.backgroundColor = newStyle.backgroundColor ?? style.backgroundColor
-            style.activeBackgroundColor = newStyle.activeBackgroundColor ?? style.activeBackgroundColor
-            style.onFocusTextColor = newStyle.onFocusTextColor ?? style.onFocusTextColor
-            style.onUnfocusTextColor = newStyle.onUnfocusTextColor ?? style.onUnfocusTextColor
-            style.onFocusBackgroundColor = newStyle.onFocusBackgroundColor ?? style.onFocusBackgroundColor
-            style.onUnfocusBackgroundColor = newStyle.onUnfocusBackgroundColor ?? style.onUnfocusBackgroundColor
-            style.font = newStyle.font ?? style.font
-            style.activeFont = newStyle.activeFont ?? style.activeFont
-            return style
-        } else {
-            return Constants.UI.StandartStyle()
-        }
-    }
-    
+
     @nonobjc
     @discardableResult
     func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
-            let style = getStyle(newStyle: action.settings.style)
+            let style = action.settings.style
             button.isHidden = false
             button.setTitle(action.settings.text, for: .normal)
-            button.setTitleColor(UIColor(hexString: style.onUnfocusTextColor), for: .normal)
-            button.setTitleColor(UIColor(hexString: style.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: style.onUnfocusBackgroundColor)
+            button.setTitleColor(UIColor(hexString: style?.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: style?.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: style?.onUnfocusBackgroundColor)
             button.onUnfocusBackgroundColor = button.backgroundColor
-            button.onFocusBackgroundColor = UIColor(hexString: style.onFocusBackgroundColor)
-            button.titleLabel?.font = UIFont(from: style.font)
+            button.onFocusBackgroundColor = UIColor(hexString: style?.onFocusBackgroundColor)
+            button.titleLabel?.font = UIFont(from: style?.font)
             button.layer.cornerRadius = 12
         } else {
             button.isHidden = true
@@ -220,11 +202,11 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            let style = getStyle(newStyle: textDetails.settings.style)
+            let style = textDetails.settings.style
             label.text = ""
             label.attributedText = textDetails.settings.text.htmlToAttributedString
-            label.textColor = UIColor(hexString: style.font.color)
-            label.font = UIFont(from: style.font)
+            label.textColor = UIColor(hexString: style?.font.color)
+            label.font = UIFont(from: style?.font)
         }
         return label
     }
@@ -232,11 +214,11 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            let style = getStyle(newStyle: textDetails.settings.style)
+            let style = textDetails.settings.style
             label.text = ""
             label.attributedText = text.htmlToAttributedString
-            label.textColor = UIColor(hexString: style.font.color)
-            label.font = UIFont(from: style.font)
+            label.textColor = UIColor(hexString: style?.font.color)
+            label.font = UIFont(from: style?.font)
         }
         return label
     }
@@ -244,13 +226,13 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, bounces: Bool = true) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
-            let style = getStyle(newStyle: textViewComponent.settings.style)
+            let style = textViewComponent.settings.style
             if let text = text {
                 textView.attributedText = text.htmlToAttributedString
             } else {
                 textView.attributedText = textViewComponent.settings.text.htmlToAttributedString
             }
-            textView.textColor = UIColor(hexString: style.font.color)
+            textView.textColor = UIColor(hexString: style?.font.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
             textView.showsVerticalScrollIndicator = true
@@ -258,7 +240,7 @@ class FocusGuideDebugView: UIView {
             textView.panGestureRecognizer.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ]
-            textView.font = UIFont(from: style.font)
+            textView.font = UIFont(from: style?.font)
         }
         return textView
     }
@@ -268,19 +250,19 @@ class FocusGuideDebugView: UIView {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
             slider.setTitle(sliderDetails.settings.leftText, forSegmentAt: 0)
             slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
-            let style = getStyle(newStyle: sliderDetails.settings.style)
+            let style = sliderDetails.settings.style
             if #available(tvOS 14.0, *) {
-                backgroundFor_v14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
+                backgroundFor_v14(slider: slider, backgroundHex: style?.backgroundColor, activeBackground: style?.activeBackgroundColor)
             }
-            if let font = UIFont(from: style.font),
-               let fontColor = style.font.color {
+            if let font = UIFont(from: style?.font) {
+                let fontColor = style?.font.color
                 slider.setTitleTextAttributes([
                     NSAttributedString.Key.font: font as Any,
                     NSAttributedString.Key.foregroundColor: UIColor(hexString: fontColor) as Any
                 ], for: .normal)
             }
-            if let activeFont = UIFont(from: style.activeFont),
-               let activeFontColor = style.activeFont.color {
+            if let activeFont = UIFont(from: style?.activeFont) {
+                let activeFontColor = style?.activeFont.color
                 slider.setTitleTextAttributes([
                     NSAttributedString.Key.font: activeFont as Any,
                     NSAttributedString.Key.foregroundColor: UIColor(hexString: activeFontColor) as Any
@@ -312,10 +294,9 @@ func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1
     return image
 }
 
-//setting background as imge for slider, v14 and above
 func backgroundFor_v14(slider: UISegmentedControl, backgroundHex: String?, activeBackground: String?) {
-    let backgroundColor = getImageWithColor(color: UIColor(hexString: backgroundHex) ?? .red)
-    let activeBackgroundColor = getImageWithColor(color: UIColor(hexString: activeBackground) ?? .red)
+    let backgroundColor = getImageWithColor(color: UIColor(hexString: backgroundHex ?? Constants.UI.StandartStyle().backgroundColor)!)
+    let activeBackgroundColor = getImageWithColor(color: UIColor(hexString: activeBackground ?? Constants.UI.StandartStyle().activeBackgroundColor)!)
     slider.setBackgroundImage(backgroundColor, for: .normal, barMetrics: .default)
     slider.setBackgroundImage(activeBackgroundColor, for: .selected, barMetrics: .default)
     slider.layer.cornerRadius = 12

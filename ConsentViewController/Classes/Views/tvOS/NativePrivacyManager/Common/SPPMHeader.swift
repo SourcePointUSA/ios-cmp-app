@@ -13,7 +13,7 @@ extension UILabel {
         if let spText = spText {
             isHidden = false
             attributedText = spText.settings.text.htmlToAttributedString
-            textColor = UIColor(hexString: spText.settings.style?.font?.color)
+            textColor = UIColor(hexString: spText.settings.style?.font.color)
             font = UIFont(from: spText.settings.style?.font)
         }
     }
