@@ -121,11 +121,7 @@ class SPNativeUISettings: NSObject, Decodable {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
-        if let style = try container.decodeIfPresent(SPNativeStyle.self, forKey: .style) {
-            self.style = style
-        } else {
-            self.style = SPNativeStyle()
-        }
+        style = try container.decodeIfPresent(SPNativeStyle.self, forKey: .style) ?? SPNativeStyle()
     }
 }
 

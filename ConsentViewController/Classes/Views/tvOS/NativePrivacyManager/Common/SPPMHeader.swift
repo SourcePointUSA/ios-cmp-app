@@ -21,11 +21,7 @@ extension UILabel {
 
 @IBDesignable
 class SPPMHeader: UIView {
-    var spBackButton: SPAppleTVButton?/* {
-        didSet {
-            backButton.setup(from: spBackButton)
-        }
-    }*/
+    var spBackButton: SPAppleTVButton?
 
     var spTitleText: SPNativeText? {
         didSet {
