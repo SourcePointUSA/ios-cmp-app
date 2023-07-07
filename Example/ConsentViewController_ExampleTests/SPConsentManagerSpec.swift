@@ -73,7 +73,7 @@ class SPConsentManagerSpec: QuickSpec {
                     let uuid = manager.userData.ccpa?.consents?.uuid
                     let uuidParam = uuid != nil ? "=\(uuid!)" : ""
 
-                    let testUrl = "https://cdn.privacy-mgmt.com/ccpa_pm/index.html?consentLanguage=ES&consentUUID\(uuidParam)&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
+                    let testUrl = "https://cdn.privacy-mgmt.com/ccpa_pm/index.html?ccpaUUID\(uuidParam)&consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
 
                     expect(pmUrl?.absoluteString).to(equal(testUrl))
                 }

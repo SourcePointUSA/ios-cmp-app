@@ -42,5 +42,18 @@ class CCPAConsentStatusSpec: QuickSpec {
         it("unknown values should decode to .Unknown") {
             expect("\"foo\"").to(decodeToValue(CCPAConsentStatus.Unknown))
         }
+
+        it("UPS string check") {
+            let consent = SPCCPAConsent(status: .RejectedAll, rejectedVendors: [], rejectedCategories: [], signedLspa: false)
+            expect(consent.uspstring) == "1---"
+            consent.applies = true
+            expect(consent.uspstring) == "1YYN"
+            consent.status = .ConsentedAll
+            expect(consent.uspstring) == "1YNN"
+            consent.signedLspa = true
+            expect(consent.uspstring) == "1YNY"
+            consent.status = .RejectedAll
+            expect(consent.uspstring) == "1YYY"
+        }
     }
 }
