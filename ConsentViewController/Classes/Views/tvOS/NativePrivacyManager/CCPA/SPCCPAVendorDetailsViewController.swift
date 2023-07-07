@@ -30,7 +30,6 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
 
     @IBOutlet var headerView: SPPMHeader!
     @IBOutlet var qrCodeImageView: UIImageView!
-//    @IBOutlet var descriptionTextView: UITextView!
     @IBOutlet var onButton: SPAppleTVButton!
     @IBOutlet var offButton: SPAppleTVButton!
     @IBOutlet var vendorDetailsTableView: UITableView!
@@ -39,7 +38,6 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-//        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
         if let vendorUrl = vendor?.policyUrl?.absoluteString {

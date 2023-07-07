@@ -299,8 +299,8 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
     }
 }
 
-//class FocusableScrollView: UIScrollView {
-//    override var canBecomeFocused: Bool {
-//        true
-//    }
-//}
+class FocusableScrollView: UIScrollView {
+    override var canBecomeFocused: Bool {
+        true
+    }
+}
