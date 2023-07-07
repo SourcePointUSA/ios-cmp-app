@@ -373,7 +373,7 @@ import UIKit
         let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
             "message_id": usedId,
             "pmTab": pmTab.rawValue,
-            "consentUUID": ccpaUUID,
+            "ccpaUUID": ccpaUUID,
             "idfaStatus": idfaStatus.description,
             "site_id": String(propertyId),
             "consentLanguage": messageLanguage.rawValue

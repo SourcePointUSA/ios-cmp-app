@@ -72,8 +72,8 @@ struct SPUSPString {
         applies ?
             "\(version)" +
             (hadChanceToOptOut ? "Y" : "N") +
-            (signedLspa ? "Y" : "N") +
-            (status == .RejectedAll || status == .RejectedSome ? "Y" : "N")
+            (status == .RejectedAll || status == .RejectedSome ? "Y" : "N") +
+            (signedLspa ? "Y" : "N")
         : "\(version)---"
     }
 }
