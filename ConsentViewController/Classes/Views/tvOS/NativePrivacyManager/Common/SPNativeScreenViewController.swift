@@ -160,8 +160,8 @@ class FocusGuideDebugView: UIView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
-        view.tintColor = UIColor(hexString: viewData.settings.style?.backgroundColor)
+        view.backgroundColor = UIColor(hexString: viewData.settings.style.backgroundColor)
+        view.tintColor = UIColor(hexString: viewData.settings.style.backgroundColor)
         setFocusGuides()
     }
 
@@ -186,12 +186,12 @@ class FocusGuideDebugView: UIView {
             let style = action.settings.style
             button.isHidden = false
             button.setTitle(action.settings.text, for: .normal)
-            button.setTitleColor(UIColor(hexString: style?.onUnfocusTextColor), for: .normal)
-            button.setTitleColor(UIColor(hexString: style?.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: style?.onUnfocusBackgroundColor)
+            button.setTitleColor(UIColor(hexString: style.onUnfocusTextColor), for: .normal)
+            button.setTitleColor(UIColor(hexString: style.onFocusTextColor), for: .focused)
+            button.backgroundColor = UIColor(hexString: style.onUnfocusBackgroundColor)
             button.onUnfocusBackgroundColor = button.backgroundColor
-            button.onFocusBackgroundColor = UIColor(hexString: style?.onFocusBackgroundColor)
-            button.titleLabel?.font = UIFont(from: style?.font)
+            button.onFocusBackgroundColor = UIColor(hexString: style.onFocusBackgroundColor)
+            button.titleLabel?.font = UIFont(from: style.font)
             button.layer.cornerRadius = 12
         } else {
             button.isHidden = true
@@ -205,8 +205,8 @@ class FocusGuideDebugView: UIView {
             let style = textDetails.settings.style
             label.text = ""
             label.attributedText = textDetails.settings.text.htmlToAttributedString
-            label.textColor = UIColor(hexString: style?.font.color)
-            label.font = UIFont(from: style?.font)
+            label.textColor = UIColor(hexString: style.font.color)
+            label.font = UIFont(from: style.font)
         }
         return label
     }
@@ -217,8 +217,8 @@ class FocusGuideDebugView: UIView {
             let style = textDetails.settings.style
             label.text = ""
             label.attributedText = text.htmlToAttributedString
-            label.textColor = UIColor(hexString: style?.font.color)
-            label.font = UIFont(from: style?.font)
+            label.textColor = UIColor(hexString: style.font.color)
+            label.font = UIFont(from: style.font)
         }
         return label
     }
@@ -232,7 +232,7 @@ class FocusGuideDebugView: UIView {
             } else {
                 textView.attributedText = textViewComponent.settings.text.htmlToAttributedString
             }
-            textView.textColor = UIColor(hexString: style?.font.color)
+            textView.textColor = UIColor(hexString: style.font.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
             textView.showsVerticalScrollIndicator = true
@@ -240,7 +240,7 @@ class FocusGuideDebugView: UIView {
             textView.panGestureRecognizer.allowedTouchTypes = [
                 NSNumber(value: UITouch.TouchType.indirect.rawValue)
             ]
-            textView.font = UIFont(from: style?.font)
+            textView.font = UIFont(from: style.font)
         }
         return textView
     }
@@ -252,17 +252,17 @@ class FocusGuideDebugView: UIView {
             slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
             let style = sliderDetails.settings.style
             if #available(tvOS 14.0, *) {
-                backgroundFor_v14(slider: slider, backgroundHex: style?.backgroundColor, activeBackground: style?.activeBackgroundColor)
+                backgroundFor_v14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
             }
-            if let font = UIFont(from: style?.font) {
-                let fontColor = style?.font.color
+            if let font = UIFont(from: style.font) {
+                let fontColor = style.font.color
                 slider.setTitleTextAttributes([
                     NSAttributedString.Key.font: font as Any,
                     NSAttributedString.Key.foregroundColor: UIColor(hexString: fontColor) as Any
                 ], for: .normal)
             }
-            if let activeFont = UIFont(from: style?.activeFont) {
-                let activeFontColor = style?.activeFont.color
+            if let activeFont = UIFont(from: style.activeFont) {
+                let activeFontColor = style.activeFont.color
                 slider.setTitleTextAttributes([
                     NSAttributedString.Key.font: activeFont as Any,
                     NSAttributedString.Key.foregroundColor: UIColor(hexString: activeFontColor) as Any
@@ -295,8 +295,8 @@ func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1
 }
 
 func backgroundFor_v14(slider: UISegmentedControl, backgroundHex: String?, activeBackground: String?) {
-    let backgroundColor = getImageWithColor(color: UIColor(hexString: backgroundHex ?? Constants.UI.StandartStyle().backgroundColor)!)
-    let activeBackgroundColor = getImageWithColor(color: UIColor(hexString: activeBackground ?? Constants.UI.StandartStyle().activeBackgroundColor)!)
+    let backgroundColor = getImageWithColor(color: UIColor(hexString: backgroundHex ?? Constants.UI.StandartStyle().backgroundColor) ?? .gray)
+    let activeBackgroundColor = getImageWithColor(color: UIColor(hexString: activeBackground ?? Constants.UI.StandartStyle().activeBackgroundColor) ?? .white)
     slider.setBackgroundImage(backgroundColor, for: .normal, barMetrics: .default)
     slider.setBackgroundImage(activeBackgroundColor, for: .selected, barMetrics: .default)
     slider.layer.cornerRadius = 12

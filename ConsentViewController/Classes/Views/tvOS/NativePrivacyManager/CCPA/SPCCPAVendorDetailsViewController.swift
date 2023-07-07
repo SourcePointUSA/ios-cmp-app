@@ -89,8 +89,8 @@ extension SPCCPAVendorDetailsViewController: UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = sections[section].header?.settings.text
-        label.font = UIFont(from: sections[section].header?.settings.style?.font)
-        label.textColor = UIColor(hexString: sections[section].header?.settings.style?.font.color)
+        label.font = UIFont(from: sections[section].header?.settings.style.font)
+        label.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
         return label
     }
 
