@@ -30,7 +30,7 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
 
     @IBOutlet var headerView: SPPMHeader!
     @IBOutlet var qrCodeImageView: UIImageView!
-    @IBOutlet var descriptionTextView: UITextView!
+//    @IBOutlet var descriptionTextView: UITextView!
     @IBOutlet var onButton: SPAppleTVButton!
     @IBOutlet var offButton: SPAppleTVButton!
     @IBOutlet var vendorDetailsTableView: UITableView!

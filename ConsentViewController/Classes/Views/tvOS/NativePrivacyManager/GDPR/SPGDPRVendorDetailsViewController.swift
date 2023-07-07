@@ -33,7 +33,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     @IBOutlet var headerView: SPPMHeader!
     @IBOutlet var qrCodeImageView: UIImageView!
-    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var onButton: SPAppleTVButton!
     @IBOutlet var offButton: SPAppleTVButton!
     @IBOutlet var vendorDetailsTableView: UITableView!
@@ -42,7 +42,8 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description)
+        loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
         if vendor?.disclosureOnlyCategories.isNotEmpty() ?? false {

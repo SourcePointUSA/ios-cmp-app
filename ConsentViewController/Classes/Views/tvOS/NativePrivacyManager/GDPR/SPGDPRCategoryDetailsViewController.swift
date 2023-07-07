@@ -23,7 +23,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     let cellReuseIdentifier = "cell"
 
     @IBOutlet var header: SPPMHeader!
-    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var onButton: SPAppleTVButton!
     @IBOutlet var offButton: SPAppleTVButton!
@@ -32,7 +32,8 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView, text: category?.description)
+        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView, text: category?.description, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
