@@ -43,7 +43,7 @@ class CCPAConsentStatusSpec: QuickSpec {
             expect("\"foo\"").to(decodeToValue(CCPAConsentStatus.Unknown))
         }
 
-        it("UPS string check") {
+        it("USP string check") {
             let consent = SPCCPAConsent(status: .RejectedAll, rejectedVendors: [], rejectedCategories: [], signedLspa: false)
             expect(consent.uspstring) == "1---"
             consent.applies = true
