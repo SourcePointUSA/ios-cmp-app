@@ -335,13 +335,13 @@ class SourcePointClient: SourcePointProtocol {
         legIntCategories: [String],
         propertyId: Int,
         handler: @escaping AddOrDeleteCustomConsentHandler) {
-            var URL = deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID).absoluteString
+            let urlString = deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID).absoluteString
             _ = JSONEncoder().encodeResult(DeleteCustomConsentRequest(
                 vendors: vendors,
                 categories: categories,
                 legIntCategories: legIntCategories
             )).map { body in
-                client.delete(urlString: URL, body: body, apiCode: .DELETE_CUSTOM_CONSENT) { result in
+                client.delete(urlString: urlString, body: body, apiCode: .DELETE_CUSTOM_CONSENT) { result in
                     handler(Result {
                         try result.decoded() as AddOrDeleteCustomConsentResponse
                     }.mapError {

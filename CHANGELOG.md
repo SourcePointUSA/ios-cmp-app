@@ -1,3 +1,9 @@
+# 7.2.0 (June, 23, 2023)
+* [DIA-2311](https://sourcepoint.atlassian.net/browse/DIA-2311) Fixed an issue causing the SDK to return default consent values for returning users before `onConsentReady` was invoked. [#451](https://github.com/SourcePointUSA/ios-cmp-app/pull/451)
+* [DIA-2271](https://sourcepoint.atlassian.net/browse/DIA-2271) `SPPublisherData` is now of type `[String: AnyEncodable]`. Passing "pubData" as `[String: String]` continues to work, but you should update your code to use `SPPublisherData` instead. [#450](https://github.com/SourcePointUSA/ios-cmp-app/pull/450)
+* [DIA-2308](https://sourcepoint.atlassian.net/browse/DIA-2308) Fixed an issue preventing tvOS home screen description text from being scrollable. [#449](https://github.com/SourcePointUSA/ios-cmp-app/pull/449)
+* [DIA-1888](https://sourcepoint.atlassian.net/browse/DIA-1888) Updated tvOS GDPR to display disclosure only vendors and purposes. [#447](https://github.com/SourcePointUSA/ios-cmp-app/pull/447)
+
 # 7.1.1 (June, 12, 2023)
 * [DIA-2193](https://sourcepoint.atlassian.net/browse/DIA-2193) Fixed an issue that would cause the consent string for CCPA to be incorrect if the user moves to an area where CCPA does not apply. [#448](https://github.com/SourcePointUSA/ios-cmp-app/pull/448)
 * [DIA-2061](https://sourcepoint.atlassian.net/browse/DIA-2061) Re-introduce support to group PMs. [#444](https://github.com/SourcePointUSA/ios-cmp-app/pull/444)

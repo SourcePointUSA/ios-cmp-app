@@ -16,14 +16,14 @@ struct PvDataResponse: Decodable, Equatable {
     let ccpa: Campaign?
 }
 
-struct PvDataRequestBody: Codable, Equatable {
-    struct GDPR: Codable, Equatable {
+struct PvDataRequestBody: Encodable, Equatable {
+    struct GDPR: Encodable, Equatable {
         let applies: Bool
         let uuid: String?
         let accountId: Int
         let siteId: Int
         let consentStatus: ConsentStatus
-        let pubData: [String: String]?
+        let pubData: SPPublisherData?
         let sampleRate: Float?
         let euconsent: String?
         let msgId: Int?
@@ -32,13 +32,13 @@ struct PvDataRequestBody: Codable, Equatable {
         let prtnUUID: String?
     }
 
-    struct CCPA: Codable, Equatable {
+    struct CCPA: Encodable, Equatable {
         let applies: Bool
         let uuid: String?
         let accountId: Int
         let siteId: Int
         let consentStatus: ConsentStatus
-        let pubData: [String: String]?
+        let pubData: SPPublisherData?
         let messageId: Int?
         let sampleRate: Float?
     }

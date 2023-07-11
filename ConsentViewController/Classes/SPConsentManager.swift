@@ -263,7 +263,7 @@ import UIKit
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.1.1"
+    public static let VERSION = "7.2.0"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
@@ -290,11 +290,15 @@ import UIKit
             .reversed()
     }
 
+    public func loadMessage(forAuthId authId: String? = nil, publisherData: [String: String]? = [:]) {
+        loadMessage(forAuthId: authId, publisherData: publisherData?.mapValues { AnyEncodable($0) })
+    }
+
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         self.authId = authId
         responsesToReceive += 1
 
-        spCoordinator.loadMessages(forAuthId: authId) { [weak self] result in
+        spCoordinator.loadMessages(forAuthId: authId, pubData: publisherData) { [weak self] result in
             if let strongSelf = self {
                 strongSelf.responsesToReceive -= 1
                 switch result {
@@ -369,7 +373,7 @@ import UIKit
         let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
             "message_id": usedId,
             "pmTab": pmTab.rawValue,
-            "consentUUID": gdprUUID,
+            "ccpaUUID": ccpaUUID,
             "idfaStatus": idfaStatus.description,
             "site_id": String(propertyId),
             "consentLanguage": messageLanguage.rawValue

@@ -218,7 +218,7 @@ Among other internal data, you'll find:
 * `type: SPActionType`: an enum signaling the type of action. Use XCode's quick help on `SPActionType` for more info.
 * `campaignType: SPCampaignType`: an enum signaling the type of campaign in which the action was taken (`gdpr, ios14, ccpa, unknown`)
 * `customActionId: String`: if the type of action is `Custom`, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).
-* `publisherPayload: [String: SPJson?]`: also known as `pubData` in some of SP services, this is an arbitrary dictionary of key value pairs (set by your app) to be sent to our servers and later retrieved using the pubData API.
+* `publisherPayload: [String: AnyEncodable]`: also known as `pubData` in some of SP services, this is an arbitrary dictionary of key value pairs (set by your app) to be sent to our servers and later retrieved using the pubData API.
 
 With exception of `PMCancel` and `ShowPrivacyManager` actions, the SDK will call the `onSPUIFinished` after handling the action. 
 

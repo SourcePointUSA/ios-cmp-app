@@ -72,8 +72,8 @@ struct SPUSPString {
         applies ?
             "\(version)" +
             (hadChanceToOptOut ? "Y" : "N") +
-            (signedLspa ? "Y" : "N") +
-            (status == .RejectedAll || status == .RejectedSome ? "Y" : "N")
+            (status == .RejectedAll || status == .RejectedSome ? "Y" : "N") +
+            (signedLspa ? "Y" : "N")
         : "\(version)---"
     }
 }
@@ -103,7 +103,7 @@ protocol CampaignConsent {
     enum CodingKeys: CodingKey {
         case status, rejectedVendors, rejectedCategories,
              uuid, childPmId, consentStatus,
-             webConsentPayload, signedLspa
+             webConsentPayload, signedLspa, applies
     }
 
     /// represents the default state of the consumer prior to seeing the consent message
@@ -189,6 +189,7 @@ protocol CampaignConsent {
         childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
+        applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
     }
 
     public static func empty() -> SPCCPAConsent { SPCCPAConsent(

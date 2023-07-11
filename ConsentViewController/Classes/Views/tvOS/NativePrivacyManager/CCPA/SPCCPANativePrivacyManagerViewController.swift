@@ -31,6 +31,7 @@ import UIKit
     @IBOutlet var rejectButton: SPAppleTVButton!
     @IBOutlet var saveAndExitButton: SPAppleTVButton!
     @IBOutlet var privacyPolicyButton: SPAppleTVButton!
+    @IBOutlet var customViewButton: SPAppleTVButton!
     @IBOutlet var doNotSellTableView: UITableView!
     @IBOutlet var actionsContainer: UIStackView!
 
@@ -46,6 +47,7 @@ import UIKit
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
+        loadButton(forComponentId: "NavCustomButton", button: customViewButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         setDoNotSellButton()
         setFocusGuidesForButtons()
@@ -173,6 +175,21 @@ import UIKit
             pmData: pmData,
             delegate: self,
             nibName: "SPPrivacyPolicyViewController"
+        ), animated: true)
+    }
+    
+    @IBAction func onCustomViewTap(_ sender: Any) {
+        guard let customView = pmData.customView else {
+            onError(UnableToFindView(withId: "CustomView"))
+            return
+        }
+        present(SPPrivacyPolicyViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: customView,
+            pmData: pmData,
+            delegate: self,
+            nibName: "SPCustomViewController"
         ), animated: true)
     }
 

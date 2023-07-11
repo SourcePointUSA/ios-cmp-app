@@ -16,7 +16,7 @@ private func findViewBy(id: String, _ rootView: SPNativeView) throws -> SPNative
 
 struct PrivacyManagerViewData {
     let homeView, categoriesView, vendorsView, categoryDetailsView, vendorDetailsView: SPNativeView
-    let privacyPolicyView: SPNativeView?
+    let privacyPolicyView, customView: SPNativeView?
 }
 
 extension PrivacyManagerViewData {
@@ -27,6 +27,7 @@ extension PrivacyManagerViewData {
         categoryDetailsView = try findViewBy(id: "CategoryDetailsView", rootView)
         vendorDetailsView = try findViewBy(id: "VendorDetailsView", rootView)
         privacyPolicyView = rootView.byId("PrivacyPolicyView") as? SPNativeView
+        customView = rootView.byId("CustomView") as? SPNativeView
     }
 }
 

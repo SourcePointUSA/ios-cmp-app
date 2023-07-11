@@ -20,8 +20,9 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
     var consentsSnapshot = GDPRPMConsentSnaptshot()
 
     var vendors: [GDPRVendor] = []
-    var userConsentVendors: [GDPRVendor] { vendors.filter { !$0.consentCategories.isEmpty } }
-    var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty } }
+    var userConsentVendors: [GDPRVendor] { vendors.filter { !$0.consentCategories.isEmpty || !$0.disclosureOnlyCategories.isEmpty } }
+    var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty || !$0.disclosureOnlyCategories.isEmpty } }
+    var disclosureOnlyVendors: [GDPRVendor] { vendors.filter { !$0.disclosureOnlyCategories.isEmpty } }
 
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]
@@ -125,7 +126,6 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
         guard let cell = vendorsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             return UITableViewCell()
         }
-
         let vendor = currentVendors[indexPath.row]
         cell.labelText = vendor.name
         cell.isOn = consentsSnapshot.toggledVendorsIds.contains(vendor.vendorId)

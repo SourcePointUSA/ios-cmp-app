@@ -20,6 +20,16 @@ class SPActionSpec: QuickSpec {
                 expect(SPAction(type: .AcceptAll).publisherData) == [:]
             }
 
+            describe("publisherData") {
+                it("sets encodablePublisherData upen being updated") {
+                    let action = SPAction(type: .Unknown)
+                    action.publisherData = ["foo": "bar"]
+                    expect(action.encodablePubData).to(equal(
+                        ["foo": AnyEncodable("bar")]
+                    ))
+                }
+            }
+
             describe("init") {
                 it("initialises type, id and payload") {
                     let payload = SPJson()

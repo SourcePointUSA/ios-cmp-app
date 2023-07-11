@@ -11,12 +11,14 @@ import UIKit
 class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
-        let content: [GDPRCategory]
+        let contentConsent: [GDPRCategory]
+        let contentLegIntCategory: [GDPRCategory]?
 
-        init? (header: SPNativeText?, content: [GDPRCategory]?) {
-            if content == nil || content?.isEmpty == true { return nil }
+        init? (header: SPNativeText?, contentConsent: [GDPRCategory]?, contentLegIntCategory: [GDPRCategory]? = nil) {
+            if contentConsent == nil || contentConsent?.isEmpty == true { return nil }
             self.header = header
-            self.content = content! // swiftlint:disable:this force_unwrapping
+            self.contentConsent = contentConsent! // swiftlint:disable:this force_unwrapping
+            self.contentLegIntCategory = contentLegIntCategory
         }
     }
 
@@ -28,12 +30,13 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var categories: [GDPRCategory] = []
     var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
+    var legIntSpecialPurposes: [GDPRCategory] { consentsSnapshot.specialPurposes.filter { $0.disclosureOnly == true } }
 
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: userConsentCategories),
-        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialPurposes)),
-        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.features)),
-        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, content: Array(consentsSnapshot.specialFeatures))
+        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, contentConsent: userConsentCategories, contentLegIntCategory: legIntCategories),
+        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialPurposes), contentLegIntCategory: legIntSpecialPurposes),
+        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.features)),
+        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialFeatures))
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
@@ -106,8 +109,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
     func currentCategory(_ index: IndexPath) -> GDPRCategory {
         displayingLegIntCategories ?
-            legIntCategories[index.row] :
-            sections[index.section].content[index.row]
+            sections[index.section].contentLegIntCategory![index.row] :
+            sections[index.section].contentConsent[index.row]
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -115,7 +118,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        displayingLegIntCategories ? 1 : sections.count
+        let legIntCategoryCount = sections.filter{ $0.contentLegIntCategory?.isNotEmpty() ?? false }.count
+        return displayingLegIntCategories ? legIntCategoryCount : sections.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -131,7 +135,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        displayingLegIntCategories ? legIntCategories.count : sections[section].content.count
+        displayingLegIntCategories ? sections[section].contentLegIntCategory?.count ?? 0 : sections[section].contentConsent.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -149,7 +153,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         cell.isOn = section == 0 || section == 3 ?
             consentsSnapshot.toggledCategoriesIds.contains(category._id) :
             nil
-        cell.selectable = section != 1
+        cell.selectable = section != 1 || category.disclosureOnly == true
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
         cell.loadUI()
@@ -157,7 +161,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        indexPath.section != 1
+        let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell
+        return cell?.selectable ?? false
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
@@ -165,7 +170,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        indexPath.section == 1 ? nil : indexPath
+        let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell
+        return cell?.selectable ?? false ? indexPath : nil
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

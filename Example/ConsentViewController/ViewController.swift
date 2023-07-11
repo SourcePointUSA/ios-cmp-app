@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         sdkStatus = .running
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
-        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": "load message"])
+        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
     }
 
@@ -105,7 +105,7 @@ extension ViewController: SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
-        action.publisherData = ["foo": "action"]
+        action.publisherData = ["foo": .init("any encodable")]
     }
 
     func onSPUIFinished(_ controller: UIViewController) {

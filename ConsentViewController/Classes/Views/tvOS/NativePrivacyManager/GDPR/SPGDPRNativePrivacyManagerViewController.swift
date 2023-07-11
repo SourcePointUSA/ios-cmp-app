@@ -36,6 +36,7 @@ protocol SPNativePrivacyManagerHome {
     @IBOutlet var rejectButton: SPAppleTVButton!
     @IBOutlet var saveAndExitButton: SPAppleTVButton!
     @IBOutlet var privacyPolicyButton: SPAppleTVButton!
+    @IBOutlet var customViewButton: SPAppleTVButton!
     @IBOutlet var categoryTableView: UITableView!
     @IBOutlet var header: SPPMHeader!
     @IBOutlet var buttonsStack: UIStackView!
@@ -52,6 +53,7 @@ protocol SPNativePrivacyManagerHome {
         loadButton(forComponentId: "NavCategoriesButton", button: managePreferenceButton)
         loadButton(forComponentId: "NavVendorsButton", button: ourPartners)
         loadButton(forComponentId: "NavPrivacyPolicyButton", button: privacyPolicyButton)
+        loadButton(forComponentId: "NavCustomButton", button: customViewButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         setFocusGuidesForButtons()
         categoryTableView.accessibilityIdentifier = "Categories List"
@@ -191,6 +193,21 @@ protocol SPNativePrivacyManagerHome {
             nibName: "SPPrivacyPolicyViewController"
         ), animated: true)
     }
+    
+    @IBAction func onCustomViewTap(_ sender: Any) {
+        guard let customView = pmData.customView else {
+            onError(UnableToFindView(withId: "CustomView"))
+            return
+        }
+        present(SPPrivacyPolicyViewController(
+            messageId: messageId,
+            campaignType: campaignType,
+            viewData: customView,
+            pmData: pmData,
+            delegate: self,
+            nibName: "SPCustomViewController"
+        ), animated: true)
+    }
 
     func setHeader () {
         loadButton(forComponentId: "BackButton", button: header.backButton)
@@ -207,7 +224,7 @@ protocol SPNativePrivacyManagerHome {
     }
 
     override func setFocusGuides() {
-        addFocusGuide(from: descriptionTextView, to: categoryTableView, direction: .bottomTop)
+        addFocusGuide(from: buttonsStack, to: categoryTableView, direction: .rightLeft)
     }
 
     func setFocusGuidesForButtons() {
@@ -267,7 +284,6 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         cell.textLabel?.text = categories[indexPath.row].name
         cell.textLabel?.setDefaultTextColorForDarkMode()
-        addFocusGuide(from: acceptButton, to: cell, direction: .rightLeft)
         return cell
     }
 }

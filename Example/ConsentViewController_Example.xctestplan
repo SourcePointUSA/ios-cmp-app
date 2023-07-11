@@ -13,8 +13,8 @@
       "targets" : [
         {
           "containerPath" : "container:Pods\/Pods.xcodeproj",
-          "identifier" : "374151914BA6B7C6A7C04A46512F48FA",
-          "name" : "ConsentViewController"
+          "identifier" : "84E1147DCA59477E2E390B109585DCAF",
+          "name" : "ConsentViewController-iOS"
         }
       ]
     },
