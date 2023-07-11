@@ -6,14 +6,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPCCPAVendorDetailsViewController" customModule="ConsentViewController" customModuleProvider="target">
             <connections>
                 <outlet property="actionsContainer" destination="hd1-ep-WaY" id="4vV-vb-Hg1"/>
-                <outlet property="descriptionTextView" destination="qQL-uQ-3WW" id="FqW-QG-oRL"/>
                 <outlet property="headerView" destination="aLv-m7-FYn" id="1Dn-R2-MOG"/>
                 <outlet property="offButton" destination="hDo-eE-jhB" id="JnH-Ut-Etd"/>
                 <outlet property="onButton" destination="JF7-FM-mVV" id="VYa-FB-gWU"/>
@@ -91,18 +89,8 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="V17-6O-rwN" userLabel="Stack View - 2nd Column">
                                     <rect key="frame" x="880" y="0.0" width="880" height="844"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQL-uQ-3WW" customClass="SPFocusableTextView" customModule="ConsentViewController" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="880" height="200"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="200" id="dCL-eo-5CG"/>
-                                            </constraints>
-                                            <color key="textColor" systemColor="labelColor"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="eeb-Ha-gIO">
-                                            <rect key="frame" x="0.0" y="200" width="880" height="644"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="880" height="844"/>
                                             <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableView>
                                     </subviews>
@@ -130,9 +118,4 @@
             <point key="canvasLocation" x="-44" y="-45"/>
         </view>
     </objects>
-    <resources>
-        <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>
