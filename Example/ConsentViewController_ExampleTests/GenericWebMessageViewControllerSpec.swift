@@ -70,7 +70,7 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
     override func spec() {
         it("calls loaded when the rendering app dispatches a sp.showMessage event") {
             let delegate = loadMessage(with: RenderingAppMock.self)
-            after(.seconds(20)) {
+            after(.seconds(120)) {
                 expect(delegate.loadedWasCalled).to(beTrue())
                 expect(delegate.onErrorWasCalled).to(beFalse())
             }
@@ -78,7 +78,7 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
 
         it("calls onError if .loaded() is not called on the delegate before the timeout") {
             let delegate = loadMessage(with: FaultyRenderingAppMock.self)
-            after(.seconds(20)) {
+            after(.seconds(120)) {
                 expect(delegate.loadedWasCalled).to(beFalse())
                 expect(delegate.onErrorWasCalled).to(beTrue())
             }

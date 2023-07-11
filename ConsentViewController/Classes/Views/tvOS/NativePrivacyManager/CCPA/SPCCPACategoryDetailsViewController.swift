@@ -33,7 +33,7 @@ class SPCCPACategoryDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView, text: category?.description, bounces: false)
+        loadTextView(forComponentId: "CategoriesDescriptionText", textView: descriptionTextView, text: category?.description, bounces: false)
         descriptionTextView.flashScrollIndicators()
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadButton(forComponentId: "OnButton", button: onButton)
