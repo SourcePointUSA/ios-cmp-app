@@ -41,7 +41,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 
     let cellReuseIdentifier = "cell"
 
-    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var acceptButton: SPAppleTVButton!
     @IBOutlet var saveAndExit: SPAppleTVButton!
@@ -53,7 +53,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView)
+        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
