@@ -49,5 +49,15 @@ struct Constants {
         struct DarkMode: SPUIValues {
             static var defaultFallbackTextColorForDarkMode: UIColor { .black }
         }
+        struct StandartStyle {
+            public var backgroundColor: String = "#575757"
+            public var activeBackgroundColor: String = "#ffffff"
+            public var onFocusTextColor: String = "#000000"
+            public var onUnfocusTextColor: String = "#ffffff"
+            public var onFocusBackgroundColor: String = "#ffffff"
+            public var onUnfocusBackgroundColor: String = "#575757"
+            public var font: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif", color: "#ffffff")
+            public var activeFont: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif", color: "#000000")
+        }
     }
 }

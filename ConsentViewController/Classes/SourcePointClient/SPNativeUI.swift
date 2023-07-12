@@ -9,22 +9,71 @@ import Foundation
 import UIKit
 
 @objcMembers class SPNativeFont: NSObject, Codable {
+    enum Keys: CodingKey {
+        case fontSize, fontWeight, color, fontFamily
+    }
+
     let fontSize: CGFloat
     let fontWeight: String
-    let color: String?
+    let color: String
     let fontFamily: String
+
+    init(fontSize: CGFloat, fontWeight: String, fontFamily: String, color: String) {
+        self.fontSize = fontSize
+        self.fontWeight = fontWeight
+        self.fontFamily = fontFamily
+        self.color = color
+    }
+
+    required init(from decoder: Decoder) throws {
+        let style = Constants.UI.StandartStyle()
+        let container = try decoder.container(keyedBy: Keys.self)
+        fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize) ?? style.font.fontSize
+        fontWeight = try container.decodeIfPresent(String.self, forKey: .fontWeight) ?? style.font.fontWeight
+        fontFamily = try container.decodeIfPresent(String.self, forKey: .fontFamily) ?? style.font.fontFamily
+        color = try container.decodeIfPresent(String.self, forKey: .color) ?? style.font.color
+    }
 }
 
 @objcMembers class SPNativeStyle: NSObject, Codable {
-    let backgroundColor: String?
-//    let width: Int?
-    let font: SPNativeFont?
-    let onFocusBackgroundColor: String?
-    let onUnfocusBackgroundColor: String?
-    let onFocusTextColor: String?
-    let onUnfocusTextColor: String?
-    let activeBackgroundColor: String?
-    let activeFont: SPNativeFont?
+    enum Keys: CodingKey {
+        case backgroundColor, font, onFocusBackgroundColor, onUnfocusBackgroundColor,
+             onFocusTextColor, onUnfocusTextColor, activeBackgroundColor, activeFont
+    }
+
+    let backgroundColor: String
+    let font: SPNativeFont
+    let onFocusBackgroundColor: String
+    let onUnfocusBackgroundColor: String
+    let onFocusTextColor: String
+    let onUnfocusTextColor: String
+    let activeBackgroundColor: String
+    let activeFont: SPNativeFont
+
+    override init() {
+        let style = Constants.UI.StandartStyle()
+        backgroundColor = style.backgroundColor
+        font = style.font
+        onFocusBackgroundColor = style.onFocusBackgroundColor
+        onUnfocusBackgroundColor = style.onUnfocusBackgroundColor
+        onFocusTextColor = style.onFocusTextColor
+        onUnfocusTextColor = style.onUnfocusTextColor
+        activeBackgroundColor = style.activeBackgroundColor
+        activeFont = style.activeFont
+    }
+
+    required init(from decoder: Decoder) throws {
+        let style = Constants.UI.StandartStyle()
+        let container = try decoder.container(keyedBy: Keys.self)
+        backgroundColor = try container.decodeIfPresent(String.self, forKey: .backgroundColor) ?? style.backgroundColor
+        font = try container.decodeIfPresent(SPNativeFont.self, forKey: .font) ?? style.font
+        onFocusBackgroundColor = try container.decodeIfPresent(String.self, forKey: .onFocusBackgroundColor) ?? style.onFocusBackgroundColor
+        onUnfocusBackgroundColor = try container.decodeIfPresent(String.self, forKey: .onUnfocusBackgroundColor) ?? style.onUnfocusBackgroundColor
+        onFocusTextColor = try container.decodeIfPresent(String.self, forKey: .onFocusTextColor) ?? style.onFocusTextColor
+        onUnfocusTextColor = try container.decodeIfPresent(String.self, forKey: .onUnfocusTextColor) ?? style.onUnfocusTextColor
+        activeBackgroundColor = try container.decodeIfPresent(String.self, forKey: .activeBackgroundColor) ?? style.activeBackgroundColor
+        activeFont = try container.decodeIfPresent(SPNativeFont.self, forKey: .activeFont) ?? style.activeFont
+    }
 }
 
 enum SPNativeUIType: Int, Equatable {
@@ -64,7 +113,16 @@ extension SPNativeUIType: Decodable {
 }
 
 class SPNativeUISettings: NSObject, Decodable {
-    let style: SPNativeStyle?
+    enum Key: CodingKey {
+        case style
+    }
+
+    let style: SPNativeStyle
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Key.self)
+        style = try container.decodeIfPresent(SPNativeStyle.self, forKey: .style) ?? SPNativeStyle()
+    }
 }
 
 class SPNativeUISettingsText: SPNativeUISettings {

@@ -90,7 +90,7 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
     }
 
     func setHeader () {
-        header.spBackButton = viewData.byId("BackButton") as? SPNativeButton
+        loadButton(forComponentId: "BackButton", button: header.backButton)
         header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
@@ -105,8 +105,8 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = "\(sections[section]?.settings.text.stripOutCss(stripHtml: true) ?? "Partners")"
-        label.font = UIFont(from: sections[section]?.settings.style?.font)
-        label.textColor = UIColor(hexString: sections[section]?.settings.style?.font?.color)
+        label.font = UIFont(from: sections[section]?.settings.style.font)
+        label.textColor = UIColor(hexString: sections[section]?.settings.style.font.color)
         return label
     }
 

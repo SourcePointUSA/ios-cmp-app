@@ -13,32 +13,15 @@ extension UILabel {
         if let spText = spText {
             isHidden = false
             attributedText = spText.settings.text.htmlToAttributedString
-            textColor = UIColor(hexString: spText.settings.style?.font?.color)
-            font = UIFont(from: spText.settings.style?.font)
-        }
-    }
-}
-
-extension UIButton {
-    func setup(from spButton: SPNativeButton?) {
-        if let spButton = spButton {
-            isHidden = false
-            setTitle(spButton.settings.text, for: .normal)
-            setTitleColor(UIColor(hexString: spButton.settings.style?.onUnfocusTextColor) ?? Constants.UI.DarkMode.defaultFallbackTextColorForDarkMode, for: .normal)
-            setTitleColor(UIColor(hexString: spButton.settings.style?.onFocusTextColor), for: .focused)
-            backgroundColor = UIColor(hexString: spButton.settings.style?.onUnfocusBackgroundColor)
-            titleLabel?.font = UIFont(from: spButton.settings.style?.font)
+            textColor = UIColor(hexString: spText.settings.style.font.color)
+            font = UIFont(from: spText.settings.style.font)
         }
     }
 }
 
 @IBDesignable
 class SPPMHeader: UIView {
-    var spBackButton: SPNativeButton? {
-        didSet {
-            backButton.setup(from: spBackButton)
-        }
-    }
+    var spBackButton: SPAppleTVButton?
 
     var spTitleText: SPNativeText? {
         didSet {
@@ -61,7 +44,7 @@ class SPPMHeader: UIView {
 
     @IBOutlet var contentView: UIView!
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var backButton: UIButton!
+    @IBOutlet var backButton: SPAppleTVButton!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
