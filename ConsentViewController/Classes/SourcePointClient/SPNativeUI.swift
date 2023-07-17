@@ -130,7 +130,7 @@ class SPNativeUISettingsText: SPNativeUISettings {
         case text
     }
 
-    let text: String
+    var text: String
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)

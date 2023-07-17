@@ -23,6 +23,7 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
     var userConsentVendors: [GDPRVendor] { vendors.filter { !$0.consentCategories.isEmpty || !$0.disclosureOnlyCategories.isEmpty } }
     var legitimateInterestVendorList: [GDPRVendor] { vendors.filter { !$0.legIntCategories.isEmpty || !$0.disclosureOnlyCategories.isEmpty } }
     var disclosureOnlyVendors: [GDPRVendor] { vendors.filter { !$0.disclosureOnlyCategories.isEmpty } }
+    var vendorDescription = [String: NSAttributedString]()
 
     var sections: [SPNativeText?] {
         [viewData.byId("VendorsHeader") as? SPNativeText]
@@ -46,6 +47,7 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
         loadSliderButton(forComponentId: "VendorsSlider", slider: vendorsSlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         nativeLongButton = viewData.byId("VendorButton") as? SPNativeLongButton
+        loadLabelText(forComponentId: "VendorDescription", labelText: "", label: selectedVendorTextLabel)
         vendorsTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
@@ -127,21 +129,21 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
             return UITableViewCell()
         }
         let vendor = currentVendors[indexPath.row]
+        cell.identifier = vendor.id
         cell.labelText = vendor.name
         cell.isOn = consentsSnapshot.toggledVendorsIds.contains(vendor.vendorId)
         cell.selectable = true
         cell.isCustom = vendor.vendorType == .CUSTOM
         cell.setup(from: nativeLongButton)
         cell.loadUI()
+        vendorDescription[vendor.id] = vendor.description?.htmlToAttributedString
         return cell
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        loadLabelText(
-            forComponentId: "VendorDescription",
-            labelText: currentVendors[indexPath.row].description ?? "", label: selectedVendorTextLabel
-        )
-
+        if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
+            selectedVendorTextLabel.attributedText = vendorDescription[cell.identifier]
+        }
         return true
     }
 
