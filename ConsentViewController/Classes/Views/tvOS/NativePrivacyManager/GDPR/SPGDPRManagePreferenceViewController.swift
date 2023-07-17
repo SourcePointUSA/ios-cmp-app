@@ -93,7 +93,9 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 
     override func setFocusGuides() {
         addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: categorySlider, to: categoriesTableView, direction: .bottomTop)
+        addFocusGuide(from: categorySlider, to: descriptionTextView, direction: .bottomTop)
+        addFocusGuide(from: descriptionTextView, to: categoriesTableView, direction: .bottomTop)
+        addFocusGuide(from: header.backButton, to: categorySlider, direction: .right)
         addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
         addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
         categoriesTableView.remembersLastFocusedIndexPath = true
