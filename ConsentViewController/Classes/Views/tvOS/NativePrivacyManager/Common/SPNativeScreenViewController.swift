@@ -171,6 +171,7 @@ class FocusGuideDebugView: UIView {
     func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView {
         if let image = components.first(where: { $0.id == id }) as? SPNativeImage,
            let url = image.settings.src {
+            imageView.image = getImageWithColor(color: .clear)
             imageView.isHidden = false
             imageView.load(url: url)
         } else {

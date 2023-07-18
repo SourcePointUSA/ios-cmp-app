@@ -199,7 +199,7 @@ protocol SPNativePrivacyManagerHome {
             onError(UnableToFindView(withId: "CustomView"))
             return
         }
-        present(SPPrivacyPolicyViewController(
+        present(SPCustomViewController(
             messageId: messageId,
             campaignType: campaignType,
             viewData: customView,
