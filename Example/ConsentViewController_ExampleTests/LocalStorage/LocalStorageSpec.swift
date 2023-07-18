@@ -20,7 +20,7 @@ class CodableMock: Codable, Equatable {
     }
 }
 
-class GDPRLocalStorageSpec: QuickSpec {
+class LocalStorageSpec: QuickSpec {
     override func spec() {
         describe("UserDefaults") {
             it("can store and retrieve Codable objects") {

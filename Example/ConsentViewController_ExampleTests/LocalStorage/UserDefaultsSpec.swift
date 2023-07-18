@@ -12,7 +12,7 @@ import Quick
 
 // swiftlint:disable force_cast function_body_length
 
-class GDPRUserDefaultsSpec: QuickSpec {
+class UserDefaultsSpec: QuickSpec {
     func randomUserConsents() -> SPUserData {
         SPUserData()
     }
