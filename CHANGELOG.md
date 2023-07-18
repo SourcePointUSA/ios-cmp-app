@@ -1,3 +1,11 @@
+# 7.2.1 (Jul, 18, 2023)
+* [DIA-2370](https://sourcepoint.atlassian.net/browse/DIA-2370) Fixed an issue causing the SDK to show a wrong state for the "Do not sell" button on CCPA messages. [#454](https://github.com/SourcePointUSA/ios-cmp-app/pull/454)
+* [DIA-2229](https://sourcepoint.atlassian.net/browse/DIA-2229) Fixed an issue causing the tvOS message to show a Sourcepoint logo briefly before loading the real image. [#460](https://github.com/SourcePointUSA/ios-cmp-app/pull/460)
+* [DIA-2430](https://sourcepoint.atlassian.net/browse/DIA-2430) Fixed an issue causing the description text on some tvOS screens to be unreacheable and unscrollable. [#457](https://github.com/SourcePointUSA/ios-cmp-app/pull/457)
+* [DIA-2429](https://sourcepoint.atlassian.net/browse/DIA-2429) Fixed an issue causing the SDK to throw a runtime exception when scrolling through vendors rapidly on tvOS. [#458](https://github.com/SourcePointUSA/ios-cmp-app/pull/458)
+* Minor tvOS layout adjustments
+* Fixed / improved on testing.
+
 # 7.2.0 (June, 23, 2023)
 * [DIA-2311](https://sourcepoint.atlassian.net/browse/DIA-2311) Fixed an issue causing the SDK to return default consent values for returning users before `onConsentReady` was invoked. [#451](https://github.com/SourcePointUSA/ios-cmp-app/pull/451)
 * [DIA-2271](https://sourcepoint.atlassian.net/browse/DIA-2271) `SPPublisherData` is now of type `[String: AnyEncodable]`. Passing "pubData" as `[String: String]` continues to work, but you should update your code to use `SPPublisherData` instead. [#450](https://github.com/SourcePointUSA/ios-cmp-app/pull/450)
