@@ -1,5 +1,5 @@
 //
-//  GDPRUserDefaultsSpec.swift
+//  SPUserDefaults.swift
 //  ConsentViewController_ExampleTests
 //
 //  Created by Andre Herculano on 06/03/20.
@@ -12,7 +12,7 @@ import Quick
 
 // swiftlint:disable force_cast function_body_length
 
-class UserDefaultsSpec: QuickSpec {
+class SPUserDefaultsSpec: QuickSpec {
     func randomUserConsents() -> SPUserData {
         SPUserData()
     }
@@ -24,7 +24,7 @@ class UserDefaultsSpec: QuickSpec {
             localStorage = InMemoryStorageMock()
         }
 
-        describe("GDPRUserDefaults") {
+        describe("SPUserDefaults") {
             describe("tcfData") {
                 it("is empty dictionary by default") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
