@@ -1,5 +1,5 @@
 //
-//  GDPRUserDefaultsSpec.swift
+//  UserDefaultsExtensionSpec.swift
 //  ConsentViewController_ExampleTests
 //
 //  Created by Andre Herculano on 06/03/20.
@@ -20,7 +20,7 @@ class CodableMock: Codable, Equatable {
     }
 }
 
-class GDPRLocalStorageSpec: QuickSpec {
+class UserDefaultsExtension: QuickSpec {
     override func spec() {
         describe("UserDefaults") {
             it("can store and retrieve Codable objects") {

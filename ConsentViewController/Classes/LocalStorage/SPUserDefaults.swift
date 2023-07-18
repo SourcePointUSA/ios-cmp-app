@@ -14,8 +14,6 @@ class SPUserDefaults: SPLocalStorage {
 
     static let LOCAL_STATE_KEY = "\(SP_KEY_PREFIX)localState"
     static let USER_DATA_KEY = "\(SP_KEY_PREFIX)userData"
-    static let IAB_CMP_SDK_ID_KEY = "\(IAB_KEY_PREFIX)CmpSdkID"
-    static let IAB_CMP_SDK_ID = 6
     static let GDPR_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)GDPRchildPmId"
     static let CCPA_CHILD_PM_ID_KEY = "\(SPUserDefaults.SP_KEY_PREFIX)CCPAchildPmId"
 

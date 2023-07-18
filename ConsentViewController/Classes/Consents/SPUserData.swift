@@ -33,6 +33,7 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     /// The consents data. See: `SPGDPRConsent`, `SPCCPAConsent`
     public let consents: ConsentType?
 
+    // swiftlint:disable:next todo
     // TODO: deprecate this attribute in favour of ConsentType.applies
     /// Indicates whether the legislation applies to the current session or not.
     /// This is based on your Vendor List configuration (scope of the vendor list) and will be determined

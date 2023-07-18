@@ -2,7 +2,7 @@ import Foundation
 // swiftlint:disable line_length
 @objcMembers public class SPError: NSError, LocalizedError {
     public var spCode: String { "sp_metric_generic_sdk_error" }
-    public var spDescription: String { description }
+
     override public var description: String { "Something went wrong in the SDK" }
     public var failureReason: String { originalError.debugDescription }
     public var originalError: Error?
@@ -303,10 +303,6 @@ import Foundation
 
 @objcMembers public class InvalidConsentStatusResponseError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.CONSENT_STATUS.code)" }
-}
-
-@objcMembers public class InvalidPvDataQueryParamsError: SPError {
-    override public var spCode: String { "sp_metric_invalid_pv_data_query_params" }
 }
 
 @objcMembers public class InvalidPvDataResponseError: SPError {

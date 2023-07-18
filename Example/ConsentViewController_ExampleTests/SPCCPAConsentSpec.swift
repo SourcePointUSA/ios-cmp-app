@@ -11,8 +11,6 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try force_unwrapping
-
 class SPCCPAConsentsSpec: QuickSpec {
     override func spec() {
         describe("static empty()") {

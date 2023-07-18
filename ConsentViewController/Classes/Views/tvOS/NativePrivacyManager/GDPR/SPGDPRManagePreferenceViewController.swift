@@ -12,13 +12,16 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
         let contentConsent: [GDPRCategory]
-        let contentLegIntCategory: [GDPRCategory]?
+        let contentLegIntCategory: [GDPRCategory]
 
         init? (header: SPNativeText?, contentConsent: [GDPRCategory]?, contentLegIntCategory: [GDPRCategory]? = nil) {
-            if contentConsent == nil || contentConsent?.isEmpty == true { return nil }
+            guard let contentConsent = contentConsent, contentConsent.isNotEmpty() else {
+                return nil
+            }
+
             self.header = header
-            self.contentConsent = contentConsent! // swiftlint:disable:this force_unwrapping
-            self.contentLegIntCategory = contentLegIntCategory
+            self.contentConsent = contentConsent
+            self.contentLegIntCategory = contentLegIntCategory ?? []
         }
     }
 
@@ -34,7 +37,9 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 
     var sections: [Section] {[
         Section(header: viewData.byId("PurposesHeader") as? SPNativeText, contentConsent: userConsentCategories, contentLegIntCategory: legIntCategories),
-        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialPurposes), contentLegIntCategory: legIntSpecialPurposes),
+        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
+                contentConsent: Array(consentsSnapshot.specialPurposes),
+                contentLegIntCategory: legIntSpecialPurposes),
         Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.features)),
         Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialFeatures))
     ].compactMap { $0 }}
@@ -112,7 +117,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
     func currentCategory(_ index: IndexPath) -> GDPRCategory {
         displayingLegIntCategories ?
-            sections[index.section].contentLegIntCategory![index.row] :
+            sections[index.section].contentLegIntCategory[index.row] :
             sections[index.section].contentConsent[index.row]
     }
 
@@ -121,7 +126,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        let legIntCategoryCount = sections.filter{ $0.contentLegIntCategory?.isNotEmpty() ?? false }.count
+        let legIntCategoryCount = sections.filter { $0.contentLegIntCategory.isNotEmpty() }.count
         return displayingLegIntCategories ? legIntCategoryCount : sections.count
     }
 
@@ -138,7 +143,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        displayingLegIntCategories ? sections[section].contentLegIntCategory?.count ?? 0 : sections[section].contentConsent.count
+        displayingLegIntCategories ? sections[section].contentLegIntCategory.count : sections[section].contentConsent.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

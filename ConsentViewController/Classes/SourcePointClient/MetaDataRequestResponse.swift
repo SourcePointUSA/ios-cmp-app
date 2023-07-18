@@ -14,7 +14,6 @@ struct MetaDataResponse: Decodable, Equatable {
     }
     struct GDPR: Decodable, Equatable {
         let additionsChangeDate: SPDateCreated
-        let getMessageAlways: Bool
         let legalBasisChangeDate: SPDateCreated
         let version: Int
         let _id: String

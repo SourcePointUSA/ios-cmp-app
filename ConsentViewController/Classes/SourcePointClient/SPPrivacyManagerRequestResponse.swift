@@ -30,7 +30,7 @@ import Foundation
             case name, vendorId, policyUrl, vendorType
         }
     }
-    
+
     enum Keys: String, CodingKey {
         case iabId
         case _id, name, description
@@ -46,7 +46,7 @@ import Foundation
     let requireConsent: Bool?
     let legIntVendors: [Vendor]?
     let requiringConsentVendors: [Vendor]?
-    let disclosureOnlyVendors: [Vendor]?
+    let disclosureOnlyVendors: [Vendor]
     var uniqueVendorIds: [String] {
         Array(Set<String>(
             ((legIntVendors ?? []).compactMap { $0.vendorId } +
@@ -65,10 +65,17 @@ import Foundation
         self.requireConsent = try container.decodeIfPresent(Bool.self, forKey: .requireConsent)
         self.legIntVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .legIntVendors)
         self.requiringConsentVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .requiringConsentVendors)
-        self.disclosureOnlyVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .disclosureOnlyVendors)
+        self.disclosureOnlyVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .disclosureOnlyVendors) ?? []
     }
 
-    init(name: String, description: String = "", disclosureOnly: Bool = false, legIntVendors: [Vendor]? = nil, requiringConsentVendors: [Vendor]? = nil, disclosureOnlyVendors: [Vendor]? = nil){
+    init(
+        name: String,
+        description: String = "",
+        disclosureOnly: Bool = false,
+        legIntVendors: [Vendor]? = nil,
+        requiringConsentVendors: [Vendor]? = nil,
+        disclosureOnlyVendors: [Vendor]? = nil
+    ) {
         self.iabId = 0
         self._id = "id"
         self.name = name
@@ -78,7 +85,7 @@ import Foundation
         self.requireConsent = false
         self.legIntVendors = legIntVendors
         self.requiringConsentVendors = requiringConsentVendors
-        self.disclosureOnlyVendors = disclosureOnlyVendors
+        self.disclosureOnlyVendors = disclosureOnlyVendors ?? []
     }
 }
 

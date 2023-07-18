@@ -200,18 +200,6 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadLabelView(forComponentId id: String, label: UILabel) -> UILabel {
-        if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            let style = textDetails.settings.style
-            label.text = ""
-            label.attributedText = textDetails.settings.text.htmlToAttributedString
-            label.textColor = UIColor(hexString: style.font.color)
-            label.font = UIFont(from: style.font)
-        }
-        return label
-    }
-
-    @discardableResult
     func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             let style = textDetails.settings.style
@@ -284,12 +272,12 @@ extension UILabel {
     }
 }
 
-func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
-    let rect = CGRectMake(0, 0, size.width, size.height)
+func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
+    let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     UIGraphicsBeginImageContextWithOptions(size, false, 0)
     color.setFill()
     UIRectFill(rect)
-    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    let image: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return image
 }
