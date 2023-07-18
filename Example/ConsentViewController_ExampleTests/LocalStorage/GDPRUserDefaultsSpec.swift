@@ -32,16 +32,17 @@ class GDPRUserDefaultsSpec: QuickSpec {
                 }
 
                 it("gets its value from the local storage") {
-                    localStorage.storage = [SPUserDefaults.IAB_CMP_SDK_ID_KEY: 99]
+                    let iabKey = "\(SPUserDefaults.IAB_KEY_PREFIX)_key"
+                    localStorage.storage = [iabKey: 99]
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    expect(userDefaults.tcfData?[SPUserDefaults.IAB_CMP_SDK_ID_KEY] as? Int) == 99
+                    expect(userDefaults.tcfData?[iabKey] as? Int) == 99
                 }
 
                 it("persists the value in the local storage") {
+                    let iabKey = "\(SPUserDefaults.IAB_KEY_PREFIX)_key"
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    userDefaults.tcfData = [SPUserDefaults.IAB_CMP_SDK_ID_KEY: 99]
-                    let stored = localStorage.storage[SPUserDefaults.IAB_CMP_SDK_ID_KEY] as! Int
-                    expect(stored) == 99
+                    userDefaults.tcfData = [iabKey: 99]
+                    expect(localStorage.storage[iabKey] as? Int) == 99
                 }
             }
 

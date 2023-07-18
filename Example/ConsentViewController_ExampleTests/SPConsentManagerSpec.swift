@@ -33,6 +33,7 @@ class SPConsentManagerSpec: QuickSpec {
         }
 
         beforeEach {
+            SPConsentManager.clearAllData()
             manager = SPConsentManager(
                 accountId: accountId,
                 propertyId: propertyId,
