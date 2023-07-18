@@ -63,7 +63,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
         }
         dismiss(animated: true)
     }
-    
+
     func hideOnOffButtons() {
         onButton.isHidden = true
         offButton.isHidden = true

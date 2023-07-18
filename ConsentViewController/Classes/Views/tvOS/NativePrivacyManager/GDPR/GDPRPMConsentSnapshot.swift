@@ -51,7 +51,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         if disclosureCategories.isNotEmpty() {
             for category in disclosureCategories {
                 self.specialPurposes.insert(
-                    GDPRCategory(name: category.name, description: category.description, disclosureOnly: true, legIntVendors: category.disclosureOnlyVendors!)
+                    GDPRCategory(name: category.name, description: category.description, disclosureOnly: true, legIntVendors: category.disclosureOnlyVendors)
                 )
             }
         }

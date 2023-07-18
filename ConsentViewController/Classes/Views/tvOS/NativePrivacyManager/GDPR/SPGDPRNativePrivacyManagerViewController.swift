@@ -193,7 +193,7 @@ protocol SPNativePrivacyManagerHome {
             nibName: "SPPrivacyPolicyViewController"
         ), animated: true)
     }
-    
+
     @IBAction func onCustomViewTap(_ sender: Any) {
         guard let customView = pmData.customView else {
             onError(UnableToFindView(withId: "CustomView"))

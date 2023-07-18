@@ -272,12 +272,12 @@ extension UILabel {
     }
 }
 
-func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
-    let rect = CGRectMake(0, 0, size.width, size.height)
+func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
+    let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     UIGraphicsBeginImageContextWithOptions(size, false, 0)
     color.setFill()
     UIRectFill(rect)
-    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    let image: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return image
 }
