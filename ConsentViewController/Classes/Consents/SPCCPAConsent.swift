@@ -106,10 +106,6 @@ protocol CampaignConsent {
              webConsentPayload, signedLspa, applies
     }
 
-    /// represents the default state of the consumer prior to seeing the consent message
-    /// - seealso: https://github.com/InteractiveAdvertisingBureau/USPrivacy/blob/master/CCPA/US%20Privacy%20String.md#us-privacy-string-format
-    public static let defaultUsPrivacyString = "1---"
-
     /// Indicates if the user has rejected `.All`, `.Some` or `.None` of the vendors **and** categories.
     public var status: CCPAConsentStatus
 

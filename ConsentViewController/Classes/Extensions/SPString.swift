@@ -23,7 +23,7 @@ extension String {
             return nil
         }
     }
-    var htmlToString: String { htmlToAttributedString?.string ?? "" }
+
     func stripOutCss(stripHtml: Bool = false) -> String? {
         // replace &lt; with < and &gt; with >
         let decoded = self.replacingOccurrences(of: "&lt;", with: "<").replacingOccurrences(of: "&gt;", with: ">")

@@ -10,7 +10,6 @@ import Foundation
 struct ConsentStatusResponse: Decodable, Equatable {
     struct Data: Decodable, Equatable {
         struct GDPR: Decodable, Equatable {
-            let localDataCurrent: Bool
             let dateCreated: SPDateCreated
             let uuid, euconsent, addtlConsent: String
             let TCData: SPJson
