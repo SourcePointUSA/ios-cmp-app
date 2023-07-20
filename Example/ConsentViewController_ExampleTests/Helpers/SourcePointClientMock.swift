@@ -184,7 +184,7 @@ class SourcePointClientMock: SourcePointProtocol {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataBodyRequest,
+        metadata: MetaDataQueryParam,
         handler: @escaping MetaDataHandler
     ) { }
 

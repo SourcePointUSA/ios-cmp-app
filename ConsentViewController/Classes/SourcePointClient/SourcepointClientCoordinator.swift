@@ -166,22 +166,16 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         (campaigns.ios14 != nil && state.ios14?.status != .accepted)
     }
 
-    var metaDataParamsFromState: MetaDataBodyRequest {
+    var metaDataParamsFromState: MetaDataQueryParam {
         .init(
             gdpr: campaigns.gdpr != nil ?
                     .init(
-                        groupPmId: campaigns.gdpr?.groupPmId,
-                        hasLocalData: state.gdpr?.uuid != nil,
-                        dateCreated: state.gdpr?.dateCreated,
-                        uuid: state.gdpr?.uuid
+                        groupPmId: campaigns.gdpr?.groupPmId
                     ) :
                     nil,
             ccpa: campaigns.ccpa != nil ?
                 .init(
-                    groupPmId: campaigns.ccpa?.groupPmId,
-                    hasLocalData: state.ccpa?.uuid != nil,
-                    dateCreated: state.ccpa?.dateCreated,
-                    uuid: state.ccpa?.uuid
+                    groupPmId: campaigns.ccpa?.groupPmId
                 ) :
                 nil
         )

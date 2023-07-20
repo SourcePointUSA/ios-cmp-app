@@ -26,12 +26,9 @@ struct MetaDataResponse: Decodable, Equatable {
     let gdpr: GDPR?
 }
 
-struct MetaDataBodyRequest: QueryParamEncodable {
+struct MetaDataQueryParam: QueryParamEncodable {
     struct Campaign: Encodable {
         let groupPmId: String?
-        let hasLocalData: Bool
-        let dateCreated: SPDateCreated?
-        let uuid: String?
     }
 
     let gdpr, ccpa: Campaign?
