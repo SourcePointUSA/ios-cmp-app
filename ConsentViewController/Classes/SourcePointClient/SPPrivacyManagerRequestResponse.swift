@@ -33,7 +33,7 @@ import Foundation
 
     enum Keys: String, CodingKey {
         case iabId
-        case _id, name, description
+        case _id, name, description, friendlyDescription
         case type
         case disclosureOnly, requireConsent
         case legIntVendors, requiringConsentVendors, disclosureOnlyVendors
@@ -41,6 +41,7 @@ import Foundation
 
     let iabId: Int?
     let _id, name, description: String
+    let friendlyDescription: String?
     let type: GDPRCategory.CategoryType?
     let disclosureOnly: Bool?
     let requireConsent: Bool?
@@ -60,6 +61,7 @@ import Foundation
         self._id = try container.decode(String.self, forKey: ._id)
         self.name = try container.decode(String.self, forKey: .name)
         self.description = try container.decode(String.self, forKey: .description)
+        self.friendlyDescription = try container.decodeIfPresent(String.self, forKey: .friendlyDescription)
         self.type = try container.decodeIfPresent(GDPRCategory.CategoryType.self, forKey: .type)
         self.disclosureOnly = try container.decodeIfPresent(Bool.self, forKey: .disclosureOnly)
         self.requireConsent = try container.decodeIfPresent(Bool.self, forKey: .requireConsent)
@@ -71,6 +73,7 @@ import Foundation
     init(
         name: String,
         description: String = "",
+        friendlyDescription: String = "",
         disclosureOnly: Bool = false,
         legIntVendors: [Vendor]? = nil,
         requiringConsentVendors: [Vendor]? = nil,
@@ -80,6 +83,7 @@ import Foundation
         self._id = "id"
         self.name = name
         self.description = description
+        self.friendlyDescription = friendlyDescription
         self.type = GDPRCategory.CategoryType.CUSTOM
         self.disclosureOnly = disclosureOnly
         self.requireConsent = false

@@ -34,18 +34,28 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
     var legIntSpecialPurposes: [GDPRCategory] { consentsSnapshot.specialPurposes.filter { $0.disclosureOnly == true } }
+    var categoryDescription = [String: String]()
 
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, contentConsent: userConsentCategories, contentLegIntCategory: legIntCategories),
-        Section(header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
-                contentConsent: Array(consentsSnapshot.specialPurposes),
-                contentLegIntCategory: legIntSpecialPurposes),
-        Section(header: viewData.byId("FeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.features)),
-        Section(header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText, contentConsent: Array(consentsSnapshot.specialFeatures))
+        Section(
+            header: viewData.byId("PurposesHeader") as? SPNativeText,
+            contentConsent: userConsentCategories,
+            contentLegIntCategory: legIntCategories),
+        Section(
+            header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
+            contentConsent: Array(consentsSnapshot.specialPurposes),
+            contentLegIntCategory: legIntSpecialPurposes),
+        Section(
+            header: viewData.byId("FeaturesHeader") as? SPNativeText,
+            contentConsent: Array(consentsSnapshot.features)),
+        Section(
+            header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText,
+            contentConsent: Array(consentsSnapshot.specialFeatures))
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
 
+    @IBOutlet var selectedCategoryTextLabel: UILabel!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var acceptButton: SPAppleTVButton!
@@ -64,6 +74,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
@@ -157,6 +168,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
 
         let section = indexPath.section
         let category = currentCategory(indexPath)
+        cell.identifier = category._id
         cell.labelText = category.name
         cell.isOn = section == 0 || section == 3 ?
             consentsSnapshot.toggledCategoriesIds.contains(category._id) :
@@ -165,6 +177,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
         cell.loadUI()
+        categoryDescription[category._id] = category.friendlyDescription
         return cell
     }
 
@@ -174,7 +187,10 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        true
+        if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
+            selectedCategoryTextLabel.text = categoryDescription[cell.identifier]
+        }
+        return true
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
