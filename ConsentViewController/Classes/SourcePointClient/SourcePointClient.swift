@@ -139,7 +139,7 @@ protocol SourcePointProtocol {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataBodyRequest,
+        metadata: MetaDataQueryParam,
         handler: @escaping MetaDataHandler
     )
 
@@ -428,7 +428,7 @@ extension SourcePointClient {
     func metaDataURLWithParams(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataBodyRequest
+        metadata: MetaDataQueryParam
     ) -> URL? {
         let url = Constants.Urls.META_DATA_URL.appendQueryItems([
             "accountId": String(accountId),
@@ -441,7 +441,7 @@ extension SourcePointClient {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataBodyRequest,
+        metadata: MetaDataQueryParam,
         handler: @escaping MetaDataHandler
     ) {
         guard let url = metaDataURLWithParams(
