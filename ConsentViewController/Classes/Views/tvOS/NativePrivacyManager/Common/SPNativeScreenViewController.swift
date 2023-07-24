@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Down
 
 extension UIImageView {
     func load(url: URL) {
@@ -212,15 +213,22 @@ class FocusGuideDebugView: UIView {
         return label
     }
 
+    func parseText(_ rawText: String) -> NSAttributedString? {
+        guard let markdownText = try? Down(markdownString: rawText).toAttributedString(),
+              markdownText.length != 0 else {
+            return rawText.htmlToAttributedString
+        }
+        return markdownText
+    }
+
     @discardableResult
     func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, bounces: Bool = true) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             let style = textViewComponent.settings.style
-            if let text = text {
-                textView.attributedText = text.htmlToAttributedString
-            } else {
-                textView.attributedText = textViewComponent.settings.text.htmlToAttributedString
-            }
+            textView.attributedText = parseText(text != nil ?
+                text! :
+                textViewComponent.settings.text
+            )
             textView.textColor = UIColor(hexString: style.font.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
