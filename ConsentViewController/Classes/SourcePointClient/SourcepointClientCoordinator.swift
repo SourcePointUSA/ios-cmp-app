@@ -109,6 +109,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         var nonKeyedLocalState: SPJson?
         var storedAuthId: String?
 
+        var hasGDPRLocalData: Bool { gdpr?.uuid != nil }
+        var hasCCPALocalData: Bool { ccpa?.uuid != nil }
+
         mutating func udpateGDPRStatus() {
             guard let gdpr = gdpr, let gdprMetadata = gdprMetaData else { return }
             var shouldUpdateConsentedAll = false
@@ -190,12 +193,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     ccpa: campaigns.ccpa != nil ?
                     .init(
                         targetingParams: campaigns.ccpa?.targetingParams,
-                        hasLocalData: state.ccpa?.uuid != nil,
+                        hasLocalData: state.hasCCPALocalData,
                         status: state.ccpa?.status
                     ) : nil,
                     gdpr: campaigns.gdpr != nil ? .init(
                         targetingParams: campaigns.gdpr?.targetingParams,
-                        hasLocalData: state.gdpr?.uuid != nil,
+                        hasLocalData: state.hasGDPRLocalData,
                         consentStatus: state.gdpr?.consentStatus
                     ) : nil,
                     ios14: campaigns.ios14 != nil ? .init(
@@ -384,12 +387,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
+    func consentStatusMetadataFromState(_ campaign: CampaignConsent?, _ hasLocalData: Bool) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
-            uuid: campaign.uuid
+            uuid: campaign.uuid,
+            hasLocalData: hasLocalData,
+            idfaStatus: SPIDFAStatus.current()
         )
     }
 
@@ -426,8 +431,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             spClient.consentStatus(
                 propertyId: propertyId,
                 metadata: .init(
-                    gdpr: consentStatusMetadataFromState(state.gdpr),
-                    ccpa: consentStatusMetadataFromState(state.ccpa)
+                    gdpr: consentStatusMetadataFromState(
+                        state.gdpr,
+                        state.hasGDPRLocalData
+                    ),
+                    ccpa: consentStatusMetadataFromState(
+                        state.ccpa,
+                        state.hasCCPALocalData
+                    )
                 ),
                 authId: authId
             ) { result in

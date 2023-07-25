@@ -389,7 +389,7 @@ class SourcePointClient: SourcePointProtocol {
 extension SourcePointClient {
     func consentStatusURLWithParams(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?) -> URL? {
         var url = Constants.Urls.CONSENT_STATUS_URL.appendQueryItems([
-            "propertyId": propertyId.description,
+            "propertyId": String(propertyId),
             "metadata": metadata.stringified(),
             "hasCsp": "true",
             "withSiteActions": "false",
