@@ -147,7 +147,7 @@ protocol SourcePointProtocol {
         actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
-        metadata: ChoiceAllBodyRequest,
+        metadata: ChoiceAllMetaDataParam,
         handler: @escaping ChoiceHandler
     )
 
@@ -497,7 +497,7 @@ extension SourcePointClient {
         propertyId: Int,
         withSiteActions: Bool,
         includeCustomVendorsRes: Bool,
-        metadata: ChoiceAllBodyRequest
+        metadata: ChoiceAllMetaDataParam
     ) -> URL? {
         var baseUrl: URL
         if actionType == .AcceptAll {
@@ -509,10 +509,10 @@ extension SourcePointClient {
         }
         return baseUrl.appendQueryItems([
             "accountId": String(accountId),
-            "hasCsp": hasCsp.description,
+            "hasCsp": String(hasCsp),
             "propertyId": String(propertyId),
-            "withSiteActions": withSiteActions.description,
-            "includeCustomVendorsRes": includeCustomVendorsRes.description,
+            "withSiteActions": String(withSiteActions),
+            "includeCustomVendorsRes": String(includeCustomVendorsRes),
             "metadata": metadata.stringified(),
             "includeData": IncludeData.string
         ])
@@ -522,7 +522,7 @@ extension SourcePointClient {
         actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
-        metadata: ChoiceAllBodyRequest,
+        metadata: ChoiceAllMetaDataParam,
         handler: @escaping ChoiceHandler
     ) {
         guard let url = choiceAllUrlWithParams(

@@ -42,7 +42,7 @@ struct ChoiceAllResponse: Decodable {
     let ccpa: CCPA?
 }
 
-struct ChoiceAllBodyRequest: QueryParamEncodable {
+struct ChoiceAllMetaDataParam: QueryParamEncodable {
     struct Campaign: Encodable {
         let applies: Bool
     }
