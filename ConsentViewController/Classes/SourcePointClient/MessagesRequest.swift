@@ -32,6 +32,7 @@ struct MessagesRequest: QueryParamEncodable {
             let ios14: IOS14?
         }
 
+        let localState: SPJson?
         let propertyHref: SPPropertyName
         let accountId: Int
         let campaigns: Campaigns
@@ -50,12 +51,6 @@ struct MessagesRequest: QueryParamEncodable {
         let ccpa, gdpr: Campaign?
     }
 
-    struct LocalState: QueryParamEncodable {
-        let ccpa: SPJson?
-        let gdpr: SPJson?
-        let ios14: SPJson?
-    }
-
     struct NonKeyedLocalState: QueryParamEncodable {
         let ccpa: SPJson?
         let gdpr: SPJson?
@@ -64,7 +59,6 @@ struct MessagesRequest: QueryParamEncodable {
 
     let body: Body
     let metadata: MetaData
-    let localState: LocalState
     let nonKeyedLocalState: NonKeyedLocalState
 }
 
@@ -73,14 +67,6 @@ extension MessagesRequest.NonKeyedLocalState {
         ccpa = nonKeyedLocalState?["ccpa"]
         gdpr = nonKeyedLocalState?["gdpr"]
         ios14 = nonKeyedLocalState?["ios14"]
-    }
-}
-
-extension MessagesRequest.LocalState {
-    init(localState: SPJson?) {
-        ccpa = localState?["ccpa"]
-        gdpr = localState?["gdpr"]
-        ios14 = localState?["ios14"]
     }
 }
 
