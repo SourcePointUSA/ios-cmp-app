@@ -27,6 +27,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     var categories: [CCPACategory] = []
     var userConsentCategories: [CCPACategory] { categories.filter { $0.requiringConsentVendors.isNotEmpty() } }
     var legIntCategories: [CCPACategory] { categories.filter { $0.legIntVendors.isNotEmpty() } }
+    var categoryDescription = [String: String]()
 
     var sections: [Section] {[
         Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: categories)
@@ -34,6 +35,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
 
     let cellReuseIdentifier = "cell"
 
+    @IBOutlet var selectedCategoryTextLabel: UILabel!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var acceptButton: SPAppleTVButton!
@@ -50,6 +52,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
+        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
@@ -131,6 +134,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
         }
 
         let category = currentCategory(indexPath)
+        cell.identifier = category._id
         cell.labelText = category.name
         switch consentsSnapshot.consentStatus {
             case .ConsentedAll, .RejectedNone: cell.isOn = true
@@ -142,6 +146,7 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
         cell.isCustom = false
         cell.setup(from: nativeLongButton)
         cell.loadUI()
+        categoryDescription[category._id] = category.description
         return cell
     }
 
@@ -150,7 +155,10 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
-        true
+        if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
+            selectedCategoryTextLabel.text = categoryDescription[cell.identifier]
+        }
+        return true
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
