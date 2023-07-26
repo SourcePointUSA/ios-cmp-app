@@ -184,6 +184,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var messagesParamsFromState: MessagesRequest {
         .init(
             body: .init(
+                localState: state.localState,
                 propertyHref: propertyName,
                 accountId: accountId,
                 campaigns: .init(
@@ -211,7 +212,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 ccpa: .init(applies: state.ccpa?.applies),
                 gdpr: .init(applies: state.gdpr?.applies)
             ),
-            localState: .init(localState: state.localState),
             nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState)
         )
     }

@@ -91,6 +91,7 @@ class SourcePointClientSpec: QuickSpec {
                 it("calls GET on the http client with the right URL") {
                     client.getMessages(MessagesRequest(
                         body: MessagesRequest.Body(
+                            localState: SPJson(),
                             propertyHref: self.propertyName,
                             accountId: self.accountId,
                             campaigns: MessagesRequest.Body.Campaigns(),
@@ -99,7 +100,6 @@ class SourcePointClientSpec: QuickSpec {
                             idfaStatus: nil
                         ),
                         metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil),
-                        localState: MessagesRequest.LocalState(localState: SPJson()),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
                     )) { _ in }
                     expect(httpClient.getWasCalledWithUrl).toEventually(contain("/v2/messages"))
