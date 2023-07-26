@@ -17,9 +17,15 @@ import Quick
 class SPDateCreatedSpec: QuickSpec {
     override func spec() {
         func dateFromString(_ date: String) -> Date? {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            return formatter.date(from: date)
+            if #available(iOS 11.0, *) {
+                let formatter = ISO8601DateFormatter()
+                formatter.formatOptions = [ .withFullDate, .withFullTime, .withFractionalSeconds, .withTimeZone ]
+                return formatter.date(from: date)
+            } else {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                return formatter.date(from: date)
+            }
         }
 
         describe("SPDateCreated") {

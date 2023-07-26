@@ -8,10 +8,16 @@
 import Foundation
 
 public struct SPDateCreated: Codable, Equatable {
-    static let format: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        return formatter
+    static let format: SPDateFormatter = {
+        if #available(iOS 11.0, *) {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [ .withFullDate, .withFullTime, .withFractionalSeconds, .withTimeZone ]
+            return formatter
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            return formatter
+        }
     }()
 
     let originalDateString: String
@@ -37,3 +43,12 @@ public struct SPDateCreated: Codable, Equatable {
         try container.encode(originalDateString)
     }
 }
+
+protocol SPDateFormatter {
+    func string(from date: Date) -> String
+    
+    func date(from string: String) -> Date?
+}
+
+extension DateFormatter: SPDateFormatter { }
+extension ISO8601DateFormatter: SPDateFormatter { }
