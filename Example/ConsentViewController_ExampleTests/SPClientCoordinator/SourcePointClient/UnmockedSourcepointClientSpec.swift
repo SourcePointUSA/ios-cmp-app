@@ -61,7 +61,22 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 waitUntil { done in
                     client.consentStatus(
                         propertyId: propertyId,
-                        metadata: ConsentStatusMetaData(gdpr: ConsentStatusMetaData.Campaign(applies: true, dateCreated: nil, uuid: nil), ccpa: ConsentStatusMetaData.Campaign(applies: true, dateCreated: nil, uuid: nil)),
+                        metadata: ConsentStatusMetaData(
+                            gdpr: .init(
+                                applies: true,
+                                dateCreated: nil,
+                                uuid: nil,
+                                hasLocalData: false,
+                                idfaStatus: nil
+                            ),
+                            ccpa: .init(
+                                applies: true,
+                                dateCreated: nil,
+                                uuid: nil,
+                                hasLocalData: false,
+                                idfaStatus: nil
+                            )
+                        ),
                         authId: "user_auth_id") { result in
                             switch result {
                             case .success(let response):

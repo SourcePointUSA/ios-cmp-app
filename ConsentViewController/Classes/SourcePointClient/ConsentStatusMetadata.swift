@@ -13,6 +13,8 @@ struct ConsentStatusMetaData: QueryParamEncodable {
         let applies: Bool
         let dateCreated: SPDateCreated?
         let uuid: String?
+        let hasLocalData: Bool
+        let idfaStatus: SPIDFAStatus?
     }
 
     let gdpr, ccpa: Campaign?
