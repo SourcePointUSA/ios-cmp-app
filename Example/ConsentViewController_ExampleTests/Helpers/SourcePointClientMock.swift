@@ -192,7 +192,7 @@ class SourcePointClientMock: SourcePointProtocol {
         actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
-        metadata: ChoiceAllBodyRequest,
+        metadata: ChoiceAllMetaDataParam,
         handler: @escaping ChoiceHandler
     ) {
         handler(.success(ChoiceAllResponse(gdpr: nil, ccpa: nil)))
