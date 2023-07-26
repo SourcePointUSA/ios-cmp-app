@@ -1,3 +1,8 @@
+# 7.2.2 (Jul, 26, 2023)
+* [DIA-2463](https://sourcepoint.atlassian.net/browse/DIA-2463),[DIA-2461](https://sourcepoint.atlassian.net/browse/DIA-2461),[DIA-2459](https://sourcepoint.atlassian.net/browse/DIA-2459),[DIA-2453](https://sourcepoint.atlassian.net/browse/DIA-2453) Several improvements to our network layer helping the SDK to better utilize Sourcepoint CDNs' cache.
+* [DIA-2309](https://sourcepoint.atlassian.net/browse/DIA-2309),[DIA-2356](https://sourcepoint.atlassian.net/browse/DIA-2356 tvOS layout improvements
+* [#466](https://github.com/SourcePointUSA/ios-cmp-app/pull/466) add support to Markdown text on tvOS.
+
 # 7.2.1 (Jul, 18, 2023)
 * [DIA-2370](https://sourcepoint.atlassian.net/browse/DIA-2370) Fixed an issue causing the SDK to show a wrong state for the "Do not sell" button on CCPA messages. [#454](https://github.com/SourcePointUSA/ios-cmp-app/pull/454)
 * [DIA-2229](https://sourcepoint.atlassian.net/browse/DIA-2229) Fixed an issue causing the tvOS message to show a Sourcepoint logo briefly before loading the real image. [#460](https://github.com/SourcePointUSA/ios-cmp-app/pull/460)
