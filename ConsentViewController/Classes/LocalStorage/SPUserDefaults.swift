@@ -101,6 +101,7 @@ class SPUserDefaults: SPLocalStorage {
     func clear() {
         localState = nil
         tcfData = [:]
+        gppData = [:]
         usPrivacyString = ""
         userData = SPUserData()
         gdprChildPmId = nil

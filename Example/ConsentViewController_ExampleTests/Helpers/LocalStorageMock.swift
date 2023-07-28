@@ -17,6 +17,7 @@ class LocalStorageMock: SPLocalStorage {
     var nonKeyedLocalState = SPJson()
     var storage: Storage = InMemoryStorageMock()
     var tcfData: [String: Any]? = [:]
+    var gppData: [String: Any]? = [:]
     var usPrivacyString: String?
     var propertyId: Int?
     var spState: SourcepointClientCoordinator.State?

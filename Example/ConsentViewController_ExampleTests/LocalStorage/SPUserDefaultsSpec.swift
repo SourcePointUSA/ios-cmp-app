@@ -10,7 +10,7 @@
 import Nimble
 import Quick
 
-// swiftlint:disable force_cast function_body_length
+// swiftlint:disable function_body_length
 
 class SPUserDefaultsSpec: QuickSpec {
     func randomUserConsents() -> SPUserData {
@@ -44,6 +44,47 @@ class SPUserDefaultsSpec: QuickSpec {
                     userDefaults.tcfData = [iabKey: 99]
                     expect(localStorage.storage[iabKey] as? Int) == 99
                 }
+
+                it("when reassigned, remove pre-existing values") {
+                    let iabKeyA = "\(SPUserDefaults.IAB_KEY_PREFIX)_key_a"
+                    let iabKeyB = "\(SPUserDefaults.IAB_KEY_PREFIX)_key_b"
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    localStorage.storage = [iabKeyA: 999]
+                    userDefaults.tcfData = [iabKeyB: 123]
+                    expect(localStorage.storage.keys).notTo(contain(iabKeyA))
+                    expect(localStorage.storage.keys).to(contain(iabKeyB))
+                }
+            }
+
+            describe("gppData") {
+                it("is empty dictionary by default") {
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    expect(userDefaults.gppData).to(beEmpty())
+                }
+
+                it("gets its value from the local storage") {
+                    let gppKey = "\(SPUserDefaults.GPP_KEY_PREFIX)_key"
+                    localStorage.storage = [gppKey: 99]
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    expect(userDefaults.gppData?[gppKey] as? Int) == 99
+                }
+
+                it("persists the value in the local storage") {
+                    let gppKey = "\(SPUserDefaults.GPP_KEY_PREFIX)_key"
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    userDefaults.gppData = [gppKey: 99]
+                    expect(localStorage.storage[gppKey] as? Int) == 99
+                }
+
+                it("when reassigned, remove pre-existing values") {
+                    let gppKeyA = "\(SPUserDefaults.GPP_KEY_PREFIX)_key_a"
+                    let gppKeyB = "\(SPUserDefaults.GPP_KEY_PREFIX)_key_b"
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    localStorage.storage = [gppKeyA: 999]
+                    userDefaults.gppData = [gppKeyB: 123]
+                    expect(localStorage.storage.keys).notTo(contain(gppKeyA))
+                    expect(localStorage.storage.keys).to(contain(gppKeyB))
+                }
             }
 
             describe("userData") {
@@ -63,7 +104,7 @@ class SPUserDefaultsSpec: QuickSpec {
                     let userData = SPUserData()
                     let userDefaults = SPUserDefaults(storage: localStorage)
                     userDefaults.userData = userData
-                    let stored = localStorage.storage[SPUserDefaults.USER_DATA_KEY] as! SPUserData
+                    let stored = localStorage.storage[SPUserDefaults.USER_DATA_KEY] as? SPUserData
                     expect(stored) == userData
                 }
             }
@@ -102,9 +143,20 @@ class SPUserDefaultsSpec: QuickSpec {
 
                 it("sets tcfData back to its default value") {
                     let userDefaults = SPUserDefaults(storage: localStorage)
-                    userDefaults.tcfData = ["foo": "bar"]
+                    let tcfKey = "\(SPUserDefaults.IAB_KEY_PREFIX)foo"
+                    userDefaults.tcfData = [tcfKey: "bar"]
+                    expect(userDefaults.tcfData).notTo(beEmpty())
                     userDefaults.clear()
                     expect(userDefaults.tcfData).to(beEmpty())
+                }
+
+                it("sets gppData back to its default value") {
+                    let userDefaults = SPUserDefaults(storage: localStorage)
+                    let gppKey = "\(SPUserDefaults.GPP_KEY_PREFIX)foo"
+                    userDefaults.gppData = [gppKey: "bar"]
+                    expect(userDefaults.gppData).notTo(beEmpty())
+                    userDefaults.clear()
+                    expect(userDefaults.gppData).to(beEmpty())
                 }
             }
 
