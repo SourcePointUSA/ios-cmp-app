@@ -41,6 +41,13 @@
 	<true/>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Hey there, we are going to track you!</string>
+	<key>SPLogLevel</key>
+	<string>debug</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -49,8 +56,6 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>SPLogLevel</key>
-	<string>debug</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
