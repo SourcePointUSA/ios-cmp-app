@@ -9,6 +9,8 @@
 import Foundation
 import Nimble
 
+public typealias Predicate = Nimble.Predicate
+
 extension URL {
     public var queryParams: [String: String]? {
         guard
