@@ -190,6 +190,9 @@ import UIKit
         if let uspString = userData.ccpa?.consents?.uspstring {
             storage.usPrivacyString = uspString
         }
+        if let gppData = userData.ccpa?.consents?.GPPData {
+            storage.gppData = gppData.dictionaryValue
+        }
     }
 
     func report(action: SPAction) {

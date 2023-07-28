@@ -21,17 +21,6 @@ class SPConsentManagerSpec: QuickSpec {
 
         var manager: SPConsentManager!
 
-        beforeSuite {
-            SPConsentManager.clearAllData()
-            Nimble.AsyncDefaults.timeout = .seconds(30)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
-        }
-
-        afterSuite {
-            Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
-        }
-
         beforeEach {
             SPConsentManager.clearAllData()
             manager = SPConsentManager(
@@ -135,6 +124,34 @@ class SPConsentManagerSpec: QuickSpec {
                 )
                 expect(manager.userData).to(equal(cachedUserData))
             }
+        }
+
+        it("stores legislation data when there are no messages to show") {
+            let coordinatorMock = CoordinatorMock()
+            let userData = SPUserData(
+                gdpr: SPConsent(consents: SPGDPRConsent(
+                    vendorGrants: SPGDPRVendorGrants(),
+                    euconsent: "",
+                    tcfData: try! SPJson(["tcf key": "tcf value"])), applies: true),
+                ccpa: SPConsent(consents: SPCCPAConsent(
+                    status: .RejectedNone,
+                    rejectedVendors: [],
+                    rejectedCategories: [],
+                    signedLspa: false,
+                    GPPData: try! SPJson(["gpp key": "gpp value"])
+                ), applies: true)
+            )
+            coordinatorMock.loadMessagesResult = .success(([], userData))
+            manager.spCoordinator = coordinatorMock
+
+            manager.loadMessage(forAuthId: nil, pubData: nil)
+
+            let storedValuePairs = UserDefaults.standard.dictionaryRepresentation().map {
+                [$0.key, $0.value as? String]
+            }
+            expect(storedValuePairs).toEventually(contain([SPUserDefaults.US_PRIVACY_STRING_KEY, userData.ccpa?.consents?.uspstring]))
+            expect(storedValuePairs).toEventually(contain(["tcf key", "tcf value"]))
+            expect(storedValuePairs).toEventually(contain(["gpp key", "gpp value"]))
         }
     }
 }
