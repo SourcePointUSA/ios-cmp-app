@@ -22,7 +22,7 @@ class SPCCPAConsentsSpec: QuickSpec {
                 expect(consents.uuid).to(beNil())
                 expect(consents.applies).to(beFalse())
                 expect(consents.status).to(equal(.RejectedNone))
-                expect(consents.gppData).to(equal(SPJson()))
+                expect(consents.GPPData).to(equal(SPJson()))
             }
         }
 
@@ -47,7 +47,7 @@ class SPCCPAConsentsSpec: QuickSpec {
             expect(consent.rejectedVendors).to(beEmpty())
             expect(consent.rejectedCategories).to(beEmpty())
             expect(consent.signedLspa).to(beFalse())
-            expect(consent.gppData.dictionaryValue?["foo"] as? String).to(equal("bar"))
+            expect(consent.GPPData.dictionaryValue?["foo"] as? String).to(equal("bar"))
         }
     }
 }
