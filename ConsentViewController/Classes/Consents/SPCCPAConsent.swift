@@ -100,10 +100,11 @@ protocol CampaignConsent {
  That is, if the user has rejected `.All` or `.None` vendors/categories, those arrays will be empty.
  */
 @objcMembers public class SPCCPAConsent: NSObject, Codable, CampaignConsent {
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case status, rejectedVendors, rejectedCategories,
              uuid, childPmId, consentStatus,
              webConsentPayload, signedLspa, applies
+        case gppData = "GPPData"
     }
 
     /// Indicates if the user has rejected `.All`, `.Some` or `.None` of the vendors **and** categories.
@@ -123,6 +124,9 @@ protocol CampaignConsent {
 
     /// The date in which the consent profile was created or updated
     public var dateCreated = SPDateCreated.now()
+
+    /// A dictionary with all GPP related data
+    public var gppData: SPJson
 
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
     var childPmId: String?
@@ -163,7 +167,8 @@ protocol CampaignConsent {
         signedLspa: Bool,
         childPmId: String? = nil,
         consentStatus: ConsentStatus = ConsentStatus(),
-        webConsentPayload: SPWebConsentPayload? = nil
+        webConsentPayload: SPWebConsentPayload? = nil,
+        gppData: SPJson = SPJson()
     ) {
         self.uuid = uuid
         self.status = status
@@ -173,6 +178,7 @@ protocol CampaignConsent {
         self.childPmId = childPmId
         self.consentStatus = consentStatus
         self.webConsentPayload = webConsentPayload
+        self.gppData = gppData
     }
 
     public required init(from decoder: Decoder) throws {
@@ -186,6 +192,7 @@ protocol CampaignConsent {
         consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
+        gppData = try container.decodeIfPresent(SPJson.self, forKey: .gppData) ?? SPJson()
     }
 
     public static func empty() -> SPCCPAConsent { SPCCPAConsent(
