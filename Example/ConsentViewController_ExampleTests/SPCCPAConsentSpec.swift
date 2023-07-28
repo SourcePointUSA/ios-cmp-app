@@ -22,6 +22,7 @@ class SPCCPAConsentsSpec: QuickSpec {
                 expect(consents.uuid).to(beNil())
                 expect(consents.applies).to(beFalse())
                 expect(consents.status).to(equal(.RejectedNone))
+                expect(consents.gppData).to(equal(SPJson()))
             }
         }
 
@@ -33,13 +34,20 @@ class SPCCPAConsentsSpec: QuickSpec {
                     "rejectedVendors": [],
                     "rejectedCategories": [],
                     "consentStatus": {},
-                    "signedLspa": false
+                    "signedLspa": false,
+                    "GPPData": {
+                        "foo": "bar"
+                    }
                 }
                 """.data(using: .utf8)
             }
             let consent = try ccpaConsents.decoded() as SPCCPAConsent
             expect(consent.applies).to(beTrue())
-            expect(consent.applies).to(beTrue())
+            expect(consent.status).to(equal(.RejectedNone))
+            expect(consent.rejectedVendors).to(beEmpty())
+            expect(consent.rejectedCategories).to(beEmpty())
+            expect(consent.signedLspa).to(beFalse())
+            expect(consent.gppData.dictionaryValue?["foo"] as? String).to(equal("bar"))
         }
     }
 }
