@@ -103,8 +103,8 @@ protocol CampaignConsent {
     enum CodingKeys: String, CodingKey {
         case status, rejectedVendors, rejectedCategories,
              uuid, childPmId, consentStatus,
-             webConsentPayload, signedLspa, applies
-        case gppData = "GPPData"
+             webConsentPayload, signedLspa, applies,
+             GPPData
     }
 
     /// Indicates if the user has rejected `.All`, `.Some` or `.None` of the vendors **and** categories.
@@ -126,7 +126,7 @@ protocol CampaignConsent {
     public var dateCreated = SPDateCreated.now()
 
     /// A dictionary with all GPP related data
-    public var gppData: SPJson
+    public var GPPData: SPJson
 
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
     var childPmId: String?
@@ -168,7 +168,7 @@ protocol CampaignConsent {
         childPmId: String? = nil,
         consentStatus: ConsentStatus = ConsentStatus(),
         webConsentPayload: SPWebConsentPayload? = nil,
-        gppData: SPJson = SPJson()
+        GPPData: SPJson = SPJson()
     ) {
         self.uuid = uuid
         self.status = status
@@ -178,7 +178,7 @@ protocol CampaignConsent {
         self.childPmId = childPmId
         self.consentStatus = consentStatus
         self.webConsentPayload = webConsentPayload
-        self.gppData = gppData
+        self.GPPData = GPPData
     }
 
     public required init(from decoder: Decoder) throws {
@@ -192,7 +192,7 @@ protocol CampaignConsent {
         consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
-        gppData = try container.decodeIfPresent(SPJson.self, forKey: .gppData) ?? SPJson()
+        GPPData = try container.decodeIfPresent(SPJson.self, forKey: .GPPData) ?? SPJson()
     }
 
     public static func empty() -> SPCCPAConsent { SPCCPAConsent(
