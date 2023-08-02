@@ -212,12 +212,10 @@ class SourcePointClient: SourcePointProtocol {
             "messageId": messageId,
             "includeData": "{\"categories\": {\"type\": \"RecordString\"}}"
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString, apiCode: .GDPR_MESSAGE) { result in
-            handler(Result {
-                (try result.decoded() as MessageResponse).message
-            }.mapError({
-                InvalidResponseMessageGDPREndpointError(error: $0)
-            }))
+        client.get(urlString: url.absoluteString, apiCode: .GDPR_MESSAGE) {
+            Self.parseResponse($0, InvalidResponseMessageGDPREndpointError()) { (parsingResult: Result<MessageResponse, SPError>) in
+                handler(parsingResult.map { $0.message })
+            }
         }
     }
 
@@ -234,7 +232,9 @@ class SourcePointClient: SourcePointProtocol {
             "messageId": messageId
         ])! // swiftlint:disable:this force_unwrapping
         client.get(urlString: url.absoluteString, apiCode: .CCPA_MESSAGE) {
-            Self.parseResponse($0, InvalidResponseMessageCCPAEndpointError(), handler)
+            Self.parseResponse($0, InvalidResponseMessageCCPAEndpointError()) { (parsingResult: Result<MessageResponse, SPError>) in
+                handler(parsingResult.map { $0.message })
+            }
         }
     }
 
