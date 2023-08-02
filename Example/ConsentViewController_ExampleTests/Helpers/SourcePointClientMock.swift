@@ -99,7 +99,8 @@ class SourcePointClientMock: SourcePointProtocol {
                 gpcEnabled: nil,
                 rejectedVendors: nil,
                 rejectedCategories: nil,
-                webConsentPayload: nil
+                webConsentPayload: nil,
+                GPPData: SPJson()
             )))
         }
     }

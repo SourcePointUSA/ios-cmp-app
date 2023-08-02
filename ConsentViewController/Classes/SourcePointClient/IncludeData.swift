@@ -10,11 +10,16 @@
 import Foundation
 
 struct IncludeData: Encodable, Equatable {
-    static let string = "{\"TCData\":{\"type\":\"RecordString\"},\"webConsentPayload\":{\"type\":\"string\"},\"localState\":{\"type\":\"RecordString\"},\"categories\":true,\"translateMessage\":true}"
+    static let string = #"{"TCData":{"type":"RecordString"},"webConsentPayload":{"type":"string"},"localState":{"type":"RecordString"},"categories":true,"translateMessage":true,"GPPData":{"MspaCoveredTransaction":"no","MspaOptOutOptionMode":"na","MspaServiceProviderMode":"na"}}"#
 
     let localState = ["type": "RecordString"]
     let TCData = ["type": "RecordString"]
     let webConsentPayload = ["type": "string"]
     let categories = true
     let translateMessage = true
+    let GPPData = [
+        "MspaCoveredTransaction": "no",
+        "MspaOptOutOptionMode": "na",
+        "MspaServiceProviderMode": "na"
+    ]
 }

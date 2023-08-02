@@ -16,7 +16,9 @@ class SPDeviceSpec: QuickSpec {
         describe("osVersion") {
             it("should contain the major version in its return") {
                 let version = SPDevice.standard.osVersion
-                if #available(iOS 16, *) {
+                if #available(iOS 17, *) {
+                    expect(version).to(contain("17."))
+                } else if #available(iOS 16, *) {
                     expect(version).to(contain("16."))
                 } else if #available(iOS 15, *) {
                     expect(version).to(contain("15."))

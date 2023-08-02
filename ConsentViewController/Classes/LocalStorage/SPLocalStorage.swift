@@ -44,6 +44,7 @@ extension UserDefaults: Storage {
 protocol SPLocalStorage {
     var storage: Storage { get set }
     var tcfData: [String: Any]? { get set }
+    var gppData: [String: Any]? { get set }
     var usPrivacyString: String? { get set }
     var userData: SPUserData { get set }
     var localState: SPJson? { get set }

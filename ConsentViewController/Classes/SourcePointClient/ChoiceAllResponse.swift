@@ -18,6 +18,7 @@ struct ChoiceAllResponse: Decodable {
         let rejectedCategories: [String]
         let gpcEnabled: Bool?
         let webConsentPayload: SPWebConsentPayload?
+        let GPPData: SPJson
     }
 
     struct GDPR: Decodable {
@@ -54,7 +55,7 @@ extension ChoiceAllResponse.CCPA: Decodable {
     enum CodingKeys: String, CodingKey {
         case dateCreated, consentedAll, rejectedAll,
              status, rejectedVendors, rejectedCategories,
-             gpcEnabled, webConsentPayload
+             gpcEnabled, webConsentPayload, GPPData
         case uspstring = "uspString"
     }
 
@@ -69,7 +70,8 @@ extension ChoiceAllResponse.CCPA: Decodable {
             rejectedVendors: ((container.decodeIfPresent([String?].self, forKey: .rejectedVendors)) ?? []).compactMap { $0 },
             rejectedCategories: ((container.decodeIfPresent([String?].self, forKey: .rejectedCategories)) ?? []).compactMap { $0 },
             gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled),
-            webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
+            webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload),
+            GPPData: container.decodeIfPresent(SPJson.self, forKey: .GPPData) ?? SPJson()
         )
     }
 }

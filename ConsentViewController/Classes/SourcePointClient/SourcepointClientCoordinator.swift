@@ -422,6 +422,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             )
             state.ccpa?.childPmId = nil
             state.ccpa?.webConsentPayload = ccpa.webConsentPayload
+            state.ccpa?.GPPData = ccpa.GPPData ?? SPJson()
         }
         storage.spState = state
     }
@@ -601,6 +602,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let ccpa = response.ccpa, campaign == .ccpa {
             state.ccpa?.dateCreated = ccpa.dateCreated
             state.ccpa?.status = ccpa.status
+            state.ccpa?.GPPData = ccpa.GPPData
         }
         storage.spState = state
     }
@@ -701,6 +703,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.postChoice(action) { postResult in
             switch postResult {
                 case .success(let response):
+                    if action.type == .SaveAndExit {
+                        self.state.ccpa?.GPPData = response.GPPData
+                    }
                     self.state.ccpa?.uuid = response.uuid
                     self.state.ccpa?.dateCreated = response.dateCreated
                     self.state.ccpa?.status = response.status ?? getResponse?.ccpa?.status ?? .RejectedAll

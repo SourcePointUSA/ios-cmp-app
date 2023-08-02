@@ -156,6 +156,7 @@
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
 		82B224182580D5D60032BC49 /* SPURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */; };
+		82B9AB4F2A740EE600565C13 /* SourcepointCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */; };
 		82BB0E5F28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */; };
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
@@ -441,6 +442,7 @@
 		82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceSpec.swift; sourceTree = "<group>"; };
 		82ACF6AB2487E73C006E207A /* SPUserDefaultsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUserDefaultsSpec.swift; sourceTree = "<group>"; };
 		82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPURLExtensionsSpec.swift; sourceTree = "<group>"; };
+		82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcepointCoordinatorMock.swift; sourceTree = "<group>"; };
 		82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmockedSourcepointClientSpec.swift; sourceTree = "<group>"; };
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
@@ -1213,6 +1215,7 @@
 			children = (
 				825F4B7F2487B5D100769B6A /* SourcePointClient */,
 				8229C6152991390300F755AA /* SPClientCoordinatorSpec.swift */,
+				82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */,
 			);
 			path = SPClientCoordinator;
 			sourceTree = "<group>";
@@ -2761,6 +2764,7 @@
 				826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */,
 				829DA56425D5573800612517 /* SPConsentSpec.swift in Sources */,
 				82B224182580D5D60032BC49 /* SPURLExtensionsSpec.swift in Sources */,
+				82B9AB4F2A740EE600565C13 /* SourcepointCoordinatorMock.swift in Sources */,
 				82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
