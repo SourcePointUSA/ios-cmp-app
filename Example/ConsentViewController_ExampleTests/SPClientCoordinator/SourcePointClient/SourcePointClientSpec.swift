@@ -25,9 +25,12 @@ class SourcePointClientSpec: QuickSpec {
     )}
     var profile: SPUserData { SPUserData(gdpr: gdprProfile) }
 
-    func getClient(_ client: MockHttp) -> SourcePointClient {
-        SourcePointClient(accountId: accountId, propertyName: propertyName, campaignEnv: .Public, client: client)
-    }
+    func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
+        accountId: accountId,
+        propertyName: propertyName,
+        campaignEnv: .Public,
+        client: client
+    )}
 
     func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {
         try! JSONEncoder().encode(
@@ -356,7 +359,14 @@ class SourcePointClientSpec: QuickSpec {
 
                     it("calls the completion handler with an InvalidResponseDeleteCustomError") {
                         waitUntil { done in
-                            client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                            client = self.getClient(MockHttp(error: InvalidResponseDeleteCustomError()))
+                            client.deleteCustomConsentGDPR(
+                                toConsentUUID: "uuid",
+                                vendors: [],
+                                categories: [],
+                                legIntCategories: [],
+                                propertyId: self.propertyId
+                            ) { result in
                                 switch result {
                                 case .success: fail("expected call to fail but it succeeded")
 

@@ -58,7 +58,7 @@ class DispatchQueueMock: SPDispatchQueue {
 
 class SimpleClientSpec: QuickSpec {
     // swiftlint:disable:next force_unwrapping
-    let exampleRequest = URLRequest(url: URL(string: "http://example")!)
+    let exampleRequest = URLRequest(url: URL(string: "http://example.com")!)
 
     override func spec() {
         describe("init(timeoutAfter: TimeInterval)") {
@@ -156,8 +156,7 @@ class SimpleClientSpec: QuickSpec {
                     let session = URLSessionMock(
                         configuration: URLSessionConfiguration.default,
                         data: nil,
-                        // swiftlint:disable:next force_unwrapping
-                        error: GenericNetworkError(request: URLRequest(url: URL(string: "/")!), response: nil)
+                        error: SPError()
                     )
                     let client = SimpleClient(
                         connectivityManager: ConnectivityMock(connected: true),

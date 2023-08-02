@@ -23,15 +23,6 @@ func aResponseWith(status: Int) -> HTTPURLResponse {
 class SPErrorSpec: QuickSpec {
     override func spec() {
         describe("SPErrorSpec") {
-            describe("GenericNetworkError") {
-                context("when no response object is provided") {
-                    it("has spCode: generic_network_request_999") {
-                        let error = GenericNetworkError(request: emptyRequest(), response: nil)
-                        expect(error.spCode) == "sp_metric_url_loading_error"
-                    }
-                }
-            }
-
             describe("NoInternetConnection") {
                 it("has spCode: no_internet_connection") {
                     expect(NoInternetConnection().spCode) == "sp_metric_no_internet_connection"
@@ -40,7 +31,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("ConnectionTimeOutError") {
                 it("has spCode: connection_timeout") {
-                    expect(WebViewConnectionTimeOutError(url: nil, timeout: nil, campaignType: .unknown).spCode) == "sp_metric_connection_timeout"
+                    expect(WebViewConnectionTimeOutError(url: nil, timeout: nil, campaignType: .unknown).spCode) == "sp_metric_webview_connection_timeout"
                 }
             }
 
@@ -53,18 +44,6 @@ class SPErrorSpec: QuickSpec {
             describe("WebViewError") {
                 it("has spCode: web_view_error") {
                     expect(WebViewError(campaignType: .gdpr).spCode) == "sp_metric_web_view_error"
-                }
-            }
-
-            describe("InvalidResponseWebMessageError") {
-                it("has spCode: invalid_response_web_message") {
-                    expect(InvalidResponseWebMessageError().spCode) == "sp_metric_invalid_response_web_message"
-                }
-            }
-
-            describe("InvalidResponseNativeMessageError") {
-                it("has spCode: invalid_response_native_message") {
-                    expect(InvalidResponseNativeMessageError().spCode) == "sp_metric_invalid_response_native_message"
                 }
             }
 

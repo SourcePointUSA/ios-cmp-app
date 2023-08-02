@@ -129,7 +129,7 @@ class SourcePointClientMock: SourcePointProtocol {
     func getMessages(campaigns: SPCampaigns, authId: String?, localState: SPJson, idfaStaus: SPIDFAStatus, consentLanguage: SPMessageLanguage, handler: @escaping MessagesHandler) {
     }
 
-    func pvData(pvDataRequestBody: ConsentViewController.PvDataRequestBody, handler: @escaping ConsentViewController.PvDataHandler) {
+    func pvData(_ pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
     }
 
     func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {

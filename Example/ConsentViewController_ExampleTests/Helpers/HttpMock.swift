@@ -15,26 +15,27 @@ class MockHttp: HttpClient {
     var deleteWasCalledWithBody: Data?
     var getWasCalledWithUrl: String?
     var success: Data?
-    var error: Error?
+    var error = SPError()
 
     init(success: Data? = nil) {
         self.success = success
     }
 
-    init(error: Error?) {
+    init(error: SPError) {
         self.error = error
     }
 
-    public func get(urlString: String, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
+    private func successOrError(_ handler: @escaping ResponseHandler) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-            self.getWasCalledWithUrl = urlString
-            if self.success != nil {
-                handler(.success(self.success))
-            } else {
-                // swiftlint:disable:next force_unwrapping
-                handler(.failure(SPError(error: self.error!)))
-            }
+            self.success != nil ?
+                handler(.success(self.success)) :
+                handler(.failure(self.error))
         }
+    }
+
+    public func get(urlString: String, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
+        self.getWasCalledWithUrl = urlString
+        successOrError(handler)
     }
 
     func request(_ urlRequest: URLRequest, apiCode: InvalidResponsAPICode = .EMPTY, _ handler: @escaping ResponseHandler) {}
@@ -42,19 +43,11 @@ class MockHttp: HttpClient {
     public func post(urlString: String, body: Data?, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
         postWasCalledWithUrl = urlString
         postWasCalledWithBody = body
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-            self.success != nil ?
-                handler(.success(self.success)) :
-                handler(.failure(InvalidURLError(urlString: urlString)))
-        }
+        successOrError(handler)
     }
 
     public func delete(urlString: String, body: Data?, apiCode: InvalidResponsAPICode = .EMPTY, handler: @escaping ResponseHandler) {
-        self.deleteWasCalledWithBody = body
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-            self.success != nil ?
-                handler(.success(self.success)) :
-                handler(.failure(InvalidURLError(urlString: urlString)))
-        }
+        deleteWasCalledWithBody = body
+        successOrError(handler)
     }
 }

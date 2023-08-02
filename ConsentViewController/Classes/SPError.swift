@@ -189,7 +189,6 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /ccpa/privacy-manager/privacy-manager-view endpoint" }
 }
 
-
 @objcMembers public class InvalidResponseConsentError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_consent" }
     override public var description: String { "The SDK got an unexpected response from /consent endpoint" }
