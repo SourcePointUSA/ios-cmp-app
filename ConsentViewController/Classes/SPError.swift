@@ -159,12 +159,6 @@ import Foundation
     override public var description: String { "The SDK could convert the message into JSON." }
 }
 
-/// Invalid API Response Errors
-@objcMembers public class InvalidResponseWebMessageError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_web_message" }
-    override public var description: String { "The SDK got an unexpected response from /message endpoint" }
-}
-
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.MESSAGES.code)" }
     override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
@@ -195,10 +189,6 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /ccpa/privacy-manager/privacy-manager-view endpoint" }
 }
 
-@objcMembers public class InvalidResponseNativeMessageError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_native_message" }
-    override public var description: String { "The SDK got an unexpected response from /native-message endpoint" }
-}
 
 @objcMembers public class InvalidResponseConsentError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_consent" }
@@ -221,8 +211,8 @@ import Foundation
     override public var description: String { "The device is not connected to the internet." }
 }
 
-@objcMembers public class ConnectionTimeOutError: SPError {
-    override public var spCode: String { "sp_metric_connection_timeout" }
+@objcMembers public class WebViewConnectionTimeOutError: SPError {
+    override public var spCode: String { "sp_metric_webview_connection_timeout" }
     override public var description: String { "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
 
     let url: URL?
@@ -239,41 +229,16 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class GenericNetworkError: SPError {
-    override public var spCode: String { "sp_metric_url_loading_error" }
-    override public var description: String {
-        "The server responsed with \(response?.statusCode ?? 999) when performing \(request.httpMethod ?? "<no verb>") \(response?.url?.absoluteString ?? "<no url>")"
-    }
-
-    let request: URLRequest
-    let response: HTTPURLResponse?
-
-    init(request: URLRequest, response: HTTPURLResponse?) {
-        self.request = request
-        self.response = response
-        super.init()
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-}
-
-@objcMembers public class ConnectionTimeoutAPIError: SPError {
-    override public var spCode: String { "sp_metric_connection_timeout\(apiCode.code))" }
-    let apiCode: InvalidResponsAPICode
-    init(apiCode: InvalidResponsAPICode) {
-        self.apiCode = apiCode
-        super.init()
-    }
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-}
-
 @objcMembers public class InvalidResponseAPIError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_api\(apiCode.code))" }
+    override public var spCode: String {
+        "sp_metric_invalid_response_api\(apiCode.code)_\(statusCode)"
+    }
     let apiCode: InvalidResponsAPICode
-    init(apiCode: InvalidResponsAPICode) {
+    let statusCode: String
+
+    init(apiCode: InvalidResponsAPICode, statusCode: String) {
         self.apiCode = apiCode
+        self.statusCode = statusCode
         super.init()
     }
     @available(*, unavailable)
