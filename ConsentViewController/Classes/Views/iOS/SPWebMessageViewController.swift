@@ -100,7 +100,7 @@ import WebKit
         if let error = error as? URLError {
             switch error.code {
             case .timedOut:
-                spError = ConnectionTimeOutError(url: error.failingURL, timeout: timeout, campaignType: campaignType)
+                spError = WebViewConnectionTimeOutError(url: error.failingURL, timeout: timeout, campaignType: campaignType)
 
             case .networkConnectionLost, .notConnectedToInternet:
                 spError = NoInternetConnection(campaignType: campaignType)

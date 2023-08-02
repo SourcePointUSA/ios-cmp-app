@@ -96,16 +96,10 @@ class SimpleClient: HttpClient {
 
                 if error != nil {
                     if let response = response as? HTTPURLResponse {
-                        switch response.statusCode {
-                        case 408:
-                            handler(.failure(ConnectionTimeoutAPIError(apiCode: apiCode)))
-
-                        case 400...407, 409...499, 500...599:
-                            handler(.failure(InvalidResponseAPIError(apiCode: apiCode)))
-
-                        default:
-                            handler(.failure(GenericNetworkError(request: urlRequest, response: response)))
-                        }
+                        handler(.failure(InvalidResponseAPIError(
+                            apiCode: apiCode,
+                            statusCode: String(response.statusCode)
+                        )))
                     }
                 } else {
                     handler(.success(data))

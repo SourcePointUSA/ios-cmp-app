@@ -226,7 +226,7 @@ class FocusGuideDebugView: UIView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             let style = textViewComponent.settings.style
             textView.attributedText = parseText(text != nil ?
-                text! :
+                text! : // swiftlint:disable:this force_unwrapping
                 textViewComponent.settings.text
             )
             textView.textColor = UIColor(hexString: style.font.color)

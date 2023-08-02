@@ -134,7 +134,7 @@ protocol SourcePointProtocol {
         handler: @escaping ConsentStatusHandler
     )
 
-    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler?)
+    func pvData(_ body: PvDataRequestBody, handler: @escaping PvDataHandler)
 
     func metaData(
         accountId: Int,
@@ -152,12 +152,6 @@ protocol SourcePointProtocol {
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
-}
-
-extension SourcePointProtocol {
-    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
-        pvData(body, handler: handler)
-    }
 }
 
 /**
@@ -187,6 +181,20 @@ class SourcePointClient: SourcePointProtocol {
             client: SimpleClient(timeoutAfter: timeout))
     }
 
+    static func parseResponse<T: Decodable>(
+        _ result: Result<Data?, SPError>,
+        _ error: SPError,
+        _ handler: (Result<T, SPError>) -> Void
+    ) {
+        switch result {
+            case .success:
+                handler(Result { try result.decoded() as T }.mapError { _ in error })
+
+            case .failure(let error):
+                handler(Result.failure(error))
+        }
+    }
+
     func setRequestTimeout(_ timeout: TimeInterval) {
         client = SimpleClient(timeoutAfter: timeout)
     }
@@ -204,12 +212,10 @@ class SourcePointClient: SourcePointProtocol {
             "messageId": messageId,
             "includeData": "{\"categories\": {\"type\": \"RecordString\"}}"
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString, apiCode: .GDPR_MESSAGE) { result in
-            handler(Result {
-                (try result.decoded() as MessageResponse).message
-            }.mapError({
-                InvalidResponseMessageGDPREndpointError(error: $0)
-            }))
+        client.get(urlString: url.absoluteString, apiCode: .GDPR_MESSAGE) {
+            Self.parseResponse($0, InvalidResponseMessageGDPREndpointError()) { (parsingResult: Result<MessageResponse, SPError>) in
+                handler(parsingResult.map { $0.message })
+            }
         }
     }
 
@@ -225,12 +231,10 @@ class SourcePointClient: SourcePointProtocol {
             "propertyId": propertyId,
             "messageId": messageId
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString, apiCode: .CCPA_MESSAGE) { result in
-            handler(Result {
-                (try result.decoded() as MessageResponse).message
-            }.mapError({
-                InvalidResponseMessageCCPAEndpointError(error: $0)
-            }))
+        client.get(urlString: url.absoluteString, apiCode: .CCPA_MESSAGE) {
+            Self.parseResponse($0, InvalidResponseMessageCCPAEndpointError()) { (parsingResult: Result<MessageResponse, SPError>) in
+                handler(parsingResult.map { $0.message })
+            }
         }
     }
 
@@ -239,12 +243,8 @@ class SourcePointClient: SourcePointProtocol {
             "siteId": String(propertyId),
             "consentLanguage": consentLanguage.rawValue
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString, apiCode: .GDPR_PRIVACY_MANAGER) { result in
-            handler(Result {
-                try result.decoded() as GDPRPrivacyManagerViewResponse
-            }.mapError({
-                InvalidResponseGDPRPMViewEndpointError(error: $0)
-            }))
+        client.get(urlString: url.absoluteString, apiCode: .GDPR_PRIVACY_MANAGER) {
+            Self.parseResponse($0, InvalidResponseGDPRPMViewEndpointError(), handler)
         }
     }
 
@@ -253,13 +253,9 @@ class SourcePointClient: SourcePointProtocol {
                 "siteId": String(propertyId),
                 "consentLanguage": consentLanguage.rawValue
         ])! // swiftlint:disable:this force_unwrapping
-        client.get(urlString: url.absoluteString, apiCode: .CCPA_PRIVACY_MANAGER) { result in
-                handler(Result {
-                    try result.decoded() as CCPAPrivacyManagerViewResponse
-                }.mapError({
-                    InvalidResponseCCPAPMViewEndpointError(error: $0)
-                }))
-            }
+        client.get(urlString: url.absoluteString, apiCode: .CCPA_PRIVACY_MANAGER) {
+            Self.parseResponse($0, InvalidResponseCCPAPMViewEndpointError(), handler)
+        }
     }
 
     func consentUrl(_ baseUrl: URL, _ actionType: SPActionType) -> URL {
@@ -269,24 +265,16 @@ class SourcePointClient: SourcePointProtocol {
 
     func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
         _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body, apiCode: .CCPA_ACTION) { result in
-                handler(Result {
-                    try result.decoded() as CCPAChoiceResponse
-                }.mapError {
-                    InvalidResponseConsentError(error: $0, campaignType: .ccpa)
-                })
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body, apiCode: .CCPA_ACTION) {
+                Self.parseResponse($0, InvalidResponseConsentError(), handler)
             }
         }
     }
 
     func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
         _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body, apiCode: .GDPR_ACTION) { result in
-                handler(Result {
-                    try result.decoded() as GDPRChoiceResponse
-                }.mapError {
-                    InvalidResponseConsentError(error: $0, campaignType: .gdpr)
-                })
+            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body, apiCode: .GDPR_ACTION) {
+                Self.parseResponse($0, InvalidResponseConsentError(), handler)
             }
         }
     }
@@ -319,12 +307,8 @@ class SourcePointClient: SourcePointProtocol {
             categories: categories,
             legIntCategories: legIntCategories
         )).map { body in
-            client.post(urlString: Constants.Urls.CUSTOM_CONSENT_URL.absoluteString, body: body, apiCode: .CUSTOM_CONSENT) { result in
-                handler(Result {
-                    try result.decoded() as AddOrDeleteCustomConsentResponse
-                }.mapError {
-                    InvalidResponseCustomError(error: $0, campaignType: .gdpr)
-                })
+            client.post(urlString: Constants.Urls.CUSTOM_CONSENT_URL.absoluteString, body: body, apiCode: .CUSTOM_CONSENT) {
+                Self.parseResponse($0, InvalidResponseCustomError(), handler)
             }
         }
     }
@@ -341,12 +325,8 @@ class SourcePointClient: SourcePointProtocol {
                 categories: categories,
                 legIntCategories: legIntCategories
             )).map { body in
-                client.delete(urlString: urlString, body: body, apiCode: .DELETE_CUSTOM_CONSENT) { result in
-                    handler(Result {
-                        try result.decoded() as AddOrDeleteCustomConsentResponse
-                    }.mapError {
-                        InvalidResponseDeleteCustomError(error: $0, campaignType: .gdpr)
-                    })
+                client.delete(urlString: urlString, body: body, apiCode: .DELETE_CUSTOM_CONSENT) {
+                    Self.parseResponse($0, InvalidResponseDeleteCustomError(), handler)
                 }
             }
         }
@@ -416,12 +396,8 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString, apiCode: .CONSENT_STATUS) { result in
-            handler(Result {
-                try result.decoded() as ConsentStatusResponse
-            }.mapError {
-                InvalidConsentStatusResponseError(error: $0)
-            })
+        client.get(urlString: url.absoluteString, apiCode: .CONSENT_STATUS) {
+            Self.parseResponse($0, InvalidConsentStatusResponseError(), handler)
         }
     }
 
@@ -453,12 +429,8 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString, apiCode: .META_DATA) { result in
-            handler(Result {
-                try result.decoded() as MetaDataResponse
-            }.mapError {
-                InvalidMetaDataResponseError(error: $0)
-            })
+        client.get(urlString: url.absoluteString, apiCode: .META_DATA) {
+            Self.parseResponse($0, InvalidMetaDataResponseError(), handler)
         }
     }
 
@@ -469,23 +441,15 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString, apiCode: .MESSAGES) { result in
-            handler(Result {
-                try result.decoded() as MessagesResponse
-            }.mapError {
-                InvalidResponseGetMessagesEndpointError(error: $0)
-            })
+        client.get(urlString: url.absoluteString, apiCode: .MESSAGES) {
+            Self.parseResponse($0, InvalidResponseGetMessagesEndpointError(), handler)
         }
     }
 
-    func pvData(_ body: PvDataRequestBody, handler: PvDataHandler? = nil) {
+    func pvData(_ body: PvDataRequestBody, handler: @escaping PvDataHandler) {
         _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body, apiCode: .PV_DATA) { result in
-                handler?(Result {
-                    try result.decoded() as PvDataResponse
-                }.mapError {
-                    InvalidPvDataResponseError(error: $0)
-                })
+            client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body, apiCode: .PV_DATA) {
+                Self.parseResponse($0, InvalidPvDataResponseError(), handler)
             }
         }
     }
@@ -538,12 +502,8 @@ extension SourcePointClient {
             return
         }
 
-        client.get(urlString: url.absoluteString, apiCode: .CHOICE_ALL) { result in
-            handler(Result {
-                try result.decoded() as ChoiceAllResponse
-            }.mapError {
-                InvalidChoiceAllResponseError(error: $0)
-            })
+        client.get(urlString: url.absoluteString, apiCode: .CHOICE_ALL) {
+            Self.parseResponse($0, InvalidChoiceAllResponseError(), handler)
         }
     }
 }

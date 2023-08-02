@@ -6,7 +6,7 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-// swiftlint:disable force_try function_body_length type_body_length force_unwrapping line_length
+// swiftlint:disable force_try function_body_length type_body_length force_unwrapping line_length cyclomatic_complexity file_length
 
 @testable import ConsentViewController
 import Nimble
@@ -25,9 +25,12 @@ class SourcePointClientSpec: QuickSpec {
     )}
     var profile: SPUserData { SPUserData(gdpr: gdprProfile) }
 
-    func getClient(_ client: MockHttp) -> SourcePointClient {
-        SourcePointClient(accountId: accountId, propertyName: propertyName, campaignEnv: .Public, client: client)
-    }
+    func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
+        accountId: accountId,
+        propertyName: propertyName,
+        campaignEnv: .Public,
+        client: client
+    )}
 
     func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {
         try! JSONEncoder().encode(
@@ -85,6 +88,57 @@ class SourcePointClientSpec: QuickSpec {
                 mockedResponse = "{\"url\": \"https://notice.sp-prod.net/?message_id=59706\"}".data(using: .utf8)
                 httpClient = MockHttp(success: mockedResponse)
                 client = self.getClient(httpClient)
+            }
+
+            describe("parseResponse") {
+                it("returns a failure Result if the result it receives is a failure") {
+                    let httpError = SPError()
+                    let result = Result<Data?, SPError>.failure(httpError)
+                    waitUntil { done in
+                        SourcePointClient.parseResponse(result, SPError()) { (parsingResult: Result<CodableMock, SPError>) in
+                            switch parsingResult {
+                                case .success: fail("expected call to fail, but it succeeded")
+
+                                case .failure(let error):
+                                    expect(error).to(be(httpError))
+                            }
+                            done()
+                        }
+                    }
+                }
+
+                it("returns a failure Result if parsing the response fails") {
+                    let parsingError = SPError()
+                    let result = Result<Data?, SPError>.success(nil)
+                    waitUntil { done in
+                        SourcePointClient.parseResponse(result, parsingError) { (parsingResult: Result<CodableMock, SPError>) in
+                            switch parsingResult {
+                                case .success: fail("expected call to fail, but it succeeded")
+
+                                case .failure(let error):
+                                    expect(error).to(be(parsingError))
+                            }
+                            done()
+                        }
+                    }
+                }
+
+                it("returns a success Result when both the result it receives and response parsing succeeds") {
+                    let codableMock = CodableMock(0)
+                    let result = Result<Data?, SPError>.success(try? JSONEncoder().encode(codableMock))
+                    waitUntil { done in
+                        SourcePointClient.parseResponse(result, SPError()) { (parsingResult: Result<CodableMock, SPError>) in
+                            switch parsingResult {
+                                case .success(let parsedObject):
+                                    expect(parsedObject).to(equal(codableMock))
+
+                                case .failure:
+                                    fail("expected call to succeed, but it failed")
+                            }
+                            done()
+                        }
+                    }
+                }
             }
 
             describe("getMessages") {
@@ -356,7 +410,14 @@ class SourcePointClientSpec: QuickSpec {
 
                     it("calls the completion handler with an InvalidResponseDeleteCustomError") {
                         waitUntil { done in
-                            client.deleteCustomConsentGDPR(toConsentUUID: "uuid", vendors: [], categories: [], legIntCategories: [], propertyId: self.propertyId) { result in
+                            client = self.getClient(MockHttp(error: InvalidResponseDeleteCustomError()))
+                            client.deleteCustomConsentGDPR(
+                                toConsentUUID: "uuid",
+                                vendors: [],
+                                categories: [],
+                                legIntCategories: [],
+                                propertyId: self.propertyId
+                            ) { result in
                                 switch result {
                                 case .success: fail("expected call to fail but it succeeded")
 

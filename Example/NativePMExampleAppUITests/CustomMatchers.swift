@@ -10,6 +10,8 @@ import Nimble
 import Quick
 import XCTest
 
+public typealias Predicate = Nimble.Predicate
+
 extension TimeInterval {
     init(dispatchTimeInterval: DispatchTimeInterval) {
         switch dispatchTimeInterval {
