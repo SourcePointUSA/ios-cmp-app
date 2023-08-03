@@ -10,21 +10,78 @@ import Foundation
 /// A collection of key/value pairs passed to the scenario builder on SP's dashboard
 public typealias SPTargetingParams = [String: String]
 
+/// Class to encapsulate GPP configuration. This config can be used with CCPA campaigns and have
+/// no effect in campaigns of other legislations.
+@objcMembers public class SPGPPConfig: NSObject, Encodable {
+    @objc public enum SPMspaBinaryFlag: Int, Encodable, Equatable {
+        case yes, no
+
+        public var string: String { self == .yes ? "yes" : "no" }
+
+        public func encode(to encoder: Encoder) throws {
+            var valueContainer = encoder.singleValueContainer()
+            try valueContainer.encode(string)
+        }
+    }
+
+    @objc public enum SPMspaTernaryFlag: Int, Encodable, Equatable {
+        case yes, no, notApplicable
+
+        public var string: String {
+            switch self {
+                case .yes: return "yes"
+                case .no: return "no"
+                case .notApplicable: return "na"
+            }
+        }
+
+        public func encode(to encoder: Encoder) throws {
+            var valueContainer = encoder.singleValueContainer()
+            try valueContainer.encode(string)
+        }
+    }
+
+    let MspaCoveredTransaction: SPMspaBinaryFlag?
+    let MspaOptOutOptionMode: SPMspaTernaryFlag?
+    let MspaServiceProviderMode: SPMspaTernaryFlag?
+
+    public init(
+        MspaCoveredTransaction: SPMspaBinaryFlag? = nil,
+        MspaOptOutOptionMode: SPMspaTernaryFlag? = nil,
+        MspaServiceProviderMode: SPMspaTernaryFlag? = nil
+    ) {
+        self.MspaCoveredTransaction = MspaCoveredTransaction
+        self.MspaOptOutOptionMode = MspaOptOutOptionMode
+        self.MspaServiceProviderMode = MspaServiceProviderMode
+    }
+}
+
 /// Contains information about the property/campaign.
 @objcMembers public class SPCampaign: NSObject {
     let targetingParams: SPTargetingParams
+
     let groupPmId: String?
 
+    /// Class to encapsulate GPP configuration. This parameter has only effect in CCPA campaigns.
+    let GPPConfig: SPGPPConfig
+
     override public var description: String {
-        "SPCampaign(targetingParams: \(targetingParams), groupPmId: \(groupPmId as Any))"
+        """
+        SPCampaign
+            - targetingParams: \(targetingParams)
+            - groupPmId: \(groupPmId as Any)
+            - GPPConfig: \(GPPConfig as Any)
+        """
     }
 
     public init(
         targetingParams: SPTargetingParams = [:],
-        groupPmId: String? = nil
+        groupPmId: String? = nil,
+        gppConfig: SPGPPConfig = SPGPPConfig()
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
+        self.GPPConfig = gppConfig
     }
 }
 
