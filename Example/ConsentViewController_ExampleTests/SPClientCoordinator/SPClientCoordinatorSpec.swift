@@ -64,6 +64,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.gdpr?.consents?.euconsent).notTo(beEmpty())
                                     expect(consents.gdpr?.consents?.vendorGrants).notTo(beEmpty())
                                     expect(consents.ccpa?.consents?.uspstring) == "1---"
+
                                 case .failure(let error):
                                     fail(error.failureReason)
                             }

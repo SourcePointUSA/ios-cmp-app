@@ -57,7 +57,12 @@ class SourcePointClientMock: SourcePointProtocol {
         )
     }
 
-    func consentStatus(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?, handler: @escaping ConsentStatusHandler) {
+    func consentStatus(
+        propertyId: Int,
+        metadata: ConsentStatusMetaData,
+        authId: String?,
+        includeData: IncludeData,
+        handler: @escaping ConsentStatusHandler) {
     }
 
     func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
@@ -194,6 +199,7 @@ class SourcePointClientMock: SourcePointProtocol {
         accountId: Int,
         propertyId: Int,
         metadata: ChoiceAllMetaDataParam,
+        includeData: IncludeData,
         handler: @escaping ChoiceHandler
     ) {
         handler(.success(ChoiceAllResponse(gdpr: nil, ccpa: nil)))

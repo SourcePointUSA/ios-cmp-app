@@ -50,7 +50,8 @@ class SourcePointClientSpec: QuickSpec {
                     ccpa: nil,
                     ios14: nil
                 ),
-                pubData: [:]
+                pubData: [:],
+                includeData: IncludeData(gppConfig: nil)
             ))
     }
 
@@ -151,7 +152,8 @@ class SourcePointClientSpec: QuickSpec {
                             campaigns: MessagesRequest.Body.Campaigns(),
                             consentLanguage: .BrowserDefault,
                             campaignEnv: nil,
-                            idfaStatus: nil
+                            idfaStatus: nil,
+                            includeData: IncludeData(gppConfig: nil)
                         ),
                         metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
@@ -177,7 +179,8 @@ class SourcePointClientSpec: QuickSpec {
                                 propertyId: 0,
                                 sampleRate: 1,
                                 idfaStatus: nil,
-                                granularStatus: .init()
+                                granularStatus: .init(),
+                                includeData: IncludeData(gppConfig: nil)
                             )
                         ) { _ in }
                         expect(httpClient.postWasCalledWithUrl) == "https://cdn.privacy-mgmt.com/wrapper/v2/choice/gdpr/11?env=prod"
@@ -196,7 +199,8 @@ class SourcePointClientSpec: QuickSpec {
                             propertyId: 0,
                             sampleRate: 1,
                             idfaStatus: nil,
-                            granularStatus: .init()
+                            granularStatus: .init(),
+                            includeData: IncludeData(gppConfig: nil)
                         )
                         client.postGDPRAction(
                             actionType: .AcceptAll,
@@ -219,7 +223,8 @@ class SourcePointClientSpec: QuickSpec {
                                 pmSaveAndExitVariables: nil,
                                 sendPVData: true,
                                 propertyId: 1,
-                                sampleRate: 1
+                                sampleRate: 1,
+                                includeData: IncludeData(gppConfig: nil)
                             )
                         ) { _ in }
                         expect(httpClient.postWasCalledWithUrl) == "https://cdn.privacy-mgmt.com/wrapper/v2/choice/ccpa/11?env=prod"
@@ -234,7 +239,8 @@ class SourcePointClientSpec: QuickSpec {
                             pmSaveAndExitVariables: nil,
                             sendPVData: true,
                             propertyId: 1,
-                            sampleRate: 1
+                            sampleRate: 1,
+                            includeData: IncludeData(gppConfig: nil)
                         )
                         client.postCCPAAction(
                             actionType: .AcceptAll,

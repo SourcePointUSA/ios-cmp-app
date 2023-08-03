@@ -131,6 +131,7 @@ protocol SourcePointProtocol {
         propertyId: Int,
         metadata: ConsentStatusMetaData,
         authId: String?,
+        includeData: IncludeData,
         handler: @escaping ConsentStatusHandler
     )
 
@@ -148,6 +149,7 @@ protocol SourcePointProtocol {
         accountId: Int,
         propertyId: Int,
         metadata: ChoiceAllMetaDataParam,
+        includeData: IncludeData,
         handler: @escaping ChoiceHandler
     )
 
@@ -367,13 +369,17 @@ class SourcePointClient: SourcePointProtocol {
 
 // MARK: V7 - cost optimised APIs
 extension SourcePointClient {
-    func consentStatusURLWithParams(propertyId: Int, metadata: ConsentStatusMetaData, authId: String?) -> URL? {
+    func consentStatusURLWithParams(
+        propertyId: Int,
+        metadata: ConsentStatusMetaData,
+        includeData: IncludeData,
+        authId: String?) -> URL? {
         var url = Constants.Urls.CONSENT_STATUS_URL.appendQueryItems([
             "propertyId": String(propertyId),
             "metadata": metadata.stringified(),
             "hasCsp": "true",
             "withSiteActions": "false",
-            "includeData": IncludeData.string
+            "includeData": includeData.string
         ])
         if let authId = authId {
             url = url?.appendQueryItems(["authId": authId])
@@ -385,13 +391,15 @@ extension SourcePointClient {
         propertyId: Int,
         metadata: ConsentStatusMetaData,
         authId: String?,
+        includeData: IncludeData,
         handler: @escaping ConsentStatusHandler
     ) {
         guard let url = consentStatusURLWithParams(
             propertyId: propertyId,
             metadata: metadata,
-            authId: authId)
-        else {
+            includeData: includeData,
+            authId: authId
+        ) else {
             handler(Result.failure(InvalidConsentStatusQueryParamsError()))
             return
         }
@@ -461,6 +469,7 @@ extension SourcePointClient {
         propertyId: Int,
         withSiteActions: Bool,
         includeCustomVendorsRes: Bool,
+        includeData: IncludeData,
         metadata: ChoiceAllMetaDataParam
     ) -> URL? {
         var baseUrl: URL
@@ -478,7 +487,7 @@ extension SourcePointClient {
             "withSiteActions": String(withSiteActions),
             "includeCustomVendorsRes": String(includeCustomVendorsRes),
             "metadata": metadata.stringified(),
-            "includeData": IncludeData.string
+            "includeData": includeData.string
         ])
     }
 
@@ -487,6 +496,7 @@ extension SourcePointClient {
         accountId: Int,
         propertyId: Int,
         metadata: ChoiceAllMetaDataParam,
+        includeData: IncludeData,
         handler: @escaping ChoiceHandler
     ) {
         guard let url = choiceAllUrlWithParams(
@@ -496,6 +506,7 @@ extension SourcePointClient {
             propertyId: propertyId,
             withSiteActions: false,
             includeCustomVendorsRes: false,
+            includeData: includeData,
             metadata: metadata
         ) else {
             handler(Result.failure(InvalidChoiceAllParamsError()))
