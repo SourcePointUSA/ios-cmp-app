@@ -31,7 +31,8 @@
 
     SPCampaign *campaign = [[SPCampaign alloc]
                             initWithTargetingParams: [NSDictionary dictionary]
-                            groupPmId: nil];
+                            groupPmId: NULL
+                            gppConfig: [SPGPPConfig alloc]];
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
