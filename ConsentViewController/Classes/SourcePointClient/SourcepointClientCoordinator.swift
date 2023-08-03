@@ -500,6 +500,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         state.ccpa?.rejectedCategories = consents.rejectedCategories
                         state.ccpa?.childPmId = consents.childPmId
                         state.ccpa?.webConsentPayload = $0.webConsentPayload
+                        state.ccpa?.GPPData = consents.GPPData
                     default: break
                 }
             }
