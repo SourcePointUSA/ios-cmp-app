@@ -10,6 +10,8 @@ import Nimble
 import Quick
 import XCTest
 
+public typealias Predicate = Nimble.Predicate
+
 /// A matcher that checks if a `XCUIElement` contains the given text
 public func containText(_ text: String) -> Predicate<XCUIElement> {
     Predicate.simple("contain text") { actualExpression in

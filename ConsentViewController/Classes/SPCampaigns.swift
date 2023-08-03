@@ -54,6 +54,16 @@ public typealias SPTargetingParams = [String: String]
         self.MspaOptOutOptionMode = MspaOptOutOptionMode
         self.MspaServiceProviderMode = MspaServiceProviderMode
     }
+
+    @objc public init(
+        MspaCoveredTransaction: SPMspaBinaryFlag,
+        MspaOptOutOptionMode: SPMspaTernaryFlag,
+        MspaServiceProviderMode: SPMspaTernaryFlag
+    ) {
+        self.MspaCoveredTransaction = MspaCoveredTransaction
+        self.MspaOptOutOptionMode = MspaOptOutOptionMode
+        self.MspaServiceProviderMode = MspaServiceProviderMode
+    }
 }
 
 /// Contains information about the property/campaign.

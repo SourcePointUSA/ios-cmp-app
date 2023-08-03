@@ -155,6 +155,7 @@ protocol CampaignConsent {
             - rejectedCategories: \(rejectedCategories)
             - uspstring: \(uspstring)
             - signedLspa: \(signedLspa)
+            - GPPData: \(GPPData)
         )
         """
     }
