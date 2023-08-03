@@ -30,6 +30,17 @@ class SPGPPConfigSpec: QuickSpec {
         describe("SPMspaBinaryFlag") {
             it("encodes to a single value") {
                 expect(SPGPPConfig.SPMspaBinaryFlag.no).to(encodeToValue(#""no""#))
+                expect(SPGPPConfig.SPMspaBinaryFlag.yes).to(encodeToValue(#""yes""#))
+            }
+        }
+
+        describe("SPMspaTernaryFlag") {
+            it("encodes to a single value") {
+                expect(SPGPPConfig.SPMspaTernaryFlag.no).to(encodeToValue(#""no""#))
+                expect(SPGPPConfig.SPMspaTernaryFlag.yes).to(encodeToValue(#""yes""#))
+                expect(SPGPPConfig.SPMspaTernaryFlag.notApplicable).to(
+                    encodeToValue(#""na""#)
+                )
             }
         }
     }
