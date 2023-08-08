@@ -122,6 +122,8 @@
 		822BF2CB2657E29800177B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2C92657E29800177B0E /* Main.storyboard */; };
 		822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CC2657E29900177B0E /* Assets.xcassets */; };
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
+		822E88F62A7BC5AF00843B2B /* IncludeDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */; };
+		822E88F82A7BC8CB00843B2B /* SPGPPConfigSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E88F72A7BC8CB00843B2B /* SPGPPConfigSpec.swift */; };
 		822FD7E02A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
@@ -403,6 +405,8 @@
 		822BF2D62657E29900177B0E /* NativePMExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludeDataSpec.swift; sourceTree = "<group>"; };
+		822E88F72A7BC8CB00843B2B /* SPGPPConfigSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGPPConfigSpec.swift; sourceTree = "<group>"; };
 		822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1386,6 +1390,8 @@
 				828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */,
 				82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */,
 				AAA25A682A28ABFE005FE84A /* SPConsentManagerSpec.swift */,
+				822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */,
+				822E88F72A7BC8CB00843B2B /* SPGPPConfigSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
@@ -2728,6 +2734,7 @@
 				8248A497247D17AA00A7D9AD /* SimpleClientSpec.swift in Sources */,
 				828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */,
 				82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */,
+				822E88F62A7BC5AF00843B2B /* IncludeDataSpec.swift in Sources */,
 				6DA66EA3255D1A690034E11A /* SPMessageLanguageSpec.swift in Sources */,
 				82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */,
 				82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */,
@@ -2758,6 +2765,7 @@
 				826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */,
 				8248A499247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift in Sources */,
 				82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */,
+				822E88F82A7BC8CB00843B2B /* SPGPPConfigSpec.swift in Sources */,
 				6D687AD724A8F1C1001DFB11 /* MessageMock.swift in Sources */,
 				82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */,
 				82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */,

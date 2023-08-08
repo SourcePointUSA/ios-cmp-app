@@ -146,6 +146,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var gdprUUID: String? { state.gdpr?.uuid }
     var ccpaUUID: String? { state.ccpa?.uuid }
 
+    let includeData: IncludeData
+
     /// Checks if this user has data from the previous version of the SDK (v6).
     /// This check should only done once so we remove the data stored by the older SDK and return false after that.
     var migratingUser: Bool {
@@ -209,7 +211,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 ),
                 consentLanguage: language,
                 campaignEnv: campaigns.environment,
-                idfaStatus: idfaStatus
+                idfaStatus: idfaStatus,
+                includeData: includeData
             ),
             metadata: .init(
                 ccpa: .init(applies: state.ccpa?.applies),
@@ -245,6 +248,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.propertyName = propertyName
         self.language = language
         self.campaigns = campaigns
+        self.includeData = IncludeData(gppConfig: campaigns.ccpa?.GPPConfig)
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,
@@ -441,7 +445,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         state.hasCCPALocalData
                     )
                 ),
-                authId: authId
+                authId: authId,
+                includeData: includeData
             ) { result in
                 switch result {
                     case .success(let response):
@@ -495,6 +500,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         state.ccpa?.rejectedCategories = consents.rejectedCategories
                         state.ccpa?.childPmId = consents.childPmId
                         state.ccpa?.webConsentPayload = $0.webConsentPayload
+                        state.ccpa?.GPPData = consents.GPPData
                     default: break
                 }
             }
@@ -616,7 +622,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 metadata: .init(
                     gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
                     ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil
-                )
+                ),
+                includeData: includeData
             ) { result in
                 switch result {
                     case .success(let response):
@@ -651,7 +658,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 propertyId: propertyId,
                 sampleRate: state.gdprMetaData?.sampleRate,
                 idfaStatus: idfaStatus,
-                granularStatus: postPayloadFromGetCall?.granularStatus
+                granularStatus: postPayloadFromGetCall?.granularStatus,
+                includeData: includeData
             )
         ) { handler($0) }
     }
@@ -670,7 +678,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 pmSaveAndExitVariables: action.pmPayload,
                 sendPVData: state.ccpaMetaData?.wasSampled ?? false,
                 propertyId: propertyId,
-                sampleRate: state.ccpaMetaData?.sampleRate
+                sampleRate: state.ccpaMetaData?.sampleRate,
+                includeData: includeData
             )
         ) { handler($0) }
     }

@@ -66,12 +66,16 @@ class ExampleApp: XCUIApplication {
         staticTexts["unknown"].exists
     }
 
-    var consentMessage: XCUIElement {
+    var gdprMessage: XCUIElement {
         webViews.first(withLabel: "GDPR Message")
     }
 
+    var ccpaMessage: XCUIElement {
+        webViews.first(withLabel: "CCPA Message")
+    }
+
     var acceptAllButton: XCUIElement {
-        consentMessage.buttons.first(withLabel: "Accept")
+        buttons.first(withLabel: "Accept")
     }
 
     var sdkStatus: XCUIElement {

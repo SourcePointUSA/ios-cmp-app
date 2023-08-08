@@ -52,9 +52,16 @@ class ObjCExampleAppUITests: QuickSpec {
 
         it("Accept all through message") {
             runAttScenario()
-            expect(self.app.consentMessage).toEventually(showUp())
+            expect(self.app.gdprMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
-            expect(self.app.consentMessage).to(disappear())
+            expect(self.app.gdprMessage).to(disappear())
+
+            expect(self.app.ccpaMessage).toEventually(showUp())
+            self.app.acceptAllButton.tap()
+            expect(self.app.ccpaMessage).to(disappear())
+
+            expect(self.app.sdkStatus).toEventually(containText("Finished"))
+
             self.app.relaunch()
             expect(self.app.sdkStatus).toEventually(containText("Finished"))
         }

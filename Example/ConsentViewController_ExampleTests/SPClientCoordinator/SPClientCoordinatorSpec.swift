@@ -64,6 +64,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.gdpr?.consents?.euconsent).notTo(beEmpty())
                                     expect(consents.gdpr?.consents?.vendorGrants).notTo(beEmpty())
                                     expect(consents.ccpa?.consents?.uspstring) == "1---"
+
                                 case .failure(let error):
                                     fail(error.failureReason)
                             }
@@ -82,6 +83,14 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.gdpr?.consents?.euconsent).notTo(beEmpty())
                                     expect(consents.gdpr?.consents?.vendorGrants).notTo(beEmpty())
                                     expect(consents.ccpa?.consents?.uspstring) == "1YNN"
+
+                                    // TODO: remove this conditional once GPP changes are in prod
+                                    if prod {
+                                        expect(consents.ccpa?.consents?.GPPData.dictionaryValue).to(beEmpty())
+                                    } else {
+                                        expect(consents.ccpa?.consents?.GPPData.dictionaryValue).notTo(beEmpty())
+                                    }
+
                                 case .failure(let error):
                                     fail(error.failureReason)
                             }

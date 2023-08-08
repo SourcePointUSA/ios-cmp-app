@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try line_length function_body_length cyclomatic_complexity
+// swiftlint:disable force_try line_length function_body_length cyclomatic_complexity type_body_length
 
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
@@ -37,21 +37,37 @@ class UnmockedSourcepointClientSpec: QuickSpec {
         describe("consentStatusURLWithParams") {
             describe("with auth id") {
                 it("should add the authId query param") {
-                    let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: "john doe")
+                    let url = client.consentStatusURLWithParams(
+                        propertyId: propertyId,
+                        metadata: emptyMetaData,
+                        includeData: IncludeData(gppConfig: nil),
+                        authId: "john doe"
+                    )
                     expect(url?.query).to(contain("authId=john%20doe"))
                 }
             }
 
             describe("without auth id") {
                 it("should not add the authId query param") {
-                    let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: nil)
+                    let url = client.consentStatusURLWithParams(
+                        propertyId: propertyId,
+                        metadata: emptyMetaData,
+                        includeData: IncludeData(gppConfig: nil),
+                        authId: nil
+                    )
                     expect(url?.query).notTo(contain("authId="))
                 }
             }
 
             it("should contain all query params") {
-                let url = client.consentStatusURLWithParams(propertyId: propertyId, metadata: emptyMetaData, authId: nil)
-                let paramsRaw = "env=\(Constants.Urls.envParam)&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)&hasCsp=true&includeData=\(IncludeData.string)&metadata={}&propertyId=17801&withSiteActions=false"
+                let includeData = IncludeData(gppConfig: nil)
+                let url = client.consentStatusURLWithParams(
+                    propertyId: propertyId,
+                    metadata: emptyMetaData,
+                    includeData: includeData,
+                    authId: nil
+                )
+                let paramsRaw = "env=\(Constants.Urls.envParam)&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)&hasCsp=true&includeData=\(stringify(includeData))&metadata={}&propertyId=17801&withSiteActions=false"
                 expect(url?.query) == paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
             }
         }
@@ -77,7 +93,9 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 idfaStatus: nil
                             )
                         ),
-                        authId: "user_auth_id") { result in
+                        authId: "user_auth_id",
+                        includeData: IncludeData(gppConfig: nil)
+                    ) { result in
                             switch result {
                             case .success(let response):
                                 expect(response).to(beAnInstanceOf(ConsentStatusResponse.self))
@@ -116,7 +134,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             ),
                             consentLanguage: .Spanish,
                             campaignEnv: nil,
-                            idfaStatus: nil
+                            idfaStatus: nil,
+                            includeData: IncludeData(gppConfig: nil)
                         ),
                         metadata: MessagesRequest.MetaData(
                             ccpa: MessagesRequest.MetaData.Campaign(applies: true),
@@ -242,7 +261,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         metadata: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)
-                        )
+                        ),
+                        includeData: IncludeData(gppConfig: nil)
                     ) { result in
                         switch result {
                         case .success(let response):
@@ -269,7 +289,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         metadata: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)
-                        )
+                        ),
+                        includeData: IncludeData(gppConfig: nil)
                     ) { result in
                         switch result {
                         case .success(let response):
