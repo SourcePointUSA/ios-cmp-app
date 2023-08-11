@@ -84,17 +84,21 @@ class SPConsentManagerSpec: QuickSpec {
                             uuid: "GDPR uuid",
                             vendorGrants: [:],
                             euconsent: "",
-                            tcfData: SPJson()
+                            tcfData: SPJson(),
+                            dateCreated: SPDateCreated.now(),
+                            applies: true
                         ),
                         applies: true
                     ),
                     ccpa: .init(
-                        consents: .init(
-                            uuid: "CCPA uuid",
-                            status: .Unknown,
+                        consents: SPCCPAConsent(
+                            status: .RejectedAll,
                             rejectedVendors: [],
                             rejectedCategories: [],
-                            signedLspa: true
+                            signedLspa: false,
+                            applies: false,
+                            dateCreated: SPDateCreated.now(),
+                            lastMessage: nil
                         ),
                         applies: true
                     )
@@ -132,12 +136,18 @@ class SPConsentManagerSpec: QuickSpec {
                 gdpr: SPConsent(consents: SPGDPRConsent(
                     vendorGrants: SPGDPRVendorGrants(),
                     euconsent: "",
-                    tcfData: try! SPJson(["tcf key": "tcf value"])), applies: true),
+                    tcfData: try! SPJson(["tcf key": "tcf value"]),
+                    dateCreated: SPDateCreated.now(),
+                    applies: true
+                ), applies: true),
                 ccpa: SPConsent(consents: SPCCPAConsent(
-                    status: .RejectedNone,
+                    status: .RejectedAll,
                     rejectedVendors: [],
                     rejectedCategories: [],
                     signedLspa: false,
+                    applies: true,
+                    dateCreated: SPDateCreated.now(),
+                    lastMessage: nil,
                     GPPData: try! SPJson(["gpp key": "gpp value"])
                 ), applies: true)
             )

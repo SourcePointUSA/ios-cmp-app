@@ -258,5 +258,29 @@ class SPClientCoordinatorSpec: QuickSpec {
                 }
             }
         }
+
+        describe("when user has consent stored") {
+            it("keeps it unchanged after calling loadMessage") {
+                SPConsentManager.clearAllData()
+
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { messagesResponse in
+                        let (_, messagesUserData) = try! messagesResponse.get()
+
+                        coordinator.reportAction(SPAction(type: .RejectAll, campaignType: .gdpr)) { actionResult in
+                            let actionUserData = try! actionResult.get()
+                            expect(messagesUserData).notTo(equal(actionUserData))
+
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondMessagesResponse in
+                                let (_, secMessagesUserData) = try! secondMessagesResponse.get()
+
+                                expect(secMessagesUserData).to(equal(actionUserData))
+                                done()
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

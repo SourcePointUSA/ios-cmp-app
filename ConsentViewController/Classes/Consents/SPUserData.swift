@@ -29,7 +29,7 @@ public struct SPWebConsents: Codable, Equatable {
     }
 }
 
-public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
+public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, Codable, NSCopying {
     /// The consents data. See: `SPGDPRConsent`, `SPCCPAConsent`
     public let consents: ConsentType?
 
@@ -51,9 +51,13 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
         guard let other = object as? Self else { return false }
         return other.applies == applies && other.consents == consents
     }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        SPConsent(consents: consents?.copy() as? ConsentType, applies: applies)
+    }
 }
 
-@objcMembers public class SPUserData: NSObject, Codable {
+@objcMembers public class SPUserData: NSObject, Codable, NSCopying {
     /// Consent data for GDPR. This attribute will be nil if your setup doesn't include a GDPR campaign
     /// - SeeAlso: `SPGDPRConsent`
     public let gdpr: SPConsent<SPGDPRConsent>?
@@ -77,6 +81,13 @@ public class SPConsent<ConsentType: Codable & Equatable>: NSObject, Codable {
     ) {
         self.gdpr = gdpr
         self.ccpa = ccpa
+    }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        SPUserData(
+            gdpr: gdpr?.copy() as? SPConsent<SPGDPRConsent>,
+            ccpa: ccpa?.copy() as? SPConsent<SPCCPAConsent>
+        )
     }
 
     override open func isEqual(_ object: Any?) -> Bool {

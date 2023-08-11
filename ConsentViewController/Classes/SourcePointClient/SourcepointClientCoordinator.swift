@@ -507,7 +507,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         storage.spState = state
-        return (messages, userData)
+        return (messages, userData.copy() as? SPUserData ?? userData)
     }
 
     func messages(_ handler: @escaping MessagesAndConsentsHandler) {
@@ -522,7 +522,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 }
             }
         } else {
-            handler(Result.success(([], userData)))
+            handler(Result.success(([], userData.copy() as? SPUserData ?? userData)))
         }
     }
 

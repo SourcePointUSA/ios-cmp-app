@@ -55,7 +55,7 @@ public typealias SPTargetingParams = [String: String]
         self.MspaServiceProviderMode = MspaServiceProviderMode
     }
 
-    @objc public init(
+    public init(
         MspaCoveredTransaction: SPMspaBinaryFlag,
         MspaOptOutOptionMode: SPMspaTernaryFlag,
         MspaServiceProviderMode: SPMspaTernaryFlag
