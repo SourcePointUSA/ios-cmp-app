@@ -389,13 +389,11 @@ The action: `SPAction` parameter, among other data (used internally), contains:
 | `publisherData: [String: String]`| This is an arbitrary dictionary of [String: String] containing data the publisher wishes to send to our servers so it can be retrieved via API later on. The publisher needs to set this field during the callback if they need the data to be sent to our server. |
 
 ### `onSPUIFinished()`
-
 The `onSPUIFinished` delegate method is invoked when the SDK determines that the UI can be removed from the view hierarchy or dismissed. It typically occurs after the end-user has taken a consent action (e.g. Accept all, Reject all, Save & Exit).
 
 With exception of `PMCancel` and `ShowPrivacyManager` actions, the SDK will call the onSPUIFinished after handling the action.
 
 ### `onConsentReady()`
-
 The `onConsentReady` will be called in two different scenarios:
 
 - After `loadMessage` is called but there's no message to be displayed
@@ -404,15 +402,30 @@ The `onConsentReady` will be called in two different scenarios:
 The `onConsentReady` delegate method sends the consent action to the server and receives a response, the SDK will store the data in the `UserDefaults`.
 
 ### `onError()`
-
 The SDK will in all cases wrap the error in one of the SPError class and eventually call the func `onError(_ error: SPError)` callback. By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
 Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
 ## Google Additional Consent (GDPR TCF)
-
 Google additional consent is a concept created by Google and the IAB Framework to pass end-user consent to Google Ad Technology Providers (ATP) despite not adhering to the IAB TCF framework. [Click here](https://docs.sourcepoint.com/hc/en-us/articles/4405115143955) for more information.
 
 Google additional consent is supported by our mobile SDKs and is stored in the `IABTCF_AddtlConsent` key in the `UserDefaults`. Look for that key in the user's local storage and pass the value to Google's SDKs.
+
+## Global Privacy Platform (GPP) Support
+Starting with version `7.3.0`, if your configuration contains a CCPA campaign, your app will automatically comply to the [GPP framework](#).
+
+The SDK allows you to set certain attributes as part of the GPP config, for example:
+```swift
+let campaigns = SPCampaigns(
+    ccpa: SPCampaign(gppConfig: SPGPPConfig(
+        MspaCoveredTransaction: .no, // optional,
+        MspaOptOutOptionMode: .yes, // optional
+        MspaServiceProviderMode: .notApplicable // optional
+    ))
+)
+```
+Note while `SPGPPConfig` can be passed to any `SPCampaign`, it only affects the CCPA campaign.
+
+For more information on each attribute of the `GPPConfig`, please refer to our [documentation](#).
 
 ## Delete user data
 Utilize the following method if an end-user requests to have their data deleted:
