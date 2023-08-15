@@ -99,7 +99,7 @@ protocol CampaignConsent {
  - Important: The `rejectedVendors` and `rejectedCategories` arrays will only be populated if the `status` is `.Some`.
  That is, if the user has rejected `.All` or `.None` vendors/categories, those arrays will be empty.
  */
-@objcMembers public class SPCCPAConsent: NSObject, Codable, CampaignConsent {
+@objcMembers public class SPCCPAConsent: NSObject, Codable, CampaignConsent, NSCopying {
     enum CodingKeys: String, CodingKey {
         case status, rejectedVendors, rejectedCategories,
              uuid, childPmId, consentStatus,
@@ -167,6 +167,9 @@ protocol CampaignConsent {
         rejectedCategories: [String],
         signedLspa: Bool,
         childPmId: String? = nil,
+        applies: Bool,
+        dateCreated: SPDateCreated,
+        lastMessage: LastMessageData?,
         consentStatus: ConsentStatus = ConsentStatus(),
         webConsentPayload: SPWebConsentPayload? = nil,
         GPPData: SPJson = SPJson()
@@ -180,6 +183,9 @@ protocol CampaignConsent {
         self.consentStatus = consentStatus
         self.webConsentPayload = webConsentPayload
         self.GPPData = GPPData
+        self.applies = applies
+        self.dateCreated = dateCreated
+        self.lastMessage = lastMessage
     }
 
     public required init(from decoder: Decoder) throws {
@@ -200,8 +206,28 @@ protocol CampaignConsent {
         status: .RejectedNone,
         rejectedVendors: [],
         rejectedCategories: [],
-        signedLspa: false
+        signedLspa: false,
+        applies: false,
+        dateCreated: SPDateCreated.now(),
+        lastMessage: nil
     )}
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        SPCCPAConsent(
+            uuid: uuid,
+            status: status,
+            rejectedVendors: rejectedVendors,
+            rejectedCategories: rejectedCategories,
+            signedLspa: signedLspa,
+            childPmId: childPmId,
+            applies: applies,
+            dateCreated: dateCreated,
+            lastMessage: lastMessage,
+            consentStatus: consentStatus,
+            webConsentPayload: webConsentPayload,
+            GPPData: GPPData
+        )
+    }
 
     override public func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPCCPAConsent {

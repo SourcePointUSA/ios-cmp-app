@@ -222,10 +222,14 @@ class SPClientCoordinatorSpec: QuickSpec {
         describe("authenticated consent") {
             it("only changes consent uuid after a different auth id is used") {
                 waitUntil { done in
-                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { guestUserResponse in
-                        let (_, guestUserData) = try! guestUserResponse.get()
-                        let guestGDPRUUID = guestUserData.gdpr?.consents?.uuid
-                        let guestCCPAUUID = guestUserData.ccpa?.consents?.uuid
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                        // uuids are only set after /pv-data is called, and /pv-data
+                        // is called right after /messages.
+                        // That's why we get the uuid from state instead of uuid from
+                        // message's response
+                        let guestGDPRUUID = coordinator.state.gdpr?.uuid
+                        let guestCCPAUUID = coordinator.state.ccpa?.uuid
+
                         expect(guestGDPRUUID).notTo(beNil())
                         expect(guestCCPAUUID).notTo(beNil())
 
@@ -252,6 +256,30 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                                     done()
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        describe("when user has consent stored") {
+            it("keeps it unchanged after calling loadMessage") {
+                SPConsentManager.clearAllData()
+
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { messagesResponse in
+                        let (_, messagesUserData) = try! messagesResponse.get()
+
+                        coordinator.reportAction(SPAction(type: .RejectAll, campaignType: .gdpr)) { actionResult in
+                            let actionUserData = try! actionResult.get()
+                            expect(messagesUserData).notTo(equal(actionUserData))
+
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondMessagesResponse in
+                                let (_, secMessagesUserData) = try! secondMessagesResponse.get()
+
+                                expect(secMessagesUserData).to(equal(actionUserData))
+                                done()
                             }
                         }
                     }

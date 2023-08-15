@@ -55,7 +55,9 @@ class SPGDPRConsentsSpec: QuickSpec {
                     ],
                     euconsent: "",
                     tcfData: SPJson(),
-                    childPmId: "yes"
+                    childPmId: "yes",
+                    dateCreated: SPDateCreated.now(),
+                    applies: true
                 )
                 expect(consent.acceptedCategories).to(contain(["purpose1", "purpose3"]))
                 expect(consent.acceptedCategories).notTo(contain(["purpose2"]))

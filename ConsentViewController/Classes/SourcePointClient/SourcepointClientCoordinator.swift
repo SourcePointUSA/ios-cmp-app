@@ -480,7 +480,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             if $0.type == .gdpr {
                 switch $0.userConsent {
                     case .gdpr(let consents):
-                        state.gdpr?.uuid = consents.uuid
                         state.gdpr?.dateCreated = consents.dateCreated
                         state.gdpr?.tcfData = consents.tcfData
                         state.gdpr?.vendorGrants = consents.vendorGrants
@@ -493,7 +492,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             } else if $0.type == .ccpa {
                 switch $0.userConsent {
                     case .ccpa(let consents):
-                        state.ccpa?.uuid = consents.uuid
                         state.ccpa?.dateCreated = consents.dateCreated
                         state.ccpa?.status = consents.status
                         state.ccpa?.rejectedVendors = consents.rejectedVendors
@@ -507,7 +505,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         storage.spState = state
-        return (messages, userData)
+        return (messages, userData.copy() as? SPUserData ?? userData)
     }
 
     func messages(_ handler: @escaping MessagesAndConsentsHandler) {
@@ -522,7 +520,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 }
             }
         } else {
-            handler(Result.success(([], userData)))
+            handler(Result.success(([], userData.copy() as? SPUserData ?? userData)))
         }
     }
 

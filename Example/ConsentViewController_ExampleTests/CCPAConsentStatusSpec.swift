@@ -44,7 +44,15 @@ class CCPAConsentStatusSpec: QuickSpec {
         }
 
         it("USP string check") {
-            let consent = SPCCPAConsent(status: .RejectedAll, rejectedVendors: [], rejectedCategories: [], signedLspa: false)
+            let consent = SPCCPAConsent(
+                status: .RejectedAll,
+                rejectedVendors: [],
+                rejectedCategories: [],
+                signedLspa: false,
+                applies: false,
+                dateCreated: SPDateCreated.now(),
+                lastMessage: nil
+            )
             expect(consent.uspstring) == "1---"
             consent.applies = true
             expect(consent.uspstring) == "1YYN"

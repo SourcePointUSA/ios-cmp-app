@@ -63,7 +63,7 @@ public typealias SPGDPRPurposeId = String
 /**
     SPGDPRConsent encapsulates all consent data from a user.
  */
-@objcMembers public class SPGDPRConsent: NSObject, Codable, CampaignConsent {
+@objcMembers public class SPGDPRConsent: NSObject, Codable, CampaignConsent, NSCopying {
     enum CodingKeys: String, CodingKey {
         case applies
         case uuid
@@ -162,7 +162,10 @@ public typealias SPGDPRPurposeId = String
         euconsent: String,
         tcfData: SPJson,
         childPmId: String? = nil,
+        dateCreated: SPDateCreated,
+        applies: Bool,
         consentStatus: ConsentStatus = ConsentStatus(),
+        lastMessage: LastMessageData? = nil,
         webConsentPayload: SPWebConsentPayload? = nil
     ) {
         self.uuid = uuid
@@ -170,7 +173,10 @@ public typealias SPGDPRPurposeId = String
         self.euconsent = euconsent
         self.tcfData = tcfData
         self.childPmId = childPmId
+        self.dateCreated = dateCreated
+        self.applies = applies
         self.consentStatus = consentStatus
+        self.lastMessage = lastMessage
         self.webConsentPayload = webConsentPayload
     }
 
@@ -179,15 +185,34 @@ public typealias SPGDPRPurposeId = String
         vendorGrants: SPGDPRVendorGrants(),
         euconsent: "",
         tcfData: SPJson(),
-        childPmId: nil
+        childPmId: nil,
+        dateCreated: SPDateCreated.now(),
+        applies: false
     )}
 
     override public func isEqual(_ object: Any?) -> Bool {
         if let other = object as? SPGDPRConsent {
             return other.uuid == uuid &&
             other.euconsent.elementsEqual(euconsent) &&
-            other.vendorGrants.allSatisfy { key, value in vendorGrants[key]?.isEqual(value) ?? false }
+            other.vendorGrants.allSatisfy { key, value in
+                vendorGrants[key]?.isEqual(value) ?? false
+            }
         }
         return false
+    }
+
+    public func copy(with zone: NSZone? = nil) -> Any {
+        SPGDPRConsent(
+            uuid: uuid,
+            vendorGrants: vendorGrants,
+            euconsent: euconsent,
+            tcfData: tcfData ?? SPJson(),
+            childPmId: childPmId,
+            dateCreated: dateCreated,
+            applies: applies,
+            consentStatus: consentStatus,
+            lastMessage: lastMessage,
+            webConsentPayload: webConsentPayload
+        )
     }
 }
