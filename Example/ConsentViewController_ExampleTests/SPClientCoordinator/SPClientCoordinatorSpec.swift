@@ -222,10 +222,14 @@ class SPClientCoordinatorSpec: QuickSpec {
         describe("authenticated consent") {
             it("only changes consent uuid after a different auth id is used") {
                 waitUntil { done in
-                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { guestUserResponse in
-                        let (_, guestUserData) = try! guestUserResponse.get()
-                        let guestGDPRUUID = guestUserData.gdpr?.consents?.uuid
-                        let guestCCPAUUID = guestUserData.ccpa?.consents?.uuid
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                        // uuids are only set after /pv-data is called, and /pv-data
+                        // is called right after /messages.
+                        // That's why we get the uuid from state instead of uuid from
+                        // message's response
+                        let guestGDPRUUID = coordinator.state.gdpr?.uuid
+                        let guestCCPAUUID = coordinator.state.ccpa?.uuid
+
                         expect(guestGDPRUUID).notTo(beNil())
                         expect(guestCCPAUUID).notTo(beNil())
 
