@@ -9,19 +9,34 @@
 @testable import ConsentViewController
 import Foundation
 
-// swiftlint:disable function_parameter_count
+// swiftlint:disable function_parameter_count force_try
 
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: AddOrDeleteCustomConsentResponse?
     var error: SPError?
     var postGDPRActionCalled = false, postCCPAActionCalled = false,
-        getMessageCalled = false, customConsentCalled = false
+        customConsentCalled = false, consentStatusCalled = false,
+        pvDataCalled = false, getMessagesCalled = false
     var customConsentWasCalledWith: [String: Any?]!
     var errorMetricsCalledWith: [String: Any?]!
     var postGDPRActionCalledWith: [String: Any?]!
     var postCCPAActionCalledWith: [String: Any?]!
 
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
+    }
+
+    convenience init(
+        accountId: Int = 0,
+        propertyName: SPPropertyName = try! SPPropertyName(""),
+        campaignEnv: SPCampaignEnv = .Public,
+        timout: TimeInterval = 1.0
+    ) {
+        self.init(
+            accountId: accountId,
+            propertyName: propertyName,
+            campaignEnv: campaignEnv,
+            timeout: timout
+        )
     }
 
     static func getCampaign(_ type: SPCampaignType) -> Campaign {
@@ -63,12 +78,30 @@ class SourcePointClientMock: SourcePointProtocol {
         authId: String?,
         includeData: IncludeData,
         handler: @escaping ConsentStatusHandler) {
+            consentStatusCalled = true
+
+            if let error = error {
+                handler(.failure(error))
+            } else {
+                handler(.success(
+                    ConsentStatusResponse(
+                        consentStatusData: .init(gdpr: nil, ccpa: nil),
+                        localState: SPJson())
+                ))
+            }
     }
 
     func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler) {
-        getMessageCalled = true
+        getMessagesCalled = true
         if let error = error {
             handler(.failure(error))
+        } else {
+            handler(.success(.init(
+                propertyId: 0,
+                campaigns: [],
+                localState: SPJson(),
+                nonKeyedLocalState: SPJson()))
+            )
         }
     }
 
@@ -132,10 +165,13 @@ class SourcePointClientMock: SourcePointProtocol {
         }
     }
 
-    func getMessages(campaigns: SPCampaigns, authId: String?, localState: SPJson, idfaStaus: SPIDFAStatus, consentLanguage: SPMessageLanguage, handler: @escaping MessagesHandler) {
-    }
-
     func pvData(_ pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
+        pvDataCalled = true
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(.init(gdpr: nil, ccpa: nil)))
+        }
     }
 
     func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
@@ -192,7 +228,13 @@ class SourcePointClientMock: SourcePointProtocol {
         propertyId: Int,
         metadata: MetaDataQueryParam,
         handler: @escaping MetaDataHandler
-    ) { }
+    ) {
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(.init(ccpa: nil, gdpr: nil)))
+        }
+    }
 
     func choiceAll(
         actionType: SPActionType,

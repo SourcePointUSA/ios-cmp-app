@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try function_body_length
+// swiftlint:disable force_try function_body_length file_length type_body_length
 
 class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
@@ -151,6 +151,188 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     let body = spClientMock.postCCPAActionCalledWith["body"] as? CCPAChoiceBody
                                     expect(body?.pubData).to(equal(ccpaAction.encodablePubData))
                             }
+                            done()
+                        }
+                    }
+                }
+            }
+        }
+
+        describe("consent-status") {
+            it("is called when an authId is passed") {
+                waitUntil { done in
+                    spClientMock = SourcePointClientMock()
+                    coordinator = SourcepointClientCoordinator(
+                        accountId: accountId,
+                        propertyName: propertyName,
+                        propertyId: propertyId,
+                        campaigns: campaigns,
+                        storage: LocalStorageMock(),
+                        spClient: spClientMock
+                    )
+                    coordinator.loadMessages(forAuthId: "test", pubData: nil) { _ in
+                        expect(spClientMock.consentStatusCalled).to(beTrue())
+                        expect(coordinator.shouldCallConsentStatus).to(beTrue())
+                        done()
+                    }
+                }
+            }
+
+            it("is called when the SDK detects local data from v6") {
+                waitUntil { done in
+                    let storage = LocalStorageMock()
+                    storage.localState = try? SPJson([
+                        "gdpr": [
+                            "uuid": "test"
+                        ]
+                    ])
+                    spClientMock = SourcePointClientMock()
+                    coordinator = SourcepointClientCoordinator(
+                        accountId: accountId,
+                        propertyName: propertyName,
+                        propertyId: propertyId,
+                        campaigns: campaigns,
+                        storage: storage,
+                        spClient: spClientMock
+                    )
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                        expect(spClientMock.consentStatusCalled).to(beTrue())
+                        done()
+                    }
+                }
+            }
+
+            describe("when local data is outdated") {
+                describe("and it has NO uuid stored") {
+                    it("consent-status is not called") {
+                        waitUntil { done in
+                            let storage = LocalStorageMock()
+                            storage.spState = SourcepointClientCoordinator.State(localVersion: 0)
+                            spClientMock = SourcePointClientMock()
+                            coordinator = SourcepointClientCoordinator(
+                                accountId: accountId,
+                                propertyName: propertyName,
+                                propertyId: propertyId,
+                                campaigns: campaigns,
+                                storage: storage,
+                                spClient: spClientMock
+                            )
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                expect(spClientMock.consentStatusCalled).to(beFalse())
+                                done()
+                            }
+                        }
+                    }
+                }
+
+                describe("and it has any uuid stored") {
+                    it("consent-status is called") {
+                        waitUntil { done in
+                            let storage = LocalStorageMock()
+                            let consents = SPGDPRConsent.empty()
+                            consents.uuid = "test"
+                            storage.spState = SourcepointClientCoordinator.State(
+                                gdpr: consents,
+                                localVersion: 0
+                            )
+                            spClientMock = SourcePointClientMock()
+                            coordinator = SourcepointClientCoordinator(
+                                accountId: accountId,
+                                propertyName: propertyName,
+                                propertyId: propertyId,
+                                campaigns: campaigns,
+                                storage: storage,
+                                spClient: spClientMock
+                            )
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                expect(spClientMock.consentStatusCalled).to(beTrue())
+                                done()
+                            }
+                        }
+                    }
+                }
+
+                it("is not called again after it's been called first time") {
+                    waitUntil { done in
+                        let storage = LocalStorageMock()
+                        let consents = SPGDPRConsent.empty()
+                        consents.uuid = "test"
+                        storage.spState = SourcepointClientCoordinator.State(
+                            gdpr: consents,
+                            localVersion: 0
+                        )
+                        spClientMock = SourcePointClientMock()
+                        coordinator = SourcepointClientCoordinator(
+                            accountId: accountId,
+                            propertyName: propertyName,
+                            propertyId: propertyId,
+                            campaigns: campaigns,
+                            storage: storage,
+                            spClient: spClientMock
+                        )
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                            expect(spClientMock.consentStatusCalled).to(beTrue())
+                            spClientMock.consentStatusCalled = false
+
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                expect(spClientMock.consentStatusCalled).to(beFalse())
+                                done()
+                            }
+                        }
+                    }
+                }
+            }
+
+            describe("when succeeds") {
+                it("sets the localDataVersion attribute to be the same as the hardcoded one") {
+                    waitUntil { done in
+                        let storage = LocalStorageMock()
+                        let consents = SPGDPRConsent.empty()
+                        consents.uuid = "test"
+                        storage.spState = SourcepointClientCoordinator.State(
+                            gdpr: consents,
+                            localVersion: 0
+                        )
+                        spClientMock = SourcePointClientMock()
+                        coordinator = SourcepointClientCoordinator(
+                            accountId: accountId,
+                            propertyName: propertyName,
+                            propertyId: propertyId,
+                            campaigns: campaigns,
+                            storage: storage,
+                            spClient: spClientMock
+                        )
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                            expect(coordinator.state.localVersion)
+                                .to(equal(SourcepointClientCoordinator.State.version))
+                            done()
+                        }
+                    }
+                }
+            }
+
+            describe("when it fails") {
+                it("leaves localDataVersion as is") {
+                    waitUntil { done in
+                        let storage = LocalStorageMock()
+                        let consents = SPGDPRConsent.empty()
+                        consents.uuid = "test"
+                        storage.spState = SourcepointClientCoordinator.State(
+                            gdpr: consents,
+                            localVersion: 0
+                        )
+                        spClientMock = SourcePointClientMock()
+                        spClientMock.error = SPError()
+                        coordinator = SourcepointClientCoordinator(
+                            accountId: accountId,
+                            propertyName: propertyName,
+                            propertyId: propertyId,
+                            campaigns: campaigns,
+                            storage: storage,
+                            spClient: spClientMock
+                        )
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                            expect(coordinator.state.localVersion).to(equal(0))
                             done()
                         }
                     }

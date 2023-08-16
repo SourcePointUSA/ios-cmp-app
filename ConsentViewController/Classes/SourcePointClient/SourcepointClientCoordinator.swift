@@ -81,6 +81,8 @@ extension SPSampleable {
 
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
+        static let version = 1
+
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var additionsChangeDate = SPDateCreated.now()
             var legalBasisChangeDate = SPDateCreated.now()
@@ -108,6 +110,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         var localState: SPJson?
         var nonKeyedLocalState: SPJson?
         var storedAuthId: String?
+
+        var localVersion: Int?
 
         var hasGDPRLocalData: Bool { gdpr?.uuid != nil }
         var hasCCPALocalData: Bool { ccpa?.uuid != nil }
@@ -161,8 +165,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    var needsNewConsentData: Bool {
+        migratingUser || (
+            state.localVersion != State.version &&
+            (state.gdpr?.uuid != nil || state.ccpa?.uuid != nil)
+        )
+    }
+
     var shouldCallConsentStatus: Bool {
-        authId != nil || migratingUser
+        needsNewConsentData || authId != nil
     }
 
     var shouldCallMessages: Bool {
@@ -428,6 +439,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.webConsentPayload = ccpa.webConsentPayload
             state.ccpa?.GPPData = ccpa.GPPData ?? SPJson()
         }
+
+        state.localVersion = State.version
         storage.spState = state
     }
 
@@ -438,11 +451,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 metadata: .init(
                     gdpr: consentStatusMetadataFromState(
                         state.gdpr,
-                        state.hasGDPRLocalData
+                        false
                     ),
                     ccpa: consentStatusMetadataFromState(
                         state.ccpa,
-                        state.hasCCPALocalData
+                        false
                     )
                 ),
                 authId: authId,
