@@ -1,3 +1,8 @@
+# 7.3.0 (Aug, 16, 2023)
+* [DIA-2383](https://sourcepoint.atlassian.net/browse/DIA-2383) Added support to [Global Privacy Platform (GPP)](https://iabtechlab.com/gpp/). [#472](https://github.com/SourcePointUSA/ios-cmp-app/pull/472), [#474](https://github.com/SourcePointUSA/ios-cmp-app/pull/474), [#479](https://github.com/SourcePointUSA/ios-cmp-app/pull/479)
+* (#477)[https://github.com/SourcePointUSA/ios-cmp-app/pull/477] Fixed an issue related to date formatting happening in some iPhones that could cause the consent message to appear multiple times.
+* Improved our error metrics data
+
 # 7.2.2 (Jul, 26, 2023)
 * [DIA-2463](https://sourcepoint.atlassian.net/browse/DIA-2463),[DIA-2461](https://sourcepoint.atlassian.net/browse/DIA-2461),[DIA-2459](https://sourcepoint.atlassian.net/browse/DIA-2459),[DIA-2453](https://sourcepoint.atlassian.net/browse/DIA-2453) Several improvements to our network layer helping the SDK to better utilize Sourcepoint CDNs' cache.
 * [DIA-2309](https://sourcepoint.atlassian.net/browse/DIA-2309),[DIA-2356](https://sourcepoint.atlassian.net/browse/DIA-2356 tvOS layout improvements
