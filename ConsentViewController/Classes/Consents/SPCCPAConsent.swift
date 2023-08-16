@@ -104,7 +104,7 @@ protocol CampaignConsent {
         case status, rejectedVendors, rejectedCategories,
              uuid, childPmId, consentStatus,
              webConsentPayload, signedLspa, applies,
-             GPPData
+             GPPData, uspstring
     }
 
     /// Indicates if the user has rejected `.All`, `.Some` or `.None` of the vendors **and** categories.
@@ -239,5 +239,20 @@ protocol CampaignConsent {
         } else {
             return false
         }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.status, forKey: .status)
+        try container.encode(self.rejectedVendors, forKey: .rejectedVendors)
+        try container.encode(self.rejectedCategories, forKey: .rejectedCategories)
+        try container.encodeIfPresent(self.uuid, forKey: .uuid)
+        try container.encodeIfPresent(self.childPmId, forKey: .childPmId)
+        try container.encode(self.consentStatus, forKey: .consentStatus)
+        try container.encodeIfPresent(self.webConsentPayload, forKey: .webConsentPayload)
+        try container.encode(self.signedLspa, forKey: .signedLspa)
+        try container.encode(self.applies, forKey: .applies)
+        try container.encode(self.GPPData, forKey: .GPPData)
+        try container.encode(self.uspstring, forKey: .uspstring)
     }
 }
