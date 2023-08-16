@@ -158,7 +158,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        fdescribe("consent-status") {
+        describe("consent-status") {
             it("is called when an authId is passed") {
                 waitUntil { done in
                     spClientMock = SourcePointClientMock()
