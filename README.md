@@ -410,22 +410,45 @@ Google additional consent is a concept created by Google and the IAB Framework t
 
 Google additional consent is supported by our mobile SDKs and is stored in the `IABTCF_AddtlConsent` key in the `UserDefaults`. Look for that key in the user's local storage and pass the value to Google's SDKs.
 
-## Global Privacy Platform (GPP) Support
-Starting with version `7.3.0`, if your configuration contains a CCPA campaign, your app will automatically comply to the [GPP framework](#).
+## Enable Global Privacy Platform (GPP) Multi-State Privacy (MSPS) String
+The IAB Tech Lab's Global Privacy Platform's (GPP) Multi-State Privacy String (MSPS) is a signal that notifies downstream partners that participating publishers have provided end-users with specific notice and choice over data processing activities on their properties.
 
-The SDK allows you to set certain attributes as part of the GPP config, for example:
+Starting with version `7.3.0`, you can enable support for the MSPS by configuring the following attributes as part of the GPP config:
+
+| Attribute                 | Possible values         | Description                                                                                                                                                                                                                                                                                                                                          |
+|---------------------------|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `MspaCoveredTransaction`  | `yes`<br> `no`          | Publisher or Advertiser, as applicable, is a signatory to the IAB Multistate Service Provider Agreement (MSPA), as may be amended from time to time, and declares that the transaction is a “Covered Transaction” as defined in the MSPA.<br>The configured value for the flag will translate to the following in the MSPS:<br>`yes` = 1<br>`no` = 2 |
+| `MspaOptOutOptionMode`    | `notApplicable`<br> `yes`<br> `no` | Publisher or Advertiser, as applicable, has enabled “Opt-Out Option Mode” for the “Covered Transaction,” as such terms are defined in the MSPA.<br>The configured value for the flag will translate to the following in the MSPS:<br>`notApplicable` = 0<br>`yes` = 1<br>`no` = 2                                                                               |
+| `MspaServiceProviderMode` | `notApplicable`<br> `yes`<br> `no` | Publisher or Advertiser, as applicable, has enabled “Service Provider Mode” for the “Covered Transaction,” as such terms are defined in the MSPA.<br>The configured value for the flag will translate to the following in the MSPS:<br>`notApplicable`  = 0 <br> `yes`  = 1 <br> `no`  = 2                                                                      |
+
+Depending on whether your organization is a signatory of the Multi-State Privacy Agreement (MSPA), your organization will configure the attributes in the following ways:
+> **Note**: While `SPGPPConfig` can be passed to any `SPCampaign`, it only affects the CCPA campaign.
+
+### Non-signatory of the MSPA
+For organizations who have not signed the MSPA and only want to listen for the MSPS. When setting the attributes thusly, the MSPA, as a contractual framework, does not cover your transactions.
+
 ```swift
 let campaigns = SPCampaigns(
     ccpa: SPCampaign(gppConfig: SPGPPConfig(
-        MspaCoveredTransaction: .no, // optional,
-        MspaOptOutOptionMode: .yes, // optional
-        MspaServiceProviderMode: .notApplicable // optional
+        MspaCoveredTransaction: .no, 
+        MspaOptOutOptionMode: .notApplicable, 
+        MspaServiceProviderMode: .notApplicable 
     ))
 )
 ```
-Note while `SPGPPConfig` can be passed to any `SPCampaign`, it only affects the CCPA campaign.
 
-For more information on each attribute of the `GPPConfig`, please refer to our [documentation](#).
+### Signatory of the MSPA
+For transactions covered by the MSPA, signatories can choose to operate in [Opt-Out Option Mode or Service Provider Mode](https://www.iab.com/wp-content/uploads/2022/12/IAB_MSPA_Decision_Tree.pdf).
+
+```swift
+let campaigns = SPCampaigns(
+    ccpa: SPCampaign(gppConfig: SPGPPConfig(
+        MspaCoveredTransaction: .yes, 
+        MspaOptOutOptionMode: .no, //dependent on which mode you use
+        MspaServiceProviderMode: .yes //dependent on which mode you use
+    ))
+)
+```
 
 ## Delete user data
 Utilize the following method if an end-user requests to have their data deleted:
