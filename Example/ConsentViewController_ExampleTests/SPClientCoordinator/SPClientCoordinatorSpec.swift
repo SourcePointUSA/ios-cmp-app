@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try function_body_length file_length
+// swiftlint:disable force_try function_body_length file_length type_body_length
 
 class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
