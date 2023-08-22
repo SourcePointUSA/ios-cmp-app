@@ -17,8 +17,9 @@ jobs:
         id: create
         uses: andresilveirah/gajira-create@master
         with:
-          project: SP
+          project: DIA
           issuetype: Bug
-          summary: "[iOS][TCFv2] ${{github.event.issue.title}}"
+          summary: "[iOS] ${{github.event.issue.title}}"
           description: "${{github.event.issue.body}}\n This issue was reported by ${{github.event.issue.user.login}} via GitHub.\n ${{github.event.issue.html_url}}"
           labels: "In-App,GitHub"
+          customFields: '{"11003":{"value":"Dialogue - Client SDKs","child":{"value":"iOS"}}}'
