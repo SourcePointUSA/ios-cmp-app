@@ -16,6 +16,8 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let grants: SPGDPRVendorGrants
             let consentStatus: ConsentStatus
             let webConsentPayload: SPWebConsentPayload?
+            let legIntCategories: [String]
+            let legIntVendors: [String]
         }
 
         struct CCPA: Decodable, Equatable {

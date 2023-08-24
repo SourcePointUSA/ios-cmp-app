@@ -99,6 +99,7 @@ struct GDPRPrivacyManagerViewResponse: Decodable {
     let vendors: [GDPRVendor]
     let categories, specialPurposes, features, specialFeatures: [GDPRCategory]
     var grants: SPGDPRVendorGrants?
+    var legIntCategories, legIntVendors: [String]?
 }
 
 struct CCPAVendor: Hashable {

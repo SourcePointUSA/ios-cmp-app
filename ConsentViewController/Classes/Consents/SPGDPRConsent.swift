@@ -73,6 +73,8 @@ public typealias SPGDPRPurposeId = String
         case childPmId
         case consentStatus
         case webConsentPayload
+        case legIntCategories
+        case legIntVendors
     }
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
@@ -133,6 +135,9 @@ public typealias SPGDPRPurposeId = String
 
     /// Used by the rendering app
     var webConsentPayload: SPWebConsentPayload?
+    
+    var legIntCategories: [String]?
+    var legIntVendors: [String]?
 
     override open var description: String {
         """
@@ -154,6 +159,8 @@ public typealias SPGDPRPurposeId = String
         self.childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         self.consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
         self.webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
+        self.legIntCategories = try container.decodeIfPresent(Array.self, forKey: .legIntCategories)
+        self.legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
     }
 
     init(

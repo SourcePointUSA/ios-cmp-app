@@ -424,6 +424,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.consentStatus = gdpr.consentStatus
             state.gdpr?.childPmId = nil
             state.gdpr?.webConsentPayload = gdpr.webConsentPayload
+            state.gdpr?.legIntCategories = gdpr.legIntCategories
+            state.gdpr?.legIntVendors = gdpr.legIntVendors
         }
         if let ccpa = response.consentStatusData.ccpa {
             state.ccpa?.uuid = ccpa.uuid
