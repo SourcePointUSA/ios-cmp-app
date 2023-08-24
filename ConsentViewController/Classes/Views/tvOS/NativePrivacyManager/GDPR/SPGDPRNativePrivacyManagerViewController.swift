@@ -107,6 +107,8 @@ protocol SPNativePrivacyManagerHome {
                         if self?.snapshot == nil {
                             self?.snapshot = GDPRPMConsentSnaptshot(
                                 grants: data.grants ?? SPGDPRVendorGrants(),
+                                legIntCategories: data.legIntCategories,
+                                legIntVendors: data.legIntVendors,
                                 vendors: Set<GDPRVendor>(data.vendors),
                                 categories: Set<GDPRCategory>(data.categories),
                                 specialPurposes: Set<GDPRCategory>(data.specialPurposes),

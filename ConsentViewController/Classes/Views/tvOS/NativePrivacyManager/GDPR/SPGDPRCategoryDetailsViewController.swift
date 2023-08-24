@@ -12,6 +12,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     weak var categoryManagerDelegate: GDPRPMConsentSnaptshot?
 
     var category: GDPRCategory?
+    var displayingLegIntCategories = false
     var partners: [String] {
         ((category?.requiringConsentVendors ?? []) + (category?.legIntVendors ?? []))
             .map { $0.name }
@@ -52,14 +53,14 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
 
     @IBAction func onOnButtonTap(_ sender: Any) {
         if let category = category {
-            categoryManagerDelegate?.onCategoryOn(category)
+            categoryManagerDelegate?.onCategoryOn(category: category, legInt: displayingLegIntCategories)
         }
         dismiss(animated: true)
     }
 
     @IBAction func onOffButtonTap(_ sender: Any) {
         if let category = category {
-            categoryManagerDelegate?.onCategoryOff(category)
+            categoryManagerDelegate?.onCategoryOff(category: category, legInt: displayingLegIntCategories)
         }
         dismiss(animated: true)
     }

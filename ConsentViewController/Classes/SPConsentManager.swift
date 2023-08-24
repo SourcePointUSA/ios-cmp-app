@@ -550,6 +550,8 @@ extension SPConsentManager: SPNativePMDelegate {
 
             case .success(var pmData):
                 pmData.grants = self?.userData.gdpr?.consents?.vendorGrants
+                pmData.legIntCategories = self?.userData.gdpr?.consents?.legIntCategories ?? [String()]
+                pmData.legIntVendors = self?.userData.gdpr?.consents?.legIntVendors ?? [String()]
                 handler(result.map { _ in pmData })
             }
         }

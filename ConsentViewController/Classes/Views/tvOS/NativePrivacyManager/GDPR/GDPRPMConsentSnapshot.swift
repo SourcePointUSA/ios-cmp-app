@@ -12,6 +12,14 @@ protocol ConsentSnapshot {
 }
 
 class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCategoryManager {
+    func onCategoryOn(_ category: GDPRCategory) {
+        
+    }
+    
+    func onCategoryOff(_ category: GDPRCategory) {
+        
+    }
+    
     typealias VendorType = GDPRVendor
     typealias CategoryType = GDPRCategory
 
@@ -22,6 +30,8 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     var toggledVendorsIds: Set<String>
     var categories, specialPurposes, features, specialFeatures: Set<GDPRCategory>
     var toggledCategoriesIds: Set<String>
+    var toggledConsentCategoriesIds: Set<String>
+    var toggledLICategoriesIds: Set<String>
 
     var vendorsWhosePurposesAreOff: [String] {
         toggledVendorsIds
@@ -61,11 +71,42 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         toggledCategoriesIds = Set<String>(
             grants.flatMap { vendors in vendors.value.purposeGrants.filter { $0.value }.keys }
         )
+        toggledConsentCategoriesIds = Set<String>([String()])
+        toggledLICategoriesIds = Set<String>([String()])
+    }
+    
+    convenience init(
+        grants: SPGDPRVendorGrants,
+        legIntCategories: [String]?,
+        legIntVendors: [String]?,
+        vendors: Set<GDPRVendor>,
+        categories: Set<GDPRCategory>,
+        specialPurposes: Set<GDPRCategory>,
+        features: Set<GDPRCategory>,
+        specialFeatures: Set<GDPRCategory>
+    ) {
+        self.init(
+            grants: grants,
+            vendors: vendors,
+            categories: categories,
+            specialPurposes: specialPurposes,
+            features: features,
+            specialFeatures: specialFeatures
+        )
+        toggledConsentCategoriesIds = Set<String>(
+            toggledCategoriesIds.compactMap { id in
+                guard let category = categories.first(where: { c in c._id == id }) else { return "" }
+                return category.requireConsent ?? false ? id : ""
+            }
+        )
+        toggledLICategoriesIds = Set<String>(legIntCategories ?? [String()])
     }
 
     override init() {
         grants = SPGDPRVendorGrants()
         toggledCategoriesIds = []
+        toggledConsentCategoriesIds = []
+        toggledLICategoriesIds = []
         toggledVendorsIds = []
         vendors = []
         categories = []
@@ -101,14 +142,24 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         )
     }
 
-    func onCategoryOn(_ category: GDPRCategory) {
+    func onCategoryOn(category: GDPRCategory, legInt: Bool) {
         toggledCategoriesIds.insert(category._id)
+        if legInt {
+            toggledLICategoriesIds.insert(category._id)
+        }else{
+            toggledConsentCategoriesIds.insert(category._id)
+        }
         toggledVendorsIds.formUnion(category.uniqueVendorIds)
         onConsentsChange()
     }
 
-    func onCategoryOff(_ category: GDPRCategory) {
+    func onCategoryOff(category: GDPRCategory, legInt: Bool) {
         toggledCategoriesIds.remove(category._id)
+        if legInt {
+            toggledLICategoriesIds.remove(category._id)
+        }else{
+            toggledConsentCategoriesIds.remove(category._id)
+        }
         toggledVendorsIds.subtract(vendorsWhosePurposesAreOff)
         onConsentsChange()
     }

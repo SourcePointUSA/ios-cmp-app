@@ -170,9 +170,15 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         let category = currentCategory(indexPath)
         cell.identifier = category._id
         cell.labelText = category.name
-        cell.isOn = section == 0 || section == 3 ?
-            consentsSnapshot.toggledCategoriesIds.contains(category._id) :
-            nil
+        if(displayingLegIntCategories){
+            cell.isOn = section == 0 || section == 3 ?
+                consentsSnapshot.toggledLICategoriesIds.contains(category._id) ://consentsSnapshot.toggledCategoriesIds.contains(category._id) :
+                nil
+        }else{
+            cell.isOn = section == 0 || section == 3 ?
+                consentsSnapshot.toggledConsentCategoriesIds.contains(category._id) :
+                nil
+        }
         cell.selectable = section != 1 || category.disclosureOnly == true
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
@@ -209,6 +215,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         )
         categoryDetailsVC.category = currentCategory(indexPath)
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
+        categoryDetailsVC.displayingLegIntCategories = displayingLegIntCategories
         present(categoryDetailsVC, animated: true)
     }
 }
