@@ -412,12 +412,13 @@ Google additional consent is supported by our mobile SDKs and is stored in the `
 
 ## Global Privacy Platform (GPP) Multi-State Privacy (MSPS) Support
 
-Starting with version `7.3.0`, you can enable support for the MSPS by configuring the following attributes as part of the GPP config:
-- `MspaCoveredTransaction`
-- `MspaOptOutOptionMode`
-- `MspaServiceProviderMode`
+Starting with version `7.3.0`, if your configuration contains a `ccpa` campaign, it will automatically set GPP data. Unless configured otherwise, the following MSPA atrributes will default to: 
 
-[Click here](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Global-Privacy-Platform-(GPP)-Multi%E2%80%90State-Privacy-(MSPS)) for more information on each attribute, possible values, and examples for signatories and non-signatories of the MSPA 
+- `MspaCoveredTransaction`: no
+- `MspaOptOutOptionMode`: notApplicable
+- `MspaServiceProviderMode`: notApplicable
+
+Optionally, your organization can customize support for the MSPS by configuring the above attributes as part of the GPP config. [Click here](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Global-Privacy-Platform-(GPP)-Multi%E2%80%90State-Privacy-(MSPS)) for more information on each attribute, possible values, and examples for signatories and non-signatories of the MSPA 
 
 Example:
 ```swift
