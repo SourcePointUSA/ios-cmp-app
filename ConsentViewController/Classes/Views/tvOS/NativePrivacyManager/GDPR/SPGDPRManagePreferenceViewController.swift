@@ -31,8 +31,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
 
     var categories: [GDPRCategory] = []
-    var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
+    var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false }.filter{!legIntCategories.contains($0)} }
     var legIntSpecialPurposes: [GDPRCategory] { consentsSnapshot.specialPurposes.filter { $0.disclosureOnly == true } }
     var categoryDescription = [String: String]()
 
@@ -176,7 +176,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
                 nil
         }else{
             cell.isOn = section == 0 || section == 3 ?
-                consentsSnapshot.toggledConsentCategoriesIds.contains(category._id) :
+                consentsSnapshot.toggledCategoriesIds.contains(category._id) :
                 nil
         }
         cell.selectable = section != 1 || category.disclosureOnly == true
