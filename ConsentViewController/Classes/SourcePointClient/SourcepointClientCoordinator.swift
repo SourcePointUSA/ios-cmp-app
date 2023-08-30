@@ -357,11 +357,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.authId = authId
         resetStateIfAuthIdChanged()
         metaData {
-            self.consentStatus {
-                self.state.udpateGDPRStatus()
-                self.messages { messagesResponse in
-                    self.pvData(pubData: pubData) {
-                        handler(messagesResponse)
+            self.messages { messagesResponse in
+                self.pvData(pubData: pubData) {
+                    handler(messagesResponse)
+                    self.consentStatus{
+                        self.state.udpateGDPRStatus()
                     }
                 }
             }
