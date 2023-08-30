@@ -173,7 +173,9 @@ public typealias SPGDPRPurposeId = String
         applies: Bool,
         consentStatus: ConsentStatus = ConsentStatus(),
         lastMessage: LastMessageData? = nil,
-        webConsentPayload: SPWebConsentPayload? = nil
+        webConsentPayload: SPWebConsentPayload? = nil,
+        legIntCategories: [String]? = nil,
+        legIntVendors: [String]? = nil
     ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
@@ -185,6 +187,8 @@ public typealias SPGDPRPurposeId = String
         self.consentStatus = consentStatus
         self.lastMessage = lastMessage
         self.webConsentPayload = webConsentPayload
+        self.legIntCategories = legIntCategories
+        self.legIntVendors = legIntVendors
     }
 
     /// Convenience initialiser to return an empty consent object.
@@ -219,7 +223,9 @@ public typealias SPGDPRPurposeId = String
             applies: applies,
             consentStatus: consentStatus,
             lastMessage: lastMessage,
-            webConsentPayload: webConsentPayload
+            webConsentPayload: webConsentPayload,
+            legIntCategories: legIntCategories,
+            legIntVendors: legIntVendors
         )
     }
 }

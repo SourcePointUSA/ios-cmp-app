@@ -710,6 +710,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     self.state.gdpr?.euconsent = response.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
                     self.state.gdpr?.vendorGrants = response.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
                     self.state.gdpr?.webConsentPayload = response.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
+                    self.state.gdpr?.legIntCategories = response.legIntCategories ?? getResponse?.gdpr?.legIntCategories
+                    self.state.gdpr?.legIntVendors = response.legIntVendors ?? getResponse?.gdpr?.legIntVendors
                     self.storage.spState = self.state
 
                     handler(Result.success(self.userData))
