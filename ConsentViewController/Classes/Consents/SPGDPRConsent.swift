@@ -135,7 +135,7 @@ public typealias SPGDPRPurposeId = String
 
     /// Used by the rendering app
     var webConsentPayload: SPWebConsentPayload?
-    
+
     var legIntCategories: [String]?
     var legIntVendors: [String]?
 

@@ -12,14 +12,6 @@ protocol ConsentSnapshot {
 }
 
 class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCategoryManager {
-    func onCategoryOn(_ category: GDPRCategory) {
-        
-    }
-    
-    func onCategoryOff(_ category: GDPRCategory) {
-        
-    }
-    
     typealias VendorType = GDPRVendor
     typealias CategoryType = GDPRCategory
 
@@ -74,7 +66,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         legIntVendors = Set<String>([String()])
         toggledLICategoriesIds = Set<String>([String()])
     }
-    
+
     convenience init(
         grants: SPGDPRVendorGrants,
         legIntCategories: [String]?,
@@ -137,10 +129,14 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         )
     }
 
+    func onCategoryOn(_ category: GDPRCategory) {}
+
+    func onCategoryOff(_ category: GDPRCategory) {}
+
     func onCategoryOn(category: GDPRCategory, legInt: Bool) {
         if legInt {
             toggledLICategoriesIds.insert(category._id)
-        }else{
+        } else {
             toggledCategoriesIds.insert(category._id)
         }
         toggledVendorsIds.formUnion(category.uniqueVendorIds)
@@ -150,7 +146,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     func onCategoryOff(category: GDPRCategory, legInt: Bool) {
         if legInt {
             toggledLICategoriesIds.remove(category._id)
-        }else{
+        } else {
             toggledCategoriesIds.remove(category._id)
         }
         toggledVendorsIds.subtract(vendorsWhosePurposesAreOff)
