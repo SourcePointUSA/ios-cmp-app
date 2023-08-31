@@ -552,6 +552,7 @@ extension SPConsentManager: SPNativePMDelegate {
                 pmData.grants = self?.userData.gdpr?.consents?.vendorGrants
                 pmData.legIntCategories = self?.userData.gdpr?.consents?.legIntCategories ?? [String()]
                 pmData.legIntVendors = self?.userData.gdpr?.consents?.legIntVendors ?? [String()]
+                pmData.hasConsentData = self?.userData.gdpr?.consents?.consentStatus.hasConsentData
                 handler(result.map { _ in pmData })
             }
         }

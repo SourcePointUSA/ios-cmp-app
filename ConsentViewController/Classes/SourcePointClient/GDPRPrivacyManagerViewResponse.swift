@@ -100,6 +100,7 @@ struct GDPRPrivacyManagerViewResponse: Decodable {
     let categories, specialPurposes, features, specialFeatures: [GDPRCategory]
     var grants: SPGDPRVendorGrants?
     var legIntCategories, legIntVendors: [String]?
+    var hasConsentData: Bool?
 }
 
 struct CCPAVendor: Hashable {

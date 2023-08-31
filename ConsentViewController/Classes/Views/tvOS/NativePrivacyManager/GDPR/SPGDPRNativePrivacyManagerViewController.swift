@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-// swiftlint:disable function_body_length
+// swiftlint:disable function_body_length force_unwrapping
 
 protocol SPNativePrivacyManagerHome {
     var delegate: SPNativePMDelegate? { get set }
@@ -109,6 +109,7 @@ protocol SPNativePrivacyManagerHome {
                                 grants: data.grants ?? SPGDPRVendorGrants(),
                                 legIntCategories: data.legIntCategories,
                                 legIntVendors: data.legIntVendors,
+                                hasConsentData: data.hasConsentData!,
                                 vendors: Set<GDPRVendor>(data.vendors),
                                 categories: Set<GDPRCategory>(data.categories),
                                 specialPurposes: Set<GDPRCategory>(data.specialPurposes),

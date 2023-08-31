@@ -71,6 +71,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         grants: SPGDPRVendorGrants,
         legIntCategories: [String]?,
         legIntVendors: [String]?,
+        hasConsentData: Bool,
         vendors: Set<GDPRVendor>,
         categories: Set<GDPRCategory>,
         specialPurposes: Set<GDPRCategory>,
@@ -86,7 +87,11 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
             specialFeatures: specialFeatures
         )
         self.legIntVendors = Set<String>(legIntVendors ?? [String()])
-        toggledLICategoriesIds = Set<String>(legIntCategories ?? [String()])
+        if hasConsentData {
+            toggledLICategoriesIds = Set<String>(legIntCategories ?? [String()])
+        } else {
+            toggledLICategoriesIds = Set<String>(toggledCategoriesIds)
+        }
     }
 
     override init() {
