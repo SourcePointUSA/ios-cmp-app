@@ -24,9 +24,9 @@ extension XCUIElement {
 class NativePMUITests: QuickSpec {
     var app: NativePMApp!
     var timeout = 20
-    var gdprCategoriesCount = 10
+    var gdprCategoriesCount = 6
     var ccpaCategoriesCount = 3
-    var gdprCategoriePlusSpecialFeatures = 11
+    var gdprCategoriePlusSpecialFeatures = 7
 
     override func setUp() {
         continueAfterFailure = false
