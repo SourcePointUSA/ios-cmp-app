@@ -176,7 +176,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
                 nil
         } else {
             cell.isOn = section == 0 || section == 3 ?
-                consentsSnapshot.toggledCategoriesIds.contains(category._id) :
+                consentsSnapshot.toggledConsentCategoriesIds.contains(category._id) :
                 nil
         }
         cell.selectable = section != 1 || category.disclosureOnly == true

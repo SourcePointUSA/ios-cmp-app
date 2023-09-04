@@ -22,7 +22,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     var legIntVendors: Set<String>
     var toggledVendorsIds: Set<String>
     var categories, specialPurposes, features, specialFeatures: Set<GDPRCategory>
-    var toggledCategoriesIds: Set<String>
+    var toggledConsentCategoriesIds: Set<String>
     var toggledLICategoriesIds: Set<String>
 
     var vendorsWhosePurposesAreOff: [String] {
@@ -30,7 +30,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
             .compactMap { id in vendors.first { $0.vendorId == id } }
             .filter { vendor in
                 let vendorCategoriesIds = (grants[vendor.vendorId] ?? SPGDPRVendorGrant()).purposeGrants.keys
-                return toggledCategoriesIds.isDisjoint(with: vendorCategoriesIds)
+                return toggledConsentCategoriesIds.isDisjoint(with: vendorCategoriesIds)
             }
             .map { $0.vendorId }
     }
@@ -60,7 +60,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         toggledVendorsIds = Set<String>(
             grants.filter { $0.value.softGranted }.map { $0.key }
         )
-        toggledCategoriesIds = Set<String>(
+        toggledConsentCategoriesIds = Set<String>(
             grants.flatMap { vendors in vendors.value.purposeGrants.filter { $0.value }.keys }
         )
         legIntVendors = Set<String>([String()])
@@ -90,15 +90,15 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         if hasConsentData {
             toggledLICategoriesIds = Set<String>(legIntCategories ?? [String()])
         } else {
-            toggledLICategoriesIds = Set<String>(toggledCategoriesIds)
-            toggledCategoriesIds = []
+            toggledLICategoriesIds = Set<String>(toggledConsentCategoriesIds)
+            toggledConsentCategoriesIds = []
         }
     }
 
     override init() {
         grants = SPGDPRVendorGrants()
         legIntVendors = []
-        toggledCategoriesIds = []
+        toggledConsentCategoriesIds = []
         toggledLICategoriesIds = []
         toggledVendorsIds = []
         vendors = []
@@ -117,7 +117,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
                 return GDPRPMPayload.Category(
                     _id: id,
                     iabId: category.iabId,
-                    consent: toggledCategoriesIds.contains(id),
+                    consent: toggledConsentCategoriesIds.contains(id),
                     legInt: toggledLICategoriesIds.contains(id),
                     type: category.type
                 )
@@ -143,7 +143,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         if legInt {
             toggledLICategoriesIds.insert(category._id)
         } else {
-            toggledCategoriesIds.insert(category._id)
+            toggledConsentCategoriesIds.insert(category._id)
         }
         toggledVendorsIds.formUnion(category.uniqueVendorIds)
         onConsentsChange()
@@ -153,7 +153,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         if legInt {
             toggledLICategoriesIds.remove(category._id)
         } else {
-            toggledCategoriesIds.remove(category._id)
+            toggledConsentCategoriesIds.remove(category._id)
         }
         toggledVendorsIds.subtract(vendorsWhosePurposesAreOff)
         onConsentsChange()
