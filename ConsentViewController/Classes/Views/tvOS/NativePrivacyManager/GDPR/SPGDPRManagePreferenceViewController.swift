@@ -32,8 +32,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 
     var categories: [GDPRCategory] = []
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
-    var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false }
-        .filter { !legIntCategories.contains($0) } }
+    var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var legIntSpecialPurposes: [GDPRCategory] { consentsSnapshot.specialPurposes.filter { $0.disclosureOnly == true } }
     var categoryDescription = [String: String]()
 

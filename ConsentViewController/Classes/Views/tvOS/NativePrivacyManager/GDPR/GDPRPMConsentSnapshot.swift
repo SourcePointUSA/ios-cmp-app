@@ -91,6 +91,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
             toggledLICategoriesIds = Set<String>(legIntCategories ?? [String()])
         } else {
             toggledLICategoriesIds = Set<String>(toggledCategoriesIds)
+            toggledCategoriesIds = []
         }
     }
 
