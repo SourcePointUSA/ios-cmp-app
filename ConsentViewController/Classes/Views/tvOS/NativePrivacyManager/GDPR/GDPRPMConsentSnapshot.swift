@@ -109,7 +109,9 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     }
 
     func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble {
-        GDPRPMPayload(
+        var toggledCategoriesIds = Set<String>(toggledConsentCategoriesIds)
+        toggledCategoriesIds.formUnion(toggledLICategoriesIds)
+        return GDPRPMPayload(
             lan: language,
             privacyManagerId: pmId,
             categories: toggledCategoriesIds.compactMap { id in
