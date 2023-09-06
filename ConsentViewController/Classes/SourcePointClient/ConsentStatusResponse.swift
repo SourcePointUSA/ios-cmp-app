@@ -18,6 +18,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let webConsentPayload: SPWebConsentPayload?
             let legIntCategories: [String]
             let legIntVendors: [String]
+            let vendors: [String]
         }
 
         struct CCPA: Decodable, Equatable {

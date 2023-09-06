@@ -17,6 +17,7 @@ struct GDPRChoiceResponse: Decodable, Equatable {
     let webConsentPayload: SPWebConsentPayload?
     let legIntCategories: [String]?
     let legIntVendors: [String]?
+    let vendors: [String]?
 }
 
 struct CCPAChoiceResponse: Equatable {

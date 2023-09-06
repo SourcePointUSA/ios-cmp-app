@@ -426,6 +426,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.webConsentPayload = gdpr.webConsentPayload
             state.gdpr?.legIntCategories = gdpr.legIntCategories
             state.gdpr?.legIntVendors = gdpr.legIntVendors
+            state.gdpr?.vendors = gdpr.vendors
         }
         if let ccpa = response.consentStatusData.ccpa {
             state.ccpa?.uuid = ccpa.uuid
@@ -712,6 +713,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     self.state.gdpr?.webConsentPayload = response.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
                     self.state.gdpr?.legIntCategories = response.legIntCategories ?? getResponse?.gdpr?.legIntCategories
                     self.state.gdpr?.legIntVendors = response.legIntVendors ?? getResponse?.gdpr?.legIntVendors
+                    self.state.gdpr?.vendors = response.vendors ?? getResponse?.gdpr?.vendors
                     self.storage.spState = self.state
 
                     handler(Result.success(self.userData))
