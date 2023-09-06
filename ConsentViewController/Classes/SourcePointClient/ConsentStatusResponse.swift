@@ -19,6 +19,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let legIntCategories: [String]
             let legIntVendors: [String]
             let vendors: [String]
+            let categories: [String]
         }
 
         struct CCPA: Decodable, Equatable {
