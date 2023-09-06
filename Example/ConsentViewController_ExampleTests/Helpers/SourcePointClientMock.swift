@@ -162,7 +162,9 @@ class SourcePointClientMock: SourcePointProtocol {
                 grants: nil,
                 webConsentPayload: nil,
                 legIntCategories: nil,
-                legIntVendors: nil
+                legIntVendors: nil,
+                vendors: nil,
+                categories: nil
             )))
         }
     }

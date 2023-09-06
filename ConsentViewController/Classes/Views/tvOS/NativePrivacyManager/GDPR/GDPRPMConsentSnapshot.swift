@@ -161,9 +161,9 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     func onCategoryOn(_ category: GDPRCategory) {}
 
     func onCategoryOff(_ category: GDPRCategory) {}
-    
+
     func onVendorOn(_ vendor: GDPRVendor) {}
-    
+
     func onVendorOff(_ vendor: GDPRVendor) {}
 
     func onCategoryOn(category: GDPRCategory, legInt: Bool) {
