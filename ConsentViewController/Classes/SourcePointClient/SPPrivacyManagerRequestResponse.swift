@@ -48,6 +48,12 @@ import Foundation
     let legIntVendors: [Vendor]?
     let requiringConsentVendors: [Vendor]?
     let disclosureOnlyVendors: [Vendor]
+    var uniqueConsentVendorIds: [String] {
+        Array(Set<String>((requiringConsentVendors ?? []).compactMap { $0.vendorId }))
+    }
+    var uniqueLIVendorIds: [String] {
+        Array(Set<String>((legIntVendors ?? []).compactMap { $0.vendorId }))
+    }
     var uniqueVendorIds: [String] {
         Array(Set<String>(
             ((legIntVendors ?? []).compactMap { $0.vendorId } +

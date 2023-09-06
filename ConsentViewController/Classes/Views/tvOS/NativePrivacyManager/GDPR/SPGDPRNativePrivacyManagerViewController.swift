@@ -109,6 +109,8 @@ protocol SPNativePrivacyManagerHome {
                                 grants: data.grants ?? SPGDPRVendorGrants(),
                                 legIntCategories: data.legIntCategories,
                                 legIntVendors: data.legIntVendors,
+                                acceptedVendors: data.acceptedVendors,
+                                acceptedCategories: data.acceptedCategories,
                                 hasConsentData: data.hasConsentData ?? false,
                                 vendors: Set<GDPRVendor>(data.vendors),
                                 categories: Set<GDPRCategory>(data.categories),
@@ -159,6 +161,11 @@ protocol SPNativePrivacyManagerHome {
                     if self?.snapshot == nil {
                         self?.snapshot = GDPRPMConsentSnaptshot(
                             grants: data.grants ?? SPGDPRVendorGrants(),
+                            legIntCategories: data.legIntCategories,
+                            legIntVendors: data.legIntVendors,
+                            acceptedVendors: data.acceptedVendors,
+                            acceptedCategories: data.acceptedCategories,
+                            hasConsentData: data.hasConsentData ?? false,
                             vendors: Set<GDPRVendor>(data.vendors),
                             categories: Set<GDPRCategory>(data.categories),
                             specialPurposes: Set<GDPRCategory>(data.specialPurposes),

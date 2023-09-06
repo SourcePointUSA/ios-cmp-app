@@ -131,7 +131,11 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
         let vendor = currentVendors[indexPath.row]
         cell.identifier = vendor.id
         cell.labelText = vendor.name
-        cell.isOn = consentsSnapshot.toggledVendorsIds.contains(vendor.vendorId)
+        if displayingLegIntVendors {
+            cell.isOn = consentsSnapshot.toggledLIVendorsIds.contains(vendor.id)
+        } else {
+            cell.isOn = consentsSnapshot.toggledConsentVendorsIds.contains(vendor.id)
+        }
         cell.selectable = true
         cell.isCustom = vendor.vendorType == .CUSTOM
         cell.setup(from: nativeLongButton)
@@ -159,6 +163,7 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
 
         vendorDetailsVC.vendor = currentVendors[indexPath.row]
         vendorDetailsVC.vendorManagerDelegate = consentsSnapshot
+        vendorDetailsVC.displayingLegIntVendors = displayingLegIntVendors
         present(vendorDetailsVC, animated: true)
     }
 }
