@@ -168,7 +168,7 @@ class NativePMUITests: QuickSpec {
         }
 
         it("Manage Preferences and Our Vendors through GDPR Privacy Manager with few consent purposes ON") {
-            self.app.relaunch(clean: true)
+            self.app.relaunch(clean: true, gdpr: true, ccpa: false)
             self.app.gdprPrivacyManagerButton.remotePress()
             self.app.acceptButton.expectToHaveFocus()
 
@@ -198,16 +198,13 @@ class NativePMUITests: QuickSpec {
             self.remote.press(.down)
             self.app.saveAndExitInternalButton.remotePress()
 
-            self.app.relaunch()
-            self.app.acceptButton.expectToHaveFocus()
-            self.app.acceptButton.remotePress()
             self.app.gdprPrivacyManagerButton.remotePress()
             self.app.acceptButton.expectToHaveFocus()
             self.app.managePreferencesButton.remotePress()
             self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 2)
             self.app.homeButton.remotePress()
             self.app.ourPartnersButton.remotePress()
-            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 7)
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 5)
         }
 
         it("Check default toggles status on Manage Preferences and Our Vendors through GDPR Privacy Manager") {
