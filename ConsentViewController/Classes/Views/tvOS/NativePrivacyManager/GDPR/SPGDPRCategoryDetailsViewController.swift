@@ -14,7 +14,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     var category: GDPRCategory?
     var displayingLegIntCategories = false
     var partners: [String] {
-        ((category?.requiringConsentVendors ?? []) + (category?.legIntVendors ?? []))
+        ((displayingLegIntCategories ? (category?.legIntVendors ?? []) : (category?.requiringConsentVendors ?? [])) + (category?.vendors ?? []))
             .map { $0.name }
             .reduce([]) { $0.contains($1) ? $0 : $0 + [$1] } // filter duplicates
     }
