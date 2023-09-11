@@ -37,6 +37,10 @@ struct ChoiceAllResponse: Decodable {
         let grants: SPGDPRVendorGrants
         let postPayload: PostPayload?
         let webConsentPayload: SPWebConsentPayload?
+        let legIntCategories: [String]?
+        let legIntVendors: [String]?
+        let vendors: [String]?
+        let categories: [String]?
     }
 
     let gdpr: GDPR?

@@ -16,7 +16,7 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     var vendors: Set<VendorType>
     var categories: Set<CategoryType>
     var toggledVendorsIds: Set<String> = Set<String>()
-    var toggledCategoriesIds: Set<String> = Set<String>()
+    var toggledConsentCategoriesIds: Set<String> = Set<String>()
     var consentStatus: CCPAConsentStatus = .RejectedNone
 
     init(
@@ -29,12 +29,12 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         self.vendors = vendors
         self.categories = categories
         toggledVendorsIds = Set<String>(rejectedVendors ?? [])
-        toggledCategoriesIds = Set<String>(rejectedCategories ?? [])
+        toggledConsentCategoriesIds = Set<String>(rejectedCategories ?? [])
         self.consentStatus = consentStatus ?? .RejectedNone
     }
 
     override init() {
-        toggledCategoriesIds = []
+        toggledConsentCategoriesIds = []
         toggledVendorsIds = []
         vendors = []
         categories = []
@@ -50,19 +50,19 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         CCPAPMPayload(
             lan: language,
             privacyManagerId: pmId,
-            rejectedCategories: Array(toggledCategoriesIds),
+            rejectedCategories: Array(toggledConsentCategoriesIds),
             rejectedVendors: Array(toggledVendorsIds)
         )
     }
 
     func onCategoryOn(_ category: CCPACategory) {
-        toggledCategoriesIds.remove(category._id)
+        toggledConsentCategoriesIds.remove(category._id)
         updateConsentStatus()
         onConsentsChange()
     }
 
     func onCategoryOff(_ category: CCPACategory) {
-        toggledCategoriesIds.insert(category._id)
+        toggledConsentCategoriesIds.insert(category._id)
         updateConsentStatus()
         onConsentsChange()
     }
@@ -80,7 +80,7 @@ class CCPAPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     }
 
     func updateConsentStatus() {
-        if toggledVendorsIds.isEmpty && toggledCategoriesIds.isEmpty {
+        if toggledVendorsIds.isEmpty && toggledConsentCategoriesIds.isEmpty {
             consentStatus = .RejectedNone
         } else {
             consentStatus = .RejectedSome

@@ -24,6 +24,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     let cellReuseIdentifier = "cell"
     var vendor: GDPRVendor?
+    var displayingLegIntVendors = false
     var sections: [Section] {[
         Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.consentCategories.map { $0.name }),
         Section(header: viewData.byId("SpecialPurposesText") as? SPNativeText, content: vendor?.iabSpecialPurposes),
@@ -61,14 +62,14 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     @IBAction func onOnButtonTap(_ sender: Any) {
         if let vendor = vendor {
-            vendorManagerDelegate?.onVendorOn(vendor)
+            vendorManagerDelegate?.onVendorOn(vendor: vendor, legInt: displayingLegIntVendors)
         }
         dismiss(animated: true)
     }
 
     @IBAction func onOffButtonTap(_ sender: Any) {
         if let vendor = vendor {
-            vendorManagerDelegate?.onVendorOff(vendor)
+            vendorManagerDelegate?.onVendorOff(vendor: vendor, legInt: displayingLegIntVendors)
         }
         dismiss(animated: true)
     }

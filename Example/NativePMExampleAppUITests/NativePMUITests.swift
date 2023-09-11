@@ -40,6 +40,11 @@ class NativePMUITests: QuickSpec {
         waitFor(element.staticTexts["Manage Preferences"].firstMatch)
         expect(element.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", onOrOf)).count).toEventually(equal(totalCategories))
     }
+    
+    func checkForAllVendors(on element: XCUIElement, shouldBe onOrOf: String, totalVendors: Int) {
+        waitFor(element.staticTexts["Our Partners"].firstMatch)
+        expect(element.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", onOrOf)).count).toEventually(equal(totalVendors))
+    }
 
     override func spec() {
         beforeSuite {
@@ -160,6 +165,81 @@ class NativePMUITests: QuickSpec {
 
             // as well as categories
             expect(self.app.gdprMessage.categoriesList.staticTexts["Almacenar o acceder a información en un dispositivo"].exists).toEventually(beTrue())
+        }
+
+        it("Manage Preferences and Our Vendors through GDPR Privacy Manager with few consent purposes ON") {
+            self.app.relaunch(clean: true, gdpr: true, ccpa: false)
+            self.app.gdprPrivacyManagerButton.remotePress()
+            self.app.acceptButton.expectToHaveFocus()
+
+            self.app.ourPartnersButton.remotePress()
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 0)
+            self.app.homeButton.remotePress()
+
+            self.app.managePreferencesButton.remotePress()
+            expect(self.app.homeButton).toEventually(showUp())
+            self.app.pressCategory(element: self.app.storeAndAccessInformation)
+            self.app.pressOnButtonInCategoryDetails()
+            self.app.backToHomeButton()
+            self.app.homeButton.remotePress()
+            self.app.ourPartnersButton.remotePress()
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 4)
+            self.app.homeButton.remotePress()
+
+            self.app.managePreferencesButton.remotePress()
+            expect(self.app.homeButton).toEventually(showUp())
+            self.app.pressCategory(element: self.app.createPersonalisedAdsProfile)
+            self.app.pressOnButtonInCategoryDetails()
+            self.app.backToHomeButton()
+            self.app.homeButton.remotePress()
+            self.app.ourPartnersButton.remotePress()
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 5)
+            self.remote.press(.down)
+            self.remote.press(.down)
+            self.app.saveAndExitInternalButton.remotePress()
+
+            self.app.gdprPrivacyManagerButton.remotePress()
+            self.app.acceptButton.expectToHaveFocus()
+            self.app.managePreferencesButton.remotePress()
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 2)
+            self.app.homeButton.remotePress()
+            self.app.ourPartnersButton.remotePress()
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 5)
+        }
+
+        it("Check default toggles status on Manage Preferences and Our Vendors through GDPR Privacy Manager") {
+            self.app.relaunch(clean: true, gdpr: true, ccpa: false)
+            self.app.acceptButton.expectToHaveFocus()
+            self.app.managePreferencesButton.remotePress()
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 0)
+            self.remote.press(.right)
+            self.remote.press(.right)
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 4)
+            self.app.backToHomeButton()
+            self.app.homeButton.remotePress()
+            self.app.ourPartnersButton.remotePress()
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 0)
+            self.remote.press(.right)
+            self.remote.press(.right)
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 4)
+            self.app.backToHomeButton()
+            self.remote.press(.down)
+            self.remote.press(.down)
+            self.app.saveAndExitInternalButton.remotePress()
+            self.app.gdprPrivacyManagerButton.remotePress()
+            self.app.acceptButton.expectToHaveFocus()
+            self.app.managePreferencesButton.remotePress()
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 0)
+            self.remote.press(.right)
+            self.remote.press(.right)
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 4)
+            self.app.backToHomeButton()
+            self.app.homeButton.remotePress()
+            self.app.ourPartnersButton.remotePress()
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 0)
+            self.remote.press(.right)
+            self.remote.press(.right)
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 4)
         }
 
 //        it("Save and Exit through CCPA & GDPR Privacy Manager") {

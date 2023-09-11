@@ -214,7 +214,7 @@ extension NativePMApp {
             acceptAllButton.expectToHaveFocus()
             remote.press(.right)
         }
-        expectToHaveFocus()
+        element.remotePressUntilFocus(direction: .down)
         remote.press(.select)
     }
 
@@ -224,6 +224,13 @@ extension NativePMApp {
         onButton.expectToHaveFocus()
         remote.press(.select)
         elementToEnsure.expectToHaveFocus()
+    }
+    
+    func pressOnButtonInCategoryDetails() {
+        backButton.expectToHaveFocus()
+        remote.press(.down)
+        onButton.expectToHaveFocus()
+        remote.press(.select)
     }
 
     func pressOffButtonInCategoryDetails(elementToEnsure: XCUIElement) {
@@ -248,6 +255,14 @@ extension NativePMApp {
         remote.press(.right)
         remote.press(.right)
         legitimateInterestButton.expectToHaveFocus()
+    }
+    
+    func backToHomeButton(){
+        remote.press(.up)
+        remote.press(.left)
+        remote.press(.left)
+        remote.press(.up)
+        homeButton.expectToHaveFocus()
     }
 }
 

@@ -73,6 +73,10 @@ public typealias SPGDPRPurposeId = String
         case childPmId
         case consentStatus
         case webConsentPayload
+        case legIntCategories
+        case legIntVendors
+        case vendors
+        case categories
     }
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
@@ -134,6 +138,11 @@ public typealias SPGDPRPurposeId = String
     /// Used by the rendering app
     var webConsentPayload: SPWebConsentPayload?
 
+    var legIntCategories: [String]?
+    var legIntVendors: [String]?
+    var vendors: [String]?
+    var categories: [String]?
+
     override open var description: String {
         """
         UserConsents(
@@ -154,6 +163,10 @@ public typealias SPGDPRPurposeId = String
         self.childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         self.consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
         self.webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
+        self.legIntCategories = try container.decodeIfPresent(Array.self, forKey: .legIntCategories)
+        self.legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
+        self.vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
+        self.categories = try container.decodeIfPresent(Array.self, forKey: .categories)
     }
 
     init(
@@ -166,7 +179,11 @@ public typealias SPGDPRPurposeId = String
         applies: Bool,
         consentStatus: ConsentStatus = ConsentStatus(),
         lastMessage: LastMessageData? = nil,
-        webConsentPayload: SPWebConsentPayload? = nil
+        webConsentPayload: SPWebConsentPayload? = nil,
+        legIntCategories: [String]? = nil,
+        legIntVendors: [String]? = nil,
+        vendors: [String]? = nil,
+        categories: [String]? = nil
     ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
@@ -178,6 +195,10 @@ public typealias SPGDPRPurposeId = String
         self.consentStatus = consentStatus
         self.lastMessage = lastMessage
         self.webConsentPayload = webConsentPayload
+        self.legIntCategories = legIntCategories
+        self.legIntVendors = legIntVendors
+        self.vendors = vendors
+        self.categories = categories
     }
 
     /// Convenience initialiser to return an empty consent object.
@@ -212,7 +233,11 @@ public typealias SPGDPRPurposeId = String
             applies: applies,
             consentStatus: consentStatus,
             lastMessage: lastMessage,
-            webConsentPayload: webConsentPayload
+            webConsentPayload: webConsentPayload,
+            legIntCategories: legIntCategories,
+            legIntVendors: legIntVendors,
+            vendors: vendors,
+            categories: categories
         )
     }
 }
