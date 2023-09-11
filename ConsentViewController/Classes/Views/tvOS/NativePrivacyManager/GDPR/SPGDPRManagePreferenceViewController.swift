@@ -179,7 +179,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
                 consentsSnapshot.toggledConsentCategoriesIds.contains(category._id) :
                 nil
         }
-        cell.selectable = section != 1 || category.disclosureOnly == true
+        cell.selectable = true
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
         cell.loadUI()
