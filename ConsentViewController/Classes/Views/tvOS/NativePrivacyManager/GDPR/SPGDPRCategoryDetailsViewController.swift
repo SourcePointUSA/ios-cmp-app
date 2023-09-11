@@ -13,6 +13,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
 
     var category: GDPRCategory?
     var displayingLegIntCategories = false
+    var purposeToggleActive = true
     var partners: [String] {
         ((displayingLegIntCategories ? (category?.legIntVendors ?? []) : (category?.requiringConsentVendors ?? [])) + (category?.vendors ?? []))
             .map { $0.name }
@@ -38,7 +39,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
-        if category?.disclosureOnly ?? false {
+        if !purposeToggleActive {
             hideOnOffButtons()
         }
         categoryDetailsTableView.allowsSelection = false
