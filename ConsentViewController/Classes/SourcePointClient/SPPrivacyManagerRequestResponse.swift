@@ -96,12 +96,8 @@ import Foundation
         self.type = GDPRCategory.CategoryType.CUSTOM
         self.disclosureOnly = disclosureOnly
         self.requireConsent = false
+        self.requiringConsentVendors = requiringConsentVendors
         self.legIntVendors = legIntVendors
-        if disclosureOnly {
-            self.requiringConsentVendors = legIntVendors
-        } else {
-            self.requiringConsentVendors = requiringConsentVendors
-        }
         self.disclosureOnlyVendors = disclosureOnlyVendors ?? []
         self.vendors = vendors ?? []
     }
