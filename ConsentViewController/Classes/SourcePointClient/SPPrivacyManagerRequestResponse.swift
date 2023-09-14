@@ -97,7 +97,11 @@ import Foundation
         self.disclosureOnly = disclosureOnly
         self.requireConsent = false
         self.legIntVendors = legIntVendors
-        self.requiringConsentVendors = requiringConsentVendors
+        if disclosureOnly {
+            self.requiringConsentVendors = legIntVendors
+        } else {
+            self.requiringConsentVendors = requiringConsentVendors
+        }
         self.disclosureOnlyVendors = disclosureOnlyVendors ?? []
         self.vendors = vendors ?? []
     }
