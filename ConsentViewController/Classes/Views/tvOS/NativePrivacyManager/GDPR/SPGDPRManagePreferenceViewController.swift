@@ -216,6 +216,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         categoryDetailsVC.category = currentCategory(indexPath)
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
         categoryDetailsVC.displayingLegIntCategories = displayingLegIntCategories
+        categoryDetailsVC.purposeToggleActive = indexPath.section == 0
         present(categoryDetailsVC, animated: true)
     }
 }

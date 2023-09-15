@@ -36,7 +36,7 @@ import Foundation
         case _id, name, description, friendlyDescription
         case type
         case disclosureOnly, requireConsent
-        case legIntVendors, requiringConsentVendors, disclosureOnlyVendors
+        case legIntVendors, requiringConsentVendors, disclosureOnlyVendors, vendors
     }
 
     let iabId: Int?
@@ -48,6 +48,7 @@ import Foundation
     let legIntVendors: [Vendor]?
     let requiringConsentVendors: [Vendor]?
     let disclosureOnlyVendors: [Vendor]
+    let vendors: [Vendor]
     var uniqueConsentVendorIds: [String] {
         Array(Set<String>((requiringConsentVendors ?? []).compactMap { $0.vendorId }))
     }
@@ -74,6 +75,7 @@ import Foundation
         self.legIntVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .legIntVendors)
         self.requiringConsentVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .requiringConsentVendors)
         self.disclosureOnlyVendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .disclosureOnlyVendors) ?? []
+        self.vendors = try container.decodeIfPresent([GDPRCategory.Vendor].self, forKey: .vendors) ?? []
     }
 
     init(
@@ -83,7 +85,8 @@ import Foundation
         disclosureOnly: Bool = false,
         legIntVendors: [Vendor]? = nil,
         requiringConsentVendors: [Vendor]? = nil,
-        disclosureOnlyVendors: [Vendor]? = nil
+        disclosureOnlyVendors: [Vendor]? = nil,
+        vendors: [Vendor]? = nil
     ) {
         self.iabId = 0
         self._id = "id"
@@ -93,9 +96,10 @@ import Foundation
         self.type = GDPRCategory.CategoryType.CUSTOM
         self.disclosureOnly = disclosureOnly
         self.requireConsent = false
-        self.legIntVendors = legIntVendors
         self.requiringConsentVendors = requiringConsentVendors
+        self.legIntVendors = legIntVendors
         self.disclosureOnlyVendors = disclosureOnlyVendors ?? []
+        self.vendors = vendors ?? []
     }
 }
 

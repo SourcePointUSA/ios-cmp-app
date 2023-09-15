@@ -26,7 +26,8 @@ class NativePMUITests: QuickSpec {
     var timeout = 20
     var gdprCategoriesCount = 10
     var ccpaCategoriesCount = 3
-    var gdprCategoriePlusSpecialFeatures = 11
+    var gdprCategoriePlusSpecialFeatures = 12
+    var gdprDefaultOnCategories = 3
 
     override func setUp() {
         continueAfterFailure = false
@@ -214,14 +215,14 @@ class NativePMUITests: QuickSpec {
             self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 0)
             self.remote.press(.right)
             self.remote.press(.right)
-            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 4)
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: self.gdprDefaultOnCategories)
             self.app.backToHomeButton()
             self.app.homeButton.remotePress()
             self.app.ourPartnersButton.remotePress()
             self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 0)
             self.remote.press(.right)
             self.remote.press(.right)
-            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 4)
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: self.gdprDefaultOnCategories)
             self.app.backToHomeButton()
             self.remote.press(.down)
             self.remote.press(.down)
@@ -232,14 +233,14 @@ class NativePMUITests: QuickSpec {
             self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 0)
             self.remote.press(.right)
             self.remote.press(.right)
-            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: 4)
+            self.checkForAllCategories(on: self.app.gdprMessage, shouldBe: "On", totalCategories: self.gdprDefaultOnCategories)
             self.app.backToHomeButton()
             self.app.homeButton.remotePress()
             self.app.ourPartnersButton.remotePress()
             self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 0)
             self.remote.press(.right)
             self.remote.press(.right)
-            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: 4)
+            self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: self.gdprDefaultOnCategories)
         }
 
 //        it("Save and Exit through CCPA & GDPR Privacy Manager") {
