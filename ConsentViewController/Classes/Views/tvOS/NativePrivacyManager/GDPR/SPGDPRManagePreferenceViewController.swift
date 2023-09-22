@@ -11,24 +11,29 @@ import UIKit
 class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
-        let contentConsent: [GDPRCategory]
-        let contentLegIntCategory: [GDPRCategory]
+        var contentConsent: [GDPRCategory]
+        var contentLegIntCategory: [GDPRCategory]
 
-        init? (header: SPNativeText?, contentConsent: [GDPRCategory]?, contentLegIntCategory: [GDPRCategory]? = nil) {
-            guard let contentConsent = contentConsent, contentConsent.isNotEmpty() else {
-                return nil
-            }
-
+        init? (
+            header: SPNativeText?,
+            contentConsent: [GDPRCategory]? = nil,
+            contentLegIntCategory: [GDPRCategory]? = nil,
+            contentFeature: [GDPRCategory]? = nil
+        ) {
             self.header = header
-            self.contentConsent = contentConsent
+            self.contentConsent = contentConsent ?? []
             self.contentLegIntCategory = contentLegIntCategory ?? []
+            if (contentFeature != nil) {
+                self.contentConsent.append(contentsOf: contentFeature ?? [])
+                self.contentLegIntCategory.append(contentsOf: contentFeature ?? [])
+            }
         }
     }
 
     var nativeLongButton: SPNativeLongButton?
 
     var consentsSnapshot = GDPRPMConsentSnaptshot()
-    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 }
+    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 || emptyConsentSection}
 
     var categories: [GDPRCategory] = []
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
@@ -47,11 +52,25 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             contentLegIntCategory: legIntSpecialPurposes),
         Section(
             header: viewData.byId("FeaturesHeader") as? SPNativeText,
-            contentConsent: Array(consentsSnapshot.features)),
+            contentFeature: Array(consentsSnapshot.features)),
         Section(
             header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText,
-            contentConsent: Array(consentsSnapshot.specialFeatures))
+            contentFeature: Array(consentsSnapshot.specialFeatures))
     ].compactMap { $0 }}
+
+    var emptyConsentSection: Bool {
+        return (
+            sections[0].contentConsent.isEmpty &&
+            sections[1].contentConsent.isEmpty
+        )
+    }
+
+    var emptyLegIntSection: Bool {
+        return (
+            sections[0].contentLegIntCategory.isEmpty &&
+            sections[1].contentLegIntCategory.isEmpty
+        )
+    }
 
     let cellReuseIdentifier = "cell"
 
@@ -137,8 +156,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        let legIntCategoryCount = sections.filter { $0.contentLegIntCategory.isNotEmpty() }.count
-        return displayingLegIntCategories ? legIntCategoryCount : sections.count
+        4
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -146,6 +164,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         label.text = sections[section].header?.settings.text
         label.font = UIFont(from: sections[section].header?.settings.style.font)
         label.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
+        label.isHidden = displayingLegIntCategories ?
+            sections[section].contentLegIntCategory.isEmpty : sections[section].contentConsent.isEmpty
         return label
     }
 
