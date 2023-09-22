@@ -92,6 +92,10 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
+        if emptyConsentSection {
+            removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 0) }
+        if emptyLegIntSection {
+            removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 1) }
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
