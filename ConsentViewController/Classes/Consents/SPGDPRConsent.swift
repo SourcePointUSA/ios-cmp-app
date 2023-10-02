@@ -168,7 +168,9 @@ public typealias SPGDPRPurposeId = String
         self.legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
         self.vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
         self.categories = try container.decodeIfPresent(Array.self, forKey: .categories)
-        self.dateCreated = try container.decode(SPDateCreated.self, forKey: .dateCreated)
+        if let date =  try container.decodeIfPresent(SPDateCreated.self, forKey: .dateCreated) {
+            self.dateCreated = date
+        }
     }
 
     init(
