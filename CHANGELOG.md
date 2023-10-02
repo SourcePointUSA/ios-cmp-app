@@ -1,3 +1,10 @@
+# 7.4.0 (Oct, 2, 2023)
+* [DIA-2632](https://sourcepoint.atlassian.net/browse/DIA-2632) `dateCreated` is parsed for `SPGDPRConsent`  [#497](https://github.com/SourcePointUSA/ios-cmp-app/pull/497)
+* [DIA-2441](https://sourcepoint.atlassian.net/browse/DIA-2441) Changed tvos toggles logic for purposes on consent tab [#487](https://github.com/SourcePointUSA/ios-cmp-app/pull/487)
+* [DIA-2440](https://sourcepoint.atlassian.net/browse/DIA-2440) Fix for category details view in manage preferences [#491](https://github.com/SourcePointUSA/ios-cmp-app/pull/491)
+* [DIA-2439](https://sourcepoint.atlassian.net/browse/DIA-2439) Make special purposes selectable [#490](https://github.com/SourcePointUSA/ios-cmp-app/pull/490)
+* [DIA-2434](https://sourcepoint.atlassian.net/browse/DIA-2434) Changed hugging priority for `Label` [#489](https://github.com/SourcePointUSA/ios-cmp-app/pull/489)
+
 # 7.3.0 (Aug, 16, 2023)
 * [DIA-2383](https://sourcepoint.atlassian.net/browse/DIA-2383) Added support to [Global Privacy Platform (GPP)](https://iabtechlab.com/gpp/). [#472](https://github.com/SourcePointUSA/ios-cmp-app/pull/472), [#474](https://github.com/SourcePointUSA/ios-cmp-app/pull/474), [#479](https://github.com/SourcePointUSA/ios-cmp-app/pull/479)
 * (#477)[https://github.com/SourcePointUSA/ios-cmp-app/pull/477] Fixed an issue related to date formatting happening in some iPhones that could cause the consent message to appear multiple times.
