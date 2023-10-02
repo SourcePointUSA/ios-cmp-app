@@ -77,6 +77,7 @@ public typealias SPGDPRPurposeId = String
         case legIntVendors
         case vendors
         case categories
+        case dateCreated
     }
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
@@ -167,6 +168,7 @@ public typealias SPGDPRPurposeId = String
         self.legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
         self.vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
         self.categories = try container.decodeIfPresent(Array.self, forKey: .categories)
+        self.dateCreated = try container.decode(SPDateCreated.self, forKey: .dateCreated)
     }
 
     init(
