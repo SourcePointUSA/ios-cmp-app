@@ -12,6 +12,7 @@ import WebKit
     var webviewConfig: WKWebViewConfiguration? { nil }
     let url: URL
     let contents: Data
+    let campaignUUID: String
 
     lazy var webview: WKWebView? = {
         if let config = self.webviewConfig {
@@ -34,9 +35,10 @@ import WebKit
         return nil
     }()
 
-    init(url: URL, messageId: String, contents: Data, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?) {
+    init(url: URL, messageId: String, contents: Data, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?, campaignUUID:String?=nil) {
         self.url = url
         self.contents = contents
+        self.campaignUUID=campaignUUID ?? ""
         super.init(messageId: messageId, campaignType: campaignType, timeout: timeout, delegate: delegate)
     }
 
@@ -173,12 +175,13 @@ import WebKit
         guard
             let type = SPActionType(rawValue: body["type"]?.intValue ?? 0)
         else { return nil }
+        let url = (body["pm_url"]?.stringValue ?? "")+"&consentUUID="+campaignUUID
         return SPAction(
             type: type,
             campaignType: campaignType,
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: body["payload"] ?? SPJson(),
-            pmurl: URL(string: body["pm_url"]?.stringValue ?? ""),
+            pmurl: URL(string: url),
             customActionId: body["customActionId"]?.stringValue
         )
     }
