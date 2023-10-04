@@ -12,7 +12,7 @@ import WebKit
     var webviewConfig: WKWebViewConfiguration? { nil }
     let url: URL
     let contents: Data
-    let campaignUUID: String
+    let campaignUUID: String?
 
     lazy var webview: WKWebView? = {
         if let config = self.webviewConfig {
@@ -175,7 +175,10 @@ import WebKit
         guard
             let type = SPActionType(rawValue: body["type"]?.intValue ?? 0)
         else { return nil }
-        let url = (body["pm_url"]?.stringValue ?? "")+"&consentUUID="+campaignUUID
+        var url = (body["pm_url"]?.stringValue ?? "")
+        if campaignUUID != nil {
+            url += "&consentUUID="+(campaignUUID ?? "")
+        }
         return SPAction(
             type: type,
             campaignType: campaignType,
