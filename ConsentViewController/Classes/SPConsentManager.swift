@@ -175,7 +175,7 @@ import UIKit
                 campaignType: type,
                 timeout: messageTimeoutInSeconds,
                 delegate: self,
-                campaignUUID: spCoordinator.userData.gdpr?.consents?.uuid
+                consentUUID: spCoordinator.userData.gdpr?.consents?.uuid
             )
         #endif
 
