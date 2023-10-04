@@ -9,25 +9,40 @@ import Foundation
 import UIKit
 
 class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
+    struct Content: Decodable {
+        let name: String
+        let retention: String?
+    }
     struct Section {
         let header: SPNativeText?
-        let content: [String]
+        var content: [Content]
 
-        init? (header: SPNativeText?, content: [String]?) {
+        init? (header: SPNativeText?, content: [String]?, additionalContent: [GDPRVendor.Category]?=nil) {
             if content == nil || content?.isEmpty == true { return nil }
             self.header = header
-            self.content = content! // swiftlint:disable:this force_unwrapping
+            self.content=[]
+            content?.forEach { name in
+                if (additionalContent?.isNotEmpty() ?? false){
+                    let retention = additionalContent?.first(where: { $0.name == name })?.retention
+                    self.content.append(Content(name: name, retention: retention))
+                }
+                else {
+                    self.content.append(Content(name: name, retention: nil))
+                }
+            }
         }
     }
 
+    var nativeLongButton: SPNativeLongButton?
+    
     weak var vendorManagerDelegate: GDPRPMConsentSnaptshot?
 
     let cellReuseIdentifier = "cell"
     var vendor: GDPRVendor?
     var displayingLegIntVendors = false
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.consentCategories.map { $0.name }),
-        Section(header: viewData.byId("SpecialPurposesText") as? SPNativeText, content: vendor?.iabSpecialPurposes),
+        Section(header: viewData.byId("PurposesText") as? SPNativeText, content: vendor?.consentCategories.map { $0.name }, additionalContent: vendor?.consentCategories),
+        Section(header: viewData.byId("SpecialPurposesText") as? SPNativeText, content: vendor?.iabSpecialPurposes, additionalContent: vendor?.iabSpecialPurposesObjs),
         Section(header: viewData.byId("FeaturesText") as? SPNativeText, content: vendor?.iabFeatures),
         Section(header: viewData.byId("SpecialFeaturesText") as? SPNativeText, content: vendor?.iabSpecialFeatures)
     ].compactMap { $0 }}
@@ -54,8 +69,12 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             qrCodeImageView.image = QRCode(from: vendorUrl)
             qrCodeImageView.isHidden = qrCodeImageView.image == nil
         }
+        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         vendorDetailsTableView.allowsSelection = false
-        vendorDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        vendorDetailsTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
     }
@@ -121,9 +140,13 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (vendorDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?) ?? UITableViewCell()
-        cell.textLabel?.text = sections[indexPath.section].content[indexPath.row]
-        cell.textLabel?.setDefaultTextColorForDarkMode()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+            return UITableViewCell()
+        }
+        cell.labelText = sections[indexPath.section].content[indexPath.row].name
+        cell.customText=sections[indexPath.section].content[indexPath.row].retention
+        cell.loadUI()
+        
         return cell
     }
 
