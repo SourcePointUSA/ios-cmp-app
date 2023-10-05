@@ -27,7 +27,7 @@ struct GDPRVendor: Decodable {
         let name: String
         let retention: String?
     }
-    
+
     struct DataCategories: Decodable {
         let name: String
         let description: String

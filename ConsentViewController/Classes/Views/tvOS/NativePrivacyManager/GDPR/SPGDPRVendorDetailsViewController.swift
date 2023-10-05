@@ -22,13 +22,12 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             if content == nil || content?.isEmpty == true { return nil }
             self.header = header
             self.content=[]
-            if additionalContent?.isNotEmpty() ?? false { self.hasAdditionalContent=true }
+            if additionalContent?.compactMap({ $0.retention }).isNotEmpty() ?? false { self.hasAdditionalContent=true }
             content?.forEach { name in
-                if (additionalContent?.isNotEmpty() ?? false){
+                if additionalContent?.isNotEmpty() ?? false {
                     let retention = additionalContent?.first(where: { $0.name == name })?.retention
                     self.content.append(Content(name: name, retention: retention))
-                }
-                else {
+                } else {
                     self.content.append(Content(name: name, retention: nil))
                 }
             }
@@ -36,7 +35,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     }
 
     var nativeLongButton: SPNativeLongButton?
-    
+
     weak var vendorManagerDelegate: GDPRPMConsentSnaptshot?
     var displayingPurposes: Bool { categorySlider.selectedSegmentIndex == 0 }
 
@@ -80,18 +79,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         if vendor?.disclosureOnlyCategories.isNotEmpty() ?? false {
             hideOnOffButtons()
         }
-        if let vendorPolicyUrl = vendor?.policyUrl?.absoluteString {
-            PolicyQrCodeImageView.image = QRCode(from: vendorPolicyUrl)
-            PolicyQrCodeImageView.isHidden = PolicyQrCodeImageView.image == nil
-            PolicyQrCodeLabel.isHidden = PolicyQrCodeImageView.image == nil
-        }
-        if let vendorLegIntUrl = vendor?.legIntUrl?.absoluteString {
-            LegIntQrCodeImageView.image = QRCode(from: vendorLegIntUrl)
-            LegIntQrCodeImageView.isHidden = LegIntQrCodeImageView.image == nil
-            LegIntQrCodeLabel.isHidden = LegIntQrCodeImageView.image == nil
-        }
-        ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
-        NoteLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
+        loadQrCodes()
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(
@@ -100,7 +88,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         )
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
-        
+
         loadVendorDataText()
         vendorDetailsTableView.isHidden=false
         vendorDetailsTextView.isHidden=true
@@ -130,7 +118,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         }
         dismiss(animated: true)
     }
-    
+
     func loadVendorDataText() {
         if vendor?.iabDataCategories?.isEmpty ?? true {
             categorySlider.removeSegment(at: 1, animated: false)
@@ -139,17 +127,35 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         }
         var labels = [String()]
         var text = ""
-        vendor?.iabDataCategories?.forEach{data in
+        vendor?.iabDataCategories?.forEach { data in
             text+=data.name+"\r\n"
             labels.append(data.name)
             text+=data.description+"\r\n\r\n"
         }
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)])
-        labels.forEach{label in
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]) // swiftlint:disable:this line_length
+        labels.forEach { label in
             let labelRange = (text as NSString).range(of: label)
             attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 26), range: labelRange)
         }
         vendorDetailsTextView.attributedText = attributedText
+    }
+
+    func loadQrCodes() {
+        if let vendorPolicyUrl = vendor?.policyUrl?.absoluteString {
+            PolicyQrCodeImageView.image = QRCode(from: vendorPolicyUrl)
+            PolicyQrCodeImageView.isHidden = PolicyQrCodeImageView.image == nil
+            PolicyQrCodeLabel.isHidden = PolicyQrCodeImageView.image == nil
+        }
+        if let vendorLegIntUrl = vendor?.legIntUrl?.absoluteString {
+            LegIntQrCodeImageView.image = QRCode(from: vendorLegIntUrl)
+            LegIntQrCodeImageView.isHidden = LegIntQrCodeImageView.image == nil
+            LegIntQrCodeLabel.isHidden = LegIntQrCodeImageView.image == nil
+        }
+        PolicyQrCodeLabel.setDefaultTextColorForDarkMode()
+        LegIntQrCodeLabel.setDefaultTextColorForDarkMode()
+        ToScanLabel.setDefaultTextColorForDarkMode()
+        ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
+        NoteLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
     }
 
     func hideOnOffButtons() {
