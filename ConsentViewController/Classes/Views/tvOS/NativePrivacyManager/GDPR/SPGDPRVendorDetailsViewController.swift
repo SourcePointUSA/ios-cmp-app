@@ -51,7 +51,12 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     ].compactMap { $0 }}
 
     @IBOutlet var headerView: SPPMHeader!
-    @IBOutlet var qrCodeImageView: UIImageView!
+    @IBOutlet var PolicyQrCodeImageView: UIImageView!
+    @IBOutlet var LegIntQrCodeImageView: UIImageView!
+    @IBOutlet var PolicyQrCodeLabel: UILabel!
+    @IBOutlet var LegIntQrCodeLabel: UILabel!
+    @IBOutlet var ToScanLabel: UILabel!
+    @IBOutlet var NoteLabel: UILabel!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var onButton: SPAppleTVButton!
     @IBOutlet var offButton: SPAppleTVButton!
@@ -68,16 +73,25 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             descriptionTextView.isHidden=true
         }
         loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
+        loadLabelText(forComponentId: "QrInstructions", label: ToScanLabel)
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
         if vendor?.disclosureOnlyCategories.isNotEmpty() ?? false {
             hideOnOffButtons()
         }
-        if let vendorUrl = vendor?.policyUrl?.absoluteString {
-            qrCodeImageView.image = QRCode(from: vendorUrl)
-            qrCodeImageView.isHidden = qrCodeImageView.image == nil
+        if let vendorPolicyUrl = vendor?.policyUrl?.absoluteString {
+            PolicyQrCodeImageView.image = QRCode(from: vendorPolicyUrl)
+            PolicyQrCodeImageView.isHidden = PolicyQrCodeImageView.image == nil
+            PolicyQrCodeLabel.isHidden = PolicyQrCodeImageView.image == nil
         }
+        if let vendorLegIntUrl = vendor?.legIntUrl?.absoluteString {
+            LegIntQrCodeImageView.image = QRCode(from: vendorLegIntUrl)
+            LegIntQrCodeImageView.isHidden = LegIntQrCodeImageView.image == nil
+            LegIntQrCodeLabel.isHidden = LegIntQrCodeImageView.image == nil
+        }
+        ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
+        NoteLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(

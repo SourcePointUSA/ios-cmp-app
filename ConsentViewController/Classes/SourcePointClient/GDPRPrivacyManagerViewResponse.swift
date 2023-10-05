@@ -13,7 +13,7 @@ struct GDPRVendor: Decodable {
     }
 
     enum Keys: String, CodingKey {
-        case policyUrl, vendorId, name
+        case policyUrl, legIntUrl, vendorId, name
         case iabId
         case iabSpecialPurposes, iabSpecialPurposesObjs, iabFeatures, iabSpecialFeatures, iabDataCategories
         case description, cookieHeader
@@ -36,6 +36,7 @@ struct GDPRVendor: Decodable {
     let vendorId, name: String
     let iabId: Int?
     let policyUrl: URL?
+    let legIntUrl: URL?
     let description, cookieHeader: String?
     let vendorType: VendorType
     let consentCategories, legIntCategories, disclosureOnlyCategories: [Category]
@@ -46,7 +47,8 @@ struct GDPRVendor: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         name = try container.decode(String.self, forKey: .name)
-        policyUrl = try? container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        legIntUrl = try container.decodeIfPresent(URL.self, forKey: .legIntUrl)
         vendorId = try container.decode(String.self, forKey: .vendorId)
         vendorType = try container.decode(Self.VendorType.self, forKey: .vendorType)
         iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)

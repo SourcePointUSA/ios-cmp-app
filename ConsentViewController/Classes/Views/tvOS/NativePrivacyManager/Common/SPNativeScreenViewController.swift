@@ -202,11 +202,11 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadLabelText(forComponentId id: String, labelText text: String, label: UILabel) -> UILabel {
+    func loadLabelText(forComponentId id: String, labelText text: String?=nil, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             let style = textDetails.settings.style
             label.text = ""
-            label.attributedText = text.htmlToAttributedString
+            label.attributedText = text != nil ? text!.htmlToAttributedString : textDetails.settings.text.htmlToAttributedString // swiftlint:disable:this force_unwrapping
             label.textColor = UIColor(hexString: style.font.color)
             label.font = UIFont(from: style.font)
         }
