@@ -16,11 +16,13 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
         var content: [Content]
+        var hasAdditionalContent: Bool=false
 
         init? (header: SPNativeText?, content: [String]?, additionalContent: [GDPRVendor.Category]?=nil) {
             if content == nil || content?.isEmpty == true { return nil }
             self.header = header
             self.content=[]
+            if additionalContent?.isNotEmpty() ?? false { self.hasAdditionalContent=true }
             content?.forEach { name in
                 if (additionalContent?.isNotEmpty() ?? false){
                     let retention = additionalContent?.first(where: { $0.name == name })?.retention
@@ -62,6 +64,10 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         super.viewDidLoad()
         setHeader()
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description, bounces: false)
+        if vendor?.description==nil {
+            descriptionTextView.isHidden=true
+        }
+        loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
@@ -81,26 +87,9 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
         
-        var labels = [String()]
-        var text = ""
-        vendor?.iabDataCategories?.forEach{data in
-            text+=data.name+"\r\n"
-            labels.append(data.name)
-            text+=data.description+"\r\n\r\n"
-        }
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)])
-        labels.forEach{label in
-            let labelRange = (text as NSString).range(of: label)
-            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 26), range: labelRange)
-        }
-        vendorDetailsTextView.attributedText = attributedText
-        vendorDetailsTextView.isUserInteractionEnabled = true
-        vendorDetailsTextView.isScrollEnabled = true
-        vendorDetailsTextView.showsVerticalScrollIndicator = true
-        
-        
-        vendorDetailsTableView.isHidden=true
-        vendorDetailsTextView.isHidden=false
+        loadVendorDataText()
+        vendorDetailsTableView.isHidden=false
+        vendorDetailsTextView.isHidden=true
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {
@@ -127,6 +116,27 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         }
         dismiss(animated: true)
     }
+    
+    func loadVendorDataText() {
+        if vendor?.iabDataCategories?.isEmpty ?? true {
+            categorySlider.removeSegment(at: 1, animated: false)
+            categorySlider.selectedSegmentIndex = 0
+            return
+        }
+        var labels = [String()]
+        var text = ""
+        vendor?.iabDataCategories?.forEach{data in
+            text+=data.name+"\r\n"
+            labels.append(data.name)
+            text+=data.description+"\r\n\r\n"
+        }
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)])
+        labels.forEach{label in
+            let labelRange = (text as NSString).range(of: label)
+            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 26), range: labelRange)
+        }
+        vendorDetailsTextView.attributedText = attributedText
+    }
 
     func hideOnOffButtons() {
         onButton.isHidden = true
@@ -143,7 +153,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     override func setFocusGuides() {
         addFocusGuide(from: headerView.backButton, to: actionsContainer, direction: .bottomTop)
-        //addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
         addFocusGuide(from: headerView.backButton, to: categorySlider, direction: .right)
         addFocusGuide(from: actionsContainer, to: vendorDetailsTableView, direction: .rightLeft)
         addFocusGuide(from: actionsContainer, to: vendorDetailsTextView, direction: .rightLeft)
@@ -160,11 +169,20 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.text = sections[section].header?.settings.text
         label.font = UIFont(from: sections[section].header?.settings.style.font)
         label.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
-        return label
+        headerView.addSubview(label)
+        if sections[section].hasAdditionalContent {
+            let retentionlabel = UILabel(frame: CGRect(x: tableView.frame.width-110, y: 0, width: 100, height: 50))
+            retentionlabel.text = "Retention"
+            retentionlabel.font = UIFont(from: sections[section].header?.settings.style.font)
+            retentionlabel.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
+            headerView.addSubview(retentionlabel)
+        }
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
