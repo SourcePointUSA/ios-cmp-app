@@ -174,7 +174,8 @@ import UIKit
                 contents: (try? JSONEncoder().encode(message)) ?? Data(),
                 campaignType: type,
                 timeout: messageTimeoutInSeconds,
-                delegate: self
+                delegate: self,
+                consentUUID: spCoordinator.userData.gdpr?.consents?.uuid
             )
         #endif
 
