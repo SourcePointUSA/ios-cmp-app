@@ -36,6 +36,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     var nativeLongButton: SPNativeLongButton?
     
     weak var vendorManagerDelegate: GDPRPMConsentSnaptshot?
+    var displayingPurposes: Bool { categorySlider.selectedSegmentIndex == 0 }
 
     let cellReuseIdentifier = "cell"
     var vendor: GDPRVendor?
@@ -53,7 +54,9 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet var onButton: SPAppleTVButton!
     @IBOutlet var offButton: SPAppleTVButton!
     @IBOutlet var vendorDetailsTableView: UITableView!
+    @IBOutlet weak var vendorDetailsTextView: UITextView!
     @IBOutlet var actionsContainer: UIStackView!
+    @IBOutlet var categorySlider: UISegmentedControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +80,38 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         )
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
+        
+        var labels = [String()]
+        var text = ""
+        vendor?.iabDataCategories?.forEach{data in
+            text+=data.name+"\r\n"
+            labels.append(data.name)
+            text+=data.description+"\r\n\r\n"
+        }
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)])
+        labels.forEach{label in
+            let labelRange = (text as NSString).range(of: label)
+            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 26), range: labelRange)
+        }
+        vendorDetailsTextView.attributedText = attributedText
+        vendorDetailsTextView.isUserInteractionEnabled = true
+        vendorDetailsTextView.isScrollEnabled = true
+        vendorDetailsTextView.showsVerticalScrollIndicator = true
+        
+        
+        vendorDetailsTableView.isHidden=true
+        vendorDetailsTextView.isHidden=false
+    }
+
+    @IBAction func onCategorySliderTap(_ sender: Any) {
+        if displayingPurposes {
+            vendorDetailsTableView.isHidden=false
+            vendorDetailsTableView.reloadData()
+            vendorDetailsTextView.isHidden=true
+        } else {
+            vendorDetailsTableView.isHidden=true
+            vendorDetailsTextView.isHidden=false
+        }
     }
 
     @IBAction func onOnButtonTap(_ sender: Any) {
@@ -108,8 +143,13 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     override func setFocusGuides() {
         addFocusGuide(from: headerView.backButton, to: actionsContainer, direction: .bottomTop)
-        addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
+        //addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
+        addFocusGuide(from: headerView.backButton, to: categorySlider, direction: .right)
         addFocusGuide(from: actionsContainer, to: vendorDetailsTableView, direction: .rightLeft)
+        addFocusGuide(from: actionsContainer, to: vendorDetailsTextView, direction: .rightLeft)
+        addFocusGuide(from: categorySlider, to: headerView.backButton, direction: .left)
+        addFocusGuide(from: categorySlider, to: vendorDetailsTableView, direction: .bottomTop)
+        addFocusGuide(from: categorySlider, to: vendorDetailsTextView, direction: .bottomTop)
     }
 }
 
@@ -146,7 +186,6 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
         cell.labelText = sections[indexPath.section].content[indexPath.row].name
         cell.customText=sections[indexPath.section].content[indexPath.row].retention
         cell.loadUI()
-        
         return cell
     }
 

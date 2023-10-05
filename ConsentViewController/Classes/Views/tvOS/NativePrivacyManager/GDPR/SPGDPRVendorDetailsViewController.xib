@@ -13,12 +13,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPGDPRVendorDetailsViewController" customModule="ConsentViewController" customModuleProvider="target">
             <connections>
                 <outlet property="actionsContainer" destination="hd1-ep-WaY" id="4vV-vb-Hg1"/>
+                <outlet property="categorySlider" destination="EiC-39-Ueq" id="lE4-qk-fDg"/>
                 <outlet property="descriptionTextView" destination="qQL-uQ-3WW" id="FqW-QG-oRL"/>
                 <outlet property="headerView" destination="aLv-m7-FYn" id="1Dn-R2-MOG"/>
                 <outlet property="offButton" destination="hDo-eE-jhB" id="JnH-Ut-Etd"/>
                 <outlet property="onButton" destination="JF7-FM-mVV" id="VYa-FB-gWU"/>
                 <outlet property="qrCodeImageView" destination="xUZ-MR-Hik" id="gyb-8I-omG"/>
                 <outlet property="vendorDetailsTableView" destination="eeb-Ha-gIO" id="pgP-kt-55Y"/>
+                <outlet property="vendorDetailsTextView" destination="oa9-1o-6Wc" id="oHW-BZ-0XP"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Eym-vH-oyN"/>
             </connections>
         </placeholder>
@@ -98,9 +100,12 @@
                                                 <constraint firstAttribute="height" constant="80" id="pFb-k3-5A3"/>
                                             </constraints>
                                             <segments>
-                                                <segment title="Purposes and Fatures"/>
+                                                <segment title="Purposes and Features"/>
                                                 <segment title="Categories of data collected"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="onCategorySliderTap:" destination="-1" eventType="valueChanged" id="uAX-NT-ZvS"/>
+                                            </connections>
                                         </segmentedControl>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQL-uQ-3WW" customClass="SPFocusableTextView" customModule="ConsentViewController" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="80" width="880" height="200"/>
@@ -112,9 +117,17 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="eeb-Ha-gIO">
-                                            <rect key="frame" x="0.0" y="280" width="880" height="564"/>
-                                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" editable="NO" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oa9-1o-6Wc">
+                                            <rect key="frame" x="0.0" y="280" width="880" height="514"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                            <color key="textColor" systemColor="labelColor"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="eeb-Ha-gIO">
+                                            <rect key="frame" x="0.0" y="794" width="880" height="50"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </tableView>
                                     </subviews>
                                 </stackView>
