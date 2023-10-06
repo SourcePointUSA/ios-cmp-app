@@ -1,3 +1,7 @@
+# 7.4.1 (Oct, 6, 2023)
+* [DIA-2838](https://sourcepoint.atlassian.net/browse/DIA-2838) Make `consentStatus` public [#501](https://github.com/SourcePointUSA/ios-cmp-app/pull/501)
+* [DIA-2816](https://sourcepoint.atlassian.net/browse/DIA-2816) Fix reconsent triggered on vendor add/Legal bases change in VL is causing all previously given consents to reset [#499](https://github.com/SourcePointUSA/ios-cmp-app/pull/499)
+
 # 7.4.0 (Oct, 2, 2023)
 * [DIA-2632](https://sourcepoint.atlassian.net/browse/DIA-2632) `dateCreated` is parsed for `SPGDPRConsent`  [#497](https://github.com/SourcePointUSA/ios-cmp-app/pull/497)
 * [DIA-2441](https://sourcepoint.atlassian.net/browse/DIA-2441) Changed tvos toggles logic for purposes on consent tab [#487](https://github.com/SourcePointUSA/ios-cmp-app/pull/487)
