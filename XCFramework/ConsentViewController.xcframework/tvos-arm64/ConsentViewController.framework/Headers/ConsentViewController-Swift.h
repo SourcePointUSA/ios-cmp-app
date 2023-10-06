@@ -310,6 +310,7 @@ typedef SWIFT_ENUM(NSInteger, CCPAConsentStatus, open) {
   CCPAConsentStatusUnknown = 5,
 };
 
+
 @class NSString;
 enum SPCampaignType : NSInteger;
 @class NSCoder;
@@ -325,27 +326,6 @@ SWIFT_CLASS("_TtC21ConsentViewController7SPError")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;
 - (nonnull instancetype)initWithDomain:(NSString * _Nonnull)domain code:(NSInteger)code userInfo:(NSDictionary<NSString *, id> * _Nullable)dict SWIFT_UNAVAILABLE;
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController22ConnectionTimeOutError")
-@interface ConnectionTimeOutError : SPError
-@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-@end
-
-
-SWIFT_CLASS("_TtC21ConsentViewController25ConnectionTimeoutAPIError")
-@interface ConnectionTimeoutAPIError : SPError
-@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@end
-
-
-
-SWIFT_CLASS("_TtC21ConsentViewController19GenericNetworkError")
-@interface GenericNetworkError : SPError
-@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @end
 
 
@@ -488,21 +468,6 @@ SWIFT_CLASS("_TtC21ConsentViewController39InvalidResponseMessageGDPREndpointErro
 @end
 
 
-SWIFT_CLASS("_TtC21ConsentViewController33InvalidResponseNativeMessageError")
-@interface InvalidResponseNativeMessageError : SPError
-@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-@end
-
-
-/// Invalid API Response Errors
-SWIFT_CLASS("_TtC21ConsentViewController30InvalidResponseWebMessageError")
-@interface InvalidResponseWebMessageError : SPError
-@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-@end
-
-
 SWIFT_CLASS("_TtC21ConsentViewController15InvalidURLError")
 @interface InvalidURLError : SPError
 @property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
@@ -609,7 +574,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController6SPCCPA_")
 /// The <code>rejectedVendors</code> and <code>rejectedCategories</code> arrays will only be populated if the <code>status</code> is <code>.Some</code>.
 /// That is, if the user has rejected <code>.All</code> or <code>.None</code> vendors/categories, those arrays will be empty.
 SWIFT_CLASS("_TtC21ConsentViewController13SPCCPAConsent")
-@interface SPCCPAConsent : NSObject
+@interface SPCCPAConsent : NSObject <NSCopying>
 /// Indicates if the user has rejected <code>.All</code>, <code>.Some</code> or <code>.None</code> of the vendors <em>and</em> categories.
 @property (nonatomic) enum CCPAConsentStatus status;
 /// The ids of the rejected vendors and categories. These can be found in SourcePoint’s dashboard
@@ -624,17 +589,19 @@ SWIFT_CLASS("_TtC21ConsentViewController13SPCCPAConsent")
 @property (nonatomic) BOOL applies;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 + (SPCCPAConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class SPGPPConfig;
 
 /// Contains information about the property/campaign.
 SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
-- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId gppConfig:(SPGPPConfig * _Nonnull)gppConfig OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -828,7 +795,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController10SPDelegate_")
 
 /// SPGDPRConsent encapsulates all consent data from a user.
 SWIFT_CLASS("_TtC21ConsentViewController13SPGDPRConsent")
-@interface SPGDPRConsent : NSObject
+@interface SPGDPRConsent : NSObject <NSCopying>
 /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
 /// The vendorGrants can be seen as an object in the following shape:
 /// \code
@@ -859,6 +826,7 @@ SWIFT_CLASS("_TtC21ConsentViewController13SPGDPRConsent")
 /// Convenience initialiser to return an empty consent object.
 + (SPGDPRConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -876,6 +844,29 @@ SWIFT_CLASS("_TtC21ConsentViewController17SPGDPRVendorGrant")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+enum SPMspaBinaryFlag : NSInteger;
+enum SPMspaTernaryFlag : NSInteger;
+
+/// Class to encapsulate GPP configuration. This config can be used with CCPA campaigns and have
+/// no effect in campaigns of other legislations.
+SWIFT_CLASS("_TtC21ConsentViewController11SPGPPConfig")
+@interface SPGPPConfig : NSObject
+- (nonnull instancetype)initWithMspaCoveredTransaction:(enum SPMspaBinaryFlag)MspaCoveredTransaction MspaOptOutOptionMode:(enum SPMspaTernaryFlag)MspaOptOutOptionMode MspaServiceProviderMode:(enum SPMspaTernaryFlag)MspaServiceProviderMode OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+typedef SWIFT_ENUM(NSInteger, SPMspaBinaryFlag, open) {
+  SPMspaBinaryFlagYes = 0,
+  SPMspaBinaryFlagNo = 1,
+};
+
+typedef SWIFT_ENUM(NSInteger, SPMspaTernaryFlag, open) {
+  SPMspaTernaryFlagYes = 0,
+  SPMspaTernaryFlagNo = 1,
+  SPMspaTernaryFlagNotApplicable = 2,
+};
 
 /// Maps <code>ATTrackingManager.requestTrackingAuthorization</code> into our own enum.
 /// It covers also the case when <code>ATTrackingManager.AuthorizationStatus</code> is not available.
@@ -1051,8 +1042,9 @@ SWIFT_CLASS("_TtC21ConsentViewController14SPPropertyName")
 
 
 SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
-@interface SPUserData : NSObject
+@interface SPUserData : NSObject <NSCopying>
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -1110,6 +1102,13 @@ SWIFT_CLASS("_TtC21ConsentViewController22UnableToLoadJSReceiver")
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 @end
 
+
+
+SWIFT_CLASS("_TtC21ConsentViewController29WebViewConnectionTimeOutError")
+@interface WebViewConnectionTimeOutError : SPError
+@property (nonatomic, readonly, copy) NSString * _Nonnull spCode;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+@end
 
 
 SWIFT_CLASS("_TtC21ConsentViewController12WebViewError")
