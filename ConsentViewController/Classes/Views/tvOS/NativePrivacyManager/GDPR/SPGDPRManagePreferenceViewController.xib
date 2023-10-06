@@ -43,6 +43,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="80" id="5p9-KN-6Y2"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="444" id="KBS-Wx-4hO"/>
                             </constraints>
                             <segments>
                                 <segment title="UserConsent"/>

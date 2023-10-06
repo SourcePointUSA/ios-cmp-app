@@ -269,6 +269,11 @@ class FocusGuideDebugView: UIView {
 
         return slider
     }
+    
+    func removeSliderButtonSegment(slider: UISegmentedControl, removeSegmentNum: Int) {
+        slider.removeSegment(at: removeSegmentNum, animated: false)
+        slider.selectedSegmentIndex = 0
+    }
 }
 
 extension UILabel {
