@@ -131,7 +131,7 @@ public typealias SPGDPRPurposeId = String
     public var applies = false
 
     /// Required by SP endpoints
-    var consentStatus: ConsentStatus
+    public var consentStatus: ConsentStatus
 
     /// Required by SP endpoints
     var lastMessage: LastMessageData?
