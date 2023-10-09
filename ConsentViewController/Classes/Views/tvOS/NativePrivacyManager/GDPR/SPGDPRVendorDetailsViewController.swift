@@ -68,6 +68,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         super.viewDidLoad()
         setHeader()
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description, bounces: false)
+        backgroundFor_v14(slider: categorySlider, backgroundHex: "#d8d9dd", activeBackground: "#777a7e")
         if vendor?.description==nil {
             descriptionTextView.isHidden=true
         }
@@ -121,8 +122,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     func loadVendorDataText() {
         if vendor?.iabDataCategories?.isEmpty ?? true {
-            categorySlider.removeSegment(at: 1, animated: false)
-            categorySlider.selectedSegmentIndex = 0
+            removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 1)
             return
         }
         var labels = [String()]
@@ -141,21 +141,20 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     }
 
     func loadQrCodes() {
-        if let vendorPolicyUrl = vendor?.policyUrl?.absoluteString {
-            PolicyQrCodeImageView.image = QRCode(from: vendorPolicyUrl)
-            PolicyQrCodeImageView.isHidden = PolicyQrCodeImageView.image == nil
-            PolicyQrCodeLabel.isHidden = PolicyQrCodeImageView.image == nil
-        }
-        if let vendorLegIntUrl = vendor?.legIntUrl?.absoluteString {
-            LegIntQrCodeImageView.image = QRCode(from: vendorLegIntUrl)
-            LegIntQrCodeImageView.isHidden = LegIntQrCodeImageView.image == nil
-            LegIntQrCodeLabel.isHidden = LegIntQrCodeImageView.image == nil
-        }
-        PolicyQrCodeLabel.setDefaultTextColorForDarkMode()
-        LegIntQrCodeLabel.setDefaultTextColorForDarkMode()
+        loadQRCode(url: vendor?.policyUrl, imageView: PolicyQrCodeImageView, label: PolicyQrCodeLabel)
+        loadQRCode(url: vendor?.legIntUrl, imageView: LegIntQrCodeImageView, label: LegIntQrCodeLabel)
         ToScanLabel.setDefaultTextColorForDarkMode()
         ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
         NoteLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
+    }
+    
+    func loadQRCode(url:URL?, imageView: UIImageView, label: UILabel) {
+        if let Url = url?.absoluteString {
+            imageView.image = QRCode(from: Url)
+            imageView.isHidden = imageView.image == nil
+            label.isHidden = imageView.image == nil
+        }
+        label.setDefaultTextColorForDarkMode()
     }
 
     func hideOnOffButtons() {
