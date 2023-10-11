@@ -195,10 +195,11 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
         label.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
         headerView.addSubview(label)
         if sections[section].hasAdditionalContent {
-            let retentionlabel = UILabel(frame: CGRect(x: tableView.frame.width-110, y: 0, width: 100, height: 50))
+            let retentionlabel = UILabel()
             retentionlabel.text = "Retention"
             retentionlabel.font = UIFont(from: sections[section].header?.settings.style.font)
             retentionlabel.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
+            retentionlabel.frame = CGRect(x: tableView.frame.width-retentionlabel.intrinsicContentSize.width, y: 0, width: retentionlabel.intrinsicContentSize.width, height: 50)
             headerView.addSubview(retentionlabel)
         }
         return headerView

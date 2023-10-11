@@ -25,7 +25,26 @@ struct GDPRVendor: Decodable {
         let type: GDPRCategory.CategoryType?
         let iabId: Int?
         let name: String
-        let retention: String?
+        var retention: String?
+        
+        enum CodingKeys: CodingKey {
+            case type
+            case iabId
+            case name
+            case retention
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container: KeyedDecodingContainer<GDPRVendor.Category.CodingKeys> = try decoder.container(keyedBy: GDPRVendor.Category.CodingKeys.self)
+            self.type = try container.decodeIfPresent(GDPRCategory.CategoryType.self, forKey: GDPRVendor.Category.CodingKeys.type)
+            self.iabId = try container.decodeIfPresent(Int.self, forKey: GDPRVendor.Category.CodingKeys.iabId)
+            self.name = try container.decode(String.self, forKey: GDPRVendor.Category.CodingKeys.name)
+            do {
+                self.retention = try container.decodeIfPresent(String.self, forKey: GDPRVendor.Category.CodingKeys.retention)
+            } catch DecodingError.typeMismatch {
+                self.retention = try String(container.decode(Int.self, forKey: GDPRVendor.Category.CodingKeys.retention))
+            }
+        }
     }
 
     struct DataCategories: Decodable {
