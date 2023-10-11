@@ -251,6 +251,13 @@ class FocusGuideDebugView: UIView {
             if #available(tvOS 14.0, *) {
                 backgroundFor_v14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
             }
+            loadSliderSegmentFont(style: style, slider: slider)
+        }
+
+        return slider
+    }
+    
+    func loadSliderSegmentFont(style: SPNativeStyle, slider: UISegmentedControl) {
             if let font = UIFont(from: style.font) {
                 let fontColor = style.font.color
                 slider.setTitleTextAttributes([
@@ -266,9 +273,6 @@ class FocusGuideDebugView: UIView {
                 ], for: .selected)
             }
         }
-
-        return slider
-    }
     
     func removeSliderButtonSegment(slider: UISegmentedControl, removeSegmentNum: Int) {
         slider.removeSegment(at: removeSegmentNum, animated: false)
