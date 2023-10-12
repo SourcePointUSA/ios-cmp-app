@@ -5,7 +5,7 @@
 //  Created by Vilas on 15/10/20.
 //
 
-import class Foundation.Bundle
+import Foundation
 
 extension Foundation.Bundle {
     /// Returns the resource bundle associated with the current Swift module.

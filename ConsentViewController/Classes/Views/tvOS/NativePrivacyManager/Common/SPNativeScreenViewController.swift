@@ -5,9 +5,13 @@
 //  Created by Andre Herculano on 25.05.21.
 //
 
-import Foundation
 import UIKit
+
+#if SPM
+@_implementationOnly import Down
+#else
 import Down
+#endif
 
 extension UIImageView {
     func load(url: URL) {

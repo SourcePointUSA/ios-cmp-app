@@ -5,7 +5,7 @@
 //  Created by Andre Herculano on 27.07.21.
 //
 
-import Foundation
+import UIKit
 
 class QRCode: UIImage {
     convenience init?(from string: String, scale: Int = 1) {
