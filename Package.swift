@@ -4,8 +4,8 @@ import PackageDescription
 let package = Package(
     name: "ConsentViewController",
     platforms: [
-        .iOS(.v11),
-        .tvOS(.v11)
+        .iOS(.v10),
+        .tvOS(.v10)
     ],
     products: [
         .library(
