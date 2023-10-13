@@ -202,11 +202,15 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadLabelText(forComponentId id: String, labelText text: String?=nil, label: UILabel) -> UILabel {
+    func loadLabelText(forComponentId id: String, labelText text: String? = nil, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
             let style = textDetails.settings.style
             label.text = ""
-            label.attributedText = text != nil ? text!.htmlToAttributedString : textDetails.settings.text.htmlToAttributedString // swiftlint:disable:this force_unwrapping
+            if let text = text {
+                label.attributedText = text.htmlToAttributedString
+            } else {
+                label.attributedText = textDetails.settings.text.htmlToAttributedString
+            }
             label.textColor = UIColor(hexString: style.font.color)
             label.font = UIFont(from: style.font)
         }
@@ -249,14 +253,14 @@ class FocusGuideDebugView: UIView {
             slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
             let style = sliderDetails.settings.style
             if #available(tvOS 14.0, *) {
-                backgroundFor_v14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
+                backgroundForV14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
             }
             loadSliderSegmentFont(style: style, slider: slider)
         }
 
         return slider
     }
-    
+
     func loadSliderSegmentFont(style: SPNativeStyle, slider: UISegmentedControl) {
             if let font = UIFont(from: style.font) {
                 let fontColor = style.font.color
@@ -273,7 +277,7 @@ class FocusGuideDebugView: UIView {
                 ], for: .selected)
             }
         }
-    
+
     func removeSliderButtonSegment(slider: UISegmentedControl, removeSegmentNum: Int) {
         slider.removeSegment(at: removeSegmentNum, animated: false)
         slider.selectedSegmentIndex = 0
@@ -300,7 +304,7 @@ func getImageWithColor(color: UIColor, size: CGSize = CGSize(width: 1, height: 1
     return image
 }
 
-func backgroundFor_v14(slider: UISegmentedControl, backgroundHex: String?, activeBackground: String?) {
+func backgroundForV14(slider: UISegmentedControl, backgroundHex: String?, activeBackground: String?) {
     let backgroundColor = getImageWithColor(color: UIColor(hexString: backgroundHex ?? Constants.UI.StandartStyle().backgroundColor) ?? .gray)
     let activeBackgroundColor = getImageWithColor(color: UIColor(hexString: activeBackground ?? Constants.UI.StandartStyle().activeBackgroundColor) ?? .white)
     slider.setBackgroundImage(backgroundColor, for: .normal, barMetrics: .default)
