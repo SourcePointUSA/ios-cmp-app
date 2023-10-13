@@ -148,8 +148,8 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
         NoteLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
     }
-    
-    func loadQRCode(url:URL?, imageView: UIImageView, label: UILabel) {
+
+    func loadQRCode(url: URL?, imageView: UIImageView, label: UILabel) {
         if let Url = url?.absoluteString {
             imageView.image = QRCode(from: Url)
             imageView.isHidden = imageView.image == nil

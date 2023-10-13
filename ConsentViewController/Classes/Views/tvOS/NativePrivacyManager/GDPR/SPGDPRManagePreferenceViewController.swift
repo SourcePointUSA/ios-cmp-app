@@ -23,7 +23,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             self.header = header
             self.contentConsent = contentConsent ?? []
             self.contentLegIntCategory = contentLegIntCategory ?? []
-            if (contentFeature != nil) {
+            if contentFeature != nil {
                 self.contentConsent.append(contentsOf: contentFeature ?? [])
                 self.contentLegIntCategory.append(contentsOf: contentFeature ?? [])
             }

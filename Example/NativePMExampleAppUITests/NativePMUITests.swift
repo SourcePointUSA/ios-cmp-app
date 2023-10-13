@@ -41,7 +41,7 @@ class NativePMUITests: QuickSpec {
         waitFor(element.staticTexts["Manage Preferences"].firstMatch)
         expect(element.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", onOrOf)).count).toEventually(equal(totalCategories))
     }
-    
+
     func checkForAllVendors(on element: XCUIElement, shouldBe onOrOf: String, totalVendors: Int) {
         waitFor(element.staticTexts["Our Partners"].firstMatch)
         expect(element.tables.cells.staticTexts.containing(NSPredicate(format: "label MATCHES[c] %@", onOrOf)).count).toEventually(equal(totalVendors))

@@ -225,7 +225,7 @@ extension NativePMApp {
         remote.press(.select)
         elementToEnsure.expectToHaveFocus()
     }
-    
+
     func pressOnButtonInCategoryDetails() {
         backButton.expectToHaveFocus()
         remote.press(.down)
@@ -256,8 +256,8 @@ extension NativePMApp {
         remote.press(.right)
         legitimateInterestButton.expectToHaveFocus()
     }
-    
-    func backToHomeButton(){
+
+    func backToHomeButton() {
         remote.press(.up)
         remote.press(.left)
         remote.press(.left)
