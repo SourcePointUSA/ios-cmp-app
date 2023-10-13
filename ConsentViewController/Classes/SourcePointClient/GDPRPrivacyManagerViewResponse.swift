@@ -13,32 +13,61 @@ struct GDPRVendor: Decodable {
     }
 
     enum Keys: String, CodingKey {
-        case policyUrl, vendorId, name
+        case policyUrl, legIntUrl, vendorId, name
         case iabId
-        case iabSpecialPurposes, iabFeatures, iabSpecialFeatures
+        case iabSpecialPurposes, iabSpecialPurposesObjs, iabFeatures, iabSpecialFeatures, iabDataCategories
         case description, cookieHeader
         case vendorType
         case consentCategories, legIntCategories, disclosureOnlyCategories
     }
 
     struct Category: Decodable {
-        let type: GDPRCategory.CategoryType
+        let type: GDPRCategory.CategoryType?
         let iabId: Int?
         let name: String
+        var retention: String?
+
+        enum CodingKeys: CodingKey {
+            case type
+            case iabId
+            case name
+            case retention
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            type = try container.decodeIfPresent(GDPRCategory.CategoryType.self, forKey: .type)
+            iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)
+            name = try container.decode(String.self, forKey: .name)
+            do {
+                retention = try container.decodeIfPresent(String.self, forKey: .retention)
+            } catch DecodingError.typeMismatch {
+                retention = try String(container.decode(Int.self, forKey: .retention))
+            }
+        }
+    }
+
+    struct DataCategories: Decodable {
+        let name: String
+        let description: String
     }
 
     let vendorId, name: String
     let iabId: Int?
     let policyUrl: URL?
+    let legIntUrl: URL?
     let description, cookieHeader: String?
     let vendorType: VendorType
     let consentCategories, legIntCategories, disclosureOnlyCategories: [Category]
     var iabSpecialPurposes, iabFeatures, iabSpecialFeatures: [String]
+    let iabSpecialPurposesObjs: [Category]?
+    let iabDataCategories: [DataCategories]?
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         name = try container.decode(String.self, forKey: .name)
-        policyUrl = try? container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        policyUrl = try container.decodeIfPresent(URL.self, forKey: .policyUrl)
+        legIntUrl = try container.decodeIfPresent(URL.self, forKey: .legIntUrl)
         vendorId = try container.decode(String.self, forKey: .vendorId)
         vendorType = try container.decode(Self.VendorType.self, forKey: .vendorType)
         iabId = try container.decodeIfPresent(Int.self, forKey: .iabId)
@@ -48,6 +77,8 @@ struct GDPRVendor: Decodable {
         legIntCategories = try container.decode([Category].self, forKey: .legIntCategories)
         disclosureOnlyCategories = try container.decode([Category].self, forKey: .disclosureOnlyCategories)
         iabSpecialPurposes = try container.decode([String].self, forKey: .iabSpecialPurposes)
+        iabSpecialPurposesObjs = try container.decodeIfPresent([Category].self, forKey: .iabSpecialPurposesObjs)
+        iabDataCategories = try container.decodeIfPresent([DataCategories].self, forKey: .iabDataCategories)
         if disclosureOnlyCategories.isNotEmpty() {
             for category in disclosureOnlyCategories {
                 iabSpecialPurposes.append(category.name)

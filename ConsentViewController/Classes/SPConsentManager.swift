@@ -179,8 +179,7 @@ import UIKit
             )
         #endif
 
-        default:
-            return nil
+        default: return nil
         }
     }
 

@@ -23,6 +23,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        consentManager.loadMessage()
+        consentManager.loadMessage(pubData: nil)
     }
 }
