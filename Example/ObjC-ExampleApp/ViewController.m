@@ -29,16 +29,10 @@
 
     SPPropertyName *propertyName = [[SPPropertyName alloc] init:@"mobile.multicampaign.demo" error:NULL];
 
-    SPGPPConfig *gppConfig = [[SPGPPConfig alloc]
-                              initWithMspaCoveredTransaction:nil
-                              MspaOptOutOptionMode:nil
-                              MspaServiceProviderMode:nil
-    ];
-
     SPCampaign *campaign = [[SPCampaign alloc]
                             initWithTargetingParams: [NSDictionary dictionary]
                             groupPmId: NULL
-                            gppConfig: gppConfig];
+                            gppConfig: NULL];
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
