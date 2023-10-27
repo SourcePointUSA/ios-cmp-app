@@ -14,7 +14,7 @@ We also support [Carthage](https://github.com/Carthage/Carthage). It requires a 
 Let us know if we missed any step.
 
 ### Swift Package Manager
-We also support [Swift Package Manager](https://swift.org/package-manager/). It is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but SourcePoint does support its use on iOS platform.
+We also support [Swift Package Manager](https://swift.org/package-manager/) for both iOS and tvOS. It is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
 To add our SDK package as dependency to your Xcode project, In Xcode select File > Swift Packages > Add Package Dependency and enter our SDK repository URL.
 

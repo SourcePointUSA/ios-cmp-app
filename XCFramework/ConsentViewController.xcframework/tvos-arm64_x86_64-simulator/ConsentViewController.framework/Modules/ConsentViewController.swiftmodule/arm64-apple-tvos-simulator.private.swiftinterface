@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
 // swift-module-flags: -target arm64-apple-tvos10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ConsentViewController
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import AdSupport
@@ -7,13 +7,13 @@ import AppTrackingTransparency
 @_exported import ConsentViewController
 import Down
 import Foundation
-import Foundation/*.Bundle*/
 import Swift
 import SystemConfiguration
 import TVUIKit
 import UIKit
 import _Concurrency
 import _StringProcessing
+import _SwiftConcurrencyShims
 import os
 public struct ConsentStatus : Swift.Codable, Swift.Equatable {
   public var rejectedAny: Swift.Bool?, rejectedLI: Swift.Bool?, consentedAll: Swift.Bool?, consentedToAny: Swift.Bool?, rejectedAll: Swift.Bool?, vendorListAdditions: Swift.Bool?, legalBasisChanges: Swift.Bool?
@@ -124,7 +124,7 @@ public typealias SPTargetingParams = [Swift.String : Swift.String]
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
-  @objc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil, gppConfig: ConsentViewController.SPGPPConfig = SPGPPConfig())
+  @objc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil, gppConfig: ConsentViewController.SPGPPConfig? = SPGPPConfig())
   @objc deinit
 }
 @objc @objcMembers public class SPCampaigns : ObjectiveC.NSObject {

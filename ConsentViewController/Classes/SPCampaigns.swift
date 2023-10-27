@@ -87,11 +87,15 @@ public typealias SPTargetingParams = [String: String]
     public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil,
-        gppConfig: SPGPPConfig = SPGPPConfig()
+        gppConfig: SPGPPConfig? = SPGPPConfig()
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
-        self.GPPConfig = gppConfig
+        if let gppConfig = gppConfig {
+            self.GPPConfig = gppConfig
+        } else {
+            self.GPPConfig = SPGPPConfig()
+        }
     }
 }
 
