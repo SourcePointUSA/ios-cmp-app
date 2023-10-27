@@ -1,3 +1,7 @@
+# 7.4.2 (Oct, 6, 2023)
+* [DIA-1896](https://sourcepoint.atlassian.net/browse/DIA-1896) Support tvOS via Swift Package Manager (thanks to [@asshoffm](https://github.com/asshoffm))[#503](https://github.com/SourcePointUSA/ios-cmp-app/pull/503)
+* [DIA-2769](https://sourcepoint.atlassian.net/browse/DIA-2769) Add support to TCF v2.2 to tvOS. [#500](https://github.com/SourcePointUSA/ios-cmp-app/pull/500)
+
 # 7.4.1 (Oct, 6, 2023)
 * [DIA-2838](https://sourcepoint.atlassian.net/browse/DIA-2838) Make `consentStatus` public [#501](https://github.com/SourcePointUSA/ios-cmp-app/pull/501)
 * [DIA-2816](https://sourcepoint.atlassian.net/browse/DIA-2816) Fix reconsent triggered on vendor add/Legal bases change in VL is causing all previously given consents to reset [#499](https://github.com/SourcePointUSA/ios-cmp-app/pull/499)
