@@ -29,7 +29,8 @@ class SPGDPRConsentsSpec: QuickSpec {
                     "euconsent": "ABCD",
                     "grants": {},
                     "childPmId": null,
-                    "consentStatus": {}
+                    "consentStatus": {},
+                    "expirationDate": "2124-10-27T16:59:00.092Z",
                 }
                 """.data(using: .utf8)
             }
@@ -56,7 +57,8 @@ class SPGDPRConsentsSpec: QuickSpec {
                     euconsent: "",
                     tcfData: SPJson(),
                     childPmId: "yes",
-                    dateCreated: SPDate.now(),
+                    dateCreated: .now(),
+                    expirationDate: .distantFuture(),
                     applies: true
                 )
                 expect(consent.acceptedCategories).to(contain(["purpose1", "purpose3"]))

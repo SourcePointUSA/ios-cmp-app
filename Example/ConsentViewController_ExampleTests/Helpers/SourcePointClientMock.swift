@@ -156,6 +156,7 @@ class SourcePointClientMock: SourcePointProtocol {
             handler(.success(GDPRChoiceResponse(
                 uuid: "",
                 dateCreated: .now(),
+                expirationDate: .distantFuture(),
                 TCData: nil,
                 euconsent: nil,
                 consentStatus: nil,

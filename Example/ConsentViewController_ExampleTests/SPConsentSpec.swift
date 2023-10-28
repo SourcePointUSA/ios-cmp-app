@@ -30,6 +30,7 @@ class SPConsentSpec: QuickSpec {
         {
             "applies": true,
             "consents": {
+                "expirationDate": "2124-10-27T16:59:00.092Z",
                 "grants": {},
                 "TCData": {},
                 "euconsent": "",

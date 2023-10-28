@@ -78,6 +78,7 @@ public typealias SPGDPRPurposeId = String
         case vendors
         case categories
         case dateCreated
+        case expirationDate
     }
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
@@ -139,6 +140,7 @@ public typealias SPGDPRPurposeId = String
     /// Used by the rendering app
     var webConsentPayload: SPWebConsentPayload?
 
+    var expirationDate: SPDate
     var legIntCategories: [String]?
     var legIntVendors: [String]?
     var vendors: [String]?
@@ -156,20 +158,21 @@ public typealias SPGDPRPurposeId = String
 
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
-        self.uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
-        self.euconsent = try container.decode(String.self, forKey: .euconsent)
-        self.tcfData = try container.decodeIfPresent(SPJson.self, forKey: .tcfData)
-        self.vendorGrants = try container.decode(SPGDPRVendorGrants.self, forKey: .vendorGrants)
-        self.childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
-        self.consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
-        self.webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
-        self.legIntCategories = try container.decodeIfPresent(Array.self, forKey: .legIntCategories)
-        self.legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
-        self.vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
-        self.categories = try container.decodeIfPresent(Array.self, forKey: .categories)
+        applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
+        uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
+        euconsent = try container.decode(String.self, forKey: .euconsent)
+        tcfData = try container.decodeIfPresent(SPJson.self, forKey: .tcfData)
+        vendorGrants = try container.decode(SPGDPRVendorGrants.self, forKey: .vendorGrants)
+        childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
+        consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
+        webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
+        legIntCategories = try container.decodeIfPresent(Array.self, forKey: .legIntCategories)
+        legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
+        vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
+        categories = try container.decodeIfPresent(Array.self, forKey: .categories)
+        expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
         if let date = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated) {
-            self.dateCreated = date
+            dateCreated = date
         }
     }
 
@@ -180,6 +183,7 @@ public typealias SPGDPRPurposeId = String
         tcfData: SPJson,
         childPmId: String? = nil,
         dateCreated: SPDate,
+        expirationDate: SPDate,
         applies: Bool,
         consentStatus: ConsentStatus = ConsentStatus(),
         lastMessage: LastMessageData? = nil,
@@ -195,6 +199,7 @@ public typealias SPGDPRPurposeId = String
         self.tcfData = tcfData
         self.childPmId = childPmId
         self.dateCreated = dateCreated
+        self.expirationDate = expirationDate
         self.applies = applies
         self.consentStatus = consentStatus
         self.lastMessage = lastMessage
@@ -211,7 +216,8 @@ public typealias SPGDPRPurposeId = String
         euconsent: "",
         tcfData: SPJson(),
         childPmId: nil,
-        dateCreated: SPDate.now(),
+        dateCreated: .now(),
+        expirationDate: .distantFuture(),
         applies: false
     )}
 
@@ -234,6 +240,7 @@ public typealias SPGDPRPurposeId = String
             tcfData: tcfData ?? SPJson(),
             childPmId: childPmId,
             dateCreated: dateCreated,
+            expirationDate: expirationDate,
             applies: applies,
             consentStatus: consentStatus,
             lastMessage: lastMessage,

@@ -33,6 +33,10 @@ public struct SPDate: Codable, Equatable {
         SPDate(date: Date())
     }
 
+    static func distantFuture() -> SPDate {
+        SPDate(date: .distantFuture)
+    }
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(originalDateString)
