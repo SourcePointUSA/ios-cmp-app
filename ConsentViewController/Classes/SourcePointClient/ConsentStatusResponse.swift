@@ -10,7 +10,7 @@ import Foundation
 struct ConsentStatusResponse: Decodable, Equatable {
     struct Data: Decodable, Equatable {
         struct GDPR: Decodable, Equatable {
-            let dateCreated: SPDateCreated
+            let dateCreated, expirationDate: SPDate
             let uuid, euconsent, addtlConsent: String
             let TCData: SPJson
             let grants: SPGDPRVendorGrants
@@ -24,7 +24,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
 
         struct CCPA: Decodable, Equatable {
             let rejectedAll: Bool
-            let dateCreated: SPDateCreated
+            let dateCreated: SPDate
             let uuid, uspstring: String
             let rejectedCategories, rejectedVendors: [String]
             let status: CCPAConsentStatus

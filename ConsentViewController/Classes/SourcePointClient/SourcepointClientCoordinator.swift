@@ -84,8 +84,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         static let version = 1
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
-            var additionsChangeDate = SPDateCreated.now()
-            var legalBasisChangeDate = SPDateCreated.now()
+            var additionsChangeDate = SPDate.now()
+            var legalBasisChangeDate = SPDate.now()
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?

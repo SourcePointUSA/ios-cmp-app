@@ -13,8 +13,8 @@ struct MetaDataResponse: Decodable, Equatable {
         let sampleRate: Float
     }
     struct GDPR: Decodable, Equatable {
-        let additionsChangeDate: SPDateCreated
-        let legalBasisChangeDate: SPDateCreated
+        let additionsChangeDate: SPDate
+        let legalBasisChangeDate: SPDate
         let version: Int
         let _id: String
         let childPmId: String?

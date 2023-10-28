@@ -85,7 +85,7 @@ class SPConsentManagerSpec: QuickSpec {
                             vendorGrants: [:],
                             euconsent: "",
                             tcfData: SPJson(),
-                            dateCreated: SPDateCreated.now(),
+                            dateCreated: SPDate.now(),
                             applies: true
                         ),
                         applies: true
@@ -97,7 +97,7 @@ class SPConsentManagerSpec: QuickSpec {
                             rejectedCategories: [],
                             signedLspa: false,
                             applies: false,
-                            dateCreated: SPDateCreated.now(),
+                            dateCreated: SPDate.now(),
                             lastMessage: nil
                         ),
                         applies: true
@@ -137,7 +137,7 @@ class SPConsentManagerSpec: QuickSpec {
                     vendorGrants: SPGDPRVendorGrants(),
                     euconsent: "",
                     tcfData: try! SPJson(["tcf key": "tcf value"]),
-                    dateCreated: SPDateCreated.now(),
+                    dateCreated: SPDate.now(),
                     applies: true
                 ), applies: true),
                 ccpa: SPConsent(consents: SPCCPAConsent(
@@ -146,7 +146,7 @@ class SPConsentManagerSpec: QuickSpec {
                     rejectedCategories: [],
                     signedLspa: false,
                     applies: true,
-                    dateCreated: SPDateCreated.now(),
+                    dateCreated: SPDate.now(),
                     lastMessage: nil,
                     GPPData: try! SPJson(["gpp key": "gpp value"])
                 ), applies: true)

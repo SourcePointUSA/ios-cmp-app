@@ -9,7 +9,7 @@ import Foundation
 
 struct GDPRChoiceResponse: Decodable, Equatable {
     let uuid: String
-    let dateCreated: SPDateCreated
+    let dateCreated, expirationDate: SPDate
     let TCData: SPJson?
     let euconsent: String?
     let consentStatus: ConsentStatus?
@@ -23,7 +23,7 @@ struct GDPRChoiceResponse: Decodable, Equatable {
 
 struct CCPAChoiceResponse: Equatable {
     let uuid: String
-    let dateCreated: SPDateCreated
+    let dateCreated: SPDate
     let consentedAll: Bool?
     let rejectedAll: Bool?
     let status: CCPAConsentStatus?
@@ -46,7 +46,7 @@ extension CCPAChoiceResponse: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(
             uuid: container.decode(String.self, forKey: .uuid),
-            dateCreated: container.decode(SPDateCreated.self, forKey: .dateCreated),
+            dateCreated: container.decode(SPDate.self, forKey: .dateCreated),
             consentedAll: container.decode(Bool.self, forKey: .consentedAll),
             rejectedAll: container.decode(Bool.self, forKey: .rejectedAll),
             status: container.decode(CCPAConsentStatus.self, forKey: .status),

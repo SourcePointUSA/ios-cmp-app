@@ -10,7 +10,7 @@ import Foundation
 struct ChoiceAllResponse: Decodable {
     struct CCPA {
         let consentedAll: Bool
-        let dateCreated: SPDateCreated
+        let dateCreated: SPDate
         let rejectedAll: Bool
         let status: CCPAConsentStatus
         let uspstring: String
@@ -31,7 +31,7 @@ struct ChoiceAllResponse: Decodable {
         let addtlConsent, childPmId: String?
         let euconsent: String
         let hasLocalData: Bool?
-        let dateCreated: SPDateCreated
+        let dateCreated: SPDate
         let TCData: SPJson
         let consentStatus: ConsentStatus
         let grants: SPGDPRVendorGrants
@@ -67,7 +67,7 @@ extension ChoiceAllResponse.CCPA: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(
             consentedAll: container.decode(Bool.self, forKey: .consentedAll),
-            dateCreated: container.decode(SPDateCreated.self, forKey: .dateCreated),
+            dateCreated: container.decode(SPDate.self, forKey: .dateCreated),
             rejectedAll: container.decode(Bool.self, forKey: .rejectedAll),
             status: container.decode(CCPAConsentStatus.self, forKey: .status),
             uspstring: container.decode(String.self, forKey: .uspstring),

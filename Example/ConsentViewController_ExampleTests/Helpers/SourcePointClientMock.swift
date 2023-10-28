@@ -67,7 +67,7 @@ class SourcePointClientMock: SourcePointProtocol {
                 rejectedVendors: [],
                 rejectedCategories: []
             ),
-            dateCreated: SPDateCreated.now(),
+            dateCreated: SPDate.now(),
             webConsentPayload: nil
         )
     }
@@ -156,6 +156,7 @@ class SourcePointClientMock: SourcePointProtocol {
             handler(.success(GDPRChoiceResponse(
                 uuid: "",
                 dateCreated: .now(),
+                expirationDate: SPDate,
                 TCData: nil,
                 euconsent: nil,
                 consentStatus: nil,

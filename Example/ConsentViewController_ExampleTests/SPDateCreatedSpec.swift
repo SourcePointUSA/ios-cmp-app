@@ -1,5 +1,5 @@
 //
-//  SPDateCreatedSpec.swift
+//  SPDateSpec.swift
 //  ConsentViewController_ExampleTests
 //
 //  Created by Andre Herculano on 31.08.22.
@@ -14,7 +14,7 @@ import Quick
 
 // swiftlint:disable force_try force_unwrapping
 
-class SPDateCreatedSpec: QuickSpec {
+class SPDateSpec: QuickSpec {
     override func spec() {
         func dateFromString(_ date: String) -> Date? {
             let formatter = DateFormatter()
@@ -22,10 +22,10 @@ class SPDateCreatedSpec: QuickSpec {
             return formatter.date(from: date)
         }
 
-        describe("SPDateCreated") {
+        describe("SPDate") {
             it("should encode to string") {
                 let dateString = "\"2022-08-25T20:56:38.551Z\""
-                let decoded: SPDateCreated = try! JSONDecoder().decode(SPDateCreated.self, from: dateString.data(using: .utf8)!)
+                let decoded: SPDate = try! JSONDecoder().decode(SPDate.self, from: dateString.data(using: .utf8)!)
                 let encoded = try! JSONEncoder().encode(decoded)
                 let encodedString = String(data: encoded, encoding: .utf8)!
                 expect(encodedString) == dateString
@@ -33,7 +33,7 @@ class SPDateCreatedSpec: QuickSpec {
 
             it("should decode from string") {
                 let dateString = "\"2022-08-25T20:56:38.551Z\""
-                let decoded: SPDateCreated = try! JSONDecoder().decode(SPDateCreated.self, from: dateString.data(using: .utf8)!)
+                let decoded: SPDate = try! JSONDecoder().decode(SPDate.self, from: dateString.data(using: .utf8)!)
                 let date = dateFromString(dateString.replacingOccurrences(of: "\"", with: ""))
                 expect(decoded.date) == date
             }

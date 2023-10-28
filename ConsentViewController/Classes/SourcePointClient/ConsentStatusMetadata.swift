@@ -11,7 +11,7 @@ import Foundation
 struct ConsentStatusMetaData: QueryParamEncodable {
     struct Campaign: Encodable {
         let applies: Bool
-        let dateCreated: SPDateCreated?
+        let dateCreated: SPDate?
         let uuid: String?
         let hasLocalData: Bool
         let idfaStatus: SPIDFAStatus?
