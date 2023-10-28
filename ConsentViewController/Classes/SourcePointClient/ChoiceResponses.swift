@@ -9,7 +9,7 @@ import Foundation
 
 struct GDPRChoiceResponse: Decodable, Equatable {
     let uuid: String
-    let dateCreated, expirationDate: SPDate
+    let dateCreated: SPDate
     let TCData: SPJson?
     let euconsent: String?
     let consentStatus: ConsentStatus?
