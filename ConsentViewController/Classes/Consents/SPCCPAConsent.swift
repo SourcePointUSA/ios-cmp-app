@@ -91,7 +91,7 @@ extension SPUSPString {
 protocol CampaignConsent {
     var uuid: String? { get set }
     var applies: Bool { get set }
-    var dateCreated: SPDateCreated { get set }
+    var dateCreated: SPDate { get set }
 }
 
 /**
@@ -123,7 +123,7 @@ protocol CampaignConsent {
     public var applies = false
 
     /// The date in which the consent profile was created or updated
-    public var dateCreated = SPDateCreated.now()
+    public var dateCreated = SPDate.now()
 
     /// A dictionary with all GPP related data
     public var GPPData: SPJson
@@ -168,7 +168,7 @@ protocol CampaignConsent {
         signedLspa: Bool,
         childPmId: String? = nil,
         applies: Bool,
-        dateCreated: SPDateCreated,
+        dateCreated: SPDate,
         lastMessage: LastMessageData?,
         consentStatus: ConsentStatus = ConsentStatus(),
         webConsentPayload: SPWebConsentPayload? = nil,
@@ -208,7 +208,7 @@ protocol CampaignConsent {
         rejectedCategories: [],
         signedLspa: false,
         applies: false,
-        dateCreated: SPDateCreated.now(),
+        dateCreated: SPDate.now(),
         lastMessage: nil
     )}
 

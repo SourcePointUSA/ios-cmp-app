@@ -125,7 +125,7 @@ public typealias SPGDPRPurposeId = String
     }
 
     /// The date in which the consent profile was created or updated
-    public var dateCreated = SPDateCreated.now()
+    public var dateCreated = SPDate.now()
 
     /// Determines if the GDPR legislation applies for this user
     public var applies = false
@@ -168,7 +168,7 @@ public typealias SPGDPRPurposeId = String
         self.legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
         self.vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
         self.categories = try container.decodeIfPresent(Array.self, forKey: .categories)
-        if let date =  try container.decodeIfPresent(SPDateCreated.self, forKey: .dateCreated) {
+        if let date = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated) {
             self.dateCreated = date
         }
     }
@@ -179,7 +179,7 @@ public typealias SPGDPRPurposeId = String
         euconsent: String,
         tcfData: SPJson,
         childPmId: String? = nil,
-        dateCreated: SPDateCreated,
+        dateCreated: SPDate,
         applies: Bool,
         consentStatus: ConsentStatus = ConsentStatus(),
         lastMessage: LastMessageData? = nil,
@@ -211,7 +211,7 @@ public typealias SPGDPRPurposeId = String
         euconsent: "",
         tcfData: SPJson(),
         childPmId: nil,
-        dateCreated: SPDateCreated.now(),
+        dateCreated: SPDate.now(),
         applies: false
     )}
 

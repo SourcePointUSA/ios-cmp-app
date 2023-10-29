@@ -1,5 +1,5 @@
 //
-//  SPDateCreated.swift
+//  SPDate.swift
 //  Pods
 //
 //  Created by Andre Herculano on 31.08.22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SPDateCreated: Codable, Equatable {
+public struct SPDate: Codable, Equatable {
     static let format: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -18,7 +18,7 @@ public struct SPDateCreated: Codable, Equatable {
     let originalDateString: String
     let date: Date
 
-    private init(date: Date) {
+    init(date: Date) {
         self.date = date
         originalDateString = Self.format.string(from: date)
     }
@@ -29,8 +29,8 @@ public struct SPDateCreated: Codable, Equatable {
         date = Self.format.date(from: originalDateString) ?? Date()
     }
 
-    static func now() -> SPDateCreated {
-        SPDateCreated(date: Date())
+    static func now() -> SPDate {
+        SPDate(date: Date())
     }
 
     public func encode(to encoder: Encoder) throws {

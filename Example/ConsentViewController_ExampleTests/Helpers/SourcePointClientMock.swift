@@ -67,7 +67,7 @@ class SourcePointClientMock: SourcePointProtocol {
                 rejectedVendors: [],
                 rejectedCategories: []
             ),
-            dateCreated: SPDateCreated.now(),
+            dateCreated: SPDate.now(),
             webConsentPayload: nil
         )
     }
