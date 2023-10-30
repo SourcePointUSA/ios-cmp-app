@@ -26,10 +26,10 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
 
     var campaignType: SPCampaignType {
         switch self {
-        case .gdpr: .gdpr
-        case .ccpa: .ccpa
-        case .ios14: .ios14
-        default: .unknown
+            case .gdpr: return .gdpr
+            case .ccpa: return .ccpa
+            case .ios14: return .ios14
+            default: return .unknown
         }
     }
 }
