@@ -98,7 +98,8 @@ class SPConsentManagerSpec: QuickSpec {
                             rejectedCategories: [],
                             signedLspa: false,
                             applies: false,
-                            dateCreated: SPDate.now(),
+                            dateCreated: .now(),
+                            expirationDate: .distantFuture(),
                             lastMessage: nil
                         ),
                         applies: true
@@ -148,7 +149,8 @@ class SPConsentManagerSpec: QuickSpec {
                     rejectedCategories: [],
                     signedLspa: false,
                     applies: true,
-                    dateCreated: SPDate.now(),
+                    dateCreated: .now(),
+                    expirationDate: .distantFuture(),
                     lastMessage: nil,
                     GPPData: try! SPJson(["gpp key": "gpp value"])
                 ), applies: true)

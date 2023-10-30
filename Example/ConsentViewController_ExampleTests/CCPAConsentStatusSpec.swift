@@ -50,7 +50,8 @@ class CCPAConsentStatusSpec: QuickSpec {
                 rejectedCategories: [],
                 signedLspa: false,
                 applies: false,
-                dateCreated: SPDate.now(),
+                dateCreated: .now(),
+                expirationDate: .distantFuture(),
                 lastMessage: nil
             )
             expect(consent.uspstring) == "1---"
