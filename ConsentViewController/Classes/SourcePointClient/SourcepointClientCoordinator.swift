@@ -288,6 +288,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if localCampaigns.ios14 != nil, localState.ios14 == nil {
             localState.ios14 = .init()
         }
+
+        // Expire user consent if later than expirationDate
+        if let gdprExpirationDate = localState.gdpr?.expirationDate.date,
+           gdprExpirationDate < Date() {
+            localState.gdpr = .empty()
+        }
+
         return localState
     }
 

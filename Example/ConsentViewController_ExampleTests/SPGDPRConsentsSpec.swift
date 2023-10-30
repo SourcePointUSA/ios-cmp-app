@@ -11,6 +11,8 @@ import Foundation
 import Nimble
 import Quick
 
+// swiftlint:disable function_body_length
+
 class SPGDPRConsentsSpec: QuickSpec {
     override func spec() {
         describe("static empty()") {
