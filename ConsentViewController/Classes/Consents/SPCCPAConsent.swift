@@ -104,7 +104,7 @@ protocol CampaignConsent {
         case status, rejectedVendors, rejectedCategories,
              uuid, childPmId, consentStatus,
              webConsentPayload, signedLspa, applies,
-             GPPData, uspstring
+             GPPData, uspstring, dateCreated, expirationDate
     }
 
     /// Indicates if the user has rejected `.All`, `.Some` or `.None` of the vendors **and** categories.
@@ -142,6 +142,8 @@ protocol CampaignConsent {
 
     var signedLspa: Bool = false
 
+    var expirationDate: SPDate
+
     var ccpaString: SPUSPString {
         SPUSPString(from: self)
     }
@@ -169,6 +171,7 @@ protocol CampaignConsent {
         childPmId: String? = nil,
         applies: Bool,
         dateCreated: SPDate,
+        expirationDate: SPDate,
         lastMessage: LastMessageData?,
         consentStatus: ConsentStatus = ConsentStatus(),
         webConsentPayload: SPWebConsentPayload? = nil,
@@ -185,6 +188,7 @@ protocol CampaignConsent {
         self.GPPData = GPPData
         self.applies = applies
         self.dateCreated = dateCreated
+        self.expirationDate = expirationDate
         self.lastMessage = lastMessage
     }
 
@@ -200,6 +204,10 @@ protocol CampaignConsent {
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
         GPPData = try container.decodeIfPresent(SPJson.self, forKey: .GPPData) ?? SPJson()
+        expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
+        if let date = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated) {
+            dateCreated = date
+        }
     }
 
     public static func empty() -> SPCCPAConsent { SPCCPAConsent(
@@ -208,7 +216,8 @@ protocol CampaignConsent {
         rejectedCategories: [],
         signedLspa: false,
         applies: false,
-        dateCreated: SPDate.now(),
+        dateCreated: .now(),
+        expirationDate: .distantFuture(),
         lastMessage: nil
     )}
 
@@ -222,6 +231,7 @@ protocol CampaignConsent {
             childPmId: childPmId,
             applies: applies,
             dateCreated: dateCreated,
+            expirationDate: expirationDate,
             lastMessage: lastMessage,
             consentStatus: consentStatus,
             webConsentPayload: webConsentPayload,
@@ -243,16 +253,18 @@ protocol CampaignConsent {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.status, forKey: .status)
-        try container.encode(self.rejectedVendors, forKey: .rejectedVendors)
-        try container.encode(self.rejectedCategories, forKey: .rejectedCategories)
-        try container.encodeIfPresent(self.uuid, forKey: .uuid)
-        try container.encodeIfPresent(self.childPmId, forKey: .childPmId)
-        try container.encode(self.consentStatus, forKey: .consentStatus)
-        try container.encodeIfPresent(self.webConsentPayload, forKey: .webConsentPayload)
-        try container.encode(self.signedLspa, forKey: .signedLspa)
-        try container.encode(self.applies, forKey: .applies)
-        try container.encode(self.GPPData, forKey: .GPPData)
-        try container.encode(self.uspstring, forKey: .uspstring)
+        try container.encode(status, forKey: .status)
+        try container.encode(rejectedVendors, forKey: .rejectedVendors)
+        try container.encode(rejectedCategories, forKey: .rejectedCategories)
+        try container.encodeIfPresent(uuid, forKey: .uuid)
+        try container.encodeIfPresent(childPmId, forKey: .childPmId)
+        try container.encode(consentStatus, forKey: .consentStatus)
+        try container.encodeIfPresent(webConsentPayload, forKey: .webConsentPayload)
+        try container.encode(signedLspa, forKey: .signedLspa)
+        try container.encode(applies, forKey: .applies)
+        try container.encode(GPPData, forKey: .GPPData)
+        try container.encode(uspstring, forKey: .uspstring)
+        try container.encode(dateCreated, forKey: .dateCreated)
+        try container.encode(expirationDate, forKey: .expirationDate)
     }
 }

@@ -68,6 +68,7 @@ class CampaignSpec: QuickSpec {
             {
                 "type": "CCPA",
                 "dateCreated": "2023-02-06T16:20:53.707Z",
+                "expirationDate": "2123-02-06T16:20:53.707Z",
                 "consentedAll": false,
                 "rejectedCategories": [],
                 "rejectedVendors": [],

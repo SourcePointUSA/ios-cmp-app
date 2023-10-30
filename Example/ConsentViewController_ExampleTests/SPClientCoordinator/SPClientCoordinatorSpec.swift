@@ -470,22 +470,31 @@ class SPClientCoordinatorSpec: QuickSpec {
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstLoadMessages in
                             let (firstMessages, _) = try! firstLoadMessages.get()
                             expect(firstMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
+                            expect(firstMessages.filter { $0.type == .ccpa }).notTo(beEmpty())
 
-                            coordinator.reportAction(SPAction(type: .AcceptAll, campaignType: .gdpr)) { firstAction in
-                                let firstActionUserData = try! firstAction.get()
-                                expect(firstActionUserData.gdpr?.consents?.consentStatus.consentedToAny).to(beTrue())
-
-                                coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondLoadMessages in
-                                    let (secondMessages, _) = try! secondLoadMessages.get()
-                                    expect(secondMessages.filter { $0.type == .gdpr }).to(beEmpty())
+                            coordinator.reportAction(SPAction(type: .AcceptAll, campaignType: .gdpr)) { _ in
+                                coordinator.reportAction(SPAction(type: .AcceptAll, campaignType: .ccpa)) { _ in
                                     expect(coordinator.state.gdpr?.consentStatus.consentedToAny).to(beTrue())
-                                    coordinator.state.gdpr?.expirationDate = SPDate(date: .yesterday)
+                                    expect(coordinator.state.ccpa?.status).to(equal(.ConsentedAll))
 
-                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { thirdLoadMessages in
-                                        let (thirdMessages, _) = try! thirdLoadMessages.get()
-                                        expect(thirdMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
-                                        expect(coordinator.state.gdpr?.consentStatus.consentedToAny).notTo(beTrue())
-                                        done()
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondLoadMessages in
+                                        let (secondMessages, _) = try! secondLoadMessages.get()
+                                        expect(secondMessages.filter { $0.type == .gdpr }).to(beEmpty())
+                                        expect(secondMessages.filter { $0.type == .ccpa }).to(beEmpty())
+                                        expect(coordinator.state.gdpr?.consentStatus.consentedToAny).to(beTrue())
+                                        expect(coordinator.state.ccpa?.status).to(equal(.ConsentedAll))
+
+                                        coordinator.state.gdpr?.expirationDate = SPDate(date: .yesterday)
+                                        coordinator.state.ccpa?.expirationDate = SPDate(date: .yesterday)
+
+                                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { thirdLoadMessages in
+                                            let (thirdMessages, _) = try! thirdLoadMessages.get()
+                                            expect(thirdMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
+                                            expect(thirdMessages.filter { $0.type == .ccpa }).notTo(beEmpty())
+                                            expect(coordinator.state.gdpr?.consentStatus.consentedToAny).notTo(beTrue())
+                                            expect(coordinator.state.ccpa?.status).to(equal(.RejectedNone))
+                                            done()
+                                        }
                                     }
                                 }
                             }
