@@ -24,7 +24,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
 
         struct CCPA: Decodable, Equatable {
             let rejectedAll: Bool
-            let dateCreated: SPDate
+            let dateCreated, expirationDate: SPDate
             let uuid, uspstring: String
             let rejectedCategories, rejectedVendors: [String]
             let status: CCPAConsentStatus

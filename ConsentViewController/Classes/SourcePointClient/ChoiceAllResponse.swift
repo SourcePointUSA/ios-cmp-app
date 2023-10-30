@@ -10,7 +10,7 @@ import Foundation
 struct ChoiceAllResponse: Decodable {
     struct CCPA {
         let consentedAll: Bool
-        let dateCreated: SPDate
+        let dateCreated, expirationDate: SPDate
         let rejectedAll: Bool
         let status: CCPAConsentStatus
         let uspstring: String
@@ -58,7 +58,7 @@ struct ChoiceAllMetaDataParam: QueryParamEncodable {
 
 extension ChoiceAllResponse.CCPA: Decodable {
     enum CodingKeys: String, CodingKey {
-        case dateCreated, consentedAll, rejectedAll,
+        case dateCreated, expirationDate, consentedAll, rejectedAll,
              status, rejectedVendors, rejectedCategories,
              gpcEnabled, webConsentPayload, GPPData
         case uspstring = "uspString"
@@ -69,6 +69,7 @@ extension ChoiceAllResponse.CCPA: Decodable {
         try self.init(
             consentedAll: container.decode(Bool.self, forKey: .consentedAll),
             dateCreated: container.decode(SPDate.self, forKey: .dateCreated),
+            expirationDate: container.decode(SPDate.self, forKey: .expirationDate),
             rejectedAll: container.decode(Bool.self, forKey: .rejectedAll),
             status: container.decode(CCPAConsentStatus.self, forKey: .status),
             uspstring: container.decode(String.self, forKey: .uspstring),

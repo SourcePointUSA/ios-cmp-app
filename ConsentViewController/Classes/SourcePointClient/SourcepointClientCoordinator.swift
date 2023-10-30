@@ -440,6 +440,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let ccpa = response.consentStatusData.ccpa {
             state.ccpa?.uuid = ccpa.uuid
             state.ccpa?.dateCreated = ccpa.dateCreated
+            state.ccpa?.expirationDate = ccpa.expirationDate
             state.ccpa?.status = ccpa.status
             state.ccpa?.rejectedVendors = ccpa.rejectedVendors
             state.ccpa?.rejectedCategories = ccpa.rejectedCategories
@@ -519,6 +520,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 switch $0.userConsent {
                     case .ccpa(let consents):
                         state.ccpa?.dateCreated = consents.dateCreated
+                        state.ccpa?.expirationDate = consents.expirationDate
                         state.ccpa?.status = consents.status
                         state.ccpa?.rejectedVendors = consents.rejectedVendors
                         state.ccpa?.rejectedCategories = consents.rejectedCategories
@@ -632,6 +634,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
         if let ccpa = response.ccpa, campaign == .ccpa {
             state.ccpa?.dateCreated = ccpa.dateCreated
+            state.ccpa?.expirationDate = ccpa.expirationDate
             state.ccpa?.status = ccpa.status
             state.ccpa?.GPPData = ccpa.GPPData
         }
@@ -745,20 +748,28 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    func handleCCPAPostChoice(
+        _ action: SPAction,
+        _ getResponse: ChoiceAllResponse?,
+        _ postResponse: CCPAChoiceResponse
+    ) {
+        if action.type == .SaveAndExit {
+            state.ccpa?.GPPData = postResponse.GPPData
+        }
+        state.ccpa?.uuid = postResponse.uuid
+        state.ccpa?.dateCreated = postResponse.dateCreated
+        state.ccpa?.status = postResponse.status ?? getResponse?.ccpa?.status ?? .RejectedAll
+        state.ccpa?.rejectedVendors = postResponse.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
+        state.ccpa?.rejectedCategories = postResponse.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
+        state.ccpa?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.ccpa?.webConsentPayload
+        storage.spState = state
+    }
+
     func reportCCPAAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         self.postChoice(action) { postResult in
             switch postResult {
                 case .success(let response):
-                    if action.type == .SaveAndExit {
-                        self.state.ccpa?.GPPData = response.GPPData
-                    }
-                    self.state.ccpa?.uuid = response.uuid
-                    self.state.ccpa?.dateCreated = response.dateCreated
-                    self.state.ccpa?.status = response.status ?? getResponse?.ccpa?.status ?? .RejectedAll
-                    self.state.ccpa?.rejectedVendors = response.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
-                    self.state.ccpa?.rejectedCategories = response.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
-                    self.state.ccpa?.webConsentPayload = response.webConsentPayload ?? getResponse?.ccpa?.webConsentPayload
-                    self.storage.spState = self.state
+                    self.handleCCPAPostChoice(action, getResponse, response)
                     handler(Result.success(self.userData))
 
                 case .failure(let error):
