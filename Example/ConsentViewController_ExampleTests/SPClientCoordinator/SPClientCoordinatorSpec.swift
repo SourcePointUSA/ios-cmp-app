@@ -473,18 +473,18 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                             coordinator.reportAction(SPAction(type: .AcceptAll, campaignType: .gdpr)) { firstAction in
                                 let firstActionUserData = try! firstAction.get()
-                                expect(firstActionUserData.gdpr?.consents?.consentStatus.consentedAll).to(beTrue())
+                                expect(firstActionUserData.gdpr?.consents?.consentStatus.consentedToAny).to(beTrue())
 
                                 coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondLoadMessages in
                                     let (secondMessages, _) = try! secondLoadMessages.get()
                                     expect(secondMessages.filter { $0.type == .gdpr }).to(beEmpty())
-                                    expect(coordinator.state.gdpr?.consentStatus.consentedAll).to(beTrue())
+                                    expect(coordinator.state.gdpr?.consentStatus.consentedToAny).to(beTrue())
                                     coordinator.state.gdpr?.expirationDate = SPDate(date: .yesterday)
 
                                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { thirdLoadMessages in
                                         let (thirdMessages, _) = try! thirdLoadMessages.get()
                                         expect(thirdMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
-                                        expect(coordinator.state.gdpr?.consentStatus.consentedAll).notTo(beTrue())
+                                        expect(coordinator.state.gdpr?.consentStatus.consentedToAny).notTo(beTrue())
                                         done()
                                     }
                                 }
