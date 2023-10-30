@@ -294,6 +294,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
            gdprExpirationDate < Date() {
             localState.gdpr = .empty()
         }
+        if let ccpaExpirationDate = localState.ccpa?.expirationDate.date,
+           ccpaExpirationDate < Date() {
+            localState.ccpa = .empty()
+        }
 
         return localState
     }
