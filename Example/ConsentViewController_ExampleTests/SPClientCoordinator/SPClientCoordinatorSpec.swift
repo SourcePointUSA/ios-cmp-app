@@ -461,6 +461,38 @@ class SPClientCoordinatorSpec: QuickSpec {
                     }
                 }
             }
+
+            describe("and expiration date is greater than current date") {
+                it("erases consent data and returns a message") {
+                    SPConsentManager.clearAllData()
+
+                    waitUntil { done in
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstLoadMessages in
+                            let (firstMessages, _) = try! firstLoadMessages.get()
+                            expect(firstMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
+
+                            coordinator.reportAction(SPAction(type: .AcceptAll, campaignType: .gdpr)) { firstAction in
+                                let firstActionUserData = try! firstAction.get()
+                                expect(firstActionUserData.gdpr?.consents?.consentStatus.consentedToAny).to(beTrue())
+
+                                coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondLoadMessages in
+                                    let (secondMessages, _) = try! secondLoadMessages.get()
+                                    expect(secondMessages.filter { $0.type == .gdpr }).to(beEmpty())
+                                    expect(coordinator.state.gdpr?.consentStatus.consentedToAny).to(beTrue())
+                                    coordinator.state.gdpr?.expirationDate = SPDate(date: .yesterday)
+
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { thirdLoadMessages in
+                                        let (thirdMessages, _) = try! thirdLoadMessages.get()
+                                        expect(thirdMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
+                                        expect(coordinator.state.gdpr?.consentStatus.consentedToAny).notTo(beTrue())
+                                        done()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

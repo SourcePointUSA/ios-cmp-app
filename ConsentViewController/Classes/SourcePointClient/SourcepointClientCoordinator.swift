@@ -288,6 +288,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if localCampaigns.ios14 != nil, localState.ios14 == nil {
             localState.ios14 = .init()
         }
+
+        // Expire user consent if later than expirationDate
+        if let gdprExpirationDate = localState.gdpr?.expirationDate.date,
+           gdprExpirationDate < Date() {
+            localState.gdpr = .empty()
+        }
+
         return localState
     }
 
@@ -419,6 +426,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.uuid = gdpr.uuid
             state.gdpr?.vendorGrants = gdpr.grants
             state.gdpr?.dateCreated = gdpr.dateCreated
+            state.gdpr?.expirationDate = gdpr.expirationDate
             state.gdpr?.euconsent = gdpr.euconsent
             state.gdpr?.tcfData = gdpr.TCData
             state.gdpr?.consentStatus = gdpr.consentStatus
@@ -498,6 +506,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 switch $0.userConsent {
                     case .gdpr(let consents):
                         state.gdpr?.dateCreated = consents.dateCreated
+                        state.gdpr?.expirationDate = consents.expirationDate
                         state.gdpr?.tcfData = consents.tcfData
                         state.gdpr?.vendorGrants = consents.vendorGrants
                         state.gdpr?.euconsent = consents.euconsent
@@ -614,6 +623,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
         if let gdpr = response.gdpr, campaign == .gdpr {
             state.gdpr?.dateCreated = gdpr.dateCreated
+            state.gdpr?.expirationDate = gdpr.expirationDate
             state.gdpr?.tcfData = gdpr.TCData
             state.gdpr?.vendorGrants = gdpr.grants
             state.gdpr?.euconsent = gdpr.euconsent
@@ -699,25 +709,33 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         ) { handler($0) }
     }
 
+    func handleGPDRPostChoice(
+        _ action: SPAction,
+        _ getResponse: ChoiceAllResponse?,
+        _ postResponse: GDPRChoiceResponse
+    ) {
+        if action.type == .SaveAndExit {
+            state.gdpr?.tcfData = postResponse.TCData
+        }
+        state.gdpr?.uuid = postResponse.uuid
+        state.gdpr?.dateCreated = postResponse.dateCreated
+        state.gdpr?.expirationDate = postResponse.expirationDate
+        state.gdpr?.consentStatus = postResponse.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
+        state.gdpr?.euconsent = postResponse.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
+        state.gdpr?.vendorGrants = postResponse.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
+        state.gdpr?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
+        state.gdpr?.legIntCategories = postResponse.legIntCategories ?? getResponse?.gdpr?.legIntCategories
+        state.gdpr?.legIntVendors = postResponse.legIntVendors ?? getResponse?.gdpr?.legIntVendors
+        state.gdpr?.vendors = postResponse.vendors ?? getResponse?.gdpr?.vendors
+        state.gdpr?.categories = postResponse.categories ?? getResponse?.gdpr?.categories
+        storage.spState = state
+    }
+
     func reportGDPRAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
             switch postResult {
                 case .success(let response):
-                    if action.type == .SaveAndExit {
-                        self.state.gdpr?.tcfData = response.TCData
-                    }
-                    self.state.gdpr?.uuid = response.uuid
-                    self.state.gdpr?.dateCreated = response.dateCreated
-                    self.state.gdpr?.consentStatus = response.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
-                    self.state.gdpr?.euconsent = response.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
-                    self.state.gdpr?.vendorGrants = response.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
-                    self.state.gdpr?.webConsentPayload = response.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
-                    self.state.gdpr?.legIntCategories = response.legIntCategories ?? getResponse?.gdpr?.legIntCategories
-                    self.state.gdpr?.legIntVendors = response.legIntVendors ?? getResponse?.gdpr?.legIntVendors
-                    self.state.gdpr?.vendors = response.vendors ?? getResponse?.gdpr?.vendors
-                    self.state.gdpr?.categories = response.categories ?? getResponse?.gdpr?.categories
-                    self.storage.spState = self.state
-
+                    self.handleGPDRPostChoice(action, getResponse, response)
                     handler(Result.success(self.userData))
 
                 case .failure(let error):

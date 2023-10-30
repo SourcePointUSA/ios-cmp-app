@@ -32,6 +32,7 @@ struct ChoiceAllResponse: Decodable {
         let euconsent: String
         let hasLocalData: Bool?
         let dateCreated: SPDate
+        let expirationDate: SPDate
         let TCData: SPJson
         let consentStatus: ConsentStatus
         let grants: SPGDPRVendorGrants

@@ -85,7 +85,8 @@ class SPConsentManagerSpec: QuickSpec {
                             vendorGrants: [:],
                             euconsent: "",
                             tcfData: SPJson(),
-                            dateCreated: SPDate.now(),
+                            dateCreated: .now(),
+                            expirationDate: .distantFuture(),
                             applies: true
                         ),
                         applies: true
@@ -137,7 +138,8 @@ class SPConsentManagerSpec: QuickSpec {
                     vendorGrants: SPGDPRVendorGrants(),
                     euconsent: "",
                     tcfData: try! SPJson(["tcf key": "tcf value"]),
-                    dateCreated: SPDate.now(),
+                    dateCreated: .now(),
+                    expirationDate: .distantFuture(),
                     applies: true
                 ), applies: true),
                 ccpa: SPConsent(consents: SPCCPAConsent(
