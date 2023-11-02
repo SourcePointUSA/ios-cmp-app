@@ -21,9 +21,17 @@ struct MetaDataResponse: Decodable, Equatable {
         let applies: Bool
         let sampleRate: Float
     }
+    struct USNat: Decodable, Equatable {
+        let _id: String
+        let additionsChangeDate: SPDate
+        let applies: Bool
+        let sampleRate: Float
+        let version: Int // TODO: ask Dan T if we should care about version
+    }
 
     let ccpa: CCPA?
     let gdpr: GDPR?
+    let usnat: USNat?
 }
 
 struct MetaDataQueryParam: QueryParamEncodable {
@@ -31,5 +39,5 @@ struct MetaDataQueryParam: QueryParamEncodable {
         let groupPmId: String?
     }
 
-    let gdpr, ccpa: Campaign?
+    let gdpr, ccpa, usnat: Campaign?
 }
