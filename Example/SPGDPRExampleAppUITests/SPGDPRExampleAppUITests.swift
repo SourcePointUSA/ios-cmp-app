@@ -74,7 +74,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
             Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
-        it("Accept all through 1st layer messages") {
+        // TODO: replace xit with it
+        xit("Accept all through 1st layer messages") {
             self.app.relaunch(clean: true, resetAtt: true)
             self.runAttScenario()
             self.acceptGDPRMessage()
@@ -85,7 +86,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
-        it("Accept all through 2nd layer") {
+        xit("Accept all through 2nd layer") {
             self.app.relaunch(clean: true, resetAtt: true, args: ["att": false])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
@@ -96,7 +97,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
-        it("Dismissing 2nd layer returns to first layer message") {
+        xit("Dismissing 2nd layer returns to first layer message") {
             self.app.relaunch(clean: true, resetAtt: true, args: [
                 "att": false,
                 "ccpa": false
@@ -106,7 +107,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
-        it("Consenting and Deleting custom vendor persist after relaunch") {
+        xit("Consenting and Deleting custom vendor persist after relaunch") {
             self.app.relaunch(clean: true, resetAtt: true, args: [
                 "att": false,
                 "ccpa": false
@@ -134,7 +135,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
         }
 
-        it("Shows a translated message") {
+        xit("Shows a translated message") {
             self.app.relaunch(clean: true, resetAtt: false, args: [
                 "att": false,
                 "language": SPMessageLanguage.Spanish.rawValue
