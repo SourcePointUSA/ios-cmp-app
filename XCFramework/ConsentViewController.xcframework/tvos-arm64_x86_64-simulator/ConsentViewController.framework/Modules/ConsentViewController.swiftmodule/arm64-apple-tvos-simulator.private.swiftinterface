@@ -169,7 +169,7 @@ extension ConsentViewController.SPCampaignType : Swift.Codable {
   }
   @objc public var uuid: Swift.String?
   @objc public var applies: Swift.Bool
-  public var dateCreated: ConsentViewController.SPDateCreated
+  public var dateCreated: ConsentViewController.SPDate
   public var GPPData: ConsentViewController.SPJson
   @objc override dynamic open var description: Swift.String {
     @objc get
@@ -223,10 +223,10 @@ extension ConsentViewController.SPConsentManager : ConsentViewController.SPMessa
   @objc dynamic public func finished(_ vcFinished: UIKit.UIViewController)
   @objc dynamic public func action(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
 }
-public struct SPDateCreated : Swift.Codable, Swift.Equatable {
+public struct SPDate : Swift.Codable, Swift.Equatable {
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
-  public static func == (a: ConsentViewController.SPDateCreated, b: ConsentViewController.SPDateCreated) -> Swift.Bool
+  public static func == (a: ConsentViewController.SPDate, b: ConsentViewController.SPDate) -> Swift.Bool
 }
 @objc public protocol SPConsentUIDelegate {
   @objc func onAction(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
@@ -571,7 +571,7 @@ public typealias SPGDPRPurposeId = Swift.String
   @objc public var acceptedCategories: [Swift.String] {
     @objc get
   }
-  public var dateCreated: ConsentViewController.SPDateCreated
+  public var dateCreated: ConsentViewController.SPDate
   @objc public var applies: Swift.Bool
   public var consentStatus: ConsentViewController.ConsentStatus
   @objc override dynamic open var description: Swift.String {
