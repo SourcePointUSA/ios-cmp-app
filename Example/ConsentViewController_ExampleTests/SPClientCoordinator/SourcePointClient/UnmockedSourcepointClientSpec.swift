@@ -205,6 +205,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             }
         }
 
+        // TODO: setup USNat campaign on property 17801
         describe("meta-data") {
             it("should call the endpoint and parse the response into MetaDataResponse") {
                 waitUntil { done in
@@ -212,7 +213,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     propertyId: 17_801,
                                     metadata: MetaDataQueryParam(
                                         gdpr: .init(groupPmId: nil),
-                                        ccpa: .init(groupPmId: nil)
+                                        ccpa: .init(groupPmId: nil),
+                                        usnat: nil
                                     )) {
                             switch $0 {
                             case .success(let response):
@@ -229,13 +231,16 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     }
                 }
             }
+
+            // TODO: setup USNat campaign on property 17801
             it("Check if groupPmId echo") {
                 waitUntil { done in
                     client.metaData(accountId: accountId,
                                     propertyId: 17_801,
                                     metadata: MetaDataQueryParam(
                                         gdpr: .init(groupPmId: "99999999999"),
-                                        ccpa: .init(groupPmId: nil)
+                                        ccpa: .init(groupPmId: nil),
+                                        usnat: nil
                                     )) {
                             switch $0 {
                             case .success(let response):

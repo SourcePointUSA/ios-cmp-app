@@ -97,6 +97,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var wasSampledAt: Float?
         }
 
+        struct UsNatMetaData: Codable, SPSampleable, Equatable {
+            var additionsChangeDate = SPDate.now()
+            var sampleRate = Float(1)
+            var wasSampled: Bool?
+            var wasSampledAt: Float?
+        }
+
         struct AttCampaign: Codable {
             var lastMessage: LastMessageData?
             var status: SPIDFAStatus { SPIDFAStatus.current() }
@@ -104,9 +111,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         var gdpr: SPGDPRConsent?
         var ccpa: SPCCPAConsent?
+        var usnat: SPUSNatConsent?
         var ios14: AttCampaign?
         var gdprMetaData: GDPRMetaData?
         var ccpaMetaData: CCPAMetaData?
+        var usNatMetaData: UsNatMetaData?
         var localState: SPJson?
         var nonKeyedLocalState: SPJson?
         var storedAuthId: String?
@@ -185,13 +194,18 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var metaDataParamsFromState: MetaDataQueryParam {
         .init(
             gdpr: campaigns.gdpr != nil ?
-                    .init(
-                        groupPmId: campaigns.gdpr?.groupPmId
-                    ) :
-                    nil,
+                .init(
+                    groupPmId: campaigns.gdpr?.groupPmId
+                ) :
+                nil,
             ccpa: campaigns.ccpa != nil ?
                 .init(
                     groupPmId: campaigns.ccpa?.groupPmId
+                ) :
+                nil,
+            usnat: campaigns.usnat != nil ?
+                .init(
+                    groupPmId: campaigns.usnat?.groupPmId
                 ) :
                 nil
         )
@@ -240,6 +254,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 nil,
             ccpa: campaigns.ccpa != nil ?
                 .init(consents: state.ccpa, applies: state.ccpa?.applies ?? false) :
+                nil,
+            usnat: campaigns.usnat != nil ?
+                .init(consents: state.usnat, applies: state.usnat?.applies ?? false) :
                 nil
         )
     }
@@ -284,6 +301,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             localState.ccpa = localStorage.userData.ccpa?.consents ?? .empty()
             localState.ccpa?.applies = localStorage.userData.ccpa?.applies ?? false
             localState.ccpaMetaData = .init()
+        }
+        if localCampaigns.usnat != nil, localState.usnat == nil {
+            localState.usnat = localStorage.userData.usnat?.consents ?? .empty()
+            localState.usnat?.applies = localStorage.userData.usnat?.applies ?? false
+            localState.usNatMetaData = .init()
         }
         if localCampaigns.ios14 != nil, localState.ios14 == nil {
             localState.ios14 = .init()
@@ -392,6 +414,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let ccpaMetaData = response.ccpa {
             state.ccpa?.applies = ccpaMetaData.applies
             state.ccpaMetaData?.updateSampleFields(ccpaMetaData.sampleRate)
+        }
+        if let usnatMetaData = response.usnat {
+            state.usnat?.applies = usnatMetaData.applies
+            state.usNatMetaData?.updateSampleFields(usnatMetaData.sampleRate)
         }
         storage.spState = state
     }

@@ -40,8 +40,19 @@ class SPConsentSpec: QuickSpec {
         }
     """
 
+    let usNatConsents = """
+        {
+            "applies": false,
+            "consents": {
+                "applies": false,
+                "dateCreated": "2124-10-27T16:59:00.092Z"
+            }
+        }
+    """
+
     override func spec() {
-        describe("SPConsent") {
+        // TODO: remove fdescribe
+        fdescribe("SPConsent") {
             describe("GDPR") {
                 it("can be decode from JSON") {
                     expect(self.gdprConsents).to(decodeToValue(
@@ -54,6 +65,14 @@ class SPConsentSpec: QuickSpec {
                 it("can be decode from JSON") {
                     expect(self.ccpaConsents).to(decodeToValue(
                         SPConsent<SPCCPAConsent>(consents: .empty(), applies: true)
+                    ))
+                }
+            }
+
+            describe("USNat") {
+                it("can be decode from JSON") {
+                    expect(self.usNatConsents).to(decodeToValue(
+                        SPConsent<SPUSNatConsent>(consents: .empty(), applies: false)
                     ))
                 }
             }

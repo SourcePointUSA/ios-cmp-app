@@ -503,5 +503,33 @@ class SPClientCoordinatorSpec: QuickSpec {
                 }
             }
         }
+
+        // TODO: remove fdescribe
+        fdescribe("a property with USNat campaign") {
+            beforeEach {
+                coordinator = SourcepointClientCoordinator(
+                    accountId: accountId,
+                    propertyName: try! SPPropertyName("staging.mobile.demo"),
+                    propertyId: 8292,
+                    campaigns: SPCampaigns(usnat: SPCampaign()),
+                    storage: LocalStorageMock()
+                )
+            }
+
+            it("returns empty usnat user data with applies true") {
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { result in
+                        switch result {
+                            case .success(let (_, consents)):
+                                expect(consents.usnat?.consents?.applies).to(beTrue())
+
+                            case .failure(let error):
+                                fail(error.failureReason)
+                        }
+                        done()
+                    }
+                }
+            }
+        }
     }
 }

@@ -15,15 +15,21 @@ struct MetaDataResponse: Decodable, Equatable {
     struct GDPR: Decodable, Equatable {
         let additionsChangeDate: SPDate
         let legalBasisChangeDate: SPDate
-        let version: Int
         let _id: String
         let childPmId: String?
+        let applies: Bool
+        let sampleRate: Float
+    }
+    struct USNat: Decodable, Equatable {
+        let _id: String
+        let additionsChangeDate: SPDate
         let applies: Bool
         let sampleRate: Float
     }
 
     let ccpa: CCPA?
     let gdpr: GDPR?
+    let usnat: USNat?
 }
 
 struct MetaDataQueryParam: QueryParamEncodable {
@@ -31,5 +37,5 @@ struct MetaDataQueryParam: QueryParamEncodable {
         let groupPmId: String?
     }
 
-    let gdpr, ccpa: Campaign?
+    let gdpr, ccpa, usnat: Campaign?
 }

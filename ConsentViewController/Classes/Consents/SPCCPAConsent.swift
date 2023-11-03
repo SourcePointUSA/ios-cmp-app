@@ -150,7 +150,7 @@ protocol CampaignConsent {
 
     override open var description: String {
         """
-        UserConsent(
+        SPCCPAConsent(
             - uuid: \(uuid ?? "")
             - status: \(status.rawValue)
             - rejectedVendors: \(rejectedVendors)

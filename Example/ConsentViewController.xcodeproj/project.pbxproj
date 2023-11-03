@@ -345,6 +345,7 @@
 		82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */; };
 		82EA4FA42488EB7300BA48BF /* SPUserDefaultsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ACF6AB2487E73C006E207A /* SPUserDefaultsSpec.swift */; };
 		82EA4FA62489171200BA48BF /* UserDefaultsExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4FA52489171200BA48BF /* UserDefaultsExtensionSpec.swift */; };
+		82F136452AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */; };
 		82F9411824A10379007D30B1 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411724A10379007D30B1 /* CustomMatchers.swift */; };
 		82F9411A24A10416007D30B1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411924A10416007D30B1 /* ExampleApp.swift */; };
 		82FA47732A3C90DC0065BF6D /* SPPublisherDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FA47722A3C90DC0065BF6D /* SPPublisherDataSpec.swift */; };
@@ -741,6 +742,7 @@
 		82EA4E332491324400DC01C9 /* LocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalStorageMock.swift; path = Helpers/LocalStorageMock.swift; sourceTree = "<group>"; };
 		82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InMemoryStorageMock.swift; path = Helpers/InMemoryStorageMock.swift; sourceTree = "<group>"; };
 		82EA4FA52489171200BA48BF /* UserDefaultsExtensionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensionSpec.swift; sourceTree = "<group>"; };
+		82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUSNatConsentSpec.swift; sourceTree = "<group>"; };
 		82F9411724A10379007D30B1 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		82F9411924A10416007D30B1 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		82FA47722A3C90DC0065BF6D /* SPPublisherDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPublisherDataSpec.swift; sourceTree = "<group>"; };
@@ -1929,6 +1931,7 @@
 				AAA25A682A28ABFE005FE84A /* SPConsentManagerSpec.swift */,
 				822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */,
 				822E88F72A7BC8CB00843B2B /* SPGPPConfigSpec.swift */,
+				82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
@@ -3561,6 +3564,7 @@
 				82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */,
 				822E88F82A7BC8CB00843B2B /* SPGPPConfigSpec.swift in Sources */,
 				6D687AD724A8F1C1001DFB11 /* MessageMock.swift in Sources */,
+				82F136452AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift in Sources */,
 				82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */,
 				82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */,
 				826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */,
