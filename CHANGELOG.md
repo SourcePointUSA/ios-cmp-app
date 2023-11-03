@@ -1,7 +1,7 @@
-# 7.4.3 (Oct, 6, 2023)
+# 7.4.3 (Nov, 2, 2023)
 * [DIA-2895](https://sourcepoint.atlassian.net/browse/DIA-2895) Implement consent expiration. If `.expiration` date is in the past, when calling `.loadMessages`, the SDK will flush the consent object before triggering the message flow. In practical terms, this usually leads to the user being presented with a consent message, taking a consent action and the consent object being renewed. [#505](https://github.com/SourcePointUSA/ios-cmp-app/pull/505)[#506](https://github.com/SourcePointUSA/ios-cmp-app/pull/506)
 
-# 7.4.2 (Oct, 6, 2023)
+# 7.4.2 (Oct, 27, 2023)
 * [DIA-1896](https://sourcepoint.atlassian.net/browse/DIA-1896) Support tvOS via Swift Package Manager (thanks to [@asshoffm](https://github.com/asshoffm))[#503](https://github.com/SourcePointUSA/ios-cmp-app/pull/503)
 * [DIA-2769](https://sourcepoint.atlassian.net/browse/DIA-2769) Add support to TCF v2.2 to tvOS. [#500](https://github.com/SourcePointUSA/ios-cmp-app/pull/500)
 
