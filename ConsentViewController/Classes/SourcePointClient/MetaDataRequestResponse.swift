@@ -15,7 +15,6 @@ struct MetaDataResponse: Decodable, Equatable {
     struct GDPR: Decodable, Equatable {
         let additionsChangeDate: SPDate
         let legalBasisChangeDate: SPDate
-        let version: Int
         let _id: String
         let childPmId: String?
         let applies: Bool
@@ -26,7 +25,6 @@ struct MetaDataResponse: Decodable, Equatable {
         let additionsChangeDate: SPDate
         let applies: Bool
         let sampleRate: Float
-        let version: Int // TODO: ask Dan T if we should care about version
     }
 
     let ccpa: CCPA?
