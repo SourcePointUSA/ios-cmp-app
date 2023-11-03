@@ -150,7 +150,7 @@ public protocol SPObjcUserData {
         usnat?.consents
     }
 
-    /// Indicates whether GDPR applies based on the VendorList configuration.
+    /// Indicates whether USNat applies based on the VendorList configuration.
     public func objcUSNatApplies() -> Bool {
         usnat?.applies ?? false
     }
