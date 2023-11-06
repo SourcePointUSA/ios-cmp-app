@@ -167,7 +167,7 @@ public typealias SPGDPRPurposeId = String
         uuid: String? = nil,
         vendorGrants: SPGDPRVendorGrants,
         euconsent: String,
-        tcfData: SPJson,
+        tcfData: SPJson?,
         childPmId: String? = nil,
         dateCreated: SPDate,
         expirationDate: SPDate,
@@ -237,5 +237,33 @@ public typealias SPGDPRPurposeId = String
             vendors: vendors,
             categories: categories
         )
+    }
+}
+
+extension SPGDPRConsent {
+    convenience init?(uuid: String?, applies: Bool?, campaignResponse: Campaign) {
+        switch campaignResponse.userConsent {
+            case .gdpr(let consents):
+                self.init(
+                    uuid: uuid,
+                    vendorGrants: consents.vendorGrants,
+                    euconsent: consents.euconsent,
+                    tcfData: consents.tcfData,
+                    childPmId: consents.childPmId,
+                    dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
+                    applies: applies ?? false,
+                    consentStatus: consents.consentStatus,
+                    lastMessage: LastMessageData(from: campaignResponse.messageMetaData),
+                    webConsentPayload: consents.webConsentPayload,
+                    legIntCategories: consents.legIntCategories,
+                    legIntVendors: consents.legIntVendors,
+                    vendors: consents.vendors,
+                    categories: consents.categories
+                )
+                return
+            default: break
+        }
+        return nil
     }
 }

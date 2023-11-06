@@ -522,43 +522,22 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.localState = response.localState
         state.nonKeyedLocalState = response.nonKeyedLocalState
         let messages = response.campaigns.compactMap { MessageToDisplay($0) }
-        messages.forEach {
-            if $0.type == .gdpr {
-                state.gdpr?.lastMessage = LastMessageData(from: $0.metadata)
-            } else if $0.type == .ccpa {
-                state.ccpa?.lastMessage = LastMessageData(from: $0.metadata)
-            } else if $0.type == .ios14 {
-                state.ios14?.lastMessage = LastMessageData(from: $0.metadata)
-            }
-        }
 
         response.campaigns.forEach {
-            if $0.type == .gdpr {
-                switch $0.userConsent {
-                    case .gdpr(let consents):
-                        state.gdpr?.dateCreated = consents.dateCreated
-                        state.gdpr?.expirationDate = consents.expirationDate
-                        state.gdpr?.tcfData = consents.tcfData
-                        state.gdpr?.vendorGrants = consents.vendorGrants
-                        state.gdpr?.euconsent = consents.euconsent
-                        state.gdpr?.consentStatus = consents.consentStatus
-                        state.gdpr?.childPmId = consents.childPmId
-                        state.gdpr?.webConsentPayload = $0.webConsentPayload
-                    default: break
-                }
-            } else if $0.type == .ccpa {
-                switch $0.userConsent {
-                    case .ccpa(let consents):
-                        state.ccpa?.dateCreated = consents.dateCreated
-                        state.ccpa?.expirationDate = consents.expirationDate
-                        state.ccpa?.status = consents.status
-                        state.ccpa?.rejectedVendors = consents.rejectedVendors
-                        state.ccpa?.rejectedCategories = consents.rejectedCategories
-                        state.ccpa?.childPmId = consents.childPmId
-                        state.ccpa?.webConsentPayload = $0.webConsentPayload
-                        state.ccpa?.GPPData = consents.GPPData
-                    default: break
-                }
+            switch $0.type {
+                case .gdpr: state.gdpr = SPGDPRConsent(
+                    uuid: state.gdpr?.uuid,
+                    applies: state.gdpr?.applies,
+                    campaignResponse: $0
+                )
+
+                case .ccpa: state.ccpa = SPCCPAConsent(
+                    uuid: state.ccpa?.uuid,
+                    applies: state.ccpa?.applies,
+                    campaignResponse: $0
+                )
+
+                case .ios14, .unknown: break
             }
         }
 
