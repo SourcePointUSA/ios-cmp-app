@@ -22,6 +22,7 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
     case gdpr = 1
     case ccpa = 2
     case ios14 = 4
+    case usnat = 6
     case unknown
 
     var campaignType: SPCampaignType {
@@ -29,6 +30,7 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
             case .gdpr: return .gdpr
             case .ccpa: return .ccpa
             case .ios14: return .ios14
+            case .usnat: return .usnat
             default: return .unknown
         }
     }
@@ -125,6 +127,7 @@ extension MessageJson: Codable {
 enum Consent: Equatable {
     case gdpr(consents: SPGDPRConsent)
     case ccpa(consents: SPCCPAConsent)
+    case usnat(consents: SPUSNatConsent)
     case unknown
 }
 extension Consent: Codable {
@@ -133,6 +136,8 @@ extension Consent: Codable {
             self = .gdpr(consents: consent)
         } else if let consent = try? SPCCPAConsent(from: decoder) {
             self = .ccpa(consents: consent)
+        } else if let consent = try? SPUSNatConsent(from: decoder) {
+            self = .usnat(consents: consent)
         } else {
             self = .unknown
         }
@@ -142,6 +147,7 @@ extension Consent: Codable {
         switch self {
         case .ccpa(let consents): try consents.encode(to: encoder)
         case .gdpr(let consents): try consents.encode(to: encoder)
+        case .usnat(let consents): try consents.encode(to: encoder)
         default: break
         }
     }
