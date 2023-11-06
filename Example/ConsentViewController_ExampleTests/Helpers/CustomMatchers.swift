@@ -143,7 +143,7 @@ public func containQueryParam(_ expected: (name: String, value: String)) -> Pred
     }
 }
 
-/// expect(url).to(containQueryParam(("name", "value")))
+/// expect(spDate).to(equal(year: 123, month: 123, day: 123))
 public func equal(year: Int? = nil, month: Int? = nil, day: Int? = nil) -> Predicate<SPDate> {
     Predicate { actual in
         guard let actual = try actual.evaluate() else {
