@@ -238,6 +238,41 @@ In case of an error, the SDK will wrap the error in one of the `SPError` classes
 By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
 Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. This _may_ cause a consent message to be shown again, depending on your scenario. 
 
+## SPUserData structure
+
+`SPUserData` contains all the information related to the user consent action. The structure of `SPUserData` is as follows:
+
+```
+SPUserData(
+    gdpr: SPConsent<SPGDPRConsent>?(
+        applies: Bool,
+        consents: SPGDPRConsents(
+            acceptedCategories: [String],
+            applies: Bool,
+            consentStatus: ConsentStatus,
+            dateCreated: SPDate,
+            euconsent: String,
+            tcfData: SPJson?,
+            uuid: String?,
+            vendorGrants: Dictionary<String, SPGDPRVendorGrant>,
+        )
+    ),
+    ccpa: SPConsent<SPCCPAConsent>?(
+        applies: Bool,
+        consents: SPCCPAConsent(
+            dateCreated: SPDate
+            GPPData: SPJson,
+            rejectedCategories: [String],
+            rejectedVendors: [String]],
+            signedLspa: Bool,
+            status: String,
+            uspstring: String,
+            uuid: String?,
+        )
+    )
+)
+```
+
 ## Adding or Removing custom consents 
 It's possible to programmatically consent the current user to a list of custom vendors, categories and legitimate interest categories with the method:
 ```swift
