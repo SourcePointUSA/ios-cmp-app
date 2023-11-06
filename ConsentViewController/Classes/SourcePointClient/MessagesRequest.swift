@@ -27,9 +27,15 @@ struct MessagesRequest: QueryParamEncodable {
                 let idfaSstatus: SPIDFAStatus
             }
 
+            // TODO: find out if there are other parameters needed
+            struct USNat: QueryParamEncodable {
+                let targetingParams: SPTargetingParams?
+            }
+
             let ccpa: CCPA?
             let gdpr: GDPR?
             let ios14: IOS14?
+            let usnat: USNat?
         }
 
         let localState: SPJson?
@@ -48,13 +54,14 @@ struct MessagesRequest: QueryParamEncodable {
             let applies: Bool
         }
 
-        let ccpa, gdpr: Campaign?
+        let ccpa, gdpr, usnat: Campaign?
     }
 
     struct NonKeyedLocalState: QueryParamEncodable {
         let ccpa: SPJson?
         let gdpr: SPJson?
         let ios14: SPJson?
+        let usnat: SPJson?
     }
 
     let body: Body
@@ -67,6 +74,7 @@ extension MessagesRequest.NonKeyedLocalState {
         ccpa = nonKeyedLocalState?["ccpa"]
         gdpr = nonKeyedLocalState?["gdpr"]
         ios14 = nonKeyedLocalState?["ios14"]
+        usnat = nonKeyedLocalState?["ios14"]
     }
 }
 
@@ -75,6 +83,7 @@ extension MessagesRequest.Body.Campaigns {
         ccpa = nil
         gdpr = nil
         ios14 = nil
+        usnat = nil
     }
 }
 
@@ -111,5 +120,13 @@ extension MessagesRequest.Body.Campaigns.IOS14 {
 
         self.targetingParams = campaign.targetingParams
         self.idfaSstatus = idfaStatus
+    }
+}
+
+extension MessagesRequest.Body.Campaigns.USNat {
+    init?(_ campaign: SPCampaign?) {
+        guard let campaign = campaign else { return nil }
+
+        self.targetingParams = campaign.targetingParams
     }
 }

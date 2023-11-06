@@ -188,7 +188,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var shouldCallMessages: Bool {
         (campaigns.gdpr != nil && state.gdpr?.consentStatus.consentedAll != true) ||
         campaigns.ccpa != nil ||
-        (campaigns.ios14 != nil && state.ios14?.status != .accepted)
+        (campaigns.ios14 != nil && state.ios14?.status != .accepted) ||
+        campaigns.usnat != nil
     }
 
     var metaDataParamsFromState: MetaDataQueryParam {
@@ -232,6 +233,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     ios14: campaigns.ios14 != nil ? .init(
                         targetingParams: campaigns.ios14?.targetingParams,
                         idfaSstatus: idfaStatus
+                    ) : nil,
+                    usnat: campaigns.usnat != nil ? .init(
+                        targetingParams: campaigns.usnat?.targetingParams
                     ) : nil
                 ),
                 consentLanguage: language,
@@ -241,7 +245,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             ),
             metadata: .init(
                 ccpa: .init(applies: state.ccpa?.applies),
-                gdpr: .init(applies: state.gdpr?.applies)
+                gdpr: .init(applies: state.gdpr?.applies),
+                usnat: .init(applies: state.usnat?.applies)
             ),
             nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState)
         )

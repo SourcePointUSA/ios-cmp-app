@@ -130,7 +130,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     hasLocalData: false,
                                     consentStatus: ConsentStatus()
                                 ),
-                                ios14: nil
+                                ios14: nil,
+                                usnat: nil
                             ),
                             consentLanguage: .Spanish,
                             campaignEnv: nil,
@@ -139,7 +140,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         ),
                         metadata: MessagesRequest.MetaData(
                             ccpa: MessagesRequest.MetaData.Campaign(applies: true),
-                            gdpr: MessagesRequest.MetaData.Campaign(applies: true)
+                            gdpr: MessagesRequest.MetaData.Campaign(applies: true),
+                            usnat: MessagesRequest.MetaData.Campaign(applies: true)
                         ),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
                     )) {
