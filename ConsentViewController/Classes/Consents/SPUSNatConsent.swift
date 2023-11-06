@@ -92,3 +92,27 @@ import Foundation
         categories: categories
     )}
 }
+
+extension SPUSNatConsent {
+    convenience init?(
+        uuid: String?,
+        applies: Bool?,
+        campaignResponse: Campaign
+    ) {
+        switch campaignResponse.userConsent {
+            case .usnat(let consents):
+                self.init(
+                    uuid: uuid,
+                    applies: applies ?? false,
+                    dateCreated: consents.dateCreated,
+                    consentString: consents.consentString,
+                    webConsentPayload: consents.webConsentPayload,
+                    lastMessage: LastMessageData(from: campaignResponse.messageMetaData),
+                    categories: consents.categories
+                )
+                return
+            default: break
+        }
+        return nil
+    }
+}

@@ -542,6 +542,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     campaignResponse: $0
                 )
 
+                case .usnat: state.usnat = SPUSNatConsent(
+                    uuid: state.usnat?.uuid,
+                    applies: state.usnat?.applies,
+                    campaignResponse: $0
+                )
+
                 case .ios14, .unknown: break
             }
         }

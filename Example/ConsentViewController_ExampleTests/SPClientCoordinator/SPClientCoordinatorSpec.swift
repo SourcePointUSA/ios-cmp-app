@@ -511,7 +511,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                     accountId: accountId,
                     propertyName: try! SPPropertyName("staging.mobile.demo"),
                     propertyId: 8292,
-                    campaigns: SPCampaigns(usnat: SPCampaign()),
+                    campaigns: SPCampaigns(usnat: SPCampaign(targetingParams: ["newUser": "true"])),
                     storage: LocalStorageMock()
                 )
             }
@@ -520,8 +520,12 @@ class SPClientCoordinatorSpec: QuickSpec {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { result in
                         switch result {
-                            case .success(let (_, consents)):
+                            case .success(let (messages, consents)):
                                 expect(consents.usnat?.consents?.applies).to(beTrue())
+                                expect(consents.usnat?.consents?.consentString).notTo(beEmpty())
+                                expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
+                                expect(consents.usnat?.consents?.lastMessage).notTo(beNil())
+                                expect(messages).notTo(beEmpty())
 
                             case .failure(let error):
                                 fail(error.failureReason)
