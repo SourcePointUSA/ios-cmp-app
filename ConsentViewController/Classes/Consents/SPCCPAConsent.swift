@@ -88,12 +88,6 @@ extension SPUSPString {
     }
 }
 
-protocol CampaignConsent {
-    var uuid: String? { get set }
-    var applies: Bool { get set }
-    var dateCreated: SPDate { get set }
-}
-
 /**
  The UserConsent class encapsulates the consent status, rejected vendor ids and rejected categories (purposes) ids.
  - Important: The `rejectedVendors` and `rejectedCategories` arrays will only be populated if the `status` is `.Some`.
