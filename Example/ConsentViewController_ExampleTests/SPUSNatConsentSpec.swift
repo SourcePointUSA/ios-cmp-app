@@ -34,10 +34,7 @@ class SPUSNatConsentsSpec: QuickSpec {
             }
             let consent = try usnatConsents.decoded() as SPUSNatConsent
             expect(consent.applies).to(beTrue())
-            let date = Calendar.current.dateComponents([.day, .year, .month], from: consent.dateCreated.date)
-            expect(date.year).to(equal(2023))
-            expect(date.month).to(equal(02))
-            expect(date.day).to(equal(06))
+            expect(consent.dateCreated).to(equal(year: 2023, month: 2, day: 6))
         }
     }
 }
