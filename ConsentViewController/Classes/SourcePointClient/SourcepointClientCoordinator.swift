@@ -526,7 +526,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func handleMessagesResponse(_ response: MessagesResponse) -> LoadMessagesReturnType {
         state.localState = response.localState
         state.nonKeyedLocalState = response.nonKeyedLocalState
-        let messages = response.campaigns.compactMap { MessageToDisplay($0) }
 
         response.campaigns.forEach {
             switch $0.type {
@@ -548,12 +547,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     campaignResponse: $0
                 )
 
-                case .ios14, .unknown: break
+                case .ios14: state.ios14?.lastMessage = LastMessageData(from: $0.messageMetaData)
+
+                case .unknown: break
             }
         }
 
         storage.spState = state
-        return (messages, userData.copy() as? SPUserData ?? userData)
+        return (
+            response.campaigns.compactMap { MessageToDisplay($0) },
+            userData.copy() as? SPUserData ?? userData
+        )
     }
 
     func messages(_ handler: @escaping MessagesAndConsentsHandler) {
