@@ -24,6 +24,8 @@ import Foundation
     /// Used by the rendering app
     let webConsentPayload: SPWebConsentPayload?
 
+    let consentStatus: ConsentStatus
+
     override open var description: String {
         """
         SPUSNatConsent(
@@ -42,7 +44,8 @@ import Foundation
         consentString: String,
         webConsentPayload: SPWebConsentPayload? = nil,
         lastMessage: LastMessageData? = nil,
-        categories: [String]
+        categories: [String],
+        consentStatus: ConsentStatus
     ) {
         self.uuid = uuid
         self.applies = applies
@@ -51,6 +54,7 @@ import Foundation
         self.webConsentPayload = webConsentPayload
         self.lastMessage = lastMessage
         self.categories = []
+        self.consentStatus = consentStatus
     }
 
     required public init(from decoder: Decoder) throws {
@@ -62,13 +66,15 @@ import Foundation
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         lastMessage = try container.decodeIfPresent(LastMessageData.self, forKey: .lastMessage)
         categories = try container.decode([String].self, forKey: .categories)
+        consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
     }
 
     public static func empty() -> SPUSNatConsent { SPUSNatConsent(
         applies: false,
         dateCreated: .now(),
         consentString: "",
-        categories: []
+        categories: [],
+        consentStatus: ConsentStatus()
     )}
 
     override public func isEqual(_ object: Any?) -> Bool {
@@ -89,7 +95,8 @@ import Foundation
         consentString: consentString,
         webConsentPayload: webConsentPayload,
         lastMessage: lastMessage,
-        categories: categories
+        categories: categories,
+        consentStatus: consentStatus
     )}
 }
 
@@ -108,7 +115,8 @@ extension SPUSNatConsent {
                     consentString: consents.consentString,
                     webConsentPayload: consents.webConsentPayload,
                     lastMessage: LastMessageData(from: campaignResponse.messageMetaData),
-                    categories: consents.categories
+                    categories: consents.categories,
+                    consentStatus: consents.consentStatus
                 )
                 return
             default: break

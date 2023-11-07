@@ -370,6 +370,26 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         return .init(gdpr: gdpr)
     }
 
+    func usnatPvDataBody(from state: State, pubData: SPPublisherData?) -> PvDataRequestBody {
+        var usnat: PvDataRequestBody.USNat?
+        if let stateUsnat = state.usnat {
+            usnat = PvDataRequestBody.USNat(
+                applies: stateUsnat.applies,
+                uuid: stateUsnat.uuid,
+                accountId: accountId,
+                siteId: propertyId,
+                consentStatus: stateUsnat.consentStatus,
+                pubData: pubData,
+                sampleRate: state.gdprMetaData?.sampleRate,
+                msgId: stateUsnat.lastMessage?.id,
+                categoryId: stateUsnat.lastMessage?.categoryId,
+                subCategoryId: stateUsnat.lastMessage?.subCategoryId,
+                prtnUUID: stateUsnat.lastMessage?.partitionUUID
+            )
+        }
+        return .init(usnat: usnat)
+    }
+
     /// Resets state if the authId has changed, except if the stored auth id was empty.
     func resetStateIfAuthIdChanged() {
         if state.storedAuthId == nil {
@@ -595,6 +615,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 if let ccpa = pvDataData.ccpa {
                     state.ccpa?.uuid = ccpa.uuid
                 }
+                if let usnat = pvDataData.usnat {
+                    state.usnat?.uuid = usnat.uuid
+                }
 
             case .failure(let error): logErrorMetrics(error)
         }
@@ -641,6 +664,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 pvDataGroup.leave()
             }
             state.ccpaMetaData?.wasSampled = sampled
+        }
+        if let usNatMetadata = state.usNatMetaData {
+            pvDataGroup.enter()
+            let sampled = sampleAndPvData(usNatMetadata, body: usnatPvDataBody(from: state, pubData: pubData)) {
+                pvDataGroup.leave()
+            }
+            state.usNatMetaData?.wasSampled = sampled
         }
 
         pvDataGroup.notify(queue: .main) {

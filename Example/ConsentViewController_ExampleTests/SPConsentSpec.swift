@@ -47,7 +47,8 @@ class SPConsentSpec: QuickSpec {
                 "applies": false,
                 "dateCreated": "2124-10-27T16:59:00.092Z",
                 "consentString": "",
-                "categories": []
+                "categories": [],
+                "consentStatus": {}
             }
         }
     """

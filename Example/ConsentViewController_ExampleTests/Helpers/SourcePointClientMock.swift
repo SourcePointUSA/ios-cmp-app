@@ -175,7 +175,7 @@ class SourcePointClientMock: SourcePointProtocol {
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(.init(gdpr: nil, ccpa: nil)))
+            handler(.success(.init(gdpr: nil, ccpa: nil, usnat: nil)))
         }
     }
 

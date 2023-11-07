@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try function_body_length file_length type_body_length
+// swiftlint:disable force_try function_body_length file_length type_body_length cyclomatic_complexity
 
 class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
@@ -526,6 +526,35 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
                                 expect(consents.usnat?.consents?.lastMessage).notTo(beNil())
                                 expect(messages).notTo(beEmpty())
+
+                            case .failure(let error):
+                                fail(error.failureReason)
+                        }
+                        done()
+                    }
+                }
+            }
+
+            it("calls pv-data when calling loadMessage") {
+                spClientMock = SourcePointClientMock(
+                    accountId: accountId,
+                    propertyName: propertyName,
+                    campaignEnv: .Public,
+                    timeout: 999
+                )
+                coordinator = SourcepointClientCoordinator(
+                    accountId: accountId,
+                    propertyName: try! SPPropertyName("staging.mobile.demo"),
+                    propertyId: 8292,
+                    campaigns: SPCampaigns(usnat: SPCampaign(targetingParams: ["newUser": "true"])),
+                    storage: LocalStorageMock(),
+                    spClient: spClientMock
+                )
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { result in
+                        switch result {
+                            case .success:
+                                expect(spClientMock.pvDataCalled).to(beTrue())
 
                             case .failure(let error):
                                 fail(error.failureReason)

@@ -16,6 +16,6 @@ public struct ConsentStatus: Codable, Equatable {
     var granularStatus: GranularStatus? = GranularStatus()
     public var rejectedAny, rejectedLI, consentedAll, consentedToAny, rejectedAll, vendorListAdditions, legalBasisChanges: Bool?
     var hasConsentData: Bool? = false
-    var rejectedVendors: [String?]? = []
-    var rejectedCategories: [String?]? = []
+    var rejectedVendors: [String?]?
+    var rejectedCategories: [String?]?
 }
