@@ -88,12 +88,6 @@ extension SPUSPString {
     }
 }
 
-protocol CampaignConsent {
-    var uuid: String? { get set }
-    var applies: Bool { get set }
-    var dateCreated: SPDate { get set }
-}
-
 /**
  The UserConsent class encapsulates the consent status, rejected vendor ids and rejected categories (purposes) ids.
  - Important: The `rejectedVendors` and `rejectedCategories` arrays will only be populated if the `status` is `.Some`.
@@ -266,5 +260,35 @@ protocol CampaignConsent {
         try container.encode(uspstring, forKey: .uspstring)
         try container.encode(dateCreated, forKey: .dateCreated)
         try container.encode(expirationDate, forKey: .expirationDate)
+    }
+}
+
+extension SPCCPAConsent {
+    convenience init?(
+        uuid: String?,
+        applies: Bool?,
+        campaignResponse: Campaign
+    ) {
+        switch campaignResponse.userConsent {
+            case .ccpa(let consents):
+                self.init(
+                    uuid: uuid,
+                    status: consents.status,
+                    rejectedVendors: consents.rejectedVendors,
+                    rejectedCategories: consents.rejectedCategories,
+                    signedLspa: consents.signedLspa,
+                    childPmId: consents.childPmId,
+                    applies: applies ?? false,
+                    dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
+                    lastMessage: LastMessageData(from: campaignResponse.messageMetaData),
+                    consentStatus: consents.consentStatus,
+                    webConsentPayload: consents.webConsentPayload,
+                    GPPData: consents.GPPData
+                )
+                return
+            default: break
+        }
+        return nil
     }
 }

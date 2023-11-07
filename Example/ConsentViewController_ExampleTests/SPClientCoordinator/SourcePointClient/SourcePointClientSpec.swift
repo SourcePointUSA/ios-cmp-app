@@ -155,7 +155,7 @@ class SourcePointClientSpec: QuickSpec {
                             idfaStatus: nil,
                             includeData: IncludeData(gppConfig: nil)
                         ),
-                        metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil),
+                        metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil, usnat: nil),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
                     )) { _ in }
                     expect(httpClient.getWasCalledWithUrl).toEventually(contain("/v2/messages"))

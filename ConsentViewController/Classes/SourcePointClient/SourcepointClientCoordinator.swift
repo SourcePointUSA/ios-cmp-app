@@ -124,6 +124,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         var hasGDPRLocalData: Bool { gdpr?.uuid != nil }
         var hasCCPALocalData: Bool { ccpa?.uuid != nil }
+        var hasUSNatLocalData: Bool { usnat?.uuid != nil }
 
         mutating func udpateGDPRStatus() {
             guard let gdpr = gdpr, let gdprMetadata = gdprMetaData else { return }
@@ -188,7 +189,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var shouldCallMessages: Bool {
         (campaigns.gdpr != nil && state.gdpr?.consentStatus.consentedAll != true) ||
         campaigns.ccpa != nil ||
-        (campaigns.ios14 != nil && state.ios14?.status != .accepted)
+        (campaigns.ios14 != nil && state.ios14?.status != .accepted) ||
+        campaigns.usnat != nil
     }
 
     var metaDataParamsFromState: MetaDataQueryParam {
@@ -232,6 +234,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     ios14: campaigns.ios14 != nil ? .init(
                         targetingParams: campaigns.ios14?.targetingParams,
                         idfaSstatus: idfaStatus
+                    ) : nil,
+                    usnat: campaigns.usnat != nil ? .init(
+                        targetingParams: campaigns.usnat?.targetingParams,
+                        hasLocalData: state.hasUSNatLocalData,
+                        status: nil
                     ) : nil
                 ),
                 consentLanguage: language,
@@ -241,7 +248,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             ),
             metadata: .init(
                 ccpa: .init(applies: state.ccpa?.applies),
-                gdpr: .init(applies: state.gdpr?.applies)
+                gdpr: .init(applies: state.gdpr?.applies),
+                usnat: .init(applies: state.usnat?.applies)
             ),
             nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState)
         )
@@ -521,49 +529,38 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func handleMessagesResponse(_ response: MessagesResponse) -> LoadMessagesReturnType {
         state.localState = response.localState
         state.nonKeyedLocalState = response.nonKeyedLocalState
-        let messages = response.campaigns.compactMap { MessageToDisplay($0) }
-        messages.forEach {
-            if $0.type == .gdpr {
-                state.gdpr?.lastMessage = LastMessageData(from: $0.metadata)
-            } else if $0.type == .ccpa {
-                state.ccpa?.lastMessage = LastMessageData(from: $0.metadata)
-            } else if $0.type == .ios14 {
-                state.ios14?.lastMessage = LastMessageData(from: $0.metadata)
-            }
-        }
 
         response.campaigns.forEach {
-            if $0.type == .gdpr {
-                switch $0.userConsent {
-                    case .gdpr(let consents):
-                        state.gdpr?.dateCreated = consents.dateCreated
-                        state.gdpr?.expirationDate = consents.expirationDate
-                        state.gdpr?.tcfData = consents.tcfData
-                        state.gdpr?.vendorGrants = consents.vendorGrants
-                        state.gdpr?.euconsent = consents.euconsent
-                        state.gdpr?.consentStatus = consents.consentStatus
-                        state.gdpr?.childPmId = consents.childPmId
-                        state.gdpr?.webConsentPayload = $0.webConsentPayload
-                    default: break
-                }
-            } else if $0.type == .ccpa {
-                switch $0.userConsent {
-                    case .ccpa(let consents):
-                        state.ccpa?.dateCreated = consents.dateCreated
-                        state.ccpa?.expirationDate = consents.expirationDate
-                        state.ccpa?.status = consents.status
-                        state.ccpa?.rejectedVendors = consents.rejectedVendors
-                        state.ccpa?.rejectedCategories = consents.rejectedCategories
-                        state.ccpa?.childPmId = consents.childPmId
-                        state.ccpa?.webConsentPayload = $0.webConsentPayload
-                        state.ccpa?.GPPData = consents.GPPData
-                    default: break
-                }
+            switch $0.type {
+                case .gdpr: state.gdpr = SPGDPRConsent(
+                    uuid: state.gdpr?.uuid,
+                    applies: state.gdpr?.applies,
+                    campaignResponse: $0
+                )
+
+                case .ccpa: state.ccpa = SPCCPAConsent(
+                    uuid: state.ccpa?.uuid,
+                    applies: state.ccpa?.applies,
+                    campaignResponse: $0
+                )
+
+                case .usnat: state.usnat = SPUSNatConsent(
+                    uuid: state.usnat?.uuid,
+                    applies: state.usnat?.applies,
+                    campaignResponse: $0
+                )
+
+                case .ios14: state.ios14?.lastMessage = LastMessageData(from: $0.messageMetaData)
+
+                case .unknown: break
             }
         }
 
         storage.spState = state
-        return (messages, userData.copy() as? SPUserData ?? userData)
+        return (
+            response.campaigns.compactMap { MessageToDisplay($0) },
+            userData.copy() as? SPUserData ?? userData
+        )
     }
 
     func messages(_ handler: @escaping MessagesAndConsentsHandler) {
