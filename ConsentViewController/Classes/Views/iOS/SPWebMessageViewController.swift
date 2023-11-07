@@ -35,11 +35,24 @@ import WebKit
         return nil
     }()
 
-    init(url: URL, messageId: String, contents: Data, campaignType: SPCampaignType, timeout: TimeInterval, delegate: SPMessageUIDelegate?, consentUUID: String?=nil) {
+    init(
+        url: URL,
+        messageId: String,
+        contents: Data,
+        campaignType: SPCampaignType,
+        timeout: TimeInterval,
+        delegate: SPMessageUIDelegate?,
+        consentUUID: String? = nil
+    ) {
         self.url = url
         self.contents = contents
-        self.consentUUID=consentUUID
-        super.init(messageId: messageId, campaignType: campaignType, timeout: timeout, delegate: delegate)
+        self.consentUUID = consentUUID
+        super.init(
+            messageId: messageId,
+            campaignType: campaignType,
+            timeout: timeout,
+            delegate: delegate
+        )
     }
 
     @available(*, unavailable)
@@ -174,17 +187,25 @@ import WebKit
     func getActionFrom(body: SPJson) -> SPAction? {
         guard
             let type = SPActionType(rawValue: body["type"]?.intValue ?? 0)
-        else { return nil }
-        var url = (body["pm_url"]?.stringValue ?? "")
-        if consentUUID != nil {
-            url += "&consentUUID="+(consentUUID ?? "")
+        else {
+            return nil
+        }
+        var pmUrl = URL(string: body["pm_url"]?.stringValue ?? "")
+        var uuidQueryParamName: String?
+        switch campaignType {
+            case .ccpa: uuidQueryParamName = "ccpaUUID"
+            case .gdpr: uuidQueryParamName = "consentUUID"
+            default: break
+        }
+        if let uuidQueryParamName, consentUUID != nil {
+            pmUrl = pmUrl?.appendQueryItems([uuidQueryParamName: consentUUID])
         }
         return SPAction(
             type: type,
             campaignType: campaignType,
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: body["payload"] ?? SPJson(),
-            pmurl: URL(string: url),
+            pmurl: pmUrl,
             customActionId: body["customActionId"]?.stringValue
         )
     }
