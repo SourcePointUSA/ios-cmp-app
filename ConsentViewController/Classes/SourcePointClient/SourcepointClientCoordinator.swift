@@ -124,6 +124,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         var hasGDPRLocalData: Bool { gdpr?.uuid != nil }
         var hasCCPALocalData: Bool { ccpa?.uuid != nil }
+        var hasUSNatLocalData: Bool { usnat?.uuid != nil }
 
         mutating func udpateGDPRStatus() {
             guard let gdpr = gdpr, let gdprMetadata = gdprMetaData else { return }
@@ -235,7 +236,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         idfaSstatus: idfaStatus
                     ) : nil,
                     usnat: campaigns.usnat != nil ? .init(
-                        targetingParams: campaigns.usnat?.targetingParams
+                        targetingParams: campaigns.usnat?.targetingParams,
+                        hasLocalData: state.hasUSNatLocalData,
+                        status: nil
                     ) : nil
                 ),
                 consentLanguage: language,

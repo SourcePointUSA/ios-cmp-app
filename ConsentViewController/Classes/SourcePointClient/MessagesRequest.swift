@@ -27,9 +27,10 @@ struct MessagesRequest: QueryParamEncodable {
                 let idfaSstatus: SPIDFAStatus
             }
 
-            // TODO: find out if there are other parameters needed
             struct USNat: QueryParamEncodable {
                 let targetingParams: SPTargetingParams?
+                let hasLocalData: Bool
+                let status: String?
             }
 
             let ccpa: CCPA?
@@ -124,9 +125,11 @@ extension MessagesRequest.Body.Campaigns.IOS14 {
 }
 
 extension MessagesRequest.Body.Campaigns.USNat {
-    init?(_ campaign: SPCampaign?) {
+    init?(_ campaign: SPCampaign?, hasLocalData: Bool, status: String?) {
         guard let campaign = campaign else { return nil }
 
         self.targetingParams = campaign.targetingParams
+        self.hasLocalData = hasLocalData
+        self.status = status
     }
 }
