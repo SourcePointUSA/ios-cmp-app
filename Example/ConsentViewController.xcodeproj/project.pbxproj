@@ -109,14 +109,12 @@
 		0B312FC82ABC507C00B62E23 /* SPCampaignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F272ABC504000B62E23 /* SPCampaignType.swift */; };
 		0B312FC92ABC507C00B62E23 /* SPAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2B2ABC504000B62E23 /* SPAction.swift */; };
 		0B312FCA2ABC507C00B62E23 /* SPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F282ABC504000B62E23 /* SPError.swift */; };
-		0B312FCB2ABC507C00B62E23 /* SPDateCreated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F292ABC504000B62E23 /* SPDateCreated.swift */; };
 		0B312FCC2ABC507C00B62E23 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2A2ABC504000B62E23 /* OSLogger.swift */; };
 		0B312FCD2ABC507C00B62E23 /* SPLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F252ABC504000B62E23 /* SPLocalStorage.swift */; };
 		0B312FCE2ABC507C00B62E23 /* SPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F262ABC504000B62E23 /* SPUserDefaults.swift */; };
 		0B312FCF2ABC507D00B62E23 /* SPCampaignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F272ABC504000B62E23 /* SPCampaignType.swift */; };
 		0B312FD02ABC507D00B62E23 /* SPAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2B2ABC504000B62E23 /* SPAction.swift */; };
 		0B312FD12ABC507D00B62E23 /* SPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F282ABC504000B62E23 /* SPError.swift */; };
-		0B312FD22ABC507D00B62E23 /* SPDateCreated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F292ABC504000B62E23 /* SPDateCreated.swift */; };
 		0B312FD32ABC507D00B62E23 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2A2ABC504000B62E23 /* OSLogger.swift */; };
 		0B312FD42ABC507D00B62E23 /* SPLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F252ABC504000B62E23 /* SPLocalStorage.swift */; };
 		0B312FD52ABC507D00B62E23 /* SPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F262ABC504000B62E23 /* SPUserDefaults.swift */; };
@@ -339,6 +337,8 @@
 		82E3D60528C64528004B1189 /* MessagesResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */; };
 		82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E3D60628C8F39B004B1189 /* CustomMatchers.swift */; };
 		82E5DBBC29E5A4C30083A054 /* SPLoggerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E5DBBB29E5A4C30083A054 /* SPLoggerMock.swift */; };
+		82E605342AFB86A10080E782 /* SPDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E605332AFB86A10080E782 /* SPDate.swift */; };
+		82E605352AFB86A10080E782 /* SPDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E605332AFB86A10080E782 /* SPDate.swift */; };
 		82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E2F2491019900DC01C9 /* HttpMock.swift */; };
 		82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */; };
 		82EA4E342491324400DC01C9 /* LocalStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E332491324400DC01C9 /* LocalStorageMock.swift */; };
@@ -471,7 +471,6 @@
 		0B312F262ABC504000B62E23 /* SPUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUserDefaults.swift; sourceTree = "<group>"; };
 		0B312F272ABC504000B62E23 /* SPCampaignType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignType.swift; sourceTree = "<group>"; };
 		0B312F282ABC504000B62E23 /* SPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPError.swift; sourceTree = "<group>"; };
-		0B312F292ABC504000B62E23 /* SPDateCreated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreated.swift; sourceTree = "<group>"; };
 		0B312F2A2ABC504000B62E23 /* OSLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
 		0B312F2B2ABC504000B62E23 /* SPAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPAction.swift; sourceTree = "<group>"; };
 		0B312F2D2ABC504000B62E23 /* SPUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUIColor.swift; sourceTree = "<group>"; };
@@ -736,6 +735,7 @@
 		82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesResponseSpec.swift; sourceTree = "<group>"; };
 		82E3D60628C8F39B004B1189 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomMatchers.swift; path = Helpers/CustomMatchers.swift; sourceTree = "<group>"; };
 		82E5DBBB29E5A4C30083A054 /* SPLoggerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPLoggerMock.swift; sourceTree = "<group>"; };
+		82E605332AFB86A10080E782 /* SPDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDate.swift; sourceTree = "<group>"; };
 		82EA4E2F2491019900DC01C9 /* HttpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HttpMock.swift; path = Helpers/HttpMock.swift; sourceTree = "<group>"; };
 		82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourcePointClientMock.swift; path = Helpers/SourcePointClientMock.swift; sourceTree = "<group>"; };
 		82EA4E332491324400DC01C9 /* LocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalStorageMock.swift; path = Helpers/LocalStorageMock.swift; sourceTree = "<group>"; };
@@ -930,6 +930,7 @@
 		0B312EEF2ABC504000B62E23 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				82E605332AFB86A10080E782 /* SPDate.swift */,
 				0B312EF02ABC504000B62E23 /* Constants.swift */,
 				0B312EF12ABC504000B62E23 /* SPIDFAStatus.swift */,
 				0B312EF22ABC504000B62E23 /* ConnectivityManager.swift */,
@@ -952,7 +953,6 @@
 				0B312F242ABC504000B62E23 /* LocalStorage */,
 				0B312F272ABC504000B62E23 /* SPCampaignType.swift */,
 				0B312F282ABC504000B62E23 /* SPError.swift */,
-				0B312F292ABC504000B62E23 /* SPDateCreated.swift */,
 				0B312F2A2ABC504000B62E23 /* OSLogger.swift */,
 				0B312F2B2ABC504000B62E23 /* SPAction.swift */,
 				0B312F2C2ABC504000B62E23 /* Views */,
@@ -3193,7 +3193,6 @@
 				0B312F8A2ABC506C00B62E23 /* SPPublisherData.swift in Sources */,
 				0B312F862ABC506C00B62E23 /* AddOrDeleteCustomConsentResponse.swift in Sources */,
 				0B312FB92ABC507700B62E23 /* SPURLExtensions.swift in Sources */,
-				0B312FCB2ABC507C00B62E23 /* SPDateCreated.swift in Sources */,
 				0B312FBA2ABC507700B62E23 /* SPString.swift in Sources */,
 				0B312F722ABC506C00B62E23 /* ChoiceResponses.swift in Sources */,
 				0B312FB82ABC507700B62E23 /* Bundle+Framework.swift in Sources */,
@@ -3223,6 +3222,7 @@
 				0B312FC92ABC507C00B62E23 /* SPAction.swift in Sources */,
 				0B312FAC2ABC507100B62E23 /* SPPrivacyManagerTab.swift in Sources */,
 				0B312F782ABC506C00B62E23 /* SourcepointClientCoordinator.swift in Sources */,
+				82E605342AFB86A10080E782 /* SPDate.swift in Sources */,
 				0B312F832ABC506C00B62E23 /* SimpleClient.swift in Sources */,
 				0B312F6B2ABC506700B62E23 /* SPConsentManager.swift in Sources */,
 				0B312FA42ABC507100B62E23 /* SPMessageUIDelegate.swift in Sources */,
@@ -3269,7 +3269,6 @@
 				0B312FDE2ABC509900B62E23 /* SPGDPRCategoryDetailsViewController.swift in Sources */,
 				0B312F9F2ABC506D00B62E23 /* AddOrDeleteCustomConsentResponse.swift in Sources */,
 				0B312FC22ABC507700B62E23 /* SPURLExtensions.swift in Sources */,
-				0B312FD22ABC507D00B62E23 /* SPDateCreated.swift in Sources */,
 				0B312FC32ABC507700B62E23 /* SPString.swift in Sources */,
 				0B312F8B2ABC506D00B62E23 /* ChoiceResponses.swift in Sources */,
 				0B312FC12ABC507700B62E23 /* Bundle+Framework.swift in Sources */,
@@ -3321,6 +3320,7 @@
 				0B312FC02ABC507700B62E23 /* Collection.swift in Sources */,
 				0B312FAE2ABC507200B62E23 /* SPUserData.swift in Sources */,
 				0B312F902ABC506D00B62E23 /* ConsentStatusMetadata.swift in Sources */,
+				82E605352AFB86A10080E782 /* SPDate.swift in Sources */,
 				0B312F8C2ABC506D00B62E23 /* QueryParamEncodableProtocol.swift in Sources */,
 				0B312FE32ABC509900B62E23 /* GDPRPMConsentSnapshot.swift in Sources */,
 				0B312F952ABC506D00B62E23 /* ErrorMetricsRequest.swift in Sources */,

@@ -41,7 +41,7 @@ public typealias SPGDPRPurposeId = Swift.String
   @objc public var acceptedCategories: [Swift.String] {
     @objc get
   }
-  public var dateCreated: ConsentViewController.SPDateCreated
+  public var dateCreated: ConsentViewController.SPDate
   @objc public var applies: Swift.Bool
   public var consentStatus: ConsentViewController.ConsentStatus
   @objc override dynamic open var description: Swift.String {
@@ -60,11 +60,6 @@ public typealias SPPublisherData = [Swift.String : ConsentViewController.AnyEnco
   public func encode(to encoder: any Swift.Encoder) throws
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc deinit
-}
-public struct SPDateCreated : Swift.Codable, Swift.Equatable {
-  public init(from decoder: any Swift.Decoder) throws
-  public func encode(to encoder: any Swift.Encoder) throws
-  public static func == (a: ConsentViewController.SPDateCreated, b: ConsentViewController.SPDateCreated) -> Swift.Bool
 }
 @objc @objcMembers open class SPPropertyName : ObjectiveC.NSObject, Swift.Codable {
   @objc override dynamic public var description: Swift.String {
@@ -98,7 +93,7 @@ public struct SPDateCreated : Swift.Codable, Swift.Equatable {
   }
   @objc public var uuid: Swift.String?
   @objc public var applies: Swift.Bool
-  public var dateCreated: ConsentViewController.SPDateCreated
+  public var dateCreated: ConsentViewController.SPDate
   public var GPPData: ConsentViewController.SPJson
   @objc override dynamic open var description: Swift.String {
     @objc get
@@ -341,6 +336,11 @@ extension ConsentViewController.SPCampaignType : Swift.Codable {
     get
   }
   public init?(rawValue: ConsentViewController.SPPrivacyManagerTab.RawValue)
+}
+public struct SPDate : Swift.Codable, Swift.Equatable {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func == (a: ConsentViewController.SPDate, b: ConsentViewController.SPDate) -> Swift.Bool
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class SPConsentManager : ObjectiveC.NSObject {
   @objc public static var shouldCallErrorMetrics: Swift.Bool
