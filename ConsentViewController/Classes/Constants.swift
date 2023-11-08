@@ -38,6 +38,7 @@ struct Constants {
         static let PV_DATA_URL = URL(string: "./v2/pv-data?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_GDPR_BASE_URL = URL(string: "./v2/choice/gdpr/?\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_CCPA_BASE_URL = URL(string: "./v2/choice/ccpa/?\(additionalData)", relativeTo: WRAPPER_API)!
+        static let CHOICE_USNAT_BASE_URL = URL(string: "./v2/choice/usnat/?\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_REJECT_ALL_URL = URL(string: "./v2/choice/reject-all/?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_CONSENT_ALL_URL = URL(string: "./v2/choice/consent-all/?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
     }
