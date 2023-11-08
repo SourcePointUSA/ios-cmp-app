@@ -102,6 +102,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
+            var vendorListId: String = ""
+
+            enum CodingKeys: String, CodingKey {
+                case additionsChangeDate, sampleRate, wasSampled, wasSampledAt
+                case vendorListId = "_id"
+            }
         }
 
         struct AttCampaign: Codable {
