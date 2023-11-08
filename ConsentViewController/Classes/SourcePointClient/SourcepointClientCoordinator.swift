@@ -869,6 +869,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             uuid = ccpaUUID
             uuidType = .ccpa
         }
+        if let usNatUUID = usnatUUID, usNatUUID.isNotEmpty() {
+            uuid = usNatUUID
+            uuidType = .usnat
+        }
         spClient.reportIdfaStatus(
             propertyId: propertyId,
             uuid: uuid,
