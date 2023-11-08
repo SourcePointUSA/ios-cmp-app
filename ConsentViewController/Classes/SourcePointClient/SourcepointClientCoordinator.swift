@@ -238,7 +238,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     usnat: campaigns.usnat != nil ? .init(
                         targetingParams: campaigns.usnat?.targetingParams,
                         hasLocalData: state.hasUSNatLocalData,
-                        status: nil
+                        consentStatus: state.usnat?.consentStatus ?? ConsentStatus()
                     ) : nil
                 ),
                 consentLanguage: language,
