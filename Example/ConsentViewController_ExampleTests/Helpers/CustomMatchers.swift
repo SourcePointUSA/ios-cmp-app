@@ -121,7 +121,7 @@ public func containQueryParam(_ expected: String) -> Predicate<URL> {
 }
 
 /// expect(url).to(containQueryParam(("name", "value")))
-public func containQueryParam(_ expected: (name: String, value: String)) -> Predicate<URL> {
+public func containQueryParam(_ name: String, withValue value: String) -> Predicate<URL> {
     Predicate { actual in
         guard let actual = try actual.evaluate(),
               let params = actual.queryParams
@@ -130,14 +130,14 @@ public func containQueryParam(_ expected: (name: String, value: String)) -> Pred
         }
         var pass = false
         var message = ""
-        if params.keys.contains(expected.name) {
-            if params.values.contains(expected.value) {
+        if params.keys.contains(name) {
+            if params.values.contains(value) {
                 pass = true
             } else {
-                message = "Expected param \(expected.name) to equal \(expected.value), but found \(params[expected.name] ?? "")"
+                message = "Expected param \(name) to equal \(value), but found \(params[name] ?? "")"
             }
         } else {
-            message = "Could not find query param with name \(expected.name) in \(actual.absoluteString)"
+            message = "Could not find query param with name \(name) in \(actual.absoluteString)"
         }
         return PredicateResult(bool: pass, message: .fail(message))
     }

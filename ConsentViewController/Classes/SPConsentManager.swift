@@ -168,6 +168,12 @@ import UIKit
         #if os(iOS)
 
         case .web:
+            var uuid: String?
+            switch type {
+                case .gdpr: uuid = spCoordinator.userData.gdpr?.consents?.uuid
+                case .ccpa: uuid = spCoordinator.userData.ccpa?.consents?.uuid
+                default: break
+            }
             return GenericWebMessageViewController(
                 url: url,
                 messageId: messageId,
@@ -175,7 +181,7 @@ import UIKit
                 campaignType: type,
                 timeout: messageTimeoutInSeconds,
                 delegate: self,
-                consentUUID: spCoordinator.userData.gdpr?.consents?.uuid
+                consentUUID: uuid
             )
         #endif
 
@@ -266,7 +272,7 @@ import UIKit
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.4.3"
+    public static let VERSION = "7.4.4"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 

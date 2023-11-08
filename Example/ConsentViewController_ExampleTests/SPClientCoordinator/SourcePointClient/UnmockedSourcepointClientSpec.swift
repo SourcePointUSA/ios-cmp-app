@@ -150,7 +150,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(response).to(beAnInstanceOf(MessagesResponse.self))
                                 expect(response.campaigns.count) == 2
                                 response.campaigns.forEach { campaign in
-                                    expect(campaign.url).to(containQueryParam(("consentLanguage", "ES")))
+                                    expect(campaign.url).to(containQueryParam("consentLanguage", withValue: "ES"))
                                 }
 
                             case .failure(let error):

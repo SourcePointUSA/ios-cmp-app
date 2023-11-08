@@ -9,15 +9,20 @@
 import Foundation
 @testable import ConsentViewController
 
-class MessageUIDelegate: SPMessageUIDelegate {
+class MessageUIDelegateSpy: SPMessageUIDelegate {
     var loadedWasCalled = false
     var onErrorWasCalled = false
+    var actionCalledWith: SPAction?
+    var onLoaded: ((UIViewController?) -> Void)?
 
     func loaded(_ controller: UIViewController) {
         loadedWasCalled = true
+        onLoaded?(controller)
     }
 
-    func action(_ action: ConsentViewController.SPAction, from controller: UIViewController) {}
+    func action(_ action: ConsentViewController.SPAction, from controller: UIViewController) {
+        actionCalledWith = action
+    }
 
     func onError(_ error: ConsentViewController.SPError) {
         onErrorWasCalled = true

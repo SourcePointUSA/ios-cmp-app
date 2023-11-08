@@ -36,7 +36,7 @@ func renderingAppMock(messageReadyDelayInSeconds: Int) -> String {
 class FaultyRenderingAppMock: WKWebView {
     override func load(_ request: URLRequest) -> WKNavigation? {
         loadHTMLString(
-            renderingAppMock(messageReadyDelayInSeconds: 4),
+            renderingAppMock(messageReadyDelayInSeconds: 3),
             baseURL: URL(string: "https://example.com")!
         )
     }
@@ -49,38 +49,97 @@ class RenderingAppMock: WKWebView {
             baseURL: URL(string: "https://example.com")!
         )
     }
+
+    func triggerShowOptionsAction() {
+        self.evaluateJavaScript("""
+            window.postMessage({
+                "name": "sp.hideMessage",
+                "actions": [{
+                    "type": "choice",
+                    "data": {
+                        "type": 12,
+                        "iframe_url": "https://cdn.privacy-mgmt.com"
+                    }
+                }]
+            }, "*")
+        """)
+    }
 }
 
-func loadMessage(with RenderingAppClass: WKWebView.Type) -> MessageUIDelegate {
-    let delegate = MessageUIDelegate()
+func loadMessage(
+    with RenderingAppClass: WKWebView.Type,
+    delegate: SPMessageUIDelegate,
+    campaignType: SPCampaignType = .unknown,
+    uuid: String? = nil
+) {
     let controller = GenericWebMessageViewController(
         url: URL(string: "https://example.com")!,
         messageId: "",
         contents: Data(),
-        campaignType: .unknown,
-        timeout: 3.0,
-        delegate: delegate
+        campaignType: campaignType,
+        timeout: 2.0,
+        delegate: delegate,
+        consentUUID: uuid
     )
     controller.webview = RenderingAppClass.init(frame: .zero, configuration: controller.webviewConfig!)
     controller.loadMessage()
-    return delegate
 }
 
 class GenericWebMessageViewControllerSpec: QuickSpec {
+    var delegate = MessageUIDelegateSpy() // swiftlint:disable:this weak_delegate
+
     override func spec() {
+        beforeEach {
+            self.delegate = MessageUIDelegateSpy()
+        }
+
         it("calls loaded when the rendering app dispatches a sp.showMessage event") {
-            let delegate = loadMessage(with: RenderingAppMock.self)
-            after(.seconds(5)) {
-                expect(delegate.loadedWasCalled).to(beTrue())
-                expect(delegate.onErrorWasCalled).to(beFalse())
+            loadMessage(with: RenderingAppMock.self, delegate: self.delegate)
+            after(.seconds(4)) {
+                expect(self.delegate.loadedWasCalled).to(beTrue())
+                expect(self.delegate.onErrorWasCalled).to(beFalse())
             }
         }
 
         it("calls onError if .loaded() is not called on the delegate before the timeout") {
-            let delegate = loadMessage(with: FaultyRenderingAppMock.self)
-            after(.seconds(5)) {
-                expect(delegate.loadedWasCalled).to(beFalse())
-                expect(delegate.onErrorWasCalled).to(beTrue())
+            loadMessage(with: FaultyRenderingAppMock.self, delegate: self.delegate)
+            after(.seconds(4)) {
+                expect(self.delegate.loadedWasCalled).to(beFalse())
+                expect(self.delegate.onErrorWasCalled).to(beTrue())
+            }
+        }
+
+        describe("when a show options action is dispatched") {
+            describe("and the campaign is gdpr") {
+                it("pmURL contains consentUUID") {
+                    self.delegate.onLoaded = { controller in
+                        ((controller as? GenericWebMessageViewController)?.webview as? RenderingAppMock)?.triggerShowOptionsAction()
+                    }
+                    loadMessage(
+                        with: RenderingAppMock.self,
+                        delegate: self.delegate,
+                        campaignType: .gdpr,
+                        uuid: "abc"
+                    )
+                    expect(self.delegate.actionCalledWith?.pmURL)
+                        .toEventually(containQueryParam("consentUUID", withValue: "abc"))
+                }
+            }
+
+            describe("and the campaign is ccpa") {
+                it("pmURL contains ccpaUUID") {
+                    self.delegate.onLoaded = { controller in
+                        ((controller as? GenericWebMessageViewController)?.webview as? RenderingAppMock)?.triggerShowOptionsAction()
+                    }
+                    loadMessage(
+                        with: RenderingAppMock.self,
+                        delegate: self.delegate,
+                        campaignType: .ccpa,
+                        uuid: "abc"
+                    )
+                    expect(self.delegate.actionCalledWith?.pmURL)
+                        .toEventually(containQueryParam("ccpaUUID", withValue: "abc"))
+                }
             }
         }
     }
