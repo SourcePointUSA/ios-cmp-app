@@ -35,6 +35,14 @@ struct CCPAChoiceResponse: Equatable {
     let GPPData: SPJson
 }
 
+struct USNatChoiceResponse: Equatable, Decodable {
+    let uuid, consentString: String
+    let categories: [String]
+    let dateCreated: SPDate
+    let webConsentPayload: SPWebConsentPayload?
+    let consentStatus: ConsentStatus
+}
+
 extension CCPAChoiceResponse: Decodable {
     enum CodingKeys: CodingKey {
         case uuid, dateCreated, consentedAll, rejectedAll,
