@@ -1,3 +1,6 @@
+# 7.4.4 (Nov, 8, 2023)
+* Fixed an issue where after triggering re-consent, seeing the 1st layer messaged and opening the CCPA PM, the consent toggles would show wrong value. [#515](https://github.com/SourcePointUSA/ios-cmp-app/pull/515)
+
 # 7.4.3 (Nov, 2, 2023)
 * [DIA-2895](https://sourcepoint.atlassian.net/browse/DIA-2895) Implement consent expiration. If `.expiration` date is in the past, when calling `.loadMessages`, the SDK will flush the consent object before triggering the message flow. In practical terms, this usually leads to the user being presented with a consent message, taking a consent action and the consent object being renewed. [#505](https://github.com/SourcePointUSA/ios-cmp-app/pull/505)[#506](https://github.com/SourcePointUSA/ios-cmp-app/pull/506)
 
