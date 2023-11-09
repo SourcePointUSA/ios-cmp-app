@@ -11,6 +11,12 @@ protocol ConsentSnapshot {
     func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble
 }
 
+public enum CategoryContentType: Int {
+    case consent = 1
+    case legitimate = 2
+    case specialFeatures = 3
+}
+
 class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCategoryManager {
     typealias VendorType = GDPRVendor
     typealias CategoryType = GDPRCategory
@@ -26,6 +32,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
     var toggledCategoriesIds: Set<String>
     var toggledConsentCategoriesIds: Set<String>
     var toggledLICategoriesIds: Set<String>
+    var toggledSpecialFeatures: Set<String>
 
     var consentVendorsWhosePurposesAreOff: [String] {
         toggledConsentVendorsIds
@@ -78,6 +85,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         toggledLIVendorsIds = Set<String>([])
         toggledConsentCategoriesIds = Set<String>([])
         toggledLICategoriesIds = Set<String>([])
+        toggledSpecialFeatures = Set<String>([])
     }
 
     convenience init(
@@ -86,6 +94,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         legIntVendors: [String]?,
         acceptedVendors: [String]?,
         acceptedCategories: [String]?,
+        acceptedSpecialFeatures: [String]?,
         hasConsentData: Bool,
         vendors: Set<GDPRVendor>,
         categories: Set<GDPRCategory>,
@@ -103,6 +112,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         )
         toggledVendorsIds.formUnion(acceptedVendors ?? [])
         toggledCategoriesIds.formUnion(acceptedCategories ?? [])
+        toggledSpecialFeatures.formUnion(acceptedSpecialFeatures ?? [])
         if hasConsentData {
             toggledConsentVendorsIds = Set<String>(acceptedVendors ?? [])
             toggledLIVendorsIds = Set<String>(legIntVendors ?? [])
@@ -124,6 +134,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         toggledCategoriesIds = []
         toggledConsentCategoriesIds = []
         toggledLICategoriesIds = []
+        toggledSpecialFeatures = []
         vendors = []
         categories = []
         specialPurposes = []
@@ -154,6 +165,13 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
                     legInt: toggledLIVendorsIds.contains(id),
                     vendorType: vendor.vendorType
                 )
+            },
+            specialFeatures: toggledSpecialFeatures.compactMap { id in
+                guard let feature = specialFeatures.first(where: { f in f._id == id}) else { return nil }
+                return GDPRPMPayload.Feature(
+                    _id: id,
+                    iabId: feature.iabId
+                )
             }
         )
     }
@@ -166,26 +184,38 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
 
     func onVendorOff(_ vendor: GDPRVendor) {}
 
-    func onCategoryOn(category: GDPRCategory, legInt: Bool) {
-        if legInt {
-            toggledLICategoriesIds.insert(category._id)
-            toggledLIVendorsIds.formUnion(category.uniqueLIVendorIds)
-        } else {
+    func onCategoryOn(category: GDPRCategory, type: CategoryContentType?) {
+        switch type {
+        case .consent:
             toggledConsentCategoriesIds.insert(category._id)
             toggledConsentVendorsIds.formUnion(category.uniqueConsentVendorIds)
+        case .legitimate:
+            toggledLICategoriesIds.insert(category._id)
+            toggledLIVendorsIds.formUnion(category.uniqueLIVendorIds)
+        case .specialFeatures:
+            toggledSpecialFeatures.insert(category._id)
+        case .none:
+            break
         }
-        toggledCategoriesIds.insert(category._id)
-        toggledVendorsIds.formUnion(category.uniqueVendorIds)
+        if type != .specialFeatures {
+            toggledCategoriesIds.insert(category._id)
+            toggledVendorsIds.formUnion(category.uniqueVendorIds)
+        }
         onConsentsChange()
     }
 
-    func onCategoryOff(category: GDPRCategory, legInt: Bool) {
-        if legInt {
-            toggledLICategoriesIds.remove(category._id)
-            toggledLIVendorsIds.subtract(liVendorsWhosePurposesAreOff)
-        } else {
+    func onCategoryOff(category: GDPRCategory, type: CategoryContentType?) {
+        switch type {
+        case .consent:
             toggledConsentCategoriesIds.remove(category._id)
             toggledConsentVendorsIds.subtract(consentVendorsWhosePurposesAreOff)
+        case .legitimate:
+            toggledLICategoriesIds.remove(category._id)
+            toggledLIVendorsIds.subtract(liVendorsWhosePurposesAreOff)
+        case .specialFeatures:
+            toggledSpecialFeatures.remove(category._id)
+        case .none:
+            break
         }
         onConsentsChange()
     }
