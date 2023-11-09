@@ -480,13 +480,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func consentStatusMetadataFromState(_ campaign: CampaignConsent?, _ hasLocalData: Bool) -> ConsentStatusMetaData.Campaign? {
+    func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid,
-            hasLocalData: hasLocalData,
+            hasLocalData: false,
             idfaStatus: SPIDFAStatus.current()
         )
     }
@@ -533,14 +533,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             spClient.consentStatus(
                 propertyId: propertyId,
                 metadata: .init(
-                    gdpr: consentStatusMetadataFromState(
-                        state.gdpr,
-                        false
-                    ),
-                    ccpa: consentStatusMetadataFromState(
-                        state.ccpa,
-                        false
-                    )
+                    gdpr: consentStatusMetadataFromState(state.gdpr),
+                    ccpa: consentStatusMetadataFromState(state.ccpa),
                 ),
                 authId: authId,
                 includeData: includeData
