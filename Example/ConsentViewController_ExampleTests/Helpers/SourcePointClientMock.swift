@@ -21,6 +21,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var errorMetricsCalledWith: [String: Any?]!
     var postGDPRActionCalledWith: [String: Any?]!
     var postCCPAActionCalledWith: [String: Any?]!
+    var postUSNatActionCalledWith: [String: Any?]?
 
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
@@ -166,6 +167,30 @@ class SourcePointClientMock: SourcePointProtocol {
                 legIntVendors: nil,
                 vendors: nil,
                 categories: nil
+            )))
+        }
+    }
+
+    func postUSNatAction(
+        actionType: SPActionType,
+        body: USNatChoiceBody,
+        handler: @escaping USNatConsentHandler
+    ) {
+        postUSNatActionCalledWith = [
+            "actionType": actionType,
+            "body": body,
+            "handler": handler
+        ]
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(USNatChoiceResponse(
+                uuid: "",
+                consentString: "",
+                categories: [],
+                dateCreated: .now(),
+                webConsentPayload: nil,
+                consentStatus: .init()
             )))
         }
     }

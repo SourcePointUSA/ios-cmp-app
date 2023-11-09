@@ -30,7 +30,7 @@ struct MessagesRequest: QueryParamEncodable {
             struct USNat: QueryParamEncodable {
                 let targetingParams: SPTargetingParams?
                 let hasLocalData: Bool
-                let status: String?
+                let consentStatus: ConsentStatus
             }
 
             let ccpa: CCPA?
@@ -125,11 +125,11 @@ extension MessagesRequest.Body.Campaigns.IOS14 {
 }
 
 extension MessagesRequest.Body.Campaigns.USNat {
-    init?(_ campaign: SPCampaign?, hasLocalData: Bool, status: String?) {
+    init?(_ campaign: SPCampaign?, hasLocalData: Bool, consentStatus: ConsentStatus) {
         guard let campaign = campaign else { return nil }
 
         self.targetingParams = campaign.targetingParams
         self.hasLocalData = hasLocalData
-        self.status = status
+        self.consentStatus = consentStatus
     }
 }

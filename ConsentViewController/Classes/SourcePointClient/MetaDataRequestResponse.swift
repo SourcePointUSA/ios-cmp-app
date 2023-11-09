@@ -21,10 +21,15 @@ struct MetaDataResponse: Decodable, Equatable {
         let sampleRate: Float
     }
     struct USNat: Decodable, Equatable {
-        let _id: String
+        let vendorListId: String
         let additionsChangeDate: SPDate
         let applies: Bool
         let sampleRate: Float
+
+        enum CodingKeys: String, CodingKey {
+            case additionsChangeDate, applies, sampleRate
+            case vendorListId = "_id"
+        }
     }
 
     let ccpa: CCPA?

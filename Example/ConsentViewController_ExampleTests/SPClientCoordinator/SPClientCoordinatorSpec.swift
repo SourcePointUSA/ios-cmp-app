@@ -504,6 +504,29 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
+        it("shouldCallGETChoice") {
+            [
+                SPAction(type: .AcceptAll, campaignType: .gdpr),
+                SPAction(type: .RejectAll, campaignType: .gdpr),
+                SPAction(type: .AcceptAll, campaignType: .ccpa),
+                SPAction(type: .RejectAll, campaignType: .ccpa)
+            ].forEach {
+                expect(coordinator.shouldCallGetChoice(for: $0))
+                    .to(beTrue(), description: "For action \($0.type), \($0.campaignType.rawValue)")
+            }
+
+            [
+                SPAction(type: .SaveAndExit, campaignType: .gdpr),
+                SPAction(type: .SaveAndExit, campaignType: .ccpa),
+                SPAction(type: .AcceptAll, campaignType: .usnat),
+                SPAction(type: .RejectAll, campaignType: .usnat),
+                SPAction(type: .SaveAndExit, campaignType: .usnat)
+            ].forEach {
+                expect(coordinator.shouldCallGetChoice(for: $0))
+                    .to(beFalse(), description: "For action \($0.type), \($0.campaignType.rawValue)")
+            }
+        }
+
         // TODO: remove fdescribe
         fdescribe("a property with USNat campaign") {
             beforeEach {
@@ -516,11 +539,13 @@ class SPClientCoordinatorSpec: QuickSpec {
                 )
             }
 
-            it("returns empty usnat user data with applies true") {
+            it("returns usnat consents data with applies true") {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { result in
                         switch result {
                             case .success(let (messages, consents)):
+                                expect(coordinator.state.usNatMetaData?.vendorListId).notTo(beNil())
+                                expect(coordinator.state.usNatMetaData?.additionsChangeDate).notTo(beNil())
                                 expect(consents.usnat?.consents?.applies).to(beTrue())
                                 expect(consents.usnat?.consents?.consentString).notTo(beEmpty())
                                 expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
@@ -560,6 +585,34 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 fail(error.failureReason)
                         }
                         done()
+                    }
+                }
+            }
+
+            describe("when calling reportAction") {
+                it("returns a usnat consent") {
+                    waitUntil { done in
+                        coordinator.reportAction(SPAction(
+                            type: .SaveAndExit,
+                            campaignType: .usnat,
+                            pmPayload: try! SPJson([
+                                "categories": [],
+                                "shownCategories": [],
+                                "vendors": [],
+                                "lan": "en",
+                                "privacyManagerId": "26087"
+                            ])
+                        )) { result in
+                            switch result {
+                                case .success(let userData):
+                                    expect(userData.usnat?.consents?.uuid).notTo(beNil())
+                                    expect(coordinator.userData.usnat).to(equal(userData.usnat))
+
+                                case .failure(let error):
+                                    fail(error.failureReason)
+                            }
+                            done()
+                        }
                     }
                 }
             }
