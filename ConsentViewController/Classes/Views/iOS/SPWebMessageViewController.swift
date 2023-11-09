@@ -190,7 +190,7 @@ import WebKit
         else {
             return nil
         }
-        var pmUrl = URL(string: body["pm_url"]?.stringValue ?? "")
+        var pmUrl = URL(string: body["pmUrl"]?.stringValue ?? "")
         var uuidQueryParamName: String?
         switch campaignType {
             case .ccpa: uuidQueryParamName = "ccpaUUID"
