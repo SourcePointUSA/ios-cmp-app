@@ -528,7 +528,19 @@ class SPClientCoordinatorSpec: QuickSpec {
         }
 
         // TODO: remove fdescribe
-        fdescribe("a property with USNat campaign") {
+        describe("a property with USNat campaign") {
+            let saveAndExitAction = SPAction(
+                type: .SaveAndExit,
+                campaignType: .usnat,
+                pmPayload: try! SPJson([
+                    "categories": [],
+                    "shownCategories": [],
+                    "vendors": [],
+                    "lan": "en",
+                    "privacyManagerId": "26087"
+                ])
+            )
+
             beforeEach {
                 coordinator = SourcepointClientCoordinator(
                     accountId: accountId,
@@ -537,6 +549,39 @@ class SPClientCoordinatorSpec: QuickSpec {
                     campaigns: SPCampaigns(usnat: SPCampaign(targetingParams: ["newUser": "true"])),
                     storage: LocalStorageMock()
                 )
+            }
+
+            describe("with authId") {
+                it("persists consent even after cleaning all data") {
+                    waitUntil { done in
+                        let authId = UUID().uuidString
+
+                        coordinator.loadMessages(forAuthId: authId, pubData: nil) { _ in
+                            coordinator.reportAction(saveAndExitAction) { result in
+                                let actionUserData = try? result.get()
+                                let actionUuid = actionUserData?.usnat?.consents?.uuid
+                                expect(actionUuid).notTo(beNil())
+
+                                coordinator = SourcepointClientCoordinator(
+                                    accountId: accountId,
+                                    propertyName: try! SPPropertyName("staging.mobile.demo"),
+                                    propertyId: 8292,
+                                    campaigns: SPCampaigns(usnat: SPCampaign(targetingParams: ["newUser": "true"])),
+                                    storage: LocalStorageMock()
+                                )
+
+                                expect(coordinator.userData.usnat?.consents?.uuid).to(beNil())
+
+                                coordinator.loadMessages(forAuthId: authId, pubData: nil) { messagesResult in
+                                    let (_, userData) = try! messagesResult.get()
+                                    expect(userData.usnat?.consents?.uuid).to(equal(actionUuid))
+
+                                    done()
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             it("returns usnat consents data with applies true") {
@@ -592,17 +637,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             describe("when calling reportAction") {
                 it("returns a usnat consent") {
                     waitUntil { done in
-                        coordinator.reportAction(SPAction(
-                            type: .SaveAndExit,
-                            campaignType: .usnat,
-                            pmPayload: try! SPJson([
-                                "categories": [],
-                                "shownCategories": [],
-                                "vendors": [],
-                                "lan": "en",
-                                "privacyManagerId": "26087"
-                            ])
-                        )) { result in
+                        coordinator.reportAction(saveAndExitAction) { result in
                             switch result {
                                 case .success(let userData):
                                     expect(userData.usnat?.consents?.uuid).notTo(beNil())
