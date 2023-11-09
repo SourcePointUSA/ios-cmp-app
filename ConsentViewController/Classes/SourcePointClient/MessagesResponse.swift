@@ -151,6 +151,75 @@ extension Consent: Codable {
         default: break
         }
     }
+
+    func toConsent(defaults: SPUSNatConsent?, messageMetaData: MessageMetaData?) -> SPUSNatConsent? {
+        switch self {
+            case .usnat(let consents):
+                return SPUSNatConsent(
+                    uuid: defaults?.uuid,
+                    applies: defaults?.applies ?? false,
+                    dateCreated: consents.dateCreated,
+                    consentString: consents.consentString,
+                    webConsentPayload: consents.webConsentPayload,
+                    lastMessage: LastMessageData(from: messageMetaData),
+                    categories: consents.categories,
+                    consentStatus: consents.consentStatus
+                )
+
+            default:
+                return defaults?.copy() as? SPUSNatConsent
+        }
+    }
+
+    func toConsent(defaults: SPCCPAConsent?, messageMetaData: MessageMetaData?) -> SPCCPAConsent? {
+        switch self {
+            case .ccpa(let consents):
+                return SPCCPAConsent(
+                    uuid: defaults?.uuid,
+                    status: consents.status,
+                    rejectedVendors: consents.rejectedVendors,
+                    rejectedCategories: consents.rejectedCategories,
+                    signedLspa: consents.signedLspa,
+                    childPmId: consents.childPmId,
+                    applies: defaults?.applies ?? false,
+                    dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
+                    lastMessage: LastMessageData(from: messageMetaData),
+                    consentStatus: consents.consentStatus,
+                    webConsentPayload: consents.webConsentPayload,
+                    GPPData: consents.GPPData
+                )
+
+            default:
+                return defaults?.copy() as? SPCCPAConsent
+        }
+    }
+
+    func toConsent(defaults: SPGDPRConsent?, messageMetaData: MessageMetaData?) -> SPGDPRConsent? {
+        switch self {
+            case .gdpr(let consents):
+                return SPGDPRConsent(
+                    uuid: defaults?.uuid,
+                    vendorGrants: consents.vendorGrants,
+                    euconsent: consents.euconsent,
+                    tcfData: consents.tcfData,
+                    childPmId: consents.childPmId,
+                    dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
+                    applies: defaults?.applies ?? false,
+                    consentStatus: consents.consentStatus,
+                    lastMessage: LastMessageData(from: messageMetaData),
+                    webConsentPayload: consents.webConsentPayload,
+                    legIntCategories: consents.legIntCategories,
+                    legIntVendors: consents.legIntVendors,
+                    vendors: consents.vendors,
+                    categories: consents.categories
+                )
+
+            default:
+                return defaults?.copy() as? SPGDPRConsent
+        }
+    }
 }
 
 struct MessageMetaData: Equatable {
