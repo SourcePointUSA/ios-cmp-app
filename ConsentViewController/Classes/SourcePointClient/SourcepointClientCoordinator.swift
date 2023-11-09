@@ -185,7 +185,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var needsNewConsentData: Bool {
         migratingUser || (
             state.localVersion != State.version &&
-            (state.gdpr?.uuid != nil || state.ccpa?.uuid != nil)
+            (
+                state.gdpr?.uuid != nil ||
+                state.ccpa?.uuid != nil ||
+                state.usnat?.uuid != nil
+            )
         )
     }
 
