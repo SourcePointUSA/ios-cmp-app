@@ -150,9 +150,13 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 // MARK: UITableViewDataSource
 extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
     func currentCategory(_ index: IndexPath) -> GDPRCategory {
-        displayingLegIntCategories ?
+        if index.section >= 2 {
+            return sections[index.section].contentConsent[index.row]
+        } else {
+            return displayingLegIntCategories ?
             sections[index.section].contentLegIntCategory[index.row] :
             sections[index.section].contentConsent[index.row]
+        }
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -194,14 +198,21 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         let category = currentCategory(indexPath)
         cell.identifier = category._id
         cell.labelText = category.name
-        if displayingLegIntCategories {
-            cell.isOn = section == 0 || section == 3 ?
-                consentsSnapshot.toggledLICategoriesIds.contains(category._id) :
-                nil
-        } else {
-            cell.isOn = section == 0 || section == 3 ?
-                consentsSnapshot.toggledConsentCategoriesIds.contains(category._id) :
-                nil
+        switch section {
+        case 0:
+            if displayingLegIntCategories {
+                cell.contentType = .legitimate
+                cell.isOn = consentsSnapshot.toggledLICategoriesIds.contains(category._id)
+            } else {
+                cell.contentType = .consent
+                cell.isOn = consentsSnapshot.toggledConsentCategoriesIds.contains(category._id)
+            }
+        case 3:
+            cell.contentType = .specialFeatures
+            cell.isOn = consentsSnapshot.toggledSpecialFeatures.contains(category._id)
+        default:
+            cell.contentType = nil
+            cell.isOn = nil
         }
         cell.selectable = true
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
@@ -229,6 +240,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell
         let categoryDetailsVC = SPGDPRCategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
@@ -239,8 +251,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         )
         categoryDetailsVC.category = currentCategory(indexPath)
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
-        categoryDetailsVC.displayingLegIntCategories = displayingLegIntCategories
-        categoryDetailsVC.purposeToggleActive = indexPath.section == 0
+        categoryDetailsVC.categoryType = cell?.contentType
+        categoryDetailsVC.purposeToggleActive = indexPath.section == 0 || indexPath.section == 3
         present(categoryDetailsVC, animated: true)
     }
 }
