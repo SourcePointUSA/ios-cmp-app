@@ -15,6 +15,15 @@ class ViewController: UIViewController {
     var sdkStatus: SDKStatus = .notStarted
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     var myVendorAccepted: VendorStatus = .Unknown
+
+    // Since the UsNat scenarios don't have a consent gate (i.e. "No Action" -> Show Message Always)
+    // the scenario relies on a targeting param pair (`"newUser": true`) in order to show a message.
+    // We set this targeting param depending if the usnat uuid is different than nil.
+    var userUuid: String? {
+        get { UserDefaults.standard.string(forKey: "myApp_userUuid") }
+        set { UserDefaults.standard.set(newValue, forKey: "myApp_userUuid") }
+    }
+
     lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
         propertyId: 16893,
@@ -29,13 +38,18 @@ class ViewController: UIViewController {
 
     lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: config.accountId,
-        propertyId: config.propertyId,
+//        propertyId: config.propertyId,
+        propertyId: 8292,
         // swiftlint:disable:next force_try
-        propertyName: try! SPPropertyName(config.propertyName),
+        propertyName: try! SPPropertyName("staging.mobile.demo"),
+//        propertyName: try! SPPropertyName(config.propertyName),
         campaigns: SPCampaigns(
-            gdpr: config.gdpr ? SPCampaign() : nil,
-            ccpa: config.ccpa ? SPCampaign() : nil,
-            ios14: config.att ? SPCampaign() : nil
+//            gdpr: config.gdpr ? SPCampaign() : nil,
+//            ccpa: config.ccpa ? SPCampaign() : nil,
+//            ios14: config.att ? SPCampaign() : nil,
+            usnat: SPCampaign(
+                targetingParams: ["newUser": String(userUuid == nil)]
+            )
         ),
         language: config.language,
         delegate: self
@@ -123,6 +137,7 @@ extension ViewController: SPDelegate {
 
     func onSPFinished(userData: SPUserData) {
         print("SDK DONE")
+        userUuid = userData.usnat?.consents?.uuid
         sdkStatus = .finished
         updateUI()
     }
