@@ -42,6 +42,7 @@ struct ChoiceAllResponse: Decodable {
         let legIntVendors: [String]?
         let vendors: [String]?
         let categories: [String]?
+        let specialFeatures: [String]?
     }
 
     let gdpr: GDPR?
