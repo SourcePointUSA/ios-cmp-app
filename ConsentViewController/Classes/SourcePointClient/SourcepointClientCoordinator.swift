@@ -523,6 +523,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.webConsentPayload = ccpa.webConsentPayload
             state.ccpa?.GPPData = ccpa.GPPData ?? SPJson()
         }
+        if let usnat = response.consentStatusData.usnat {
+            state.usnat = SPUSNatConsent(
+                uuid: usnat.uuid,
+                applies: state.usnat?.applies ?? false,
+                dateCreated: usnat.dateCreated,
+                consentString: usnat.consentString,
+                webConsentPayload: usnat.webConsentPayload,
+                categories: usnat.categories,
+                consentStatus: usnat.consentStatus
+            )
+        }
 
         state.localVersion = State.version
         storage.spState = state
@@ -535,6 +546,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 metadata: .init(
                     gdpr: consentStatusMetadataFromState(state.gdpr),
                     ccpa: consentStatusMetadataFromState(state.ccpa),
+                    usnat: consentStatusMetadataFromState(state.usnat)
                 ),
                 authId: authId,
                 includeData: includeData
@@ -559,22 +571,19 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         response.campaigns.forEach {
             switch $0.type {
-                case .gdpr: state.gdpr = SPGDPRConsent(
-                    uuid: state.gdpr?.uuid,
-                    applies: state.gdpr?.applies,
-                    campaignResponse: $0
+                case .gdpr: state.gdpr = $0.userConsent.toConsent(
+                    defaults: state.gdpr,
+                    messageMetaData: $0.messageMetaData
                 )
 
-                case .ccpa: state.ccpa = SPCCPAConsent(
-                    uuid: state.ccpa?.uuid,
-                    applies: state.ccpa?.applies,
-                    campaignResponse: $0
+                case .ccpa: state.ccpa = $0.userConsent.toConsent(
+                    defaults: state.ccpa,
+                    messageMetaData: $0.messageMetaData
                 )
 
-                case .usnat: state.usnat = SPUSNatConsent(
-                    uuid: state.usnat?.uuid,
-                    applies: state.usnat?.applies,
-                    campaignResponse: $0
+                case .usnat: state.usnat = $0.userConsent.toConsent(
+                    defaults: state.usnat,
+                    messageMetaData: $0.messageMetaData
                 )
 
                 case .ios14: state.ios14?.lastMessage = LastMessageData(from: $0.messageMetaData)
