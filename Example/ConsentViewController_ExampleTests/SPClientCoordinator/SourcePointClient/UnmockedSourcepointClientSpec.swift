@@ -15,7 +15,7 @@ import Quick
 
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
-        let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
+        let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil, usnat: nil)
         let propertyName = try! SPPropertyName("tests.unified-script.com")
         let accountId = 22
         let propertyId = 17_801
@@ -91,6 +91,13 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 uuid: nil,
                                 hasLocalData: false,
                                 idfaStatus: nil
+                            ),
+                            usnat: .init(
+                                applies: true,
+                                dateCreated: nil,
+                                uuid: nil,
+                                hasLocalData: false,
+                                idfaStatus: nil
                             )
                         ),
                         authId: "user_auth_id",
@@ -138,10 +145,10 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             idfaStatus: nil,
                             includeData: IncludeData(gppConfig: nil)
                         ),
-                        metadata: MessagesRequest.MetaData(
-                            ccpa: MessagesRequest.MetaData.Campaign(applies: true),
-                            gdpr: MessagesRequest.MetaData.Campaign(applies: true),
-                            usnat: MessagesRequest.MetaData.Campaign(applies: true)
+                        metadata: .init(
+                            ccpa: .init(applies: true),
+                            gdpr: .init(applies: true),
+                            usnat: .init(applies: true)
                         ),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
                     )) {

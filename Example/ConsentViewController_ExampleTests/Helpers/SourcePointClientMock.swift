@@ -86,7 +86,7 @@ class SourcePointClientMock: SourcePointProtocol {
             } else {
                 handler(.success(
                     ConsentStatusResponse(
-                        consentStatusData: .init(gdpr: nil, ccpa: nil),
+                        consentStatusData: .init(gdpr: nil, ccpa: nil, usnat: nil),
                         localState: SPJson())
                 ))
             }
