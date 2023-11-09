@@ -452,6 +452,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
         if let usnatMetaData = response.usnat {
             state.usnat?.applies = usnatMetaData.applies
+            state.usNatMetaData?.vendorListId = usnatMetaData.vendorListId
+            state.usNatMetaData?.additionsChangeDate = usnatMetaData.additionsChangeDate
             state.usNatMetaData?.updateSampleFields(usnatMetaData.sampleRate)
         }
         storage.spState = state

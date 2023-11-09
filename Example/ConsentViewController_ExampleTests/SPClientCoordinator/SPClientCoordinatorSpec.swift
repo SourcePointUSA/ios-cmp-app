@@ -539,11 +539,13 @@ class SPClientCoordinatorSpec: QuickSpec {
                 )
             }
 
-            it("returns empty usnat user data with applies true") {
+            it("returns usnat consents data with applies true") {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { result in
                         switch result {
                             case .success(let (messages, consents)):
+                                expect(coordinator.state.usNatMetaData?.vendorListId).notTo(beNil())
+                                expect(coordinator.state.usNatMetaData?.additionsChangeDate).notTo(beNil())
                                 expect(consents.usnat?.consents?.applies).to(beTrue())
                                 expect(consents.usnat?.consents?.consentString).notTo(beEmpty())
                                 expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
