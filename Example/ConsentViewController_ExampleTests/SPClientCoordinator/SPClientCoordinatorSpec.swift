@@ -504,7 +504,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        it("shouldCallGETChoice") {
+        fit("shouldCallGETChoice") {
             [
                 SPAction(type: .AcceptAll, campaignType: .gdpr),
                 SPAction(type: .RejectAll, campaignType: .gdpr),
@@ -647,6 +647,32 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     fail(error.failureReason)
                             }
                             done()
+                        }
+                    }
+                }
+            }
+
+            fdescribe("and expiration date is greater than current date") {
+                it("erases consent data and returns a message") {
+                    SPConsentManager.clearAllData()
+
+                    waitUntil { done in
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                            coordinator.reportAction(saveAndExitAction) { _ in
+                                let firstUUID = coordinator.state.usnat?.uuid
+                                expect(firstUUID).notTo(beNil())
+
+                                coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                    expect(coordinator.state.usnat?.uuid).to(equal(firstUUID))
+
+                                    coordinator.state.usnat?.expirationDate = SPDate(date: .yesterday)
+
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                        expect(coordinator.state.usnat?.uuid).to(beNil())
+                                        done()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
