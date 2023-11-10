@@ -31,6 +31,7 @@ struct Constants {
         static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
         static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
         static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
+        static let USNAT_PM_URL = URL(string: "./us_pm/index.html", relativeTo: SP_ROOT)!
         static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
         static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let META_DATA_URL = URL(string: "./v2/meta-data?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!

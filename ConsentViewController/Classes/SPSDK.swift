@@ -19,7 +19,14 @@ import Foundation
     @objc func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
 }
 
-@objc public protocol SPSDK: SPGDPR, SPCCPA, SPMessageUIDelegate {
+@available(iOS 10, *)
+@objc public protocol SPUSNAT {
+    @objc var usnatApplies: Bool { get }
+
+    @objc func loadUSNatPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
+}
+
+@objc public protocol SPSDK: SPGDPR, SPCCPA, SPUSNAT, SPMessageUIDelegate {
     @objc static var VERSION: String { get }
     @objc var cleanUserDataOnError: Bool { get set }
     @objc var messageTimeoutInSeconds: TimeInterval { get set }
@@ -80,5 +87,9 @@ public extension SPSDK {
 
     func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         loadGDPRPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
+    }
+
+    func loadUSNatPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        loadUSNatPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
     }
 }
