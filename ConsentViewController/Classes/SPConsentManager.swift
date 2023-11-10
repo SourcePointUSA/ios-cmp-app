@@ -55,6 +55,7 @@ import UIKit
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     var ccpaUUID: String? { spCoordinator.userData.ccpa?.consents?.uuid }
     var gdprUUID: String? { spCoordinator.userData.gdpr?.consents?.uuid }
+    var usnatUUID: String? { spCoordinator.userData.usnat?.consents?.uuid }
     var messagesToShow = 0
     var responsesToReceive = 0
 
@@ -217,14 +218,10 @@ import UIKit
     }
 
     #if os(iOS)
-    func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL) {
-        let pmId = URLComponents(url: pmURL, resolvingAgainstBaseURL: false)?
-            .queryItems?
-            .first { $0.name == "message_id" }?
-            .value ?? ""
+    func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL, messageId: String) {
         GenericWebMessageViewController(
             url: pmURL,
-            messageId: pmId,
+            messageId: messageId,
             contents: Data(),
             campaignType: campaignType,
             timeout: messageTimeoutInSeconds,
@@ -277,6 +274,8 @@ import UIKit
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
     public var ccpaApplies: Bool { spCoordinator.userData.ccpa?.applies ?? false }
+
+    public var usnatApplies: Bool { spCoordinator.userData.usnat?.applies ?? false }
 
     /// Returns the user data **stored in the `UserDefaults`**.
     public var userData: SPUserData { spCoordinator.userData }
@@ -351,7 +350,7 @@ import UIKit
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
-        loadWebPrivacyManager(.gdpr, pmUrl)
+        loadWebPrivacyManager(.gdpr, pmUrl, messageId: usedId)
         #elseif os(tvOS)
         spClient.getGDPRMessage(propertyId: String(propertyId), consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
@@ -401,7 +400,7 @@ import UIKit
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
-        loadWebPrivacyManager(.ccpa, pmUrl)
+        loadWebPrivacyManager(.ccpa, pmUrl, messageId: usedId)
         #elseif os(tvOS)
         spClient.getCCPAMessage(propertyId: String(propertyId), consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
@@ -426,6 +425,33 @@ import UIKit
             }
         }
         #endif
+    }
+
+    func buildUSNatPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default) -> URL? {
+        let pmUrl = Constants.Urls.USNAT_PM_URL.appendQueryItems([
+            "message_id": usedId,
+            "pmTab": pmTab.rawValue,
+            "uuid": usnatUUID, // TODO: this might change to usnatUUID
+            "idfaStatus": idfaStatus.description,
+            "site_id": String(propertyId),
+            "consentLanguage": messageLanguage.rawValue
+        ])
+        return pmUrl
+    }
+
+    @available(iOS 10, *)
+    public func loadUSNatPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        messagesToShow += 1
+        var usedId: String = id
+        if useGroupPmIfAvailable {
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
+        }
+
+        guard let pmUrl = buildUSNatPmUrl(usedId: usedId, pmTab: tab) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
+        loadWebPrivacyManager(.usnat, pmUrl, messageId: usedId)
     }
 
     @nonobjc func handleCustomConsentResult(
