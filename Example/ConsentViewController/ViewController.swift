@@ -26,30 +26,29 @@ class ViewController: UIViewController {
 
     lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
-        propertyId: 16893,
-        propertyName: "mobile.multicampaign.demo",
-        gdpr: true,
-        ccpa: true,
-        att: true,
+        propertyId: 8292,
+        propertyName: "staging.mobile.demo",
+        gdpr: false,
+        ccpa: false,
+        att: false,
+        usnat: true,
         language: .BrowserDefault,
         gdprPmId: "488393",
-        ccpaPmId: "509688"
+        ccpaPmId: "509688",
+        usnatPmId: "25950"
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
         accountId: config.accountId,
-//        propertyId: config.propertyId,
-        propertyId: 8292,
-        // swiftlint:disable:next force_try
-        propertyName: try! SPPropertyName("staging.mobile.demo"),
-//        propertyName: try! SPPropertyName(config.propertyName),
+        propertyId: config.propertyId,
+        propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
         campaigns: SPCampaigns(
-//            gdpr: config.gdpr ? SPCampaign() : nil,
-//            ccpa: config.ccpa ? SPCampaign() : nil,
-//            ios14: config.att ? SPCampaign() : nil,
-            usnat: SPCampaign(
+            gdpr: config.gdpr ? SPCampaign() : nil,
+            ccpa: config.ccpa ? SPCampaign() : nil,
+            usnat: config.usnat ? SPCampaign(
                 targetingParams: ["newUser": String(userUuid == nil)]
-            )
+            ) : nil,
+            ios14: config.att ? SPCampaign() : nil
         ),
         language: config.language,
         delegate: self
@@ -62,6 +61,7 @@ class ViewController: UIViewController {
     @IBOutlet var deleteMyVendorButton: UIButton!
     @IBOutlet var gdprPMButton: UIButton!
     @IBOutlet var ccpaPMButton: UIButton!
+    @IBOutlet weak var usnatPMButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +88,10 @@ class ViewController: UIViewController {
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
         consentManager.loadCCPAPrivacyManager(withId: config.ccpaPmId!)
+    }
+
+    @IBAction func onUSNatPrivacyManagerTap(_ sender: Any) {
+        consentManager.loadUSNatPrivacyManager(withId: config.usnatPmId!)
     }
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
@@ -154,7 +158,11 @@ extension ViewController {
     func updateUI() {
         updateIDFAStatusLabel()
         updateMyVendorUI()
-        updatePMButtons(ccpaApplies: consentManager.ccpaApplies, gdprApplies: consentManager.gdprApplies)
+        updatePMButtons(
+            ccpaApplies: consentManager.ccpaApplies,
+            gdprApplies: consentManager.gdprApplies,
+            usnatApplies: consentManager.usnatApplies
+        )
         updateSDKStatusLabel()
     }
 
@@ -189,9 +197,10 @@ extension ViewController {
         }
     }
 
-    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool) {
+    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool, usnatApplies: Bool) {
         gdprPMButton.isEnabled = gdprApplies
         ccpaPMButton.isEnabled = ccpaApplies
+        usnatPMButton.isEnabled = usnatApplies
     }
 
     func updateSDKStatusLabel() {

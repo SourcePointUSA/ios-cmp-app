@@ -11,14 +11,14 @@ import Foundation
 
 struct Config {
     enum Keys: String, CaseIterable {
-        case accountId, propertyId, propertyName, gdpr, ccpa, att, language, gdprPmId, ccpaPmId
+        case accountId, propertyId, propertyName, gdpr, ccpa, att, language, gdprPmId, ccpaPmId, usnatPmId
     }
 
     let accountId, propertyId: Int
     let propertyName: String
-    let gdpr, ccpa, att: Bool
+    let gdpr, ccpa, att, usnat: Bool
     let language: SPMessageLanguage
-    let gdprPmId, ccpaPmId: String?
+    let gdprPmId, ccpaPmId, usnatPmId: String?
 
     let myVendorId = "5ff4d000a228633ac048be41"
     let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
@@ -32,9 +32,11 @@ extension Config {
         propertyName = values["propertyName"] as? String ?? defaults.propertyName
         gdpr = (values["gdpr"] as? NSString)?.boolValue ?? defaults.gdpr
         ccpa = (values["ccpa"] as? NSString)?.boolValue ?? defaults.ccpa
+        usnat = (values["usnat"] as? NSString)?.boolValue ?? defaults.usnat
         att = (values["att"] as? NSString)?.boolValue ?? defaults.att
         language = SPMessageLanguage(rawValue: values["language"] as? String ?? "xx") ?? defaults.language
         gdprPmId = defaults.gdprPmId
         ccpaPmId = defaults.ccpaPmId
+        usnatPmId = defaults.usnatPmId
     }
 }
