@@ -38,7 +38,7 @@ struct CCPAChoiceResponse: Equatable {
 struct USNatChoiceResponse: Equatable, Decodable {
     let uuid, consentString: String
     let categories: [String]
-    let dateCreated: SPDate
+    let dateCreated, expirationDate: SPDate
     let webConsentPayload: SPWebConsentPayload?
     let consentStatus: ConsentStatus
 }

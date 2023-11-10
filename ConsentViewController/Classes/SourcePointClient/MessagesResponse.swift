@@ -159,6 +159,7 @@ extension Consent: Codable {
                     uuid: defaults?.uuid,
                     applies: defaults?.applies ?? false,
                     dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
                     consentString: consents.consentString,
                     webConsentPayload: consents.webConsentPayload,
                     lastMessage: LastMessageData(from: messageMetaData),

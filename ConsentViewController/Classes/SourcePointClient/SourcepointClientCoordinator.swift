@@ -231,8 +231,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 propertyHref: propertyName,
                 accountId: accountId,
                 campaigns: .init(
-                    ccpa: campaigns.ccpa != nil ?
-                    .init(
+                    ccpa: campaigns.ccpa != nil ? .init(
                         targetingParams: campaigns.ccpa?.targetingParams,
                         hasLocalData: state.hasCCPALocalData,
                         status: state.ccpa?.status
@@ -338,6 +337,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let ccpaExpirationDate = localState.ccpa?.expirationDate.date,
            ccpaExpirationDate < Date() {
             localState.ccpa = .empty()
+        }
+        if let usnatExpirationDate = localState.usnat?.expirationDate.date,
+           usnatExpirationDate < Date() {
+            localState.usnat = .empty()
         }
 
         return localState
@@ -528,6 +531,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 uuid: usnat.uuid,
                 applies: state.usnat?.applies ?? false,
                 dateCreated: usnat.dateCreated,
+                expirationDate: usnat.expirationDate,
                 consentString: usnat.consentString,
                 webConsentPayload: usnat.webConsentPayload,
                 categories: usnat.categories,
@@ -889,6 +893,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             uuid: state.usnat?.uuid != nil ? state.usnat?.uuid : postResponse.uuid,
             applies: state.usnat?.applies ?? false,
             dateCreated: postResponse.dateCreated,
+            expirationDate: postResponse.expirationDate,
             consentString: postResponse.consentString,
             webConsentPayload: postResponse.webConsentPayload,
             categories: postResponse.categories,

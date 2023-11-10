@@ -14,7 +14,7 @@ import Foundation
 
     public let categories: [String]
 
-    var dateCreated: SPDate
+    var dateCreated, expirationDate: SPDate
 
     public let consentString: String
 
@@ -33,6 +33,7 @@ import Foundation
             - applies: \(applies)
             - categories: \(categories)
             - dateCreated: \(dateCreated)
+            - expirationDate: \(expirationDate)
         )
         """
     }
@@ -41,6 +42,7 @@ import Foundation
         uuid: String? = nil,
         applies: Bool,
         dateCreated: SPDate,
+        expirationDate: SPDate,
         consentString: String,
         webConsentPayload: SPWebConsentPayload? = nil,
         lastMessage: LastMessageData? = nil,
@@ -50,6 +52,7 @@ import Foundation
         self.uuid = uuid
         self.applies = applies
         self.dateCreated = dateCreated
+        self.expirationDate = expirationDate
         self.consentString = consentString
         self.webConsentPayload = webConsentPayload
         self.lastMessage = lastMessage
@@ -62,6 +65,7 @@ import Foundation
         uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
         dateCreated = try container.decode(SPDate.self, forKey: .dateCreated)
+        expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
         consentString = try container.decode(String.self, forKey: .consentString)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         lastMessage = try container.decodeIfPresent(LastMessageData.self, forKey: .lastMessage)
@@ -72,6 +76,7 @@ import Foundation
     public static func empty() -> SPUSNatConsent { SPUSNatConsent(
         applies: false,
         dateCreated: .now(),
+        expirationDate: .distantFuture(),
         consentString: "",
         categories: [],
         consentStatus: ConsentStatus()
@@ -92,6 +97,7 @@ import Foundation
         uuid: uuid,
         applies: applies,
         dateCreated: dateCreated,
+        expirationDate: expirationDate,
         consentString: consentString,
         webConsentPayload: webConsentPayload,
         lastMessage: lastMessage,

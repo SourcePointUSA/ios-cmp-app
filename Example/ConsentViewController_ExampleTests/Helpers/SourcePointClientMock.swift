@@ -189,6 +189,7 @@ class SourcePointClientMock: SourcePointProtocol {
                 consentString: "",
                 categories: [],
                 dateCreated: .now(),
+                expirationDate: .distantFuture(),
                 webConsentPayload: nil,
                 consentStatus: .init()
             )))
