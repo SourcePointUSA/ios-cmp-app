@@ -17,5 +17,5 @@ struct ConsentStatusMetaData: QueryParamEncodable {
         let idfaStatus: SPIDFAStatus?
     }
 
-    let gdpr, ccpa: Campaign?
+    let gdpr, ccpa, usnat: Campaign?
 }

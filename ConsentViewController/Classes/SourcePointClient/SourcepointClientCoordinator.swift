@@ -185,7 +185,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var needsNewConsentData: Bool {
         migratingUser || (
             state.localVersion != State.version &&
-            (state.gdpr?.uuid != nil || state.ccpa?.uuid != nil)
+            (
+                state.gdpr?.uuid != nil ||
+                state.ccpa?.uuid != nil ||
+                state.usnat?.uuid != nil
+            )
         )
     }
 
@@ -476,13 +480,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func consentStatusMetadataFromState(_ campaign: CampaignConsent?, _ hasLocalData: Bool) -> ConsentStatusMetaData.Campaign? {
+    func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
         guard let campaign = campaign else { return nil }
         return ConsentStatusMetaData.Campaign(
             applies: campaign.applies,
             dateCreated: campaign.dateCreated,
             uuid: campaign.uuid,
-            hasLocalData: hasLocalData,
+            hasLocalData: false,
             idfaStatus: SPIDFAStatus.current()
         )
     }
@@ -519,6 +523,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.webConsentPayload = ccpa.webConsentPayload
             state.ccpa?.GPPData = ccpa.GPPData ?? SPJson()
         }
+        if let usnat = response.consentStatusData.usnat {
+            state.usnat = SPUSNatConsent(
+                uuid: usnat.uuid,
+                applies: state.usnat?.applies ?? false,
+                dateCreated: usnat.dateCreated,
+                consentString: usnat.consentString,
+                webConsentPayload: usnat.webConsentPayload,
+                categories: usnat.categories,
+                consentStatus: usnat.consentStatus
+            )
+        }
 
         state.localVersion = State.version
         storage.spState = state
@@ -529,14 +544,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             spClient.consentStatus(
                 propertyId: propertyId,
                 metadata: .init(
-                    gdpr: consentStatusMetadataFromState(
-                        state.gdpr,
-                        false
-                    ),
-                    ccpa: consentStatusMetadataFromState(
-                        state.ccpa,
-                        false
-                    )
+                    gdpr: consentStatusMetadataFromState(state.gdpr),
+                    ccpa: consentStatusMetadataFromState(state.ccpa),
+                    usnat: consentStatusMetadataFromState(state.usnat)
                 ),
                 authId: authId,
                 includeData: includeData
@@ -561,22 +571,19 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         response.campaigns.forEach {
             switch $0.type {
-                case .gdpr: state.gdpr = SPGDPRConsent(
-                    uuid: state.gdpr?.uuid,
-                    applies: state.gdpr?.applies,
-                    campaignResponse: $0
+                case .gdpr: state.gdpr = $0.userConsent.toConsent(
+                    defaults: state.gdpr,
+                    messageMetaData: $0.messageMetaData
                 )
 
-                case .ccpa: state.ccpa = SPCCPAConsent(
-                    uuid: state.ccpa?.uuid,
-                    applies: state.ccpa?.applies,
-                    campaignResponse: $0
+                case .ccpa: state.ccpa = $0.userConsent.toConsent(
+                    defaults: state.ccpa,
+                    messageMetaData: $0.messageMetaData
                 )
 
-                case .usnat: state.usnat = SPUSNatConsent(
-                    uuid: state.usnat?.uuid,
-                    applies: state.usnat?.applies,
-                    campaignResponse: $0
+                case .usnat: state.usnat = $0.userConsent.toConsent(
+                    defaults: state.usnat,
+                    messageMetaData: $0.messageMetaData
                 )
 
                 case .ios14: state.ios14?.lastMessage = LastMessageData(from: $0.messageMetaData)

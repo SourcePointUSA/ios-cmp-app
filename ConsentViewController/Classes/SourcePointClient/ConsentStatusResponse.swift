@@ -32,8 +32,17 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let GPPData: SPJson?
         }
 
+        struct USNAT: Decodable, Equatable {
+            let uuid, consentString: String
+            let dateCreated: SPDate
+            let consentStatus: ConsentStatus
+            let categories: [String]
+            let webConsentPayload: SPWebConsentPayload?
+        }
+
         let gdpr: GDPR?
         let ccpa: CCPA?
+        let usnat: USNAT?
     }
 
     let consentStatusData: Data
