@@ -251,7 +251,6 @@ struct Campaign: Equatable {
     var message: Message?
     let userConsent: Consent
     let messageMetaData: MessageMetaData?
-    let consentStatus: ConsentStatus?
     let dateCreated: SPDate?
     let webConsentPayload: SPWebConsentPayload?
 }
@@ -266,7 +265,6 @@ extension Campaign: Decodable {
         type = try container.decode(SPCampaignType.self, forKey: .type)
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
         userConsent = try Consent(from: decoder)
-        consentStatus = try? container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus) ?? ConsentStatus(from: decoder)
         dateCreated = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         if let metaData = messageMetaData {
