@@ -11,10 +11,10 @@ protocol ConsentSnapshot {
     func toPayload(language: SPMessageLanguage, pmId: String) -> JSONAble
 }
 
-public enum CategoryContentType: Int {
-    case consent = 1
-    case legitimate = 2
-    case specialFeatures = 3
+public enum CategoryContentType {
+    case consent
+    case legitimate
+    case specialFeatures
 }
 
 class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCategoryManager {
@@ -147,7 +147,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
             lan: language,
             privacyManagerId: pmId,
             categories: toggledCategoriesIds.compactMap { id in
-                guard let category = categories.first(where: { c in c._id == id }) else { return nil }
+                guard let category = categories.first(where: { $0._id == id }) else { return nil }
                 return GDPRPMPayload.Category(
                     _id: id,
                     iabId: category.iabId,
@@ -157,7 +157,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
                 )
             },
             vendors: toggledVendorsIds.compactMap { id in
-                guard let vendor = vendors.first(where: { v in v.vendorId == id }) else { return nil }
+                guard let vendor = vendors.first(where: { $0.vendorId == id }) else { return nil }
                 return GDPRPMPayload.Vendor(
                     _id: id,
                     iabId: vendor.iabId,
@@ -167,7 +167,7 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
                 )
             },
             specialFeatures: toggledSpecialFeatures.compactMap { id in
-                guard let feature = specialFeatures.first(where: { f in f._id == id}) else { return nil }
+                guard let feature = specialFeatures.first(where: { $0._id == id }) else { return nil }
                 return GDPRPMPayload.Feature(
                     _id: id,
                     iabId: feature.iabId
