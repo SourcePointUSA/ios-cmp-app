@@ -207,9 +207,11 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
                 cell.contentType = .consent
                 cell.isOn = consentsSnapshot.toggledConsentCategoriesIds.contains(category._id)
             }
+
         case 3:
             cell.contentType = .specialFeatures
             cell.isOn = consentsSnapshot.toggledSpecialFeatures.contains(category._id)
+
         default:
             cell.contentType = nil
             cell.isOn = nil

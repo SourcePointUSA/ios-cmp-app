@@ -189,11 +189,14 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         case .consent:
             toggledConsentCategoriesIds.insert(category._id)
             toggledConsentVendorsIds.formUnion(category.uniqueConsentVendorIds)
+
         case .legitimate:
             toggledLICategoriesIds.insert(category._id)
             toggledLIVendorsIds.formUnion(category.uniqueLIVendorIds)
+
         case .specialFeatures:
             toggledSpecialFeatures.insert(category._id)
+
         case .none:
             break
         }
@@ -209,11 +212,14 @@ class GDPRPMConsentSnaptshot: NSObject, ConsentSnapshot, PMVendorManager, PMCate
         case .consent:
             toggledConsentCategoriesIds.remove(category._id)
             toggledConsentVendorsIds.subtract(consentVendorsWhosePurposesAreOff)
+
         case .legitimate:
             toggledLICategoriesIds.remove(category._id)
             toggledLIVendorsIds.subtract(liVendorsWhosePurposesAreOff)
+
         case .specialFeatures:
             toggledSpecialFeatures.remove(category._id)
+
         case .none:
             break
         }
