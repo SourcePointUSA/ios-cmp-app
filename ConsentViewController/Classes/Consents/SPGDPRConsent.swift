@@ -77,6 +77,7 @@ public typealias SPGDPRPurposeId = String
         case legIntVendors
         case vendors
         case categories
+        case specialFeatures
         case dateCreated
         case expirationDate
     }
@@ -145,6 +146,7 @@ public typealias SPGDPRPurposeId = String
     var legIntVendors: [String]?
     var vendors: [String]?
     var categories: [String]?
+    var specialFeatures: [String]?
 
     override open var description: String {
         """
@@ -170,6 +172,7 @@ public typealias SPGDPRPurposeId = String
         legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
         vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
         categories = try container.decodeIfPresent(Array.self, forKey: .categories)
+        specialFeatures = try container.decodeIfPresent(Array.self, forKey: .specialFeatures)
         expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
         if let date = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated) {
             dateCreated = date
