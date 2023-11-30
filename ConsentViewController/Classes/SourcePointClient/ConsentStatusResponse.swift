@@ -34,7 +34,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
 
         struct USNAT: Decodable, Equatable {
             let uuid, consentString: String
-            let dateCreated: SPDate
+            let dateCreated, expirationDate: SPDate
             let consentStatus: ConsentStatus
             let categories: [String]
             let webConsentPayload: SPWebConsentPayload?

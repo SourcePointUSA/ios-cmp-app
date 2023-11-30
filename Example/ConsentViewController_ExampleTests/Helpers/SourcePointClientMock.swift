@@ -51,23 +51,6 @@ class SourcePointClientMock: SourcePointProtocol {
                 messageId: "1",
                 messagePartitionUUID: "1234"
             ),
-            consentStatus: ConsentStatus(
-                granularStatus: ConsentStatus.GranularStatus(
-                    vendorConsent: "",
-                    vendorLegInt: "",
-                    purposeConsent: "",
-                    purposeLegInt: "",
-                    previousOptInAll: false,
-                    defaultConsent: false
-                ),
-                rejectedAny: false,
-                rejectedLI: false,
-                consentedAll: false,
-                consentedToAny: false,
-                hasConsentData: false,
-                rejectedVendors: [],
-                rejectedCategories: []
-            ),
             dateCreated: SPDate.now(),
             webConsentPayload: nil
         )
@@ -189,6 +172,7 @@ class SourcePointClientMock: SourcePointProtocol {
                 consentString: "",
                 categories: [],
                 dateCreated: .now(),
+                expirationDate: .distantFuture(),
                 webConsentPayload: nil,
                 consentStatus: .init()
             )))
