@@ -11,6 +11,8 @@ import Nimble
 import Quick
 import XCTest
 
+public typealias Predicate = Nimble.Predicate
+
 extension DispatchTimeInterval {
     func toDouble() -> Double {
         var result: Double = 0
