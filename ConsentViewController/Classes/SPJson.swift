@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SPJson: Codable, CustomStringConvertible, Equatable {
+public enum SPJson: Codable, CustomStringConvertible, Equatable, QueryParamEncodable {
     case string(String)
     case number(Double)
     case object([Key: SPJson])

@@ -32,7 +32,6 @@ struct MessagesRequest: QueryParamEncodable {
             let ios14: IOS14?
         }
 
-        let localState: SPJson?
         let propertyHref: SPPropertyName
         let accountId: Int
         let campaigns: Campaigns
@@ -60,6 +59,7 @@ struct MessagesRequest: QueryParamEncodable {
     let body: Body
     let metadata: MetaData
     let nonKeyedLocalState: NonKeyedLocalState
+    let localState: SPJson?
 }
 
 extension MessagesRequest.NonKeyedLocalState {

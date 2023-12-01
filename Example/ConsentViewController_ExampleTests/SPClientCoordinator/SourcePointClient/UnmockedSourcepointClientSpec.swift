@@ -116,7 +116,6 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 waitUntil { done in
                     client.getMessages(MessagesRequest(
                         body: MessagesRequest.Body(
-                            localState: SPJson(),
                             propertyHref: propertyName,
                             accountId: accountId,
                             campaigns: MessagesRequest.Body.Campaigns(
@@ -141,7 +140,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             ccpa: MessagesRequest.MetaData.Campaign(applies: true),
                             gdpr: MessagesRequest.MetaData.Campaign(applies: true)
                         ),
-                        nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson())
+                        nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson()),
+                        localState: nil
                     )) {
                             switch $0 {
                             case .success(let response):
