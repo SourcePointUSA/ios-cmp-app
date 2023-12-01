@@ -149,7 +149,8 @@ class SourcePointClientMock: SourcePointProtocol {
                 legIntCategories: nil,
                 legIntVendors: nil,
                 vendors: nil,
-                categories: nil
+                categories: nil,
+                specialFeatures: nil
             )))
         }
     }

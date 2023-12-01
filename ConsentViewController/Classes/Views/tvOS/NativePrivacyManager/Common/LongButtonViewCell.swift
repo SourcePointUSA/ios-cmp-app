@@ -16,6 +16,7 @@ class LongButtonViewCell: UITableViewCell {
     var customText: String?
     var selectable = false
     var identifier: String = ""
+    var contentType: CategoryContentType?
 
     @IBOutlet var label: UILabel!
     @IBOutlet var customLabel: UILabel!

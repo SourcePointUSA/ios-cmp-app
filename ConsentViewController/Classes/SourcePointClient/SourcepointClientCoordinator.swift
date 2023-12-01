@@ -227,7 +227,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var messagesParamsFromState: MessagesRequest {
         .init(
             body: .init(
-                localState: state.localState,
                 propertyHref: propertyName,
                 accountId: accountId,
                 campaigns: .init(
@@ -261,7 +260,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 gdpr: .init(applies: state.gdpr?.applies),
                 usnat: .init(applies: state.usnat?.applies)
             ),
-            nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState)
+            nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState),
+            localState: state.localState
         )
     }
 
@@ -510,6 +510,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.legIntVendors = gdpr.legIntVendors
             state.gdpr?.vendors = gdpr.vendors
             state.gdpr?.categories = gdpr.categories
+            state.gdpr?.specialFeatures = gdpr.specialFeatures
         }
         if let ccpa = response.consentStatusData.ccpa {
             state.ccpa?.uuid = ccpa.uuid
@@ -837,6 +838,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.gdpr?.legIntVendors = postResponse.legIntVendors ?? getResponse?.gdpr?.legIntVendors
         state.gdpr?.vendors = postResponse.vendors ?? getResponse?.gdpr?.vendors
         state.gdpr?.categories = postResponse.categories ?? getResponse?.gdpr?.categories
+        state.gdpr?.specialFeatures = postResponse.specialFeatures ?? getResponse?.gdpr?.specialFeatures
         storage.spState = state
     }
 

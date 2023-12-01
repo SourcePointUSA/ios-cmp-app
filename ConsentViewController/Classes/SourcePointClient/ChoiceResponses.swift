@@ -19,6 +19,7 @@ struct GDPRChoiceResponse: Decodable, Equatable {
     let legIntVendors: [String]?
     let vendors: [String]?
     let categories: [String]?
+    let specialFeatures: [String]?
 }
 
 struct CCPAChoiceResponse: Equatable {
