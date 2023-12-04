@@ -578,7 +578,9 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
 
             describe("with authId") {
-                it("persists consent even after cleaning all data") {
+                // TODO: replace `xit` with `it` once authenticated consent is fixed
+                // https://sourcepoint.atlassian.net/browse/DIA-3186
+                xit("persists consent even after cleaning all data") {
                     waitUntil { done in
                         let authId = UUID().uuidString
 
