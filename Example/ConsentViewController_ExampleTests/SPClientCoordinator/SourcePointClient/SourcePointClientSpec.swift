@@ -55,6 +55,10 @@ class SourcePointClientSpec: QuickSpec {
             ))
     }
 
+    var wrapperHost: String {
+        Constants.prod ? "cdn.privacy-mgmt.com" : "preprod-cdn.privacy-mgmt.com"
+    }
+
     override func spec() {
         var client: SourcePointClient!
         var httpClient: MockHttp!
@@ -74,12 +78,12 @@ class SourcePointClientSpec: QuickSpec {
 
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
-                let expectedUrl  = URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
+                let expectedUrl  = URL(string: "https://\(self.wrapperHost)/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
                 expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(expectedUrl))
             }
 
             it("DELETE_CUSTOM_CONSENT_URL") {
-                let expectedUrl = URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
+                let expectedUrl = URL(string: "https://\(self.wrapperHost)/consent/tcfv2/consent/v3/custom?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
                 expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL) == expectedUrl
             }
         }
@@ -183,7 +187,7 @@ class SourcePointClientSpec: QuickSpec {
                                 includeData: IncludeData(gppConfig: nil)
                             )
                         ) { _ in }
-                        expect(httpClient.postWasCalledWithUrl) == "https://cdn.privacy-mgmt.com/wrapper/v2/choice/gdpr/11?env=prod"
+                        expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/gdpr/11?env=prod"
                     }
 
                     it("calls POST on the http client with the right body") {
@@ -227,7 +231,7 @@ class SourcePointClientSpec: QuickSpec {
                                 includeData: IncludeData(gppConfig: nil)
                             )
                         ) { _ in }
-                        expect(httpClient.postWasCalledWithUrl) == "https://cdn.privacy-mgmt.com/wrapper/v2/choice/ccpa/11?env=prod"
+                        expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/ccpa/11?env=prod"
                     }
 
                     it("calls POST on the http client with the right body") {
@@ -340,7 +344,7 @@ class SourcePointClientSpec: QuickSpec {
                             campaignType: .gdpr
                         )
                         let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-                        let expectedUrl = "https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
+                        let expectedUrl = "https://\(self.wrapperHost)/wrapper/metrics/v1/custom-metrics?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
                         expect(http.postWasCalledWithUrl) == expectedUrl
                         expect((parsedRequest?["code"] as? String)) == error.spCode
                         expect((parsedRequest?["accountId"] as? String)) == "\(self.accountId)"
@@ -358,7 +362,7 @@ class SourcePointClientSpec: QuickSpec {
             describe("deleteCustomConsent") {
                 it("constructsCorrectURL") {
                     expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, self.propertyId, "yo").absoluteString).to(
-                        equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
+                        equal("https://\(self.wrapperHost)/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
                 }
 
                 it("makes a DELETE with the correct body") {

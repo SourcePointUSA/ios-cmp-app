@@ -14,6 +14,10 @@ import Quick
 // swiftlint:disable force_try function_body_length line_length force_unwrapping
 
 class SPConsentManagerSpec: QuickSpec {
+    var wrapperHost: String {
+        Constants.prod ? "cdn.privacy-mgmt.com" : "preprod-cdn.privacy-mgmt.com"
+    }
+
     override func spec() {
         let accountId = 22, propertyId = 16_893
         let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
@@ -50,7 +54,7 @@ class SPConsentManagerSpec: QuickSpec {
                     let uuid = manager.userData.gdpr?.consents?.uuid
                     let uuidParam = uuid != nil ? "=\(uuid!)" : ""
 
-                    let testUrl = "https://cdn.privacy-mgmt.com/privacy-manager/index.html?consentLanguage=ES&consentUUID\(uuidParam )&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
+                    let testUrl = "https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&consentUUID\(uuidParam )&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
 
                     expect(pmUrl?.absoluteString).to(equal(testUrl))
                 }
@@ -63,7 +67,7 @@ class SPConsentManagerSpec: QuickSpec {
                     let uuid = manager.userData.ccpa?.consents?.uuid
                     let uuidParam = uuid != nil ? "=\(uuid!)" : ""
 
-                    let testUrl = "https://cdn.privacy-mgmt.com/ccpa_pm/index.html?ccpaUUID\(uuidParam)&consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
+                    let testUrl = "https://\(self.wrapperHost)/ccpa_pm/index.html?ccpaUUID\(uuidParam)&consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
 
                     expect(pmUrl?.absoluteString).to(equal(testUrl))
                 }

@@ -14,11 +14,11 @@ protocol SPUIValues {
     static var defaultFallbackTextColorForDarkMode: UIColor { get }
 }
 
-let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
-
 struct Constants {
+    static let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
+
     struct Urls {
-        static let envParam = prod ? "stage" : "localProd"
+        static let envParam = "prod"
         static let additionalData: String = "scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
         static let SP_ROOT = URL(string: prod ? "https://cdn.privacy-mgmt.com/" : "https://preprod-cdn.privacy-mgmt.com/")!
         static let WRAPPER_API = URL(string: "./wrapper/?env=\(envParam)", relativeTo: SP_ROOT)!
