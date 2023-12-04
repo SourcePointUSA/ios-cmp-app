@@ -47,7 +47,7 @@ class SPConsentSpec: QuickSpec {
                 "applies": false,
                 "dateCreated": "2124-10-27T16:59:00.092Z",
                 "expirationDate": "2124-10-27T16:59:00.092Z",
-                "consentString": "",
+                "consentStrings": [],
                 "categories": [],
                 "consentStatus": {}
             }
@@ -55,8 +55,7 @@ class SPConsentSpec: QuickSpec {
     """
 
     override func spec() {
-        // TODO: remove fdescribe
-        fdescribe("SPConsent") {
+        describe("SPConsent") {
             describe("GDPR") {
                 it("can be decode from JSON") {
                     expect(self.gdprConsents).to(decodeToValue(

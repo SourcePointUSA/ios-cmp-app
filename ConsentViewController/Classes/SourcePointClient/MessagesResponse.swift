@@ -160,7 +160,7 @@ extension Consent: Codable {
                     applies: defaults?.applies ?? false,
                     dateCreated: consents.dateCreated,
                     expirationDate: consents.expirationDate,
-                    consentString: consents.consentString,
+                    consentStrings: consents.consentStrings,
                     webConsentPayload: consents.webConsentPayload,
                     lastMessage: LastMessageData(from: messageMetaData),
                     categories: consents.categories,

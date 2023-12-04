@@ -58,22 +58,12 @@ class AuthExampleUITests: QuickSpec {
             self.app.webViewButton.tap()
         }
 
-        func waitForWebViewToSettle(handler: () -> Void) {
-            if self.app.webViewOnConsentReadyCalls.element.waitForExistence(
-                timeout: Nimble.AsyncDefaults.timeout.toDouble()
-            ) {
-                handler()
-            }
-        }
-
         it("Accepting all via native screen should prevent messages from showing on the webview screen") {
             acceptGDPRMessage()
             acceptCCPAMessage()
             waitForSdkToFinish()
             navigateToWebView()
-            waitForWebViewToSettle {
-                expect(self.app.webViewOnConsentReadyCalls.count).to(equal(2))
-            }
+            expect(self.app.webViewOnConsentReadyCalls.count).toEventually(equal(2))
         }
     }
 }

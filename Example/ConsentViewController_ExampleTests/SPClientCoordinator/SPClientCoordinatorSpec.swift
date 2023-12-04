@@ -504,7 +504,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        fit("shouldCallGETChoice") {
+        it("shouldCallGETChoice") {
             [
                 SPAction(type: .AcceptAll, campaignType: .gdpr),
                 SPAction(type: .RejectAll, campaignType: .gdpr),
@@ -527,26 +527,52 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        // TODO: remove fdescribe
         describe("a property with USNat campaign") {
             let saveAndExitAction = SPAction(
                 type: .SaveAndExit,
                 campaignType: .usnat,
+                publisherData: ["foo": "bar"],
                 pmPayload: try! SPJson([
-                    "categories": [],
-                    "shownCategories": [],
-                    "vendors": [],
-                    "lan": "en",
-                    "privacyManagerId": "26087"
+                    "shownCategories": [
+                        "6568ae4503cf5cf81eb79fa5",
+                        "6568ae4503cf5cf81eb79fb7",
+                        "6568ae4503cf5cf81eb79fc9",
+                        "6568ae4503cf5cf81eb79fdb",
+                        "6568ae4503cf5cf81eb79fed",
+                        "6568ae4503cf5cf81eb79fff",
+                        "6568ae4503cf5cf81eb7a011",
+                        "6568ae4503cf5cf81eb7a023",
+                        "6568ae4503cf5cf81eb7a035",
+                        "6568ae4503cf5cf81eb7a047",
+                        "6568ae4503cf5cf81eb7a059",
+                        "6568ae4503cf5cf81eb7a06b"
+                    ],
+                    "categories": [
+                        "6568ae4503cf5cf81eb79fa5",
+                        "6568ae4503cf5cf81eb79fb7",
+                        "6568ae4503cf5cf81eb79fc9",
+                        "6568ae4503cf5cf81eb79fdb",
+                        "6568ae4503cf5cf81eb79fed",
+                        "6568ae4503cf5cf81eb79fff",
+                        "6568ae4503cf5cf81eb7a011",
+                        "6568ae4503cf5cf81eb7a023",
+                        "6568ae4503cf5cf81eb7a035",
+                        "6568ae4503cf5cf81eb7a047",
+                        "6568ae4503cf5cf81eb7a059",
+                        "6568ae4503cf5cf81eb7a06b"
+                    ],
+                    "lan": "EN",
+                    "privacyManagerId": "943890",
+                    "vendors": []
                 ])
             )
 
             beforeEach {
                 coordinator = SourcepointClientCoordinator(
                     accountId: accountId,
-                    propertyName: try! SPPropertyName("staging.mobile.demo"),
-                    propertyId: 8292,
-                    campaigns: SPCampaigns(usnat: SPCampaign(targetingParams: ["newUser": "true"])),
+                    propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                    propertyId: 34152,
+                    campaigns: SPCampaigns(usnat: SPCampaign()),
                     storage: LocalStorageMock()
                 )
             }
@@ -556,24 +582,33 @@ class SPClientCoordinatorSpec: QuickSpec {
                     waitUntil { done in
                         let authId = UUID().uuidString
 
+                        coordinator = SourcepointClientCoordinator(
+                            accountId: accountId,
+                            propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                            propertyId: 34152,
+                            campaigns: SPCampaigns(usnat: SPCampaign()),
+                            storage: LocalStorageMock()
+                        )
+
                         coordinator.loadMessages(forAuthId: authId, pubData: nil) { _ in
-                            coordinator.reportAction(saveAndExitAction) { result in
-                                let actionUserData = try? result.get()
-                                let actionUuid = actionUserData?.usnat?.consents?.uuid
-                                expect(actionUuid).notTo(beNil())
+                        coordinator.reportAction(saveAndExitAction) { result in
+                            let actionUserData = try? result.get()
+                            let actionUuid = actionUserData?.usnat?.consents?.uuid
+                            expect(actionUuid).notTo(beNil())
+                            expect(coordinator.userData.usnat?.consents?.uuid).to(equal(actionUuid))
 
-                                coordinator = SourcepointClientCoordinator(
-                                    accountId: accountId,
-                                    propertyName: try! SPPropertyName("staging.mobile.demo"),
-                                    propertyId: 8292,
-                                    campaigns: SPCampaigns(usnat: SPCampaign(targetingParams: ["newUser": "true"])),
-                                    storage: LocalStorageMock()
-                                )
+                            coordinator = SourcepointClientCoordinator(
+                                accountId: accountId,
+                                propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                                propertyId: 34152,
+                                campaigns: SPCampaigns(usnat: SPCampaign()),
+                                storage: LocalStorageMock()
+                            )
 
-                                expect(coordinator.userData.usnat?.consents?.uuid).to(beNil())
-
+                            expect(coordinator.userData.usnat?.consents?.uuid).to(beNil())
                                 coordinator.loadMessages(forAuthId: authId, pubData: nil) { messagesResult in
-                                    let (_, userData) = try! messagesResult.get()
+                                    let (messages, userData) = try! messagesResult.get()
+                                    expect(messages).to(beEmpty())
                                     expect(userData.usnat?.consents?.uuid).to(equal(actionUuid))
 
                                     done()
@@ -592,7 +627,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(coordinator.state.usNatMetaData?.vendorListId).notTo(beNil())
                                 expect(coordinator.state.usNatMetaData?.additionsChangeDate).notTo(beNil())
                                 expect(consents.usnat?.consents?.applies).to(beTrue())
-                                expect(consents.usnat?.consents?.consentString).notTo(beEmpty())
+                                expect(consents.usnat?.consents?.consentStrings).notTo(beEmpty())
                                 expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
                                 expect(consents.usnat?.consents?.lastMessage).notTo(beNil())
                                 expect(messages).notTo(beEmpty())
@@ -614,9 +649,9 @@ class SPClientCoordinatorSpec: QuickSpec {
                 )
                 coordinator = SourcepointClientCoordinator(
                     accountId: accountId,
-                    propertyName: try! SPPropertyName("staging.mobile.demo"),
-                    propertyId: 8292,
-                    campaigns: SPCampaigns(usnat: SPCampaign(targetingParams: ["newUser": "true"])),
+                    propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                    propertyId: 34152,
+                    campaigns: SPCampaigns(usnat: SPCampaign()),
                     storage: LocalStorageMock(),
                     spClient: spClientMock
                 )
@@ -652,7 +687,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                 }
             }
 
-            fdescribe("and expiration date is greater than current date") {
+            describe("and expiration date is greater than current date") {
                 it("erases consent data and returns a message") {
                     SPConsentManager.clearAllData()
 
@@ -668,7 +703,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     coordinator.state.usnat?.expirationDate = SPDate(date: .yesterday)
 
                                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
-                                        expect(coordinator.state.usnat?.uuid).to(beNil())
+                                        expect(coordinator.state.usnat?.uuid).notTo(equal(firstUUID))
                                         done()
                                     }
                                 }

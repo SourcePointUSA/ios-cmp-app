@@ -533,7 +533,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 applies: state.usnat?.applies ?? false,
                 dateCreated: usnat.dateCreated,
                 expirationDate: usnat.expirationDate,
-                consentString: usnat.consentString,
+                consentStrings: usnat.consentStrings,
                 webConsentPayload: usnat.webConsentPayload,
                 categories: usnat.categories,
                 consentStatus: usnat.consentStatus
@@ -896,7 +896,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             applies: state.usnat?.applies ?? false,
             dateCreated: postResponse.dateCreated,
             expirationDate: postResponse.expirationDate,
-            consentString: postResponse.consentString,
+            consentStrings: postResponse.consentStrings,
             webConsentPayload: postResponse.webConsentPayload,
             categories: postResponse.categories,
             consentStatus: postResponse.consentStatus

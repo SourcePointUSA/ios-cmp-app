@@ -170,7 +170,7 @@ class SourcePointClientMock: SourcePointProtocol {
         } else {
             handler(.success(USNatChoiceResponse(
                 uuid: "",
-                consentString: "",
+                consentStrings: [],
                 categories: [],
                 dateCreated: .now(),
                 expirationDate: .distantFuture(),
