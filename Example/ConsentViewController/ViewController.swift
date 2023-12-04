@@ -16,18 +16,10 @@ class ViewController: UIViewController {
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     var myVendorAccepted: VendorStatus = .Unknown
 
-    // Since the UsNat scenarios don't have a consent gate (i.e. "No Action" -> Show Message Always)
-    // the scenario relies on a targeting param pair (`"newUser": true`) in order to show a message.
-    // We set this targeting param depending if the usnat uuid is different than nil.
-    var userUuid: String? {
-        get { UserDefaults.standard.string(forKey: "myApp_userUuid") }
-        set { UserDefaults.standard.set(newValue, forKey: "myApp_userUuid") }
-    }
-
     lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
-        propertyId: 8292,
-        propertyName: "staging.mobile.demo",
+        propertyId: 34152,
+        propertyName: "usnat.mobile.demo",
         gdpr: false,
         ccpa: false,
         att: false,
@@ -35,7 +27,7 @@ class ViewController: UIViewController {
         language: .BrowserDefault,
         gdprPmId: "488393",
         ccpaPmId: "509688",
-        usnatPmId: "25950"
+        usnatPmId: "943886"
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
@@ -45,9 +37,7 @@ class ViewController: UIViewController {
         campaigns: SPCampaigns(
             gdpr: config.gdpr ? SPCampaign() : nil,
             ccpa: config.ccpa ? SPCampaign() : nil,
-            usnat: config.usnat ? SPCampaign(
-                targetingParams: ["newUser": String(userUuid == nil)]
-            ) : nil,
+            usnat: config.usnat ? SPCampaign() : nil,
             ios14: config.att ? SPCampaign() : nil
         ),
         language: config.language,
