@@ -892,7 +892,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         _ postResponse: USNatChoiceResponse
     ) {
         state.usnat = SPUSNatConsent(
-            uuid: state.usnat?.uuid != nil ? state.usnat?.uuid : postResponse.uuid,
+            uuid: postResponse.uuid,
             applies: state.usnat?.applies ?? false,
             dateCreated: postResponse.dateCreated,
             expirationDate: postResponse.expirationDate,

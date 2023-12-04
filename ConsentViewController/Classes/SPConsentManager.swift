@@ -431,7 +431,7 @@ import UIKit
         let pmUrl = Constants.Urls.USNAT_PM_URL.appendQueryItems([
             "message_id": usedId,
             "pmTab": pmTab.rawValue,
-            "uuid": usnatUUID, // TODO: this might change to usnatUUID
+            "uuid": usnatUUID,
             "idfaStatus": idfaStatus.description,
             "site_id": String(propertyId),
             "consentLanguage": messageLanguage.rawValue

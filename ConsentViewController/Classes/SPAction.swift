@@ -74,6 +74,7 @@ import Foundation
     public init(
         type: SPActionType,
         campaignType: SPCampaignType = .unknown,
+        publisherData: [String: String] = [:],
         consentLanguage: String? = nil,
         pmPayload: SPJson = SPJson(),
         pmurl: URL? = nil,
@@ -81,6 +82,7 @@ import Foundation
     ) {
         self.type = type
         self.campaignType = campaignType
+        self.publisherData = publisherData
         self.consentLanguage = consentLanguage
         self.pmPayload = pmPayload
         self.pmURL = pmurl
