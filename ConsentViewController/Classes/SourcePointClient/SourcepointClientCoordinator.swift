@@ -294,7 +294,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.propertyName = propertyName
         self.language = language
         self.campaigns = campaigns
-        self.includeData = IncludeData(gppConfig: campaigns.ccpa?.GPPConfig)
+        self.includeData = .standard
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,
