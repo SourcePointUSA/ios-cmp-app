@@ -11,9 +11,11 @@ extension URL {
     /// - Parameter parameters: parameters dictionary.
     /// - Returns: URL with appending given query parameters.
     func appendQueryItems(_ parameters: [String: String?]) -> URL? {
+        let filteredParams = parameters.filter { _, value in value != nil }
+
         if var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true) {
-            urlComponents.queryItems = (urlComponents.queryItems ?? []) + Array(parameters.keys).sorted().map { key in
-                URLQueryItem(name: key, value: parameters[key] ?? "")
+            urlComponents.queryItems = (urlComponents.queryItems ?? []) + Array(filteredParams.keys).sorted().map { key in
+                URLQueryItem(name: key, value: filteredParams[key] ?? "")
             }
             return urlComponents.url
         }

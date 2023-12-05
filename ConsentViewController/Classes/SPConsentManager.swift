@@ -327,16 +327,38 @@ import UIKit
         }
     }
 
-    func buildGDPRPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default) -> URL? {
-        let pmUrl = Constants.Urls.GDPR_PM_URL.appendQueryItems([
-            "message_id": usedId,
-            "pmTab": pmTab.rawValue,
-            "consentUUID": gdprUUID,
+    func genericPMUrl(
+        _ specificUrl: URL?,
+        pmId: String,
+        uuidName: String = "uuid",
+        uuidValue: String?,
+        propertyId: Int,
+        tab: SPPrivacyManagerTab = .Default,
+        idfaStatus: SPIDFAStatus = SPIDFAStatus.current(),
+        consentLanguage: SPMessageLanguage
+    ) -> URL? {
+        specificUrl?.appendQueryItems([
+            "message_id": pmId,
+            "pmTab": tab.rawValue,
+            uuidName: uuidValue,
             "idfaStatus": idfaStatus.description,
             "site_id": String(propertyId),
             "consentLanguage": messageLanguage.rawValue
         ])
-        return pmUrl
+    }
+
+    func buildGDPRPmUrl(
+        usedId: String,
+        pmTab: SPPrivacyManagerTab = .Default,
+        uuid: String?
+    ) -> URL? {
+        genericPMUrl(
+            Constants.Urls.GDPR_PM_URL,
+            pmId: usedId,
+            uuidValue: uuid,
+            propertyId: propertyId,
+            consentLanguage: messageLanguage
+        )
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
@@ -346,7 +368,7 @@ import UIKit
             usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.gdpr?.groupPmId, childPmId: storage.gdprChildPmId)
         }
         #if os(iOS)
-        guard let pmUrl = buildGDPRPmUrl(usedId: usedId, pmTab: tab) else {
+        guard let pmUrl = buildGDPRPmUrl(usedId: usedId, pmTab: tab, uuid: gdprUUID) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
@@ -377,16 +399,15 @@ import UIKit
         #endif
     }
 
-    func buildCCPAPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default) -> URL? {
-        let pmUrl = Constants.Urls.CCPA_PM_URL.appendQueryItems([
-            "message_id": usedId,
-            "pmTab": pmTab.rawValue,
-            "ccpaUUID": ccpaUUID,
-            "idfaStatus": idfaStatus.description,
-            "site_id": String(propertyId),
-            "consentLanguage": messageLanguage.rawValue
-        ])
-        return pmUrl
+    func buildCCPAPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default, uuid: String?) -> URL? {
+        genericPMUrl(
+            Constants.Urls.CCPA_PM_URL,
+            pmId: usedId,
+            uuidName: "ccpaUUID",
+            uuidValue: uuid,
+            propertyId: propertyId,
+            consentLanguage: messageLanguage
+        )
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
@@ -396,7 +417,7 @@ import UIKit
             usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
         }
         #if os(iOS)
-        guard let pmUrl = buildCCPAPmUrl(usedId: usedId, pmTab: tab) else {
+        guard let pmUrl = buildCCPAPmUrl(usedId: usedId, pmTab: tab, uuid: ccpaUUID) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
@@ -427,16 +448,14 @@ import UIKit
         #endif
     }
 
-    func buildUSNatPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default) -> URL? {
-        let pmUrl = Constants.Urls.USNAT_PM_URL.appendQueryItems([
-            "message_id": usedId,
-            "pmTab": pmTab.rawValue,
-            "uuid": usnatUUID,
-            "idfaStatus": idfaStatus.description,
-            "site_id": String(propertyId),
-            "consentLanguage": messageLanguage.rawValue
-        ])
-        return pmUrl
+    func buildUSNatPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default, uuid: String?) -> URL? {
+        genericPMUrl(
+            Constants.Urls.USNAT_PM_URL,
+            pmId: usedId,
+            uuidValue: uuid,
+            propertyId: propertyId,
+            consentLanguage: messageLanguage
+        )
     }
 
     @available(iOS 10, *)
@@ -447,7 +466,7 @@ import UIKit
             usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
         }
 
-        guard let pmUrl = buildUSNatPmUrl(usedId: usedId, pmTab: tab) else {
+        guard let pmUrl = buildUSNatPmUrl(usedId: usedId, pmTab: tab, uuid: usnatUUID) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }

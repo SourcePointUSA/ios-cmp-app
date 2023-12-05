@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try function_body_length line_length force_unwrapping
+// swiftlint:disable force_try function_body_length line_length
 
 class SPConsentManagerSpec: QuickSpec {
     var wrapperHost: String {
@@ -21,9 +21,19 @@ class SPConsentManagerSpec: QuickSpec {
     override func spec() {
         let accountId = 22, propertyId = 16_893
         let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
-        let campaigns = SPCampaigns(gdpr: SPCampaign(), ccpa: SPCampaign())
+        let campaigns = SPCampaigns(
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign(),
+            usnat: SPCampaign()
+        )
 
-        var manager: SPConsentManager!
+        var manager = SPConsentManager(
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            delegate: nil
+        )
 
         beforeEach {
             SPConsentManager.clearAllData()
@@ -46,30 +56,52 @@ class SPConsentManagerSpec: QuickSpec {
         }
 
         describe("buildPrivacyManagerUrl") {
+            beforeEach {
+                manager.messageLanguage = .Spanish
+            }
+
+            let idfaStatus = manager.idfaStatus.description
+            let usedId = "1"
+
             describe("gdpr") {
                 it("build URL with the right parameters") {
-                    manager.messageLanguage = .Spanish
-                    let idfaStatus = manager.idfaStatus.description
-                    let pmUrl = manager.buildGDPRPmUrl(usedId: "1")
-                    let uuid = manager.userData.gdpr?.consents?.uuid
-                    let uuidParam = uuid != nil ? "=\(uuid!)" : ""
+                    expect(manager.buildGDPRPmUrl(usedId: usedId, uuid: nil)?.absoluteString)
+                        .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                }
 
-                    let testUrl = "https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&consentUUID\(uuidParam )&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
-
-                    expect(pmUrl?.absoluteString).to(equal(testUrl))
+                describe("when there's uuid") {
+                    it("includes the uuid query param") {
+                        expect(manager.buildGDPRPmUrl(usedId: usedId, uuid: "gdprUUID")?.absoluteString)
+                            .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)&uuid=gdprUUID"))
+                    }
                 }
             }
+
             describe("ccpa") {
                 it("build URL with the right parameters") {
-                    manager.messageLanguage = .Spanish
-                    let idfaStatus = manager.idfaStatus.description
-                    let pmUrl = manager.buildCCPAPmUrl(usedId: "1")
-                    let uuid = manager.userData.ccpa?.consents?.uuid
-                    let uuidParam = uuid != nil ? "=\(uuid!)" : ""
+                    expect(manager.buildCCPAPmUrl(usedId: "1", uuid: nil)?.absoluteString)
+                        .to(equal("https://\(self.wrapperHost)/ccpa_pm/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                }
 
-                    let testUrl = "https://\(self.wrapperHost)/ccpa_pm/index.html?ccpaUUID\(uuidParam)&consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"
+                describe("when there's uuid") {
+                    it("includes the uuid query param") {
+                        expect(manager.buildCCPAPmUrl(usedId: usedId, uuid: "ccpaUUID")?.absoluteString)
+                            .to(equal("https://\(self.wrapperHost)/ccpa_pm/index.html?ccpaUUID=ccpaUUID&consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                    }
+                }
+            }
 
-                    expect(pmUrl?.absoluteString).to(equal(testUrl))
+            describe("usnat") {
+                it("build URL with the right parameters") {
+                    expect(manager.buildUSNatPmUrl(usedId: "1", uuid: nil)?.absoluteString)
+                        .to(equal("https://\(self.wrapperHost)/us_pm/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                }
+
+                describe("when there's uuid") {
+                    it("includes the uuid query param") {
+                        expect(manager.buildUSNatPmUrl(usedId: usedId, uuid: "usnatUUID")?.absoluteString)
+                            .to(equal("https://\(self.wrapperHost)/us_pm/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)&uuid=usnatUUID"))
+                    }
                 }
             }
         }
@@ -79,35 +111,14 @@ class SPConsentManagerSpec: QuickSpec {
                 let userData = manager.userData
                 expect(userData.gdpr).to(equal(SPConsent(consents: SPGDPRConsent.empty(), applies: false)))
                 expect(userData.ccpa).to(equal(SPConsent(consents: SPCCPAConsent.empty(), applies: false)))
+                expect(userData.usnat).to(equal(SPConsent(consents: SPUSNatConsent.empty(), applies: false)))
             }
 
             it("returns cached data if there's some") {
                 let cachedUserData = SPUserData(
-                    gdpr: .init(
-                        consents: .init(
-                            uuid: "GDPR uuid",
-                            vendorGrants: [:],
-                            euconsent: "",
-                            tcfData: SPJson(),
-                            dateCreated: .now(),
-                            expirationDate: .distantFuture(),
-                            applies: true
-                        ),
-                        applies: true
-                    ),
-                    ccpa: .init(
-                        consents: SPCCPAConsent(
-                            status: .RejectedAll,
-                            rejectedVendors: [],
-                            rejectedCategories: [],
-                            signedLspa: false,
-                            applies: false,
-                            dateCreated: .now(),
-                            expirationDate: .distantFuture(),
-                            lastMessage: nil
-                        ),
-                        applies: true
-                    )
+                    gdpr: .init(consents: SPGDPRConsent.empty(), applies: true),
+                    ccpa: .init(consents: SPCCPAConsent.empty(), applies: true),
+                    usnat: .init(consents: SPUSNatConsent.empty(), applies: true)
                 )
                 let mockStorage = LocalStorageMock()
                 mockStorage.userData = cachedUserData
