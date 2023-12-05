@@ -148,6 +148,18 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 self.gdpr?.consentStatus.consentedAll = false
             }
         }
+
+        mutating func udpateUSNatStatus() {
+            guard let usnat = usnat, let usNatMetaData = usNatMetaData else { return }
+
+            if usnat.dateCreated.date < usNatMetaData.additionsChangeDate.date {
+                self.usnat?.consentStatus.vendorListAdditions = true
+                if self.usnat?.consentStatus.consentedAll == true {
+                    self.usnat?.consentStatus.granularStatus?.previousOptInAll = true
+                    self.usnat?.consentStatus.consentedAll = false
+                }
+            }
+        }
     }
 
     let accountId, propertyId: Int
@@ -434,6 +446,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         metaData {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
+                self.state.udpateUSNatStatus()
                 self.messages { messagesResponse in
                     self.pvData(pubData: pubData) {
                         handler(messagesResponse)
