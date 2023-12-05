@@ -37,6 +37,9 @@ class SPUSNatConsentsSpec: QuickSpec {
                     "consentStatus": {
                         "granularStatus": {},
                         "hasConsentData": false
+                    },
+                    "GPPData": {
+                        "foo": "bar"
                     }
                 }
                 """.data(using: .utf8)
@@ -44,6 +47,7 @@ class SPUSNatConsentsSpec: QuickSpec {
             let consent = try usnatConsents.decoded() as SPUSNatConsent
             expect(consent.applies).to(beTrue())
             expect(consent.categories).to(equal(["foo"]))
+            expect(consent.GPPData).to(equal(try? SPJson(["foo": "bar"])))
             expect(consent.consentStrings).to(equal([
                 .init(sectionId: 99, sectionName: "abc", consentString: "xyz")
             ]))

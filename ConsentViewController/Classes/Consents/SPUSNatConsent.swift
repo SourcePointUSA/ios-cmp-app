@@ -17,11 +17,14 @@ import Foundation
 
     public var applies: Bool
 
-    public let categories: [String]
+    public let consentStrings: [ConsentString]
+
+    /// A dictionary with all GPP related data
+    public var GPPData: SPJson?
+
+    let categories: [String]
 
     var dateCreated, expirationDate: SPDate
-
-    public let consentStrings: [ConsentString]
 
     /// Required by SP endpoints
     var lastMessage: LastMessageData?
@@ -53,7 +56,8 @@ import Foundation
         webConsentPayload: SPWebConsentPayload? = nil,
         lastMessage: LastMessageData? = nil,
         categories: [String],
-        consentStatus: ConsentStatus
+        consentStatus: ConsentStatus,
+        GPPData: SPJson? = nil
     ) {
         self.uuid = uuid
         self.applies = applies
@@ -64,6 +68,7 @@ import Foundation
         self.lastMessage = lastMessage
         self.categories = []
         self.consentStatus = consentStatus
+        self.GPPData = GPPData
     }
 
     required public init(from decoder: Decoder) throws {
@@ -77,6 +82,7 @@ import Foundation
         lastMessage = try container.decodeIfPresent(LastMessageData.self, forKey: .lastMessage)
         categories = try container.decode([String].self, forKey: .categories)
         consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
+        GPPData = try container.decodeIfPresent(SPJson.self, forKey: .GPPData)
     }
 
     public static func empty() -> SPUSNatConsent { SPUSNatConsent(
@@ -110,6 +116,7 @@ import Foundation
         webConsentPayload: webConsentPayload,
         lastMessage: lastMessage,
         categories: categories,
-        consentStatus: consentStatus
+        consentStatus: consentStatus,
+        GPPData: GPPData
     )}
 }
