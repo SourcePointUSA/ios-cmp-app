@@ -197,8 +197,11 @@ import UIKit
         if let uspString = userData.ccpa?.consents?.uspstring {
             storage.usPrivacyString = uspString
         }
-        if let gppData = userData.ccpa?.consents?.GPPData {
-            storage.gppData = gppData.dictionaryValue
+        if let ccpaGPPData = userData.ccpa?.consents?.GPPData {
+            storage.gppData = ccpaGPPData.dictionaryValue
+        }
+        if let usnatGPPData = userData.usnat?.consents?.GPPData {
+            storage.gppData = usnatGPPData.dictionaryValue
         }
     }
 

@@ -149,26 +149,23 @@ class SPConsentManagerSpec: QuickSpec {
 
         it("stores legislation data when there are no messages to show") {
             let coordinatorMock = CoordinatorMock()
+            let gdpr = SPConsent(consents: SPGDPRConsent.empty(), applies: false)
+            gdpr.consents?.tcfData = try! SPJson(["tcf key": "tcf value"])
+            let ccpa = SPConsent(consents: SPCCPAConsent.empty(), applies: false)
+            ccpa.consents?.GPPData = try! SPJson([
+                "ccpa gpp key": "ccpa gpp value",
+                "common gpp key": "common ccpa"
+            ])
+            let usnat = SPConsent(consents: SPUSNatConsent.empty(), applies: false)
+            usnat.consents?.GPPData = try! SPJson([
+                "usnat gpp key": "usnat gpp value",
+                "common gpp key": "common usnat"
+            ])
+
             let userData = SPUserData(
-                gdpr: SPConsent(consents: SPGDPRConsent(
-                    vendorGrants: SPGDPRVendorGrants(),
-                    euconsent: "",
-                    tcfData: try! SPJson(["tcf key": "tcf value"]),
-                    dateCreated: .now(),
-                    expirationDate: .distantFuture(),
-                    applies: true
-                ), applies: true),
-                ccpa: SPConsent(consents: SPCCPAConsent(
-                    status: .RejectedAll,
-                    rejectedVendors: [],
-                    rejectedCategories: [],
-                    signedLspa: false,
-                    applies: true,
-                    dateCreated: .now(),
-                    expirationDate: .distantFuture(),
-                    lastMessage: nil,
-                    GPPData: try! SPJson(["gpp key": "gpp value"])
-                ), applies: true)
+                gdpr: gdpr,
+                ccpa: ccpa,
+                usnat: usnat
             )
             coordinatorMock.loadMessagesResult = .success(([], userData))
             manager.spCoordinator = coordinatorMock
@@ -180,7 +177,13 @@ class SPConsentManagerSpec: QuickSpec {
             }
             expect(storedValuePairs).toEventually(contain([SPUserDefaults.US_PRIVACY_STRING_KEY, userData.ccpa?.consents?.uspstring]))
             expect(storedValuePairs).toEventually(contain(["tcf key", "tcf value"]))
-            expect(storedValuePairs).toEventually(contain(["gpp key", "gpp value"]))
+            expect(storedValuePairs).toEventually(contain(["ccpa gpp key", "ccpa gpp value"]))
+            expect(storedValuePairs).toEventually(contain(["usnat gpp key", "usnat gpp value"]))
+
+            // asserts that if ccpa gpp data has a key in common with usnat gpp data, usnat
+            // gpp data is the one stored
+            expect(storedValuePairs).toEventually(contain(["common gpp key", "common usnat"]))
+            expect(storedValuePairs).toEventuallyNot(contain(["common gpp key", "common ccpa"]))
         }
     }
 }
