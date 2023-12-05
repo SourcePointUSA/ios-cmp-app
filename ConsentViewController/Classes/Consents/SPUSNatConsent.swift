@@ -8,6 +8,11 @@
 import Foundation
 
 @objcMembers public class SPUSNatConsent: NSObject, Codable, CampaignConsent, NSCopying {
+    public struct ConsentString: Codable, Equatable {
+        let sectionId: Int
+        let sectionName, consentString: String
+    }
+
     public var uuid: String?
 
     public var applies: Bool
@@ -16,7 +21,7 @@ import Foundation
 
     var dateCreated, expirationDate: SPDate
 
-    public let consentString: String
+    public let consentStrings: [ConsentString]
 
     /// Required by SP endpoints
     var lastMessage: LastMessageData?
@@ -31,6 +36,7 @@ import Foundation
         SPUSNatConsent(
             - uuid: \(uuid ?? "")
             - applies: \(applies)
+            - consentStrings: \(consentStrings)
             - categories: \(categories)
             - dateCreated: \(dateCreated)
             - expirationDate: \(expirationDate)
@@ -43,7 +49,7 @@ import Foundation
         applies: Bool,
         dateCreated: SPDate,
         expirationDate: SPDate,
-        consentString: String,
+        consentStrings: [ConsentString],
         webConsentPayload: SPWebConsentPayload? = nil,
         lastMessage: LastMessageData? = nil,
         categories: [String],
@@ -53,7 +59,7 @@ import Foundation
         self.applies = applies
         self.dateCreated = dateCreated
         self.expirationDate = expirationDate
-        self.consentString = consentString
+        self.consentStrings = consentStrings
         self.webConsentPayload = webConsentPayload
         self.lastMessage = lastMessage
         self.categories = []
@@ -66,7 +72,7 @@ import Foundation
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
         dateCreated = try container.decode(SPDate.self, forKey: .dateCreated)
         expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
-        consentString = try container.decode(String.self, forKey: .consentString)
+        consentStrings = try container.decode([ConsentString].self, forKey: .consentStrings)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         lastMessage = try container.decodeIfPresent(LastMessageData.self, forKey: .lastMessage)
         categories = try container.decode([String].self, forKey: .categories)
@@ -77,7 +83,7 @@ import Foundation
         applies: false,
         dateCreated: .now(),
         expirationDate: .distantFuture(),
-        consentString: "",
+        consentStrings: [],
         categories: [],
         consentStatus: ConsentStatus()
     )}
@@ -86,7 +92,9 @@ import Foundation
         if let other = object as? SPUSNatConsent {
             return other.uuid == uuid &&
                 other.applies == applies &&
-                other.consentString == consentString &&
+                other.consentStrings.count == consentStrings.count &&
+                other.consentStrings.sorted(by: { $0.sectionId > $1.sectionId }) ==
+                    other.consentStrings.sorted(by: { $0.sectionId > $1.sectionId }) &&
                 other.categories == categories
         } else {
             return false
@@ -98,7 +106,7 @@ import Foundation
         applies: applies,
         dateCreated: dateCreated,
         expirationDate: expirationDate,
-        consentString: consentString,
+        consentStrings: consentStrings,
         webConsentPayload: webConsentPayload,
         lastMessage: lastMessage,
         categories: categories,

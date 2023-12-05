@@ -131,7 +131,6 @@ extension ViewController: SPDelegate {
 
     func onSPFinished(userData: SPUserData) {
         print("SDK DONE")
-        userUuid = userData.usnat?.consents?.uuid
         sdkStatus = .finished
         updateUI()
     }

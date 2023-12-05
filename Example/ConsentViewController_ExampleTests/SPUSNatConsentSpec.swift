@@ -13,8 +13,7 @@ import Quick
 
 class SPUSNatConsentsSpec: QuickSpec {
     override func spec() {
-        // TODO: remove fdescribe
-        fdescribe("static empty()") {
+        describe("static empty()") {
             it("contain empty defaults for all its fields") {
                 let consents = SPUSNatConsent.empty()
                 expect(consents.uuid).to(beNil())
@@ -23,14 +22,17 @@ class SPUSNatConsentsSpec: QuickSpec {
             }
         }
 
-        // TODO: remove fit
-        fit("is Codable") {
+        it("is Codable") {
             let usnatConsents = Result { """
                 {
                     "applies": true,
                     "dateCreated": "2023-02-06T16:20:53.707Z",
                     "expirationDate": "2024-02-06T16:20:53.707Z",
-                    "consentString": "ABC",
+                    "consentStrings": [{
+                        "sectionId": 99,
+                        "sectionName": "abc",
+                        "consentString": "xyz"
+                    }],
                     "categories": ["foo"],
                     "consentStatus": {
                         "granularStatus": {},
@@ -42,7 +44,9 @@ class SPUSNatConsentsSpec: QuickSpec {
             let consent = try usnatConsents.decoded() as SPUSNatConsent
             expect(consent.applies).to(beTrue())
             expect(consent.categories).to(equal(["foo"]))
-            expect(consent.consentString).to(equal("ABC"))
+            expect(consent.consentStrings).to(equal([
+                .init(sectionId: 99, sectionName: "abc", consentString: "xyz")
+            ]))
             expect(consent.dateCreated).to(equal(year: 2023, month: 2, day: 6))
             expect(consent.expirationDate).to(equal(year: 2024, month: 2, day: 6))
             expect(consent.consentStatus).to(equal(ConsentStatus()))

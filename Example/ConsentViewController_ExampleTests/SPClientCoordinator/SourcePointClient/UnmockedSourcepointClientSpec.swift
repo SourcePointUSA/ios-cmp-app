@@ -92,13 +92,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 hasLocalData: false,
                                 idfaStatus: nil
                             ),
-                            usnat: .init(
-                                applies: true,
-                                dateCreated: nil,
-                                uuid: nil,
-                                hasLocalData: false,
-                                idfaStatus: nil
-                            )
+                            usnat: nil
                         ),
                         authId: "user_auth_id",
                         includeData: IncludeData(gppConfig: nil)
