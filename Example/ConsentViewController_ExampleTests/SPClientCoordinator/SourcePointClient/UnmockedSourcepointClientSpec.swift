@@ -40,7 +40,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     let url = client.consentStatusURLWithParams(
                         propertyId: propertyId,
                         metadata: emptyMetaData,
-                        includeData: IncludeData(gppConfig: nil),
+                        includeData: .standard,
                         authId: "john doe"
                     )
                     expect(url?.query).to(contain("authId=john%20doe"))
@@ -52,7 +52,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     let url = client.consentStatusURLWithParams(
                         propertyId: propertyId,
                         metadata: emptyMetaData,
-                        includeData: IncludeData(gppConfig: nil),
+                        includeData: .standard,
                         authId: nil
                     )
                     expect(url?.query).notTo(contain("authId="))
@@ -60,7 +60,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             }
 
             it("should contain all query params") {
-                let includeData = IncludeData(gppConfig: nil)
+                let includeData = IncludeData()
                 let url = client.consentStatusURLWithParams(
                     propertyId: propertyId,
                     metadata: emptyMetaData,
@@ -95,7 +95,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             usnat: nil
                         ),
                         authId: "user_auth_id",
-                        includeData: IncludeData(gppConfig: nil)
+                        includeData: .standard
                     ) { result in
                             switch result {
                             case .success(let response):
@@ -136,7 +136,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             consentLanguage: .Spanish,
                             campaignEnv: nil,
                             idfaStatus: nil,
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         ),
                         metadata: .init(
                             ccpa: .init(applies: true),
@@ -270,7 +270,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)
                         ),
-                        includeData: IncludeData(gppConfig: nil)
+                        includeData: .standard
                     ) { result in
                         switch result {
                         case .success(let response):
@@ -298,7 +298,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)
                         ),
-                        includeData: IncludeData(gppConfig: nil)
+                        includeData: .standard
                     ) { result in
                         switch result {
                         case .success(let response):

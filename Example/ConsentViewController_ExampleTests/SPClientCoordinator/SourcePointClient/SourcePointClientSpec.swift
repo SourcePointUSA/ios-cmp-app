@@ -51,7 +51,7 @@ class SourcePointClientSpec: QuickSpec {
                     ios14: nil
                 ),
                 pubData: [:],
-                includeData: IncludeData(gppConfig: nil)
+                includeData: .standard
             ))
     }
 
@@ -156,7 +156,7 @@ class SourcePointClientSpec: QuickSpec {
                             consentLanguage: .BrowserDefault,
                             campaignEnv: nil,
                             idfaStatus: nil,
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         ),
                         metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil, usnat: nil),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson()),
@@ -184,7 +184,7 @@ class SourcePointClientSpec: QuickSpec {
                                 sampleRate: 1,
                                 idfaStatus: nil,
                                 granularStatus: .init(),
-                                includeData: IncludeData(gppConfig: nil)
+                                includeData: .standard
                             )
                         ) { _ in }
                         expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/gdpr/11?env=prod"
@@ -204,7 +204,7 @@ class SourcePointClientSpec: QuickSpec {
                             sampleRate: 1,
                             idfaStatus: nil,
                             granularStatus: .init(),
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         )
                         client.postGDPRAction(
                             actionType: .AcceptAll,
@@ -228,7 +228,7 @@ class SourcePointClientSpec: QuickSpec {
                                 sendPVData: true,
                                 propertyId: 1,
                                 sampleRate: 1,
-                                includeData: IncludeData(gppConfig: nil)
+                                includeData: .standard
                             )
                         ) { _ in }
                         expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/ccpa/11?env=prod"
@@ -244,7 +244,7 @@ class SourcePointClientSpec: QuickSpec {
                             sendPVData: true,
                             propertyId: 1,
                             sampleRate: 1,
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         )
                         client.postCCPAAction(
                             actionType: .AcceptAll,

@@ -8,12 +8,14 @@
 import Foundation
 
 struct IncludeData: Equatable {
+    static let standard = IncludeData()
+
     let localState = ["type": "RecordString"]
     let TCData = ["type": "RecordString"]
     let webConsentPayload = ["type": "string"]
     let categories = true
     let translateMessage = true
-    let gppConfig: SPGPPConfig?
+    let gppConfig = true
 }
 
 extension IncludeData: Encodable {
@@ -28,15 +30,5 @@ extension IncludeData: Encodable {
             return stringified
         }
         return nil
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(localState, forKey: .localState)
-        try container.encode(TCData, forKey: .TCData)
-        try container.encode(webConsentPayload, forKey: .webConsentPayload)
-        try container.encode(categories, forKey: .categories)
-        try container.encode(translateMessage, forKey: .translateMessage)
-        try container.encodeIfPresent(gppConfig, forKey: .gppConfig)
     }
 }
