@@ -29,7 +29,7 @@ import Foundation
     /// Used by the rendering app
     let webConsentPayload: SPWebConsentPayload?
 
-    let consentStatus: ConsentStatus
+    var consentStatus: ConsentStatus
 
     override open var description: String {
         """

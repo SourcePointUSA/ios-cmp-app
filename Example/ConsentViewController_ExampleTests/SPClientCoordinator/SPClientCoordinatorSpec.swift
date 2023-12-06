@@ -11,7 +11,7 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try function_body_length file_length type_body_length cyclomatic_complexity
+// swiftlint:disable force_unwrapping force_try function_body_length file_length type_body_length cyclomatic_complexity
 
 class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
@@ -707,6 +707,36 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                                         expect(coordinator.state.usnat?.uuid).notTo(equal(firstUUID))
                                         done()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            fdescribe("when dealing with a re-consent scenario") {
+                describe("when additionsChangeDate bigger than consent dateCreated") {
+                    it("should show a message") {
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstMessages in
+                                let (messages, _) = try! firstMessages.get()
+                                expect(messages.count).to(equal(1))
+
+                                coordinator.reportAction(saveAndExitAction) { _ in
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondMessages in
+                                        let (messages, _) = try! secondMessages.get()
+                                        expect(messages.count).to(equal(0))
+
+                                        coordinator.state.usnat?.dateCreated = SPDate(date: coordinator.state.usNatMetaData!.additionsChangeDate.date.dayBefore
+                                        )
+
+                                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { thirdMessages in
+                                            let (messages, _) = try! thirdMessages.get()
+                                            expect(messages.count).to(equal(1))
+
+                                            done()
+                                        }
                                     }
                                 }
                             }
