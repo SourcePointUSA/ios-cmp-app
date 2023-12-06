@@ -40,6 +40,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let consentStatus: ConsentStatus
             let categories: [String]
             let webConsentPayload: SPWebConsentPayload?
+            let GPPData: SPJson?
         }
 
         let gdpr: GDPR?

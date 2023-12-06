@@ -533,34 +533,8 @@ class SPClientCoordinatorSpec: QuickSpec {
                 campaignType: .usnat,
                 publisherData: ["foo": "bar"],
                 pmPayload: try! SPJson([
-                    "shownCategories": [
-                        "6568ae4503cf5cf81eb79fa5",
-                        "6568ae4503cf5cf81eb79fb7",
-                        "6568ae4503cf5cf81eb79fc9",
-                        "6568ae4503cf5cf81eb79fdb",
-                        "6568ae4503cf5cf81eb79fed",
-                        "6568ae4503cf5cf81eb79fff",
-                        "6568ae4503cf5cf81eb7a011",
-                        "6568ae4503cf5cf81eb7a023",
-                        "6568ae4503cf5cf81eb7a035",
-                        "6568ae4503cf5cf81eb7a047",
-                        "6568ae4503cf5cf81eb7a059",
-                        "6568ae4503cf5cf81eb7a06b"
-                    ],
-                    "categories": [
-                        "6568ae4503cf5cf81eb79fa5",
-                        "6568ae4503cf5cf81eb79fb7",
-                        "6568ae4503cf5cf81eb79fc9",
-                        "6568ae4503cf5cf81eb79fdb",
-                        "6568ae4503cf5cf81eb79fed",
-                        "6568ae4503cf5cf81eb79fff",
-                        "6568ae4503cf5cf81eb7a011",
-                        "6568ae4503cf5cf81eb7a023",
-                        "6568ae4503cf5cf81eb7a035",
-                        "6568ae4503cf5cf81eb7a047",
-                        "6568ae4503cf5cf81eb7a059",
-                        "6568ae4503cf5cf81eb7a06b"
-                    ],
+                    "shownCategories": ["6568ae4503cf5cf81eb79fa5"],
+                    "categories": ["6568ae4503cf5cf81eb79fa5"],
                     "lan": "EN",
                     "privacyManagerId": "943890",
                     "vendors": []
@@ -632,6 +606,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(consents.usnat?.consents?.consentStrings).notTo(beEmpty())
                                 expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
                                 expect(consents.usnat?.consents?.lastMessage).notTo(beNil())
+                                expect(consents.usnat?.consents?.GPPData?.dictionaryValue).notTo(beEmpty())
                                 expect(messages).notTo(beEmpty())
 
                             case .failure(let error):

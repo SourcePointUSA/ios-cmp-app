@@ -164,7 +164,8 @@ extension Consent: Codable {
                     webConsentPayload: consents.webConsentPayload,
                     lastMessage: LastMessageData(from: messageMetaData),
                     categories: consents.categories,
-                    consentStatus: consents.consentStatus
+                    consentStatus: consents.consentStatus,
+                    GPPData: consents.GPPData
                 )
 
             default:

@@ -175,7 +175,8 @@ class SourcePointClientMock: SourcePointProtocol {
                 dateCreated: .now(),
                 expirationDate: .distantFuture(),
                 webConsentPayload: nil,
-                consentStatus: .init()
+                consentStatus: .init(),
+                GPPData: nil
             )))
         }
     }

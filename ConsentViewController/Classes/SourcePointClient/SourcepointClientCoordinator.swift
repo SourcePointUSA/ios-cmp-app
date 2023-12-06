@@ -549,7 +549,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 consentStrings: usnat.consentStrings,
                 webConsentPayload: usnat.webConsentPayload,
                 categories: usnat.categories,
-                consentStatus: usnat.consentStatus
+                consentStatus: usnat.consentStatus,
+                GPPData: usnat.GPPData
             )
         }
 
@@ -912,7 +913,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             consentStrings: postResponse.consentStrings,
             webConsentPayload: postResponse.webConsentPayload,
             categories: postResponse.categories,
-            consentStatus: postResponse.consentStatus
+            consentStatus: postResponse.consentStatus,
+            GPPData: postResponse.GPPData
         )
 
         storage.spState = state

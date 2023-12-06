@@ -49,7 +49,8 @@ class SPConsentSpec: QuickSpec {
                 "expirationDate": "2124-10-27T16:59:00.092Z",
                 "consentStrings": [],
                 "categories": [],
-                "consentStatus": {}
+                "consentStatus": {},
+                "GPPData": {}
             }
         }
     """

@@ -43,6 +43,7 @@ struct USNatChoiceResponse: Equatable, Decodable {
     let dateCreated, expirationDate: SPDate
     let webConsentPayload: SPWebConsentPayload?
     let consentStatus: ConsentStatus
+    let GPPData: SPJson?
 }
 
 extension CCPAChoiceResponse: Decodable {
