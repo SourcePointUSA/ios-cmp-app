@@ -30,9 +30,10 @@ struct MetaDataResponse: Decodable, Equatable {
         let additionsChangeDate: SPDate
         let applies: Bool
         let sampleRate: Float
+        let applicableSections: [Int]
 
         enum CodingKeys: String, CodingKey {
-            case additionsChangeDate, applies, sampleRate
+            case additionsChangeDate, applies, sampleRate, applicableSections
             case vendorListId = "_id"
         }
     }

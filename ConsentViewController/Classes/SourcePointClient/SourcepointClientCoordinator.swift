@@ -103,9 +103,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var wasSampled: Bool?
             var wasSampledAt: Float?
             var vendorListId: String = ""
+            var applicableSections: [Int] = []
 
             enum CodingKeys: String, CodingKey {
-                case additionsChangeDate, sampleRate, wasSampled, wasSampledAt
+                case additionsChangeDate, sampleRate, wasSampled, wasSampledAt, applicableSections
                 case vendorListId = "_id"
             }
         }
