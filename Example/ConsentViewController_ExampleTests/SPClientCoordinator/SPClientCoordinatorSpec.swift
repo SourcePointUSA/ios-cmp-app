@@ -66,7 +66,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.ccpa?.consents?.uspstring) == "1---"
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             expect(coordinator.storage.gdprChildPmId)=="613057"
                             done()
@@ -86,7 +86,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.ccpa?.consents?.GPPData.dictionaryValue).notTo(beEmpty())
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             done()
                         }
@@ -610,7 +610,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(messages).notTo(beEmpty())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                         }
                         done()
                     }
@@ -639,7 +639,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(spClientMock.pvDataCalled).to(beTrue())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                         }
                         done()
                     }
@@ -656,7 +656,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(coordinator.userData.usnat).to(equal(userData.usnat))
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             done()
                         }
@@ -690,7 +690,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                 }
             }
 
-            fdescribe("when dealing with a re-consent scenario") {
+            describe("when dealing with a re-consent scenario") {
                 describe("when additionsChangeDate bigger than consent dateCreated") {
                     it("should show a message") {
                         waitUntil { done in
@@ -714,6 +714,54 @@ class SPClientCoordinatorSpec: QuickSpec {
                                         }
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+
+            describe("when usnat applicableSections change") {
+                it("should call consent-status") {
+                    let clientMock = SourcePointClientMock()
+                    let firstApplicableSection = 1
+                    let differentApplicableSection = 2
+                    clientMock.metadataResponse = MetaDataResponse(
+                        ccpa: nil,
+                        gdpr: nil,
+                        usnat: .init(
+                            vendorListId: "",
+                            additionsChangeDate: .now(),
+                            applies: true,
+                            sampleRate: 1.0,
+                            applicableSections: [firstApplicableSection]
+                        )
+                    )
+                    coordinator = SourcepointClientCoordinator(
+                        accountId: accountId,
+                        propertyName: propertyName,
+                        propertyId: propertyId,
+                        campaigns: SPCampaigns(usnat: SPCampaign()),
+                        storage: LocalStorageMock(),
+                        spClient: clientMock
+                    )
+                    waitUntil { done in
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                            expect(clientMock.consentStatusCalled).to(beFalse())
+
+                            clientMock.metadataResponse = MetaDataResponse(
+                                ccpa: nil,
+                                gdpr: nil,
+                                usnat: .init(
+                                    vendorListId: "",
+                                    additionsChangeDate: .now(),
+                                    applies: true,
+                                    sampleRate: 1.0,
+                                    applicableSections: [differentApplicableSection]
+                                )
+                            )
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                expect(clientMock.consentStatusCalled).to(beTrue())
+                                done()
                             }
                         }
                     }
