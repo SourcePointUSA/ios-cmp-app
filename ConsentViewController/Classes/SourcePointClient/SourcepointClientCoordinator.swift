@@ -207,8 +207,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     /**
-        Set to true if in the response of `/meta-data`, the applicableSectionId returned
-        is different than the one stored in memory.
+        Set to true if in the response of `/meta-data`, the applicableSections returned is different than the one stored.
         Used as part of the decision to call `/consent-status`
      */
     var needsNewUSNatData = false
