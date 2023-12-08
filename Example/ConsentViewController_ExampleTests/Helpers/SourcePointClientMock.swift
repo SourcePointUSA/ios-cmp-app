@@ -23,6 +23,8 @@ class SourcePointClientMock: SourcePointProtocol {
     var postCCPAActionCalledWith: [String: Any?]!
     var postUSNatActionCalledWith: [String: Any?]?
 
+    var metadataResponse = MetaDataResponse(ccpa: nil, gdpr: nil, usnat: nil)
+
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
 
@@ -248,7 +250,7 @@ class SourcePointClientMock: SourcePointProtocol {
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(.init(ccpa: nil, gdpr: nil, usnat: nil)))
+            handler(.success(metadataResponse))
         }
     }
 

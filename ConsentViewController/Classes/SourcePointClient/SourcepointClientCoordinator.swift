@@ -196,8 +196,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var needsNewConsentData: Bool {
-        migratingUser || (
-            state.localVersion != State.version &&
+        migratingUser || needsNewUSNatData || (
+            state.localVersion != nil && state.localVersion != State.version &&
             (
                 state.gdpr?.uuid != nil ||
                 state.ccpa?.uuid != nil ||
@@ -205,6 +205,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             )
         )
     }
+
+    /**
+        Set to true if in the response of `/meta-data`, the applicableSectionId returned
+        is different than the one stored in memory.
+        Used as part of the decision to call `/consent-status`
+     */
+    var needsNewUSNatData = false
 
     var shouldCallConsentStatus: Bool {
         needsNewConsentData || authId != nil
@@ -472,10 +479,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpaMetaData?.updateSampleFields(ccpaMetaData.sampleRate)
         }
         if let usnatMetaData = response.usnat {
+            let previousApplicableSections = state.usNatMetaData?.applicableSections ?? []
             state.usnat?.applies = usnatMetaData.applies
             state.usNatMetaData?.vendorListId = usnatMetaData.vendorListId
             state.usNatMetaData?.additionsChangeDate = usnatMetaData.additionsChangeDate
             state.usNatMetaData?.updateSampleFields(usnatMetaData.sampleRate)
+            state.usNatMetaData?.applicableSections = usnatMetaData.applicableSections
+            if previousApplicableSections.isNotEmpty() && previousApplicableSections != state.usNatMetaData?.applicableSections {
+                needsNewUSNatData = true
+            }
         }
         storage.spState = state
     }
