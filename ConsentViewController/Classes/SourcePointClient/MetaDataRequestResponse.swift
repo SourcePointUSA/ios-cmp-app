@@ -15,10 +15,15 @@ struct MetaDataResponse: Decodable, Equatable {
     struct GDPR: Decodable, Equatable {
         let additionsChangeDate: SPDate
         let legalBasisChangeDate: SPDate
-        let _id: String
+        let vendorListId: String
         let childPmId: String?
         let applies: Bool
         let sampleRate: Float
+
+        enum CodingKeys: String, CodingKey {
+            case additionsChangeDate, legalBasisChangeDate, applies, sampleRate, childPmId
+            case vendorListId = "_id"
+        }
     }
     struct USNat: Decodable, Equatable {
         let vendorListId: String
