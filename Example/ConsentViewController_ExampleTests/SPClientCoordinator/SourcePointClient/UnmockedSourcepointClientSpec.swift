@@ -104,7 +104,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(response.consentStatusData.ccpa).notTo(beNil())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
@@ -155,7 +155,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 }
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
@@ -200,7 +200,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.gdpr).notTo(beNil())
 
                         case .failure(let error):
-                            fail(error.failureReason)
+                            fail(error.description)
                         }
                         done()
                     }
@@ -228,7 +228,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(CCPA).notTo(beNil())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
@@ -251,7 +251,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(GDPR?.childPmId) == "99999999999"
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
@@ -279,7 +279,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.ccpa).notTo(beNil())
 
                         case .failure(let error):
-                            fail(error.failureReason)
+                            fail(error.description)
                         }
                         done()
                     }
@@ -307,7 +307,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.ccpa).notTo(beNil())
 
                         case .failure(let error):
-                            fail(error.failureReason)
+                            fail(error.description)
                         }
                         done()
                     }

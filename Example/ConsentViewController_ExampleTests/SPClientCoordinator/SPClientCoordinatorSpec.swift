@@ -66,7 +66,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.ccpa?.consents?.uspstring) == "1---"
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             expect(coordinator.storage.gdprChildPmId)=="613057"
                             done()
@@ -86,7 +86,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.ccpa?.consents?.GPPData.dictionaryValue).notTo(beEmpty())
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             done()
                         }
@@ -610,7 +610,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(messages).notTo(beEmpty())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                         }
                         done()
                     }
@@ -639,7 +639,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(spClientMock.pvDataCalled).to(beTrue())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                         }
                         done()
                     }
@@ -656,7 +656,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(coordinator.userData.usnat).to(equal(userData.usnat))
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             done()
                         }
