@@ -217,6 +217,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var transitionCCPAUSNat: Bool {
+        campaigns.usnat != nil &&
         ccpaUUID != nil &&
         usnatUUID == nil &&
         (state.ccpa?.status == .RejectedAll || state.ccpa?.status == .RejectedSome)
