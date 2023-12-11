@@ -210,11 +210,11 @@ The `SpConsentManager` initializer contains your organization's account and prop
 
 ```swift
 lazy var consentManager: SPConsentManager = { SPConsentManager(
-    accountId: 1584,
-    propertyId: 12345,
-    propertyName: try! SPPropertyName("example.demo"),
+    accountId: 22,
+    propertyId: 34152,
+    propertyName: try! SPPropertyName("usnat.mobile.demo"),
     campaigns: SPCampaigns(
-        gdpr: SPCampaign()
+        gdpr: SPCampaign(),
         usnat: SPCampaign()
     ),
     delegate: self
@@ -443,6 +443,25 @@ SPCampaign *myCampaign = [[SPCampaign alloc]
     initWithTargetingParams: [[NSDictionary alloc] initWithObjectsAndKeys:@"value1", @"key1"]
 ];
 ```
+
+## Transfering CCPA consents over USNat
+
+When transitioning from CCPA to USNat campaign, the SDK will automatically detect CCPA consent data and have that transferred over to USNat. In other words, if your user, opted-out from CCPA consent, that user will continue to be opted-out on USNat. Same goes for opted-in.
+
+If you ever used authenticated consent for CCPA, you'll have to set the flag `transitionCCPAAuth` manually when configuring the campaigns to be loaded by the SDK. Example:
+
+```swift
+var consentManager = SPConsentManager(
+    accountId: accId,
+    propertyId: propId,
+    propertyName: try! SPPropertyName(propName),
+    campaigns: SPCampaigns(usnat: SPCampaign(transitionCCPAAuth: true)), // <== here
+    delegate: self
+)
+```
+
+This way, the SDK will look for authenticated consent within CCPA profiles and carry that over to USNat, even if the user current doesn't have CCPA local data (on a fresh install, for example)
+
 
 ## Configuring the Message/Consents timeout
 
