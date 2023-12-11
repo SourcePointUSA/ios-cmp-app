@@ -82,14 +82,12 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 applies: true,
                                 dateCreated: nil,
                                 uuid: nil,
-                                hasLocalData: false,
                                 idfaStatus: nil
                             ),
                             ccpa: .init(
                                 applies: true,
                                 dateCreated: nil,
                                 uuid: nil,
-                                hasLocalData: false,
                                 idfaStatus: nil
                             ),
                             usnat: nil
