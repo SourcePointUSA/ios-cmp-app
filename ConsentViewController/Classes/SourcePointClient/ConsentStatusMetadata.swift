@@ -23,6 +23,8 @@ struct ConsentStatusMetaData: QueryParamEncodable {
         let uuid: String?
         let hasLocalData = false
         let idfaStatus: SPIDFAStatus?
+        let transitionCCPAAuth: Bool?
+        let optedOut: Bool?
     }
 
     let gdpr, ccpa: Campaign?
@@ -44,10 +46,15 @@ extension ConsentStatusMetaData.USNatCampaign {
         _ consent: CampaignConsent?,
         campaign: SPCampaign?,
         idfaStatus: SPIDFAStatus?,
+        dateCreated: SPDate?,
+        optedOut: Bool?
     ) {
         guard let consent = consent, let campaign = campaign else { return nil }
         applies = consent.applies
         uuid = consent.uuid
+        transitionCCPAAuth = campaign.transitionCCPAAuth
         self.dateCreated = dateCreated
+        self.optedOut = optedOut
+        self.idfaStatus = idfaStatus
     }
 }

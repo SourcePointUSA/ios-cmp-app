@@ -196,7 +196,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var needsNewConsentData: Bool {
-        migratingUser || needsNewUSNatData || (
+        migratingUser || needsNewUSNatData || transitionCCPAUSNat || (
             state.localVersion != nil && state.localVersion != State.version &&
             (
                 state.gdpr?.uuid != nil ||
@@ -211,6 +211,16 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         Used as part of the decision to call `/consent-status`
      */
     var needsNewUSNatData = false
+
+    var authTransitionCCPAUSNat: Bool {
+        authId != nil && campaigns.usnat?.transitionCCPAAuth == true
+    }
+
+    var transitionCCPAUSNat: Bool {
+        ccpaUUID != nil &&
+        usnatUUID == nil &&
+        (state.ccpa?.status == .RejectedAll || state.ccpa?.status == .RejectedSome)
+    }
 
     var shouldCallConsentStatus: Bool {
         needsNewConsentData || authId != nil
