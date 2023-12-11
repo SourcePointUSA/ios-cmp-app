@@ -372,6 +372,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             localState.usnat = .empty()
         }
 
+        if localState.localVersion == nil {
+            localState.localVersion = State.version
+        }
+
         return localState
     }
 
