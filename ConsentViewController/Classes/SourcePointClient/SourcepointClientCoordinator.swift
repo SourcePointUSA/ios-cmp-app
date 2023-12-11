@@ -711,21 +711,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func pvData(pubData: SPPublisherData?, _ handler: @escaping () -> Void) {
         let pvDataGroup = DispatchGroup()
-        if let gdprMetadata = state.gdprMetaData {
+        if let gdprMetadata = state.gdprMetaData, campaigns.gdpr != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.gdprMetaData?.wasSampled = sampled
         }
-        if let ccpaMetadata = state.ccpaMetaData {
+        if let ccpaMetadata = state.ccpaMetaData, campaigns.ccpa != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.ccpaMetaData?.wasSampled = sampled
         }
-        if let usNatMetadata = state.usNatMetaData {
+        if let usNatMetadata = state.usNatMetaData, campaigns.usnat != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(usNatMetadata, body: usnatPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
