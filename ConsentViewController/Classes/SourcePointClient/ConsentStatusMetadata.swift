@@ -13,9 +13,41 @@ struct ConsentStatusMetaData: QueryParamEncodable {
         let applies: Bool
         let dateCreated: SPDate?
         let uuid: String?
-        let hasLocalData: Bool
+        let hasLocalData = false
         let idfaStatus: SPIDFAStatus?
     }
 
-    let gdpr, ccpa, usnat: Campaign?
+    struct USNatCampaign: Encodable {
+        let applies: Bool
+        let dateCreated: SPDate?
+        let uuid: String?
+        let hasLocalData = false
+        let idfaStatus: SPIDFAStatus?
+    }
+
+    let gdpr, ccpa: Campaign?
+    let usnat: USNatCampaign?
+}
+
+extension ConsentStatusMetaData.Campaign {
+    init?(_ consent: CampaignConsent?, campaign: SPCampaign?, idfaStatus: SPIDFAStatus?) {
+        guard let consent = consent, campaign != nil else { return nil }
+        applies = consent.applies
+        dateCreated = consent.dateCreated
+        uuid = consent.uuid
+        self.idfaStatus = idfaStatus
+    }
+}
+
+extension ConsentStatusMetaData.USNatCampaign {
+    init?(
+        _ consent: CampaignConsent?,
+        campaign: SPCampaign?,
+        idfaStatus: SPIDFAStatus?,
+    ) {
+        guard let consent = consent, let campaign = campaign else { return nil }
+        applies = consent.applies
+        uuid = consent.uuid
+        self.dateCreated = dateCreated
+    }
 }
