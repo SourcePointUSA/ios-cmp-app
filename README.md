@@ -444,11 +444,13 @@ SPCampaign *myCampaign = [[SPCampaign alloc]
 ];
 ```
 
-## Transfering CCPA consents over USNat
+## Transfer opt-in/opt out preferences from U.S. Privacy (Legacy) to U.S. Multi-State Privacy
 
-When transitioning from CCPA to USNat campaign, the SDK will automatically detect CCPA consent data and have that transferred over to USNat. In other words, if your user, opted-out from CCPA consent, that user will continue to be opted-out on USNat. Same goes for opted-in.
+When migrating a property from the U.S. Privacy (Legacy) campaign to U.S. Multi-State Privacy campaign, the SDK will automatically detect previously set end-user opt-in/opt-out preferences for U.S. Privacy (Legacy) and have that transferred over to U.S. Multi-State Privacy. 
 
-If you ever used authenticated consent for CCPA, you'll have to set the flag `transitionCCPAAuth` manually when configuring the campaigns to be loaded by the SDK. Example:
+> If an end-user rejected a vendor or category for U.S. Privacy, Sourcepoint will set the *Sharing of Personal Information Targeted Advertisting* and *Sale of Personal Information* privacy choices or the *Sale or Share of Personal Information/Targeted Advertising* privacy choice (depending on your configuration) to **opted-out** when the preferences are transferred.
+
+If you ever used authenticated consent for CCPA, you'll have to set the flag `transitionCCPAAuth` manually when configuring the campaigns to be loaded by the SDK. This way, the SDK will look for authenticated consent within CCPA profiles and carry that over to USNat, even if the user currently doesn't have CCPA local data (on a fresh install, for example).
 
 ```swift
 var consentManager = SPConsentManager(
@@ -459,8 +461,6 @@ var consentManager = SPConsentManager(
     delegate: self
 )
 ```
-
-This way, the SDK will look for authenticated consent within CCPA profiles and carry that over to USNat, even if the user current doesn't have CCPA local data (on a fresh install, for example)
 
 
 ## Configuring the Message/Consents timeout
