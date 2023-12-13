@@ -615,7 +615,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                         accountId: accountId,
                                         propertyName: try! SPPropertyName("usnat.mobile.demo"),
                                         propertyId: 34152,
-                                        campaigns: SPCampaigns(usnat: SPCampaign()),
+                                        campaigns: SPCampaigns(usnat: SPCampaign(transitionCCPAAuth: true)),
                                         storage: LocalStorageMock()
                                     )
                                     coordinator.loadMessages(forAuthId: ccpaAuthId, pubData: nil) { usnatMessages in
