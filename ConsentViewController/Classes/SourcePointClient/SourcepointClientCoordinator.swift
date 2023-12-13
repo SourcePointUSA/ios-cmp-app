@@ -196,7 +196,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var needsNewConsentData: Bool {
-        migratingUser || needsNewUSNatData || (
+        migratingUser || needsNewUSNatData || transitionCCPAUSNat || (
             state.localVersion != nil && state.localVersion != State.version &&
             (
                 state.gdpr?.uuid != nil ||
@@ -211,6 +211,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         Used as part of the decision to call `/consent-status`
      */
     var needsNewUSNatData = false
+
+    var authTransitionCCPAUSNat: Bool {
+        authId != nil && campaigns.usnat?.transitionCCPAAuth == true
+    }
+
+    var transitionCCPAUSNat: Bool {
+        campaigns.usnat != nil &&
+        ccpaUUID != nil &&
+        usnatUUID == nil &&
+        (state.ccpa?.status == .RejectedAll || state.ccpa?.status == .RejectedSome)
+    }
 
     var shouldCallConsentStatus: Bool {
         needsNewConsentData || authId != nil
@@ -362,6 +373,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             localState.usnat = .empty()
         }
 
+        if localState.localVersion == nil {
+            localState.localVersion = State.version
+        }
+
         return localState
     }
 
@@ -508,17 +523,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func consentStatusMetadataFromState(_ campaign: CampaignConsent?) -> ConsentStatusMetaData.Campaign? {
-        guard let campaign = campaign else { return nil }
-        return ConsentStatusMetaData.Campaign(
-            applies: campaign.applies,
-            dateCreated: campaign.dateCreated,
-            uuid: campaign.uuid,
-            hasLocalData: false,
-            idfaStatus: SPIDFAStatus.current()
-        )
-    }
-
     func handleConsentStatusResponse(_ response: ConsentStatusResponse) {
         state.localState = response.localState
         if let gdpr = response.consentStatusData.gdpr {
@@ -575,9 +579,23 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             spClient.consentStatus(
                 propertyId: propertyId,
                 metadata: .init(
-                    gdpr: consentStatusMetadataFromState(state.gdpr),
-                    ccpa: consentStatusMetadataFromState(state.ccpa),
-                    usnat: consentStatusMetadataFromState(state.usnat)
+                    gdpr: .init(
+                        state.gdpr,
+                        campaign: campaigns.gdpr,
+                        idfaStatus: SPIDFAStatus.current()
+                    ),
+                    ccpa: .init(
+                        state.ccpa,
+                        campaign: campaigns.ccpa,
+                        idfaStatus: SPIDFAStatus.current()
+                    ),
+                    usnat: .init(
+                        state.usnat,
+                        campaign: campaigns.usnat,
+                        idfaStatus: SPIDFAStatus.current(),
+                        dateCreated: transitionCCPAUSNat ? state.ccpa?.dateCreated : state.usnat?.dateCreated,
+                        optedOut: transitionCCPAUSNat
+                    )
                 ),
                 authId: authId,
                 includeData: includeData
@@ -698,21 +716,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func pvData(pubData: SPPublisherData?, _ handler: @escaping () -> Void) {
         let pvDataGroup = DispatchGroup()
-        if let gdprMetadata = state.gdprMetaData {
+        if let gdprMetadata = state.gdprMetaData, campaigns.gdpr != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.gdprMetaData?.wasSampled = sampled
         }
-        if let ccpaMetadata = state.ccpaMetaData {
+        if let ccpaMetadata = state.ccpaMetaData, campaigns.ccpa != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.ccpaMetaData?.wasSampled = sampled
         }
-        if let usNatMetadata = state.usNatMetaData {
+        if let usNatMetadata = state.usNatMetaData, campaigns.usnat != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(usNatMetadata, body: usnatPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()

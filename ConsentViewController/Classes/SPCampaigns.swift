@@ -16,20 +16,29 @@ public typealias SPTargetingParams = [String: String]
 
     let groupPmId: String?
 
+    /**
+     Used by usNat campaigns only. Set this flag only if your app used an SDK older than `7.6.0`, use authenticated consent
+     and has a CCPA campaign.
+     */
+    let transitionCCPAAuth: Bool?
+
     override public var description: String {
         """
         SPCampaign
             - targetingParams: \(targetingParams)
             - groupPmId: \(groupPmId as Any)
+            - transitionCCPAAuth: \(transitionCCPAAuth as Any)
         """
     }
 
     public init(
         targetingParams: SPTargetingParams = [:],
-        groupPmId: String? = nil
+        groupPmId: String? = nil,
+        transitionCCPAAuth: Bool? = nil
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
+        self.transitionCCPAAuth = transitionCCPAAuth
     }
 }
 

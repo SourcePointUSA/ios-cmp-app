@@ -123,7 +123,7 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                                 case .success:
                                     expect(spClientMock.postGDPRActionCalled).to(beTrue())
-                                    let body = spClientMock.postGDPRActionCalledWith["body"] as? GDPRChoiceBody
+                                    let body = spClientMock.postGDPRActionCalledWith?["body"] as? GDPRChoiceBody
                                     expect(body?.pubData).to(equal(gdprAction.encodablePubData))
                             }
                             done()
@@ -142,7 +142,7 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                                 case .success:
                                     expect(spClientMock.postCCPAActionCalled).to(beTrue())
-                                    let body = spClientMock.postCCPAActionCalledWith["body"] as? CCPAChoiceBody
+                                    let body = spClientMock.postCCPAActionCalledWith?["body"] as? CCPAChoiceBody
                                     expect(body?.pubData).to(equal(ccpaAction.encodablePubData))
                             }
                             done()
@@ -588,6 +588,104 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(userData.usnat?.consents?.uuid).to(equal(actionUuid))
 
                                     done()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                describe("and the transitionCCPAAuth campaign config is true") {
+                    it("sets the flag transitionCCPAAuth in consent-status' metadata param") {
+                        coordinator = SourcepointClientCoordinator(
+                            accountId: accountId,
+                            propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                            propertyId: 34152,
+                            campaigns: SPCampaigns(ccpa: SPCampaign()),
+                            storage: LocalStorageMock()
+                        )
+                        let ccpaAuthId = UUID().uuidString
+
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: ccpaAuthId, pubData: nil) { _ in
+                                coordinator.reportAction(SPAction(type: .RejectAll, campaignType: .ccpa)) { actionResult in
+                                    let userData = try? actionResult.get()
+                                    expect(userData?.ccpa?.consents?.status).to(equal(.RejectedAll))
+
+                                    coordinator = SourcepointClientCoordinator(
+                                        accountId: accountId,
+                                        propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                                        propertyId: 34152,
+                                        campaigns: SPCampaigns(usnat: SPCampaign(transitionCCPAAuth: true)),
+                                        storage: LocalStorageMock()
+                                    )
+                                    coordinator.loadMessages(forAuthId: ccpaAuthId, pubData: nil) { usnatMessages in
+                                        let (messages, usnatUserData) = try! usnatMessages.get()
+                                        expect(messages).to(beEmpty())
+                                        expect(usnatUserData.usnat?.consents?.consentStatus.rejectedAny).to(beTrue())
+                                        expect(usnatUserData.usnat?.consents?.consentStatus.consentedToAll).to(beFalse())
+                                        done()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            describe("handles ccpa opt-outs") {
+                describe("when there's no authId") {
+                    it("transitionCCPAAuth in consent-status' metadata param is nil") {
+                        let client = SourcePointClientMock()
+                        coordinator = SourcepointClientCoordinator(
+                            accountId: accountId,
+                            propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                            propertyId: 34152,
+                            campaigns: SPCampaigns(usnat: SPCampaign(transitionCCPAAuth: true)),
+                            storage: LocalStorageMock(),
+                            spClient: client
+                        )
+
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                let consentStatusMetadata = client.consentStatusCalledWith?["metadata"] as? ConsentStatusMetaData
+                                expect(consentStatusMetadata?.usnat?.transitionCCPAAuth).to(beNil())
+                                done()
+                            }
+                        }
+                    }
+                }
+
+                describe("and there is ccpa consent data") {
+                    it("returns a rejected-all usnat consent") {
+                        let storage = LocalStorageMock()
+                        let campaignsWithCCPA = SPCampaigns(ccpa: SPCampaign())
+                        let campaignsWithUSNat = SPCampaigns(usnat: SPCampaign())
+                        coordinator = SourcepointClientCoordinator(
+                            accountId: accountId,
+                            propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                            propertyId: 34152,
+                            campaigns: campaignsWithCCPA,
+                            storage: storage
+                        )
+
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                coordinator.reportAction(SPAction(type: .RejectAll, campaignType: .ccpa)) { _ in
+                                    expect(coordinator.ccpaUUID).notTo(beNil())
+                                    coordinator = SourcepointClientCoordinator(
+                                        accountId: accountId,
+                                        propertyName: try! SPPropertyName("usnat.mobile.demo"),
+                                        propertyId: 34152,
+                                        campaigns: campaignsWithUSNat,
+                                        storage: storage
+                                    )
+
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { response in
+                                        let (messages, userData) = try! response.get()
+                                        expect(messages).to(beEmpty())
+                                        expect(userData.usnat?.consents?.uuid).notTo(beNil())
+                                        done()
+                                    }
                                 }
                             }
                         }

@@ -17,11 +17,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var postGDPRActionCalled = false, postCCPAActionCalled = false,
         customConsentCalled = false, consentStatusCalled = false,
         pvDataCalled = false, getMessagesCalled = false
-    var customConsentWasCalledWith: [String: Any?]!
-    var errorMetricsCalledWith: [String: Any?]!
-    var postGDPRActionCalledWith: [String: Any?]!
-    var postCCPAActionCalledWith: [String: Any?]!
-    var postUSNatActionCalledWith: [String: Any?]?
+    var consentStatusCalledWith, customConsentWasCalledWith, errorMetricsCalledWith, postGDPRActionCalledWith, postCCPAActionCalledWith, postUSNatActionCalledWith: [String: Any?]?
 
     var metadataResponse = MetaDataResponse(ccpa: nil, gdpr: nil, usnat: nil)
 
@@ -65,6 +61,12 @@ class SourcePointClientMock: SourcePointProtocol {
         includeData: IncludeData,
         handler: @escaping ConsentStatusHandler) {
             consentStatusCalled = true
+            consentStatusCalledWith = [
+                "propertyId": propertyId,
+                "metadata": metadata,
+                "authId": authId,
+                "includeData": includeData
+            ]
 
             if let error = error {
                 handler(.failure(error))
