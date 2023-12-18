@@ -23,6 +23,6 @@
   <key>NSPrincipalClass</key>
   <string></string>
   <key>SPEnv</key>
-  <string>prod</string>
+  <string>preprod</string>
 </dict>
 </plist>
