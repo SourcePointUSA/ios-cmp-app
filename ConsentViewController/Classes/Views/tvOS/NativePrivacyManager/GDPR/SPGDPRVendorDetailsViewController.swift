@@ -55,7 +55,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     @IBOutlet var PolicyQrCodeLabel: UILabel!
     @IBOutlet var LegIntQrCodeLabel: UILabel!
     @IBOutlet var ToScanLabel: UILabel!
-    @IBOutlet var NoteLabel: UILabel!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var onButton: SPAppleTVButton!
     @IBOutlet var offButton: SPAppleTVButton!
@@ -146,7 +145,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         loadQRCode(url: vendor?.legIntUrl, imageView: LegIntQrCodeImageView, label: LegIntQrCodeLabel)
         ToScanLabel.setDefaultTextColorForDarkMode()
         ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
-        NoteLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
     }
 
     func loadQRCode(url: URL?, imageView: UIImageView, label: UILabel) {
