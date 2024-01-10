@@ -371,9 +371,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
                 self.messages { messagesResponse in
-                    self.pvData(pubData: pubData) {
-                        handler(messagesResponse)
-                    }
+                    handler(messagesResponse)
+                    self.pvData(pubData: pubData) { }
                 }
             }
         }
