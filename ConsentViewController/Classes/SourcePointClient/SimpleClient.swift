@@ -8,6 +8,7 @@
 import Foundation
 
 protocol SPURLSessionDataTask {
+    var priority: Float { get set }
     func resume()
 }
 
@@ -16,22 +17,16 @@ protocol SPURLSession { typealias DataTaskResult = (Data?, URLResponse?, Error?)
     func dataTask(_ request: URLRequest, completionHandler: @escaping DataTaskResult) -> SPURLSessionDataTask
 }
 
-protocol SPDispatchQueue {
-    func async(execute work: @escaping () -> Void)
-}
-
 extension URLSession: SPURLSession {
     func dataTask(_ request: URLRequest, completionHandler: @escaping DataTaskResult) -> SPURLSessionDataTask {
-        dataTask(with: request, completionHandler: completionHandler)
+        let task = dataTask(with: request, completionHandler: completionHandler)
+        task.priority = 1.0
+        return task
     }
 }
 
-extension URLSessionDataTask: SPURLSessionDataTask {}
-
-extension DispatchQueue: SPDispatchQueue {
-    func async(execute work: @escaping () -> Void) {
-        async(group: nil, qos: .unspecified, flags: [], execute: work)
-    }
+extension URLSessionDataTask: SPURLSessionDataTask {
+    public override var priority: Float { get { URLSessionTask.highPriority } set {} }
 }
 
 typealias ResponseHandler = (Result<Data?, SPError>) -> Void
@@ -43,26 +38,45 @@ protocol HttpClient {
 }
 
 class SimpleClient: HttpClient {
+    static func sessionConfig(withTimeout timeout: TimeInterval) -> URLSessionConfiguration {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForResource = timeout
+        config.requestCachePolicy = .useProtocolCachePolicy
+        config.urlCache = .shared
+        config.networkServiceType = .responsiveData
+        config.httpCookieStorage = .shared
+        config.allowsCellularAccess = true
+        config.httpCookieAcceptPolicy = .always
+        config.httpMaximumConnectionsPerHost = 10
+        config.isDiscretionary = false
+        config.shouldUseExtendedBackgroundIdleMode = true
+        if #available(iOS 11.0, *) {
+            config.waitsForConnectivity = false
+        }
+        if #available(iOS 13.0, *) {
+            config.allowsExpensiveNetworkAccess = true
+            config.allowsConstrainedNetworkAccess = true
+        }
+        return config
+    }
+
     let connectivityManager: Connectivity
     let logger: SPLogger
     let session: SPURLSession
-    let dispatchQueue: SPDispatchQueue
 
-    init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession, dispatchQueue: SPDispatchQueue) {
+    init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession) {
         self.connectivityManager = connectivityManager
         self.logger = logger
         session = urlSession
-        self.dispatchQueue = dispatchQueue
     }
 
     convenience init(timeoutAfter timeout: TimeInterval) {
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForResource = timeout
+        let session = URLSession(configuration: Self.sessionConfig(withTimeout: timeout))
+        session.sessionDescription = "SourcepointSession"
         self.init(
             connectivityManager: ConnectivityManager(),
             logger: OSLogger.standard,
-            urlSession: URLSession(configuration: config),
-            dispatchQueue: DispatchQueue.main
+            urlSession: session
         )
     }
 
@@ -89,21 +103,17 @@ class SimpleClient: HttpClient {
             handler(.failure(NoInternetConnection()))
             return
         }
-        session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         session.dataTask(urlRequest) { [weak self] data, response, error in
-            self?.dispatchQueue.async { [weak self] in
-                self?.logResponse(urlRequest, data)
-
-                if error != nil {
-                    if let response = response as? HTTPURLResponse {
-                        handler(.failure(InvalidResponseAPIError(
-                            apiCode: apiCode,
-                            statusCode: String(response.statusCode)
-                        )))
-                    }
-                } else {
-                    handler(.success(data))
+            self?.logResponse(urlRequest, data)
+            if error != nil {
+                if let response = response as? HTTPURLResponse {
+                    handler(.failure(InvalidResponseAPIError(
+                        apiCode: apiCode,
+                        statusCode: String(response.statusCode)
+                    )))
                 }
+            } else {
+                handler(.success(data))
             }
         }.resume()
     }
