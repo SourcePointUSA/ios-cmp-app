@@ -114,7 +114,7 @@ import UIKit
 
     func handleSDKDone() {
         if messagesToShow == 0, responsesToReceive == 0 {
-            delegate?.onSPFinished?(userData: userData)
+            onSPFinished(userData: userData)
         }
     }
 
@@ -235,29 +235,18 @@ import UIKit
 
     func onConsentReceived(_ userData: SPUserData) {
         storeLegislationConsent(userData: userData)
-        delegate?.onConsentReady?(userData: userData)
+        onConsentReady(userData: userData)
         handleSDKDone()
     }
 
     public func gracefullyDegradeOnError(_ error: SPError) {
-        spCoordinator.logErrorMetrics(error)
         if !userData.isEqual(SPUserData()) {
-            delegate?.onConsentReady?(userData: userData)
+            spCoordinator.logErrorMetrics(error)
+            onConsentReady(userData: userData)
             handleSDKDone()
         } else {
-            if cleanUserDataOnError {
-                Self.clearAllData()
-            }
-            delegate?.onError?(error: error)
+            onError(error)
         }
-    }
-
-    public func onError(_ error: SPError) {
-        spCoordinator.logErrorMetrics(error)
-        if cleanUserDataOnError {
-            Self.clearAllData()
-        }
-        delegate?.onError?(error: error)
     }
 
     func selectPrivacyManagerId(fallbackId: String, groupPmId: String?, childPmId: String?) -> String {
@@ -304,6 +293,7 @@ import UIKit
     }
 
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
+        OSLogger.standard.begin("MessageFlow")
         self.authId = authId
         responsesToReceive += 1
 
@@ -313,7 +303,9 @@ import UIKit
                 switch result {
                     case .success(let (messages, consents)):
                         strongSelf.storeLegislationConsent(userData: consents)
-                        strongSelf.messageControllersStack = strongSelf.messagesToViewController(messages)
+                        mainSync { [weak self] in
+                            self?.messageControllersStack = strongSelf.messagesToViewController(messages)
+                        }
                         strongSelf.messagesToShow = strongSelf.messageControllersStack.count
                         if strongSelf.messageControllersStack.isEmpty {
                             strongSelf.onConsentReceived(strongSelf.userData)
@@ -341,6 +333,7 @@ import UIKit
     }
 
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        OSLogger.standard.begin("MessageFlow")
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
@@ -391,6 +384,7 @@ import UIKit
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        OSLogger.standard.begin("MessageFlow")
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
@@ -433,7 +427,8 @@ import UIKit
         handler: @escaping (SPGDPRConsent) -> Void
     ) {
         switch result {
-            case .success(let result): handler(result)
+            case .success(let result): DispatchQueue.main.async { handler(result) }
+
             case .failure(let error): onError(error)
         }
     }
@@ -471,23 +466,17 @@ import UIKit
 
 extension SPConsentManager: SPMessageUIDelegate {
     public func loaded(_ message: SPNativeMessage) {
-        DispatchQueue.main.async { [weak self] in
-            self?.delegate?.onSPNativeMessageReady?(message)
-        }
+        onSPNativeMessageReady(message)
     }
 
     public func loaded(_ controller: UIViewController) {
-        DispatchQueue.main.async { [weak self] in
-            self?.delegate?.onSPUIReady(controller)
-        }
+        onSPUIReady(controller)
     }
 
     public func finished(_ vcFinished: UIViewController) {
-        DispatchQueue.main.async { [weak self] in
-            self?.delegate?.onSPUIFinished(vcFinished)
-            self?.messagesToShow -= 1
-            self?.handleSDKDone()
-        }
+        onSPUIFinished(vcFinished)
+        messagesToShow -= 1
+        handleSDKDone()
     }
 
     public func action(_ action: SPAction, from controller: UIViewController) {
@@ -530,10 +519,6 @@ extension SPConsentManager: SPMessageUIDelegate {
         default:
             nextMessageIfAny(controller)
         }
-    }
-
-    func onAction(_ action: SPAction, from controller: UIViewController) {
-        delegate?.onAction(action, from: controller)
     }
 }
 
@@ -583,4 +568,72 @@ extension SPConsentManager: SPNativePMDelegate {
             }
         }
     }
+}
+
+extension SPConsentManager: SPDelegate {
+    public func onSPUIReady(_ controller: UIViewController) {
+        OSLogger.standard.end("MessageFlow")
+        OSLogger.standard.event("onSPUIReady")
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onSPUIReady(controller)
+        }
+    }
+
+    public func onSPNativeMessageReady(_ message: SPNativeMessage) {
+        OSLogger.standard.end("MessageFlow")
+        OSLogger.standard.event("onSPNativeMessageReady")
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onSPNativeMessageReady?(message)
+        }
+    }
+
+    public func onAction(_ action: SPAction, from controller: UIViewController) {
+        OSLogger.standard.event("onAction", action.type.description)
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onAction(action, from: controller)
+        }
+    }
+
+    public func onSPUIFinished(_ controller: UIViewController) {
+        OSLogger.standard.event("onSPUIFinished")
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onSPUIFinished(controller)
+        }
+    }
+
+    public func onConsentReady(userData: SPUserData) {
+        OSLogger.standard.end("MessageFlow")
+        OSLogger.standard.event("onConsentReady")
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onConsentReady?(userData: userData)
+        }
+    }
+
+    public func onSPFinished(userData: SPUserData) {
+        OSLogger.standard.event("onSPFinished")
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onSPFinished?(userData: userData)
+        }
+    }
+
+    public func onError(_ error: SPError) {
+        OSLogger.standard.end("MessageFlow")
+        OSLogger.standard.event("onError")
+        OSLogger.standard.error("onError")
+        spCoordinator.logErrorMetrics(error)
+        if cleanUserDataOnError {
+            Self.clearAllData()
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onError?(error: error)
+        }
+    }
+}
+
+func mainSync<T>(execute work: () throws -> T) rethrows -> T {
+    if Thread.isMainThread {
+        return try work()
+    }
+
+    return try DispatchQueue.main.sync { try work() }
 }
