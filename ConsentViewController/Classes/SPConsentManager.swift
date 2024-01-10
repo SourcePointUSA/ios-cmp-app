@@ -344,7 +344,9 @@ import UIKit
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
-        loadWebPrivacyManager(.gdpr, pmUrl)
+        mainSync {
+            loadWebPrivacyManager(.gdpr, pmUrl)
+        }
         #elseif os(tvOS)
         spClient.getGDPRMessage(propertyId: String(propertyId), consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
@@ -353,16 +355,18 @@ import UIKit
                     self?.onError(InvalidJSONEncodeResult())
                     return
                 }
-                let pmViewController = SPGDPRNativePrivacyManagerViewController(
-                    messageId: usedId,
-                    campaignType: .gdpr,
-                    viewData: nativePMMessage.homeView,
-                    pmData: nativePMMessage,
-                    delegate: self
-                )
-                pmViewController.categories = message.categories ?? []
-                pmViewController.delegate = self
-                self?.loaded(pmViewController)
+                mainSync {
+                    let pmViewController = SPGDPRNativePrivacyManagerViewController(
+                        messageId: usedId,
+                        campaignType: .gdpr,
+                        viewData: nativePMMessage.homeView,
+                        pmData: nativePMMessage,
+                        delegate: self
+                    )
+                    pmViewController.categories = message.categories ?? []
+                    pmViewController.delegate = self
+                    self?.loaded(pmViewController)
+                }
 
             case .failure(let error):
                 self?.onError(error)
@@ -395,7 +399,9 @@ import UIKit
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
-        loadWebPrivacyManager(.ccpa, pmUrl)
+        mainSync {
+            loadWebPrivacyManager(.ccpa, pmUrl)
+        }
         #elseif os(tvOS)
         spClient.getCCPAMessage(propertyId: String(propertyId), consentLanguage: messageLanguage, messageId: usedId) { [weak self] result in
             switch result {
@@ -404,16 +410,18 @@ import UIKit
                     self?.onError(InvalidJSONEncodeResult())
                     return
                 }
-                let pmViewController = SPCCPANativePrivacyManagerViewController(
-                    messageId: usedId,
-                    campaignType: .ccpa,
-                    viewData: nativePMMessage.homeView,
-                    pmData: nativePMMessage,
-                    delegate: self
-                )
-                pmViewController.delegate = self
-                pmViewController.ccpaConsents = self?.userData.ccpa?.consents
-                self?.loaded(pmViewController)
+                mainSync {
+                    let pmViewController = SPCCPANativePrivacyManagerViewController(
+                        messageId: usedId,
+                        campaignType: .ccpa,
+                        viewData: nativePMMessage.homeView,
+                        pmData: nativePMMessage,
+                        delegate: self
+                    )
+                    pmViewController.delegate = self
+                    pmViewController.ccpaConsents = self?.userData.ccpa?.consents
+                    self?.loaded(pmViewController)
+                }
 
             case .failure(let error):
                 self?.onError(error)
@@ -547,7 +555,9 @@ extension SPConsentManager: SPNativePMDelegate {
                 pmData.acceptedCategories = self?.userData.gdpr?.consents?.categories ?? []
                 pmData.acceptedSpecialFeatures = self?.userData.gdpr?.consents?.specialFeatures ?? []
                 pmData.hasConsentData = self?.userData.gdpr?.consents?.consentStatus.hasConsentData
-                handler(result.map { _ in pmData })
+                mainSync {
+                    handler(result.map { _ in pmData })
+                }
             }
         }
     }
@@ -564,7 +574,9 @@ extension SPConsentManager: SPNativePMDelegate {
                 pmData.rejectedCategories = self?.userData.ccpa?.consents?.rejectedCategories
                 pmData.rejectedVendors = self?.userData.ccpa?.consents?.rejectedVendors
                 pmData.consentStatus = self?.userData.ccpa?.consents?.status
-                handler(result.map { _ in pmData })
+                mainSync {
+                    handler(result.map { _ in pmData })
+                }
             }
         }
     }
