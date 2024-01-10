@@ -24,7 +24,7 @@ enum SPLogLevel: String {
     case prod
 }
 
-@available(iOS 12.0, *)
+@available(iOS 12.0, tvOS 12.0, *)
 struct ModernishLogger: SPLogger {
     let logger = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: .pointsOfInterest)
 
@@ -138,7 +138,7 @@ struct OSLogger: SPLogger {
     private init (level: SPLogLevel? = Self.defaultLevel) {
         if level == .prod {
             logger = NoopLogger()
-        } else if #available(iOS 12.0, *) {
+        } else if #available(iOS 12.0, tvOS 12.0, *) {
             logger = ModernishLogger()
         } else {
             logger = LegacyLogger()

@@ -50,10 +50,10 @@ class SimpleClient: HttpClient {
         config.httpMaximumConnectionsPerHost = 10
         config.isDiscretionary = false
         config.shouldUseExtendedBackgroundIdleMode = true
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
             config.waitsForConnectivity = false
         }
-        if #available(iOS 13.0, *) {
+        if #available(iOS 13.0, tvOS 13.0, *) {
             config.allowsExpensiveNetworkAccess = true
             config.allowsConstrainedNetworkAccess = true
         }

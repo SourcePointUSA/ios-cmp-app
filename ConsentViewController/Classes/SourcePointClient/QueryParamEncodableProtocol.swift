@@ -15,7 +15,7 @@ protocol QueryParamEncodable: Encodable {
 extension QueryParamEncodable {
     func stringified() -> String {
         let encoder = JSONEncoder()
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
             encoder.outputFormatting = .sortedKeys
         }
         guard let data = try? encoder.encode(self),
