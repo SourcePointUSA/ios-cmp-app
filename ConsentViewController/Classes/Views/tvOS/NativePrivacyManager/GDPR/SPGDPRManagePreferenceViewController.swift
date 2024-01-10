@@ -89,6 +89,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         setHeader()
         loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView, bounces: false)
         descriptionTextView.flashScrollIndicators()
+        dynamicFrameForDescription()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadSliderButton(forComponentId: "CategoriesSlider", slider: categorySlider)
@@ -144,6 +145,17 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "BackButton", button: header.backButton)
         header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
+    }
+
+    func dynamicFrameForDescription() {
+        let width = descriptionTextView.frame.size.width
+        let height = descriptionTextView.frame.height
+        descriptionTextView.translatesAutoresizingMaskIntoConstraints = true
+        descriptionTextView.sizeToFit()
+        descriptionTextView.frame.size.width = width
+        if descriptionTextView.frame.size.height > height {
+            descriptionTextView.frame.size.height = height
+        }
     }
 }
 

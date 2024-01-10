@@ -399,38 +399,40 @@ class SPClientCoordinatorSpec: QuickSpec {
             it("only changes consent uuid after a different auth id is used") {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
-                        // uuids are only set after /pv-data is called, and /pv-data
-                        // is called right after /messages.
-                        // That's why we get the uuid from state instead of uuid from
-                        // message's response
-                        let guestGDPRUUID = coordinator.state.gdpr?.uuid
-                        let guestCCPAUUID = coordinator.state.ccpa?.uuid
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                            // uuids are only set after /pv-data is called, and /pv-data
+                            // is called right after /messages.
+                            // That's why we need to wait a bit before making assertion
+                            // against the state's uuids
+                            let guestGDPRUUID = coordinator.state.gdpr?.uuid
+                            let guestCCPAUUID = coordinator.state.ccpa?.uuid
 
-                        expect(guestGDPRUUID).notTo(beNil())
-                        expect(guestCCPAUUID).notTo(beNil())
+                            expect(guestGDPRUUID).notTo(beNil())
+                            expect(guestCCPAUUID).notTo(beNil())
 
-                        coordinator.loadMessages(forAuthId: UUID().uuidString, pubData: nil) { loggedInResponse in
-                            let (_, loggedInUserData) = try! loggedInResponse.get()
-                            let loggedInGDPRUUID = loggedInUserData.gdpr?.consents?.uuid
-                            let loggedInCCPAUUID = loggedInUserData.ccpa?.consents?.uuid
-                            expect(loggedInGDPRUUID).to(equal(guestGDPRUUID))
-                            expect(loggedInCCPAUUID).to(equal(guestCCPAUUID))
+                            coordinator.loadMessages(forAuthId: UUID().uuidString, pubData: nil) { loggedInResponse in
+                                let (_, loggedInUserData) = try! loggedInResponse.get()
+                                let loggedInGDPRUUID = loggedInUserData.gdpr?.consents?.uuid
+                                let loggedInCCPAUUID = loggedInUserData.ccpa?.consents?.uuid
+                                expect(loggedInGDPRUUID).to(equal(guestGDPRUUID))
+                                expect(loggedInCCPAUUID).to(equal(guestCCPAUUID))
 
-                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { loggedOutResponse in
-                                let (_, loggedOutUserData) = try! loggedOutResponse.get()
-                                let loggedOutGDPRUUID = loggedOutUserData.gdpr?.consents?.uuid
-                                let loggedOutCCPAUUID = loggedOutUserData.ccpa?.consents?.uuid
-                                expect(loggedInGDPRUUID).to(equal(loggedOutGDPRUUID))
-                                expect(loggedInCCPAUUID).to(equal(loggedOutCCPAUUID))
+                                coordinator.loadMessages(forAuthId: nil, pubData: nil) { loggedOutResponse in
+                                    let (_, loggedOutUserData) = try! loggedOutResponse.get()
+                                    let loggedOutGDPRUUID = loggedOutUserData.gdpr?.consents?.uuid
+                                    let loggedOutCCPAUUID = loggedOutUserData.ccpa?.consents?.uuid
+                                    expect(loggedInGDPRUUID).to(equal(loggedOutGDPRUUID))
+                                    expect(loggedInCCPAUUID).to(equal(loggedOutCCPAUUID))
 
-                                coordinator.loadMessages(forAuthId: UUID().uuidString, pubData: nil) { differentUserResponse in
-                                    let (_, differentUserData) = try! differentUserResponse.get()
-                                    let differentUserGDPRUUID = differentUserData.gdpr?.consents?.uuid
-                                    let differentUserCCPAUUID = differentUserData.ccpa?.consents?.uuid
-                                    expect(differentUserGDPRUUID).notTo(equal(loggedOutGDPRUUID))
-                                    expect(differentUserCCPAUUID).notTo(equal(loggedOutCCPAUUID))
+                                    coordinator.loadMessages(forAuthId: UUID().uuidString, pubData: nil) { differentUserResponse in
+                                        let (_, differentUserData) = try! differentUserResponse.get()
+                                        let differentUserGDPRUUID = differentUserData.gdpr?.consents?.uuid
+                                        let differentUserCCPAUUID = differentUserData.ccpa?.consents?.uuid
+                                        expect(differentUserGDPRUUID).notTo(equal(loggedOutGDPRUUID))
+                                        expect(differentUserCCPAUUID).notTo(equal(loggedOutCCPAUUID))
 
-                                    done()
+                                        done()
+                                    }
                                 }
                             }
                         }

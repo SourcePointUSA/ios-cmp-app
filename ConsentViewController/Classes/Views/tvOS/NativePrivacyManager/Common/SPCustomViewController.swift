@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 @objcMembers class SPCustomViewController: SPNativeScreenViewController {
-    @IBOutlet var descriptionTextView: UITextView!
+    @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var closeButton: SPAppleTVButton!
     @IBOutlet var header: SPPMHeader!
@@ -17,7 +17,8 @@ import UIKit
     override public func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "Body", textView: descriptionTextView)
+        loadTextView(forComponentId: "Body", textView: descriptionTextView, bounces: false)
+        descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "CloseButton", button: closeButton)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         addFocusGuide(from: header, to: descriptionTextView, direction: .rightLeft)

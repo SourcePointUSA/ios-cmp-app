@@ -470,9 +470,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 self.state.udpateGDPRStatus()
                 self.state.udpateUSNatStatus()
                 self.messages { messagesResponse in
-                    self.pvData(pubData: pubData) {
-                        handler(messagesResponse)
-                    }
+                    handler(messagesResponse)
+                    self.pvData(pubData: pubData) { }
                 }
             }
         }

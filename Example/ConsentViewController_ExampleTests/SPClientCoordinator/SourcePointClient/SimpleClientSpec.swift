@@ -16,6 +16,8 @@ import Quick
 class URLSessionDataTaskMock: SPURLSessionDataTask {
     var resumeWasCalled = false
 
+    var priority: Float = 1.0
+
     func resume() {
         resumeWasCalled = true
     }
@@ -47,26 +49,12 @@ class URLSessionMock: SPURLSession {
     }
 }
 
-class DispatchQueueMock: SPDispatchQueue {
-    var asyncCalled: Bool?
-
-    func async(execute work: @escaping () -> Void) {
-        asyncCalled = true
-        work()
-    }
-}
-
 class SimpleClientSpec: QuickSpec {
     // swiftlint:disable:next force_unwrapping
     let exampleRequest = URLRequest(url: URL(string: "http://example.com")!)
 
     override func spec() {
         describe("init(timeoutAfter: TimeInterval)") {
-            it("sets the dispatchQueue to DispatchQueue.main") {
-                let dispatchQueue = SimpleClient(timeoutAfter: 1).dispatchQueue as! DispatchQueue
-                expect(dispatchQueue) == DispatchQueue.main
-            }
-
             it("sets the timeout in its URLSession") {
                 let session = SimpleClient(timeoutAfter: 10.0).session as! URLSession
                 expect(session.configuration.timeoutIntervalForResource) == 10.0
@@ -78,42 +66,11 @@ class SimpleClientSpec: QuickSpec {
                 let session = URLSessionMock()
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: true),
-                    logger: SPLoggerMock(),
-                    urlSession: session,
-                    dispatchQueue: DispatchQueue.main
+                    logger: NoopLogger(),
+                    urlSession: session
                 )
                 client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
                 expect(session.dataTaskCalledWith) == self.exampleRequest
-            }
-
-            it("calls requestCachePolicy on its urlSession configuration") {
-                let session = URLSessionMock()
-                session.configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-                let client = SimpleClient(
-                    connectivityManager: ConnectivityMock(connected: true),
-                    logger: SPLoggerMock(),
-                    urlSession: session,
-                    dispatchQueue: DispatchQueue.main
-                )
-                client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
-                expect(session.configuration.requestCachePolicy) == .reloadIgnoringLocalCacheData
-            }
-
-            it("calls async on its dispatchQueue with the result of the dataTask") {
-                let session = URLSessionMock()
-                let queue = DispatchQueueMock()
-                let client = SimpleClient(
-                    connectivityManager: ConnectivityMock(connected: true),
-                    logger: SPLoggerMock(),
-                    urlSession: session,
-                    dispatchQueue: queue
-                )
-                waitUntil { done in
-                    client.request(self.exampleRequest, apiCode: .EMPTY) { _ in
-                        expect(queue.asyncCalled) == true
-                        done()
-                    }
-                }
             }
 
             it("calls resume on the result of the dataTask") {
@@ -124,9 +81,8 @@ class SimpleClientSpec: QuickSpec {
                 )
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: true),
-                    logger: SPLoggerMock(),
-                    urlSession: session,
-                    dispatchQueue: DispatchQueue.main
+                    logger: NoopLogger(),
+                    urlSession: session
                 )
                 client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
                 expect(dataTaskResult.resumeWasCalled) == true
@@ -142,9 +98,8 @@ class SimpleClientSpec: QuickSpec {
                     )
                     let client = SimpleClient(
                         connectivityManager: ConnectivityMock(connected: true),
-                        logger: SPLoggerMock(),
-                        urlSession: session,
-                        dispatchQueue: DispatchQueueMock()
+                        logger: NoopLogger(),
+                        urlSession: session
                     )
                     client.request(self.exampleRequest, apiCode: .EMPTY) { result = $0 }
                     expect(result).toEventuallyNot(beNil())
@@ -160,9 +115,8 @@ class SimpleClientSpec: QuickSpec {
                     )
                     let client = SimpleClient(
                         connectivityManager: ConnectivityMock(connected: true),
-                        logger: SPLoggerMock(),
-                        urlSession: session,
-                        dispatchQueue: DispatchQueueMock()
+                        logger: NoopLogger(),
+                        urlSession: session
                     )
                     client.request(self.exampleRequest, apiCode: .EMPTY) { result in
                         switch result {
@@ -180,9 +134,8 @@ class SimpleClientSpec: QuickSpec {
             it("calls the completionHandler with an NoInternetConnection error") {
                 let client = SimpleClient(
                     connectivityManager: ConnectivityMock(connected: false),
-                    logger: SPLoggerMock(),
-                    urlSession: URLSession.shared,
-                    dispatchQueue: DispatchQueue.main
+                    logger: NoopLogger(),
+                    urlSession: URLSession.shared
                 )
                 client.request(self.exampleRequest, apiCode: .EMPTY) { result in
                     switch result {
