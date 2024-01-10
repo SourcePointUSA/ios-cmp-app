@@ -146,7 +146,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         header.spTitleText = viewData.byId("Header") as? SPNativeText
         header.onBackButtonTapped = { [weak self] in self?.dismiss(animated: true) }
     }
-    
+
     func dynamicFrameForDescription() {
         let width = descriptionTextView.frame.size.width
         let height = descriptionTextView.frame.height
