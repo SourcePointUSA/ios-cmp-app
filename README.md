@@ -6,7 +6,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.4.4'
+pod 'ConsentViewController', '7.4.5'
 ```
 
 ### Carthage
@@ -220,7 +220,7 @@ Among other internal data, you'll find:
 * `customActionId: String`: if the type of action is `Custom`, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).
 * `publisherPayload: [String: AnyEncodable]`: also known as `pubData` in some of SP services, this is an arbitrary dictionary of key value pairs (set by your app) to be sent to our servers and later retrieved using the pubData API.
 
-With exception of `PMCancel` and `ShowPrivacyManager` actions, the SDK will call the `onSPUIFinished` after handling the action. 
+With exception of `PMCancel` and `ShowPrivacyManager` actions, the SDK will call the `onSPUIFinished` after handling the action.
 
 ### onSPUIFinished(_ controller: UIViewController)
 When an action is taken (see above), the SDK will handle it appropriately (sending a consent request to our servers, for example) and call the `onSPUIFinished` to indicate the message can be dismissed by your app.
@@ -233,10 +233,10 @@ The `onConsentReady` will be called in two different scenarios:
 Make sure to check XCode's quick help of `SPUserData` for more information on what data is available to your app during `onConsentReady`.
 
 ### optional onError(error: SPError)
-In case of an error, the SDK will wrap the error in one of the `SPError` classes and eventually call the `onError(_ error: SPError)` callback. 
+In case of an error, the SDK will wrap the error in one of the `SPError` classes and eventually call the `onError(_ error: SPError)` callback.
 
 By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
-Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. This _may_ cause a consent message to be shown again, depending on your scenario. 
+Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. This _may_ cause a consent message to be shown again, depending on your scenario.
 
 ## SPUserData structure
 
@@ -273,7 +273,7 @@ SPUserData(
 )
 ```
 
-## Adding or Removing custom consents 
+## Adding or Removing custom consents
 It's possible to programmatically consent the current user to a list of custom vendors, categories and legitimate interest categories with the method:
 ```swift
 func customConsentToGDPR(
@@ -287,12 +287,12 @@ func customConsentToGDPR(
 The vendor grants will be re-generated, this time taking into consideration the list of vendors, categories and legitimate interest categories you pass as parameters. The method is asynchronous so you must pass a completion handler that will receive back an instance of `SPGDPRConsent` in case of success or it'll call the delegate method `onError` in case of failure.
 
 Using the same strategy for the custom consent, it's possible to programmatically delete the current user consent to a list of vendors, categories and legitimate interest categories by using the following method:
- 
+
  ```swift
 func deleteCustomConsentGDPR(
-    vendors: [String], 
-    categories: [String], 
-    legIntCategories: [String], 
+    vendors: [String],
+    categories: [String],
+    legIntCategories: [String],
     handler: @escaping (SPGDPRConsent) -> Void
  )
  ```
@@ -342,7 +342,7 @@ A few remarks:
 3. Your web content needs to be loaded (or loading) on the webview and our [web SDK](https://docs.sourcepoint.com/hc/en-us/articles/8073421891091-GDPR-TCF-and-U-S-Privacy-CCPA-implementation-guide-web-) should be included in it. Furthermore, you need to add the query param `_sp_pass_consent=true` to your URL, this will signal to Sourcepoint's web SDK it needs to wait for the consent data to be injected from the native code, instead of immediately querying it from our servers.
 
 ## Overwriting default language
-By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behavior and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `SPConsentManager` _before_ calling `.loadMessage() / .loadPrivacyManager()`. 
+By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behavior and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `SPConsentManager` _before_ calling `.loadMessage() / .loadPrivacyManager()`.
 ```swift
 consentManager.messageLanguage = .German
 consentManager.loadMessage()
@@ -355,7 +355,7 @@ consentManager.messageLanguage = SPMessageLanguageGerman;
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
 
 ## Loading Stage campaigns
-`SPConsentManager`'s constructor accepts an optional parameter called `campaignsEnv: SPCampaignEnv`. This parameter, when omitted will be `.Public` by default. 
+`SPConsentManager`'s constructor accepts an optional parameter called `campaignsEnv: SPCampaignEnv`. This parameter, when omitted will be `.Public` by default.
 Currently, we don't support loading campaigns of different environments. In other words, you can only load all Stage or Public campaigns.
 
 ## Setting Targeting Parameters
@@ -394,7 +394,7 @@ To display the App Tracking Transparency authorization request for accessing the
 
 ## Event callbacks
 
-iOS delegate methods are triggered in response to certain events for example, when a message is ready to be displayed or the end-user opens the privacy manager. 
+iOS delegate methods are triggered in response to certain events for example, when a message is ready to be displayed or the end-user opens the privacy manager.
 This section describes the purpose and action for each of these functions.
 
 The iOS implementation of Sourcepoint's CMP has five event callbacks:
@@ -438,7 +438,7 @@ The `onConsentReady` delegate method sends the consent action to the server and 
 
 ### `onError()`
 The SDK will in all cases wrap the error in one of the SPError class and eventually call the func `onError(_ error: SPError)` callback. By default, the SDK preserves all user consent data from UserDefaults in case of `OnError` event is called.
-Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario. 
+Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `SPConsentManager` if you wish to opt-out from this behavior. If set to `true` such use case will erase all user consent data from UserDefaults. This _may_ cause a consent message to be shown again, depending on your scenario.
 
 ## Google Additional Consent (GDPR TCF)
 Google additional consent is a concept created by Google and the IAB Framework to pass end-user consent to Google Ad Technology Providers (ATP) despite not adhering to the IAB TCF framework. [Click here](https://docs.sourcepoint.com/hc/en-us/articles/4405115143955) for more information.
@@ -447,13 +447,13 @@ Google additional consent is supported by our mobile SDKs and is stored in the `
 
 ## Global Privacy Platform (GPP) Multi-State Privacy (MSPS) Support
 
-Starting with version `7.3.0`, if your configuration contains a `ccpa` campaign, it will automatically set GPP data. Unless configured otherwise, the following MSPA atrributes will default to: 
+Starting with version `7.3.0`, if your configuration contains a `ccpa` campaign, it will automatically set GPP data. Unless configured otherwise, the following MSPA atrributes will default to:
 
 - `MspaCoveredTransaction`: no
 - `MspaOptOutOptionMode`: notApplicable
 - `MspaServiceProviderMode`: notApplicable
 
-Optionally, your organization can customize support for the MSPS by configuring the above attributes as part of the GPP config. [Click here](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Global-Privacy-Platform-(GPP)-Multi%E2%80%90State-Privacy-(MSPS)) for more information on each attribute, possible values, and examples for signatories and non-signatories of the MSPA 
+Optionally, your organization can customize support for the MSPS by configuring the above attributes as part of the GPP config. [Click here](https://github.com/SourcePointUSA/ios-cmp-app/wiki/Global-Privacy-Platform-(GPP)-Multi%E2%80%90State-Privacy-(MSPS)) for more information on each attribute, possible values, and examples for signatories and non-signatories of the MSPA
 
 Example:
 ```swift
@@ -474,9 +474,9 @@ SPConsentManager.clearAllData()
 ```
 
 ## Set a Privacy Manager Id for the Property Group
- Property groups allow your organization to group properties together in order to simplify configurations for  mass campaigns and updates. 
+ Property groups allow your organization to group properties together in order to simplify configurations for  mass campaigns and updates.
  In order to use a `Privacy Manager Id for the Property Group`, you should edit the SDK configuration object as follows:
- 
+
  ```swift
  lazy var consentManager: SPConsentManager = { SPConsentManager(
     accountId: 22,
@@ -487,7 +487,7 @@ SPConsentManager.clearAllData()
     delegate: self
 )}()
  ```
- 
+
  After adding the `Privacy Manager Id for the Property Group` you should set the flag `useGroupPmIfAvailable`, in the `loadGDPRPrivacyManager`, to true:
 
  ```swift

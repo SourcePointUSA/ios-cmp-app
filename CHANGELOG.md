@@ -1,3 +1,8 @@
+# 7.4.5 (Jan, 11, 2024)
+* Improved networking performance and better SDK instrumentation. The average "time to consent" has been cut from ~750 ms down to ~150 ms [#539](https://github.com/SourcePointUSA/ios-cmp-app/pull/539)
+* Fixed several minor UI issues on tvOS [#535](https://github.com/SourcePointUSA/ios-cmp-app/pull/535), [#536](https://github.com/SourcePointUSA/ios-cmp-app/pull/536), [#537](https://github.com/SourcePointUSA/ios-cmp-app/pull/537)
+* Fixed an issue that'd cause scenarios with _show message once_ to show a message more than once fa8651c
+
 # 7.4.4 (Nov, 8, 2023)
 * Fixed an issue where after triggering re-consent, seeing the 1st layer messaged and opening the CCPA PM, the consent toggles would show wrong value. [#515](https://github.com/SourcePointUSA/ios-cmp-app/pull/515)
 
@@ -140,7 +145,7 @@ We have received a lot of valuable feedback from you and we listened. This relea
 * Added a brand new delegate method `onSPFinished`. As the name suggests, this method is invoked when the SDK is done displaying messages, sending/receiving consent to our APIs. At this point, the `UserDefaults` is guaranteed to have all consent data up to date. #350
 * Fixed an issue preventing the Native Message for AppleTV from showing the correct client logo. #358
 * Fixed an issue with the `SPPropertyName` not behaving correctly when the property name contained `[http|https]://`. #357
-* Fixed other issues regarding the Native AppleTV message. #352 #353 
+* Fixed other issues regarding the Native AppleTV message. #352 #353
 * Improved and extended unit as well as UI tests. #356
 
 # 6.3.1 (Nov, 17, 2021)
