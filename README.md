@@ -211,8 +211,8 @@ The `SpConsentManager` initializer contains your organization's account and prop
 ```swift
 lazy var consentManager: SPConsentManager = { SPConsentManager(
     accountId: 22,
-    propertyId: 34152,
-    propertyName: try! SPPropertyName("usnat.mobile.demo"),
+    propertyId: 16893,
+    propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
     campaigns: SPCampaigns(
         gdpr: SPCampaign(),
         usnat: SPCampaign()
