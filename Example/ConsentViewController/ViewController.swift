@@ -18,8 +18,8 @@ class ViewController: UIViewController {
 
     lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
-        propertyId: 34152,
-        propertyName: "usnat.mobile.demo",
+        propertyId: 16893,
+        propertyName: "mobile.multicampaign.demo",
         gdpr: false,
         ccpa: false,
         att: false,
