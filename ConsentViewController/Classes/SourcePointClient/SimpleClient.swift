@@ -38,6 +38,26 @@ protocol HttpClient {
 }
 
 class SimpleClient: HttpClient {
+    let connectivityManager: Connectivity
+    let logger: SPLogger
+    let session: SPURLSession
+
+    init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession) {
+        self.connectivityManager = connectivityManager
+        self.logger = logger
+        session = urlSession
+    }
+
+    convenience init(timeoutAfter timeout: TimeInterval) {
+        let session = URLSession(configuration: Self.sessionConfig(withTimeout: timeout))
+        session.sessionDescription = "SourcepointSession"
+        self.init(
+            connectivityManager: ConnectivityManager(),
+            logger: OSLogger.standard,
+            urlSession: session
+        )
+    }
+
     static func sessionConfig(withTimeout timeout: TimeInterval) -> URLSessionConfiguration {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForResource = timeout
@@ -58,26 +78,6 @@ class SimpleClient: HttpClient {
             config.allowsConstrainedNetworkAccess = true
         }
         return config
-    }
-
-    let connectivityManager: Connectivity
-    let logger: SPLogger
-    let session: SPURLSession
-
-    init(connectivityManager: Connectivity, logger: SPLogger, urlSession: SPURLSession) {
-        self.connectivityManager = connectivityManager
-        self.logger = logger
-        session = urlSession
-    }
-
-    convenience init(timeoutAfter timeout: TimeInterval) {
-        let session = URLSession(configuration: Self.sessionConfig(withTimeout: timeout))
-        session.sessionDescription = "SourcepointSession"
-        self.init(
-            connectivityManager: ConnectivityManager(),
-            logger: OSLogger.standard,
-            urlSession: session
-        )
     }
 
     func logRequest(_ type: String, _ request: URLRequest, _ body: Data?) {

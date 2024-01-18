@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A dictionary in which the keys represent the Vendor Id
 public typealias SPGDPRVendorGrants = [GDPRVendorId: SPGDPRVendorGrant]
 public typealias GDPRVendorId = String

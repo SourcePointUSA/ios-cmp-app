@@ -15,8 +15,6 @@ protocol SPUIValues {
 }
 
 struct Constants {
-    static let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
-
     struct Urls {
         static let envParam = "prod"
         static let additionalData: String = "scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
@@ -59,4 +57,6 @@ struct Constants {
             public var activeFont: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif", color: "#ffffff")
         }
     }
+
+    static let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
 }
