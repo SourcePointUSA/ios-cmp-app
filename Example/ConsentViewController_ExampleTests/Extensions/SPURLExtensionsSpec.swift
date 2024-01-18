@@ -19,6 +19,14 @@ class SPURLExtensions: QuickSpec {
                 url = url?.appendQueryItems(["a": "b", "c": "d"])
                 expect(url) == URL(string: "https://example.com?foo=bar&a=b&c=d")
             }
+
+            describe("when a value is nil") {
+                it("does not append its key to the url") {
+                    var url = URL(string: "https://example.com")
+                    url = url?.appendQueryItems(["a": "b", "c": nil])
+                    expect(url).to(equal(URL(string: "https://example.com?a=b")))
+                }
+            }
         }
     }
 }

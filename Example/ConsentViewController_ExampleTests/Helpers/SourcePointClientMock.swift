@@ -17,10 +17,9 @@ class SourcePointClientMock: SourcePointProtocol {
     var postGDPRActionCalled = false, postCCPAActionCalled = false,
         customConsentCalled = false, consentStatusCalled = false,
         pvDataCalled = false, getMessagesCalled = false
-    var customConsentWasCalledWith: [String: Any?]!
-    var errorMetricsCalledWith: [String: Any?]!
-    var postGDPRActionCalledWith: [String: Any?]!
-    var postCCPAActionCalledWith: [String: Any?]!
+    var consentStatusCalledWith, customConsentWasCalledWith, errorMetricsCalledWith, postGDPRActionCalledWith, postCCPAActionCalledWith, postUSNatActionCalledWith: [String: Any?]?
+
+    var metadataResponse = MetaDataResponse(ccpa: nil, gdpr: nil, usnat: nil)
 
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
@@ -50,23 +49,6 @@ class SourcePointClientMock: SourcePointProtocol {
                 messageId: "1",
                 messagePartitionUUID: "1234"
             ),
-            consentStatus: ConsentStatus(
-                granularStatus: ConsentStatus.GranularStatus(
-                    vendorConsent: "",
-                    vendorLegInt: "",
-                    purposeConsent: "",
-                    purposeLegInt: "",
-                    previousOptInAll: false,
-                    defaultConsent: false
-                ),
-                rejectedAny: false,
-                rejectedLI: false,
-                consentedAll: false,
-                consentedToAny: false,
-                hasConsentData: false,
-                rejectedVendors: [],
-                rejectedCategories: []
-            ),
             dateCreated: SPDate.now(),
             webConsentPayload: nil
         )
@@ -79,13 +61,19 @@ class SourcePointClientMock: SourcePointProtocol {
         includeData: IncludeData,
         handler: @escaping ConsentStatusHandler) {
             consentStatusCalled = true
+            consentStatusCalledWith = [
+                "propertyId": propertyId,
+                "metadata": metadata,
+                "authId": authId,
+                "includeData": includeData
+            ]
 
             if let error = error {
                 handler(.failure(error))
             } else {
                 handler(.success(
                     ConsentStatusResponse(
-                        consentStatusData: .init(gdpr: nil, ccpa: nil),
+                        consentStatusData: .init(gdpr: nil, ccpa: nil, usnat: nil),
                         localState: SPJson())
                 ))
             }
@@ -171,12 +159,38 @@ class SourcePointClientMock: SourcePointProtocol {
         }
     }
 
+    func postUSNatAction(
+        actionType: SPActionType,
+        body: USNatChoiceBody,
+        handler: @escaping USNatConsentHandler
+    ) {
+        postUSNatActionCalledWith = [
+            "actionType": actionType,
+            "body": body,
+            "handler": handler
+        ]
+        if let error = error {
+            handler(.failure(error))
+        } else {
+            handler(.success(USNatChoiceResponse(
+                uuid: "",
+                consentStrings: [],
+                categories: [],
+                dateCreated: .now(),
+                expirationDate: .distantFuture(),
+                webConsentPayload: nil,
+                consentStatus: .init(),
+                GPPData: nil
+            )))
+        }
+    }
+
     func pvData(_ pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
         pvDataCalled = true
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(.init(gdpr: nil, ccpa: nil)))
+            handler(.success(.init(gdpr: nil, ccpa: nil, usnat: nil)))
         }
     }
 
@@ -238,7 +252,7 @@ class SourcePointClientMock: SourcePointProtocol {
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(.init(ccpa: nil, gdpr: nil)))
+            handler(.success(metadataResponse))
         }
     }
 

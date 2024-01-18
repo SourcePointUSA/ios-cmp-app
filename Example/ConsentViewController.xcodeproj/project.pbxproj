@@ -168,7 +168,6 @@
 		0B3130052ABC50C300B62E23 /* Barcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B312F612ABC504000B62E23 /* Barcode.png */; };
 		0B3130062ABC50C300B62E23 /* SP_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B312F602ABC504000B62E23 /* SP_Icon.png */; };
 		0B3130072ABC50D200B62E23 /* SPJSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = 0B312F632ABC504000B62E23 /* SPJSReceiver.js */; };
-		0B31300A2ABC511100B62E23 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3130092ABC511100B62E23 /* Down */; };
 		0B31300B2ABC513000B62E23 /* ConsentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B312EED2ABC500200B62E23 /* ConsentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B31300C2ABC513300B62E23 /* ConsentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B312EED2ABC500200B62E23 /* ConsentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1997B6C6238FDEA10079AF34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1997B675238FDEA00079AF34 /* Assets.xcassets */; };
@@ -272,6 +271,8 @@
 		71F0930571CB8351E8BD5541 /* Pods_NativePMExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED42ED30F5FB710D166C76A /* Pods_NativePMExampleApp.framework */; };
 		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
 		7EB50C9C352487B08739414C /* Pods_ConsentViewController_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6780CD2BEC66C09DC8DA41 /* Pods_ConsentViewController_ExampleTests.framework */; };
+		82009CD82B595DDA00810F4E /* Pods_ObjC_ExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A5A481B97C11AC27421C73 /* Pods_ObjC_ExampleApp.framework */; };
+		82009CD92B595DDA00810F4E /* Pods_ObjC_ExampleApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 80A5A481B97C11AC27421C73 /* Pods_ObjC_ExampleApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		820EF1792A0D28F9009D9941 /* After.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF1782A0D28F9009D9941 /* After.swift */; };
 		820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
@@ -286,7 +287,6 @@
 		822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CC2657E29900177B0E /* Assets.xcassets */; };
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
 		822E88F62A7BC5AF00843B2B /* IncludeDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */; };
-		822E88F82A7BC8CB00843B2B /* SPGPPConfigSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E88F72A7BC8CB00843B2B /* SPGPPConfigSpec.swift */; };
 		822FD7E02A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
@@ -295,6 +295,7 @@
 		8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */; };
 		8248A497247D17AA00A7D9AD /* SimpleClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A496247D17AA00A7D9AD /* SimpleClientSpec.swift */; };
 		8248A499247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A498247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift */; };
+		8249DC982B59AB3D004F45B4 /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 8249DC972B59AB3D004F45B4 /* ConsentViewController */; };
 		824BC0342463F6B0006D3C18 /* SPActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824BC0332463F6B0006D3C18 /* SPActionSpec.swift */; };
 		824E88302729507F00B6C9C8 /* NativeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824E882F2729507F00B6C9C8 /* NativeMessageViewController.swift */; };
 		824E88322729516D00B6C9C8 /* NativeMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 824E88312729516D00B6C9C8 /* NativeMessageViewController.xib */; };
@@ -304,7 +305,6 @@
 		8255B6D227A9661100C9A70D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8255B6D027A9661100C9A70D /* Main.storyboard */; };
 		8255B6D427A9661200C9A70D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8255B6D327A9661200C9A70D /* Assets.xcassets */; };
 		8255B6D727A9661200C9A70D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8255B6D527A9661200C9A70D /* LaunchScreen.storyboard */; };
-		8255B6E227A981A100C9A70D /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 8255B6E127A981A100C9A70D /* ConsentViewController */; };
 		8258D626272191A1005AAB2E /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258D625272191A1005AAB2E /* ExampleApp.swift */; };
 		82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82665C302444ECF600CCE738 /* SPJsonSpec.swift */; };
 		826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31AC2498DE340026A6B9 /* MockConsentDelegate.swift */; };
@@ -344,11 +344,11 @@
 		82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */; };
 		82EA4FA42488EB7300BA48BF /* SPUserDefaultsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ACF6AB2487E73C006E207A /* SPUserDefaultsSpec.swift */; };
 		82EA4FA62489171200BA48BF /* UserDefaultsExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4FA52489171200BA48BF /* UserDefaultsExtensionSpec.swift */; };
+		82F136452AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */; };
 		82F9411824A10379007D30B1 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411724A10379007D30B1 /* CustomMatchers.swift */; };
 		82F9411A24A10416007D30B1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411924A10416007D30B1 /* ExampleApp.swift */; };
 		82FA47732A3C90DC0065BF6D /* SPPublisherDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FA47722A3C90DC0065BF6D /* SPPublisherDataSpec.swift */; };
 		92ECD25BA20E75498CE72BAD /* Pods_ObjC_ExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FA8476B429828C66D868F0B /* Pods_ObjC_ExampleAppUITests.framework */; };
-		B6CA565AA8A83C920FA9B78E /* Pods_ObjC_ExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A5A481B97C11AC27421C73 /* Pods_ObjC_ExampleApp.framework */; };
 		E89FF825267FCAEEA7A7EC1B /* Pods_SourcePointMetaAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E4BCEF766E3BF0AA1BEF95 /* Pods_SourcePointMetaAppUITests.framework */; };
 		EDD01F432A2A07B700590772 /* SPConsentManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD01F422A2A07B700590772 /* SPConsentManagerSpec.swift */; };
 /* End PBXBuildFile section */
@@ -411,6 +411,20 @@
 			remoteInfo = ConsentViewController_Example;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		82009CDA2B595DDA00810F4E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				82009CD92B595DDA00810F4E /* Pods_ObjC_ExampleApp.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0909C3E990EBFEEA4FEEF2F3 /* Pods-NativePMExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleApp.release.xcconfig"; path = "Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -675,7 +689,6 @@
 		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludeDataSpec.swift; sourceTree = "<group>"; };
-		822E88F72A7BC8CB00843B2B /* SPGPPConfigSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGPPConfigSpec.swift; sourceTree = "<group>"; };
 		822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -739,6 +752,7 @@
 		82EA4E332491324400DC01C9 /* LocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalStorageMock.swift; path = Helpers/LocalStorageMock.swift; sourceTree = "<group>"; };
 		82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InMemoryStorageMock.swift; path = Helpers/InMemoryStorageMock.swift; sourceTree = "<group>"; };
 		82EA4FA52489171200BA48BF /* UserDefaultsExtensionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensionSpec.swift; sourceTree = "<group>"; };
+		82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUSNatConsentSpec.swift; sourceTree = "<group>"; };
 		82F9411724A10379007D30B1 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		82F9411924A10416007D30B1 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		82FA47722A3C90DC0065BF6D /* SPPublisherDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPublisherDataSpec.swift; sourceTree = "<group>"; };
@@ -780,7 +794,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B31300A2ABC511100B62E23 /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,7 +833,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6CA565AA8A83C920FA9B78E /* Pods_ObjC_ExampleApp.framework in Frameworks */,
+				82009CD82B595DDA00810F4E /* Pods_ObjC_ExampleApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,7 +896,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8255B6E227A981A100C9A70D /* ConsentViewController in Frameworks */,
+				8249DC982B59AB3D004F45B4 /* ConsentViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1925,7 +1938,7 @@
 				82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */,
 				AAA25A682A28ABFE005FE84A /* SPConsentManagerSpec.swift */,
 				822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */,
-				822E88F72A7BC8CB00843B2B /* SPGPPConfigSpec.swift */,
+				82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
@@ -2007,9 +2020,6 @@
 			dependencies = (
 			);
 			name = "SPMConsentViewController-tvOS";
-			packageProductDependencies = (
-				0B3130092ABC511100B62E23 /* Down */,
-			);
 			productName = ConsentViewController;
 			productReference = 0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */;
 			productType = "com.apple.product-type.framework";
@@ -2102,6 +2112,7 @@
 				6D8046E725D1A87E0005002B /* Frameworks */,
 				6D8046E825D1A87E0005002B /* Resources */,
 				5CA0F8D3E1DF5FF6834AC3C4 /* [CP] Embed Pods Frameworks */,
+				82009CDA2B595DDA00810F4E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2181,7 +2192,7 @@
 				822BF2BF2657E29800177B0E /* Sources */,
 				822BF2C02657E29800177B0E /* Frameworks */,
 				822BF2C12657E29800177B0E /* Resources */,
-				0FAF8BBDB95D908BFCC60A87 /* [CP] Embed Pods Frameworks */,
+				8BD378E3E5507BE88BCFF6CA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2264,7 +2275,7 @@
 			);
 			name = SPMBuild;
 			packageProductDependencies = (
-				8255B6E127A981A100C9A70D /* ConsentViewController */,
+				8249DC972B59AB3D004F45B4 /* ConsentViewController */,
 			);
 			productName = SPMBuild;
 			productReference = 8255B6C827A9661100C9A70D /* SPMBuild.app */;
@@ -2407,8 +2418,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				8255B6DE27A9818100C9A70D /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
-				0B3130082ABC511100B62E23 /* XCRemoteSwiftPackageReference "Down" */,
+				827C3DEE2B59979300191CCD /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -2614,23 +2624,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0FAF8BBDB95D908BFCC60A87 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		174D4963E22D3982BD621924 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2878,6 +2871,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		8BD378E3E5507BE88BCFF6CA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		90B1ECB9DC0F24A803BB47AF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3555,8 +3565,8 @@
 				826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */,
 				8248A499247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift in Sources */,
 				82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */,
-				822E88F82A7BC8CB00843B2B /* SPGPPConfigSpec.swift in Sources */,
 				6D687AD724A8F1C1001DFB11 /* MessageMock.swift in Sources */,
+				82F136452AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift in Sources */,
 				82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */,
 				82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */,
 				826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */,
@@ -5155,33 +5165,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0B3130082ABC511100B62E23 /* XCRemoteSwiftPackageReference "Down" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnxnguyen/Down.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.11.0;
-			};
-		};
-		8255B6DE27A9818100C9A70D /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
+		827C3DEE2B59979300191CCD /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "http://github.com/SourcePointUSA/ios-cmp-app.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.4.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0B3130092ABC511100B62E23 /* Down */ = {
+		8249DC972B59AB3D004F45B4 /* ConsentViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0B3130082ABC511100B62E23 /* XCRemoteSwiftPackageReference "Down" */;
-			productName = Down;
-		};
-		8255B6E127A981A100C9A70D /* ConsentViewController */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8255B6DE27A9818100C9A70D /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
+			package = 827C3DEE2B59979300191CCD /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
 			productName = ConsentViewController;
 		};
 /* End XCSwiftPackageProductDependency section */

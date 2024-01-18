@@ -22,6 +22,7 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
     case gdpr = 1
     case ccpa = 2
     case ios14 = 4
+    case usnat = 6
     case unknown
 
     var campaignType: SPCampaignType {
@@ -29,6 +30,7 @@ enum MessageCategory: Int, Codable, Defaultable, Equatable {
             case .gdpr: return .gdpr
             case .ccpa: return .ccpa
             case .ios14: return .ios14
+            case .usnat: return .usnat
             default: return .unknown
         }
     }
@@ -125,6 +127,7 @@ extension MessageJson: Codable {
 enum Consent: Equatable {
     case gdpr(consents: SPGDPRConsent)
     case ccpa(consents: SPCCPAConsent)
+    case usnat(consents: SPUSNatConsent)
     case unknown
 }
 extension Consent: Codable {
@@ -133,6 +136,8 @@ extension Consent: Codable {
             self = .gdpr(consents: consent)
         } else if let consent = try? SPCCPAConsent(from: decoder) {
             self = .ccpa(consents: consent)
+        } else if let consent = try? SPUSNatConsent(from: decoder) {
+            self = .usnat(consents: consent)
         } else {
             self = .unknown
         }
@@ -142,7 +147,79 @@ extension Consent: Codable {
         switch self {
         case .ccpa(let consents): try consents.encode(to: encoder)
         case .gdpr(let consents): try consents.encode(to: encoder)
+        case .usnat(let consents): try consents.encode(to: encoder)
         default: break
+        }
+    }
+
+    func toConsent(defaults: SPUSNatConsent?, messageMetaData: MessageMetaData?) -> SPUSNatConsent? {
+        switch self {
+            case .usnat(let consents):
+                return SPUSNatConsent(
+                    uuid: defaults?.uuid,
+                    applies: defaults?.applies ?? false,
+                    dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
+                    consentStrings: consents.consentStrings,
+                    webConsentPayload: consents.webConsentPayload,
+                    lastMessage: LastMessageData(from: messageMetaData),
+                    categories: consents.categories,
+                    consentStatus: consents.consentStatus,
+                    GPPData: consents.GPPData
+                )
+
+            default:
+                return defaults?.copy() as? SPUSNatConsent
+        }
+    }
+
+    func toConsent(defaults: SPCCPAConsent?, messageMetaData: MessageMetaData?) -> SPCCPAConsent? {
+        switch self {
+            case .ccpa(let consents):
+                return SPCCPAConsent(
+                    uuid: defaults?.uuid,
+                    status: consents.status,
+                    rejectedVendors: consents.rejectedVendors,
+                    rejectedCategories: consents.rejectedCategories,
+                    signedLspa: consents.signedLspa,
+                    childPmId: consents.childPmId,
+                    applies: defaults?.applies ?? false,
+                    dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
+                    lastMessage: LastMessageData(from: messageMetaData),
+                    consentStatus: consents.consentStatus,
+                    webConsentPayload: consents.webConsentPayload,
+                    GPPData: consents.GPPData
+                )
+
+            default:
+                return defaults?.copy() as? SPCCPAConsent
+        }
+    }
+
+    func toConsent(defaults: SPGDPRConsent?, messageMetaData: MessageMetaData?) -> SPGDPRConsent? {
+        switch self {
+            case .gdpr(let consents):
+                return SPGDPRConsent(
+                    uuid: defaults?.uuid,
+                    vendorGrants: consents.vendorGrants,
+                    euconsent: consents.euconsent,
+                    tcfData: consents.tcfData,
+                    childPmId: consents.childPmId,
+                    dateCreated: consents.dateCreated,
+                    expirationDate: consents.expirationDate,
+                    applies: defaults?.applies ?? false,
+                    consentStatus: consents.consentStatus,
+                    lastMessage: LastMessageData(from: messageMetaData),
+                    webConsentPayload: consents.webConsentPayload,
+                    legIntCategories: consents.legIntCategories,
+                    legIntVendors: consents.legIntVendors,
+                    vendors: consents.vendors,
+                    categories: consents.categories
+                )
+
+            default:
+                return defaults?.copy() as? SPGDPRConsent
         }
     }
 }
@@ -175,7 +252,6 @@ struct Campaign: Equatable {
     var message: Message?
     let userConsent: Consent
     let messageMetaData: MessageMetaData?
-    let consentStatus: ConsentStatus?
     let dateCreated: SPDate?
     let webConsentPayload: SPWebConsentPayload?
 }
@@ -190,7 +266,6 @@ extension Campaign: Decodable {
         type = try container.decode(SPCampaignType.self, forKey: .type)
         messageMetaData = try container.decodeIfPresent(MessageMetaData.self, forKey: .messageMetaData)
         userConsent = try Consent(from: decoder)
-        consentStatus = try? container.decodeIfPresent(ConsentStatus.self, forKey: .consentStatus) ?? ConsentStatus(from: decoder)
         dateCreated = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         if let metaData = messageMetaData {

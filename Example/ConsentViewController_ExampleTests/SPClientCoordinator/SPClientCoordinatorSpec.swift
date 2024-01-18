@@ -11,17 +11,35 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable force_try function_body_length file_length type_body_length
+// swiftlint:disable force_unwrapping force_try function_body_length file_length type_body_length cyclomatic_complexity
 
 class SPClientCoordinatorSpec: QuickSpec {
     override func spec() {
         SPConsentManager.clearAllData()
 
-        let accountId = 22, propertyId = 16_893
+        let accountId = 22, propertyId = 16893
         let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
-        let campaigns = SPCampaigns(gdpr: SPCampaign(), ccpa: SPCampaign())
+        let gdprCcpaCampaigns = SPCampaigns(gdpr: SPCampaign(), ccpa: SPCampaign())
         var spClientMock: SourcePointClientMock!
         var coordinator: SourcepointClientCoordinator!
+
+        func coordinatorFor(
+            accountId: Int = accountId,
+            propertyName: SPPropertyName = propertyName,
+            propertyId: Int = propertyId,
+            campaigns: SPCampaigns,
+            spClient: SourcePointProtocol? = nil,
+            storage: SPLocalStorage = LocalStorageMock()
+        ) -> SourcepointClientCoordinator {
+            SourcepointClientCoordinator(
+                accountId: accountId,
+                propertyName: propertyName,
+                propertyId: propertyId,
+                campaigns: campaigns,
+                storage: storage,
+                spClient: spClient
+            )
+        }
 
         beforeSuite {
             Nimble.AsyncDefaults.timeout = .seconds(30)
@@ -34,27 +52,19 @@ class SPClientCoordinatorSpec: QuickSpec {
         }
 
         beforeEach {
-            coordinator = SourcepointClientCoordinator(
-                accountId: accountId,
-                propertyName: propertyName,
-                propertyId: propertyId,
-                campaigns: campaigns,
-                storage: LocalStorageMock()
-            )
+            coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns)
         }
 
         describe("a property with GDPR and CCPA campaigns") {
             describe("loadMessage") {
                 it("should return gpoupPmId from metaData and save") {
-                    coordinator = SourcepointClientCoordinator(
-                        accountId: 22,
+                    coordinator = coordinatorFor(
                         propertyName: try! SPPropertyName("mobile.prop-1"),
                         propertyId: 24188,
                         campaigns: SPCampaigns(
                             gdpr: SPCampaign(groupPmId: "613056"),
                             ccpa: SPCampaign()
-                        ),
-                        storage: LocalStorageMock()
+                        )
                     )
                     waitUntil { done in
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { result in
@@ -66,7 +76,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.ccpa?.consents?.uspstring) == "1---"
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             expect(coordinator.storage.gdprChildPmId)=="613057"
                             done()
@@ -86,7 +96,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(consents.ccpa?.consents?.GPPData.dictionaryValue).notTo(beEmpty())
 
                                 case .failure(let error):
-                                    fail(error.failureReason)
+                                    fail(error.description)
                             }
                             done()
                         }
@@ -102,14 +112,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                         campaignEnv: .Public,
                         timeout: 999
                     )
-                    coordinator = SourcepointClientCoordinator(
-                        accountId: accountId,
-                        propertyName: propertyName,
-                        propertyId: propertyId,
-                        campaigns: campaigns,
-                        storage: LocalStorageMock(),
-                        spClient: spClientMock
-                    )
+                    coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock)
                 }
 
                 it("should include pubData in its payload for GDPR") {
@@ -123,7 +126,7 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                                 case .success:
                                     expect(spClientMock.postGDPRActionCalled).to(beTrue())
-                                    let body = spClientMock.postGDPRActionCalledWith["body"] as? GDPRChoiceBody
+                                    let body = spClientMock.postGDPRActionCalledWith?["body"] as? GDPRChoiceBody
                                     expect(body?.pubData).to(equal(gdprAction.encodablePubData))
                             }
                             done()
@@ -142,7 +145,7 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                                 case .success:
                                     expect(spClientMock.postCCPAActionCalled).to(beTrue())
-                                    let body = spClientMock.postCCPAActionCalledWith["body"] as? CCPAChoiceBody
+                                    let body = spClientMock.postCCPAActionCalledWith?["body"] as? CCPAChoiceBody
                                     expect(body?.pubData).to(equal(ccpaAction.encodablePubData))
                             }
                             done()
@@ -156,14 +159,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             it("is called when an authId is passed") {
                 waitUntil { done in
                     spClientMock = SourcePointClientMock()
-                    coordinator = SourcepointClientCoordinator(
-                        accountId: accountId,
-                        propertyName: propertyName,
-                        propertyId: propertyId,
-                        campaigns: campaigns,
-                        storage: LocalStorageMock(),
-                        spClient: spClientMock
-                    )
+                    coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock)
                     coordinator.loadMessages(forAuthId: "test", pubData: nil) { _ in
                         expect(spClientMock.consentStatusCalled).to(beTrue())
                         expect(coordinator.shouldCallConsentStatus).to(beTrue())
@@ -181,14 +177,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                         ]
                     ])
                     spClientMock = SourcePointClientMock()
-                    coordinator = SourcepointClientCoordinator(
-                        accountId: accountId,
-                        propertyName: propertyName,
-                        propertyId: propertyId,
-                        campaigns: campaigns,
-                        storage: storage,
-                        spClient: spClientMock
-                    )
+                    coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock, storage: storage)
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                         expect(spClientMock.consentStatusCalled).to(beTrue())
                         done()
@@ -201,16 +190,9 @@ class SPClientCoordinatorSpec: QuickSpec {
                     it("consent-status is not called") {
                         waitUntil { done in
                             let storage = LocalStorageMock()
-                            storage.spState = SourcepointClientCoordinator.State(localVersion: 0)
                             spClientMock = SourcePointClientMock()
-                            coordinator = SourcepointClientCoordinator(
-                                accountId: accountId,
-                                propertyName: propertyName,
-                                propertyId: propertyId,
-                                campaigns: campaigns,
-                                storage: storage,
-                                spClient: spClientMock
-                            )
+                            storage.spState = SourcepointClientCoordinator.State(localVersion: 0)
+                            coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock, storage: storage)
                             coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                                 expect(spClientMock.consentStatusCalled).to(beFalse())
                                 done()
@@ -230,14 +212,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 localVersion: 0
                             )
                             spClientMock = SourcePointClientMock()
-                            coordinator = SourcepointClientCoordinator(
-                                accountId: accountId,
-                                propertyName: propertyName,
-                                propertyId: propertyId,
-                                campaigns: campaigns,
-                                storage: storage,
-                                spClient: spClientMock
-                            )
+                            coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock, storage: storage)
                             coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                                 expect(spClientMock.consentStatusCalled).to(beTrue())
                                 done()
@@ -256,14 +231,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                             localVersion: 0
                         )
                         spClientMock = SourcePointClientMock()
-                        coordinator = SourcepointClientCoordinator(
-                            accountId: accountId,
-                            propertyName: propertyName,
-                            propertyId: propertyId,
-                            campaigns: campaigns,
-                            storage: storage,
-                            spClient: spClientMock
-                        )
+                        coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock, storage: storage)
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                             expect(spClientMock.consentStatusCalled).to(beTrue())
                             spClientMock.consentStatusCalled = false
@@ -288,14 +256,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                             localVersion: 0
                         )
                         spClientMock = SourcePointClientMock()
-                        coordinator = SourcepointClientCoordinator(
-                            accountId: accountId,
-                            propertyName: propertyName,
-                            propertyId: propertyId,
-                            campaigns: campaigns,
-                            storage: storage,
-                            spClient: spClientMock
-                        )
+                        coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock, storage: storage)
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                             expect(coordinator.state.localVersion)
                                 .to(equal(SourcepointClientCoordinator.State.version))
@@ -317,14 +278,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                         )
                         spClientMock = SourcePointClientMock()
                         spClientMock.error = SPError()
-                        coordinator = SourcepointClientCoordinator(
-                            accountId: accountId,
-                            propertyName: propertyName,
-                            propertyId: propertyId,
-                            campaigns: campaigns,
-                            storage: storage,
-                            spClient: spClientMock
-                        )
+                        coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock, storage: storage)
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                             expect(coordinator.state.localVersion).to(equal(0))
                             done()
@@ -399,7 +353,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             it("only changes consent uuid after a different auth id is used") {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                             // uuids are only set after /pv-data is called, and /pv-data
                             // is called right after /messages.
                             // That's why we need to wait a bit before making assertion
@@ -424,14 +378,15 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(loggedInGDPRUUID).to(equal(loggedOutGDPRUUID))
                                     expect(loggedInCCPAUUID).to(equal(loggedOutCCPAUUID))
 
-                                    coordinator.loadMessages(forAuthId: UUID().uuidString, pubData: nil) { differentUserResponse in
-                                        let (_, differentUserData) = try! differentUserResponse.get()
-                                        let differentUserGDPRUUID = differentUserData.gdpr?.consents?.uuid
-                                        let differentUserCCPAUUID = differentUserData.ccpa?.consents?.uuid
-                                        expect(differentUserGDPRUUID).notTo(equal(loggedOutGDPRUUID))
-                                        expect(differentUserCCPAUUID).notTo(equal(loggedOutCCPAUUID))
-
-                                        done()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                                        coordinator.loadMessages(forAuthId: UUID().uuidString, pubData: nil) { differentUserResponse in
+                                            let (_, differentUserData) = try! differentUserResponse.get()
+                                            let differentUserGDPRUUID = differentUserData.gdpr?.consents?.uuid
+                                            let differentUserCCPAUUID = differentUserData.ccpa?.consents?.uuid
+                                            expect(differentUserGDPRUUID).notTo(equal(loggedOutGDPRUUID))
+                                            expect(differentUserCCPAUUID).notTo(equal(loggedOutCCPAUUID))
+                                            done()
+                                        }
                                     }
                                 }
                             }
@@ -443,8 +398,6 @@ class SPClientCoordinatorSpec: QuickSpec {
 
         describe("when user has consent stored") {
             it("keeps it unchanged after calling loadMessage") {
-                SPConsentManager.clearAllData()
-
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { messagesResponse in
                         let (_, messagesUserData) = try! messagesResponse.get()
@@ -466,8 +419,6 @@ class SPClientCoordinatorSpec: QuickSpec {
 
             describe("and expiration date is greater than current date") {
                 it("erases consent data and returns a message") {
-                    SPConsentManager.clearAllData()
-
                     waitUntil { done in
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstLoadMessages in
                             let (firstMessages, _) = try! firstLoadMessages.get()
@@ -499,6 +450,303 @@ class SPClientCoordinatorSpec: QuickSpec {
                                         }
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        it("shouldCallGETChoice") {
+            [
+                SPAction(type: .AcceptAll, campaignType: .gdpr),
+                SPAction(type: .RejectAll, campaignType: .gdpr),
+                SPAction(type: .AcceptAll, campaignType: .ccpa),
+                SPAction(type: .RejectAll, campaignType: .ccpa)
+            ].forEach {
+                expect(coordinator.shouldCallGetChoice(for: $0))
+                    .to(beTrue(), description: "For action \($0.type), \($0.campaignType.rawValue)")
+            }
+
+            [
+                SPAction(type: .SaveAndExit, campaignType: .gdpr),
+                SPAction(type: .SaveAndExit, campaignType: .ccpa),
+                SPAction(type: .AcceptAll, campaignType: .usnat),
+                SPAction(type: .RejectAll, campaignType: .usnat),
+                SPAction(type: .SaveAndExit, campaignType: .usnat)
+            ].forEach {
+                expect(coordinator.shouldCallGetChoice(for: $0))
+                    .to(beFalse(), description: "For action \($0.type), \($0.campaignType.rawValue)")
+            }
+        }
+
+        describe("a property with USNat campaign") {
+            let saveAndExitAction = SPAction(
+                type: .SaveAndExit,
+                campaignType: .usnat,
+                publisherData: ["foo": "bar"],
+                pmPayload: try! SPJson([
+                    "shownCategories": ["6568ae4503cf5cf81eb79fa5"],
+                    "categories": ["6568ae4503cf5cf81eb79fa5"],
+                    "lan": "EN",
+                    "privacyManagerId": "943890",
+                    "vendors": []
+                ])
+            )
+
+            beforeEach {
+                coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()))
+            }
+
+            describe("with authId") {
+                it("persists consent even after cleaning all data") {
+                    waitUntil { done in
+                        let authId = UUID().uuidString
+
+                        coordinator.loadMessages(forAuthId: authId, pubData: nil) { _ in
+                        coordinator.reportAction(saveAndExitAction) { result in
+                            let actionUserData = try? result.get()
+                            let actionUuid = actionUserData?.usnat?.consents?.uuid
+                            expect(actionUuid).notTo(beNil())
+                            expect(coordinator.userData.usnat?.consents?.uuid).to(equal(actionUuid))
+
+                            coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()))
+
+                            expect(coordinator.userData.usnat?.consents?.uuid).to(beNil())
+                                coordinator.loadMessages(forAuthId: authId, pubData: nil) { messagesResult in
+                                    let (messages, userData) = try! messagesResult.get()
+                                    expect(messages).to(beEmpty())
+                                    expect(userData.usnat?.consents?.uuid).to(equal(actionUuid))
+
+                                    done()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                describe("and the transitionCCPAAuth campaign config is true") {
+                    it("sets the flag transitionCCPAAuth in consent-status' metadata param") {
+                        coordinator = coordinatorFor(campaigns: SPCampaigns(ccpa: SPCampaign()))
+                        let ccpaAuthId = UUID().uuidString
+
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: ccpaAuthId, pubData: nil) { _ in
+                                coordinator.reportAction(SPAction(type: .RejectAll, campaignType: .ccpa)) { actionResult in
+                                    let userData = try? actionResult.get()
+                                    expect(userData?.ccpa?.consents?.status).to(equal(.RejectedAll))
+
+                                    coordinator = coordinatorFor(
+                                        campaigns: SPCampaigns(usnat: SPCampaign(transitionCCPAAuth: true))
+                                    )
+
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                                        coordinator.loadMessages(forAuthId: ccpaAuthId, pubData: nil) { usnatMessages in
+                                            let (messages, usnatUserData) = try! usnatMessages.get()
+                                            expect(messages).to(beEmpty())
+                                            expect(usnatUserData.usnat?.consents?.consentStatus.rejectedAny).to(beTrue())
+                                            expect(usnatUserData.usnat?.consents?.consentStatus.consentedToAll).to(beFalse())
+                                            done()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            describe("handles ccpa opt-outs") {
+                describe("when there's no authId") {
+                    it("transitionCCPAAuth in consent-status' metadata param is nil") {
+                        let spClientMock = SourcePointClientMock()
+                        coordinator = coordinatorFor(
+                            campaigns: SPCampaigns(usnat: SPCampaign(transitionCCPAAuth: true)),
+                            spClient: spClientMock
+                        )
+
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                let consentStatusMetadata = spClientMock.consentStatusCalledWith?["metadata"] as? ConsentStatusMetaData
+                                expect(consentStatusMetadata?.usnat?.transitionCCPAAuth).to(beNil())
+                                done()
+                            }
+                        }
+                    }
+                }
+
+                describe("and there is ccpa consent data") {
+                    // FIXME: waiting on an API deploy to fix this issue
+                    xit("returns a rejected-all usnat consent") {
+                        let storage = LocalStorageMock()
+                        let campaignsWithCCPA = SPCampaigns(ccpa: SPCampaign())
+                        let campaignsWithUSNat = SPCampaigns(usnat: SPCampaign())
+                        coordinator = coordinatorFor(campaigns: campaignsWithCCPA, storage: storage)
+
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                coordinator.reportAction(SPAction(type: .RejectAll, campaignType: .ccpa)) { _ in
+                                    expect(coordinator.ccpaUUID).notTo(beNil())
+                                    coordinator = coordinatorFor(campaigns: campaignsWithUSNat, storage: storage)
+
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { response in
+                                        let (messages, userData) = try! response.get()
+                                        expect(messages).to(beEmpty())
+                                        expect(userData.usnat?.consents?.uuid).notTo(beNil())
+                                        done()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            it("returns usnat consents data with applies true") {
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { result in
+                        switch result {
+                            case .success(let (messages, consents)):
+                                expect(coordinator.state.usNatMetaData?.vendorListId).notTo(beNil())
+                                expect(coordinator.state.usNatMetaData?.additionsChangeDate).notTo(beNil())
+                                expect(consents.usnat?.consents?.applies).to(beTrue())
+                                expect(consents.usnat?.consents?.consentStrings).notTo(beEmpty())
+                                expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
+                                expect(consents.usnat?.consents?.lastMessage).notTo(beNil())
+                                expect(consents.usnat?.consents?.GPPData?.dictionaryValue).notTo(beEmpty())
+                                expect(messages).notTo(beEmpty())
+
+                            case .failure(let error):
+                                fail(error.description)
+                        }
+                        done()
+                    }
+                }
+            }
+
+            it("calls pv-data when calling loadMessage") {
+                spClientMock = SourcePointClientMock(
+                    accountId: accountId,
+                    propertyName: propertyName,
+                    campaignEnv: .Public,
+                    timeout: 999
+                )
+                coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()), spClient: spClientMock)
+                coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in }
+                expect(spClientMock.pvDataCalled).toEventually(beTrue())
+            }
+
+            describe("when calling reportAction") {
+                it("returns a usnat consent") {
+                    waitUntil { done in
+                        coordinator.reportAction(saveAndExitAction) { result in
+                            switch result {
+                                case .success(let userData):
+                                    expect(userData.usnat?.consents?.uuid).notTo(beNil())
+                                    expect(coordinator.userData.usnat).to(equal(userData.usnat))
+
+                                case .failure(let error):
+                                    fail(error.description)
+                            }
+                            done()
+                        }
+                    }
+                }
+            }
+
+            describe("and expiration date is greater than current date") {
+                it("erases consent data and returns a message") {
+                    waitUntil { done in
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                            coordinator.reportAction(saveAndExitAction) { _ in
+                                let firstUUID = coordinator.state.usnat?.uuid
+                                expect(firstUUID).notTo(beNil())
+
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                        expect(coordinator.state.usnat?.uuid).to(equal(firstUUID))
+
+                                        coordinator.state.usnat?.expirationDate = SPDate(date: .yesterday)
+
+                                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                                                expect(coordinator.state.usnat?.uuid).notTo(equal(firstUUID))
+                                                done()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            describe("when dealing with a re-consent scenario") {
+                describe("when additionsChangeDate bigger than consent dateCreated") {
+                    it("should show a message") {
+                        waitUntil { done in
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstMessages in
+                                let (messages, _) = try! firstMessages.get()
+                                expect(messages.count).to(equal(1))
+
+                                coordinator.reportAction(saveAndExitAction) { _ in
+                                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondMessages in
+                                        let (messages, _) = try! secondMessages.get()
+                                        expect(messages.count).to(equal(0))
+
+                                        coordinator.state.usnat?.dateCreated = SPDate(date: coordinator.state.usNatMetaData!.additionsChangeDate.date.dayBefore
+                                        )
+
+                                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { thirdMessages in
+                                            let (messages, _) = try! thirdMessages.get()
+                                            expect(messages.count).to(equal(1))
+
+                                            done()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            describe("when usnat applicableSections change") {
+                it("should call consent-status") {
+                    let clientMock = SourcePointClientMock()
+                    let firstApplicableSection = 1
+                    let differentApplicableSection = 2
+                    clientMock.metadataResponse = MetaDataResponse(
+                        ccpa: nil,
+                        gdpr: nil,
+                        usnat: .init(
+                            vendorListId: "",
+                            additionsChangeDate: .now(),
+                            applies: true,
+                            sampleRate: 1.0,
+                            applicableSections: [firstApplicableSection]
+                        )
+                    )
+                    coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()), spClient: clientMock)
+                    waitUntil { done in
+                        coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                            expect(clientMock.consentStatusCalled).to(beFalse())
+
+                            clientMock.metadataResponse = MetaDataResponse(
+                                ccpa: nil,
+                                gdpr: nil,
+                                usnat: .init(
+                                    vendorListId: "",
+                                    additionsChangeDate: .now(),
+                                    applies: true,
+                                    sampleRate: 1.0,
+                                    applicableSections: [differentApplicableSection]
+                                )
+                            )
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                                expect(clientMock.consentStatusCalled).to(beTrue())
+                                done()
                             }
                         }
                     }

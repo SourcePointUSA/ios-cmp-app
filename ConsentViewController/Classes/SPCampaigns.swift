@@ -10,107 +10,100 @@ import Foundation
 /// A collection of key/value pairs passed to the scenario builder on SP's dashboard
 public typealias SPTargetingParams = [String: String]
 
-/// Class to encapsulate GPP configuration. This config can be used with CCPA campaigns and have
-/// no effect in campaigns of other legislations.
-@objcMembers public class SPGPPConfig: NSObject, Encodable {
-    @objc public enum SPMspaBinaryFlag: Int, Encodable, Equatable {
-        case yes, no
+@objc public enum SPOptinalBool: Int {
+    case yes, no, unset
 
-        public var string: String { self == .yes ? "yes" : "no" }
-
-        public func encode(to encoder: Encoder) throws {
-            var valueContainer = encoder.singleValueContainer()
-            try valueContainer.encode(string)
+    public var string: String {
+        switch self {
+            case .no: return "false"
+            case .yes: return "true"
+            case .unset: return "unset(nil)"
         }
     }
 
-    @objc public enum SPMspaTernaryFlag: Int, Encodable, Equatable {
-        case yes, no, notApplicable
-
-        public var string: String {
-            switch self {
-                case .yes: return "yes"
-                case .no: return "no"
-                case .notApplicable: return "na"
-            }
+    var boolValue: Bool? {
+        switch self {
+            case .no: return false
+            case .yes: return true
+            case .unset: return nil
         }
-
-        public func encode(to encoder: Encoder) throws {
-            var valueContainer = encoder.singleValueContainer()
-            try valueContainer.encode(string)
-        }
-    }
-
-    let MspaCoveredTransaction: SPMspaBinaryFlag?
-    let MspaOptOutOptionMode: SPMspaTernaryFlag?
-    let MspaServiceProviderMode: SPMspaTernaryFlag?
-
-    public init(
-        MspaCoveredTransaction: SPMspaBinaryFlag? = nil,
-        MspaOptOutOptionMode: SPMspaTernaryFlag? = nil,
-        MspaServiceProviderMode: SPMspaTernaryFlag? = nil
-    ) {
-        self.MspaCoveredTransaction = MspaCoveredTransaction
-        self.MspaOptOutOptionMode = MspaOptOutOptionMode
-        self.MspaServiceProviderMode = MspaServiceProviderMode
-    }
-
-    public init(
-        MspaCoveredTransaction: SPMspaBinaryFlag,
-        MspaOptOutOptionMode: SPMspaTernaryFlag,
-        MspaServiceProviderMode: SPMspaTernaryFlag
-    ) {
-        self.MspaCoveredTransaction = MspaCoveredTransaction
-        self.MspaOptOutOptionMode = MspaOptOutOptionMode
-        self.MspaServiceProviderMode = MspaServiceProviderMode
     }
 }
 
 /// Contains information about the property/campaign.
-@objcMembers public class SPCampaign: NSObject {
-    let targetingParams: SPTargetingParams
+@objc public class SPCampaign: NSObject {
+    @objc let targetingParams: SPTargetingParams
 
-    let groupPmId: String?
+    @objc let groupPmId: String?
 
     /// Class to encapsulate GPP configuration. This parameter has only effect in CCPA campaigns.
-    let GPPConfig: SPGPPConfig
+    let GPPConfig: SPGPPConfig?
 
-    override public var description: String {
+    /**
+     Used by usNat campaigns only. Set this flag only if your app used an SDK older than `7.6.0`, use authenticated consent
+     and has a CCPA campaign.
+     */
+    let transitionCCPAAuth: Bool?
+
+    @objc override public var description: String {
         """
         SPCampaign
             - targetingParams: \(targetingParams)
             - groupPmId: \(groupPmId as Any)
             - GPPConfig: \(GPPConfig as Any)
+            - transitionCCPAAuth: \(transitionCCPAAuth as Any)
         """
     }
 
-    public init(
+    @nonobjc public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil,
-        gppConfig: SPGPPConfig? = SPGPPConfig()
+        gppConfig: SPGPPConfig? = nil,
+        transitionCCPAAuth: Bool? = nil
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
-        if let gppConfig = gppConfig {
-            self.GPPConfig = gppConfig
-        } else {
-            self.GPPConfig = SPGPPConfig()
-        }
+        self.GPPConfig = gppConfig
+        self.transitionCCPAAuth = transitionCCPAAuth
+    }
+
+    @available(swift, obsoleted: 1.0)
+    @objc public init(
+        targetingParams: SPTargetingParams = [:],
+        groupPmId: String? = nil
+    ) {
+        self.targetingParams = targetingParams
+        self.groupPmId = groupPmId
+        self.GPPConfig = nil
+        self.transitionCCPAAuth = nil
+    }
+
+    @available(swift, obsoleted: 1.0)
+    @objc public init(
+        targetingParams: SPTargetingParams = [:],
+        groupPmId: String? = nil,
+        gppConfig: SPGPPConfig? = nil,
+        transitionCCPAAuth: SPOptinalBool = .unset
+    ) {
+        self.targetingParams = targetingParams
+        self.groupPmId = groupPmId
+        self.GPPConfig = gppConfig
+        self.transitionCCPAAuth = transitionCCPAAuth.boolValue
     }
 }
 
-/// Set `gdpr` and/or `ccpa` if you wish to cover any of those legislations.
 /// It's important to notice the campaign you passed as parameter needs to have
 /// a active vendor list of that legislation.
 @objcMembers public class SPCampaigns: NSObject {
     public let environment: SPCampaignEnv
-    public let gdpr, ccpa, ios14: SPCampaign?
+    public let gdpr, ccpa, usnat, ios14: SPCampaign?
 
     override public var description: String {
         """
         SPCampaigns
             - gdpr: \(gdpr as Any)
             - cppa: \(ccpa as Any)
+            - usnat: \(usnat as Any)
             - ios14: \(ios14 as Any)
             - environment: \(environment)
         """
@@ -119,11 +112,13 @@ public typealias SPTargetingParams = [String: String]
     public init(
         gdpr: SPCampaign? = nil,
         ccpa: SPCampaign? = nil,
+        usnat: SPCampaign? = nil,
         ios14: SPCampaign? = nil,
         environment: SPCampaignEnv = .Public
     ) {
         self.gdpr = gdpr
         self.ccpa = ccpa
+        self.usnat = usnat
         self.ios14 = ios14
         self.environment = environment
     }

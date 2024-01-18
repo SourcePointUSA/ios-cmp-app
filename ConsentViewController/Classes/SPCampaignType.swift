@@ -8,7 +8,7 @@
 import Foundation
 
 @objc public enum SPCampaignType: Int, Equatable {
-    case gdpr, ios14, ccpa, unknown
+    case gdpr, ios14, ccpa, usnat, unknown
 }
 
 extension SPCampaignType: Codable {
@@ -19,6 +19,7 @@ extension SPCampaignType: Codable {
         case .gdpr: return "GDPR"
         case .ccpa: return "CCPA"
         case .ios14: return "ios14"
+        case .usnat: return "usnat"
         default: return "unknown"
         }
     }
@@ -28,6 +29,7 @@ extension SPCampaignType: Codable {
         case "GDPR": self = .gdpr
         case "CCPA": self = .ccpa
         case "ios14": self = .ios14
+        case "usnat": self = .usnat
         default: self = .unknown
         }
     }

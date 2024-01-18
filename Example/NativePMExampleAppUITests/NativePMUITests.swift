@@ -24,7 +24,7 @@ extension XCUIElement {
 class NativePMUITests: QuickSpec {
     var app: NativePMApp!
     var timeout = 20
-    var gdprCategoriesCount = 12
+    var gdprCategoriesCount = 10
     var ccpaCategoriesCount = 3
     var gdprCategoriePlusSpecialFeatures = 12
     var gdprDefaultOnCategories = 3
@@ -165,7 +165,7 @@ class NativePMUITests: QuickSpec {
             expect(self.app.gdprMessage.headerTitle).toEventually(containText("Mensage GDPR"))
 
             // as well as categories
-            expect(self.app.gdprMessage.categoriesList.staticTexts["Almacenar o acceder a información en un dispositivo"].exists).toEventually(beTrue())
+            expect(self.app.gdprMessage.categoriesList.staticTexts["Crear perfiles para publicidad personalizada"].exists).toEventually(beTrue())
         }
 
         it("Manage Preferences and Our Vendors through GDPR Privacy Manager with few consent purposes ON") {

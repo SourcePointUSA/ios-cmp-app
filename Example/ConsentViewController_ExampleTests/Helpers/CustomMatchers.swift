@@ -8,6 +8,7 @@
 
 import Foundation
 import Nimble
+@testable import ConsentViewController
 
 public typealias Predicate = Nimble.Predicate
 
@@ -24,7 +25,7 @@ extension URL {
 
 private func assertDecode<T: Decodable>(_ expected: T.Type, _ actual: Data) -> (Bool, String) {
     do {
-        _ = try JSONDecoder().decode(expected, from: actual)
+        _ = try JSONDecoder().decode(expected, from: actual) as T
         return (true, "pass")
     } catch let DecodingError.dataCorrupted(context) {
         return (false, context.debugDescription)
@@ -41,7 +42,7 @@ private func assertDecode<T: Decodable>(_ expected: T.Type, _ actual: Data) -> (
 
 private func assertDecodeToValue<T: Decodable & Equatable>(_ expected: T, _ actual: Data) -> (Bool, String) {
     do {
-        let value = try JSONDecoder().decode(T.self, from: actual)
+        let value = try JSONDecoder().decode(T.self, from: actual) as T
         return value == expected ?
             (true, "pass") :
             (false, "Expected \(expected), but decoded into \(value)")
@@ -139,5 +140,26 @@ public func containQueryParam(_ name: String, withValue value: String) -> Predic
             message = "Could not find query param with name \(name) in \(actual.absoluteString)"
         }
         return PredicateResult(bool: pass, message: .fail(message))
+    }
+}
+
+/// expect(spDate).to(equal(year: 123, month: 123, day: 123))
+public func equal(year: Int? = nil, month: Int? = nil, day: Int? = nil) -> Predicate<SPDate> {
+    Predicate { actual in
+        guard let actual = try actual.evaluate() else {
+            return PredicateResult(bool: false, message: .fail("..."))
+        }
+        let date = Calendar.current.dateComponents([.day, .year, .month], from: actual.date)
+        if let year = year, year != date.year {
+            return PredicateResult(bool: false, message: .fail("expected year: \(year), but got: \(String(describing: date.year))"))
+        }
+        if let month = month, month != date.month {
+            return PredicateResult(bool: false, message: .fail("expected month: \(month), but got: \(String(describing: date.month))"))
+        }
+        if let day = day, day != date.day {
+            return PredicateResult(bool: false, message: .fail("expected day: \(day), but got: \(String(describing: date.day))"))
+        }
+
+        return PredicateResult(bool: true, message: .fail(""))
     }
 }

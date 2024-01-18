@@ -97,6 +97,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var wasSampledAt: Float?
         }
 
+        struct UsNatMetaData: Codable, SPSampleable, Equatable {
+            var additionsChangeDate = SPDate.now()
+            var sampleRate = Float(1)
+            var wasSampled: Bool?
+            var wasSampledAt: Float?
+            var vendorListId: String = ""
+            var applicableSections: [Int] = []
+
+            enum CodingKeys: String, CodingKey {
+                case additionsChangeDate, sampleRate, wasSampled, wasSampledAt, applicableSections
+                case vendorListId = "_id"
+            }
+        }
+
         struct AttCampaign: Codable {
             var lastMessage: LastMessageData?
             var status: SPIDFAStatus { SPIDFAStatus.current() }
@@ -104,9 +118,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         var gdpr: SPGDPRConsent?
         var ccpa: SPCCPAConsent?
+        var usnat: SPUSNatConsent?
         var ios14: AttCampaign?
         var gdprMetaData: GDPRMetaData?
         var ccpaMetaData: CCPAMetaData?
+        var usNatMetaData: UsNatMetaData?
         var localState: SPJson?
         var nonKeyedLocalState: SPJson?
         var storedAuthId: String?
@@ -115,6 +131,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         var hasGDPRLocalData: Bool { gdpr?.uuid != nil }
         var hasCCPALocalData: Bool { ccpa?.uuid != nil }
+        var hasUSNatLocalData: Bool { usnat?.uuid != nil }
 
         mutating func udpateGDPRStatus() {
             guard let gdpr = gdpr, let gdprMetadata = gdprMetaData else { return }
@@ -130,6 +147,18 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             if self.gdpr?.consentStatus.consentedAll == true, shouldUpdateConsentedAll {
                 self.gdpr?.consentStatus.granularStatus?.previousOptInAll = true
                 self.gdpr?.consentStatus.consentedAll = false
+            }
+        }
+
+        mutating func udpateUSNatStatus() {
+            guard let usnat = usnat, let usNatMetaData = usNatMetaData else { return }
+
+            if usnat.dateCreated.date < usNatMetaData.additionsChangeDate.date {
+                self.usnat?.consentStatus.vendorListAdditions = true
+                if self.usnat?.consentStatus.consentedAll == true {
+                    self.usnat?.consentStatus.granularStatus?.previousOptInAll = true
+                    self.usnat?.consentStatus.consentedAll = false
+                }
             }
         }
     }
@@ -149,6 +178,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var gdprUUID: String? { state.gdpr?.uuid }
     var ccpaUUID: String? { state.ccpa?.uuid }
+    var usnatUUID: String? { state.usnat?.uuid }
 
     let includeData: IncludeData
 
@@ -166,10 +196,31 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var needsNewConsentData: Bool {
-        migratingUser || (
-            state.localVersion != State.version &&
-            (state.gdpr?.uuid != nil || state.ccpa?.uuid != nil)
+        migratingUser || needsNewUSNatData || transitionCCPAUSNat || (
+            state.localVersion != nil && state.localVersion != State.version &&
+            (
+                state.gdpr?.uuid != nil ||
+                state.ccpa?.uuid != nil ||
+                state.usnat?.uuid != nil
+            )
         )
+    }
+
+    /**
+        Set to true if in the response of `/meta-data`, the applicableSections returned is different than the one stored.
+        Used as part of the decision to call `/consent-status`
+     */
+    var needsNewUSNatData = false
+
+    var authTransitionCCPAUSNat: Bool {
+        authId != nil && campaigns.usnat?.transitionCCPAAuth == true
+    }
+
+    var transitionCCPAUSNat: Bool {
+        campaigns.usnat != nil &&
+        ccpaUUID != nil &&
+        usnatUUID == nil &&
+        (state.ccpa?.status == .RejectedAll || state.ccpa?.status == .RejectedSome)
     }
 
     var shouldCallConsentStatus: Bool {
@@ -179,19 +230,25 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var shouldCallMessages: Bool {
         (campaigns.gdpr != nil && state.gdpr?.consentStatus.consentedAll != true) ||
         campaigns.ccpa != nil ||
-        (campaigns.ios14 != nil && state.ios14?.status != .accepted)
+        (campaigns.ios14 != nil && state.ios14?.status != .accepted) ||
+        campaigns.usnat != nil
     }
 
     var metaDataParamsFromState: MetaDataQueryParam {
         .init(
             gdpr: campaigns.gdpr != nil ?
-                    .init(
-                        groupPmId: campaigns.gdpr?.groupPmId
-                    ) :
-                    nil,
+                .init(
+                    groupPmId: campaigns.gdpr?.groupPmId
+                ) :
+                nil,
             ccpa: campaigns.ccpa != nil ?
                 .init(
                     groupPmId: campaigns.ccpa?.groupPmId
+                ) :
+                nil,
+            usnat: campaigns.usnat != nil ?
+                .init(
+                    groupPmId: campaigns.usnat?.groupPmId
                 ) :
                 nil
         )
@@ -203,8 +260,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 propertyHref: propertyName,
                 accountId: accountId,
                 campaigns: .init(
-                    ccpa: campaigns.ccpa != nil ?
-                    .init(
+                    ccpa: campaigns.ccpa != nil ? .init(
                         targetingParams: campaigns.ccpa?.targetingParams,
                         hasLocalData: state.hasCCPALocalData,
                         status: state.ccpa?.status
@@ -217,6 +273,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     ios14: campaigns.ios14 != nil ? .init(
                         targetingParams: campaigns.ios14?.targetingParams,
                         idfaSstatus: idfaStatus
+                    ) : nil,
+                    usnat: campaigns.usnat != nil ? .init(
+                        targetingParams: campaigns.usnat?.targetingParams,
+                        hasLocalData: state.hasUSNatLocalData,
+                        consentStatus: state.usnat?.consentStatus ?? ConsentStatus()
                     ) : nil
                 ),
                 consentLanguage: language,
@@ -226,7 +287,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             ),
             metadata: .init(
                 ccpa: .init(applies: state.ccpa?.applies),
-                gdpr: .init(applies: state.gdpr?.applies)
+                gdpr: .init(applies: state.gdpr?.applies),
+                usnat: .init(applies: state.usnat?.applies)
             ),
             nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState),
             localState: state.localState
@@ -240,6 +302,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 nil,
             ccpa: campaigns.ccpa != nil ?
                 .init(consents: state.ccpa, applies: state.ccpa?.applies ?? false) :
+                nil,
+            usnat: campaigns.usnat != nil ?
+                .init(consents: state.usnat, applies: state.usnat?.applies ?? false) :
                 nil
         )
     }
@@ -259,7 +324,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.propertyName = propertyName
         self.language = language
         self.campaigns = campaigns
-        self.includeData = IncludeData(gppConfig: campaigns.ccpa?.GPPConfig)
+        self.includeData = IncludeData(gppConfig: campaigns.ccpa?.GPPConfig ?? SPGPPConfig())
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,
@@ -285,6 +350,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             localState.ccpa?.applies = localStorage.userData.ccpa?.applies ?? false
             localState.ccpaMetaData = .init()
         }
+        if localCampaigns.usnat != nil, localState.usnat == nil {
+            localState.usnat = localStorage.userData.usnat?.consents ?? .empty()
+            localState.usnat?.applies = localStorage.userData.usnat?.applies ?? false
+            localState.usNatMetaData = .init()
+        }
         if localCampaigns.ios14 != nil, localState.ios14 == nil {
             localState.ios14 = .init()
         }
@@ -297,6 +367,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let ccpaExpirationDate = localState.ccpa?.expirationDate.date,
            ccpaExpirationDate < Date() {
             localState.ccpa = .empty()
+        }
+        if let usnatExpirationDate = localState.usnat?.expirationDate.date,
+           usnatExpirationDate < Date() {
+            localState.usnat = .empty()
+        }
+
+        if localState.localVersion == nil {
+            localState.localVersion = State.version
         }
 
         return localState
@@ -340,6 +418,26 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         return .init(gdpr: gdpr)
     }
 
+    func usnatPvDataBody(from state: State, pubData: SPPublisherData?) -> PvDataRequestBody {
+        var usnat: PvDataRequestBody.USNat?
+        if let stateUsnat = state.usnat {
+            usnat = PvDataRequestBody.USNat(
+                applies: stateUsnat.applies,
+                uuid: stateUsnat.uuid,
+                accountId: accountId,
+                siteId: propertyId,
+                consentStatus: stateUsnat.consentStatus,
+                pubData: pubData,
+                sampleRate: state.gdprMetaData?.sampleRate,
+                msgId: stateUsnat.lastMessage?.id,
+                categoryId: stateUsnat.lastMessage?.categoryId,
+                subCategoryId: stateUsnat.lastMessage?.subCategoryId,
+                prtnUUID: stateUsnat.lastMessage?.partitionUUID
+            )
+        }
+        return .init(usnat: usnat)
+    }
+
     /// Resets state if the authId has changed, except if the stored auth id was empty.
     func resetStateIfAuthIdChanged() {
         if state.storedAuthId == nil {
@@ -370,6 +468,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         metaData {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
+                self.state.udpateUSNatStatus()
                 self.messages { messagesResponse in
                     handler(messagesResponse)
                     self.pvData(pubData: pubData) { }
@@ -392,6 +491,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.applies = ccpaMetaData.applies
             state.ccpaMetaData?.updateSampleFields(ccpaMetaData.sampleRate)
         }
+        if let usnatMetaData = response.usnat {
+            let previousApplicableSections = state.usNatMetaData?.applicableSections ?? []
+            state.usnat?.applies = usnatMetaData.applies
+            state.usNatMetaData?.vendorListId = usnatMetaData.vendorListId
+            state.usNatMetaData?.additionsChangeDate = usnatMetaData.additionsChangeDate
+            state.usNatMetaData?.updateSampleFields(usnatMetaData.sampleRate)
+            state.usNatMetaData?.applicableSections = usnatMetaData.applicableSections
+            if previousApplicableSections.isNotEmpty() && previousApplicableSections != state.usNatMetaData?.applicableSections {
+                needsNewUSNatData = true
+            }
+        }
         storage.spState = state
     }
 
@@ -412,17 +522,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func consentStatusMetadataFromState(_ campaign: CampaignConsent?, _ hasLocalData: Bool) -> ConsentStatusMetaData.Campaign? {
-        guard let campaign = campaign else { return nil }
-        return ConsentStatusMetaData.Campaign(
-            applies: campaign.applies,
-            dateCreated: campaign.dateCreated,
-            uuid: campaign.uuid,
-            hasLocalData: hasLocalData,
-            idfaStatus: SPIDFAStatus.current()
-        )
-    }
-
+    // swiftlint:disable:next function_body_length
     func handleConsentStatusResponse(_ response: ConsentStatusResponse) {
         state.localState = response.localState
         if let gdpr = response.consentStatusData.gdpr {
@@ -456,6 +556,19 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.webConsentPayload = ccpa.webConsentPayload
             state.ccpa?.GPPData = ccpa.GPPData ?? SPJson()
         }
+        if let usnat = response.consentStatusData.usnat {
+            state.usnat = SPUSNatConsent(
+                uuid: usnat.uuid,
+                applies: state.usnat?.applies ?? false,
+                dateCreated: usnat.dateCreated,
+                expirationDate: usnat.expirationDate,
+                consentStrings: usnat.consentStrings,
+                webConsentPayload: usnat.webConsentPayload,
+                categories: usnat.categories,
+                consentStatus: usnat.consentStatus,
+                GPPData: usnat.GPPData
+            )
+        }
 
         state.localVersion = State.version
         storage.spState = state
@@ -466,13 +579,22 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             spClient.consentStatus(
                 propertyId: propertyId,
                 metadata: .init(
-                    gdpr: consentStatusMetadataFromState(
+                    gdpr: .init(
                         state.gdpr,
-                        false
+                        campaign: campaigns.gdpr,
+                        idfaStatus: SPIDFAStatus.current()
                     ),
-                    ccpa: consentStatusMetadataFromState(
+                    ccpa: .init(
                         state.ccpa,
-                        false
+                        campaign: campaigns.ccpa,
+                        idfaStatus: SPIDFAStatus.current()
+                    ),
+                    usnat: .init(
+                        state.usnat,
+                        campaign: campaigns.usnat,
+                        idfaStatus: SPIDFAStatus.current(),
+                        dateCreated: transitionCCPAUSNat ? state.ccpa?.dateCreated : state.usnat?.dateCreated,
+                        optedOut: transitionCCPAUSNat
                     )
                 ),
                 authId: authId,
@@ -495,49 +617,35 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func handleMessagesResponse(_ response: MessagesResponse) -> LoadMessagesReturnType {
         state.localState = response.localState
         state.nonKeyedLocalState = response.nonKeyedLocalState
-        let messages = response.campaigns.compactMap { MessageToDisplay($0) }
-        messages.forEach {
-            if $0.type == .gdpr {
-                state.gdpr?.lastMessage = LastMessageData(from: $0.metadata)
-            } else if $0.type == .ccpa {
-                state.ccpa?.lastMessage = LastMessageData(from: $0.metadata)
-            } else if $0.type == .ios14 {
-                state.ios14?.lastMessage = LastMessageData(from: $0.metadata)
-            }
-        }
 
         response.campaigns.forEach {
-            if $0.type == .gdpr {
-                switch $0.userConsent {
-                    case .gdpr(let consents):
-                        state.gdpr?.dateCreated = consents.dateCreated
-                        state.gdpr?.expirationDate = consents.expirationDate
-                        state.gdpr?.tcfData = consents.tcfData
-                        state.gdpr?.vendorGrants = consents.vendorGrants
-                        state.gdpr?.euconsent = consents.euconsent
-                        state.gdpr?.consentStatus = consents.consentStatus
-                        state.gdpr?.childPmId = consents.childPmId
-                        state.gdpr?.webConsentPayload = $0.webConsentPayload
-                    default: break
-                }
-            } else if $0.type == .ccpa {
-                switch $0.userConsent {
-                    case .ccpa(let consents):
-                        state.ccpa?.dateCreated = consents.dateCreated
-                        state.ccpa?.expirationDate = consents.expirationDate
-                        state.ccpa?.status = consents.status
-                        state.ccpa?.rejectedVendors = consents.rejectedVendors
-                        state.ccpa?.rejectedCategories = consents.rejectedCategories
-                        state.ccpa?.childPmId = consents.childPmId
-                        state.ccpa?.webConsentPayload = $0.webConsentPayload
-                        state.ccpa?.GPPData = consents.GPPData
-                    default: break
-                }
+            switch $0.type {
+                case .gdpr: state.gdpr = $0.userConsent.toConsent(
+                    defaults: state.gdpr,
+                    messageMetaData: $0.messageMetaData
+                )
+
+                case .ccpa: state.ccpa = $0.userConsent.toConsent(
+                    defaults: state.ccpa,
+                    messageMetaData: $0.messageMetaData
+                )
+
+                case .usnat: state.usnat = $0.userConsent.toConsent(
+                    defaults: state.usnat,
+                    messageMetaData: $0.messageMetaData
+                )
+
+                case .ios14: state.ios14?.lastMessage = LastMessageData(from: $0.messageMetaData)
+
+                case .unknown: break
             }
         }
 
         storage.spState = state
-        return (messages, userData.copy() as? SPUserData ?? userData)
+        return (
+            response.campaigns.compactMap { MessageToDisplay($0) },
+            userData.copy() as? SPUserData ?? userData
+        )
     }
 
     func messages(_ handler: @escaping MessagesAndConsentsHandler) {
@@ -572,6 +680,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 if let ccpa = pvDataData.ccpa {
                     state.ccpa?.uuid = ccpa.uuid
                 }
+                if let usnat = pvDataData.usnat {
+                    state.usnat?.uuid = usnat.uuid
+                }
 
             case .failure(let error): logErrorMetrics(error)
         }
@@ -605,19 +716,26 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func pvData(pubData: SPPublisherData?, _ handler: @escaping () -> Void) {
         let pvDataGroup = DispatchGroup()
-        if let gdprMetadata = state.gdprMetaData {
+        if let gdprMetadata = state.gdprMetaData, campaigns.gdpr != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(gdprMetadata, body: gdprPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.gdprMetaData?.wasSampled = sampled
         }
-        if let ccpaMetadata = state.ccpaMetaData {
+        if let ccpaMetadata = state.ccpaMetaData, campaigns.ccpa != nil {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(ccpaMetadata, body: ccpaPvDataBody(from: state, pubData: pubData)) {
                 pvDataGroup.leave()
             }
             state.ccpaMetaData?.wasSampled = sampled
+        }
+        if let usNatMetadata = state.usNatMetaData, campaigns.usnat != nil {
+            pvDataGroup.enter()
+            let sampled = sampleAndPvData(usNatMetadata, body: usnatPvDataBody(from: state, pubData: pubData)) {
+                pvDataGroup.leave()
+            }
+            state.usNatMetaData?.wasSampled = sampled
         }
 
         pvDataGroup.notify(queue: .main) {
@@ -645,8 +763,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
+    func shouldCallGetChoice(for action: SPAction) -> Bool {
+        (action.campaignType == .ccpa || action.campaignType == .gdpr) &&
+        (action.type == .AcceptAll || action.type == .RejectAll)
+    }
+
     func getChoiceAll(_ action: SPAction, handler: @escaping (Result<ChoiceAllResponse?, SPError>) -> Void) {
-        if action.type == .AcceptAll || action.type == .RejectAll {
+        if shouldCallGetChoice(for: action) {
             spClient.choiceAll(
                 actionType: action.type,
                 accountId: accountId,
@@ -714,6 +837,30 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 includeData: includeData
             )
         ) { handler($0) }
+    }
+
+    func postChoice(
+        _ action: SPAction,
+        handler: @escaping (Result<USNatChoiceResponse, SPError>) -> Void
+    ) {
+        spClient.postUSNatAction(
+            actionType: action.type,
+            body: .init(
+                authId: authId,
+                uuid: state.usnat?.uuid,
+                messageId: String(state.usnat?.lastMessage?.id ?? 0),
+                vendorListId: state.usNatMetaData?.vendorListId,
+                pubData: action.encodablePubData,
+                pmSaveAndExitVariables: action.pmPayload,
+                sendPVData: state.usNatMetaData?.wasSampled ?? false,
+                propertyId: propertyId,
+                sampleRate: state.usNatMetaData?.sampleRate,
+                idfaStatus: idfaStatus,
+                granularStatus: state.usnat?.consentStatus.granularStatus,
+                includeData: includeData
+            ),
+            handler: handler
+        )
     }
 
     func handleGPDRPostChoice(
@@ -784,14 +931,48 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    func handleUSNatPostChoice(
+        _ action: SPAction,
+        _ postResponse: USNatChoiceResponse
+    ) {
+        state.usnat = SPUSNatConsent(
+            uuid: postResponse.uuid,
+            applies: state.usnat?.applies ?? false,
+            dateCreated: postResponse.dateCreated,
+            expirationDate: postResponse.expirationDate,
+            consentStrings: postResponse.consentStrings,
+            webConsentPayload: postResponse.webConsentPayload,
+            categories: postResponse.categories,
+            consentStatus: postResponse.consentStatus,
+            GPPData: postResponse.GPPData
+        )
+
+        storage.spState = state
+    }
+
+    func reportUSNatAction(_ action: SPAction, _ handler: @escaping ActionHandler) {
+        self.postChoice(action) { postResult in
+            switch postResult {
+                case .success(let response):
+                    self.handleUSNatPostChoice(action, response)
+                    handler(Result.success(self.userData))
+
+                case .failure(let error):
+                    // flag to sync again later
+                    handler(Result.failure(error))
+            }
+        }
+    }
+
     func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
         getChoiceAll(action) { getResult in
             switch getResult {
                 case .success(let getResponse):
-                    if action.campaignType == .gdpr {
-                        self.reportGDPRAction(action, getResponse, handler)
-                    } else if action.campaignType == .ccpa {
-                        self.reportCCPAAction(action, getResponse, handler)
+                    switch action.campaignType {
+                        case .gdpr: self.reportGDPRAction(action, getResponse, handler)
+                        case .ccpa: self.reportCCPAAction(action, getResponse, handler)
+                        case .usnat: self.reportUSNatAction(action, handler)
+                        default: break
                     }
 
                 case .failure(let error):
@@ -810,6 +991,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let ccpaUUID = ccpaUUID, ccpaUUID.isNotEmpty() {
             uuid = ccpaUUID
             uuidType = .ccpa
+        }
+        if let usNatUUID = usnatUUID, usNatUUID.isNotEmpty() {
+            uuid = usNatUUID
+            uuidType = .usnat
         }
         spClient.reportIdfaStatus(
             propertyId: propertyId,

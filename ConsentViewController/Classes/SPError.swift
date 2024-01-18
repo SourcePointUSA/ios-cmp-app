@@ -299,6 +299,7 @@ public enum InvalidResponsAPICode: String {
     case ERROR_METRICS = "_error-metrics"
     case CCPA_ACTION = "_CCPA-action"
     case GDPR_ACTION = "_GDPR-action"
+    case USNAT_ACTION = "_USNAT-action"
     case IDFA_STATUS = "_IDFA-status"
     case CCPA_PRIVACY_MANAGER = "_CCPA-privacy-manager"
     case CHOICE_ALL = "_choice-all"

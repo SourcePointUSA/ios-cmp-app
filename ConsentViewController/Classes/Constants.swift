@@ -14,11 +14,9 @@ protocol SPUIValues {
     static var defaultFallbackTextColorForDarkMode: UIColor { get }
 }
 
-let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
-
 struct Constants {
     struct Urls {
-        static let envParam = prod ? "prod" : "localProd"
+        static let envParam = "prod"
         static let additionalData: String = "scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
         static let SP_ROOT = URL(string: prod ? "https://cdn.privacy-mgmt.com/" : "https://preprod-cdn.privacy-mgmt.com/")!
         static let WRAPPER_API = URL(string: "./wrapper/?env=\(envParam)", relativeTo: SP_ROOT)!
@@ -31,6 +29,7 @@ struct Constants {
         static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
         static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
         static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
+        static let USNAT_PM_URL = URL(string: "./us_pm/index.html", relativeTo: SP_ROOT)!
         static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
         static let CONSENT_STATUS_URL = URL(string: "./v2/consent-status?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let META_DATA_URL = URL(string: "./v2/meta-data?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
@@ -38,6 +37,7 @@ struct Constants {
         static let PV_DATA_URL = URL(string: "./v2/pv-data?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_GDPR_BASE_URL = URL(string: "./v2/choice/gdpr/?\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_CCPA_BASE_URL = URL(string: "./v2/choice/ccpa/?\(additionalData)", relativeTo: WRAPPER_API)!
+        static let CHOICE_USNAT_BASE_URL = URL(string: "./v2/choice/usnat/?\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_REJECT_ALL_URL = URL(string: "./v2/choice/reject-all/?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
         static let CHOICE_CONSENT_ALL_URL = URL(string: "./v2/choice/consent-all/?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
     }
@@ -57,4 +57,6 @@ struct Constants {
             public var activeFont: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif", color: "#ffffff")
         }
     }
+
+    static let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
 }

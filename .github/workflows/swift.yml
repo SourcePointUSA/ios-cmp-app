@@ -92,7 +92,7 @@ jobs:
           if: failure()
           name: Upload NativePMExampleApp tests results
           with:
-            path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult 
+            path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   # MetaApp:
   #     runs-on: macos-12
   #     steps:
@@ -105,4 +105,4 @@ jobs:
   #         if: failure()
   #         name: Upload SourcePointMetaApp tests results
   #         with:
-  #           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult         
+  #           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult

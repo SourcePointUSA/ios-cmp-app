@@ -20,17 +20,17 @@ public struct SPWebConsents: Codable, Equatable {
         }
     }
 
-    let gdpr: SPWebConsent?
-    let ccpa: SPWebConsent?
+    let gdpr, ccpa, usnat: SPWebConsent?
 
-    public init(gdpr: SPWebConsent? = nil, ccpa: SPWebConsent? = nil) {
+    public init(gdpr: SPWebConsent? = nil, ccpa: SPWebConsent? = nil, usnat: SPWebConsent? = nil) {
         self.gdpr = gdpr
         self.ccpa = ccpa
+        self.usnat = usnat
     }
 }
 
 public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, Codable, NSCopying {
-    /// The consents data. See: `SPGDPRConsent`, `SPCCPAConsent`
+    /// The consents data. See: `SPGDPRConsent`, `SPCCPAConsent`, `SPUSNatConsent`
     public let consents: ConsentType?
 
     // swiftlint:disable:next todo
@@ -66,27 +66,35 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
     /// - SeeAlso: `SPCCPAConsent`
     public let ccpa: SPConsent<SPCCPAConsent>?
 
+    /// Consent data for USNat. This attribute will be nil if your setup doesn't include a CCPA campaign
+    /// - SeeAlso: `SPUSNatConsent`
+    public let usnat: SPConsent<SPUSNatConsent>?
+
     var webConsents: SPWebConsents { SPWebConsents(
         gdpr: .init(uuid: gdpr?.consents?.uuid, webConsentPayload: gdpr?.consents?.webConsentPayload),
-        ccpa: .init(uuid: ccpa?.consents?.uuid, webConsentPayload: ccpa?.consents?.webConsentPayload)
+        ccpa: .init(uuid: ccpa?.consents?.uuid, webConsentPayload: ccpa?.consents?.webConsentPayload),
+        usnat: .init(uuid: usnat?.consents?.uuid, webConsentPayload: usnat?.consents?.webConsentPayload)
     )}
 
     override public var description: String {
-        "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa))"
+        "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa)), usnat: \(String(describing: usnat))"
     }
 
     public init(
         gdpr: SPConsent<SPGDPRConsent>? = nil,
-        ccpa: SPConsent<SPCCPAConsent>? = nil
+        ccpa: SPConsent<SPCCPAConsent>? = nil,
+        usnat: SPConsent<SPUSNatConsent>? = nil
     ) {
         self.gdpr = gdpr
         self.ccpa = ccpa
+        self.usnat = usnat
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
         SPUserData(
             gdpr: gdpr?.copy() as? SPConsent<SPGDPRConsent>,
-            ccpa: ccpa?.copy() as? SPConsent<SPCCPAConsent>
+            ccpa: ccpa?.copy() as? SPConsent<SPCCPAConsent>,
+            usnat: usnat?.copy() as? SPConsent<SPUSNatConsent>
         )
     }
 
@@ -95,7 +103,9 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
             return  gdpr?.applies == object.gdpr?.applies &&
                     gdpr?.consents == object.gdpr?.consents &&
                     ccpa?.applies == object.ccpa?.applies &&
-                    ccpa?.consents == object.ccpa?.consents
+                    ccpa?.consents == object.ccpa?.consents &&
+                    usnat?.applies == object.usnat?.applies &&
+                    usnat?.consents == object.usnat?.consents
         } else {
             return false
         }
@@ -107,6 +117,8 @@ public protocol SPObjcUserData {
     func objcGDPRApplies() -> Bool
     func objcCCPAConsents() -> SPCCPAConsent?
     func objcCCPAApplies() -> Bool
+    func objcUSNatConsents() -> SPUSNatConsent?
+    func objcUSNatApplies() -> Bool
 }
 
 @objc extension SPUserData: SPObjcUserData {
@@ -121,14 +133,25 @@ public protocol SPObjcUserData {
         gdpr?.applies ?? false
     }
 
-    /// Returns GDPR consent data if any available.
+    /// Returns CCPA consent data if any available.
     /// - SeeAlso: `SPCCPAConsent`
     public func objcCCPAConsents() -> SPCCPAConsent? {
         ccpa?.consents
     }
 
-    /// Indicates whether GDPR applies based on the VendorList configuration.
+    /// Indicates whether CCPA applies based on the VendorList configuration.
     public func objcCCPAApplies() -> Bool {
         ccpa?.applies ?? false
+    }
+
+    /// Returns USNat consent data if any available.
+    /// - SeeAlso: `SPUSNatConsent`
+    public func objcUSNatConsents() -> SPUSNatConsent? {
+        usnat?.consents
+    }
+
+    /// Indicates whether USNat applies based on the VendorList configuration.
+    public func objcUSNatApplies() -> Bool {
+        usnat?.applies ?? false
     }
 }
