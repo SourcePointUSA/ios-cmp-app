@@ -10,11 +10,31 @@ import Foundation
 /// A collection of key/value pairs passed to the scenario builder on SP's dashboard
 public typealias SPTargetingParams = [String: String]
 
-/// Contains information about the property/campaign.
-@objcMembers public class SPCampaign: NSObject {
-    let targetingParams: SPTargetingParams
+@objc public enum SPOptinalBool: Int {
+    case yes, no, unset
 
-    let groupPmId: String?
+    public var string: String {
+        switch self {
+            case .no: "false"
+            case .yes: "true"
+            case .unset: "unset(nil)"
+        }
+    }
+
+    var boolValue: Bool? {
+        switch self {
+            case .no: false
+            case .yes: true
+            case .unset: nil
+        }
+    }
+}
+
+/// Contains information about the property/campaign.
+@objc public class SPCampaign: NSObject {
+    @objc let targetingParams: SPTargetingParams
+
+    @objc let groupPmId: String?
 
     /**
      Used by usNat campaigns only. Set this flag only if your app used an SDK older than `7.6.0`, use authenticated consent
@@ -22,7 +42,7 @@ public typealias SPTargetingParams = [String: String]
      */
     let transitionCCPAAuth: Bool?
 
-    override public var description: String {
+    @objc override public var description: String {
         """
         SPCampaign
             - targetingParams: \(targetingParams)
@@ -31,7 +51,7 @@ public typealias SPTargetingParams = [String: String]
         """
     }
 
-    public init(
+    @nonobjc public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil,
         transitionCCPAAuth: Bool? = nil
@@ -39,6 +59,27 @@ public typealias SPTargetingParams = [String: String]
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
         self.transitionCCPAAuth = transitionCCPAAuth
+    }
+
+    @available(swift, obsoleted: 1.0)
+    @objc public init(
+        targetingParams: SPTargetingParams = [:],
+        groupPmId: String? = nil
+    ) {
+        self.targetingParams = targetingParams
+        self.groupPmId = groupPmId
+        self.transitionCCPAAuth = nil
+    }
+
+    @available(swift, obsoleted: 1.0)
+    @objc public init(
+        targetingParams: SPTargetingParams = [:],
+        groupPmId: String? = nil,
+        transitionCCPAAuth: SPOptinalBool = .unset
+    ) {
+        self.targetingParams = targetingParams
+        self.groupPmId = groupPmId
+        self.transitionCCPAAuth = transitionCCPAAuth.boolValue
     }
 }
 
