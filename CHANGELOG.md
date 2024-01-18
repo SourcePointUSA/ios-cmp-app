@@ -1,3 +1,6 @@
+# 7.5.0 (Jan, 18, 2024)
+* [DIA-2030](https://sourcepoint.atlassian.net/browse/DIA-2030) Added support to USNat campaign. [#510](https://github.com/SourcePointUSA/ios-cmp-app/pull/510)
+
 # 7.4.5 (Jan, 11, 2024)
 * Improved networking performance and better SDK instrumentation. The average "time to consent" has been cut from ~750 ms down to ~150 ms [#539](https://github.com/SourcePointUSA/ios-cmp-app/pull/539)
 * Fixed several minor UI issues on tvOS [#535](https://github.com/SourcePointUSA/ios-cmp-app/pull/535), [#536](https://github.com/SourcePointUSA/ios-cmp-app/pull/536), [#537](https://github.com/SourcePointUSA/ios-cmp-app/pull/537)
