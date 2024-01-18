@@ -15,9 +15,9 @@ public typealias SPTargetingParams = [String: String]
 
     public var string: String {
         switch self {
-            case .no: "false"
-            case .yes: "true"
-            case .unset: "unset(nil)"
+            case .no: return "false"
+            case .yes: return "true"
+            case .unset: return "unset(nil)"
         }
     }
 
