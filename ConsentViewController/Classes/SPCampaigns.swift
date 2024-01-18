@@ -23,9 +23,9 @@ public typealias SPTargetingParams = [String: String]
 
     var boolValue: Bool? {
         switch self {
-            case .no: false
-            case .yes: true
-            case .unset: nil
+            case .no: return false
+            case .yes: return true
+            case .unset: return nil
         }
     }
 }
