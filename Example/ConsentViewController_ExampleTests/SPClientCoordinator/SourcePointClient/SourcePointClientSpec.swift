@@ -24,6 +24,9 @@ class SourcePointClientSpec: QuickSpec {
         applies: true
     )}
     var profile: SPUserData { SPUserData(gdpr: gdprProfile) }
+    var wrapperHost: String {
+        Constants.prod ? "cdn.privacy-mgmt.com" : "preprod-cdn.privacy-mgmt.com"
+    }
 
     func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
         accountId: accountId,
@@ -53,10 +56,6 @@ class SourcePointClientSpec: QuickSpec {
                 pubData: [:],
                 includeData: .standard
             ))
-    }
-
-    var wrapperHost: String {
-        Constants.prod ? "cdn.privacy-mgmt.com" : "preprod-cdn.privacy-mgmt.com"
     }
 
     override func spec() {

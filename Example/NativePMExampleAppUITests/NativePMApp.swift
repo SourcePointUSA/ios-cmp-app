@@ -89,15 +89,7 @@ class NativePMApp: XCUIApplication {
     }
 
     var createPersonalisedAdsProfile: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Create a personalised ads profile").firstMatch
-    }
-
-    var seedtag: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Seedtag Advertising S.L").firstMatch
-    }
-
-    var freewheel: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Freewheel").firstMatch
+        tables.cells.containing(.staticText, identifier: "Create profiles for personalised advertising").firstMatch
     }
 
     var justpremiumBV: XCUIElement {

@@ -294,7 +294,7 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row].name
+        cell.textLabel?.text = categories[indexPath.row].name.trimmingCharacters(in: .whitespacesAndNewlines)
         cell.textLabel?.setDefaultTextColorForDarkMode()
         return cell
     }

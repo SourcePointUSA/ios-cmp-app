@@ -132,6 +132,7 @@ import UIKit
         renderNextMessageIfAny()
     }
 
+    // swiftlint:disable:next function_body_length
     func messageToViewController(_ url: URL, _ messageId: String, _ message: Message, _ type: SPCampaignType) -> SPMessageView? {
         switch message.messageJson {
         case .native(let nativeMessage):
@@ -463,8 +464,8 @@ import UIKit
         )
     }
 
-    @available(iOS 10, *)
     public func loadUSNatPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        #if os(iOS)
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
@@ -476,6 +477,7 @@ import UIKit
             return
         }
         loadWebPrivacyManager(.usnat, pmUrl, messageId: usedId)
+        #endif
     }
 
     @nonobjc func handleCustomConsentResult(

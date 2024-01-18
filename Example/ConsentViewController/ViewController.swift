@@ -18,12 +18,12 @@ class ViewController: UIViewController {
 
     lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
-        propertyId: 34152,
-        propertyName: "usnat.mobile.demo",
-        gdpr: false,
-        ccpa: false,
-        att: false,
-        usnat: true,
+        propertyId: 16893,
+        propertyName: "mobile.multicampaign.demo",
+        gdpr: true,
+        ccpa: true,
+        att: true,
+        usnat: false,
         language: .BrowserDefault,
         gdprPmId: "488393",
         ccpaPmId: "509688",

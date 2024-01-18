@@ -31,12 +31,12 @@
 
     SPCampaign *campaign = [[SPCampaign alloc]
                             initWithTargetingParams: [NSDictionary dictionary]
-                            groupPmId: NULL
-                            gppConfig: NULL];
+                            groupPmId: NULL];
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
                               ccpa: campaign
+                              usnat: NULL
                               ios14: campaign
                               environment: SPCampaignEnvPublic];
 

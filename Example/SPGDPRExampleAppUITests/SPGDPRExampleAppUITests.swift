@@ -51,16 +51,6 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
     }
 
-    /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
-    func waitForUserDefaultsToPersist(_ delay: Int = 10, execute: @escaping () -> Void) {
-        waitUntil(timeout: .seconds(delay + 5)) { done in
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                execute()
-                done()
-            }
-        }
-    }
-
     override func spec() {
         beforeSuite {
             self.continueAfterFailure = false
@@ -74,8 +64,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
-        // TODO: replace xit with it
-        xit("Accept all through 1st layer messages") {
+        it("Accept all through 1st layer messages") {
             self.app.relaunch(clean: true, resetAtt: true)
             self.runAttScenario()
             self.acceptGDPRMessage()
@@ -86,7 +75,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
-        xit("Accept all through 2nd layer") {
+        it("Accept all through 2nd layer") {
             self.app.relaunch(clean: true, resetAtt: true, args: ["att": false])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
@@ -97,7 +86,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
-        xit("Dismissing 2nd layer returns to first layer message") {
+        it("Dismissing 2nd layer returns to first layer message") {
             self.app.relaunch(clean: true, resetAtt: true, args: [
                 "att": false,
                 "ccpa": false
@@ -107,18 +96,17 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
-        xit("Consenting and Deleting custom vendor persist after relaunch") {
+        it("Consenting and Deleting custom vendor persist after relaunch") {
             self.app.relaunch(clean: true, resetAtt: true, args: [
                 "att": false,
                 "ccpa": false
             ])
             self.acceptGDPRMessage()
 
+            expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
             self.app.deleteCustomVendorsButton.tap()
 
-            self.waitForUserDefaultsToPersist {
-                self.app.relaunch(args: ["att": false, "ccpa": false])
-            }
+            self.app.relaunch(args: ["att": false, "ccpa": false])
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beDisabled())
             expect(self.app.acceptCustomVendorsButton).toEventually(beEnabled())
@@ -126,16 +114,14 @@ class SPGDPRExampleAppUITests: QuickSpec {
 
             self.app.acceptCustomVendorsButton.tap()
 
-            self.waitForUserDefaultsToPersist {
-                self.app.relaunch(args: ["att": false, "ccpa": false])
-            }
+            self.app.relaunch(args: ["att": false, "ccpa": false])
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
             expect(self.app.acceptCustomVendorsButton).toEventually(beDisabled())
             expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
         }
 
-        xit("Shows a translated message") {
+        it("Shows a translated message") {
             self.app.relaunch(clean: true, resetAtt: false, args: [
                 "att": false,
                 "language": SPMessageLanguage.Spanish.rawValue

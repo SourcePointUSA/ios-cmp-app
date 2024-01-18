@@ -206,7 +206,6 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             }
         }
 
-        // TODO: setup USNat campaign on property 17801
         describe("meta-data") {
             it("should call the endpoint and parse the response into MetaDataResponse") {
                 waitUntil { done in
@@ -233,7 +232,6 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 }
             }
 
-            // TODO: setup USNat campaign on property 17801
             it("Check if groupPmId echo") {
                 waitUntil { done in
                     client.metaData(accountId: accountId,

@@ -522,6 +522,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     func handleConsentStatusResponse(_ response: ConsentStatusResponse) {
         state.localState = response.localState
         if let gdpr = response.consentStatusData.gdpr {

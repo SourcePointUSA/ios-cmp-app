@@ -17,6 +17,7 @@ protocol Storage {
     func removeObject(forKey defaultName: String)
     func removeObjects(forKeys keys: [String])
     func dictionaryRepresentation() -> [String: Any]
+    func synchronize() -> Bool
 }
 
 extension UserDefaults: Storage {
