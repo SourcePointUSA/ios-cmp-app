@@ -48,4 +48,8 @@ class InMemoryStorageMock: Storage {
     func dictionaryRepresentation() -> [String: Any] {
         storage
     }
+
+    func synchronize() -> Bool {
+        true
+    }
 }

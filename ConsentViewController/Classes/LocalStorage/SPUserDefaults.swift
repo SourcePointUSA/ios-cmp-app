@@ -85,7 +85,10 @@ class SPUserDefaults: SPLocalStorage {
                 forKey: Self.SP_STATE_KEY
             )
         }
-        set { storage.setObject(newValue, forKey: Self.SP_STATE_KEY) }
+        set {
+            storage.setObject(newValue, forKey: Self.SP_STATE_KEY)
+            _ = storage.synchronize()
+        }
     }
 
     required init(storage: Storage = UserDefaults.standard) {
