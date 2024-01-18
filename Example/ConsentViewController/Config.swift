@@ -11,7 +11,9 @@ import Foundation
 
 struct Config {
     enum Keys: String, CaseIterable {
-        case accountId, propertyId, propertyName, gdpr, ccpa, att, language, gdprPmId, ccpaPmId, usnatPmId
+        case accountId, propertyId, propertyName,
+             gdpr, ccpa, usnat, att, language, gdprPmId,
+             ccpaPmId, usnatPmId
     }
 
     let accountId, propertyId: Int
