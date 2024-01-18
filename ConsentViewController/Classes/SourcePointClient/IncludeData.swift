@@ -8,14 +8,14 @@
 import Foundation
 
 struct IncludeData: Equatable {
-    static let standard = IncludeData()
+    static let standard = IncludeData(gppConfig: SPGPPConfig())
 
     let localState = ["type": "RecordString"]
     let TCData = ["type": "RecordString"]
     let webConsentPayload = ["type": "string"]
     let categories = true
     let translateMessage = true
-    let gppConfig = true
+    let gppConfig: SPGPPConfig
 }
 
 extension IncludeData: Encodable {

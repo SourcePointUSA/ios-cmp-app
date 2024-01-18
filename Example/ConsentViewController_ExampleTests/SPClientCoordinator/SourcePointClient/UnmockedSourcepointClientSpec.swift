@@ -60,7 +60,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             }
 
             it("should contain all query params") {
-                let includeData = IncludeData()
+                let includeData = IncludeData.standard
                 let url = client.consentStatusURLWithParams(
                     propertyId: propertyId,
                     metadata: emptyMetaData,

@@ -36,6 +36,9 @@ public typealias SPTargetingParams = [String: String]
 
     @objc let groupPmId: String?
 
+    /// Class to encapsulate GPP configuration. This parameter has only effect in CCPA campaigns.
+    let GPPConfig: SPGPPConfig?
+
     /**
      Used by usNat campaigns only. Set this flag only if your app used an SDK older than `7.6.0`, use authenticated consent
      and has a CCPA campaign.
@@ -47,6 +50,7 @@ public typealias SPTargetingParams = [String: String]
         SPCampaign
             - targetingParams: \(targetingParams)
             - groupPmId: \(groupPmId as Any)
+            - GPPConfig: \(GPPConfig as Any)
             - transitionCCPAAuth: \(transitionCCPAAuth as Any)
         """
     }
@@ -54,10 +58,12 @@ public typealias SPTargetingParams = [String: String]
     @nonobjc public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil,
+        gppConfig: SPGPPConfig? = nil,
         transitionCCPAAuth: Bool? = nil
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
+        self.GPPConfig = gppConfig
         self.transitionCCPAAuth = transitionCCPAAuth
     }
 
@@ -68,6 +74,7 @@ public typealias SPTargetingParams = [String: String]
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
+        self.GPPConfig = nil
         self.transitionCCPAAuth = nil
     }
 
@@ -75,10 +82,12 @@ public typealias SPTargetingParams = [String: String]
     @objc public init(
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil,
+        gppConfig: SPGPPConfig? = nil,
         transitionCCPAAuth: SPOptinalBool = .unset
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
+        self.GPPConfig = gppConfig
         self.transitionCCPAAuth = transitionCCPAAuth.boolValue
     }
 }

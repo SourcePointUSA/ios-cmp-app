@@ -23,13 +23,13 @@ public func stringify<T: Encodable>(_ obj: T) -> String {
 class IncludeDataSpec: QuickSpec {
     override func spec() {
         it("can be stringified") {
-            let stringified = stringify(IncludeData())
+            let stringified = stringify(IncludeData(gppConfig: SPGPPConfig()))
             expect(stringified).to(contain(#""localState":{"type":"RecordString"}"#))
             expect(stringified).to(contain(#""TCData":{"type":"RecordString"}"#))
             expect(stringified).to(contain(#""webConsentPayload":{"type":"string"}"#))
             expect(stringified).to(contain(#""categories":true"#))
             expect(stringified).to(contain(#""translateMessage":true"#))
-            expect(stringified).to(contain(#""GPPData":true"#))
+            expect(stringified).to(contain(#""GPPData":{}"#))
         }
     }
 }
