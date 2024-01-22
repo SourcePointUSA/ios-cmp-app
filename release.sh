@@ -29,10 +29,21 @@ firstArgWithPrefix() {
     echo ""
 }
 
+getVersionFromBranch() {
+    local currentBranch=$(git rev-parse --abbrev-ref HEAD)
+    local branchPrefix="pre-"
+    echo "${currentBranch#${branchPrefix}}"
+}
+
 getVersionArg() {
     local prefix="-v="
     local args=$1
-    echo $(firstArgWithPrefix $prefix $args)
+    local versionFromArgs=$(firstArgWithPrefix $prefix $args)
+    if [ -z $versionFromArgs ]; then
+        echo $(getVersionFromBranch)
+    else
+        echo $versionFromArgs
+    fi
 }
 
 ############ END CLI
