@@ -11,9 +11,9 @@ containsElement () {
     local e match="$1"
     shift
     for e; do
-        [[ "$e" == "$match" ]] && return 0
+        [[ "$e" == "$match" ]] && return 0 #true
     done
-    return 1
+    return 1 #false
 }
 
 firstArgWithPrefix() {
@@ -96,7 +96,7 @@ gitPush() {
     if [ $dryRun -eq 0 ]; then
         echo "git push $gitArgs"
     else
-        git push "$gitArgs"
+        git push $gitArgs
     fi
     assertStatus "git push $gitArgs"
 }
@@ -119,10 +119,22 @@ deleteBranch() {
     git push origin :$branchName
 }
 
+generateFrameworks() {
+    local skipFrameworks=$1
+    if [$skipFrameworks -eq 1]; then
+        bash ./buildXCFrameworks.sh
+        git add .
+        git commit -m "'update XCFrameworksfor $version'"
+    else
+        echo "skipping generating XCFrameworks"
+    fi
+}
+
 release () {
     local version=$1
     local dryRun=$2
     local currentBranch=$(git rev-parse --abbrev-ref HEAD)
+    local skipFrameworks=$3
 
     echo "Releasing SDK version $version"
     updatePodspec $version
@@ -133,13 +145,11 @@ release () {
     podInstall
     git add .
     git commit -am "'run pod install with $version'"
-    bash ./buildXCFrameworks.sh
-    git add .
-    git commit -m "'update XCFrameworksfor $version'"
-    gitPush $dryRun
+    generateFrameworks $skipFrameworks
+    gitPush $dryRun "-u origin $currentBranch"
     git checkout develop
     git merge $currentBranch
-    gitPush
+    gitPush $dryRun
     git checkout master
     git merge develop
     createTag $version
@@ -171,7 +181,8 @@ printHelp() {
 }
 
 helpArg="-h"
-dryRunArg="--dry"
+dryRunArg=$(containsElement "--dry" $@)
+skipFrameworks=$(containsElement "--skipFrameworks" $@)
 
 dryRun=1 # false
 if containsElement $dryRunArg $@; then
@@ -192,7 +203,7 @@ if [ -z $versionToRelease ]; then
 fi
 
 if isSemVer $versionToRelease; then
-    release $versionToRelease $dryRun
+    release $versionToRelease $dryRun $skipFrameworks
     exit 0
 else
     printf "$versionToRelease is not a valid SemVer.\n"
