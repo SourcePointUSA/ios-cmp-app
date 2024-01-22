@@ -1,9 +1,10 @@
 #!/bin/bash
 
-versionToRelease=$1
 podspecFileName="ConsentViewController.podspec"
 spConsentManagerFileName="ConsentViewController/Classes/SPConsentManager.swift"
 readmeFileName="README.md"
+
+############ BEGIN CLI
 
 # Function to check if an array contains a value
 containsElement () {
@@ -14,6 +15,27 @@ containsElement () {
     done
     return 1
 }
+
+firstArgWithPrefix() {
+    local prefix="$1"
+    local args=$2
+
+    for element in $args; do
+        if [[ $element == $prefix* ]]; then
+            # The syntax ${variable#pattern} removes the pattern from the start of $variable.
+            echo "${element#${prefix}}"
+        fi
+    done
+    echo ""
+}
+
+getVersionArg() {
+    local prefix="-v="
+    local args=$1
+    echo $(firstArgWithPrefix $prefix $args)
+}
+
+############ END CLI
 
 updatePodspec() {
     echo "Updating podspec"
@@ -114,17 +136,18 @@ printHelp() {
 helpArg="-h"
 dryRunArg="--dry"
 
-dryRun = 1 # false
+dryRun=1 # false
 
 if containsElement $dryRunArg $@; then
-    dryRun = 0 # true
-    exit 0
+    dryRun=0 # true
 fi
 
 if containsElement $helpArg $@; then
     printHelp
     exit 0
 fi
+
+versionToRelease=$(getVersionArg $@)
 
 if [ -z $versionToRelease ]; then
     printf "Did you forget to pass the version as argument?\n"
