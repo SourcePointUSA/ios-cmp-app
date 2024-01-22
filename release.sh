@@ -37,6 +37,15 @@ getVersionArg() {
 
 ############ END CLI
 
+assertStatus() {
+    local status=$?
+    local command="$1"
+    if [ "$status" -ne 0 ]; then
+        echo "command $command failed with status $status"
+        exit status
+    fi
+}
+
 updatePodspec() {
     echo "Updating podspec"
     local version=$1
@@ -66,6 +75,7 @@ createTag() {
 podInstall() {
     cd Example
     pod install
+    assertStatus "pod install"
     cd ..
 }
 
@@ -77,6 +87,7 @@ gitPush() {
     else
         git push "$gitArgs"
     fi
+    assertStatus "git push $gitArgs"
 }
 
 podTrunk() {
@@ -85,14 +96,24 @@ podTrunk() {
         echo "pod trunk push ConsentViewController.podspec --verbose"
     else
         pod trunk push ConsentViewController.podspec --verbose
+        assertStatus "pod trunk push ConsentViewController.podspec --verbose"
     fi
+}
+
+deleteBranch() {
+    local branchName=$1
+
+    echo "Deleting branch $branchName"
+    git branch -D $branchName
+    git push origin :$branchName
 }
 
 release () {
     local version=$1
     local dryRun=$2
+    local currentBranch=$(git rev-parse --abbrev-ref HEAD)
 
-    echo "Releasing stuff..."
+    echo "Releasing SDK version $version"
     updatePodspec $version
     updateVersionOnSPConsentManager $version
     updateReadme $version
@@ -105,14 +126,17 @@ release () {
     git add .
     git commit -m "'update XCFrameworksfor $version'"
     gitPush $dryRun
-    # git checkout master
-    # git merge develop
+    git checkout develop
+    git merge $currentBranch
+    gitPush
+    git checkout master
+    git merge develop
     createTag $version
     gitPush $dryRun
     podTrunk $dryRun
     git checkout develop
+    deleteBranch $currentBranch
 }
-
 
 # Function to check if a string matches the SemVer pattern
 isSemVer() {
@@ -127,7 +151,9 @@ printUsage() {
 
 printHelp() {
     printf "Script used to release iOS/tvOS SDK.\n"
-    printf "Execute it from a clean state 'develop' branch.\n"
+    printf "1. Make sure to be on a branhc called pre-VERSION where VERSION follows SemVer spec\n"
+    printf "2. Update CHANGELOG.md and commit.\n"
+    printf "3. Run this script passing -v=VERSION as argument"
     printf "Options:\n"
     printf "\t -h prints this message\n"
     printUsage
@@ -137,7 +163,6 @@ helpArg="-h"
 dryRunArg="--dry"
 
 dryRun=1 # false
-
 if containsElement $dryRunArg $@; then
     dryRun=0 # true
 fi
