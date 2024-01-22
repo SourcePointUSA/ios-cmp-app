@@ -1,3 +1,6 @@
+# 7.5.1 (Jan, 22, 2024)
+* Update standalone and SPM XCFrameworks[#543](https://github.com/SourcePointUSA/ios-cmp-app/pull/543)
+
 # 7.5.0 (Jan, 18, 2024)
 * [DIA-2030](https://sourcepoint.atlassian.net/browse/DIA-2030) Added support to USNat campaign. [#510](https://github.com/SourcePointUSA/ios-cmp-app/pull/510)
 
