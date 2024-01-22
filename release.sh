@@ -180,6 +180,12 @@ printHelp() {
     printUsage
 }
 
+printGHReleaseLink() {
+    local version=$1
+    printf "In order to create a release for version ${version} go to:\n"
+    printf "\thttps://github.com/SourcePointUSA/ios-cmp-app/releases/new?tag=${version}\n"
+}
+
 helpArg="-h"
 dryRunArg=$(containsElement "--dry" $@)
 skipFrameworks=$(containsElement "--skipFrameworks" $@)
@@ -204,6 +210,7 @@ fi
 
 if isSemVer $versionToRelease; then
     release $versionToRelease $dryRun $skipFrameworks
+    printGHReleaseLink $versionToRelease
     exit 0
 else
     printf "$versionToRelease is not a valid SemVer.\n"
