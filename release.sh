@@ -121,7 +121,7 @@ deleteBranch() {
 
 generateFrameworks() {
     local skipFrameworks=$1
-    if [$skipFrameworks -eq 1]; then
+    if [ $skipFrameworks -eq 1 ]; then
         bash ./buildXCFrameworks.sh
         git add .
         git commit -m "'update XCFrameworksfor $version'"
@@ -187,12 +187,17 @@ printGHReleaseLink() {
 }
 
 helpArg="-h"
-dryRunArg=$(containsElement "--dry" $@)
-skipFrameworks=$(containsElement "--skipFrameworks" $@)
+dryRunArg="--dry"
+skipFrameworksArg="--skipFrameworks"
 
 dryRun=1 # false
 if containsElement $dryRunArg $@; then
     dryRun=0 # true
+fi
+
+skipFrameworks=1 # false
+if containsElement $skipFrameworksArg $@; then
+    skipFrameworksArg=0 # true
 fi
 
 if containsElement $helpArg $@; then
@@ -209,7 +214,8 @@ if [ -z $versionToRelease ]; then
 fi
 
 if isSemVer $versionToRelease; then
-    release $versionToRelease $dryRun $skipFrameworks
+    # release $versionToRelease $dryRun $skipFrameworks
+    generateFrameworks $skipFrameworks
     printGHReleaseLink $versionToRelease
     exit 0
 else
