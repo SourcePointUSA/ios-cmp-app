@@ -121,10 +121,11 @@ deleteBranch() {
 
 generateFrameworks() {
     local skipFrameworks=$1
+    local version=$2
     if [ $skipFrameworks -eq 1 ]; then
         bash ./buildXCFrameworks.sh
         git add .
-        git commit -m "'update XCFrameworksfor $version'"
+        git commit -m "'update XCFrameworks for $version'"
     else
         echo "skipping generating XCFrameworks"
     fi
@@ -145,7 +146,7 @@ release () {
     podInstall
     git add .
     git commit -am "'run pod install with $version'"
-    generateFrameworks $skipFrameworks
+    generateFrameworks $skipFrameworks $version
     gitPush $dryRun "-u origin $currentBranch"
     git checkout develop
     git merge $currentBranch
