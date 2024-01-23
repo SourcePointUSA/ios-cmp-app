@@ -214,8 +214,7 @@ if [ -z $versionToRelease ]; then
 fi
 
 if isSemVer $versionToRelease; then
-    # release $versionToRelease $dryRun $skipFrameworks
-    generateFrameworks $skipFrameworks
+    release $versionToRelease $dryRun $skipFrameworks
     printGHReleaseLink $versionToRelease
     exit 0
 else
