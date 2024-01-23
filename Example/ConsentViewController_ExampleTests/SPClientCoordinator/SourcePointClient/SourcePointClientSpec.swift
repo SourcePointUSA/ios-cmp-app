@@ -24,6 +24,9 @@ class SourcePointClientSpec: QuickSpec {
         applies: true
     )}
     var profile: SPUserData { SPUserData(gdpr: gdprProfile) }
+    var wrapperHost: String {
+        Constants.prod ? "cdn.privacy-mgmt.com" : "preprod-cdn.privacy-mgmt.com"
+    }
 
     func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
         accountId: accountId,
@@ -51,7 +54,7 @@ class SourcePointClientSpec: QuickSpec {
                     ios14: nil
                 ),
                 pubData: [:],
-                includeData: IncludeData(gppConfig: nil)
+                includeData: .standard
             ))
     }
 
@@ -74,12 +77,12 @@ class SourcePointClientSpec: QuickSpec {
 
         describe("statics") {
             it("CUSTOM_CONSENT_URL") {
-                let expectedUrl  = URL(string: "https://cdn.privacy-mgmt.com/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
+                let expectedUrl  = URL(string: "https://\(self.wrapperHost)/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
                 expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(expectedUrl))
             }
 
             it("DELETE_CUSTOM_CONSENT_URL") {
-                let expectedUrl = URL(string: "https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
+                let expectedUrl = URL(string: "https://\(self.wrapperHost)/consent/tcfv2/consent/v3/custom?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
                 expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL) == expectedUrl
             }
         }
@@ -152,9 +155,9 @@ class SourcePointClientSpec: QuickSpec {
                             consentLanguage: .BrowserDefault,
                             campaignEnv: nil,
                             idfaStatus: nil,
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         ),
-                        metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil),
+                        metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil, usnat: nil),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson()),
                         localState: nil
                     )) { _ in }
@@ -180,10 +183,10 @@ class SourcePointClientSpec: QuickSpec {
                                 sampleRate: 1,
                                 idfaStatus: nil,
                                 granularStatus: .init(),
-                                includeData: IncludeData(gppConfig: nil)
+                                includeData: .standard
                             )
                         ) { _ in }
-                        expect(httpClient.postWasCalledWithUrl) == "https://cdn.privacy-mgmt.com/wrapper/v2/choice/gdpr/11?env=prod"
+                        expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/gdpr/11?env=prod"
                     }
 
                     it("calls POST on the http client with the right body") {
@@ -200,7 +203,7 @@ class SourcePointClientSpec: QuickSpec {
                             sampleRate: 1,
                             idfaStatus: nil,
                             granularStatus: .init(),
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         )
                         client.postGDPRAction(
                             actionType: .AcceptAll,
@@ -224,10 +227,10 @@ class SourcePointClientSpec: QuickSpec {
                                 sendPVData: true,
                                 propertyId: 1,
                                 sampleRate: 1,
-                                includeData: IncludeData(gppConfig: nil)
+                                includeData: .standard
                             )
                         ) { _ in }
-                        expect(httpClient.postWasCalledWithUrl) == "https://cdn.privacy-mgmt.com/wrapper/v2/choice/ccpa/11?env=prod"
+                        expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/ccpa/11?env=prod"
                     }
 
                     it("calls POST on the http client with the right body") {
@@ -240,7 +243,7 @@ class SourcePointClientSpec: QuickSpec {
                             sendPVData: true,
                             propertyId: 1,
                             sampleRate: 1,
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         )
                         client.postCCPAAction(
                             actionType: .AcceptAll,
@@ -340,7 +343,7 @@ class SourcePointClientSpec: QuickSpec {
                             campaignType: .gdpr
                         )
                         let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-                        let expectedUrl = "https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
+                        let expectedUrl = "https://\(self.wrapperHost)/wrapper/metrics/v1/custom-metrics?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
                         expect(http.postWasCalledWithUrl) == expectedUrl
                         expect((parsedRequest?["code"] as? String)) == error.spCode
                         expect((parsedRequest?["accountId"] as? String)) == "\(self.accountId)"
@@ -358,7 +361,7 @@ class SourcePointClientSpec: QuickSpec {
             describe("deleteCustomConsent") {
                 it("constructsCorrectURL") {
                     expect(client.deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, self.propertyId, "yo").absoluteString).to(
-                        equal("https://cdn.privacy-mgmt.com/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
+                        equal("https://\(self.wrapperHost)/consent/tcfv2/consent/v3/custom/\(self.propertyId)?consentUUID=yo"))
                 }
 
                 it("makes a DELETE with the correct body") {

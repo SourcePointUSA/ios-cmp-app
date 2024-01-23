@@ -28,3 +28,15 @@ struct CCPAChoiceBody: Encodable, Equatable {
     let sampleRate: Float?
     let includeData: IncludeData
 }
+
+struct USNatChoiceBody: Encodable, Equatable {
+    let authId, uuid, messageId, vendorListId: String?
+    let pubData: SPPublisherData
+    let pmSaveAndExitVariables: SPJson?
+    let sendPVData: Bool
+    let propertyId: Int
+    let sampleRate: Float?
+    let idfaStatus: SPIDFAStatus?
+    let granularStatus: ConsentStatus.GranularStatus?
+    let includeData: IncludeData
+}

@@ -14,16 +14,6 @@ import XCTest
 class AuthExampleUITests: QuickSpec {
     var app: AuthExampleApp!
 
-    /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
-    func waitForUserDefaultsToPersist(_ delay: Int = 3, execute: @escaping () -> Void) {
-        waitUntil(timeout: .seconds(delay + 3)) { done in
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                execute()
-                done()
-            }
-        }
-    }
-
     override func spec() {
         beforeSuite {
             self.app = AuthExampleApp()
@@ -58,22 +48,12 @@ class AuthExampleUITests: QuickSpec {
             self.app.webViewButton.tap()
         }
 
-        func waitForWebViewToSettle(handler: () -> Void) {
-            if self.app.webViewOnConsentReadyCalls.element.waitForExistence(
-                timeout: Nimble.AsyncDefaults.timeout.toDouble()
-            ) {
-                handler()
-            }
-        }
-
         it("Accepting all via native screen should prevent messages from showing on the webview screen") {
             acceptGDPRMessage()
             acceptCCPAMessage()
             waitForSdkToFinish()
             navigateToWebView()
-            waitForWebViewToSettle {
-                expect(self.app.webViewOnConsentReadyCalls.count).to(equal(2))
-            }
+            expect(self.app.webViewOnConsentReadyCalls.count).toEventually(equal(2))
         }
     }
 }

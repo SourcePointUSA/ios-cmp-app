@@ -51,16 +51,6 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
     }
 
-    /// The SDK stores data in the UserDefaults and it takes a while until it persists its in-memory data
-    func waitForUserDefaultsToPersist(_ delay: Int = 10, execute: @escaping () -> Void) {
-        waitUntil(timeout: .seconds(delay + 5)) { done in
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
-                execute()
-                done()
-            }
-        }
-    }
-
     override func spec() {
         beforeSuite {
             self.continueAfterFailure = false
@@ -113,11 +103,10 @@ class SPGDPRExampleAppUITests: QuickSpec {
             ])
             self.acceptGDPRMessage()
 
+            expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
             self.app.deleteCustomVendorsButton.tap()
 
-            self.waitForUserDefaultsToPersist {
-                self.app.relaunch(args: ["att": false, "ccpa": false])
-            }
+            self.app.relaunch(args: ["att": false, "ccpa": false])
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beDisabled())
             expect(self.app.acceptCustomVendorsButton).toEventually(beEnabled())
@@ -125,9 +114,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
 
             self.app.acceptCustomVendorsButton.tap()
 
-            self.waitForUserDefaultsToPersist {
-                self.app.relaunch(args: ["att": false, "ccpa": false])
-            }
+            self.app.relaunch(args: ["att": false, "ccpa": false])
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
             expect(self.app.acceptCustomVendorsButton).toEventually(beDisabled())

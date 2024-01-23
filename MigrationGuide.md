@@ -1,3 +1,33 @@
+# Migrating from 7.x to 7.5.0
+With version `7.5.0` you are now able to support [USNat](https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform/blob/main/Core/CMP%20API%20Specification.md#in-app-details) campaigns on your app.
+
+Provided your property on Sourcepoint portal contains a _U.S. MultiState Privacy Compliance_ campaign (also sometimes referred to USNat or GPP), adding support to it in your app should be effortless:
+
+1. Replace `ccpa` campaign with `usnat`
+
+```diff
+// constructor
+SPConsentManager(
+    accountId: 123,
+    propertyId: 123
+    propertyName: try! SPPropertyName("myPropertyName"),
+    campaigns: SPCampaigns(
+-        ccpa: SPCampaign(),
++        usnat: SPCampaign()
+    ),
+    delegate: self
+)
+```
+
+2. Replace the call to `loadCCPAPrivacyManager` with `loadUSNatPrivacyManager`.
+
+The SDK will automatically detect local data and, if the user has opted-out on CCPA, it'll transition that opt-out signal to the new usnat legislation. If you're migrating from an older version of the SDK (i.e. <7.5) and you make use of authenticated consent with CCPA, you'll need to perform one extra step:
+
+3. (Optional) make sure to set the following flag `usnat: SPCampaign(transitionCCPAAuth: true)`. This ensures the SDK transitions CCPA opted-out consent to the new usnat legislation, even on a new app install.
+
+For more information regarding USNat and how to setup it, make sure to check our [help articles](https://docs.sourcepoint.com/hc/en-us/search?utf8=✓&query=usnat).
+
+
 # Migrating from v6 to v7
 We worked hard to keep the public API as close as possible to the previous version in order to keep your migration effort to a minimum.
 ```diff
@@ -64,7 +94,7 @@ In this guide we will cover how to migrate your app to the latest version of Sou
 2. No longer instantiate a `UIViewController` if there is no message being displayed.
 3. End-users will see a message faster by removing one network call (down from 3 to 2).
 
->**Note:** In addition to the technical migration below, you will also need to enable the **Multi-Campaign** toggle for the app property within the Sourcepoint portal. 
+>**Note:** In addition to the technical migration below, you will also need to enable the **Multi-Campaign** toggle for the app property within the Sourcepoint portal.
 
 ## Initialisation:
 

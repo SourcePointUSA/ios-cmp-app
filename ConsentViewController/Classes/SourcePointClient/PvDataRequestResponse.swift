@@ -12,8 +12,7 @@ struct PvDataResponse: Decodable, Equatable {
         let uuid: String
     }
 
-    let gdpr: Campaign?
-    let ccpa: Campaign?
+    let gdpr, ccpa, usnat: Campaign?
 }
 
 struct PvDataRequestBody: Encodable, Equatable {
@@ -43,11 +42,27 @@ struct PvDataRequestBody: Encodable, Equatable {
         let sampleRate: Float?
     }
 
+    struct USNat: Encodable, Equatable {
+        let applies: Bool
+        let uuid: String?
+        let accountId: Int
+        let siteId: Int
+        let consentStatus: ConsentStatus
+        let pubData: SPPublisherData?
+        let sampleRate: Float?
+        let msgId: Int?
+        let categoryId: Int?
+        let subCategoryId: Int?
+        let prtnUUID: String?
+    }
+
     let gdpr: GDPR?
     let ccpa: CCPA?
+    let usnat: USNat?
 
-    init(gdpr: GDPR? = nil, ccpa: CCPA? = nil) {
+    init(gdpr: GDPR? = nil, ccpa: CCPA? = nil, usnat: USNat? = nil) {
         self.gdpr = gdpr
         self.ccpa = ccpa
+        self.usnat = usnat
     }
 }

@@ -39,6 +39,7 @@ typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse
 typealias MessageHandler = (Result<Message, SPError>) -> Void
 typealias CCPAConsentHandler = (Result<CCPAChoiceResponse, SPError>) -> Void
 typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
+typealias USNatConsentHandler = (Result<USNatChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
@@ -82,6 +83,12 @@ protocol SourcePointProtocol {
         actionType: SPActionType,
         body: CCPAChoiceBody,
         handler: @escaping CCPAConsentHandler
+    )
+
+    func postUSNatAction(
+        actionType: SPActionType,
+        body: USNatChoiceBody,
+        handler: @escaping USNatConsentHandler
     )
 
     func postGDPRAction(
@@ -276,6 +283,20 @@ class SourcePointClient: SourcePointProtocol {
     func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
         _ = JSONEncoder().encodeResult(body).map { body in
             client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body, apiCode: .GDPR_ACTION) {
+                Self.parseResponse($0, InvalidResponseConsentError(), handler)
+            }
+        }
+    }
+
+    func postUSNatAction(actionType: SPActionType, body: USNatChoiceBody, handler: @escaping USNatConsentHandler) {
+        _ = JSONEncoder().encodeResult(body).map { encodedBody in
+            client.post(
+                urlString: consentUrl(
+                    Constants.Urls.CHOICE_USNAT_BASE_URL, actionType
+                ).absoluteString,
+                body: encodedBody,
+                apiCode: .USNAT_ACTION
+            ) {
                 Self.parseResponse($0, InvalidResponseConsentError(), handler)
             }
         }

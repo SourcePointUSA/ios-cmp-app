@@ -15,7 +15,7 @@ import Quick
 
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
-        let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil)
+        let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil, usnat: nil)
         let propertyName = try! SPPropertyName("tests.unified-script.com")
         let accountId = 22
         let propertyId = 17_801
@@ -40,7 +40,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     let url = client.consentStatusURLWithParams(
                         propertyId: propertyId,
                         metadata: emptyMetaData,
-                        includeData: IncludeData(gppConfig: nil),
+                        includeData: .standard,
                         authId: "john doe"
                     )
                     expect(url?.query).to(contain("authId=john%20doe"))
@@ -52,7 +52,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     let url = client.consentStatusURLWithParams(
                         propertyId: propertyId,
                         metadata: emptyMetaData,
-                        includeData: IncludeData(gppConfig: nil),
+                        includeData: .standard,
                         authId: nil
                     )
                     expect(url?.query).notTo(contain("authId="))
@@ -60,7 +60,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             }
 
             it("should contain all query params") {
-                let includeData = IncludeData(gppConfig: nil)
+                let includeData = IncludeData.standard
                 let url = client.consentStatusURLWithParams(
                     propertyId: propertyId,
                     metadata: emptyMetaData,
@@ -82,19 +82,18 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 applies: true,
                                 dateCreated: nil,
                                 uuid: nil,
-                                hasLocalData: false,
                                 idfaStatus: nil
                             ),
                             ccpa: .init(
                                 applies: true,
                                 dateCreated: nil,
                                 uuid: nil,
-                                hasLocalData: false,
                                 idfaStatus: nil
-                            )
+                            ),
+                            usnat: nil
                         ),
                         authId: "user_auth_id",
-                        includeData: IncludeData(gppConfig: nil)
+                        includeData: .standard
                     ) { result in
                             switch result {
                             case .success(let response):
@@ -103,7 +102,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(response.consentStatusData.ccpa).notTo(beNil())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
@@ -129,16 +128,18 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     hasLocalData: false,
                                     consentStatus: ConsentStatus()
                                 ),
-                                ios14: nil
+                                ios14: nil,
+                                usnat: nil
                             ),
                             consentLanguage: .Spanish,
                             campaignEnv: nil,
                             idfaStatus: nil,
-                            includeData: IncludeData(gppConfig: nil)
+                            includeData: .standard
                         ),
-                        metadata: MessagesRequest.MetaData(
-                            ccpa: MessagesRequest.MetaData.Campaign(applies: true),
-                            gdpr: MessagesRequest.MetaData.Campaign(applies: true)
+                        metadata: .init(
+                            ccpa: .init(applies: true),
+                            gdpr: .init(applies: true),
+                            usnat: .init(applies: true)
                         ),
                         nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson()),
                         localState: nil
@@ -152,7 +153,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 }
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
@@ -197,7 +198,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.gdpr).notTo(beNil())
 
                         case .failure(let error):
-                            fail(error.failureReason)
+                            fail(error.description)
                         }
                         done()
                     }
@@ -212,7 +213,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                     propertyId: 17_801,
                                     metadata: MetaDataQueryParam(
                                         gdpr: .init(groupPmId: nil),
-                                        ccpa: .init(groupPmId: nil)
+                                        ccpa: .init(groupPmId: nil),
+                                        usnat: nil
                                     )) {
                             switch $0 {
                             case .success(let response):
@@ -223,19 +225,21 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(CCPA).notTo(beNil())
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
                 }
             }
+
             it("Check if groupPmId echo") {
                 waitUntil { done in
                     client.metaData(accountId: accountId,
                                     propertyId: 17_801,
                                     metadata: MetaDataQueryParam(
                                         gdpr: .init(groupPmId: "99999999999"),
-                                        ccpa: .init(groupPmId: nil)
+                                        ccpa: .init(groupPmId: nil),
+                                        usnat: nil
                                     )) {
                             switch $0 {
                             case .success(let response):
@@ -243,7 +247,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 expect(GDPR?.childPmId) == "99999999999"
 
                             case .failure(let error):
-                                fail(error.failureReason)
+                                fail(error.description)
                             }
                             done()
                     }
@@ -262,7 +266,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)
                         ),
-                        includeData: IncludeData(gppConfig: nil)
+                        includeData: .standard
                     ) { result in
                         switch result {
                         case .success(let response):
@@ -271,7 +275,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.ccpa).notTo(beNil())
 
                         case .failure(let error):
-                            fail(error.failureReason)
+                            fail(error.description)
                         }
                         done()
                     }
@@ -290,7 +294,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)
                         ),
-                        includeData: IncludeData(gppConfig: nil)
+                        includeData: .standard
                     ) { result in
                         switch result {
                         case .success(let response):
@@ -299,7 +303,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.ccpa).notTo(beNil())
 
                         case .failure(let error):
-                            fail(error.failureReason)
+                            fail(error.description)
                         }
                         done()
                     }
