@@ -1,5 +1,5 @@
 PODS:
-  - ConsentViewController (7.5.1):
+  - ConsentViewController (7.5.2):
     - Down (~> 0.11.0)
   - Down (0.11.0)
   - IQKeyboardManagerSwift (6.5.11)
@@ -33,7 +33,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: 7ebb4c8487d4611f2a4f4b95d2973d357c6692aa
+  ConsentViewController: 24098f8381f113c09fb048a68c0ce8b3ed88a242
   Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
   IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
   JSONView: ba9049102fae7ad70de40234d0b7c60986e61e4c
