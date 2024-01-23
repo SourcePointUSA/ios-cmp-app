@@ -197,7 +197,7 @@ fi
 
 skipFrameworks=1 # false
 if containsElement $skipFrameworksArg $@; then
-    skipFrameworksArg=0 # true
+    skipFrameworks=0 # true
 fi
 
 if containsElement $helpArg $@; then
