@@ -38,7 +38,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView, text: category?.description, bounces: false)
+        loadTextView(forComponentId: "CategoryDescription", textView: descriptionTextView, text: category?.description.stripOutCss(stripHtml: true), bounces: false)
         descriptionTextView.flashScrollIndicators()
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadButton(forComponentId: "OnButton", button: onButton)
