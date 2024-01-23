@@ -1,3 +1,6 @@
+# 7.5.2 (Jan, 23, 2024)
+* Fixed an issue preventing the SDK from being integrated via Carthage [#c6876a5c](https://github.com/SourcePointUSA/ios-cmp-app/commit/c6876a5ca2be367c8fa907135d3b59abefc6d501)
+
 # 7.5.1 (Jan, 22, 2024)
 * Update standalone and SPM XCFrameworks[#543](https://github.com/SourcePointUSA/ios-cmp-app/pull/543)
 
