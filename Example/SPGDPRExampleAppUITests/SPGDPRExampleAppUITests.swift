@@ -76,7 +76,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Accepting All toggles all toggles on PM") {
-            self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false])
+            self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false])
             self.acceptGDPRMessage()
 
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
