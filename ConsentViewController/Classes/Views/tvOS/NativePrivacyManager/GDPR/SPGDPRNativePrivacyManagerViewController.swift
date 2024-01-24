@@ -316,3 +316,5 @@ class FocusableScrollView: UIScrollView {
         true
     }
 }
+
+// swiftlint:enable function_body_length

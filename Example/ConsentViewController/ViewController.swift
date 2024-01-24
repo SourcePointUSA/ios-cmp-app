@@ -196,3 +196,5 @@ extension ViewController {
         sdkStatusLabel.text = sdkStatus.rawValue
     }
 }
+
+// swiftlint:enable force_unwrapping

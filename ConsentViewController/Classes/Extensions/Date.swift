@@ -22,3 +22,5 @@ extension Date {
         Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
     }
 }
+
+// swiftlint:enable force_unwrapping

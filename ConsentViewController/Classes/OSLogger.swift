@@ -3,10 +3,11 @@
 //  GDPRConsentViewController
 //
 //  Created by Andre Herculano on 06.10.19.
-// swiftlint:disable all
 
 import Foundation
 import os
+
+// swiftlint:disable force_unwrapping
 
 protocol SPLogger {
     func log(_ message: String)
@@ -126,14 +127,14 @@ struct NoopLogger: SPLogger {
 struct OSLogger: SPLogger {
     static let category = "SPSDK"
     static var standard: OSLogger { OSLogger() }
-    private let logger: SPLogger
-
-    static var defaultLevel: SPLogLevel { 
+    static var defaultLevel: SPLogLevel {
         SPLogLevel(rawValue:
             Bundle.main.object(forInfoDictionaryKey: "SPLogLevel") as? String ??
          Bundle.framework.object(forInfoDictionaryKey: "SPLogLevel") as? String ??
          "prod"
     ) ?? .prod}
+
+    private let logger: SPLogger
 
     private init (level: SPLogLevel? = Self.defaultLevel) {
         if level == .prod {
@@ -177,3 +178,5 @@ struct OSLogger: SPLogger {
         logger.error(message)
     }
 }
+
+// swiftlint:enable force_unwrapping

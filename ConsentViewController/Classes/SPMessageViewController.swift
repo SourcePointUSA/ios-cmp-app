@@ -101,3 +101,5 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         fatalError("not implemented")
     }
 }
+
+// swiftlint:enable unavailable_function

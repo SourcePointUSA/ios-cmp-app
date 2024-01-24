@@ -109,3 +109,5 @@ import WebKit
         getCookies { handler($0[name, default: ""], $1) }
     }
 }
+
+// swiftlint:enable line_length
