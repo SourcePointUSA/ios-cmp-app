@@ -60,3 +60,5 @@ struct Constants {
 
     static let prod = (Bundle.framework.object(forInfoDictionaryKey: "SPEnv") as? String) != "preprod"
 }
+
+// swiftlint:enable force_unwrapping
