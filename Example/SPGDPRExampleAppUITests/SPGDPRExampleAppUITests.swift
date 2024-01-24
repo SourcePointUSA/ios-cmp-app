@@ -75,6 +75,24 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
+        fit("Accepting All toggles all toggles on PM") {
+            self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false])
+            self.acceptGDPRMessage()
+
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
+            self.app.gdprPrivacyManagerButton.tap()
+            expect(self.app.gdprPM).toEventually(showUp())
+            expect(self.app.gdprPM.purposeToggles).to(allPass(beToggledOn()))
+
+            self.app.gdprPM.rejectAllButton.tap()
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
+            self.app.gdprPrivacyManagerButton.tap()
+            expect(self.app.gdprPM).toEventually(showUp())
+            expect(self.app.gdprPM.purposeToggles).to(allPass(beToggledOff()))
+        }
+
         it("Accept all through 2nd layer") {
             self.app.relaunch(clean: true, resetAtt: true, args: ["att": false])
             self.showGDPRPMViaFirstLayerMessage()
