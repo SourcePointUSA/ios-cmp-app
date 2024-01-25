@@ -212,10 +212,10 @@ extension Consent: Codable {
                     consentStatus: consents.consentStatus,
                     lastMessage: LastMessageData(from: messageMetaData),
                     webConsentPayload: consents.webConsentPayload,
-                    legIntCategories: consents.legIntCategories,
-                    legIntVendors: consents.legIntVendors,
-                    vendors: consents.vendors,
-                    categories: consents.categories
+                    acceptedLegIntCategories: consents.acceptedLegIntCategories,
+                    acceptedLegIntVendors: consents.acceptedLegIntVendors,
+                    acceptedVendors: consents.acceptedVendors,
+                    acceptedCategories: consents.acceptedCategories
                 )
 
             default:

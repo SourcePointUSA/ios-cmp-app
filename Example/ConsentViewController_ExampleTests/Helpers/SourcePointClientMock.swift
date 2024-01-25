@@ -150,11 +150,11 @@ class SourcePointClientMock: SourcePointProtocol {
                 consentStatus: nil,
                 grants: nil,
                 webConsentPayload: nil,
-                legIntCategories: nil,
-                legIntVendors: nil,
-                vendors: nil,
-                categories: nil,
-                specialFeatures: nil
+                acceptedLegIntCategories: nil,
+                acceptedLegIntVendors: nil,
+                acceptedVendors: nil,
+                acceptedCategories: nil,
+                acceptedSpecialFeatures: nil
             )))
         }
     }

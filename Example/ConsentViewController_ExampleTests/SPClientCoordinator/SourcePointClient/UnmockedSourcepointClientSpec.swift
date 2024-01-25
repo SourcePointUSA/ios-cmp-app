@@ -272,6 +272,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         case .success(let response):
                             expect(response).to(beAnInstanceOf(ChoiceAllResponse.self))
                             expect(response.gdpr).notTo(beNil())
+                            expect(response.gdpr?.acceptedCategories).to(beEmpty())
                             expect(response.ccpa).notTo(beNil())
 
                         case .failure(let error):
@@ -300,6 +301,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         case .success(let response):
                             expect(response).to(beAnInstanceOf(ChoiceAllResponse.self))
                             expect(response.gdpr).notTo(beNil())
+                            expect(response.gdpr?.acceptedCategories).notTo(beEmpty())
                             expect(response.ccpa).notTo(beNil())
 
                         case .failure(let error):
