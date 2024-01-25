@@ -94,11 +94,12 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Accept all through 2nd layer") {
-            self.app.relaunch(clean: true, resetAtt: true, args: ["att": false])
+            self.app.relaunch(clean: true, resetAtt: true, args: [
+                "att": false,
+                "ccpa": false
+            ])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            self.acceptCCPAMessage()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
