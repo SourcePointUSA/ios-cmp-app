@@ -72,7 +72,7 @@ class SPConsentManagerSpec: QuickSpec {
                 describe("when there's uuid") {
                     it("includes the uuid query param") {
                         expect(manager.buildGDPRPmUrl(usedId: usedId, uuid: "gdprUUID")?.absoluteString)
-                            .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)&uuid=gdprUUID"))
+                            .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&consentUUID=gdprUUID&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
                     }
                 }
             }

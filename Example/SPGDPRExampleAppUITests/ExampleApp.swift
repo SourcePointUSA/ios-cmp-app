@@ -59,6 +59,12 @@ class ExampleApp: XCUIApplication {
             staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
         }
 
+        var purposeToggles: [XCUIElement] {
+            (0..<container.switches.count).map {
+                container.switches.element(boundBy: $0)
+            }
+        }
+
         var acceptAllButton: XCUIElement {
             container.buttons["Accept All"].firstMatch
         }

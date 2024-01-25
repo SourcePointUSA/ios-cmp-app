@@ -326,7 +326,7 @@ import UIKit
     func genericPMUrl(
         _ specificUrl: URL?,
         pmId: String,
-        uuidName: String = "uuid",
+        uuidName: String,
         uuidValue: String?,
         propertyId: Int,
         tab: SPPrivacyManagerTab = .Default,
@@ -351,6 +351,7 @@ import UIKit
         genericPMUrl(
             Constants.Urls.GDPR_PM_URL,
             pmId: usedId,
+            uuidName: "consentUUID",
             uuidValue: uuid,
             propertyId: propertyId,
             consentLanguage: messageLanguage
@@ -458,6 +459,7 @@ import UIKit
         genericPMUrl(
             Constants.Urls.USNAT_PM_URL,
             pmId: usedId,
+            uuidName: "uuid",
             uuidValue: uuid,
             propertyId: propertyId,
             consentLanguage: messageLanguage

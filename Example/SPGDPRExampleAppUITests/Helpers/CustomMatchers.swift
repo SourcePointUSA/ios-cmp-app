@@ -89,3 +89,19 @@ public func beDisabled() -> Predicate<XCUIElement> {
         return PredicateStatus(bool: !actual.isEnabled)
     }
 }
+
+/// A Nimble matcher that succeeds when an XCUIElement is disabled
+public func beToggledOn() -> Predicate<XCUIElement> {
+    Predicate.simple("beToggledOn") { actualExpression in
+        guard let actual = try actualExpression.evaluate() else { return .fail }
+        return PredicateStatus(bool: actual.value as? String == "1")
+    }
+}
+
+/// A Nimble matcher that succeeds when an XCUIElement is disabled
+public func beToggledOff() -> Predicate<XCUIElement> {
+    Predicate.simple("beToggledOff") { actualExpression in
+        guard let actual = try actualExpression.evaluate() else { return .fail }
+        return PredicateStatus(bool: actual.value as? String != "1")
+    }
+}

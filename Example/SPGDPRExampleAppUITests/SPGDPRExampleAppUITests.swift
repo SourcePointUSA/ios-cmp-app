@@ -56,7 +56,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.continueAfterFailure = false
             self.app = ExampleApp()
             Nimble.AsyncDefaults.timeout = .seconds(30)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            Nimble.AsyncDefaults.pollInterval = .milliseconds(300)
         }
 
         afterSuite {
@@ -75,12 +75,31 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
+        it("Accepting All toggles all toggles on PM") {
+            self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false])
+            self.acceptGDPRMessage()
+
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
+            self.app.gdprPrivacyManagerButton.tap()
+            expect(self.app.gdprPM).toEventually(showUp())
+            expect(self.app.gdprPM.purposeToggles).toEventually(allPass(beToggledOn()))
+
+            self.app.gdprPM.rejectAllButton.tap()
+            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
+            self.app.gdprPrivacyManagerButton.tap()
+            expect(self.app.gdprPM).toEventually(showUp())
+            expect(self.app.gdprPM.purposeToggles).toEventually(allPass(beToggledOff()))
+        }
+
         it("Accept all through 2nd layer") {
-            self.app.relaunch(clean: true, resetAtt: true, args: ["att": false])
+            self.app.relaunch(clean: true, resetAtt: true, args: [
+                "att": false,
+                "ccpa": false
+            ])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            self.acceptCCPAMessage()
-            expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
@@ -103,8 +122,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
             ])
             self.acceptGDPRMessage()
 
+            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
+            expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
             self.app.deleteCustomVendorsButton.tap()
+            expect(self.app.customVendorLabel).toEventually(containText("Rejected"))
 
             self.app.relaunch(args: ["att": false, "ccpa": false])
 
@@ -113,6 +135,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.customVendorLabel).toEventually(containText("Rejected"))
 
             self.app.acceptCustomVendorsButton.tap()
+            expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
 
             self.app.relaunch(args: ["att": false, "ccpa": false])
 
@@ -124,8 +147,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
         it("Shows a translated message") {
             self.app.relaunch(clean: true, resetAtt: false, args: [
                 "att": false,
+                "ccpa": false,
+                "usnat": false,
                 "language": SPMessageLanguage.Spanish.rawValue
             ])
+            expect(self.app.sdkStatusLabel).toEventually(containText("Running"))
             expect(self.app.gdprMessage.spanishMessageTitle).toEventually(showUp())
         }
     }

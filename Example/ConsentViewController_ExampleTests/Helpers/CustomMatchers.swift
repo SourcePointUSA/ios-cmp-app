@@ -126,7 +126,7 @@ public func containQueryParam(_ name: String, withValue value: String) -> Predic
         guard let actual = try actual.evaluate(),
               let params = actual.queryParams
         else {
-            return PredicateResult(bool: false, message: .fail("could not get query params from URL"))
+            return PredicateResult(bool: false, message: .fail("could not get query params from URL(\(try? actual.evaluate()?.absoluteString))"))
         }
         var pass = false
         var message = ""
