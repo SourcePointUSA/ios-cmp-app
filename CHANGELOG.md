@@ -1,3 +1,7 @@
+# 7.5.3 (Jan, 25, 2024)
+* [DIA-3478](https://sourcepoint.atlassian.net/browse/DIA-3478) Fixed an issue causing the GDPR privacy manager toggles to be rendered switched off. [#544](https://github.com/SourcePointUSA/ios-cmp-app/pull/544)
+* Fixed new linting warnings
+
 # 7.5.2 (Jan, 23, 2024)
 * Fixed an issue preventing the SDK from being integrated via Carthage [#c6876a5c](https://github.com/SourcePointUSA/ios-cmp-app/commit/c6876a5ca2be367c8fa907135d3b59abefc6d501)
 
