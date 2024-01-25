@@ -75,7 +75,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
-        fit("Accepting All toggles all toggles on PM") {
+        it("Accepting All toggles all toggles on PM") {
             self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false])
             self.acceptGDPRMessage()
 
