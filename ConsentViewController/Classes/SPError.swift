@@ -312,3 +312,5 @@ public enum InvalidResponsAPICode: String {
         "\(rawValue)"
     }
 }
+
+// swiftlint:enable line_length

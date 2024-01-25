@@ -4,6 +4,9 @@
 disabled_rules:
   - switch_case_alignment
   - void_function_in_ternary
+analyzer_rules:
+  - unused_declaration
+  - unused_import
 opt_in_rules:
   - force_unwrapping
   - trailing_semicolon
@@ -19,9 +22,7 @@ opt_in_rules:
   - unused_capture_list
   - unused_closure_parameter
   - unused_control_flow_label
-  - unused_declaration
   - unused_enumerated
-  - unused_import
   - unused_optional_binding
   - unused_setter_value
   - valid_ibinspectable
@@ -38,8 +39,8 @@ opt_in_rules:
   - yoda_condition
 included: # paths to include during linting. `--path` is ignored if present.
  - ../ConsentViewController/Classes
- - ./
 excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - ./
   - AuthExample
   - Pods
   - SourcePointMetaAppUITests
