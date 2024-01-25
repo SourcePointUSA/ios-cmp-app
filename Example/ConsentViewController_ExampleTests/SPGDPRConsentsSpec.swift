@@ -11,8 +11,6 @@ import Foundation
 import Nimble
 import Quick
 
-// swiftlint:disable function_body_length
-
 class SPGDPRConsentsSpec: QuickSpec {
     override func spec() {
         describe("static empty()") {
@@ -41,32 +39,6 @@ class SPGDPRConsentsSpec: QuickSpec {
             expect(consent.vendorGrants) == SPGDPRVendorGrants()
             expect(consent.childPmId).to(beNil())
             expect(consent.applies).to(beTrue())
-        }
-
-        describe("acceptedCategories") {
-            it("contains all purposes accepted in *all* vendors") {
-                let consent = SPGDPRConsent(
-                    vendorGrants: [
-                        "vendor1": SPGDPRVendorGrant(granted: false, purposeGrants: [
-                            "purpose1": true,
-                            "purpose2": false
-                        ]),
-                        "vendor2": SPGDPRVendorGrant(granted: false, purposeGrants: [
-                            "purpose1": true,
-                            "purpose3": true
-                        ])
-                    ],
-                    euconsent: "",
-                    tcfData: SPJson(),
-                    childPmId: "yes",
-                    dateCreated: .now(),
-                    expirationDate: .distantFuture(),
-                    applies: true
-                )
-                expect(consent.acceptedCategories).to(contain(["purpose1", "purpose3"]))
-                expect(consent.acceptedCategories).notTo(contain(["purpose2"]))
-                expect(consent.childPmId) == "yes"
-            }
         }
     }
 }

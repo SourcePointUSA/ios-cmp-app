@@ -51,21 +51,12 @@ public typealias SPGDPRPurposeId = String
  */
 @objcMembers public class SPGDPRConsent: NSObject, Codable, CampaignConsent, NSCopying {
     enum CodingKeys: String, CodingKey {
-        case applies
-        case uuid
-        case euconsent
+        case applies, uuid, euconsent, childPmId, consentStatus,
+             webConsentPayload, acceptedLegIntCategories, acceptedLegIntVendors,
+             acceptedVendors, acceptedCategories, acceptedSpecialFeatures, dateCreated,
+             expirationDate
         case tcfData = "TCData"
         case vendorGrants = "grants"
-        case childPmId
-        case consentStatus
-        case webConsentPayload
-        case legIntCategories
-        case legIntVendors
-        case vendors
-        case categories
-        case specialFeatures
-        case dateCreated
-        case expirationDate
     }
 
     /// The snapshot of user consents. It contains information of all purposes on a vendor per vendor basis.
@@ -99,19 +90,6 @@ public typealias SPGDPRPurposeId = String
     /// In case `/getMessages` request was done with `groupPmId`, `childPmId` will be returned
     var childPmId: String?
 
-    /// A list of ids of the categories accepted by the user in all its vendors.
-    /// If a category has been rejected in a single vendor, its id won't part of the `acceptedCategories` list.
-    public var acceptedCategories: [String] {
-        let categoryGrants = vendorGrants
-            .flatMap { $0.value.purposeGrants }
-        return Set<String>(categoryGrants.map { $0.key })
-            .filter { id in
-                categoryGrants
-                    .filter { $0.key == id }
-                    .allSatisfy { $0.value }
-            }
-    }
-
     /// The date in which the consent profile was created or updated
     public var dateCreated = SPDate.now()
 
@@ -128,11 +106,11 @@ public typealias SPGDPRPurposeId = String
     var webConsentPayload: SPWebConsentPayload?
 
     var expirationDate: SPDate
-    var legIntCategories: [String]?
-    var legIntVendors: [String]?
-    var vendors: [String]?
-    var categories: [String]?
-    var specialFeatures: [String]?
+    var acceptedLegIntCategories: [String]
+    var acceptedLegIntVendors: [String]
+    var acceptedVendors: [String]
+    public var acceptedCategories: [String]
+    var acceptedSpecialFeatures: [String]
 
     override open var description: String {
         """
@@ -154,11 +132,11 @@ public typealias SPGDPRPurposeId = String
         childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
-        legIntCategories = try container.decodeIfPresent(Array.self, forKey: .legIntCategories)
-        legIntVendors = try container.decodeIfPresent(Array.self, forKey: .legIntVendors)
-        vendors = try container.decodeIfPresent(Array.self, forKey: .vendors)
-        categories = try container.decodeIfPresent(Array.self, forKey: .categories)
-        specialFeatures = try container.decodeIfPresent(Array.self, forKey: .specialFeatures)
+        acceptedLegIntCategories = try container.decodeIfPresent(Array.self, forKey: .acceptedLegIntCategories) ?? []
+        acceptedLegIntVendors = try container.decodeIfPresent(Array.self, forKey: .acceptedLegIntVendors) ?? []
+        acceptedVendors = try container.decodeIfPresent(Array.self, forKey: .acceptedVendors) ?? []
+        acceptedCategories = try container.decodeIfPresent(Array.self, forKey: .acceptedCategories) ?? []
+        acceptedSpecialFeatures = try container.decodeIfPresent(Array.self, forKey: .acceptedSpecialFeatures) ?? []
         expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
         if let date = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated) {
             dateCreated = date
@@ -177,10 +155,11 @@ public typealias SPGDPRPurposeId = String
         consentStatus: ConsentStatus = ConsentStatus(),
         lastMessage: LastMessageData? = nil,
         webConsentPayload: SPWebConsentPayload? = nil,
-        legIntCategories: [String]? = nil,
-        legIntVendors: [String]? = nil,
-        vendors: [String]? = nil,
-        categories: [String]? = nil
+        acceptedLegIntCategories: [String] = [],
+        acceptedLegIntVendors: [String] = [],
+        acceptedVendors: [String] = [],
+        acceptedCategories: [String] = [],
+        acceptedSpecialFeatures: [String] = []
     ) {
         self.uuid = uuid
         self.vendorGrants = vendorGrants
@@ -193,10 +172,11 @@ public typealias SPGDPRPurposeId = String
         self.consentStatus = consentStatus
         self.lastMessage = lastMessage
         self.webConsentPayload = webConsentPayload
-        self.legIntCategories = legIntCategories
-        self.legIntVendors = legIntVendors
-        self.vendors = vendors
-        self.categories = categories
+        self.acceptedLegIntCategories = acceptedLegIntCategories
+        self.acceptedLegIntVendors = acceptedLegIntVendors
+        self.acceptedVendors = acceptedVendors
+        self.acceptedCategories = acceptedCategories
+        self.acceptedSpecialFeatures = acceptedSpecialFeatures
     }
 
     /// Convenience initialiser to return an empty consent object.
@@ -207,7 +187,12 @@ public typealias SPGDPRPurposeId = String
         childPmId: nil,
         dateCreated: .now(),
         expirationDate: .distantFuture(),
-        applies: false
+        applies: false,
+        acceptedLegIntCategories: [],
+        acceptedLegIntVendors: [],
+        acceptedVendors: [],
+        acceptedCategories: [],
+        acceptedSpecialFeatures: []
     )}
 
     override public func isEqual(_ object: Any?) -> Bool {
@@ -234,10 +219,11 @@ public typealias SPGDPRPurposeId = String
             consentStatus: consentStatus,
             lastMessage: lastMessage,
             webConsentPayload: webConsentPayload,
-            legIntCategories: legIntCategories,
-            legIntVendors: legIntVendors,
-            vendors: vendors,
-            categories: categories
+            acceptedLegIntCategories: acceptedLegIntCategories,
+            acceptedLegIntVendors: acceptedLegIntVendors,
+            acceptedVendors: acceptedVendors,
+            acceptedCategories: acceptedCategories,
+            acceptedSpecialFeatures: acceptedSpecialFeatures
         )
     }
 }

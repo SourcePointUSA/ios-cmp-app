@@ -601,11 +601,11 @@ extension SPConsentManager: SPNativePMDelegate {
 
             case .success(var pmData):
                 pmData.grants = self?.userData.gdpr?.consents?.vendorGrants
-                pmData.legIntCategories = self?.userData.gdpr?.consents?.legIntCategories ?? []
-                pmData.legIntVendors = self?.userData.gdpr?.consents?.legIntVendors ?? []
-                pmData.acceptedVendors = self?.userData.gdpr?.consents?.vendors ?? []
-                pmData.acceptedCategories = self?.userData.gdpr?.consents?.categories ?? []
-                pmData.acceptedSpecialFeatures = self?.userData.gdpr?.consents?.specialFeatures ?? []
+                pmData.legIntCategories = self?.userData.gdpr?.consents?.acceptedLegIntCategories
+                pmData.legIntVendors = self?.userData.gdpr?.consents?.acceptedLegIntVendors
+                pmData.acceptedVendors = self?.userData.gdpr?.consents?.acceptedVendors
+                pmData.acceptedCategories = self?.userData.gdpr?.consents?.acceptedCategories
+                pmData.acceptedSpecialFeatures = self?.userData.gdpr?.consents?.acceptedSpecialFeatures
                 pmData.hasConsentData = self?.userData.gdpr?.consents?.consentStatus.hasConsentData
                 mainSync {
                     handler(result.map { _ in pmData })

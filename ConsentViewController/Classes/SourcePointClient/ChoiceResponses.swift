@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GDPRChoiceResponse: Decodable, Equatable {
+struct GDPRChoiceResponse: Equatable {
     let uuid: String
     let dateCreated, expirationDate: SPDate
     let TCData: SPJson?
@@ -15,11 +15,11 @@ struct GDPRChoiceResponse: Decodable, Equatable {
     let consentStatus: ConsentStatus?
     let grants: SPGDPRVendorGrants?
     let webConsentPayload: SPWebConsentPayload?
-    let legIntCategories: [String]?
-    let legIntVendors: [String]?
-    let vendors: [String]?
-    let categories: [String]?
-    let specialFeatures: [String]?
+    let acceptedLegIntCategories: [String]?
+    let acceptedLegIntVendors: [String]?
+    let acceptedVendors: [String]?
+    let acceptedCategories: [String]?
+    let acceptedSpecialFeatures: [String]?
 }
 
 struct CCPAChoiceResponse: Equatable {
@@ -68,5 +68,17 @@ extension CCPAChoiceResponse: Decodable {
             webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload),
             GPPData: container.decodeIfPresent(SPJson.self, forKey: .GPPData) ?? SPJson()
         )
+    }
+}
+
+extension GDPRChoiceResponse: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case uuid, euconsent, dateCreated, expirationDate,
+             TCData, consentStatus, grants, webConsentPayload
+        case acceptedCategories = "categories"
+        case acceptedLegIntCategories = "legIntCategories"
+        case acceptedVendors = "vendors"
+        case acceptedLegIntVendors = "legIntVendors"
+        case acceptedSpecialFeatures = "specialFeatures"
     }
 }

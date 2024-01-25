@@ -21,7 +21,7 @@ struct ChoiceAllResponse: Decodable {
         let GPPData: SPJson
     }
 
-    struct GDPR: Decodable {
+    struct GDPR {
         struct PostPayload: Decodable {
             let consentAllRef: String?
             let vendorListId: String
@@ -38,11 +38,11 @@ struct ChoiceAllResponse: Decodable {
         let grants: SPGDPRVendorGrants
         let postPayload: PostPayload?
         let webConsentPayload: SPWebConsentPayload?
-        let legIntCategories: [String]?
-        let legIntVendors: [String]?
-        let vendors: [String]?
-        let categories: [String]?
-        let specialFeatures: [String]?
+        let acceptedLegIntCategories: [String]
+        let acceptedLegIntVendors: [String]
+        let acceptedVendors: [String]
+        let acceptedCategories: [String]
+        let acceptedSpecialFeatures: [String]
     }
 
     let gdpr: GDPR?
@@ -80,5 +80,18 @@ extension ChoiceAllResponse.CCPA: Decodable {
             webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload),
             GPPData: container.decodeIfPresent(SPJson.self, forKey: .GPPData) ?? SPJson()
         )
+    }
+}
+
+extension ChoiceAllResponse.GDPR: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case addtlConsent, childPmId, euconsent, hasLocalData,
+             dateCreated, expirationDate, TCData, consentStatus,
+             grants, postPayload, webConsentPayload
+        case acceptedCategories = "categories"
+        case acceptedLegIntCategories = "legIntCategories"
+        case acceptedVendors = "vendors"
+        case acceptedLegIntVendors = "legIntVendors"
+        case acceptedSpecialFeatures = "specialFeatures"
     }
 }
