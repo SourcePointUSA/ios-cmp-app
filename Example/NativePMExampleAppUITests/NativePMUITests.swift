@@ -24,7 +24,7 @@ extension XCUIElement {
 class NativePMUITests: QuickSpec {
     var app: NativePMApp!
     var timeout = 20
-    var gdprCategoriesCount = 10
+    var gdprCategoriesCount = 12
     var ccpaCategoriesCount = 3
     var gdprCategoriePlusSpecialFeatures = 12
     var gdprDefaultOnCategories = 3
