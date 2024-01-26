@@ -571,12 +571,10 @@ public typealias SPGDPRPurposeId = Swift.String
   @objc public var euconsent: Swift.String
   public var tcfData: ConsentViewController.SPJson?
   @objc public var uuid: Swift.String?
-  @objc public var acceptedCategories: [Swift.String] {
-    @objc get
-  }
   public var dateCreated: ConsentViewController.SPDate
   @objc public var applies: Swift.Bool
   public var consentStatus: ConsentViewController.ConsentStatus
+  @objc public var acceptedCategories: [Swift.String]
   @objc override dynamic open var description: Swift.String {
     @objc get
   }

@@ -14,7 +14,7 @@
 		</data>
 		<key>ConsentViewController.bundle/Info.plist</key>
 		<data>
-		t+BmfSgK9PZWarxr89p3cJFufmE=
+		f8xin99FOVui9Zya/9F7RuiByuQ=
 		</data>
 		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
-		Xeq/9e2R4JWfOzUnMojWvFgTniw=
+		Hnk/qDen2VsQRpSuh3kwosTuStQ=
 		</data>
 		<key>Headers/ConsentViewController-tvOS-umbrella.h</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		3otSQQHmTHXMN7YoRTwPlZTVtAo=
+		0JdyaY2NTIwGx88hLoGPl9yFsaE=
 		</data>
 		<key>LongButtonViewCell.nib</key>
 		<data>
@@ -70,43 +70,43 @@
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<data>
-		zkt7TeWUwcY1P6jmdzSkV5GDBzE=
+		xdm79PuwxmhLI3VBiTXc9ZPCJRQ=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		cRHQLDN16PRfwLZq0t2/+zeMc5c=
+		tYgHY3wqBFRDCE2SvghKXj8ucfw=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		UmeraQ5e4AqoPhYnlwFLk5IhmiY=
+		P/b2b3hNGYok0z8p7kMtdB1iU1k=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		cRHQLDN16PRfwLZq0t2/+zeMc5c=
+		tYgHY3wqBFRDCE2SvghKXj8ucfw=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		wa+eWUEl9F23QjXeghp3XRuoUj8=
+		zohX7ma9mTUL5UfLt2O5hQEFZsE=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<data>
-		zkt7TeWUwcY1P6jmdzSkV5GDBzE=
+		xdm79PuwxmhLI3VBiTXc9ZPCJRQ=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		oETJnhMA5pBRUh6V8FkPTOQA3B8=
+		Lz/3lK5Ou/VQx79ndwHBSZDNXAA=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		uKXCsRwiSMvE7K+pKoY/Ie8ZUXc=
+		pnNR0swVZQ6vhjzIBudvWjSoldY=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		oETJnhMA5pBRUh6V8FkPTOQA3B8=
+		Lz/3lK5Ou/VQx79ndwHBSZDNXAA=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		xLx2mAEEoe3NeXNjBRMefNxXUf8=
+		UDgAZXFrPStmPV3d0qrwise6LWo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -201,7 +201,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			G1X3IgxqhAkMOLYJrSIF4fhzvcnfSf4LfaeiOAn7Vt8=
+			1Bvu2EeUEfJIjbXQpjguidl2pEjiZA4P4o2A6aoMJGc=
 			</data>
 		</dict>
 		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
@@ -271,7 +271,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xMS1NaIh/VPyqmzuQ33swYPwDELzgmVDJ0mmQSV3Spg=
+			KbkPTYdRRfGYTMQ1afRSRRqNHulnzP4aDarTX/WrVpo=
 			</data>
 		</dict>
 		<key>Headers/ConsentViewController-tvOS-umbrella.h</key>
@@ -292,70 +292,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			NjVr8qHtbN1Bm5wY1b8yPs3yLFoqbC56f21GRgQQ0HA=
+			5B8mmVDexpJTNKc/3k+RaJp6yWWEVP2qiV8WV28lEaw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BzOSn+V+BnXnqi7Xm4m94dheqMaL7iWjj0ZYlrGenc4=
+			cjxVN89dN3jVB2yjrJvOLiqhlQ7V20riuRVo/BVHFfw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wXwKvECQ1WXE3O41cwQUisoAEMmx4m5SlDXHAVYkAq0=
+			et6/5MHOVmMm0sCfIZGDCzm9Xxe2efzn087t7O2q/jg=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BzOSn+V+BnXnqi7Xm4m94dheqMaL7iWjj0ZYlrGenc4=
+			cjxVN89dN3jVB2yjrJvOLiqhlQ7V20riuRVo/BVHFfw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JVU+rIM155AF3oh+bWjriaGeNvrjOOLl9ZqSSm/TmTk=
+			uoKiHegybnZS/tyhUoupAgUnstLdZtEb0tpI2VQN5OU=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			NjVr8qHtbN1Bm5wY1b8yPs3yLFoqbC56f21GRgQQ0HA=
+			5B8mmVDexpJTNKc/3k+RaJp6yWWEVP2qiV8WV28lEaw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cAOPuM1aY8f3yGU1Y2H9WSsn2ka4g2dTNyGNgwcF84Q=
+			9Fkp3q4j52gELxWfDHAB91wf4hySu4c9EN3gDlSRsgc=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EN58G7dDbyw9SC2iCIxHh980LnnvO2p+e3kbR5wZ+Fs=
+			6CqTWXchkqN218uO9Tw/Y+5MOTqhJhE4iq4Hh+5/fp8=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cAOPuM1aY8f3yGU1Y2H9WSsn2ka4g2dTNyGNgwcF84Q=
+			9Fkp3q4j52gELxWfDHAB91wf4hySu4c9EN3gDlSRsgc=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			w7vSrKoUpRPiPoHzB2yaFurxaSfxj+OLZdrJiFCnJ+w=
+			oJc4qRNCgHijNWCn1ADA/8kj/V0iIrlO7ceokl4MZkw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

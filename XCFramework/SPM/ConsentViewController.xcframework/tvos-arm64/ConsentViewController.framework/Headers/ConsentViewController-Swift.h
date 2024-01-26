@@ -857,11 +857,9 @@ SWIFT_CLASS("_TtC21ConsentViewController13SPGDPRConsent")
 @property (nonatomic, copy) NSString * _Nonnull euconsent;
 /// That’s the internal Sourcepoint id we give to this consent profile
 @property (nonatomic, copy) NSString * _Nullable uuid;
-/// A list of ids of the categories accepted by the user in all its vendors.
-/// If a category has been rejected in a single vendor, its id won’t part of the <code>acceptedCategories</code> list.
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull acceptedCategories;
 /// Determines if the GDPR legislation applies for this user
 @property (nonatomic) BOOL applies;
+@property (nonatomic, copy) NSArray<NSString *> * _Nonnull acceptedCategories;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 /// Convenience initialiser to return an empty consent object.
 + (SPGDPRConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
