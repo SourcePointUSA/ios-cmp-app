@@ -15,6 +15,7 @@ struct GDPRChoiceResponse: Equatable {
     let consentStatus: ConsentStatus?
     let grants: SPGDPRVendorGrants?
     let webConsentPayload: SPWebConsentPayload?
+    let gcmStatus: SPGCMData?
     let acceptedLegIntCategories: [String]?
     let acceptedLegIntVendors: [String]?
     let acceptedVendors: [String]?
@@ -74,7 +75,7 @@ extension CCPAChoiceResponse: Decodable {
 extension GDPRChoiceResponse: Decodable {
     enum CodingKeys: String, CodingKey {
         case uuid, euconsent, dateCreated, expirationDate,
-             TCData, consentStatus, grants, webConsentPayload
+             TCData, consentStatus, grants, webConsentPayload, gcmStatus
         case acceptedCategories = "categories"
         case acceptedLegIntCategories = "legIntCategories"
         case acceptedVendors = "vendors"
