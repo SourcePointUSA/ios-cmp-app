@@ -10,7 +10,6 @@ import Foundation
 /// A dictionary in which the keys represent the Vendor Id
 public typealias SPGDPRVendorGrants = [GDPRVendorId: SPGDPRVendorGrant]
 public typealias GDPRVendorId = String
-public typealias SPGCMData = [SPGCMConsentType: SPGCMConsentStatus]
 
 /// A dictionary in which the keys represent the Purpose Id and the values indicate if that purpose is granted (`true`) or not (`false`) on a legal basis.
 public typealias SPGDPRPurposeGrants = [SPGDPRPurposeId: Bool]
