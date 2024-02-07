@@ -42,6 +42,8 @@ import Foundation
     let MspaOptOutOptionMode: SPMspaTernaryFlag?
     let MspaServiceProviderMode: SPMspaTernaryFlag?
 
+    let uspString: Bool?
+
     public init(
         MspaCoveredTransaction: SPMspaBinaryFlag? = nil,
         MspaOptOutOptionMode: SPMspaTernaryFlag? = nil,
@@ -50,6 +52,7 @@ import Foundation
         self.MspaCoveredTransaction = MspaCoveredTransaction
         self.MspaOptOutOptionMode = MspaOptOutOptionMode
         self.MspaServiceProviderMode = MspaServiceProviderMode
+        uspString = nil
     }
 
     public init(
@@ -60,5 +63,13 @@ import Foundation
         self.MspaCoveredTransaction = MspaCoveredTransaction
         self.MspaOptOutOptionMode = MspaOptOutOptionMode
         self.MspaServiceProviderMode = MspaServiceProviderMode
+        uspString = nil
+    }
+
+    init(uspString: Bool?) {
+        self.uspString = uspString
+        MspaCoveredTransaction = nil
+        MspaOptOutOptionMode = nil
+        MspaServiceProviderMode = nil
     }
 }

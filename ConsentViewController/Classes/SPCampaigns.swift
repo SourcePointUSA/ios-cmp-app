@@ -40,10 +40,16 @@ public typealias SPTargetingParams = [String: String]
     let GPPConfig: SPGPPConfig?
 
     /**
-     Used by usNat campaigns only. Set this flag only if your app used an SDK older than `7.6.0`, use authenticated consent
+     Used by USNat campaigns only. Set this flag only if your app used an SDK older than `7.6.0`, use authenticated consent
      and has a CCPA campaign.
      */
     let transitionCCPAAuth: Bool?
+
+    /**
+     Used by USNat campaigns. Set this flag if you want to continue having the value `IABUSPrivacy_String`
+     stored in the `UserDefaults`. Useful during the transition between CCPA and USNat campaigns.
+    */
+    let supportLegacyUSPString: Bool?
 
     @objc override public var description: String {
         """
@@ -52,6 +58,7 @@ public typealias SPTargetingParams = [String: String]
             - groupPmId: \(groupPmId as Any)
             - GPPConfig: \(GPPConfig as Any)
             - transitionCCPAAuth: \(transitionCCPAAuth as Any)
+            - supportLegacyUSPString: \(supportLegacyUSPString as Any)
         """
     }
 
@@ -59,12 +66,14 @@ public typealias SPTargetingParams = [String: String]
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil,
         gppConfig: SPGPPConfig? = nil,
-        transitionCCPAAuth: Bool? = nil
+        transitionCCPAAuth: Bool? = nil,
+        supportLegacyUSPString: Bool? = nil
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
         self.GPPConfig = gppConfig
         self.transitionCCPAAuth = transitionCCPAAuth
+        self.supportLegacyUSPString = supportLegacyUSPString
     }
 
     @available(swift, obsoleted: 1.0)
@@ -76,6 +85,7 @@ public typealias SPTargetingParams = [String: String]
         self.groupPmId = groupPmId
         self.GPPConfig = nil
         self.transitionCCPAAuth = nil
+        self.supportLegacyUSPString = nil
     }
 
     @available(swift, obsoleted: 1.0)
@@ -83,12 +93,14 @@ public typealias SPTargetingParams = [String: String]
         targetingParams: SPTargetingParams = [:],
         groupPmId: String? = nil,
         gppConfig: SPGPPConfig? = nil,
-        transitionCCPAAuth: SPOptinalBool = .unset
+        transitionCCPAAuth: SPOptinalBool = .unset,
+        supportLegacyUSPString: SPOptinalBool = .unset
     ) {
         self.targetingParams = targetingParams
         self.groupPmId = groupPmId
         self.GPPConfig = gppConfig
         self.transitionCCPAAuth = transitionCCPAAuth.boolValue
+        self.supportLegacyUSPString = supportLegacyUSPString.boolValue
     }
 }
 
