@@ -491,6 +491,17 @@ var consentManager = SPConsentManager(
 )
 ```
 
+## Keeping support to legacy CCPA privacy string
+
+If you're transitioning from CCPA to USNat, odds are you want to keep supporting the legacy CCPA privacy string (`IABUSPrivacy_String`).
+To do so, when instantiating the SDK, make sure to set the flag `.supportLegacyUSPString` to true. Example:
+```swift
+var consentManager = SPConsentManager(
+    ...
+    campaigns: SPCampaigns(usnat: SPCampaign(supportLegacyUSPString: true)), // <== here
+    delegate: self
+)
+```
 
 ## Configuring the Message/Consents timeout
 
