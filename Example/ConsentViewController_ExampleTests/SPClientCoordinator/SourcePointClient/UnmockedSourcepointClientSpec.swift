@@ -16,9 +16,9 @@ import Quick
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
         let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil, usnat: nil)
-        let propertyName = try! SPPropertyName("tests.unified-script.com")
+        let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
         let accountId = 22
-        let propertyId = 17_801
+        let propertyId = 16893
 
         var client: SourcePointClient!
 
@@ -67,7 +67,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                     includeData: includeData,
                     authId: nil
                 )
-                let paramsRaw = "env=\(Constants.Urls.envParam)&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)&hasCsp=true&includeData=\(stringify(includeData))&metadata={}&propertyId=17801&withSiteActions=false"
+                let paramsRaw = "env=\(Constants.Urls.envParam)&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)&hasCsp=true&includeData=\(stringify(includeData))&metadata={}&propertyId=16893&withSiteActions=false"
                 expect(url?.query) == paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
             }
         }
@@ -210,7 +210,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             it("should call the endpoint and parse the response into MetaDataResponse") {
                 waitUntil { done in
                     client.metaData(accountId: accountId,
-                                    propertyId: 17_801,
+                                    propertyId: propertyId,
                                     metadata: MetaDataQueryParam(
                                         gdpr: .init(groupPmId: nil),
                                         ccpa: .init(groupPmId: nil),
@@ -232,24 +232,32 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 }
             }
 
-            it("Check if groupPmId echo") {
-                waitUntil { done in
-                    client.metaData(accountId: accountId,
-                                    propertyId: 17_801,
-                                    metadata: MetaDataQueryParam(
-                                        gdpr: .init(groupPmId: "99999999999"),
-                                        ccpa: .init(groupPmId: nil),
-                                        usnat: nil
-                                    )) {
-                            switch $0 {
-                            case .success(let response):
-                                let GDPR = response.gdpr
-                                expect(GDPR?.childPmId) == "99999999999"
+            describe("for a property belonging to a property group") {
+                describe("and with a valid groupPmId") {
+                    it("meta-data returns a childPmId") {
+                        let propertyIdBelongingToAPropertyGroup = 24188
+                        let groupPmId = "613056"
+                        let childPmId = "613057"
+                        waitUntil { done in
+                            client.metaData(
+                                accountId: accountId,
+                                propertyId: propertyIdBelongingToAPropertyGroup,
+                                metadata: MetaDataQueryParam(
+                                    gdpr: .init(groupPmId: groupPmId),
+                                    ccpa: .init(groupPmId: nil),
+                                    usnat: nil
+                                )
+                            ) {
+                                switch $0 {
+                                    case .success(let response):
+                                        expect(response.gdpr?.childPmId).to(equal(childPmId))
 
-                            case .failure(let error):
-                                fail(error.description)
+                                    case .failure(let error):
+                                        fail(error.description)
+                                }
+                                done()
                             }
-                            done()
+                        }
                     }
                 }
             }
