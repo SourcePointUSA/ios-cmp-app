@@ -190,6 +190,9 @@
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
 		82B224182580D5D60032BC49 /* SPURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */; };
 		82B9AB4F2A740EE600565C13 /* SourcepointCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */; };
+		82BA6E642B72980F00E318B3 /* SPGCMDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */; };
+		82BA6E672B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
+		82BA6E682B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
 		82BB0E5F28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */; };
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
@@ -669,6 +672,8 @@
 		82ACF6AB2487E73C006E207A /* SPUserDefaultsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUserDefaultsSpec.swift; sourceTree = "<group>"; };
 		82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPURLExtensionsSpec.swift; sourceTree = "<group>"; };
 		82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcepointCoordinatorMock.swift; sourceTree = "<group>"; };
+		82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGCMDataSpec.swift; sourceTree = "<group>"; };
+		82BA6E662B72AC2300E318B3 /* SPGCMData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGCMData.swift; sourceTree = "<group>"; };
 		82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmockedSourcepointClientSpec.swift; sourceTree = "<group>"; };
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
@@ -1727,9 +1732,18 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		82BA6E652B72AC2300E318B3 /* GoogleConsentMode */ = {
+			isa = PBXGroup;
+			children = (
+				82BA6E662B72AC2300E318B3 /* SPGCMData.swift */,
+			);
+			path = GoogleConsentMode;
+			sourceTree = "<group>";
+		};
 		82CD6E412B59CA2C00CAD663 /* Consents */ = {
 			isa = PBXGroup;
 			children = (
+				82BA6E652B72AC2300E318B3 /* GoogleConsentMode */,
 				82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */,
 				82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */,
 				82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */,
@@ -1976,6 +1990,7 @@
 				AAA25A682A28ABFE005FE84A /* SPConsentManagerSpec.swift */,
 				822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */,
 				82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */,
+				82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
 			sourceTree = "<group>";
@@ -3293,6 +3308,7 @@
 				82CD6F772B59CB0700CAD663 /* SPNativeMessage.swift in Sources */,
 				82CD6F782B59CB0700CAD663 /* SPDeviceManager.swift in Sources */,
 				82CD6F792B59CB0700CAD663 /* SPSDK.swift in Sources */,
+				82BA6E672B72AC2300E318B3 /* SPGCMData.swift in Sources */,
 				82CD6F7A2B59CB0700CAD663 /* SPCampaignType.swift in Sources */,
 				82CD6F7B2B59CB0700CAD663 /* SPError.swift in Sources */,
 				82CD6F7C2B59CB0700CAD663 /* OSLogger.swift in Sources */,
@@ -3312,6 +3328,7 @@
 				82CD6F272B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift in Sources */,
 				82CD6F012B59CA2C00CAD663 /* SPFocusableTextView.swift in Sources */,
 				82CD6EA12B59CA2C00CAD663 /* ConsentStatus.swift in Sources */,
+				82BA6E682B72AC2300E318B3 /* SPGCMData.swift in Sources */,
 				0B312FC52ABC507700B62E23 /* SPDeviceManager.swift in Sources */,
 				82CD6EE72B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift in Sources */,
 				82CD6ED92B59CA2C00CAD663 /* PvDataRequestResponse.swift in Sources */,
@@ -3586,6 +3603,7 @@
 				82BB0E5F28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift in Sources */,
 				8248A497247D17AA00A7D9AD /* SimpleClientSpec.swift in Sources */,
 				828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */,
+				82BA6E642B72980F00E318B3 /* SPGCMDataSpec.swift in Sources */,
 				82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */,
 				822E88F62A7BC5AF00843B2B /* IncludeDataSpec.swift in Sources */,
 				6DA66EA3255D1A690034E11A /* SPMessageLanguageSpec.swift in Sources */,

@@ -55,6 +55,7 @@ public typealias SPGDPRPurposeId = String
              webConsentPayload, acceptedLegIntCategories, acceptedLegIntVendors,
              acceptedVendors, acceptedCategories, acceptedSpecialFeatures, dateCreated,
              expirationDate
+        case googleConsentMode = "gcmStatus"
         case tcfData = "TCData"
         case vendorGrants = "grants"
     }
@@ -99,6 +100,9 @@ public typealias SPGDPRPurposeId = String
     /// Required by SP endpoints
     public var consentStatus: ConsentStatus
 
+    /// Information required by Google's Firebase Analytics SDK, GCM 2.0
+    public var googleConsentMode: SPGCMData?
+
     /// Required by SP endpoints
     var lastMessage: LastMessageData?
 
@@ -138,6 +142,7 @@ public typealias SPGDPRPurposeId = String
         acceptedCategories = try container.decodeIfPresent(Array.self, forKey: .acceptedCategories) ?? []
         acceptedSpecialFeatures = try container.decodeIfPresent(Array.self, forKey: .acceptedSpecialFeatures) ?? []
         expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
+        googleConsentMode = try container.decodeIfPresent(SPGCMData.self, forKey: .googleConsentMode)
         if let date = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated) {
             dateCreated = date
         }
@@ -155,6 +160,7 @@ public typealias SPGDPRPurposeId = String
         consentStatus: ConsentStatus = ConsentStatus(),
         lastMessage: LastMessageData? = nil,
         webConsentPayload: SPWebConsentPayload? = nil,
+        googleConsentMode: SPGCMData? = nil,
         acceptedLegIntCategories: [String] = [],
         acceptedLegIntVendors: [String] = [],
         acceptedVendors: [String] = [],
@@ -172,6 +178,7 @@ public typealias SPGDPRPurposeId = String
         self.consentStatus = consentStatus
         self.lastMessage = lastMessage
         self.webConsentPayload = webConsentPayload
+        self.googleConsentMode = googleConsentMode
         self.acceptedLegIntCategories = acceptedLegIntCategories
         self.acceptedLegIntVendors = acceptedLegIntVendors
         self.acceptedVendors = acceptedVendors
@@ -219,6 +226,7 @@ public typealias SPGDPRPurposeId = String
             consentStatus: consentStatus,
             lastMessage: lastMessage,
             webConsentPayload: webConsentPayload,
+            googleConsentMode: googleConsentMode,
             acceptedLegIntCategories: acceptedLegIntCategories,
             acceptedLegIntVendors: acceptedLegIntVendors,
             acceptedVendors: acceptedVendors,

@@ -19,6 +19,7 @@ class SPGDPRConsentsSpec: QuickSpec {
                 expect(consents.euconsent).to(beEmpty())
                 expect(consents.tcfData?.dictionaryValue).to(beEmpty())
                 expect(consents.vendorGrants).to(beEmpty())
+                expect(consents.googleConsentMode).to(beNil())
             }
         }
 
@@ -31,14 +32,22 @@ class SPGDPRConsentsSpec: QuickSpec {
                     "childPmId": null,
                     "consentStatus": {},
                     "expirationDate": "2124-10-27T16:59:00.092Z",
+                    "gcmStatus": {
+                        "ad_user_data": "granted"
+                    }
                 }
                 """.data(using: .utf8)
             }
-            let consent = try gdprCampaign.decoded() as SPGDPRConsent
-            expect(consent.euconsent) == "ABCD"
-            expect(consent.vendorGrants) == SPGDPRVendorGrants()
-            expect(consent.childPmId).to(beNil())
-            expect(consent.applies).to(beTrue())
+            do {
+                let consent = try gdprCampaign.decoded() as SPGDPRConsent
+                expect(consent.euconsent) == "ABCD"
+                expect(consent.vendorGrants) == SPGDPRVendorGrants()
+                expect(consent.childPmId).to(beNil())
+                expect(consent.applies).to(beTrue())
+                expect(consent.googleConsentMode?.adUserData).to(equal(.granted))
+            } catch {
+                fail(String(describing: error))
+            }
         }
     }
 }

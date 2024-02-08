@@ -304,6 +304,7 @@ SPUserData(
             acceptedCategories: [String],
             applies: Bool,
             consentStatus: ConsentStatus,
+            googleConsentMode: SPGCMData?
             dateCreated: SPDate,
             euconsent: String,
             tcfData: SPJson?,
@@ -326,6 +327,34 @@ SPUserData(
     )
 )
 ```
+
+## Google Consent Mode
+If your app uses Google Firebase products, you might be interested in supporting [Google Consent Mode](https://developers.google.com/tag-platform/security/concepts/consent-mode). Our SDK makes it convenient for you to set consent using `Firebase.Analytics`.
+
+### Setting Google Consent
+
+```swift
+func onSPFinished(userData: SPUserData) {
+    let gcmData = userData.gdpr?.consents?.googleConsentMode
+    Analytics.setConsent([
+        .analyticsStorage: gcmData?.analyticsStorage == .granted ? .granted : .denied,
+        .adStorage: gcmData?.adStorage == .granted ? .granted : .denied,
+        .adUserData: gcmData?.adUserData == .granted ? .granted : .denied,
+        .adPersonalization: gcmData?.adPersonalization == .granted ? .granted : .denied,
+    ])
+}
+```
+
+### Initial Consent State
+Google requires you to define the initial consent state (`.granted` | `.denied`) of each purpose in your app's `info.plist`, adding the following key to it:
+```xml
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE</key> <true/> // set this to `true` or `false` as required
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE</key> <true/>
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA</key> <true/>
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key> <true/>
+```
+
+For more information, please refer to [Manage consent settings (apps)](https://developers.google.com/tag-platform/security/guides/app-consent?platform=ios)
 
 ## Adding or Removing custom consents
 

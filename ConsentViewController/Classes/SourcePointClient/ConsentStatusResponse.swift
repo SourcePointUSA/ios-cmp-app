@@ -21,6 +21,7 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let vendors: [String]
             let categories: [String]
             let specialFeatures: [String]
+            let gcmStatus: SPGCMData?
         }
 
         struct CCPA: Decodable, Equatable {

@@ -532,8 +532,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.euconsent = gdpr.euconsent
             state.gdpr?.tcfData = gdpr.TCData
             state.gdpr?.consentStatus = gdpr.consentStatus
-            state.gdpr?.childPmId = nil
             state.gdpr?.webConsentPayload = gdpr.webConsentPayload
+            state.gdpr?.googleConsentMode = gdpr.gcmStatus
             state.gdpr?.acceptedLegIntCategories = gdpr.legIntCategories
             state.gdpr?.acceptedLegIntVendors = gdpr.legIntVendors
             state.gdpr?.acceptedVendors = gdpr.vendors
@@ -551,7 +551,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 rejectedVendors: ccpa.rejectedVendors,
                 rejectedCategories: ccpa.rejectedCategories
             )
-            state.ccpa?.childPmId = nil
             state.ccpa?.webConsentPayload = ccpa.webConsentPayload
             state.ccpa?.GPPData = ccpa.GPPData ?? SPJson()
         }
@@ -752,6 +751,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.gdpr?.euconsent = gdpr.euconsent
             state.gdpr?.consentStatus = gdpr.consentStatus
             state.gdpr?.childPmId = gdpr.childPmId
+            state.gdpr?.googleConsentMode = gdpr.gcmStatus
         }
         if let ccpa = response.ccpa, campaign == .ccpa {
             state.ccpa?.dateCreated = ccpa.dateCreated
@@ -877,6 +877,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.gdpr?.euconsent = postResponse.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
         state.gdpr?.vendorGrants = postResponse.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
         state.gdpr?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
+        state.gdpr?.googleConsentMode = postResponse.gcmStatus ?? getResponse?.gdpr?.gcmStatus
         state.gdpr?.acceptedLegIntCategories = postResponse.acceptedLegIntCategories ?? getResponse?.gdpr?.acceptedLegIntCategories ?? []
         state.gdpr?.acceptedLegIntVendors = postResponse.acceptedLegIntVendors ?? getResponse?.gdpr?.acceptedLegIntVendors ?? []
         state.gdpr?.acceptedVendors = postResponse.acceptedVendors ?? getResponse?.gdpr?.acceptedVendors ?? []
