@@ -1,3 +1,6 @@
+# 7.6.0 (Feb, 08, 2024)
+* [DIA-3565](https://sourcepoint.atlassian.net/browse/DIA-3565) Add support to [GCM](https://github.com/SourcePointUSA/ios-cmp-app?tab=readme-ov-file#google-consent-mode). [#548](https://github.com/SourcePointUSA/ios-cmp-app/pull/548)
+
 # 7.5.4 (Jan, 26, 2024)
 * [DIA-3306](https://sourcepoint.atlassian.net/browse/DIA-3306) Expanded the way `acceptedCategories` on `SPGDPRConsent` works. Previously, a category id would only be added to the list if the user would give consent to it as well as all vendors declaring that category. Now a category id will be include in the list simply if the user gives consent to it, regardless of vendor consent. [#547](https://github.com/SourcePointUSA/ios-cmp-app/pull/547)
 
