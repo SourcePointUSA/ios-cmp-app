@@ -831,6 +831,19 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 
 
 
+SWIFT_CLASS("_TtC21ConsentViewController9SPGCMData")
+@interface SPGCMData : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// Mimics Firebase’s Analytics ConsentStatus enums
+typedef SWIFT_ENUM(NSInteger, Status, open) {
+  StatusGranted = 0,
+  StatusDenied = 1,
+};
+
+
 @class SPGDPRVendorGrant;
 
 /// SPGDPRConsent encapsulates all consent data from a user.
@@ -859,6 +872,8 @@ SWIFT_CLASS("_TtC21ConsentViewController13SPGDPRConsent")
 @property (nonatomic, copy) NSString * _Nullable uuid;
 /// Determines if the GDPR legislation applies for this user
 @property (nonatomic) BOOL applies;
+/// Information required by Google’s Firebase Analytics SDK, GCM 2.0
+@property (nonatomic, strong) SPGCMData * _Nullable googleConsentMode;
 @property (nonatomic, copy) NSArray<NSString *> * _Nonnull acceptedCategories;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 /// Convenience initialiser to return an empty consent object.

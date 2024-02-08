@@ -1930,6 +1930,664 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "SPGCMData",
+        "printedName": "SPGCMData",
+        "children": [
+          {
+            "kind": "TypeDecl",
+            "name": "Status",
+            "printedName": "Status",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "granted",
+                "printedName": "granted",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPGCMData.Status.Type) -> ConsentViewController.SPGCMData.Status",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Status",
+                        "printedName": "ConsentViewController.SPGCMData.Status",
+                        "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPGCMData.Status.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Status",
+                            "printedName": "ConsentViewController.SPGCMData.Status",
+                            "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController9SPGCMDataC6StatusO7grantedyA2EmF",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC6StatusO7grantedyA2EmF",
+                "moduleName": "ConsentViewController",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "fixedbinaryorder": 0
+              },
+              {
+                "kind": "Var",
+                "name": "denied",
+                "printedName": "denied",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPGCMData.Status.Type) -> ConsentViewController.SPGCMData.Status",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Status",
+                        "printedName": "ConsentViewController.SPGCMData.Status",
+                        "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPGCMData.Status.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Status",
+                            "printedName": "ConsentViewController.SPGCMData.Status",
+                            "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController9SPGCMDataC6StatusO6deniedyA2EmF",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC6StatusO6deniedyA2EmF",
+                "moduleName": "ConsentViewController",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "fixedbinaryorder": 1
+              },
+              {
+                "kind": "Var",
+                "name": "rawValue",
+                "printedName": "rawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:21ConsentViewController9SPGCMDataC6StatusO8rawValueSSvp",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC6StatusO8rawValueSSvp",
+                "moduleName": "ConsentViewController",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:21ConsentViewController9SPGCMDataC6StatusO8rawValueSSvg",
+                    "mangledName": "$s21ConsentViewController9SPGCMDataC6StatusO8rawValueSSvg",
+                    "moduleName": "ConsentViewController",
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(rawValue:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPGCMData.Status?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Status",
+                        "printedName": "ConsentViewController.SPGCMData.Status",
+                        "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:21ConsentViewController9SPGCMDataC6StatusO8rawValueAESgSS_tcfc",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC6StatusO8rawValueAESgSS_tcfc",
+                "moduleName": "ConsentViewController",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "init_kind": "Designated"
+              }
+            ],
+            "declKind": "Enum",
+            "usr": "s:21ConsentViewController9SPGCMDataC6StatusO",
+            "mangledName": "$s21ConsentViewController9SPGCMDataC6StatusO",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "enumRawTypeName": "Int",
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Hashable",
+                "printedName": "Hashable",
+                "usr": "s:SH",
+                "mangledName": "$sSH"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Equatable",
+                "printedName": "Equatable",
+                "usr": "s:SQ",
+                "mangledName": "$sSQ"
+              },
+              {
+                "kind": "Conformance",
+                "name": "RawRepresentable",
+                "printedName": "RawRepresentable",
+                "children": [
+                  {
+                    "kind": "TypeWitness",
+                    "name": "RawValue",
+                    "printedName": "RawValue",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:SY",
+                "mangledName": "$sSY"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Decodable",
+                "printedName": "Decodable",
+                "usr": "s:Se",
+                "mangledName": "$sSe"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Encodable",
+                "printedName": "Encodable",
+                "usr": "s:SE",
+                "mangledName": "$sSE"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "adStorage",
+            "printedName": "adStorage",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPGCMData.Status?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Status",
+                    "printedName": "ConsentViewController.SPGCMData.Status",
+                    "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController9SPGCMDataC9adStorageAC6StatusOSgvp",
+            "mangledName": "$s21ConsentViewController9SPGCMDataC9adStorageAC6StatusOSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPGCMData.Status?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Status",
+                        "printedName": "ConsentViewController.SPGCMData.Status",
+                        "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController9SPGCMDataC9adStorageAC6StatusOSgvg",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC9adStorageAC6StatusOSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "analyticsStorage",
+            "printedName": "analyticsStorage",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPGCMData.Status?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Status",
+                    "printedName": "ConsentViewController.SPGCMData.Status",
+                    "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController9SPGCMDataC16analyticsStorageAC6StatusOSgvp",
+            "mangledName": "$s21ConsentViewController9SPGCMDataC16analyticsStorageAC6StatusOSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPGCMData.Status?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Status",
+                        "printedName": "ConsentViewController.SPGCMData.Status",
+                        "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController9SPGCMDataC16analyticsStorageAC6StatusOSgvg",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC16analyticsStorageAC6StatusOSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "adUserData",
+            "printedName": "adUserData",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPGCMData.Status?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Status",
+                    "printedName": "ConsentViewController.SPGCMData.Status",
+                    "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController9SPGCMDataC10adUserDataAC6StatusOSgvp",
+            "mangledName": "$s21ConsentViewController9SPGCMDataC10adUserDataAC6StatusOSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPGCMData.Status?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Status",
+                        "printedName": "ConsentViewController.SPGCMData.Status",
+                        "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController9SPGCMDataC10adUserDataAC6StatusOSgvg",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC10adUserDataAC6StatusOSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "adPersonalization",
+            "printedName": "adPersonalization",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPGCMData.Status?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Status",
+                    "printedName": "ConsentViewController.SPGCMData.Status",
+                    "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController9SPGCMDataC17adPersonalizationAC6StatusOSgvp",
+            "mangledName": "$s21ConsentViewController9SPGCMDataC17adPersonalizationAC6StatusOSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPGCMData.Status?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Status",
+                        "printedName": "ConsentViewController.SPGCMData.Status",
+                        "usr": "s:21ConsentViewController9SPGCMDataC6StatusO"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController9SPGCMDataC17adPersonalizationAC6StatusOSgvg",
+                "mangledName": "$s21ConsentViewController9SPGCMDataC17adPersonalizationAC6StatusOSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SPGCMData",
+                "printedName": "ConsentViewController.SPGCMData",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPGCMData"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@ConsentViewController@objc(cs)SPGCMData(im)init",
+            "mangledName": "$s21ConsentViewController9SPGCMDataCACycfc",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SPGCMData",
+                "printedName": "ConsentViewController.SPGCMData",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPGCMData"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Decoder",
+                "printedName": "Swift.Decoder",
+                "usr": "s:s7DecoderP"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:21ConsentViewController9SPGCMDataC4fromACs7Decoder_p_tKcfc",
+            "mangledName": "$s21ConsentViewController9SPGCMDataC4fromACs7Decoder_p_tKcfc",
+            "moduleName": "ConsentViewController",
+            "implicit": true,
+            "declAttributes": [
+              "Required"
+            ],
+            "throwing": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "encode",
+            "printedName": "encode(to:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Encoder",
+                "printedName": "Swift.Encoder",
+                "usr": "s:s7EncoderP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:21ConsentViewController9SPGCMDataC6encode2toys7Encoder_p_tKF",
+            "mangledName": "$s21ConsentViewController9SPGCMDataC6encode2toys7Encoder_p_tKF",
+            "moduleName": "ConsentViewController",
+            "implicit": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@ConsentViewController@objc(cs)SPGCMData",
+        "mangledName": "$s21ConsentViewController9SPGCMDataC",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
         "kind": "Import",
         "name": "UIKit",
         "printedName": "UIKit",
@@ -12096,6 +12754,124 @@
                 "declKind": "Accessor",
                 "usr": "s:21ConsentViewController13SPGDPRConsentC13consentStatusAA0aF0VvM",
                 "mangledName": "$s21ConsentViewController13SPGDPRConsentC13consentStatusAA0aF0VvM",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "googleConsentMode",
+            "printedName": "googleConsentMode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPGCMData?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPGCMData",
+                    "printedName": "ConsentViewController.SPGCMData",
+                    "usr": "c:@M@ConsentViewController@objc(cs)SPGCMData"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)SPGDPRConsent(py)googleConsentMode",
+            "mangledName": "$s21ConsentViewController13SPGDPRConsentC06googleA4ModeAA9SPGCMDataCSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPGCMData?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPGCMData",
+                        "printedName": "ConsentViewController.SPGCMData",
+                        "usr": "c:@M@ConsentViewController@objc(cs)SPGCMData"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPGDPRConsent(im)googleConsentMode",
+                "mangledName": "$s21ConsentViewController13SPGDPRConsentC06googleA4ModeAA9SPGCMDataCSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPGCMData?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPGCMData",
+                        "printedName": "ConsentViewController.SPGCMData",
+                        "usr": "c:@M@ConsentViewController@objc(cs)SPGCMData"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPGDPRConsent(im)setGoogleConsentMode:",
+                "mangledName": "$s21ConsentViewController13SPGDPRConsentC06googleA4ModeAA9SPGCMDataCSgvs",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController13SPGDPRConsentC06googleA4ModeAA9SPGCMDataCSgvM",
+                "mangledName": "$s21ConsentViewController13SPGDPRConsentC06googleA4ModeAA9SPGCMDataCSgvM",
                 "moduleName": "ConsentViewController",
                 "implicit": true,
                 "accessorKind": "_modify"
@@ -32838,6 +33614,104 @@
       "value": "false"
     },
     {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "IntegerLiteral",
+      "offset": 365,
+      "length": 6,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 475,
+      "length": 9,
+      "value": "\"granted\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 522,
+      "length": 8,
+      "value": "\"denied\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 648,
+      "length": 9,
+      "value": "\"granted\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 696,
+      "length": 8,
+      "value": "\"denied\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 854,
+      "length": 12,
+      "value": "\"ad_storage\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 899,
+      "length": 19,
+      "value": "\"analytics_storage\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 945,
+      "length": 14,
+      "value": "\"ad_user_data\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 993,
+      "length": 20,
+      "value": "\"ad_personalization\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 854,
+      "length": 12,
+      "value": "\"ad_storage\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 899,
+      "length": 19,
+      "value": "\"analytics_storage\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 945,
+      "length": 14,
+      "value": "\"ad_user_data\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 993,
+      "length": 20,
+      "value": "\"ad_personalization\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/GoogleConsentMode\/SPGCMData.swift",
+      "kind": "StringLiteral",
+      "offset": 128,
+      "length": 9,
+      "value": "\"ConsentViewController.SPGCMData\""
+    },
+    {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPDeviceManager.swift",
       "kind": "StringLiteral",
       "offset": 726,
@@ -34261,203 +35135,203 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 21510,
+      "offset": 21489,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 25118,
+      "offset": 25097,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 25438,
+      "offset": 25417,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 25453,
+      "offset": 25432,
       "length": 3,
       "value": "100"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 25476,
+      "offset": 25455,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 25480,
+      "offset": 25459,
       "length": 3,
       "value": "100"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 26579,
+      "offset": 26558,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 26654,
+      "offset": 26633,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 26715,
+      "offset": 26694,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 26863,
+      "offset": 26842,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 26926,
+      "offset": 26905,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 29674,
+      "offset": 29712,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 29776,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 30746,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
-      "kind": "BooleanLiteral",
-      "offset": 31058,
+      "offset": 29814,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 31727,
+      "offset": 30784,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 31901,
+      "offset": 31096,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 32462,
+      "offset": 31765,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 32702,
+      "offset": 31939,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 32500,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
+      "kind": "BooleanLiteral",
+      "offset": 32740,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "StringLiteral",
-      "offset": 33662,
+      "offset": 33700,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 34019,
+      "offset": 34152,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 34148,
+      "offset": 34281,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 34259,
+      "offset": 34392,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 34379,
+      "offset": 34512,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 34514,
+      "offset": 34647,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 35725,
+      "offset": 35858,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 35845,
+      "offset": 35978,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "BooleanLiteral",
-      "offset": 36783,
+      "offset": 36916,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "StringLiteral",
-      "offset": 38498,
+      "offset": 38631,
       "length": 2,
       "value": "\"\""
     },
@@ -36676,98 +37550,98 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 1843,
+      "offset": 1877,
       "length": 11,
       "value": "\"uspString\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 1843,
+      "offset": 1877,
       "length": 11,
       "value": "\"uspString\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "Array",
-      "offset": 2570,
+      "offset": 2604,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "Array",
-      "offset": 2702,
+      "offset": 2736,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3330,
+      "offset": 3375,
       "length": 12,
       "value": "\"categories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3383,
+      "offset": 3428,
       "length": 18,
       "value": "\"legIntCategories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3433,
+      "offset": 3478,
       "length": 9,
       "value": "\"vendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3480,
+      "offset": 3525,
       "length": 15,
       "value": "\"legIntVendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3535,
+      "offset": 3580,
       "length": 17,
       "value": "\"specialFeatures\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3330,
+      "offset": 3375,
       "length": 12,
       "value": "\"categories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3383,
+      "offset": 3428,
       "length": 18,
       "value": "\"legIntCategories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3433,
+      "offset": 3478,
       "length": 9,
       "value": "\"vendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3480,
+      "offset": 3525,
       "length": 15,
       "value": "\"legIntVendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceAllResponse.swift",
       "kind": "StringLiteral",
-      "offset": 3535,
+      "offset": 3580,
       "length": 17,
       "value": "\"specialFeatures\""
     },
@@ -36956,210 +37830,224 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2152,
+      "offset": 2162,
+      "length": 11,
+      "value": "\"gcmStatus\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 2197,
       "length": 8,
       "value": "\"TCData\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2189,
+      "offset": 2234,
       "length": 8,
       "value": "\"grants\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2152,
+      "offset": 2162,
+      "length": 11,
+      "value": "\"gcmStatus\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 2197,
       "length": 8,
       "value": "\"TCData\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2189,
+      "offset": 2234,
       "length": 8,
       "value": "\"grants\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 3585,
+      "offset": 3630,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 4112,
+      "offset": 4276,
       "length": 158,
       "value": "\"UserConsents(\n    uuid: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 4166,
+      "offset": 4330,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 4169,
+      "offset": 4333,
       "length": 12,
       "value": "\"\n    vendorGrants: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 4211,
+      "offset": 4375,
       "length": 1,
       "value": "\",\n    euconsent: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 4248,
+      "offset": 4412,
       "length": 1,
       "value": "\"\n)\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 4487,
+      "offset": 4651,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 5210,
+      "offset": 5374,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 5322,
+      "offset": 5486,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 5422,
+      "offset": 5586,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 5528,
+      "offset": 5692,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 5644,
+      "offset": 5808,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6321,
+      "offset": 6632,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6367,
+      "offset": 6678,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6407,
+      "offset": 6718,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6450,
+      "offset": 6761,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6498,
+      "offset": 6809,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 7413,
+      "offset": 7775,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 7556,
+      "offset": 7918,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 7597,
+      "offset": 7959,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 7632,
+      "offset": 7994,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 7661,
+      "offset": 8023,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 7693,
+      "offset": 8055,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 7730,
+      "offset": 8092,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 8058,
+      "offset": 8420,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 8103,
+      "offset": 8465,
       "length": 5,
       "value": "false"
     },
@@ -38426,84 +39314,84 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "Array",
-      "offset": 2314,
+      "offset": 2344,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "Array",
-      "offset": 2446,
+      "offset": 2476,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 2928,
+      "offset": 2969,
       "length": 12,
       "value": "\"categories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 2981,
+      "offset": 3022,
       "length": 18,
       "value": "\"legIntCategories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 3031,
+      "offset": 3072,
       "length": 9,
       "value": "\"vendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 3078,
+      "offset": 3119,
       "length": 15,
       "value": "\"legIntVendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 3133,
+      "offset": 3174,
       "length": 17,
       "value": "\"specialFeatures\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 2928,
+      "offset": 2969,
       "length": 12,
       "value": "\"categories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 2981,
+      "offset": 3022,
       "length": 18,
       "value": "\"legIntCategories\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 3031,
+      "offset": 3072,
       "length": 9,
       "value": "\"vendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 3078,
+      "offset": 3119,
       "length": 15,
       "value": "\"legIntVendors\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/ChoiceResponses.swift",
       "kind": "StringLiteral",
-      "offset": 3133,
+      "offset": 3174,
       "length": 17,
       "value": "\"specialFeatures\""
     },
@@ -38953,7 +39841,7 @@
       "kind": "StringLiteral",
       "offset": 9072,
       "length": 7,
-      "value": "\"7.5.4\""
+      "value": "\"7.6.0\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",

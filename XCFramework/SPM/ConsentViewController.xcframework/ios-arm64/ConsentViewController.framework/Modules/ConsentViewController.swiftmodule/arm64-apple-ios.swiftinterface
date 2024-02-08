@@ -78,6 +78,7 @@ public typealias SPGDPRPurposeId = Swift.String
   public var dateCreated: ConsentViewController.SPDate
   @objc public var applies: Swift.Bool
   public var consentStatus: ConsentViewController.ConsentStatus
+  @objc public var googleConsentMode: ConsentViewController.SPGCMData?
   @objc public var acceptedCategories: [Swift.String]
   @objc override dynamic open var description: Swift.String {
     @objc get
@@ -519,6 +520,20 @@ extension ConsentViewController.SPSDK {
   public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   public func loadUSNatPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SPGCMData : ObjectiveC.NSObject, Swift.Codable {
+  @objc public enum Status : Swift.Int, Swift.Hashable, Swift.Equatable, Swift.RawRepresentable, Swift.Codable {
+    public typealias RawValue = Swift.String
+    case granted, denied
+    public var rawValue: Swift.String {
+      get
+    }
+    public init?(rawValue: Swift.String)
+  }
+  final public let adStorage: ConsentViewController.SPGCMData.Status?, analyticsStorage: ConsentViewController.SPGCMData.Status?, adUserData: ConsentViewController.SPGCMData.Status?, adPersonalization: ConsentViewController.SPGCMData.Status?
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
 }
 @objc public enum SPCampaignType : Swift.Int, Swift.Equatable {
   case gdpr, ios14, ccpa, usnat, unknown

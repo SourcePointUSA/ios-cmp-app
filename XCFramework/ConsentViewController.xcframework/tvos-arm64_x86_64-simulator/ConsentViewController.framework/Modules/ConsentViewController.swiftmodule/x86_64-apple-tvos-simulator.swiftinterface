@@ -561,6 +561,20 @@ public enum InvalidResponsAPICode : Swift.String {
     get
   }
 }
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SPGCMData : ObjectiveC.NSObject, Swift.Codable {
+  @objc public enum Status : Swift.Int, Swift.Hashable, Swift.Equatable, Swift.RawRepresentable, Swift.Codable {
+    public typealias RawValue = Swift.String
+    case granted, denied
+    public var rawValue: Swift.String {
+      get
+    }
+    public init?(rawValue: Swift.String)
+  }
+  final public let adStorage: ConsentViewController.SPGCMData.Status?, analyticsStorage: ConsentViewController.SPGCMData.Status?, adUserData: ConsentViewController.SPGCMData.Status?, adPersonalization: ConsentViewController.SPGCMData.Status?
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
 public typealias SPGDPRVendorGrants = [ConsentViewController.GDPRVendorId : ConsentViewController.SPGDPRVendorGrant]
 public typealias GDPRVendorId = Swift.String
 public typealias SPGDPRPurposeGrants = [ConsentViewController.SPGDPRPurposeId : Swift.Bool]
@@ -585,6 +599,7 @@ public typealias SPGDPRPurposeId = Swift.String
   public var dateCreated: ConsentViewController.SPDate
   @objc public var applies: Swift.Bool
   public var consentStatus: ConsentViewController.ConsentStatus
+  @objc public var googleConsentMode: ConsentViewController.SPGCMData?
   @objc public var acceptedCategories: [Swift.String]
   @objc override dynamic open var description: Swift.String {
     @objc get
