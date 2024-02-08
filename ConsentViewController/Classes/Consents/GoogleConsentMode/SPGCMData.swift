@@ -37,7 +37,7 @@ import Foundation
         case adPersonalization = "ad_personalization"
     }
 
-    let adStorage, analyticsStorage, adUserData, adPersonalization: Status?
+    public let adStorage, analyticsStorage, adUserData, adPersonalization: Status?
 
     init(adStorage: Status? = nil, analyticsStorage: Status? = nil, adUserData: Status? = nil, adPersonalization: Status? = nil) {
         self.adStorage = adStorage
