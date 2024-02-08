@@ -39,7 +39,7 @@
   },
   "resources": "ConsentViewController/**/*.{js,json,png}",
   "info_plist": {
-    "SPEnv": "preprod"
+    "SPEnv": "prod"
   },
   "swift_version": "5.1"
 }
