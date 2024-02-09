@@ -504,9 +504,13 @@ class SPClientCoordinatorSpec: QuickSpec {
                         usnat: SPCampaign(supportLegacyUSPString: true)
                     )
                 )
-                coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
-                    expect(UserDefaults.standard.string(forKey: "IABUSPrivacy_String")).notTo(beNil())
-                    done()
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                        expect(
+                            coordinator.userData.usnat?.consents?.GPPData?["IABUSPrivacy_String"]?.stringValue
+                        ).notTo(beEmpty())
+                        done()
+                    }
                 }
             }
 
