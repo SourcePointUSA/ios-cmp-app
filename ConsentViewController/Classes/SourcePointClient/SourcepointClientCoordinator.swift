@@ -326,7 +326,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.campaigns = campaigns
         self.includeData = IncludeData(
             gppConfig: campaigns.ccpa?.GPPConfig ?? 
-                SPGPPConfig(uspString: campaigns.ccpa?.supportLegacyUSPString)
+                SPGPPConfig(uspString: campaigns.usnat?.supportLegacyUSPString)
         )
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
