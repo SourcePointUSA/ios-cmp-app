@@ -426,6 +426,7 @@ if let userConsents = userConsents {
     webview.load(URLRequest(URL(string: "https://my-url.com/")!)) // load url without _sp_pass_consent=true
 }
 ```
+Note: The desitination url needs to implement the unified script.
 
 A few remarks:
 
