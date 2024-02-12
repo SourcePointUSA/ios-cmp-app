@@ -15,6 +15,11 @@ target 'ConsentViewController_Example' do
   pod 'Wormholy'
 end
 
+target 'SourcepointFirebaseDemo' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'FirebaseAnalytics'
+end
+
 target 'NativePMExampleApp' do
   platform :tvos, '12.0'
   pod 'ConsentViewController', :path => '../'
@@ -43,6 +48,21 @@ target 'ConsentViewController_ExampleTests' do
   pod 'Quick'
   pod 'Nimble'
 end
+
+target 'SourcepointFirebaseDemoTests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'FirebaseAnalytics'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
+target 'SourcepointFirebaseDemoUITests' do
+  pod 'ConsentViewController', :path => '../'
+  pod 'FirebaseAnalytics'
+  pod 'Quick'
+  pod 'Nimble'
+end
+
 
 target 'SPGDPRExampleAppUITests' do
   pod 'ConsentViewController', :path => '../'

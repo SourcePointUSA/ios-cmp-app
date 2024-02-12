@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SourcepointFirebaseDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Google Consent Mode Demo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHA-K2-hZU" userLabel="Google Consent Mode Demo">
+                                <rect key="frame" x="8" y="67" width="349.66666666666669" height="33.666666666666657"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lqg-LF-Cog">
+                                <rect key="frame" x="0.0" y="108.66666666666669" width="393" height="751.33333333333326"/>
+                                <subviews>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IABTCF_EnableAdvertiserConsentMode:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3G6-F5-mV7" userLabel="IABTCF_EnableAdvertiserConsentMode">
+                                        <rect key="frame" x="8" y="7.9999999999999982" width="377" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdQ-ZS-QyQ" userLabel="GCM Value">
+                                        <rect key="frame" x="8" y="28.333333333333329" width="377" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TC String: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AS8-5Q-e1V" userLabel="TC String:">
+                                        <rect key="frame" x="8" y="48.666666666666671" width="377" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="-" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PfX-2A-p1c" userLabel="TCString Value">
+                                        <rect key="frame" x="8" y="69" width="377" height="640.33333333333337"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHD-sE-zFN" userLabel="Load Privacy Manager">
+                                <rect key="frame" x="0.0" y="791.66666666666663" width="393" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Load Privacy Manager"/>
+                                <connections>
+                                    <action selector="loadPMButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="x1I-1J-lKy"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vHA-K2-hZU" secondAttribute="trailing" symbolic="YES" id="0jB-NB-E34"/>
+                            <constraint firstItem="VHD-sE-zFN" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="AAq-Lg-ldY"/>
+                            <constraint firstItem="lqg-LF-Cog" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="GX6-ig-3hM"/>
+                            <constraint firstItem="VHD-sE-zFN" firstAttribute="bottom" secondItem="PfX-2A-p1c" secondAttribute="bottom" constant="8" id="VwA-z5-P8L"/>
+                            <constraint firstItem="VHD-sE-zFN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WCf-5K-Fle"/>
+                            <constraint firstItem="vHA-K2-hZU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="cMJ-rJ-wV1"/>
+                            <constraint firstItem="vHA-K2-hZU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="gYC-Ns-iHT"/>
+                            <constraint firstItem="lqg-LF-Cog" firstAttribute="top" secondItem="vHA-K2-hZU" secondAttribute="bottom" constant="8" id="jwy-CW-x3X"/>
+                            <constraint firstItem="VHD-sE-zFN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="8" id="mac-UY-wio"/>
+                            <constraint firstItem="lqg-LF-Cog" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nbN-Qk-RO8"/>
+                            <constraint firstItem="vHA-K2-hZU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="rcG-gL-Ukq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="GCMFlagLabel" destination="CdQ-ZS-QyQ" id="6Vs-fA-Dfc"/>
+                        <outlet property="TCStringTextView" destination="PfX-2A-p1c" id="oyo-3O-shX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-60.305343511450381" y="3.5211267605633805"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
