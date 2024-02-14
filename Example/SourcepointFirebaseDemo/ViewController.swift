@@ -15,13 +15,13 @@ class ViewController: UIViewController, SPDelegate {
     @IBOutlet weak var TCStringTextView: UITextView!
 
     @IBAction func loadPMButton(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "488393")
+        consentManager.loadGDPRPrivacyManager(withId: "674747")
     }
 
     lazy var consentManager: SPConsentManager = { SPConsentManager(
-        accountId: 22,
-        propertyId: 16893,
-        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        accountId: 1772,
+        propertyId: 21930,
+        propertyName: try! SPPropertyName("tpi-test-space.web.app"),
         campaigns: SPCampaigns(gdpr: SPCampaign()),
         delegate: self
     )}()
