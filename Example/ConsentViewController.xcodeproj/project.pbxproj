@@ -417,13 +417,6 @@
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = ConsentViewController_Example;
 		};
-		822BF2D72657E29900177B0E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 822BF2C22657E29800177B0E;
-			remoteInfo = NativePMExampleApp;
-		};
 		822BF2E22657E29900177B0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
@@ -661,7 +654,6 @@
 		822BF2CC2657E29900177B0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		822BF2CF2657E29900177B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		822BF2D12657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		822BF2D62657E29900177B0E /* NativePMExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludeDataSpec.swift; sourceTree = "<group>"; };
@@ -945,13 +937,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				71F0930571CB8351E8BD5541 /* Pods_NativePMExampleApp.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		822BF2D32657E29900177B0E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1461,7 +1446,6 @@
 				6D80473225D1AC3E0005002B /* ObjC-ExampleAppUITests.xctest */,
 				6D9053FB25D27ABF00E4B49D /* AuthExampleUITests.xctest */,
 				822BF2C32657E29800177B0E /* NativePMExampleApp.app */,
-				822BF2D62657E29900177B0E /* NativePMExampleAppTests.xctest */,
 				822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */,
 				8255B6C827A9661100C9A70D /* SPMBuild.app */,
 				0B312ED92ABC4E2400B62E23 /* ConsentViewController.framework */,
@@ -2382,24 +2366,6 @@
 			productReference = 822BF2C32657E29800177B0E /* NativePMExampleApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		822BF2D52657E29900177B0E /* NativePMExampleAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 822BF2EF2657E29900177B0E /* Build configuration list for PBXNativeTarget "NativePMExampleAppTests" */;
-			buildPhases = (
-				822BF2D22657E29900177B0E /* Sources */,
-				822BF2D32657E29900177B0E /* Frameworks */,
-				822BF2D42657E29900177B0E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				822BF2D82657E29900177B0E /* PBXTargetDependency */,
-			);
-			name = NativePMExampleAppTests;
-			productName = NativePMExampleAppTests;
-			productReference = 822BF2D62657E29900177B0E /* NativePMExampleAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		822BF2E02657E29900177B0E /* NativePMExampleAppUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 822BF2F02657E29900177B0E /* Build configuration list for PBXNativeTarget "NativePMExampleAppUITests" */;
@@ -2617,10 +2583,6 @@
 					822BF2C22657E29800177B0E = {
 						CreatedOnToolsVersion = 12.5;
 					};
-					822BF2D52657E29900177B0E = {
-						CreatedOnToolsVersion = 12.5;
-						TestTargetID = 822BF2C22657E29800177B0E;
-					};
 					822BF2E02657E29900177B0E = {
 						CreatedOnToolsVersion = 12.5;
 						TestTargetID = 822BF2C22657E29800177B0E;
@@ -2686,7 +2648,6 @@
 				6D80473125D1AC3E0005002B /* ObjC-ExampleAppUITests */,
 				6D9053FA25D27ABF00E4B49D /* AuthExampleUITests */,
 				822BF2C22657E29800177B0E /* NativePMExampleApp */,
-				822BF2D52657E29900177B0E /* NativePMExampleAppTests */,
 				822BF2E02657E29900177B0E /* NativePMExampleAppUITests */,
 				8255B6C727A9661100C9A70D /* SPMBuild */,
 				0B312ED82ABC4E2400B62E23 /* SPMConsentViewController-iOS */,
@@ -2815,13 +2776,6 @@
 				822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */,
 				822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */,
 				822BF2CB2657E29800177B0E /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		822BF2D42657E29900177B0E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3881,13 +3835,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		822BF2D22657E29900177B0E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		822BF2DD2657E29900177B0E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4037,11 +3984,6 @@
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* ConsentViewController_Example */;
 			targetProxy = 8214B27C249CC13B00167BFE /* PBXContainerItemProxy */;
-		};
-		822BF2D82657E29900177B0E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 822BF2C22657E29800177B0E /* NativePMExampleApp */;
-			targetProxy = 822BF2D72657E29900177B0E /* PBXContainerItemProxy */;
 		};
 		822BF2E32657E29900177B0E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5053,71 +4995,6 @@
 			};
 			name = Release;
 		};
-		822BF2EA2657E29900177B0E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = NativePMExampleAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.NativePMExampleAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativePMExampleApp.app/NativePMExampleApp";
-				TVOS_DEPLOYMENT_TARGET = 14.5;
-			};
-			name = Debug;
-		};
-		822BF2EB2657E29900177B0E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6KYEQLUC5A;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = NativePMExampleAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.NativePMExampleAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativePMExampleApp.app/NativePMExampleApp";
-				TVOS_DEPLOYMENT_TARGET = 14.5;
-			};
-			name = Release;
-		};
 		822BF2EC2657E29900177B0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D4EC4C211BD7510DDB068A3 /* Pods-NativePMExampleAppUITests.debug.xcconfig */;
@@ -5780,15 +5657,6 @@
 			buildConfigurations = (
 				822BF2E82657E29900177B0E /* Debug */,
 				822BF2E92657E29900177B0E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		822BF2EF2657E29900177B0E /* Build configuration list for PBXNativeTarget "NativePMExampleAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				822BF2EA2657E29900177B0E /* Debug */,
-				822BF2EB2657E29900177B0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
