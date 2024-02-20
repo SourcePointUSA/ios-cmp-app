@@ -33247,63 +33247,56 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6632,
+      "offset": 6661,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6678,
+      "offset": 6707,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6718,
+      "offset": 6747,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6761,
+      "offset": 6790,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 6809,
+      "offset": 6838,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "StringLiteral",
-      "offset": 7775,
+      "offset": 7804,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 7918,
+      "offset": 7947,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 7959,
-      "length": 2,
-      "value": "[]"
-    },
-    {
-      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
-      "kind": "Array",
-      "offset": 7994,
+      "offset": 7988,
       "length": 2,
       "value": "[]"
     },
@@ -33317,28 +33310,35 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 8055,
+      "offset": 8052,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "Array",
-      "offset": 8092,
+      "offset": 8084,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
+      "kind": "Array",
+      "offset": 8121,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 8420,
+      "offset": 8449,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPGDPRConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 8465,
+      "offset": 8494,
       "length": 5,
       "value": "false"
     },
