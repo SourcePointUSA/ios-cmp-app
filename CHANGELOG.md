@@ -1,3 +1,7 @@
+# 7.6.1 (Feb, 08, 2024)
+* [DIA-3617](https://sourcepoint.atlassian.net/browse/DIA-3617) Fixed an issue introduced in version `7.4.3` that caused users to see the GDPR 1st layer message again (and loose consent data) when upgrading from previous versions of the SDK. [#550](https://github.com/SourcePointUSA/ios-cmp-app/pull/550) Big thanks to [@pyrtsa](https://github.com/pyrtsa).
+* Minor updates to the Firebase integration example app.
+
 # 7.6.0 (Feb, 08, 2024)
 * [DIA-3565](https://sourcepoint.atlassian.net/browse/DIA-3565) Add support to [GCM](https://github.com/SourcePointUSA/ios-cmp-app?tab=readme-ov-file#google-consent-mode). [#548](https://github.com/SourcePointUSA/ios-cmp-app/pull/548)
 
