@@ -1,5 +1,5 @@
 PODS:
-  - ConsentViewController (7.6.0):
+  - ConsentViewController (7.6.1):
     - Down (~> 0.11.0)
   - Down (0.11.0)
   - FirebaseAnalytics (10.21.0):
@@ -116,7 +116,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: e76951e27e6ee36c29b5641706ed142deaa6e875
+  ConsentViewController: c34faea25ac1b437cebcc76c7c6a31d8fad65799
   Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
   FirebaseAnalytics: d275f288881d4417f780115dd52c05fa9752d530
   FirebaseCore: 74f647ad9739ea75112ce6c3b3b91f5488ce1122
