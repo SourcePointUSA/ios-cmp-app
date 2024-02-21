@@ -31,7 +31,6 @@ class SPGDPRConsentsSpec: QuickSpec {
                     "grants": {},
                     "childPmId": null,
                     "consentStatus": {},
-                    "expirationDate": "2124-10-27T16:59:00.092Z",
                     "gcmStatus": {
                         "ad_user_data": "granted"
                     }
@@ -45,6 +44,7 @@ class SPGDPRConsentsSpec: QuickSpec {
                 expect(consent.childPmId).to(beNil())
                 expect(consent.applies).to(beTrue())
                 expect(consent.googleConsentMode?.adUserData).to(equal(.granted))
+                expect(consent.expirationDate).to(equal(.distantFuture()))
             } catch {
                 fail(String(describing: error))
             }
