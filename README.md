@@ -329,11 +329,30 @@ SPUserData(
 ```
 
 ## Google Consent Mode
-If your app uses Google Firebase products, you might be interested in supporting [Google Consent Mode](https://developers.google.com/tag-platform/security/concepts/consent-mode). Our SDK makes it convenient for you to set consent using `Firebase.Analytics`.
 
-### Setting Google Consent
+[Google Consent Mode 2.0](https://developers.google.com/tag-platform/security/concepts/consent-mode) ensures that Google vendors on your property comply with an end-user's consent choices for purposes (called consent checks) defined by Google. It is implemented via [Google Analytics for Firebase SDK](https://developers.google.com/tag-platform/security/guides/app-consent?consentmode=advanced&platform=ios).
+
+### Set default consent state for consent checks
+
+Add the following keys to your app's `info.plist` to define the initial consent state (`.granted` | `.denied`) for each of Google's consent checks:
+
+```xml
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE</key> <true/> // set this to `true` or `false` as required
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE</key> <true/>
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA</key> <true/>
+<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key> <true/>
+```
+
+### Update consent checks
+
+Use Google's `setConsent` method to update the relevant consent checks when the appropriate purposes are consented to/rejected.
+
+> The consent checks updated via the `setConsent` method will vary and depends on how you are implementing Google Consent Mode 2.0 on your mobile property within the Sourcepoint portal. The method should only be called with consent checks that are mapped within your vendor list to custom purposes.<br><br>Review Sourcepoint's implementation documentation below for more information:
+> - [Implement Google Consent Mode 2.0 on GDPR TCF (mobile)](https://docs.sourcepoint.com/hc/en-us/articles/26139951882643-Google-Consent-Mode-2-0-GDPR-TCF-mobile#h_01HPHHGSP42A36607MDC7NVBV9)
+> - [Implement Google Consent Mode 2.0 on GDPR Standard (mobile)](https://docs.sourcepoint.com/hc/en-us/articles/26159382698387-Google-Consent-Mode-2-0-GDPR-Standard-mobile#h_01HPJ2MT0F5B1G8ZZVD5PNXT9S)
 
 ```swift
+//Example only. Consent checks updated via setConsent will depend on implementation
 func onSPFinished(userData: SPUserData) {
     let gcmData = userData.gdpr?.consents?.googleConsentMode
     Analytics.setConsent([
@@ -345,16 +364,7 @@ func onSPFinished(userData: SPUserData) {
 }
 ```
 
-### Initial Consent State
-Google requires you to define the initial consent state (`.granted` | `.denied`) of each purpose in your app's `info.plist`, adding the following key to it:
-```xml
-<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE</key> <true/> // set this to `true` or `false` as required
-<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE</key> <true/>
-<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA</key> <true/>
-<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key> <true/>
-```
-
-For more information, please refer to [Manage consent settings (apps)](https://developers.google.com/tag-platform/security/guides/app-consent?platform=ios)
+Be advised that the `googleConsentMode` object in `SPUserData` will only return values for Google consent checks that are mapped to a custom purpose within your vendor list. For all other Google consent checks, the response will be `null`.
 
 ## Adding or Removing custom consents
 
