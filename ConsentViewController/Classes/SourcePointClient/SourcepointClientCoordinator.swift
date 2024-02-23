@@ -197,8 +197,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var needsNewConsentData: Bool {
         migratingUser || needsNewUSNatData || transitionCCPAUSNat || (
-            state.localVersion != nil && state.localVersion != State.version &&
-            (
+            state.localVersion != State.version && (
                 state.gdpr?.uuid != nil ||
                 state.ccpa?.uuid != nil ||
                 state.usnat?.uuid != nil
@@ -371,10 +370,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let usnatExpirationDate = localState.usnat?.expirationDate.date,
            usnatExpirationDate < Date() {
             localState.usnat = .empty()
-        }
-
-        if localState.localVersion == nil {
-            localState.localVersion = State.version
         }
 
         return localState
@@ -568,7 +563,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             )
         }
 
-        state.localVersion = State.version
         storage.spState = state
     }
 
@@ -610,6 +604,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         } else {
             next()
         }
+        state.localVersion = State.version
     }
 
     func handleMessagesResponse(_ response: MessagesResponse) -> LoadMessagesReturnType {
