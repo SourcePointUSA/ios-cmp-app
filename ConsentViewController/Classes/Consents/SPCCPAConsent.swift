@@ -191,14 +191,14 @@ extension SPUSPString {
         status = try container.decode(CCPAConsentStatus.self, forKey: .status)
         rejectedVendors = try container.decode([String].self, forKey: .rejectedVendors)
         rejectedCategories = try container.decode([String].self, forKey: .rejectedCategories)
-        signedLspa = try container.decode(Bool.self, forKey: .signedLspa)
+        signedLspa = try container.decodeIfPresent(Bool.self, forKey: .signedLspa) ?? false
         uuid = try container.decodeIfPresent(String.self, forKey: .uuid)
         childPmId = try container.decodeIfPresent(String.self, forKey: .childPmId)
         consentStatus = try (try? container.decode(ConsentStatus.self, forKey: .consentStatus)) ?? ConsentStatus(from: decoder)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         applies = try container.decodeIfPresent(Bool.self, forKey: .applies) ?? false
         GPPData = try container.decodeIfPresent(SPJson.self, forKey: .GPPData) ?? SPJson()
-        expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
+        expirationDate = try container.decodeIfPresent(SPDate.self, forKey: .expirationDate) ?? .distantFuture()
         if let date = try container.decodeIfPresent(SPDate.self, forKey: .dateCreated) {
             dateCreated = date
         }
