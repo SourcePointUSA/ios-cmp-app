@@ -464,6 +464,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
                 self.state.udpateUSNatStatus()
+                self.state.localVersion = State.version
                 self.messages { messagesResponse in
                     handler(messagesResponse)
                     self.pvData(pubData: pubData) { }
@@ -604,7 +605,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         } else {
             next()
         }
-        state.localVersion = State.version
     }
 
     func handleMessagesResponse(_ response: MessagesResponse) -> LoadMessagesReturnType {
