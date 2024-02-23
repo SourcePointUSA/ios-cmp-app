@@ -464,7 +464,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             self.consentStatus {
                 self.state.udpateGDPRStatus()
                 self.state.udpateUSNatStatus()
-                self.state.localVersion = State.version
                 self.messages { messagesResponse in
                     handler(messagesResponse)
                     self.pvData(pubData: pubData) { }
@@ -595,6 +594,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             ) { result in
                 switch result {
                     case .success(let response):
+                        self.state.localVersion = State.version
                         self.handleConsentStatusResponse(response)
 
                     case .failure(let error):
@@ -603,6 +603,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 next()
             }
         } else {
+            self.state.localVersion = State.version
             next()
         }
     }
