@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-// swiftlint:disable file_length
+
+// swiftlint:disable file_length function_parameter_count
 @objcMembers public class SPConsentManager: NSObject {
     static let DefaultTimeout = TimeInterval(30)
     public static var shouldCallErrorMetrics = true
@@ -701,3 +702,5 @@ func mainSync<T>(execute work: () throws -> T) rethrows -> T {
 
     return try DispatchQueue.main.sync { try work() }
 }
+
+// swiftlint:enable function_parameter_count
