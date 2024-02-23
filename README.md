@@ -491,6 +491,17 @@ var consentManager = SPConsentManager(
 )
 ```
 
+## Support U.S. Privacy (Legacy) with U.S. Multi-State Privacy
+
+If you're transitioning from U.S. Privacy (Legacy) to U.S. Multi-State Privacy, you may want to continue supporting the legacy US privacy string (`IABUSPrivacy_String`).
+To do so, when instantiating the SDK, make sure to set the flag `.supportLegacyUSPString` to true. Example:
+```swift
+var consentManager = SPConsentManager(
+    ...
+    campaigns: SPCampaigns(usnat: SPCampaign(supportLegacyUSPString: true)), // <== here
+    delegate: self
+)
+```
 
 ## Configuring the Message/Consents timeout
 

@@ -99,7 +99,10 @@ class SPUserDefaults: SPLocalStorage {
         Self.USER_DATA_KEY: userData,
         Self.US_PRIVACY_STRING_KEY: usPrivacyString,
         Self.LOCAL_STATE_KEY: localState
-    ].merging(tcfData ?? [:]) { item, _ in item }}
+    ]
+        .merging(tcfData ?? [:]) { item, _ in item }
+        .merging(gppData ?? [:]) { item, _ in item }
+    }
 
     func clear() {
         localState = nil

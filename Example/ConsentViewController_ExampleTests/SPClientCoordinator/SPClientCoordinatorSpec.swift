@@ -498,6 +498,22 @@ class SPClientCoordinatorSpec: QuickSpec {
                 coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()))
             }
 
+            it("can support legacy uspstring") {
+                coordinator = coordinatorFor(
+                    campaigns: SPCampaigns(
+                        usnat: SPCampaign(supportLegacyUSPString: true)
+                    )
+                )
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
+                        expect(
+                            coordinator.userData.usnat?.consents?.GPPData?["IABUSPrivacy_String"]?.stringValue
+                        ).notTo(beEmpty())
+                        done()
+                    }
+                }
+            }
+
             describe("with authId") {
                 it("persists consent even after cleaning all data") {
                     waitUntil { done in
