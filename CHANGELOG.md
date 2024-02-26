@@ -1,3 +1,8 @@
+# 7.6.2 (Feb, 26, 2024)
+* [DIA-3617](https://sourcepoint.atlassian.net/browse/DIA-3617) Fixed an issue that would prevent consent data from being migrated from older versions of the SDK (>= 6 <=7.4.0). [#552](https://github.com/SourcePointUSA/ios-cmp-app/pull/552)
+* Fixed an issue preventing setups with a CCPA campaign from migrating user data from SDK version 7.4.3 onwards. [#552](https://github.com/SourcePointUSA/ios-cmp-app/pull/552)
+* Improvments to our USNat documentation.
+
 # 7.6.1 (Feb, 21, 2024)
 * [DIA-3617](https://sourcepoint.atlassian.net/browse/DIA-3617) Fixed an issue introduced in version `7.4.3` that caused users to see the GDPR 1st layer message again (and loose consent data) when upgrading from previous versions of the SDK. [#550](https://github.com/SourcePointUSA/ios-cmp-app/pull/550) Big thanks to [@pyrtsa](https://github.com/pyrtsa).
 * Minor updates to the Firebase integration example app.
