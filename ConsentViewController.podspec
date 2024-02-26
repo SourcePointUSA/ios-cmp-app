@@ -13,7 +13,12 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '12.0'
   s.tvos.exclude_files = 'ConsentViewController/Classes/Views/iOS'
   s.tvos.dependency 'Down', '~> 0.11.0'
-  s.resource_bundles = { 'ConsentViewController' => ['ConsentViewController/Assets/**/*', 'Pod/Classes/**/*.{storyboard,xib,xcassets,json,imageset,png,js}'] }
+  s.resource_bundles = {
+      'ConsentViewController' => [
+          'ConsentViewController/Assets/**/*',
+          'Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}'
+      ]
+  }
   s.resources = "ConsentViewController/**/*.{js,json,png}"
   s.info_plist = {
       'SPEnv' => 'prod'

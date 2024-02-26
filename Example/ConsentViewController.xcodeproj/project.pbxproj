@@ -349,6 +349,9 @@
 		82CD6F852B59CC3600CAD663 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 82CD6F842B59CC3600CAD663 /* Down */; };
 		82CFB3EF2A431D89002B0EF2 /* SPCCPAConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */; };
 		82CFDE312924057500F86A69 /* JSONLocalDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */; };
+		82D6CE222B8CD186004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */; };
+		82D6CE262B8CD508004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE252B8CD508004677E9 /* PrivacyInfo.xcprivacy */; };
+		82D6CE272B8CD508004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE252B8CD508004677E9 /* PrivacyInfo.xcprivacy */; };
 		82D8447D2B7AA5AE0069714D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8447C2B7AA5AE0069714D /* AppDelegate.swift */; };
 		82D8447F2B7AA5AE0069714D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8447E2B7AA5AE0069714D /* SceneDelegate.swift */; };
 		82D844812B7AA5AE0069714D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D844802B7AA5AE0069714D /* ViewController.swift */; };
@@ -790,6 +793,8 @@
 		82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUserDefaults.swift; sourceTree = "<group>"; };
 		82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCCPAConsentSpec.swift; sourceTree = "<group>"; };
 		82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLocalDataViewController.swift; sourceTree = "<group>"; };
+		82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		82D6CE252B8CD508004677E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		82D8447A2B7AA5AE0069714D /* SourcepointFirebaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourcepointFirebaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D8447C2B7AA5AE0069714D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82D8447E2B7AA5AE0069714D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1069,6 +1074,7 @@
 		0B312F5E2ABC504000B62E23 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				82D6CE252B8CD508004677E9 /* PrivacyInfo.xcprivacy */,
 				0B312F5F2ABC504000B62E23 /* images */,
 				0B312F622ABC504000B62E23 /* javascript */,
 			);
@@ -1473,6 +1479,7 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				8225BAB1298BF1F200C2E5FA /* Statuses.swift */,
+				82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */,
 			);
 			name = "Example for ConsentViewController";
 			path = ConsentViewController;
@@ -2668,6 +2675,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82D6CE262B8CD508004677E9 /* PrivacyInfo.xcprivacy in Resources */,
 				82C80BEE2B8CB7870079607F /* PrivacyInfo.xcprivacy in Resources */,
 				0B3130072ABC50D200B62E23 /* SPJSReceiver.js in Resources */,
 			);
@@ -2689,6 +2697,7 @@
 				82CD6F152B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.xib in Resources */,
 				82CD6F032B59CA2C00CAD663 /* SPPMHeader.xib in Resources */,
 				0B3130062ABC50C300B62E23 /* SP_Icon.png in Resources */,
+				82D6CE272B8CD508004677E9 /* PrivacyInfo.xcprivacy in Resources */,
 				82CD6F232B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.xib in Resources */,
 				82CD6EFB2B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.xib in Resources */,
 				82CD6F172B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.xib in Resources */,
@@ -2726,6 +2735,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				82D6CE222B8CD186004677E9 /* PrivacyInfo.xcprivacy in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
