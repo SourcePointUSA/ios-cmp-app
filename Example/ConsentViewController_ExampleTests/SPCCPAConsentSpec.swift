@@ -36,7 +36,6 @@ class SPCCPAConsentsSpec: QuickSpec {
                     "rejectedCategories": [],
                     "consentStatus": {},
                     "signedLspa": false,
-                    "expirationDate": "2023-02-06T16:20:53.707Z",
                     "GPPData": {
                         "foo": "bar"
                     }
@@ -50,7 +49,7 @@ class SPCCPAConsentsSpec: QuickSpec {
             expect(consent.rejectedCategories).to(beEmpty())
             expect(consent.signedLspa).to(beFalse())
             expect(consent.GPPData.dictionaryValue?["foo"] as? String).to(equal("bar"))
-            expect(consent.expirationDate).to(equal(year: 2023, month: 2, day: 6))
+            expect(consent.expirationDate).to(equal(.distantFuture()))
         }
     }
 }

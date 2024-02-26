@@ -81,7 +81,7 @@ extension SPSampleable {
 
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
-        static let version = 2
+        static let version = 3
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var additionsChangeDate = SPDate.now()
@@ -197,8 +197,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var needsNewConsentData: Bool {
         migratingUser || needsNewUSNatData || transitionCCPAUSNat || (
-            state.localVersion != nil && state.localVersion != State.version &&
-            (
+            state.localVersion != State.version && (
                 state.gdpr?.uuid != nil ||
                 state.ccpa?.uuid != nil ||
                 state.usnat?.uuid != nil
@@ -374,10 +373,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if let usnatExpirationDate = localState.usnat?.expirationDate.date,
            usnatExpirationDate < Date() {
             localState.usnat = .empty()
-        }
-
-        if localState.localVersion == nil {
-            localState.localVersion = State.version
         }
 
         return localState
@@ -571,7 +566,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             )
         }
 
-        state.localVersion = State.version
         storage.spState = state
     }
 
@@ -603,6 +597,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             ) { result in
                 switch result {
                     case .success(let response):
+                        self.state.localVersion = State.version
                         self.handleConsentStatusResponse(response)
 
                     case .failure(let error):
@@ -611,6 +606,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 next()
             }
         } else {
+            self.state.localVersion = State.version
             next()
         }
     }
