@@ -200,6 +200,8 @@
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
 		82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C4935F28F17A2D00898E7A /* CampaignSpec.swift */; };
+		82C80BEE2B8CB7870079607F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82C80BED2B8CB7870079607F /* PrivacyInfo.xcprivacy */; };
+		82C80BEF2B8CB7870079607F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82C80BED2B8CB7870079607F /* PrivacyInfo.xcprivacy */; };
 		82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */; };
 		82CD6EA12B59CA2C00CAD663 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */; };
 		82CD6EA32B59CA2C00CAD663 /* SPCCPAConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */; };
@@ -705,6 +707,7 @@
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
 		82C4935F28F17A2D00898E7A /* CampaignSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignSpec.swift; sourceTree = "<group>"; };
 		82C54E84290814C400379259 /* SPSdkStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSdkStatus.h; sourceTree = "<group>"; };
+		82C80BED2B8CB7870079607F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampaignConsent.swift; sourceTree = "<group>"; };
 		82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentStatus.swift; sourceTree = "<group>"; };
 		82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPAConsent.swift; sourceTree = "<group>"; };
@@ -1029,6 +1032,7 @@
 		0B312EEF2ABC504000B62E23 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				82C80BED2B8CB7870079607F /* PrivacyInfo.xcprivacy */,
 				82CD6E412B59CA2C00CAD663 /* Consents */,
 				82CD6E952B59CA2C00CAD663 /* Extensions */,
 				82CD6E9B2B59CA2C00CAD663 /* LocalStorage */,
@@ -2664,6 +2668,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82C80BEE2B8CB7870079607F /* PrivacyInfo.xcprivacy in Resources */,
 				0B3130072ABC50D200B62E23 /* SPJSReceiver.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2680,6 +2685,7 @@
 				0B3130052ABC50C300B62E23 /* Barcode.png in Resources */,
 				82CD6F212B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.xib in Resources */,
 				82CD6EEB2B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.xib in Resources */,
+				82C80BEF2B8CB7870079607F /* PrivacyInfo.xcprivacy in Resources */,
 				82CD6F152B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.xib in Resources */,
 				82CD6F032B59CA2C00CAD663 /* SPPMHeader.xib in Resources */,
 				0B3130062ABC50C300B62E23 /* SP_Icon.png in Resources */,
