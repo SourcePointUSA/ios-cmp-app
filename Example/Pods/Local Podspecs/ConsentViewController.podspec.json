@@ -34,7 +34,7 @@
   "resource_bundles": {
     "ConsentViewController": [
       "ConsentViewController/Assets/**/*",
-      "Pod/Classes/**/*.{storyboard,xib,xcassets,json,imageset,png,js}"
+      "Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}"
     ]
   },
   "resources": "ConsentViewController/**/*.{js,json,png}",
