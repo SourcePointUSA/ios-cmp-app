@@ -620,7 +620,7 @@ SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId gppConfig:(SPGPPConfig * _Nullable)gppConfig transitionCCPAAuth:(enum SPOptinalBool)transitionCCPAAuth OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId gppConfig:(SPGPPConfig * _Nullable)gppConfig transitionCCPAAuth:(enum SPOptinalBool)transitionCCPAAuth supportLegacyUSPString:(enum SPOptinalBool)supportLegacyUSPString OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1849,7 +1849,7 @@ SWIFT_CLASS("_TtC21ConsentViewController10SPCampaign")
 @interface SPCampaign : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
 - (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId gppConfig:(SPGPPConfig * _Nullable)gppConfig transitionCCPAAuth:(enum SPOptinalBool)transitionCCPAAuth OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nonnull)targetingParams groupPmId:(NSString * _Nullable)groupPmId gppConfig:(SPGPPConfig * _Nullable)gppConfig transitionCCPAAuth:(enum SPOptinalBool)transitionCCPAAuth supportLegacyUSPString:(enum SPOptinalBool)supportLegacyUSPString OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

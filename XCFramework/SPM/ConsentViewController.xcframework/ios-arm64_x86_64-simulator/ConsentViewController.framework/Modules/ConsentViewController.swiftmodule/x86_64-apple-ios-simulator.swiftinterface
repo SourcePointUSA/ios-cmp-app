@@ -182,7 +182,7 @@ extension Foundation.URLSessionDataTask {
     @objc set
   }
 }
-@objc @objcMembers public class SPGPPConfig : ObjectiveC.NSObject, Swift.Encodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class SPGPPConfig : ObjectiveC.NSObject, Swift.Encodable {
   @objc public enum SPMspaBinaryFlag : Swift.Int, Swift.Encodable, Swift.Equatable {
     case yes, no
     public var string: Swift.String {
@@ -403,11 +403,11 @@ public typealias SPTargetingParams = [Swift.String : Swift.String]
   @objc override dynamic public var description: Swift.String {
     @objc get
   }
-  @nonobjc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil, gppConfig: ConsentViewController.SPGPPConfig? = nil, transitionCCPAAuth: Swift.Bool? = nil)
+  @nonobjc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil, gppConfig: ConsentViewController.SPGPPConfig? = nil, transitionCCPAAuth: Swift.Bool? = nil, supportLegacyUSPString: Swift.Bool? = nil)
   @available(swift, obsoleted: 1.0)
   @objc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil)
   @available(swift, obsoleted: 1.0)
-  @objc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil, gppConfig: ConsentViewController.SPGPPConfig? = nil, transitionCCPAAuth: ConsentViewController.SPOptinalBool = .unset)
+  @objc public init(targetingParams: ConsentViewController.SPTargetingParams = [:], groupPmId: Swift.String? = nil, gppConfig: ConsentViewController.SPGPPConfig? = nil, transitionCCPAAuth: ConsentViewController.SPOptinalBool = .unset, supportLegacyUSPString: ConsentViewController.SPOptinalBool = .unset)
   @objc deinit
 }
 @objc @objcMembers public class SPCampaigns : ObjectiveC.NSObject {
