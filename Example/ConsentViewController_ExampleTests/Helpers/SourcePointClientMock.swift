@@ -173,16 +173,7 @@ class SourcePointClientMock: SourcePointProtocol {
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(USNatChoiceResponse(
-                uuid: "",
-                consentStrings: [],
-                categories: [],
-                dateCreated: .now(),
-                expirationDate: .distantFuture(),
-                webConsentPayload: nil,
-                consentStatus: .init(),
-                GPPData: nil
-            )))
+            handler(.success(SPUSNatConsent.empty()))
         }
     }
 

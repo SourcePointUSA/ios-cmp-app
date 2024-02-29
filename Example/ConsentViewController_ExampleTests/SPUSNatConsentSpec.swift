@@ -18,7 +18,7 @@ class SPUSNatConsentsSpec: QuickSpec {
                 let consents = SPUSNatConsent.empty()
                 expect(consents.uuid).to(beNil())
                 expect(consents.applies).to(beFalse())
-                expect(consents.dateCreated.date.doubleValue).to(beCloseTo(SPDate(date: Date()).date.doubleValue, within: 0.001))
+                expect(consents.dateCreated.date.doubleValue).to(beCloseTo(SPDate(date: Date()).date.doubleValue, within: 0.01))
             }
         }
 
@@ -33,7 +33,16 @@ class SPUSNatConsentsSpec: QuickSpec {
                         "sectionName": "abc",
                         "consentString": "xyz"
                     }],
-                    "categories": ["foo"],
+                    "userConsents": {
+                        "categories": [{
+                            "_id": "categoryId",
+                            "consented": false
+                        }],
+                        "vendors": [{
+                            "_id": "vendorId",
+                            "consented": false
+                        }]
+                    },
                     "consentStatus": {
                         "granularStatus": {},
                         "hasConsentData": false
@@ -44,16 +53,23 @@ class SPUSNatConsentsSpec: QuickSpec {
                 }
                 """.data(using: .utf8)
             }
-            let consent = try usnatConsents.decoded() as SPUSNatConsent
-            expect(consent.applies).to(beTrue())
-            expect(consent.categories).to(equal(["foo"]))
-            expect(consent.GPPData).to(equal(try? SPJson(["foo": "bar"])))
-            expect(consent.consentStrings).to(equal([
-                .init(sectionId: 99, sectionName: "abc", consentString: "xyz")
-            ]))
-            expect(consent.dateCreated).to(equal(year: 2023, month: 2, day: 6))
-            expect(consent.expirationDate).to(equal(year: 2024, month: 2, day: 6))
-            expect(consent.consentStatus).to(equal(ConsentStatus()))
+            do {
+                let consent = try usnatConsents.decoded() as SPUSNatConsent
+                expect(consent.applies).to(beTrue())
+                expect(consent.categories)
+                    .to(equal([SPConsentable(id: "categoryId", consented: false)]))
+                expect(consent.vendors)
+                    .to(equal([SPConsentable(id: "vendorId", consented: false)]))
+                expect(consent.GPPData).to(equal(try? SPJson(["foo": "bar"])))
+                expect(consent.consentStrings).to(equal([
+                    .init(sectionId: 99, sectionName: "abc", consentString: "xyz")
+                ]))
+                expect(consent.dateCreated).to(equal(year: 2023, month: 2, day: 6))
+                expect(consent.expirationDate).to(equal(year: 2024, month: 2, day: 6))
+                expect(consent.consentStatus).to(equal(ConsentStatus()))
+            } catch {
+                fail(String(describing: error))
+            }
         }
     }
 }

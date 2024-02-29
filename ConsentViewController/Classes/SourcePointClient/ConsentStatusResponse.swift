@@ -39,9 +39,9 @@ struct ConsentStatusResponse: Decodable, Equatable {
             let consentStrings: [SPUSNatConsent.ConsentString]
             let dateCreated, expirationDate: SPDate
             let consentStatus: ConsentStatus
-            let categories: [String]
             let webConsentPayload: SPWebConsentPayload?
             let GPPData: SPJson?
+            let userConsents: SPUSNatConsent.UserConsents
         }
 
         let gdpr: GDPR?
