@@ -9,8 +9,8 @@ import Foundation
 
 @objcMembers public class SPUSNatConsent: NSObject, Codable, CampaignConsent, NSCopying {
     public struct ConsentString: Codable, Equatable {
-        let sectionId: Int
-        let sectionName, consentString: String
+        public let sectionId: Int
+        public let sectionName, consentString: String
     }
 
     public var uuid: String?
