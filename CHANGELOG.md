@@ -1,4 +1,26 @@
 # 7.6.3 (Feb, 26, 2024)
+* [DIA-3558](https://sourcepoint.atlassian.net/browse/DIA-3558) Expanded public fields on `SPUSNatConsent` object. [#555](https://github.com/SourcePointUSA/ios-cmp-app/pull/555)
+```diff
+SPUSNatConsent(
+-  consentStrings: []
++ consentStrings: [{ sectionId: Int, sectionName: String, consentString: String }]
++ categories: [{ id: String, consented: Bool }]
++ vendors: [{ id: String, consented: Bool }]
++ statuses: {
++     rejectedAny: Bool?,
++     consentedToAll: Bool?,
++     consentedToAny: Bool?,
++     sellStatus: Bool?,
++     shareStatus: Bool,
++     sensitiveDataStatus: Bool?,
++     gpcStatus: Bool?,
++     previousOptInAll: Bool?
++     hasConsentData: Bool?
++   }
+)
+```
+
+# 7.6.3 (Feb, 26, 2024)
 * [DIA-3415](https://sourcepoint.atlassian.net/browse/DIA-3415) Added [Privacy Manifest](https://developer.apple.com/documentation/bundleresources/privacy_manifest_files). [#553](https://github.com/SourcePointUSA/ios-cmp-app/pull/553)
 
 # 7.6.2 (Feb, 26, 2024)
