@@ -81,7 +81,7 @@ extension SPSampleable {
 
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
-        static let version = 3
+        static let version = 4
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var additionsChangeDate = SPDate.now()
@@ -560,7 +560,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 expirationDate: usnat.expirationDate,
                 consentStrings: usnat.consentStrings,
                 webConsentPayload: usnat.webConsentPayload,
-                categories: usnat.categories,
+                categories: usnat.userConsents.categories,
+                vendors: usnat.userConsents.vendors,
                 consentStatus: usnat.consentStatus,
                 GPPData: usnat.GPPData
             )
@@ -839,7 +840,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func postChoice(
         _ action: SPAction,
-        handler: @escaping (Result<USNatChoiceResponse, SPError>) -> Void
+        handler: @escaping (Result<SPUSNatConsent, SPError>) -> Void
     ) {
         spClient.postUSNatAction(
             actionType: action.type,
@@ -932,7 +933,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleUSNatPostChoice(
         _ action: SPAction,
-        _ postResponse: USNatChoiceResponse
+        _ postResponse: SPUSNatConsent
     ) {
         state.usnat = SPUSNatConsent(
             uuid: postResponse.uuid,
@@ -942,6 +943,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             consentStrings: postResponse.consentStrings,
             webConsentPayload: postResponse.webConsentPayload,
             categories: postResponse.categories,
+            vendors: postResponse.vendors,
             consentStatus: postResponse.consentStatus,
             GPPData: postResponse.GPPData
         )

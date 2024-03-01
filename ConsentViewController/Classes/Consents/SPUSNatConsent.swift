@@ -8,21 +8,29 @@
 import Foundation
 
 @objcMembers public class SPUSNatConsent: NSObject, Codable, CampaignConsent, NSCopying {
-    public struct ConsentString: Codable, Equatable {
-        let sectionId: Int
-        let sectionName, consentString: String
-    }
+    /// A collection of accepted/rejected vendors and their ids
+    public var vendors: [SPConsentable] { userConsents.vendors }
 
+    /// A collection of accepted/rejected categories (aka. purposes) and their ids
+    public var categories: [SPConsentable] { userConsents.categories }
+
+    /// Identifies this usnat consent profile
     public var uuid: String?
 
+    /// Whether USNat applies according to user's location (inferred from IP lookup) and your Vendor List applies scope setting
     public var applies: Bool
 
+    /// The consent strings related to this user profile
     public let consentStrings: [ConsentString]
 
-    /// A dictionary with all GPP related data
-    public var GPPData: SPJson?
+    /// A series of statuses (`Bool?`) regarding GPP and user consent
+    /// - SeeAlso: `SPUSNatConsent.Statuses`
+    public var statuses: Statuses { .init(from: consentStatus) }
 
-    let categories: [String]
+    /// A dictionary with all GPP related data. Only available on Swift implementations.
+    /// ObjC projects will have to access this data via `UserDefaults` according to the GPP spec:
+    /// - SeeAlso: https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform/blob/main/Core/CMP%20API%20Specification.md#in-app-details
+    public var GPPData: SPJson?
 
     var dateCreated, expirationDate: SPDate
 
@@ -32,20 +40,12 @@ import Foundation
     /// Used by the rendering app
     let webConsentPayload: SPWebConsentPayload?
 
+    /// Used by SP endpoints and to derive the data inside `statuses`
     var consentStatus: ConsentStatus
 
-    override open var description: String {
-        """
-        SPUSNatConsent(
-            - uuid: \(uuid ?? "")
-            - applies: \(applies)
-            - consentStrings: \(consentStrings)
-            - categories: \(categories)
-            - dateCreated: \(dateCreated)
-            - expirationDate: \(expirationDate)
-        )
-        """
-    }
+    /// Only here to make it easier encoding/decoding data from SP endpoints.
+    /// Used to derive the data in `vendors` and `categories`
+    var userConsents: UserConsents
 
     init(
         uuid: String? = nil,
@@ -55,7 +55,8 @@ import Foundation
         consentStrings: [ConsentString],
         webConsentPayload: SPWebConsentPayload? = nil,
         lastMessage: LastMessageData? = nil,
-        categories: [String],
+        categories: [SPConsentable],
+        vendors: [SPConsentable],
         consentStatus: ConsentStatus,
         GPPData: SPJson? = nil
     ) {
@@ -66,9 +67,9 @@ import Foundation
         self.consentStrings = consentStrings
         self.webConsentPayload = webConsentPayload
         self.lastMessage = lastMessage
-        self.categories = []
         self.consentStatus = consentStatus
         self.GPPData = GPPData
+        self.userConsents = UserConsents(vendors: vendors, categories: categories)
     }
 
     required public init(from decoder: Decoder) throws {
@@ -80,9 +81,25 @@ import Foundation
         consentStrings = try container.decode([ConsentString].self, forKey: .consentStrings)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
         lastMessage = try container.decodeIfPresent(LastMessageData.self, forKey: .lastMessage)
-        categories = try container.decode([String].self, forKey: .categories)
         consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
         GPPData = try container.decodeIfPresent(SPJson.self, forKey: .GPPData)
+        userConsents = try container.decodeIfPresent(UserConsents.self, forKey: .userConsents) ?? UserConsents(vendors: [], categories: [])
+    }
+}
+
+extension SPUSNatConsent {
+    override open var description: String {
+        """
+        SPUSNatConsent(
+            - uuid: \(uuid ?? "")
+            - applies: \(applies)
+            - consentStrings: \(consentStrings)
+            - categories: \(categories)
+            - vendors: \(vendors)
+            - dateCreated: \(dateCreated)
+            - expirationDate: \(expirationDate)
+        )
+        """
     }
 
     public static func empty() -> SPUSNatConsent { SPUSNatConsent(
@@ -91,20 +108,20 @@ import Foundation
         expirationDate: .distantFuture(),
         consentStrings: [],
         categories: [],
+        vendors: [],
         consentStatus: ConsentStatus()
     )}
 
     override public func isEqual(_ object: Any?) -> Bool {
-        if let other = object as? SPUSNatConsent {
-            return other.uuid == uuid &&
-                other.applies == applies &&
-                other.consentStrings.count == consentStrings.count &&
-                other.consentStrings.sorted(by: { $0.sectionId > $1.sectionId }) ==
-                    other.consentStrings.sorted(by: { $0.sectionId > $1.sectionId }) &&
-                other.categories == categories
-        } else {
-            return false
-        }
+        guard let other = object as? SPUSNatConsent else { return false }
+
+        return other.uuid == uuid &&
+            other.applies == applies &&
+            other.consentStrings.count == consentStrings.count &&
+            other.consentStrings.sorted(by: { $0.sectionId > $1.sectionId }) ==
+            other.consentStrings.sorted(by: { $0.sectionId > $1.sectionId }) &&
+            other.categories == categories &&
+            other.vendors == vendors
     }
 
     public func copy(with zone: NSZone? = nil) -> Any { SPUSNatConsent(
@@ -116,7 +133,105 @@ import Foundation
         webConsentPayload: webConsentPayload,
         lastMessage: lastMessage,
         categories: categories,
+        vendors: vendors,
         consentStatus: consentStatus,
         GPPData: GPPData
     )}
+}
+
+extension SPUSNatConsent {
+    struct UserConsents: Codable, Equatable {
+        let vendors, categories: [SPConsentable]
+    }
+}
+
+extension SPUSNatConsent {
+    @objcMembers public class ConsentString: NSObject, Codable {
+        public let sectionId: Int
+        public let sectionName, consentString: String
+
+        override open var description: String {
+            """
+            SPUSNatConsent.ConsentString(
+                - sectionId: \(sectionId)
+                - sectionName: \(sectionName)
+                - consentString: \(consentString)
+            )
+            """
+        }
+
+        init(sectionId: Int, sectionName: String, consentString: String) {
+            self.sectionId = sectionId
+            self.sectionName = sectionName
+            self.consentString = consentString
+        }
+
+        override public func isEqual(_ object: Any?) -> Bool {
+            guard let other = object as? ConsentString else { return false }
+
+            return other.sectionId == sectionId &&
+            other.sectionName == sectionName &&
+            other.consentString == consentString
+        }
+    }
+}
+
+extension SPUSNatConsent {
+    @objcMembers public class Statuses: NSObject {
+        let rejectedAny, consentedToAll, consentedToAny,
+            hasConsentData, sellStatus, shareStatus,
+            sensitiveDataStatus, gpcStatus: Bool?
+
+        override open var description: String {
+            """
+            SPUSNatConsent.Statuses(
+                - rejectedAny: \(rejectedAny as Any)
+                - consentedToAll: \(consentedToAll as Any)
+                - consentedToAny: \(consentedToAny as Any)
+                - hasConsentData: \(hasConsentData as Any)
+                - sellStatus: \(sellStatus as Any)
+                - shareStatus: \(shareStatus as Any)
+                - sensitiveDataStatus: \(sensitiveDataStatus as Any)
+                - gpcStatus: \(gpcStatus as Any)
+            )
+            """
+        }
+
+        init(from status: ConsentStatus) {
+            rejectedAny = status.rejectedAny
+            consentedToAll = status.consentedToAll
+            consentedToAny = status.consentedToAny
+            hasConsentData = status.hasConsentData
+            sellStatus = status.granularStatus?.sellStatus
+            shareStatus = status.granularStatus?.shareStatus
+            sensitiveDataStatus = status.granularStatus?.sensitiveDataStatus
+            gpcStatus = status.granularStatus?.gpcStatus
+        }
+
+        init(rejectedAny: Bool?, consentedToAll: Bool?, consentedToAny: Bool?,
+             hasConsentData: Bool?, sellStatus: Bool?, shareStatus: Bool?,
+             sensitiveDataStatus: Bool?, gpcStatus: Bool?) {
+            self.rejectedAny = rejectedAny
+            self.consentedToAll = consentedToAll
+            self.consentedToAny = consentedToAny
+            self.hasConsentData = hasConsentData
+            self.sellStatus = sellStatus
+            self.shareStatus = shareStatus
+            self.sensitiveDataStatus = sensitiveDataStatus
+            self.gpcStatus = gpcStatus
+        }
+
+        public override func isEqual(_ object: Any?) -> Bool {
+            guard let other = object as? Statuses else { return false }
+
+            return other.rejectedAny == rejectedAny &&
+               other.consentedToAll == consentedToAll &&
+               other.consentedToAny == consentedToAny &&
+               other.hasConsentData == hasConsentData &&
+               other.sellStatus == sellStatus &&
+               other.shareStatus == shareStatus &&
+               other.sensitiveDataStatus == sensitiveDataStatus &&
+               other.gpcStatus == gpcStatus
+        }
+    }
 }
