@@ -1,4 +1,4 @@
-# 7.6.4 (Feb, 26, 2024)
+# 7.6.4 (Mar, 1, 2024)
 * [DIA-3558](https://sourcepoint.atlassian.net/browse/DIA-3558) Expanded public fields on `SPUSNatConsent` object. [#555](https://github.com/SourcePointUSA/ios-cmp-app/pull/555)
 ```diff
 SPUSNatConsent(
@@ -14,7 +14,6 @@ SPUSNatConsent(
 +     shareStatus: Bool,
 +     sensitiveDataStatus: Bool?,
 +     gpcStatus: Bool?,
-+     previousOptInAll: Bool?
 +     hasConsentData: Bool?
 +   }
 )
@@ -24,6 +23,7 @@ SPUSNatConsent(
 * [DIA-3415](https://sourcepoint.atlassian.net/browse/DIA-3415) Added [Privacy Manifest](https://developer.apple.com/documentation/bundleresources/privacy_manifest_files). [#553](https://github.com/SourcePointUSA/ios-cmp-app/pull/553)
 
 # 7.6.2 (Feb, 26, 2024)
+* [DIA-3524](https://sourcepoint.atlassian.net/browse/DIA-3524) Add support to legacy CCPA US Privacy String within USNat campaigns. Check [this README section](https://github.com/SourcePointUSA/ios-cmp-app?tab=readme-ov-file#support-us-privacy-legacy-with-us-multi-state-privacy) for more info. [#549](https://github.com/SourcePointUSA/ios-cmp-app/pull/549)
 * [DIA-3617](https://sourcepoint.atlassian.net/browse/DIA-3617) Fixed an issue that would prevent consent data from being migrated from older versions of the SDK (>= 6 <=7.4.0). [#552](https://github.com/SourcePointUSA/ios-cmp-app/pull/552)
 * Fixed an issue preventing setups with a CCPA campaign from migrating user data from SDK version 7.4.3 onwards. [#552](https://github.com/SourcePointUSA/ios-cmp-app/pull/552)
 * Improvments to our USNat documentation.
