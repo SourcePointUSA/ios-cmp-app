@@ -1,4 +1,4 @@
-# 7.6.3 (Feb, 26, 2024)
+# 7.6.4 (Feb, 26, 2024)
 * [DIA-3558](https://sourcepoint.atlassian.net/browse/DIA-3558) Expanded public fields on `SPUSNatConsent` object. [#555](https://github.com/SourcePointUSA/ios-cmp-app/pull/555)
 ```diff
 SPUSNatConsent(
