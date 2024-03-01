@@ -324,7 +324,6 @@ SPUserData(
                 shareStatus: Bool,
                 sensitiveDataStatus: Bool?,
                 gpcStatus: Bool?,
-                previousOptInAll: Bool?
                 hasConsentData: Bool?
             }
             consentStrings: [
