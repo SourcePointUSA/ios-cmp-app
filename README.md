@@ -504,6 +504,11 @@ var consentManager = SPConsentManager(
 ## Support U.S. Privacy (Legacy) with U.S. Multi-State Privacy
 
 If you're transitioning from U.S. Privacy (Legacy) to U.S. Multi-State Privacy, you may want to continue supporting the legacy US privacy string (`IABUSPrivacy_String`).
+
+> Since U.S. Privacy (Legacy) does not have support for sensitive data categories, any organization who require sensitive data opt-ins should not use this approach. Additionally, this approach should not be used by organizations who ***only*** require Sharing of Personal Information/Targeted Advertising. A `uspString` will only be set if you use either of the following privacy choices:
+> - Sale of Personal Information
+> - Sale or Sharing of Personal Information/Targeted Advertising
+
 To do so, when instantiating the SDK, make sure to set the flag `.supportLegacyUSPString` to true. Example:
 ```swift
 var consentManager = SPConsentManager(
