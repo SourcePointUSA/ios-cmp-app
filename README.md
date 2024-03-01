@@ -312,13 +312,40 @@ SPUserData(
             vendorGrants: Dictionary<String, SPGDPRVendorGrant>,
         )
     ),
+    usnat: SPConsent<SPUSNatConsent>?(
+        applies: Bool,
+        consents: SPUSNatConsent(
+            GPPData: GPPSpec
+            statuses: {
+                rejectedAny: Bool?,
+                consentedToAll: Bool?,
+                consentedToAny: Bool?,
+                sellStatus: Bool?,
+                shareStatus: Bool,
+                sensitiveDataStatus: Bool?,
+                gpcStatus: Bool?,
+                previousOptInAll: Bool?
+                hasConsentData: Bool?
+            }
+            consentStrings: [
+                {
+                    sectionId: String,
+                    sectionName: String,
+                    consentString: String
+                }
+            ]
+            vendors: [{ id: String, consented: Bool }]
+            categories: [{ id: String, consented: Bool }]
+            uuid: String?
+        )
+    ),
     ccpa: SPConsent<SPCCPAConsent>?(
         applies: Bool,
         consents: SPCCPAConsent(
             dateCreated: SPDate
             GPPData: SPJson,
             rejectedCategories: [String],
-            rejectedVendors: [String]],
+            rejectedVendors: [String],
             signedLspa: Bool,
             status: String,
             uspstring: String,
@@ -327,6 +354,8 @@ SPUserData(
     )
 )
 ```
+
+> [Click here](https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform/blob/main/Core/CMP%20API%20Specification.md#in-app-key-names) to view the keys in `GPPSpec`.
 
 ## Google Consent Mode
 
