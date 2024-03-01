@@ -28,6 +28,9 @@ import Foundation
     public let consentStrings: [ConsentString]
 
     /// A dictionary with all GPP related data
+    /// A series of statuses (`Bool?`) regarding GPP and user consent
+    /// - SeeAlso: `SPUSNatConsent.Statuses`
+    public var statuses: Statuses { .init(from: consentStatus) }
     public var GPPData: SPJson?
 
     var dateCreated, expirationDate: SPDate
@@ -130,4 +133,63 @@ import Foundation
         consentStatus: consentStatus,
         GPPData: GPPData
     )}
+}
+extension SPUSNatConsent {
+    @objcMembers public class Statuses: NSObject {
+        let rejectedAny, consentedToAll, consentedToAny,
+            hasConsentData, sellStatus, shareStatus,
+            sensitiveDataStatus, gpcStatus: Bool?
+
+        override open var description: String {
+            """
+            SPUSNatConsent.Statuses(
+                - rejectedAny: \(rejectedAny as Any)
+                - consentedToAll: \(consentedToAll as Any)
+                - consentedToAny: \(consentedToAny as Any)
+                - hasConsentData: \(hasConsentData as Any)
+                - sellStatus: \(sellStatus as Any)
+                - shareStatus: \(shareStatus as Any)
+                - sensitiveDataStatus: \(sensitiveDataStatus as Any)
+                - gpcStatus: \(gpcStatus as Any)
+            )
+            """
+        }
+
+        init(from status: ConsentStatus) {
+            rejectedAny = status.rejectedAny
+            consentedToAll = status.consentedToAll
+            consentedToAny = status.consentedToAny
+            hasConsentData = status.hasConsentData
+            sellStatus = status.granularStatus?.sellStatus
+            shareStatus = status.granularStatus?.shareStatus
+            sensitiveDataStatus = status.granularStatus?.sensitiveDataStatus
+            gpcStatus = status.granularStatus?.gpcStatus
+        }
+
+        init(rejectedAny: Bool?, consentedToAll: Bool?, consentedToAny: Bool?,
+             hasConsentData: Bool?, sellStatus: Bool?, shareStatus: Bool?,
+             sensitiveDataStatus: Bool?, gpcStatus: Bool?) {
+            self.rejectedAny = rejectedAny
+            self.consentedToAll = consentedToAll
+            self.consentedToAny = consentedToAny
+            self.hasConsentData = hasConsentData
+            self.sellStatus = sellStatus
+            self.shareStatus = shareStatus
+            self.sensitiveDataStatus = sensitiveDataStatus
+            self.gpcStatus = gpcStatus
+        }
+
+        public override func isEqual(_ object: Any?) -> Bool {
+            guard let other = object as? Statuses else { return false }
+
+            return other.rejectedAny == rejectedAny &&
+               other.consentedToAll == consentedToAll &&
+               other.consentedToAny == consentedToAny &&
+               other.hasConsentData == hasConsentData &&
+               other.sellStatus == sellStatus &&
+               other.shareStatus == shareStatus &&
+               other.sensitiveDataStatus == sensitiveDataStatus &&
+               other.gpcStatus == gpcStatus
+        }
+    }
 }
