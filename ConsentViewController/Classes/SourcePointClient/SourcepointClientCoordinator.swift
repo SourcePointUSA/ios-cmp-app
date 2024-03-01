@@ -81,7 +81,7 @@ extension SPSampleable {
 
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
-        static let version = 3
+        static let version = 4
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var additionsChangeDate = SPDate.now()
