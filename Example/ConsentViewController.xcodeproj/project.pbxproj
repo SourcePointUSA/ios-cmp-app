@@ -156,6 +156,8 @@
 		822BF2CB2657E29800177B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2C92657E29800177B0E /* Main.storyboard */; };
 		822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CC2657E29900177B0E /* Assets.xcassets */; };
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
+		822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822CF3FE2B975AB000927247 /* SPConsentable.swift */; };
+		822CF4002B975AB000927247 /* SPConsentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822CF3FE2B975AB000927247 /* SPConsentable.swift */; };
 		822E88F62A7BC5AF00843B2B /* IncludeDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */; };
 		822FD7E02A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
@@ -659,6 +661,7 @@
 		822BF2D12657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		822CF3FE2B975AB000927247 /* SPConsentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPConsentable.swift; sourceTree = "<group>"; };
 		822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludeDataSpec.swift; sourceTree = "<group>"; };
 		822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1820,6 +1823,7 @@
 		82CD6E412B59CA2C00CAD663 /* Consents */ = {
 			isa = PBXGroup;
 			children = (
+				822CF3FE2B975AB000927247 /* SPConsentable.swift */,
 				82BA6E652B72AC2300E318B3 /* GoogleConsentMode */,
 				82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */,
 				82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */,
@@ -3571,6 +3575,7 @@
 				82CD6F522B59CB0700CAD663 /* QueryParamEncodableProtocol.swift in Sources */,
 				82CD6F532B59CB0700CAD663 /* SourcepointClientCoordinator.swift in Sources */,
 				82CD6F542B59CB0700CAD663 /* CustomConsentRequest.swift in Sources */,
+				822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */,
 				82CD6F552B59CB0700CAD663 /* ChoiceRequests.swift in Sources */,
 				82CD6F562B59CB0700CAD663 /* MessagesRequest.swift in Sources */,
 				82CD6F572B59CB0700CAD663 /* ChoiceResponses.swift in Sources */,
@@ -3695,6 +3700,7 @@
 				82CD6F312B59CA2C00CAD663 /* Date.swift in Sources */,
 				82CD6EDB2B59CA2C00CAD663 /* SourcePointClient.swift in Sources */,
 				82CD6EAB2B59CA2C00CAD663 /* LastMessageData.swift in Sources */,
+				822CF4002B975AB000927247 /* SPConsentable.swift in Sources */,
 				82CD6F392B59CA2C00CAD663 /* NSObjectExtensions.swift in Sources */,
 				82E605352AFB86A10080E782 /* SPDate.swift in Sources */,
 				82CD6EE12B59CA2C00CAD663 /* SPUIColor.swift in Sources */,
