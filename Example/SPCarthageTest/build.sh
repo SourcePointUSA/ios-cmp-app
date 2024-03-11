@@ -1,5 +1,5 @@
 # generate Cartfile for the current branch
-echo "git \"$(realpath ../../)\" \"$(git branch --show-current)\"" > ./Cartfile
+echo "git \"$(cd ../../; pwd)\" \"$(git branch --show-current)\"" > ./Cartfile
 
 carthage update --use-xcframeworks
 
