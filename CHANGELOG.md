@@ -1,3 +1,7 @@
+# 7.6.5 (Mar, 11, 2024)
+* [DIA-3691](https://sourcepoint.atlassian.net/browse/DIA-3691) Fixed an issue preventing the SDK from being used with Carthage. [#557](https://github.com/SourcePointUSA/ios-cmp-app/pull/557)
+* Updated README on `SPUSNatConsent` [#556](https://github.com/SourcePointUSA/ios-cmp-app/pull/556)
+
 # 7.6.4 (Mar, 1, 2024)
 * [DIA-3558](https://sourcepoint.atlassian.net/browse/DIA-3558) Expanded public fields on `SPUSNatConsent` object. [#555](https://github.com/SourcePointUSA/ios-cmp-app/pull/555)
 ```diff
