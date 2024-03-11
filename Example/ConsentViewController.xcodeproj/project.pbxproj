@@ -170,18 +170,6 @@
 		8248A499247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A498247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift */; };
 		8249DC982B59AB3D004F45B4 /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 8249DC972B59AB3D004F45B4 /* ConsentViewController */; };
 		824BC0342463F6B0006D3C18 /* SPActionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824BC0332463F6B0006D3C18 /* SPActionSpec.swift */; };
-		824D08E62B9F1A3F00EB42AF /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 824D08CE2B9F1A3F00EB42AF /* Cartfile.resolved */; };
-		824D08E72B9F1A3F00EB42AF /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 824D08CF2B9F1A3F00EB42AF /* Cartfile */; };
-		824D08E82B9F1A3F00EB42AF /* ios-cmp-app in Resources */ = {isa = PBXBuildFile; fileRef = 824D08D52B9F1A3F00EB42AF /* ios-cmp-app */; };
-		824D08E92B9F1A3F00EB42AF /* .ios-cmp-app.version in Resources */ = {isa = PBXBuildFile; fileRef = 824D08D72B9F1A3F00EB42AF /* .ios-cmp-app.version */; };
-		824D08EA2B9F1A3F00EB42AF /* ConsentViewController.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824D08D82B9F1A3F00EB42AF /* ConsentViewController.xcframework */; };
-		824D08EB2B9F1A3F00EB42AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D08DA2B9F1A3F00EB42AF /* ViewController.swift */; };
-		824D08EC2B9F1A3F00EB42AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824D08DB2B9F1A3F00EB42AF /* Assets.xcassets */; };
-		824D08ED2B9F1A3F00EB42AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 824D08DC2B9F1A3F00EB42AF /* LaunchScreen.storyboard */; };
-		824D08EE2B9F1A3F00EB42AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 824D08DE2B9F1A3F00EB42AF /* Main.storyboard */; };
-		824D08EF2B9F1A3F00EB42AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D08E02B9F1A3F00EB42AF /* AppDelegate.swift */; };
-		824D08F02B9F1A3F00EB42AF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 824D08E12B9F1A3F00EB42AF /* Info.plist */; };
-		824D08F12B9F1A3F00EB42AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D08E22B9F1A3F00EB42AF /* SceneDelegate.swift */; };
 		824E88302729507F00B6C9C8 /* NativeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824E882F2729507F00B6C9C8 /* NativeMessageViewController.swift */; };
 		824E88322729516D00B6C9C8 /* NativeMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 824E88312729516D00B6C9C8 /* NativeMessageViewController.xib */; };
 		8255B6CB27A9661100C9A70D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8255B6CA27A9661100C9A70D /* AppDelegate.swift */; };
@@ -441,13 +429,6 @@
 			remoteGlobalIDString = 822BF2C22657E29800177B0E;
 			remoteInfo = NativePMExampleApp;
 		};
-		824D08E42B9F1A3F00EB42AF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 824D08D02B9F1A3F00EB42AF /* SPCarthageTest.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 820B08962B6014D5004E77E8;
-			remoteInfo = SPCarthageTest;
-		};
 		82D844902B7AA5AF0069714D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
@@ -695,19 +676,6 @@
 		8248A496247D17AA00A7D9AD /* SimpleClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleClientSpec.swift; sourceTree = "<group>"; };
 		8248A498247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGDPRConsentsSpec.swift; sourceTree = "<group>"; };
 		824BC0332463F6B0006D3C18 /* SPActionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPActionSpec.swift; sourceTree = "<group>"; };
-		824D08CE2B9F1A3F00EB42AF /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
-		824D08CF2B9F1A3F00EB42AF /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
-		824D08D02B9F1A3F00EB42AF /* SPCarthageTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SPCarthageTest.xcodeproj; sourceTree = "<group>"; };
-		824D08D52B9F1A3F00EB42AF /* ios-cmp-app */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "ios-cmp-app"; sourceTree = "<group>"; };
-		824D08D72B9F1A3F00EB42AF /* .ios-cmp-app.version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".ios-cmp-app.version"; sourceTree = "<group>"; };
-		824D08D82B9F1A3F00EB42AF /* ConsentViewController.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ConsentViewController.xcframework; sourceTree = "<group>"; };
-		824D08DA2B9F1A3F00EB42AF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		824D08DB2B9F1A3F00EB42AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		824D08DD2B9F1A3F00EB42AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		824D08DF2B9F1A3F00EB42AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		824D08E02B9F1A3F00EB42AF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		824D08E12B9F1A3F00EB42AF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		824D08E22B9F1A3F00EB42AF /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		824E882F2729507F00B6C9C8 /* NativeMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeMessageViewController.swift; sourceTree = "<group>"; };
 		824E88312729516D00B6C9C8 /* NativeMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NativeMessageViewController.xib; sourceTree = "<group>"; };
 		8255B6C827A9661100C9A70D /* SPMBuild.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPMBuild.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -921,7 +889,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AA4A60D28A9FC7077408F65 /* Pods_ConsentViewController_Example.framework in Frameworks */,
-				824D08EA2B9F1A3F00EB42AF /* ConsentViewController.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1448,7 +1415,6 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				824D08CD2B9F1A3F00EB42AF /* SPCarthageTest */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ConsentViewController */,
 				82D8FEDD23DC753400F28D74 /* NativeMessageExample */,
@@ -1789,66 +1755,6 @@
 				8231B14B22BA5A6C00D2669B /* Info.plist */,
 			);
 			path = AuthExample;
-			sourceTree = "<group>";
-		};
-		824D08CD2B9F1A3F00EB42AF /* SPCarthageTest */ = {
-			isa = PBXGroup;
-			children = (
-				824D08CE2B9F1A3F00EB42AF /* Cartfile.resolved */,
-				824D08CF2B9F1A3F00EB42AF /* Cartfile */,
-				824D08D02B9F1A3F00EB42AF /* SPCarthageTest.xcodeproj */,
-				824D08D32B9F1A3F00EB42AF /* Carthage */,
-				824D08D92B9F1A3F00EB42AF /* SPCarthageTest */,
-			);
-			path = SPCarthageTest;
-			sourceTree = "<group>";
-		};
-		824D08D12B9F1A3F00EB42AF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				824D08E52B9F1A3F00EB42AF /* SPCarthageTest.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		824D08D32B9F1A3F00EB42AF /* Carthage */ = {
-			isa = PBXGroup;
-			children = (
-				824D08D42B9F1A3F00EB42AF /* Checkouts */,
-				824D08D62B9F1A3F00EB42AF /* Build */,
-			);
-			path = Carthage;
-			sourceTree = "<group>";
-		};
-		824D08D42B9F1A3F00EB42AF /* Checkouts */ = {
-			isa = PBXGroup;
-			children = (
-				824D08D52B9F1A3F00EB42AF /* ios-cmp-app */,
-			);
-			path = Checkouts;
-			sourceTree = "<group>";
-		};
-		824D08D62B9F1A3F00EB42AF /* Build */ = {
-			isa = PBXGroup;
-			children = (
-				824D08D72B9F1A3F00EB42AF /* .ios-cmp-app.version */,
-				824D08D82B9F1A3F00EB42AF /* ConsentViewController.xcframework */,
-			);
-			path = Build;
-			sourceTree = "<group>";
-		};
-		824D08D92B9F1A3F00EB42AF /* SPCarthageTest */ = {
-			isa = PBXGroup;
-			children = (
-				824D08DA2B9F1A3F00EB42AF /* ViewController.swift */,
-				824D08DB2B9F1A3F00EB42AF /* Assets.xcassets */,
-				824D08DC2B9F1A3F00EB42AF /* LaunchScreen.storyboard */,
-				824D08DE2B9F1A3F00EB42AF /* Main.storyboard */,
-				824D08E02B9F1A3F00EB42AF /* AppDelegate.swift */,
-				824D08E12B9F1A3F00EB42AF /* Info.plist */,
-				824D08E22B9F1A3F00EB42AF /* SceneDelegate.swift */,
-			);
-			path = SPCarthageTest;
 			sourceTree = "<group>";
 		};
 		8255B6C927A9661100C9A70D /* SPMBuild */ = {
@@ -2739,12 +2645,6 @@
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 824D08D12B9F1A3F00EB42AF /* Products */;
-					ProjectRef = 824D08D02B9F1A3F00EB42AF /* SPCarthageTest.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* ConsentViewController_Example */,
@@ -2769,16 +2669,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		824D08E52B9F1A3F00EB42AF /* SPCarthageTest.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SPCarthageTest.app;
-			remoteRef = 824D08E42B9F1A3F00EB42AF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0B312ED72ABC4E2400B62E23 /* Resources */ = {
@@ -2841,17 +2731,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824D08E72B9F1A3F00EB42AF /* Cartfile in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				824D08E82B9F1A3F00EB42AF /* ios-cmp-app in Resources */,
-				824D08ED2B9F1A3F00EB42AF /* LaunchScreen.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				824D08EE2B9F1A3F00EB42AF /* Main.storyboard in Resources */,
-				824D08E92B9F1A3F00EB42AF /* .ios-cmp-app.version in Resources */,
 				82D6CE222B8CD186004677E9 /* PrivacyInfo.xcprivacy in Resources */,
-				824D08F02B9F1A3F00EB42AF /* Info.plist in Resources */,
-				824D08E62B9F1A3F00EB42AF /* Cartfile.resolved in Resources */,
-				824D08EC2B9F1A3F00EB42AF /* Assets.xcassets in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3886,14 +3768,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824D08EB2B9F1A3F00EB42AF /* ViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				8225BAB0298BF0E300C2E5FA /* Config.swift in Sources */,
 				8225BAB2298BF1F200C2E5FA /* Statuses.swift in Sources */,
-				824D08EF2B9F1A3F00EB42AF /* AppDelegate.swift in Sources */,
 				82CFDE312924057500F86A69 /* JSONLocalDataViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				824D08F12B9F1A3F00EB42AF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4223,22 +4102,6 @@
 				8231B14922BA5A6C00D2669B /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		824D08DC2B9F1A3F00EB42AF /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				824D08DD2B9F1A3F00EB42AF /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		824D08DE2B9F1A3F00EB42AF /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				824D08DF2B9F1A3F00EB42AF /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		8255B6D027A9661100C9A70D /* Main.storyboard */ = {
