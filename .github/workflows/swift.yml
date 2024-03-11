@@ -31,7 +31,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: Building Carthage Project
-          run: ./Example/SPCarthage/build
+          run: cd ./SPCarthage && ./build.sh
   ObjC-ExampleApp-tests:
       runs-on: macos-latest
       steps:
