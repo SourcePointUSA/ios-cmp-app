@@ -2,104 +2,55 @@ use_frameworks!
 platform :ios, '10.0'
 install! 'cocoapods', :share_schemes_for_development_pods => true
 
-target 'AuthExample' do
-  pod 'ConsentViewController', :path => '../'
+pod 'ConsentViewController', :path => '../'
+
+abstract_target 'Examples' do
   pod 'SwiftLint'
   pod 'Wormholy'
+
+  target 'AuthExample' do; end
+  target 'NativeMessageExample' do; end
+  target 'ObjC-ExampleApp' do; end
+
+  target 'ConsentViewController_Example' do
+    pod 'JSONView'
+  end
+
+  target 'SourcepointFirebaseDemo' do
+    pod 'FirebaseAnalytics'
+  end
+
+  target 'NativePMExampleApp' do
+    platform :tvos, '12.0'
+  end
+
+  target 'SourcePointMetaApp' do
+    pod 'IQKeyboardManagerSwift'
+  end
 end
 
-target 'ConsentViewController_Example' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'JSONView'
-  pod 'SwiftLint'
-  pod 'Wormholy'
-end
-
-target 'SourcepointFirebaseDemo' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'FirebaseAnalytics'
-end
-
-target 'NativePMExampleApp' do
-  platform :tvos, '12.0'
-  pod 'ConsentViewController', :path => '../'
-  pod 'SwiftLint'
-end
-
-target 'NativeMessageExample' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'Wormholy'
-  pod 'SwiftLint'
-end
-
-target 'ObjC-ExampleApp' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'SwiftLint'
-end
-
-target 'SourcePointMetaApp' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'IQKeyboardManagerSwift'
-  pod 'Wormholy'
-end
-
-target 'ConsentViewController_ExampleTests' do
-  pod 'ConsentViewController', :path => '../'
+abstract_target 'Tests' do
   pod 'Quick'
   pod 'Nimble'
+
+  target 'ObjC-ExampleAppTests' do; end
+  target 'ConsentViewController_ExampleTests' do; end
+  target 'SPGDPRExampleAppUITests' do; end
+  target 'NativeMessageExampleUITests' do; end
+  target 'AuthExampleUITests' do; end
+  target 'SourcePointMetaAppUITests' do; end
+  target 'ObjC-ExampleAppUITests' do; end
+
+  target 'NativePMExampleAppUITests' do
+    platform :tvos, '12.0'
+  end
+
+  abstract_target 'FirebaseTests' do
+    pod 'FirebaseAnalytics'
+
+    target 'SourcepointFirebaseDemoTests' do; end
+    target 'SourcepointFirebaseDemoTests' do; end
+    target 'SourcepointFirebaseDemoUITests' do; end
+  end
 end
 
-target 'SourcepointFirebaseDemoTests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'FirebaseAnalytics'
-  pod 'Quick'
-  pod 'Nimble'
-end
-
-target 'SourcepointFirebaseDemoUITests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'FirebaseAnalytics'
-  pod 'Quick'
-  pod 'Nimble'
-end
-
-
-target 'SPGDPRExampleAppUITests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
-end
-
-target 'NativeMessageExampleUITests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
-end
-
-target 'AuthExampleUITests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
-end
-
-target 'SourcePointMetaAppUITests' do
-  inherit! :search_paths
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
-end
-
-target 'ObjC-ExampleAppUITests' do
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
-end
-
-target 'NativePMExampleAppUITests' do
-  platform :tvos, '12.0'
-  inherit! :search_paths
-  # Pods for testing
-  pod 'ConsentViewController', :path => '../'
-  pod 'Quick'
-  pod 'Nimble'
-end

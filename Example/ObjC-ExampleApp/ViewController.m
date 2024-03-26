@@ -101,7 +101,7 @@
     sdkStatus = SPSdkStatusFinished;
     [self updateUIFields];
     NSLog(@"GDPR Applies: %d", userData.objcGDPRApplies);
-    NSLog(@"GDPR: %@", userData.objcGDPRConsents);
+    NSLog(@"GDPR: %@", userData.objcGDPRConsents.googleConsentMode.objcAdStorage);
     NSLog(@"CCPA Applies: %d", userData.objcCCPAApplies);
     NSLog(@"CCPA: %@", userData.objcCCPAConsents);
 }

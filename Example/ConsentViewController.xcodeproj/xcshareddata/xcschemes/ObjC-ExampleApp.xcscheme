@@ -44,6 +44,17 @@
                ReferencedContainer = "container:ConsentViewController.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "82BC13712BB2DFE300AD346A"
+               BuildableName = "ObjC-ExampleAppTests.xctest"
+               BlueprintName = "ObjC-ExampleAppTests"
+               ReferencedContainer = "container:ConsentViewController.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

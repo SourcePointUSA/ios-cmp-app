@@ -201,6 +201,7 @@
 		82BB0E5F28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */; };
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
+		82BC13752BB2DFE300AD346A /* ObjC_ExampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13742BB2DFE300AD346A /* ObjC_ExampleAppTests.m */; };
 		82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C4935F28F17A2D00898E7A /* CampaignSpec.swift */; };
 		82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */; };
 		82CD6EA12B59CA2C00CAD663 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */; };
@@ -428,6 +429,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 822BF2C22657E29800177B0E;
 			remoteInfo = NativePMExampleApp;
+		};
+		82BC13762BB2DFE300AD346A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D8046E925D1A87E0005002B;
+			remoteInfo = "ObjC-ExampleApp";
 		};
 		82D844902B7AA5AF0069714D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -709,6 +717,8 @@
 		82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmockedSourcepointClientSpec.swift; sourceTree = "<group>"; };
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
+		82BC13722BB2DFE300AD346A /* ObjC-ExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ObjC-ExampleAppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		82BC13742BB2DFE300AD346A /* ObjC_ExampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjC_ExampleAppTests.m; sourceTree = "<group>"; };
 		82C4935F28F17A2D00898E7A /* CampaignSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignSpec.swift; sourceTree = "<group>"; };
 		82C54E84290814C400379259 /* SPSdkStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSdkStatus.h; sourceTree = "<group>"; };
 		82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampaignConsent.swift; sourceTree = "<group>"; };
@@ -969,6 +979,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8249DC982B59AB3D004F45B4 /* ConsentViewController in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BC136F2BB2DFE300AD346A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1417,16 +1434,15 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ConsentViewController */,
-				82D8FEDD23DC753400F28D74 /* NativeMessageExample */,
-				8231B13E22BA5A6B00D2669B /* AuthExample */,
-				1997B63B238FDCE80079AF34 /* SourcePointMetaApp */,
-				6D8046EB25D1A87E0005002B /* ObjC-ExampleApp */,
 				82FC4D3B23983231002F08E5 /* ConsentViewController_ExampleTests */,
 				8214B278249CC13B00167BFE /* SPGDPRExampleAppUITests */,
+				82D8FEDD23DC753400F28D74 /* NativeMessageExample */,
 				6D56EB7D24C8850C009F33D9 /* NativeMessageExampleUITests */,
-				6D110B7D24D9E0A100A51BD9 /* SourcePointMetaAppUITests */,
-				6D80473325D1AC3E0005002B /* ObjC-ExampleAppUITests */,
+				8231B13E22BA5A6B00D2669B /* AuthExample */,
 				6D9053FC25D27ABF00E4B49D /* AuthExampleUITests */,
+				6D8046EB25D1A87E0005002B /* ObjC-ExampleApp */,
+				82BC13732BB2DFE300AD346A /* ObjC-ExampleAppTests */,
+				6D80473325D1AC3E0005002B /* ObjC-ExampleAppUITests */,
 				822BF2C42657E29800177B0E /* NativePMExampleApp */,
 				822BF2E42657E29900177B0E /* NativePMExampleAppUITests */,
 				0B312EEC2ABC4FE500B62E23 /* SPM */,
@@ -1434,6 +1450,8 @@
 				82D8447B2B7AA5AE0069714D /* SourcepointFirebaseDemo */,
 				82D844922B7AA5B00069714D /* SourcepointFirebaseDemoTests */,
 				82D8449C2B7AA5B00069714D /* SourcepointFirebaseDemoUITests */,
+				1997B63B238FDCE80079AF34 /* SourcePointMetaApp */,
+				6D110B7D24D9E0A100A51BD9 /* SourcePointMetaAppUITests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				EEE3CDAB8AFE80647B1E565B /* Frameworks */,
 				71D1A6814E9EB941C02E22B8 /* Pods */,
@@ -1462,6 +1480,7 @@
 				82D8447A2B7AA5AE0069714D /* SourcepointFirebaseDemo.app */,
 				82D8448F2B7AA5AF0069714D /* SourcepointFirebaseDemoTests.xctest */,
 				82D844992B7AA5B00069714D /* SourcepointFirebaseDemoUITests.xctest */,
+				82BC13722BB2DFE300AD346A /* ObjC-ExampleAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1818,6 +1837,14 @@
 				82BA6E662B72AC2300E318B3 /* SPGCMData.swift */,
 			);
 			path = GoogleConsentMode;
+			sourceTree = "<group>";
+		};
+		82BC13732BB2DFE300AD346A /* ObjC-ExampleAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				82BC13742BB2DFE300AD346A /* ObjC_ExampleAppTests.m */,
+			);
+			path = "ObjC-ExampleAppTests";
 			sourceTree = "<group>";
 		};
 		82CD6E412B59CA2C00CAD663 /* Consents */ = {
@@ -2437,6 +2464,24 @@
 			productReference = 8255B6C827A9661100C9A70D /* SPMBuild.app */;
 			productType = "com.apple.product-type.application";
 		};
+		82BC13712BB2DFE300AD346A /* ObjC-ExampleAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82BC137A2BB2DFE300AD346A /* Build configuration list for PBXNativeTarget "ObjC-ExampleAppTests" */;
+			buildPhases = (
+				82BC136E2BB2DFE300AD346A /* Sources */,
+				82BC136F2BB2DFE300AD346A /* Frameworks */,
+				82BC13702BB2DFE300AD346A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82BC13772BB2DFE300AD346A /* PBXTargetDependency */,
+			);
+			name = "ObjC-ExampleAppTests";
+			productName = "ObjC-ExampleAppTests";
+			productReference = 82BC13722BB2DFE300AD346A /* ObjC-ExampleAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		82D844792B7AA5AE0069714D /* SourcepointFirebaseDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82D844A72B7AA5B00069714D /* Build configuration list for PBXNativeTarget "SourcepointFirebaseDemo" */;
@@ -2605,6 +2650,10 @@
 					8255B6C727A9661100C9A70D = {
 						CreatedOnToolsVersion = 13.1;
 					};
+					82BC13712BB2DFE300AD346A = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 6D8046E925D1A87E0005002B;
+					};
 					82D844792B7AA5AE0069714D = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -2666,6 +2715,7 @@
 				82D844792B7AA5AE0069714D /* SourcepointFirebaseDemo */,
 				82D8448E2B7AA5AF0069714D /* SourcepointFirebaseDemoTests */,
 				82D844982B7AA5B00069714D /* SourcepointFirebaseDemoUITests */,
+				82BC13712BB2DFE300AD346A /* ObjC-ExampleAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2819,6 +2869,13 @@
 				8255B6D727A9661200C9A70D /* LaunchScreen.storyboard in Resources */,
 				8255B6D427A9661200C9A70D /* Assets.xcassets in Resources */,
 				8255B6D227A9661100C9A70D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82BC13702BB2DFE300AD346A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3883,6 +3940,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82BC136E2BB2DFE300AD346A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82BC13752BB2DFE300AD346A /* ObjC_ExampleAppTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		82D844762B7AA5AE0069714D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4005,6 +4070,11 @@
 			isa = PBXTargetDependency;
 			target = 822BF2C22657E29800177B0E /* NativePMExampleApp */;
 			targetProxy = 822BF2E22657E29900177B0E /* PBXContainerItemProxy */;
+		};
+		82BC13772BB2DFE300AD346A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D8046E925D1A87E0005002B /* ObjC-ExampleApp */;
+			targetProxy = 82BC13762BB2DFE300AD346A /* PBXContainerItemProxy */;
 		};
 		82D844912B7AA5AF0069714D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5229,6 +5299,66 @@
 			};
 			name = Release;
 		};
+		82BC13782BB2DFE300AD346A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sourcepoint.ObjC-ExampleAppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjC-ExampleApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ObjC-ExampleApp";
+			};
+			name = Debug;
+		};
+		82BC13792BB2DFE300AD346A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6KYEQLUC5A;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sourcepoint.ObjC-ExampleAppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjC-ExampleApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ObjC-ExampleApp";
+			};
+			name = Release;
+		};
 		82D844A12B7AA5B00069714D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 815ACB69209144D8CA0F5833 /* Pods-SourcepointFirebaseDemo.debug.xcconfig */;
@@ -5700,6 +5830,15 @@
 			buildConfigurations = (
 				8255B6D927A9661200C9A70D /* Debug */,
 				8255B6DA27A9661200C9A70D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82BC137A2BB2DFE300AD346A /* Build configuration list for PBXNativeTarget "ObjC-ExampleAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82BC13782BB2DFE300AD346A /* Debug */,
+				82BC13792BB2DFE300AD346A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

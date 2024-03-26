@@ -7,27 +7,10 @@
 
 import Foundation
 
-@objcMembers public class SPGCMData: NSObject, Codable {
+public class SPGCMData: NSObject, Codable {
     /// Mimics Firebase's Analytics ConsentStatus enums
-    @objc public enum Status: Int, Hashable, Equatable, RawRepresentable, Codable {
-        public typealias RawValue = String
-
+    public enum Status: String, Hashable, Equatable, Codable {
         case granted, denied
-
-        public var rawValue: String {
-            switch self {
-                case .granted: return "granted"
-                case .denied: return "denied"
-            }
-        }
-
-        public init?(rawValue: String) {
-            switch rawValue {
-                case "granted": self = .granted
-                case "denied": self = .denied
-                default: return nil
-            }
-        }
     }
 
     enum CodingKeys: String, CodingKey {
@@ -45,4 +28,32 @@ import Foundation
         self.adUserData = adUserData
         self.adPersonalization = adPersonalization
     }
+}
+
+@available(swift, obsoleted: 1.0)
+extension SPGCMData {
+    @objc public enum ObjcStatus: Int, CustomStringConvertible {
+        case granted, denied, unset
+
+        public var description: String {
+            switch self {
+                case .granted: return "SPGCMData.ObjcStatus.granted"
+                case .denied: return "SPGCMData.ObjcStatus.denied"
+                case .unset: return "SPGCMData.ObjcStatus.unset"
+            }
+        }
+
+        init(fromStatus status: Status?) {
+            switch status {
+                case .granted: self = .granted
+                case .denied: self = .denied
+                case .none: self = .unset
+            }
+        }
+    }
+
+    @objc public var objcAdStorage: ObjcStatus { .init(fromStatus: adStorage) }
+    @objc public var objcAnalyticsStorage: ObjcStatus { .init(fromStatus: analyticsStorage) }
+    @objc public var objcAdUserData: ObjcStatus { .init(fromStatus: adUserData) }
+    @objc public var objcAdPersonalization: ObjcStatus { .init(fromStatus: adPersonalization) }
 }
