@@ -1,5 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests-frameworks.sh
-${BUILT_PRODUCTS_DIR}/ConsentViewController/ConsentViewController.framework
+${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework
 ${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework
 ${BUILT_PRODUCTS_DIR}/Quick/Quick.framework
 ${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework

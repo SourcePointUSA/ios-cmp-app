@@ -134,7 +134,6 @@
 		71F0930571CB8351E8BD5541 /* Pods_NativePMExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED42ED30F5FB710D166C76A /* Pods_NativePMExampleApp.framework */; };
 		7A8F0D717661D0EB4B43CA8A /* Pods_Examples_NativeMessageExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2ED27DE2832296F28683534 /* Pods_Examples_NativeMessageExample.framework */; };
 		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
-		82009CD92B595DDA00810F4E /* Pods_ObjC_ExampleApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 80A5A481B97C11AC27421C73 /* Pods_ObjC_ExampleApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		820B08AE2B602177004E77E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08AD2B602177004E77E8 /* Foundation.framework */; };
 		820B08B02B60217E004E77E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08AF2B60217E004E77E8 /* UIKit.framework */; };
 		820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08B12B6021A6004E77E8 /* Foundation.framework */; };
@@ -460,20 +459,6 @@
 			remoteInfo = ConsentViewController_Example;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		82009CDA2B595DDA00810F4E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				82009CD92B595DDA00810F4E /* Pods_ObjC_ExampleApp.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00C3A17DB5FF9A9001DDE411 /* Pods-Examples-SourcePointMetaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-SourcePointMetaApp.release.xcconfig"; path = "Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -2384,7 +2369,6 @@
 				6D8046E725D1A87E0005002B /* Frameworks */,
 				6D8046E825D1A87E0005002B /* Resources */,
 				5CA0F8D3E1DF5FF6834AC3C4 /* [CP] Embed Pods Frameworks */,
-				82009CDA2B595DDA00810F4E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2464,6 +2448,7 @@
 				822BF2BF2657E29800177B0E /* Sources */,
 				822BF2C02657E29800177B0E /* Frameworks */,
 				822BF2C12657E29800177B0E /* Resources */,
+				CA3CDF2A3BF9B9DDFF29D3EB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3447,6 +3432,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA3CDF2A3BF9B9DDFF29D3EB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CBE586B933D81745BC9C6FB7 /* [CP] Check Pods Manifest.lock */ = {

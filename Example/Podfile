@@ -22,6 +22,7 @@ abstract_target 'Examples' do
 
   target 'NativePMExampleApp' do
     platform :tvos, '12.0'
+    pod 'ConsentViewController', :path => '../'
   end
 
   target 'SourcePointMetaApp' do
