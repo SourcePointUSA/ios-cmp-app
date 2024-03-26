@@ -25,7 +25,7 @@ protocol Consentable {
         "SPConsentable(id: \(id), consented: \(consented))"
     }
 
-    init(id: String, consented: Bool) {
+    public init(id: String, consented: Bool) {
         self.id = id
         self.consented = consented
     }

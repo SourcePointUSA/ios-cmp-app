@@ -146,6 +146,7 @@ extension SPUSNatConsent {
 }
 
 extension SPUSNatConsent {
+    @objc(SPUSNatConsent_ConsentString)
     @objcMembers public class ConsentString: NSObject, Codable {
         public let sectionId: Int
         public let sectionName, consentString: String
@@ -160,7 +161,7 @@ extension SPUSNatConsent {
             """
         }
 
-        init(sectionId: Int, sectionName: String, consentString: String) {
+        public init(sectionId: Int, sectionName: String, consentString: String) {
             self.sectionId = sectionId
             self.sectionName = sectionName
             self.consentString = consentString

@@ -30,5 +30,27 @@
     XCTAssertFalse(consents.objcStatuses.sensitiveDataStatus);
     XCTAssertFalse(consents.objcStatuses.gpcStatus);
 }
+
+- (void)testConsentString {
+    SPUSNatConsent_ConsentString *consentString = [
+        [SPUSNatConsent_ConsentString alloc]
+           initWithSectionId:0
+           sectionName:@"foo"
+           consentString:@"bar"
+    ];
+    XCTAssertEqual(consentString.sectionId, 0);
+    XCTAssertEqual(consentString.sectionName, @"foo");
+    XCTAssertEqual(consentString.consentString, @"bar");
+}
+
+- (void)testConsentable {
+    SPConsentable *consentable = [
+        [SPConsentable alloc]
+        initWithId:@"123"
+        consented:TRUE
+    ];
+    XCTAssertEqual(consentable.id, @"123");
+    XCTAssertTrue(consentable.consented);
+}
 @end
 
