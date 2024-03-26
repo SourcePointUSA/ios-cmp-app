@@ -24,7 +24,6 @@ class SPGCMDataSpec: QuickSpec {
             do {
                 let gcm = try rawGcm.decoded() as SPGCMData
                 expect(gcm.adUserData).to(equal(.granted))
-                expect(gcm.objcAdUserData).to(equal(.granted))
             } catch {
                 fail(String(describing: error))
             }

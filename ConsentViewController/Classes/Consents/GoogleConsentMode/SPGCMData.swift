@@ -32,14 +32,15 @@ public class SPGCMData: NSObject, Codable {
 
 @available(swift, obsoleted: 1.0)
 extension SPGCMData {
-    @objc public enum ObjcStatus: Int, CustomStringConvertible {
+    @objc(SPGCMData_ObjcStatus)
+    public enum ObjcStatus: Int, CustomStringConvertible {
         case granted, denied, unset
 
         public var description: String {
             switch self {
-                case .granted: return "SPGCMData.ObjcStatus.granted"
-                case .denied: return "SPGCMData.ObjcStatus.denied"
-                case .unset: return "SPGCMData.ObjcStatus.unset"
+                case .granted: return "SPGCMData_ObjcStatus.granted"
+                case .denied: return "SPGCMData_ObjcStatus.denied"
+                case .unset: return "SPGCMData_ObjcStatus.unset"
             }
         }
 
