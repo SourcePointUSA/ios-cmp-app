@@ -8,9 +8,9 @@ abstract_target 'Examples' do
   pod 'SwiftLint'
   pod 'Wormholy'
 
-  target 'AuthExample' do; end
-  target 'NativeMessageExample' do; end
-  target 'ObjC-ExampleApp' do; end
+  target 'AuthExample'
+  target 'NativeMessageExample'
+  target 'ObjC-ExampleApp'
 
   target 'ConsentViewController_Example' do
     pod 'JSONView'
@@ -32,24 +32,27 @@ end
 
 abstract_target 'Tests' do
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble', '10.0.0'
 
-  target 'ConsentViewController_ExampleTests' do; end
-  target 'SPGDPRExampleAppUITests' do; end
-  target 'NativeMessageExampleUITests' do; end
-  target 'AuthExampleUITests' do; end
-  target 'SourcePointMetaAppUITests' do; end
-  target 'ObjC-ExampleAppUITests' do; end
+  target 'ConsentViewController_ExampleTests'
+  target 'SPGDPRExampleAppUITests'
+  target 'NativeMessageExampleUITests'
+  target 'AuthExampleUITests'
+  target 'SourcePointMetaAppUITests'
+  target 'ObjC-ExampleAppUITests'
 
   target 'NativePMExampleAppUITests' do
     platform :tvos, '12.0'
+    pod 'ConsentViewController', :path => '../'
+    pod 'Quick'
+    pod 'Nimble', '10.0.0'
   end
 
   abstract_target 'FirebaseTests' do
     pod 'FirebaseAnalytics'
 
-    target 'SourcepointFirebaseDemoTests' do; end
-    target 'SourcepointFirebaseDemoUITests' do; end
+    target 'SourcepointFirebaseDemoTests'
+    target 'SourcepointFirebaseDemoUITests'
   end
 end
 

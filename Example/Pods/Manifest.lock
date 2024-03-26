@@ -97,7 +97,7 @@ DEPENDENCIES:
   - FirebaseAnalytics
   - IQKeyboardManagerSwift
   - JSONView
-  - Nimble
+  - Nimble (= 10.0.0)
   - Quick
   - SwiftLint
   - Wormholy
@@ -142,6 +142,6 @@ SPEC CHECKSUMS:
   SwiftLint: 1b7561918a19e23bfed960e40759086e70f4dba5
   Wormholy: 09da0b876f9276031fd47383627cb75e194fc068
 
-PODFILE CHECKSUM: 8b3741956125ae544cb5896d8ea6147c4693249c
+PODFILE CHECKSUM: 6a9c3d2c2149547436a380f9134aefab391732e2
 
 COCOAPODS: 1.15.2
