@@ -1,6 +1,0 @@
-framework module Pods_NativeMessageExample {
-  umbrella header "Pods-NativeMessageExample-umbrella.h"
-
-  export *
-  module * { export * }
-}

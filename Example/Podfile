@@ -33,7 +33,6 @@ abstract_target 'Tests' do
   pod 'Quick'
   pod 'Nimble'
 
-  target 'ObjC-ExampleAppTests' do; end
   target 'ConsentViewController_ExampleTests' do; end
   target 'SPGDPRExampleAppUITests' do; end
   target 'NativeMessageExampleUITests' do; end
@@ -48,7 +47,6 @@ abstract_target 'Tests' do
   abstract_target 'FirebaseTests' do
     pod 'FirebaseAnalytics'
 
-    target 'SourcepointFirebaseDemoTests' do; end
     target 'SourcepointFirebaseDemoTests' do; end
     target 'SourcepointFirebaseDemoUITests' do; end
   end
