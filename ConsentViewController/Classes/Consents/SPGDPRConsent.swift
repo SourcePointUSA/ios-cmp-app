@@ -235,3 +235,8 @@ public typealias SPGDPRPurposeId = String
         )
     }
 }
+
+@available(swift, obsoleted: 1.0) // available on objc only
+@objc extension SPGDPRConsent {
+    public var objcGoogleConsentMode: SPGCMDataObjc? { .init(from: googleConsentMode) }
+}

@@ -15,10 +15,12 @@
 
 @implementation SPGDPRConsentObjcSpec
 - (void)testGCMData {
-    SPGDPRConsent *consents = [SPGDPRConsent empty];
-    XCTAssertEqual(consents.googleConsentMode.objcAdStorage, 0);
-    XCTAssertEqual(consents.googleConsentMode.objcAnalyticsStorage, 0);
-    XCTAssertEqual(consents.googleConsentMode.objcAdUserData, 0);
-    XCTAssertEqual(consents.googleConsentMode.objcAdPersonalization, 0);
+    SPGCMDataObjc *gcmData = [[SPGDPRConsent empty] objcGoogleConsentMode];
+    SPGCMDataObjc_ObjcStatus unset = SPGCMDataObjc_ObjcStatusUnset;
+
+    XCTAssertEqual(gcmData.adStorage, unset);
+    XCTAssertEqual(gcmData.analyticsStorage, unset);
+    XCTAssertEqual(gcmData.adUserData, unset);
+    XCTAssertEqual(gcmData.adPersonalization, unset);
 }
 @end

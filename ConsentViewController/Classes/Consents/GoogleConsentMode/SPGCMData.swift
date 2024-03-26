@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class SPGCMData: NSObject, Codable {
+public struct SPGCMData: Codable, Equatable {
     /// Mimics Firebase's Analytics ConsentStatus enums
     public enum Status: String, Hashable, Equatable, Codable {
         case granted, denied
@@ -21,18 +21,11 @@ public class SPGCMData: NSObject, Codable {
     }
 
     public let adStorage, analyticsStorage, adUserData, adPersonalization: Status?
-
-    init(adStorage: Status? = nil, analyticsStorage: Status? = nil, adUserData: Status? = nil, adPersonalization: Status? = nil) {
-        self.adStorage = adStorage
-        self.analyticsStorage = analyticsStorage
-        self.adUserData = adUserData
-        self.adPersonalization = adPersonalization
-    }
 }
 
 @available(swift, obsoleted: 1.0)
-extension SPGCMData {
-    @objc(SPGCMData_ObjcStatus)
+@objcMembers public class SPGCMDataObjc: NSObject {
+    @objc(SPGCMDataObjc_ObjcStatus)
     public enum ObjcStatus: Int, CustomStringConvertible {
         case granted, denied, unset
 
@@ -44,17 +37,21 @@ extension SPGCMData {
             }
         }
 
-        init(fromStatus status: Status?) {
+        init(from status: SPGCMData.Status?) {
             switch status {
+                case .none: self = .unset
                 case .granted: self = .granted
                 case .denied: self = .denied
-                case .none: self = .unset
             }
         }
     }
 
-    @objc public var objcAdStorage: ObjcStatus { .init(fromStatus: adStorage) }
-    @objc public var objcAnalyticsStorage: ObjcStatus { .init(fromStatus: analyticsStorage) }
-    @objc public var objcAdUserData: ObjcStatus { .init(fromStatus: adUserData) }
-    @objc public var objcAdPersonalization: ObjcStatus { .init(fromStatus: adPersonalization) }
+    public let adStorage, analyticsStorage, adUserData, adPersonalization: ObjcStatus
+
+    public init(from gcmData: SPGCMData?) {
+        adStorage = .init(from: gcmData?.adStorage)
+        analyticsStorage = .init(from: gcmData?.analyticsStorage)
+        adUserData = .init(from: gcmData?.adUserData)
+        adPersonalization = .init(from: gcmData?.adPersonalization)
+    }
 }
