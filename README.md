@@ -304,7 +304,8 @@ SPUserData(
             acceptedCategories: [String],
             applies: Bool,
             consentStatus: ConsentStatus,
-            googleConsentMode: SPGCMData?
+            googleConsentMode: SPGCMData?,
+            objcGoogleConsentMode: SPGCMDataObjc?, // available only on ObjC
             dateCreated: SPDate,
             euconsent: String,
             tcfData: SPJson?,

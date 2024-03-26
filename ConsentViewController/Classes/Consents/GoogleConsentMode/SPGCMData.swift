@@ -7,27 +7,10 @@
 
 import Foundation
 
-@objcMembers public class SPGCMData: NSObject, Codable {
+public struct SPGCMData: Codable, Equatable {
     /// Mimics Firebase's Analytics ConsentStatus enums
-    @objc public enum Status: Int, Hashable, Equatable, RawRepresentable, Codable {
-        public typealias RawValue = String
-
+    public enum Status: String, Hashable, Equatable, Codable {
         case granted, denied
-
-        public var rawValue: String {
-            switch self {
-                case .granted: return "granted"
-                case .denied: return "denied"
-            }
-        }
-
-        public init?(rawValue: String) {
-            switch rawValue {
-                case "granted": self = .granted
-                case "denied": self = .denied
-                default: return nil
-            }
-        }
     }
 
     enum CodingKeys: String, CodingKey {
@@ -38,11 +21,37 @@ import Foundation
     }
 
     public let adStorage, analyticsStorage, adUserData, adPersonalization: Status?
+}
 
-    init(adStorage: Status? = nil, analyticsStorage: Status? = nil, adUserData: Status? = nil, adPersonalization: Status? = nil) {
-        self.adStorage = adStorage
-        self.analyticsStorage = analyticsStorage
-        self.adUserData = adUserData
-        self.adPersonalization = adPersonalization
+@available(swift, obsoleted: 1.0)
+@objcMembers public class SPGCMDataObjc: NSObject {
+    @objc(SPGCMDataObjc_ObjcStatus)
+    public enum ObjcStatus: Int, CustomStringConvertible {
+        case granted, denied, unset
+
+        public var description: String {
+            switch self {
+                case .granted: return "SPGCMData_ObjcStatus.granted"
+                case .denied: return "SPGCMData_ObjcStatus.denied"
+                case .unset: return "SPGCMData_ObjcStatus.unset"
+            }
+        }
+
+        init(from status: SPGCMData.Status?) {
+            switch status {
+                case .none: self = .unset
+                case .granted: self = .granted
+                case .denied: self = .denied
+            }
+        }
+    }
+
+    public let adStorage, analyticsStorage, adUserData, adPersonalization: ObjcStatus
+
+    public init(from gcmData: SPGCMData?) {
+        adStorage = .init(from: gcmData?.adStorage)
+        analyticsStorage = .init(from: gcmData?.analyticsStorage)
+        adUserData = .init(from: gcmData?.adUserData)
+        adPersonalization = .init(from: gcmData?.adPersonalization)
     }
 }

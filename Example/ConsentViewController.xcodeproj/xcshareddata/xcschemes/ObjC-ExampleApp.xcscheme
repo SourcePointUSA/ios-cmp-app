@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1300"
+   LastUpgradeVersion = "1520"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -41,6 +41,17 @@
                BlueprintIdentifier = "6D80473125D1AC3E0005002B"
                BuildableName = "ObjC-ExampleAppUITests.xctest"
                BlueprintName = "ObjC-ExampleAppUITests"
+               ReferencedContainer = "container:ConsentViewController.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "82BC13712BB2DFE300AD346A"
+               BuildableName = "ObjC-ExampleAppTests.xctest"
+               BlueprintName = "ObjC-ExampleAppTests"
                ReferencedContainer = "container:ConsentViewController.xcodeproj">
             </BuildableReference>
          </TestableReference>

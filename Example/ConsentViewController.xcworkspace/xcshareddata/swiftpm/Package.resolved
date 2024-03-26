@@ -12,10 +12,10 @@
     {
       "identity" : "ios-cmp-app",
       "kind" : "remoteSourceControl",
-      "location" : "http://github.com/SourcePointUSA/ios-cmp-app.git",
+      "location" : "https://github.com/SourcePointUSA/ios-cmp-app.git",
       "state" : {
-        "revision" : "4fa1ec32fb3289a28b2eded4b2b0ac3744f28741",
-        "version" : "7.6.4"
+        "revision" : "711ccf8a8aaf222308009699e505df500429656e",
+        "version" : "7.6.5"
       }
     }
   ],

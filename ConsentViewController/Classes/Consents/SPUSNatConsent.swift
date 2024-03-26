@@ -146,6 +146,7 @@ extension SPUSNatConsent {
 }
 
 extension SPUSNatConsent {
+    @objc(SPUSNatConsent_ConsentString)
     @objcMembers public class ConsentString: NSObject, Codable {
         public let sectionId: Int
         public let sectionName, consentString: String
@@ -160,7 +161,7 @@ extension SPUSNatConsent {
             """
         }
 
-        init(sectionId: Int, sectionName: String, consentString: String) {
+        public init(sectionId: Int, sectionName: String, consentString: String) {
             self.sectionId = sectionId
             self.sectionName = sectionName
             self.consentString = consentString
@@ -176,13 +177,13 @@ extension SPUSNatConsent {
     }
 }
 
-extension SPUSNatConsent {
-    @objcMembers public class Statuses: NSObject {
+public extension SPUSNatConsent {
+    struct Statuses: CustomStringConvertible, Equatable {
         let rejectedAny, consentedToAll, consentedToAny,
             hasConsentData, sellStatus, shareStatus,
             sensitiveDataStatus, gpcStatus: Bool?
 
-        override open var description: String {
+        public var description: String {
             """
             SPUSNatConsent.Statuses(
                 - rejectedAny: \(rejectedAny as Any)
@@ -207,31 +208,43 @@ extension SPUSNatConsent {
             sensitiveDataStatus = status.granularStatus?.sensitiveDataStatus
             gpcStatus = status.granularStatus?.gpcStatus
         }
+    }
+}
 
-        init(rejectedAny: Bool?, consentedToAll: Bool?, consentedToAny: Bool?,
-             hasConsentData: Bool?, sellStatus: Bool?, shareStatus: Bool?,
-             sensitiveDataStatus: Bool?, gpcStatus: Bool?) {
-            self.rejectedAny = rejectedAny
-            self.consentedToAll = consentedToAll
-            self.consentedToAny = consentedToAny
-            self.hasConsentData = hasConsentData
-            self.sellStatus = sellStatus
-            self.shareStatus = shareStatus
-            self.sensitiveDataStatus = sensitiveDataStatus
-            self.gpcStatus = gpcStatus
+@available(swift, obsoleted: 1.0)
+public extension SPUSNatConsent {
+    @objc(SPUSNatConsent_ObjcStatuses)
+    class ObjcStatuses: NSObject {
+        let statuses: Statuses
+
+        @objc public var rejectedAny: Bool { statuses.rejectedAny ?? false }
+        @objc public var consentedToAll: Bool { statuses.consentedToAll ?? false }
+        @objc public var consentedToAny: Bool { statuses.consentedToAny ?? false }
+        @objc public var hasConsentData: Bool { statuses.hasConsentData ?? false }
+        @objc public var sellStatus: Bool { statuses.sellStatus ?? false }
+        @objc public var shareStatus: Bool { statuses.shareStatus ?? false }
+        @objc public var sensitiveDataStatus: Bool { statuses.sensitiveDataStatus ?? false }
+        @objc public var gpcStatus: Bool { statuses.gpcStatus ?? false }
+
+        override public var description: String {
+            """
+            SPUSNatConsent_ObjcStatuses(
+                - rejectedAny: \(rejectedAny as Any)
+                - consentedToAll: \(consentedToAll as Any)
+                - consentedToAny: \(consentedToAny as Any)
+                - hasConsentData: \(hasConsentData as Any)
+                - sellStatus: \(sellStatus as Any)
+                - shareStatus: \(shareStatus as Any)
+                - sensitiveDataStatus: \(sensitiveDataStatus as Any)
+                - gpcStatus: \(gpcStatus as Any)
+            )
+            """
         }
 
-        public override func isEqual(_ object: Any?) -> Bool {
-            guard let other = object as? Statuses else { return false }
-
-            return other.rejectedAny == rejectedAny &&
-               other.consentedToAll == consentedToAll &&
-               other.consentedToAny == consentedToAny &&
-               other.hasConsentData == hasConsentData &&
-               other.sellStatus == sellStatus &&
-               other.shareStatus == shareStatus &&
-               other.sensitiveDataStatus == sensitiveDataStatus &&
-               other.gpcStatus == gpcStatus
+        public init(from statuses: Statuses) {
+            self.statuses = statuses
         }
     }
+
+    var objcStatuses: ObjcStatuses { .init(from: statuses) }
 }
