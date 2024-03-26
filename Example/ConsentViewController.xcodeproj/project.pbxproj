@@ -197,6 +197,7 @@
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
 		82BC13812BB2E96100AD346A /* SPGDPRConsentObjcSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13802BB2E96100AD346A /* SPGDPRConsentObjcSpec.m */; };
+		82BC13832BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */; };
 		82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C4935F28F17A2D00898E7A /* CampaignSpec.swift */; };
 		82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */; };
 		82CD6EA12B59CA2C00CAD663 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */; };
@@ -740,6 +741,7 @@
 		82BC13722BB2DFE300AD346A /* ObjC-ExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ObjC-ExampleAppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82BC137F2BB2E96100AD346A /* ConsentViewController_ExampleTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConsentViewController_ExampleTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		82BC13802BB2E96100AD346A /* SPGDPRConsentObjcSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPGDPRConsentObjcSpec.m; sourceTree = "<group>"; };
+		82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPUSNatConsentObjcSpec.m; sourceTree = "<group>"; };
 		82C4935F28F17A2D00898E7A /* CampaignSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignSpec.swift; sourceTree = "<group>"; };
 		82C54E84290814C400379259 /* SPSdkStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSdkStatus.h; sourceTree = "<group>"; };
 		82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampaignConsent.swift; sourceTree = "<group>"; };
@@ -1910,6 +1912,7 @@
 			children = (
 				82BC137F2BB2E96100AD346A /* ConsentViewController_ExampleTests-Bridging-Header.h */,
 				82BC13802BB2E96100AD346A /* SPGDPRConsentObjcSpec.m */,
+				82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */,
 			);
 			path = Objc;
 			sourceTree = "<group>";
@@ -4034,6 +4037,7 @@
 				EDD01F432A2A07B700590772 /* SPConsentManagerSpec.swift in Sources */,
 				82EA4E342491324400DC01C9 /* LocalStorageMock.swift in Sources */,
 				6D605DF62423B96C00BB3E5F /* SPErrorSpec.swift in Sources */,
+				82BC13832BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m in Sources */,
 				5687C4F227A1B11A003456E7 /* SPPropertyNameSpec.swift in Sources */,
 				82CFB3EF2A431D89002B0EF2 /* SPCCPAConsentSpec.swift in Sources */,
 				82E3D60528C64528004B1189 /* MessagesResponseSpec.swift in Sources */,

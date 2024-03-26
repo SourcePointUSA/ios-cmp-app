@@ -74,18 +74,14 @@ class SPUSNatConsentsSpec: QuickSpec {
                 ]))
                 expect(consent.dateCreated).to(equal(year: 2023, month: 2, day: 6))
                 expect(consent.expirationDate).to(equal(year: 2024, month: 2, day: 6))
-                expect(consent.statuses).to(equal(
-                    SPUSNatConsent.Statuses(
-                        rejectedAny: true,
-                        consentedToAll: true,
-                        consentedToAny: true,
-                        hasConsentData: true,
-                        sellStatus: true,
-                        shareStatus: true,
-                        sensitiveDataStatus: true,
-                        gpcStatus: true
-                    )
-                ))
+                expect(consent.statuses.rejectedAny).to(beTrue())
+                expect(consent.statuses.consentedToAll).to(beTrue())
+                expect(consent.statuses.consentedToAny).to(beTrue())
+                expect(consent.statuses.hasConsentData).to(beTrue())
+                expect(consent.statuses.sellStatus).to(beTrue())
+                expect(consent.statuses.shareStatus).to(beTrue())
+                expect(consent.statuses.sensitiveDataStatus).to(beTrue())
+                expect(consent.statuses.gpcStatus).to(beTrue())
             } catch {
                 fail(String(describing: error))
             }
