@@ -70,7 +70,7 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
     /// - SeeAlso: `SPUSNatConsent`
     public let usnat: SPConsent<SPUSNatConsent>?
 
-    var webConsents: SPWebConsents { SPWebConsents(
+    public var webConsents: SPWebConsents { SPWebConsents(
         gdpr: .init(uuid: gdpr?.consents?.uuid, webConsentPayload: gdpr?.consents?.webConsentPayload),
         ccpa: .init(uuid: ccpa?.consents?.uuid, webConsentPayload: ccpa?.consents?.webConsentPayload),
         usnat: .init(uuid: usnat?.consents?.uuid, webConsentPayload: usnat?.consents?.webConsentPayload)
