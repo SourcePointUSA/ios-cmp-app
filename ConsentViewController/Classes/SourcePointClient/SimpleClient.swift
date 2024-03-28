@@ -111,6 +111,19 @@ class SimpleClient: HttpClient {
                         apiCode: apiCode,
                         statusCode: String(response.statusCode)
                     )))
+                } else if let error = error as? NSError {
+                    switch error.code {
+                        case NSURLErrorTimedOut:
+                            handler(.failure(
+                                ClientRequestTimeoutError(
+                                    apiSufix: apiCode,
+                                    timeoutValue: self?.session.configuration.timeoutIntervalForResource
+                                )
+                            ))
+
+                        default:
+                            handler(.failure(GenericNetworkError(apiSufix: apiCode, error: error)))
+                    }
                 }
             } else {
                 handler(.success(data))

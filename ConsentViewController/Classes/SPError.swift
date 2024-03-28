@@ -1,7 +1,7 @@
 import Foundation
 // swiftlint:disable line_length
 @objcMembers public class SPError: NSError, LocalizedError {
-    public var spCode: String { "sp_metric_generic_sdk_error" }
+    public var spCode: String { "sp_metric_generic_sdk_error_\(code)" }
 
     override public var description: String { "Something went wrong in the SDK" }
     public var failureReason: String { originalError.debugDescription }
@@ -152,6 +152,49 @@ import Foundation
 @objcMembers public class RenderingAppTimeoutError: SPError {
     override public var spCode: String { "sp_metric_rendering_app_timeout" }
     override public var description: String { "Something went wrong while loading the Rendering App. onMessageReady was not called within the specified timeout." }
+}
+
+@objcMembers public class ClientRequestTimeoutError: SPError {
+    let apiSufix: InvalidResponsAPICode
+    let timeoutValue: TimeInterval?
+
+    // swiftlint:disable:next force_unwrapping
+    var timeoutString: String { timeoutValue != nil ? String(timeoutValue!) : "" }
+
+    override public var spCode: String {
+        "sp_metric_client_side_timeout\(apiSufix.code)_\(timeoutString)"
+    }
+    override public var description: String {
+        "The request could not be fullfiled within the timeout (\(timeoutString)) specified by the client"
+    }
+
+    init(apiSufix: InvalidResponsAPICode, timeoutValue: TimeInterval?) {
+        self.apiSufix = apiSufix
+        self.timeoutValue = timeoutValue
+        super.init()
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+@objcMembers public class GenericNetworkError: SPError {
+    let apiSufix: InvalidResponsAPICode
+    let error: NSError
+
+    override public var spCode: String { "sp_metric_generic_network_error\(apiSufix.code)_\(error.code)" }
+    override public var description: String {
+        "Something went wrong when calling \(apiSufix.code)"
+    }
+
+    init(apiSufix: InvalidResponsAPICode, error: NSError) {
+        self.apiSufix = apiSufix
+        self.error = error
+        super.init()
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 @objcMembers public class UnableToInjectMessageIntoRenderingApp: SPError {
