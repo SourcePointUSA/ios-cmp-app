@@ -8,6 +8,7 @@
 
 import Foundation
 
+typealias ErrorHandler = (SPError) -> Void
 typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
 typealias GDPRCustomConsentHandler = (Result<SPGDPRConsent, SPError>) -> Void
@@ -463,8 +464,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         self.authId = authId
         resetStateIfAuthIdChanged()
-        metaData {
-            self.consentStatus {
+
+        let onError: ErrorHandler = {
+            self.logErrorMetrics($0)
+            handler(Result.failure($0))
+        }
+
+        metaData(onError) {
+            self.consentStatus(onError) {
                 self.state.udpateGDPRStatus()
                 self.state.udpateUSNatStatus()
                 self.messages { messagesResponse in
@@ -503,7 +510,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func metaData(next: @escaping () -> Void) {
+    func metaData(_ errorHandler: @escaping ErrorHandler, next: @escaping () -> Void) {
         spClient.metaData(
             accountId: accountId,
             propertyId: propertyId,
@@ -512,11 +519,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             switch result {
                 case .success(let response):
                     self.handleMetaDataResponse(response)
+                    next()
 
-                case .failure(let error):
-                    self.logErrorMetrics(error)
+                case .failure(let error): errorHandler(error)
             }
-            next()
         }
     }
 
@@ -570,7 +576,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func consentStatus(next: @escaping () -> Void) {
+    func consentStatus(_ errorHandler: ErrorHandler, next: @escaping () -> Void) {
         if shouldCallConsentStatus {
             spClient.consentStatus(
                 propertyId: propertyId,
@@ -654,6 +660,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         handler(Result.success(self.handleMessagesResponse(response)))
 
                     case .failure(let error):
+                        self.logErrorMetrics(error)
                         handler(Result.failure(error))
                 }
             }
