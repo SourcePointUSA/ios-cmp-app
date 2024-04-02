@@ -17,11 +17,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authIdTextField: UITextField!
     @IBOutlet var consentTableView: UITableView!
 
-    @IBAction func onAuthIdChanged(_ sender: Any) {
-        authId = authIdTextField.text
-        authId = authId == "" ? nil : authId
-    }
-
     @IBAction func onDonePress(_ sender: Any) {
         self.messageFlow()
     }
@@ -44,15 +39,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         delegate: self
     )}()
 
-    /// Use a random generated `UUID` if you don't intend to share consent among different apps
-    /// Otherwise use the `UIDevice().identifierForVendor` if you intend to share consent among
-    /// different apps you control but don't have an id tha uniquely identifies a user such as email, username, etc.
-    /// Make sure to persist the authId as it needs to be re-used everytime the `.loadMessage(forAuthId:` is called.
-    var authId: String! {
-        didSet {
-            UserDefaults.standard.set(authId, forKey: "MyAppsAuthId")
-        }
-    }
     
     let tableSections = ["SDK Data"]
     var sdkData: [String: String?] = [:]
@@ -85,7 +71,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func messageFlow() {
         initData()
         sdkLoading()
-        consentManager.loadMessage(forAuthId: authId)
+        consentManager.loadMessage()
     }
 
     override func viewDidLoad() {
@@ -93,7 +79,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         // dismiss keyboard when tapping outside the authId text field
         view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing)))
-        authId = UserDefaults.standard.string(forKey: "MyAppsAuthId")
         messageFlow()
     }
 
