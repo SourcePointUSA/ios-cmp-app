@@ -31,10 +31,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         ccpa: SPCampaign()
     )}
 
+    let accountId = 22
+    let propertyName = "mobile.multicampaign.demo"
+    let propertyId = 16893
+    let loginPagePropertyName = "sdks-auth-consent-test-page"
+    let loginPagePropertyId = 31007
+
     lazy var consentManager: SPSDK = { SPConsentManager(
-        accountId: 22,
-        propertyId: 16893,
-        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        accountId: accountId,
+        propertyId: propertyId,
+        propertyName: try! SPPropertyName(propertyName),
         campaigns: campaigns,
         delegate: self
     )}()
@@ -85,6 +91,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let homeController = segue.destination as? HomeViewController
         homeController?.userData = consentManager.userData
+        homeController?.accountId = String(accountId)
+        homeController?.propertyId = String(loginPagePropertyId)
+        homeController?.propertyName = loginPagePropertyName
     }
 
     func sdkLoading() {
