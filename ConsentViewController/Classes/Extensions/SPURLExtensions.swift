@@ -10,7 +10,7 @@ import Foundation
 extension URL {
     /// - Parameter parameters: parameters dictionary.
     /// - Returns: URL with appending given query parameters.
-    func appendQueryItems(_ parameters: [String: String?]) -> URL? {
+    public func appendQueryItems(_ parameters: [String: String?]) -> URL? {
         let filteredParams = parameters.filter { _, value in value != nil }
 
         if var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true) {
