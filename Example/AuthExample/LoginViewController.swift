@@ -17,11 +17,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authIdTextField: UITextField!
     @IBOutlet var consentTableView: UITableView!
 
-    @IBAction func onAuthIdChanged(_ sender: Any) {
-        authId = authIdTextField.text
-        authId = authId == "" ? nil : authId
-    }
-
     @IBAction func onDonePress(_ sender: Any) {
         self.messageFlow()
     }
@@ -36,23 +31,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         ccpa: SPCampaign()
     )}
 
+    let accountId = 22
+    let propertyName = "mobile.multicampaign.demo"
+    let propertyId = 16893
+    let loginPagePropertyName = "sdks-auth-consent-test-page"
+    let loginPagePropertyId = 31007
+
     lazy var consentManager: SPSDK = { SPConsentManager(
-        accountId: 22,
-        propertyId: 16893,
-        propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
+        accountId: accountId,
+        propertyId: propertyId,
+        propertyName: try! SPPropertyName(propertyName),
         campaigns: campaigns,
         delegate: self
     )}()
 
-    /// Use a random generated `UUID` if you don't intend to share consent among different apps
-    /// Otherwise use the `UIDevice().identifierForVendor` if you intend to share consent among
-    /// different apps you control but don't have an id tha uniquely identifies a user such as email, username, etc.
-    /// Make sure to persist the authId as it needs to be re-used everytime the `.loadMessage(forAuthId:` is called.
-    var authId: String! {
-        didSet {
-            UserDefaults.standard.set(authId, forKey: "MyAppsAuthId")
-        }
-    }
     
     let tableSections = ["SDK Data"]
     var sdkData: [String: String?] = [:]
@@ -85,7 +77,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func messageFlow() {
         initData()
         sdkLoading()
-        consentManager.loadMessage(forAuthId: authId)
+        consentManager.loadMessage()
     }
 
     override func viewDidLoad() {
@@ -93,13 +85,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         // dismiss keyboard when tapping outside the authId text field
         view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing)))
-        authId = UserDefaults.standard.string(forKey: "MyAppsAuthId")
         messageFlow()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let homeController = segue.destination as? HomeViewController
         homeController?.userData = consentManager.userData
+        homeController?.accountId = String(accountId)
+        homeController?.propertyId = String(loginPagePropertyId)
+        homeController?.propertyName = loginPagePropertyName
     }
 
     func sdkLoading() {

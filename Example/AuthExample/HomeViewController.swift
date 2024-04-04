@@ -11,17 +11,28 @@ import WebKit
 import ConsentViewController
 
 class HomeViewController: UIViewController {
-    static let webviewUrl = URL(string: "https://sourcepointusa.github.io/sdks-auth-consent-test-page/?_sp_version=4.9.0&_sp_pass_consent=true")!
+    var webviewUrl: URL { (URL(string: "https://sourcepointusa.github.io/sdks-auth-consent-test-page")?
+        .appendQueryItems([
+            "_sp_pass_consent": "true",
+            "accountId": accountId,
+            "propertyId": propertyId,
+            "propertyName": propertyName
+        ]))!
+    }
     static let notFoundHtml = Bundle.main.path(forResource: "webserver/404", ofType: "html")!
 
     @IBOutlet weak var webview: WKWebView!
 
     var userData: SPUserData!
+    var accountId, propertyId, propertyName: String!
 
     override func viewDidLoad() {
+        if #available(iOS 16.4, *) {
+            webview.isInspectable = true
+        }
         webview.cleanCache()
         webview.navigationDelegate = self
-        webview.load(URLRequest(url: HomeViewController.webviewUrl))
+        webview.load(URLRequest(url: webviewUrl))
         webview.preloadConsent(from: userData)
     }
 }
