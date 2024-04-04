@@ -242,7 +242,7 @@ import UIKit
     }
 
     public func gracefullyDegradeOnError(_ error: SPError) {
-        if !userData.isEqual(SPUserData()) {
+        if userData.isNotEmpty {
             spCoordinator.logErrorMetrics(error)
             onConsentReady(userData: userData)
             handleSDKDone()

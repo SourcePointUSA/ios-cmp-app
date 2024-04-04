@@ -76,6 +76,13 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
         usnat: .init(uuid: usnat?.consents?.uuid, webConsentPayload: usnat?.consents?.webConsentPayload)
     )}
 
+    var isNotEmpty: Bool {
+        self != SPUserData() &&
+            gdpr?.consents != SPGDPRConsent.empty() &&
+            ccpa?.consents != SPCCPAConsent.empty() &&
+            usnat?.consents != SPUSNatConsent.empty()
+    }
+
     override public var description: String {
         "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa)), usnat: \(String(describing: usnat))"
     }
