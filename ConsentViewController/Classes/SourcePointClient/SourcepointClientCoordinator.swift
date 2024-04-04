@@ -86,7 +86,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var additionsChangeDate = SPDate.now()
-            var legalBasisChangeDate = SPDate.now()
+            var legalBasisChangeDate: SPDate?
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
@@ -141,7 +141,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 self.gdpr?.consentStatus.vendorListAdditions = true
                 shouldUpdateConsentedAll = true
             }
-            if gdpr.dateCreated.date < gdprMetadata.legalBasisChangeDate.date {
+            if let legalBasisChangeDate = gdprMetadata.legalBasisChangeDate, gdpr.dateCreated.date < legalBasisChangeDate.date {
                 self.gdpr?.consentStatus.legalBasisChanges = true
                 shouldUpdateConsentedAll = true
             }
