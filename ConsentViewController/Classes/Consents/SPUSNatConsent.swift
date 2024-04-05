@@ -179,7 +179,7 @@ extension SPUSNatConsent {
 
 public extension SPUSNatConsent {
     struct Statuses: CustomStringConvertible, Equatable {
-        let rejectedAny, consentedToAll, consentedToAny,
+        public let rejectedAny, consentedToAll, consentedToAny,
             hasConsentData, sellStatus, shareStatus,
             sensitiveDataStatus, gpcStatus: Bool?
 
