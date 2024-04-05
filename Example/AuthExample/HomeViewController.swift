@@ -27,9 +27,11 @@ class HomeViewController: UIViewController {
     var accountId, propertyId, propertyName: String!
 
     override func viewDidLoad() {
+        #if compiler(>=5.8) && DEBUG
         if #available(iOS 16.4, *) {
             webview.isInspectable = true
         }
+        #endif
         webview.cleanCache()
         webview.navigationDelegate = self
         webview.load(URLRequest(url: webviewUrl))
