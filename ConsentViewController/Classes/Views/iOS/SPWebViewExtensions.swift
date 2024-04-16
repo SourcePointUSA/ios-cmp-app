@@ -37,7 +37,7 @@ import WebKit
     /// * you should append query param `_sp_pass_consent=true` to your page (so the our web script knows it should wait for consent data)
     /// * you need to call `preloadConsent` only _after_ the url been loaded into the webview (ie. after `.load(URLRequest)`)
     func preloadConsent(from consents: SPUserData) {
-        guard 
+        guard
             let consentsData = try? JSONEncoder().encode(
                 PreloadConsentsPayload(consent: consents.webConsents)
             ),
