@@ -97,10 +97,10 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let sectionComponent = sections[section] else { return nil }
+
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        label.text = "\(sections[section]?.settings.text ?? "Partners") (\(partners.count))"
-        label.font = UIFont(from: sections[section]?.settings.style.font)
-        label.textColor = UIColor(hexString: sections[section]?.settings.style.font.color)
+        loadLabelText(forComponent: sectionComponent, label: label)
         return label
     }
 

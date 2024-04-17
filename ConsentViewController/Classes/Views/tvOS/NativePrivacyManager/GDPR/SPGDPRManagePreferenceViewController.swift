@@ -33,7 +33,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var nativeLongButton: SPNativeLongButton?
 
     var consentsSnapshot = GDPRPMConsentSnaptshot()
-    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 || emptyConsentSection}
+    var displayingLegIntCategories: Bool { categorySlider.selectedSegmentIndex == 1 || emptyConsentSection }
 
     var categories: [GDPRCategory] = []
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
@@ -180,10 +180,10 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let sectionComponent = sections[section].header else { return nil }
+
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        label.text = sections[section].header?.settings.text
-        label.font = UIFont(from: sections[section].header?.settings.style.font)
-        label.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
+        loadLabelText(forComponent: sectionComponent, label: label)
         label.isHidden = displayingLegIntCategories ?
             sections[section].contentLegIntCategory.isEmpty : sections[section].contentConsent.isEmpty
         return label
