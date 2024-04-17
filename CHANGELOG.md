@@ -1,3 +1,13 @@
+# 7.6.6 (Apr, 17, 2024)
+* [DIA-3679](https://sourcepoint.atlassian.net/browse/DIA-3679) Fixed an issue affecting Objc implementations preventing USNat consent status from being accessed by the app. [#559](https://github.com/SourcePointUSA/ios-cmp-app/pull/559)
+* [DIA-3811](https://sourcepoint.atlassian.net/browse/DIA-3811) Fixed an issue with webview consent transferring affecting some implementations that contained consent actions in their vendor list. [#563](https://github.com/SourcePointUSA/ios-cmp-app/pull/563)
+* [DIA-2963](https://sourcepoint.atlassian.net/browse/DIA-2963) Fixed an issue causing the `onError` callback not being called in certain cases. [#561](https://github.com/SourcePointUSA/ios-cmp-app/pull/561)
+* [DIA-3817](https://sourcepoint.atlassian.net/browse/DIA-3817) Fixed an issue causing the SDK to error for old campaigns (where `legalBasisChangeDate` are not returned by the backend). [#562](https://github.com/SourcePointUSA/ios-cmp-app/pull/562)
+* [DIA-3770](https://sourcepoint.atlassian.net/browse/DIA-3770) Fixed a layout issue on tvOS causing html tags to be rendered. [#565](https://github.com/SourcePointUSA/ios-cmp-app/pull/565)
+* Improved tests for legacy USPString within USNat campaigns. [#564](https://github.com/SourcePointUSA/ios-cmp-app/pull/564)
+* Made `webConsents` public to better support React Native, Flutter and other bridge SDKs. [#560](https://github.com/SourcePointUSA/ios-cmp-app/pull/560) (thanks [@finnp](https://github.com/finnp) & [@thekorn](https://github.com/thekorn))
+
+
 # 7.6.5 (Mar, 11, 2024)
 * [DIA-3691](https://sourcepoint.atlassian.net/browse/DIA-3691) Fixed an issue preventing the SDK from being used with Carthage. [#557](https://github.com/SourcePointUSA/ios-cmp-app/pull/557)
 * Updated README on `SPUSNatConsent` [#556](https://github.com/SourcePointUSA/ios-cmp-app/pull/556)
