@@ -63,8 +63,7 @@ public struct SPGCMData : Swift.Codable, Swift.Equatable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
-@objc @available(swift, obsoleted: 1.0)
-@objcMembers public class SPGCMDataObjc : ObjectiveC.NSObject {
+@objc @objcMembers public class SPGCMDataObjc : ObjectiveC.NSObject {
   @objc(SPGCMDataObjc_ObjcStatus) public enum ObjcStatus : Swift.Int, Swift.CustomStringConvertible {
     case granted, denied, unset
     public var description: Swift.String {
@@ -1129,11 +1128,8 @@ extension ConsentViewController.SPGPPConfig.SPMspaBinaryFlag : Swift.RawRepresen
 extension ConsentViewController.SPGPPConfig.SPMspaTernaryFlag : Swift.Hashable {}
 extension ConsentViewController.SPGPPConfig.SPMspaTernaryFlag : Swift.RawRepresentable {}
 extension ConsentViewController.SPGCMData.Status : Swift.RawRepresentable {}
-@available(swift, obsoleted: 1.0)
 extension ConsentViewController.SPGCMDataObjc.ObjcStatus : Swift.Equatable {}
-@available(swift, obsoleted: 1.0)
 extension ConsentViewController.SPGCMDataObjc.ObjcStatus : Swift.Hashable {}
-@available(swift, obsoleted: 1.0)
 extension ConsentViewController.SPGCMDataObjc.ObjcStatus : Swift.RawRepresentable {}
 extension ConsentViewController.CCPAConsentStatus : Swift.Equatable {}
 extension ConsentViewController.CCPAConsentStatus : Swift.Hashable {}

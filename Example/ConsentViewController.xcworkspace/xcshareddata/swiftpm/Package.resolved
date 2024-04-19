@@ -1,4 +1,5 @@
 {
+  "originHash" : "3b8368769f82c03aa3d4f8dfa65fa26c3b577444e9310697e7f3b1e56ad62c00",
   "pins" : [
     {
       "identity" : "down",
@@ -8,16 +9,7 @@
         "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
         "version" : "0.11.0"
       }
-    },
-    {
-      "identity" : "ios-cmp-app",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SourcePointUSA/ios-cmp-app.git",
-      "state" : {
-        "revision" : "711ccf8a8aaf222308009699e505df500429656e",
-        "version" : "7.6.5"
-      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

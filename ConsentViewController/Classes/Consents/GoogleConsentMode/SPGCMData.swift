@@ -23,7 +23,6 @@ public struct SPGCMData: Codable, Equatable {
     public let adStorage, analyticsStorage, adUserData, adPersonalization: Status?
 }
 
-@available(swift, obsoleted: 1.0)
 @objcMembers public class SPGCMDataObjc: NSObject {
     @objc(SPGCMDataObjc_ObjcStatus)
     public enum ObjcStatus: Int, CustomStringConvertible {
