@@ -2760,6 +2760,7 @@
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
 				82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */,
+				827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -5996,6 +5997,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 		82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnxnguyen/Down";
