@@ -14,14 +14,21 @@ struct IncludeData: Equatable {
     let TCData = ["type": "RecordString"]
     let webConsentPayload = ["type": "string"]
     let categories = true
-    let translateMessage = true
     let gppConfig: SPGPPConfig
+    
+    #if os(tvOS)
+    let translateMessage = true
+    #endif
 }
 
 extension IncludeData: Encodable {
     enum CodingKeys: String, CodingKey {
-        case localState, TCData, webConsentPayload, categories, translateMessage
+        case localState, TCData, webConsentPayload, categories
         case gppConfig = "GPPData"
+        
+        #if os(tvOS)
+        case translateMessage
+        #endif
     }
 
     var string: String? {
