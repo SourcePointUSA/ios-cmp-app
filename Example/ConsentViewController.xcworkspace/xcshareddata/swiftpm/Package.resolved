@@ -16,7 +16,7 @@
       "location" : "https://github.com/SourcePointUSA/ios-cmp-app",
       "state" : {
         "branch" : "fix_spm_runtime",
-        "revision" : "fb5d5b42fbd3dcd08be3fe9dfc953edd9e1483a9"
+        "revision" : "f7eb60b362d7df1c07d6ba412d5669ff9790be62"
       }
     }
   ],
