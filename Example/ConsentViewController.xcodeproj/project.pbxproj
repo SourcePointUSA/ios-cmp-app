@@ -143,6 +143,7 @@
 		8216E2612BB31D8D006FEF11 /* Pods_NativePMExampleAppUITests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 615BBC646752BDBE2B3F2E7C /* Pods_NativePMExampleAppUITests.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8216F2EE29FAB4B400133C69 /* AuthExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2ED29FAB4B400133C69 /* AuthExampleApp.swift */; };
 		8216F2F029FAB60400133C69 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2EF29FAB60400133C69 /* CustomMatchers.swift */; };
+		8224216A2BD6DE870081141F /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 822421692BD6DE870081141F /* ConsentViewController */; };
 		8225BAB0298BF0E300C2E5FA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8225BAAF298BF0E300C2E5FA /* Config.swift */; };
 		8225BAB2298BF1F200C2E5FA /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8225BAB1298BF1F200C2E5FA /* Statuses.swift */; };
 		8229C6162991390300F755AA /* SPClientCoordinatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8229C6152991390300F755AA /* SPClientCoordinatorSpec.swift */; };
@@ -1010,6 +1011,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8224216A2BD6DE870081141F /* ConsentViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2529,6 +2531,7 @@
 			);
 			name = SPMBuild;
 			packageProductDependencies = (
+				822421692BD6DE870081141F /* ConsentViewController */,
 			);
 			productName = SPMBuild;
 			productReference = 8255B6C827A9661100C9A70D /* SPMBuild.app */;
@@ -6016,6 +6019,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		822421692BD6DE870081141F /* ConsentViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
+			productName = ConsentViewController;
+		};
 		82CD6F842B59CC3600CAD663 /* Down */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */;
