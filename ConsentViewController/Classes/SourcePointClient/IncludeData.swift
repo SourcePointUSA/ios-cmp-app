@@ -15,7 +15,7 @@ struct IncludeData: Equatable {
     let webConsentPayload = ["type": "string"]
     let categories = true
     let gppConfig: SPGPPConfig
-    
+
     #if os(tvOS)
     let translateMessage = true
     #endif
