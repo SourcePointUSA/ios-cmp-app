@@ -41,17 +41,26 @@ extension Config {
         } else {
             language = defaults.language
         }
+        
+        let gdprArg = (values["gdpr"] as? NSString)?.boolValue
+        let ccpaArg = (values["ccpa"] as? NSString)?.boolValue
+        let usnatArg = (values["usnat"] as? NSString)?.boolValue
+        let attArg = (values["att"] as? NSString)?.boolValue
 
         campaigns = SPCampaigns(
-            gdpr: (values["gdpr"] as? NSString)?.boolValue == true ? SPCampaign(
+            gdpr: gdprArg == nil ? defaults.campaigns.gdpr :
+                gdprArg == true ? SPCampaign(
                 // sets the withoutBrowserDefault targeting param so we can test a message
                 // without the browser default settings enabled (otherwise, setting the language
                 // param has no effect).
                 targetingParams: language != nil ? ["withoutBrowserDefault": "true"] : [:]
-            ) : defaults.campaigns.gdpr,
-            ccpa: (values["ccpa"] as? NSString)?.boolValue == true ? SPCampaign() : defaults.campaigns.ccpa,
-            usnat: (values["usnat"] as? NSString)?.boolValue == true ? SPCampaign() : defaults.campaigns.usnat,
-            ios14: (values["att"] as? NSString)?.boolValue == true ? SPCampaign() : defaults.campaigns.ios14
+            ) : nil,
+            ccpa: ccpaArg == nil ? defaults.campaigns.ccpa :
+                ccpaArg == true ? SPCampaign() : nil,
+            usnat: usnatArg == nil ? defaults.campaigns.usnat :
+                usnatArg == true ? SPCampaign() : nil,
+            ios14: attArg == nil ? defaults.campaigns.ios14 :
+                attArg == true ? SPCampaign() : nil
         )
     }
 }
