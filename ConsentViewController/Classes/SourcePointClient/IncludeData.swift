@@ -25,7 +25,7 @@ extension IncludeData: Encodable {
     enum CodingKeys: String, CodingKey {
         case localState, TCData, webConsentPayload, categories
         case gppConfig = "GPPData"
-        
+
         #if os(tvOS)
         case translateMessage
         #endif

@@ -28,7 +28,9 @@ class IncludeDataSpec: QuickSpec {
             expect(stringified).to(contain(#""TCData":{"type":"RecordString"}"#))
             expect(stringified).to(contain(#""webConsentPayload":{"type":"string"}"#))
             expect(stringified).to(contain(#""categories":true"#))
+            #if os(tvOS)
             expect(stringified).to(contain(#""translateMessage":true"#))
+            #endif
             expect(stringified).to(contain(#""GPPData":{}"#))
         }
     }

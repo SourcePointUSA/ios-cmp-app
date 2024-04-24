@@ -30,6 +30,11 @@ import WebKit
             wv.isOpaque = false
             wv.backgroundColor = .clear
             wv.allowsBackForwardNavigationGestures = false
+            #if compiler(>=5.8) && DEBUG
+            if #available(iOS 16.4, *) {
+                wv.isInspectable = true
+            }
+            #endif
             return wv
         }
         return nil
