@@ -20,11 +20,12 @@ class ViewController: UIViewController {
         accountId: 22,
         propertyId: 16893,
         propertyName: "mobile.multicampaign.demo",
-        gdpr: true,
-        ccpa: true,
-        att: true,
-        usnat: false,
-        language: .BrowserDefault,
+        campaigns: SPCampaigns(
+            gdpr: SPCampaign(),
+            ccpa: SPCampaign(),
+            usnat: nil,
+            ios14: SPCampaign()
+        ),
         gdprPmId: "488393",
         ccpaPmId: "509688",
         usnatPmId: "943886"
@@ -34,13 +35,8 @@ class ViewController: UIViewController {
         accountId: config.accountId,
         propertyId: config.propertyId,
         propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
-        campaigns: SPCampaigns(
-            gdpr: config.gdpr ? SPCampaign() : nil,
-            ccpa: config.ccpa ? SPCampaign() : nil,
-            usnat: config.usnat ? SPCampaign() : nil,
-            ios14: config.att ? SPCampaign() : nil
-        ),
-        language: config.language,
+        campaigns: config.campaigns,
+        language: config.language ?? .BrowserDefault,
         delegate: self
     )}()
 

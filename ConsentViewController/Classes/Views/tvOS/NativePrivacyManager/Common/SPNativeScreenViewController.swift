@@ -204,7 +204,7 @@ class FocusGuideDebugView: UIView {
         }
         return button
     }
-    
+
     @discardableResult
     func loadLabelText(forComponent component: SPNativeText, labelText text: String? = nil, label: UILabel) -> UILabel {
         let style = component.settings.style

@@ -146,6 +146,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
 
         it("Shows a translated message") {
             self.app.relaunch(clean: true, resetAtt: false, args: [
+                "gdpr": true,
                 "att": false,
                 "ccpa": false,
                 "usnat": false,
