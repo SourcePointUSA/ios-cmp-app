@@ -1,3 +1,8 @@
+# 7.6.7 (Apr, 24, 2024)
+* [DIA-3878](https://sourcepoint.atlassian.net/browse/DIA-3878) Fixed an issue preventing the SDK from being integrated using SPM. [#567](https://github.com/SourcePointUSA/ios-cmp-app/pull/567)
+* Fixed an issue causing the 1st layer message to be rendered in english even when "Use Browser Defaults" was enabled in the message builder. [#568](https://github.com/SourcePointUSA/ios-cmp-app/pull/568)
+* Improved documentation regarding USNat statuses [#566](https://github.com/SourcePointUSA/ios-cmp-app/pull/566)
+
 # 7.6.6 (Apr, 17, 2024)
 * [DIA-3679](https://sourcepoint.atlassian.net/browse/DIA-3679) Fixed an issue affecting Objc implementations preventing USNat consent status from being accessed by the app. [#559](https://github.com/SourcePointUSA/ios-cmp-app/pull/559)
 * [DIA-3811](https://sourcepoint.atlassian.net/browse/DIA-3811) Fixed an issue with webview consent transferring affecting some implementations that contained consent actions in their vendor list. [#563](https://github.com/SourcePointUSA/ios-cmp-app/pull/563)
