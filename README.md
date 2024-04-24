@@ -529,6 +529,28 @@ var consentManager = SPConsentManager(
     delegate: self
 )
 ```
+## Check end-user consent status for U.S. Multi-State Privacy
+
+Your organization can check an end-user's consent status for a privacy choice by checking the `statuses` object for `usnat` in `SPUserData`.
+
+In the following code snippets, replace `{status}` with a status from the table below:
+
+| **Status**            | **Description**                                                                                                                                                                                                                                                              |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sellStatus`          | Checks end-user consent status for _Sale of Personal Information_ privacy choice.                                                                                                                                                                                            |
+| `shareStatus`         | Checks end-user consent status for _Sharing of Personal Information/Targeted Advertising_ privacy choice.                                                                                                                                                                    |
+| `sensitiveDataStatus` | Checks end-user consent status for _Processing of Sensitive Personal Information_ privacy choice.<br><br>Each sensitive data category configured by your organization is collated under this single privacy choice.The end-user either opts into all the categories or none. |
+
+The code snippets will check the configured status and execute the code you have set up for an end-user.
+
+```swift
+//Replace {status} with the appropriate status
+if SPUserData.usnat?.consents?.statuses.{status} {
+    //execute code
+}
+```
+
+> If your organization has combined _Sharing of Personal Information/Targeted Advertising and Sale of Personal Information_ into a single privacy choice in the Sourcepoint portal, you can elect to check either `sellStatus` or `shareStatus` for the end-user consent status.
 
 ## Support U.S. Privacy (Legacy) with U.S. Multi-State Privacy
 
