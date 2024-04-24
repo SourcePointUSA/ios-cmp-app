@@ -10,15 +10,15 @@ defaults:
     working-directory: Example
 jobs:
   lint:
-    runs-on: macos-latest
+    runs-on: macos-latest-large
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: linting
         run: swiftlint lint
   BuildSwiftPackage:
-      runs-on: macos-latest
+      runs-on: macos-latest-large
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: Building Swift Package
           run: xcodebuild clean build -scheme SPMBuild -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2'
         - uses: actions/upload-artifact@v2
@@ -27,15 +27,15 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   BuildCarthageProject:
-      runs-on: macos-latest
+      runs-on: macos-latest-large
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: Building Carthage Project
           run: cd ./SPCarthageTest && ./build.sh
   ObjC-ExampleApp-tests:
-      runs-on: macos-latest
+      runs-on: macos-latest-large
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: ObjC-ExampleApp testing -> iPhone 14 Pro (iOS 16.2)
           run: xcodebuild test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2'
         - uses: actions/upload-artifact@v2
@@ -44,9 +44,9 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   ConsentViewController:
-      runs-on: macos-latest
+      runs-on: macos-latest-large
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: ConsentViewController testing -> iPhone 14 Pro (iOS 16.2)
           run: xcodebuild test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2'
         - uses: actions/upload-artifact@v2
@@ -55,9 +55,9 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   AuthExample-tests:
-    runs-on: macos-latest
+    runs-on: macos-latest-large
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: ConsentViewController testing -> iPhone 14 Pro (iOS 16.2)
         run: xcodebuild test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2'
       - uses: actions/upload-artifact@v2
@@ -66,9 +66,9 @@ jobs:
         with:
           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   NativePMExampleApp:
-      runs-on: macos-latest
+      runs-on: macos-latest-large
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v4
         - name: ConsentViewController testing -> Apple TV (tvOS 16.1)
           run: xcodebuild test -scheme NativePMExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=16.1'
         - uses: actions/upload-artifact@v2
