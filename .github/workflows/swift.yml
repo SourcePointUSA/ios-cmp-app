@@ -10,13 +10,13 @@ defaults:
     working-directory: Example
 jobs:
   lint:
-    runs-on: macos-large
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - run: brew install swiftlint
       - run: swiftlint lint
   BuildSwiftPackage:
-      runs-on: macos-large
+      runs-on: macos-latest
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
@@ -28,14 +28,14 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   BuildCarthageProject:
-      runs-on: macos-large
+      runs-on: macos-latest
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
         - name: Building Carthage Project
           run: cd ./SPCarthageTest && ./build.sh
   ObjC-ExampleApp-tests:
-      runs-on: macos-large
+      runs-on: macos-latest
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
@@ -47,7 +47,7 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   ConsentViewController:
-      runs-on: macos-large
+      runs-on: macos-latest
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
@@ -59,7 +59,7 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   AuthExample-tests:
-    runs-on: macos-large
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - run: sudo xcode-select -s /Applications/Xcode_15.3.app
@@ -71,7 +71,7 @@ jobs:
         with:
           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   NativePMExampleApp:
-      runs-on: macos-large
+      runs-on: macos-latest
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
