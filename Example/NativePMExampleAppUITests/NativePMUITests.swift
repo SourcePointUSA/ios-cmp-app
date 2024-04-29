@@ -158,13 +158,26 @@ class NativePMUITests: QuickSpec {
             expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["OFF"]).toEventually(showUp())
         }
 
-        it("Handles message translation") {
+        it("Handles message translation via 1st layer") {
             self.app.relaunch(clean: true, language: .Spanish)
 
             // Message content is translated
             expect(self.app.gdprMessage.headerTitle).toEventually(containText("Mensage GDPR"))
 
             // as well as categories
+            expect(self.app.gdprMessage.categoriesList.staticTexts["Crear perfiles para publicidad personalizada"].exists).toEventually(beTrue())
+        }
+        
+        it("Handles message translation when loading PM via function") {
+            self.app.relaunch(clean: true, gdpr: true, ccpa: false, language: .Spanish)
+
+            self.waitFor(self.app.gdprMessage)
+            self.remote.press(.select)
+
+            self.app.gdprPrivacyManagerButton.remotePress()
+            self.waitFor(self.app.gdprMessage)
+            
+            expect(self.app.gdprMessage.headerTitle).toEventually(containText("Mensage GDPR"))
             expect(self.app.gdprMessage.categoriesList.staticTexts["Crear perfiles para publicidad personalizada"].exists).toEventually(beTrue())
         }
 
