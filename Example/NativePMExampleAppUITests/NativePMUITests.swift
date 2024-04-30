@@ -158,13 +158,26 @@ class NativePMUITests: QuickSpec {
             expect(self.app.ccpaMessage.doNotSellMyInfoButton.staticTexts["OFF"]).toEventually(showUp())
         }
 
-        it("Handles message translation") {
+        it("Handles message translation via 1st layer") {
             self.app.relaunch(clean: true, language: .Spanish)
 
             // Message content is translated
             expect(self.app.gdprMessage.headerTitle).toEventually(containText("Mensage GDPR"))
 
             // as well as categories
+            expect(self.app.gdprMessage.categoriesList.staticTexts["Crear perfiles para publicidad personalizada"].exists).toEventually(beTrue())
+        }
+        
+        it("Handles message translation when loading PM via function") {
+            self.app.relaunch(clean: true, gdpr: true, ccpa: false, language: .Spanish)
+
+            self.waitFor(self.app.gdprMessage)
+            self.remote.press(.select)
+
+            self.app.gdprPrivacyManagerButton.remotePress()
+            self.waitFor(self.app.gdprMessage)
+            
+            expect(self.app.gdprMessage.headerTitle).toEventually(containText("Mensage GDPR"))
             expect(self.app.gdprMessage.categoriesList.staticTexts["Crear perfiles para publicidad personalizada"].exists).toEventually(beTrue())
         }
 
@@ -242,145 +255,5 @@ class NativePMUITests: QuickSpec {
             self.remote.press(.right)
             self.checkForAllVendors(on: self.app.gdprMessage, shouldBe: "On", totalVendors: self.gdprDefaultOnCategories)
         }
-
-//        it("Save and Exit through CCPA & GDPR Privacy Manager") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            self.app.homeButton.expectToHaveFocus()
-//            self.app.saveAndExitInternalButton.remotePress()
-//            self.app.ccpaPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            self.app.homeButton.expectToHaveFocus()
-//            self.app.saveAndExitInternalButton.remotePress()
-//        }
-//
-//        it("Privacy policy of CCPA & GDPR Privacy Manager") {
-//            self.app.ccpaPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.privacyPolicyButton.remotePress()
-//            self.app.pressHomeAndReturnToHomeViewWithFocusOnPrivacyPolicyButton()
-//            self.app.acceptButton.remotePress()
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.privacyPolicyButton.remotePress()
-//            self.app.pressHomeAndReturnToHomeViewWithFocusOnPrivacyPolicyButton()
-//            self.app.acceptButton.remotePress()
-//        }
-//
-//        it("Manage Preferences through CCPA & GDPR Privacy Manager with few purposes ON") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.storeAndAccessInformation)
-//            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.storeAndAccessInformation)
-//            self.app.pressSaveAndExitInCategory()
-//            self.app.ccpaPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.category)
-//            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.category2)
-//            self.app.pressSaveAndExitInCategory()
-//        }
-//
-//        it("Manage Preferences through CCPA & GDPR Privacy Manager with few purposes OFF") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.storeAndAccessInformation)
-//            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.storeAndAccessInformation)
-//            self.app.pressSaveAndExitInCategory()
-//            self.app.ccpaPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.category)
-//            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.category2)
-//            self.app.pressSaveAndExitInCategory()
-//        }
-//
-//        it("Our Partners through CCPA & GDPR Privacy Manager with few purposes On") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.ourPartnersButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.loopMe)
-//            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.googleCharts)
-//            self.app.pressSaveAndExitInCategory()
-//            self.app.ccpaPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.ourPartnersButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.freewheel)
-//            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.seedtag)
-//            self.app.pressSaveAndExitInCategory()
-//        }
-//
-//        it("Our Partners through CCPA & GDPR Privacy Manager with few purposes OFF") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.ourPartnersButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.loopMe)
-//            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.googleCharts)
-//            self.app.pressSaveAndExitInCategory()
-//            self.app.ccpaPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.ourPartnersButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.pressCategory(element: self.app.freewheel)
-//            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.seedtag)
-//            self.app.pressSaveAndExitInCategory()
-//        }
-//
-//        it("Manage Preferences through GDPR Privacy Manager with few Legitimate interest purposes ON") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.switchToLegitInterests()
-//            self.app.pressCategory(element: self.app.createPersonalisedAdsProfile)
-//            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.createPersonalisedAdsProfile)
-//            self.app.pressSaveAndExitInCategory()
-//        }
-//
-//        it("Manage Preferences through GDPR Privacy Manager with few Legitimate interest purposes OFF") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.managePreferencesButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.switchToLegitInterests()
-//            self.app.pressCategory(element: self.app.createPersonalisedAdsProfile)
-//            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.createPersonalisedAdsProfile)
-//            self.app.pressSaveAndExitInCategory()
-//        }
-//
-//        it("Our Partners through GDPR Privacy Manager with few Legitimate interest purposes ON") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.ourPartnersButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.switchToLegitInterests()
-//            self.app.pressCategory(element: self.app.loopMe)
-//            self.app.backButton.expectToHaveFocus()
-//            self.app.pressOnButtonInCategoryDetails(elementToEnsure: self.app.loopMe)
-//            self.app.pressSaveAndExitInCategory()
-//        }
-//
-//        it("Our Partners through GDPR Privacy Manager with few Legitimate interest purposes Off") {
-//            self.app.gdprPrivacyManagerButton.remotePress()
-//            self.app.acceptButton.expectToHaveFocus()
-//            self.app.ourPartnersButton.remotePress()
-//            expect(self.app.homeButton).toEventually(showUp())
-//            self.app.switchToLegitInterests()
-//            self.app.pressCategory(element: self.app.loopMe)
-//            self.app.backButton.expectToHaveFocus()
-//            self.app.pressOffButtonInCategoryDetails(elementToEnsure: self.app.loopMe)
-//            self.app.pressSaveAndExitInCategory()
-//        }
     }
 }
