@@ -1,4 +1,4 @@
-# 7.6.7 (Apr, 24, 2024)
+# 7.6.8 (Apr, 24, 2024)
 * [DIA-3916](https://sourcepoint.atlassian.net/browse/DIA-3916) Fixed an issue causing the SDK to show incorrect translations on tvOS when loading the privacy manager via `loadGDPRPrivacyManager`. [#569](https://github.com/SourcePointUSA/ios-cmp-app/pull/569)
 
 # 7.6.7 (Apr, 24, 2024)
