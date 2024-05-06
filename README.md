@@ -488,7 +488,9 @@ consentManager.messageLanguage = SPMessageLanguageGerman;
 [consentManager loadMessage];
 ```
 
-It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in english as a fallback.
+It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in the default language configured in the message builder.
+
+> When the **Use Browser Default** toggle is enabled in the message builder, the user's browser language will always take precedence over the language set in the SDK as long as the end-user's browser language is supported in the message. If the user's browser language is not supported, the default language set in the message builder will be used.
 
 ## Loading Stage campaigns
 
