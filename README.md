@@ -490,7 +490,7 @@ consentManager.messageLanguage = SPMessageLanguageGerman;
 
 It's important to notice that if any of the components of the message doesn't have a translation for that language, the component will be rendered in the default language configured in the message builder.
 
-> When the **Use Browser Default** toggle is enabled in the message builder, the user's browser language will always take precedence over the language set in the SDK as long as the end-user's browser language is supported in the message. If the user's browser language is not supported, the default language set in the message builder will be used.
+> When the **Use Browser Default** toggle is enabled in the message builder, Sourcepoint will ignore the language setting configured in the SDK and use the default language configured in the message builder. If the end-user's browser language is not supported by a translation in the message builder, the default language set in the message builder will be used instead.
 
 ## Loading Stage campaigns
 
