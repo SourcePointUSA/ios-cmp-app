@@ -97,7 +97,7 @@ class ViewController: UIViewController {
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
+            usnat: SPCampaign(),
             ios14: SPCampaign()
         ),
         delegate: self
@@ -164,7 +164,7 @@ extension ViewController: SPDelegate {
 
         SPCampaigns *campaigns = [[SPCampaigns alloc]
             initWithGdpr: campaign
-            ccpa: campaign
+            usnat: campaign
             ios14: campaign
             environment: SPCampaignEnvPublic];
 
