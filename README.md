@@ -446,16 +446,7 @@ In Obj-C that'd be:
 
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
 
->If required for your app's log out process, your organization can call the `clearAllData` method to erase local data:
->```obj-c
->// Objective-C
->[SPConsentManager clearAllData];
->```
->```swift
->// Swift
->SPConsentManager.clearAllData()
->```
->Once cleared, your organization can then call `loadMessage` to collect consent from a non-authenticated user or `loadMessage` with a new `authId` for a new authenticated user. 
+>If required for your app's log out process, your organization can call the [`clearAllData`](#delete-user-data) method to erase local data. Once cleared, your organization can then call `loadMessage` to collect consent from a non-authenticated user or `loadMessage` with a new `authId` for a new authenticated user. 
 
 ## Sharing consent with a `WKWebView`
 
@@ -700,8 +691,14 @@ let campaigns = SPCampaigns(
 
 Utilize the following method if an end-user requests to have their data deleted:
 
-```
+```swift
+//Swift
 SPConsentManager.clearAllData()
+```
+
+```obj-c
+//Objective C
+[SPConsentManager clearAllData];
 ```
 
 ## Set a Privacy Manager Id for the Property Group
