@@ -1,3 +1,7 @@
+# 7.6.9 (Jun, 10, 2024)
+* [DIA-4076](https://sourcepoint.atlassian.net/browse/DIA-4076) Add `consentLanguage` param in query for PM call from FLM [#572](https://github.com/SourcePointUSA/ios-cmp-app/pull/572)
+* [HCD 516](https://sourcepoint.atlassian.net/browse/HCD-516) README.md update: Add default language precedence [#570](https://github.com/SourcePointUSA/ios-cmp-app/pull/570)
+
 # 7.6.8 (Apr, 30, 2024)
 * [DIA-3916](https://sourcepoint.atlassian.net/browse/DIA-3916) Fixed an issue causing the SDK to show incorrect translations on tvOS when loading the privacy manager via `loadGDPRPrivacyManager`. [#569](https://github.com/SourcePointUSA/ios-cmp-app/pull/569)
 
