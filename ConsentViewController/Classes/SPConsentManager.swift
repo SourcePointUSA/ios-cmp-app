@@ -548,9 +548,12 @@ extension SPConsentManager: SPMessageUIDelegate {
             nextMessageIfAny(controller)
 
         case .ShowPrivacyManager:
-            guard let url = action.pmURL?.appendQueryItems(["site_id": String(propertyId)]) else {
+            guard var url = action.pmURL?.appendQueryItems(["site_id": String(propertyId)]) else {
                 onError(InvalidURLError(urlString: "Empty or invalid PM URL"))
                 return
+            }
+            if let consentLanguage = action.consentLanguage {
+                url = url.appendQueryItems(["consentLanguage": String(consentLanguage)]) ?? url
             }
             if let spController = controller as? SPMessageViewController {
                 spController.loadPrivacyManager(url: url)
