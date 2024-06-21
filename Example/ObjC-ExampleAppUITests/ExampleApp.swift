@@ -70,8 +70,8 @@ class ExampleApp: XCUIApplication {
         webViews.first(withLabel: "GDPR Message")
     }
 
-    var ccpaMessage: XCUIElement {
-        webViews.first(withLabel: "CCPA Message")
+    var usnatMessage: XCUIElement {
+        webViews.first(withLabel: "USNat Message")
     }
 
     var acceptAllButton: XCUIElement {

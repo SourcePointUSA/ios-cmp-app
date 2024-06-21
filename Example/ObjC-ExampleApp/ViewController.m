@@ -35,8 +35,8 @@
 
     SPCampaigns *campaigns = [[SPCampaigns alloc]
                               initWithGdpr: campaign
-                              ccpa: campaign
-                              usnat: NULL
+                              ccpa: NULL
+                              usnat: campaign
                               ios14: campaign
                               environment: SPCampaignEnvPublic];
 
@@ -102,7 +102,7 @@
     [self updateUIFields];
     NSLog(@"GDPR Applies: %d", userData.objcGDPRApplies);
     NSLog(@"GDPR: %@", userData.objcGDPRConsents);
-    NSLog(@"CCPA Applies: %d", userData.objcCCPAApplies);
-    NSLog(@"CCPA: %@", userData.objcCCPAConsents);
+    NSLog(@"USNAT Applies: %d", userData.objcUSNatApplies);
+    NSLog(@"USNAT: %@", userData.objcUSNatConsents);
 }
 @end
