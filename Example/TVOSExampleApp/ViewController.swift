@@ -21,15 +21,15 @@ class ViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: "app.campaigns.ccpa") {
             ccpa = SPCampaign()
         }
-        return SPCampaigns(gdpr: nil, ccpa: SPCampaign(), environment: .Public)
+        return SPCampaigns(gdpr: gdpr, ccpa: ccpa, environment: .Public)
     }
 
     lazy var consentManager: SPSDK = {
         SPConsentManager(
-            accountId: 155,
-            propertyId: 35468,
+            accountId: 22,
+            propertyId: 17935,
             // swiftlint:disable:next force_try
-            propertyName: try! SPPropertyName("generic.ott"),
+            propertyName: try! SPPropertyName("appletv.demo"),
             campaigns: campaigns,
             language: SPMessageLanguage(rawValue: UserDefaults.standard.string(forKey: "app.lang") ?? "") ?? .BrowserDefault,
             delegate: self
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "1098751")
+        consentManager.loadCCPAPrivacyManager(withId: "753802")
     }
 }
 
@@ -93,7 +93,7 @@ extension ViewController: SPDelegate {
 // MARK: - UI Utils
 extension ViewController {
     func updateButtons() {
-        ccpaButton.isEnabled = true
+        ccpaButton.isEnabled = consentManager.ccpaApplies
         gdprButton.isEnabled = consentManager.gdprApplies
     }
 
