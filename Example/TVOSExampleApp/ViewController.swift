@@ -93,8 +93,8 @@ extension ViewController: SPDelegate {
 // MARK: - UI Utils
 extension ViewController {
     func updateButtons() {
-        ccpaButton.isEnabled = consentManager.ccpaApplies
-        gdprButton.isEnabled = consentManager.gdprApplies
+        ccpaButton.isEnabled = true // consentManager.ccpaApplies
+        gdprButton.isEnabled = true // consentManager.gdprApplies
     }
 
     func showActivityIndicator(on parentView: UIView?) {

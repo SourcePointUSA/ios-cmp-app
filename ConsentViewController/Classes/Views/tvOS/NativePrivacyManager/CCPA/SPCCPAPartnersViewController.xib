@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="19529" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,7 +38,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoB-tD-PZ6" userLabel="Stack View - Content">
                             <rect key="frame" x="0.0" y="116" width="1760" height="844"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gcn-TZ-MaO" userLabel="Stack View - 1st Column">
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="Gcn-TZ-MaO" userLabel="Stack View - 1st Column">
                                     <rect key="frame" x="0.0" y="0.0" width="880" height="844"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nlg-W0-A4w">
@@ -49,7 +49,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="jSe-4i-jyb" userLabel="SelectedCategoryLabel">
-                                            <rect key="frame" x="165" y="472" width="550" height="80"/>
+                                            <rect key="frame" x="165" y="400" width="550" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="24P-N3-fVM"/>
                                                 <constraint firstAttribute="width" constant="550" id="EtQ-zw-LjX"/>
@@ -59,10 +59,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fkt-xy-1Gj" userLabel="Stack View - Actions">
-                                            <rect key="frame" x="190" y="664" width="500" height="180"/>
+                                            <rect key="frame" x="190" y="520" width="500" height="128"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6p-Na-Ow5" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="egk-rM-T4E"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Accept All"/>
                                                     <connections>
@@ -70,7 +73,10 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIA-bC-Rnh" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="94" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="68" width="500" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="1dj-1c-TXK"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Save &amp; Exit"/>
                                                     <connections>
@@ -83,6 +89,9 @@
                                                 <constraint firstAttribute="width" constant="500" id="5lj-HN-GZj"/>
                                             </constraints>
                                         </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvn-33-80J" userLabel="Spacer">
+                                            <rect key="frame" x="190" y="688" width="500" height="156"/>
+                                        </view>
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="T5e-1y-rxW" userLabel="Stack View - 2nd Column">
