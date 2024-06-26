@@ -150,6 +150,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     func loadQRCode(url: URL?, imageView: UIImageView, label: UILabel) {
         if let Url = url?.absoluteString {
             imageView.image = QRCode(from: Url)
+            imageView.layer.magnificationFilter = CALayerContentsFilter.nearest
             imageView.isHidden = imageView.image == nil
             label.isHidden = imageView.image == nil
         }
