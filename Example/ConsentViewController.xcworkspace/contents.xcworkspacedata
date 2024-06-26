@@ -14,7 +14,7 @@
       location = "group:ObjC-ExampleApp.xctestplan">
    </FileRef>
    <FileRef
-      location = "group:NativePMExampleApp.xctestplan">
+      location = "group:TVOSExampleApp.xctestplan">
    </FileRef>
    <FileRef
       location = "group:NativeMessageExample.xctestplan">

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  NativePMExampleApp
+//  TVOSExampleApp
 //
 //  Created by Andre Herculano on 21.05.21.
 //  Copyright © 2021 CocoaPods. All rights reserved.

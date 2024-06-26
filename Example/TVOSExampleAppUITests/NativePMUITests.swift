@@ -1,6 +1,6 @@
 //
 //  NativePMUITests.swift
-//  NativePMExampleAppUITests
+//  TVOSExampleAppUITests
 //
 //  Created by Vilas on 27/09/21.
 //  Copyright © 2021 CocoaPods. All rights reserved.
@@ -8,7 +8,7 @@
 
 // swiftlint:disable function_body_length
 
-@testable import NativePMExampleApp
+@testable import TVOSExampleApp
 import Nimble
 import Quick
 import XCTest

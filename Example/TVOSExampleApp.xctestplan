@@ -21,7 +21,7 @@
     "targetForVariableExpansion" : {
       "containerPath" : "container:ConsentViewController.xcodeproj",
       "identifier" : "822BF2C22657E29800177B0E",
-      "name" : "NativePMExampleApp"
+      "name" : "TVOSExampleApp"
     },
     "testRepetitionMode" : "retryOnFailure"
   },
@@ -30,7 +30,7 @@
       "target" : {
         "containerPath" : "container:ConsentViewController.xcodeproj",
         "identifier" : "822BF2E02657E29900177B0E",
-        "name" : "NativePMExampleAppUITests"
+        "name" : "TVOSExampleAppUITests"
       }
     }
   ],

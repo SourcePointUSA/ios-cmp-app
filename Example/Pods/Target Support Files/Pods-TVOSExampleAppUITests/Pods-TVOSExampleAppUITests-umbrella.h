@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_NativePMExampleAppUITestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_NativePMExampleAppUITestsVersionString[];
+FOUNDATION_EXPORT double Pods_TVOSExampleAppUITestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_TVOSExampleAppUITestsVersionString[];
 

@@ -20,7 +20,7 @@ abstract_target 'Examples' do
     pod 'FirebaseAnalytics'
   end
 
-  target 'NativePMExampleApp' do
+  target 'TVOSExampleApp' do
     platform :tvos, '12.0'
     pod 'ConsentViewController', :path => '../'
   end
@@ -41,7 +41,7 @@ abstract_target 'Tests' do
   target 'SourcePointMetaAppUITests'
   target 'ObjC-ExampleAppUITests'
 
-  target 'NativePMExampleAppUITests' do
+  target 'TVOSExampleAppUITests' do
     platform :tvos, '12.0'
     pod 'ConsentViewController', :path => '../'
     pod 'Quick'

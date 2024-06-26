@@ -130,7 +130,7 @@
 		6DE11C6C269A2D5C0058ABE9 /* CampaignModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE11C6B269A2D5C0058ABE9 /* CampaignModel.swift */; };
 		6DE11C70269A2DDB0058ABE9 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE11C6E269A2DDB0058ABE9 /* SideMenuViewController.swift */; };
 		6DE11C71269A2DDB0058ABE9 /* ConsentDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE11C6F269A2DDB0058ABE9 /* ConsentDetailsViewController.swift */; };
-		71F0930571CB8351E8BD5541 /* Pods_NativePMExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED42ED30F5FB710D166C76A /* Pods_NativePMExampleApp.framework */; };
+		71F0930571CB8351E8BD5541 /* Pods_TVOSExampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED42ED30F5FB710D166C76A /* Pods_TVOSExampleApp.framework */; };
 		7A8F0D717661D0EB4B43CA8A /* Pods_Examples_NativeMessageExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2ED27DE2832296F28683534 /* Pods_Examples_NativeMessageExample.framework */; };
 		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
 		820B08AE2B602177004E77E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08AD2B602177004E77E8 /* Foundation.framework */; };
@@ -139,8 +139,8 @@
 		820EF1792A0D28F9009D9941 /* After.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF1782A0D28F9009D9941 /* After.swift */; };
 		820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
-		8216E2602BB31D8D006FEF11 /* Pods_NativePMExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615BBC646752BDBE2B3F2E7C /* Pods_NativePMExampleAppUITests.framework */; };
-		8216E2612BB31D8D006FEF11 /* Pods_NativePMExampleAppUITests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 615BBC646752BDBE2B3F2E7C /* Pods_NativePMExampleAppUITests.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8216E2602BB31D8D006FEF11 /* Pods_TVOSExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615BBC646752BDBE2B3F2E7C /* Pods_TVOSExampleAppUITests.framework */; };
+		8216E2612BB31D8D006FEF11 /* Pods_TVOSExampleAppUITests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 615BBC646752BDBE2B3F2E7C /* Pods_TVOSExampleAppUITests.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8216F2EE29FAB4B400133C69 /* AuthExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2ED29FAB4B400133C69 /* AuthExampleApp.swift */; };
 		8216F2F029FAB60400133C69 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2EF29FAB60400133C69 /* CustomMatchers.swift */; };
 		8224216A2BD6DE870081141F /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 822421692BD6DE870081141F /* ConsentViewController */; };
@@ -429,7 +429,7 @@
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 822BF2C22657E29800177B0E;
-			remoteInfo = NativePMExampleApp;
+			remoteInfo = TVOSExampleApp;
 		};
 		82BC13762BB2DFE300AD346A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -468,7 +468,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8216E2612BB31D8D006FEF11 /* Pods_NativePMExampleAppUITests.framework in Embed Frameworks */,
+				8216E2612BB31D8D006FEF11 /* Pods_TVOSExampleAppUITests.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,7 +477,7 @@
 
 /* Begin PBXFileReference section */
 		00C3A17DB5FF9A9001DDE411 /* Pods-Examples-SourcePointMetaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-SourcePointMetaApp.release.xcconfig"; path = "Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp.release.xcconfig"; sourceTree = "<group>"; };
-		0909C3E990EBFEEA4FEEF2F3 /* Pods-NativePMExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleApp.release.xcconfig"; path = "Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp.release.xcconfig"; sourceTree = "<group>"; };
+		0909C3E990EBFEEA4FEEF2F3 /* Pods-TVOSExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSExampleApp.release.xcconfig"; path = "Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp.release.xcconfig"; sourceTree = "<group>"; };
 		0A6C2347E48A5B5815864E11 /* Pods-SourcepointFirebaseDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcepointFirebaseDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-SourcepointFirebaseDemoUITests/Pods-SourcepointFirebaseDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		0B312ED92ABC4E2400B62E23 /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -511,7 +511,7 @@
 		0B312F652ABC504000B62E23 /* SPJSReceiver.spec.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = SPJSReceiver.spec.js; sourceTree = "<group>"; };
 		0CC11FBF86975C344F3FD7A5 /* Pods-AuthExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AuthExample.debug.xcconfig"; path = "Target Support Files/Pods-AuthExample/Pods-AuthExample.debug.xcconfig"; sourceTree = "<group>"; };
 		0E6A38F5AE8A36A4141FBD02 /* Pods-Tests-SourcePointMetaAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-SourcePointMetaAppUITests.release.xcconfig"; path = "Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests.release.xcconfig"; sourceTree = "<group>"; };
-		0ED42ED30F5FB710D166C76A /* Pods_NativePMExampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NativePMExampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ED42ED30F5FB710D166C76A /* Pods_TVOSExampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TVOSExampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1997B63A238FDCE80079AF34 /* Unified-MetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unified-MetaApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1997B64A238FDCF30079AF34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1997B675238FDEA00079AF34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -588,7 +588,7 @@
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		60F3B060FFC200F1EBE9C7C9 /* Pods_Tests_ConsentViewController_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests_ConsentViewController_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		615BBC646752BDBE2B3F2E7C /* Pods_NativePMExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NativePMExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		615BBC646752BDBE2B3F2E7C /* Pods_TVOSExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TVOSExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		663DE362110AEABD75816094 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		67AAF76429115F0E0816D416 /* Pods-NativeMessageExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeMessageExample.release.xcconfig"; path = "Target Support Files/Pods-NativeMessageExample/Pods-NativeMessageExample.release.xcconfig"; sourceTree = "<group>"; };
 		69F46847A09D1B51EE946FD8 /* Pods-Tests-AuthExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-AuthExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-Tests-AuthExampleUITests/Pods-Tests-AuthExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -682,14 +682,14 @@
 		8225BAAF298BF0E300C2E5FA /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		8225BAB1298BF1F200C2E5FA /* Statuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
 		8229C6152991390300F755AA /* SPClientCoordinatorSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPClientCoordinatorSpec.swift; sourceTree = "<group>"; };
-		822BF2C32657E29800177B0E /* NativePMExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativePMExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		822BF2C32657E29800177B0E /* TVOSExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVOSExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2C52657E29800177B0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		822BF2C72657E29800177B0E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		822BF2CA2657E29800177B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		822BF2CC2657E29900177B0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		822BF2CF2657E29900177B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		822BF2D12657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativePMExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		822BF2E12657E29900177B0E /* TVOSExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVOSExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822CF3FE2B975AB000927247 /* SPConsentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPConsentable.swift; sourceTree = "<group>"; };
 		822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludeDataSpec.swift; sourceTree = "<group>"; };
@@ -868,11 +868,11 @@
 		8472378712AF95446FAE61AD /* Pods_Examples_ConsentViewController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples_ConsentViewController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88BF9421A56C5788AFF58E2D /* Pods-Examples-ObjC-ExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-ObjC-ExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		8AAA828B54284BF876A6D6AB /* Pods-Tests-ConsentViewController_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-ConsentViewController_ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		90049D34ED6EF28053D3C018 /* Pods-NativePMExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		90049D34ED6EF28053D3C018 /* Pods-TVOSExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		90AEBFA183B0E0D9BE05391F /* Pods_Tests_SourcePointMetaAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests_SourcePointMetaAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96AF8CBB3DFA7D832F70CF77 /* Pods-SourcePointMetaAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcePointMetaAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-SourcePointMetaAppUITests/Pods-SourcePointMetaAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9D2F083B24C971D8FF7A7025 /* Pods-ObjC-ExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjC-ExampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ObjC-ExampleAppUITests/Pods-ObjC-ExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
-		9D4EC4C211BD7510DDB068A3 /* Pods-NativePMExampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-NativePMExampleAppUITests/Pods-NativePMExampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		9D4EC4C211BD7510DDB068A3 /* Pods-TVOSExampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSExampleAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9EAF4A932CE0170728360879 /* Pods_Tests_SPGDPRExampleAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests_SPGDPRExampleAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26BB5EDF4A7F357A954E1EE /* Pods-SPGDPRExampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SPGDPRExampleAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-SPGDPRExampleAppUITests/Pods-SPGDPRExampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3122FD062AD131D18A2076D /* Pods-Examples-SourcepointFirebaseDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-SourcepointFirebaseDemo.release.xcconfig"; path = "Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -895,7 +895,7 @@
 		DEF66586D772B97E3033773A /* Pods_Examples_AuthExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples_AuthExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E49091D4B33C20F5A885F560 /* Pods-ConsentViewController_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ConsentViewController_ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ConsentViewController_ExampleTests/Pods-ConsentViewController_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EDD01F422A2A07B700590772 /* SPConsentManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPConsentManagerSpec.swift; sourceTree = "<group>"; };
-		F09E82E9DEE8A7F3ED401EB2 /* Pods-NativePMExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativePMExampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-NativePMExampleAppUITests/Pods-NativePMExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F09E82E9DEE8A7F3ED401EB2 /* Pods-TVOSExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSExampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2ED27DE2832296F28683534 /* Pods_Examples_NativeMessageExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples_NativeMessageExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A9B179B610867B5905C68D /* Pods-SPGDPRExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SPGDPRExampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-SPGDPRExampleAppUITests/Pods-SPGDPRExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -987,7 +987,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71F0930571CB8351E8BD5541 /* Pods_NativePMExampleApp.framework in Frameworks */,
+				71F0930571CB8351E8BD5541 /* Pods_TVOSExampleApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -995,7 +995,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8216E2602BB31D8D006FEF11 /* Pods_NativePMExampleAppUITests.framework in Frameworks */,
+				8216E2602BB31D8D006FEF11 /* Pods_TVOSExampleAppUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1475,8 +1475,8 @@
 				6D9053FC25D27ABF00E4B49D /* AuthExampleUITests */,
 				6D8046EB25D1A87E0005002B /* ObjC-ExampleApp */,
 				6D80473325D1AC3E0005002B /* ObjC-ExampleAppUITests */,
-				822BF2C42657E29800177B0E /* NativePMExampleApp */,
-				822BF2E42657E29900177B0E /* NativePMExampleAppUITests */,
+				822BF2C42657E29800177B0E /* TVOSExampleApp */,
+				822BF2E42657E29900177B0E /* TVOSExampleAppUITests */,
 				0B312EEC2ABC4FE500B62E23 /* SPM */,
 				8255B6C927A9661100C9A70D /* SPMBuild */,
 				82D8447B2B7AA5AE0069714D /* SourcepointFirebaseDemo */,
@@ -1505,8 +1505,8 @@
 				6D8046EA25D1A87E0005002B /* ObjC-ExampleApp.app */,
 				6D80473225D1AC3E0005002B /* ObjC-ExampleAppUITests.xctest */,
 				6D9053FB25D27ABF00E4B49D /* AuthExampleUITests.xctest */,
-				822BF2C32657E29800177B0E /* NativePMExampleApp.app */,
-				822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */,
+				822BF2C32657E29800177B0E /* TVOSExampleApp.app */,
+				822BF2E12657E29900177B0E /* TVOSExampleAppUITests.xctest */,
 				8255B6C827A9661100C9A70D /* SPMBuild.app */,
 				0B312ED92ABC4E2400B62E23 /* ConsentViewController.framework */,
 				0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */,
@@ -1721,10 +1721,10 @@
 				67AAF76429115F0E0816D416 /* Pods-NativeMessageExample.release.xcconfig */,
 				A3271515CABF16A266F76AB5 /* Pods-NativeMessageExampleUITests.debug.xcconfig */,
 				B4087F5F6A15D2AB068CF925 /* Pods-NativeMessageExampleUITests.release.xcconfig */,
-				90049D34ED6EF28053D3C018 /* Pods-NativePMExampleApp.debug.xcconfig */,
-				0909C3E990EBFEEA4FEEF2F3 /* Pods-NativePMExampleApp.release.xcconfig */,
-				9D4EC4C211BD7510DDB068A3 /* Pods-NativePMExampleAppUITests.debug.xcconfig */,
-				F09E82E9DEE8A7F3ED401EB2 /* Pods-NativePMExampleAppUITests.release.xcconfig */,
+				90049D34ED6EF28053D3C018 /* Pods-TVOSExampleApp.debug.xcconfig */,
+				0909C3E990EBFEEA4FEEF2F3 /* Pods-TVOSExampleApp.release.xcconfig */,
+				9D4EC4C211BD7510DDB068A3 /* Pods-TVOSExampleAppUITests.debug.xcconfig */,
+				F09E82E9DEE8A7F3ED401EB2 /* Pods-TVOSExampleAppUITests.release.xcconfig */,
 				D7826F6727CB618982D4059E /* Pods-ObjC-ExampleApp.debug.xcconfig */,
 				7145FA87C5C9A2740BF65F71 /* Pods-ObjC-ExampleApp.release.xcconfig */,
 				7B64545F27CBFCAA12937C1D /* Pods-ObjC-ExampleAppUITests.debug.xcconfig */,
@@ -1796,7 +1796,7 @@
 			path = SPClientCoordinator;
 			sourceTree = "<group>";
 		};
-		822BF2C42657E29800177B0E /* NativePMExampleApp */ = {
+		822BF2C42657E29800177B0E /* TVOSExampleApp */ = {
 			isa = PBXGroup;
 			children = (
 				822BF2C52657E29800177B0E /* AppDelegate.swift */,
@@ -1806,10 +1806,10 @@
 				822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */,
 				822BF2D12657E29900177B0E /* Info.plist */,
 			);
-			path = NativePMExampleApp;
+			path = TVOSExampleApp;
 			sourceTree = "<group>";
 		};
-		822BF2E42657E29900177B0E /* NativePMExampleAppUITests */ = {
+		822BF2E42657E29900177B0E /* TVOSExampleAppUITests */ = {
 			isa = PBXGroup;
 			children = (
 				822BF2E72657E29900177B0E /* Info.plist */,
@@ -1817,7 +1817,7 @@
 				6D5FB7EA2702395D008F479B /* NativePMApp.swift */,
 				6D5FB7EE27023C93008F479B /* NativePMUITests.swift */,
 			);
-			path = NativePMExampleAppUITests;
+			path = TVOSExampleAppUITests;
 			sourceTree = "<group>";
 		};
 		8231B13E22BA5A6B00D2669B /* AuthExample */ = {
@@ -2217,8 +2217,8 @@
 				6D90553125D2857700E4B49D /* ConsentViewController.framework */,
 				8231B15122BBC39900D2669B /* ConsentViewController.framework */,
 				6D8047D225D1C76D0005002B /* ConsentViewController.framework */,
-				0ED42ED30F5FB710D166C76A /* Pods_NativePMExampleApp.framework */,
-				615BBC646752BDBE2B3F2E7C /* Pods_NativePMExampleAppUITests.framework */,
+				0ED42ED30F5FB710D166C76A /* Pods_TVOSExampleApp.framework */,
+				615BBC646752BDBE2B3F2E7C /* Pods_TVOSExampleAppUITests.framework */,
 				DEF66586D772B97E3033773A /* Pods_Examples_AuthExample.framework */,
 				F2ED27DE2832296F28683534 /* Pods_Examples_NativeMessageExample.framework */,
 				D733AC29FB111C094F688376 /* Pods_Examples_ObjC_ExampleApp.framework */,
@@ -2457,9 +2457,9 @@
 			productReference = 8214B277249CC13B00167BFE /* SPGDPRExampleAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		822BF2C22657E29800177B0E /* NativePMExampleApp */ = {
+		822BF2C22657E29800177B0E /* TVOSExampleApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 822BF2EE2657E29900177B0E /* Build configuration list for PBXNativeTarget "NativePMExampleApp" */;
+			buildConfigurationList = 822BF2EE2657E29900177B0E /* Build configuration list for PBXNativeTarget "TVOSExampleApp" */;
 			buildPhases = (
 				B062DF0F7FECF3228384CE3E /* [CP] Check Pods Manifest.lock */,
 				822BF2BF2657E29800177B0E /* Sources */,
@@ -2471,14 +2471,14 @@
 			);
 			dependencies = (
 			);
-			name = NativePMExampleApp;
-			productName = NativePMExampleApp;
-			productReference = 822BF2C32657E29800177B0E /* NativePMExampleApp.app */;
+			name = TVOSExampleApp;
+			productName = TVOSExampleApp;
+			productReference = 822BF2C32657E29800177B0E /* TVOSExampleApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		822BF2E02657E29900177B0E /* NativePMExampleAppUITests */ = {
+		822BF2E02657E29900177B0E /* TVOSExampleAppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 822BF2F02657E29900177B0E /* Build configuration list for PBXNativeTarget "NativePMExampleAppUITests" */;
+			buildConfigurationList = 822BF2F02657E29900177B0E /* Build configuration list for PBXNativeTarget "TVOSExampleAppUITests" */;
 			buildPhases = (
 				42CC27259441B6EC2F4DBAC6 /* [CP] Check Pods Manifest.lock */,
 				822BF2DD2657E29900177B0E /* Sources */,
@@ -2492,9 +2492,9 @@
 			dependencies = (
 				822BF2E32657E29900177B0E /* PBXTargetDependency */,
 			);
-			name = NativePMExampleAppUITests;
-			productName = NativePMExampleAppUITests;
-			productReference = 822BF2E12657E29900177B0E /* NativePMExampleAppUITests.xctest */;
+			name = TVOSExampleAppUITests;
+			productName = TVOSExampleAppUITests;
+			productReference = 822BF2E12657E29900177B0E /* TVOSExampleAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		8231B13C22BA5A6B00D2669B /* AuthExample */ = {
@@ -2780,8 +2780,8 @@
 				6D8046E925D1A87E0005002B /* ObjC-ExampleApp */,
 				6D80473125D1AC3E0005002B /* ObjC-ExampleAppUITests */,
 				6D9053FA25D27ABF00E4B49D /* AuthExampleUITests */,
-				822BF2C22657E29800177B0E /* NativePMExampleApp */,
-				822BF2E02657E29900177B0E /* NativePMExampleAppUITests */,
+				822BF2C22657E29800177B0E /* TVOSExampleApp */,
+				822BF2E02657E29900177B0E /* TVOSExampleAppUITests */,
 				8255B6C727A9661100C9A70D /* SPMBuild */,
 				0B312ED82ABC4E2400B62E23 /* SPMConsentViewController-iOS */,
 				0B312EE42ABC4E4000B62E23 /* SPMConsentViewController-tvOS */,
@@ -3091,7 +3091,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NativePMExampleAppUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TVOSExampleAppUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3126,15 +3126,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleAppUITests/Pods-NativePMExampleAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleAppUITests/Pods-NativePMExampleAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleAppUITests/Pods-NativePMExampleAppUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5401DFC3A3A3A0B2CCEA99BE /* [CP] Embed Pods Frameworks */ = {
@@ -3441,7 +3441,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NativePMExampleApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TVOSExampleApp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3476,15 +3476,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NativePMExampleApp/Pods-NativePMExampleApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CBE586B933D81745BC9C6FB7 /* [CP] Check Pods Manifest.lock */ = {
@@ -4142,7 +4142,7 @@
 		};
 		822BF2E32657E29900177B0E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 822BF2C22657E29800177B0E /* NativePMExampleApp */;
+			target = 822BF2C22657E29800177B0E /* TVOSExampleApp */;
 			targetProxy = 822BF2E22657E29900177B0E /* PBXContainerItemProxy */;
 		};
 		82BC13772BB2DFE300AD346A /* PBXTargetDependency */ = {
@@ -5122,7 +5122,7 @@
 		};
 		822BF2E82657E29900177B0E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 90049D34ED6EF28053D3C018 /* Pods-NativePMExampleApp.debug.xcconfig */;
+			baseConfigurationReference = 90049D34ED6EF28053D3C018 /* Pods-TVOSExampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5137,7 +5137,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = NativePMExampleApp/Info.plist;
+				INFOPLIST_FILE = TVOSExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5145,7 +5145,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.NativePMExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.TVOSExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -5157,7 +5157,7 @@
 		};
 		822BF2E92657E29900177B0E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0909C3E990EBFEEA4FEEF2F3 /* Pods-NativePMExampleApp.release.xcconfig */;
+			baseConfigurationReference = 0909C3E990EBFEEA4FEEF2F3 /* Pods-TVOSExampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5171,14 +5171,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = NativePMExampleApp/Info.plist;
+				INFOPLIST_FILE = TVOSExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.NativePMExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.TVOSExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 5.0;
@@ -5189,7 +5189,7 @@
 		};
 		822BF2EC2657E29900177B0E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D4EC4C211BD7510DDB068A3 /* Pods-NativePMExampleAppUITests.debug.xcconfig */;
+			baseConfigurationReference = 9D4EC4C211BD7510DDB068A3 /* Pods-TVOSExampleAppUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -5201,7 +5201,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = NativePMExampleAppUITests/Info.plist;
+				INFOPLIST_FILE = TVOSExampleAppUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5211,20 +5211,20 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.NativePMExampleAppUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.TVOSExampleAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TEST_TARGET_NAME = NativePMExampleApp;
+				TEST_TARGET_NAME = TVOSExampleApp;
 				TVOS_DEPLOYMENT_TARGET = 14.5;
 			};
 			name = Debug;
 		};
 		822BF2ED2657E29900177B0E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F09E82E9DEE8A7F3ED401EB2 /* Pods-NativePMExampleAppUITests.release.xcconfig */;
+			baseConfigurationReference = F09E82E9DEE8A7F3ED401EB2 /* Pods-TVOSExampleAppUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -5235,7 +5235,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6KYEQLUC5A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = NativePMExampleAppUITests/Info.plist;
+				INFOPLIST_FILE = TVOSExampleAppUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5244,12 +5244,12 @@
 				);
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.NativePMExampleAppUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.NativeMessageExample.TVOSExampleAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TEST_TARGET_NAME = NativePMExampleApp;
+				TEST_TARGET_NAME = TVOSExampleApp;
 				TVOS_DEPLOYMENT_TARGET = 14.5;
 			};
 			name = Release;
@@ -5915,7 +5915,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		822BF2EE2657E29900177B0E /* Build configuration list for PBXNativeTarget "NativePMExampleApp" */ = {
+		822BF2EE2657E29900177B0E /* Build configuration list for PBXNativeTarget "TVOSExampleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				822BF2E82657E29900177B0E /* Debug */,
@@ -5924,7 +5924,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		822BF2F02657E29900177B0E /* Build configuration list for PBXNativeTarget "NativePMExampleAppUITests" */ = {
+		822BF2F02657E29900177B0E /* Build configuration list for PBXNativeTarget "TVOSExampleAppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				822BF2EC2657E29900177B0E /* Debug */,
