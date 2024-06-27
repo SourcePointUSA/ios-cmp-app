@@ -1,4 +1,7 @@
 # 7.6.9 (Jun, 10, 2024)
+* [DIA-3813](https://sourcepoint.atlassian.net/browse/DIA-3813) Adjust tvOS buttons layout [#573](https://github.com/SourcePointUSA/ios-cmp-app/pull/573)
+
+# 7.6.9 (Jun, 10, 2024)
 * [DIA-4076](https://sourcepoint.atlassian.net/browse/DIA-4076) Add `consentLanguage` param in query for PM call from FLM [#572](https://github.com/SourcePointUSA/ios-cmp-app/pull/572)
 * [HCD 516](https://sourcepoint.atlassian.net/browse/HCD-516) README.md update: Add default language precedence [#570](https://github.com/SourcePointUSA/ios-cmp-app/pull/570)
 
