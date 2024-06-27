@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="21507" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,7 +40,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A7J-Iw-S0w" userLabel="Stack View - Content">
                             <rect key="frame" x="0.0" y="116" width="1760" height="844"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="6Dj-j9-6q0" userLabel="Stack View - 1st Column">
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="6Dj-j9-6q0" userLabel="Stack View - 1st Column">
                                     <rect key="frame" x="0.0" y="0.0" width="880" height="844"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0d5-2y-hex">
@@ -51,20 +51,23 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="mzo-8H-642" userLabel="SelectedCategoryLabel">
-                                            <rect key="frame" x="165" y="472" width="550" height="80"/>
+                                            <rect key="frame" x="165" y="400" width="550" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="550" id="I3Q-Dc-zSf"/>
-                                                <constraint firstAttribute="height" constant="80" id="Iop-iC-NkE"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="rNx-CU-XlL"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="i2S-g5-yct" userLabel="Stack View - Actions">
-                                            <rect key="frame" x="190" y="664" width="500" height="180"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="i2S-g5-yct" userLabel="Stack View - Actions">
+                                            <rect key="frame" x="190" y="520" width="500" height="128"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ab-43-cUI" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="StN-8G-XAA"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Accept All"/>
                                                     <connections>
@@ -72,7 +75,10 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NkU-e5-wl4" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="94" width="500" height="86"/>
+                                                    <rect key="frame" x="0.0" y="68" width="500" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="dpt-rq-R4b"/>
+                                                    </constraints>
                                                     <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                                     <state key="normal" title="Save &amp; Exit"/>
                                                     <connections>
@@ -85,6 +91,9 @@
                                                 <constraint firstAttribute="width" constant="500" id="jqC-kR-DwJ"/>
                                             </constraints>
                                         </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3s-g0-adj" userLabel="Spacer">
+                                            <rect key="frame" x="190" y="688" width="500" height="156"/>
+                                        </view>
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4ej-KD-EOf" userLabel="Stack View - 2nd Column">
@@ -132,7 +141,7 @@
     </objects>
     <resources>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

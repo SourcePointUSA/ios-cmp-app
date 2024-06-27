@@ -56,9 +56,9 @@ class ObjCExampleAppUITests: QuickSpec {
             self.app.acceptAllButton.tap()
             expect(self.app.gdprMessage).to(disappear())
 
-            expect(self.app.ccpaMessage).toEventually(showUp())
+            expect(self.app.usnatMessage).toEventually(showUp())
             self.app.acceptAllButton.tap()
-            expect(self.app.ccpaMessage).to(disappear())
+            expect(self.app.usnatMessage).to(disappear())
 
             expect(self.app.sdkStatus).toEventually(containText("Finished"))
 

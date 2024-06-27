@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="21701" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -55,8 +55,8 @@
                                                 <constraint firstAttribute="width" constant="360" id="dbF-fc-VEI"/>
                                             </constraints>
                                         </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="ActionsContainer">
-                                            <rect key="frame" x="190" y="422" width="500" height="526"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="KAo-n6-Z8y" userLabel="ActionsContainer">
+                                            <rect key="frame" x="190" y="400" width="500" height="452"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jl-Fv-EUl" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="500" height="60"/>
@@ -114,7 +114,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-4F-WQC" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="340" width="500" height="60"/>
+                                                    <rect key="frame" x="0.0" y="340" width="500" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="jVm-rj-ic1"/>
                                                     </constraints>
@@ -125,7 +125,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y42-Fe-M6A" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="408" width="500" height="60"/>
+                                                    <rect key="frame" x="0.0" y="384" width="500" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="gkW-7k-9iG"/>
                                                     </constraints>
@@ -136,8 +136,8 @@
                                                         <action selector="onPrivacyPolicyTap:" destination="-1" eventType="primaryActionTriggered" id="LaG-OY-Dmp"/>
                                                     </connections>
                                                 </button>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRh-hi-Kqi" userLabel="Spacer">
-                                                    <rect key="frame" x="0.0" y="476" width="500" height="50"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRh-hi-Kqi" userLabel="Spacer">
+                                                    <rect key="frame" x="0.0" y="452" width="500" height="0.0"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                             </subviews>
@@ -151,6 +151,7 @@
                                         <constraint firstAttribute="width" constant="880" id="D4f-te-IB7"/>
                                         <constraint firstItem="gkm-7r-4K2" firstAttribute="centerX" secondItem="b6t-bX-jNG" secondAttribute="centerX" id="QYX-KK-CeY"/>
                                         <constraint firstItem="gkm-7r-4K2" firstAttribute="top" secondItem="b6t-bX-jNG" secondAttribute="top" id="YAq-Hf-83X"/>
+                                        <constraint firstItem="KAo-n6-Z8y" firstAttribute="top" secondItem="gkm-7r-4K2" secondAttribute="bottom" constant="40" id="YrD-qe-tmC"/>
                                         <constraint firstAttribute="height" constant="852" id="clW-Ls-srb"/>
                                         <constraint firstItem="KAo-n6-Z8y" firstAttribute="centerX" secondItem="b6t-bX-jNG" secondAttribute="centerX" id="gnW-64-uLa"/>
                                         <constraint firstAttribute="bottom" secondItem="KAo-n6-Z8y" secondAttribute="bottom" id="ifV-G5-umk"/>
@@ -205,7 +206,7 @@
     </objects>
     <resources>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

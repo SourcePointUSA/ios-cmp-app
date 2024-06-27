@@ -37751,41 +37751,41 @@
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "StringLiteral",
       "offset": 9086,
-      "length": 7,
-      "value": "\"7.6.8\""
+      "length": 8,
+      "value": "\"7.6.10\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "Dictionary",
-      "offset": 10069,
+      "offset": 10070,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "Dictionary",
-      "offset": 10279,
+      "offset": 10280,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 12604,
+      "offset": 12605,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 14794,
+      "offset": 14795,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 16990,
+      "offset": 16991,
       "length": 5,
       "value": "false"
     },

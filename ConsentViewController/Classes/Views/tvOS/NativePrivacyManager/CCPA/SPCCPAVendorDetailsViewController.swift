@@ -41,6 +41,7 @@ class SPCCPAVendorDetailsViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
         if let vendorUrl = vendor?.policyUrl?.absoluteString {
+            qrCodeImageView.layer.magnificationFilter = CALayerContentsFilter.nearest
             qrCodeImageView.image = QRCode(from: vendorUrl)
             qrCodeImageView.isHidden = qrCodeImageView.image == nil
         }
