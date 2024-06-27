@@ -1,4 +1,4 @@
-# 7.6.9 (Jun, 10, 2024)
+# 7.6.10 (Jun, 27, 2024)
 * [DIA-3813](https://sourcepoint.atlassian.net/browse/DIA-3813) Adjust tvOS buttons layout [#573](https://github.com/SourcePointUSA/ios-cmp-app/pull/573)
 
 # 7.6.9 (Jun, 10, 2024)
