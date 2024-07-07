@@ -58,7 +58,11 @@ protocol SPNativePrivacyManagerHome {
         setFocusGuidesForButtons()
         categoryTableView.accessibilityIdentifier = "Categories List"
         categoryTableView.allowsSelection = false
-        categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        if #available(tvOS 14.0, *) {
+            categoryTableView.register(CategoryCellView.self, forCellReuseIdentifier: cellReuseIdentifier)
+        } else {
+            categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        }
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
         disableMenuButton()
@@ -314,6 +318,34 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDelegate {
 class FocusableScrollView: UIScrollView {
     override var canBecomeFocused: Bool {
         true
+    }
+}
+
+/// A table view cell with a custom background configuration.
+/// It suppresses unwanted background and border effects that are automatically added by the system
+/// while while keeping the drop shadow and scaling effect when being focused.
+@available(tvOS 14.0, *)
+class CategoryCellView: UITableViewCell {
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupBackground()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupBackground() {
+        var backgroundConfiguration = UIBackgroundConfiguration.listPlainCell()
+        backgroundConfiguration.backgroundColor = nil
+        self.backgroundConfiguration = backgroundConfiguration
+    }
+
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        super.updateConfiguration(using: state)
+        textLabel?.textColor = .white
+        clearBackgroundColors(ignoring: backgroundConfiguration?.backgroundColor)
     }
 }
 
