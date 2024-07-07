@@ -7,34 +7,30 @@
 
 import UIKit
 
-extension UIView {
-    var allSubviews: [UIView] {
-        subviews.reduce(into: [self]) { array, subview in
-            array += subview.allSubviews
-        }
+/// A button that enforces clear background colors.
+/// To style the background, use ``UIButton.setBackgroundImage(_ image:for:)``.
+/// This suppresses unwanted background and border effects automatically added when using
+/// the system button type while keeping the default appearance, drop shadow, and scaling effect.
+final class SPAppleTVButton: UIButton {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        clearBackgroundColors()
     }
 }
 
-class SPAppleTVButton: UIButton {
-    var viewBeforeUITitleView: UIView? { allSubviews.dropFirst(allSubviews.count - 2).first }
+extension UIView {
 
-    var onFocusBackgroundColor: UIColor?
-    var onUnfocusBackgroundColor: UIColor? {
-        didSet {
-            viewBeforeUITitleView?.backgroundColor = onUnfocusBackgroundColor
-        }
-    }
+    /// Sets the background colors of all the view's subviews to ``UIColor.clear``.
+    /// - Parameter ignoredColor: Exception that is not overridden.
+    func clearBackgroundColors(ignoring ignoredColor: UIColor? = nil) {
+        for subview in subviews {
+            subview.clearBackgroundColors(ignoring: ignoredColor)
 
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        super.didUpdateFocus(in: context, with: coordinator)
-        if isFocused {
-            backgroundColor = onFocusBackgroundColor
-            coordinator.addCoordinatedAnimations({ [weak self] in
-                self?.viewBeforeUITitleView?.backgroundColor = self?.onFocusBackgroundColor
-            })
-        } else {
-            backgroundColor = onUnfocusBackgroundColor
-            viewBeforeUITitleView?.backgroundColor = onUnfocusBackgroundColor
+            if let ignoredColor, subview.backgroundColor == ignoredColor {
+                continue
+            }
+
+            subview.backgroundColor = .clear
         }
     }
 }
