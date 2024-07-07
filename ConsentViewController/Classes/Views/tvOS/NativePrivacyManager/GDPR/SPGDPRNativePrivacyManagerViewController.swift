@@ -339,7 +339,7 @@ class CategoryCellView: UITableViewCell {
     
     private func setupBackground() {
         var backgroundConfiguration = UIBackgroundConfiguration.listPlainCell()
-        backgroundConfiguration.backgroundColor = nil
+        backgroundConfiguration.backgroundColor = .darkGray
         self.backgroundConfiguration = backgroundConfiguration
     }
 
