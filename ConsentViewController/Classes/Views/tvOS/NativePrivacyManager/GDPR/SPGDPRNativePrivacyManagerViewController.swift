@@ -300,6 +300,7 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         cell.textLabel?.text = categories[indexPath.row].name.trimmingCharacters(in: .whitespacesAndNewlines)
         cell.textLabel?.setDefaultTextColorForDarkMode()
+        cell.textLabel?.font = .preferredFont(forTextStyle: .footnote)
         return cell
     }
 }
