@@ -270,6 +270,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         actionType: .RejectAll,
                         accountId: accountId,
                         propertyId: propertyId,
+                        idfaStatus: .accepted,
                         metadata: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)
@@ -299,6 +300,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         actionType: .AcceptAll,
                         accountId: accountId,
                         propertyId: propertyId,
+                        idfaStatus: .accepted,
                         metadata: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true)

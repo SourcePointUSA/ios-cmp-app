@@ -165,6 +165,33 @@ class SourcePointClientSpec: QuickSpec {
                 }
             }
 
+            describe("choiceAll") {
+                it("should contain the correct query params") {
+                    let includeData = IncludeData.standard
+                    client.choiceAll(
+                        actionType: .AcceptAll, 
+                        accountId: 123,
+                        propertyId: 321,
+                        idfaStatus: .accepted,
+                        metadata: .init(gdpr: .init(applies: true), ccpa: .init(applies: false)),
+                        includeData: includeData
+                    ) { _ in }
+                    let choiceAllUrl = URL(string: httpClient.getWasCalledWithUrl!)
+                    expect(choiceAllUrl).to(
+                        containQueryParams([
+                            "accountId": "123",
+                            "hasCsp": "true",
+                            "propertyId": "321",
+                            "withSiteActions": "false",
+                            "includeCustomVendorsRes": "false",
+                            "idfaStatus": "accepted",
+                            "metadata": #"{"ccpa":{"applies":false},"gdpr":{"applies":true}}"#
+                        ])
+                    )
+                    expect(choiceAllUrl).to(containQueryParam("includeData"))
+                }
+            }
+
             describe("postAction") {
                 describe("gdpr") {
                     it("calls post on the http client with the right url") {

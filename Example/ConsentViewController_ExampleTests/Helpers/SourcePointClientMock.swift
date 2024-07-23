@@ -252,6 +252,7 @@ class SourcePointClientMock: SourcePointProtocol {
         actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
+        idfaStatus: SPIDFAStatus,
         metadata: ChoiceAllMetaDataParam,
         includeData: IncludeData,
         handler: @escaping ChoiceHandler

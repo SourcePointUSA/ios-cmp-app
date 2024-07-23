@@ -155,6 +155,7 @@ protocol SourcePointProtocol {
         actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
+        idfaStatus: SPIDFAStatus,
         metadata: ChoiceAllMetaDataParam,
         includeData: IncludeData,
         handler: @escaping ChoiceHandler
@@ -492,6 +493,7 @@ extension SourcePointClient {
         withSiteActions: Bool,
         includeCustomVendorsRes: Bool,
         includeData: IncludeData,
+        idfaStatus: String,
         metadata: ChoiceAllMetaDataParam
     ) -> URL? {
         var baseUrl: URL
@@ -508,6 +510,7 @@ extension SourcePointClient {
             "propertyId": String(propertyId),
             "withSiteActions": String(withSiteActions),
             "includeCustomVendorsRes": String(includeCustomVendorsRes),
+            "idfaStatus": idfaStatus,
             "metadata": metadata.stringified(),
             "includeData": includeData.string
         ])
@@ -517,6 +520,7 @@ extension SourcePointClient {
         actionType: SPActionType,
         accountId: Int,
         propertyId: Int,
+        idfaStatus: SPIDFAStatus,
         metadata: ChoiceAllMetaDataParam,
         includeData: IncludeData,
         handler: @escaping ChoiceHandler
@@ -529,6 +533,7 @@ extension SourcePointClient {
             withSiteActions: false,
             includeCustomVendorsRes: false,
             includeData: includeData,
+            idfaStatus: idfaStatus.description,
             metadata: metadata
         ) else {
             handler(Result.failure(InvalidChoiceAllParamsError()))
