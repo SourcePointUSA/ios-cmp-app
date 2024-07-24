@@ -8,6 +8,15 @@
 import Foundation
 
 struct ChoiceAllResponse: Decodable {
+    struct USNAT {
+        let consentedToAll: Bool
+        let dateCreated: SPDate
+        let rejectedAny: Bool
+        let gpcEnabled: Bool?
+        let webConsentPayload: SPWebConsentPayload?
+        let GPPData: SPJson
+    }
+
     struct CCPA {
         let consentedAll: Bool
         let dateCreated, expirationDate: SPDate
@@ -48,6 +57,7 @@ struct ChoiceAllResponse: Decodable {
 
     let gdpr: GDPR?
     let ccpa: CCPA?
+    let usnat: USNAT?
 }
 
 struct ChoiceAllMetaDataParam: QueryParamEncodable {
@@ -55,7 +65,26 @@ struct ChoiceAllMetaDataParam: QueryParamEncodable {
         let applies: Bool
     }
 
-    let gdpr, ccpa: Campaign?
+    let gdpr, ccpa, usnat: Campaign?
+}
+
+extension ChoiceAllResponse.USNAT: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case dateCreated, consentedToAll, rejectedAny,
+             gpcEnabled, webConsentPayload, GPPData
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try self.init(
+            consentedToAll: container.decode(Bool.self, forKey: .consentedToAll),
+            dateCreated: container.decode(SPDate.self, forKey: .dateCreated),
+            rejectedAny: container.decode(Bool.self, forKey: .rejectedAny),
+            gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled),
+            webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload),
+            GPPData: container.decodeIfPresent(SPJson.self, forKey: .GPPData) ?? SPJson()
+        )
+    }
 }
 
 extension ChoiceAllResponse.CCPA: Decodable {
