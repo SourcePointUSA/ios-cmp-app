@@ -284,6 +284,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.gdpr).notTo(beNil())
                             expect(response.gdpr?.acceptedCategories).to(beEmpty())
                             expect(response.ccpa).notTo(beNil())
+                            expect(response.usnat).notTo(beNil())
 
                         case .failure(let error):
                             fail(error.description)
@@ -315,6 +316,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.gdpr).notTo(beNil())
                             expect(response.gdpr?.acceptedCategories).notTo(beEmpty())
                             expect(response.ccpa).notTo(beNil())
+                            expect(response.usnat).notTo(beNil())
 
                         case .failure(let error):
                             fail(error.description)

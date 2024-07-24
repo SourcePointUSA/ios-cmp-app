@@ -462,7 +462,9 @@ class SPClientCoordinatorSpec: QuickSpec {
                 SPAction(type: .AcceptAll, campaignType: .gdpr),
                 SPAction(type: .RejectAll, campaignType: .gdpr),
                 SPAction(type: .AcceptAll, campaignType: .ccpa),
-                SPAction(type: .RejectAll, campaignType: .ccpa)
+                SPAction(type: .RejectAll, campaignType: .ccpa),
+                SPAction(type: .AcceptAll, campaignType: .usnat),
+                SPAction(type: .RejectAll, campaignType: .usnat)
             ].forEach {
                 expect(coordinator.shouldCallGetChoice(for: $0))
                     .to(beTrue(), description: "For action \($0.type), \($0.campaignType.rawValue)")

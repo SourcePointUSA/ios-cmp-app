@@ -280,6 +280,51 @@ class SourcePointClientSpec: QuickSpec {
                         expect(httpClient.postWasCalledWithBody!).to(equal(encoded))
                     }
                 }
+                describe("usnat") {
+                    it("calls post on the http client with the right url") {
+                        client.postUSNatAction(
+                            actionType: .AcceptAll,
+                            body: .init(
+                                authId: nil,
+                                uuid: nil,
+                                messageId: "",
+                                vendorListId: nil,
+                                pubData: [:],
+                                pmSaveAndExitVariables: nil,
+                                sendPVData: true,
+                                propertyId: 1,
+                                sampleRate: 1,
+                                idfaStatus: nil,
+                                granularStatus: nil,
+                                includeData: .standard
+                            )
+                        ) { _ in }
+                        expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/usnat/11?env=prod"
+                    }
+
+                    it("calls POST on the http client with the right body") {
+                        let body = USNatChoiceBody(
+                            authId: nil,
+                            uuid: nil,
+                            messageId: "",
+                            vendorListId: nil,
+                            pubData: [:],
+                            pmSaveAndExitVariables: nil,
+                            sendPVData: true,
+                            propertyId: 1,
+                            sampleRate: 1,
+                            idfaStatus: nil,
+                            granularStatus: nil,
+                            includeData: .standard
+                        )
+                        client.postUSNatAction(
+                            actionType: .AcceptAll,
+                            body: body
+                        ) { _ in }
+                        let encoded = try JSONEncoder().encode(body)
+                        expect(httpClient.postWasCalledWithBody!).to(equal(encoded))
+                    }
+                }
             }
 
             describe("customConsent") {
