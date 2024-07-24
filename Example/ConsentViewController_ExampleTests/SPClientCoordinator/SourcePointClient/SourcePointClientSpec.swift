@@ -173,7 +173,7 @@ class SourcePointClientSpec: QuickSpec {
                         accountId: 123,
                         propertyId: 321,
                         idfaStatus: .accepted,
-                        metadata: .init(gdpr: .init(applies: true), ccpa: .init(applies: false)),
+                        metadata: .init(gdpr: .init(applies: true), ccpa: .init(applies: false), usnat: .init(applies: false)),
                         includeData: includeData
                     ) { _ in }
                     let choiceAllUrl = URL(string: httpClient.getWasCalledWithUrl!)
@@ -185,7 +185,7 @@ class SourcePointClientSpec: QuickSpec {
                             "withSiteActions": "false",
                             "includeCustomVendorsRes": "false",
                             "idfaStatus": "accepted",
-                            "metadata": #"{"ccpa":{"applies":false},"gdpr":{"applies":true}}"#
+                            "metadata": #"{"ccpa":{"applies":false},"gdpr":{"applies":true},"usnat":{"applies":false}}"#
                         ])
                     )
                     expect(choiceAllUrl).to(containQueryParam("includeData"))

@@ -273,7 +273,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         idfaStatus: .accepted,
                         metadata: .init(
                             gdpr: .init(applies: true),
-                            ccpa: .init(applies: true)
+                            ccpa: .init(applies: true),
+                            usnat: .init(applies: true)
                         ),
                         includeData: .standard
                     ) { result in
@@ -303,7 +304,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         idfaStatus: .accepted,
                         metadata: .init(
                             gdpr: .init(applies: true),
-                            ccpa: .init(applies: true)
+                            ccpa: .init(applies: true),
+                            usnat: .init(applies: true)
                         ),
                         includeData: .standard
                     ) { result in

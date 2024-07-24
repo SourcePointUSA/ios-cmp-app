@@ -471,8 +471,6 @@ class SPClientCoordinatorSpec: QuickSpec {
             [
                 SPAction(type: .SaveAndExit, campaignType: .gdpr),
                 SPAction(type: .SaveAndExit, campaignType: .ccpa),
-                SPAction(type: .AcceptAll, campaignType: .usnat),
-                SPAction(type: .RejectAll, campaignType: .usnat),
                 SPAction(type: .SaveAndExit, campaignType: .usnat)
             ].forEach {
                 expect(coordinator.shouldCallGetChoice(for: $0))
