@@ -768,7 +768,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
         if let usnat = response.usnat, campaign == .usnat {
             state.usnat?.dateCreated = usnat.dateCreated
+            state.usnat?.expirationDate = usnat.expirationDate
+            state.usnat?.consentStatus = usnat.consentStatus
             state.usnat?.GPPData = usnat.GPPData
+            // state.usnat?.categories = usnat.сategories
+            // state.usnat?.consentStrings = usnat.consentStrings
+            // state.usnat?.statuses.consentedToAll = usnat.consentedToAll
+            // state.usnat?.consentStatus.rejectedAny = usnat.rejectedAny
+            // state.usnat?.statuses.gpcStatus = usnat.gpcEnabled
         }
         storage.spState = state
     }

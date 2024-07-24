@@ -9,8 +9,11 @@ import Foundation
 
 struct ChoiceAllResponse: Decodable {
     struct USNAT {
+        let categories: [String]
+        let consentStatus: ConsentStatus
+        let consentStrings: [SPUSNatConsent.ConsentString]
         let consentedToAll: Bool
-        let dateCreated: SPDate
+        let dateCreated, expirationDate: SPDate
         let rejectedAny: Bool
         let gpcEnabled: Bool?
         let webConsentPayload: SPWebConsentPayload?
@@ -70,15 +73,20 @@ struct ChoiceAllMetaDataParam: QueryParamEncodable {
 
 extension ChoiceAllResponse.USNAT: Decodable {
     enum CodingKeys: String, CodingKey {
-        case dateCreated, consentedToAll, rejectedAny,
-             gpcEnabled, webConsentPayload, GPPData
+        case categories, consentStatus, consentStrings, dateCreated,
+             expirationDate, consentedToAll, rejectedAny, gpcEnabled,
+             webConsentPayload, GPPData
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         try self.init(
+            categories: container.decodeIfPresent([String].self, forKey: .categories) ?? [],
+            consentStatus: container.decode(ConsentStatus.self, forKey: .consentStatus),
+            consentStrings: container.decode([SPUSNatConsent.ConsentString].self, forKey: .consentStrings),
             consentedToAll: container.decode(Bool.self, forKey: .consentedToAll),
             dateCreated: container.decode(SPDate.self, forKey: .dateCreated),
+            expirationDate: container.decodeIfPresent(SPDate.self, forKey: .expirationDate) ?? SPDate(date: .distantFuture),
             rejectedAny: container.decode(Bool.self, forKey: .rejectedAny),
             gpcEnabled: container.decodeIfPresent(Bool.self, forKey: .gpcEnabled),
             webConsentPayload: container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload),
