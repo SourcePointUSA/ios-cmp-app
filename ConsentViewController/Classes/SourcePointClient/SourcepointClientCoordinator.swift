@@ -766,11 +766,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.status = ccpa.status
             state.ccpa?.GPPData = ccpa.GPPData
         }
+        if let usnat = response.usnat, campaign == .usnat {
+            state.usnat?.dateCreated = usnat.dateCreated
+            state.usnat?.GPPData = usnat.GPPData
+        }
         storage.spState = state
     }
 
     func shouldCallGetChoice(for action: SPAction) -> Bool {
-        (action.campaignType == .ccpa || action.campaignType == .gdpr) &&
+        (action.campaignType == .ccpa || action.campaignType == .gdpr || action.campaignType == .usnat) &&
         (action.type == .AcceptAll || action.type == .RejectAll)
     }
 
@@ -783,7 +787,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 idfaStatus: .accepted,
                 metadata: .init(
                     gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
-                    ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil
+                    ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
+                    usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
                 ),
                 includeData: includeData
             ) { result in
@@ -941,6 +946,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleUSNatPostChoice(
         _ action: SPAction,
+        _ getResponse: ChoiceAllResponse?,
         _ postResponse: SPUSNatConsent
     ) {
         state.usnat = SPUSNatConsent(
@@ -949,21 +955,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             dateCreated: postResponse.dateCreated,
             expirationDate: postResponse.expirationDate,
             consentStrings: postResponse.consentStrings,
-            webConsentPayload: postResponse.webConsentPayload,
+            webConsentPayload: postResponse.webConsentPayload ?? getResponse?.usnat?.webConsentPayload,
             categories: postResponse.categories,
             vendors: postResponse.vendors,
             consentStatus: postResponse.consentStatus,
-            GPPData: postResponse.GPPData
+            GPPData: postResponse.GPPData ?? getResponse?.usnat?.GPPData
         )
 
         storage.spState = state
     }
 
-    func reportUSNatAction(_ action: SPAction, _ handler: @escaping ActionHandler) {
+    func reportUSNatAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         self.postChoice(action) { postResult in
             switch postResult {
                 case .success(let response):
-                    self.handleUSNatPostChoice(action, response)
+                    self.handleUSNatPostChoice(action, getResponse, response)
                     handler(Result.success(self.userData))
 
                 case .failure(let error):
@@ -980,7 +986,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     switch action.campaignType {
                         case .gdpr: self.reportGDPRAction(action, getResponse, handler)
                         case .ccpa: self.reportCCPAAction(action, getResponse, handler)
-                        case .usnat: self.reportUSNatAction(action, handler)
+                        case .usnat: self.reportUSNatAction(action, getResponse, handler)
                         default: break
                     }
 
