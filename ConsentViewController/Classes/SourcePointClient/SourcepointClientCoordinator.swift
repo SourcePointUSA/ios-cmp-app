@@ -771,17 +771,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.usnat?.expirationDate = usnat.expirationDate
             state.usnat?.consentStatus = usnat.consentStatus
             state.usnat?.GPPData = usnat.GPPData
-            // state.usnat?.categories = usnat.сategories
-            // state.usnat?.consentStrings = usnat.consentStrings
-            // state.usnat?.statuses.consentedToAll = usnat.consentedToAll
-            // state.usnat?.consentStatus.rejectedAny = usnat.rejectedAny
-            // state.usnat?.statuses.gpcStatus = usnat.gpcEnabled
+            state.usnat?.consentStrings = usnat.consentStrings
+            state.usnat?.consentStatus.consentedToAll = usnat.consentedToAll
+            state.usnat?.consentStatus.rejectedAny = usnat.rejectedAny
+            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnat.gpcEnabled
         }
         storage.spState = state
     }
 
     func shouldCallGetChoice(for action: SPAction) -> Bool {
-        (action.campaignType == .ccpa || action.campaignType == .gdpr || action.campaignType == .usnat) &&
         (action.type == .AcceptAll || action.type == .RejectAll)
     }
 

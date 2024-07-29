@@ -21,7 +21,7 @@ import Foundation
     public var applies: Bool
 
     /// The consent strings related to this user profile
-    public let consentStrings: [ConsentString]
+    public var consentStrings: [ConsentString]
 
     /// A series of statuses (`Bool?`) regarding GPP and user consent
     /// - SeeAlso: `SPUSNatConsent.Statuses`
@@ -141,7 +141,7 @@ extension SPUSNatConsent {
 
 extension SPUSNatConsent {
     struct UserConsents: Codable, Equatable {
-        let vendors, categories: [SPConsentable]
+        var vendors, categories: [SPConsentable]
     }
 }
 
@@ -179,7 +179,7 @@ extension SPUSNatConsent {
 
 public extension SPUSNatConsent {
     struct Statuses: CustomStringConvertible, Equatable {
-        public let rejectedAny, consentedToAll, consentedToAny,
+        public var rejectedAny, consentedToAll, consentedToAny,
             hasConsentData, sellStatus, shareStatus,
             sensitiveDataStatus, gpcStatus: Bool?
 
