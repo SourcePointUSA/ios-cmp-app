@@ -104,7 +104,7 @@ public typealias SPGDPRPurposeId = Swift.String
   }
   @objc public var uuid: Swift.String?
   @objc public var applies: Swift.Bool
-  @objc final public let consentStrings: [ConsentViewController.SPUSNatConsent.ConsentString]
+  @objc public var consentStrings: [ConsentViewController.SPUSNatConsent.ConsentString]
   public var statuses: ConsentViewController.SPUSNatConsent.Statuses {
     get
   }
@@ -137,7 +137,7 @@ extension ConsentViewController.SPUSNatConsent {
 }
 extension ConsentViewController.SPUSNatConsent {
   public struct Statuses : Swift.CustomStringConvertible, Swift.Equatable {
-    public let rejectedAny: Swift.Bool?, consentedToAll: Swift.Bool?, consentedToAny: Swift.Bool?, hasConsentData: Swift.Bool?, sellStatus: Swift.Bool?, shareStatus: Swift.Bool?, sensitiveDataStatus: Swift.Bool?, gpcStatus: Swift.Bool?
+    public var rejectedAny: Swift.Bool?, consentedToAll: Swift.Bool?, consentedToAny: Swift.Bool?, hasConsentData: Swift.Bool?, sellStatus: Swift.Bool?, shareStatus: Swift.Bool?, sensitiveDataStatus: Swift.Bool?, gpcStatus: Swift.Bool?
     public var description: Swift.String {
       get
     }
@@ -388,6 +388,7 @@ extension ConsentViewController.SPIDFAStatus : Swift.Codable {
   @objc dynamic public func loadUSNatPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   @objc dynamic public func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
   @objc dynamic public func deleteCustomConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
+  @objc dynamic public func rejectAll(campaignType: ConsentViewController.SPCampaignType)
 }
 extension ConsentViewController.SPConsentManager : ConsentViewController.SPMessageUIDelegate {
   @objc dynamic public func loaded(_ message: ConsentViewController.SPNativeMessage)
@@ -605,6 +606,7 @@ public typealias SPTargetingParams = [Swift.String : Swift.String]
   @objc(loadMessageForAuthId:spPublisherData:) func loadMessage(forAuthId authId: Swift.String?, publisherData: ConsentViewController.SPPublisherData?)
   @objc func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
   @objc func deleteCustomConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
+  @objc func rejectAll(campaignType: ConsentViewController.SPCampaignType)
 }
 extension ConsentViewController.SPSDK {
   public init(accountId: Swift.Int, propertyId: Swift.Int, propertyName: ConsentViewController.SPPropertyName, campaigns: ConsentViewController.SPCampaigns, language: ConsentViewController.SPMessageLanguage = .BrowserDefault, delegate: (any ConsentViewController.SPDelegate)?)

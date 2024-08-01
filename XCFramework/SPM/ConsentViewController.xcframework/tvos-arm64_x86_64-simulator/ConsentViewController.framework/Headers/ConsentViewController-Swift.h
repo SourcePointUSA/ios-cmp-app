@@ -820,6 +820,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId spPublisherData:(NSDictionary<NSString *, AnyEncodable *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)rejectAllWithCampaignType:(enum SPCampaignType)campaignType;
 @end
 
 
@@ -839,6 +840,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadUSNatPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)rejectAllWithCampaignType:(enum SPCampaignType)campaignType;
 @end
 
 
@@ -1147,7 +1149,7 @@ SWIFT_CLASS("_TtC21ConsentViewController14SPUSNatConsent")
 /// Whether USNat applies according to user’s location (inferred from IP lookup) and your Vendor List applies scope setting
 @property (nonatomic) BOOL applies;
 /// The consent strings related to this user profile
-@property (nonatomic, readonly, copy) NSArray<SPUSNatConsent_ConsentString *> * _Nonnull consentStrings;
+@property (nonatomic, copy) NSArray<SPUSNatConsent_ConsentString *> * _Nonnull consentStrings;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -2118,6 +2120,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadMessageForAuthId:(NSString * _Nullable)authId spPublisherData:(NSDictionary<NSString *, AnyEncodable *> * _Nullable)publisherData;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)rejectAllWithCampaignType:(enum SPCampaignType)campaignType;
 @end
 
 
@@ -2137,6 +2140,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadUSNatPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
+- (void)rejectAllWithCampaignType:(enum SPCampaignType)campaignType;
 @end
 
 
@@ -2445,7 +2449,7 @@ SWIFT_CLASS("_TtC21ConsentViewController14SPUSNatConsent")
 /// Whether USNat applies according to user’s location (inferred from IP lookup) and your Vendor List applies scope setting
 @property (nonatomic) BOOL applies;
 /// The consent strings related to this user profile
-@property (nonatomic, readonly, copy) NSArray<SPUSNatConsent_ConsentString *> * _Nonnull consentStrings;
+@property (nonatomic, copy) NSArray<SPUSNatConsent_ConsentString *> * _Nonnull consentStrings;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
