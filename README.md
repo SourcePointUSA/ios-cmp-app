@@ -725,6 +725,15 @@ consentManager.loadGDPRPrivacyManager(withId: "111", useGroupPmIfAvailable: true
 
 > **Note**: CCPA campaign `Privacy Manager Id for the Property Group` feature is currently not supported.
 
+## Programmatically rejecting all for a user
+
+It's possible to programmatically issue a "reject all" action in behalf of the current user by calling the `rejectAll(campaignType)` function. The `rejectAll` function behaves exactly the same way as if a user would have pressed the "reject all" button on the 1st layer or privacy manager.
+Upon completion, the sdk will call either `onConsentReady` in case of success or `onError` in case of failure.
+
+```swift
+    consentManager.rejectAll(campaignType: .gdpr)
+```
+
 ## Frequently Asked Questions
 
 ### 1. How big is the SDK?
