@@ -523,6 +523,10 @@ import UIKit
             self?.handleCustomConsentResult(result, handler: handler)
         }
     }
+
+    public func rejectAll(campaignType: SPCampaignType) {
+        report(action: SPAction(type: .RejectAll, campaignType: campaignType))
+    }
 }
 
 extension SPConsentManager: SPMessageUIDelegate {
