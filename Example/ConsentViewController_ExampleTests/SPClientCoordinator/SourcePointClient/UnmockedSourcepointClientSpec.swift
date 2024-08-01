@@ -273,7 +273,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         idfaStatus: .accepted,
                         metadata: .init(
                             gdpr: .init(applies: true),
-                            ccpa: .init(applies: true)
+                            ccpa: .init(applies: true),
+                            usnat: .init(applies: true)
                         ),
                         includeData: .standard
                     ) { result in
@@ -283,6 +284,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.gdpr).notTo(beNil())
                             expect(response.gdpr?.acceptedCategories).to(beEmpty())
                             expect(response.ccpa).notTo(beNil())
+                            expect(response.usnat).notTo(beNil())
 
                         case .failure(let error):
                             fail(error.description)
@@ -303,7 +305,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                         idfaStatus: .accepted,
                         metadata: .init(
                             gdpr: .init(applies: true),
-                            ccpa: .init(applies: true)
+                            ccpa: .init(applies: true),
+                            usnat: .init(applies: true)
                         ),
                         includeData: .standard
                     ) { result in
@@ -313,6 +316,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             expect(response.gdpr).notTo(beNil())
                             expect(response.gdpr?.acceptedCategories).notTo(beEmpty())
                             expect(response.ccpa).notTo(beNil())
+                            expect(response.usnat).notTo(beNil())
 
                         case .failure(let error):
                             fail(error.description)

@@ -257,6 +257,6 @@ class SourcePointClientMock: SourcePointProtocol {
         includeData: IncludeData,
         handler: @escaping ChoiceHandler
     ) {
-        handler(.success(ChoiceAllResponse(gdpr: nil, ccpa: nil)))
+        handler(.success(ChoiceAllResponse(gdpr: nil, ccpa: nil, usnat: nil)))
     }
 }

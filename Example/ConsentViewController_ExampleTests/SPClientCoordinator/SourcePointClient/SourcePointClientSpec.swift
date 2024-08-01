@@ -173,7 +173,7 @@ class SourcePointClientSpec: QuickSpec {
                         accountId: 123,
                         propertyId: 321,
                         idfaStatus: .accepted,
-                        metadata: .init(gdpr: .init(applies: true), ccpa: .init(applies: false)),
+                        metadata: .init(gdpr: .init(applies: true), ccpa: .init(applies: false), usnat: .init(applies: false)),
                         includeData: includeData
                     ) { _ in }
                     let choiceAllUrl = URL(string: httpClient.getWasCalledWithUrl!)
@@ -185,7 +185,7 @@ class SourcePointClientSpec: QuickSpec {
                             "withSiteActions": "false",
                             "includeCustomVendorsRes": "false",
                             "idfaStatus": "accepted",
-                            "metadata": #"{"ccpa":{"applies":false},"gdpr":{"applies":true}}"#
+                            "metadata": #"{"ccpa":{"applies":false},"gdpr":{"applies":true},"usnat":{"applies":false}}"#
                         ])
                     )
                     expect(choiceAllUrl).to(containQueryParam("includeData"))
@@ -273,6 +273,51 @@ class SourcePointClientSpec: QuickSpec {
                             includeData: .standard
                         )
                         client.postCCPAAction(
+                            actionType: .AcceptAll,
+                            body: body
+                        ) { _ in }
+                        let encoded = try JSONEncoder().encode(body)
+                        expect(httpClient.postWasCalledWithBody!).to(equal(encoded))
+                    }
+                }
+                describe("usnat") {
+                    it("calls post on the http client with the right url") {
+                        client.postUSNatAction(
+                            actionType: .AcceptAll,
+                            body: .init(
+                                authId: nil,
+                                uuid: nil,
+                                messageId: "",
+                                vendorListId: nil,
+                                pubData: [:],
+                                pmSaveAndExitVariables: nil,
+                                sendPVData: true,
+                                propertyId: 1,
+                                sampleRate: 1,
+                                idfaStatus: nil,
+                                granularStatus: nil,
+                                includeData: .standard
+                            )
+                        ) { _ in }
+                        expect(httpClient.postWasCalledWithUrl) == "https://\(self.wrapperHost)/wrapper/v2/choice/usnat/11?env=prod"
+                    }
+
+                    it("calls POST on the http client with the right body") {
+                        let body = USNatChoiceBody(
+                            authId: nil,
+                            uuid: nil,
+                            messageId: "",
+                            vendorListId: nil,
+                            pubData: [:],
+                            pmSaveAndExitVariables: nil,
+                            sendPVData: true,
+                            propertyId: 1,
+                            sampleRate: 1,
+                            idfaStatus: nil,
+                            granularStatus: nil,
+                            includeData: .standard
+                        )
+                        client.postUSNatAction(
                             actionType: .AcceptAll,
                             body: body
                         ) { _ in }

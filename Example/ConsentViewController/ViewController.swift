@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
             ccpa: SPCampaign(),
-            usnat: nil,
+            usnat: SPCampaign(),
             ios14: SPCampaign()
         ),
         gdprPmId: "488393",
