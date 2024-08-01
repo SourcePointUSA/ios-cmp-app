@@ -109,7 +109,9 @@ extension ViewController: SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
+        print("onAction:", action.type.description)
         action.publisherData = ["foo": .init("any encodable")]
+        updateUI()
     }
 
     func onSPUIFinished(_ controller: UIViewController) {

@@ -789,7 +789,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 actionType: action.type,
                 accountId: accountId,
                 propertyId: propertyId,
-                idfaStatus: .accepted,
+                idfaStatus: SPIDFAStatus.current(),
                 metadata: .init(
                     gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
                     ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
