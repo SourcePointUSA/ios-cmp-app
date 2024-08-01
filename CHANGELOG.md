@@ -1,3 +1,9 @@
+# 7.7.0 (Aug, 01, 2024)
+* [DIA-3950](https://sourcepoint.atlassian.net/browse/DIA-3950) Fix an issue causing the consent string not take the IDFA into account [#575](https://github.com/SourcePointUSA/ios-cmp-app/pull/575)
+* [DIA-4307](https://sourcepoint.atlassian.net/browse/DIA-4307) Add new programmatic reject-all feature. [#577](https://github.com/SourcePointUSA/ios-cmp-app/pull/577)
+* [DIA-3890](https://sourcepoint.atlassian.net/browse/DIA-3890) Handle accept/reject all actions for USNat campaigns. [#576](https://github.com/SourcePointUSA/ios-cmp-app/pull/576)
+
+
 # 7.6.10 (Jun, 27, 2024)
 * [DIA-3813](https://sourcepoint.atlassian.net/browse/DIA-3813) Adjust tvOS buttons layout [#573](https://github.com/SourcePointUSA/ios-cmp-app/pull/573)
 
