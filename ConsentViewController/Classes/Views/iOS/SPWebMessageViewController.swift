@@ -168,6 +168,7 @@ import WebKit
             contentController.removeScriptMessageHandler(forName: Self.MESSAGE_HANDLER_NAME)
             contentController.removeAllUserScripts()
         }
+        super.viewWillDisappear(animated)
     }
 
     override func loadMessage() {
