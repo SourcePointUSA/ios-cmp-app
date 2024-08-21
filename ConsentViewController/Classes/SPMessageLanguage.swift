@@ -42,6 +42,7 @@ import Foundation
     case Spanish
     case Swedish
     case Turkish
+    case Tagalog
 
     public typealias RawValue = String
 
@@ -114,6 +115,8 @@ import Foundation
             return "SV"
         case .Turkish:
             return "TR"
+        case .Tagalog:
+            return "TL"
         }
     }
     // swiftlint:disable:next cyclomatic_complexity function_body_length
@@ -185,6 +188,8 @@ import Foundation
             self = .Swedish
         case "TR":
             self = .Turkish
+        case "TL":
+            self = .Tagalog
 
         default:
             return nil
