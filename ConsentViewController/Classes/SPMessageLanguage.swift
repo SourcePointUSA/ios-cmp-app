@@ -24,12 +24,17 @@ import Foundation
     case Gaelic
     case German
     case Greek
+    case Hebrew
     case Hungarian
     case Icelandic
+    case Indonesian
     case Italian
     case Japanese
+    case Korean
     case Latvian
     case Lithuanian
+    case Macedonian
+    case Malay
     case Norwegian
     case Polish
     case Portuguese
@@ -41,6 +46,7 @@ import Foundation
     case Slovenian
     case Spanish
     case Swedish
+    case Tagalog
     case Turkish
 
     public typealias RawValue = String
@@ -78,18 +84,28 @@ import Foundation
             return "DE"
         case .Greek:
             return "EL"
+        case .Hebrew:
+            return "HE"
         case .Hungarian:
             return "HU"
         case .Icelandic:
             return "IS"
+        case .Indonesian:
+            return "ID"
         case .Italian:
             return "IT"
         case .Japanese:
             return "JA"
+        case .Korean:
+            return "KO"
         case .Latvian:
             return "LV"
         case .Lithuanian:
             return "LT"
+        case .Macedonian:
+            return "MK"
+        case .Malay:
+            return "MS"
         case .Norwegian:
             return "NO"
         case .Polish:
@@ -112,6 +128,8 @@ import Foundation
             return "ES"
         case .Swedish:
             return "SV"
+        case .Tagalog:
+            return "TL"
         case .Turkish:
             return "TR"
         }
@@ -149,18 +167,28 @@ import Foundation
             self = .German
         case "EL":
             self = .Greek
+        case "HE":
+            self = .Hebrew
         case "HU":
             self = .Hungarian
         case "IS":
             self = .Icelandic
+        case "ID":
+            self = .Indonesian
         case "IT":
             self = .Italian
         case "JA":
             self = .Japanese
+        case "KO":
+            self = .Korean
         case "LV":
             self = .Latvian
         case "LT":
             self = .Lithuanian
+        case "MK":
+            self = .Macedonian
+        case "MS":
+            self = .Malay
         case "NO":
             self = .Norwegian
         case "PL":
@@ -183,6 +211,8 @@ import Foundation
             self = .Spanish
         case "SV":
             self = .Swedish
+        case "TL":
+            self = .Tagalog
         case "TR":
             self = .Turkish
 
