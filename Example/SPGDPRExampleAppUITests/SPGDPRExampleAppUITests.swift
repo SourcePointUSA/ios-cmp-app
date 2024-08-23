@@ -117,9 +117,10 @@ class SPGDPRExampleAppUITests: QuickSpec {
 
         it("Consenting and Deleting custom vendor persist after relaunch") {
             self.app.relaunch(clean: true, resetAtt: true, args: [
-                "att": false,
+                "att": true,
                 "ccpa": false
             ])
+            self.runAttScenario()
             self.acceptGDPRMessage()
 
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
