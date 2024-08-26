@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct MetaDataResponse: Decodable, Equatable {
-    struct CCPA: Decodable, Equatable {
+struct MetaDataResponse: Equatable {
+    struct CCPA: Equatable {
         let applies: Bool
         let sampleRate: Float
     }
-    struct GDPR: Decodable, Equatable {
+    struct GDPR: Equatable {
         let additionsChangeDate: SPDate
         let legalBasisChangeDate: SPDate?
         let vendorListId: String
@@ -25,7 +25,7 @@ struct MetaDataResponse: Decodable, Equatable {
             case vendorListId = "_id"
         }
     }
-    struct USNat: Decodable, Equatable {
+    struct USNat: Equatable {
         let vendorListId: String
         let additionsChangeDate: SPDate
         let applies: Bool
@@ -42,6 +42,11 @@ struct MetaDataResponse: Decodable, Equatable {
     let gdpr: GDPR?
     let usnat: USNat?
 }
+
+extension MetaDataResponse: Decodable {}
+extension MetaDataResponse.GDPR: Decodable {}
+extension MetaDataResponse.CCPA: Decodable {}
+extension MetaDataResponse.USNat: Decodable {}
 
 struct MetaDataQueryParam: QueryParamEncodable {
     struct Campaign: Encodable {
