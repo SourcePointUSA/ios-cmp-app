@@ -62,6 +62,7 @@ import Foundation
     /// This property will be renamed to `publisherData` in the next major release
     public var encodablePubData: SPPublisherData = [:]
     public var customActionId: String?
+    public var messageId: String?
 
     override public var description: String {
         """
@@ -78,7 +79,8 @@ import Foundation
         consentLanguage: String? = nil,
         pmPayload: SPJson = SPJson(),
         pmurl: URL? = nil,
-        customActionId: String? = nil
+        customActionId: String? = nil,
+        messageId: String? = nil
     ) {
         self.type = type
         self.campaignType = campaignType
@@ -87,6 +89,7 @@ import Foundation
         self.pmPayload = pmPayload
         self.pmURL = pmurl
         self.customActionId = customActionId
+        self.messageId = messageId
     }
 
     override public func isEqual(_ object: Any?) -> Bool {
@@ -94,9 +97,10 @@ import Foundation
             return false
         }
         return other.type == type &&
-        other.consentLanguage == consentLanguage &&
-        other.pmURL == pmURL &&
-        other.pmPayload == pmPayload &&
-        other.publisherData == publisherData
+            other.consentLanguage == consentLanguage &&
+            other.pmURL == pmURL &&
+            other.pmPayload == pmPayload &&
+            other.publisherData == publisherData &&
+            other.messageId == messageId
     }
 }

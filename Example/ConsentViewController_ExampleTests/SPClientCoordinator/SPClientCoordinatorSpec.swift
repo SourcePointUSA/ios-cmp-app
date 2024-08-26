@@ -102,7 +102,8 @@ class SPClientCoordinatorSpec: QuickSpec {
                         }
                     }
                 }
-                fit("calls pv-data with correct values") {
+
+                it("calls pv-data with correct values") {
                     spClientMock = SourcePointClientMock(
                         accountId: accountId,
                         propertyName: propertyName,
@@ -179,8 +180,12 @@ class SPClientCoordinatorSpec: QuickSpec {
                     coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock)
                 }
 
-                it("should include pubData in its payload for GDPR") {
-                    let gdprAction = SPAction(type: .AcceptAll, campaignType: .gdpr)
+                it("should include right payload for GDPR") {
+                    let gdprAction = SPAction(
+                        type: .AcceptAll,
+                        campaignType: .gdpr,
+                        messageId: "1234"
+                    )
                     gdprAction.encodablePubData = ["foo": .init("gdpr")]
 
                     waitUntil { done in
@@ -192,14 +197,19 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(spClientMock.postGDPRActionCalled).to(beTrue())
                                     let body = spClientMock.postGDPRActionCalledWith?["body"] as? GDPRChoiceBody
                                     expect(body?.pubData).to(equal(gdprAction.encodablePubData))
+                                    expect(body?.messageId).to(equal("1234"))
                             }
                             done()
                         }
                     }
                 }
 
-                it("should include pubData in its payload for CCPA") {
-                    let ccpaAction = SPAction(type: .AcceptAll, campaignType: .ccpa)
+                it("should include the right payload for CCPA") {
+                    let ccpaAction = SPAction(
+                        type: .AcceptAll,
+                        campaignType: .ccpa,
+                        messageId: "321"
+                    )
                     ccpaAction.encodablePubData = ["foo": .init("ccpa")]
 
                     waitUntil { done in
@@ -211,6 +221,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(spClientMock.postCCPAActionCalled).to(beTrue())
                                     let body = spClientMock.postCCPAActionCalledWith?["body"] as? CCPAChoiceBody
                                     expect(body?.pubData).to(equal(ccpaAction.encodablePubData))
+                                    expect(body?.messageId).to(equal("321"))
                             }
                             done()
                         }

@@ -32,7 +32,6 @@ extension XCUIApplication: App {
         args.forEach { key, value in
             launchArguments.append("-\(key)=\(value)")
         }
-        // TODO: add UI tests for USNAT campaigns
         launchArguments.append("-usnat=false")
         launch()
     }

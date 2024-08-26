@@ -575,9 +575,21 @@ extension SPConsentManager: SPMessageUIDelegate {
                     osVersion: self?.deviceManager.osVersion ?? ""
                 )
                 if status == .accepted {
-                    self?.onAction(SPAction(type: .IDFAAccepted, campaignType: .ios14), from: controller)
+                    self?.onAction(
+                        SPAction(
+                            type: .IDFAAccepted,
+                            campaignType: .ios14,
+                            messageId: action.messageId
+                        ),
+                        from: controller
+                    )
                 } else if status == .denied {
-                    self?.onAction(SPAction(type: .IDFADenied, campaignType: .ios14), from: controller)
+                    self?.onAction(
+                        SPAction(
+                            type: .IDFADenied,
+                            campaignType: .ios14,
+                            messageId: action.messageId
+                        ), from: controller)
                 }
                 self?.nextMessageIfAny(controller)
             }

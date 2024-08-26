@@ -114,6 +114,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         struct AttCampaign: Codable {
             var status: SPIDFAStatus { SPIDFAStatus.current() }
+            var messageId: String?
+            var partitionUUID: String?
         }
 
         var gdpr: SPGDPRConsent?
@@ -392,7 +394,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 siteId: propertyId,
                 consentStatus: stateCCPA.consentStatus,
                 pubData: pubData,
-                messageId: Int(messageMetaData?.messageId ?? "0"),
+                // swiftlint:disable:next force_unwrapping
+                messageId: messageMetaData != nil ? Int(messageMetaData!.messageId) : nil,
                 sampleRate: state.ccpaMetaData?.sampleRate
             )
         }
@@ -415,7 +418,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 pubData: pubData,
                 sampleRate: state.gdprMetaData?.sampleRate,
                 euconsent: stateGDPR.euconsent,
-                msgId: Int(messageMetaData?.messageId ?? "0"),
+                // swiftlint:disable:next force_unwrapping
+                msgId: messageMetaData != nil ? Int(messageMetaData!.messageId) : nil,
                 categoryId: messageMetaData?.categoryId.rawValue,
                 subCategoryId: messageMetaData?.subCategoryId.rawValue,
                 prtnUUID: messageMetaData?.messagePartitionUUID
@@ -439,7 +443,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 consentStatus: stateUsnat.consentStatus,
                 pubData: pubData,
                 sampleRate: state.usNatMetaData?.sampleRate,
-                msgId: Int(messageMetaData?.messageId ?? "0"),
+                // swiftlint:disable:next force_unwrapping
+                msgId: messageMetaData != nil ? Int(messageMetaData!.messageId) : nil,
                 categoryId: messageMetaData?.categoryId.rawValue,
                 subCategoryId: messageMetaData?.subCategoryId.rawValue,
                 prtnUUID: messageMetaData?.messagePartitionUUID
@@ -648,7 +653,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     defaults: state.usnat
                 )
 
-                case .ios14: break // LastMessageData(from: $0.messageMetaData)  // TODO: fix
+                case .ios14:
+                    state.ios14?.messageId = $0.messageMetaData?.messageId
+                    state.ios14?.partitionUUID = $0.messageMetaData?.messagePartitionUUID
 
                 case .unknown: break
             }
@@ -851,7 +858,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             body: GDPRChoiceBody(
                 authId: authId,
                 uuid: state.gdpr?.uuid,
-                messageId: "0",  // TODO: fix String(state.gdpr?.lastMessage?.id ?? 0),
+                messageId: action.messageId,
                 consentAllRef: postPayloadFromGetCall?.consentAllRef,
                 vendorListId: postPayloadFromGetCall?.vendorListId,
                 pubData: action.encodablePubData,
@@ -875,7 +882,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             body: .init(
                 authId: authId,
                 uuid: state.ccpa?.uuid,
-                messageId: "0",  // TODO: fix String(state.ccpa?.lastMessage?.id ?? 0),
+                messageId: action.messageId,
                 pubData: action.encodablePubData,
                 pmSaveAndExitVariables: action.pmPayload,
                 sendPVData: state.ccpaMetaData?.wasSampled ?? false,
@@ -895,7 +902,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             body: .init(
                 authId: authId,
                 uuid: state.usnat?.uuid,
-                messageId: "0", // String(state.usnat?.lastMessage?.id ?? 0), // TODO: fix
+                messageId: action.messageId,
                 vendorListId: state.usNatMetaData?.vendorListId,
                 pubData: action.encodablePubData,
                 pmSaveAndExitVariables: action.pmPayload,
@@ -1050,10 +1057,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             propertyId: propertyId,
             uuid: uuid,
             uuidType: uuidType,
-            messageId: nil,  // TODO: fix state.ios14?.lastMessage?.id,
+            messageId: Int(state.ios14?.messageId ?? ""),
             idfaStatus: status,
             iosVersion: osVersion,
-            partitionUUID: nil // TODO: fix state.ios14?.lastMessage?.partitionUUID
+            partitionUUID: state.ios14?.partitionUUID
         )
     }
 
