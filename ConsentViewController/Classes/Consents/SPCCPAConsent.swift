@@ -126,9 +126,6 @@ extension SPUSPString {
     var childPmId: String?
 
     /// Required by SP endpoints
-    var lastMessage: LastMessageData?
-
-    /// Required by SP endpoints
     var consentStatus: ConsentStatus
 
     /// Used by the rendering app
@@ -166,7 +163,6 @@ extension SPUSPString {
         applies: Bool,
         dateCreated: SPDate,
         expirationDate: SPDate,
-        lastMessage: LastMessageData?,
         consentStatus: ConsentStatus = ConsentStatus(),
         webConsentPayload: SPWebConsentPayload? = nil,
         GPPData: SPJson = SPJson()
@@ -183,7 +179,6 @@ extension SPUSPString {
         self.applies = applies
         self.dateCreated = dateCreated
         self.expirationDate = expirationDate
-        self.lastMessage = lastMessage
     }
 
     public required init(from decoder: Decoder) throws {
@@ -211,8 +206,7 @@ extension SPUSPString {
         signedLspa: false,
         applies: false,
         dateCreated: .now(),
-        expirationDate: .distantFuture(),
-        lastMessage: nil
+        expirationDate: .distantFuture()
     )}
 
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -226,7 +220,6 @@ extension SPUSPString {
             applies: applies,
             dateCreated: dateCreated,
             expirationDate: expirationDate,
-            lastMessage: lastMessage,
             consentStatus: consentStatus,
             webConsentPayload: webConsentPayload,
             GPPData: GPPData

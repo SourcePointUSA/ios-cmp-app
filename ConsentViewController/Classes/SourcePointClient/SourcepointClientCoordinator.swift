@@ -113,7 +113,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         struct AttCampaign: Codable {
-            var lastMessage: LastMessageData?
             var status: SPIDFAStatus { SPIDFAStatus.current() }
         }
 
