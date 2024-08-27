@@ -34,9 +34,6 @@ import Foundation
 
     var dateCreated, expirationDate: SPDate
 
-    /// Required by SP endpoints
-    var lastMessage: LastMessageData?
-
     /// Used by the rendering app
     let webConsentPayload: SPWebConsentPayload?
 
@@ -54,7 +51,6 @@ import Foundation
         expirationDate: SPDate,
         consentStrings: [ConsentString],
         webConsentPayload: SPWebConsentPayload? = nil,
-        lastMessage: LastMessageData? = nil,
         categories: [SPConsentable],
         vendors: [SPConsentable],
         consentStatus: ConsentStatus,
@@ -66,7 +62,6 @@ import Foundation
         self.expirationDate = expirationDate
         self.consentStrings = consentStrings
         self.webConsentPayload = webConsentPayload
-        self.lastMessage = lastMessage
         self.consentStatus = consentStatus
         self.GPPData = GPPData
         self.userConsents = UserConsents(vendors: vendors, categories: categories)
@@ -80,7 +75,6 @@ import Foundation
         expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
         consentStrings = try container.decode([ConsentString].self, forKey: .consentStrings)
         webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
-        lastMessage = try container.decodeIfPresent(LastMessageData.self, forKey: .lastMessage)
         consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
         GPPData = try container.decodeIfPresent(SPJson.self, forKey: .GPPData)
         userConsents = try container.decodeIfPresent(UserConsents.self, forKey: .userConsents) ?? UserConsents(vendors: [], categories: [])
@@ -131,7 +125,6 @@ extension SPUSNatConsent {
         expirationDate: expirationDate,
         consentStrings: consentStrings,
         webConsentPayload: webConsentPayload,
-        lastMessage: lastMessage,
         categories: categories,
         vendors: vendors,
         consentStatus: consentStatus,

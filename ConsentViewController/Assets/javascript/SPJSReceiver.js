@@ -44,7 +44,8 @@ var getActionFromMessage = function (eventData) {
         type: choiceData.type,
         pmUrl: choiceData.pmUrl || choiceData.iframe_url,
         consentLanguage: eventData.consentLanguage,
-        customActionId: choiceData.customAction
+        customActionId: choiceData.customAction,
+        messageId: eventData.messageId
     };
 };
 
@@ -67,7 +68,8 @@ var handleMessageEvent = function(SDK) {
                         payload: eventData.payload,
                         consentLanguage: eventData.consentLanguage,
                         customActionId: eventData.customAction,
-                        pmUrl: eventData.pmUrl
+                        pmUrl: eventData.pmUrl,
+                        messageId: eventData.messageId
                     }) :
                     SDK.onAction(getActionFromMessage(eventData));
                 break;

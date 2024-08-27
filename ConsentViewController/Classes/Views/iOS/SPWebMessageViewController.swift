@@ -212,7 +212,8 @@ import WebKit
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: body["payload"] ?? SPJson(),
             pmurl: pmUrl,
-            customActionId: body["customActionId"]?.stringValue
+            customActionId: body["customActionId"]?.stringValue,
+            messageId: body["messageId"]?.stringValue
         )
     }
 

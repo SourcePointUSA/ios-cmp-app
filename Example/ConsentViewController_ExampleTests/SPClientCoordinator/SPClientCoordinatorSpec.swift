@@ -42,7 +42,7 @@ class SPClientCoordinatorSpec: QuickSpec {
         }
 
         beforeSuite {
-            Nimble.AsyncDefaults.timeout = .seconds(30)
+            Nimble.AsyncDefaults.timeout = .seconds(5)
             Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
         }
 
@@ -102,6 +102,71 @@ class SPClientCoordinatorSpec: QuickSpec {
                         }
                     }
                 }
+
+                it("calls pv-data with correct values") {
+                    spClientMock = SourcePointClientMock(
+                        accountId: accountId,
+                        propertyName: propertyName,
+                        campaignEnv: .Public,
+                        timeout: 999
+                    )
+                    spClientMock.messagesResponse = .init(
+                        propertyId: 0,
+                        localState: SPJson(),
+                        campaigns: [
+                            .init(
+                                type: .gdpr,
+                                url: URL(string: "https://example.com")!,
+                                message: try? Message(
+                                    propertyId: 0,
+                                    language: nil,
+                                    category: .gdpr,
+                                    subCategory: .TCFv2,
+                                    messageChoices: SPJson(),
+                                    webMessageJson: SPJson(),
+                                    categories: nil
+                                ),
+                                userConsent: .gdpr(consents: .empty()),
+                                messageMetaData: .init(
+                                    categoryId: .gdpr,
+                                    subCategoryId: .TCFv2,
+                                    messageId: "0",
+                                    messagePartitionUUID: "bar"
+                                ),
+                                dateCreated: nil,
+                                webConsentPayload: nil
+                            )
+                        ],
+                        nonKeyedLocalState: SPJson()
+                    )
+                    spClientMock.metadataResponse = MetaDataResponse(
+                        ccpa: nil,
+                        gdpr: MetaDataResponse.GDPR(
+                            additionsChangeDate: .distantFuture(),
+                            legalBasisChangeDate: nil,
+                            vendorListId: "",
+                            childPmId: nil,
+                            applies: true,
+                            sampleRate: 1.0
+                        ),
+                        usnat: nil
+                    )
+                    coordinator = coordinatorFor(
+                        campaigns: SPCampaigns(gdpr: SPCampaign()),
+                        spClient: spClientMock
+                    )
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in }
+                    expect(spClientMock.pvDataCalled)
+                        .toEventually(beTrue())
+                    expect(spClientMock.pvDataCalledWith?.gdpr?.msgId)
+                        .toEventually(equal(0))
+                    expect(spClientMock.pvDataCalledWith?.gdpr?.prtnUUID)
+                        .toEventually(equal("bar"))
+                    expect(spClientMock.pvDataCalledWith?.gdpr?.categoryId)
+                        .toEventually(equal(MessageCategory.gdpr.rawValue))
+                    expect(spClientMock.pvDataCalledWith?.gdpr?.subCategoryId)
+                        .toEventually(equal(MessageSubCategory.TCFv2.rawValue))
+                }
             }
 
             describe("reportAction") {
@@ -115,8 +180,12 @@ class SPClientCoordinatorSpec: QuickSpec {
                     coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock)
                 }
 
-                it("should include pubData in its payload for GDPR") {
-                    let gdprAction = SPAction(type: .AcceptAll, campaignType: .gdpr)
+                it("should include right payload for GDPR") {
+                    let gdprAction = SPAction(
+                        type: .AcceptAll,
+                        campaignType: .gdpr,
+                        messageId: "1234"
+                    )
                     gdprAction.encodablePubData = ["foo": .init("gdpr")]
 
                     waitUntil { done in
@@ -128,14 +197,19 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(spClientMock.postGDPRActionCalled).to(beTrue())
                                     let body = spClientMock.postGDPRActionCalledWith?["body"] as? GDPRChoiceBody
                                     expect(body?.pubData).to(equal(gdprAction.encodablePubData))
+                                    expect(body?.messageId).to(equal("1234"))
                             }
                             done()
                         }
                     }
                 }
 
-                it("should include pubData in its payload for CCPA") {
-                    let ccpaAction = SPAction(type: .AcceptAll, campaignType: .ccpa)
+                it("should include the right payload for CCPA") {
+                    let ccpaAction = SPAction(
+                        type: .AcceptAll,
+                        campaignType: .ccpa,
+                        messageId: "321"
+                    )
                     ccpaAction.encodablePubData = ["foo": .init("ccpa")]
 
                     waitUntil { done in
@@ -147,6 +221,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     expect(spClientMock.postCCPAActionCalled).to(beTrue())
                                     let body = spClientMock.postCCPAActionCalledWith?["body"] as? CCPAChoiceBody
                                     expect(body?.pubData).to(equal(ccpaAction.encodablePubData))
+                                    expect(body?.messageId).to(equal("321"))
                             }
                             done()
                         }
@@ -675,7 +750,6 @@ class SPClientCoordinatorSpec: QuickSpec {
                                 expect(consents.usnat?.consents?.applies).to(beTrue())
                                 expect(consents.usnat?.consents?.consentStrings).notTo(beEmpty())
                                 expect(consents.usnat?.consents?.webConsentPayload).notTo(beNil())
-                                expect(consents.usnat?.consents?.lastMessage).notTo(beNil())
                                 expect(consents.usnat?.consents?.GPPData?.dictionaryValue).notTo(beEmpty())
                                 expect(messages).notTo(beEmpty())
 

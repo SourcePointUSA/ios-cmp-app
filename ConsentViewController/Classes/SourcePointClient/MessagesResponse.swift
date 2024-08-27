@@ -152,7 +152,7 @@ extension Consent: Codable {
         }
     }
 
-    func toConsent(defaults: SPUSNatConsent?, messageMetaData: MessageMetaData?) -> SPUSNatConsent? {
+    func toConsent(defaults: SPUSNatConsent?) -> SPUSNatConsent? {
         switch self {
             case .usnat(let consents):
                 return SPUSNatConsent(
@@ -162,7 +162,6 @@ extension Consent: Codable {
                     expirationDate: consents.expirationDate,
                     consentStrings: consents.consentStrings,
                     webConsentPayload: consents.webConsentPayload,
-                    lastMessage: LastMessageData(from: messageMetaData),
                     categories: consents.categories,
                     vendors: consents.vendors,
                     consentStatus: consents.consentStatus,
@@ -174,7 +173,7 @@ extension Consent: Codable {
         }
     }
 
-    func toConsent(defaults: SPCCPAConsent?, messageMetaData: MessageMetaData?) -> SPCCPAConsent? {
+    func toConsent(defaults: SPCCPAConsent?) -> SPCCPAConsent? {
         switch self {
             case .ccpa(let consents):
                 return SPCCPAConsent(
@@ -187,7 +186,6 @@ extension Consent: Codable {
                     applies: defaults?.applies ?? false,
                     dateCreated: consents.dateCreated,
                     expirationDate: consents.expirationDate,
-                    lastMessage: LastMessageData(from: messageMetaData),
                     consentStatus: consents.consentStatus,
                     webConsentPayload: consents.webConsentPayload,
                     GPPData: consents.GPPData
@@ -198,7 +196,7 @@ extension Consent: Codable {
         }
     }
 
-    func toConsent(defaults: SPGDPRConsent?, messageMetaData: MessageMetaData?) -> SPGDPRConsent? {
+    func toConsent(defaults: SPGDPRConsent?) -> SPGDPRConsent? {
         switch self {
             case .gdpr(let consents):
                 return SPGDPRConsent(
@@ -211,7 +209,6 @@ extension Consent: Codable {
                     expirationDate: consents.expirationDate,
                     applies: defaults?.applies ?? false,
                     consentStatus: consents.consentStatus,
-                    lastMessage: LastMessageData(from: messageMetaData),
                     webConsentPayload: consents.webConsentPayload,
                     acceptedLegIntCategories: consents.acceptedLegIntCategories,
                     acceptedLegIntVendors: consents.acceptedLegIntVendors,

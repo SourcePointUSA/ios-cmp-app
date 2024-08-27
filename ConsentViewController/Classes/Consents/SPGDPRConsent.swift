@@ -103,9 +103,6 @@ public typealias SPGDPRPurposeId = String
     /// Information required by Google's Firebase Analytics SDK, GCM 2.0
     public var googleConsentMode: SPGCMData?
 
-    /// Required by SP endpoints
-    var lastMessage: LastMessageData?
-
     /// Used by the rendering app
     var webConsentPayload: SPWebConsentPayload?
 
@@ -158,7 +155,6 @@ public typealias SPGDPRPurposeId = String
         expirationDate: SPDate,
         applies: Bool,
         consentStatus: ConsentStatus = ConsentStatus(),
-        lastMessage: LastMessageData? = nil,
         webConsentPayload: SPWebConsentPayload? = nil,
         googleConsentMode: SPGCMData? = nil,
         acceptedLegIntCategories: [String] = [],
@@ -176,7 +172,6 @@ public typealias SPGDPRPurposeId = String
         self.expirationDate = expirationDate
         self.applies = applies
         self.consentStatus = consentStatus
-        self.lastMessage = lastMessage
         self.webConsentPayload = webConsentPayload
         self.googleConsentMode = googleConsentMode
         self.acceptedLegIntCategories = acceptedLegIntCategories
@@ -224,7 +219,6 @@ public typealias SPGDPRPurposeId = String
             expirationDate: expirationDate,
             applies: applies,
             consentStatus: consentStatus,
-            lastMessage: lastMessage,
             webConsentPayload: webConsentPayload,
             googleConsentMode: googleConsentMode,
             acceptedLegIntCategories: acceptedLegIntCategories,

@@ -18,8 +18,15 @@ class SourcePointClientMock: SourcePointProtocol {
         customConsentCalled = false, consentStatusCalled = false,
         pvDataCalled = false, getMessagesCalled = false
     var consentStatusCalledWith, customConsentWasCalledWith, errorMetricsCalledWith, postGDPRActionCalledWith, postCCPAActionCalledWith, postUSNatActionCalledWith: [String: Any?]?
+    var pvDataCalledWith: PvDataRequestBody?
 
     var metadataResponse = MetaDataResponse(ccpa: nil, gdpr: nil, usnat: nil)
+    var messagesResponse = MessagesResponse(
+        propertyId: 0,
+        localState: SPJson(),
+        campaigns: [],
+        nonKeyedLocalState: SPJson()
+    )
 
     required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
     }
@@ -84,12 +91,7 @@ class SourcePointClientMock: SourcePointProtocol {
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(.init(
-                propertyId: 0,
-                campaigns: [],
-                localState: SPJson(),
-                nonKeyedLocalState: SPJson()))
-            )
+            handler(.success(messagesResponse))
         }
     }
 
@@ -179,6 +181,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     func pvData(_ pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
         pvDataCalled = true
+        pvDataCalledWith = pvDataRequestBody
         if let error = error {
             handler(.failure(error))
         } else {
