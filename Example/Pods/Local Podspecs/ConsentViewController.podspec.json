@@ -16,6 +16,11 @@
   },
   "swift_versions": "5.1",
   "source_files": "ConsentViewController/Classes/**/*",
+  "dependencies": {
+    "SPMobileCore": [
+      "0.0.3"
+    ]
+  },
   "platforms": {
     "ios": "10.0",
     "tvos": "12.0"

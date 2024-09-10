@@ -668,6 +668,7 @@
 		80A5A481B97C11AC27421C73 /* Pods_ObjC_ExampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ObjC_ExampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		815ACB69209144D8CA0F5833 /* Pods-SourcepointFirebaseDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcepointFirebaseDemo.debug.xcconfig"; path = "Target Support Files/Pods-SourcepointFirebaseDemo/Pods-SourcepointFirebaseDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		816F9B5ABCD689D81DDBAC41 /* Pods-SourcepointFirebaseDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SourcepointFirebaseDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-SourcepointFirebaseDemoUITests/Pods-SourcepointFirebaseDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SPMobileCore.xcframework; path = "../../mobile-core/SPMobileCore.xcframework"; sourceTree = "<group>"; };
 		820B08AD2B602177004E77E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		820B08AF2B60217E004E77E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		820B08B12B6021A6004E77E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS17.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -2210,6 +2211,7 @@
 		EEE3CDAB8AFE80647B1E565B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */,
 				8216E2632BB32B74006FEF11 /* ConsentViewController.framework */,
 				820B08B12B6021A6004E77E8 /* Foundation.framework */,
 				820B08AF2B60217E004E77E8 /* UIKit.framework */,
