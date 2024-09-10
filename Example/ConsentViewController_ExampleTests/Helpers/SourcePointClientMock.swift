@@ -28,18 +28,25 @@ class SourcePointClientMock: SourcePointProtocol {
         nonKeyedLocalState: SPJson()
     )
 
-    required init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
-    }
+    required init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        propertyId: Int,
+        campaignEnv: SPCampaignEnv,
+        timeout: TimeInterval
+    ) {}
 
     convenience init(
         accountId: Int = 0,
         propertyName: SPPropertyName = try! SPPropertyName(""),
+        propertyId: Int = 0,
         campaignEnv: SPCampaignEnv = .Public,
         timout: TimeInterval = 1.0
     ) {
         self.init(
             accountId: accountId,
             propertyName: propertyName,
+            propertyId: propertyId,
             campaignEnv: campaignEnv,
             timeout: timout
         )

@@ -7,6 +7,9 @@
 
 // swiftlint:disable function_parameter_count file_length
 import Foundation
+import SPMobileCore
+
+typealias CoreClient = SPMobileCore.SourcepointClient
 
 extension Result where Success == Data? {
     func decoded<T: Decodable>(
@@ -49,7 +52,13 @@ typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
 typealias ChoiceHandler = (Result<ChoiceAllResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
-    init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
+    init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        propertyId: Int,
+        campaignEnv: SPCampaignEnv,
+        timeout: TimeInterval
+    )
 
     func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler)
 
@@ -170,23 +179,44 @@ A Http client for SourcePoint's endpoints
  */
 class SourcePointClient: SourcePointProtocol {
     let accountId: Int
+    let propertyId: Int
     let propertyName: SPPropertyName
     let campaignEnv: SPCampaignEnv
     var client: HttpClient
+    let coreClient: CoreClient
 
     let requestUUID = UUID()
 
-    init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, client: HttpClient) {
+    init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        propertyId: Int,
+        campaignEnv: SPCampaignEnv,
+        client: HttpClient
+    ) {
         self.accountId = accountId
         self.propertyName = propertyName
+        self.propertyId = propertyId
         self.campaignEnv = campaignEnv
         self.client = client
+        self.coreClient = CoreClient(
+            accountId: Int32(accountId),
+            propertyId: Int32(propertyId),
+            propertyName: propertyName.rawValue
+        )
     }
 
-    required convenience init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
+    required convenience init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        propertyId: Int,
+        campaignEnv: SPCampaignEnv,
+        timeout: TimeInterval
+    ) {
         self.init(
             accountId: accountId,
             propertyName: propertyName,
+            propertyId: propertyId,
             campaignEnv: campaignEnv,
             client: SimpleClient(timeoutAfter: timeout))
     }
@@ -445,7 +475,7 @@ extension SourcePointClient {
         return url
     }
 
-    func metaData(
+    func fallbackMetaData(
         accountId: Int,
         propertyId: Int,
         metadata: MetaDataQueryParam,
@@ -462,6 +492,26 @@ extension SourcePointClient {
 
         client.get(urlString: url.absoluteString, apiCode: .META_DATA) {
             Self.parseResponse($0, InvalidMetaDataResponseError(), handler)
+        }
+    }
+
+    func metaData(
+        accountId: Int,
+        propertyId: Int,
+        metadata: MetaDataQueryParam,
+        handler: @escaping MetaDataHandler
+    ) {
+        coreClient.getMetaData(campaigns: metadata.toCore()) { response, error in
+            if error != nil || response == nil {
+                self.fallbackMetaData(
+                    accountId: accountId,
+                    propertyId: propertyId,
+                    metadata: metadata,
+                    handler: handler
+                )
+            } else {
+                handler(Result.success(response!.toNative())) // swiftlint:disable:this force_unwrapping
+            }
         }
     }
 

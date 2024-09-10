@@ -137,6 +137,7 @@ class SPConsentManagerSpec: QuickSpec {
                     spClient: SourcePointClientMock(
                         accountId: accountId,
                         propertyName: propertyName,
+                        propertyId: propertyId,
                         campaignEnv: .Public,
                         timeout: 999
                     ),

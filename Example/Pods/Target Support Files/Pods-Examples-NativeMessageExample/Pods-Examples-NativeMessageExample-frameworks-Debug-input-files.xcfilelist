@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Examples-NativeMessageExample/Pods-Examples-NativeMessageExample-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework
 ${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/SPMobileCore/SPMobileCore.framework/SPMobileCore

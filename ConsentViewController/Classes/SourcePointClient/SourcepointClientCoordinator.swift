@@ -333,6 +333,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,
             propertyName: propertyName,
+            propertyId: propertyId,
             campaignEnv: campaigns.environment,
             timeout: SPConsentManager.DefaultTimeout
         )

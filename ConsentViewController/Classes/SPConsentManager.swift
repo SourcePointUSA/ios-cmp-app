@@ -71,6 +71,7 @@ import UIKit
         let client = SourcePointClient(
             accountId: accountId,
             propertyName: propertyName,
+            propertyId: propertyId,
             campaignEnv: campaigns.environment,
             timeout: Self.DefaultTimeout
         )

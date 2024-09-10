@@ -29,6 +29,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             client = SourcePointClient(
                 accountId: accountId,
                 propertyName: propertyName,
+                propertyId: propertyId,
                 campaignEnv: .Public,
                 client: SimpleClient(timeoutAfter: TimeInterval(10))
             )
@@ -235,16 +236,22 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             describe("for a property belonging to a property group") {
                 describe("and with a valid groupPmId") {
                     it("meta-data returns a childPmId") {
-                        let propertyIdBelongingToAPropertyGroup = 24188
                         let groupPmId = "613056"
                         let childPmId = "613057"
+                        client = SourcePointClient(
+                            accountId: accountId,
+                            propertyName: propertyName,
+                            propertyId: 24188,
+                            campaignEnv: .Public,
+                            client: SimpleClient(timeoutAfter: TimeInterval(10))
+                        )
                         waitUntil { done in
                             client.metaData(
-                                accountId: accountId,
-                                propertyId: propertyIdBelongingToAPropertyGroup,
+                                accountId: 99,
+                                propertyId: 99,
                                 metadata: MetaDataQueryParam(
                                     gdpr: .init(groupPmId: groupPmId),
-                                    ccpa: .init(groupPmId: nil),
+                                    ccpa: nil,
                                     usnat: nil
                                 )
                             ) {

@@ -107,6 +107,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                     spClientMock = SourcePointClientMock(
                         accountId: accountId,
                         propertyName: propertyName,
+                        propertyId: propertyId,
                         campaignEnv: .Public,
                         timeout: 999
                     )
@@ -174,6 +175,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                     spClientMock = SourcePointClientMock(
                         accountId: accountId,
                         propertyName: propertyName,
+                        propertyId: propertyId,
                         campaignEnv: .Public,
                         timeout: 999
                     )
@@ -765,6 +767,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                 spClientMock = SourcePointClientMock(
                     accountId: accountId,
                     propertyName: propertyName,
+                    propertyId: propertyId,
                     campaignEnv: .Public,
                     timeout: 999
                 )

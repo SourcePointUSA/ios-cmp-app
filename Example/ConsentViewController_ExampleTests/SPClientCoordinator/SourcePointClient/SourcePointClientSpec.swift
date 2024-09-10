@@ -31,6 +31,7 @@ class SourcePointClientSpec: QuickSpec {
     func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
         accountId: accountId,
         propertyName: propertyName,
+        propertyId: propertyId,
         campaignEnv: .Public,
         client: client
     )}
