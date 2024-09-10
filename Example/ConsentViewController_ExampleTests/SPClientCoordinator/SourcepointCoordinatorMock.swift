@@ -19,6 +19,7 @@ class CoordinatorMock: SPClientCoordinator {
     var spClient: SourcePointProtocol = SourcePointClientMock(
         accountId: 0,
         propertyName: try! SPPropertyName(""),
+        propertyId: 0,
         campaignEnv: .Public,
         timeout: 10
     )

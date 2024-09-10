@@ -29,6 +29,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             client = SourcePointClient(
                 accountId: accountId,
                 propertyName: propertyName,
+                propertyId: propertyId,
                 campaignEnv: .Public,
                 client: SimpleClient(timeoutAfter: TimeInterval(10))
             )

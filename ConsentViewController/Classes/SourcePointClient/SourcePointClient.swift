@@ -49,7 +49,13 @@ typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
 typealias ChoiceHandler = (Result<ChoiceAllResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
-    init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval)
+    init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        propertyId: Int,
+        campaignEnv: SPCampaignEnv,
+        timeout: TimeInterval
+    )
 
     func getMessages(_ params: MessagesRequest, handler: @escaping MessagesHandler)
 
@@ -170,23 +176,38 @@ A Http client for SourcePoint's endpoints
  */
 class SourcePointClient: SourcePointProtocol {
     let accountId: Int
+    let propertyId: Int
     let propertyName: SPPropertyName
     let campaignEnv: SPCampaignEnv
     var client: HttpClient
 
     let requestUUID = UUID()
 
-    init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, client: HttpClient) {
+    init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        propertyId: Int,
+        campaignEnv: SPCampaignEnv,
+        client: HttpClient
+    ) {
         self.accountId = accountId
         self.propertyName = propertyName
+        self.propertyId = propertyId
         self.campaignEnv = campaignEnv
         self.client = client
     }
 
-    required convenience init(accountId: Int, propertyName: SPPropertyName, campaignEnv: SPCampaignEnv, timeout: TimeInterval) {
+    required convenience init(
+        accountId: Int,
+        propertyName: SPPropertyName,
+        propertyId: Int,
+        campaignEnv: SPCampaignEnv,
+        timeout: TimeInterval
+    ) {
         self.init(
             accountId: accountId,
             propertyName: propertyName,
+            propertyId: propertyId,
             campaignEnv: campaignEnv,
             client: SimpleClient(timeoutAfter: timeout))
     }
