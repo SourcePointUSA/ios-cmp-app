@@ -10,6 +10,7 @@
 import Foundation
 import Nimble
 import Quick
+import SPMobileCore
 
 // swiftlint:disable force_unwrapping force_try function_body_length file_length type_body_length cyclomatic_complexity
 
@@ -140,17 +141,17 @@ class SPClientCoordinatorSpec: QuickSpec {
                         ],
                         nonKeyedLocalState: SPJson()
                     )
-                    spClientMock.metadataResponse = MetaDataResponse(
-                        ccpa: nil,
-                        gdpr: MetaDataResponse.GDPR(
-                            additionsChangeDate: .distantFuture(),
-                            legalBasisChangeDate: nil,
-                            vendorListId: "",
-                            childPmId: nil,
+                    spClientMock.metadataResponse = SPMobileCore.MetaDataResponse(
+                        gdpr: SPMobileCore.MetaDataResponse.MetaDataResponseGDPR(
                             applies: true,
-                            sampleRate: 1.0
+                            sampleRate: 1.0,
+                            additionsChangeDate: SPDate.distantFuture().originalDateString,
+                            legalBasisChangeDate: "",
+                            childPmId: nil,
+                            vendorListId: ""
                         ),
-                        usnat: nil
+                        usnat: nil,
+                        ccpa: nil
                     )
                     coordinator = coordinatorFor(
                         campaigns: SPCampaigns(gdpr: SPCampaign()),
@@ -857,32 +858,32 @@ class SPClientCoordinatorSpec: QuickSpec {
                     let clientMock = SourcePointClientMock()
                     let firstApplicableSection = 1
                     let differentApplicableSection = 2
-                    clientMock.metadataResponse = MetaDataResponse(
-                        ccpa: nil,
+                    clientMock.metadataResponse = SPMobileCore.MetaDataResponse(
                         gdpr: nil,
                         usnat: .init(
-                            vendorListId: "",
-                            additionsChangeDate: .now(),
                             applies: true,
                             sampleRate: 1.0,
-                            applicableSections: [firstApplicableSection]
-                        )
+                            additionsChangeDate: SPDate.now().originalDateString,
+                            applicableSections: [KotlinInt(int: Int32(firstApplicableSection))],
+                            vendorListId: ""
+                        ),
+                        ccpa: nil
                     )
                     coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()), spClient: clientMock)
                     waitUntil { done in
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                             expect(clientMock.consentStatusCalled).to(beFalse())
 
-                            clientMock.metadataResponse = MetaDataResponse(
-                                ccpa: nil,
+                            clientMock.metadataResponse = SPMobileCore.MetaDataResponse(
                                 gdpr: nil,
                                 usnat: .init(
-                                    vendorListId: "",
-                                    additionsChangeDate: .now(),
                                     applies: true,
                                     sampleRate: 1.0,
-                                    applicableSections: [differentApplicableSection]
-                                )
+                                    additionsChangeDate: SPDate.now().originalDateString,
+                                    applicableSections: [KotlinInt(int: Int32(differentApplicableSection))],
+                                    vendorListId: ""
+                                ),
+                                ccpa: nil
                             )
                             coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                                 expect(clientMock.consentStatusCalled).to(beTrue())

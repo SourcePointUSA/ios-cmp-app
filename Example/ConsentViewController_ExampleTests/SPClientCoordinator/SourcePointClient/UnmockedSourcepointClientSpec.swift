@@ -10,6 +10,7 @@
 import Foundation
 import Nimble
 import Quick
+import SPMobileCore
 
 // swiftlint:disable force_try line_length function_body_length cyclomatic_complexity type_body_length
 
@@ -221,7 +222,7 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             case .success(let response):
                                 let GDPR = response.gdpr
                                 let CCPA = response.ccpa
-                                expect(response).to(beAnInstanceOf(MetaDataResponse.self))
+                                expect(response).to(beAnInstanceOf(SPMobileCore.MetaDataResponse.self))
                                 expect(GDPR).notTo(beNil())
                                 expect(CCPA).notTo(beNil())
 
