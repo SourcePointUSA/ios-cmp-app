@@ -236,21 +236,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         campaigns.usnat != nil
     }
 
-    var metaDataParamsFromState: MetaDataQueryParam {
+    var metaDataParamsFromState: SPMobileCore.MetaDataRequest.Campaigns {
         .init(
             gdpr: campaigns.gdpr != nil ?
                 .init(
                     groupPmId: campaigns.gdpr?.groupPmId
                 ) :
                 nil,
-            ccpa: campaigns.ccpa != nil ?
-                .init(
-                    groupPmId: campaigns.ccpa?.groupPmId
-                ) :
-                nil,
             usnat: campaigns.usnat != nil ?
                 .init(
                     groupPmId: campaigns.usnat?.groupPmId
+                ) :
+                nil,
+            ccpa: campaigns.ccpa != nil ?
+                .init(
+                    groupPmId: campaigns.ccpa?.groupPmId
                 ) :
                 nil
         )
@@ -535,7 +535,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         spClient.metaData(
             accountId: accountId,
             propertyId: propertyId,
-            metadata: metaDataParamsFromState
+            campaigns: metaDataParamsFromState
         ) { result in
             switch result {
                 case .success(let response):

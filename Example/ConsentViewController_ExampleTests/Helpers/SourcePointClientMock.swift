@@ -257,7 +257,7 @@ class SourcePointClientMock: SourcePointProtocol {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataQueryParam,
+        campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     ) {
         if let error = error {

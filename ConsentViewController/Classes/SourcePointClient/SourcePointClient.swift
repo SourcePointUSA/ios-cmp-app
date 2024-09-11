@@ -156,7 +156,7 @@ protocol SourcePointProtocol {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataQueryParam,
+        campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     )
 
@@ -465,10 +465,10 @@ extension SourcePointClient {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataQueryParam,
+        campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     ) {
-        coreClient.getMetaData(campaigns: metadata.toCore()) { response, error in
+        coreClient.getMetaData(campaigns: campaigns) { response, error in
             if error != nil || response == nil {
                 handler(Result.failure(InvalidMetaDataResponseError()))
             } else {
