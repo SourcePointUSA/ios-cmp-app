@@ -10,6 +10,7 @@
 import Foundation
 import Nimble
 import Quick
+import SPMobileCore
 
 // swiftlint:disable force_try line_length function_body_length cyclomatic_complexity type_body_length
 
@@ -212,16 +213,16 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 waitUntil { done in
                     client.metaData(accountId: accountId,
                                     propertyId: propertyId,
-                                    metadata: MetaDataQueryParam(
+                                    campaigns: .init(
                                         gdpr: .init(groupPmId: nil),
-                                        ccpa: .init(groupPmId: nil),
-                                        usnat: nil
+                                        usnat: nil,
+                                        ccpa: .init(groupPmId: nil)
                                     )) {
                             switch $0 {
                             case .success(let response):
                                 let GDPR = response.gdpr
                                 let CCPA = response.ccpa
-                                expect(response).to(beAnInstanceOf(MetaDataResponse.self))
+                                expect(response).to(beAnInstanceOf(SPMobileCore.MetaDataResponse.self))
                                 expect(GDPR).notTo(beNil())
                                 expect(CCPA).notTo(beNil())
 
@@ -249,10 +250,10 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                             client.metaData(
                                 accountId: 99,
                                 propertyId: 99,
-                                metadata: MetaDataQueryParam(
+                                campaigns: SPMobileCore.MetaDataRequest.Campaigns(
                                     gdpr: .init(groupPmId: groupPmId),
-                                    ccpa: nil,
-                                    usnat: nil
+                                    usnat: nil,
+                                    ccpa: nil
                                 )
                             ) {
                                 switch $0 {

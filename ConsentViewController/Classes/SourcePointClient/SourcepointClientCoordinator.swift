@@ -7,6 +7,7 @@
 // swiftlint:disable type_body_length file_length
 
 import Foundation
+import SPMobileCore
 
 typealias ErrorHandler = (SPError) -> Void
 typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
@@ -235,21 +236,21 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         campaigns.usnat != nil
     }
 
-    var metaDataParamsFromState: MetaDataQueryParam {
+    var metaDataParamsFromState: SPMobileCore.MetaDataRequest.Campaigns {
         .init(
             gdpr: campaigns.gdpr != nil ?
                 .init(
                     groupPmId: campaigns.gdpr?.groupPmId
                 ) :
                 nil,
-            ccpa: campaigns.ccpa != nil ?
-                .init(
-                    groupPmId: campaigns.ccpa?.groupPmId
-                ) :
-                nil,
             usnat: campaigns.usnat != nil ?
                 .init(
                     groupPmId: campaigns.usnat?.groupPmId
+                ) :
+                nil,
+            ccpa: campaigns.ccpa != nil ?
+                .init(
+                    groupPmId: campaigns.ccpa?.groupPmId
                 ) :
                 nil
         )
@@ -500,14 +501,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func handleMetaDataResponse(_ response: MetaDataResponse) {
+    func handleMetaDataResponse(_ response: SPMobileCore.MetaDataResponse) {
         if let gdprMetaData = response.gdpr {
             state.gdpr?.applies = gdprMetaData.applies
-            state.gdprMetaData?.additionsChangeDate = gdprMetaData.additionsChangeDate
-            state.gdprMetaData?.legalBasisChangeDate = gdprMetaData.legalBasisChangeDate
+            state.gdprMetaData?.additionsChangeDate = SPDate(string: gdprMetaData.additionsChangeDate)
+            state.gdprMetaData?.legalBasisChangeDate = SPDate(string: gdprMetaData.legalBasisChangeDate)
             state.gdprMetaData?.updateSampleFields(gdprMetaData.sampleRate)
             if campaigns.gdpr?.groupPmId != gdprMetaData.childPmId {
-                storage.gdprChildPmId = gdprMetaData.childPmId ?? ""
+                storage.gdprChildPmId = gdprMetaData.childPmId
             }
         }
         if let ccpaMetaData = response.ccpa {
@@ -518,9 +519,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             let previousApplicableSections = state.usNatMetaData?.applicableSections ?? []
             state.usnat?.applies = usnatMetaData.applies
             state.usNatMetaData?.vendorListId = usnatMetaData.vendorListId
-            state.usNatMetaData?.additionsChangeDate = usnatMetaData.additionsChangeDate
+            state.usNatMetaData?.additionsChangeDate = SPDate(string: usnatMetaData.additionsChangeDate)
             state.usNatMetaData?.updateSampleFields(usnatMetaData.sampleRate)
-            state.usNatMetaData?.applicableSections = usnatMetaData.applicableSections
+            state.usNatMetaData?.applicableSections = usnatMetaData.applicableSections.map {
+                Int(truncating: $0)
+            }
             if previousApplicableSections.isNotEmpty() && previousApplicableSections != state.usNatMetaData?.applicableSections {
                 needsNewUSNatData = true
             }
@@ -532,7 +535,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         spClient.metaData(
             accountId: accountId,
             propertyId: propertyId,
-            metadata: metaDataParamsFromState
+            campaigns: metaDataParamsFromState
         ) { result in
             switch result {
                 case .success(let response):

@@ -8,6 +8,15 @@
 
 @testable import ConsentViewController
 import Foundation
+import SPMobileCore
+
+typealias SPCampaignEnv = ConsentViewController.SPCampaignEnv
+typealias MessageRequest = ConsentViewController.MessageRequest
+typealias MessagesRequest = ConsentViewController.MessagesRequest
+typealias IncludeData = ConsentViewController.IncludeData
+typealias SPIDFAStatus = ConsentViewController.SPIDFAStatus
+typealias SPCampaignType = ConsentViewController.SPCampaignType
+typealias SPMessageLanguage = ConsentViewController.SPMessageLanguage
 
 // swiftlint:disable function_parameter_count force_try
 
@@ -20,7 +29,7 @@ class SourcePointClientMock: SourcePointProtocol {
     var consentStatusCalledWith, customConsentWasCalledWith, errorMetricsCalledWith, postGDPRActionCalledWith, postCCPAActionCalledWith, postUSNatActionCalledWith: [String: Any?]?
     var pvDataCalledWith: PvDataRequestBody?
 
-    var metadataResponse = MetaDataResponse(ccpa: nil, gdpr: nil, usnat: nil)
+    var metadataResponse = SPMobileCore.MetaDataResponse(gdpr: nil, usnat: nil, ccpa: nil)
     var messagesResponse = MessagesResponse(
         propertyId: 0,
         localState: SPJson(),
@@ -248,7 +257,7 @@ class SourcePointClientMock: SourcePointProtocol {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataQueryParam,
+        campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     ) {
         if let error = error {

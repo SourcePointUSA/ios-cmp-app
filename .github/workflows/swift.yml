@@ -22,7 +22,7 @@ jobs:
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
         - name: Building Swift Package
           run: xcodebuild clean build -scheme SPMBuild -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.4'
-        - uses: actions/upload-artifact@v2
+        - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload Swift Package build results
           with:
@@ -41,7 +41,7 @@ jobs:
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
         - name: ObjC-ExampleApp testing -> iPhone 15 (iOS 17.4)
           run: xcodebuild test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.4'
-        - uses: actions/upload-artifact@v2
+        - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload ObjCExampleApp tests results
           with:
@@ -53,7 +53,7 @@ jobs:
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
         - name: ConsentViewController testing -> iPhone 15 (iOS 17.4)
           run: xcodebuild test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.4'
-        - uses: actions/upload-artifact@v2
+        - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload ConsentViewController tests results
           with:
@@ -65,7 +65,7 @@ jobs:
       - run: sudo xcode-select -s /Applications/Xcode_15.3.app
       - name: ConsentViewController testing -> iPhone 15 (iOS 17.4)
         run: xcodebuild test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.4'
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: failure()
         name: Upload ConsentViewController tests results
         with:
@@ -77,7 +77,7 @@ jobs:
         - run: sudo xcode-select -s /Applications/Xcode_15.3.app
         - name: ConsentViewController testing -> Apple TV (tvOS 17.4)
           run: xcodebuild test -scheme TVOSExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=17.4'
-        - uses: actions/upload-artifact@v2
+        - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload TVOSExampleApp tests results
           with:

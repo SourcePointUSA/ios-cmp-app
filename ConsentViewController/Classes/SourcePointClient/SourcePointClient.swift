@@ -48,7 +48,7 @@ typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResp
 typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
-typealias MetaDataHandler = (Result<MetaDataResponse, SPError>) -> Void
+typealias MetaDataHandler = (Result<SPMobileCore.MetaDataResponse, SPError>) -> Void
 typealias ChoiceHandler = (Result<ChoiceAllResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
@@ -156,7 +156,7 @@ protocol SourcePointProtocol {
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataQueryParam,
+        campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     )
 
@@ -462,55 +462,17 @@ extension SourcePointClient {
         }
     }
 
-    func metaDataURLWithParams(
-        accountId: Int,
-        propertyId: Int,
-        metadata: MetaDataQueryParam
-    ) -> URL? {
-        let url = Constants.Urls.META_DATA_URL.appendQueryItems([
-            "accountId": String(accountId),
-            "propertyId": String(propertyId),
-            "metadata": metadata.stringified()
-        ])
-        return url
-    }
-
-    func fallbackMetaData(
-        accountId: Int,
-        propertyId: Int,
-        metadata: MetaDataQueryParam,
-        handler: @escaping MetaDataHandler
-    ) {
-        guard let url = metaDataURLWithParams(
-            accountId: accountId,
-            propertyId: propertyId,
-            metadata: metadata
-        ) else {
-            handler(Result.failure(InvalidMetaDataQueryParamsError()))
-            return
-        }
-
-        client.get(urlString: url.absoluteString, apiCode: .META_DATA) {
-            Self.parseResponse($0, InvalidMetaDataResponseError(), handler)
-        }
-    }
-
     func metaData(
         accountId: Int,
         propertyId: Int,
-        metadata: MetaDataQueryParam,
+        campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     ) {
-        coreClient.getMetaData(campaigns: metadata.toCore()) { response, error in
+        coreClient.getMetaData(campaigns: campaigns) { response, error in
             if error != nil || response == nil {
-                self.fallbackMetaData(
-                    accountId: accountId,
-                    propertyId: propertyId,
-                    metadata: metadata,
-                    handler: handler
-                )
+                handler(Result.failure(InvalidMetaDataResponseError()))
             } else {
-                handler(Result.success(response!.toNative())) // swiftlint:disable:this force_unwrapping
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
             }
         }
     }
