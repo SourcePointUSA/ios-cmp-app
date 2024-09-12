@@ -45,7 +45,7 @@ typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
 typealias USNatConsentHandler = (Result<SPUSNatConsent, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
-typealias ConsentStatusHandler = (Result<ConsentStatusResponse, SPError>) -> Void
+typealias ConsentStatusHandler = (Result<SPMobileCore.ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
 typealias MetaDataHandler = (Result<SPMobileCore.MetaDataResponse, SPError>) -> Void
@@ -144,10 +144,8 @@ protocol SourcePointProtocol {
     )
 
     func consentStatus(
-        propertyId: Int,
-        metadata: ConsentStatusMetaData,
+        metadata: SPMobileCore.ConsentStatusRequest.MetaData,
         authId: String?,
-        includeData: IncludeData,
         handler: @escaping ConsentStatusHandler
     )
 
@@ -422,43 +420,20 @@ class SourcePointClient: SourcePointProtocol {
 
 // MARK: V7 - cost optimised APIs
 extension SourcePointClient {
-    func consentStatusURLWithParams(
-        propertyId: Int,
-        metadata: ConsentStatusMetaData,
-        includeData: IncludeData,
-        authId: String?) -> URL? {
-        var url = Constants.Urls.CONSENT_STATUS_URL.appendQueryItems([
-            "propertyId": String(propertyId),
-            "metadata": metadata.stringified(),
-            "hasCsp": "true",
-            "withSiteActions": "false",
-            "includeData": includeData.string
-        ])
-        if let authId = authId {
-            url = url?.appendQueryItems(["authId": authId])
-        }
-        return url
-    }
-
     func consentStatus(
-        propertyId: Int,
-        metadata: ConsentStatusMetaData,
+        metadata: SPMobileCore.ConsentStatusRequest.MetaData,
         authId: String?,
-        includeData: IncludeData,
         handler: @escaping ConsentStatusHandler
     ) {
-        guard let url = consentStatusURLWithParams(
-            propertyId: propertyId,
-            metadata: metadata,
-            includeData: includeData,
-            authId: authId
-        ) else {
-            handler(Result.failure(InvalidConsentStatusQueryParamsError()))
-            return
-        }
-
-        client.get(urlString: url.absoluteString, apiCode: .CONSENT_STATUS) {
-            Self.parseResponse($0, InvalidConsentStatusResponseError(), handler)
+        coreClient.getConsentStatus(
+            authId: authId,
+            metadata: metadata
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidConsentStatusResponseError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
+            }
         }
     }
 

@@ -36,66 +36,28 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             )
         }
 
-        describe("consentStatusURLWithParams") {
-            describe("with auth id") {
-                it("should add the authId query param") {
-                    let url = client.consentStatusURLWithParams(
-                        propertyId: propertyId,
-                        metadata: emptyMetaData,
-                        includeData: .standard,
-                        authId: "john doe"
-                    )
-                    expect(url?.query).to(contain("authId=john%20doe"))
-                }
-            }
-
-            describe("without auth id") {
-                it("should not add the authId query param") {
-                    let url = client.consentStatusURLWithParams(
-                        propertyId: propertyId,
-                        metadata: emptyMetaData,
-                        includeData: .standard,
-                        authId: nil
-                    )
-                    expect(url?.query).notTo(contain("authId="))
-                }
-            }
-
-            it("should contain all query params") {
-                let includeData = IncludeData.standard
-                let url = client.consentStatusURLWithParams(
-                    propertyId: propertyId,
-                    metadata: emptyMetaData,
-                    includeData: includeData,
-                    authId: nil
-                )
-                let paramsRaw = "env=\(Constants.Urls.envParam)&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)&hasCsp=true&includeData=\(stringify(includeData))&metadata={}&propertyId=16893&withSiteActions=false"
-                expect(url?.query) == paramsRaw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            }
-        }
-
         describe("consentStatus") {
             it("should call the endpoint and parse the response into ConsentStatusResponse") {
                 waitUntil { done in
                     client.consentStatus(
-                        propertyId: propertyId,
-                        metadata: ConsentStatusMetaData(
+                        metadata: SPMobileCore.ConsentStatusRequest.MetaData(
                             gdpr: .init(
                                 applies: true,
                                 dateCreated: nil,
                                 uuid: nil,
+                                hasLocalData: false,
                                 idfaStatus: nil
                             ),
+                            usnat: nil,
                             ccpa: .init(
                                 applies: true,
                                 dateCreated: nil,
                                 uuid: nil,
+                                hasLocalData: false,
                                 idfaStatus: nil
-                            ),
-                            usnat: nil
+                            )
                         ),
-                        authId: "user_auth_id",
-                        includeData: .standard
+                        authId: "user_auth_id"
                     ) { result in
                             switch result {
                             case .success(let response):

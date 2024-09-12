@@ -78,26 +78,23 @@ class SourcePointClientMock: SourcePointProtocol {
     }
 
     func consentStatus(
-        propertyId: Int,
-        metadata: ConsentStatusMetaData,
+        metadata: SPMobileCore.ConsentStatusRequest.MetaData,
         authId: String?,
-        includeData: IncludeData,
         handler: @escaping ConsentStatusHandler) {
             consentStatusCalled = true
             consentStatusCalledWith = [
-                "propertyId": propertyId,
                 "metadata": metadata,
                 "authId": authId,
-                "includeData": includeData
             ]
 
             if let error = error {
                 handler(.failure(error))
             } else {
                 handler(.success(
-                    ConsentStatusResponse(
-                        consentStatusData: .init(gdpr: nil, ccpa: nil, usnat: nil),
-                        localState: SPJson())
+                    SPMobileCore.ConsentStatusResponse(
+                        consentStatusData: .init(gdpr: nil, usnat: nil, ccpa: nil),
+                        localState: ""
+                    )
                 ))
             }
     }
