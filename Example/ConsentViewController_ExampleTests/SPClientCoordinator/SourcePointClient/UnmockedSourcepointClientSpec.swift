@@ -16,7 +16,7 @@ import SPMobileCore
 
 class UnmockedSourcepointClientSpec: QuickSpec {
     override func spec() {
-        let emptyMetaData = ConsentStatusMetaData(gdpr: nil, ccpa: nil, usnat: nil)
+        let emptyMetaData = SPMobileCore.ConsentStatusRequest.MetaData(gdpr: nil,  usnat: nil, ccpa: nil)
         let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
         let accountId = 22
         let propertyId = 16893
