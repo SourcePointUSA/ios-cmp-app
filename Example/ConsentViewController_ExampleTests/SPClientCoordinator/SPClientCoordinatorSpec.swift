@@ -708,7 +708,7 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                         waitUntil { done in
                             coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
-                                let consentStatusMetadata = spClientMock.consentStatusCalledWith?["metadata"] as? ConsentStatusMetaData
+                                let consentStatusMetadata = spClientMock.consentStatusCalledWith?["metadata"] as? SPMobileCore.ConsentStatusRequest.MetaData
                                 expect(consentStatusMetadata?.usnat?.transitionCCPAAuth).to(beNil())
                                 done()
                             }

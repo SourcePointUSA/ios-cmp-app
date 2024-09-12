@@ -199,7 +199,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     var needsNewConsentData: Bool {
-        migratingUser || needsNewUSNatData || transitionCCPAUSNat || (
+        migratingUser || needsNewUSNatData || transitionCCPAOptedOut || (
             state.localVersion != State.version && (
                 state.gdpr?.uuid != nil ||
                 state.ccpa?.uuid != nil ||
@@ -218,7 +218,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         authId != nil && campaigns.usnat?.transitionCCPAAuth == true
     }
 
-    var transitionCCPAUSNat: Bool {
+    var transitionCCPAOptedOut: Bool {
         campaigns.usnat != nil &&
         ccpaUUID != nil &&
         usnatUUID == nil &&
@@ -345,41 +345,41 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns) -> State {
-        var localState = localStorage.spState ?? .init()
-        if localCampaigns.gdpr != nil, localState.gdpr == nil {
-            localState.gdpr = localStorage.userData.gdpr?.consents ?? .empty()
-            localState.gdpr?.applies = localStorage.userData.gdpr?.applies ?? false
-            localState.gdprMetaData = .init()
+        var spState = localStorage.spState ?? .init()
+        if localCampaigns.gdpr != nil, spState.gdpr == nil {
+            spState.gdpr = localStorage.userData.gdpr?.consents ?? .empty()
+            spState.gdpr?.applies = localStorage.userData.gdpr?.applies ?? false
+            spState.gdprMetaData = .init()
         }
-        if localCampaigns.ccpa != nil, localState.ccpa == nil {
-            localState.ccpa = localStorage.userData.ccpa?.consents ?? .empty()
-            localState.ccpa?.applies = localStorage.userData.ccpa?.applies ?? false
-            localState.ccpaMetaData = .init()
+        if localCampaigns.ccpa != nil, spState.ccpa == nil {
+            spState.ccpa = localStorage.userData.ccpa?.consents ?? .empty()
+            spState.ccpa?.applies = localStorage.userData.ccpa?.applies ?? false
+            spState.ccpaMetaData = .init()
         }
-        if localCampaigns.usnat != nil, localState.usnat == nil {
-            localState.usnat = localStorage.userData.usnat?.consents ?? .empty()
-            localState.usnat?.applies = localStorage.userData.usnat?.applies ?? false
-            localState.usNatMetaData = .init()
+        if localCampaigns.usnat != nil, spState.usnat == nil {
+            spState.usnat = localStorage.userData.usnat?.consents ?? .empty()
+            spState.usnat?.applies = localStorage.userData.usnat?.applies ?? false
+            spState.usNatMetaData = .init()
         }
-        if localCampaigns.ios14 != nil, localState.ios14 == nil {
-            localState.ios14 = .init()
+        if localCampaigns.ios14 != nil, spState.ios14 == nil {
+            spState.ios14 = .init()
         }
 
         // Expire user consent if later than expirationDate
-        if let gdprExpirationDate = localState.gdpr?.expirationDate.date,
+        if let gdprExpirationDate = spState.gdpr?.expirationDate.date,
            gdprExpirationDate < Date() {
-            localState.gdpr = .empty()
+            spState.gdpr = .empty()
         }
-        if let ccpaExpirationDate = localState.ccpa?.expirationDate.date,
+        if let ccpaExpirationDate = spState.ccpa?.expirationDate.date,
            ccpaExpirationDate < Date() {
-            localState.ccpa = .empty()
+            spState.ccpa = .empty()
         }
-        if let usnatExpirationDate = localState.usnat?.expirationDate.date,
+        if let usnatExpirationDate = spState.usnat?.expirationDate.date,
            usnatExpirationDate < Date() {
-            localState.usnat = .empty()
+            spState.usnat = .empty()
         }
 
-        return localState
+        return spState
     }
 
     func ccpaPvDataBody(
@@ -547,18 +547,18 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func handleConsentStatusResponse(_ response: ConsentStatusResponse) {
-        state.localState = response.localState
+    func handleConsentStatusResponse(_ response: SPMobileCore.ConsentStatusResponse) {
+        state.localState = try? SPJson(response.localState)
         if let gdpr = response.consentStatusData.gdpr {
             state.gdpr?.uuid = gdpr.uuid
-            state.gdpr?.vendorGrants = gdpr.grants
-            state.gdpr?.dateCreated = gdpr.dateCreated
-            state.gdpr?.expirationDate = gdpr.expirationDate
-            state.gdpr?.euconsent = gdpr.euconsent
-            state.gdpr?.tcfData = gdpr.TCData
-            state.gdpr?.consentStatus = gdpr.consentStatus
+            state.gdpr?.vendorGrants = gdpr.grants.mapValues { $0.toNative() }
+            state.gdpr?.dateCreated = SPDate(string: gdpr.dateCreated ?? "")
+            state.gdpr?.expirationDate = SPDate(string: gdpr.expirationDate ?? "")
+            state.gdpr?.euconsent = gdpr.euconsent ?? ""
+            state.gdpr?.tcfData = gdpr.tcData.toNative()
+            state.gdpr?.consentStatus = gdpr.consentStatus.toNative()
             state.gdpr?.webConsentPayload = gdpr.webConsentPayload
-            state.gdpr?.googleConsentMode = gdpr.gcmStatus
+            state.gdpr?.googleConsentMode = gdpr.gcmStatus?.toNative()
             state.gdpr?.acceptedLegIntCategories = gdpr.legIntCategories
             state.gdpr?.acceptedLegIntVendors = gdpr.legIntVendors
             state.gdpr?.acceptedVendors = gdpr.vendors
@@ -567,9 +567,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
         if let ccpa = response.consentStatusData.ccpa {
             state.ccpa?.uuid = ccpa.uuid
-            state.ccpa?.dateCreated = ccpa.dateCreated
-            state.ccpa?.expirationDate = ccpa.expirationDate
-            state.ccpa?.status = ccpa.status
+            state.ccpa?.dateCreated = SPDate(string: ccpa.dateCreated ?? "")
+            state.ccpa?.expirationDate = SPDate(string: ccpa.expirationDate ?? "")
+            state.ccpa?.status = ccpa.status.toNative()
             state.ccpa?.rejectedVendors = ccpa.rejectedVendors
             state.ccpa?.rejectedCategories = ccpa.rejectedCategories
             state.ccpa?.consentStatus = ConsentStatus(
@@ -577,20 +577,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 rejectedCategories: ccpa.rejectedCategories
             )
             state.ccpa?.webConsentPayload = ccpa.webConsentPayload
-            state.ccpa?.GPPData = ccpa.GPPData ?? SPJson()
+            state.ccpa?.GPPData = ccpa.gppData.toNative() ?? SPJson()
         }
         if let usnat = response.consentStatusData.usnat {
             state.usnat = SPUSNatConsent(
                 uuid: usnat.uuid,
                 applies: state.usnat?.applies ?? false,
-                dateCreated: usnat.dateCreated,
-                expirationDate: usnat.expirationDate,
-                consentStrings: usnat.consentStrings,
+                dateCreated: SPDate(string: usnat.dateCreated ?? ""),
+                expirationDate: SPDate(string: usnat.expirationDate ?? ""),
+                consentStrings: usnat.consentStrings.map { $0.toNative() },
                 webConsentPayload: usnat.webConsentPayload,
-                categories: usnat.userConsents.categories,
-                vendors: usnat.userConsents.vendors,
-                consentStatus: usnat.consentStatus,
-                GPPData: usnat.GPPData
+                categories: usnat.userConsents.categories.map { $0.toNative() },
+                vendors: usnat.userConsents.vendors.map { $0.toNative() },
+                consentStatus: usnat.consentStatus.toNative(),
+                GPPData: usnat.gppData.toNative()
             )
         }
 
@@ -600,28 +600,36 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func consentStatus(_ errorHandler: ErrorHandler, next: @escaping () -> Void) {
         if shouldCallConsentStatus {
             spClient.consentStatus(
-                propertyId: propertyId,
                 metadata: .init(
-                    gdpr: .init(
-                        state.gdpr,
-                        campaign: campaigns.gdpr,
-                        idfaStatus: SPIDFAStatus.current()
-                    ),
-                    ccpa: .init(
-                        state.ccpa,
-                        campaign: campaigns.ccpa,
-                        idfaStatus: SPIDFAStatus.current()
-                    ),
-                    usnat: .init(
-                        state.usnat,
-                        campaign: campaigns.usnat,
-                        idfaStatus: SPIDFAStatus.current(),
-                        dateCreated: transitionCCPAUSNat ? state.ccpa?.dateCreated : state.usnat?.dateCreated,
-                        optedOut: transitionCCPAUSNat
-                    )
+                    // swiftlint:disable force_unwrapping
+                    gdpr: state.gdpr != nil ? .init(
+                        applies: state.gdpr!.applies,
+                        dateCreated: state.gdpr?.dateCreated.originalDateString,
+                        uuid: state.gdpr?.uuid,
+                        hasLocalData: state.hasGDPRLocalData,
+                        idfaStatus: SPIDFAStatus.current().toCore()
+                    ) : nil,
+                    usnat: state.usnat != nil ? .init(
+                        applies: state.usnat!.applies,
+                        dateCreated: transitionCCPAOptedOut ?
+                            state.ccpa?.dateCreated.originalDateString :
+                            state.usnat?.dateCreated.originalDateString,
+                        uuid: state.usnat?.uuid,
+                        hasLocalData: state.hasUSNatLocalData,
+                        idfaStatus: SPIDFAStatus.current().toCore(),
+                        transitionCCPAAuth: KotlinBoolean(bool: authTransitionCCPAUSNat),
+                        optedOut: KotlinBoolean(bool: transitionCCPAOptedOut)
+                    ) : nil,
+                    ccpa: state.ccpa != nil ? .init(
+                        applies: state.ccpa!.applies,
+                        dateCreated: state.ccpa?.dateCreated.originalDateString,
+                        uuid: state.ccpa?.uuid,
+                        hasLocalData: state.hasCCPALocalData,
+                        idfaStatus: SPIDFAStatus.current().toCore()
+                    ) : nil
                 ),
-                authId: authId,
-                includeData: includeData
+                // swiftlint:enable force_unwrapping
+                authId: authId
             ) { result in
                 switch result {
                     case .success(let response):
