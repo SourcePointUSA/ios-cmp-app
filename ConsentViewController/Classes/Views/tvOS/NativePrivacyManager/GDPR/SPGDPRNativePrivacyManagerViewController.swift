@@ -324,7 +324,7 @@ class FocusableScrollView: UIScrollView {
 
 /// A table view cell with a custom background configuration.
 /// It suppresses unwanted background and border effects that are automatically added by the system
-/// while while keeping the drop shadow and scaling effect when being focused.
+/// while keeping the drop shadow and scaling effect when being focused.
 @available(tvOS 14.0, *)
 class CategoryCellView: UITableViewCell {
 
