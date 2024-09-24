@@ -200,7 +200,8 @@ class SourcePointClient: SourcePointProtocol {
         self.coreClient = CoreClient(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            propertyName: propertyName.rawValue
+            propertyName: propertyName.rawValue,
+            requestTimeoutInSeconds: Int32(5)
         )
     }
 

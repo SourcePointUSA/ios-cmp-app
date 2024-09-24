@@ -20,6 +20,8 @@ typealias SPMessageLanguage = ConsentViewController.SPMessageLanguage
 
 // swiftlint:disable function_parameter_count force_try
 
+typealias SPError = ConsentViewController.SPError
+
 class SourcePointClientMock: SourcePointProtocol {
     var customConsentResponse: AddOrDeleteCustomConsentResponse?
     var error: SPError?
