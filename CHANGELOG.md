@@ -1,4 +1,4 @@
-# 7.7.1 (Sep, 30, 2024)
+# 7.7.2 (Sep, 30, 2024)
 * [DIA-4457](https://sourcepoint.atlassian.net/browse/DIA-4457) Replace native `/meta-data` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/meta-data` implementation. [#580](https://github.com/SourcePointUSA/ios-cmp-app/pull/580) [#581](https://github.com/SourcePointUSA/ios-cmp-app/pull/581)
 * [DIA-4457](https://sourcepoint.atlassian.net/browse/DIA-4457) Replace native `/consent-status` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/consent-status` implementation. [#582](https://github.com/SourcePointUSA/ios-cmp-app/pull/582)
 
