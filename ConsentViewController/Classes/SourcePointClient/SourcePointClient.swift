@@ -354,6 +354,61 @@ class SourcePointClient: SourcePointProtocol {
         legIntCategories: [String],
         propertyId: Int,
         handler: @escaping AddOrDeleteCustomConsentHandler) {
+            coreClient.customConsentGDPR(
+                consentUUID: consentUUID,
+                propertyId: Int32(propertyId),
+                vendors: vendors,
+                categories: categories,
+                legIntCategories: legIntCategories) { response, error in
+                    if error != nil || response == nil {
+                        self.fallbackCustomConsentGDPR(
+                            toConsentUUID: consentUUID,
+                            vendors: vendors,
+                            categories: categories,
+                            legIntCategories: legIntCategories,
+                            propertyId: propertyId,
+                            handler: handler
+                        )
+                    } else {
+                        handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
+                    }
+                }
+    }
+
+    func deleteCustomConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String], categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping AddOrDeleteCustomConsentHandler) {
+            coreClient.deleteCustomConsentGDPR(
+                consentUUID: consentUUID,
+                propertyId: Int32(propertyId),
+                vendors: vendors,
+                categories: categories,
+                legIntCategories: legIntCategories) { response, error in
+                    if error != nil || response == nil {
+                        self.fallbackDeleteCustomConsentGDPR(
+                            toConsentUUID: consentUUID,
+                            vendors: vendors,
+                            categories: categories,
+                            legIntCategories: legIntCategories,
+                            propertyId: propertyId,
+                            handler: handler
+                        )
+                    } else {
+                        handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
+                    }
+                }
+        }
+
+    func fallbackCustomConsentGDPR(
+        toConsentUUID consentUUID: String,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        propertyId: Int,
+        handler: @escaping AddOrDeleteCustomConsentHandler) {
         _ = JSONEncoder().encodeResult(CustomConsentRequest(
             consentUUID: consentUUID,
             propertyId: propertyId,
@@ -367,7 +422,7 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func deleteCustomConsentGDPR(
+    func fallbackDeleteCustomConsentGDPR(
         toConsentUUID consentUUID: String,
         vendors: [String], categories: [String],
         legIntCategories: [String],
