@@ -361,14 +361,7 @@ class SourcePointClient: SourcePointProtocol {
                 categories: categories,
                 legIntCategories: legIntCategories) { response, error in
                     if error != nil || response == nil {
-                        self.fallbackCustomConsentGDPR(
-                            toConsentUUID: consentUUID,
-                            vendors: vendors,
-                            categories: categories,
-                            legIntCategories: legIntCategories,
-                            propertyId: propertyId,
-                            handler: handler
-                        )
+                        handler(Result.failure(InvalidResponseCustomError()))
                     } else {
                         handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
                     }
@@ -388,67 +381,12 @@ class SourcePointClient: SourcePointProtocol {
                 categories: categories,
                 legIntCategories: legIntCategories) { response, error in
                     if error != nil || response == nil {
-                        self.fallbackDeleteCustomConsentGDPR(
-                            toConsentUUID: consentUUID,
-                            vendors: vendors,
-                            categories: categories,
-                            legIntCategories: legIntCategories,
-                            propertyId: propertyId,
-                            handler: handler
-                        )
+                        handler(Result.failure(InvalidResponseDeleteCustomError()))
                     } else {
                         handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
                     }
                 }
         }
-
-    func fallbackCustomConsentGDPR(
-        toConsentUUID consentUUID: String,
-        vendors: [String],
-        categories: [String],
-        legIntCategories: [String],
-        propertyId: Int,
-        handler: @escaping AddOrDeleteCustomConsentHandler) {
-        _ = JSONEncoder().encodeResult(CustomConsentRequest(
-            consentUUID: consentUUID,
-            propertyId: propertyId,
-            vendors: vendors,
-            categories: categories,
-            legIntCategories: legIntCategories
-        )).map { body in
-            client.post(urlString: Constants.Urls.CUSTOM_CONSENT_URL.absoluteString, body: body, apiCode: .CUSTOM_CONSENT) {
-                Self.parseResponse($0, InvalidResponseCustomError(), handler)
-            }
-        }
-    }
-
-    func fallbackDeleteCustomConsentGDPR(
-        toConsentUUID consentUUID: String,
-        vendors: [String], categories: [String],
-        legIntCategories: [String],
-        propertyId: Int,
-        handler: @escaping AddOrDeleteCustomConsentHandler) {
-            let urlString = deleteCustomConsentUrl(Constants.Urls.DELETE_CUSTOM_CONSENT_URL, propertyId, consentUUID).absoluteString
-            _ = JSONEncoder().encodeResult(DeleteCustomConsentRequest(
-                vendors: vendors,
-                categories: categories,
-                legIntCategories: legIntCategories
-            )).map { body in
-                client.delete(urlString: urlString, body: body, apiCode: .DELETE_CUSTOM_CONSENT) {
-                    Self.parseResponse($0, InvalidResponseDeleteCustomError(), handler)
-                }
-            }
-        }
-
-    func deleteCustomConsentUrl(_ baseUrl: URL, _ propertyId: Int, _ consentUUID: String) -> URL {
-        let propertyIdString = String(propertyId)
-        let urlWithPath = baseUrl.appendingPathComponent(propertyIdString)
-        // swiftlint:disable:next force_unwrapping
-        var components = URLComponents(url: urlWithPath, resolvingAgainstBaseURL: true)!
-        components.queryItems = [URLQueryItem(name: "consentUUID", value: consentUUID)]
-        // swiftlint:disable:next force_unwrapping
-        return components.url(relativeTo: baseUrl)!
-    }
 
     func errorMetrics(
         _ error: SPError,

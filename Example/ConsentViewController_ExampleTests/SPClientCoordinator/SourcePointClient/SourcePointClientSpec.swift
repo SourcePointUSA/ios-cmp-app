@@ -76,18 +76,6 @@ class SourcePointClientSpec: QuickSpec {
             AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
-        describe("statics") {
-            it("CUSTOM_CONSENT_URL") {
-                let expectedUrl  = URL(string: "https://\(self.wrapperHost)/wrapper/tcfv2/v1/gdpr/custom-consent?env=prod&inApp=true&scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
-                expect(Constants.Urls.CUSTOM_CONSENT_URL.absoluteURL).to(equal(expectedUrl))
-            }
-
-            it("DELETE_CUSTOM_CONSENT_URL") {
-                let expectedUrl = URL(string: "https://\(self.wrapperHost)/consent/tcfv2/consent/v3/custom?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)")!.absoluteURL
-                expect(Constants.Urls.DELETE_CUSTOM_CONSENT_URL.absoluteURL) == expectedUrl
-            }
-        }
-
         describe("SourcePointClient") {
             beforeEach {
                 mockedResponse = "{\"url\": \"https://notice.sp-prod.net/?message_id=59706\"}".data(using: .utf8)
@@ -324,35 +312,6 @@ class SourcePointClientSpec: QuickSpec {
                         ) { _ in }
                         let encoded = try JSONEncoder().encode(body)
                         expect(httpClient.postWasCalledWithBody!).to(equal(encoded))
-                    }
-                }
-            }
-
-            describe("customConsent") {
-                describe("metrics") {
-                    it("makes a POST to https://cdn.privacy-mgmt.com/wrapper/metrics/v1/custom-metrics with correct body") {
-                        let http = MockHttp()
-                        let error = SPError()
-                        self.getClient(http).errorMetrics(
-                            error,
-                            propertyId: self.propertyId,
-                            sdkVersion: "1.2.3",
-                            OSVersion: "11.0",
-                            deviceFamily: "iPhone 11 pro",
-                            campaignType: .gdpr
-                        )
-                        let parsedRequest = try? JSONSerialization.jsonObject(with: http.postWasCalledWithBody!) as? [String: Any]
-                        let expectedUrl = "https://\(self.wrapperHost)/wrapper/metrics/v1/custom-metrics?scriptType=ios&scriptVersion=\(SPConsentManager.VERSION)"
-                        expect(http.postWasCalledWithUrl) == expectedUrl
-                        expect((parsedRequest?["code"] as? String)) == error.spCode
-                        expect((parsedRequest?["accountId"] as? String)) == "\(self.accountId)"
-                        expect((parsedRequest?["propertyId"] as? String)) == "\(self.propertyId)"
-                        expect((parsedRequest?["propertyHref"] as? String)) == "https://test"
-                        expect((parsedRequest?["description"] as? String)) == error.description
-                        expect((parsedRequest?["scriptVersion"] as? String)) == "1.2.3"
-                        expect((parsedRequest?["sdkOSVersion"] as? String)) == "11.0"
-                        expect((parsedRequest?["deviceFamily"] as? String)) == "iPhone 11 pro"
-                        expect((parsedRequest?["legislation"] as? String)) == "GDPR"
                     }
                 }
             }
