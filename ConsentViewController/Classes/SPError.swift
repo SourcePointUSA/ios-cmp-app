@@ -338,7 +338,6 @@ public enum InvalidResponsAPICode: String {
     case CONSENT_STATUS = "_consent-status"
     case PV_DATA = "_pv-data"
     case MESSAGES = "_messages"
-    case CUSTOM_CONSENT = "_custom-consent-GDPR"
     case ERROR_METRICS = "_error-metrics"
     case CCPA_ACTION = "_CCPA-action"
     case GDPR_ACTION = "_GDPR-action"

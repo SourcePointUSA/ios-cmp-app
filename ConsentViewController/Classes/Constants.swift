@@ -24,8 +24,6 @@ struct Constants {
         static let CCPA_MESSAGE_URL = URL(string: "./v2/message/v2/ccpa?\(additionalData)", relativeTo: WRAPPER_API)!
         static let ERROR_METRIS_URL = URL(string: "./metrics/v1/custom-metrics?\(additionalData)", relativeTo: WRAPPER_API)!
         static let IDFA_RERPORT_URL = URL(string: "./metrics/v1/apple-tracking?env=\(envParam)&\(additionalData)", relativeTo: WRAPPER_API)!
-        static let DELETE_CUSTOM_CONSENT_URL = URL(string: "./consent/tcfv2/consent/v3/custom?\(additionalData)", relativeTo: SP_ROOT)!
-        static let CUSTOM_CONSENT_URL = URL(string: "./tcfv2/v1/gdpr/custom-consent?env=\(envParam)&inApp=true&\(additionalData)", relativeTo: WRAPPER_API)!
         static let GDPR_PRIVACY_MANAGER_VIEW_URL = URL(string: "./consent/tcfv2/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
         static let CCPA_PRIVACY_MANAGER_VIEW_URL = URL(string: "./ccpa/privacy-manager/privacy-manager-view?\(additionalData)", relativeTo: SP_ROOT)!
         static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!

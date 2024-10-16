@@ -569,7 +569,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             state.ccpa?.uuid = ccpa.uuid
             state.ccpa?.dateCreated = SPDate(string: ccpa.dateCreated ?? "")
             state.ccpa?.expirationDate = SPDate(string: ccpa.expirationDate ?? "")
-            state.ccpa?.status = ccpa.status.toNative()
+            state.ccpa?.status = ccpa.status?.toNative() ?? .Unknown
             state.ccpa?.rejectedVendors = ccpa.rejectedVendors
             state.ccpa?.rejectedCategories = ccpa.rejectedCategories
             state.ccpa?.consentStatus = ConsentStatus(
