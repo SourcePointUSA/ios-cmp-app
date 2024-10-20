@@ -89,6 +89,12 @@ extension [String: Kotlinx_serialization_jsonJsonPrimitive] {
     }
 }
 
+extension SPMobileCore.GDPRConsent {
+    func toNativeAsAddOrDeleteCustomConsentResponse() -> AddOrDeleteCustomConsentResponse {
+        .init(grants: grants.mapValues{ $0.toNative() })
+    }
+}
+
 extension SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
     func toNative() -> ConsentStatus.GranularStatus {
         .init(
