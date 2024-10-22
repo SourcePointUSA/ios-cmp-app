@@ -91,7 +91,7 @@ extension [String: Kotlinx_serialization_jsonJsonPrimitive] {
 
 extension SPMobileCore.GDPRConsent {
     func toNativeAsAddOrDeleteCustomConsentResponse() -> AddOrDeleteCustomConsentResponse {
-        .init(grants: grants.mapValues{ $0.toNative() })
+        .init(grants: grants.mapValues { $0.toNative() })
     }
 }
 
@@ -105,6 +105,57 @@ extension SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
             previousOptInAll: previousOptInAll?.boolValue,
             defaultConsent: defaultConsent?.boolValue
         )
+    }
+}
+
+extension Bool? {
+    func toCore() -> KotlinBoolean? {
+        // swiftlint:disable:next force_unwrapping
+        return self != nil ? KotlinBoolean(value: self!) : nil
+    }
+}
+
+extension ConsentStatus {
+    func toCore(rejectedVendors: [String]? = nil, rejectedCategories: [String]? = nil) -> SPMobileCore.ConsentStatus {
+        return SPMobileCore.ConsentStatus.init(
+            rejectedAny: rejectedAny.toCore(),
+            rejectedLI: rejectedLI.toCore(),
+            rejectedAll: rejectedAll.toCore(),
+            consentedAll: consentedAll.toCore(),
+            consentedToAll: consentedToAll.toCore(),
+            consentedToAny: consentedToAny.toCore(),
+            hasConsentData: hasConsentData.toCore(),
+            vendorListAdditions: vendorListAdditions.toCore(),
+            legalBasisChanges: legalBasisChanges.toCore(),
+            granularStatus: granularStatus?.toCore(),
+            // swiftlint:disable:next force_unwrapping
+            rejectedVendors: rejectedVendors != nil ? rejectedVendors! as [String] : [String](),
+            // swiftlint:disable:next force_unwrapping
+            rejectedCategories: rejectedVendors != nil ? rejectedCategories! as [String] : [String]()
+        )
+    }
+}
+
+extension ConsentStatus.GranularStatus {
+    func toCore() -> SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
+        return SPMobileCore.ConsentStatus.ConsentStatusGranularStatus.init(
+            vendorConsent: vendorConsent,
+            vendorLegInt: vendorLegInt,
+            purposeConsent: purposeConsent,
+            purposeLegInt: purposeLegInt,
+            previousOptInAll: previousOptInAll.toCore(),
+            defaultConsent: defaultConsent.toCore(),
+            sellStatus: sellStatus.toCore(),
+            shareStatus: shareStatus.toCore(),
+            sensitiveDataStatus: sensitiveDataStatus.toCore(),
+            gpcStatus: gpcStatus.toCore()
+        )
+    }
+}
+
+extension SPPublisherData {
+    func toCore() -> String? {
+        return try? self.toJsonString()
     }
 }
 
