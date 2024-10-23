@@ -398,8 +398,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     accountId: Int32(accountId),
                     propertyId: Int32(propertyId),
                     consentStatus: stateCCPA.consentStatus.toCore(rejectedVendors: stateCCPA.rejectedVendors, rejectedCategories: stateCCPA.rejectedCategories),
-                    // swiftlint:disable:next force_unwrapping
-                    pubData: pubDataJson != nil ? JsonKt.encodeToJsonObject(pubDataJson!) : nil,
+                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
                     messageId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
                     sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate)
                 ),
@@ -424,8 +423,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     accountId: Int32(accountId),
                     propertyId: Int32(propertyId),
                     consentStatus: stateGDPR.consentStatus.toCore(),
-                    // swiftlint:disable:next force_unwrapping
-                    pubData: pubDataJson != nil ? JsonKt.encodeToJsonObject(pubDataJson!) : nil,
+                    pubData:JsonKt.encodeToJsonObject(pubDataJson),
                     sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
                     euconsent: stateGDPR.euconsent,
                     msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
@@ -457,9 +455,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     accountId: Int32(accountId),
                     propertyId: Int32(propertyId),
                     consentStatus: stateUsnat.consentStatus.toCore(),
-                    // swiftlint:disable:next force_unwrapping
-                    pubData: pubDataJson != nil ? JsonKt.encodeToJsonObject(pubDataJson!) : nil,
-                    // swiftlint:disable:next force_unwrapping
+                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
                     sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
                     msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
                     categoryId: messageMetaData?.categoryId.rawValue as? KotlinInt,
