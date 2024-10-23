@@ -396,14 +396,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     applies: stateCCPA.applies,
                     uuid: stateCCPA.uuid,
                     accountId: Int32(accountId),
-                    siteId: Int32(propertyId),
+                    propertyId: Int32(propertyId),
                     consentStatus: stateCCPA.consentStatus.toCore(rejectedVendors: stateCCPA.rejectedVendors, rejectedCategories: stateCCPA.rejectedCategories),
                     // swiftlint:disable:next force_unwrapping
-                    pubData: pubDataJson != nil ? JsonKt.StringToJsonObject(str: pubDataJson!) : nil,
-                    // swiftlint:disable:next force_unwrapping
-                    messageId: messageMetaData != nil ? Int(messageMetaData!.messageId) as? KotlinInt : nil,
-                    // swiftlint:disable:next force_unwrapping
-                    sampleRateval: state.ccpaMetaData?.sampleRate != nil ? KotlinFloat(value: state.ccpaMetaData!.sampleRate) : nil
+                    pubData: pubDataJson != nil ? JsonKt.encodeToJsonObject(pubDataJson!) : nil,
+                    messageId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
+                    sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate)
                 ),
                 usnat: nil
             )
@@ -424,15 +422,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     applies: stateGDPR.applies,
                     uuid: stateGDPR.uuid,
                     accountId: Int32(accountId),
-                    siteId: Int32(propertyId),
+                    propertyId: Int32(propertyId),
                     consentStatus: stateGDPR.consentStatus.toCore(),
                     // swiftlint:disable:next force_unwrapping
-                    pubData: pubDataJson != nil ? JsonKt.StringToJsonObject(str: pubDataJson!) : nil,
-                    // swiftlint:disable:next force_unwrapping
-                    sampleRate: state.gdprMetaData?.sampleRate != nil ? KotlinFloat(value: state.gdprMetaData!.sampleRate) : nil,
+                    pubData: pubDataJson != nil ? JsonKt.encodeToJsonObject(pubDataJson!) : nil,
+                    sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
                     euconsent: stateGDPR.euconsent,
-                    // swiftlint:disable:next force_unwrapping
-                    msgId: messageMetaData != nil ? Int(messageMetaData!.messageId) as? KotlinInt : nil,
+                    msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
                     categoryId: messageMetaData?.categoryId.rawValue as? KotlinInt,
                     subCategoryId: messageMetaData?.subCategoryId.rawValue as? KotlinInt,
                     prtnUUID: messageMetaData?.messagePartitionUUID
@@ -459,17 +455,16 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     applies: stateUsnat.applies,
                     uuid: stateUsnat.uuid,
                     accountId: Int32(accountId),
-                    siteId: Int32(propertyId),
+                    propertyId: Int32(propertyId),
                     consentStatus: stateUsnat.consentStatus.toCore(),
                     // swiftlint:disable:next force_unwrapping
-                    pubData: pubDataJson != nil ? JsonKt.StringToJsonObject(str: pubDataJson!) : nil,
+                    pubData: pubDataJson != nil ? JsonKt.encodeToJsonObject(pubDataJson!) : nil,
                     // swiftlint:disable:next force_unwrapping
-                    sampleRate: state.usNatMetaData?.sampleRate != nil ? KotlinFloat(value: state.usNatMetaData!.sampleRate) : nil,
-                    // swiftlint:disable:next force_unwrapping
-                    msgId: messageMetaData != nil ? Int(messageMetaData!.messageId) as? KotlinInt : nil,
+                    sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
+                    msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
                     categoryId: messageMetaData?.categoryId.rawValue as? KotlinInt,
                     subCategoryId: messageMetaData?.subCategoryId.rawValue as? KotlinInt,
-                    prtnUUIDval: messageMetaData?.messagePartitionUUID
+                    prtnUUID: messageMetaData?.messagePartitionUUID
                 )
             )
         }

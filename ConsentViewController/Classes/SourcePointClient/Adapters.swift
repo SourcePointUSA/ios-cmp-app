@@ -108,30 +108,42 @@ extension SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
     }
 }
 
-extension Bool? {
-    func toCore() -> KotlinBoolean? {
-        // swiftlint:disable:next force_unwrapping
-        return self != nil ? KotlinBoolean(value: self!) : nil
+extension KotlinBoolean {
+    public convenience init?(bool value: Bool?) {
+        guard let bool = value else { return nil }
+        self.init(bool: bool)
+    }
+}
+
+extension KotlinInt {
+    public convenience init?(int value: Int?) {
+        guard let int = value else { return nil }
+        self.init(int: int)
+    }
+}
+
+extension KotlinFloat {
+    public convenience init?(float value: Float?) {
+        guard let float = value else { return nil }
+        self.init(float: float)
     }
 }
 
 extension ConsentStatus {
     func toCore(rejectedVendors: [String]? = nil, rejectedCategories: [String]? = nil) -> SPMobileCore.ConsentStatus {
         return SPMobileCore.ConsentStatus.init(
-            rejectedAny: rejectedAny.toCore(),
-            rejectedLI: rejectedLI.toCore(),
-            rejectedAll: rejectedAll.toCore(),
-            consentedAll: consentedAll.toCore(),
-            consentedToAll: consentedToAll.toCore(),
-            consentedToAny: consentedToAny.toCore(),
-            hasConsentData: hasConsentData.toCore(),
-            vendorListAdditions: vendorListAdditions.toCore(),
-            legalBasisChanges: legalBasisChanges.toCore(),
+            rejectedAny: KotlinBoolean(bool: rejectedAny),
+            rejectedLI: KotlinBoolean(bool: rejectedLI),
+            rejectedAll: KotlinBoolean(bool: rejectedAll),
+            consentedAll: KotlinBoolean(bool: consentedAll),
+            consentedToAll: KotlinBoolean(bool: consentedToAll),
+            consentedToAny: KotlinBoolean(bool: consentedToAny),
+            hasConsentData: KotlinBoolean(bool: hasConsentData),
+            vendorListAdditions: KotlinBoolean(bool: vendorListAdditions),
+            legalBasisChanges: KotlinBoolean(bool: legalBasisChanges),
             granularStatus: granularStatus?.toCore(),
-            // swiftlint:disable:next force_unwrapping
-            rejectedVendors: rejectedVendors != nil ? rejectedVendors! as [String] : [String](),
-            // swiftlint:disable:next force_unwrapping
-            rejectedCategories: rejectedVendors != nil ? rejectedCategories! as [String] : [String]()
+            rejectedVendors: rejectedVendors,
+            rejectedCategories: rejectedCategories
         )
     }
 }
@@ -143,12 +155,12 @@ extension ConsentStatus.GranularStatus {
             vendorLegInt: vendorLegInt,
             purposeConsent: purposeConsent,
             purposeLegInt: purposeLegInt,
-            previousOptInAll: previousOptInAll.toCore(),
-            defaultConsent: defaultConsent.toCore(),
-            sellStatus: sellStatus.toCore(),
-            shareStatus: shareStatus.toCore(),
-            sensitiveDataStatus: sensitiveDataStatus.toCore(),
-            gpcStatus: gpcStatus.toCore()
+            previousOptInAll: KotlinBoolean(bool: previousOptInAll),
+            defaultConsent: KotlinBoolean(bool: defaultConsent),
+            sellStatus: KotlinBoolean(bool: sellStatus),
+            shareStatus: KotlinBoolean(bool: shareStatus),
+            sensitiveDataStatus: KotlinBoolean(bool: sensitiveDataStatus),
+            gpcStatus: KotlinBoolean(bool: gpcStatus)
         )
     }
 }
