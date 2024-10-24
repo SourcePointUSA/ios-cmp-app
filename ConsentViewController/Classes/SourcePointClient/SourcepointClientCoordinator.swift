@@ -423,12 +423,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     accountId: Int32(accountId),
                     propertyId: Int32(propertyId),
                     consentStatus: stateGDPR.consentStatus.toCore(),
-                    pubData:JsonKt.encodeToJsonObject(pubDataJson),
+                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
                     sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
                     euconsent: stateGDPR.euconsent,
                     msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
-                    categoryId: messageMetaData?.categoryId.rawValue as? KotlinInt,
-                    subCategoryId: messageMetaData?.subCategoryId.rawValue as? KotlinInt,
+                    categoryId: KotlinInt(int: messageMetaData?.categoryId.rawValue),
+                    subCategoryId: KotlinInt(int: messageMetaData?.subCategoryId.rawValue),
                     prtnUUID: messageMetaData?.messagePartitionUUID
                 ),
                 ccpa: nil,
@@ -458,8 +458,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                     pubData: JsonKt.encodeToJsonObject(pubDataJson),
                     sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
                     msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
-                    categoryId: messageMetaData?.categoryId.rawValue as? KotlinInt,
-                    subCategoryId: messageMetaData?.subCategoryId.rawValue as? KotlinInt,
+                    categoryId: KotlinInt(int: messageMetaData?.categoryId.rawValue),
+                    subCategoryId: KotlinInt(int: messageMetaData?.subCategoryId.rawValue),
                     prtnUUID: messageMetaData?.messagePartitionUUID
                 )
             )

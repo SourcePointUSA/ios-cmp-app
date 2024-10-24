@@ -118,7 +118,7 @@ extension KotlinBoolean {
 extension KotlinInt {
     public convenience init?(int value: Int?) {
         guard let int = value else { return nil }
-        self.init(int: int)
+        self.init(int: Int32(int))
     }
 }
 
