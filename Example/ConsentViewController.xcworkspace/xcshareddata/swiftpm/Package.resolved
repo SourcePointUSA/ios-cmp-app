@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "down",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnxnguyen/Down",
+      "state" : {
+        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+        "version" : "0.11.0"
+      }
+    },
+    {
+      "identity" : "ios-cmp-app",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SourcePointUSA/ios-cmp-app",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "03dac9df288b9ff66ca9505deb38ba6f9779b7ac"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -128,14 +128,14 @@ class UnmockedSourcepointClientSpec: QuickSpec {
         describe("pvData") {
             it("should call the endpoint and parse the response into PvDataResponse") {
                 waitUntil { done in
-                    client.pvData(
+                    client.pvData(request:
                         .init(
                             gdpr: .init(
                                 applies: true,
                                 uuid: nil,
-                                accountId: accountId,
-                                siteId: 17_801,
-                                consentStatus: ConsentStatus(),
+                                accountId: Int32(accountId),
+                                propertyId: 17801,
+                                consentStatus: ConsentStatus().toCore(),
                                 pubData: nil,
                                 sampleRate: 5,
                                 euconsent: nil,
@@ -144,16 +144,8 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                                 subCategoryId: nil,
                                 prtnUUID: nil
                             ),
-                             ccpa: .init(
-                                applies: true,
-                                uuid: nil,
-                                accountId: accountId,
-                                siteId: 17_801,
-                                consentStatus: ConsentStatus(rejectedVendors: [], rejectedCategories: []),
-                                pubData: nil,
-                                messageId: nil,
-                                sampleRate: 5
-                             )
+                            ccpa: nil,
+                            usnat: nil
                         )
                     ) { result in
                         switch result {

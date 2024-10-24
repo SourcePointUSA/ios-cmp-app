@@ -91,7 +91,7 @@ extension [String: Kotlinx_serialization_jsonJsonPrimitive] {
 
 extension SPMobileCore.GDPRConsent {
     func toNativeAsAddOrDeleteCustomConsentResponse() -> AddOrDeleteCustomConsentResponse {
-        .init(grants: grants.mapValues{ $0.toNative() })
+        .init(grants: grants.mapValues { $0.toNative() })
     }
 }
 
@@ -105,6 +105,69 @@ extension SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
             previousOptInAll: previousOptInAll?.boolValue,
             defaultConsent: defaultConsent?.boolValue
         )
+    }
+}
+
+extension KotlinBoolean {
+    public convenience init?(bool value: Bool?) {
+        guard let bool = value else { return nil }
+        self.init(bool: bool)
+    }
+}
+
+extension KotlinInt {
+    public convenience init?(int value: Int?) {
+        guard let int = value else { return nil }
+        self.init(int: Int32(int))
+    }
+}
+
+extension KotlinFloat {
+    public convenience init?(float value: Float?) {
+        guard let float = value else { return nil }
+        self.init(float: float)
+    }
+}
+
+extension ConsentStatus {
+    func toCore(rejectedVendors: [String]? = nil, rejectedCategories: [String]? = nil) -> SPMobileCore.ConsentStatus {
+        return SPMobileCore.ConsentStatus.init(
+            rejectedAny: KotlinBoolean(bool: rejectedAny),
+            rejectedLI: KotlinBoolean(bool: rejectedLI),
+            rejectedAll: KotlinBoolean(bool: rejectedAll),
+            consentedAll: KotlinBoolean(bool: consentedAll),
+            consentedToAll: KotlinBoolean(bool: consentedToAll),
+            consentedToAny: KotlinBoolean(bool: consentedToAny),
+            hasConsentData: KotlinBoolean(bool: hasConsentData),
+            vendorListAdditions: KotlinBoolean(bool: vendorListAdditions),
+            legalBasisChanges: KotlinBoolean(bool: legalBasisChanges),
+            granularStatus: granularStatus?.toCore(),
+            rejectedVendors: rejectedVendors,
+            rejectedCategories: rejectedCategories
+        )
+    }
+}
+
+extension ConsentStatus.GranularStatus {
+    func toCore() -> SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
+        return SPMobileCore.ConsentStatus.ConsentStatusGranularStatus.init(
+            vendorConsent: vendorConsent,
+            vendorLegInt: vendorLegInt,
+            purposeConsent: purposeConsent,
+            purposeLegInt: purposeLegInt,
+            previousOptInAll: KotlinBoolean(bool: previousOptInAll),
+            defaultConsent: KotlinBoolean(bool: defaultConsent),
+            sellStatus: KotlinBoolean(bool: sellStatus),
+            shareStatus: KotlinBoolean(bool: shareStatus),
+            sensitiveDataStatus: KotlinBoolean(bool: sensitiveDataStatus),
+            gpcStatus: KotlinBoolean(bool: gpcStatus)
+        )
+    }
+}
+
+extension SPPublisherData {
+    func toCore() -> String? {
+        return try? self.toJsonString()
     }
 }
 

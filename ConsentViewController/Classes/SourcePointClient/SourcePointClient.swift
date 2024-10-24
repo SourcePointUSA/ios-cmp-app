@@ -47,7 +47,7 @@ typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPErro
 typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<SPMobileCore.ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
-typealias PvDataHandler = (Result<PvDataResponse, SPError>) -> Void
+typealias PvDataHandler = (Result<SPMobileCore.PvDataResponse, SPError>) -> Void
 typealias MetaDataHandler = (Result<SPMobileCore.MetaDataResponse, SPError>) -> Void
 typealias ChoiceHandler = (Result<ChoiceAllResponse, SPError>) -> Void
 
@@ -149,7 +149,7 @@ protocol SourcePointProtocol {
         handler: @escaping ConsentStatusHandler
     )
 
-    func pvData(_ body: PvDataRequestBody, handler: @escaping PvDataHandler)
+    func pvData(request: SPMobileCore.PvDataRequest, handler: @escaping PvDataHandler)
 
     func metaData(
         accountId: Int,
@@ -458,10 +458,12 @@ extension SourcePointClient {
         }
     }
 
-    func pvData(_ body: PvDataRequestBody, handler: @escaping PvDataHandler) {
-        _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: Constants.Urls.PV_DATA_URL.absoluteString, body: body, apiCode: .PV_DATA) {
-                Self.parseResponse($0, InvalidPvDataResponseError(), handler)
+    func pvData(request: SPMobileCore.PvDataRequest, handler: @escaping PvDataHandler) {
+        coreClient.postPvData(request: request) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidPvDataResponseError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
             }
         }
     }

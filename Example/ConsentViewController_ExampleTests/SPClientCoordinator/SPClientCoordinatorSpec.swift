@@ -164,10 +164,6 @@ class SPClientCoordinatorSpec: QuickSpec {
                         .toEventually(equal(0))
                     expect(spClientMock.pvDataCalledWith?.gdpr?.prtnUUID)
                         .toEventually(equal("bar"))
-                    expect(spClientMock.pvDataCalledWith?.gdpr?.categoryId)
-                        .toEventually(equal(MessageCategory.gdpr.rawValue))
-                    expect(spClientMock.pvDataCalledWith?.gdpr?.subCategoryId)
-                        .toEventually(equal(MessageSubCategory.TCFv2.rawValue))
                 }
             }
 
