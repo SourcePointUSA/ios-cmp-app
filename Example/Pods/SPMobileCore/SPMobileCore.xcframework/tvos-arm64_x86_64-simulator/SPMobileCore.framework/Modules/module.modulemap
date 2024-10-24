@@ -1,6 +1,5 @@
-framework module SPMobileCore {
+framework module "SPMobileCore" {
     umbrella header "SPMobileCore.h"
-
     export *
     module * { export * }
 }
