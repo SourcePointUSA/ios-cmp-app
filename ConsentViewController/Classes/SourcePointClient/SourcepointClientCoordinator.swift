@@ -386,73 +386,85 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         from state: State,
         pubData: SPPublisherData?,
         messageMetaData: MessageMetaData?
-    ) -> PvDataRequestBody {
-        var ccpa: PvDataRequestBody.CCPA?
+    ) -> SPMobileCore.PvDataRequest {
+        var request: SPMobileCore.PvDataRequest?
         if let stateCCPA = state.ccpa {
-            ccpa = .init(
-                applies: stateCCPA.applies,
-                uuid: stateCCPA.uuid,
-                accountId: accountId,
-                siteId: propertyId,
-                consentStatus: stateCCPA.consentStatus,
-                pubData: pubData,
-                // swiftlint:disable:next force_unwrapping
-                messageId: messageMetaData != nil ? Int(messageMetaData!.messageId) : nil,
-                sampleRate: state.ccpaMetaData?.sampleRate
+            let pubDataJson = pubData?.toCore()
+            request = SPMobileCore.PvDataRequest.init(
+                gdpr: nil,
+                ccpa: SPMobileCore.PvDataRequest.CCPA.init(
+                    applies: stateCCPA.applies,
+                    uuid: stateCCPA.uuid,
+                    accountId: Int32(accountId),
+                    propertyId: Int32(propertyId),
+                    consentStatus: stateCCPA.consentStatus.toCore(rejectedVendors: stateCCPA.rejectedVendors, rejectedCategories: stateCCPA.rejectedCategories),
+                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
+                    messageId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
+                    sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate)
+                ),
+                usnat: nil
             )
         }
-        return .init(ccpa: ccpa)
+        return request ?? SPMobileCore.PvDataRequest(gdpr: nil, ccpa: nil, usnat: nil)
     }
 
     func gdprPvDataBody(
         from state: State,
         pubData: SPPublisherData?,
         messageMetaData: MessageMetaData?
-    ) -> PvDataRequestBody {
-        var gdpr: PvDataRequestBody.GDPR?
+    ) -> SPMobileCore.PvDataRequest {
+        var request: SPMobileCore.PvDataRequest?
         if let stateGDPR = state.gdpr {
-            gdpr = PvDataRequestBody.GDPR(
-                applies: stateGDPR.applies,
-                uuid: stateGDPR.uuid,
-                accountId: accountId,
-                siteId: propertyId,
-                consentStatus: stateGDPR.consentStatus,
-                pubData: pubData,
-                sampleRate: state.gdprMetaData?.sampleRate,
-                euconsent: stateGDPR.euconsent,
-                // swiftlint:disable:next force_unwrapping
-                msgId: messageMetaData != nil ? Int(messageMetaData!.messageId) : nil,
-                categoryId: messageMetaData?.categoryId.rawValue,
-                subCategoryId: messageMetaData?.subCategoryId.rawValue,
-                prtnUUID: messageMetaData?.messagePartitionUUID
+            let pubDataJson = pubData?.toCore()
+            request = SPMobileCore.PvDataRequest.init(
+                gdpr: SPMobileCore.PvDataRequest.GDPR.init(
+                    applies: stateGDPR.applies,
+                    uuid: stateGDPR.uuid,
+                    accountId: Int32(accountId),
+                    propertyId: Int32(propertyId),
+                    consentStatus: stateGDPR.consentStatus.toCore(),
+                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
+                    sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
+                    euconsent: stateGDPR.euconsent,
+                    msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
+                    categoryId: KotlinInt(int: messageMetaData?.categoryId.rawValue),
+                    subCategoryId: KotlinInt(int: messageMetaData?.subCategoryId.rawValue),
+                    prtnUUID: messageMetaData?.messagePartitionUUID
+                ),
+                ccpa: nil,
+                usnat: nil
             )
         }
-        return .init(gdpr: gdpr)
+        return request ?? SPMobileCore.PvDataRequest(gdpr: nil, ccpa: nil, usnat: nil)
     }
 
     func usnatPvDataBody(
         from state: State,
         pubData: SPPublisherData?,
         messageMetaData: MessageMetaData?
-    ) -> PvDataRequestBody {
-        var usnat: PvDataRequestBody.USNat?
+    ) -> SPMobileCore.PvDataRequest {
+        var request: SPMobileCore.PvDataRequest?
         if let stateUsnat = state.usnat {
-            usnat = PvDataRequestBody.USNat(
-                applies: stateUsnat.applies,
-                uuid: stateUsnat.uuid,
-                accountId: accountId,
-                siteId: propertyId,
-                consentStatus: stateUsnat.consentStatus,
-                pubData: pubData,
-                sampleRate: state.usNatMetaData?.sampleRate,
-                // swiftlint:disable:next force_unwrapping
-                msgId: messageMetaData != nil ? Int(messageMetaData!.messageId) : nil,
-                categoryId: messageMetaData?.categoryId.rawValue,
-                subCategoryId: messageMetaData?.subCategoryId.rawValue,
-                prtnUUID: messageMetaData?.messagePartitionUUID
+            let pubDataJson = pubData?.toCore()
+            request = SPMobileCore.PvDataRequest.init(
+                gdpr: nil,
+                ccpa: nil,
+                usnat: SPMobileCore.PvDataRequest.USNat.init(
+                    applies: stateUsnat.applies,
+                    uuid: stateUsnat.uuid,
+                    accountId: Int32(accountId),
+                    propertyId: Int32(propertyId),
+                    consentStatus: stateUsnat.consentStatus.toCore(),
+                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
+                    sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
+                    msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
+                    categoryId: KotlinInt(int: messageMetaData?.categoryId.rawValue),
+                    subCategoryId: KotlinInt(int: messageMetaData?.subCategoryId.rawValue),
+                    prtnUUID: messageMetaData?.messagePartitionUUID
+                )
             )
         }
-        return .init(usnat: usnat)
+        return request ?? SPMobileCore.PvDataRequest(gdpr: nil, ccpa: nil, usnat: nil)
     }
 
     /// Resets state if the authId has changed, except if the stored auth id was empty.
@@ -704,7 +716,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         1...Int(rate * 100) ~= Int.random(in: 1...100)
     }
 
-    func handlePvDataResponse(_ response: Result<PvDataResponse, SPError>) {
+    func handlePvDataResponse(_ response: Result<SPMobileCore.PvDataResponse, SPError>) {
         switch response {
             case .success(let pvDataData):
                 if let gdpr = pvDataData.gdpr {
@@ -723,10 +735,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     /// If campaign is not `nil`, sample it and call pvData in case the sampling was a hit.
     /// Returns `true` if it hit or `false` otherwise
-    func sampleAndPvData(_ campaign: SPSampleable, body: PvDataRequestBody, handler: @escaping () -> Void) -> Bool {
+    func sampleAndPvData(_ campaign: SPSampleable, request: SPMobileCore.PvDataRequest, handler: @escaping () -> Void) -> Bool {
         if campaign.wasSampled == nil {
             if sample(at: campaign.sampleRate) {
-                spClient.pvData(body) {
+                spClient.pvData(request: request) {
                     self.handlePvDataResponse($0)
                     handler()
                 }
@@ -736,7 +748,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 return false
             }
         } else if campaign.wasSampled == true {
-            spClient.pvData(body) {
+            spClient.pvData(request: request) {
                 self.handlePvDataResponse($0)
                 handler()
             }
@@ -753,7 +765,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(
                 gdprMetadata,
-                body: gdprPvDataBody(
+                request: gdprPvDataBody(
                     from: state,
                     pubData: pubData,
                     messageMetaData: messages.first { $0.type == .gdpr }?.metadata
@@ -767,7 +779,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(
                 ccpaMetadata,
-                body: ccpaPvDataBody(
+                request: ccpaPvDataBody(
                     from: state,
                     pubData: pubData,
                     messageMetaData: messages.first { $0.type == .ccpa }?.metadata
@@ -781,7 +793,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             pvDataGroup.enter()
             let sampled = sampleAndPvData(
                 usNatMetadata,
-                body: usnatPvDataBody(
+                request: usnatPvDataBody(
                     from: state,
                     pubData: pubData,
                     messageMetaData: messages.first { $0.type == .usnat }?.metadata

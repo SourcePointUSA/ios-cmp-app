@@ -29,7 +29,7 @@ class SourcePointClientMock: SourcePointProtocol {
         customConsentCalled = false, consentStatusCalled = false,
         pvDataCalled = false, getMessagesCalled = false
     var consentStatusCalledWith, customConsentWasCalledWith, errorMetricsCalledWith, postGDPRActionCalledWith, postCCPAActionCalledWith, postUSNatActionCalledWith: [String: Any?]?
-    var pvDataCalledWith: PvDataRequestBody?
+    var pvDataCalledWith: PvDataRequest?
 
     var metadataResponse = SPMobileCore.MetaDataResponse(gdpr: nil, usnat: nil, ccpa: nil)
     var messagesResponse = MessagesResponse(
@@ -194,9 +194,9 @@ class SourcePointClientMock: SourcePointProtocol {
         }
     }
 
-    func pvData(_ pvDataRequestBody: PvDataRequestBody, handler: @escaping PvDataHandler) {
+    func pvData(request: PvDataRequest, handler: @escaping ConsentViewController.PvDataHandler) {
         pvDataCalled = true
-        pvDataCalledWith = pvDataRequestBody
+        pvDataCalledWith = request
         if let error = error {
             handler(.failure(error))
         } else {

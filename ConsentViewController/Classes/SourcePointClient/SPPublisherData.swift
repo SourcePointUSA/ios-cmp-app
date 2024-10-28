@@ -18,6 +18,11 @@ extension Encodable {
     fileprivate func encode(to container: inout SingleValueEncodingContainer) throws {
         try container.encode(self)
     }
+
+    func toJsonString(_ encoder: JSONEncoder = JSONEncoder()) throws -> String {
+        let data = try encoder.encode(self)
+        return String(decoding: data, as: UTF8.self)
+    }
 }
 
 @objcMembers public class AnyEncodable: NSObject, Encodable {
