@@ -810,32 +810,32 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
+    func handleGetChoices(_ response: SPMobileCore.ChoiceAllResponse, from campaign: SPCampaignType) {
         if let gdpr = response.gdpr, campaign == .gdpr {
-            state.gdpr?.dateCreated = gdpr.dateCreated
-            state.gdpr?.expirationDate = gdpr.expirationDate
-            state.gdpr?.tcfData = gdpr.TCData
-            state.gdpr?.vendorGrants = gdpr.grants
+            state.gdpr?.dateCreated = SPDate(string: gdpr.dateCreated ?? "")
+            state.gdpr?.expirationDate = SPDate(string: gdpr.expirationDate ?? "")
+            state.gdpr?.tcfData = gdpr.tcData?.toNative()
+            state.gdpr?.vendorGrants = gdpr.grants.mapValues { $0.toNative() }
             state.gdpr?.euconsent = gdpr.euconsent
-            state.gdpr?.consentStatus = gdpr.consentStatus
+            state.gdpr?.consentStatus = gdpr.consentStatus.toNative()
             state.gdpr?.childPmId = gdpr.childPmId
-            state.gdpr?.googleConsentMode = gdpr.gcmStatus
+            state.gdpr?.googleConsentMode = gdpr.gcmStatus?.toNative()
         }
         if let ccpa = response.ccpa, campaign == .ccpa {
-            state.ccpa?.dateCreated = ccpa.dateCreated
-            state.ccpa?.expirationDate = ccpa.expirationDate
-            state.ccpa?.status = ccpa.status
-            state.ccpa?.GPPData = ccpa.GPPData
+            state.ccpa?.dateCreated = SPDate(string: ccpa.dateCreated ?? "")
+            state.ccpa?.expirationDate = SPDate(string: ccpa.expirationDate ?? "")
+            state.ccpa?.status = ccpa.status.toNative()
+            state.ccpa?.GPPData = ccpa.gppData.toNative() ?? SPJson()
         }
         if let usnat = response.usnat, campaign == .usnat {
-            state.usnat?.dateCreated = usnat.dateCreated
-            state.usnat?.expirationDate = usnat.expirationDate
-            state.usnat?.consentStatus = usnat.consentStatus
-            state.usnat?.GPPData = usnat.GPPData
-            state.usnat?.consentStrings = usnat.consentStrings
+            state.usnat?.dateCreated = SPDate(string: usnat.dateCreated ?? "")
+            state.usnat?.expirationDate = SPDate(string: usnat.expirationDate ?? "")
+            state.usnat?.consentStatus = usnat.consentStatus.toNative()
+            state.usnat?.GPPData = usnat.gppData.toNative()
+            state.usnat?.consentStrings = usnat.consentStrings.map { $0.toNative() }
             state.usnat?.consentStatus.consentedToAll = usnat.consentedToAll
             state.usnat?.consentStatus.rejectedAny = usnat.rejectedAny
-            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnat.gpcEnabled
+            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnat.gpcEnabled?.boolValue
         }
         storage.spState = state
     }
@@ -844,19 +844,19 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         (action.type == .AcceptAll || action.type == .RejectAll)
     }
 
-    func getChoiceAll(_ action: SPAction, handler: @escaping (Result<ChoiceAllResponse?, SPError>) -> Void) {
+    func getChoiceAll(_ action: SPAction, handler: @escaping (Result<SPMobileCore.ChoiceAllResponse?, SPError>) -> Void) {
         if shouldCallGetChoice(for: action) {
             spClient.choiceAll(
-                actionType: action.type,
+                actionType: action.type.toCore(),
                 accountId: accountId,
                 propertyId: propertyId,
-                idfaStatus: SPIDFAStatus.current(),
+                idfaStatus: SPIDFAStatus.current().toCore(),
                 metadata: .init(
                     gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
                     ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
                     usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
                 ),
-                includeData: includeData
+                includeData: includeData.toCore()
             ) { result in
                 switch result {
                     case .success(let response):

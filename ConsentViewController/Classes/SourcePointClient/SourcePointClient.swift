@@ -49,7 +49,7 @@ typealias ConsentStatusHandler = (Result<SPMobileCore.ConsentStatusResponse, SPE
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<SPMobileCore.PvDataResponse, SPError>) -> Void
 typealias MetaDataHandler = (Result<SPMobileCore.MetaDataResponse, SPError>) -> Void
-typealias ChoiceHandler = (Result<ChoiceAllResponse, SPError>) -> Void
+typealias ChoiceHandler = (Result<SPMobileCore.ChoiceAllResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(
@@ -159,12 +159,12 @@ protocol SourcePointProtocol {
     )
 
     func choiceAll(
-        actionType: SPActionType,
+        actionType: SPMobileCore.SPActionType,
         accountId: Int,
         propertyId: Int,
-        idfaStatus: SPIDFAStatus,
-        metadata: ChoiceAllMetaDataParam,
-        includeData: IncludeData,
+        idfaStatus: SPMobileCore.SPIDFAStatus,
+        metadata: ChoiceAllMetaDataRequest,
+        includeData: SPMobileCore.IncludeData,
         handler: @escaping ChoiceHandler
     )
 
@@ -468,57 +468,16 @@ extension SourcePointClient {
         }
     }
 
-    func choiceAllUrlWithParams(
-        actionType: SPActionType,
-        accountId: Int,
-        hasCsp: Bool,
-        propertyId: Int,
-        withSiteActions: Bool,
-        includeCustomVendorsRes: Bool,
-        includeData: IncludeData,
-        idfaStatus: String,
-        metadata: ChoiceAllMetaDataParam
-    ) -> URL? {
-        var baseUrl: URL
-        if actionType == .AcceptAll {
-            baseUrl = Constants.Urls.CHOICE_CONSENT_ALL_URL
-        } else if actionType == .RejectAll {
-            baseUrl = Constants.Urls.CHOICE_REJECT_ALL_URL
-        } else {
-            return nil
-        }
-        return baseUrl.appendQueryItems([
-            "accountId": String(accountId),
-            "hasCsp": String(hasCsp),
-            "propertyId": String(propertyId),
-            "withSiteActions": String(withSiteActions),
-            "includeCustomVendorsRes": String(includeCustomVendorsRes),
-            "idfaStatus": idfaStatus,
-            "metadata": metadata.stringified(),
-            "includeData": includeData.string
-        ])
-    }
-
     func choiceAll(
-        actionType: SPActionType,
+        actionType: SPMobileCore.SPActionType,
         accountId: Int,
         propertyId: Int,
-        idfaStatus: SPIDFAStatus,
-        metadata: ChoiceAllMetaDataParam,
-        includeData: IncludeData,
+        idfaStatus: SPMobileCore.SPIDFAStatus,
+        metadata: ChoiceAllMetaDataRequest,
+        includeData: SPMobileCore.IncludeData,
         handler: @escaping ChoiceHandler
     ) {
-        guard let url = choiceAllUrlWithParams(
-            actionType: actionType,
-            accountId: accountId,
-            hasCsp: true,
-            propertyId: propertyId,
-            withSiteActions: false,
-            includeCustomVendorsRes: false,
-            includeData: includeData,
-            idfaStatus: idfaStatus.description,
-            metadata: metadata
-        ) else {
+        if actionType != SPMobileCore.SPActionType.acceptall && actionType != SPMobileCore.SPActionType.rejectall {
             handler(Result.failure(InvalidChoiceAllParamsError()))
             return
         }
