@@ -40,9 +40,9 @@ typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPErro
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias MessageHandler = (Result<Message, SPError>) -> Void
-typealias USNatConsentHandler = (Result<SPUSNatConsent, SPError>) -> Void
 typealias CCPAConsentHandler = (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
 typealias GDPRConsentHandler = (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
+typealias USNatConsentHandler = (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<SPMobileCore.ConsentStatusResponse, SPError>) -> Void
@@ -96,7 +96,7 @@ protocol SourcePointProtocol {
 
     func postUSNatAction(
         actionType: SPActionType,
-        body: USNatChoiceBody,
+        request: SPMobileCore.USNatChoiceRequest,
         handler: @escaping USNatConsentHandler
     )
 
@@ -329,16 +329,15 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postUSNatAction(actionType: SPActionType, body: USNatChoiceBody, handler: @escaping USNatConsentHandler) {
-        _ = JSONEncoder().encodeResult(body).map { encodedBody in
-            client.post(
-                urlString: consentUrl(
-                    Constants.Urls.CHOICE_USNAT_BASE_URL, actionType
-                ).absoluteString,
-                body: encodedBody,
-                apiCode: .USNAT_ACTION
-            ) {
-                Self.parseResponse($0, InvalidResponseConsentError(), handler)
+    func postUSNatAction(actionType: SPActionType, request: SPMobileCore.USNatChoiceRequest, handler: @escaping USNatConsentHandler) {
+        coreClient.postChoiceUSNatAction(
+            actionType: actionType.toCore(),
+            request: request
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidResponseConsentError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
             }
         }
     }

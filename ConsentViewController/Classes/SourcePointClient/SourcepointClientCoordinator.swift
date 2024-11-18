@@ -919,23 +919,23 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func postChoice(
         _ action: SPAction,
-        handler: @escaping (Result<SPUSNatConsent, SPError>) -> Void
+        handler: @escaping (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
     ) {
         spClient.postUSNatAction(
             actionType: action.type,
-            body: .init(
+            request: USNatChoiceRequest(
                 authId: authId,
                 uuid: state.usnat?.uuid,
                 messageId: action.messageId,
                 vendorListId: state.usNatMetaData?.vendorListId,
-                pubData: action.encodablePubData,
-                pmSaveAndExitVariables: action.pmPayload,
+                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
+                pmSaveAndExitVariables: action.pmPayload.toCore(),
                 sendPVData: state.usNatMetaData?.wasSampled ?? false,
-                propertyId: propertyId,
-                sampleRate: state.usNatMetaData?.sampleRate,
-                idfaStatus: idfaStatus,
-                granularStatus: state.usnat?.consentStatus.granularStatus,
-                includeData: includeData
+                propertyId: Int32(propertyId),
+                sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
+                idfaStatus: idfaStatus.toCore(),
+                granularStatus: state.usnat?.consentStatus.granularStatus?.toCore(),
+                includeData: includeData.toCore()
             ),
             handler: handler
         )
@@ -1012,26 +1012,26 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleUSNatPostChoice(
         _ action: SPAction,
-        _ getResponse: ChoiceAllResponse?,
-        _ postResponse: SPUSNatConsent
+        _ getResponse: SPMobileCore.ChoiceAllResponse?,
+        _ postResponse: SPMobileCore.USNatChoiceResponse
     ) {
         state.usnat = SPUSNatConsent(
             uuid: postResponse.uuid,
             applies: state.usnat?.applies ?? false,
-            dateCreated: postResponse.dateCreated,
-            expirationDate: postResponse.expirationDate,
-            consentStrings: postResponse.consentStrings,
+            dateCreated: SPDate(string: postResponse.dateCreated ?? ""),
+            expirationDate: SPDate(string: postResponse.expirationDate ?? ""),
+            consentStrings: postResponse.consentStrings.map { $0.toNative() },
             webConsentPayload: postResponse.webConsentPayload ?? getResponse?.usnat?.webConsentPayload,
-            categories: postResponse.categories,
-            vendors: postResponse.vendors,
-            consentStatus: postResponse.consentStatus,
-            GPPData: postResponse.GPPData ?? getResponse?.usnat?.GPPData
+            categories: postResponse.userConsents.categories.map { $0.toNative() },
+            vendors: postResponse.userConsents.vendors.map { $0.toNative() },
+            consentStatus: postResponse.consentStatus.toNative(),
+            GPPData: postResponse.gppData.toNative() ?? getResponse?.usnat?.gppData.toNative()
         )
 
         storage.spState = state
     }
 
-    func reportUSNatAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+    func reportUSNatAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         self.postChoice(action) { postResult in
             switch postResult {
                 case .success(let response):
