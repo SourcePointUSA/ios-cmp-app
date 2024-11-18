@@ -874,25 +874,25 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func postChoice(
         _ action: SPAction,
-        postPayloadFromGetCall: ChoiceAllResponse.GDPR.PostPayload?,
-        handler: @escaping (Result<GDPRChoiceResponse, SPError>) -> Void
+        postPayloadFromGetCall: SPMobileCore.ChoiceAllResponse.GDPRPostPayload?,
+        handler: @escaping (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
     ) {
         spClient.postGDPRAction(
             actionType: action.type,
-            body: GDPRChoiceBody(
+            request: GDPRChoiceRequest(
                 authId: authId,
                 uuid: state.gdpr?.uuid,
                 messageId: action.messageId,
                 consentAllRef: postPayloadFromGetCall?.consentAllRef,
                 vendorListId: postPayloadFromGetCall?.vendorListId,
-                pubData: action.encodablePubData,
-                pmSaveAndExitVariables: action.pmPayload,
+                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
+                pmSaveAndExitVariables: action.pmPayload.toCore(),
                 sendPVData: state.gdprMetaData?.wasSampled ?? false,
-                propertyId: propertyId,
-                sampleRate: state.gdprMetaData?.sampleRate,
-                idfaStatus: idfaStatus,
+                propertyId: Int32(propertyId),
+                sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
+                idfaStatus: idfaStatus.toCore(),
                 granularStatus: postPayloadFromGetCall?.granularStatus,
-                includeData: includeData
+                includeData: includeData.toCore()
             )
         ) { handler($0) }
     }
@@ -943,20 +943,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleGPDRPostChoice(
         _ action: SPAction,
-        _ getResponse: ChoiceAllResponse?,
-        _ postResponse: GDPRChoiceResponse
+        _ getResponse: SPMobileCore.ChoiceAllResponse?,
+        _ postResponse: SPMobileCore.GDPRChoiceResponse
     ) {
         if action.type == .SaveAndExit {
-            state.gdpr?.tcfData = postResponse.TCData
+            state.gdpr?.tcfData = postResponse.tcData?.toNative()
         }
         state.gdpr?.uuid = postResponse.uuid
-        state.gdpr?.dateCreated = postResponse.dateCreated
-        state.gdpr?.expirationDate = postResponse.expirationDate
-        state.gdpr?.consentStatus = postResponse.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
+        state.gdpr?.dateCreated = SPDate(string: postResponse.dateCreated ?? "")
+        state.gdpr?.expirationDate = SPDate(string: postResponse.expirationDate ?? "")
+        state.gdpr?.consentStatus = postResponse.consentStatus?.toNative() ?? getResponse?.gdpr?.consentStatus.toNative() ?? ConsentStatus()
         state.gdpr?.euconsent = postResponse.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
-        state.gdpr?.vendorGrants = postResponse.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
+        state.gdpr?.vendorGrants = postResponse.grants?.mapValues { $0.toNative() } ?? getResponse?.gdpr?.grants.mapValues { $0.toNative() } ?? SPGDPRVendorGrants()
         state.gdpr?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
-        state.gdpr?.googleConsentMode = postResponse.gcmStatus ?? getResponse?.gdpr?.gcmStatus
+        state.gdpr?.googleConsentMode = postResponse.gcmStatus?.toNative() ?? getResponse?.gdpr?.gcmStatus?.toNative()
         state.gdpr?.acceptedLegIntCategories = postResponse.acceptedLegIntCategories ?? getResponse?.gdpr?.acceptedLegIntCategories ?? []
         state.gdpr?.acceptedLegIntVendors = postResponse.acceptedLegIntVendors ?? getResponse?.gdpr?.acceptedLegIntVendors ?? []
         state.gdpr?.acceptedVendors = postResponse.acceptedVendors ?? getResponse?.gdpr?.acceptedVendors ?? []
@@ -965,7 +965,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func reportGDPRAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+    func reportGDPRAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
             switch postResult {
                 case .success(let response):

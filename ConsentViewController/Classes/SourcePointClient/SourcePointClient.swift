@@ -41,8 +41,8 @@ typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias MessageHandler = (Result<Message, SPError>) -> Void
 typealias CCPAConsentHandler = (Result<CCPAChoiceResponse, SPError>) -> Void
-typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
 typealias USNatConsentHandler = (Result<SPUSNatConsent, SPError>) -> Void
+typealias GDPRConsentHandler = (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<SPMobileCore.ConsentStatusResponse, SPError>) -> Void
@@ -102,7 +102,7 @@ protocol SourcePointProtocol {
 
     func postGDPRAction(
         actionType: SPActionType,
-        body: GDPRChoiceBody,
+        request: SPMobileCore.GDPRChoiceRequest,
         handler: @escaping GDPRConsentHandler
     )
 
@@ -311,10 +311,15 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
-    func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
-        _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body, apiCode: .GDPR_ACTION) {
-                Self.parseResponse($0, InvalidResponseConsentError(), handler)
+    func postGDPRAction(actionType: SPActionType, request: SPMobileCore.GDPRChoiceRequest, handler: @escaping GDPRConsentHandler) {
+        coreClient.postChoiceGDPRAction(
+            actionType: actionType.toCore(), 
+            request: request
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidResponseConsentError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
             }
         }
     }
@@ -481,9 +486,19 @@ extension SourcePointClient {
             handler(Result.failure(InvalidChoiceAllParamsError()))
             return
         }
-
-        client.get(urlString: url.absoluteString, apiCode: .CHOICE_ALL) {
-            Self.parseResponse($0, InvalidChoiceAllResponseError(), handler)
+        coreClient.getChoiceAll(
+            actionType: actionType,
+            accountId: Int32(accountId),
+            propertyId: Int32(propertyId),
+            idfaStatus: idfaStatus,
+            metadata: metadata,
+            includeData: includeData
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidChoiceAllResponseError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
+            }
         }
     }
 }
