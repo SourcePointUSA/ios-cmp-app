@@ -899,20 +899,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func postChoice(
         _ action: SPAction,
-        handler: @escaping (Result<CCPAChoiceResponse, SPError>) -> Void
+        handler: @escaping (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
     ) {
         spClient.postCCPAAction(
             actionType: action.type,
-            body: .init(
+            request: CCPAChoiceRequest(
                 authId: authId,
                 uuid: state.ccpa?.uuid,
                 messageId: action.messageId,
-                pubData: action.encodablePubData,
-                pmSaveAndExitVariables: action.pmPayload,
+                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
+                pmSaveAndExitVariables: action.pmPayload.toCore(),
                 sendPVData: state.ccpaMetaData?.wasSampled ?? false,
-                propertyId: propertyId,
-                sampleRate: state.ccpaMetaData?.sampleRate,
-                includeData: includeData
+                propertyId: Int32(propertyId),
+                sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate),
+                includeData: includeData.toCore()
             )
         ) { handler($0) }
     }
@@ -981,22 +981,22 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleCCPAPostChoice(
         _ action: SPAction,
-        _ getResponse: ChoiceAllResponse?,
-        _ postResponse: CCPAChoiceResponse
+        _ getResponse: SPMobileCore.ChoiceAllResponse?,
+        _ postResponse: SPMobileCore.CCPAChoiceResponse
     ) {
         if action.type == .SaveAndExit {
-            state.ccpa?.GPPData = postResponse.GPPData
+            state.ccpa?.GPPData = postResponse.gppData.toNative() ?? SPJson()
         }
         state.ccpa?.uuid = postResponse.uuid
-        state.ccpa?.dateCreated = postResponse.dateCreated
-        state.ccpa?.status = postResponse.status ?? getResponse?.ccpa?.status ?? .RejectedAll
+        state.ccpa?.dateCreated = SPDate(string: postResponse.dateCreated ?? "")
+        state.ccpa?.status = postResponse.status?.toNative() ?? getResponse?.ccpa?.status.toNative() ?? .RejectedAll
         state.ccpa?.rejectedVendors = postResponse.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
         state.ccpa?.rejectedCategories = postResponse.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
         state.ccpa?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.ccpa?.webConsentPayload
         storage.spState = state
     }
 
-    func reportCCPAAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+    func reportCCPAAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         self.postChoice(action) { postResult in
             switch postResult {
                 case .success(let response):

@@ -40,8 +40,8 @@ typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPErro
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias MessageHandler = (Result<Message, SPError>) -> Void
-typealias CCPAConsentHandler = (Result<CCPAChoiceResponse, SPError>) -> Void
 typealias USNatConsentHandler = (Result<SPUSNatConsent, SPError>) -> Void
+typealias CCPAConsentHandler = (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
 typealias GDPRConsentHandler = (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
 typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
@@ -90,7 +90,7 @@ protocol SourcePointProtocol {
 
     func postCCPAAction(
         actionType: SPActionType,
-        body: CCPAChoiceBody,
+        request: SPMobileCore.CCPAChoiceRequest,
         handler: @escaping CCPAConsentHandler
     )
 
@@ -303,10 +303,15 @@ class SourcePointClient: SourcePointProtocol {
         URL(string: "./\(actionType.rawValue)?env=\(Constants.Urls.envParam)", relativeTo: baseUrl)!
     }
 
-    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
-        _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body, apiCode: .CCPA_ACTION) {
-                Self.parseResponse($0, InvalidResponseConsentError(), handler)
+    func postCCPAAction(actionType: SPActionType, request: SPMobileCore.CCPAChoiceRequest, handler: @escaping CCPAConsentHandler) {
+        coreClient.postChoiceCCPAAction(
+            actionType: actionType.toCore(),
+            request: request
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidResponseConsentError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
             }
         }
     }
