@@ -44,7 +44,7 @@ typealias CCPAConsentHandler = (Result<SPMobileCore.CCPAChoiceResponse, SPError>
 typealias GDPRConsentHandler = (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
 typealias USNatConsentHandler = (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
-typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
+typealias AddOrDeleteCustomConsentHandler = (Result<SPMobileCore.GDPRConsent, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<SPMobileCore.ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<SPMobileCore.PvDataResponse, SPError>) -> Void
@@ -234,6 +234,19 @@ class SourcePointClient: SourcePointProtocol {
         }
     }
 
+    static func coreHandler<T: Any>(
+        _ responseCore: T?,
+        _ errorCore: (any Error)?,
+        _ errorNative: SPError,
+        _ handlerNative: (Result<T, SPError>) -> Void
+    ) {
+        if errorCore != nil || responseCore == nil {
+            handlerNative(Result.failure(errorNative))
+        } else {
+            handlerNative(Result.success(responseCore!)) // swiftlint:disable:this force_unwrapping
+        }
+    }
+
     func setRequestTimeout(_ timeout: TimeInterval) {
         client = SimpleClient(timeoutAfter: timeout)
     }
@@ -307,25 +320,17 @@ class SourcePointClient: SourcePointProtocol {
         coreClient.postChoiceCCPAAction(
             actionType: actionType.toCore(),
             request: request
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        ) {
+            SourcePointClient.coreHandler($0, $1, InvalidResponseConsentError(), handler)
         }
     }
 
     func postGDPRAction(actionType: SPActionType, request: SPMobileCore.GDPRChoiceRequest, handler: @escaping GDPRConsentHandler) {
         coreClient.postChoiceGDPRAction(
-            actionType: actionType.toCore(), 
+            actionType: actionType.toCore(),
             request: request
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        ) {
+            SourcePointClient.coreHandler($0, $1, InvalidResponseConsentError(), handler)
         }
     }
 
@@ -333,12 +338,8 @@ class SourcePointClient: SourcePointProtocol {
         coreClient.postChoiceUSNatAction(
             actionType: actionType.toCore(),
             request: request
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        ) {
+            SourcePointClient.coreHandler($0, $1, InvalidResponseConsentError(), handler)
         }
     }
 
@@ -368,12 +369,8 @@ class SourcePointClient: SourcePointProtocol {
                 propertyId: Int32(propertyId),
                 vendors: vendors,
                 categories: categories,
-                legIntCategories: legIntCategories) { response, error in
-                    if error != nil || response == nil {
-                        handler(Result.failure(InvalidResponseCustomError()))
-                    } else {
-                        handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
-                    }
+                legIntCategories: legIntCategories) {
+                    SourcePointClient.coreHandler($0, $1, InvalidResponseCustomError(), handler)
                 }
     }
 
@@ -388,12 +385,8 @@ class SourcePointClient: SourcePointProtocol {
                 propertyId: Int32(propertyId),
                 vendors: vendors,
                 categories: categories,
-                legIntCategories: legIntCategories) { response, error in
-                    if error != nil || response == nil {
-                        handler(Result.failure(InvalidResponseDeleteCustomError()))
-                    } else {
-                        handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
-                    }
+                legIntCategories: legIntCategories) {
+                    SourcePointClient.coreHandler($0, $1, InvalidResponseDeleteCustomError(), handler)
                 }
         }
 
@@ -431,12 +424,8 @@ extension SourcePointClient {
         coreClient.getConsentStatus(
             authId: authId,
             metadata: metadata
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidConsentStatusResponseError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        ) {
+            SourcePointClient.coreHandler($0, $1, InvalidConsentStatusResponseError(), handler)
         }
     }
 
@@ -446,12 +435,8 @@ extension SourcePointClient {
         campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     ) {
-        coreClient.getMetaData(campaigns: campaigns) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidMetaDataResponseError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        coreClient.getMetaData(campaigns: campaigns) {
+            SourcePointClient.coreHandler($0, $1, InvalidMetaDataResponseError(), handler)
         }
     }
 
@@ -468,12 +453,8 @@ extension SourcePointClient {
     }
 
     func pvData(request: SPMobileCore.PvDataRequest, handler: @escaping PvDataHandler) {
-        coreClient.postPvData(request: request) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidPvDataResponseError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        coreClient.postPvData(request: request) {
+            SourcePointClient.coreHandler($0, $1, InvalidPvDataResponseError(), handler)
         }
     }
 
@@ -497,12 +478,8 @@ extension SourcePointClient {
             idfaStatus: idfaStatus,
             metadata: metadata,
             includeData: includeData
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidChoiceAllResponseError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        ) {
+            SourcePointClient.coreHandler($0, $1, InvalidChoiceAllResponseError(), handler)
         }
     }
 }

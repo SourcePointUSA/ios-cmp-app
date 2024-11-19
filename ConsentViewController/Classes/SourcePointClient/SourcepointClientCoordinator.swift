@@ -1100,12 +1100,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func handleAddOrDeleteCustomConsentResponse(
-        _ result: Result<AddOrDeleteCustomConsentResponse, SPError>,
+        _ result: Result<SPMobileCore.GDPRConsent, SPError>,
         handler: @escaping GDPRCustomConsentHandler
     ) {
         switch result {
             case .success(let consents):
-                state.gdpr?.vendorGrants = consents.grants
+                state.gdpr?.vendorGrants = consents.toNativeAsAddOrDeleteCustomConsentResponse().grants
                 storage.spState = state
                 handler(Result.success(state.gdpr ?? .empty()))
 
