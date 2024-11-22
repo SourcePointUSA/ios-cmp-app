@@ -344,7 +344,7 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
-        coreClient.reportIdfaStatus(
+        coreClient.postReportIdfaStatus(
             propertyId: KotlinInt(int: propertyId),
             uuid: uuid,
             requestUUID: UUID().uuidString,
