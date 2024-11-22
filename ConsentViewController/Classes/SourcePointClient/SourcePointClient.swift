@@ -235,10 +235,10 @@ class SourcePointClient: SourcePointProtocol {
     }
 
     static func coreHandler<T: Any>(
-        _ responseCore: T?,
-        _ errorCore: (any Error)?,
-        _ errorNative: SPError,
-        _ handlerNative: (Result<T, SPError>) -> Void
+        responseCore: T?,
+        errorCore: (any Error)?,
+        errorNative: SPError,
+        handlerNative: (Result<T, SPError>) -> Void
     ) {
         if errorCore != nil || responseCore == nil {
             handlerNative(Result.failure(errorNative))
@@ -321,7 +321,7 @@ class SourcePointClient: SourcePointProtocol {
             actionType: actionType.toCore(),
             request: request
         ) {
-            SourcePointClient.coreHandler($0, $1, InvalidResponseConsentError(), handler)
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseConsentError(), handlerNative: handler)
         }
     }
 
@@ -330,7 +330,7 @@ class SourcePointClient: SourcePointProtocol {
             actionType: actionType.toCore(),
             request: request
         ) {
-            SourcePointClient.coreHandler($0, $1, InvalidResponseConsentError(), handler)
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseConsentError(), handlerNative: handler)
         }
     }
 
@@ -339,7 +339,7 @@ class SourcePointClient: SourcePointProtocol {
             actionType: actionType.toCore(),
             request: request
         ) {
-            SourcePointClient.coreHandler($0, $1, InvalidResponseConsentError(), handler)
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseConsentError(), handlerNative: handler)
         }
     }
 
@@ -369,7 +369,7 @@ class SourcePointClient: SourcePointProtocol {
                 vendors: vendors,
                 categories: categories,
                 legIntCategories: legIntCategories) {
-                    SourcePointClient.coreHandler($0, $1, InvalidResponseCustomError(), handler)
+                    SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseCustomError(), handlerNative: handler)
                 }
     }
 
@@ -385,7 +385,7 @@ class SourcePointClient: SourcePointProtocol {
                 vendors: vendors,
                 categories: categories,
                 legIntCategories: legIntCategories) {
-                    SourcePointClient.coreHandler($0, $1, InvalidResponseDeleteCustomError(), handler)
+                    SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseDeleteCustomError(), handlerNative: handler)
                 }
         }
 
@@ -424,7 +424,7 @@ extension SourcePointClient {
             authId: authId,
             metadata: metadata
         ) {
-            SourcePointClient.coreHandler($0, $1, InvalidConsentStatusResponseError(), handler)
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidConsentStatusResponseError(), handlerNative: handler)
         }
     }
 
@@ -435,7 +435,7 @@ extension SourcePointClient {
         handler: @escaping MetaDataHandler
     ) {
         coreClient.getMetaData(campaigns: campaigns) {
-            SourcePointClient.coreHandler($0, $1, InvalidMetaDataResponseError(), handler)
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidMetaDataResponseError(), handlerNative: handler)
         }
     }
 
@@ -453,7 +453,7 @@ extension SourcePointClient {
 
     func pvData(request: SPMobileCore.PvDataRequest, handler: @escaping PvDataHandler) {
         coreClient.postPvData(request: request) {
-            SourcePointClient.coreHandler($0, $1, InvalidPvDataResponseError(), handler)
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidPvDataResponseError(), handlerNative: handler)
         }
     }
 
@@ -478,7 +478,7 @@ extension SourcePointClient {
             metadata: metadata,
             includeData: includeData
         ) {
-            SourcePointClient.coreHandler($0, $1, InvalidChoiceAllResponseError(), handler)
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidChoiceAllResponseError(), handlerNative: handler)
         }
     }
 }
