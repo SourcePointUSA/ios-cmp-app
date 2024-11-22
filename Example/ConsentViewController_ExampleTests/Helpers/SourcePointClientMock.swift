@@ -122,19 +122,19 @@ class SourcePointClientMock: SourcePointProtocol {
     func ccpaPrivacyManagerView(propertyId: Int, consentLanguage: SPMessageLanguage, handler: @escaping CCPAPrivacyManagerViewHandler) {
     }
 
-    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
+    func postCCPAAction(actionType: ConsentViewController.SPActionType, request: CCPAChoiceRequest, handler: @escaping ConsentViewController.CCPAConsentHandler) {
         postCCPAActionCalled = true
         postCCPAActionCalledWith = [
             "actionType": actionType,
-            "body": body,
+            "request": request,
             "handler": handler
         ]
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(CCPAChoiceResponse(
+            handler(.success(SPMobileCore.CCPAChoiceResponse(
                 uuid: "",
-                dateCreated: .now(),
+                dateCreated: SPDate.format.string(from: SPDate.now().date),
                 consentedAll: nil,
                 rejectedAll: nil,
                 status: nil,
@@ -143,26 +143,26 @@ class SourcePointClientMock: SourcePointProtocol {
                 rejectedVendors: nil,
                 rejectedCategories: nil,
                 webConsentPayload: nil,
-                GPPData: SPJson()
+                gppData: [:] as [String : Kotlinx_serialization_jsonJsonPrimitive]
             )))
         }
     }
 
-    func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
+    func postGDPRAction(actionType: ConsentViewController.SPActionType, request: GDPRChoiceRequest, handler: @escaping ConsentViewController.GDPRConsentHandler) {
         postGDPRActionCalled = true
         postGDPRActionCalledWith = [
             "actionType": actionType,
-            "body": body,
+            "request": request,
             "handler": handler
         ]
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(GDPRChoiceResponse(
+            handler(.success(SPMobileCore.GDPRChoiceResponse(
                 uuid: "",
-                dateCreated: .now(),
-                expirationDate: .distantFuture(),
-                TCData: nil,
+                dateCreated: SPDate.format.string(from: SPDate.now().date),
+                expirationDate: SPDate.format.string(from: SPDate.distantFuture().date),
+                tcData: nil,
                 euconsent: nil,
                 consentStatus: nil,
                 grants: nil,
@@ -178,19 +178,30 @@ class SourcePointClientMock: SourcePointProtocol {
     }
 
     func postUSNatAction(
-        actionType: SPActionType,
-        body: USNatChoiceBody,
-        handler: @escaping USNatConsentHandler
+        actionType: ConsentViewController.SPActionType,
+        request: USNatChoiceRequest,
+        handler: @escaping ConsentViewController.USNatConsentHandler
     ) {
         postUSNatActionCalledWith = [
             "actionType": actionType,
-            "body": body,
+            "request": request,
             "handler": handler
         ]
         if let error = error {
             handler(.failure(error))
         } else {
-            handler(.success(SPUSNatConsent.empty()))
+            handler(.success(SPMobileCore.USNatChoiceResponse(
+                uuid: nil,
+                categories: [],
+                consentStatus: SPMobileCore.ConsentStatus(rejectedAny: nil, rejectedLI: nil, rejectedAll: nil, consentedAll: nil, consentedToAll: nil, consentedToAny: nil, hasConsentData: nil, vendorListAdditions: nil, legalBasisChanges: nil, granularStatus: nil, rejectedVendors: nil, rejectedCategories: nil),
+                consentStrings: [],
+                dateCreated: SPDate.format.string(from: SPDate.now().date),
+                expirationDate: SPDate.format.string(from: SPDate.distantFuture().date),
+                gpcEnabled: nil,
+                webConsentPayload: nil,
+                gppData: [:] as [String : Kotlinx_serialization_jsonJsonPrimitive],
+                userConsents: USNatConsent.USNatUserConsents(vendors: [], categories: [])
+            )))
         }
     }
 
@@ -267,14 +278,13 @@ class SourcePointClientMock: SourcePointProtocol {
     }
 
     func choiceAll(
-        actionType: SPActionType,
+        actionType: SPMobileCore.SPActionType,
         accountId: Int,
         propertyId: Int,
-        idfaStatus: SPIDFAStatus,
-        metadata: ChoiceAllMetaDataParam,
-        includeData: IncludeData,
-        handler: @escaping ChoiceHandler
-    ) {
+        idfaStatus: SPMobileCore.SPIDFAStatus,
+        metadata: ChoiceAllMetaDataRequest,
+        includeData: SPMobileCore.IncludeData,
+        handler: @escaping ConsentViewController.ChoiceHandler) {
         handler(.success(ChoiceAllResponse(gdpr: nil, ccpa: nil, usnat: nil)))
     }
 }
