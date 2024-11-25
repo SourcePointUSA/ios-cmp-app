@@ -1,3 +1,9 @@
+# 7.7.3 (Nov, 25, 2024)
+* [DIA-4610](https://sourcepoint.atlassian.net/browse/DIA-4610) Replace native `/custom-consent` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/custom-consent` implementation. [#584](https://github.com/SourcePointUSA/ios-cmp-app/pull/584)
+* [DIA-3500](https://sourcepoint.atlassian.net/browse/DIA-3500) Replace native `/pv-data` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/pv-data` implementation. [#583](https://github.com/SourcePointUSA/ios-cmp-app/pull/583)
+* [DIA-4733](https://sourcepoint.atlassian.net/browse/DIA-4733) Fixed an issue causing app crashes when no internet connection [#587](https://github.com/SourcePointUSA/ios-cmp-app/pull/587)
+* Update dependency `mobile_core` to `0.0.9` version
+
 # 7.7.2 (Sep, 30, 2024)
 * [DIA-4457](https://sourcepoint.atlassian.net/browse/DIA-4457) Replace native `/meta-data` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/meta-data` implementation. [#580](https://github.com/SourcePointUSA/ios-cmp-app/pull/580) [#581](https://github.com/SourcePointUSA/ios-cmp-app/pull/581)
 * [DIA-4457](https://sourcepoint.atlassian.net/browse/DIA-4457) Replace native `/consent-status` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/consent-status` implementation. [#582](https://github.com/SourcePointUSA/ios-cmp-app/pull/582)
