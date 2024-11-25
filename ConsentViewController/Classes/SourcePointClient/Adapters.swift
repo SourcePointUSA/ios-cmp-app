@@ -259,3 +259,15 @@ extension SPDate {
         date = Self.format.date(from: originalDateString) ?? Date()
     }
 }
+
+extension SPCampaignType {
+    func toCore() -> SPMobileCore.SPCampaignType {
+        switch self {
+        case .gdpr: return .gdpr
+        case .ccpa: return .ccpa
+        case .usnat: return .usnat
+        case .ios14: return .ios14
+        case .unknown: return .unknown
+        }
+    }
+}
