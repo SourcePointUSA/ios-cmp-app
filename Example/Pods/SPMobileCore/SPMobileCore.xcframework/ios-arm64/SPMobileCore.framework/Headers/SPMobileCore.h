@@ -1350,14 +1350,14 @@ __attribute__((swift_name("MessagesRequest.BodyCampaigns")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MessagesRequest.BodyCampaignsCCPA")))
 @interface SPMCMessagesRequestBodyCampaignsCCPA : SPMCBase
-- (instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nullable)targetingParams hasLocalData:(BOOL)hasLocalData consentStatus:(SPMCCCPAConsentCCPAConsentStatus * _Nullable)consentStatus __attribute__((swift_name("init(targetingParams:hasLocalData:consentStatus:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nullable)targetingParams hasLocalData:(BOOL)hasLocalData status:(SPMCCCPAConsentCCPAConsentStatus * _Nullable)status __attribute__((swift_name("init(targetingParams:hasLocalData:status:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMessagesRequestBodyCampaignsCCPACompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMessagesRequestBodyCampaignsCCPA *)doCopyTargetingParams:(NSDictionary<NSString *, NSString *> * _Nullable)targetingParams hasLocalData:(BOOL)hasLocalData consentStatus:(SPMCCCPAConsentCCPAConsentStatus * _Nullable)consentStatus __attribute__((swift_name("doCopy(targetingParams:hasLocalData:consentStatus:)")));
+- (SPMCMessagesRequestBodyCampaignsCCPA *)doCopyTargetingParams:(NSDictionary<NSString *, NSString *> * _Nullable)targetingParams hasLocalData:(BOOL)hasLocalData status:(SPMCCCPAConsentCCPAConsentStatus * _Nullable)status __attribute__((swift_name("doCopy(targetingParams:hasLocalData:status:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
-@property (readonly) SPMCCCPAConsentCCPAConsentStatus * _Nullable consentStatus __attribute__((swift_name("consentStatus")));
 @property (readonly) BOOL hasLocalData __attribute__((swift_name("hasLocalData")));
+@property (readonly) SPMCCCPAConsentCCPAConsentStatus * _Nullable status __attribute__((swift_name("status")));
 @property (readonly) NSDictionary<NSString *, NSString *> * _Nullable targetingParams __attribute__((swift_name("targetingParams")));
 @end
 
@@ -1885,9 +1885,9 @@ __attribute__((swift_name("MessagesResponseCampaign")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MessagesResponse.CCPA")))
 @interface SPMCMessagesResponseCCPA : SPMCMessagesResponseCampaign<SPMCCCPAConsent *>
-- (instancetype)initWithType:(SPMCSPCampaignType *)type status:(SPMCCCPAConsentCCPAConsentStatus *)status signedLspa:(SPMCBoolean * _Nullable)signedLspa rejectedVendors:(NSArray<NSString *> * _Nullable)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nullable)rejectedCategories dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)gppData derivedConsents:(SPMCCCPAConsent * _Nullable)derivedConsents __attribute__((swift_name("init(type:status:signedLspa:rejectedVendors:rejectedCategories:dateCreated:expirationDate:webConsentPayload:gppData:derivedConsents:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithType:(SPMCSPCampaignType *)type status:(SPMCCCPAConsentCCPAConsentStatus * _Nullable)status signedLspa:(SPMCBoolean * _Nullable)signedLspa rejectedVendors:(NSArray<NSString *> * _Nullable)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nullable)rejectedCategories dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)gppData derivedConsents:(SPMCCCPAConsent * _Nullable)derivedConsents __attribute__((swift_name("init(type:status:signedLspa:rejectedVendors:rejectedCategories:dateCreated:expirationDate:webConsentPayload:gppData:derivedConsents:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMessagesResponseCCPACompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMessagesResponseCCPA *)doCopyType:(SPMCSPCampaignType *)type status:(SPMCCCPAConsentCCPAConsentStatus *)status signedLspa:(SPMCBoolean * _Nullable)signedLspa rejectedVendors:(NSArray<NSString *> * _Nullable)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nullable)rejectedCategories dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)gppData derivedConsents:(SPMCCCPAConsent * _Nullable)derivedConsents __attribute__((swift_name("doCopy(type:status:signedLspa:rejectedVendors:rejectedCategories:dateCreated:expirationDate:webConsentPayload:gppData:derivedConsents:)")));
+- (SPMCMessagesResponseCCPA *)doCopyType:(SPMCSPCampaignType *)type status:(SPMCCCPAConsentCCPAConsentStatus * _Nullable)status signedLspa:(SPMCBoolean * _Nullable)signedLspa rejectedVendors:(NSArray<NSString *> * _Nullable)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nullable)rejectedCategories dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)gppData derivedConsents:(SPMCCCPAConsent * _Nullable)derivedConsents __attribute__((swift_name("doCopy(type:status:signedLspa:rejectedVendors:rejectedCategories:dateCreated:expirationDate:webConsentPayload:gppData:derivedConsents:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
@@ -1903,7 +1903,7 @@ __attribute__((swift_name("MessagesResponse.CCPA")))
 @property (readonly) NSArray<NSString *> * _Nullable rejectedCategories __attribute__((swift_name("rejectedCategories")));
 @property (readonly) NSArray<NSString *> * _Nullable rejectedVendors __attribute__((swift_name("rejectedVendors")));
 @property (readonly) SPMCBoolean * _Nullable signedLspa __attribute__((swift_name("signedLspa")));
-@property (readonly) SPMCCCPAConsentCCPAConsentStatus *status __attribute__((swift_name("status")));
+@property (readonly) SPMCCCPAConsentCCPAConsentStatus * _Nullable status __attribute__((swift_name("status")));
 @property (readonly) SPMCSPCampaignType *type __attribute__((swift_name("type")));
 @property (readonly) NSString * _Nullable webConsentPayload __attribute__((swift_name("webConsentPayload")));
 @end
