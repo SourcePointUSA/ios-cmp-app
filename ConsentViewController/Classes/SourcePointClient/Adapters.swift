@@ -165,9 +165,79 @@ extension ConsentStatus.GranularStatus {
     }
 }
 
+extension SPGPPConfig.SPMspaBinaryFlag {
+    func toCore() -> SPMobileCore.IncludeData.MspaBinaryFlag? {
+        switch self {
+        case .yes: return .yes
+        case .no: return .no
+        }
+    }
+}
+
+extension SPGPPConfig.SPMspaTernaryFlag {
+    func toCore() -> SPMobileCore.IncludeData.MspaTernaryFlag? {
+        switch self {
+        case .yes: return .yes
+        case .no: return .no
+        case .notApplicable: return .na
+        }
+    }
+}
+
+extension IncludeData {
+    func toCore() -> SPMobileCore.IncludeData {
+        var translateMessageVal = nil as Bool?
+        #if os(tvOS)
+        translateMessageVal = translateMessage
+        #endif
+        return SPMobileCore.IncludeData.init(
+            tcData: SPMobileCore.IncludeData.TypeString(type: "RecordString"),
+            webConsentPayload: SPMobileCore.IncludeData.TypeString(type: "string"),
+            localState: SPMobileCore.IncludeData.TypeString(type: "RecordString"),
+            categories: categories,
+            translateMessage: KotlinBoolean(bool: translateMessageVal),
+            gppData: SPMobileCore.IncludeData.GPPConfig(
+                MspaCoveredTransaction: gppConfig.MspaCoveredTransaction?.toCore(),
+                MspaOptOutOptionMode: gppConfig.MspaOptOutOptionMode?.toCore(),
+                MspaServiceProviderMode: gppConfig.MspaServiceProviderMode?.toCore(),
+                uspString: KotlinBoolean(bool: gppConfig.uspString)
+            )
+        )
+    }
+}
+
 extension SPPublisherData {
     func toCore() -> String? {
         return try? self.toJsonString()
+    }
+}
+
+extension SPJson {
+    func toCore() -> String? {
+        if let encoded = try? JSONEncoder().encode(self),
+           let stringified = String(data: encoded, encoding: .utf8) {
+            return stringified
+        }
+        return nil
+    }
+}
+
+extension SPActionType {
+    func toCore() -> SPMobileCore.SPActionType {
+        switch self {
+        case .AcceptAll: return .acceptall
+        case .RejectAll: return .rejectall
+        case .Custom: return .custom
+        case .ShowPrivacyManager: return .showprivacymanager
+        case .SaveAndExit: return .saveandexit
+        case .Dismiss: return .dismiss
+        case .PMCancel: return .pmcancel
+        case .RequestATTAccess: return .requestattaccess
+        case .IDFAAccepted: return .idfaaccepted
+        case .IDFADenied: return .idfadenied
+        case .Unknown: return .unknown
+        @unknown default: return .unknown
+        }
     }
 }
 
@@ -187,5 +257,17 @@ extension SPDate {
     init(string: String) {
         originalDateString = string
         date = Self.format.date(from: originalDateString) ?? Date()
+    }
+}
+
+extension SPCampaignType {
+    func toCore() -> SPMobileCore.SPCampaignType {
+        switch self {
+        case .gdpr: return .gdpr
+        case .ccpa: return .ccpa
+        case .usnat: return .usnat
+        case .ios14: return .ios14
+        case .unknown: return .unknown
+        }
     }
 }
