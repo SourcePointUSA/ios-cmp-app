@@ -160,11 +160,7 @@ protocol SourcePointProtocol {
 
     func choiceAll(
         actionType: SPMobileCore.SPActionType,
-        accountId: Int,
-        propertyId: Int,
-        idfaStatus: SPMobileCore.SPIDFAStatus,
-        metadata: ChoiceAllMetaDataRequest,
-        includeData: SPMobileCore.IncludeData,
+        campaigns: SPMobileCore.ChoiceAllRequest.ChoiceAllCampaigns,
         handler: @escaping ChoiceHandler
     )
 
@@ -459,11 +455,7 @@ extension SourcePointClient {
 
     func choiceAll(
         actionType: SPMobileCore.SPActionType,
-        accountId: Int,
-        propertyId: Int,
-        idfaStatus: SPMobileCore.SPIDFAStatus,
-        metadata: ChoiceAllMetaDataRequest,
-        includeData: SPMobileCore.IncludeData,
+        campaigns: SPMobileCore.ChoiceAllRequest.ChoiceAllCampaigns,
         handler: @escaping ChoiceHandler
     ) {
         if actionType != SPMobileCore.SPActionType.acceptall && actionType != SPMobileCore.SPActionType.rejectall {
@@ -472,11 +464,7 @@ extension SourcePointClient {
         }
         coreClient.getChoiceAll(
             actionType: actionType,
-            accountId: Int32(accountId),
-            propertyId: Int32(propertyId),
-            idfaStatus: idfaStatus,
-            metadata: metadata,
-            includeData: includeData
+            campaigns: campaigns
         ) {
             SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidChoiceAllResponseError(), handlerNative: handler)
         }

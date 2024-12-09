@@ -848,15 +848,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         if shouldCallGetChoice(for: action) {
             spClient.choiceAll(
                 actionType: action.type.toCore(),
-                accountId: accountId,
-                propertyId: propertyId,
-                idfaStatus: SPIDFAStatus.current().toCore(),
-                metadata: .init(
+                campaigns: .init(
                     gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
                     ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
                     usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
-                ),
-                includeData: includeData.toCore()
+                )
             ) { result in
                 switch result {
                     case .success(let response):
