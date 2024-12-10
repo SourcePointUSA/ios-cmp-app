@@ -186,6 +186,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                         messageId: "1234"
                     )
                     gdprAction.encodablePubData = ["foo": .init("gdpr")]
+                    let publisherData = JsonKt.encodeToJsonObject(gdprAction.encodablePubData.toCore())
 
                     waitUntil { done in
                         coordinator.reportAction(gdprAction) { response in
@@ -194,9 +195,9 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                                 case .success:
                                     expect(spClientMock.postGDPRActionCalled).to(beTrue())
-                                    let body = spClientMock.postGDPRActionCalledWith?["body"] as? GDPRChoiceBody
-                                    expect(body?.pubData).to(equal(gdprAction.encodablePubData))
-                                    expect(body?.messageId).to(equal("1234"))
+                                    let request = spClientMock.postGDPRActionCalledWith?["request"] as? GDPRChoiceRequest
+                                    expect(request?.pubData).to(equal(publisherData))
+                                    expect(request?.messageId).to(equal("1234"))
                             }
                             done()
                         }
@@ -210,6 +211,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                         messageId: "321"
                     )
                     ccpaAction.encodablePubData = ["foo": .init("ccpa")]
+                    let publisherData = JsonKt.encodeToJsonObject(ccpaAction.encodablePubData.toCore())
 
                     waitUntil { done in
                         coordinator.reportAction(ccpaAction) { response in
@@ -218,9 +220,9 @@ class SPClientCoordinatorSpec: QuickSpec {
 
                                 case .success:
                                     expect(spClientMock.postCCPAActionCalled).to(beTrue())
-                                    let body = spClientMock.postCCPAActionCalledWith?["body"] as? CCPAChoiceBody
-                                    expect(body?.pubData).to(equal(ccpaAction.encodablePubData))
-                                    expect(body?.messageId).to(equal("321"))
+                                    let request = spClientMock.postCCPAActionCalledWith?["request"] as? CCPAChoiceRequest
+                                    expect(request?.pubData).to(equal(publisherData))
+                                    expect(request?.messageId).to(equal("321"))
                             }
                             done()
                         }
