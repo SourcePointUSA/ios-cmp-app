@@ -230,15 +230,11 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 waitUntil { done in
                     client.choiceAll(
                         actionType: .rejectall,
-                        accountId: accountId,
-                        propertyId: propertyId,
-                        idfaStatus: .accepted,
-                        metadata: .init(
+                        campaigns: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true),
                             usnat: .init(applies: true)
-                        ),
-                        includeData: IncludeData.standard.toCore()
+                        )
                     ) { result in
                         switch result {
                         case .success(let response):
@@ -262,15 +258,11 @@ class UnmockedSourcepointClientSpec: QuickSpec {
                 waitUntil { done in
                     client.choiceAll(
                         actionType: .acceptall,
-                        accountId: accountId,
-                        propertyId: propertyId,
-                        idfaStatus: .accepted,
-                        metadata: .init(
+                        campaigns: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true),
                             usnat: .init(applies: true)
-                        ),
-                        includeData: IncludeData.standard.toCore()
+                        )
                     ) { result in
                         switch result {
                         case .success(let response):

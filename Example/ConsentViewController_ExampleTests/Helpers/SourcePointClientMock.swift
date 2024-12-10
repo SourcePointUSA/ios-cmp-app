@@ -192,7 +192,6 @@ class SourcePointClientMock: SourcePointProtocol {
         } else {
             handler(.success(SPMobileCore.USNatChoiceResponse(
                 uuid: nil,
-                categories: [],
                 consentStatus: SPMobileCore.ConsentStatus(rejectedAny: nil, rejectedLI: nil, rejectedAll: nil, consentedAll: nil, consentedToAll: nil, consentedToAny: nil, hasConsentData: nil, vendorListAdditions: nil, legalBasisChanges: nil, granularStatus: nil, rejectedVendors: nil, rejectedCategories: nil),
                 consentStrings: [],
                 dateCreated: SPDate.format.string(from: SPDate.now().date),
@@ -279,11 +278,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     func choiceAll(
         actionType: SPMobileCore.SPActionType,
-        accountId: Int,
-        propertyId: Int,
-        idfaStatus: SPMobileCore.SPIDFAStatus,
-        metadata: ChoiceAllMetaDataRequest,
-        includeData: SPMobileCore.IncludeData,
+        campaigns: SPMobileCore.ChoiceAllRequest.ChoiceAllCampaigns,
         handler: @escaping ConsentViewController.ChoiceHandler) {
         handler(.success(ChoiceAllResponse(gdpr: nil, ccpa: nil, usnat: nil)))
     }
