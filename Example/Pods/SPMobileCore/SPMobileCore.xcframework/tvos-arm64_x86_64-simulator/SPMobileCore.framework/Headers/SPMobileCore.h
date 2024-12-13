@@ -6,9 +6,9 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSValue.h>
 
-@class SPMCRepository, SPMCSourcepointClient, SPMCMetaDataRequestCampaigns, SPMCOSName, SPMCKotlinEnumCompanion, SPMCKotlinEnum<E>, SPMCKotlinArray<T>, SPMCSPCampaignEnvCompanion, SPMCSPCampaignEnv, SPMCSPCampaignTypeCompanion, SPMCSPCampaignType, SPMCKotlinThrowable, SPMCKotlinException, SPMCSPError, SPMCSPIDFAStatusCompanion, SPMCSPIDFAStatus, SPMCSPMessageLanguage, SPMCCCPAConsentCCPAConsentStatus, SPMCKotlinx_serialization_jsonJsonPrimitive, SPMCCCPAConsentCompanion, SPMCCCPAConsent, SPMCCCPAConsentCCPAConsentStatusCompanion, SPMCConsentStatusConsentStatusGranularStatus, SPMCConsentStatusCompanion, SPMCConsentStatus, SPMCConsentStatusConsentStatusGranularStatusCompanion, SPMCGDPRConsentVendorGrantsValue, SPMCGDPRConsentGCMStatus, SPMCGDPRConsentCompanion, SPMCGDPRConsent, SPMCGDPRConsentGCMStatusCompanion, SPMCGDPRConsentVendorGrantsValueCompanion, SPMCUSNatConsentUSNatConsentSection, SPMCUSNatConsentUSNatUserConsents, SPMCUSNatConsentCompanion, SPMCUSNatConsent, SPMCUSNatConsentUSNatConsentSectionCompanion, SPMCUSNatConsentUSNatConsentableCompanion, SPMCUSNatConsentUSNatConsentable, SPMCUSNatConsentUSNatUserConsentsCompanion, SPMCDefaultRequestCompanion, SPMCDefaultRequest, SPMCErrorMetricsRequestCompanion, SPMCErrorMetricsRequest, SPMCConsentStatusRequestMetaData, SPMCConsentStatusResponse, SPMCMessagesRequest, SPMCMessagesResponse, SPMCMetaDataResponse, SPMCPvDataRequest, SPMCPvDataResponse, SPMCDeviceInformation, SPMCIncludeData, SPMCConsentStatusRequestCompanion, SPMCConsentStatusRequest, SPMCConsentStatusRequestMetaDataCampaign, SPMCConsentStatusRequestMetaDataUSNatCampaign, SPMCConsentStatusRequestMetaDataCompanion, SPMCConsentStatusRequestMetaDataCampaignCompanion, SPMCConsentStatusRequestMetaDataUSNatCampaignCompanion, SPMCCustomConsentRequestCompanion, SPMCCustomConsentRequest, SPMCIncludeDataTypeString, SPMCIncludeDataGPPConfig, SPMCIncludeDataCompanion, SPMCIncludeDataMspaBinaryFlag, SPMCIncludeDataMspaTernaryFlag, SPMCIncludeDataGPPConfigCompanion, SPMCIncludeDataMspaBinaryFlagCompanion, SPMCIncludeDataMspaTernaryFlagCompanion, SPMCIncludeDataTypeStringCompanion, SPMCMessagesRequestBody, SPMCMessagesRequestMetaData, SPMCMessagesRequestCompanion, SPMCMessagesRequestBodyCampaigns, SPMCMessagesRequestBodyCompanion, SPMCMessagesRequestBodyCampaignsGDPR, SPMCMessagesRequestBodyCampaignsIOS14, SPMCMessagesRequestBodyCampaignsCCPA, SPMCMessagesRequestBodyCampaignsUSNat, SPMCMessagesRequestBodyCampaignsCompanion, SPMCMessagesRequestBodyCampaignsCCPACompanion, SPMCMessagesRequestBodyCampaignsGDPRCompanion, SPMCMessagesRequestBodyCampaignsIOS14Companion, SPMCMessagesRequestBodyCampaignsUSNatCompanion, SPMCMessagesRequestMetaDataCampaign, SPMCMessagesRequestMetaDataCompanion, SPMCMessagesRequestMetaDataCampaignCompanion, SPMCMetaDataRequestCompanion, SPMCMetaDataRequest, SPMCMetaDataRequestCampaignsCampaign, SPMCMetaDataRequestCampaignsCompanion, SPMCMetaDataRequestCampaignsCampaignCompanion, SPMCPvDataRequestGDPR, SPMCPvDataRequestCCPA, SPMCPvDataRequestUSNat, SPMCPvDataRequestCompanion, SPMCKotlinx_serialization_jsonJsonElement, SPMCPvDataRequestCCPACompanion, SPMCPvDataRequestGDPRCompanion, SPMCPvDataRequestUSNatCompanion, SPMCConsentStatusResponseConsentStatusData, SPMCConsentStatusResponseCompanion, SPMCConsentStatusResponseConsentStatusDataCompanion, SPMCMessagesResponseCampaign<ConsentClass>, SPMCMessagesResponseCompanion, SPMCMessagesResponseCampaignCompanion, SPMCMessagesResponseMessage, SPMCMessagesResponseMessageMetaData, SPMCMessagesResponseCCPACompanion, SPMCMessagesResponseCCPA, SPMCMessagesResponseGDPRCompanion, SPMCMessagesResponseGDPR, SPMCKotlinNothing, SPMCMessagesResponseIos14Companion, SPMCMessagesResponseIos14, SPMCMessagesResponseMessageGDPRCategory, SPMCMessagesResponseMessageCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryType, SPMCMessagesResponseMessageGDPRCategoryVendor, SPMCMessagesResponseMessageGDPRCategoryCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeCompanion, SPMCStringEnumWithDefaultSerializer<T>, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeSerializer, SPMCMessagesResponseMessageGDPRCategoryVendorVendorType, SPMCMessagesResponseMessageGDPRCategoryVendorCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeSerializer, SPMCMessagesResponseMessageMetaDataMessageCategory, SPMCMessagesResponseMessageMetaDataMessageSubCategory, SPMCMessagesResponseMessageMetaDataCompanion, SPMCMessagesResponseMessageMetaDataMessageCategoryCompanion, SPMCIntEnumSerializer<T>, SPMCMessagesResponseMessageMetaDataMessageCategorySerializer, SPMCMessagesResponseMessageMetaDataMessageSubCategoryCompanion, SPMCMessagesResponseMessageMetaDataMessageSubCategorySerializer, SPMCMessagesResponseUSNatCompanion, SPMCMessagesResponseUSNat, SPMCMetaDataResponseMetaDataResponseGDPR, SPMCMetaDataResponseMetaDataResponseUSNat, SPMCMetaDataResponseMetaDataResponseCCPA, SPMCMetaDataResponseCompanion, SPMCMetaDataResponseMetaDataResponseCCPACompanion, SPMCMetaDataResponseMetaDataResponseGDPRCompanion, SPMCMetaDataResponseMetaDataResponseUSNatCompanion, SPMCPvDataResponseCampaign, SPMCPvDataResponseCompanion, SPMCPvDataResponseCampaignCompanion, SPMCRepositoryKeys, SPMCKtor_client_coreHttpClientCall, SPMCKtor_utilsGMTDate, SPMCKtor_httpHttpStatusCode, SPMCKtor_httpHttpProtocolVersion, SPMCKtor_client_coreHttpResponse, SPMCKtor_httpURLProtocol, SPMCKtor_httpURLBuilderCompanion, SPMCKtor_httpUrl, SPMCKtor_httpURLBuilder, SPMCKotlinx_serialization_jsonJson, SPMCKotlinRuntimeException, SPMCKotlinIllegalStateException, SPMCKotlinx_serialization_jsonJsonElementCompanion, SPMCKotlinx_serialization_jsonJsonPrimitiveCompanion, SPMCKtor_client_coreHttpRequestData, SPMCKtor_client_coreHttpResponseData, SPMCKtor_client_coreHttpClient, SPMCKtor_client_coreHttpClientEngineConfig, SPMCKotlinx_coroutines_coreCoroutineDispatcher, SPMCKotlinx_serialization_coreSerializersModule, SPMCKotlinx_serialization_coreSerialKind, SPMCKtor_client_coreHttpClientCallCompanion, SPMCKtor_utilsTypeInfo, SPMCKtor_utilsWeekDay, SPMCKtor_utilsMonth, SPMCKtor_utilsGMTDateCompanion, SPMCKtor_httpHttpStatusCodeCompanion, SPMCKtor_httpHttpProtocolVersionCompanion, SPMCKtor_httpURLProtocolCompanion, SPMCKtor_httpUrlCompanion, SPMCKotlinx_serialization_jsonJsonDefault, SPMCKotlinx_serialization_jsonJsonConfiguration, SPMCKtor_utilsAttributeKey<T>, SPMCKtor_httpHttpMethod, SPMCKtor_httpOutgoingContent, SPMCKtor_client_coreHttpClientConfig<T>, SPMCKtor_eventsEvents, SPMCKtor_client_coreHttpReceivePipeline, SPMCKtor_client_coreHttpRequestPipeline, SPMCKtor_client_coreHttpResponsePipeline, SPMCKtor_client_coreHttpSendPipeline, SPMCKtor_client_coreProxyConfig, SPMCKotlinAbstractCoroutineContextElement, SPMCKotlinx_coroutines_coreCoroutineDispatcherKey, SPMCKotlinByteArray, SPMCKotlinx_io_coreBuffer, SPMCKtor_utilsWeekDayCompanion, SPMCKtor_utilsMonthCompanion, SPMCKotlinKTypeProjection, SPMCKotlinx_serialization_jsonClassDiscriminatorMode, SPMCKtor_httpHttpMethodCompanion, SPMCKtor_httpContentType, SPMCKotlinCancellationException, SPMCKtor_eventsEventDefinition<T>, SPMCKtor_utilsPipelinePhase, SPMCKtor_utilsPipeline<TSubject, TContext>, SPMCKtor_client_coreHttpReceivePipelinePhases, SPMCKotlinUnit, SPMCKtor_client_coreHttpRequestPipelinePhases, SPMCKtor_client_coreHttpRequestBuilder, SPMCKtor_client_coreHttpResponsePipelinePhases, SPMCKtor_client_coreHttpResponseContainer, SPMCKtor_client_coreHttpSendPipelinePhases, SPMCKotlinAbstractCoroutineContextKey<B, E>, SPMCKotlinByteIterator, SPMCKotlinKVariance, SPMCKotlinKTypeProjectionCompanion, SPMCKtor_httpHeaderValueParam, SPMCKtor_httpHeaderValueWithParametersCompanion, SPMCKtor_httpHeaderValueWithParameters, SPMCKtor_httpContentTypeCompanion, SPMCKtor_httpHeadersBuilder, SPMCKtor_client_coreHttpRequestBuilderCompanion, SPMCKtor_utilsStringValuesBuilderImpl;
+@class SPMCRepository, SPMCSourcepointClient, SPMCMetaDataRequestCampaigns, SPMCOSName, SPMCKotlinEnumCompanion, SPMCKotlinEnum<E>, SPMCKotlinArray<T>, SPMCKotlinThrowable, SPMCKotlinException, SPMCSPCampaignType, SPMCSPError, SPMCSPActionType, SPMCSPCampaignEnvCompanion, SPMCSPCampaignEnv, SPMCSPCampaignTypeCompanion, SPMCSPIDFAStatusCompanion, SPMCSPIDFAStatus, SPMCSPMessageLanguage, SPMCCCPAConsentCCPAConsentStatus, SPMCKotlinx_serialization_jsonJsonPrimitive, SPMCCCPAConsentCompanion, SPMCCCPAConsent, SPMCCCPAConsentCCPAConsentStatusCompanion, SPMCConsentStatusConsentStatusGranularStatus, SPMCConsentStatusCompanion, SPMCConsentStatus, SPMCConsentStatusConsentStatusGranularStatusCompanion, SPMCGDPRConsentVendorGrantsValue, SPMCGDPRConsentGCMStatus, SPMCGDPRConsentCompanion, SPMCGDPRConsent, SPMCGDPRConsentGCMStatusCompanion, SPMCGDPRConsentVendorGrantsValueCompanion, SPMCUSNatConsentUSNatConsentSection, SPMCUSNatConsentUSNatUserConsents, SPMCUSNatConsentCompanion, SPMCUSNatConsent, SPMCUSNatConsentUSNatConsentSectionCompanion, SPMCUSNatConsentUSNatConsentableCompanion, SPMCUSNatConsentUSNatConsentable, SPMCUSNatConsentUSNatUserConsentsCompanion, SPMCDefaultRequestCompanion, SPMCDefaultRequest, SPMCErrorMetricsRequestCompanion, SPMCErrorMetricsRequest, SPMCChoiceAllRequestChoiceAllCampaigns, SPMCChoiceAllResponse, SPMCConsentStatusRequestMetaData, SPMCConsentStatusResponse, SPMCMessagesRequest, SPMCMessagesResponse, SPMCMetaDataResponse, SPMCCCPAChoiceRequest, SPMCCCPAChoiceResponse, SPMCGDPRChoiceRequest, SPMCGDPRChoiceResponse, SPMCUSNatChoiceRequest, SPMCUSNatChoiceResponse, SPMCPvDataRequest, SPMCPvDataResponse, SPMCDeviceInformation, SPMCKotlinx_serialization_jsonJsonElement, SPMCIncludeData, SPMCCCPAChoiceRequestCompanion, SPMCChoiceAllRequestCompanion, SPMCChoiceAllRequest, SPMCChoiceAllRequestChoiceAllCampaignsCampaign, SPMCChoiceAllRequestChoiceAllCampaignsCompanion, SPMCChoiceAllRequestChoiceAllCampaignsCampaignCompanion, SPMCConsentStatusRequestCompanion, SPMCConsentStatusRequest, SPMCConsentStatusRequestMetaDataCampaign, SPMCConsentStatusRequestMetaDataUSNatCampaign, SPMCConsentStatusRequestMetaDataCompanion, SPMCConsentStatusRequestMetaDataCampaignCompanion, SPMCConsentStatusRequestMetaDataUSNatCampaignCompanion, SPMCCustomConsentRequestCompanion, SPMCCustomConsentRequest, SPMCGDPRChoiceRequestCompanion, SPMCIDFAStatusReportRequestAppleTrackingPayload, SPMCIDFAStatusReportRequestCompanion, SPMCIDFAStatusReportRequest, SPMCIDFAStatusReportRequestAppleTrackingPayloadCompanion, SPMCIncludeDataTypeString, SPMCIncludeDataGPPConfig, SPMCIncludeDataCompanion, SPMCIncludeDataMspaBinaryFlag, SPMCIncludeDataMspaTernaryFlag, SPMCIncludeDataGPPConfigCompanion, SPMCIncludeDataMspaBinaryFlagCompanion, SPMCIncludeDataMspaTernaryFlagCompanion, SPMCIncludeDataTypeStringCompanion, SPMCMessagesRequestBody, SPMCMessagesRequestMetaData, SPMCMessagesRequestCompanion, SPMCMessagesRequestBodyCampaigns, SPMCMessagesRequestBodyCompanion, SPMCMessagesRequestBodyCampaignsGDPR, SPMCMessagesRequestBodyCampaignsIOS14, SPMCMessagesRequestBodyCampaignsCCPA, SPMCMessagesRequestBodyCampaignsUSNat, SPMCMessagesRequestBodyCampaignsCompanion, SPMCMessagesRequestBodyCampaignsCCPACompanion, SPMCMessagesRequestBodyCampaignsGDPRCompanion, SPMCMessagesRequestBodyCampaignsIOS14Companion, SPMCMessagesRequestBodyCampaignsUSNatCompanion, SPMCMessagesRequestMetaDataCampaign, SPMCMessagesRequestMetaDataCompanion, SPMCMessagesRequestMetaDataCampaignCompanion, SPMCMetaDataRequestCompanion, SPMCMetaDataRequest, SPMCMetaDataRequestCampaignsCampaign, SPMCMetaDataRequestCampaignsCompanion, SPMCMetaDataRequestCampaignsCampaignCompanion, SPMCPvDataRequestGDPR, SPMCPvDataRequestCCPA, SPMCPvDataRequestUSNat, SPMCPvDataRequestCompanion, SPMCPvDataRequestCCPACompanion, SPMCPvDataRequestGDPRCompanion, SPMCPvDataRequestUSNatCompanion, SPMCUSNatChoiceRequestCompanion, SPMCCCPAChoiceResponseCompanion, SPMCChoiceAllResponseGDPR, SPMCChoiceAllResponseCCPA, SPMCChoiceAllResponseUSNAT, SPMCChoiceAllResponseCompanion, SPMCChoiceAllResponseCCPACompanion, SPMCChoiceAllResponseGDPRPostPayload, SPMCChoiceAllResponseGDPRCompanion, SPMCChoiceAllResponseGDPRPostPayloadCompanion, SPMCChoiceAllResponseUSNATCompanion, SPMCConsentStatusResponseConsentStatusData, SPMCConsentStatusResponseCompanion, SPMCConsentStatusResponseConsentStatusDataCompanion, SPMCGDPRChoiceResponseCompanion, SPMCMessagesResponseCampaign<ConsentClass>, SPMCMessagesResponseCompanion, SPMCMessagesResponseCampaignCompanion, SPMCMessagesResponseMessage, SPMCMessagesResponseMessageMetaData, SPMCMessagesResponseCCPACompanion, SPMCMessagesResponseCCPA, SPMCMessagesResponseGDPRCompanion, SPMCMessagesResponseGDPR, SPMCKotlinNothing, SPMCMessagesResponseIos14Companion, SPMCMessagesResponseIos14, SPMCMessagesResponseMessageGDPRCategory, SPMCMessagesResponseMessageCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryType, SPMCMessagesResponseMessageGDPRCategoryVendor, SPMCMessagesResponseMessageGDPRCategoryCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeCompanion, SPMCStringEnumWithDefaultSerializer<T>, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeSerializer, SPMCMessagesResponseMessageGDPRCategoryVendorVendorType, SPMCMessagesResponseMessageGDPRCategoryVendorCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeSerializer, SPMCMessagesResponseMessageMetaDataMessageCategory, SPMCMessagesResponseMessageMetaDataMessageSubCategory, SPMCMessagesResponseMessageMetaDataCompanion, SPMCMessagesResponseMessageMetaDataMessageCategoryCompanion, SPMCIntEnumSerializer<T>, SPMCMessagesResponseMessageMetaDataMessageCategorySerializer, SPMCMessagesResponseMessageMetaDataMessageSubCategoryCompanion, SPMCMessagesResponseMessageMetaDataMessageSubCategorySerializer, SPMCMessagesResponseUSNatCompanion, SPMCMessagesResponseUSNat, SPMCMetaDataResponseMetaDataResponseGDPR, SPMCMetaDataResponseMetaDataResponseUSNat, SPMCMetaDataResponseMetaDataResponseCCPA, SPMCMetaDataResponseCompanion, SPMCMetaDataResponseMetaDataResponseCCPACompanion, SPMCMetaDataResponseMetaDataResponseGDPRCompanion, SPMCMetaDataResponseMetaDataResponseUSNatCompanion, SPMCPvDataResponseCampaign, SPMCPvDataResponseCompanion, SPMCPvDataResponseCampaignCompanion, SPMCUSNatChoiceResponseCompanion, SPMCRepositoryKeys, SPMCKtor_client_coreHttpClientCall, SPMCKtor_utilsGMTDate, SPMCKtor_httpHttpStatusCode, SPMCKtor_httpHttpProtocolVersion, SPMCKtor_client_coreHttpResponse, SPMCKtor_httpURLProtocol, SPMCKtor_httpURLBuilderCompanion, SPMCKtor_httpUrl, SPMCKtor_httpURLBuilder, SPMCKotlinx_serialization_jsonJson, SPMCKotlinRuntimeException, SPMCKotlinIllegalStateException, SPMCKotlinx_serialization_jsonJsonElementCompanion, SPMCKotlinx_serialization_jsonJsonPrimitiveCompanion, SPMCKotlinx_serialization_coreSerializersModule, SPMCKotlinx_serialization_coreSerialKind, SPMCKtor_client_coreHttpRequestData, SPMCKtor_client_coreHttpResponseData, SPMCKtor_client_coreHttpClient, SPMCKtor_client_coreHttpClientEngineConfig, SPMCKotlinx_coroutines_coreCoroutineDispatcher, SPMCKtor_client_coreHttpClientCallCompanion, SPMCKtor_utilsTypeInfo, SPMCKtor_utilsWeekDay, SPMCKtor_utilsMonth, SPMCKtor_utilsGMTDateCompanion, SPMCKtor_httpHttpStatusCodeCompanion, SPMCKtor_httpHttpProtocolVersionCompanion, SPMCKtor_httpURLProtocolCompanion, SPMCKtor_httpUrlCompanion, SPMCKotlinx_serialization_jsonJsonDefault, SPMCKotlinx_serialization_jsonJsonConfiguration, SPMCKtor_utilsAttributeKey<T>, SPMCKtor_httpHttpMethod, SPMCKtor_httpOutgoingContent, SPMCKtor_client_coreHttpClientConfig<T>, SPMCKtor_eventsEvents, SPMCKtor_client_coreHttpReceivePipeline, SPMCKtor_client_coreHttpRequestPipeline, SPMCKtor_client_coreHttpResponsePipeline, SPMCKtor_client_coreHttpSendPipeline, SPMCKtor_client_coreProxyConfig, SPMCKotlinAbstractCoroutineContextElement, SPMCKotlinx_coroutines_coreCoroutineDispatcherKey, SPMCKotlinByteArray, SPMCKotlinx_io_coreBuffer, SPMCKtor_utilsWeekDayCompanion, SPMCKtor_utilsMonthCompanion, SPMCKotlinKTypeProjection, SPMCKotlinx_serialization_jsonClassDiscriminatorMode, SPMCKtor_httpHttpMethodCompanion, SPMCKtor_httpContentType, SPMCKotlinCancellationException, SPMCKtor_eventsEventDefinition<T>, SPMCKtor_utilsPipelinePhase, SPMCKtor_utilsPipeline<TSubject, TContext>, SPMCKtor_client_coreHttpReceivePipelinePhases, SPMCKotlinUnit, SPMCKtor_client_coreHttpRequestPipelinePhases, SPMCKtor_client_coreHttpRequestBuilder, SPMCKtor_client_coreHttpResponsePipelinePhases, SPMCKtor_client_coreHttpResponseContainer, SPMCKtor_client_coreHttpSendPipelinePhases, SPMCKotlinAbstractCoroutineContextKey<B, E>, SPMCKotlinByteIterator, SPMCKotlinKVariance, SPMCKotlinKTypeProjectionCompanion, SPMCKtor_httpHeaderValueParam, SPMCKtor_httpHeaderValueWithParametersCompanion, SPMCKtor_httpHeaderValueWithParameters, SPMCKtor_httpContentTypeCompanion, SPMCKtor_httpHeadersBuilder, SPMCKtor_client_coreHttpRequestBuilderCompanion, SPMCKtor_utilsStringValuesBuilderImpl;
 
-@protocol SPMCKotlinComparable, SPMCKotlinx_serialization_coreKSerializer, SPMCSPClient, SPMCKtor_client_coreHttpClientEngine, SPMCKotlinx_serialization_coreEncoder, SPMCKotlinx_serialization_coreSerialDescriptor, SPMCKotlinx_serialization_coreSerializationStrategy, SPMCKotlinx_serialization_coreDecoder, SPMCKotlinx_serialization_coreDeserializationStrategy, SPMCIntEnum, SPMCMultiplatform_settingsSettings, SPMCKtor_httpHeaders, SPMCKtor_httpHttpMessage, SPMCKotlinCoroutineContext, SPMCKotlinx_coroutines_coreCoroutineScope, SPMCKtor_ioByteReadChannel, SPMCKotlinKSuspendFunction1, SPMCKtor_httpParameters, SPMCKtor_httpParametersBuilder, SPMCKtor_client_coreClientPlugin, SPMCKotlinIterator, SPMCKtor_client_coreHttpClientEngineCapability, SPMCKtor_ioCloseable, SPMCKotlinx_serialization_coreCompositeEncoder, SPMCKotlinAnnotation, SPMCKotlinx_serialization_coreCompositeDecoder, SPMCKotlinMapEntry, SPMCKtor_utilsStringValues, SPMCKotlinCoroutineContextElement, SPMCKotlinCoroutineContextKey, SPMCKtor_utilsAttributes, SPMCKtor_client_coreHttpRequest, SPMCKotlinx_io_coreSource, SPMCKotlinKType, SPMCKotlinKAnnotatedElement, SPMCKotlinKCallable, SPMCKotlinFunction, SPMCKotlinKFunction, SPMCKotlinSuspendFunction1, SPMCKtor_utilsStringValuesBuilder, SPMCKotlinx_serialization_coreSerialFormat, SPMCKotlinx_serialization_coreStringFormat, SPMCKtor_client_coreHttpClientPlugin, SPMCKotlinx_coroutines_coreJob, SPMCKotlinContinuation, SPMCKotlinContinuationInterceptor, SPMCKotlinx_coroutines_coreRunnable, SPMCKotlinx_serialization_coreSerializersModuleCollector, SPMCKotlinKClass, SPMCKotlinx_io_coreRawSink, SPMCKotlinAutoCloseable, SPMCKotlinx_io_coreRawSource, SPMCKotlinKClassifier, SPMCKotlinx_serialization_jsonJsonNamingStrategy, SPMCKotlinx_coroutines_coreChildHandle, SPMCKotlinx_coroutines_coreChildJob, SPMCKotlinx_coroutines_coreDisposableHandle, SPMCKotlinSequence, SPMCKotlinx_coroutines_coreSelectClause0, SPMCKotlinSuspendFunction2, SPMCKotlinKDeclarationContainer, SPMCKotlinx_io_coreSink, SPMCKotlinx_coroutines_coreParentJob, SPMCKotlinx_coroutines_coreSelectInstance, SPMCKotlinx_coroutines_coreSelectClause, SPMCKtor_httpHttpMessageBuilder;
+@protocol SPMCKotlinComparable, SPMCKotlinx_serialization_coreKSerializer, SPMCKotlinx_serialization_coreEncoder, SPMCKotlinx_serialization_coreSerialDescriptor, SPMCKotlinx_serialization_coreSerializationStrategy, SPMCKotlinx_serialization_coreDecoder, SPMCKotlinx_serialization_coreDeserializationStrategy, SPMCSPClient, SPMCKtor_client_coreHttpClientEngine, SPMCIntEnum, SPMCMultiplatform_settingsSettings, SPMCKtor_httpHeaders, SPMCKtor_httpHttpMessage, SPMCKotlinCoroutineContext, SPMCKotlinx_coroutines_coreCoroutineScope, SPMCKtor_ioByteReadChannel, SPMCKotlinKSuspendFunction1, SPMCKtor_httpParameters, SPMCKtor_httpParametersBuilder, SPMCKtor_client_coreClientPlugin, SPMCKotlinIterator, SPMCKotlinx_serialization_coreCompositeEncoder, SPMCKotlinAnnotation, SPMCKotlinx_serialization_coreCompositeDecoder, SPMCKtor_client_coreHttpClientEngineCapability, SPMCKtor_ioCloseable, SPMCKotlinMapEntry, SPMCKtor_utilsStringValues, SPMCKotlinCoroutineContextElement, SPMCKotlinCoroutineContextKey, SPMCKtor_utilsAttributes, SPMCKtor_client_coreHttpRequest, SPMCKotlinx_io_coreSource, SPMCKotlinKType, SPMCKotlinKAnnotatedElement, SPMCKotlinKCallable, SPMCKotlinFunction, SPMCKotlinKFunction, SPMCKotlinSuspendFunction1, SPMCKtor_utilsStringValuesBuilder, SPMCKotlinx_serialization_coreSerialFormat, SPMCKotlinx_serialization_coreStringFormat, SPMCKtor_client_coreHttpClientPlugin, SPMCKotlinx_serialization_coreSerializersModuleCollector, SPMCKotlinKClass, SPMCKotlinx_coroutines_coreJob, SPMCKotlinContinuation, SPMCKotlinContinuationInterceptor, SPMCKotlinx_coroutines_coreRunnable, SPMCKotlinx_io_coreRawSink, SPMCKotlinAutoCloseable, SPMCKotlinx_io_coreRawSource, SPMCKotlinKClassifier, SPMCKotlinx_serialization_jsonJsonNamingStrategy, SPMCKotlinKDeclarationContainer, SPMCKotlinx_coroutines_coreChildHandle, SPMCKotlinx_coroutines_coreChildJob, SPMCKotlinx_coroutines_coreDisposableHandle, SPMCKotlinSequence, SPMCKotlinx_coroutines_coreSelectClause0, SPMCKotlinSuspendFunction2, SPMCKotlinx_io_coreSink, SPMCKotlinx_coroutines_coreParentJob, SPMCKotlinx_coroutines_coreSelectInstance, SPMCKotlinx_coroutines_coreSelectClause, SPMCKtor_httpHttpMessageBuilder;
 
 NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
@@ -199,6 +199,77 @@ __attribute__((swift_name("OSName")))
 @property (class, readonly) NSArray<SPMCOSName *> *entries __attribute__((swift_name("entries")));
 @end
 
+__attribute__((swift_name("KotlinThrowable")))
+@interface SPMCKotlinThrowable : SPMCBase
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
++ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+- (instancetype)initWithMessage:(NSString * _Nullable)message __attribute__((swift_name("init(message:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithCause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(cause:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithMessage:(NSString * _Nullable)message cause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(message:cause:)"))) __attribute__((objc_designated_initializer));
+
+/**
+ * @note annotations
+ *   kotlin.experimental.ExperimentalNativeApi
+*/
+- (SPMCKotlinArray<NSString *> *)getStackTrace __attribute__((swift_name("getStackTrace()")));
+- (void)printStackTrace __attribute__((swift_name("printStackTrace()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCKotlinThrowable * _Nullable cause __attribute__((swift_name("cause")));
+@property (readonly) NSString * _Nullable message __attribute__((swift_name("message")));
+- (NSError *)asError __attribute__((swift_name("asError()")));
+@end
+
+__attribute__((swift_name("KotlinException")))
+@interface SPMCKotlinException : SPMCKotlinThrowable
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
++ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+- (instancetype)initWithMessage:(NSString * _Nullable)message __attribute__((swift_name("init(message:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithCause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(cause:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithMessage:(NSString * _Nullable)message cause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(message:cause:)"))) __attribute__((objc_designated_initializer));
+@end
+
+__attribute__((swift_name("SPError")))
+@interface SPMCSPError : SPMCKotlinException
+- (instancetype)initWithCode:(NSString *)code description:(NSString *)description campaignType:(SPMCSPCampaignType * _Nullable)campaignType __attribute__((swift_name("init(code:description:campaignType:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
++ (instancetype)new __attribute__((unavailable));
+- (instancetype)initWithMessage:(NSString * _Nullable)message __attribute__((swift_name("init(message:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+- (instancetype)initWithCause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(cause:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+- (instancetype)initWithMessage:(NSString * _Nullable)message cause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(message:cause:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+@property (readonly) SPMCSPCampaignType * _Nullable campaignType __attribute__((swift_name("campaignType")));
+@property (readonly) NSString *code __attribute__((swift_name("code")));
+@property (readonly) NSString *description_ __attribute__((swift_name("description_")));
+@end
+
+__attribute__((swift_name("InvalidChoiceAllParamsError")))
+@interface SPMCInvalidChoiceAllParamsError : SPMCSPError
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
++ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+- (instancetype)initWithCode:(NSString *)code description:(NSString *)description campaignType:(SPMCSPCampaignType * _Nullable)campaignType __attribute__((swift_name("init(code:description:campaignType:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("SPActionType")))
+@interface SPMCSPActionType : SPMCKotlinEnum<SPMCSPActionType *>
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
+- (instancetype)initWithName:(NSString *)name ordinal:(int32_t)ordinal __attribute__((swift_name("init(name:ordinal:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+@property (class, readonly) SPMCSPActionType *saveandexit __attribute__((swift_name("saveandexit")));
+@property (class, readonly) SPMCSPActionType *pmcancel __attribute__((swift_name("pmcancel")));
+@property (class, readonly) SPMCSPActionType *custom __attribute__((swift_name("custom")));
+@property (class, readonly) SPMCSPActionType *acceptall __attribute__((swift_name("acceptall")));
+@property (class, readonly) SPMCSPActionType *showprivacymanager __attribute__((swift_name("showprivacymanager")));
+@property (class, readonly) SPMCSPActionType *rejectall __attribute__((swift_name("rejectall")));
+@property (class, readonly) SPMCSPActionType *dismiss __attribute__((swift_name("dismiss")));
+@property (class, readonly) SPMCSPActionType *requestattaccess __attribute__((swift_name("requestattaccess")));
+@property (class, readonly) SPMCSPActionType *idfaaccepted __attribute__((swift_name("idfaaccepted")));
+@property (class, readonly) SPMCSPActionType *idfadenied __attribute__((swift_name("idfadenied")));
+@property (class, readonly) SPMCSPActionType *unknown __attribute__((swift_name("unknown")));
++ (SPMCKotlinArray<SPMCSPActionType *> *)values __attribute__((swift_name("values()")));
+@property (class, readonly) NSArray<SPMCSPActionType *> *entries __attribute__((swift_name("entries")));
+@property (readonly) int32_t type __attribute__((swift_name("type")));
+@end
+
 
 /**
  * @note annotations
@@ -245,6 +316,7 @@ __attribute__((swift_name("SPCampaignType")))
 @property (class, readonly) SPMCSPCampaignType *ccpa __attribute__((swift_name("ccpa")));
 @property (class, readonly) SPMCSPCampaignType *usnat __attribute__((swift_name("usnat")));
 @property (class, readonly) SPMCSPCampaignType *ios14 __attribute__((swift_name("ios14")));
+@property (class, readonly) SPMCSPCampaignType *unknown __attribute__((swift_name("unknown")));
 + (SPMCKotlinArray<SPMCSPCampaignType *> *)values __attribute__((swift_name("values()")));
 @property (class, readonly) NSArray<SPMCSPCampaignType *> *entries __attribute__((swift_name("entries")));
 @end
@@ -258,48 +330,6 @@ __attribute__((swift_name("SPCampaignType.Companion")))
 @property (class, readonly, getter=shared) SPMCSPCampaignTypeCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializerTypeParamsSerializers:(SPMCKotlinArray<id<SPMCKotlinx_serialization_coreKSerializer>> *)typeParamsSerializers __attribute__((swift_name("serializer(typeParamsSerializers:)")));
-@end
-
-__attribute__((swift_name("KotlinThrowable")))
-@interface SPMCKotlinThrowable : SPMCBase
-- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
-+ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
-- (instancetype)initWithMessage:(NSString * _Nullable)message __attribute__((swift_name("init(message:)"))) __attribute__((objc_designated_initializer));
-- (instancetype)initWithCause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(cause:)"))) __attribute__((objc_designated_initializer));
-- (instancetype)initWithMessage:(NSString * _Nullable)message cause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(message:cause:)"))) __attribute__((objc_designated_initializer));
-
-/**
- * @note annotations
- *   kotlin.experimental.ExperimentalNativeApi
-*/
-- (SPMCKotlinArray<NSString *> *)getStackTrace __attribute__((swift_name("getStackTrace()")));
-- (void)printStackTrace __attribute__((swift_name("printStackTrace()")));
-- (NSString *)description __attribute__((swift_name("description()")));
-@property (readonly) SPMCKotlinThrowable * _Nullable cause __attribute__((swift_name("cause")));
-@property (readonly) NSString * _Nullable message __attribute__((swift_name("message")));
-- (NSError *)asError __attribute__((swift_name("asError()")));
-@end
-
-__attribute__((swift_name("KotlinException")))
-@interface SPMCKotlinException : SPMCKotlinThrowable
-- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
-+ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
-- (instancetype)initWithMessage:(NSString * _Nullable)message __attribute__((swift_name("init(message:)"))) __attribute__((objc_designated_initializer));
-- (instancetype)initWithCause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(cause:)"))) __attribute__((objc_designated_initializer));
-- (instancetype)initWithMessage:(NSString * _Nullable)message cause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(message:cause:)"))) __attribute__((objc_designated_initializer));
-@end
-
-__attribute__((swift_name("SPError")))
-@interface SPMCSPError : SPMCKotlinException
-- (instancetype)initWithCode:(NSString *)code description:(NSString *)description campaignType:(SPMCSPCampaignType * _Nullable)campaignType __attribute__((swift_name("init(code:description:campaignType:)"))) __attribute__((objc_designated_initializer));
-- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
-+ (instancetype)new __attribute__((unavailable));
-- (instancetype)initWithMessage:(NSString * _Nullable)message __attribute__((swift_name("init(message:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
-- (instancetype)initWithCause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(cause:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
-- (instancetype)initWithMessage:(NSString * _Nullable)message cause:(SPMCKotlinThrowable * _Nullable)cause __attribute__((swift_name("init(message:cause:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
-@property (readonly) SPMCSPCampaignType * _Nullable campaignType __attribute__((swift_name("campaignType")));
-@property (readonly) NSString *code __attribute__((swift_name("code")));
-@property (readonly) NSString *description_ __attribute__((swift_name("description_")));
 @end
 
 __attribute__((swift_name("SPClientTimeout")))
@@ -607,9 +637,29 @@ __attribute__((swift_name("GDPRConsent.GCMStatus")))
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="ad_personalization")
+*/
 @property (readonly) NSString * _Nullable adPersonalization __attribute__((swift_name("adPersonalization")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="ad_storage")
+*/
 @property (readonly) NSString * _Nullable adStorage __attribute__((swift_name("adStorage")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="ad_user_data")
+*/
 @property (readonly) NSString * _Nullable adUserData __attribute__((swift_name("adUserData")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="analytics_storage")
+*/
 @property (readonly) NSString * _Nullable analyticsStorage __attribute__((swift_name("analyticsStorage")));
 @end
 
@@ -865,6 +915,12 @@ __attribute__((swift_name("SPClient")))
  * @note This method converts instances of Exception to errors.
  * Other uncaught Kotlin exceptions are fatal.
 */
+- (void)getChoiceAllActionType:(SPMCSPActionType *)actionType campaigns:(SPMCChoiceAllRequestChoiceAllCampaigns *)campaigns completionHandler:(void (^)(SPMCChoiceAllResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getChoiceAll(actionType:campaigns:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
 - (void)getConsentStatusAuthId:(NSString * _Nullable)authId metadata:(SPMCConsentStatusRequestMetaData *)metadata completionHandler:(void (^)(SPMCConsentStatusResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getConsentStatus(authId:metadata:completionHandler:)")));
 
 /**
@@ -883,7 +939,60 @@ __attribute__((swift_name("SPClient")))
  * @note This method converts instances of Exception to errors.
  * Other uncaught Kotlin exceptions are fatal.
 */
+- (void)postChoiceCCPAActionActionType:(SPMCSPActionType *)actionType request:(SPMCCCPAChoiceRequest *)request completionHandler:(void (^)(SPMCCCPAChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceCCPAAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)postChoiceGDPRActionActionType:(SPMCSPActionType *)actionType request:(SPMCGDPRChoiceRequest *)request completionHandler:(void (^)(SPMCGDPRChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceGDPRAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)postChoiceUSNatActionActionType:(SPMCSPActionType *)actionType request:(SPMCUSNatChoiceRequest *)request completionHandler:(void (^)(SPMCUSNatChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceUSNatAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
 - (void)postPvDataRequest:(SPMCPvDataRequest *)request completionHandler:(void (^)(SPMCPvDataResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postPvData(request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)postReportIdfaStatusPropertyId:(SPMCInt * _Nullable)propertyId uuid:(NSString * _Nullable)uuid requestUUID:(NSString *)requestUUID uuidType:(SPMCSPCampaignType * _Nullable)uuidType messageId:(SPMCInt * _Nullable)messageId idfaStatus:(SPMCSPIDFAStatus *)idfaStatus iosVersion:(NSString *)iosVersion partitionUUID:(NSString * _Nullable)partitionUUID completionHandler:(void (^)(NSError * _Nullable))completionHandler __attribute__((swift_name("postReportIdfaStatus(propertyId:uuid:requestUUID:uuidType:messageId:idfaStatus:iosVersion:partitionUUID:completionHandler:)")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreSerializationStrategy")))
+@protocol SPMCKotlinx_serialization_coreSerializationStrategy
+@required
+- (void)serializeEncoder:(id<SPMCKotlinx_serialization_coreEncoder>)encoder value:(id _Nullable)value __attribute__((swift_name("serialize(encoder:value:)")));
+@property (readonly) id<SPMCKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreDeserializationStrategy")))
+@protocol SPMCKotlinx_serialization_coreDeserializationStrategy
+@required
+- (id _Nullable)deserializeDecoder:(id<SPMCKotlinx_serialization_coreDecoder>)decoder __attribute__((swift_name("deserialize(decoder:)")));
+@property (readonly) id<SPMCKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreKSerializer")))
+@protocol SPMCKotlinx_serialization_coreKSerializer <SPMCKotlinx_serialization_coreSerializationStrategy, SPMCKotlinx_serialization_coreDeserializationStrategy>
+@required
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("SPJsonSerializer")))
+@interface SPMCSPJsonSerializer : SPMCBase <SPMCKotlinx_serialization_coreKSerializer>
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
++ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+- (NSString *)deserializeDecoder:(id<SPMCKotlinx_serialization_coreDecoder>)decoder __attribute__((swift_name("deserialize(decoder:)")));
+- (void)serializeEncoder:(id<SPMCKotlinx_serialization_coreEncoder>)encoder value:(NSString *)value __attribute__((swift_name("serialize(encoder:value:)")));
+@property (readonly) id<SPMCKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
 @end
 
 __attribute__((objc_subclassing_restricted))
@@ -915,6 +1024,12 @@ __attribute__((swift_name("SourcepointClient")))
  * @note This method converts instances of Exception to errors.
  * Other uncaught Kotlin exceptions are fatal.
 */
+- (void)getChoiceAllActionType:(SPMCSPActionType *)actionType campaigns:(SPMCChoiceAllRequestChoiceAllCampaigns *)campaigns completionHandler:(void (^)(SPMCChoiceAllResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getChoiceAll(actionType:campaigns:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
 - (void)getConsentStatusAuthId:(NSString * _Nullable)authId metadata:(SPMCConsentStatusRequestMetaData *)metadata completionHandler:(void (^)(SPMCConsentStatusResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getConsentStatus(authId:metadata:completionHandler:)")));
 
 /**
@@ -933,7 +1048,31 @@ __attribute__((swift_name("SourcepointClient")))
  * @note This method converts instances of Exception to errors.
  * Other uncaught Kotlin exceptions are fatal.
 */
+- (void)postChoiceCCPAActionActionType:(SPMCSPActionType *)actionType request:(SPMCCCPAChoiceRequest *)request completionHandler:(void (^)(SPMCCCPAChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceCCPAAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)postChoiceGDPRActionActionType:(SPMCSPActionType *)actionType request:(SPMCGDPRChoiceRequest *)request completionHandler:(void (^)(SPMCGDPRChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceGDPRAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)postChoiceUSNatActionActionType:(SPMCSPActionType *)actionType request:(SPMCUSNatChoiceRequest *)request completionHandler:(void (^)(SPMCUSNatChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceUSNatAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of Exception to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
 - (void)postPvDataRequest:(SPMCPvDataRequest *)request completionHandler:(void (^)(SPMCPvDataResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postPvData(request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)postReportIdfaStatusPropertyId:(SPMCInt * _Nullable)propertyId uuid:(NSString * _Nullable)uuid requestUUID:(NSString *)requestUUID uuidType:(SPMCSPCampaignType * _Nullable)uuidType messageId:(SPMCInt * _Nullable)messageId idfaStatus:(SPMCSPIDFAStatus *)idfaStatus iosVersion:(NSString *)iosVersion partitionUUID:(NSString * _Nullable)partitionUUID completionHandler:(void (^)(NSError * _Nullable))completionHandler __attribute__((swift_name("postReportIdfaStatus(propertyId:uuid:requestUUID:uuidType:messageId:idfaStatus:iosVersion:partitionUUID:completionHandler:)")));
 @end
 
 __attribute__((objc_subclassing_restricted))
@@ -942,6 +1081,132 @@ __attribute__((swift_name("WrapHttpTimeoutErrorConfig")))
 - (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
 + (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
 @property int32_t timeoutInSeconds __attribute__((swift_name("timeoutInSeconds")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("CCPAChoiceRequest")))
+@interface SPMCCCPAChoiceRequest : SPMCBase
+- (instancetype)initWithAuthId:(NSString * _Nullable)authId uuid:(NSString * _Nullable)uuid messageId:(NSString * _Nullable)messageId pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable)pubData pmSaveAndExitVariables:(NSString * _Nullable)pmSaveAndExitVariables sendPVData:(BOOL)sendPVData propertyId:(int32_t)propertyId sampleRate:(SPMCFloat * _Nullable)sampleRate includeData:(SPMCIncludeData *)includeData __attribute__((swift_name("init(authId:uuid:messageId:pubData:pmSaveAndExitVariables:sendPVData:propertyId:sampleRate:includeData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCCCPAChoiceRequestCompanion *companion __attribute__((swift_name("companion")));
+@property (readonly) NSString * _Nullable authId __attribute__((swift_name("authId")));
+@property (readonly) SPMCIncludeData *includeData __attribute__((swift_name("includeData")));
+@property (readonly) NSString * _Nullable messageId __attribute__((swift_name("messageId")));
+@property (readonly) NSString * _Nullable pmSaveAndExitVariables __attribute__((swift_name("pmSaveAndExitVariables")));
+@property (readonly) int32_t propertyId __attribute__((swift_name("propertyId")));
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable pubData __attribute__((swift_name("pubData")));
+@property (readonly) SPMCFloat * _Nullable sampleRate __attribute__((swift_name("sampleRate")));
+@property (readonly) BOOL sendPVData __attribute__((swift_name("sendPVData")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("CCPAChoiceRequest.Companion")))
+@interface SPMCCCPAChoiceRequestCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCCCPAChoiceRequestCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllRequest")))
+@interface SPMCChoiceAllRequest : SPMCDefaultRequest
+- (instancetype)initWithAccountId:(int32_t)accountId propertyId:(int32_t)propertyId campaigns:(SPMCChoiceAllRequestChoiceAllCampaigns *)campaigns idfaStatus:(SPMCSPIDFAStatus * _Nullable)idfaStatus includeData:(SPMCIncludeData * _Nullable)includeData hasCsp:(BOOL)hasCsp withSiteActions:(BOOL)withSiteActions includeCustomVendorsRes:(BOOL)includeCustomVendorsRes __attribute__((swift_name("init(accountId:propertyId:campaigns:idfaStatus:includeData:hasCsp:withSiteActions:includeCustomVendorsRes:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
++ (instancetype)new __attribute__((unavailable));
+- (instancetype)initWithSeen0:(int32_t)seen0 env:(NSString * _Nullable)env scriptType:(NSString * _Nullable)scriptType scriptVersion:(NSString * _Nullable)scriptVersion serializationConstructorMarker:(id _Nullable)serializationConstructorMarker __attribute__((swift_name("init(seen0:env:scriptType:scriptVersion:serializationConstructorMarker:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+@property (class, readonly, getter=companion) SPMCChoiceAllRequestCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllRequest *)doCopyAccountId:(int32_t)accountId propertyId:(int32_t)propertyId campaigns:(SPMCChoiceAllRequestChoiceAllCampaigns *)campaigns idfaStatus:(SPMCSPIDFAStatus * _Nullable)idfaStatus includeData:(SPMCIncludeData * _Nullable)includeData hasCsp:(BOOL)hasCsp withSiteActions:(BOOL)withSiteActions includeCustomVendorsRes:(BOOL)includeCustomVendorsRes __attribute__((swift_name("doCopy(accountId:propertyId:campaigns:idfaStatus:includeData:hasCsp:withSiteActions:includeCustomVendorsRes:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) int32_t accountId __attribute__((swift_name("accountId")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="metadata")
+*/
+@property (readonly) SPMCChoiceAllRequestChoiceAllCampaigns *campaigns __attribute__((swift_name("campaigns")));
+@property (readonly) SPMCSPIDFAStatus * _Nullable idfaStatus __attribute__((swift_name("idfaStatus")));
+@property (readonly) SPMCIncludeData * _Nullable includeData __attribute__((swift_name("includeData")));
+@property (readonly) int32_t propertyId __attribute__((swift_name("propertyId")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllRequest.ChoiceAllCampaigns")))
+@interface SPMCChoiceAllRequestChoiceAllCampaigns : SPMCBase
+- (instancetype)initWithGdpr:(SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable)gdpr ccpa:(SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable)ccpa usnat:(SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable)usnat __attribute__((swift_name("init(gdpr:ccpa:usnat:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCChoiceAllRequestChoiceAllCampaignsCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllRequestChoiceAllCampaigns *)doCopyGdpr:(SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable)gdpr ccpa:(SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable)ccpa usnat:(SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable)usnat __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable ccpa __attribute__((swift_name("ccpa")));
+@property (readonly) SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCChoiceAllRequestChoiceAllCampaignsCampaign * _Nullable usnat __attribute__((swift_name("usnat")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllRequest.ChoiceAllCampaignsCampaign")))
+@interface SPMCChoiceAllRequestChoiceAllCampaignsCampaign : SPMCBase
+- (instancetype)initWithApplies:(BOOL)applies __attribute__((swift_name("init(applies:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCChoiceAllRequestChoiceAllCampaignsCampaignCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllRequestChoiceAllCampaignsCampaign *)doCopyApplies:(BOOL)applies __attribute__((swift_name("doCopy(applies:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) BOOL applies __attribute__((swift_name("applies")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllRequest.ChoiceAllCampaignsCampaignCompanion")))
+@interface SPMCChoiceAllRequestChoiceAllCampaignsCampaignCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllRequestChoiceAllCampaignsCampaignCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllRequest.ChoiceAllCampaignsCompanion")))
+@interface SPMCChoiceAllRequestChoiceAllCampaignsCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllRequestChoiceAllCampaignsCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllRequest.Companion")))
+@interface SPMCChoiceAllRequestCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllRequestCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
 
@@ -1110,6 +1375,112 @@ __attribute__((swift_name("DefaultRequest.Companion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCDefaultRequestCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GDPRChoiceRequest")))
+@interface SPMCGDPRChoiceRequest : SPMCBase
+- (instancetype)initWithAuthId:(NSString * _Nullable)authId uuid:(NSString * _Nullable)uuid messageId:(NSString * _Nullable)messageId consentAllRef:(NSString * _Nullable)consentAllRef vendorListId:(NSString * _Nullable)vendorListId pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable)pubData pmSaveAndExitVariables:(NSString * _Nullable)pmSaveAndExitVariables sendPVData:(BOOL)sendPVData propertyId:(int32_t)propertyId sampleRate:(SPMCFloat * _Nullable)sampleRate idfaStatus:(SPMCSPIDFAStatus * _Nullable)idfaStatus granularStatus:(SPMCConsentStatusConsentStatusGranularStatus * _Nullable)granularStatus includeData:(SPMCIncludeData *)includeData __attribute__((swift_name("init(authId:uuid:messageId:consentAllRef:vendorListId:pubData:pmSaveAndExitVariables:sendPVData:propertyId:sampleRate:idfaStatus:granularStatus:includeData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCGDPRChoiceRequestCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCGDPRChoiceRequest *)doCopyAuthId:(NSString * _Nullable)authId uuid:(NSString * _Nullable)uuid messageId:(NSString * _Nullable)messageId consentAllRef:(NSString * _Nullable)consentAllRef vendorListId:(NSString * _Nullable)vendorListId pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable)pubData pmSaveAndExitVariables:(NSString * _Nullable)pmSaveAndExitVariables sendPVData:(BOOL)sendPVData propertyId:(int32_t)propertyId sampleRate:(SPMCFloat * _Nullable)sampleRate idfaStatus:(SPMCSPIDFAStatus * _Nullable)idfaStatus granularStatus:(SPMCConsentStatusConsentStatusGranularStatus * _Nullable)granularStatus includeData:(SPMCIncludeData *)includeData __attribute__((swift_name("doCopy(authId:uuid:messageId:consentAllRef:vendorListId:pubData:pmSaveAndExitVariables:sendPVData:propertyId:sampleRate:idfaStatus:granularStatus:includeData:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSString * _Nullable authId __attribute__((swift_name("authId")));
+@property (readonly) NSString * _Nullable consentAllRef __attribute__((swift_name("consentAllRef")));
+@property (readonly) SPMCConsentStatusConsentStatusGranularStatus * _Nullable granularStatus __attribute__((swift_name("granularStatus")));
+@property (readonly) SPMCSPIDFAStatus * _Nullable idfaStatus __attribute__((swift_name("idfaStatus")));
+@property (readonly) SPMCIncludeData *includeData __attribute__((swift_name("includeData")));
+@property (readonly) NSString * _Nullable messageId __attribute__((swift_name("messageId")));
+@property (readonly) NSString * _Nullable pmSaveAndExitVariables __attribute__((swift_name("pmSaveAndExitVariables")));
+@property (readonly) int32_t propertyId __attribute__((swift_name("propertyId")));
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable pubData __attribute__((swift_name("pubData")));
+@property (readonly) SPMCFloat * _Nullable sampleRate __attribute__((swift_name("sampleRate")));
+@property (readonly) BOOL sendPVData __attribute__((swift_name("sendPVData")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@property (readonly) NSString * _Nullable vendorListId __attribute__((swift_name("vendorListId")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GDPRChoiceRequest.Companion")))
+@interface SPMCGDPRChoiceRequestCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCGDPRChoiceRequestCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("IDFAStatusReportRequest")))
+@interface SPMCIDFAStatusReportRequest : SPMCBase
+- (instancetype)initWithAccountId:(int32_t)accountId propertyId:(SPMCInt * _Nullable)propertyId uuid:(NSString * _Nullable)uuid uuidType:(SPMCSPCampaignType * _Nullable)uuidType requestUUID:(NSString *)requestUUID iosVersion:(NSString *)iosVersion appleTracking:(SPMCIDFAStatusReportRequestAppleTrackingPayload *)appleTracking __attribute__((swift_name("init(accountId:propertyId:uuid:uuidType:requestUUID:iosVersion:appleTracking:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCIDFAStatusReportRequestCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCIDFAStatusReportRequest *)doCopyAccountId:(int32_t)accountId propertyId:(SPMCInt * _Nullable)propertyId uuid:(NSString * _Nullable)uuid uuidType:(SPMCSPCampaignType * _Nullable)uuidType requestUUID:(NSString *)requestUUID iosVersion:(NSString *)iosVersion appleTracking:(SPMCIDFAStatusReportRequestAppleTrackingPayload *)appleTracking __attribute__((swift_name("doCopy(accountId:propertyId:uuid:uuidType:requestUUID:iosVersion:appleTracking:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) int32_t accountId __attribute__((swift_name("accountId")));
+@property (readonly) SPMCIDFAStatusReportRequestAppleTrackingPayload *appleTracking __attribute__((swift_name("appleTracking")));
+@property (readonly) NSString *iosVersion __attribute__((swift_name("iosVersion")));
+@property (readonly) SPMCInt * _Nullable propertyId __attribute__((swift_name("propertyId")));
+@property (readonly) NSString *requestUUID __attribute__((swift_name("requestUUID")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@property (readonly) SPMCSPCampaignType * _Nullable uuidType __attribute__((swift_name("uuidType")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("IDFAStatusReportRequest.AppleTrackingPayload")))
+@interface SPMCIDFAStatusReportRequestAppleTrackingPayload : SPMCBase
+- (instancetype)initWithAppleChoice:(SPMCSPIDFAStatus *)appleChoice appleMsgId:(SPMCInt * _Nullable)appleMsgId messagePartitionUUID:(NSString * _Nullable)messagePartitionUUID __attribute__((swift_name("init(appleChoice:appleMsgId:messagePartitionUUID:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCIDFAStatusReportRequestAppleTrackingPayloadCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCIDFAStatusReportRequestAppleTrackingPayload *)doCopyAppleChoice:(SPMCSPIDFAStatus *)appleChoice appleMsgId:(SPMCInt * _Nullable)appleMsgId messagePartitionUUID:(NSString * _Nullable)messagePartitionUUID __attribute__((swift_name("doCopy(appleChoice:appleMsgId:messagePartitionUUID:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCSPIDFAStatus *appleChoice __attribute__((swift_name("appleChoice")));
+@property (readonly) SPMCInt * _Nullable appleMsgId __attribute__((swift_name("appleMsgId")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="partition_uuid")
+*/
+@property (readonly) NSString * _Nullable messagePartitionUUID __attribute__((swift_name("messagePartitionUUID")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("IDFAStatusReportRequest.AppleTrackingPayloadCompanion")))
+@interface SPMCIDFAStatusReportRequestAppleTrackingPayloadCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCIDFAStatusReportRequestAppleTrackingPayloadCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("IDFAStatusReportRequest.Companion")))
+@interface SPMCIDFAStatusReportRequestCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCIDFAStatusReportRequestCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -1790,6 +2161,301 @@ __attribute__((swift_name("PvDataRequest.USNatCompanion")))
  *   kotlinx.serialization.Serializable
 */
 __attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("USNatChoiceRequest")))
+@interface SPMCUSNatChoiceRequest : SPMCBase
+- (instancetype)initWithAuthId:(NSString * _Nullable)authId uuid:(NSString * _Nullable)uuid messageId:(NSString * _Nullable)messageId vendorListId:(NSString * _Nullable)vendorListId pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable)pubData pmSaveAndExitVariables:(NSString * _Nullable)pmSaveAndExitVariables sendPVData:(BOOL)sendPVData propertyId:(int32_t)propertyId sampleRate:(SPMCFloat * _Nullable)sampleRate idfaStatus:(SPMCSPIDFAStatus * _Nullable)idfaStatus granularStatus:(SPMCConsentStatusConsentStatusGranularStatus * _Nullable)granularStatus includeData:(SPMCIncludeData *)includeData __attribute__((swift_name("init(authId:uuid:messageId:vendorListId:pubData:pmSaveAndExitVariables:sendPVData:propertyId:sampleRate:idfaStatus:granularStatus:includeData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCUSNatChoiceRequestCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCUSNatChoiceRequest *)doCopyAuthId:(NSString * _Nullable)authId uuid:(NSString * _Nullable)uuid messageId:(NSString * _Nullable)messageId vendorListId:(NSString * _Nullable)vendorListId pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable)pubData pmSaveAndExitVariables:(NSString * _Nullable)pmSaveAndExitVariables sendPVData:(BOOL)sendPVData propertyId:(int32_t)propertyId sampleRate:(SPMCFloat * _Nullable)sampleRate idfaStatus:(SPMCSPIDFAStatus * _Nullable)idfaStatus granularStatus:(SPMCConsentStatusConsentStatusGranularStatus * _Nullable)granularStatus includeData:(SPMCIncludeData *)includeData __attribute__((swift_name("doCopy(authId:uuid:messageId:vendorListId:pubData:pmSaveAndExitVariables:sendPVData:propertyId:sampleRate:idfaStatus:granularStatus:includeData:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSString * _Nullable authId __attribute__((swift_name("authId")));
+@property (readonly) SPMCConsentStatusConsentStatusGranularStatus * _Nullable granularStatus __attribute__((swift_name("granularStatus")));
+@property (readonly) SPMCSPIDFAStatus * _Nullable idfaStatus __attribute__((swift_name("idfaStatus")));
+@property (readonly) SPMCIncludeData *includeData __attribute__((swift_name("includeData")));
+@property (readonly) NSString * _Nullable messageId __attribute__((swift_name("messageId")));
+@property (readonly) NSString * _Nullable pmSaveAndExitVariables __attribute__((swift_name("pmSaveAndExitVariables")));
+@property (readonly) int32_t propertyId __attribute__((swift_name("propertyId")));
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable pubData __attribute__((swift_name("pubData")));
+@property (readonly) SPMCFloat * _Nullable sampleRate __attribute__((swift_name("sampleRate")));
+@property (readonly) BOOL sendPVData __attribute__((swift_name("sendPVData")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@property (readonly) NSString * _Nullable vendorListId __attribute__((swift_name("vendorListId")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("USNatChoiceRequest.Companion")))
+@interface SPMCUSNatChoiceRequestCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCUSNatChoiceRequestCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("CCPAChoiceResponse")))
+@interface SPMCCCPAChoiceResponse : SPMCBase
+- (instancetype)initWithUuid:(NSString *)uuid dateCreated:(NSString * _Nullable)dateCreated consentedAll:(SPMCBoolean * _Nullable)consentedAll rejectedAll:(SPMCBoolean * _Nullable)rejectedAll status:(SPMCCCPAConsentCCPAConsentStatus * _Nullable)status uspstring:(NSString * _Nullable)uspstring gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled rejectedVendors:(NSArray<NSString *> * _Nullable)rejectedVendors rejectedCategories:(NSArray<NSString *> * _Nullable)rejectedCategories webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *)gppData __attribute__((swift_name("init(uuid:dateCreated:consentedAll:rejectedAll:status:uspstring:gpcEnabled:rejectedVendors:rejectedCategories:webConsentPayload:gppData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCCCPAChoiceResponseCompanion *companion __attribute__((swift_name("companion")));
+@property (readonly) SPMCBoolean * _Nullable consentedAll __attribute__((swift_name("consentedAll")));
+@property (readonly) NSString * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) SPMCBoolean * _Nullable gpcEnabled __attribute__((swift_name("gpcEnabled")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="GPPData")
+*/
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *gppData __attribute__((swift_name("gppData")));
+@property (readonly) SPMCBoolean * _Nullable rejectedAll __attribute__((swift_name("rejectedAll")));
+@property (readonly) NSArray<NSString *> * _Nullable rejectedCategories __attribute__((swift_name("rejectedCategories")));
+@property (readonly) NSArray<NSString *> * _Nullable rejectedVendors __attribute__((swift_name("rejectedVendors")));
+@property (readonly) SPMCCCPAConsentCCPAConsentStatus * _Nullable status __attribute__((swift_name("status")));
+@property (readonly) NSString * _Nullable uspstring __attribute__((swift_name("uspstring")));
+@property (readonly) NSString *uuid __attribute__((swift_name("uuid")));
+@property (readonly) NSString * _Nullable webConsentPayload __attribute__((swift_name("webConsentPayload")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("CCPAChoiceResponse.Companion")))
+@interface SPMCCCPAChoiceResponseCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCCCPAChoiceResponseCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse")))
+@interface SPMCChoiceAllResponse : SPMCBase
+- (instancetype)initWithGdpr:(SPMCChoiceAllResponseGDPR * _Nullable)gdpr ccpa:(SPMCChoiceAllResponseCCPA * _Nullable)ccpa usnat:(SPMCChoiceAllResponseUSNAT * _Nullable)usnat __attribute__((swift_name("init(gdpr:ccpa:usnat:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCChoiceAllResponseCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllResponse *)doCopyGdpr:(SPMCChoiceAllResponseGDPR * _Nullable)gdpr ccpa:(SPMCChoiceAllResponseCCPA * _Nullable)ccpa usnat:(SPMCChoiceAllResponseUSNAT * _Nullable)usnat __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCChoiceAllResponseCCPA * _Nullable ccpa __attribute__((swift_name("ccpa")));
+@property (readonly) SPMCChoiceAllResponseGDPR * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCChoiceAllResponseUSNAT * _Nullable usnat __attribute__((swift_name("usnat")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.CCPA")))
+@interface SPMCChoiceAllResponseCCPA : SPMCBase
+- (instancetype)initWithConsentedAll:(BOOL)consentedAll dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate rejectedAll:(BOOL)rejectedAll status:(SPMCCCPAConsentCCPAConsentStatus *)status uspstring:(NSString *)uspstring rejectedVendors:(NSArray<NSString *> *)rejectedVendors rejectedCategories:(NSArray<NSString *> *)rejectedCategories gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *)gppData __attribute__((swift_name("init(consentedAll:dateCreated:expirationDate:rejectedAll:status:uspstring:rejectedVendors:rejectedCategories:gpcEnabled:webConsentPayload:gppData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCChoiceAllResponseCCPACompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllResponseCCPA *)doCopyConsentedAll:(BOOL)consentedAll dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate rejectedAll:(BOOL)rejectedAll status:(SPMCCCPAConsentCCPAConsentStatus *)status uspstring:(NSString *)uspstring rejectedVendors:(NSArray<NSString *> *)rejectedVendors rejectedCategories:(NSArray<NSString *> *)rejectedCategories gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *)gppData __attribute__((swift_name("doCopy(consentedAll:dateCreated:expirationDate:rejectedAll:status:uspstring:rejectedVendors:rejectedCategories:gpcEnabled:webConsentPayload:gppData:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) BOOL consentedAll __attribute__((swift_name("consentedAll")));
+@property (readonly) NSString * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) NSString * _Nullable expirationDate __attribute__((swift_name("expirationDate")));
+@property (readonly) SPMCBoolean * _Nullable gpcEnabled __attribute__((swift_name("gpcEnabled")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="GPPData")
+*/
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *gppData __attribute__((swift_name("gppData")));
+@property (readonly) BOOL rejectedAll __attribute__((swift_name("rejectedAll")));
+@property (readonly) NSArray<NSString *> *rejectedCategories __attribute__((swift_name("rejectedCategories")));
+@property (readonly) NSArray<NSString *> *rejectedVendors __attribute__((swift_name("rejectedVendors")));
+@property (readonly) SPMCCCPAConsentCCPAConsentStatus *status __attribute__((swift_name("status")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="uspString")
+*/
+@property (readonly) NSString *uspstring __attribute__((swift_name("uspstring")));
+@property (readonly) NSString * _Nullable webConsentPayload __attribute__((swift_name("webConsentPayload")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.CCPACompanion")))
+@interface SPMCChoiceAllResponseCCPACompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllResponseCCPACompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.Companion")))
+@interface SPMCChoiceAllResponseCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllResponseCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.GDPR")))
+@interface SPMCChoiceAllResponseGDPR : SPMCBase
+- (instancetype)initWithAddtlConsent:(NSString * _Nullable)addtlConsent childPmId:(NSString * _Nullable)childPmId euconsent:(NSString *)euconsent hasLocalData:(SPMCBoolean * _Nullable)hasLocalData dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate tcData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)tcData consentStatus:(SPMCConsentStatus *)consentStatus grants:(NSDictionary<NSString *, SPMCGDPRConsentVendorGrantsValue *> *)grants postPayload:(SPMCChoiceAllResponseGDPRPostPayload * _Nullable)postPayload webConsentPayload:(NSString * _Nullable)webConsentPayload gcmStatus:(SPMCGDPRConsentGCMStatus * _Nullable)gcmStatus acceptedLegIntCategories:(NSArray<NSString *> *)acceptedLegIntCategories acceptedLegIntVendors:(NSArray<NSString *> *)acceptedLegIntVendors acceptedVendors:(NSArray<NSString *> *)acceptedVendors acceptedCategories:(NSArray<NSString *> *)acceptedCategories acceptedSpecialFeatures:(NSArray<NSString *> *)acceptedSpecialFeatures __attribute__((swift_name("init(addtlConsent:childPmId:euconsent:hasLocalData:dateCreated:expirationDate:tcData:consentStatus:grants:postPayload:webConsentPayload:gcmStatus:acceptedLegIntCategories:acceptedLegIntVendors:acceptedVendors:acceptedCategories:acceptedSpecialFeatures:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCChoiceAllResponseGDPRCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllResponseGDPR *)doCopyAddtlConsent:(NSString * _Nullable)addtlConsent childPmId:(NSString * _Nullable)childPmId euconsent:(NSString *)euconsent hasLocalData:(SPMCBoolean * _Nullable)hasLocalData dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate tcData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)tcData consentStatus:(SPMCConsentStatus *)consentStatus grants:(NSDictionary<NSString *, SPMCGDPRConsentVendorGrantsValue *> *)grants postPayload:(SPMCChoiceAllResponseGDPRPostPayload * _Nullable)postPayload webConsentPayload:(NSString * _Nullable)webConsentPayload gcmStatus:(SPMCGDPRConsentGCMStatus * _Nullable)gcmStatus acceptedLegIntCategories:(NSArray<NSString *> *)acceptedLegIntCategories acceptedLegIntVendors:(NSArray<NSString *> *)acceptedLegIntVendors acceptedVendors:(NSArray<NSString *> *)acceptedVendors acceptedCategories:(NSArray<NSString *> *)acceptedCategories acceptedSpecialFeatures:(NSArray<NSString *> *)acceptedSpecialFeatures __attribute__((swift_name("doCopy(addtlConsent:childPmId:euconsent:hasLocalData:dateCreated:expirationDate:tcData:consentStatus:grants:postPayload:webConsentPayload:gcmStatus:acceptedLegIntCategories:acceptedLegIntVendors:acceptedVendors:acceptedCategories:acceptedSpecialFeatures:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="categories")
+*/
+@property (readonly) NSArray<NSString *> *acceptedCategories __attribute__((swift_name("acceptedCategories")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="legIntCategories")
+*/
+@property (readonly) NSArray<NSString *> *acceptedLegIntCategories __attribute__((swift_name("acceptedLegIntCategories")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="legIntVendors")
+*/
+@property (readonly) NSArray<NSString *> *acceptedLegIntVendors __attribute__((swift_name("acceptedLegIntVendors")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="specialFeatures")
+*/
+@property (readonly) NSArray<NSString *> *acceptedSpecialFeatures __attribute__((swift_name("acceptedSpecialFeatures")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="vendors")
+*/
+@property (readonly) NSArray<NSString *> *acceptedVendors __attribute__((swift_name("acceptedVendors")));
+@property (readonly) NSString * _Nullable addtlConsent __attribute__((swift_name("addtlConsent")));
+@property (readonly) NSString * _Nullable childPmId __attribute__((swift_name("childPmId")));
+@property (readonly) SPMCConsentStatus *consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) NSString * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) NSString *euconsent __attribute__((swift_name("euconsent")));
+@property (readonly) NSString * _Nullable expirationDate __attribute__((swift_name("expirationDate")));
+@property (readonly) SPMCGDPRConsentGCMStatus * _Nullable gcmStatus __attribute__((swift_name("gcmStatus")));
+@property (readonly) NSDictionary<NSString *, SPMCGDPRConsentVendorGrantsValue *> *grants __attribute__((swift_name("grants")));
+@property (readonly) SPMCBoolean * _Nullable hasLocalData __attribute__((swift_name("hasLocalData")));
+@property (readonly) SPMCChoiceAllResponseGDPRPostPayload * _Nullable postPayload __attribute__((swift_name("postPayload")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="TCData")
+*/
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable tcData __attribute__((swift_name("tcData")));
+@property (readonly) NSString * _Nullable webConsentPayload __attribute__((swift_name("webConsentPayload")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.GDPRCompanion")))
+@interface SPMCChoiceAllResponseGDPRCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllResponseGDPRCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.GDPRPostPayload")))
+@interface SPMCChoiceAllResponseGDPRPostPayload : SPMCBase
+- (instancetype)initWithConsentAllRef:(NSString * _Nullable)consentAllRef vendorListId:(NSString *)vendorListId granularStatus:(SPMCConsentStatusConsentStatusGranularStatus * _Nullable)granularStatus __attribute__((swift_name("init(consentAllRef:vendorListId:granularStatus:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCChoiceAllResponseGDPRPostPayloadCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllResponseGDPRPostPayload *)doCopyConsentAllRef:(NSString * _Nullable)consentAllRef vendorListId:(NSString *)vendorListId granularStatus:(SPMCConsentStatusConsentStatusGranularStatus * _Nullable)granularStatus __attribute__((swift_name("doCopy(consentAllRef:vendorListId:granularStatus:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSString * _Nullable consentAllRef __attribute__((swift_name("consentAllRef")));
+@property (readonly) SPMCConsentStatusConsentStatusGranularStatus * _Nullable granularStatus __attribute__((swift_name("granularStatus")));
+@property (readonly) NSString *vendorListId __attribute__((swift_name("vendorListId")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.GDPRPostPayloadCompanion")))
+@interface SPMCChoiceAllResponseGDPRPostPayloadCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllResponseGDPRPostPayloadCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.USNAT")))
+@interface SPMCChoiceAllResponseUSNAT : SPMCBase
+- (instancetype)initWithCategories:(NSArray<NSString *> *)categories consentStatus:(SPMCConsentStatus *)consentStatus consentStrings:(NSArray<SPMCUSNatConsentUSNatConsentSection *> *)consentStrings consentedToAll:(BOOL)consentedToAll dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate rejectedAny:(BOOL)rejectedAny gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *)gppData __attribute__((swift_name("init(categories:consentStatus:consentStrings:consentedToAll:dateCreated:expirationDate:rejectedAny:gpcEnabled:webConsentPayload:gppData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCChoiceAllResponseUSNATCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCChoiceAllResponseUSNAT *)doCopyCategories:(NSArray<NSString *> *)categories consentStatus:(SPMCConsentStatus *)consentStatus consentStrings:(NSArray<SPMCUSNatConsentUSNatConsentSection *> *)consentStrings consentedToAll:(BOOL)consentedToAll dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate rejectedAny:(BOOL)rejectedAny gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *)gppData __attribute__((swift_name("doCopy(categories:consentStatus:consentStrings:consentedToAll:dateCreated:expirationDate:rejectedAny:gpcEnabled:webConsentPayload:gppData:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSArray<NSString *> *categories __attribute__((swift_name("categories")));
+@property (readonly) SPMCConsentStatus *consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) NSArray<SPMCUSNatConsentUSNatConsentSection *> *consentStrings __attribute__((swift_name("consentStrings")));
+@property (readonly) BOOL consentedToAll __attribute__((swift_name("consentedToAll")));
+@property (readonly) NSString * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) NSString * _Nullable expirationDate __attribute__((swift_name("expirationDate")));
+@property (readonly) SPMCBoolean * _Nullable gpcEnabled __attribute__((swift_name("gpcEnabled")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="GPPData")
+*/
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *gppData __attribute__((swift_name("gppData")));
+@property (readonly) BOOL rejectedAny __attribute__((swift_name("rejectedAny")));
+@property (readonly) NSString * _Nullable webConsentPayload __attribute__((swift_name("webConsentPayload")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ChoiceAllResponse.USNATCompanion")))
+@interface SPMCChoiceAllResponseUSNATCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCChoiceAllResponseUSNATCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("ConsentStatusResponse")))
 @interface SPMCConsentStatusResponse : SPMCBase
 - (instancetype)initWithConsentStatusData:(SPMCConsentStatusResponseConsentStatusData *)consentStatusData localState:(NSString *)localState __attribute__((swift_name("init(consentStatusData:localState:)"))) __attribute__((objc_designated_initializer));
@@ -1838,6 +2504,76 @@ __attribute__((swift_name("ConsentStatusResponse.ConsentStatusDataCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCConsentStatusResponseConsentStatusDataCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GDPRChoiceResponse")))
+@interface SPMCGDPRChoiceResponse : SPMCBase
+- (instancetype)initWithUuid:(NSString *)uuid dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate tcData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)tcData euconsent:(NSString * _Nullable)euconsent consentStatus:(SPMCConsentStatus * _Nullable)consentStatus grants:(NSDictionary<NSString *, SPMCGDPRConsentVendorGrantsValue *> * _Nullable)grants webConsentPayload:(NSString * _Nullable)webConsentPayload gcmStatus:(SPMCGDPRConsentGCMStatus * _Nullable)gcmStatus acceptedLegIntCategories:(NSArray<NSString *> * _Nullable)acceptedLegIntCategories acceptedLegIntVendors:(NSArray<NSString *> * _Nullable)acceptedLegIntVendors acceptedVendors:(NSArray<NSString *> * _Nullable)acceptedVendors acceptedCategories:(NSArray<NSString *> * _Nullable)acceptedCategories acceptedSpecialFeatures:(NSArray<NSString *> * _Nullable)acceptedSpecialFeatures __attribute__((swift_name("init(uuid:dateCreated:expirationDate:tcData:euconsent:consentStatus:grants:webConsentPayload:gcmStatus:acceptedLegIntCategories:acceptedLegIntVendors:acceptedVendors:acceptedCategories:acceptedSpecialFeatures:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCGDPRChoiceResponseCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCGDPRChoiceResponse *)doCopyUuid:(NSString *)uuid dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate tcData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable)tcData euconsent:(NSString * _Nullable)euconsent consentStatus:(SPMCConsentStatus * _Nullable)consentStatus grants:(NSDictionary<NSString *, SPMCGDPRConsentVendorGrantsValue *> * _Nullable)grants webConsentPayload:(NSString * _Nullable)webConsentPayload gcmStatus:(SPMCGDPRConsentGCMStatus * _Nullable)gcmStatus acceptedLegIntCategories:(NSArray<NSString *> * _Nullable)acceptedLegIntCategories acceptedLegIntVendors:(NSArray<NSString *> * _Nullable)acceptedLegIntVendors acceptedVendors:(NSArray<NSString *> * _Nullable)acceptedVendors acceptedCategories:(NSArray<NSString *> * _Nullable)acceptedCategories acceptedSpecialFeatures:(NSArray<NSString *> * _Nullable)acceptedSpecialFeatures __attribute__((swift_name("doCopy(uuid:dateCreated:expirationDate:tcData:euconsent:consentStatus:grants:webConsentPayload:gcmStatus:acceptedLegIntCategories:acceptedLegIntVendors:acceptedVendors:acceptedCategories:acceptedSpecialFeatures:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="categories")
+*/
+@property (readonly) NSArray<NSString *> * _Nullable acceptedCategories __attribute__((swift_name("acceptedCategories")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="legIntCategories")
+*/
+@property (readonly) NSArray<NSString *> * _Nullable acceptedLegIntCategories __attribute__((swift_name("acceptedLegIntCategories")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="legIntVendors")
+*/
+@property (readonly) NSArray<NSString *> * _Nullable acceptedLegIntVendors __attribute__((swift_name("acceptedLegIntVendors")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="specialFeatures")
+*/
+@property (readonly) NSArray<NSString *> * _Nullable acceptedSpecialFeatures __attribute__((swift_name("acceptedSpecialFeatures")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="vendors")
+*/
+@property (readonly) NSArray<NSString *> * _Nullable acceptedVendors __attribute__((swift_name("acceptedVendors")));
+@property (readonly) SPMCConsentStatus * _Nullable consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) NSString * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) NSString * _Nullable euconsent __attribute__((swift_name("euconsent")));
+@property (readonly) NSString * _Nullable expirationDate __attribute__((swift_name("expirationDate")));
+@property (readonly) SPMCGDPRConsentGCMStatus * _Nullable gcmStatus __attribute__((swift_name("gcmStatus")));
+@property (readonly) NSDictionary<NSString *, SPMCGDPRConsentVendorGrantsValue *> * _Nullable grants __attribute__((swift_name("grants")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="TCData")
+*/
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> * _Nullable tcData __attribute__((swift_name("tcData")));
+@property (readonly) NSString *uuid __attribute__((swift_name("uuid")));
+@property (readonly) NSString * _Nullable webConsentPayload __attribute__((swift_name("webConsentPayload")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GDPRChoiceResponse.Companion")))
+@interface SPMCGDPRChoiceResponseCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCGDPRChoiceResponseCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -2112,25 +2848,6 @@ __attribute__((swift_name("MessagesResponse.MessageGDPRCategoryCategoryTypeCompa
 @property (class, readonly, getter=shared) SPMCMessagesResponseMessageGDPRCategoryCategoryTypeCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializerTypeParamsSerializers:(SPMCKotlinArray<id<SPMCKotlinx_serialization_coreKSerializer>> *)typeParamsSerializers __attribute__((swift_name("serializer(typeParamsSerializers:)")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreSerializationStrategy")))
-@protocol SPMCKotlinx_serialization_coreSerializationStrategy
-@required
-- (void)serializeEncoder:(id<SPMCKotlinx_serialization_coreEncoder>)encoder value:(id _Nullable)value __attribute__((swift_name("serialize(encoder:value:)")));
-@property (readonly) id<SPMCKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreDeserializationStrategy")))
-@protocol SPMCKotlinx_serialization_coreDeserializationStrategy
-@required
-- (id _Nullable)deserializeDecoder:(id<SPMCKotlinx_serialization_coreDecoder>)decoder __attribute__((swift_name("deserialize(decoder:)")));
-@property (readonly) id<SPMCKotlinx_serialization_coreSerialDescriptor> descriptor __attribute__((swift_name("descriptor")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreKSerializer")))
-@protocol SPMCKotlinx_serialization_coreKSerializer <SPMCKotlinx_serialization_coreSerializationStrategy, SPMCKotlinx_serialization_coreDeserializationStrategy>
-@required
 @end
 
 __attribute__((swift_name("StringEnumWithDefaultSerializer")))
@@ -2594,6 +3311,46 @@ __attribute__((swift_name("PvDataResponse.Companion")))
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("USNatChoiceResponse")))
+@interface SPMCUSNatChoiceResponse : SPMCBase
+- (instancetype)initWithUuid:(NSString * _Nullable)uuid consentStatus:(SPMCConsentStatus *)consentStatus consentStrings:(NSArray<SPMCUSNatConsentUSNatConsentSection *> *)consentStrings dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *)gppData userConsents:(SPMCUSNatConsentUSNatUserConsents *)userConsents __attribute__((swift_name("init(uuid:consentStatus:consentStrings:dateCreated:expirationDate:gpcEnabled:webConsentPayload:gppData:userConsents:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCUSNatChoiceResponseCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCUSNatChoiceResponse *)doCopyUuid:(NSString * _Nullable)uuid consentStatus:(SPMCConsentStatus *)consentStatus consentStrings:(NSArray<SPMCUSNatConsentUSNatConsentSection *> *)consentStrings dateCreated:(NSString * _Nullable)dateCreated expirationDate:(NSString * _Nullable)expirationDate gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled webConsentPayload:(NSString * _Nullable)webConsentPayload gppData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *)gppData userConsents:(SPMCUSNatConsentUSNatUserConsents *)userConsents __attribute__((swift_name("doCopy(uuid:consentStatus:consentStrings:dateCreated:expirationDate:gpcEnabled:webConsentPayload:gppData:userConsents:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCConsentStatus *consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) NSArray<SPMCUSNatConsentUSNatConsentSection *> *consentStrings __attribute__((swift_name("consentStrings")));
+@property (readonly) NSString * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) NSString * _Nullable expirationDate __attribute__((swift_name("expirationDate")));
+@property (readonly) SPMCBoolean * _Nullable gpcEnabled __attribute__((swift_name("gpcEnabled")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="GPPData")
+*/
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonPrimitive *> *gppData __attribute__((swift_name("gppData")));
+@property (readonly) SPMCUSNatConsentUSNatUserConsents *userConsents __attribute__((swift_name("userConsents")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@property (readonly) NSString * _Nullable webConsentPayload __attribute__((swift_name("webConsentPayload")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("USNatChoiceResponse.Companion")))
+@interface SPMCUSNatChoiceResponseCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCUSNatChoiceResponseCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("Repository")))
 @interface SPMCRepository : SPMCBase
@@ -2773,32 +3530,6 @@ __attribute__((swift_name("Kotlinx_serialization_jsonJsonPrimitive")))
 @property (readonly) BOOL isString __attribute__((swift_name("isString")));
 @end
 
-__attribute__((swift_name("Ktor_ioCloseable")))
-@protocol SPMCKtor_ioCloseable
-@required
-- (void)close __attribute__((swift_name("close()")));
-@end
-
-__attribute__((swift_name("Ktor_client_coreHttpClientEngine")))
-@protocol SPMCKtor_client_coreHttpClientEngine <SPMCKotlinx_coroutines_coreCoroutineScope, SPMCKtor_ioCloseable>
-@required
-
-/**
- * @note This method converts instances of CancellationException to errors.
- * Other uncaught Kotlin exceptions are fatal.
-*/
-- (void)executeData:(SPMCKtor_client_coreHttpRequestData *)data completionHandler:(void (^)(SPMCKtor_client_coreHttpResponseData * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("execute(data:completionHandler:)")));
-- (void)installClient:(SPMCKtor_client_coreHttpClient *)client __attribute__((swift_name("install(client:)")));
-@property (readonly) SPMCKtor_client_coreHttpClientEngineConfig *config __attribute__((swift_name("config")));
-@property (readonly) SPMCKotlinx_coroutines_coreCoroutineDispatcher *dispatcher __attribute__((swift_name("dispatcher")));
-@property (readonly) NSSet<id<SPMCKtor_client_coreHttpClientEngineCapability>> *supportedCapabilities __attribute__((swift_name("supportedCapabilities")));
-@end
-
-__attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("KotlinNothing")))
-@interface SPMCKotlinNothing : SPMCBase
-@end
-
 __attribute__((swift_name("Kotlinx_serialization_coreEncoder")))
 @protocol SPMCKotlinx_serialization_coreEncoder
 @required
@@ -2938,6 +3669,32 @@ __attribute__((swift_name("Kotlinx_serialization_coreDecoder")))
 - (int16_t)decodeShort __attribute__((swift_name("decodeShort()")));
 - (NSString *)decodeString __attribute__((swift_name("decodeString()")));
 @property (readonly) SPMCKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
+@end
+
+__attribute__((swift_name("Ktor_ioCloseable")))
+@protocol SPMCKtor_ioCloseable
+@required
+- (void)close __attribute__((swift_name("close()")));
+@end
+
+__attribute__((swift_name("Ktor_client_coreHttpClientEngine")))
+@protocol SPMCKtor_client_coreHttpClientEngine <SPMCKotlinx_coroutines_coreCoroutineScope, SPMCKtor_ioCloseable>
+@required
+
+/**
+ * @note This method converts instances of CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)executeData:(SPMCKtor_client_coreHttpRequestData *)data completionHandler:(void (^)(SPMCKtor_client_coreHttpResponseData * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("execute(data:completionHandler:)")));
+- (void)installClient:(SPMCKtor_client_coreHttpClient *)client __attribute__((swift_name("install(client:)")));
+@property (readonly) SPMCKtor_client_coreHttpClientEngineConfig *config __attribute__((swift_name("config")));
+@property (readonly) SPMCKotlinx_coroutines_coreCoroutineDispatcher *dispatcher __attribute__((swift_name("dispatcher")));
+@property (readonly) NSSet<id<SPMCKtor_client_coreHttpClientEngineCapability>> *supportedCapabilities __attribute__((swift_name("supportedCapabilities")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KotlinNothing")))
+@interface SPMCKotlinNothing : SPMCBase
 @end
 
 __attribute__((swift_name("Multiplatform_settingsSettings")))
@@ -3297,6 +4054,112 @@ __attribute__((swift_name("Kotlinx_serialization_jsonJsonPrimitive.Companion")))
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
+__attribute__((swift_name("Kotlinx_serialization_coreCompositeEncoder")))
+@protocol SPMCKotlinx_serialization_coreCompositeEncoder
+@required
+- (void)encodeBooleanElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(BOOL)value __attribute__((swift_name("encodeBooleanElement(descriptor:index:value:)")));
+- (void)encodeByteElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int8_t)value __attribute__((swift_name("encodeByteElement(descriptor:index:value:)")));
+- (void)encodeCharElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(unichar)value __attribute__((swift_name("encodeCharElement(descriptor:index:value:)")));
+- (void)encodeDoubleElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(double)value __attribute__((swift_name("encodeDoubleElement(descriptor:index:value:)")));
+- (void)encodeFloatElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(float)value __attribute__((swift_name("encodeFloatElement(descriptor:index:value:)")));
+- (id<SPMCKotlinx_serialization_coreEncoder>)encodeInlineElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("encodeInlineElement(descriptor:index:)")));
+- (void)encodeIntElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int32_t)value __attribute__((swift_name("encodeIntElement(descriptor:index:value:)")));
+- (void)encodeLongElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int64_t)value __attribute__((swift_name("encodeLongElement(descriptor:index:value:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (void)encodeNullableSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<SPMCKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeNullableSerializableElement(descriptor:index:serializer:value:)")));
+- (void)encodeSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<SPMCKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeSerializableElement(descriptor:index:serializer:value:)")));
+- (void)encodeShortElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int16_t)value __attribute__((swift_name("encodeShortElement(descriptor:index:value:)")));
+- (void)encodeStringElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(NSString *)value __attribute__((swift_name("encodeStringElement(descriptor:index:value:)")));
+- (void)endStructureDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (BOOL)shouldEncodeElementDefaultDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("shouldEncodeElementDefault(descriptor:index:)")));
+@property (readonly) SPMCKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreSerializersModule")))
+@interface SPMCKotlinx_serialization_coreSerializersModule : SPMCBase
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (void)dumpToCollector:(id<SPMCKotlinx_serialization_coreSerializersModuleCollector>)collector __attribute__((swift_name("dumpTo(collector:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id<SPMCKotlinx_serialization_coreKSerializer> _Nullable)getContextualKClass:(id<SPMCKotlinKClass>)kClass typeArgumentsSerializers:(NSArray<id<SPMCKotlinx_serialization_coreKSerializer>> *)typeArgumentsSerializers __attribute__((swift_name("getContextual(kClass:typeArgumentsSerializers:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id<SPMCKotlinx_serialization_coreSerializationStrategy> _Nullable)getPolymorphicBaseClass:(id<SPMCKotlinKClass>)baseClass value:(id)value __attribute__((swift_name("getPolymorphic(baseClass:value:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id<SPMCKotlinx_serialization_coreDeserializationStrategy> _Nullable)getPolymorphicBaseClass:(id<SPMCKotlinKClass>)baseClass serializedClassName:(NSString * _Nullable)serializedClassName __attribute__((swift_name("getPolymorphic(baseClass:serializedClassName:)")));
+@end
+
+__attribute__((swift_name("KotlinAnnotation")))
+@protocol SPMCKotlinAnnotation
+@required
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+__attribute__((swift_name("Kotlinx_serialization_coreSerialKind")))
+@interface SPMCKotlinx_serialization_coreSerialKind : SPMCBase
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@end
+
+__attribute__((swift_name("Kotlinx_serialization_coreCompositeDecoder")))
+@protocol SPMCKotlinx_serialization_coreCompositeDecoder
+@required
+- (BOOL)decodeBooleanElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeBooleanElement(descriptor:index:)")));
+- (int8_t)decodeByteElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeByteElement(descriptor:index:)")));
+- (unichar)decodeCharElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeCharElement(descriptor:index:)")));
+- (int32_t)decodeCollectionSizeDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeCollectionSize(descriptor:)")));
+- (double)decodeDoubleElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeDoubleElement(descriptor:index:)")));
+- (int32_t)decodeElementIndexDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeElementIndex(descriptor:)")));
+- (float)decodeFloatElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeFloatElement(descriptor:index:)")));
+- (id<SPMCKotlinx_serialization_coreDecoder>)decodeInlineElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeInlineElement(descriptor:index:)")));
+- (int32_t)decodeIntElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeIntElement(descriptor:index:)")));
+- (int64_t)decodeLongElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeLongElement(descriptor:index:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (id _Nullable)decodeNullableSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<SPMCKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeNullableSerializableElement(descriptor:index:deserializer:previousValue:)")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+- (BOOL)decodeSequentially __attribute__((swift_name("decodeSequentially()")));
+- (id _Nullable)decodeSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<SPMCKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeSerializableElement(descriptor:index:deserializer:previousValue:)")));
+- (int16_t)decodeShortElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeShortElement(descriptor:index:)")));
+- (NSString *)decodeStringElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeStringElement(descriptor:index:)")));
+- (void)endStructureDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
+@property (readonly) SPMCKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
+@end
+
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("Ktor_client_coreHttpRequestData")))
 @interface SPMCKtor_client_coreHttpRequestData : SPMCBase
@@ -3407,112 +4270,6 @@ __attribute__((swift_name("Kotlinx_coroutines_coreCoroutineDispatcher")))
 __attribute__((swift_name("Ktor_client_coreHttpClientEngineCapability")))
 @protocol SPMCKtor_client_coreHttpClientEngineCapability
 @required
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreCompositeEncoder")))
-@protocol SPMCKotlinx_serialization_coreCompositeEncoder
-@required
-- (void)encodeBooleanElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(BOOL)value __attribute__((swift_name("encodeBooleanElement(descriptor:index:value:)")));
-- (void)encodeByteElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int8_t)value __attribute__((swift_name("encodeByteElement(descriptor:index:value:)")));
-- (void)encodeCharElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(unichar)value __attribute__((swift_name("encodeCharElement(descriptor:index:value:)")));
-- (void)encodeDoubleElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(double)value __attribute__((swift_name("encodeDoubleElement(descriptor:index:value:)")));
-- (void)encodeFloatElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(float)value __attribute__((swift_name("encodeFloatElement(descriptor:index:value:)")));
-- (id<SPMCKotlinx_serialization_coreEncoder>)encodeInlineElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("encodeInlineElement(descriptor:index:)")));
-- (void)encodeIntElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int32_t)value __attribute__((swift_name("encodeIntElement(descriptor:index:value:)")));
-- (void)encodeLongElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int64_t)value __attribute__((swift_name("encodeLongElement(descriptor:index:value:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (void)encodeNullableSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<SPMCKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeNullableSerializableElement(descriptor:index:serializer:value:)")));
-- (void)encodeSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index serializer:(id<SPMCKotlinx_serialization_coreSerializationStrategy>)serializer value:(id _Nullable)value __attribute__((swift_name("encodeSerializableElement(descriptor:index:serializer:value:)")));
-- (void)encodeShortElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(int16_t)value __attribute__((swift_name("encodeShortElement(descriptor:index:value:)")));
-- (void)encodeStringElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index value:(NSString *)value __attribute__((swift_name("encodeStringElement(descriptor:index:value:)")));
-- (void)endStructureDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (BOOL)shouldEncodeElementDefaultDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("shouldEncodeElementDefault(descriptor:index:)")));
-@property (readonly) SPMCKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreSerializersModule")))
-@interface SPMCKotlinx_serialization_coreSerializersModule : SPMCBase
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (void)dumpToCollector:(id<SPMCKotlinx_serialization_coreSerializersModuleCollector>)collector __attribute__((swift_name("dumpTo(collector:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id<SPMCKotlinx_serialization_coreKSerializer> _Nullable)getContextualKClass:(id<SPMCKotlinKClass>)kClass typeArgumentsSerializers:(NSArray<id<SPMCKotlinx_serialization_coreKSerializer>> *)typeArgumentsSerializers __attribute__((swift_name("getContextual(kClass:typeArgumentsSerializers:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id<SPMCKotlinx_serialization_coreSerializationStrategy> _Nullable)getPolymorphicBaseClass:(id<SPMCKotlinKClass>)baseClass value:(id)value __attribute__((swift_name("getPolymorphic(baseClass:value:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id<SPMCKotlinx_serialization_coreDeserializationStrategy> _Nullable)getPolymorphicBaseClass:(id<SPMCKotlinKClass>)baseClass serializedClassName:(NSString * _Nullable)serializedClassName __attribute__((swift_name("getPolymorphic(baseClass:serializedClassName:)")));
-@end
-
-__attribute__((swift_name("KotlinAnnotation")))
-@protocol SPMCKotlinAnnotation
-@required
-@end
-
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-__attribute__((swift_name("Kotlinx_serialization_coreSerialKind")))
-@interface SPMCKotlinx_serialization_coreSerialKind : SPMCBase
-- (NSUInteger)hash __attribute__((swift_name("hash()")));
-- (NSString *)description __attribute__((swift_name("description()")));
-@end
-
-__attribute__((swift_name("Kotlinx_serialization_coreCompositeDecoder")))
-@protocol SPMCKotlinx_serialization_coreCompositeDecoder
-@required
-- (BOOL)decodeBooleanElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeBooleanElement(descriptor:index:)")));
-- (int8_t)decodeByteElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeByteElement(descriptor:index:)")));
-- (unichar)decodeCharElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeCharElement(descriptor:index:)")));
-- (int32_t)decodeCollectionSizeDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeCollectionSize(descriptor:)")));
-- (double)decodeDoubleElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeDoubleElement(descriptor:index:)")));
-- (int32_t)decodeElementIndexDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("decodeElementIndex(descriptor:)")));
-- (float)decodeFloatElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeFloatElement(descriptor:index:)")));
-- (id<SPMCKotlinx_serialization_coreDecoder>)decodeInlineElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeInlineElement(descriptor:index:)")));
-- (int32_t)decodeIntElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeIntElement(descriptor:index:)")));
-- (int64_t)decodeLongElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeLongElement(descriptor:index:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (id _Nullable)decodeNullableSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<SPMCKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeNullableSerializableElement(descriptor:index:deserializer:previousValue:)")));
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-- (BOOL)decodeSequentially __attribute__((swift_name("decodeSequentially()")));
-- (id _Nullable)decodeSerializableElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index deserializer:(id<SPMCKotlinx_serialization_coreDeserializationStrategy>)deserializer previousValue:(id _Nullable)previousValue __attribute__((swift_name("decodeSerializableElement(descriptor:index:deserializer:previousValue:)")));
-- (int16_t)decodeShortElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeShortElement(descriptor:index:)")));
-- (NSString *)decodeStringElementDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor index:(int32_t)index __attribute__((swift_name("decodeStringElement(descriptor:index:)")));
-- (void)endStructureDescriptor:(id<SPMCKotlinx_serialization_coreSerialDescriptor>)descriptor __attribute__((swift_name("endStructure(descriptor:)")));
-@property (readonly) SPMCKotlinx_serialization_coreSerializersModule *serializersModule __attribute__((swift_name("serializersModule")));
 @end
 
 __attribute__((swift_name("KotlinMapEntry")))
@@ -3867,6 +4624,50 @@ __attribute__((swift_name("Ktor_utilsAttributeKey")))
 @property (readonly) NSString *name __attribute__((swift_name("name")));
 @end
 
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.ExperimentalSerializationApi
+*/
+__attribute__((swift_name("Kotlinx_serialization_coreSerializersModuleCollector")))
+@protocol SPMCKotlinx_serialization_coreSerializersModuleCollector
+@required
+- (void)contextualKClass:(id<SPMCKotlinKClass>)kClass provider:(id<SPMCKotlinx_serialization_coreKSerializer> (^)(NSArray<id<SPMCKotlinx_serialization_coreKSerializer>> *))provider __attribute__((swift_name("contextual(kClass:provider:)")));
+- (void)contextualKClass:(id<SPMCKotlinKClass>)kClass serializer:(id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("contextual(kClass:serializer:)")));
+- (void)polymorphicBaseClass:(id<SPMCKotlinKClass>)baseClass actualClass:(id<SPMCKotlinKClass>)actualClass actualSerializer:(id<SPMCKotlinx_serialization_coreKSerializer>)actualSerializer __attribute__((swift_name("polymorphic(baseClass:actualClass:actualSerializer:)")));
+- (void)polymorphicDefaultBaseClass:(id<SPMCKotlinKClass>)baseClass defaultDeserializerProvider:(id<SPMCKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefault(baseClass:defaultDeserializerProvider:)"))) __attribute__((deprecated("Deprecated in favor of function with more precise name: polymorphicDefaultDeserializer")));
+- (void)polymorphicDefaultDeserializerBaseClass:(id<SPMCKotlinKClass>)baseClass defaultDeserializerProvider:(id<SPMCKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefaultDeserializer(baseClass:defaultDeserializerProvider:)")));
+- (void)polymorphicDefaultSerializerBaseClass:(id<SPMCKotlinKClass>)baseClass defaultSerializerProvider:(id<SPMCKotlinx_serialization_coreSerializationStrategy> _Nullable (^)(id))defaultSerializerProvider __attribute__((swift_name("polymorphicDefaultSerializer(baseClass:defaultSerializerProvider:)")));
+@end
+
+__attribute__((swift_name("KotlinKDeclarationContainer")))
+@protocol SPMCKotlinKDeclarationContainer
+@required
+@end
+
+
+/**
+ * @note annotations
+ *   kotlin.SinceKotlin(version="1.1")
+*/
+__attribute__((swift_name("KotlinKClassifier")))
+@protocol SPMCKotlinKClassifier
+@required
+@end
+
+__attribute__((swift_name("KotlinKClass")))
+@protocol SPMCKotlinKClass <SPMCKotlinKDeclarationContainer, SPMCKotlinKAnnotatedElement, SPMCKotlinKClassifier>
+@required
+
+/**
+ * @note annotations
+ *   kotlin.SinceKotlin(version="1.1")
+*/
+- (BOOL)isInstanceValue:(id _Nullable)value __attribute__((swift_name("isInstance(value:)")));
+@property (readonly) NSString * _Nullable qualifiedName __attribute__((swift_name("qualifiedName")));
+@property (readonly) NSString * _Nullable simpleName __attribute__((swift_name("simpleName")));
+@end
+
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("Ktor_httpHttpMethod")))
 @interface SPMCKtor_httpHttpMethod : SPMCBase
@@ -4077,50 +4878,6 @@ __attribute__((swift_name("Kotlinx_coroutines_coreRunnable")))
 @protocol SPMCKotlinx_coroutines_coreRunnable
 @required
 - (void)run __attribute__((swift_name("run()")));
-@end
-
-
-/**
- * @note annotations
- *   kotlinx.serialization.ExperimentalSerializationApi
-*/
-__attribute__((swift_name("Kotlinx_serialization_coreSerializersModuleCollector")))
-@protocol SPMCKotlinx_serialization_coreSerializersModuleCollector
-@required
-- (void)contextualKClass:(id<SPMCKotlinKClass>)kClass provider:(id<SPMCKotlinx_serialization_coreKSerializer> (^)(NSArray<id<SPMCKotlinx_serialization_coreKSerializer>> *))provider __attribute__((swift_name("contextual(kClass:provider:)")));
-- (void)contextualKClass:(id<SPMCKotlinKClass>)kClass serializer:(id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("contextual(kClass:serializer:)")));
-- (void)polymorphicBaseClass:(id<SPMCKotlinKClass>)baseClass actualClass:(id<SPMCKotlinKClass>)actualClass actualSerializer:(id<SPMCKotlinx_serialization_coreKSerializer>)actualSerializer __attribute__((swift_name("polymorphic(baseClass:actualClass:actualSerializer:)")));
-- (void)polymorphicDefaultBaseClass:(id<SPMCKotlinKClass>)baseClass defaultDeserializerProvider:(id<SPMCKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefault(baseClass:defaultDeserializerProvider:)"))) __attribute__((deprecated("Deprecated in favor of function with more precise name: polymorphicDefaultDeserializer")));
-- (void)polymorphicDefaultDeserializerBaseClass:(id<SPMCKotlinKClass>)baseClass defaultDeserializerProvider:(id<SPMCKotlinx_serialization_coreDeserializationStrategy> _Nullable (^)(NSString * _Nullable))defaultDeserializerProvider __attribute__((swift_name("polymorphicDefaultDeserializer(baseClass:defaultDeserializerProvider:)")));
-- (void)polymorphicDefaultSerializerBaseClass:(id<SPMCKotlinKClass>)baseClass defaultSerializerProvider:(id<SPMCKotlinx_serialization_coreSerializationStrategy> _Nullable (^)(id))defaultSerializerProvider __attribute__((swift_name("polymorphicDefaultSerializer(baseClass:defaultSerializerProvider:)")));
-@end
-
-__attribute__((swift_name("KotlinKDeclarationContainer")))
-@protocol SPMCKotlinKDeclarationContainer
-@required
-@end
-
-
-/**
- * @note annotations
- *   kotlin.SinceKotlin(version="1.1")
-*/
-__attribute__((swift_name("KotlinKClassifier")))
-@protocol SPMCKotlinKClassifier
-@required
-@end
-
-__attribute__((swift_name("KotlinKClass")))
-@protocol SPMCKotlinKClass <SPMCKotlinKDeclarationContainer, SPMCKotlinKAnnotatedElement, SPMCKotlinKClassifier>
-@required
-
-/**
- * @note annotations
- *   kotlin.SinceKotlin(version="1.1")
-*/
-- (BOOL)isInstanceValue:(id _Nullable)value __attribute__((swift_name("isInstance(value:)")));
-@property (readonly) NSString * _Nullable qualifiedName __attribute__((swift_name("qualifiedName")));
-@property (readonly) NSString * _Nullable simpleName __attribute__((swift_name("simpleName")));
 @end
 
 __attribute__((objc_subclassing_restricted))
