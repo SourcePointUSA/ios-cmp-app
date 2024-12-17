@@ -40,16 +40,16 @@ typealias PrivacyManagerViewHandler = (Result<PrivacyManagerViewResponse, SPErro
 typealias GDPRPrivacyManagerViewHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
 typealias CCPAPrivacyManagerViewHandler = (Result<CCPAPrivacyManagerViewResponse, SPError>) -> Void
 typealias MessageHandler = (Result<Message, SPError>) -> Void
-typealias CCPAConsentHandler = (Result<CCPAChoiceResponse, SPError>) -> Void
-typealias GDPRConsentHandler = (Result<GDPRChoiceResponse, SPError>) -> Void
-typealias USNatConsentHandler = (Result<SPUSNatConsent, SPError>) -> Void
+typealias CCPAConsentHandler = (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
+typealias GDPRConsentHandler = (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
+typealias USNatConsentHandler = (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
 typealias ConsentHandler<T: Decodable & Equatable> = (Result<(SPJson, T), SPError>) -> Void
-typealias AddOrDeleteCustomConsentHandler = (Result<AddOrDeleteCustomConsentResponse, SPError>) -> Void
+typealias AddOrDeleteCustomConsentHandler = (Result<SPMobileCore.GDPRConsent, SPError>) -> Void
 typealias ConsentStatusHandler = (Result<SPMobileCore.ConsentStatusResponse, SPError>) -> Void
 typealias MessagesHandler = (Result<MessagesResponse, SPError>) -> Void
 typealias PvDataHandler = (Result<SPMobileCore.PvDataResponse, SPError>) -> Void
 typealias MetaDataHandler = (Result<SPMobileCore.MetaDataResponse, SPError>) -> Void
-typealias ChoiceHandler = (Result<ChoiceAllResponse, SPError>) -> Void
+typealias ChoiceHandler = (Result<SPMobileCore.ChoiceAllResponse, SPError>) -> Void
 
 protocol SourcePointProtocol {
     init(
@@ -90,19 +90,19 @@ protocol SourcePointProtocol {
 
     func postCCPAAction(
         actionType: SPActionType,
-        body: CCPAChoiceBody,
+        request: SPMobileCore.CCPAChoiceRequest,
         handler: @escaping CCPAConsentHandler
     )
 
     func postUSNatAction(
         actionType: SPActionType,
-        body: USNatChoiceBody,
+        request: SPMobileCore.USNatChoiceRequest,
         handler: @escaping USNatConsentHandler
     )
 
     func postGDPRAction(
         actionType: SPActionType,
-        body: GDPRChoiceBody,
+        request: SPMobileCore.GDPRChoiceRequest,
         handler: @escaping GDPRConsentHandler
     )
 
@@ -159,12 +159,8 @@ protocol SourcePointProtocol {
     )
 
     func choiceAll(
-        actionType: SPActionType,
-        accountId: Int,
-        propertyId: Int,
-        idfaStatus: SPIDFAStatus,
-        metadata: ChoiceAllMetaDataParam,
-        includeData: IncludeData,
+        actionType: SPMobileCore.SPActionType,
+        campaigns: SPMobileCore.ChoiceAllRequest.ChoiceAllCampaigns,
         handler: @escaping ChoiceHandler
     )
 
@@ -231,6 +227,19 @@ class SourcePointClient: SourcePointProtocol {
 
             case .failure(let error):
                 handler(Result.failure(error))
+        }
+    }
+
+    static func coreHandler<T: Any>(
+        responseCore: T?,
+        errorCore: (any Error)?,
+        errorNative: SPError,
+        handlerNative: (Result<T, SPError>) -> Void
+    ) {
+        if errorCore != nil || responseCore == nil {
+            handlerNative(Result.failure(errorNative))
+        } else {
+            handlerNative(Result.success(responseCore!)) // swiftlint:disable:this force_unwrapping
         }
     }
 
@@ -303,48 +312,44 @@ class SourcePointClient: SourcePointProtocol {
         URL(string: "./\(actionType.rawValue)?env=\(Constants.Urls.envParam)", relativeTo: baseUrl)!
     }
 
-    func postCCPAAction(actionType: SPActionType, body: CCPAChoiceBody, handler: @escaping CCPAConsentHandler) {
-        _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_CCPA_BASE_URL, actionType).absoluteString, body: body, apiCode: .CCPA_ACTION) {
-                Self.parseResponse($0, InvalidResponseConsentError(), handler)
-            }
+    func postCCPAAction(actionType: SPActionType, request: SPMobileCore.CCPAChoiceRequest, handler: @escaping CCPAConsentHandler) {
+        coreClient.postChoiceCCPAAction(
+            actionType: actionType.toCore(),
+            request: request
+        ) {
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseConsentError(), handlerNative: handler)
         }
     }
 
-    func postGDPRAction(actionType: SPActionType, body: GDPRChoiceBody, handler: @escaping GDPRConsentHandler) {
-        _ = JSONEncoder().encodeResult(body).map { body in
-            client.post(urlString: consentUrl(Constants.Urls.CHOICE_GDPR_BASE_URL, actionType).absoluteString, body: body, apiCode: .GDPR_ACTION) {
-                Self.parseResponse($0, InvalidResponseConsentError(), handler)
-            }
+    func postGDPRAction(actionType: SPActionType, request: SPMobileCore.GDPRChoiceRequest, handler: @escaping GDPRConsentHandler) {
+        coreClient.postChoiceGDPRAction(
+            actionType: actionType.toCore(),
+            request: request
+        ) {
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseConsentError(), handlerNative: handler)
         }
     }
 
-    func postUSNatAction(actionType: SPActionType, body: USNatChoiceBody, handler: @escaping USNatConsentHandler) {
-        _ = JSONEncoder().encodeResult(body).map { encodedBody in
-            client.post(
-                urlString: consentUrl(
-                    Constants.Urls.CHOICE_USNAT_BASE_URL, actionType
-                ).absoluteString,
-                body: encodedBody,
-                apiCode: .USNAT_ACTION
-            ) {
-                Self.parseResponse($0, InvalidResponseConsentError(), handler)
-            }
+    func postUSNatAction(actionType: SPActionType, request: SPMobileCore.USNatChoiceRequest, handler: @escaping USNatConsentHandler) {
+        coreClient.postChoiceUSNatAction(
+            actionType: actionType.toCore(),
+            request: request
+        ) {
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseConsentError(), handlerNative: handler)
         }
     }
 
     func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
-        _ = JSONEncoder().encodeResult(IDFAStatusReportRequest(
-            accountId: accountId,
-            propertyId: propertyId,
+        coreClient.postReportIdfaStatus(
+            propertyId: KotlinInt(int: propertyId),
             uuid: uuid,
-            uuidType: uuidType,
-            requestUUID: UUID(),
+            requestUUID: UUID().uuidString,
+            uuidType: uuidType?.toCore(),
+            messageId: KotlinInt(int: messageId),
+            idfaStatus: idfaStatus.toCore(),
             iosVersion: iosVersion,
-            appleTracking: AppleTrackingPayload(appleChoice: idfaStatus, appleMsgId: messageId, messagePartitionUUID: partitionUUID)
-        )).map {
-            client.post(urlString: Constants.Urls.IDFA_RERPORT_URL.absoluteString, body: $0, apiCode: .IDFA_STATUS) { _ in }
-        }
+            partitionUUID: partitionUUID
+        ) { _ in }
     }
 
     func customConsentGDPR(
@@ -359,12 +364,8 @@ class SourcePointClient: SourcePointProtocol {
                 propertyId: Int32(propertyId),
                 vendors: vendors,
                 categories: categories,
-                legIntCategories: legIntCategories) { response, error in
-                    if error != nil || response == nil {
-                        handler(Result.failure(InvalidResponseCustomError()))
-                    } else {
-                        handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
-                    }
+                legIntCategories: legIntCategories) {
+                    SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseCustomError(), handlerNative: handler)
                 }
     }
 
@@ -379,12 +380,8 @@ class SourcePointClient: SourcePointProtocol {
                 propertyId: Int32(propertyId),
                 vendors: vendors,
                 categories: categories,
-                legIntCategories: legIntCategories) { response, error in
-                    if error != nil || response == nil {
-                        handler(Result.failure(InvalidResponseDeleteCustomError()))
-                    } else {
-                        handler(Result.success(response!.toNativeAsAddOrDeleteCustomConsentResponse())) // swiftlint:disable:this force_unwrapping
-                    }
+                legIntCategories: legIntCategories) {
+                    SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidResponseDeleteCustomError(), handlerNative: handler)
                 }
         }
 
@@ -422,12 +419,8 @@ extension SourcePointClient {
         coreClient.getConsentStatus(
             authId: authId,
             metadata: metadata
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidConsentStatusResponseError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        ) {
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidConsentStatusResponseError(), handlerNative: handler)
         }
     }
 
@@ -437,12 +430,8 @@ extension SourcePointClient {
         campaigns: SPMobileCore.MetaDataRequest.Campaigns,
         handler: @escaping MetaDataHandler
     ) {
-        coreClient.getMetaData(campaigns: campaigns) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidMetaDataResponseError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        coreClient.getMetaData(campaigns: campaigns) {
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidMetaDataResponseError(), handlerNative: handler)
         }
     }
 
@@ -459,72 +448,25 @@ extension SourcePointClient {
     }
 
     func pvData(request: SPMobileCore.PvDataRequest, handler: @escaping PvDataHandler) {
-        coreClient.postPvData(request: request) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidPvDataResponseError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
+        coreClient.postPvData(request: request) {
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidPvDataResponseError(), handlerNative: handler)
         }
-    }
-
-    func choiceAllUrlWithParams(
-        actionType: SPActionType,
-        accountId: Int,
-        hasCsp: Bool,
-        propertyId: Int,
-        withSiteActions: Bool,
-        includeCustomVendorsRes: Bool,
-        includeData: IncludeData,
-        idfaStatus: String,
-        metadata: ChoiceAllMetaDataParam
-    ) -> URL? {
-        var baseUrl: URL
-        if actionType == .AcceptAll {
-            baseUrl = Constants.Urls.CHOICE_CONSENT_ALL_URL
-        } else if actionType == .RejectAll {
-            baseUrl = Constants.Urls.CHOICE_REJECT_ALL_URL
-        } else {
-            return nil
-        }
-        return baseUrl.appendQueryItems([
-            "accountId": String(accountId),
-            "hasCsp": String(hasCsp),
-            "propertyId": String(propertyId),
-            "withSiteActions": String(withSiteActions),
-            "includeCustomVendorsRes": String(includeCustomVendorsRes),
-            "idfaStatus": idfaStatus,
-            "metadata": metadata.stringified(),
-            "includeData": includeData.string
-        ])
     }
 
     func choiceAll(
-        actionType: SPActionType,
-        accountId: Int,
-        propertyId: Int,
-        idfaStatus: SPIDFAStatus,
-        metadata: ChoiceAllMetaDataParam,
-        includeData: IncludeData,
+        actionType: SPMobileCore.SPActionType,
+        campaigns: SPMobileCore.ChoiceAllRequest.ChoiceAllCampaigns,
         handler: @escaping ChoiceHandler
     ) {
-        guard let url = choiceAllUrlWithParams(
-            actionType: actionType,
-            accountId: accountId,
-            hasCsp: true,
-            propertyId: propertyId,
-            withSiteActions: false,
-            includeCustomVendorsRes: false,
-            includeData: includeData,
-            idfaStatus: idfaStatus.description,
-            metadata: metadata
-        ) else {
+        if actionType != SPMobileCore.SPActionType.acceptall && actionType != SPMobileCore.SPActionType.rejectall {
             handler(Result.failure(InvalidChoiceAllParamsError()))
             return
         }
-
-        client.get(urlString: url.absoluteString, apiCode: .CHOICE_ALL) {
-            Self.parseResponse($0, InvalidChoiceAllResponseError(), handler)
+        coreClient.getChoiceAll(
+            actionType: actionType,
+            campaigns: campaigns
+        ) {
+            SourcePointClient.coreHandler(responseCore: $0, errorCore: $1, errorNative: InvalidChoiceAllResponseError(), handlerNative: handler)
         }
     }
 }

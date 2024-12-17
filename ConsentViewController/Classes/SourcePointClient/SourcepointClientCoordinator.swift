@@ -810,32 +810,32 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func handleGetChoices(_ response: ChoiceAllResponse, from campaign: SPCampaignType) {
+    func handleGetChoices(_ response: SPMobileCore.ChoiceAllResponse, from campaign: SPCampaignType) {
         if let gdpr = response.gdpr, campaign == .gdpr {
-            state.gdpr?.dateCreated = gdpr.dateCreated
-            state.gdpr?.expirationDate = gdpr.expirationDate
-            state.gdpr?.tcfData = gdpr.TCData
-            state.gdpr?.vendorGrants = gdpr.grants
+            state.gdpr?.dateCreated = SPDate(string: gdpr.dateCreated ?? "")
+            state.gdpr?.expirationDate = SPDate(string: gdpr.expirationDate ?? "")
+            state.gdpr?.tcfData = gdpr.tcData?.toNative()
+            state.gdpr?.vendorGrants = gdpr.grants.mapValues { $0.toNative() }
             state.gdpr?.euconsent = gdpr.euconsent
-            state.gdpr?.consentStatus = gdpr.consentStatus
+            state.gdpr?.consentStatus = gdpr.consentStatus.toNative()
             state.gdpr?.childPmId = gdpr.childPmId
-            state.gdpr?.googleConsentMode = gdpr.gcmStatus
+            state.gdpr?.googleConsentMode = gdpr.gcmStatus?.toNative()
         }
         if let ccpa = response.ccpa, campaign == .ccpa {
-            state.ccpa?.dateCreated = ccpa.dateCreated
-            state.ccpa?.expirationDate = ccpa.expirationDate
-            state.ccpa?.status = ccpa.status
-            state.ccpa?.GPPData = ccpa.GPPData
+            state.ccpa?.dateCreated = SPDate(string: ccpa.dateCreated ?? "")
+            state.ccpa?.expirationDate = SPDate(string: ccpa.expirationDate ?? "")
+            state.ccpa?.status = ccpa.status.toNative()
+            state.ccpa?.GPPData = ccpa.gppData.toNative() ?? SPJson()
         }
         if let usnat = response.usnat, campaign == .usnat {
-            state.usnat?.dateCreated = usnat.dateCreated
-            state.usnat?.expirationDate = usnat.expirationDate
-            state.usnat?.consentStatus = usnat.consentStatus
-            state.usnat?.GPPData = usnat.GPPData
-            state.usnat?.consentStrings = usnat.consentStrings
+            state.usnat?.dateCreated = SPDate(string: usnat.dateCreated ?? "")
+            state.usnat?.expirationDate = SPDate(string: usnat.expirationDate ?? "")
+            state.usnat?.consentStatus = usnat.consentStatus.toNative()
+            state.usnat?.GPPData = usnat.gppData.toNative()
+            state.usnat?.consentStrings = usnat.consentStrings.map { $0.toNative() }
             state.usnat?.consentStatus.consentedToAll = usnat.consentedToAll
             state.usnat?.consentStatus.rejectedAny = usnat.rejectedAny
-            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnat.gpcEnabled
+            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnat.gpcEnabled?.boolValue
         }
         storage.spState = state
     }
@@ -844,19 +844,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         (action.type == .AcceptAll || action.type == .RejectAll)
     }
 
-    func getChoiceAll(_ action: SPAction, handler: @escaping (Result<ChoiceAllResponse?, SPError>) -> Void) {
+    func getChoiceAll(_ action: SPAction, handler: @escaping (Result<SPMobileCore.ChoiceAllResponse?, SPError>) -> Void) {
         if shouldCallGetChoice(for: action) {
             spClient.choiceAll(
-                actionType: action.type,
-                accountId: accountId,
-                propertyId: propertyId,
-                idfaStatus: SPIDFAStatus.current(),
-                metadata: .init(
+                actionType: action.type.toCore(),
+                campaigns: .init(
                     gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
                     ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
                     usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
-                ),
-                includeData: includeData
+                )
             ) { result in
                 switch result {
                     case .success(let response):
@@ -874,68 +870,68 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func postChoice(
         _ action: SPAction,
-        postPayloadFromGetCall: ChoiceAllResponse.GDPR.PostPayload?,
-        handler: @escaping (Result<GDPRChoiceResponse, SPError>) -> Void
+        postPayloadFromGetCall: SPMobileCore.ChoiceAllResponse.GDPRPostPayload?,
+        handler: @escaping (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
     ) {
         spClient.postGDPRAction(
             actionType: action.type,
-            body: GDPRChoiceBody(
+            request: GDPRChoiceRequest(
                 authId: authId,
                 uuid: state.gdpr?.uuid,
                 messageId: action.messageId,
                 consentAllRef: postPayloadFromGetCall?.consentAllRef,
                 vendorListId: postPayloadFromGetCall?.vendorListId,
-                pubData: action.encodablePubData,
-                pmSaveAndExitVariables: action.pmPayload,
+                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
+                pmSaveAndExitVariables: action.pmPayload.toCore(),
                 sendPVData: state.gdprMetaData?.wasSampled ?? false,
-                propertyId: propertyId,
-                sampleRate: state.gdprMetaData?.sampleRate,
-                idfaStatus: idfaStatus,
+                propertyId: Int32(propertyId),
+                sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
+                idfaStatus: idfaStatus.toCore(),
                 granularStatus: postPayloadFromGetCall?.granularStatus,
-                includeData: includeData
+                includeData: includeData.toCore()
             )
         ) { handler($0) }
     }
 
     func postChoice(
         _ action: SPAction,
-        handler: @escaping (Result<CCPAChoiceResponse, SPError>) -> Void
+        handler: @escaping (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
     ) {
         spClient.postCCPAAction(
             actionType: action.type,
-            body: .init(
+            request: CCPAChoiceRequest(
                 authId: authId,
                 uuid: state.ccpa?.uuid,
                 messageId: action.messageId,
-                pubData: action.encodablePubData,
-                pmSaveAndExitVariables: action.pmPayload,
+                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
+                pmSaveAndExitVariables: action.pmPayload.toCore(),
                 sendPVData: state.ccpaMetaData?.wasSampled ?? false,
-                propertyId: propertyId,
-                sampleRate: state.ccpaMetaData?.sampleRate,
-                includeData: includeData
+                propertyId: Int32(propertyId),
+                sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate),
+                includeData: includeData.toCore()
             )
         ) { handler($0) }
     }
 
     func postChoice(
         _ action: SPAction,
-        handler: @escaping (Result<SPUSNatConsent, SPError>) -> Void
+        handler: @escaping (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
     ) {
         spClient.postUSNatAction(
             actionType: action.type,
-            body: .init(
+            request: USNatChoiceRequest(
                 authId: authId,
                 uuid: state.usnat?.uuid,
                 messageId: action.messageId,
                 vendorListId: state.usNatMetaData?.vendorListId,
-                pubData: action.encodablePubData,
-                pmSaveAndExitVariables: action.pmPayload,
+                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
+                pmSaveAndExitVariables: action.pmPayload.toCore(),
                 sendPVData: state.usNatMetaData?.wasSampled ?? false,
-                propertyId: propertyId,
-                sampleRate: state.usNatMetaData?.sampleRate,
-                idfaStatus: idfaStatus,
-                granularStatus: state.usnat?.consentStatus.granularStatus,
-                includeData: includeData
+                propertyId: Int32(propertyId),
+                sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
+                idfaStatus: idfaStatus.toCore(),
+                granularStatus: state.usnat?.consentStatus.granularStatus?.toCore(),
+                includeData: includeData.toCore()
             ),
             handler: handler
         )
@@ -943,20 +939,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleGPDRPostChoice(
         _ action: SPAction,
-        _ getResponse: ChoiceAllResponse?,
-        _ postResponse: GDPRChoiceResponse
+        _ getResponse: SPMobileCore.ChoiceAllResponse?,
+        _ postResponse: SPMobileCore.GDPRChoiceResponse
     ) {
         if action.type == .SaveAndExit {
-            state.gdpr?.tcfData = postResponse.TCData
+            state.gdpr?.tcfData = postResponse.tcData?.toNative()
         }
         state.gdpr?.uuid = postResponse.uuid
-        state.gdpr?.dateCreated = postResponse.dateCreated
-        state.gdpr?.expirationDate = postResponse.expirationDate
-        state.gdpr?.consentStatus = postResponse.consentStatus ?? getResponse?.gdpr?.consentStatus ?? ConsentStatus()
+        state.gdpr?.dateCreated = SPDate(string: postResponse.dateCreated ?? "")
+        state.gdpr?.expirationDate = SPDate(string: postResponse.expirationDate ?? "")
+        state.gdpr?.consentStatus = postResponse.consentStatus?.toNative() ?? getResponse?.gdpr?.consentStatus.toNative() ?? ConsentStatus()
         state.gdpr?.euconsent = postResponse.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
-        state.gdpr?.vendorGrants = postResponse.grants ?? getResponse?.gdpr?.grants ?? SPGDPRVendorGrants()
+        state.gdpr?.vendorGrants = postResponse.grants?.mapValues { $0.toNative() } ?? getResponse?.gdpr?.grants.mapValues { $0.toNative() } ?? SPGDPRVendorGrants()
         state.gdpr?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
-        state.gdpr?.googleConsentMode = postResponse.gcmStatus ?? getResponse?.gdpr?.gcmStatus
+        state.gdpr?.googleConsentMode = postResponse.gcmStatus?.toNative() ?? getResponse?.gdpr?.gcmStatus?.toNative()
         state.gdpr?.acceptedLegIntCategories = postResponse.acceptedLegIntCategories ?? getResponse?.gdpr?.acceptedLegIntCategories ?? []
         state.gdpr?.acceptedLegIntVendors = postResponse.acceptedLegIntVendors ?? getResponse?.gdpr?.acceptedLegIntVendors ?? []
         state.gdpr?.acceptedVendors = postResponse.acceptedVendors ?? getResponse?.gdpr?.acceptedVendors ?? []
@@ -965,7 +961,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func reportGDPRAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+    func reportGDPRAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
             switch postResult {
                 case .success(let response):
@@ -981,22 +977,22 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleCCPAPostChoice(
         _ action: SPAction,
-        _ getResponse: ChoiceAllResponse?,
-        _ postResponse: CCPAChoiceResponse
+        _ getResponse: SPMobileCore.ChoiceAllResponse?,
+        _ postResponse: SPMobileCore.CCPAChoiceResponse
     ) {
         if action.type == .SaveAndExit {
-            state.ccpa?.GPPData = postResponse.GPPData
+            state.ccpa?.GPPData = postResponse.gppData.toNative() ?? SPJson()
         }
         state.ccpa?.uuid = postResponse.uuid
-        state.ccpa?.dateCreated = postResponse.dateCreated
-        state.ccpa?.status = postResponse.status ?? getResponse?.ccpa?.status ?? .RejectedAll
+        state.ccpa?.dateCreated = SPDate(string: postResponse.dateCreated ?? "")
+        state.ccpa?.status = postResponse.status?.toNative() ?? getResponse?.ccpa?.status.toNative() ?? .RejectedAll
         state.ccpa?.rejectedVendors = postResponse.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
         state.ccpa?.rejectedCategories = postResponse.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
         state.ccpa?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.ccpa?.webConsentPayload
         storage.spState = state
     }
 
-    func reportCCPAAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+    func reportCCPAAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         self.postChoice(action) { postResult in
             switch postResult {
                 case .success(let response):
@@ -1012,26 +1008,26 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleUSNatPostChoice(
         _ action: SPAction,
-        _ getResponse: ChoiceAllResponse?,
-        _ postResponse: SPUSNatConsent
+        _ getResponse: SPMobileCore.ChoiceAllResponse?,
+        _ postResponse: SPMobileCore.USNatChoiceResponse
     ) {
         state.usnat = SPUSNatConsent(
             uuid: postResponse.uuid,
             applies: state.usnat?.applies ?? false,
-            dateCreated: postResponse.dateCreated,
-            expirationDate: postResponse.expirationDate,
-            consentStrings: postResponse.consentStrings,
+            dateCreated: SPDate(string: postResponse.dateCreated ?? ""),
+            expirationDate: SPDate(string: postResponse.expirationDate ?? ""),
+            consentStrings: postResponse.consentStrings.map { $0.toNative() },
             webConsentPayload: postResponse.webConsentPayload ?? getResponse?.usnat?.webConsentPayload,
-            categories: postResponse.categories,
-            vendors: postResponse.vendors,
-            consentStatus: postResponse.consentStatus,
-            GPPData: postResponse.GPPData ?? getResponse?.usnat?.GPPData
+            categories: postResponse.userConsents.categories.map { $0.toNative() },
+            vendors: postResponse.userConsents.vendors.map { $0.toNative() },
+            consentStatus: postResponse.consentStatus.toNative(),
+            GPPData: postResponse.gppData.toNative() ?? getResponse?.usnat?.gppData.toNative()
         )
 
         storage.spState = state
     }
 
-    func reportUSNatAction(_ action: SPAction, _ getResponse: ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
+    func reportUSNatAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
         self.postChoice(action) { postResult in
             switch postResult {
                 case .success(let response):
@@ -1100,12 +1096,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func handleAddOrDeleteCustomConsentResponse(
-        _ result: Result<AddOrDeleteCustomConsentResponse, SPError>,
+        _ result: Result<SPMobileCore.GDPRConsent, SPError>,
         handler: @escaping GDPRCustomConsentHandler
     ) {
         switch result {
             case .success(let consents):
-                state.gdpr?.vendorGrants = consents.grants
+                state.gdpr?.vendorGrants = consents.toNativeAsAddOrDeleteCustomConsentResponse().grants
                 storage.spState = state
                 handler(Result.success(state.gdpr ?? .empty()))
 

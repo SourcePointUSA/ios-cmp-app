@@ -229,16 +229,12 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             it("should call the endpoint and parse the response into ChoiceAllResponse") {
                 waitUntil { done in
                     client.choiceAll(
-                        actionType: .RejectAll,
-                        accountId: accountId,
-                        propertyId: propertyId,
-                        idfaStatus: .accepted,
-                        metadata: .init(
+                        actionType: .rejectall,
+                        campaigns: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true),
                             usnat: .init(applies: true)
-                        ),
-                        includeData: .standard
+                        )
                     ) { result in
                         switch result {
                         case .success(let response):
@@ -261,16 +257,12 @@ class UnmockedSourcepointClientSpec: QuickSpec {
             it("should call the endpoint and parse the response into ChoiceAllResponse") {
                 waitUntil { done in
                     client.choiceAll(
-                        actionType: .AcceptAll,
-                        accountId: accountId,
-                        propertyId: propertyId,
-                        idfaStatus: .accepted,
-                        metadata: .init(
+                        actionType: .acceptall,
+                        campaigns: .init(
                             gdpr: .init(applies: true),
                             ccpa: .init(applies: true),
                             usnat: .init(applies: true)
-                        ),
-                        includeData: .standard
+                        )
                     ) { result in
                         switch result {
                         case .success(let response):
