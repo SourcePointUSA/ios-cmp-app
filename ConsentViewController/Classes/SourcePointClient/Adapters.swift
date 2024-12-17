@@ -165,6 +165,47 @@ extension ConsentStatus.GranularStatus {
     }
 }
 
+extension SPGPPConfig.SPMspaBinaryFlag {
+    func toCore() -> SPMobileCore.IncludeData.MspaBinaryFlag? {
+        switch self {
+        case .yes: return .yes
+        case .no: return .no
+        }
+    }
+}
+
+extension SPGPPConfig.SPMspaTernaryFlag {
+    func toCore() -> SPMobileCore.IncludeData.MspaTernaryFlag? {
+        switch self {
+        case .yes: return .yes
+        case .no: return .no
+        case .notApplicable: return .na
+        }
+    }
+}
+
+extension IncludeData {
+    func toCore() -> SPMobileCore.IncludeData {
+        var translateMessageVal = nil as Bool?
+        #if os(tvOS)
+        translateMessageVal = translateMessage
+        #endif
+        return SPMobileCore.IncludeData.init(
+            tcData: SPMobileCore.IncludeData.TypeString(type: "RecordString"),
+            webConsentPayload: SPMobileCore.IncludeData.TypeString(type: "string"),
+            localState: SPMobileCore.IncludeData.TypeString(type: "RecordString"),
+            categories: categories,
+            translateMessage: KotlinBoolean(bool: translateMessageVal),
+            gppData: SPMobileCore.IncludeData.GPPConfig(
+                MspaCoveredTransaction: gppConfig.MspaCoveredTransaction?.toCore(),
+                MspaOptOutOptionMode: gppConfig.MspaOptOutOptionMode?.toCore(),
+                MspaServiceProviderMode: gppConfig.MspaServiceProviderMode?.toCore(),
+                uspString: KotlinBoolean(bool: gppConfig.uspString)
+            )
+        )
+    }
+}
+
 extension SPPublisherData {
     func toCore() -> String? {
         return try? self.toJsonString()
