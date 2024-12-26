@@ -9,6 +9,8 @@
 import Foundation
 import SPMobileCore
 
+typealias CoreCoordinator = SPMobileCore.Coordinator
+
 typealias ErrorHandler = (SPError) -> Void
 typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
@@ -175,6 +177,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var deviceManager: SPDeviceManager
     let spClient: SourcePointProtocol
+    let coreCoordinator: CoreCoordinator
     var storage: SPLocalStorage
 
     var state: State
@@ -337,6 +340,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             propertyId: propertyId,
             campaignEnv: campaigns.environment,
             timeout: SPConsentManager.DefaultTimeout
+        )
+        self.coreCoordinator = CoreCoordinator(
+            accountId: Int32(accountId),
+            propertyId: Int32(propertyId),
+            propertyName: propertyName.rawValue
         )
         self.deviceManager = deviceManager
 
@@ -840,31 +848,24 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
-    func shouldCallGetChoice(for action: SPAction) -> Bool {
-        (action.type == .AcceptAll || action.type == .RejectAll)
-    }
-
     func getChoiceAll(_ action: SPAction, handler: @escaping (Result<SPMobileCore.ChoiceAllResponse?, SPError>) -> Void) {
-        if shouldCallGetChoice(for: action) {
-            spClient.choiceAll(
-                actionType: action.type.toCore(),
-                campaigns: .init(
-                    gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
-                    ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
-                    usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
-                )
-            ) { result in
-                switch result {
-                    case .success(let response):
-                        self.handleGetChoices(response, from: action.campaignType)
-                        handler(Result.success(response))
-
-                    case .failure(let error):
-                        handler(Result.failure(error))
+        coreCoordinator.state = state.toCore()
+        coreCoordinator.getChoiceAll(
+            action: action.toCore(),
+            campaigns: .init(
+                gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
+                ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
+                usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
+            )
+        ) { response, error in
+            if error != nil {
+                handler(Result.failure(InvalidChoiceAllResponseError()))
+            } else {
+                if response != nil {
+                    self.handleGetChoices(response!, from: action.campaignType) // swiftlint:disable:this force_unwrapping
                 }
+                handler(Result.success(response))
             }
-        } else {
-            handler(Result.success(nil))
         }
     }
 
