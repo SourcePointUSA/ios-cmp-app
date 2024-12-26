@@ -222,6 +222,18 @@ extension SPJson {
     }
 }
 
+extension SPAction {
+    func toCore() -> SPMobileCore.SPAction {
+        return SPMobileCore.SPAction(
+            type: self.type.toCore(),
+            campaignType: self.campaignType.toCore(),
+            messageId: self.messageId,
+            pmPayload: self.pmPayload.toCore(),
+            encodablePubData: JsonKt.encodeToJsonObject(self.encodablePubData.toCore())
+        )
+    }
+}
+
 extension SPActionType {
     func toCore() -> SPMobileCore.SPActionType {
         switch self {
@@ -258,6 +270,10 @@ extension SPDate {
         originalDateString = string
         date = Self.format.date(from: originalDateString) ?? Date()
     }
+
+    func toCore() -> String {
+        return SPDate(date: self.date).originalDateString
+    }
 }
 
 extension SPCampaignType {
@@ -269,6 +285,42 @@ extension SPCampaignType {
         case .ios14: return .ios14
         case .unknown: return .unknown
         }
+    }
+}
+
+extension SPGDPRVendorGrants {
+    func toCore() -> [String: GDPRConsent.VendorGrantsValue] {
+        return self.mapValues { GDPRConsent.VendorGrantsValue(vendorGrant: $0.granted, purposeGrants: $0.purposeGrants.mapValues {KotlinBoolean(bool: $0)}) }
+    }
+}
+
+extension CCPAConsentStatus {
+    func toCore() -> SPMobileCore.CCPAConsent.CCPAConsentStatus? {
+        switch self {
+        case .ConsentedAll: return SPMobileCore.CCPAConsent.CCPAConsentStatus.consentedall
+        case .RejectedAll: return SPMobileCore.CCPAConsent.CCPAConsentStatus.rejectedall
+        case .RejectedSome: return SPMobileCore.CCPAConsent.CCPAConsentStatus.rejectedsome
+        case .RejectedNone: return SPMobileCore.CCPAConsent.CCPAConsentStatus.rejectednone
+        case .LinkedNoAction: return SPMobileCore.CCPAConsent.CCPAConsentStatus.linkednoaction
+        case .Unknown: return nil
+        }
+    }
+}
+
+extension SPGCMData {
+    func toCore() -> SPMobileCore.GDPRConsent.GCMStatus {
+        return SPMobileCore.GDPRConsent.GCMStatus(
+            analyticsStorage: self.analyticsStorage?.rawValue,
+            adStorage: self.adStorage?.rawValue,
+            adUserData: self.adUserData?.rawValue,
+            adPersonalization: self.adPersonalization?.rawValue
+        )
+    }
+}
+
+extension [SPConsentable] {
+    func toCore() -> [SPMobileCore.USNatConsent.USNatConsentable] {
+        return self.map { SPMobileCore.USNatConsent.USNatConsentable(id: $0.id, consented: $0.consented) }
     }
 }
 

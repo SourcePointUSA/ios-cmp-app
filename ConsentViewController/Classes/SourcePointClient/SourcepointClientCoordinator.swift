@@ -874,68 +874,46 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         postPayloadFromGetCall: SPMobileCore.ChoiceAllResponse.GDPRPostPayload?,
         handler: @escaping (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
     ) {
-        spClient.postGDPRAction(
-            actionType: action.type,
-            request: GDPRChoiceRequest(
-                authId: authId,
-                uuid: state.gdpr?.uuid,
-                messageId: action.messageId,
-                consentAllRef: postPayloadFromGetCall?.consentAllRef,
-                vendorListId: postPayloadFromGetCall?.vendorListId,
-                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
-                pmSaveAndExitVariables: action.pmPayload.toCore(),
-                sendPVData: state.gdprMetaData?.wasSampled ?? false,
-                propertyId: Int32(propertyId),
-                sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
-                idfaStatus: idfaStatus.toCore(),
-                granularStatus: postPayloadFromGetCall?.granularStatus,
-                includeData: includeData.toCore()
-            )
-        ) { handler($0) }
+        coreCoordinator.postChoiceGDPR(
+            action: action.toCore(),
+            postPayloadFromGetCall: postPayloadFromGetCall
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidResponseConsentError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
+            }
+        }
     }
 
     func postChoice(
         _ action: SPAction,
         handler: @escaping (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
     ) {
-        spClient.postCCPAAction(
-            actionType: action.type,
-            request: CCPAChoiceRequest(
-                authId: authId,
-                uuid: state.ccpa?.uuid,
-                messageId: action.messageId,
-                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
-                pmSaveAndExitVariables: action.pmPayload.toCore(),
-                sendPVData: state.ccpaMetaData?.wasSampled ?? false,
-                propertyId: Int32(propertyId),
-                sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate),
-                includeData: includeData.toCore()
-            )
-        ) { handler($0) }
+        coreCoordinator.postChoiceCCPA(
+            action: action.toCore()
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidResponseConsentError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
+            }
+        }
     }
 
     func postChoice(
         _ action: SPAction,
         handler: @escaping (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
     ) {
-        spClient.postUSNatAction(
-            actionType: action.type,
-            request: USNatChoiceRequest(
-                authId: authId,
-                uuid: state.usnat?.uuid,
-                messageId: action.messageId,
-                vendorListId: state.usNatMetaData?.vendorListId,
-                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
-                pmSaveAndExitVariables: action.pmPayload.toCore(),
-                sendPVData: state.usNatMetaData?.wasSampled ?? false,
-                propertyId: Int32(propertyId),
-                sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
-                idfaStatus: idfaStatus.toCore(),
-                granularStatus: state.usnat?.consentStatus.granularStatus?.toCore(),
-                includeData: includeData.toCore()
-            ),
-            handler: handler
-        )
+        coreCoordinator.postChoiceUSNat(
+            action: action.toCore()
+        ) { response, error in
+            if error != nil || response == nil {
+                handler(Result.failure(InvalidResponseConsentError()))
+            } else {
+                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
+            }
+        }
     }
 
     func handleGPDRPostChoice(
@@ -1043,6 +1021,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
+        coreCoordinator.authId = authId
+        coreCoordinator.idfaStatus = idfaStatus.toCore()
+        coreCoordinator.includeData = includeData.toCore()
+        coreCoordinator.state = state.toCore()
         getChoiceAll(action) { getResult in
             switch getResult {
                 case .success(let getResponse):
