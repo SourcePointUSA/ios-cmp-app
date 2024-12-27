@@ -343,6 +343,7 @@ extension SPGDPRConsent {
             dateCreated: self.dateCreated.toCore(),
             expirationDate: self.expirationDate.toCore(),
             uuid: self.uuid,
+            childPmId: self.childPmId,
             euconsent: self.euconsent,
             legIntCategories: self.acceptedLegIntVendors,
             legIntVendors: self.acceptedLegIntVendors,
