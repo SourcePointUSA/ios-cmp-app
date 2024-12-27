@@ -533,29 +533,6 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        it("shouldCallGETChoice") {
-            [
-                SPAction(type: .AcceptAll, campaignType: .gdpr),
-                SPAction(type: .RejectAll, campaignType: .gdpr),
-                SPAction(type: .AcceptAll, campaignType: .ccpa),
-                SPAction(type: .RejectAll, campaignType: .ccpa),
-                SPAction(type: .AcceptAll, campaignType: .usnat),
-                SPAction(type: .RejectAll, campaignType: .usnat)
-            ].forEach {
-                expect(coordinator.shouldCallGetChoice(for: $0))
-                    .to(beTrue(), description: "For action \($0.type), \($0.campaignType.rawValue)")
-            }
-
-            [
-                SPAction(type: .SaveAndExit, campaignType: .gdpr),
-                SPAction(type: .SaveAndExit, campaignType: .ccpa),
-                SPAction(type: .SaveAndExit, campaignType: .usnat)
-            ].forEach {
-                expect(coordinator.shouldCallGetChoice(for: $0))
-                    .to(beFalse(), description: "For action \($0.type), \($0.campaignType.rawValue)")
-            }
-        }
-
         describe("a property with USNat campaign") {
             let saveAndExitAction = SPAction(
                 type: .SaveAndExit,
@@ -773,24 +750,6 @@ class SPClientCoordinatorSpec: QuickSpec {
                 coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()), spClient: spClientMock)
                 coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in }
                 expect(spClientMock.pvDataCalled).toEventually(beTrue())
-            }
-
-            describe("when calling reportAction") {
-                it("returns a usnat consent") {
-                    waitUntil { done in
-                        coordinator.reportAction(saveAndExitAction) { result in
-                            switch result {
-                                case .success(let userData):
-                                    expect(userData.usnat?.consents?.uuid).notTo(beNil())
-                                    expect(coordinator.userData.usnat).to(equal(userData.usnat))
-
-                                case .failure(let error):
-                                    fail(error.description)
-                            }
-                            done()
-                        }
-                    }
-                }
             }
 
             describe("and expiration date is greater than current date") {
