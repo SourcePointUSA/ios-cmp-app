@@ -330,9 +330,10 @@ extension SourcepointClientCoordinator.State {
             gdpr: self.gdpr?.toCore(),
             ccpa: self.ccpa?.toCore(),
             usNat: self.usnat?.toCore(),
-            gdprMetaData: nil,
-            ccpaMetaData: nil,
-            usNatMetaData: nil)
+            gdprMetaData: self.gdprMetaData?.toCore(),
+            ccpaMetaData: self.ccpaMetaData?.toCore(),
+            usNatMetaData: self.usNatMetaData?.toCore()
+        )
     }
 }
 
@@ -391,6 +392,41 @@ extension SPUSNatConsent {
             },
             userConsents: USNatConsent.USNatUserConsents(vendors: self.userConsents.vendors.toCore(), categories: self.userConsents.categories.toCore()),
             gppData: self.GPPData?.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
+        )
+    }
+}
+
+extension SourcepointClientCoordinator.State.GDPRMetaData {
+    func toCore() -> SPMobileCore.State.GDPRMetaData {
+        return .init(
+            additionsChangeDate: self.additionsChangeDate.toCore(),
+            legalBasisChangeDate: self.legalBasisChangeDate?.toCore(),
+            sampleRate: self.sampleRate,
+            wasSampled: KotlinBoolean(bool: self.wasSampled),
+            wasSampledAt: KotlinFloat(float: self.wasSampledAt)
+        )
+    }
+}
+
+extension SourcepointClientCoordinator.State.CCPAMetaData {
+    func toCore() -> SPMobileCore.State.CCPAMetaData {
+        return .init(
+            sampleRate: self.sampleRate,
+            wasSampled: KotlinBoolean(bool: self.wasSampled),
+            wasSampledAt: KotlinFloat(float: self.wasSampledAt)
+        )
+    }
+}
+
+extension SourcepointClientCoordinator.State.UsNatMetaData {
+    func toCore() -> SPMobileCore.State.UsNatMetaData {
+        return .init(
+            additionsChangeDate: self.additionsChangeDate.toCore(),
+            sampleRate: self.sampleRate,
+            wasSampled: KotlinBoolean(bool: self.wasSampled),
+            wasSampledAt: KotlinFloat(float: self.wasSampledAt),
+            vendorListId: self.vendorListId,
+            applicableSections: self.applicableSections.map { KotlinInt(integerLiteral: $0) }
         )
     }
 }
