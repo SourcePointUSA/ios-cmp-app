@@ -8,6 +8,8 @@
 import Foundation
 import SPMobileCore
 
+// swiftlint:disable file_length
+
 extension SPMobileCore.CCPAConsent.CCPAConsentStatus {
     func toNative() -> CCPAConsentStatus {
         switch name {
@@ -234,6 +236,7 @@ extension SPAction {
     }
 }
 
+// swiftlint:disable cyclomatic_complexity
 extension SPActionType {
     func toCore() -> SPMobileCore.SPActionType {
         switch self {
@@ -252,6 +255,7 @@ extension SPActionType {
         }
     }
 }
+// swiftlint:enable cyclomatic_complexity
 
 extension SPIDFAStatus {
     func toCore() -> SPMobileCore.SPIDFAStatus {
