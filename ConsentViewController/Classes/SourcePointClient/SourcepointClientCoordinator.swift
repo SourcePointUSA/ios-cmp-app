@@ -818,104 +818,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func getChoiceAll(_ action: SPAction, handler: @escaping (Result<SPMobileCore.ChoiceAllResponse?, SPError>) -> Void) {
-        coreCoordinator.state = state.toCore()
-        coreCoordinator.getChoiceAll(
-            action: action.toCore(),
-            campaigns: .init(
-                gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
-                ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
-                usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
-            )
-        ) { response, error in
-            if error != nil {
-                handler(Result.failure(InvalidChoiceAllResponseError()))
-            } else {
-                handler(Result.success(response))
-            }
-        }
-    }
-
-    func postChoiceGDPR(
-        _ action: SPAction,
-        postPayloadFromGetCall: SPMobileCore.ChoiceAllResponse.GDPRPostPayload?,
-        handler: @escaping (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
-    ) {
-        coreCoordinator.postChoiceGDPR(
-            action: action.toCore(),
-            postPayloadFromGetCall: postPayloadFromGetCall
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
-        }
-    }
-
-    func postChoiceCCPA(
-        _ action: SPAction,
-        handler: @escaping (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
-    ) {
-        coreCoordinator.postChoiceCCPA(
-            action: action.toCore()
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
-        }
-    }
-
-    func postChoiceUsnat(
-        _ action: SPAction,
-        handler: @escaping (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
-    ) {
-        coreCoordinator.postChoiceUSNat(
-            action: action.toCore()
-        ) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                handler(Result.success(response!)) // swiftlint:disable:this force_unwrapping
-            }
-        }
-    }
-
-    func reportGDPRAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
-        coreCoordinator.reportGDPRAction(action: action.toCore(), getResponse: getResponse) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                self.updateStateFromCore(coreState: self.coreCoordinator.state)
-                handler(Result.success(self.userData))
-            }
-        }
-    }
-
-    func reportCCPAAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
-        coreCoordinator.reportCCPAAction(action: action.toCore(), getResponse: getResponse) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                self.updateStateFromCore(coreState: self.coreCoordinator.state)
-                handler(Result.success(self.userData))
-            }
-        }
-    }
-
-    func reportUSNatAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
-        coreCoordinator.reportUSNatAction(action: action.toCore(), getResponse: getResponse) { response, error in
-            if error != nil || response == nil {
-                handler(Result.failure(InvalidResponseConsentError()))
-            } else {
-                self.updateStateFromCore(coreState: self.coreCoordinator.state)
-                handler(Result.success(self.userData))
-            }
-        }
-    }
-
     func updateStateFromCore(coreState: SPMobileCore.State) {
         state.gdpr?.uuid = coreState.gdpr?.uuid
         state.gdpr?.dateCreated = SPDate(string: coreState.gdpr?.dateCreated ?? "")
@@ -961,18 +863,19 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         coreCoordinator.idfaStatus = idfaStatus.toCore()
         coreCoordinator.includeData = includeData.toCore()
         coreCoordinator.state = state.toCore()
-        getChoiceAll(action) { getResult in
-            switch getResult {
-                case .success(let getResponse):
-                    switch action.campaignType {
-                        case .gdpr: self.reportGDPRAction(action, getResponse, handler)
-                        case .ccpa: self.reportCCPAAction(action, getResponse, handler)
-                        case .usnat: self.reportUSNatAction(action, getResponse, handler)
-                        default: break
-                    }
-
-                case .failure(let error):
-                    handler(Result.failure(error))
+        coreCoordinator.reportAction(
+            action: action.toCore(),
+            campaigns: .init(
+                gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
+                ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
+                usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
+            )
+        ) { _, error in
+            if error != nil {
+                handler(Result.failure(InvalidChoiceAllResponseError()))
+            } else {
+                self.updateStateFromCore(coreState: self.coreCoordinator.state)
+                handler(Result.success(self.userData))
             }
         }
     }
