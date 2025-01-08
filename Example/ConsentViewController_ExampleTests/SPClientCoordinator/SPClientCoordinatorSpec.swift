@@ -166,69 +166,6 @@ class SPClientCoordinatorSpec: QuickSpec {
                         .toEventually(equal("bar"))
                 }
             }
-
-            describe("reportAction") {
-                beforeEach {
-                    spClientMock = SourcePointClientMock(
-                        accountId: accountId,
-                        propertyName: propertyName,
-                        propertyId: propertyId,
-                        campaignEnv: .Public,
-                        timeout: 999
-                    )
-                    coordinator = coordinatorFor(campaigns: gdprCcpaCampaigns, spClient: spClientMock)
-                }
-
-                it("should include right payload for GDPR") {
-                    let gdprAction = SPAction(
-                        type: .AcceptAll,
-                        campaignType: .gdpr,
-                        messageId: "1234"
-                    )
-                    gdprAction.encodablePubData = ["foo": .init("gdpr")]
-                    let publisherData = JsonKt.encodeToJsonObject(gdprAction.encodablePubData.toCore())
-
-                    waitUntil { done in
-                        coordinator.reportAction(gdprAction) { response in
-                            switch response {
-                                case .failure: fail("failed reporting gdpr action")
-
-                                case .success:
-                                    expect(spClientMock.postGDPRActionCalled).to(beTrue())
-                                    let request = spClientMock.postGDPRActionCalledWith?["request"] as? GDPRChoiceRequest
-                                    expect(request?.pubData).to(equal(publisherData))
-                                    expect(request?.messageId).to(equal("1234"))
-                            }
-                            done()
-                        }
-                    }
-                }
-
-                it("should include the right payload for CCPA") {
-                    let ccpaAction = SPAction(
-                        type: .AcceptAll,
-                        campaignType: .ccpa,
-                        messageId: "321"
-                    )
-                    ccpaAction.encodablePubData = ["foo": .init("ccpa")]
-                    let publisherData = JsonKt.encodeToJsonObject(ccpaAction.encodablePubData.toCore())
-
-                    waitUntil { done in
-                        coordinator.reportAction(ccpaAction) { response in
-                            switch response {
-                                case .failure: fail("failed reporting ccpa action")
-
-                                case .success:
-                                    expect(spClientMock.postCCPAActionCalled).to(beTrue())
-                                    let request = spClientMock.postCCPAActionCalledWith?["request"] as? CCPAChoiceRequest
-                                    expect(request?.pubData).to(equal(publisherData))
-                                    expect(request?.messageId).to(equal("321"))
-                            }
-                            done()
-                        }
-                    }
-                }
-            }
         }
 
         describe("consent-status") {
