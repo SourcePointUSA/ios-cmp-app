@@ -88,6 +88,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         static let version = 4
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
+            var vendorListId: String?
             var additionsChangeDate = SPDate.now()
             var legalBasisChangeDate: SPDate?
             var sampleRate = Float(1)
@@ -106,13 +107,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
-            var vendorListId: String = ""
+            var vendorListId: String?
             var applicableSections: [Int] = []
-
-            enum CodingKeys: String, CodingKey {
-                case additionsChangeDate, sampleRate, wasSampled, wasSampledAt, applicableSections
-                case vendorListId = "_id"
-            }
         }
 
         struct AttCampaign: Codable {
@@ -523,10 +519,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     func handleMetaDataResponse(_ response: SPMobileCore.MetaDataResponse) {
         if let gdprMetaData = response.gdpr {
+            if state.gdprMetaData?.vendorListId != nil && state.gdprMetaData?.vendorListId != gdprMetaData.vendorListId {
+                state.gdpr = .empty()
+            }
             state.gdpr?.applies = gdprMetaData.applies
             state.gdprMetaData?.additionsChangeDate = SPDate(string: gdprMetaData.additionsChangeDate)
             state.gdprMetaData?.legalBasisChangeDate = SPDate(string: gdprMetaData.legalBasisChangeDate)
             state.gdprMetaData?.updateSampleFields(gdprMetaData.sampleRate)
+            state.gdprMetaData?.vendorListId = gdprMetaData.vendorListId
             if campaigns.gdpr?.groupPmId != gdprMetaData.childPmId {
                 storage.gdprChildPmId = gdprMetaData.childPmId
             }
@@ -537,6 +537,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
         if let usnatMetaData = response.usnat {
             let previousApplicableSections = state.usNatMetaData?.applicableSections ?? []
+            if state.usNatMetaData?.vendorListId != nil && state.usNatMetaData?.vendorListId != usnatMetaData.vendorListId {
+                state.usnat = .empty()
+            }
             state.usnat?.applies = usnatMetaData.applies
             state.usNatMetaData?.vendorListId = usnatMetaData.vendorListId
             state.usNatMetaData?.additionsChangeDate = SPDate(string: usnatMetaData.additionsChangeDate)
