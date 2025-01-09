@@ -892,5 +892,48 @@ class SPClientCoordinatorSpec: QuickSpec {
                 }
             }
         }
+
+        fdescribe("flushing consent") {
+            it("when gdpr vendorListId changes") {
+                waitUntil { done in
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstLoadMessages in
+                        let (firstMessages, _) = try! firstLoadMessages.get()
+                        expect(firstMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
+
+                        coordinator.reportAction(SPAction(type: .AcceptAll, campaignType: .gdpr)) { _ in
+                            coordinator.state.gdprMetaData?.vendorListId = "foo"
+                            coordinator.storage.spState = coordinator.state
+
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondLoadMessages in
+                                let (secondMessages, _) = try! secondLoadMessages.get()
+                                expect(secondMessages.filter { $0.type == .gdpr }).notTo(beEmpty())
+                                done()
+                            }
+                        }
+                    }
+                }
+            }
+
+            it("when usnat vendorListId changes") {
+                waitUntil { done in
+                    coordinator = coordinatorFor(campaigns: SPCampaigns(usnat: SPCampaign()))
+                    coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstLoadMessages in
+                        let (firstMessages, _) = try! firstLoadMessages.get()
+                        expect(firstMessages.filter { $0.type == .usnat }).notTo(beEmpty())
+
+                        coordinator.reportAction(SPAction(type: .AcceptAll, campaignType: .usnat)) { _ in
+                            coordinator.state.usNatMetaData?.vendorListId = "foo"
+                            coordinator.storage.spState = coordinator.state
+
+                            coordinator.loadMessages(forAuthId: nil, pubData: nil) { secondLoadMessages in
+                                let (secondMessages, _) = try! secondLoadMessages.get()
+                                expect(secondMessages.filter { $0.type == .usnat }).notTo(beEmpty())
+                                done()
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
