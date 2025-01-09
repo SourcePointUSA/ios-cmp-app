@@ -115,6 +115,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var partitionUUID: String?
         }
 
+        var accountId, propertyId: Int?
+
         var gdpr: SPGDPRConsent?
         var ccpa: SPCCPAConsent?
         var usnat: SPUSNatConsent?
@@ -336,12 +338,27 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
         self.deviceManager = deviceManager
 
-        self.state = Self.setupState(from: storage, campaigns: campaigns)
+        self.state = Self.setupState(
+            from: storage,
+            accountId: accountId,
+            propertyId: propertyId,
+            campaigns: campaigns
+        )
         self.storage.spState = self.state
     }
 
-    static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns) -> State {
+    static func setupState(
+        from localStorage: SPLocalStorage,
+        accountId: Int,
+        propertyId: Int,
+        campaigns localCampaigns: SPCampaigns
+    ) -> State {
         var spState = localStorage.spState ?? .init()
+        if spState.accountId == nil || spState.propertyId == nil {
+            spState.accountId = accountId
+            spState.propertyId = propertyId
+        }
+
         if localCampaigns.gdpr != nil, spState.gdpr == nil {
             spState.gdpr = localStorage.userData.gdpr?.consents ?? .empty()
             spState.gdpr?.applies = localStorage.userData.gdpr?.applies ?? false
@@ -485,7 +502,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
-        state = Self.setupState(from: storage, campaigns: campaigns)
+        state = Self.setupState(
+            from: storage,
+            accountId: accountId,
+            propertyId: propertyId,
+            campaigns: campaigns
+        )
         storage.spState = state
 
         self.authId = authId
