@@ -893,7 +893,7 @@ class SPClientCoordinatorSpec: QuickSpec {
             }
         }
 
-        fdescribe("flushing consent") {
+        describe("flushing consent") {
             it("when gdpr vendorListId changes") {
                 waitUntil { done in
                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { firstLoadMessages in
