@@ -359,6 +359,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             spState.propertyId = propertyId
         }
 
+        if spState.accountId != accountId || spState.propertyId != propertyId {
+            spState = .init()
+            spState.accountId = accountId
+            spState.propertyId = propertyId
+        }
+
         if localCampaigns.gdpr != nil, spState.gdpr == nil {
             spState.gdpr = localStorage.userData.gdpr?.consents ?? .empty()
             spState.gdpr?.applies = localStorage.userData.gdpr?.applies ?? false
