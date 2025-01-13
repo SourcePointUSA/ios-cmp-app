@@ -1,3 +1,7 @@
+# 7.7.4 (Jan, 13, 2025)
+* [DIA-3283](https://sourcepoint.atlassian.net/browse/DIA-3283) Fixed an issue that'd cause the SDK to keep consent data even after the property/account id would change. This is an edge case and won't normally happen. [#589](https://github.com/SourcePointUSA/ios-cmp-app/pull/589)
+* [DIA-2956](https://sourcepoint.atlassian.net/browse/DIA-2956) Fixed an issue causing the SDK to keep consent data when a property would change from vendor list to another. Consent data is now purged for that campaign type. The user is treated as "no action" and will likely be re-messaged (depending on the campaign scenario). [#585](https://github.com/SourcePointUSA/ios-cmp-app/pull/585)
+
 # 7.7.3 (Nov, 25, 2024)
 * [DIA-4610](https://sourcepoint.atlassian.net/browse/DIA-4610) Replace native `/custom-consent` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/custom-consent` implementation. [#584](https://github.com/SourcePointUSA/ios-cmp-app/pull/584)
 * [DIA-3500](https://sourcepoint.atlassian.net/browse/DIA-3500) Replace native `/pv-data` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/pv-data` implementation. [#583](https://github.com/SourcePointUSA/ios-cmp-app/pull/583)
