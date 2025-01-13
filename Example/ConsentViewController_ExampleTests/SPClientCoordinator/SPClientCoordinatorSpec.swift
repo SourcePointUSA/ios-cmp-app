@@ -934,6 +934,26 @@ class SPClientCoordinatorSpec: QuickSpec {
                     }
                 }
             }
+
+            it("when propertyId changes") {
+                let sameStorage = LocalStorageMock()
+                coordinator = coordinatorFor(propertyId: 999, campaigns: gdprCcpaCampaigns, storage: sameStorage)
+                coordinator.state.gdpr?.uuid = "foo"
+                expect(coordinator.state.gdpr?.uuid).to(equal("foo"))
+
+                coordinator = coordinatorFor(propertyId: 123, campaigns: gdprCcpaCampaigns, storage: sameStorage)
+                expect(coordinator.state.gdpr?.uuid).to(beNil())
+            }
+
+            it("when accountId changes") {
+                let sameStorage = LocalStorageMock()
+                coordinator = coordinatorFor(accountId: 999, campaigns: gdprCcpaCampaigns, storage: sameStorage)
+                coordinator.state.gdpr?.uuid = "foo"
+                expect(coordinator.state.gdpr?.uuid).to(equal("foo"))
+
+                coordinator = coordinatorFor(accountId: 123, campaigns: gdprCcpaCampaigns, storage: sameStorage)
+                expect(coordinator.state.gdpr?.uuid).to(beNil())
+            }
         }
     }
 }
