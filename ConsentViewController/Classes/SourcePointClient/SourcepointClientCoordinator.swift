@@ -846,6 +846,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.ccpa?.rejectedVendors = coreState.ccpa?.rejectedVendors  ?? state.ccpa?.rejectedVendors ?? []
         state.ccpa?.rejectedCategories = coreState.ccpa?.rejectedCategories ?? state.ccpa?.rejectedCategories ?? []
         state.ccpa?.webConsentPayload = coreState.ccpa?.webConsentPayload
+        state.ccpa?.uspstring = coreState.ccpa?.uspstring
 
         state.usnat?.uuid = coreState.usNat?.uuid
         state.usnat?.dateCreated = SPDate(string: coreState.usNat?.dateCreated ?? "")
