@@ -111,7 +111,8 @@ var handleMessageOrPMEvent = function (SDK) {
                 payload: data.payload || data.actions || {},
                 consentLanguage: data.consentLanguage,
                 customAction: data.customAction,
-                pmUrl: data.iframe_url
+                pmUrl: data.iframe_url,
+                messageId: data.messageId
             });
         } catch (error) {
             SDK.onError(error);
