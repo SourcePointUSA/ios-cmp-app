@@ -1,4 +1,4 @@
-# 7.7.4 (Jan, 15, 2025)
+# 7.7.5 (Jan, 15, 2025)
 * [DIA-4868](https://sourcepoint.atlassian.net/browse/DIA-4868) Fixed a bug potentially affecting reporting numbers. [#591](https://github.com/SourcePointUSA/ios-cmp-app/pull/591)
 
 # 7.7.4 (Jan, 13, 2025)
