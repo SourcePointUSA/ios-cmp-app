@@ -846,7 +846,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.ccpa?.rejectedVendors = coreState.ccpa?.rejectedVendors  ?? state.ccpa?.rejectedVendors ?? []
         state.ccpa?.rejectedCategories = coreState.ccpa?.rejectedCategories ?? state.ccpa?.rejectedCategories ?? []
         state.ccpa?.webConsentPayload = coreState.ccpa?.webConsentPayload
-        state.ccpa?.uspstring = coreState.ccpa?.uspstring
+        state.ccpa?.signedLspa = coreState.ccpa?.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false
 
         state.usnat?.uuid = coreState.usNat?.uuid
         state.usnat?.dateCreated = SPDate(string: coreState.usNat?.dateCreated ?? "")
@@ -862,6 +862,30 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         storage.spState = state
     }
 
+    func buildChoiceAllCampaigns(action: SPAction) -> ChoiceAllRequest.ChoiceAllCampaigns {
+        var gdprApplies: Bool?
+        var ccpaApplies: Bool?
+        var usnatApplies: Bool?
+        switch action.campaignType {
+        case .gdpr:
+            gdprApplies = state.gdpr?.applies
+
+        case .ccpa:
+            ccpaApplies = state.ccpa?.applies
+
+        case .usnat:
+            usnatApplies = state.usnat?.applies
+
+        case .ios14, .unknown:
+            break
+        }
+        return .init(
+            gdpr: .init(applies: gdprApplies ?? false),
+            ccpa: .init(applies: ccpaApplies ?? false),
+            usnat: .init(applies: usnatApplies ?? false)
+        )
+    }
+
     func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
         coreCoordinator.authId = authId
         coreCoordinator.idfaStatus = idfaStatus.toCore()
@@ -869,11 +893,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         coreCoordinator.state = state.toCore()
         coreCoordinator.reportAction(
             action: action.toCore(),
-            campaigns: .init(
-                gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
-                ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
-                usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
-            )
+            campaigns: buildChoiceAllCampaigns(action: action)
         ) { _, error in
             if error != nil {
                 handler(Result.failure(InvalidChoiceAllResponseError()))

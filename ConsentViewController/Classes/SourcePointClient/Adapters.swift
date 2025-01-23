@@ -407,7 +407,8 @@ extension SourcepointClientCoordinator.State.GDPRMetaData {
             legalBasisChangeDate: self.legalBasisChangeDate?.toCore(),
             sampleRate: self.sampleRate,
             wasSampled: KotlinBoolean(bool: self.wasSampled),
-            wasSampledAt: KotlinFloat(float: self.wasSampledAt)
+            wasSampledAt: KotlinFloat(float: self.wasSampledAt), 
+            vendorListId: self.vendorListId
         )
     }
 }
