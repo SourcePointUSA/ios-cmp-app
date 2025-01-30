@@ -9,6 +9,7 @@ import Foundation
 
 /// Languages supported by Message and PM
 @objc public enum SPMessageLanguage: Int, Codable {
+    case Basque
     case BrowserDefault
     case English
     case Bulgarian
@@ -58,6 +59,8 @@ import Foundation
             return ""
         case .English:
             return "EN"
+        case .Basque:
+            return "EUS"
         case .Bulgarian:
             return "BG"
         case .Catalan:
@@ -141,6 +144,8 @@ import Foundation
             self = .BrowserDefault
         case "EN":
             self = .English
+        case "EUS":
+            self = .Basque
         case "BG":
             self = .Bulgarian
         case "CA":
