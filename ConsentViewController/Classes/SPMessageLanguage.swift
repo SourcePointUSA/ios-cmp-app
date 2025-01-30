@@ -15,6 +15,8 @@ import Foundation
     case Bulgarian
     case Catalan
     case Chinese
+    case ChineseSimplified
+    case ChineseTraditional
     case Croatian
     case Czech
     case Danish
@@ -67,6 +69,10 @@ import Foundation
             return "CA"
         case .Chinese:
             return "ZH"
+        case .ChineseSimplified:
+            return "ZH-HANS"
+        case .ChineseTraditional:
+            return "ZH-HANT"
         case .Croatian:
             return "HR"
         case .Czech:
@@ -152,6 +158,10 @@ import Foundation
             self = .Catalan
         case "ZH":
             self = .Chinese
+        case "ZH-HANS":
+            self = .ChineseSimplified
+        case "ZH-HANT":
+            self = .ChineseTraditional
         case "HR":
             self = .Croatian
         case "CS":
