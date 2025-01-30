@@ -139,7 +139,7 @@ import Foundation
     }
     // swiftlint:disable:next cyclomatic_complexity function_body_length
     public init?(rawValue: RawValue) {
-        switch rawValue {
+        switch rawValue.uppercased() {
         case "":
             self = .BrowserDefault
         case "EN":
