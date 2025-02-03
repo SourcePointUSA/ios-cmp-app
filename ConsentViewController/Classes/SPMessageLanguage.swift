@@ -9,7 +9,9 @@ import Foundation
 
 /// Languages supported by Message and PM
 @objc public enum SPMessageLanguage: Int, Codable {
+    case Arabic
     case Basque
+    case Bosnian
     case BrowserDefault
     case English
     case Bulgarian
@@ -23,6 +25,7 @@ import Foundation
     case Finnish
     case French
     case Gaelic
+    case Galician
     case German
     case Greek
     case Hebrew
@@ -36,6 +39,7 @@ import Foundation
     case Lithuanian
     case Macedonian
     case Malay
+    case Maltese
     case Norwegian
     case Polish
     case Portuguese
@@ -54,6 +58,8 @@ import Foundation
 
     public var rawValue: RawValue {
         switch self {
+        case .Arabic:
+            return "AR"
         // having it empty string instructs the rendering app to use the browser's locale
         case .BrowserDefault:
             return ""
@@ -61,6 +67,8 @@ import Foundation
             return "EN"
         case .Basque:
             return "EUS"
+        case .Bosnian:
+            return "BS"
         case .Bulgarian:
             return "BG"
         case .Catalan:
@@ -83,6 +91,8 @@ import Foundation
             return "FR"
         case .Gaelic:
             return "GD"
+        case .Galician:
+            return "GL"
         case .German:
             return "DE"
         case .Greek:
@@ -109,6 +119,8 @@ import Foundation
             return "MK"
         case .Malay:
             return "MS"
+        case .Maltese:
+            return "MT"
         case .Norwegian:
             return "NO"
         case .Polish:
@@ -144,8 +156,12 @@ import Foundation
             self = .BrowserDefault
         case "EN":
             self = .English
+        case "AR":
+            self = .Arabic
         case "EUS":
             self = .Basque
+        case "BS":
+            self = .Bosnian
         case "BG":
             self = .Bulgarian
         case "CA":
@@ -168,6 +184,8 @@ import Foundation
             self = .French
         case "GD":
             self = .Gaelic
+        case "GL":
+            self = .Galician
         case "DE":
             self = .German
         case "EL":
@@ -194,6 +212,8 @@ import Foundation
             self = .Macedonian
         case "MS":
             self = .Malay
+        case "MT":
+            self = .Maltese
         case "NO":
             self = .Norwegian
         case "PL":
