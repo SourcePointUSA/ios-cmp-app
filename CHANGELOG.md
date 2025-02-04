@@ -1,3 +1,6 @@
+# 7.7.6 (Feb, 4, 2025)
+* [DIA-5097](https://sourcepoint.atlassian.net/browse/DIA-5097) Added support to Arabic, Basque, Bosnian, Galician and Maltese languages. [#592](https://github.com/SourcePointUSA/ios-cmp-app/pull/592)
+
 # 7.7.5 (Jan, 15, 2025)
 * [DIA-4868](https://sourcepoint.atlassian.net/browse/DIA-4868) Fixed a bug potentially affecting reporting numbers. [#591](https://github.com/SourcePointUSA/ios-cmp-app/pull/591)
 
