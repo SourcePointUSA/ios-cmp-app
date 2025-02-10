@@ -110,6 +110,54 @@ extension SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
     }
 }
 
+extension SPMobileCore.SPCampaignType {
+    func toNative() -> SPCampaignType {
+        switch name {
+        case "Gdpr":
+            return .gdpr
+        case "Ccpa":
+            return .ccpa
+        case "UsNat":
+            return .usnat
+        case "IOS14":
+            return .ios14
+
+        default:
+            return .unknown
+        }
+    }
+}
+
+extension SPMobileCore.MessagesResponse.Message {
+    func toNative(metaData: SPMobileCore.MessagesResponse.MessageMetaData) -> Message? {
+        return try? Message(decoderDataString: self.encodeToJson(categoryId: metaData.categoryId, subCategoryId: metaData.subCategoryId))
+    }
+}
+
+extension SPMobileCore.MessagesResponse.MessageMetaData {
+    func toNative() -> MessageMetaData {
+        return MessageMetaData(
+            categoryId: MessageCategory(rawValue: Int(categoryId.rawValue)) ?? .unknown,
+            subCategoryId: MessageSubCategory(rawValue: Int(subCategoryId.rawValue)) ?? .unknown,
+            messageId: String(messageId),
+            messagePartitionUUID: messagePartitionUUID
+        )
+    }
+}
+
+extension [SPMobileCore.MessageToDisplay]? {
+    func toNative() -> [MessageToDisplay]? {
+        return self?.map {
+            // swiftlint:disable:next force_unwrapping
+            MessageToDisplay(message: $0.message.toNative(metaData: $0.metaData)!,
+                             metadata: $0.metaData.toNative(),
+                             // swiftlint:disable:next force_unwrapping
+                             url: URL(string: $0.url)!,
+                             type: $0.type.toNative())
+        }
+    }
+}
+
 extension KotlinBoolean {
     public convenience init?(bool value: Bool?) {
         guard let bool = value else { return nil }
@@ -334,9 +382,12 @@ extension SourcepointClientCoordinator.State {
             gdpr: self.gdpr?.toCore(),
             ccpa: self.ccpa?.toCore(),
             usNat: self.usnat?.toCore(),
+            ios14: self.ios14?.toCore(),
             gdprMetaData: self.gdprMetaData?.toCore(),
             ccpaMetaData: self.ccpaMetaData?.toCore(),
-            usNatMetaData: self.usNatMetaData?.toCore()
+            usNatMetaData: self.usNatMetaData?.toCore(),
+            localState: self.localState?.toCore(),
+            nonKeyedLocalState: self.nonKeyedLocalState?.toCore()
         )
     }
 }
@@ -373,6 +424,9 @@ extension SPCCPAConsent {
             expirationDate: self.expirationDate.toCore(),
             signedLspa: KotlinBoolean(bool: self.signedLspa),
             uspstring: self.uspstring,
+            childPmId: self.childPmId,
+            rejectedAll: KotlinBoolean(bool: self.consentStatus.rejectedAll),
+            consentedAll: KotlinBoolean(bool: self.consentStatus.consentedAll),
             rejectedVendors: self.rejectedVendors,
             rejectedCategories: self.rejectedCategories,
             status: self.status.toCore(),
@@ -400,6 +454,17 @@ extension SPUSNatConsent {
     }
 }
 
+extension SourcepointClientCoordinator.State.AttCampaign {
+    func toCore() -> SPMobileCore.AttCampaign {
+        return SPMobileCore.AttCampaign(
+            status: self.status.toCore(),
+            // swiftlint:disable:next force_unwrapping
+            messageId: self.messageId != nil ? KotlinInt(int: Int(self.messageId!)) : nil,
+            partitionUUID: self.partitionUUID
+        )
+    }
+}
+
 extension SourcepointClientCoordinator.State.GDPRMetaData {
     func toCore() -> SPMobileCore.State.GDPRMetaData {
         return .init(
@@ -407,7 +472,7 @@ extension SourcepointClientCoordinator.State.GDPRMetaData {
             legalBasisChangeDate: self.legalBasisChangeDate?.toCore(),
             sampleRate: self.sampleRate,
             wasSampled: KotlinBoolean(bool: self.wasSampled),
-            wasSampledAt: KotlinFloat(float: self.wasSampledAt), 
+            wasSampledAt: KotlinFloat(float: self.wasSampledAt),
             vendorListId: self.vendorListId
         )
     }
@@ -432,6 +497,44 @@ extension SourcepointClientCoordinator.State.UsNatMetaData {
             wasSampledAt: KotlinFloat(float: self.wasSampledAt),
             vendorListId: self.vendorListId,
             applicableSections: self.applicableSections.map { KotlinInt(integerLiteral: $0) }
+        )
+    }
+}
+
+extension SPCampaignEnv {
+    func toCore() -> SPMobileCore.SPCampaignEnv {
+        switch self {
+        case .Public: return SPMobileCore.SPCampaignEnv.public_
+        case .Stage: return SPMobileCore.SPCampaignEnv.stage
+        }
+    }
+}
+
+extension SPCampaign? {
+    func toCore() -> SPMobileCore.SPCampaign? {
+        if self != nil { return SPMobileCore.SPCampaign(
+            targetingParams: self?.targetingParams ?? [:],
+            groupPmId: self?.groupPmId,
+            gppConfig: SPMobileCore.IncludeData.GPPConfig(
+                MspaCoveredTransaction: self?.GPPConfig?.MspaCoveredTransaction?.toCore(),
+                MspaOptOutOptionMode: self?.GPPConfig?.MspaOptOutOptionMode?.toCore(),
+                MspaServiceProviderMode: self?.GPPConfig?.MspaServiceProviderMode?.toCore(),
+                uspString: KotlinBoolean(bool: self?.GPPConfig?.uspString)
+            ),
+            transitionCCPAAuth: KotlinBoolean(bool: self?.transitionCCPAAuth),
+            supportLegacyUSPString: KotlinBoolean(bool: self?.supportLegacyUSPString)
+        )} else { return nil }
+    }
+}
+
+extension SPCampaigns {
+    func toCore() -> SPMobileCore.SPCampaigns {
+        return SPMobileCore.SPCampaigns(
+            environment: environment.toCore(),
+            gdpr: gdpr.toCore(),
+            ccpa: ccpa.toCore(),
+            usnat: usnat.toCore(),
+            ios14: ios14.toCore()
         )
     }
 }
