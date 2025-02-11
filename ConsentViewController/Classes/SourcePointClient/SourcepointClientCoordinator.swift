@@ -296,19 +296,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    var userData: SPUserData {
-        SPUserData(
-            gdpr: campaigns.gdpr != nil ?
-                .init(consents: state.gdpr, applies: state.gdpr?.applies ?? false) :
-                nil,
-            ccpa: campaigns.ccpa != nil ?
-                .init(consents: state.ccpa, applies: state.ccpa?.applies ?? false) :
-                nil,
-            usnat: campaigns.usnat != nil ?
-                .init(consents: state.usnat, applies: state.usnat?.applies ?? false) :
-                nil
-        )
-    }
+    var userData: SPUserData { coreCoordinator.userData.toNative() }
 
     init(
         accountId: Int,
@@ -493,26 +481,22 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
-        state = Self.setupState(from: storage, campaigns: campaigns)
-        storage.spState = state
-
-        self.authId = authId
-        resetStateIfAuthIdChanged()
-
-        let onError: ErrorHandler = {
-            self.logErrorMetrics($0)
-            handler(Result.failure($0))
-        }
-
-        metaData(onError) {
-            self.consentStatus(onError) {
-                self.state.udpateGDPRStatus()
-                self.state.udpateUSNatStatus()
-                self.messages { messagesResponse in
-                    let (messages, _) = (try? messagesResponse.get()) ?? ([], SPUserData())
-                    handler(messagesResponse)
-                    self.pvData(pubData: pubData, messages: messages) { }
+        coreCoordinator.campaigns = campaigns.toCore()
+        coreCoordinator.loadMessages(authId: authId, pubData: JsonKt.encodeToJsonObject(pubData?.toCore())) { response, error in
+            if error != nil {
+                let coreError = SPError()
+                self.logErrorMetrics(coreError)
+                handler(Result.failure(coreError))
+            } else {
+                self.updateStateFromCore(coreState: self.coreCoordinator.state)
+                var messageToDisplay: [MessageToDisplay]
+                if let response = response.toNative() {
+                    messageToDisplay = response
+                } else {
+                    messageToDisplay = []
                 }
+                let result = LoadMessagesReturnType(messageToDisplay, self.userData)
+                handler(Result.success(result))
             }
         }
     }
@@ -822,6 +806,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func updateStateFromCore(coreState: SPMobileCore.State) {
+        state.gdpr?.applies = coreState.gdpr?.applies ?? false
         state.gdpr?.uuid = coreState.gdpr?.uuid
         state.gdpr?.dateCreated = SPDate(string: coreState.gdpr?.dateCreated ?? "")
         state.gdpr?.expirationDate = SPDate(string: coreState.gdpr?.expirationDate ?? "")
@@ -837,7 +822,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.gdpr?.acceptedLegIntVendors = coreState.gdpr?.legIntVendors ?? state.gdpr?.acceptedLegIntVendors ?? []
         state.gdpr?.acceptedLegIntCategories = coreState.gdpr?.legIntCategories ?? state.gdpr?.acceptedLegIntCategories ?? []
         state.gdpr?.acceptedSpecialFeatures = coreState.gdpr?.specialFeatures ?? state.gdpr?.acceptedSpecialFeatures ?? []
-
+        
+        state.ccpa?.applies = coreState.ccpa?.applies ?? false
         state.ccpa?.uuid = coreState.ccpa?.uuid
         state.ccpa?.dateCreated = SPDate(string: coreState.ccpa?.dateCreated ?? "")
         state.ccpa?.expirationDate = SPDate(string: coreState.ccpa?.expirationDate ?? "")
@@ -847,7 +833,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         state.ccpa?.rejectedCategories = coreState.ccpa?.rejectedCategories ?? state.ccpa?.rejectedCategories ?? []
         state.ccpa?.webConsentPayload = coreState.ccpa?.webConsentPayload
         state.ccpa?.signedLspa = coreState.ccpa?.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false
-
+        state.ccpa?.consentStatus.rejectedAll = coreState.ccpa?.rejectedAll?.boolValue
+        state.ccpa?.consentStatus.consentedAll = coreState.ccpa?.consentedAll?.boolValue
+        
+        state.usnat?.applies = coreState.usNat?.applies ?? false
         state.usnat?.uuid = coreState.usNat?.uuid
         state.usnat?.dateCreated = SPDate(string: coreState.usNat?.dateCreated ?? "")
         state.usnat?.expirationDate = SPDate(string: coreState.usNat?.expirationDate ?? "")
