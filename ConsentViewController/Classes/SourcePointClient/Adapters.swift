@@ -158,6 +158,102 @@ extension [SPMobileCore.MessageToDisplay]? {
     }
 }
 
+extension SPMobileCore.GDPRConsent {
+    func toNative() -> SPGDPRConsent {
+        return .init(
+            uuid: self.uuid,
+            vendorGrants: self.grants.mapValues { $0.toNative() },
+            euconsent: self.euconsent ?? "",
+            tcfData: self.tcData.toNative(),
+            childPmId: self.childPmId,
+            dateCreated: SPDate(string: self.dateCreated ?? ""),
+            expirationDate: SPDate(string: self.expirationDate ?? ""),
+            applies: self.applies,
+            consentStatus: self.consentStatus.toNative(),
+            webConsentPayload: self.webConsentPayload,
+            googleConsentMode: self.gcmStatus?.toNative(),
+            acceptedLegIntCategories: self.legIntCategories,
+            acceptedLegIntVendors: self.legIntVendors,
+            acceptedVendors: self.vendors,
+            acceptedCategories: self.categories,
+            acceptedSpecialFeatures: self.specialFeatures
+        )
+    }
+}
+
+extension SPMobileCore.CCPAConsent {
+    func toNative() -> SPCCPAConsent {
+        return .init(
+            uuid: self.uuid,
+            status: self.status?.toNative() ?? .Unknown,
+            rejectedVendors: self.rejectedVendors,
+            rejectedCategories: self.rejectedCategories,
+            signedLspa: self.signedLspa?.boolValue ?? false,
+            childPmId: self.childPmId,
+            applies: self.applies,
+            dateCreated: SPDate(string: self.dateCreated ?? ""),
+            expirationDate: SPDate(string: self.expirationDate ?? ""),
+            consentStatus: ConsentStatus(consentedAll: self.consentedAll?.boolValue, rejectedAll: self.rejectedAll?.boolValue),
+            webConsentPayload: self.webConsentPayload,
+            GPPData: self.gppData.toNative() ?? SPJson()
+        )
+    }
+}
+
+extension SPMobileCore.USNatConsent {
+    func toNative() -> SPUSNatConsent {
+        return .init(
+            uuid: self.uuid,
+            applies: self.applies,
+            dateCreated: SPDate(string: self.dateCreated ?? ""),
+            expirationDate: SPDate(string: self.expirationDate ?? ""),
+            consentStrings: self.consentStrings.map { $0.toNative() },
+            webConsentPayload: self.webConsentPayload,
+            categories: self.userConsents.categories.map { $0.toNative() },
+            vendors: self.userConsents.vendors.map { $0.toNative() },
+            consentStatus: self.consentStatus.toNative(),
+            GPPData: self.gppData.toNative()
+        )
+    }
+}
+
+extension SPUserDataSPConsent<GDPRConsent>? {
+    func toNative() -> SPConsent<SPGDPRConsent>? {
+        return SPConsent<SPGDPRConsent>.init(
+            consents: self?.consents?.toNative(),
+            applies: self?.consents?.applies ?? false
+        )
+    }
+}
+
+extension SPUserDataSPConsent<CCPAConsent>? {
+    func toNative() -> SPConsent<SPCCPAConsent>? {
+        return SPConsent<SPCCPAConsent>.init(
+            consents: self?.consents?.toNative(),
+            applies: self?.consents?.applies ?? false
+        )
+    }
+}
+
+extension SPUserDataSPConsent<USNatConsent>? {
+    func toNative() -> SPConsent<SPUSNatConsent>? {
+        return SPConsent<SPUSNatConsent>.init(
+            consents: self?.consents?.toNative(),
+            applies: self?.consents?.applies ?? false
+        )
+    }
+}
+
+extension SPMobileCore.SPUserData {
+    func toNative() -> SPUserData {
+        return SPUserData(
+            gdpr: self.gdpr.toNative(),
+            ccpa: self.ccpa.toNative(),
+            usnat: self.usnat.toNative()
+        )
+    }
+}
+
 extension KotlinBoolean {
     public convenience init?(bool value: Bool?) {
         guard let bool = value else { return nil }
