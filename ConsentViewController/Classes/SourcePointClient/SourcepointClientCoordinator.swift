@@ -192,50 +192,48 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             propertyName: propertyName.rawValue
         )
         self.deviceManager = deviceManager
-
-        self.state = Self.setupState(from: storage, campaigns: campaigns)
-        self.storage.spState = self.state
+        self.state = State()
+        self.updateCoreStorage()
     }
 
-    static func setupState(from localStorage: SPLocalStorage, campaigns localCampaigns: SPCampaigns) -> State {
-        var spState = localStorage.spState ?? .init()
-        if localCampaigns.gdpr != nil, spState.gdpr == nil {
-            spState.gdpr = localStorage.userData.gdpr?.consents ?? .empty()
-            spState.gdpr?.applies = localStorage.userData.gdpr?.applies ?? false
-            spState.gdprMetaData = .init()
+    func updateCoreStorage() {
+        if let localState = storage.localState {
+            coreCoordinator.repository.cachedLocalState = localState.toCore()
         }
-        if localCampaigns.ccpa != nil, spState.ccpa == nil {
-            spState.ccpa = localStorage.userData.ccpa?.consents ?? .empty()
-            spState.ccpa?.applies = localStorage.userData.ccpa?.applies ?? false
-            spState.ccpaMetaData = .init()
+        if let tcfData = storage.tcfData, tcfData.isNotEmpty() {
+            coreCoordinator.repository.cachedTcData = tcfData.mapValues { JsonKt.toJsonPrimitive($0) }
         }
-        if localCampaigns.usnat != nil, spState.usnat == nil {
-            spState.usnat = localStorage.userData.usnat?.consents ?? .empty()
-            spState.usnat?.applies = localStorage.userData.usnat?.applies ?? false
-            spState.usNatMetaData = .init()
+        if let gppData = storage.gppData, gppData.isNotEmpty() {
+            coreCoordinator.repository.cachedGppData = gppData.mapValues { JsonKt.toJsonPrimitive($0) }
         }
-        if localCampaigns.ios14 != nil, spState.ios14 == nil {
-            spState.ios14 = .init()
+        if let usPrivacyString = storage.usPrivacyString, usPrivacyString.isNotEmpty() {
+            coreCoordinator.repository.cachedUspString = usPrivacyString
         }
-
-        // Expire user consent if later than expirationDate
-        if let gdprExpirationDate = spState.gdpr?.expirationDate.date,
-           gdprExpirationDate < Date() {
-            spState.gdpr = .empty()
+        if storage.userData.gdpr != nil || storage.userData.ccpa != nil || storage.userData.usnat != nil {
+            coreCoordinator.repository.cachedUserData = SPMobileCore.SPUserData(
+                gdpr: SPUserDataSPConsent(consents: storage.userData.gdpr?.consents?.toCore()),
+                ccpa: SPUserDataSPConsent(consents: storage.userData.ccpa?.consents?.toCore()),
+                usnat: SPUserDataSPConsent(consents: storage.userData.usnat?.consents?.toCore())
+            )
         }
-        if let ccpaExpirationDate = spState.ccpa?.expirationDate.date,
-           ccpaExpirationDate < Date() {
-            spState.ccpa = .empty()
+        if let gdprChildPmId = storage.gdprChildPmId {
+            coreCoordinator.repository.cachedGdprChildPmId = gdprChildPmId
         }
-        if let usnatExpirationDate = spState.usnat?.expirationDate.date,
-           usnatExpirationDate < Date() {
-            spState.usnat = .empty()
+        if let ccpaChildPmId = storage.ccpaChildPmId {
+            coreCoordinator.repository.cachedCcpaChildPmId = ccpaChildPmId
         }
-
-        return spState
+        if let spState = storage.spState {
+            coreCoordinator.repository.cachedSPState = spState.toCore()
+        }
+        storage.clear()
+        print(coreCoordinator.repository.cachedSPState)
+        //coreCoordinator.repository.clear()
     }
 
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
+        coreCoordinator.authId = authId
+        coreCoordinator.idfaStatus = idfaStatus.toCore()
+        coreCoordinator.includeData = includeData.toCore()
         coreCoordinator.campaigns = campaigns.toCore()
         coreCoordinator.loadMessages(authId: authId, pubData: JsonKt.encodeToJsonObject(pubData?.toCore())) { response, error in
             if error != nil {
@@ -330,7 +328,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         coreCoordinator.authId = authId
         coreCoordinator.idfaStatus = idfaStatus.toCore()
         coreCoordinator.includeData = includeData.toCore()
-        coreCoordinator.state = state.toCore()
         coreCoordinator.reportAction(
             action: action.toCore(),
             campaigns: buildChoiceAllCampaigns(action: action)
