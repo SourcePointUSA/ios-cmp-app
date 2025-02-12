@@ -56,6 +56,10 @@ struct Message: Codable, Equatable {
         case messageChoices = "message_choice"
         case propertyId = "site_id"
     }
+    enum CodingKeysCore: String, CodingKey {
+        case category = "categoryId"
+        case subCategory = "subCategoryId"
+    }
 
     var messageJson: MessageJson
     let categories: [GDPRCategory]?
@@ -71,6 +75,24 @@ struct Message: Codable, Equatable {
         self.subCategory = subCategory
         let container = try decoder.container(keyedBy: CodingKeys.self)
         messageJson = try MessageJson(type: subCategory, campaignType: category.campaignType, decoder: try container.superDecoder(forKey: .messageJson))
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let containerCore = try decoder.container(keyedBy: CodingKeysCore.self)
+        self.categories = try container.decodeIfPresent([GDPRCategory].self, forKey: .categories)
+        self.language = try container.decodeIfPresent(String.self, forKey: .language)
+        self.category = try containerCore.decodeIfPresent(MessageCategory.self, forKey: .category) ?? .unknown
+        self.subCategory = try containerCore.decodeIfPresent(MessageSubCategory.self, forKey: .subCategory) ?? .unknown
+        self.messageJson = try MessageJson(type: self.subCategory, campaignType: self.category.campaignType, decoder: try container.superDecoder(forKey: .messageJson))
+        self.messageChoices = try container.decode(SPJson.self, forKey: .messageChoices)
+        self.propertyId = try container.decode(Int.self, forKey: .propertyId)
+    }
+    
+    init?(decoderDataString: String) throws {
+        guard let data = decoderDataString.data(using: .utf8) else { return nil }
+        let decoder = JSONDecoder()
+        self = try decoder.decode(Self.self, from: data)
     }
 }
 
