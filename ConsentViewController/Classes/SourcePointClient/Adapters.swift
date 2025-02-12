@@ -337,9 +337,9 @@ extension IncludeData {
         translateMessageVal = translateMessage
         #endif
         return SPMobileCore.IncludeData.init(
-            tcData: SPMobileCore.IncludeData.TypeString(type: "RecordString"),
+            tcData: SPMobileCore.IncludeData.TypeString(type: "string"),
             webConsentPayload: SPMobileCore.IncludeData.TypeString(type: "string"),
-            localState: SPMobileCore.IncludeData.TypeString(type: "RecordString"),
+            localState: SPMobileCore.IncludeData.TypeString(type: "string"),
             categories: categories,
             translateMessage: KotlinBoolean(bool: translateMessageVal),
             gppData: SPMobileCore.IncludeData.GPPConfig(
@@ -483,7 +483,9 @@ extension SourcepointClientCoordinator.State {
             ccpaMetaData: self.ccpaMetaData?.toCore(),
             usNatMetaData: self.usNatMetaData?.toCore(),
             localState: self.localState?.toCore(),
-            nonKeyedLocalState: self.nonKeyedLocalState?.toCore()
+            nonKeyedLocalState: self.nonKeyedLocalState?.toCore(),
+            storedAuthId: self.storedAuthId,
+            localVersion: KotlinInt(int: self.localVersion)
         )
     }
 }
