@@ -46,6 +46,8 @@ protocol SPClientCoordinator {
     var userData: SPUserData { get }
     var language: SPMessageLanguage { get set }
     var spClient: SourcePointProtocol { get }
+    var gdprChildPmId: String? { get }
+    var ccpaChildPmId: String? { get }
 
     func loadMessages(forAuthId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
@@ -138,9 +140,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var state: State
 
-    var gdprUUID: String? { state.gdpr?.uuid }
-    var ccpaUUID: String? { state.ccpa?.uuid }
-    var usnatUUID: String? { state.usnat?.uuid }
+    var gdprChildPmId: String? { coreCoordinator.repository.cachedGdprChildPmId }
+    var ccpaChildPmId: String? { coreCoordinator.repository.cachedCcpaChildPmId }
 
     let includeData: IncludeData
 
@@ -344,15 +345,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String) {
         var uuid = ""
         var uuidType: SPCampaignType?
-        if let gdprUUID = gdprUUID, gdprUUID.isNotEmpty() {
+        if let gdprUUID = coreCoordinator.state.gdpr?.uuid, gdprUUID.isNotEmpty() {
             uuid = gdprUUID
             uuidType = .gdpr
         }
-        if let ccpaUUID = ccpaUUID, ccpaUUID.isNotEmpty() {
+        if let ccpaUUID = coreCoordinator.state.ccpa?.uuid, ccpaUUID.isNotEmpty() {
             uuid = ccpaUUID
             uuidType = .ccpa
         }
-        if let usNatUUID = usnatUUID, usNatUUID.isNotEmpty() {
+        if let usNatUUID = coreCoordinator.state.usNat?.uuid, usNatUUID.isNotEmpty() {
             uuid = usNatUUID
             uuidType = .usnat
         }
@@ -379,17 +380,14 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func handleAddOrDeleteCustomConsentResponse(
-        _ result: Result<SPMobileCore.GDPRConsent, SPError>,
+        _ error: Error?,
         handler: @escaping GDPRCustomConsentHandler
     ) {
-        switch result {
-            case .success(let consents):
-                state.gdpr?.vendorGrants = consents.toNativeAsAddOrDeleteCustomConsentResponse().grants
-                storage.spState = state
+        if error == nil {
+            updateStateFromCore(coreState: coreCoordinator.state)
                 handler(Result.success(state.gdpr ?? .empty()))
-
-            case .failure(let error):
-                handler(Result.failure((error)))
+        } else {
+            handler(Result.failure(PostingConsentWithoutConsentUUID()))
         }
     }
 
@@ -399,16 +397,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         legIntCategories: [String],
         handler: @escaping GDPRCustomConsentHandler
     ) {
-        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
-            handler(Result.failure(PostingConsentWithoutConsentUUID()))
-            return
-        }
-        spClient.deleteCustomConsentGDPR(
-            toConsentUUID: gdprUUID,
+        coreCoordinator.deleteCustomConsentGDPR(
             vendors: vendors,
             categories: categories,
-            legIntCategories: legIntCategories,
-            propertyId: propertyId
+            legIntCategories: legIntCategories
         ) {
             self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
         }
@@ -420,16 +412,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         legIntCategories: [String],
         handler: @escaping GDPRCustomConsentHandler
     ) {
-        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
-            handler(Result.failure(PostingConsentWithoutConsentUUID()))
-        return
-        }
-        spClient.customConsentGDPR(
-            toConsentUUID: gdprUUID,
+        coreCoordinator.customConsentGDPR(
             vendors: vendors,
             categories: categories,
-            legIntCategories: legIntCategories,
-            propertyId: propertyId
+            legIntCategories: legIntCategories
         ) {
             self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
         }
