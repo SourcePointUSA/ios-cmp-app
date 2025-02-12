@@ -256,49 +256,62 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func updateStateFromCore(coreState: SPMobileCore.State) {
-        state.gdpr?.applies = coreState.gdpr?.applies ?? false
-        state.gdpr?.uuid = coreState.gdpr?.uuid
-        state.gdpr?.dateCreated = SPDate(string: coreState.gdpr?.dateCreated ?? "")
-        state.gdpr?.expirationDate = SPDate(string: coreState.gdpr?.expirationDate ?? "")
-        state.gdpr?.tcfData = coreState.gdpr?.tcData.toNative()
-        state.gdpr?.vendorGrants = coreState.gdpr?.grants.mapValues { $0.toNative() } ?? state.gdpr?.vendorGrants ?? [:]
-        state.gdpr?.webConsentPayload = coreState.gdpr?.webConsentPayload
-        state.gdpr?.euconsent = coreState.gdpr?.euconsent ?? state.gdpr?.euconsent ?? ""
-        state.gdpr?.consentStatus = coreState.gdpr?.consentStatus.toNative() ?? state.gdpr?.consentStatus ?? ConsentStatus()
-        state.gdpr?.childPmId = coreState.gdpr?.childPmId
-        state.gdpr?.googleConsentMode = coreState.gdpr?.gcmStatus?.toNative()
-        state.gdpr?.acceptedVendors = coreState.gdpr?.vendors ?? state.gdpr?.acceptedVendors ?? []
-        state.gdpr?.acceptedCategories = coreState.gdpr?.categories ?? state.gdpr?.acceptedCategories ?? []
-        state.gdpr?.acceptedLegIntVendors = coreState.gdpr?.legIntVendors ?? state.gdpr?.acceptedLegIntVendors ?? []
-        state.gdpr?.acceptedLegIntCategories = coreState.gdpr?.legIntCategories ?? state.gdpr?.acceptedLegIntCategories ?? []
-        state.gdpr?.acceptedSpecialFeatures = coreState.gdpr?.specialFeatures ?? state.gdpr?.acceptedSpecialFeatures ?? []
-        
-        state.ccpa?.applies = coreState.ccpa?.applies ?? false
-        state.ccpa?.uuid = coreState.ccpa?.uuid
-        state.ccpa?.dateCreated = SPDate(string: coreState.ccpa?.dateCreated ?? "")
-        state.ccpa?.expirationDate = SPDate(string: coreState.ccpa?.expirationDate ?? "")
-        state.ccpa?.status = coreState.ccpa?.status?.toNative() ?? state.ccpa?.status ?? .Unknown
-        state.ccpa?.GPPData = coreState.ccpa?.gppData.toNative() ?? SPJson()
-        state.ccpa?.rejectedVendors = coreState.ccpa?.rejectedVendors  ?? state.ccpa?.rejectedVendors ?? []
-        state.ccpa?.rejectedCategories = coreState.ccpa?.rejectedCategories ?? state.ccpa?.rejectedCategories ?? []
-        state.ccpa?.webConsentPayload = coreState.ccpa?.webConsentPayload
-        state.ccpa?.signedLspa = coreState.ccpa?.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false
-        state.ccpa?.consentStatus.rejectedAll = coreState.ccpa?.rejectedAll?.boolValue
-        state.ccpa?.consentStatus.consentedAll = coreState.ccpa?.consentedAll?.boolValue
-        
-        state.usnat?.applies = coreState.usNat?.applies ?? false
-        state.usnat?.uuid = coreState.usNat?.uuid
-        state.usnat?.dateCreated = SPDate(string: coreState.usNat?.dateCreated ?? "")
-        state.usnat?.expirationDate = SPDate(string: coreState.usNat?.expirationDate ?? "")
-        state.usnat?.consentStatus = coreState.usNat?.consentStatus.toNative() ?? state.usnat?.consentStatus ?? ConsentStatus()
-        state.usnat?.GPPData = coreState.usNat?.gppData.toNative()
-        state.usnat?.consentStrings = coreState.usNat?.consentStrings.map { $0.toNative() } ?? state.usnat?.consentStrings ?? []
-        state.usnat?.consentStatus.granularStatus?.gpcStatus = coreState.usNat?.consentStatus.granularStatus?.gpcStatus?.boolValue
-        state.usnat?.webConsentPayload = coreState.usNat?.webConsentPayload
-        state.usnat?.userConsents.vendors = coreState.usNat?.userConsents.vendors.map { $0.toNative() } ?? state.usnat?.userConsents.vendors ?? []
-        state.usnat?.userConsents.categories = coreState.usNat?.userConsents.categories.map { $0.toNative() } ?? state.usnat?.userConsents.categories ?? []
+        if let gdprState = coreState.gdpr {
+            state.gdpr = SPGDPRConsent(
+                uuid: gdprState.uuid,
+                vendorGrants: gdprState.grants.mapValues { $0.toNative() },
+                euconsent: gdprState.euconsent ?? "",
+                tcfData: gdprState.tcData.toNative(),
+                childPmId: gdprState.childPmId,
+                dateCreated: SPDate(string: gdprState.dateCreated ?? ""),
+                expirationDate: SPDate(string: gdprState.expirationDate ?? ""),
+                applies: gdprState.applies,
+                consentStatus: gdprState.consentStatus.toNative(),
+                webConsentPayload: gdprState.webConsentPayload,
+                googleConsentMode: gdprState.gcmStatus?.toNative(),
+                acceptedLegIntCategories: gdprState.legIntCategories,
+                acceptedLegIntVendors: gdprState.legIntVendors,
+                acceptedVendors: gdprState.vendors,
+                acceptedCategories: gdprState.categories,
+                acceptedSpecialFeatures: gdprState.specialFeatures
+            )
+        }
 
-        storage.spState = state
+        if let ccpaState = coreState.ccpa {
+            state.ccpa = SPCCPAConsent(
+                uuid: ccpaState.uuid,
+                status: ccpaState.status?.toNative() ?? .Unknown,
+                rejectedVendors: ccpaState.rejectedVendors,
+                rejectedCategories: ccpaState.rejectedCategories,
+                signedLspa: ccpaState.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false,
+                childPmId: ccpaState.childPmId,
+                applies: ccpaState.applies,
+                dateCreated: SPDate(string: ccpaState.dateCreated ?? ""),
+                expirationDate: SPDate(string: ccpaState.expirationDate ?? ""),
+                consentStatus: ConsentStatus(
+                    consentedAll: ccpaState.consentedAll?.boolValue,
+                    rejectedAll: ccpaState.rejectedAll?.boolValue
+                ),
+                webConsentPayload: ccpaState.webConsentPayload,
+                GPPData: ccpaState.gppData.toNative() ?? SPJson()
+            )
+        }
+
+        if let usnatState = coreState.usNat {
+            state.usnat = SPUSNatConsent(
+                uuid: usnatState.uuid,
+                applies: usnatState.applies,
+                dateCreated: SPDate(string: usnatState.dateCreated ?? ""),
+                expirationDate: SPDate(string: usnatState.expirationDate ?? ""),
+                consentStrings: usnatState.consentStrings.map { $0.toNative() },
+                webConsentPayload: usnatState.webConsentPayload,
+                categories: usnatState.userConsents.categories.map { $0.toNative() },
+                vendors: usnatState.userConsents.vendors.map { $0.toNative() },
+                consentStatus: usnatState.consentStatus.toNative(),
+                GPPData: usnatState.gppData.toNative()
+            )
+            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnatState.consentStatus.granularStatus?.gpcStatus?.boolValue
+        }
     }
 
     func buildChoiceAllCampaigns(action: SPAction) -> ChoiceAllRequest.ChoiceAllCampaigns {
@@ -385,7 +398,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     ) {
         if error == nil {
             updateStateFromCore(coreState: coreCoordinator.state)
-                handler(Result.success(state.gdpr ?? .empty()))
+            handler(Result.success(state.gdpr ?? .empty()))
         } else {
             handler(Result.failure(PostingConsentWithoutConsentUUID()))
         }
