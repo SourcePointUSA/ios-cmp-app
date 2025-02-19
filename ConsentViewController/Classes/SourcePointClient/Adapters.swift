@@ -137,8 +137,8 @@ extension SPMobileCore.MessagesResponse.Message {
 extension SPMobileCore.MessagesResponse.MessageMetaData {
     func toNative() -> MessageMetaData {
         return MessageMetaData(
-            categoryId: MessageCategory(rawValue: Int(categoryId.rawValue)) ?? .unknown,
-            subCategoryId: MessageSubCategory(rawValue: Int(subCategoryId.rawValue)) ?? .unknown,
+            categoryId: MessageCategory(rawValue: Int(categoryId.rawValue_)) ?? .unknown,
+            subCategoryId: MessageSubCategory(rawValue: Int(subCategoryId.rawValue_)) ?? .unknown,
             messageId: String(messageId),
             messagePartitionUUID: messagePartitionUUID
         )
@@ -166,8 +166,8 @@ extension SPMobileCore.GDPRConsent {
             euconsent: self.euconsent ?? "",
             tcfData: self.tcData.toNative(),
             childPmId: self.childPmId,
-            dateCreated: SPDate(string: self.dateCreated ?? ""),
-            expirationDate: SPDate(string: self.expirationDate ?? ""),
+            dateCreated: SPDate(string: self.dateCreated.instantToString()),
+            expirationDate: SPDate(string: self.expirationDate.instantToString()),
             applies: self.applies,
             consentStatus: self.consentStatus.toNative(),
             webConsentPayload: self.webConsentPayload,
@@ -191,8 +191,8 @@ extension SPMobileCore.CCPAConsent {
             signedLspa: self.signedLspa?.boolValue ?? false,
             childPmId: self.childPmId,
             applies: self.applies,
-            dateCreated: SPDate(string: self.dateCreated ?? ""),
-            expirationDate: SPDate(string: self.expirationDate ?? ""),
+            dateCreated: SPDate(string: self.dateCreated.instantToString()),
+            expirationDate: SPDate(string: self.expirationDate.instantToString()),
             consentStatus: ConsentStatus(consentedAll: self.consentedAll?.boolValue, rejectedAll: self.rejectedAll?.boolValue),
             webConsentPayload: self.webConsentPayload,
             GPPData: self.gppData.toNative() ?? SPJson()
@@ -205,8 +205,8 @@ extension SPMobileCore.USNatConsent {
         return .init(
             uuid: self.uuid,
             applies: self.applies,
-            dateCreated: SPDate(string: self.dateCreated ?? ""),
-            expirationDate: SPDate(string: self.expirationDate ?? ""),
+            dateCreated: SPDate(string: self.dateCreated.instantToString()),
+            expirationDate: SPDate(string: self.expirationDate.instantToString()),
             consentStrings: self.consentStrings.map { $0.toNative() },
             webConsentPayload: self.webConsentPayload,
             categories: self.userConsents.categories.map { $0.toNative() },
@@ -359,7 +359,7 @@ extension SPPublisherData {
 }
 
 extension SPJson {
-    func toCore() -> String? {
+    func toCoreString() -> String? {
         if let encoded = try? JSONEncoder().encode(self),
            let stringified = String(data: encoded, encoding: .utf8) {
             return stringified
@@ -374,8 +374,8 @@ extension SPAction {
             type: self.type.toCore(),
             campaignType: self.campaignType.toCore(),
             messageId: self.messageId,
-            pmPayload: self.pmPayload.toCore(),
-            encodablePubData: JsonKt.encodeToJsonObject(self.encodablePubData.toCore())
+            pmPayload: self.pmPayload.toCoreString(),
+            encodablePubData: try? self.encodablePubData.toJsonString()
         )
     }
 }
@@ -419,8 +419,8 @@ extension SPDate {
         date = Self.format.date(from: originalDateString) ?? Date()
     }
 
-    func toCore() -> String {
-        return SPDate(date: self.date).originalDateString
+    func toCore() -> SPMobileCore.Kotlinx_datetimeInstant {
+        return InstantKt.toInstant(SPDate(date: self.date).originalDateString)
     }
 }
 
@@ -474,127 +474,136 @@ extension [SPConsentable] {
 
 extension SourcepointClientCoordinator.State {
     func toCore() -> SPMobileCore.State {
-        return SPMobileCore.State(
-            gdpr: self.gdpr?.toCore(),
-            ccpa: self.ccpa?.toCore(),
-            usNat: self.usnat?.toCore(),
-            ios14: self.ios14?.toCore(),
-            gdprMetaData: self.gdprMetaData?.toCore(),
-            ccpaMetaData: self.ccpaMetaData?.toCore(),
-            usNatMetaData: self.usNatMetaData?.toCore(),
-            localState: self.localState?.toCore(),
-            nonKeyedLocalState: self.nonKeyedLocalState?.toCore(),
-            storedAuthId: self.storedAuthId,
-            localVersion: KotlinInt(int: self.localVersion)
+        return SPMobileCore.State.init(
+            gdpr: self.gdpr.toCore(metaData: self.gdprMetaData),
+            ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
+            usNat: self.usnat.toCore(metaData: self.usNatMetaData),
+            ios14: self.ios14.toCore(),
+            authId: self.storedAuthId,
+            localVersion: Int32(self.localVersion ?? 1),
+            localState: self.localState?.toCoreString() ?? "",
+            nonKeyedLocalState: self.nonKeyedLocalState?.toCoreString() ?? ""
         )
     }
 }
 
-extension SPGDPRConsent {
-    func toCore() -> SPMobileCore.GDPRConsent {
-        return SPMobileCore.GDPRConsent(
-            applies: self.applies,
-            dateCreated: self.dateCreated.toCore(),
-            expirationDate: self.expirationDate.toCore(),
-            uuid: self.uuid,
-            childPmId: self.childPmId,
-            euconsent: self.euconsent,
-            legIntCategories: self.acceptedLegIntVendors,
-            legIntVendors: self.acceptedLegIntVendors,
-            vendors: self.acceptedVendors,
-            categories: self.acceptedCategories,
-            specialFeatures: self.acceptedSpecialFeatures,
-            grants: self.vendorGrants.toCore(),
-            gcmStatus: self.googleConsentMode?.toCore(),
-            webConsentPayload: self.webConsentPayload,
-            consentStatus: self.consentStatus.toCore(),
-            tcData: self.tcfData?.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
+extension SPGDPRConsent? {
+    func toCore(metaData: SourcepointClientCoordinator.State.GDPRMetaData?) -> SPMobileCore.State.GDPRState {
+        return SPMobileCore.State.GDPRState(
+            metaData: metaData.toCore(),
+            consents: SPMobileCore.GDPRConsent(
+                applies: self?.applies ?? false,
+                dateCreated: self?.dateCreated.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+                expirationDate: self?.expirationDate.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+                uuid: self?.uuid,
+                childPmId: self?.childPmId,
+                euconsent: self?.euconsent,
+                legIntCategories: self?.acceptedLegIntVendors ?? [],
+                legIntVendors: self?.acceptedLegIntVendors ?? [],
+                vendors: self?.acceptedVendors ?? [],
+                categories: self?.acceptedCategories ?? [],
+                specialFeatures: self?.acceptedSpecialFeatures ?? [],
+                grants: self?.vendorGrants.toCore() ?? [:],
+                gcmStatus: self?.googleConsentMode?.toCore(),
+                webConsentPayload: self?.webConsentPayload,
+                consentStatus: self?.consentStatus.toCore() ?? ConsentStatus().toCore(),
+                tcData: self?.tcfData?.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
+            ),
+            childPmId: self?.childPmId
         )
     }
 }
 
-extension SPCCPAConsent {
-    func toCore() -> SPMobileCore.CCPAConsent {
-        return SPMobileCore.CCPAConsent(
-            applies: self.applies,
-            uuid: self.uuid,
-            dateCreated: self.dateCreated.toCore(),
-            expirationDate: self.expirationDate.toCore(),
-            signedLspa: KotlinBoolean(bool: self.signedLspa),
-            uspstring: self.uspstring,
-            childPmId: self.childPmId,
-            rejectedAll: KotlinBoolean(bool: self.consentStatus.rejectedAll),
-            consentedAll: KotlinBoolean(bool: self.consentStatus.consentedAll),
-            rejectedVendors: self.rejectedVendors,
-            rejectedCategories: self.rejectedCategories,
-            status: self.status.toCore(),
-            webConsentPayload: self.webConsentPayload,
-            gppData: self.GPPData.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
+extension SPCCPAConsent? {
+    func toCore(metaData: SourcepointClientCoordinator.State.CCPAMetaData?) -> SPMobileCore.State.CCPAState {
+        return SPMobileCore.State.CCPAState(
+            metaData: metaData.toCore(),
+            consents: SPMobileCore.CCPAConsent(
+                applies: self?.applies ?? false,
+                uuid: self?.uuid,
+                dateCreated: self?.dateCreated.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+                expirationDate: self?.expirationDate.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+                signedLspa: KotlinBoolean(bool: self?.signedLspa),
+                uspstring: self?.uspstring,
+                childPmId: self?.childPmId,
+                rejectedAll: KotlinBoolean(bool: self?.consentStatus.rejectedAll),
+                consentedAll: KotlinBoolean(bool: self?.consentStatus.consentedAll),
+                rejectedVendors: self?.rejectedVendors ?? [],
+                rejectedCategories: self?.rejectedCategories ?? [],
+                status: self?.status.toCore(),
+                webConsentPayload: self?.webConsentPayload,
+                gppData: self?.GPPData.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
+            ),
+            childPmId: self?.childPmId
         )
     }
 }
 
-extension SPUSNatConsent {
-    func toCore() -> SPMobileCore.USNatConsent {
-        return SPMobileCore.USNatConsent(
-            applies: self.applies,
-            dateCreated: self.dateCreated.toCore(),
-            expirationDate: self.expirationDate.toCore(),
-            uuid: self.uuid,
-            webConsentPayload: self.webConsentPayload,
-            consentStatus: self.consentStatus.toCore(),
-            consentStrings: self.consentStrings.map {
-                USNatConsent.USNatConsentSection(sectionId: Int32($0.sectionId), sectionName: $0.sectionName, consentString: $0.consentString)
-            },
-            userConsents: USNatConsent.USNatUserConsents(vendors: self.userConsents.vendors.toCore(), categories: self.userConsents.categories.toCore()),
-            gppData: self.GPPData?.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
+extension SPUSNatConsent? {
+    func toCore(metaData: SourcepointClientCoordinator.State.UsNatMetaData?) -> SPMobileCore.State.USNatState {
+        return SPMobileCore.State.USNatState(
+            metaData: metaData.toCore(),
+            consents: SPMobileCore.USNatConsent(
+                applies: self?.applies ?? false,
+                dateCreated: self?.dateCreated.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+                expirationDate: self?.expirationDate.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+                uuid: self?.uuid,
+                webConsentPayload: self?.webConsentPayload,
+                consentStatus: self?.consentStatus.toCore() ?? ConsentStatus().toCore(),
+                consentStrings: self?.consentStrings.map {
+                    USNatConsent.USNatConsentSection(sectionId: Int32($0.sectionId), sectionName: $0.sectionName, consentString: $0.consentString)
+                } ?? [],
+                userConsents: USNatConsent.USNatUserConsents(vendors: self?.userConsents.vendors.toCore() ?? [], categories: self?.userConsents.categories.toCore() ?? []),
+                gppData: self?.GPPData?.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
+            ),
+            childPmId: nil
         )
     }
 }
 
-extension SourcepointClientCoordinator.State.AttCampaign {
+extension SourcepointClientCoordinator.State.AttCampaign? {
     func toCore() -> SPMobileCore.AttCampaign {
         return SPMobileCore.AttCampaign(
-            status: self.status.toCore(),
+            status: self?.status.toCore(),
             // swiftlint:disable:next force_unwrapping
-            messageId: self.messageId != nil ? KotlinInt(int: Int(self.messageId!)) : nil,
-            partitionUUID: self.partitionUUID
+            messageId: self?.messageId != nil ? KotlinInt(int: Int(self!.messageId!)) : nil,
+            partitionUUID: self?.partitionUUID
         )
     }
 }
 
-extension SourcepointClientCoordinator.State.GDPRMetaData {
-    func toCore() -> SPMobileCore.State.GDPRMetaData {
-        return .init(
-            additionsChangeDate: self.additionsChangeDate.toCore(),
-            legalBasisChangeDate: self.legalBasisChangeDate?.toCore(),
-            sampleRate: self.sampleRate,
-            wasSampled: KotlinBoolean(bool: self.wasSampled),
-            wasSampledAt: KotlinFloat(float: self.wasSampledAt),
-            vendorListId: self.vendorListId
+extension SourcepointClientCoordinator.State.GDPRMetaData? {
+    func toCore() -> SPMobileCore.State.GDPRStateGDPRMetaData {
+        return SPMobileCore.State.GDPRStateGDPRMetaData.init(
+            additionsChangeDate: self?.additionsChangeDate.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+            legalBasisChangeDate: self?.legalBasisChangeDate?.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+            sampleRate: self?.sampleRate ?? 1,
+            wasSampled: KotlinBoolean(bool: self?.wasSampled),
+            wasSampledAt: KotlinFloat(float: self?.wasSampledAt),
+            vendorListId: self?.vendorListId
         )
     }
 }
 
-extension SourcepointClientCoordinator.State.CCPAMetaData {
-    func toCore() -> SPMobileCore.State.CCPAMetaData {
-        return .init(
-            sampleRate: self.sampleRate,
-            wasSampled: KotlinBoolean(bool: self.wasSampled),
-            wasSampledAt: KotlinFloat(float: self.wasSampledAt)
+extension SourcepointClientCoordinator.State.CCPAMetaData? {
+    func toCore() -> SPMobileCore.State.CCPAStateCCPAMetaData {
+        return SPMobileCore.State.CCPAStateCCPAMetaData.init(
+            sampleRate: self?.sampleRate ?? 1,
+            wasSampled: KotlinBoolean(bool: self?.wasSampled),
+            wasSampledAt: KotlinFloat(float: self?.wasSampledAt)
         )
     }
 }
 
-extension SourcepointClientCoordinator.State.UsNatMetaData {
-    func toCore() -> SPMobileCore.State.UsNatMetaData {
-        return .init(
-            additionsChangeDate: self.additionsChangeDate.toCore(),
-            sampleRate: self.sampleRate,
-            wasSampled: KotlinBoolean(bool: self.wasSampled),
-            wasSampledAt: KotlinFloat(float: self.wasSampledAt),
-            vendorListId: self.vendorListId,
-            applicableSections: self.applicableSections.map { KotlinInt(integerLiteral: $0) }
+extension SourcepointClientCoordinator.State.UsNatMetaData? {
+    func toCore() -> SPMobileCore.State.USNatStateUsNatMetaData {
+        return SPMobileCore.State.USNatStateUsNatMetaData.init(
+            additionsChangeDate: self?.additionsChangeDate.toCore() ?? SPDate(date: Date.distantPast).toCore(),
+            sampleRate: self?.sampleRate ?? 1,
+            wasSampled: KotlinBoolean(bool: self?.wasSampled),
+            wasSampledAt: KotlinFloat(float: self?.wasSampledAt),
+            vendorListId: self?.vendorListId,
+            applicableSections: self?.applicableSections.compactMap { KotlinInt(integerLiteral: $0) } ?? []
         )
     }
 }
