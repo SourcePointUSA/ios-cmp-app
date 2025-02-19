@@ -140,8 +140,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var state: State
 
-    var gdprChildPmId: String? { coreCoordinator.repository.cachedGdprChildPmId }
-    var ccpaChildPmId: String? { coreCoordinator.repository.cachedCcpaChildPmId }
+    var gdprChildPmId: String? { coreCoordinator.userData.gdpr?.consents?.childPmId }
+    var ccpaChildPmId: String? { coreCoordinator.userData.ccpa?.consents?.childPmId }
 
     let includeData: IncludeData
 
@@ -177,7 +177,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.campaigns = campaigns
         self.includeData = IncludeData(
             gppConfig: campaigns.ccpa?.GPPConfig ??
-                SPGPPConfig(uspString: campaigns.usnat?.supportLegacyUSPString)
+            SPGPPConfig(uspString: campaigns.usnat?.supportLegacyUSPString)
         )
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
@@ -187,62 +187,36 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             campaignEnv: campaigns.environment,
             timeout: SPConsentManager.DefaultTimeout
         )
+        self.state = State()
+        self.deviceManager = deviceManager
         self.coreCoordinator = CoreCoordinator(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            propertyName: propertyName.rawValue
+            // swiftlint:disable:next force_try
+            propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+            campaigns: campaigns.toCore(),
+            repository: SPMobileCore.Repository.init(),
+            initialState: {
+                if let localState = storage.spState {
+                    storage.clear()
+                    print("passed state")
+                    return localState.toCore()
+                } else {
+                    print("no state")
+                    return nil
+                }
+            }()
         )
-        self.deviceManager = deviceManager
-        self.state = State()
-        self.updateCoreStorage()
-    }
-
-    func updateCoreStorage() {
-        if let localState = storage.localState {
-            coreCoordinator.repository.cachedLocalState = localState.toCore()
-        }
-        if let tcfData = storage.tcfData, tcfData.isNotEmpty() {
-            coreCoordinator.repository.cachedTcData = tcfData.mapValues { JsonKt.toJsonPrimitive($0) }
-        }
-        if let gppData = storage.gppData, gppData.isNotEmpty() {
-            coreCoordinator.repository.cachedGppData = gppData.mapValues { JsonKt.toJsonPrimitive($0) }
-        }
-        if let usPrivacyString = storage.usPrivacyString, usPrivacyString.isNotEmpty() {
-            coreCoordinator.repository.cachedUspString = usPrivacyString
-        }
-        if storage.userData.gdpr != nil || storage.userData.ccpa != nil || storage.userData.usnat != nil {
-            coreCoordinator.repository.cachedUserData = SPMobileCore.SPUserData(
-                gdpr: SPUserDataSPConsent(consents: storage.userData.gdpr?.consents?.toCore()),
-                ccpa: SPUserDataSPConsent(consents: storage.userData.ccpa?.consents?.toCore()),
-                usnat: SPUserDataSPConsent(consents: storage.userData.usnat?.consents?.toCore())
-            )
-        }
-        if let gdprChildPmId = storage.gdprChildPmId {
-            coreCoordinator.repository.cachedGdprChildPmId = gdprChildPmId
-        }
-        if let ccpaChildPmId = storage.ccpaChildPmId {
-            coreCoordinator.repository.cachedCcpaChildPmId = ccpaChildPmId
-        }
-        if let spState = storage.spState {
-            coreCoordinator.repository.cachedSPState = spState.toCore()
-        }
-        storage.clear()
-        print(coreCoordinator.repository.cachedSPState)
-        //coreCoordinator.repository.clear()
     }
 
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
-        coreCoordinator.authId = authId
-        coreCoordinator.idfaStatus = idfaStatus.toCore()
-        coreCoordinator.includeData = includeData.toCore()
-        coreCoordinator.campaigns = campaigns.toCore()
         coreCoordinator.loadMessages(authId: authId, pubData: JsonKt.encodeToJsonObject(pubData?.toCore())) { response, error in
             if error != nil {
-                let coreError = SPError()
+                let coreError = GenericNetworkError(apiSufix: .MESSAGES, error: NSError(domain: error.debugDescription, code: 0))
                 self.logErrorMetrics(coreError)
                 handler(Result.failure(coreError))
             } else {
-                self.updateStateFromCore(coreState: self.coreCoordinator.state)
+                self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
                 var messageToDisplay: [MessageToDisplay]
                 if let response = response.toNative() {
                     messageToDisplay = response
@@ -255,62 +229,56 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func updateStateFromCore(coreState: SPMobileCore.State) {
-        if let gdprState = coreState.gdpr {
+    func updateStateFromCore(coreUserData: SPMobileCore.SPUserData) {
+        if let gdprData = coreUserData.gdpr?.consents {
             state.gdpr = SPGDPRConsent(
-                uuid: gdprState.uuid,
-                vendorGrants: gdprState.grants.mapValues { $0.toNative() },
-                euconsent: gdprState.euconsent ?? "",
-                tcfData: gdprState.tcData.toNative(),
-                childPmId: gdprState.childPmId,
-                dateCreated: SPDate(string: gdprState.dateCreated ?? ""),
-                expirationDate: SPDate(string: gdprState.expirationDate ?? ""),
-                applies: gdprState.applies,
-                consentStatus: gdprState.consentStatus.toNative(),
-                webConsentPayload: gdprState.webConsentPayload,
-                googleConsentMode: gdprState.gcmStatus?.toNative(),
-                acceptedLegIntCategories: gdprState.legIntCategories,
-                acceptedLegIntVendors: gdprState.legIntVendors,
-                acceptedVendors: gdprState.vendors,
-                acceptedCategories: gdprState.categories,
-                acceptedSpecialFeatures: gdprState.specialFeatures
+                uuid: gdprData.uuid,
+                vendorGrants: gdprData.grants.mapValues { $0.toNative() },
+                euconsent: gdprData.euconsent ?? "",
+                tcfData: gdprData.tcData.toNative(),
+                childPmId: gdprData.childPmId,
+                dateCreated: SPDate(string: gdprData.dateCreated.instantToString()),
+                expirationDate: SPDate(string: gdprData.expirationDate.instantToString()),
+                applies: gdprData.applies,
+                consentStatus: gdprData.consentStatus.toNative(),
+                webConsentPayload: gdprData.webConsentPayload,
+                googleConsentMode: gdprData.gcmStatus?.toNative(),
+                acceptedLegIntCategories: gdprData.legIntCategories,
+                acceptedLegIntVendors: gdprData.legIntVendors,
+                acceptedVendors: gdprData.vendors,
+                acceptedCategories: gdprData.categories,
+                acceptedSpecialFeatures: gdprData.specialFeatures
             )
         }
-
-        if let ccpaState = coreState.ccpa {
+        if let ccpaData = coreUserData.ccpa?.consents {
             state.ccpa = SPCCPAConsent(
-                uuid: ccpaState.uuid,
-                status: ccpaState.status?.toNative() ?? .Unknown,
-                rejectedVendors: ccpaState.rejectedVendors,
-                rejectedCategories: ccpaState.rejectedCategories,
-                signedLspa: ccpaState.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false,
-                childPmId: ccpaState.childPmId,
-                applies: ccpaState.applies,
-                dateCreated: SPDate(string: ccpaState.dateCreated ?? ""),
-                expirationDate: SPDate(string: ccpaState.expirationDate ?? ""),
-                consentStatus: ConsentStatus(
-                    consentedAll: ccpaState.consentedAll?.boolValue,
-                    rejectedAll: ccpaState.rejectedAll?.boolValue
-                ),
-                webConsentPayload: ccpaState.webConsentPayload,
-                GPPData: ccpaState.gppData.toNative() ?? SPJson()
+                uuid: ccpaData.uuid,
+                status: ccpaData.status?.toNative() ?? .Unknown,
+                rejectedVendors: ccpaData.rejectedVendors,
+                rejectedCategories: ccpaData.rejectedCategories,
+                signedLspa: ccpaData.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false,
+                childPmId: ccpaData.childPmId,
+                applies: ccpaData.applies,
+                dateCreated: SPDate(string: ccpaData.dateCreated.instantToString()),
+                expirationDate: SPDate(string: ccpaData.expirationDate.instantToString()),
+                consentStatus: ConsentStatus(consentedAll: ccpaData.consentedAll?.boolValue, rejectedAll: ccpaData.rejectedAll?.boolValue),
+                webConsentPayload: ccpaData.webConsentPayload,
+                GPPData: ccpaData.gppData.toNative() ?? SPJson()
             )
         }
-
-        if let usnatState = coreState.usNat {
+        if let usnatData = coreUserData.usnat?.consents {
             state.usnat = SPUSNatConsent(
-                uuid: usnatState.uuid,
-                applies: usnatState.applies,
-                dateCreated: SPDate(string: usnatState.dateCreated ?? ""),
-                expirationDate: SPDate(string: usnatState.expirationDate ?? ""),
-                consentStrings: usnatState.consentStrings.map { $0.toNative() },
-                webConsentPayload: usnatState.webConsentPayload,
-                categories: usnatState.userConsents.categories.map { $0.toNative() },
-                vendors: usnatState.userConsents.vendors.map { $0.toNative() },
-                consentStatus: usnatState.consentStatus.toNative(),
-                GPPData: usnatState.gppData.toNative()
+                uuid: usnatData.uuid,
+                applies: usnatData.applies,
+                dateCreated: SPDate(string: usnatData.dateCreated.instantToString()),
+                expirationDate: SPDate(string: usnatData.expirationDate.instantToString()),
+                consentStrings: usnatData.consentStrings.map { $0.toNative() },
+                webConsentPayload: usnatData.webConsentPayload,
+                categories: usnatData.userConsents.categories.map { $0.toNative() },
+                vendors: usnatData.userConsents.vendors.map { $0.toNative() },
+                consentStatus: usnatData.consentStatus.toNative(),
+                GPPData: usnatData.gppData.toNative()
             )
-            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnatState.consentStatus.granularStatus?.gpcStatus?.boolValue
         }
     }
 
@@ -339,17 +307,13 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
-        coreCoordinator.authId = authId
-        coreCoordinator.idfaStatus = idfaStatus.toCore()
-        coreCoordinator.includeData = includeData.toCore()
         coreCoordinator.reportAction(
-            action: action.toCore(),
-            campaigns: buildChoiceAllCampaigns(action: action)
+            action: action.toCore()
         ) { _, error in
             if error != nil {
                 handler(Result.failure(InvalidChoiceAllResponseError()))
             } else {
-                self.updateStateFromCore(coreState: self.coreCoordinator.state)
+                self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
                 handler(Result.success(self.userData))
             }
         }
@@ -358,15 +322,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func reportIdfaStatus(status: SPIDFAStatus, osVersion: String) {
         var uuid = ""
         var uuidType: SPCampaignType?
-        if let gdprUUID = coreCoordinator.state.gdpr?.uuid, gdprUUID.isNotEmpty() {
+        if let gdprUUID = coreCoordinator.userData.gdpr?.consents?.uuid, gdprUUID.isNotEmpty() {
             uuid = gdprUUID
             uuidType = .gdpr
         }
-        if let ccpaUUID = coreCoordinator.state.ccpa?.uuid, ccpaUUID.isNotEmpty() {
+        if let ccpaUUID = coreCoordinator.userData.ccpa?.consents?.uuid, ccpaUUID.isNotEmpty() {
             uuid = ccpaUUID
             uuidType = .ccpa
         }
-        if let usNatUUID = coreCoordinator.state.usNat?.uuid, usNatUUID.isNotEmpty() {
+        if let usNatUUID = coreCoordinator.userData.usnat?.consents?.uuid, usNatUUID.isNotEmpty() {
             uuid = usNatUUID
             uuidType = .usnat
         }
@@ -397,7 +361,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         handler: @escaping GDPRCustomConsentHandler
     ) {
         if error == nil {
-            updateStateFromCore(coreState: coreCoordinator.state)
+            updateStateFromCore(coreUserData: coreCoordinator.userData)
             handler(Result.success(state.gdpr ?? .empty()))
         } else {
             handler(Result.failure(PostingConsentWithoutConsentUUID()))
