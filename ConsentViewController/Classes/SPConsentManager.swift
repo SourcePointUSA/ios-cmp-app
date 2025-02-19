@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SPMobileCore
 
 // swiftlint:disable file_length function_parameter_count
 @objcMembers public class SPConsentManager: NSObject {
@@ -260,7 +261,7 @@ import UIKit
     public var userData: SPUserData { spCoordinator.userData }
 
     public static func clearAllData() {
-        SPUserDefaults(storage: UserDefaults.standard).clear()
+        SPMobileCore.Repository.init().clear()
     }
 
     @nonobjc
