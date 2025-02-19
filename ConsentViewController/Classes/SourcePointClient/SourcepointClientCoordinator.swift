@@ -199,10 +199,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             initialState: {
                 if let localState = storage.spState {
                     storage.clear()
-                    print("passed state")
                     return localState.toCore()
                 } else {
-                    print("no state")
                     return nil
                 }
             }()
