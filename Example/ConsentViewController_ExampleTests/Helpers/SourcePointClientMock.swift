@@ -41,7 +41,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     required init(
         accountId: Int,
-        propertyName: SPPropertyName,
+        propertyName: ConsentViewController.SPPropertyName,
         propertyId: Int,
         campaignEnv: SPCampaignEnv,
         timeout: TimeInterval
@@ -49,7 +49,7 @@ class SourcePointClientMock: SourcePointProtocol {
 
     convenience init(
         accountId: Int = 0,
-        propertyName: SPPropertyName = try! SPPropertyName(""),
+        propertyName: ConsentViewController.SPPropertyName = try! ConsentViewController.SPPropertyName(""),
         propertyId: Int = 0,
         campaignEnv: SPCampaignEnv = .Public,
         timout: TimeInterval = 1.0
@@ -134,7 +134,7 @@ class SourcePointClientMock: SourcePointProtocol {
         } else {
             handler(.success(SPMobileCore.CCPAChoiceResponse(
                 uuid: "",
-                dateCreated: SPDate.format.string(from: SPDate.now().date),
+                dateCreated: SPDate.now().toCore(),
                 consentedAll: nil,
                 rejectedAll: nil,
                 status: nil,
@@ -160,8 +160,8 @@ class SourcePointClientMock: SourcePointProtocol {
         } else {
             handler(.success(SPMobileCore.GDPRChoiceResponse(
                 uuid: "",
-                dateCreated: SPDate.format.string(from: SPDate.now().date),
-                expirationDate: SPDate.format.string(from: SPDate.distantFuture().date),
+                dateCreated: SPDate.now().toCore(),
+                expirationDate: SPDate.distantFuture().toCore(),
                 tcData: nil,
                 euconsent: nil,
                 consentStatus: nil,
@@ -194,8 +194,8 @@ class SourcePointClientMock: SourcePointProtocol {
                 uuid: nil,
                 consentStatus: SPMobileCore.ConsentStatus(rejectedAny: nil, rejectedLI: nil, rejectedAll: nil, consentedAll: nil, consentedToAll: nil, consentedToAny: nil, hasConsentData: nil, vendorListAdditions: nil, legalBasisChanges: nil, granularStatus: nil, rejectedVendors: nil, rejectedCategories: nil),
                 consentStrings: [],
-                dateCreated: SPDate.format.string(from: SPDate.now().date),
-                expirationDate: SPDate.format.string(from: SPDate.distantFuture().date),
+                dateCreated: SPDate.now().toCore(),
+                expirationDate: SPDate.distantFuture().toCore(),
                 gpcEnabled: nil,
                 webConsentPayload: nil,
                 gppData: [:] as [String : Kotlinx_serialization_jsonJsonPrimitive],

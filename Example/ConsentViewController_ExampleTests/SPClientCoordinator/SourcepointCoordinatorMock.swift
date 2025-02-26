@@ -12,6 +12,10 @@ import Foundation
 // swiftlint:disable force_try
 
 class CoordinatorMock: SPClientCoordinator {
+    var gdprChildPmId: String?
+    
+    var ccpaChildPmId: String?
+    
     var authId: String?
     var deviceManager: SPDeviceManager = SPDevice()
     var userData: SPUserData = SPUserData()
@@ -20,7 +24,7 @@ class CoordinatorMock: SPClientCoordinator {
         accountId: 0,
         propertyName: try! SPPropertyName(""),
         propertyId: 0,
-        campaignEnv: .Public,
+        campaignEnv: SPCampaignEnv.Public,
         timeout: 10
     )
 
