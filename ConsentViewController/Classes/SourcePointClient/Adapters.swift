@@ -185,7 +185,7 @@ extension SPMobileCore.CCPAConsent {
     func toNative() -> SPCCPAConsent {
         return .init(
             uuid: self.uuid,
-            status: self.status?.toNative() ?? .Unknown,
+            status: self.status?.toNative() ?? .RejectedNone,
             rejectedVendors: self.rejectedVendors,
             rejectedCategories: self.rejectedCategories,
             signedLspa: self.signedLspa?.boolValue ?? false,
@@ -193,7 +193,7 @@ extension SPMobileCore.CCPAConsent {
             applies: self.applies,
             dateCreated: SPDate(string: self.dateCreated.instantToString()),
             expirationDate: SPDate(string: self.expirationDate.instantToString()),
-            consentStatus: ConsentStatus(consentedAll: self.consentedAll?.boolValue, rejectedAll: self.rejectedAll?.boolValue),
+            consentStatus: ConsentStatus(consentedAll: self.consentedAll, rejectedAll: self.rejectedAll),
             webConsentPayload: self.webConsentPayload,
             GPPData: self.gppData.toNative() ?? SPJson()
         )
@@ -370,13 +370,19 @@ extension SPJson {
 
 extension SPAction {
     func toCore() -> SPMobileCore.SPAction {
-        return SPMobileCore.SPAction(
+        return SPMobileCore.SPAction.companion.doInit(
             type: self.type.toCore(),
             campaignType: self.campaignType.toCore(),
             messageId: self.messageId,
             pmPayload: self.pmPayload.toCoreString(),
             encodablePubData: try? self.encodablePubData.toJsonString()
         )
+    }
+}
+
+extension SPMessageLanguage {
+    func toCore() -> SPMobileCore.SPMessageLanguage {
+        return SPMobileCore.SPMessageLanguage.entries.first { $0.name == self.rawValue} ?? SPMobileCore.SPMessageLanguage.english
     }
 }
 
@@ -473,13 +479,15 @@ extension [SPConsentable] {
 }
 
 extension SourcepointClientCoordinator.State {
-    func toCore() -> SPMobileCore.State {
+    func toCore(propertyId: Int, accountId: Int) -> SPMobileCore.State {
         return SPMobileCore.State.init(
             gdpr: self.gdpr.toCore(metaData: self.gdprMetaData),
             ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
             usNat: self.usnat.toCore(metaData: self.usNatMetaData),
             ios14: self.ios14.toCore(),
             authId: self.storedAuthId,
+            propertyId: Int32(propertyId),
+            accountId: Int32(accountId),
             localVersion: Int32(self.localVersion ?? 1),
             localState: self.localState?.toCoreString() ?? "",
             nonKeyedLocalState: self.nonKeyedLocalState?.toCoreString() ?? ""
@@ -526,8 +534,8 @@ extension SPCCPAConsent? {
                 signedLspa: KotlinBoolean(bool: self?.signedLspa),
                 uspstring: self?.uspstring,
                 childPmId: self?.childPmId,
-                rejectedAll: KotlinBoolean(bool: self?.consentStatus.rejectedAll),
-                consentedAll: KotlinBoolean(bool: self?.consentStatus.consentedAll),
+                rejectedAll: self?.consentStatus.rejectedAll ?? false,
+                consentedAll: self?.consentStatus.consentedAll ?? false,
                 rejectedVendors: self?.rejectedVendors ?? [],
                 rejectedCategories: self?.rejectedCategories ?? [],
                 status: self?.status.toCore(),

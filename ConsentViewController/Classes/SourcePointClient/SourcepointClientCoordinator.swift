@@ -135,7 +135,15 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var deviceManager: SPDeviceManager
     let spClient: SourcePointProtocol
-    let coreCoordinator: CoreCoordinator
+    let coreClient: CoreClient
+    lazy var coreCoordinator: CoreCoordinator = CoreCoordinator.init(
+        accountId: Int32(accountId),
+        propertyId: Int32(propertyId),
+        // swiftlint:disable:next force_try
+        propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+        campaigns: campaigns.toCore()
+    )
+    let coreStorage: SPMobileCore.Repository
     var storage: SPLocalStorage
 
     var state: State
@@ -189,26 +197,35 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
         self.state = State()
         self.deviceManager = deviceManager
-        self.coreCoordinator = CoreCoordinator(
+        self.coreClient = CoreClient(
+            accountId: Int32(accountId),
+            propertyId: Int32(propertyId),
+            // swiftlint:disable:next force_try
+            propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+            requestTimeoutInSeconds: Int32(5)
+        )
+        self.coreStorage = SPMobileCore.Repository.init()
+        self.coreCoordinator = CoreCoordinator.init(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
             // swiftlint:disable:next force_try
             propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
             campaigns: campaigns.toCore(),
-            repository: SPMobileCore.Repository.init(),
-            initialState: {
+            repository: coreStorage,
+            spClient: coreClient,
+            state: {
                 if let localState = storage.spState {
                     storage.clear()
-                    return localState.toCore()
+                    return localState.toCore(propertyId: propertyId, accountId: accountId)
                 } else {
-                    return nil
+                    return coreStorage.state ?? State().toCore(propertyId: propertyId, accountId: accountId)
                 }
             }()
         )
     }
 
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
-        coreCoordinator.loadMessages(authId: authId, pubData: JsonKt.encodeToJsonObject(pubData?.toCore())) { response, error in
+        coreCoordinator.loadMessages(authId: authId, pubData: JsonKt.encodeToJsonObject(pubData?.toCore()), language: language.toCore()) { response, error in
             if error != nil {
                 let coreError = GenericNetworkError(apiSufix: .MESSAGES, error: NSError(domain: error.debugDescription, code: 0))
                 self.logErrorMetrics(coreError)
@@ -259,7 +276,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 applies: ccpaData.applies,
                 dateCreated: SPDate(string: ccpaData.dateCreated.instantToString()),
                 expirationDate: SPDate(string: ccpaData.expirationDate.instantToString()),
-                consentStatus: ConsentStatus(consentedAll: ccpaData.consentedAll?.boolValue, rejectedAll: ccpaData.rejectedAll?.boolValue),
+                consentStatus: ConsentStatus(consentedAll: ccpaData.consentedAll, rejectedAll: ccpaData.rejectedAll),
                 webConsentPayload: ccpaData.webConsentPayload,
                 GPPData: ccpaData.gppData.toNative() ?? SPJson()
             )
