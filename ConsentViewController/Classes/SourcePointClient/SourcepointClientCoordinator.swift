@@ -108,6 +108,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var partitionUUID: String?
         }
 
+        var accountId, propertyId: Int?
+
         var gdpr: SPGDPRConsent?
         var ccpa: SPCCPAConsent?
         var usnat: SPUSNatConsent?
