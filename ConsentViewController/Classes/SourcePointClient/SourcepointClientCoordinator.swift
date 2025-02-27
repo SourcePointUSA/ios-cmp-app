@@ -150,8 +150,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var state: State
 
-    var gdprChildPmId: String? { coreCoordinator.userData.gdpr?.consents?.childPmId }
-    var ccpaChildPmId: String? { coreCoordinator.userData.ccpa?.consents?.childPmId }
+    var gdprChildPmId: String? { coreCoordinator.userData.gdpr?.childPmId }
+    var ccpaChildPmId: String? { coreCoordinator.userData.ccpa?.childPmId }
 
     let includeData: IncludeData
 
@@ -215,6 +215,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             campaigns: campaigns.toCore(),
             repository: coreStorage,
             spClient: coreClient,
+            authId: nil,
             state: {
                 if let localState = storage.spState {
                     storage.clear()
@@ -224,6 +225,9 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 }
             }()
         )
+        #if os(tvOS)
+        coreCoordinator.translateMessage = true
+        #endif
     }
 
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
@@ -253,7 +257,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 vendorGrants: gdprData.grants.mapValues { $0.toNative() },
                 euconsent: gdprData.euconsent ?? "",
                 tcfData: gdprData.tcData.toNative(),
-                childPmId: gdprData.childPmId,
                 dateCreated: SPDate(string: gdprData.dateCreated.instantToString()),
                 expirationDate: SPDate(string: gdprData.expirationDate.instantToString()),
                 applies: gdprData.applies,
@@ -274,7 +277,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 rejectedVendors: ccpaData.rejectedVendors,
                 rejectedCategories: ccpaData.rejectedCategories,
                 signedLspa: ccpaData.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false,
-                childPmId: ccpaData.childPmId,
                 applies: ccpaData.applies,
                 dateCreated: SPDate(string: ccpaData.dateCreated.instantToString()),
                 expirationDate: SPDate(string: ccpaData.expirationDate.instantToString()),

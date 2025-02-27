@@ -165,7 +165,6 @@ extension SPMobileCore.GDPRConsent {
             vendorGrants: self.grants.mapValues { $0.toNative() },
             euconsent: self.euconsent ?? "",
             tcfData: self.tcData.toNative(),
-            childPmId: self.childPmId,
             dateCreated: SPDate(string: self.dateCreated.instantToString()),
             expirationDate: SPDate(string: self.expirationDate.instantToString()),
             applies: self.applies,
@@ -189,7 +188,6 @@ extension SPMobileCore.CCPAConsent {
             rejectedVendors: self.rejectedVendors,
             rejectedCategories: self.rejectedCategories,
             signedLspa: self.signedLspa?.boolValue ?? false,
-            childPmId: self.childPmId,
             applies: self.applies,
             dateCreated: SPDate(string: self.dateCreated.instantToString()),
             expirationDate: SPDate(string: self.expirationDate.instantToString()),
@@ -382,7 +380,7 @@ extension SPAction {
 
 extension SPMessageLanguage {
     func toCore() -> SPMobileCore.SPMessageLanguage {
-        return SPMobileCore.SPMessageLanguage.entries.first { $0.name == self.rawValue} ?? SPMobileCore.SPMessageLanguage.english
+        return SPMobileCore.SPMessageLanguage.entries.first { $0.shortCode == self.rawValue} ?? SPMobileCore.SPMessageLanguage.english
     }
 }
 
@@ -504,7 +502,6 @@ extension SPGDPRConsent? {
                 dateCreated: self?.dateCreated.toCore() ?? SPDate(date: Date.distantPast).toCore(),
                 expirationDate: self?.expirationDate.toCore() ?? SPDate(date: Date.distantPast).toCore(),
                 uuid: self?.uuid,
-                childPmId: self?.childPmId,
                 euconsent: self?.euconsent,
                 legIntCategories: self?.acceptedLegIntVendors ?? [],
                 legIntVendors: self?.acceptedLegIntVendors ?? [],
@@ -532,8 +529,6 @@ extension SPCCPAConsent? {
                 dateCreated: self?.dateCreated.toCore() ?? SPDate(date: Date.distantPast).toCore(),
                 expirationDate: self?.expirationDate.toCore() ?? SPDate(date: Date.distantPast).toCore(),
                 signedLspa: KotlinBoolean(bool: self?.signedLspa),
-                uspstring: self?.uspstring,
-                childPmId: self?.childPmId,
                 rejectedAll: self?.consentStatus.rejectedAll ?? false,
                 consentedAll: self?.consentStatus.consentedAll ?? false,
                 rejectedVendors: self?.rejectedVendors ?? [],
