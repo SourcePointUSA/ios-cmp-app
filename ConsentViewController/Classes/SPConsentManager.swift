@@ -291,7 +291,7 @@ import SPMobileCore
             if let strongSelf = self {
                 strongSelf.responsesToReceive -= 1
                 switch result {
-                    case .success(let (messages, consents)):
+                    case .success(let messages):
                         mainSync { [weak self] in
                             self?.messageControllersStack = strongSelf.messagesToViewController(messages)
                         }
@@ -529,6 +529,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         handleSDKDone()
     }
 
+    // swiftlint:disable cyclomatic_complexity
     public func action(_ action: SPAction, from controller: UIViewController) {
         onAction(action, from: controller)
         switch action.type {
@@ -583,6 +584,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             nextMessageIfAny(controller)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 }
 
 typealias SPGDPRSecondLayerHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void

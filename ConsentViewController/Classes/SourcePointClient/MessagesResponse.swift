@@ -76,7 +76,7 @@ struct Message: Codable, Equatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         messageJson = try MessageJson(type: subCategory, campaignType: category.campaignType, decoder: try container.superDecoder(forKey: .messageJson))
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let containerCore = try decoder.container(keyedBy: CodingKeysCore.self)
@@ -88,7 +88,7 @@ struct Message: Codable, Equatable {
         self.messageChoices = try container.decode(SPJson.self, forKey: .messageChoices)
         self.propertyId = try container.decode(Int.self, forKey: .propertyId)
     }
-    
+
     init?(decoderDataString: String) throws {
         guard let data = decoderDataString.data(using: .utf8) else { return nil }
         let decoder = JSONDecoder()

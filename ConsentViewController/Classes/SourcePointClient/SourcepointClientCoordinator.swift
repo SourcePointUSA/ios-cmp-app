@@ -12,7 +12,7 @@ import SPMobileCore
 typealias CoreCoordinator = SPMobileCore.Coordinator
 
 typealias ErrorHandler = (SPError) -> Void
-typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
+typealias LoadMessagesReturnType = [MessageToDisplay]
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
 typealias GDPRCustomConsentHandler = (Result<SPGDPRConsent, SPError>) -> Void
 typealias ActionHandler = (Result<SPUserData, SPError>) -> Void
@@ -238,7 +238,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 } else {
                     messageToDisplay = []
                 }
-                let result = LoadMessagesReturnType(messageToDisplay, self.userData)
+                let result = LoadMessagesReturnType(messageToDisplay)
                 handler(Result.success(result))
             }
         }
@@ -369,7 +369,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    func handleAddOrDeleteCustomConsentResponse(
+    func updateAfterCustomConsent(
         _ error: Error?,
         handler: @escaping GDPRCustomConsentHandler
     ) {
@@ -392,7 +392,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             categories: categories,
             legIntCategories: legIntCategories
         ) {
-            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+            self.updateAfterCustomConsent($0, handler: handler)
         }
     }
 
@@ -407,7 +407,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             categories: categories,
             legIntCategories: legIntCategories
         ) {
-            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+            self.updateAfterCustomConsent($0, handler: handler)
         }
     }
 
