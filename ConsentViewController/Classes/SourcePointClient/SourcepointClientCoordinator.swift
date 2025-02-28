@@ -153,8 +153,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     var gdprChildPmId: String? { coreCoordinator.userData.gdpr?.childPmId }
     var ccpaChildPmId: String? { coreCoordinator.userData.ccpa?.childPmId }
 
-    let includeData: IncludeData
-
     /// Checks if this user has data from the previous version of the SDK (v6).
     /// This check should only done once so we remove the data stored by the older SDK and return false after that.
     var migratingUser: Bool {
@@ -185,10 +183,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.propertyName = propertyName
         self.language = language
         self.campaigns = campaigns
-        self.includeData = IncludeData(
-            gppConfig: campaigns.ccpa?.GPPConfig ??
-            SPGPPConfig(uspString: campaigns.usnat?.supportLegacyUSPString)
-        )
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,

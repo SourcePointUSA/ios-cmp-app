@@ -328,28 +328,6 @@ extension SPGPPConfig.SPMspaTernaryFlag {
     }
 }
 
-extension IncludeData {
-    func toCore() -> SPMobileCore.IncludeData {
-        var translateMessageVal = nil as Bool?
-        #if os(tvOS)
-        translateMessageVal = translateMessage
-        #endif
-        return SPMobileCore.IncludeData.init(
-            tcData: SPMobileCore.IncludeData.TypeString(type: "string"),
-            webConsentPayload: SPMobileCore.IncludeData.TypeString(type: "string"),
-            localState: SPMobileCore.IncludeData.TypeString(type: "string"),
-            categories: categories,
-            translateMessage: KotlinBoolean(bool: translateMessageVal),
-            gppData: SPMobileCore.IncludeData.GPPConfig(
-                MspaCoveredTransaction: gppConfig.MspaCoveredTransaction?.toCore(),
-                MspaOptOutOptionMode: gppConfig.MspaOptOutOptionMode?.toCore(),
-                MspaServiceProviderMode: gppConfig.MspaServiceProviderMode?.toCore(),
-                uspString: KotlinBoolean(bool: gppConfig.uspString)
-            )
-        )
-    }
-}
-
 extension SPPublisherData {
     func toCore() -> String? {
         return try? self.toJsonString()
