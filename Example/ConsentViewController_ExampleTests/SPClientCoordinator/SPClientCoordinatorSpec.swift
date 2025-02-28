@@ -67,9 +67,8 @@ class SPClientCoordinatorSpec: QuickSpec {
                                     coordinator = coordinatorFor(campaigns: campaignsWithUSNat, storage: storage)
 
                                     coordinator.loadMessages(forAuthId: nil, pubData: nil) { response in
-                                        let (messages, userData) = try! response.get()
+                                        let messages = try! response.get()
                                         expect(messages).to(beEmpty())
-                                        expect(userData.usnat?.consents?.uuid).notTo(beNil())
                                         done()
                                     }
                                 }
