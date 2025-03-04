@@ -141,8 +141,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     lazy var coreCoordinator: CoreCoordinator = CoreCoordinator.init(
         accountId: Int32(accountId),
         propertyId: Int32(propertyId),
-        // swiftlint:disable:next force_try
-        propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+        propertyName: propertyName.coreValue,
         campaigns: campaigns.toCore()
     )
     let coreStorage: SPMobileCore.Repository
@@ -193,19 +192,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
         self.state = State()
         self.deviceManager = deviceManager
-        self.coreClient = CoreClient(
+        self.coreStorage = SPMobileCore.Repository.init()
+        self.coreClient = CoreClient.init(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            // swiftlint:disable:next force_try
-            propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+            propertyName: propertyName.coreValue,
             requestTimeoutInSeconds: Int32(5)
         )
-        self.coreStorage = SPMobileCore.Repository.init()
         self.coreCoordinator = CoreCoordinator.init(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            // swiftlint:disable:next force_try
-            propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+            propertyName: propertyName.coreValue,
             campaigns: campaigns.toCore(),
             repository: coreStorage,
             spClient: coreClient,
