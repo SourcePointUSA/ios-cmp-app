@@ -204,7 +204,8 @@ import Foundation
 
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.MESSAGES.code)" }
-    override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
+    override public var description: String { return optionalDecription }
+    var optionalDecription: String = "The SDK got an unexpected response from /get_messages endpoint"
 }
 
 @objcMembers public class InvalidGetMessagesParams: SPError {

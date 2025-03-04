@@ -10,6 +10,23 @@ import SPMobileCore
 
 // swiftlint:disable file_length
 
+extension SPError {
+    static func convertCoreError(error: NSError) -> SPError {
+        switch error.kotlinException {
+        case let coreInvalidPropertyNameError as SPMobileCore.CoreInvalidPropertyNameError:
+            return InvalidPropertyNameError(message: coreInvalidPropertyNameError.message ?? "")
+
+        case let coreLoadMessagesException as SPMobileCore.LoadMessagesException:
+            let translated = InvalidResponseGetMessagesEndpointError()
+            translated.optionalDecription = coreLoadMessagesException.causedBy?.description_ ?? InvalidResponseGetMessagesEndpointError.description()
+            return translated
+
+        default:
+            return SPError()
+        }
+    }
+}
+
 extension SPMobileCore.CCPAConsent.CCPAConsentStatus {
     func toNative() -> CCPAConsentStatus {
         switch name {

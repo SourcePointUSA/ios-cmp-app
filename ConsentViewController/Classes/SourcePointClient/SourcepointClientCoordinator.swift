@@ -233,8 +233,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
         coreCoordinator.loadMessages(authId: authId, pubData: JsonKt.encodeToJsonObject(pubData?.toCore()), language: language.toCore()) { response, error in
             if error != nil {
-                let coreError = GenericNetworkError(apiSufix: .MESSAGES, error: NSError(domain: error.debugDescription, code: 0))
-                self.logErrorMetrics(coreError)
+                var coreError = SPError()
+                if let nsError = error as? NSError {
+                    coreError = SPError.convertCoreError(error: nsError)
+                }
                 handler(Result.failure(coreError))
             } else {
                 self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
@@ -330,6 +332,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             action: action.toCore()
         ) { _, error in
             if error != nil {
+                //var coreError = SPError()
+                //if let nsError = error as? NSError {
+                //    coreError = SPError.convertCoreError(error: nsError)
+                //}
                 handler(Result.failure(InvalidChoiceAllResponseError()))
             } else {
                 self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
@@ -383,6 +389,10 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             updateStateFromCore(coreUserData: coreCoordinator.userData)
             handler(Result.success(state.gdpr ?? .empty()))
         } else {
+            //var coreError = SPError()
+            //if let nsError = error as? NSError {
+            //    coreError = SPError.convertCoreError(error: nsError)
+            //}
             handler(Result.failure(PostingConsentWithoutConsentUUID()))
         }
     }
