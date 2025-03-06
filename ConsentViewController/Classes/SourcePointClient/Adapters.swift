@@ -21,6 +21,24 @@ extension SPError {
             translated.optionalDecription = coreLoadMessagesException.causedBy?.description_ ?? InvalidResponseGetMessagesEndpointError.description()
             return translated
 
+        case let coreReportActionException as SPMobileCore.ReportActionException:
+            let translated = ReportActionError()
+            translated.optionalDecription = coreReportActionException.causedBy?.description_ ?? ReportActionError.description()
+            return translated
+
+        case _ as SPMobileCore.InvalidCustomConsentUUIDError:
+            return PostingCustomConsentWithoutConsentUUID()
+
+        case let corePostCustomConsentGDPRException as SPMobileCore.PostCustomConsentGDPRException:
+            let translated = InvalidResponseCustomError()
+            translated.optionalDecription = corePostCustomConsentGDPRException.causedBy?.description_ ?? InvalidResponseCustomError.description()
+            return translated
+
+        case let coreDeleteCustomConsentGDPRException as SPMobileCore.DeleteCustomConsentGDPRException:
+            let translated = InvalidResponseDeleteCustomError()
+            translated.optionalDecription = coreDeleteCustomConsentGDPRException.causedBy?.description_ ?? InvalidResponseDeleteCustomError.description()
+            return translated
+
         default:
             return SPError()
         }

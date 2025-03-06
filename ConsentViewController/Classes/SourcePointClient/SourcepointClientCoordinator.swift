@@ -332,11 +332,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             action: action.toCore()
         ) { _, error in
             if error != nil {
-                //var coreError = SPError()
-                //if let nsError = error as? NSError {
-                //    coreError = SPError.convertCoreError(error: nsError)
-                //}
-                handler(Result.failure(InvalidChoiceAllResponseError()))
+                var coreError = SPError()
+                if let nsError = error as? NSError {
+                    coreError = SPError.convertCoreError(error: nsError)
+                }
+                handler(Result.failure(coreError))
             } else {
                 self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
                 handler(Result.success(self.userData))
@@ -389,11 +389,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             updateStateFromCore(coreUserData: coreCoordinator.userData)
             handler(Result.success(state.gdpr ?? .empty()))
         } else {
-            //var coreError = SPError()
-            //if let nsError = error as? NSError {
-            //    coreError = SPError.convertCoreError(error: nsError)
-            //}
-            handler(Result.failure(PostingConsentWithoutConsentUUID()))
+            var coreError = SPError()
+            if let nsError = error as? NSError {
+                coreError = SPError.convertCoreError(error: nsError)
+            }
+            handler(Result.failure(coreError))
         }
     }
 
