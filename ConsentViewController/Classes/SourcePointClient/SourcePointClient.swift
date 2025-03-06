@@ -5,7 +5,7 @@
 //  Created by Andre Herculano on 13.03.19.
 //
 
-// swiftlint:disable function_parameter_count file_length
+// swiftlint:disable function_parameter_count
 import Foundation
 import SPMobileCore
 

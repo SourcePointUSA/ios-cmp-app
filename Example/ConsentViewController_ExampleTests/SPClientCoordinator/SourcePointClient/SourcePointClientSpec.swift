@@ -36,29 +36,6 @@ class SourcePointClientSpec: QuickSpec {
         client: client
     )}
 
-    func getMessageRequest(_ client: SourcePointClient, _ targetingParams: SPTargetingParams = [:]) -> Data {
-        try! JSONEncoder().encode(
-            MessageRequest(
-                authId: authID,
-                requestUUID: client.requestUUID,
-                propertyHref: propertyName,
-                accountId: accountId,
-                campaignEnv: .Public,
-                idfaStatus: .unknown,
-                localState: SPJson(),
-                consentLanguage: .English,
-                campaigns: CampaignsRequest(
-                    gdpr: CampaignRequest(
-                        groupPmId: nil, targetingParams: targetingParams
-                    ),
-                    ccpa: nil,
-                    ios14: nil
-                ),
-                pubData: [:],
-                includeData: .standard
-            ))
-    }
-
     override func spec() {
         var client: SourcePointClient!
         var httpClient: MockHttp!
@@ -131,26 +108,6 @@ class SourcePointClientSpec: QuickSpec {
                             done()
                         }
                     }
-                }
-            }
-
-            describe("getMessages") {
-                it("calls GET on the http client with the right URL") {
-                    client.getMessages(MessagesRequest(
-                        body: MessagesRequest.Body(
-                            propertyHref: self.propertyName,
-                            accountId: self.accountId,
-                            campaigns: MessagesRequest.Body.Campaigns(),
-                            consentLanguage: .BrowserDefault,
-                            campaignEnv: nil,
-                            idfaStatus: nil,
-                            includeData: .standard
-                        ),
-                        metadata: MessagesRequest.MetaData(ccpa: nil, gdpr: nil, usnat: nil),
-                        nonKeyedLocalState: MessagesRequest.NonKeyedLocalState(nonKeyedLocalState: SPJson()),
-                        localState: nil
-                    )) { _ in }
-                    expect(httpClient.getWasCalledWithUrl).toEventually(contain("/v2/messages"))
                 }
             }
         }

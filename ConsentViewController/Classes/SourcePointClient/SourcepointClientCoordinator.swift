@@ -12,7 +12,7 @@ import SPMobileCore
 typealias CoreCoordinator = SPMobileCore.Coordinator
 
 typealias ErrorHandler = (SPError) -> Void
-typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
+typealias LoadMessagesReturnType = [MessageToDisplay]
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
 typealias GDPRCustomConsentHandler = (Result<SPGDPRConsent, SPError>) -> Void
 typealias ActionHandler = (Result<SPUserData, SPError>) -> Void
@@ -141,8 +141,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     lazy var coreCoordinator: CoreCoordinator = CoreCoordinator.init(
         accountId: Int32(accountId),
         propertyId: Int32(propertyId),
-        // swiftlint:disable:next force_try
-        propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+        propertyName: propertyName.coreValue,
         campaigns: campaigns.toCore()
     )
     let coreStorage: SPMobileCore.Repository
@@ -152,8 +151,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var gdprChildPmId: String? { coreCoordinator.userData.gdpr?.childPmId }
     var ccpaChildPmId: String? { coreCoordinator.userData.ccpa?.childPmId }
-
-    let includeData: IncludeData
 
     /// Checks if this user has data from the previous version of the SDK (v6).
     /// This check should only done once so we remove the data stored by the older SDK and return false after that.
@@ -185,10 +182,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.propertyName = propertyName
         self.language = language
         self.campaigns = campaigns
-        self.includeData = IncludeData(
-            gppConfig: campaigns.ccpa?.GPPConfig ??
-            SPGPPConfig(uspString: campaigns.usnat?.supportLegacyUSPString)
-        )
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,
@@ -199,19 +192,17 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
         self.state = State()
         self.deviceManager = deviceManager
-        self.coreClient = CoreClient(
+        self.coreStorage = SPMobileCore.Repository.init()
+        self.coreClient = CoreClient.init(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            // swiftlint:disable:next force_try
-            propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+            propertyName: propertyName.coreValue,
             requestTimeoutInSeconds: Int32(5)
         )
-        self.coreStorage = SPMobileCore.Repository.init()
         self.coreCoordinator = CoreCoordinator.init(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            // swiftlint:disable:next force_try
-            propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
+            propertyName: propertyName.coreValue,
             campaigns: campaigns.toCore(),
             repository: coreStorage,
             spClient: coreClient,
@@ -244,7 +235,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 } else {
                     messageToDisplay = []
                 }
-                let result = LoadMessagesReturnType(messageToDisplay, self.userData)
+                let result = LoadMessagesReturnType(messageToDisplay)
                 handler(Result.success(result))
             }
         }
@@ -375,7 +366,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
     }
 
-    func handleAddOrDeleteCustomConsentResponse(
+    func updateAfterCustomConsent(
         _ error: Error?,
         handler: @escaping GDPRCustomConsentHandler
     ) {
@@ -398,7 +389,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             categories: categories,
             legIntCategories: legIntCategories
         ) {
-            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+            self.updateAfterCustomConsent($0, handler: handler)
         }
     }
 
@@ -413,7 +404,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             categories: categories,
             legIntCategories: legIntCategories
         ) {
-            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+            self.updateAfterCustomConsent($0, handler: handler)
         }
     }
 

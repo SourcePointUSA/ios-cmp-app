@@ -91,12 +91,6 @@ extension [String: Kotlinx_serialization_jsonJsonPrimitive] {
     }
 }
 
-extension SPMobileCore.GDPRConsent {
-    func toNativeAsAddOrDeleteCustomConsentResponse() -> AddOrDeleteCustomConsentResponse {
-        .init(grants: grants.mapValues { $0.toNative() })
-    }
-}
-
 extension SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
     func toNative() -> ConsentStatus.GranularStatus {
         .init(
@@ -325,28 +319,6 @@ extension SPGPPConfig.SPMspaTernaryFlag {
         case .no: return .no
         case .notApplicable: return .na
         }
-    }
-}
-
-extension IncludeData {
-    func toCore() -> SPMobileCore.IncludeData {
-        var translateMessageVal = nil as Bool?
-        #if os(tvOS)
-        translateMessageVal = translateMessage
-        #endif
-        return SPMobileCore.IncludeData.init(
-            tcData: SPMobileCore.IncludeData.TypeString(type: "string"),
-            webConsentPayload: SPMobileCore.IncludeData.TypeString(type: "string"),
-            localState: SPMobileCore.IncludeData.TypeString(type: "string"),
-            categories: categories,
-            translateMessage: KotlinBoolean(bool: translateMessageVal),
-            gppData: SPMobileCore.IncludeData.GPPConfig(
-                MspaCoveredTransaction: gppConfig.MspaCoveredTransaction?.toCore(),
-                MspaOptOutOptionMode: gppConfig.MspaOptOutOptionMode?.toCore(),
-                MspaServiceProviderMode: gppConfig.MspaServiceProviderMode?.toCore(),
-                uspString: KotlinBoolean(bool: gppConfig.uspString)
-            )
-        )
     }
 }
 
