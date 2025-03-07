@@ -834,7 +834,7 @@ class SPClientCoordinatorSpec: QuickSpec {
                                         let (messages, _) = try! secondMessages.get()
                                         expect(messages.count).to(equal(0))
 
-                                        coordinator.state.usnat?.dateCreated = SPDate(date: coordinator.state.usNatMetaData!.additionsChangeDate.date.dayBefore
+                                        coordinator.state.usnat?.dateCreated = SPDate(date: coordinator.state.usNatMetaData!.additionsChangeDate!.date.dayBefore
                                         )
 
                                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { thirdMessages in

@@ -258,6 +258,15 @@ extension SPDate {
         originalDateString = string
         date = Self.format.date(from: originalDateString) ?? Date()
     }
+
+    init?(string: String?) {
+        if let string = string {
+            originalDateString = string
+            date = Self.format.date(from: originalDateString) ?? Date()
+        } else {
+            return nil
+        }
+    }
 }
 
 extension SPCampaignType {
