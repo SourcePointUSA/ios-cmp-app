@@ -583,9 +583,9 @@ class SPClientCoordinatorSpec: QuickSpec {
                     )
                     waitUntil { done in
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
-                            let optedOutUspString = "1YYN"
+                            let optedInUspString = "1YNN"
                             let newUserUspString = coordinator.userData.usnat?.consents?.GPPData?["IABUSPrivacy_String"]?.stringValue
-                            expect(newUserUspString).to(equal(optedOutUspString))
+                            expect(newUserUspString).to(equal(optedInUspString))
                             done()
                         }
                     }
