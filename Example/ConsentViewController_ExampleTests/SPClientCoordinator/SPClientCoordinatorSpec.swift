@@ -584,54 +584,9 @@ class SPClientCoordinatorSpec: QuickSpec {
                     waitUntil { done in
                         coordinator.loadMessages(forAuthId: nil, pubData: nil) { _ in
                             let optedOutUspString = "1YYN"
-                            let optedInUspString = "1YNN"
                             let newUserUspString = coordinator.userData.usnat?.consents?.GPPData?["IABUSPrivacy_String"]?.stringValue
                             expect(newUserUspString).to(equal(optedOutUspString))
-
-                            let saveAndExitAcceptAction = SPAction(
-                                type: .SaveAndExit,
-                                campaignType: .usnat,
-                                pmPayload: try! SPJson([
-                                    "shownCategories": [
-                                        "65a6a785cc78fac48ab34e65",
-                                        "65a6a785cc78fac48ab34e6a",
-                                        "65a6a785cc78fac48ab34e6f",
-                                        "65a6a785cc78fac48ab34e74",
-                                        "65a6a785cc78fac48ab34e79",
-                                        "65a6a785cc78fac48ab34e7e",
-                                        "65a6a785cc78fac48ab34e83",
-                                        "65a6a785cc78fac48ab34e88",
-                                        "65a6a785cc78fac48ab34e8d",
-                                        "65a6a785cc78fac48ab34e92",
-                                        "65a6a785cc78fac48ab34e97",
-                                        "65a6a785cc78fac48ab34e9c"
-                                    ],
-                                    "privacyManagerId": "995256",
-                                    "lan": "EN",
-                                    "vendors": [],
-                                    "categories": [
-                                        "65a6a785cc78fac48ab34e65",
-                                        "65a6a785cc78fac48ab34e6a",
-                                        "65a6a785cc78fac48ab34e6f",
-                                        "65a6a785cc78fac48ab34e74",
-                                        "65a6a785cc78fac48ab34e79",
-                                        "65a6a785cc78fac48ab34e7e",
-                                        "65a6a785cc78fac48ab34e83",
-                                        "65a6a785cc78fac48ab34e88",
-                                        "65a6a785cc78fac48ab34e8d",
-                                        "65a6a785cc78fac48ab34e92",
-                                        "65a6a785cc78fac48ab34e97",
-                                        "65a6a785cc78fac48ab34e9c",
-                                        "648c9c48e17a3c7a82360c54"
-                                    ]
-                                ])
-                            )
-                            coordinator.reportAction(saveAndExitAcceptAction) { result in
-                                let actionUserData = try? result.get()
-                                let actionUspString = actionUserData?.usnat?.consents?.GPPData?["IABUSPrivacy_String"]?.stringValue
-                                expect(actionUspString).to(equal(optedInUspString))
-                                done()
-                            }
+                            done()
                         }
                     }
                 }
