@@ -87,7 +87,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var vendorListId: String?
-            var additionsChangeDate = SPDate.now()
+            var additionsChangeDate: SPDate? = SPDate.now()
             var legalBasisChangeDate: SPDate?
             var sampleRate = Float(1)
             var wasSampled: Bool?
@@ -101,7 +101,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         struct UsNatMetaData: Codable, SPSampleable, Equatable {
-            var additionsChangeDate = SPDate.now()
+            var additionsChangeDate: SPDate? = SPDate.now()
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
@@ -137,7 +137,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         mutating func udpateGDPRStatus() {
             guard let gdpr = gdpr, let gdprMetadata = gdprMetaData else { return }
             var shouldUpdateConsentedAll = false
-            if gdpr.dateCreated.date < gdprMetadata.additionsChangeDate.date {
+            if let additionsChangeDate = gdprMetadata.additionsChangeDate?.date,
+               gdpr.dateCreated.date < additionsChangeDate {
                 self.gdpr?.consentStatus.vendorListAdditions = true
                 shouldUpdateConsentedAll = true
             }
@@ -154,7 +155,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         mutating func udpateUSNatStatus() {
             guard let usnat = usnat, let usNatMetaData = usNatMetaData else { return }
 
-            if usnat.dateCreated.date < usNatMetaData.additionsChangeDate.date {
+            if let additionsChangeDate = usNatMetaData.additionsChangeDate?.date,
+               usnat.dateCreated.date < additionsChangeDate {
                 self.usnat?.consentStatus.vendorListAdditions = true
                 if self.usnat?.consentStatus.consentedAll == true {
                     self.usnat?.consentStatus.granularStatus?.previousOptInAll = true
