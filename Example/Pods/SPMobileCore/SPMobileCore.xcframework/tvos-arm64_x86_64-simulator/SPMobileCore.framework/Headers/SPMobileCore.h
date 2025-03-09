@@ -369,6 +369,9 @@ __attribute__((swift_name("SPMessageLanguage")))
 + (instancetype)alloc __attribute__((unavailable));
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 - (instancetype)initWithName:(NSString *)name ordinal:(int32_t)ordinal __attribute__((swift_name("init(name:ordinal:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+@property (class, readonly) SPMCSPMessageLanguage *arabic __attribute__((swift_name("arabic")));
+@property (class, readonly) SPMCSPMessageLanguage *basque __attribute__((swift_name("basque")));
+@property (class, readonly) SPMCSPMessageLanguage *bosnian __attribute__((swift_name("bosnian")));
 @property (class, readonly) SPMCSPMessageLanguage *bulgarian __attribute__((swift_name("bulgarian")));
 @property (class, readonly) SPMCSPMessageLanguage *catalan __attribute__((swift_name("catalan")));
 @property (class, readonly) SPMCSPMessageLanguage *chinese __attribute__((swift_name("chinese")));
@@ -381,6 +384,7 @@ __attribute__((swift_name("SPMessageLanguage")))
 @property (class, readonly) SPMCSPMessageLanguage *finnish __attribute__((swift_name("finnish")));
 @property (class, readonly) SPMCSPMessageLanguage *french __attribute__((swift_name("french")));
 @property (class, readonly) SPMCSPMessageLanguage *gaelic __attribute__((swift_name("gaelic")));
+@property (class, readonly) SPMCSPMessageLanguage *galician __attribute__((swift_name("galician")));
 @property (class, readonly) SPMCSPMessageLanguage *german __attribute__((swift_name("german")));
 @property (class, readonly) SPMCSPMessageLanguage *greek __attribute__((swift_name("greek")));
 @property (class, readonly) SPMCSPMessageLanguage *hungarian __attribute__((swift_name("hungarian")));
@@ -407,6 +411,7 @@ __attribute__((swift_name("SPMessageLanguage")))
 @property (class, readonly) SPMCSPMessageLanguage *korean __attribute__((swift_name("korean")));
 @property (class, readonly) SPMCSPMessageLanguage *macedonian __attribute__((swift_name("macedonian")));
 @property (class, readonly) SPMCSPMessageLanguage *malay __attribute__((swift_name("malay")));
+@property (class, readonly) SPMCSPMessageLanguage *maltese __attribute__((swift_name("maltese")));
 + (SPMCKotlinArray<SPMCSPMessageLanguage *> *)values __attribute__((swift_name("values()")));
 @property (class, readonly) NSArray<SPMCSPMessageLanguage *> *entries __attribute__((swift_name("entries")));
 @property (readonly) NSString *shortCode __attribute__((swift_name("shortCode")));
@@ -3190,16 +3195,16 @@ __attribute__((swift_name("MetaDataResponse.MetaDataResponseCCPACompanion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MetaDataResponse.MetaDataResponseGDPR")))
 @interface SPMCMetaDataResponseMetaDataResponseGDPR : SPMCBase
-- (instancetype)initWithApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString *)additionsChangeDate legalBasisChangeDate:(NSString *)legalBasisChangeDate childPmId:(NSString * _Nullable)childPmId vendorListId:(NSString *)vendorListId __attribute__((swift_name("init(applies:sampleRate:additionsChangeDate:legalBasisChangeDate:childPmId:vendorListId:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString * _Nullable)additionsChangeDate legalBasisChangeDate:(NSString * _Nullable)legalBasisChangeDate childPmId:(NSString * _Nullable)childPmId vendorListId:(NSString *)vendorListId __attribute__((swift_name("init(applies:sampleRate:additionsChangeDate:legalBasisChangeDate:childPmId:vendorListId:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMetaDataResponseMetaDataResponseGDPRCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMetaDataResponseMetaDataResponseGDPR *)doCopyApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString *)additionsChangeDate legalBasisChangeDate:(NSString *)legalBasisChangeDate childPmId:(NSString * _Nullable)childPmId vendorListId:(NSString *)vendorListId __attribute__((swift_name("doCopy(applies:sampleRate:additionsChangeDate:legalBasisChangeDate:childPmId:vendorListId:)")));
+- (SPMCMetaDataResponseMetaDataResponseGDPR *)doCopyApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString * _Nullable)additionsChangeDate legalBasisChangeDate:(NSString * _Nullable)legalBasisChangeDate childPmId:(NSString * _Nullable)childPmId vendorListId:(NSString *)vendorListId __attribute__((swift_name("doCopy(applies:sampleRate:additionsChangeDate:legalBasisChangeDate:childPmId:vendorListId:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
-@property (readonly) NSString *additionsChangeDate __attribute__((swift_name("additionsChangeDate")));
+@property (readonly) NSString * _Nullable additionsChangeDate __attribute__((swift_name("additionsChangeDate")));
 @property (readonly) BOOL applies __attribute__((swift_name("applies")));
 @property (readonly) NSString * _Nullable childPmId __attribute__((swift_name("childPmId")));
-@property (readonly) NSString *legalBasisChangeDate __attribute__((swift_name("legalBasisChangeDate")));
+@property (readonly) NSString * _Nullable legalBasisChangeDate __attribute__((swift_name("legalBasisChangeDate")));
 @property (readonly) float sampleRate __attribute__((swift_name("sampleRate")));
 
 /**
@@ -3227,13 +3232,13 @@ __attribute__((swift_name("MetaDataResponse.MetaDataResponseGDPRCompanion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MetaDataResponse.MetaDataResponseUSNat")))
 @interface SPMCMetaDataResponseMetaDataResponseUSNat : SPMCBase
-- (instancetype)initWithApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString *)additionsChangeDate applicableSections:(NSArray<SPMCInt *> *)applicableSections vendorListId:(NSString *)vendorListId __attribute__((swift_name("init(applies:sampleRate:additionsChangeDate:applicableSections:vendorListId:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString * _Nullable)additionsChangeDate applicableSections:(NSArray<SPMCInt *> *)applicableSections vendorListId:(NSString *)vendorListId __attribute__((swift_name("init(applies:sampleRate:additionsChangeDate:applicableSections:vendorListId:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMetaDataResponseMetaDataResponseUSNatCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMetaDataResponseMetaDataResponseUSNat *)doCopyApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString *)additionsChangeDate applicableSections:(NSArray<SPMCInt *> *)applicableSections vendorListId:(NSString *)vendorListId __attribute__((swift_name("doCopy(applies:sampleRate:additionsChangeDate:applicableSections:vendorListId:)")));
+- (SPMCMetaDataResponseMetaDataResponseUSNat *)doCopyApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(NSString * _Nullable)additionsChangeDate applicableSections:(NSArray<SPMCInt *> *)applicableSections vendorListId:(NSString *)vendorListId __attribute__((swift_name("doCopy(applies:sampleRate:additionsChangeDate:applicableSections:vendorListId:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
-@property (readonly) NSString *additionsChangeDate __attribute__((swift_name("additionsChangeDate")));
+@property (readonly) NSString * _Nullable additionsChangeDate __attribute__((swift_name("additionsChangeDate")));
 @property (readonly) NSArray<SPMCInt *> *applicableSections __attribute__((swift_name("applicableSections")));
 @property (readonly) BOOL applies __attribute__((swift_name("applies")));
 @property (readonly) float sampleRate __attribute__((swift_name("sampleRate")));
