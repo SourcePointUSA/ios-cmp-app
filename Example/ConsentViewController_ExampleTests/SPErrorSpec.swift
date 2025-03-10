@@ -87,7 +87,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("sp_metric_invalid_consent_UUID") {
                 it("has spCode: invalid_request_error") {
-                    expect(PostingConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_consent_UUID"
+                    expect(PostingCustomConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_consent_UUID"
                 }
             }
 

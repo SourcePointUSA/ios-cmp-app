@@ -154,7 +154,6 @@
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
 		822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822CF3FE2B975AB000927247 /* SPConsentable.swift */; };
 		822CF4002B975AB000927247 /* SPConsentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822CF3FE2B975AB000927247 /* SPConsentable.swift */; };
-		822E88F62A7BC5AF00843B2B /* IncludeDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */; };
 		822FD7E02A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
@@ -188,12 +187,9 @@
 		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
-		82B224182580D5D60032BC49 /* SPURLExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */; };
-		82B9AB4F2A740EE600565C13 /* SourcepointCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */; };
 		82BA6E642B72980F00E318B3 /* SPGCMDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */; };
 		82BA6E672B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
 		82BA6E682B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
-		82BB0E5F28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */; };
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
 		82BC13812BB2E96100AD346A /* SPGDPRConsentObjcSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13802BB2E96100AD346A /* SPGDPRConsentObjcSpec.m */; };
@@ -368,12 +364,9 @@
 		82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E3D60628C8F39B004B1189 /* CustomMatchers.swift */; };
 		82E605352AFB86A10080E782 /* SPDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E605332AFB86A10080E782 /* SPDate.swift */; };
 		82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E2F2491019900DC01C9 /* HttpMock.swift */; };
-		82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */; };
 		82EA4E342491324400DC01C9 /* LocalStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E332491324400DC01C9 /* LocalStorageMock.swift */; };
 		82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */; };
-		82EA4FA42488EB7300BA48BF /* SPUserDefaultsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ACF6AB2487E73C006E207A /* SPUserDefaultsSpec.swift */; };
 		82EA4FA62489171200BA48BF /* UserDefaultsExtensionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4FA52489171200BA48BF /* UserDefaultsExtensionSpec.swift */; };
-		82F136452AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */; };
 		82F9411824A10379007D30B1 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411724A10379007D30B1 /* CustomMatchers.swift */; };
 		82F9411A24A10416007D30B1 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9411924A10416007D30B1 /* ExampleApp.swift */; };
 		82FA47732A3C90DC0065BF6D /* SPPublisherDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FA47722A3C90DC0065BF6D /* SPPublisherDataSpec.swift */; };
@@ -693,7 +686,6 @@
 		822BF2E12657E29900177B0E /* TVOSExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVOSExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822CF3FE2B975AB000927247 /* SPConsentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPConsentable.swift; sourceTree = "<group>"; };
-		822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludeDataSpec.swift; sourceTree = "<group>"; };
 		822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -732,12 +724,8 @@
 		82A99CC2255D956400A85024 /* 404.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = 404.html; sourceTree = "<group>"; };
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceSpec.swift; sourceTree = "<group>"; };
-		82ACF6AB2487E73C006E207A /* SPUserDefaultsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUserDefaultsSpec.swift; sourceTree = "<group>"; };
-		82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPURLExtensionsSpec.swift; sourceTree = "<group>"; };
-		82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcepointCoordinatorMock.swift; sourceTree = "<group>"; };
 		82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGCMDataSpec.swift; sourceTree = "<group>"; };
 		82BA6E662B72AC2300E318B3 /* SPGCMData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGCMData.swift; sourceTree = "<group>"; };
-		82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmockedSourcepointClientSpec.swift; sourceTree = "<group>"; };
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
 		82BC13722BB2DFE300AD346A /* ObjC-ExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ObjC-ExampleAppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -855,11 +843,9 @@
 		82E3D60628C8F39B004B1189 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomMatchers.swift; path = Helpers/CustomMatchers.swift; sourceTree = "<group>"; };
 		82E605332AFB86A10080E782 /* SPDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDate.swift; sourceTree = "<group>"; };
 		82EA4E2F2491019900DC01C9 /* HttpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HttpMock.swift; path = Helpers/HttpMock.swift; sourceTree = "<group>"; };
-		82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SourcePointClientMock.swift; path = Helpers/SourcePointClientMock.swift; sourceTree = "<group>"; };
 		82EA4E332491324400DC01C9 /* LocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalStorageMock.swift; path = Helpers/LocalStorageMock.swift; sourceTree = "<group>"; };
 		82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InMemoryStorageMock.swift; path = Helpers/InMemoryStorageMock.swift; sourceTree = "<group>"; };
 		82EA4FA52489171200BA48BF /* UserDefaultsExtensionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensionSpec.swift; sourceTree = "<group>"; };
-		82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUSNatConsentSpec.swift; sourceTree = "<group>"; };
 		82F9411724A10379007D30B1 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMatchers.swift; sourceTree = "<group>"; };
 		82F9411924A10416007D30B1 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		82FA47722A3C90DC0065BF6D /* SPPublisherDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPublisherDataSpec.swift; sourceTree = "<group>"; };
@@ -1792,7 +1778,6 @@
 			children = (
 				825F4B7F2487B5D100769B6A /* SourcePointClient */,
 				8229C6152991390300F755AA /* SPClientCoordinatorSpec.swift */,
-				82B9AB4E2A740EE600565C13 /* SourcepointCoordinatorMock.swift */,
 			);
 			path = SPClientCoordinator;
 			sourceTree = "<group>";
@@ -1859,7 +1844,6 @@
 				6DB2B2212424C52A008F9226 /* ConnectivityManagerSpec.swift */,
 				6D554C2124310BF800B15583 /* SourcePointClientSpec.swift */,
 				8248A496247D17AA00A7D9AD /* SimpleClientSpec.swift */,
-				82BB0E5E28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift */,
 				82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */,
 				82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */,
 				82C4935F28F17A2D00898E7A /* CampaignSpec.swift */,
@@ -1870,7 +1854,6 @@
 		825F4B802487B5DB00769B6A /* LocalStorage */ = {
 			isa = PBXGroup;
 			children = (
-				82ACF6AB2487E73C006E207A /* SPUserDefaultsSpec.swift */,
 				82EA4FA52489171200BA48BF /* UserDefaultsExtensionSpec.swift */,
 			);
 			path = LocalStorage;
@@ -1883,14 +1866,6 @@
 				82A99CC2255D956400A85024 /* 404.html */,
 			);
 			path = webserver;
-			sourceTree = "<group>";
-		};
-		82B224162580D5B50032BC49 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				82B224172580D5D60032BC49 /* SPURLExtensionsSpec.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		82BA6E652B72AC2300E318B3 /* GoogleConsentMode */ = {
@@ -2153,7 +2128,6 @@
 				6D687AD624A8F1C1001DFB11 /* MessageMock.swift */,
 				826D31B0249A46C40026A6B9 /* GDPRUIiDelegateMock.swift */,
 				82EA4E2F2491019900DC01C9 /* HttpMock.swift */,
-				82EA4E31249101EC00DC01C9 /* SourcePointClientMock.swift */,
 				82EA4E332491324400DC01C9 /* LocalStorageMock.swift */,
 				82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */,
 				826D31AC2498DE340026A6B9 /* MockConsentDelegate.swift */,
@@ -2180,7 +2154,6 @@
 				EDD01F422A2A07B700590772 /* SPConsentManagerSpec.swift */,
 				822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */,
 				8229C614299138E400F755AA /* SPClientCoordinator */,
-				82B224162580D5B50032BC49 /* Extensions */,
 				82EA4E2E249100B800DC01C9 /* Helpers */,
 				825F4B802487B5DB00769B6A /* LocalStorage */,
 				6D605DF52423B96C00BB3E5F /* SPErrorSpec.swift */,
@@ -2201,8 +2174,6 @@
 				828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */,
 				82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */,
 				AAA25A682A28ABFE005FE84A /* SPConsentManagerSpec.swift */,
-				822E88F52A7BC5AF00843B2B /* IncludeDataSpec.swift */,
-				82F136442AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift */,
 				82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */,
 			);
 			path = ConsentViewController_ExampleTests;
@@ -4064,13 +4035,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82EA4FA42488EB7300BA48BF /* SPUserDefaultsSpec.swift in Sources */,
-				82BB0E5F28BE1A9B006FBB60 /* UnmockedSourcepointClientSpec.swift in Sources */,
 				8248A497247D17AA00A7D9AD /* SimpleClientSpec.swift in Sources */,
 				828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */,
 				82BA6E642B72980F00E318B3 /* SPGCMDataSpec.swift in Sources */,
 				82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */,
-				822E88F62A7BC5AF00843B2B /* IncludeDataSpec.swift in Sources */,
 				6DA66EA3255D1A690034E11A /* SPMessageLanguageSpec.swift in Sources */,
 				82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */,
 				82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */,
@@ -4102,14 +4070,10 @@
 				8248A499247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift in Sources */,
 				82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */,
 				6D687AD724A8F1C1001DFB11 /* MessageMock.swift in Sources */,
-				82F136452AF3E78A0047A6F8 /* SPUSNatConsentSpec.swift in Sources */,
 				82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */,
-				82EA4E32249101EC00DC01C9 /* SourcePointClientMock.swift in Sources */,
 				826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */,
 				829DA56425D5573800612517 /* SPConsentSpec.swift in Sources */,
 				82BC13812BB2E96100AD346A /* SPGDPRConsentObjcSpec.m in Sources */,
-				82B224182580D5D60032BC49 /* SPURLExtensionsSpec.swift in Sources */,
-				82B9AB4F2A740EE600565C13 /* SourcepointCoordinatorMock.swift in Sources */,
 				82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

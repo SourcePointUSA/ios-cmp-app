@@ -35,7 +35,7 @@ import Foundation
     var dateCreated, expirationDate: SPDate
 
     /// Used by the rendering app
-    let webConsentPayload: SPWebConsentPayload?
+    var webConsentPayload: SPWebConsentPayload?
 
     /// Used by SP endpoints and to derive the data inside `statuses`
     var consentStatus: ConsentStatus
