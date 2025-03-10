@@ -10,6 +10,41 @@ import SPMobileCore
 
 // swiftlint:disable file_length
 
+extension SPError {
+    static func convertCoreError(error: NSError) -> SPError {
+        switch error.kotlinException {
+        case let coreInvalidPropertyNameError as SPMobileCore.CoreInvalidPropertyNameError:
+            return InvalidPropertyNameError(message: coreInvalidPropertyNameError.message ?? "")
+
+        case let coreLoadMessagesException as SPMobileCore.LoadMessagesException:
+            let translated = InvalidResponseGetMessagesEndpointError()
+            translated.optionalDecription = coreLoadMessagesException.causedBy?.description_ ?? InvalidResponseGetMessagesEndpointError.description()
+            return translated
+
+        case let coreReportActionException as SPMobileCore.ReportActionException:
+            let translated = ReportActionError()
+            translated.optionalDecription = coreReportActionException.causedBy?.description_ ?? ReportActionError.description()
+            return translated
+
+        case _ as SPMobileCore.InvalidCustomConsentUUIDError:
+            return PostingCustomConsentWithoutConsentUUID()
+
+        case let corePostCustomConsentGDPRException as SPMobileCore.PostCustomConsentGDPRException:
+            let translated = InvalidResponseCustomError()
+            translated.optionalDecription = corePostCustomConsentGDPRException.causedBy?.description_ ?? InvalidResponseCustomError.description()
+            return translated
+
+        case let coreDeleteCustomConsentGDPRException as SPMobileCore.DeleteCustomConsentGDPRException:
+            let translated = InvalidResponseDeleteCustomError()
+            translated.optionalDecription = coreDeleteCustomConsentGDPRException.causedBy?.description_ ?? InvalidResponseDeleteCustomError.description()
+            return translated
+
+        default:
+            return SPError()
+        }
+    }
+}
+
 extension SPMobileCore.CCPAConsent.CCPAConsentStatus {
     func toNative() -> CCPAConsentStatus {
         switch name {
