@@ -80,7 +80,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var vendorListId: String?
-            var additionsChangeDate = SPDate.now()
+            var additionsChangeDate: SPDate? = SPDate.now()
             var legalBasisChangeDate: SPDate?
             var sampleRate = Float(1)
             var wasSampled: Bool?
@@ -94,7 +94,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         struct UsNatMetaData: Codable, SPSampleable, Equatable {
-            var additionsChangeDate = SPDate.now()
+            var additionsChangeDate: SPDate? = SPDate.now()
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?

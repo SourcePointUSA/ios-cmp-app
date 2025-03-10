@@ -1,3 +1,6 @@
+# 7.7.7 (Mar, 9, 2025)
+* [DIA-5293](https://sourcepoint.atlassian.net/browse/DIA-5293) Fixed an issue causing the SDK to call `onError` when `legalBasisChangeDate` was absent or null in the vendor list. [#598](https://github.com/SourcePointUSA/ios-cmp-app/pull/598)
+
 # 7.7.6 (Feb, 4, 2025)
 * [DIA-5097](https://sourcepoint.atlassian.net/browse/DIA-5097) Added support to Arabic, Basque, Bosnian, Galician and Maltese languages. [#592](https://github.com/SourcePointUSA/ios-cmp-app/pull/592)
 

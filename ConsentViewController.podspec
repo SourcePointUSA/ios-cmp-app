@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'ConsentViewController'
-  s.version = '7.7.6'
+  s.version = '7.7.7'
   s.summary = 'SourcePoint\'s ConsentViewController to handle privacy consents.'
   s.homepage = 'https://www.sourcepoint.com'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'https://github.com/SourcePointUSA/ios-cmp-app.git', :tag => s.version.to_s }
   s.swift_version = '5.1'
   s.source_files = 'ConsentViewController/Classes/**/*'
-  s.dependency 'SPMobileCore', '0.0.10'
+  s.dependency 'SPMobileCore', '0.0.11'
   s.ios.deployment_target = '10.0'
   s.ios.exclude_files = 'ConsentViewController/Classes/Views/tvOS'
   s.tvos.deployment_target = '12.0'
