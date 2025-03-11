@@ -51,7 +51,7 @@ protocol SPClientCoordinator {
 
     func loadMessages(forAuthId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
-    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
+    func reportIdfaStatus(osVersion: String)
     func logErrorMetrics(_ error: SPError)
     func deleteCustomConsentGDPR(
         vendors: [String],
@@ -80,7 +80,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var vendorListId: String?
-            var additionsChangeDate: SPDate? = SPDate.now()
+            var additionsChangeDate = SPDate.now()
             var legalBasisChangeDate: SPDate?
             var sampleRate = Float(1)
             var wasSampled: Bool?
@@ -94,7 +94,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         struct UsNatMetaData: Codable, SPSampleable, Equatable {
-            var additionsChangeDate: SPDate? = SPDate.now()
+            var additionsChangeDate = SPDate.now()
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
@@ -336,30 +336,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String) {
-        var uuid = ""
-        var uuidType: SPCampaignType?
-        if let gdprUUID = coreCoordinator.userData.gdpr?.consents?.uuid, gdprUUID.isNotEmpty() {
-            uuid = gdprUUID
-            uuidType = .gdpr
-        }
-        if let ccpaUUID = coreCoordinator.userData.ccpa?.consents?.uuid, ccpaUUID.isNotEmpty() {
-            uuid = ccpaUUID
-            uuidType = .ccpa
-        }
-        if let usNatUUID = coreCoordinator.userData.usnat?.consents?.uuid, usNatUUID.isNotEmpty() {
-            uuid = usNatUUID
-            uuidType = .usnat
-        }
-        spClient.reportIdfaStatus(
-            propertyId: propertyId,
-            uuid: uuid,
-            uuidType: uuidType,
-            messageId: Int(state.ios14?.messageId ?? ""),
-            idfaStatus: status,
-            iosVersion: osVersion,
-            partitionUUID: state.ios14?.partitionUUID
-        )
+    func reportIdfaStatus(osVersion: String) {
+        coreCoordinator.reportIdfaStatus(osVersion: osVersion, requestUUID: UUID().uuidString) { _ in }
     }
 
     func logErrorMetrics(_ error: SPError) {

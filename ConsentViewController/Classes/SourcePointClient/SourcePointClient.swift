@@ -78,16 +78,6 @@ protocol SourcePointProtocol {
         handler: @escaping CCPAPrivacyManagerViewHandler
     )
 
-    func reportIdfaStatus(
-        propertyId: Int?,
-        uuid: String?,
-        uuidType: SPCampaignType?,
-        messageId: Int?,
-        idfaStatus: SPIDFAStatus,
-        iosVersion: String,
-        partitionUUID: String?
-    )
-
     func errorMetrics(
         _ error: SPError,
         propertyId: Int?,
@@ -226,19 +216,6 @@ class SourcePointClient: SourcePointProtocol {
         client.get(urlString: url.absoluteString, apiCode: .CCPA_PRIVACY_MANAGER) {
             Self.parseResponse($0, InvalidResponseCCPAPMViewEndpointError(), handler)
         }
-    }
-
-    func reportIdfaStatus(propertyId: Int?, uuid: String?, uuidType: SPCampaignType?, messageId: Int?, idfaStatus: SPIDFAStatus, iosVersion: String, partitionUUID: String?) {
-        coreClient.postReportIdfaStatus(
-            propertyId: KotlinInt(int: propertyId),
-            uuid: uuid,
-            requestUUID: UUID().uuidString,
-            uuidType: uuidType?.toCore(),
-            messageId: KotlinInt(int: messageId),
-            idfaStatus: idfaStatus.toCore(),
-            iosVersion: iosVersion,
-            partitionUUID: partitionUUID
-        ) { _ in }
     }
 
     func errorMetrics(

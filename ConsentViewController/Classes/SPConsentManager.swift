@@ -557,7 +557,6 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 self?.spCoordinator.reportIdfaStatus(
-                    status: status,
                     osVersion: self?.deviceManager.osVersion ?? ""
                 )
                 if status == .accepted {
