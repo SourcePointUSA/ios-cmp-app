@@ -229,6 +229,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 if let nsError = error as? NSError {
                     coreError = SPError.convertCoreError(error: nsError)
                 }
+                coreError.coreError = error as? CoreSPError
                 handler(Result.failure(coreError))
             } else {
                 self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
@@ -328,6 +329,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 if let nsError = error as? NSError {
                     coreError = SPError.convertCoreError(error: nsError)
                 }
+                coreError.coreError = error as? CoreSPError
                 handler(Result.failure(coreError))
             } else {
                 self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
@@ -360,6 +362,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             if let nsError = error as? NSError {
                 coreError = SPError.convertCoreError(error: nsError)
             }
+            coreError.coreError = error as? CoreSPError
             handler(Result.failure(coreError))
         }
     }
