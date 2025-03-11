@@ -1,4 +1,5 @@
 import Foundation
+import SPMobileCore
 // swiftlint:disable line_length
 @objcMembers public class SPError: NSError, LocalizedError {
     public var spCode: String { "sp_metric_generic_sdk_error_\(code)" }
@@ -6,6 +7,7 @@ import Foundation
     override public var description: String { "Something went wrong in the SDK" }
     public var failureReason: String { originalError.debugDescription }
     public var originalError: Error?
+    public var coreError: CoreSPError?
     public var campaignType: SPCampaignType = .unknown
 
     init() { super.init(domain: "SPConsentManager", code: 0, userInfo: nil) }
