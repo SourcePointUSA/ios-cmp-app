@@ -218,7 +218,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         )
         self.coreCoordinator.getIDFAStatus = { return self.idfaStatus.toCore() }
         #if os(tvOS)
-        coreCoordinator.translateMessage = true
+        coreCoordinator.setTranslateMessage(value: true)
         #endif
     }
 
