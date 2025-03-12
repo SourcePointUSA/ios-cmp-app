@@ -43,6 +43,15 @@ extension SPError {
             return SPError()
         }
     }
+
+    func toCore() -> CoreSPError {
+        return CoreSPError(
+            code: String(code),
+            description: description,
+            causedBy: nil,
+            campaignType: campaignType.toCore()
+        )
+    }
 }
 
 extension SPMobileCore.CCPAConsent.CCPAConsentStatus {

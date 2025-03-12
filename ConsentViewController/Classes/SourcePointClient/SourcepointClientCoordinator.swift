@@ -229,6 +229,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 if let nsError = error as? NSError {
                     coreError = SPError.convertCoreError(error: nsError)
                 }
+                coreError.coreError = error as? CoreSPError
                 handler(Result.failure(coreError))
             } else {
                 self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
@@ -328,6 +329,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 if let nsError = error as? NSError {
                     coreError = SPError.convertCoreError(error: nsError)
                 }
+                coreError.coreError = error as? CoreSPError
                 handler(Result.failure(coreError))
             } else {
                 self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
@@ -341,14 +343,11 @@ class SourcepointClientCoordinator: SPClientCoordinator {
     }
 
     func logErrorMetrics(_ error: SPError) {
-        spClient.errorMetrics(
-            error,
-            propertyId: propertyId,
-            sdkVersion: SPConsentManager.VERSION,
-            OSVersion: deviceManager.osVersion,
-            deviceFamily: deviceManager.deviceFamily,
-            campaignType: error.campaignType
-        )
+        if let logError = error.coreError {
+            coreCoordinator.logError(error: logError) { _ in }
+        } else {
+            coreCoordinator.logError(error: error.toCore()) { _ in }
+        }
     }
 
     func updateAfterCustomConsent(
@@ -363,6 +362,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             if let nsError = error as? NSError {
                 coreError = SPError.convertCoreError(error: nsError)
             }
+            coreError.coreError = error as? CoreSPError
             handler(Result.failure(coreError))
         }
     }

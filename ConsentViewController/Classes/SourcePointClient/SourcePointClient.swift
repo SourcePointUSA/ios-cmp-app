@@ -5,7 +5,6 @@
 //  Created by Andre Herculano on 13.03.19.
 //
 
-// swiftlint:disable function_parameter_count
 import Foundation
 import SPMobileCore
 
@@ -76,15 +75,6 @@ protocol SourcePointProtocol {
         propertyId: Int,
         consentLanguage: SPMessageLanguage,
         handler: @escaping CCPAPrivacyManagerViewHandler
-    )
-
-    func errorMetrics(
-        _ error: SPError,
-        propertyId: Int?,
-        sdkVersion: String,
-        OSVersion: String,
-        deviceFamily: String,
-        campaignType: SPCampaignType
     )
 
     func setRequestTimeout(_ timeout: TimeInterval)
@@ -217,28 +207,4 @@ class SourcePointClient: SourcePointProtocol {
             Self.parseResponse($0, InvalidResponseCCPAPMViewEndpointError(), handler)
         }
     }
-
-    func errorMetrics(
-        _ error: SPError,
-        propertyId: Int?,
-        sdkVersion: String,
-        OSVersion: String,
-        deviceFamily: String,
-        campaignType: SPCampaignType
-    ) {
-        _ = JSONEncoder().encodeResult(ErrorMetricsRequest(
-            code: error.spCode,
-            accountId: String(accountId),
-            description: error.description,
-            sdkVersion: sdkVersion,
-            OSVersion: OSVersion,
-            deviceFamily: deviceFamily,
-            propertyId: propertyId != nil ? String(propertyId!) : "", // swiftlint:disable:this force_unwrapping
-            propertyName: propertyName,
-            campaignType: campaignType
-        )).map {
-            client.post(urlString: Constants.Urls.ERROR_METRIS_URL.absoluteString, body: $0, apiCode: .ERROR_METRICS) { _ in }
-        }
-    }
 }
-// swiftlint:enable function_parameter_count
