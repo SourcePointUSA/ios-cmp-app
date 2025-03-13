@@ -47,12 +47,6 @@ class SPErrorSpec: QuickSpec {
                 }
             }
 
-            describe("InvalidResponseConsentError") {
-                it("has spCode: invalid_response_consent") {
-                    expect(InvalidResponseConsentError().spCode) == "sp_metric_invalid_response_consent"
-                }
-            }
-
             describe("InvalidResponseCustomError") {
                 it("has spCode: invalid_response_custom_consent") {
                     expect(InvalidResponseCustomError().spCode) == "sp_metric_invalid_response_custom_consent"
@@ -87,7 +81,7 @@ class SPErrorSpec: QuickSpec {
 
             describe("sp_metric_invalid_consent_UUID") {
                 it("has spCode: invalid_request_error") {
-                    expect(PostingConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_consent_UUID"
+                    expect(PostingCustomConsentWithoutConsentUUID().spCode) == "sp_metric_invalid_consent_UUID"
                 }
             }
 

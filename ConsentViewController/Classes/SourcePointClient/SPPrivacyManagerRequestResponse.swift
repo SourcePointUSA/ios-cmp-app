@@ -26,6 +26,13 @@ import Foundation
             vendorType = try container.decodeIfPresent(GDPRVendor.VendorType.self, forKey: .vendorType)
         }
 
+        init(name: String, vendorId: String?, policyUrl: URL?, vendorType: GDPRVendor.VendorType?) {
+            self.name = name
+            self.vendorId = vendorId
+            self.policyUrl = policyUrl
+            self.vendorType = vendorType
+        }
+
         enum Keys: String, CodingKey {
             case name, vendorId, policyUrl, vendorType
         }
