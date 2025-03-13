@@ -9,11 +9,13 @@ import Foundation
 import SPMobileCore
 
 // swiftlint:disable file_length
+typealias CoreInvalidPropertyNameError = SPMobileCore.InvalidPropertyNameError
+typealias CoreSPError = SPMobileCore.SPError
 
 extension SPError {
     static func convertCoreError(error: NSError) -> SPError {
         switch error.kotlinException {
-        case let coreInvalidPropertyNameError as SPMobileCore.CoreInvalidPropertyNameError:
+        case let coreInvalidPropertyNameError as CoreInvalidPropertyNameError:
             return InvalidPropertyNameError(message: coreInvalidPropertyNameError.message ?? "")
 
         case let coreLoadMessagesException as SPMobileCore.LoadMessagesException:
