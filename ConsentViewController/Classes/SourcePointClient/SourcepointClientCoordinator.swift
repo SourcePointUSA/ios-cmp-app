@@ -651,7 +651,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         applies: state.gdpr!.applies,
                         dateCreated: state.gdpr?.dateCreated.originalDateString,
                         uuid: state.gdpr?.uuid,
-                        hasLocalData: state.hasGDPRLocalData,
+                        hasLocalData: false,
                         idfaStatus: SPIDFAStatus.current().toCore()
                     ) : nil,
                     usnat: state.usnat != nil ? .init(
@@ -660,7 +660,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                             state.ccpa?.dateCreated.originalDateString :
                             state.usnat?.dateCreated.originalDateString,
                         uuid: state.usnat?.uuid,
-                        hasLocalData: state.hasUSNatLocalData,
+                        hasLocalData: false,
                         idfaStatus: SPIDFAStatus.current().toCore(),
                         transitionCCPAAuth: KotlinBoolean(bool: authTransitionCCPAUSNat),
                         optedOut: KotlinBoolean(bool: transitionCCPAOptedOut)
@@ -669,7 +669,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                         applies: state.ccpa!.applies,
                         dateCreated: state.ccpa?.dateCreated.originalDateString,
                         uuid: state.ccpa?.uuid,
-                        hasLocalData: state.hasCCPALocalData,
+                        hasLocalData: false,
                         idfaStatus: SPIDFAStatus.current().toCore()
                     ) : nil
                 ),
