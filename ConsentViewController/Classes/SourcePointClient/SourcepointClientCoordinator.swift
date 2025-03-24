@@ -196,7 +196,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.coreClient = CoreClient.init(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            propertyName: propertyName.coreValue,
             requestTimeoutInSeconds: Int32(5)
         )
         self.coreCoordinator = CoreCoordinator.init(

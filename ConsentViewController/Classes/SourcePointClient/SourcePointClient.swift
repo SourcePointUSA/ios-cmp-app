@@ -109,8 +109,6 @@ class SourcePointClient: SourcePointProtocol {
         self.coreClient = CoreClient(
             accountId: Int32(accountId),
             propertyId: Int32(propertyId),
-            // swiftlint:disable:next force_try
-            propertyName: try! SPMobileCore.SPPropertyName.companion.create(rawValue: propertyName.rawValue),
             requestTimeoutInSeconds: Int32(5)
         )
     }
