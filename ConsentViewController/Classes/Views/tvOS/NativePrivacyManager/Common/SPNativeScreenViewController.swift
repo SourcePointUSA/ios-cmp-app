@@ -145,10 +145,12 @@ class FocusGuideDebugView: UIView {
     var components: [SPNativeUI] { viewData.children }
     let viewData: SPNativeView
     let pmData: PrivacyManagerViewData
+    var language: SPMessageLanguage
 
     init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.viewData = viewData
         self.pmData = pmData
+        self.language = .BrowserDefault
         super.init(
             messageId: messageId,
             campaignType: campaignType,
@@ -238,10 +240,7 @@ class FocusGuideDebugView: UIView {
     }
     
     func getTextByLanguage(settings: SPNativeUISettings) -> SPLanguageTextUI? {
-        if let language = settings.selectedLanguage {
-            return settings.languages?.first(where: { $0.key == language })?.value
-        }
-        return nil
+        return settings.languages?.first(where: { $0.key == language.rawValue })?.value
     }
 
     @discardableResult

@@ -127,17 +127,15 @@ class SPLanguageTextUI: NSObject, Decodable {
 
 class SPNativeUISettings: NSObject, Decodable {
     enum Key: CodingKey {
-        case style, selectedLanguage, languages
+        case style, languages
     }
 
     let style: SPNativeStyle
-    let selectedLanguage: String?
     let languages: [String: SPLanguageTextUI]?
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         style = try container.decodeIfPresent(SPNativeStyle.self, forKey: .style) ?? SPNativeStyle()
-        selectedLanguage = try container.decodeIfPresent(String.self, forKey: .selectedLanguage)
         languages = try container.decodeIfPresent([String:SPLanguageTextUI].self, forKey: .languages)
     }
 }
