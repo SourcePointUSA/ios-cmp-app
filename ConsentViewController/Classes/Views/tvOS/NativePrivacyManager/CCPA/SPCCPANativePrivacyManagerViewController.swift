@@ -114,6 +114,7 @@ import UIKit
                         )
                         controller.categories = data.categories
                         controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
+                        controller.language = strongSelf.language
                         self?.present(controller, animated: true)
                     }
                 }
@@ -157,6 +158,7 @@ import UIKit
                     )
                     controller.vendors = data.vendors
                     controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
+                    controller.language = strongSelf.language
                     self?.present(controller, animated: true)
                 }
             }
@@ -297,7 +299,7 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
         cell.selectable = false
         cell.isCustom = false
         cell.isOn = snapshot.consentStatus == .RejectedAll
-        cell.setup(from: doNotSellButton)
+        cell.setup(from: doNotSellButton, selectedLanguage: language)
         cell.loadUI()
         return cell
     }
