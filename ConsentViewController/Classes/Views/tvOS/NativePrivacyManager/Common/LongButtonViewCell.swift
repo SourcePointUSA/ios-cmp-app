@@ -29,11 +29,8 @@ class LongButtonViewCell: UITableViewCell {
 //        stateLabel as Any
 //    ]}}
 
-    func setup(from nativeCell: SPNativeLongButton?) {
-        var translatedTextUI: SPLanguageTextUI? = nil
-        if let language = nativeCell?.settings.selectedLanguage {
-            translatedTextUI = nativeCell?.settings.languages?.first(where: { $0.key == language })?.value
-        }
+    func setup(from nativeCell: SPNativeLongButton?, selectedLanguage language: SPMessageLanguage) {
+        let translatedTextUI = nativeCell?.settings.languages?.first(where: { $0.key == language.rawValue })?.value
         onText = translatedTextUI?.onText != nil ? translatedTextUI?.onText : nativeCell?.settings.onText ?? "On"
         offText = translatedTextUI?.offText != nil ? translatedTextUI?.offText : nativeCell?.settings.offText ?? "Off"
         customText = isCustom ? 

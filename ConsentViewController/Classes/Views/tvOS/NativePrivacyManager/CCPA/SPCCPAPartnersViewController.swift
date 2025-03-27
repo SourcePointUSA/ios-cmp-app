@@ -120,7 +120,7 @@ extension SPCCPAPartnersViewController: UITableViewDataSource, UITableViewDelega
         }
         cell.selectable = true
         cell.isCustom = false
-        cell.setup(from: nativeLongButton)
+        cell.setup(from: nativeLongButton, selectedLanguage: language)
         cell.loadUI()
         return cell
     }

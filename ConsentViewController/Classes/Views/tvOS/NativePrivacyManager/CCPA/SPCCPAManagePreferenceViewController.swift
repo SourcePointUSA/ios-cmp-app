@@ -144,7 +144,7 @@ func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) 
 
         cell.selectable = true
         cell.isCustom = false
-        cell.setup(from: nativeLongButton)
+        cell.setup(from: viewData.children.first(where: { $0.id == "CategoryButton" }) as? SPNativeLongButton, selectedLanguage: language)
         cell.loadUI()
         categoryDescription[category._id] = category.description
         return cell
