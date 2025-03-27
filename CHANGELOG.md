@@ -1,3 +1,6 @@
+# 7.7.8 (Mar, 25, 2025)
+* [DIA-5336](https://sourcepoint.atlassian.net/browse/DIA-5336) [iOS] SDK 7.7.7 is not handling authId Properly. [#601](https://github.com/SourcePointUSA/ios-cmp-app/pull/601)
+
 # 7.7.7 (Mar, 9, 2025)
 * [DIA-5293](https://sourcepoint.atlassian.net/browse/DIA-5293) Fixed an issue causing the SDK to call `onError` when `legalBasisChangeDate` was absent or null in the vendor list. [#598](https://github.com/SourcePointUSA/ios-cmp-app/pull/598)
 
