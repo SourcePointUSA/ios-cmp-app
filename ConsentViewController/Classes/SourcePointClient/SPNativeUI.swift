@@ -28,7 +28,8 @@ import UIKit
     required init(from decoder: Decoder) throws {
         let style = Constants.UI.StandartStyle()
         let container = try decoder.container(keyedBy: Keys.self)
-        fontSize = try container.decodeIfPresent(CGFloat.self, forKey: .fontSize) ?? style.font.fontSize
+        let _fontSize = try? container.decodeIfPresent(CGFloat.self, forKey: .fontSize)
+        fontSize = _fontSize ?? style.font.fontSize
         fontWeight = try container.decodeIfPresent(String.self, forKey: .fontWeight) ?? style.font.fontWeight
         fontFamily = try container.decodeIfPresent(String.self, forKey: .fontFamily) ?? style.font.fontFamily
         color = try container.decodeIfPresent(String.self, forKey: .color) ?? style.font.color
