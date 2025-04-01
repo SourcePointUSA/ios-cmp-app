@@ -138,7 +138,7 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
         }
         cell.selectable = true
         cell.isCustom = vendor.vendorType == .CUSTOM
-        cell.setup(from: nativeLongButton, selectedLanguage: language)
+        cell.setup(from: nativeLongButton)
         cell.loadUI()
         vendorDescription[vendor.id] = vendor.description?.htmlToAttributedString
         return cell

@@ -154,7 +154,6 @@ import SPMobileCore
                 )
                 controller.categories = message.categories ?? []
                 controller.delegate = self
-                controller.language = self.spCoordinator.language
                 return controller
             }
             if type == .ccpa {
@@ -167,7 +166,6 @@ import SPMobileCore
                 )
                 controller.delegate = self
                 controller.ccpaConsents = userData.ccpa?.consents
-                controller.language = self.spCoordinator.language
                 return controller
             }
             return nil
@@ -379,7 +377,6 @@ import SPMobileCore
                     )
                     pmViewController.categories = message.categories ?? []
                     pmViewController.delegate = self
-                    pmViewController.language = self?.spCoordinator.language ?? SPMessageLanguage.BrowserDefault
                     self?.loaded(pmViewController)
                 }
 
@@ -434,7 +431,6 @@ import SPMobileCore
                     )
                     pmViewController.delegate = self
                     pmViewController.ccpaConsents = self?.userData.ccpa?.consents
-                    pmViewController.language = self?.spCoordinator.language ?? SPMessageLanguage.BrowserDefault
                     self?.loaded(pmViewController)
                 }
 

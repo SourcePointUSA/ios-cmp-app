@@ -122,7 +122,6 @@ protocol SPNativePrivacyManagerHome {
                         }
                         controller.categories = data.categories
                         controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
-                        controller.language = strongSelf.language
                         self?.present(controller, animated: true)
                     }
                 }
@@ -149,7 +148,6 @@ protocol SPNativePrivacyManagerHome {
         }
         controller.categories = secondLayerData.categories
         controller.consentsSnapshot = snapshot! // swiftlint:disable:this force_unwrapping
-        controller.language = language
         present(controller, animated: true)
     }
 
@@ -187,7 +185,6 @@ protocol SPNativePrivacyManagerHome {
                     )
                     controller.vendors = data.vendors
                     controller.consentsSnapshot = strongSelf.snapshot! // swiftlint:disable:this force_unwrapping
-                    controller.language = strongSelf.language
                     self?.present(controller, animated: true)
                 }
             }

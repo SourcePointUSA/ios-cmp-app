@@ -145,12 +145,10 @@ class FocusGuideDebugView: UIView {
     var components: [SPNativeUI] { viewData.children }
     let viewData: SPNativeView
     let pmData: PrivacyManagerViewData
-    var language: SPMessageLanguage
 
     init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.viewData = viewData
         self.pmData = pmData
-        self.language = .BrowserDefault
         super.init(
             messageId: messageId,
             campaignType: campaignType,
@@ -192,10 +190,8 @@ class FocusGuideDebugView: UIView {
     func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton {
         if let action = components.first(where: { $0.id == id }) as? SPNativeButton {
             let style = action.settings.style
-            let translatedTextUI = getTextByLanguage(settings: action.settings)
-            let text = translatedTextUI?.text != nil ? translatedTextUI?.text : action.settings.text
             button.isHidden = false
-            button.setTitle(text, for: .normal)
+            button.setTitle(action.settings.text, for: .normal)
             button.setTitleColor(UIColor(hexString: style.onUnfocusTextColor), for: .normal)
             button.setTitleColor(UIColor(hexString: style.onFocusTextColor), for: .focused)
             button.backgroundColor = UIColor(hexString: style.onUnfocusBackgroundColor)
@@ -238,19 +234,14 @@ class FocusGuideDebugView: UIView {
         }
         return markdownText
     }
-    
-    func getTextByLanguage(settings: SPNativeUISettings) -> SPLanguageTextUI? {
-        return settings.languages?.first(where: { $0.key == language.rawValue })?.value
-    }
 
     @discardableResult
     func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, bounces: Bool = true) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             let style = textViewComponent.settings.style
-            let translatedTextUI = getTextByLanguage(settings: textViewComponent.settings)
             textView.attributedText = parseText(text != nil ?
                 text! : // swiftlint:disable:this force_unwrapping
-                translatedTextUI?.text != nil ? translatedTextUI!.text! : textViewComponent.settings.text
+                textViewComponent.settings.text
             )
             textView.textColor = UIColor(hexString: style.font.color)
             textView.isUserInteractionEnabled = true
@@ -268,11 +259,8 @@ class FocusGuideDebugView: UIView {
     @discardableResult
     func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
-            let translatedTextUI = getTextByLanguage(settings: sliderDetails.settings)
-            let leftText = translatedTextUI?.leftText != nil ? translatedTextUI?.leftText : sliderDetails.settings.leftText
-            let rightText = translatedTextUI?.rightText != nil ? translatedTextUI?.rightText : sliderDetails.settings.rightText
-            slider.setTitle(leftText, forSegmentAt: 0)
-            slider.setTitle(rightText, forSegmentAt: 1)
+            slider.setTitle(sliderDetails.settings.leftText, forSegmentAt: 0)
+            slider.setTitle(sliderDetails.settings.rightText, forSegmentAt: 1)
             let style = sliderDetails.settings.style
             if #available(tvOS 14.0, *) {
                 backgroundForV14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)

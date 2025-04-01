@@ -112,31 +112,16 @@ extension SPNativeUIType: Decodable {
     }
 }
 
-class SPLanguageTextUI: NSObject, Decodable {
-    enum Keys: CodingKey {
-        case text, onText, offText, rightText, leftText, customText
-    }
-    
-    let text: String?
-    let onText: String?
-    let offText: String?
-    let rightText: String?
-    let leftText: String?
-    let customText: String?
-}
-
 class SPNativeUISettings: NSObject, Decodable {
     enum Key: CodingKey {
-        case style, languages
+        case style
     }
 
     let style: SPNativeStyle
-    let languages: [String: SPLanguageTextUI]?
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         style = try container.decodeIfPresent(SPNativeStyle.self, forKey: .style) ?? SPNativeStyle()
-        languages = try container.decodeIfPresent([String:SPLanguageTextUI].self, forKey: .languages)
     }
 }
 
