@@ -99,7 +99,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 1) }
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
-        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
+        nativeLongButton = viewData.byId("CategoryButton") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
@@ -230,7 +230,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         }
         cell.selectable = true
         cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
-        cell.setup(from: viewData.children.first(where: { $0.id == "CategoryButton" }) as? SPNativeLongButton)
+        cell.setup(from: nativeLongButton)
         cell.loadUI()
         categoryDescription[category._id] = category.friendlyDescription
         return cell
