@@ -1,3 +1,6 @@
+# 7.8.0 (Apr, 04, 2025)
+* [DIA-3501](https://sourcepoint.atlassian.net/browse/DIA-3501) Integrate the (SourcepointUSA/mobile-core)[https://github.com/SourcePointUSA/mobile-core]. This is a major internal change. We moved the majority of our business logic, network, and data layers into our Kotlin Multiplatform library named mobile-core (mobile-core)[https://github.com/SourcePointUSA/mobile-core]. This change not only allows us to move faster when developing new features and addressing issues, but also helps us maintain a standardized approach across multiple platforms. The mobile team did its best to accomplish all of this while keeping the public interface untouched. [#593](https://github.com/SourcePointUSA/ios-cmp-app/pull/593)
+
 # 7.7.8 (Mar, 25, 2025)
 * [DIA-5336](https://sourcepoint.atlassian.net/browse/DIA-5336) [iOS] SDK 7.7.7 is not handling authId Properly. [#601](https://github.com/SourcePointUSA/ios-cmp-app/pull/601)
 
