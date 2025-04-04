@@ -642,6 +642,7 @@ extension SPConsentManager: SPDelegate {
     public func onSPUIReady(_ controller: UIViewController) {
         OSLogger.standard.end("MessageFlow")
         OSLogger.standard.event("onSPUIReady")
+        controller.modalPresentationStyle = .overFullScreen
         DispatchQueue.main.async { [weak self] in
             self?.delegate?.onSPUIReady(controller)
         }
