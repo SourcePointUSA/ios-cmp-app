@@ -250,6 +250,9 @@ extension NativePMApp {
     }
 
     func backToHomeButton() {
+        remote.press(.left)
+        remote.press(.left)
+        remote.press(.left)
         remote.press(.up)
         remote.press(.left)
         remote.press(.left)
