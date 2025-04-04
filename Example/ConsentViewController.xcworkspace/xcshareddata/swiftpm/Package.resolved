@@ -1,4 +1,5 @@
 {
+  "originHash" : "6b6f482ad9f7ef01fcc98d61474c88e8b9b189eaa7aad5224ed076d04e36973d",
   "pins" : [
     {
       "identity" : "down",
@@ -15,9 +16,9 @@
       "location" : "https://github.com/SourcePointUSA/ios-cmp-app",
       "state" : {
         "branch" : "develop",
-        "revision" : "03dac9df288b9ff66ca9505deb38ba6f9779b7ac"
+        "revision" : "98f9b1889344222ad17dbd80b1e8f76183ef66a3"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
