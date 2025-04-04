@@ -180,6 +180,10 @@
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
+		829BD47B2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
+		829BD47C2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
+		829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
+		829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
 		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* SPConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* SPConsentSpec.swift */; };
 		829E851729FA9A6500BE5E65 /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829E851629FA9A6500BE5E65 /* Statuses.swift */; };
@@ -201,32 +205,17 @@
 		82CD6EA52B59CA2C00CAD663 /* SPGDPRConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */; };
 		82CD6EA72B59CA2C00CAD663 /* SPUSNatConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */; };
 		82CD6EA92B59CA2C00CAD663 /* SPUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E472B59CA2C00CAD663 /* SPUserData.swift */; };
-		82CD6EAB2B59CA2C00CAD663 /* LastMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E482B59CA2C00CAD663 /* LastMessageData.swift */; };
-		82CD6EAD2B59CA2C00CAD663 /* ChoiceAllResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4A2B59CA2C00CAD663 /* ChoiceAllResponse.swift */; };
-		82CD6EAF2B59CA2C00CAD663 /* ConsentStatusMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4B2B59CA2C00CAD663 /* ConsentStatusMetadata.swift */; };
-		82CD6EB12B59CA2C00CAD663 /* DeleteCustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4C2B59CA2C00CAD663 /* DeleteCustomConsentRequest.swift */; };
-		82CD6EB32B59CA2C00CAD663 /* IDFAStatusReportRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4D2B59CA2C00CAD663 /* IDFAStatusReportRequest.swift */; };
-		82CD6EB52B59CA2C00CAD663 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4E2B59CA2C00CAD663 /* MessageRequest.swift */; };
 		82CD6EB72B59CA2C00CAD663 /* MessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */; };
 		82CD6EB92B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */; };
 		82CD6EBB2B59CA2C00CAD663 /* SourcepointClientCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */; };
-		82CD6EBD2B59CA2C00CAD663 /* CustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E522B59CA2C00CAD663 /* CustomConsentRequest.swift */; };
-		82CD6EBF2B59CA2C00CAD663 /* ChoiceRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E532B59CA2C00CAD663 /* ChoiceRequests.swift */; };
-		82CD6EC12B59CA2C00CAD663 /* MessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E542B59CA2C00CAD663 /* MessagesRequest.swift */; };
-		82CD6EC32B59CA2C00CAD663 /* ChoiceResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E552B59CA2C00CAD663 /* ChoiceResponses.swift */; };
 		82CD6EC52B59CA2C00CAD663 /* ErrorMetricsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */; };
 		82CD6EC72B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */; };
 		82CD6EC92B59CA2C00CAD663 /* SPPublisherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */; };
-		82CD6ECB2B59CA2C00CAD663 /* ConsentStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E592B59CA2C00CAD663 /* ConsentStatusResponse.swift */; };
 		82CD6ECD2B59CA2C00CAD663 /* PrivacyManagerViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */; };
 		82CD6ECF2B59CA2C00CAD663 /* SPNativeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */; };
 		82CD6ED12B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */; };
 		82CD6ED32B59CA2C00CAD663 /* SimpleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */; };
-		82CD6ED52B59CA2C00CAD663 /* AddOrDeleteCustomConsentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5E2B59CA2C00CAD663 /* AddOrDeleteCustomConsentResponse.swift */; };
-		82CD6ED72B59CA2C00CAD663 /* IncludeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5F2B59CA2C00CAD663 /* IncludeData.swift */; };
-		82CD6ED92B59CA2C00CAD663 /* PvDataRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E602B59CA2C00CAD663 /* PvDataRequestResponse.swift */; };
 		82CD6EDB2B59CA2C00CAD663 /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */; };
-		82CD6EDD2B59CA2C00CAD663 /* MetaDataRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E622B59CA2C00CAD663 /* MetaDataRequestResponse.swift */; };
 		82CD6EDF2B59CA2C00CAD663 /* SPGPPConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E632B59CA2C00CAD663 /* SPGPPConfig.swift */; };
 		82CD6EE12B59CA2C00CAD663 /* SPUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E652B59CA2C00CAD663 /* SPUIColor.swift */; };
 		82CD6EE72B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E6D2B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift */; };
@@ -279,7 +268,6 @@
 		82CD6F412B59CB0600CAD663 /* SPGDPRConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */; };
 		82CD6F422B59CB0600CAD663 /* SPUSNatConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */; };
 		82CD6F432B59CB0700CAD663 /* SPUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E472B59CA2C00CAD663 /* SPUserData.swift */; };
-		82CD6F442B59CB0700CAD663 /* LastMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E482B59CA2C00CAD663 /* LastMessageData.swift */; };
 		82CD6F452B59CB0700CAD663 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E962B59CA2C00CAD663 /* Date.swift */; };
 		82CD6F462B59CB0700CAD663 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E972B59CA2C00CAD663 /* Collection.swift */; };
 		82CD6F472B59CB0700CAD663 /* SPURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E982B59CA2C00CAD663 /* SPURLExtensions.swift */; };
@@ -287,31 +275,17 @@
 		82CD6F492B59CB0700CAD663 /* NSObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9A2B59CA2C00CAD663 /* NSObjectExtensions.swift */; };
 		82CD6F4A2B59CB0700CAD663 /* SPLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9C2B59CA2C00CAD663 /* SPLocalStorage.swift */; };
 		82CD6F4B2B59CB0700CAD663 /* SPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */; };
-		82CD6F4C2B59CB0700CAD663 /* ChoiceAllResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4A2B59CA2C00CAD663 /* ChoiceAllResponse.swift */; };
-		82CD6F4D2B59CB0700CAD663 /* ConsentStatusMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4B2B59CA2C00CAD663 /* ConsentStatusMetadata.swift */; };
-		82CD6F4E2B59CB0700CAD663 /* DeleteCustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4C2B59CA2C00CAD663 /* DeleteCustomConsentRequest.swift */; };
-		82CD6F4F2B59CB0700CAD663 /* IDFAStatusReportRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4D2B59CA2C00CAD663 /* IDFAStatusReportRequest.swift */; };
-		82CD6F502B59CB0700CAD663 /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4E2B59CA2C00CAD663 /* MessageRequest.swift */; };
 		82CD6F512B59CB0700CAD663 /* MessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */; };
 		82CD6F522B59CB0700CAD663 /* QueryParamEncodableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */; };
 		82CD6F532B59CB0700CAD663 /* SourcepointClientCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */; };
-		82CD6F542B59CB0700CAD663 /* CustomConsentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E522B59CA2C00CAD663 /* CustomConsentRequest.swift */; };
-		82CD6F552B59CB0700CAD663 /* ChoiceRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E532B59CA2C00CAD663 /* ChoiceRequests.swift */; };
-		82CD6F562B59CB0700CAD663 /* MessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E542B59CA2C00CAD663 /* MessagesRequest.swift */; };
-		82CD6F572B59CB0700CAD663 /* ChoiceResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E552B59CA2C00CAD663 /* ChoiceResponses.swift */; };
 		82CD6F582B59CB0700CAD663 /* ErrorMetricsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */; };
 		82CD6F592B59CB0700CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */; };
 		82CD6F5A2B59CB0700CAD663 /* SPPublisherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */; };
-		82CD6F5B2B59CB0700CAD663 /* ConsentStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E592B59CA2C00CAD663 /* ConsentStatusResponse.swift */; };
 		82CD6F5C2B59CB0700CAD663 /* PrivacyManagerViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */; };
 		82CD6F5D2B59CB0700CAD663 /* SPNativeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */; };
 		82CD6F5E2B59CB0700CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */; };
 		82CD6F5F2B59CB0700CAD663 /* SimpleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */; };
-		82CD6F602B59CB0700CAD663 /* AddOrDeleteCustomConsentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5E2B59CA2C00CAD663 /* AddOrDeleteCustomConsentResponse.swift */; };
-		82CD6F612B59CB0700CAD663 /* IncludeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5F2B59CA2C00CAD663 /* IncludeData.swift */; };
-		82CD6F622B59CB0700CAD663 /* PvDataRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E602B59CA2C00CAD663 /* PvDataRequestResponse.swift */; };
 		82CD6F632B59CB0700CAD663 /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */; };
-		82CD6F642B59CB0700CAD663 /* MetaDataRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E622B59CA2C00CAD663 /* MetaDataRequestResponse.swift */; };
 		82CD6F652B59CB0700CAD663 /* SPGPPConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E632B59CA2C00CAD663 /* SPGPPConfig.swift */; };
 		82CD6F662B59CB0700CAD663 /* SPUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E652B59CA2C00CAD663 /* SPUIColor.swift */; };
 		82CD6F672B59CB0700CAD663 /* SPWebViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E672B59CA2C00CAD663 /* SPWebViewExtensions.swift */; };
@@ -717,6 +691,7 @@
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignEnvSpec.swift; sourceTree = "<group>"; };
 		828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPAConsentStatusSpec.swift; sourceTree = "<group>"; };
+		829BD47A2DA02E790043B374 /* Adapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapters.swift; sourceTree = "<group>"; };
 		829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
 		829DA56325D5573800612517 /* SPConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPConsentSpec.swift; sourceTree = "<group>"; };
 		829E851629FA9A6500BE5E65 /* Statuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
@@ -740,32 +715,17 @@
 		82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGDPRConsent.swift; sourceTree = "<group>"; };
 		82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUSNatConsent.swift; sourceTree = "<group>"; };
 		82CD6E472B59CA2C00CAD663 /* SPUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUserData.swift; sourceTree = "<group>"; };
-		82CD6E482B59CA2C00CAD663 /* LastMessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastMessageData.swift; sourceTree = "<group>"; };
-		82CD6E4A2B59CA2C00CAD663 /* ChoiceAllResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceAllResponse.swift; sourceTree = "<group>"; };
-		82CD6E4B2B59CA2C00CAD663 /* ConsentStatusMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentStatusMetadata.swift; sourceTree = "<group>"; };
-		82CD6E4C2B59CA2C00CAD663 /* DeleteCustomConsentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteCustomConsentRequest.swift; sourceTree = "<group>"; };
-		82CD6E4D2B59CA2C00CAD663 /* IDFAStatusReportRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDFAStatusReportRequest.swift; sourceTree = "<group>"; };
-		82CD6E4E2B59CA2C00CAD663 /* MessageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
 		82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesResponse.swift; sourceTree = "<group>"; };
 		82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableProtocol.swift; sourceTree = "<group>"; };
 		82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcepointClientCoordinator.swift; sourceTree = "<group>"; };
-		82CD6E522B59CA2C00CAD663 /* CustomConsentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomConsentRequest.swift; sourceTree = "<group>"; };
-		82CD6E532B59CA2C00CAD663 /* ChoiceRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceRequests.swift; sourceTree = "<group>"; };
-		82CD6E542B59CA2C00CAD663 /* MessagesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesRequest.swift; sourceTree = "<group>"; };
-		82CD6E552B59CA2C00CAD663 /* ChoiceResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceResponses.swift; sourceTree = "<group>"; };
 		82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMetricsRequest.swift; sourceTree = "<group>"; };
 		82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDPRPrivacyManagerViewResponse.swift; sourceTree = "<group>"; };
 		82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPublisherData.swift; sourceTree = "<group>"; };
-		82CD6E592B59CA2C00CAD663 /* ConsentStatusResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentStatusResponse.swift; sourceTree = "<group>"; };
 		82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyManagerViewData.swift; sourceTree = "<group>"; };
 		82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNativeUI.swift; sourceTree = "<group>"; };
 		82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPrivacyManagerRequestResponse.swift; sourceTree = "<group>"; };
 		82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleClient.swift; sourceTree = "<group>"; };
-		82CD6E5E2B59CA2C00CAD663 /* AddOrDeleteCustomConsentResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrDeleteCustomConsentResponse.swift; sourceTree = "<group>"; };
-		82CD6E5F2B59CA2C00CAD663 /* IncludeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncludeData.swift; sourceTree = "<group>"; };
-		82CD6E602B59CA2C00CAD663 /* PvDataRequestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PvDataRequestResponse.swift; sourceTree = "<group>"; };
 		82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointClient.swift; sourceTree = "<group>"; };
-		82CD6E622B59CA2C00CAD663 /* MetaDataRequestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaDataRequestResponse.swift; sourceTree = "<group>"; };
 		82CD6E632B59CA2C00CAD663 /* SPGPPConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGPPConfig.swift; sourceTree = "<group>"; };
 		82CD6E652B59CA2C00CAD663 /* SPUIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUIColor.swift; sourceTree = "<group>"; };
 		82CD6E672B59CA2C00CAD663 /* SPWebViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPWebViewExtensions.swift; sourceTree = "<group>"; };
@@ -1905,7 +1865,6 @@
 				82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */,
 				82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */,
 				82CD6E472B59CA2C00CAD663 /* SPUserData.swift */,
-				82CD6E482B59CA2C00CAD663 /* LastMessageData.swift */,
 			);
 			path = Consents;
 			sourceTree = "<group>";
@@ -1913,31 +1872,18 @@
 		82CD6E492B59CA2C00CAD663 /* SourcePointClient */ = {
 			isa = PBXGroup;
 			children = (
-				82CD6E4A2B59CA2C00CAD663 /* ChoiceAllResponse.swift */,
-				82CD6E4B2B59CA2C00CAD663 /* ConsentStatusMetadata.swift */,
-				82CD6E4C2B59CA2C00CAD663 /* DeleteCustomConsentRequest.swift */,
-				82CD6E4D2B59CA2C00CAD663 /* IDFAStatusReportRequest.swift */,
-				82CD6E4E2B59CA2C00CAD663 /* MessageRequest.swift */,
+				829BD47A2DA02E790043B374 /* Adapters.swift */,
 				82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */,
 				82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */,
 				82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */,
-				82CD6E522B59CA2C00CAD663 /* CustomConsentRequest.swift */,
-				82CD6E532B59CA2C00CAD663 /* ChoiceRequests.swift */,
-				82CD6E542B59CA2C00CAD663 /* MessagesRequest.swift */,
-				82CD6E552B59CA2C00CAD663 /* ChoiceResponses.swift */,
 				82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */,
 				82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */,
 				82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */,
-				82CD6E592B59CA2C00CAD663 /* ConsentStatusResponse.swift */,
 				82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */,
 				82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */,
 				82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */,
 				82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */,
-				82CD6E5E2B59CA2C00CAD663 /* AddOrDeleteCustomConsentResponse.swift */,
-				82CD6E5F2B59CA2C00CAD663 /* IncludeData.swift */,
-				82CD6E602B59CA2C00CAD663 /* PvDataRequestResponse.swift */,
 				82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */,
-				82CD6E622B59CA2C00CAD663 /* MetaDataRequestResponse.swift */,
 			);
 			path = SourcePointClient;
 			sourceTree = "<group>";
@@ -3655,13 +3601,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F3E2B59CB0600CAD663 /* CampaignConsent.swift in Sources */,
 				82CD6F3F2B59CB0600CAD663 /* ConsentStatus.swift in Sources */,
 				82CD6F402B59CB0600CAD663 /* SPCCPAConsent.swift in Sources */,
 				82CD6F412B59CB0600CAD663 /* SPGDPRConsent.swift in Sources */,
 				82CD6F422B59CB0600CAD663 /* SPUSNatConsent.swift in Sources */,
 				82CD6F432B59CB0700CAD663 /* SPUserData.swift in Sources */,
-				82CD6F442B59CB0700CAD663 /* LastMessageData.swift in Sources */,
 				82CD6F452B59CB0700CAD663 /* Date.swift in Sources */,
 				82CD6F462B59CB0700CAD663 /* Collection.swift in Sources */,
 				82CD6F472B59CB0700CAD663 /* SPURLExtensions.swift in Sources */,
@@ -3669,32 +3615,19 @@
 				82CD6F492B59CB0700CAD663 /* NSObjectExtensions.swift in Sources */,
 				82CD6F4A2B59CB0700CAD663 /* SPLocalStorage.swift in Sources */,
 				82CD6F4B2B59CB0700CAD663 /* SPUserDefaults.swift in Sources */,
-				82CD6F4C2B59CB0700CAD663 /* ChoiceAllResponse.swift in Sources */,
-				82CD6F4D2B59CB0700CAD663 /* ConsentStatusMetadata.swift in Sources */,
-				82CD6F4E2B59CB0700CAD663 /* DeleteCustomConsentRequest.swift in Sources */,
-				82CD6F4F2B59CB0700CAD663 /* IDFAStatusReportRequest.swift in Sources */,
-				82CD6F502B59CB0700CAD663 /* MessageRequest.swift in Sources */,
 				82CD6F512B59CB0700CAD663 /* MessagesResponse.swift in Sources */,
 				82CD6F522B59CB0700CAD663 /* QueryParamEncodableProtocol.swift in Sources */,
 				82CD6F532B59CB0700CAD663 /* SourcepointClientCoordinator.swift in Sources */,
-				82CD6F542B59CB0700CAD663 /* CustomConsentRequest.swift in Sources */,
 				822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */,
-				82CD6F552B59CB0700CAD663 /* ChoiceRequests.swift in Sources */,
-				82CD6F562B59CB0700CAD663 /* MessagesRequest.swift in Sources */,
-				82CD6F572B59CB0700CAD663 /* ChoiceResponses.swift in Sources */,
 				82CD6F582B59CB0700CAD663 /* ErrorMetricsRequest.swift in Sources */,
 				82CD6F592B59CB0700CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */,
 				82CD6F5A2B59CB0700CAD663 /* SPPublisherData.swift in Sources */,
-				82CD6F5B2B59CB0700CAD663 /* ConsentStatusResponse.swift in Sources */,
 				82CD6F5C2B59CB0700CAD663 /* PrivacyManagerViewData.swift in Sources */,
+				829BD47C2DA02E790043B374 /* Adapters.swift in Sources */,
 				82CD6F5D2B59CB0700CAD663 /* SPNativeUI.swift in Sources */,
 				82CD6F5E2B59CB0700CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */,
 				82CD6F5F2B59CB0700CAD663 /* SimpleClient.swift in Sources */,
-				82CD6F602B59CB0700CAD663 /* AddOrDeleteCustomConsentResponse.swift in Sources */,
-				82CD6F612B59CB0700CAD663 /* IncludeData.swift in Sources */,
-				82CD6F622B59CB0700CAD663 /* PvDataRequestResponse.swift in Sources */,
 				82CD6F632B59CB0700CAD663 /* SourcePointClient.swift in Sources */,
-				82CD6F642B59CB0700CAD663 /* MetaDataRequestResponse.swift in Sources */,
 				82CD6F652B59CB0700CAD663 /* SPGPPConfig.swift in Sources */,
 				82CD6F662B59CB0700CAD663 /* SPUIColor.swift in Sources */,
 				82CD6F672B59CB0700CAD663 /* SPWebViewExtensions.swift in Sources */,
@@ -3730,8 +3663,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F1F2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift in Sources */,
-				82CD6EB32B59CA2C00CAD663 /* IDFAStatusReportRequest.swift in Sources */,
 				82CD6EDF2B59CA2C00CAD663 /* SPGPPConfig.swift in Sources */,
 				82CD6F272B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift in Sources */,
 				82CD6F012B59CA2C00CAD663 /* SPFocusableTextView.swift in Sources */,
@@ -3739,39 +3672,31 @@
 				82BA6E682B72AC2300E318B3 /* SPGCMData.swift in Sources */,
 				0B312FC52ABC507700B62E23 /* SPDeviceManager.swift in Sources */,
 				82CD6EE72B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift in Sources */,
-				82CD6ED92B59CA2C00CAD663 /* PvDataRequestResponse.swift in Sources */,
 				82CD6F3D2B59CA2C00CAD663 /* SPUserDefaults.swift in Sources */,
 				82CD6EA92B59CA2C00CAD663 /* SPUserData.swift in Sources */,
 				82CD6EFF2B59CA2C00CAD663 /* SPNativeScreenViewController.swift in Sources */,
 				82CD6EA32B59CA2C00CAD663 /* SPCCPAConsent.swift in Sources */,
 				82CD6EBB2B59CA2C00CAD663 /* SourcepointClientCoordinator.swift in Sources */,
 				82CD6EB72B59CA2C00CAD663 /* MessagesResponse.swift in Sources */,
-				82CD6EC12B59CA2C00CAD663 /* MessagesRequest.swift in Sources */,
 				82CD6F2F2B59CA2C00CAD663 /* PMVendorManager.swift in Sources */,
 				0B312FC12ABC507700B62E23 /* Bundle+Framework.swift in Sources */,
 				82CD6F292B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.swift in Sources */,
 				0B312FAF2ABC507200B62E23 /* SPPropertyName.swift in Sources */,
 				0B312F6E2ABC506700B62E23 /* ConnectivityManager.swift in Sources */,
 				82CD6F3B2B59CA2C00CAD663 /* SPLocalStorage.swift in Sources */,
-				82CD6EDD2B59CA2C00CAD663 /* MetaDataRequestResponse.swift in Sources */,
 				82CD6F0D2B59CA2C00CAD663 /* LongButtonViewCell.swift in Sources */,
-				82CD6EB52B59CA2C00CAD663 /* MessageRequest.swift in Sources */,
 				82CD6ED32B59CA2C00CAD663 /* SimpleClient.swift in Sources */,
 				82CD6F132B59CA2C00CAD663 /* SPQRCode.swift in Sources */,
 				0B312F6D2ABC506700B62E23 /* SPMessageLanguage.swift in Sources */,
 				82CD6ECF2B59CA2C00CAD663 /* SPNativeUI.swift in Sources */,
 				0B312FB12ABC507200B62E23 /* SPCampaigns.swift in Sources */,
-				82CD6EAF2B59CA2C00CAD663 /* ConsentStatusMetadata.swift in Sources */,
 				0B312F702ABC506700B62E23 /* SPIDFAStatus.swift in Sources */,
 				0B312FBF2ABC507700B62E23 /* SPSDK.swift in Sources */,
 				0B312FC62ABC507700B62E23 /* SPDelegate.swift in Sources */,
-				82CD6EAD2B59CA2C00CAD663 /* ChoiceAllResponse.swift in Sources */,
 				0B312FB32ABC507200B62E23 /* SPStringifiedJSON.swift in Sources */,
-				82CD6ED72B59CA2C00CAD663 /* IncludeData.swift in Sources */,
 				82CD6EB92B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift in Sources */,
 				82CD6EA52B59CA2C00CAD663 /* SPGDPRConsent.swift in Sources */,
 				82CD6EE92B59CA2C00CAD663 /* GDPRPMConsentSnapshot.swift in Sources */,
-				82CD6EB12B59CA2C00CAD663 /* DeleteCustomConsentRequest.swift in Sources */,
 				0B312FCF2ABC507D00B62E23 /* SPCampaignType.swift in Sources */,
 				82CD6EF72B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.swift in Sources */,
 				82CD6EFD2B59CA2C00CAD663 /* SPPrivacyPolicyViewController.swift in Sources */,
@@ -3780,35 +3705,30 @@
 				82CD6F2B2B59CA2C00CAD663 /* PMCategoryManager.swift in Sources */,
 				82CD6F372B59CA2C00CAD663 /* SPString.swift in Sources */,
 				0B312FB52ABC507200B62E23 /* SPPrivacyManagerTab.swift in Sources */,
-				82CD6EC32B59CA2C00CAD663 /* ChoiceResponses.swift in Sources */,
 				82CD6F332B59CA2C00CAD663 /* Collection.swift in Sources */,
 				82CD6EF32B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.swift in Sources */,
 				0B312F712ABC506700B62E23 /* SPConsentManager.swift in Sources */,
 				82CD6F1B2B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.swift in Sources */,
 				82CD6EC52B59CA2C00CAD663 /* ErrorMetricsRequest.swift in Sources */,
-				82CD6ECB2B59CA2C00CAD663 /* ConsentStatusResponse.swift in Sources */,
 				0B312FAD2ABC507200B62E23 /* SPMessageUIDelegate.swift in Sources */,
 				82CD6EA72B59CA2C00CAD663 /* SPUSNatConsent.swift in Sources */,
+				829BD47B2DA02E790043B374 /* Adapters.swift in Sources */,
 				0B312FD12ABC507D00B62E23 /* SPError.swift in Sources */,
 				82CD6EC92B59CA2C00CAD663 /* SPPublisherData.swift in Sources */,
 				0B312FDB2ABC508600B62E23 /* SPJson.swift in Sources */,
 				82CD6F352B59CA2C00CAD663 /* SPURLExtensions.swift in Sources */,
 				82CD6EF52B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.swift in Sources */,
 				82CD6F252B59CA2C00CAD663 /* CCPAPMConsentSnapshot.swift in Sources */,
-				82CD6ED52B59CA2C00CAD663 /* AddOrDeleteCustomConsentResponse.swift in Sources */,
 				0B312F6C2ABC506700B62E23 /* SPCampaignEnv.swift in Sources */,
-				82CD6EBD2B59CA2C00CAD663 /* CustomConsentRequest.swift in Sources */,
 				82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */,
 				82CD6ED12B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */,
 				82CD6F312B59CA2C00CAD663 /* Date.swift in Sources */,
 				82CD6EDB2B59CA2C00CAD663 /* SourcePointClient.swift in Sources */,
-				82CD6EAB2B59CA2C00CAD663 /* LastMessageData.swift in Sources */,
 				822CF4002B975AB000927247 /* SPConsentable.swift in Sources */,
 				82CD6F392B59CA2C00CAD663 /* NSObjectExtensions.swift in Sources */,
 				82E605352AFB86A10080E782 /* SPDate.swift in Sources */,
 				82CD6EE12B59CA2C00CAD663 /* SPUIColor.swift in Sources */,
 				82CD6F112B59CA2C00CAD663 /* SPCustomViewController.swift in Sources */,
-				82CD6EBF2B59CA2C00CAD663 /* ChoiceRequests.swift in Sources */,
 				82CD6F072B59CA2C00CAD663 /* SPPMHeader.swift in Sources */,
 				82CD6F0B2B59CA2C00CAD663 /* SPAppleTVButton.swift in Sources */,
 				0B312FD32ABC507D00B62E23 /* OSLogger.swift in Sources */,
