@@ -6,6 +6,7 @@ import Foundation
     override public var description: String { "Something went wrong in the SDK" }
     public var failureReason: String { originalError.debugDescription }
     public var originalError: Error?
+    var coreError: CoreSPError?
     public var campaignType: SPCampaignType = .unknown
 
     init() { super.init(domain: "SPConsentManager", code: 0, userInfo: nil) }
@@ -204,12 +205,8 @@ import Foundation
 
 @objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.MESSAGES.code)" }
-    override public var description: String { "The SDK got an unexpected response from /get_messages endpoint" }
-}
-
-@objcMembers public class InvalidGetMessagesParams: SPError {
-    override public var spCode: String { "sp_invalid_get_messages_param" }
-    override public var description: String { "The request params to /messages are invalid" }
+    override public var description: String { return optionalDecription }
+    var optionalDecription: String = "The SDK got an unexpected response from /get_messages endpoint"
 }
 
 @objcMembers public class InvalidResponseMessageGDPREndpointError: SPError {
@@ -232,19 +229,25 @@ import Foundation
     override public var description: String { "The SDK got an unexpected response from /ccpa/privacy-manager/privacy-manager-view endpoint" }
 }
 
-@objcMembers public class InvalidResponseConsentError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_consent" }
-    override public var description: String { "The SDK got an unexpected response from /consent endpoint" }
+@objcMembers public class PostingCustomConsentWithoutConsentUUID: SPError {
+    override public var spCode: String { "sp_metric_invalid_consent_UUID" }
+    override public var description: String {
+        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadGDPRPrivacyManager or loadCCPAPrivacyManager."
+    }
+
+    override public var campaignType: SPCampaignType { get { .gdpr } set {} }
 }
 
 @objcMembers public class InvalidResponseCustomError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_custom_consent" }
-    override public var description: String { "The SDK got an unexpected response from /custom-consent endpoint" }
+    override public var description: String { return optionalDecription }
+    var optionalDecription: String = "The SDK got an unexpected response from /custom-consent endpoint"
 }
 
 @objcMembers public class InvalidResponseDeleteCustomError: SPError {
     override public var spCode: String { "sp_metric_invalid_response_delete_custom_consent" }
-    override public var description: String { "The SDK got an unexpected response from /consent/tcfv2/consent/v3/custom/ endpoint" }
+    override public var description: String { return optionalDecription }
+    var optionalDecription: String = "The SDK got an unexpected response from /consent/tcfv2/consent/v3/custom/ endpoint"
 }
 
 /// Network Errors
@@ -287,41 +290,10 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class PostingConsentWithoutConsentUUID: SPError {
-    override public var spCode: String { "sp_metric_invalid_consent_UUID" }
-    override public var description: String {
-        "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadGDPRPrivacyManager or loadCCPAPrivacyManager."
-    }
-
-    override public var campaignType: SPCampaignType { get { .gdpr } set {} }
-}
-
-@objcMembers public class InvalidMetaDataQueryParamsError: SPError {
-    override public var spCode: String { "sp_metric_invalid_meta_data_query_params" }
-}
-
-@objcMembers public class InvalidMetaDataResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.META_DATA.code)" }
-}
-
-@objcMembers public class InvalidConsentStatusQueryParamsError: SPError {
-    override public var spCode: String { "sp_metric_invalid_consent_status_query_params" }
-}
-
-@objcMembers public class InvalidConsentStatusResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.CONSENT_STATUS.code)" }
-}
-
-@objcMembers public class InvalidPvDataResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.PV_DATA.code)" }
-}
-
-@objcMembers public class InvalidChoiceAllParamsError: SPError {
-    override public var spCode: String { "sp_metric_invalid_choice_all_query_params" }
-}
-
-@objcMembers public class InvalidChoiceAllResponseError: SPError {
-    override public var spCode: String { "sp_metric_invalid_choice_all_response" }
+@objcMembers public class ReportActionError: SPError {
+    override public var spCode: String { "sp_metric_report_action_exception" }
+    override public var description: String { return optionalDecription }
+    var optionalDecription: String = "Unable to report action"
 }
 
 // swiftlint:disable:next type_name
@@ -330,6 +302,10 @@ import Foundation
 }
 
 @objcMembers public class InvalidJSONEncodeResult: SPError {
+    override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
+}
+
+@objcMembers public class InvalidReportActionEvent: SPError {
     override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
 }
 

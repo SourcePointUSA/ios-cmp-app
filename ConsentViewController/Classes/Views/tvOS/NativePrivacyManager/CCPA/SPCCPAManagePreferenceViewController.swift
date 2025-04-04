@@ -53,7 +53,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
-        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
+        nativeLongButton = viewData.byId("CategoryButton") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier

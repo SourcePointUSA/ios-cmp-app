@@ -105,7 +105,6 @@ class ViewController: UIViewController {
 // MARK: - SPDelegate implementation
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: UIViewController) {
-        controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
 

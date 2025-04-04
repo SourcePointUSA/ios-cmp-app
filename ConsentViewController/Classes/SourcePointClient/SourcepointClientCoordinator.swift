@@ -9,8 +9,10 @@
 import Foundation
 import SPMobileCore
 
+typealias CoreCoordinator = SPMobileCore.Coordinator
+
 typealias ErrorHandler = (SPError) -> Void
-typealias LoadMessagesReturnType = ([MessageToDisplay], SPUserData)
+typealias LoadMessagesReturnType = [MessageToDisplay]
 typealias MessagesAndConsentsHandler = (Result<LoadMessagesReturnType, SPError>) -> Void
 typealias GDPRCustomConsentHandler = (Result<SPGDPRConsent, SPError>) -> Void
 typealias ActionHandler = (Result<SPUserData, SPError>) -> Void
@@ -44,10 +46,12 @@ protocol SPClientCoordinator {
     var userData: SPUserData { get }
     var language: SPMessageLanguage { get set }
     var spClient: SourcePointProtocol { get }
+    var gdprChildPmId: String? { get }
+    var ccpaChildPmId: String? { get }
 
     func loadMessages(forAuthId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
-    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String)
+    func reportIdfaStatus(osVersion: String)
     func logErrorMetrics(_ error: SPError)
     func deleteCustomConsentGDPR(
         vendors: [String],
@@ -68,17 +72,6 @@ protocol SPSampleable {
     var sampleRate: Float { get set }
     var wasSampled: Bool? { get set }
     var wasSampledAt: Float? { get set }
-    mutating func updateSampleFields(_ newSampleRate: Float)
-}
-
-extension SPSampleable {
-    mutating func updateSampleFields(_ newSampleRate: Float) {
-        sampleRate = newSampleRate
-        if sampleRate != wasSampledAt {
-            wasSampledAt = sampleRate
-            wasSampled = nil
-        }
-    }
 }
 
 class SourcepointClientCoordinator: SPClientCoordinator {
@@ -87,7 +80,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var vendorListId: String?
-            var additionsChangeDate: SPDate? = SPDate.now()
+            var additionsChangeDate = SPDate.now()
             var legalBasisChangeDate: SPDate?
             var sampleRate = Float(1)
             var wasSampled: Bool?
@@ -101,7 +94,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
 
         struct UsNatMetaData: Codable, SPSampleable, Equatable {
-            var additionsChangeDate: SPDate? = SPDate.now()
+            var additionsChangeDate = SPDate.now()
             var sampleRate = Float(1)
             var wasSampled: Bool?
             var wasSampledAt: Float?
@@ -133,37 +126,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         var hasGDPRLocalData: Bool { gdpr?.uuid != nil }
         var hasCCPALocalData: Bool { ccpa?.uuid != nil }
         var hasUSNatLocalData: Bool { usnat?.uuid != nil }
-
-        mutating func udpateGDPRStatus() {
-            guard let gdpr = gdpr, let gdprMetadata = gdprMetaData else { return }
-            var shouldUpdateConsentedAll = false
-            if let additionsChangeDate = gdprMetadata.additionsChangeDate?.date,
-               gdpr.dateCreated.date < additionsChangeDate {
-                self.gdpr?.consentStatus.vendorListAdditions = true
-                shouldUpdateConsentedAll = true
-            }
-            if let legalBasisChangeDate = gdprMetadata.legalBasisChangeDate, gdpr.dateCreated.date < legalBasisChangeDate.date {
-                self.gdpr?.consentStatus.legalBasisChanges = true
-                shouldUpdateConsentedAll = true
-            }
-            if self.gdpr?.consentStatus.consentedAll == true, shouldUpdateConsentedAll {
-                self.gdpr?.consentStatus.granularStatus?.previousOptInAll = true
-                self.gdpr?.consentStatus.consentedAll = false
-            }
-        }
-
-        mutating func udpateUSNatStatus() {
-            guard let usnat = usnat, let usNatMetaData = usNatMetaData else { return }
-
-            if let additionsChangeDate = usNatMetaData.additionsChangeDate?.date,
-               usnat.dateCreated.date < additionsChangeDate {
-                self.usnat?.consentStatus.vendorListAdditions = true
-                if self.usnat?.consentStatus.consentedAll == true {
-                    self.usnat?.consentStatus.granularStatus?.previousOptInAll = true
-                    self.usnat?.consentStatus.consentedAll = false
-                }
-            }
-        }
     }
 
     let accountId, propertyId: Int
@@ -175,15 +137,20 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var deviceManager: SPDeviceManager
     let spClient: SourcePointProtocol
+    let coreClient: CoreClient
+    lazy var coreCoordinator: CoreCoordinator = CoreCoordinator.init(
+        accountId: Int32(accountId),
+        propertyId: Int32(propertyId),
+        propertyName: propertyName.coreValue,
+        campaigns: campaigns.toCore()
+    )
+    let coreStorage: SPMobileCore.Repository
     var storage: SPLocalStorage
 
     var state: State
 
-    var gdprUUID: String? { state.gdpr?.uuid }
-    var ccpaUUID: String? { state.ccpa?.uuid }
-    var usnatUUID: String? { state.usnat?.uuid }
-
-    let includeData: IncludeData
+    var gdprChildPmId: String? { coreCoordinator.userData.gdpr?.childPmId }
+    var ccpaChildPmId: String? { coreCoordinator.userData.ccpa?.childPmId }
 
     /// Checks if this user has data from the previous version of the SDK (v6).
     /// This check should only done once so we remove the data stored by the older SDK and return false after that.
@@ -198,118 +165,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    var needsNewConsentData: Bool {
-        migratingUser || needsNewUSNatData || transitionCCPAOptedOut || (
-            state.localVersion != State.version && (
-                state.gdpr?.uuid != nil ||
-                state.ccpa?.uuid != nil ||
-                state.usnat?.uuid != nil
-            )
-        )
-    }
-
-    /**
-        Set to true if in the response of `/meta-data`, the applicableSections returned is different than the one stored.
-        Used as part of the decision to call `/consent-status`
-     */
-    var needsNewUSNatData = false
-
-    var authTransitionCCPAUSNat: Bool {
-        authId != nil && campaigns.usnat?.transitionCCPAAuth == true
-    }
-
-    var transitionCCPAOptedOut: Bool {
-        campaigns.usnat != nil &&
-        ccpaUUID != nil &&
-        usnatUUID == nil &&
-        (state.ccpa?.status == .RejectedAll || state.ccpa?.status == .RejectedSome)
-    }
-
-    var shouldCallConsentStatus: Bool {
-        needsNewConsentData || authId != nil
-    }
-
-    var shouldCallMessages: Bool {
-        (campaigns.gdpr != nil && state.gdpr?.consentStatus.consentedAll != true) ||
-        campaigns.ccpa != nil ||
-        (campaigns.ios14 != nil && state.ios14?.status != .accepted) ||
-        campaigns.usnat != nil
-    }
-
-    var metaDataParamsFromState: SPMobileCore.MetaDataRequest.Campaigns {
-        .init(
-            gdpr: campaigns.gdpr != nil ?
-                .init(
-                    groupPmId: campaigns.gdpr?.groupPmId
-                ) :
-                nil,
-            usnat: campaigns.usnat != nil ?
-                .init(
-                    groupPmId: campaigns.usnat?.groupPmId
-                ) :
-                nil,
-            ccpa: campaigns.ccpa != nil ?
-                .init(
-                    groupPmId: campaigns.ccpa?.groupPmId
-                ) :
-                nil
-        )
-    }
-
-    var messagesParamsFromState: MessagesRequest {
-        .init(
-            body: .init(
-                propertyHref: propertyName,
-                accountId: accountId,
-                campaigns: .init(
-                    ccpa: campaigns.ccpa != nil ? .init(
-                        targetingParams: campaigns.ccpa?.targetingParams,
-                        hasLocalData: state.hasCCPALocalData,
-                        status: state.ccpa?.status
-                    ) : nil,
-                    gdpr: campaigns.gdpr != nil ? .init(
-                        targetingParams: campaigns.gdpr?.targetingParams,
-                        hasLocalData: state.hasGDPRLocalData,
-                        consentStatus: state.gdpr?.consentStatus
-                    ) : nil,
-                    ios14: campaigns.ios14 != nil ? .init(
-                        targetingParams: campaigns.ios14?.targetingParams,
-                        idfaSstatus: idfaStatus
-                    ) : nil,
-                    usnat: campaigns.usnat != nil ? .init(
-                        targetingParams: campaigns.usnat?.targetingParams,
-                        hasLocalData: state.hasUSNatLocalData,
-                        consentStatus: state.usnat?.consentStatus ?? ConsentStatus()
-                    ) : nil
-                ),
-                consentLanguage: language,
-                campaignEnv: campaigns.environment,
-                idfaStatus: idfaStatus,
-                includeData: includeData
-            ),
-            metadata: .init(
-                ccpa: .init(applies: state.ccpa?.applies),
-                gdpr: .init(applies: state.gdpr?.applies),
-                usnat: .init(applies: state.usnat?.applies)
-            ),
-            nonKeyedLocalState: .init(nonKeyedLocalState: state.nonKeyedLocalState),
-            localState: state.localState
-        )
-    }
-
-    var userData: SPUserData {
-        SPUserData(
-            gdpr: campaigns.gdpr != nil ?
-                .init(consents: state.gdpr, applies: state.gdpr?.applies ?? false) :
-                nil,
-            ccpa: campaigns.ccpa != nil ?
-                .init(consents: state.ccpa, applies: state.ccpa?.applies ?? false) :
-                nil,
-            usnat: campaigns.usnat != nil ?
-                .init(consents: state.usnat, applies: state.usnat?.applies ?? false) :
-                nil
-        )
-    }
+    var userData: SPUserData { coreCoordinator.userData.toNative() }
 
     init(
         accountId: Int,
@@ -326,10 +182,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         self.propertyName = propertyName
         self.language = language
         self.campaigns = campaigns
-        self.includeData = IncludeData(
-            gppConfig: campaigns.ccpa?.GPPConfig ??
-                SPGPPConfig(uspString: campaigns.usnat?.supportLegacyUSPString)
-        )
         self.storage = storage
         self.spClient = spClient ?? SourcePointClient(
             accountId: accountId,
@@ -338,808 +190,179 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             campaignEnv: campaigns.environment,
             timeout: SPConsentManager.DefaultTimeout
         )
+        self.state = State()
         self.deviceManager = deviceManager
-
-        self.state = Self.setupState(
-            from: storage,
-            accountId: accountId,
-            propertyId: propertyId,
-            campaigns: campaigns
+        self.coreStorage = SPMobileCore.Repository.init()
+        self.coreClient = CoreClient.init(
+            accountId: Int32(accountId),
+            propertyId: Int32(propertyId),
+            requestTimeoutInSeconds: Int32(5)
         )
-        self.storage.spState = self.state
-    }
-
-    static func setupState(
-        from localStorage: SPLocalStorage,
-        accountId: Int,
-        propertyId: Int,
-        campaigns localCampaigns: SPCampaigns
-    ) -> State {
-        var spState = localStorage.spState ?? .init()
-        if spState.accountId == nil || spState.propertyId == nil {
-            spState.accountId = accountId
-            spState.propertyId = propertyId
-        }
-
-        if spState.accountId != accountId || spState.propertyId != propertyId {
-            spState = .init()
-            spState.accountId = accountId
-            spState.propertyId = propertyId
-        }
-
-        if localCampaigns.gdpr != nil, spState.gdpr == nil {
-            spState.gdpr = localStorage.userData.gdpr?.consents ?? .empty()
-            spState.gdpr?.applies = localStorage.userData.gdpr?.applies ?? false
-            spState.gdprMetaData = .init()
-        }
-        if localCampaigns.ccpa != nil, spState.ccpa == nil {
-            spState.ccpa = localStorage.userData.ccpa?.consents ?? .empty()
-            spState.ccpa?.applies = localStorage.userData.ccpa?.applies ?? false
-            spState.ccpaMetaData = .init()
-        }
-        if localCampaigns.usnat != nil, spState.usnat == nil {
-            spState.usnat = localStorage.userData.usnat?.consents ?? .empty()
-            spState.usnat?.applies = localStorage.userData.usnat?.applies ?? false
-            spState.usNatMetaData = .init()
-        }
-        if localCampaigns.ios14 != nil, spState.ios14 == nil {
-            spState.ios14 = .init()
-        }
-
-        // Expire user consent if later than expirationDate
-        if let gdprExpirationDate = spState.gdpr?.expirationDate.date,
-           gdprExpirationDate < Date() {
-            spState.gdpr = .empty()
-        }
-        if let ccpaExpirationDate = spState.ccpa?.expirationDate.date,
-           ccpaExpirationDate < Date() {
-            spState.ccpa = .empty()
-        }
-        if let usnatExpirationDate = spState.usnat?.expirationDate.date,
-           usnatExpirationDate < Date() {
-            spState.usnat = .empty()
-        }
-
-        return spState
-    }
-
-    func ccpaPvDataBody(
-        from state: State,
-        pubData: SPPublisherData?,
-        messageMetaData: MessageMetaData?
-    ) -> SPMobileCore.PvDataRequest {
-        var request: SPMobileCore.PvDataRequest?
-        if let stateCCPA = state.ccpa {
-            let pubDataJson = pubData?.toCore()
-            request = SPMobileCore.PvDataRequest.init(
-                gdpr: nil,
-                ccpa: SPMobileCore.PvDataRequest.CCPA.init(
-                    applies: stateCCPA.applies,
-                    uuid: stateCCPA.uuid,
-                    accountId: Int32(accountId),
-                    propertyId: Int32(propertyId),
-                    consentStatus: stateCCPA.consentStatus.toCore(rejectedVendors: stateCCPA.rejectedVendors, rejectedCategories: stateCCPA.rejectedCategories),
-                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
-                    messageId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
-                    sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate)
-                ),
-                usnat: nil
-            )
-        }
-        return request ?? SPMobileCore.PvDataRequest(gdpr: nil, ccpa: nil, usnat: nil)
-    }
-
-    func gdprPvDataBody(
-        from state: State,
-        pubData: SPPublisherData?,
-        messageMetaData: MessageMetaData?
-    ) -> SPMobileCore.PvDataRequest {
-        var request: SPMobileCore.PvDataRequest?
-        if let stateGDPR = state.gdpr {
-            let pubDataJson = pubData?.toCore()
-            request = SPMobileCore.PvDataRequest.init(
-                gdpr: SPMobileCore.PvDataRequest.GDPR.init(
-                    applies: stateGDPR.applies,
-                    uuid: stateGDPR.uuid,
-                    accountId: Int32(accountId),
-                    propertyId: Int32(propertyId),
-                    consentStatus: stateGDPR.consentStatus.toCore(),
-                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
-                    sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
-                    euconsent: stateGDPR.euconsent,
-                    msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
-                    categoryId: KotlinInt(int: messageMetaData?.categoryId.rawValue),
-                    subCategoryId: KotlinInt(int: messageMetaData?.subCategoryId.rawValue),
-                    prtnUUID: messageMetaData?.messagePartitionUUID
-                ),
-                ccpa: nil,
-                usnat: nil
-            )
-        }
-        return request ?? SPMobileCore.PvDataRequest(gdpr: nil, ccpa: nil, usnat: nil)
-    }
-
-    func usnatPvDataBody(
-        from state: State,
-        pubData: SPPublisherData?,
-        messageMetaData: MessageMetaData?
-    ) -> SPMobileCore.PvDataRequest {
-        var request: SPMobileCore.PvDataRequest?
-        if let stateUsnat = state.usnat {
-            let pubDataJson = pubData?.toCore()
-            request = SPMobileCore.PvDataRequest.init(
-                gdpr: nil,
-                ccpa: nil,
-                usnat: SPMobileCore.PvDataRequest.USNat.init(
-                    applies: stateUsnat.applies,
-                    uuid: stateUsnat.uuid,
-                    accountId: Int32(accountId),
-                    propertyId: Int32(propertyId),
-                    consentStatus: stateUsnat.consentStatus.toCore(),
-                    pubData: JsonKt.encodeToJsonObject(pubDataJson),
-                    sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
-                    msgId: KotlinInt(int: Int(messageMetaData?.messageId ?? "")),
-                    categoryId: KotlinInt(int: messageMetaData?.categoryId.rawValue),
-                    subCategoryId: KotlinInt(int: messageMetaData?.subCategoryId.rawValue),
-                    prtnUUID: messageMetaData?.messagePartitionUUID
-                )
-            )
-        }
-        return request ?? SPMobileCore.PvDataRequest(gdpr: nil, ccpa: nil, usnat: nil)
-    }
-
-    /// Resets state if the authId has changed, except if the stored auth id was empty.
-    func resetStateIfAuthIdChanged() {
-        if state.storedAuthId == nil {
-            state.storedAuthId = authId
-        }
-
-        if authId != nil, state.storedAuthId != authId {
-            state.storedAuthId = authId
-            if campaigns.gdpr != nil {
-                state.gdpr = .empty()
-                state.gdprMetaData = .init()
-            }
-            if campaigns.ccpa != nil {
-                state.ccpa = .empty()
-                state.ccpaMetaData = .init()
-            }
-        }
-
-        storage.spState = state
+        self.coreCoordinator = CoreCoordinator.init(
+            accountId: Int32(accountId),
+            propertyId: Int32(propertyId),
+            propertyName: propertyName.coreValue,
+            campaigns: campaigns.toCore(),
+            repository: coreStorage,
+            spClient: coreClient,
+            authId: nil,
+            state: {
+                if let localState = storage.spState {
+                    storage.clear()
+                    return localState.toCore(propertyId: propertyId, accountId: accountId)
+                } else {
+                    return coreStorage.state ?? State().toCore(propertyId: propertyId, accountId: accountId)
+                }
+            }()
+        )
+        self.coreCoordinator.getIDFAStatus = { return self.idfaStatus.toCore() }
+        #if os(tvOS)
+        coreCoordinator.setTranslateMessage(value: true)
+        #endif
     }
 
     func loadMessages(forAuthId authId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler) {
-        state = Self.setupState(
-            from: storage,
-            accountId: accountId,
-            propertyId: propertyId,
-            campaigns: campaigns
-        )
-        storage.spState = state
-
-        self.authId = authId
-        resetStateIfAuthIdChanged()
-
-        let onError: ErrorHandler = {
-            self.logErrorMetrics($0)
-            handler(Result.failure($0))
-        }
-
-        metaData(onError) {
-            self.consentStatus(onError) {
-                self.state.udpateGDPRStatus()
-                self.state.udpateUSNatStatus()
-                self.messages { messagesResponse in
-                    let (messages, _) = (try? messagesResponse.get()) ?? ([], SPUserData())
-                    handler(messagesResponse)
-                    self.pvData(pubData: pubData, messages: messages) { }
+        coreCoordinator.loadMessages(authId: authId, pubData: JsonKt.encodeToJsonObject(pubData?.toCore()), language: language.toCore()) { response, error in
+            if error != nil {
+                var coreError = SPError()
+                if let nsError = error as? NSError {
+                    coreError = SPError.convertCoreError(error: nsError)
                 }
-            }
-        }
-    }
-
-    func handleMetaDataResponse(_ response: SPMobileCore.MetaDataResponse) {
-        if let gdprMetaData = response.gdpr {
-            if state.gdprMetaData?.vendorListId != nil && state.gdprMetaData?.vendorListId != gdprMetaData.vendorListId {
-                state.gdpr = .empty()
-            }
-            state.gdpr?.applies = gdprMetaData.applies
-            state.gdprMetaData?.additionsChangeDate = SPDate(string: gdprMetaData.additionsChangeDate)
-            state.gdprMetaData?.legalBasisChangeDate = SPDate(string: gdprMetaData.legalBasisChangeDate)
-            state.gdprMetaData?.updateSampleFields(gdprMetaData.sampleRate)
-            state.gdprMetaData?.vendorListId = gdprMetaData.vendorListId
-            if campaigns.gdpr?.groupPmId != gdprMetaData.childPmId {
-                storage.gdprChildPmId = gdprMetaData.childPmId
-            }
-        }
-        if let ccpaMetaData = response.ccpa {
-            state.ccpa?.applies = ccpaMetaData.applies
-            state.ccpaMetaData?.updateSampleFields(ccpaMetaData.sampleRate)
-        }
-        if let usnatMetaData = response.usnat {
-            let previousApplicableSections = state.usNatMetaData?.applicableSections ?? []
-            if state.usNatMetaData?.vendorListId != nil && state.usNatMetaData?.vendorListId != usnatMetaData.vendorListId {
-                state.usnat = .empty()
-            }
-            state.usnat?.applies = usnatMetaData.applies
-            state.usNatMetaData?.vendorListId = usnatMetaData.vendorListId
-            state.usNatMetaData?.additionsChangeDate = SPDate(string: usnatMetaData.additionsChangeDate)
-            state.usNatMetaData?.updateSampleFields(usnatMetaData.sampleRate)
-            state.usNatMetaData?.applicableSections = usnatMetaData.applicableSections.map {
-                Int(truncating: $0)
-            }
-            if previousApplicableSections.isNotEmpty() && previousApplicableSections != state.usNatMetaData?.applicableSections {
-                needsNewUSNatData = true
-            }
-        }
-        storage.spState = state
-    }
-
-    func metaData(_ errorHandler: @escaping ErrorHandler, next: @escaping () -> Void) {
-        spClient.metaData(
-            accountId: accountId,
-            propertyId: propertyId,
-            campaigns: metaDataParamsFromState
-        ) { result in
-            switch result {
-                case .success(let response):
-                    self.handleMetaDataResponse(response)
-                    next()
-
-                case .failure(let error): errorHandler(error)
-            }
-        }
-    }
-
-    func handleConsentStatusResponse(_ response: SPMobileCore.ConsentStatusResponse) {
-        state.localState = try? SPJson(response.localState)
-        if let gdpr = response.consentStatusData.gdpr {
-            state.gdpr?.uuid = gdpr.uuid
-            state.gdpr?.vendorGrants = gdpr.grants.mapValues { $0.toNative() }
-            state.gdpr?.dateCreated = SPDate(string: gdpr.dateCreated ?? "")
-            state.gdpr?.expirationDate = SPDate(string: gdpr.expirationDate ?? "")
-            state.gdpr?.euconsent = gdpr.euconsent ?? ""
-            state.gdpr?.tcfData = gdpr.tcData.toNative()
-            state.gdpr?.consentStatus = gdpr.consentStatus.toNative()
-            state.gdpr?.webConsentPayload = gdpr.webConsentPayload
-            state.gdpr?.googleConsentMode = gdpr.gcmStatus?.toNative()
-            state.gdpr?.acceptedLegIntCategories = gdpr.legIntCategories
-            state.gdpr?.acceptedLegIntVendors = gdpr.legIntVendors
-            state.gdpr?.acceptedVendors = gdpr.vendors
-            state.gdpr?.acceptedCategories = gdpr.categories
-            state.gdpr?.acceptedSpecialFeatures = gdpr.specialFeatures
-        }
-        if let ccpa = response.consentStatusData.ccpa {
-            state.ccpa?.uuid = ccpa.uuid
-            state.ccpa?.dateCreated = SPDate(string: ccpa.dateCreated ?? "")
-            state.ccpa?.expirationDate = SPDate(string: ccpa.expirationDate ?? "")
-            state.ccpa?.status = ccpa.status?.toNative() ?? .Unknown
-            state.ccpa?.rejectedVendors = ccpa.rejectedVendors
-            state.ccpa?.rejectedCategories = ccpa.rejectedCategories
-            state.ccpa?.consentStatus = ConsentStatus(
-                rejectedVendors: ccpa.rejectedVendors,
-                rejectedCategories: ccpa.rejectedCategories
-            )
-            state.ccpa?.webConsentPayload = ccpa.webConsentPayload
-            state.ccpa?.GPPData = ccpa.gppData.toNative() ?? SPJson()
-        }
-        if let usnat = response.consentStatusData.usnat {
-            state.usnat = SPUSNatConsent(
-                uuid: usnat.uuid,
-                applies: state.usnat?.applies ?? false,
-                dateCreated: SPDate(string: usnat.dateCreated ?? ""),
-                expirationDate: SPDate(string: usnat.expirationDate ?? ""),
-                consentStrings: usnat.consentStrings.map { $0.toNative() },
-                webConsentPayload: usnat.webConsentPayload,
-                categories: usnat.userConsents.categories.map { $0.toNative() },
-                vendors: usnat.userConsents.vendors.map { $0.toNative() },
-                consentStatus: usnat.consentStatus.toNative(),
-                GPPData: usnat.gppData.toNative()
-            )
-        }
-
-        storage.spState = state
-    }
-
-    func consentStatus(_ errorHandler: ErrorHandler, next: @escaping () -> Void) {
-        if shouldCallConsentStatus {
-            spClient.consentStatus(
-                metadata: .init(
-                    // swiftlint:disable force_unwrapping
-                    gdpr: state.gdpr != nil ? .init(
-                        applies: state.gdpr!.applies,
-                        dateCreated: state.gdpr?.dateCreated.originalDateString,
-                        uuid: state.gdpr?.uuid,
-                        hasLocalData: false,
-                        idfaStatus: SPIDFAStatus.current().toCore()
-                    ) : nil,
-                    usnat: state.usnat != nil ? .init(
-                        applies: state.usnat!.applies,
-                        dateCreated: transitionCCPAOptedOut ?
-                            state.ccpa?.dateCreated.originalDateString :
-                            state.usnat?.dateCreated.originalDateString,
-                        uuid: state.usnat?.uuid,
-                        hasLocalData: false,
-                        idfaStatus: SPIDFAStatus.current().toCore(),
-                        transitionCCPAAuth: KotlinBoolean(bool: authTransitionCCPAUSNat),
-                        optedOut: KotlinBoolean(bool: transitionCCPAOptedOut)
-                    ) : nil,
-                    ccpa: state.ccpa != nil ? .init(
-                        applies: state.ccpa!.applies,
-                        dateCreated: state.ccpa?.dateCreated.originalDateString,
-                        uuid: state.ccpa?.uuid,
-                        hasLocalData: false,
-                        idfaStatus: SPIDFAStatus.current().toCore()
-                    ) : nil
-                ),
-                // swiftlint:enable force_unwrapping
-                authId: authId
-            ) { result in
-                switch result {
-                    case .success(let response):
-                        self.state.localVersion = State.version
-                        self.handleConsentStatusResponse(response)
-
-                    case .failure(let error):
-                        self.logErrorMetrics(error)
-                }
-                next()
-            }
-        } else {
-            self.state.localVersion = State.version
-            next()
-        }
-    }
-
-    func handleMessagesResponse(_ response: MessagesResponse) -> LoadMessagesReturnType {
-        state.localState = response.localState
-        state.nonKeyedLocalState = response.nonKeyedLocalState
-
-        response.campaigns.forEach {
-            switch $0.type {
-                case .gdpr: state.gdpr = $0.userConsent.toConsent(
-                    defaults: state.gdpr
-                )
-
-                case .ccpa: state.ccpa = $0.userConsent.toConsent(
-                    defaults: state.ccpa
-                )
-
-                case .usnat: state.usnat = $0.userConsent.toConsent(
-                    defaults: state.usnat
-                )
-
-                case .ios14:
-                    state.ios14?.messageId = $0.messageMetaData?.messageId
-                    state.ios14?.partitionUUID = $0.messageMetaData?.messagePartitionUUID
-
-                case .unknown: break
-            }
-        }
-
-        storage.spState = state
-        return (
-            response.campaigns.compactMap { MessageToDisplay($0) },
-            userData.copy() as? SPUserData ?? userData
-        )
-    }
-
-    func messages(_ handler: @escaping MessagesAndConsentsHandler) {
-        if shouldCallMessages {
-            spClient.getMessages(messagesParamsFromState) { result in
-                switch result {
-                    case .success(let response):
-                        handler(Result.success(self.handleMessagesResponse(response)))
-
-                    case .failure(let error):
-                        self.logErrorMetrics(error)
-                        handler(Result.failure(error))
-                }
-            }
-        } else {
-            handler(Result.success(([], userData.copy() as? SPUserData ?? userData)))
-        }
-    }
-
-    /// rate is a float ranging from 0.0 to 1.0
-    /// sample will generate a number from 1 to 100 and if that number
-    /// is inside the given range 1...rate*100, it returns `true` otherwise `false`
-    func sample(at rate: Float) -> Bool {
-        1...Int(rate * 100) ~= Int.random(in: 1...100)
-    }
-
-    func handlePvDataResponse(_ response: Result<SPMobileCore.PvDataResponse, SPError>) {
-        switch response {
-            case .success(let pvDataData):
-                if let gdpr = pvDataData.gdpr {
-                    state.gdpr?.uuid = gdpr.uuid
-                }
-                if let ccpa = pvDataData.ccpa {
-                    state.ccpa?.uuid = ccpa.uuid
-                }
-                if let usnat = pvDataData.usnat {
-                    state.usnat?.uuid = usnat.uuid
-                }
-
-            case .failure(let error): logErrorMetrics(error)
-        }
-    }
-
-    /// If campaign is not `nil`, sample it and call pvData in case the sampling was a hit.
-    /// Returns `true` if it hit or `false` otherwise
-    func sampleAndPvData(_ campaign: SPSampleable, request: SPMobileCore.PvDataRequest, handler: @escaping () -> Void) -> Bool {
-        if campaign.wasSampled == nil {
-            if sample(at: campaign.sampleRate) {
-                spClient.pvData(request: request) {
-                    self.handlePvDataResponse($0)
-                    handler()
-                }
-                return true
+                coreError.coreError = error as? CoreSPError
+                handler(Result.failure(coreError))
             } else {
-                handler()
-                return false
-            }
-        } else if campaign.wasSampled == true {
-            spClient.pvData(request: request) {
-                self.handlePvDataResponse($0)
-                handler()
-            }
-            return true
-        } else {
-            handler()
-            return false
-        }
-    }
-
-    func pvData(pubData: SPPublisherData?, messages: [MessageToDisplay], _ handler: @escaping () -> Void) {
-        let pvDataGroup = DispatchGroup()
-        if let gdprMetadata = state.gdprMetaData, campaigns.gdpr != nil {
-            pvDataGroup.enter()
-            let sampled = sampleAndPvData(
-                gdprMetadata,
-                request: gdprPvDataBody(
-                    from: state,
-                    pubData: pubData,
-                    messageMetaData: messages.first { $0.type == .gdpr }?.metadata
-                )
-            ) {
-                pvDataGroup.leave()
-            }
-            state.gdprMetaData?.wasSampled = sampled
-        }
-        if let ccpaMetadata = state.ccpaMetaData, campaigns.ccpa != nil {
-            pvDataGroup.enter()
-            let sampled = sampleAndPvData(
-                ccpaMetadata,
-                request: ccpaPvDataBody(
-                    from: state,
-                    pubData: pubData,
-                    messageMetaData: messages.first { $0.type == .ccpa }?.metadata
-                )
-            ) {
-                pvDataGroup.leave()
-            }
-            state.ccpaMetaData?.wasSampled = sampled
-        }
-        if let usNatMetadata = state.usNatMetaData, campaigns.usnat != nil {
-            pvDataGroup.enter()
-            let sampled = sampleAndPvData(
-                usNatMetadata,
-                request: usnatPvDataBody(
-                    from: state,
-                    pubData: pubData,
-                    messageMetaData: messages.first { $0.type == .usnat }?.metadata
-                )
-            ) {
-                pvDataGroup.leave()
-            }
-            state.usNatMetaData?.wasSampled = sampled
-        }
-
-        pvDataGroup.notify(queue: .main) {
-            self.storage.spState = self.state
-            handler()
-        }
-    }
-
-    func handleGetChoices(_ response: SPMobileCore.ChoiceAllResponse, from campaign: SPCampaignType) {
-        if let gdpr = response.gdpr, campaign == .gdpr {
-            state.gdpr?.dateCreated = SPDate(string: gdpr.dateCreated ?? "")
-            state.gdpr?.expirationDate = SPDate(string: gdpr.expirationDate ?? "")
-            state.gdpr?.tcfData = gdpr.tcData?.toNative()
-            state.gdpr?.vendorGrants = gdpr.grants.mapValues { $0.toNative() }
-            state.gdpr?.euconsent = gdpr.euconsent
-            state.gdpr?.consentStatus = gdpr.consentStatus.toNative()
-            state.gdpr?.childPmId = gdpr.childPmId
-            state.gdpr?.googleConsentMode = gdpr.gcmStatus?.toNative()
-        }
-        if let ccpa = response.ccpa, campaign == .ccpa {
-            state.ccpa?.dateCreated = SPDate(string: ccpa.dateCreated ?? "")
-            state.ccpa?.expirationDate = SPDate(string: ccpa.expirationDate ?? "")
-            state.ccpa?.status = ccpa.status.toNative()
-            state.ccpa?.GPPData = ccpa.gppData.toNative() ?? SPJson()
-        }
-        if let usnat = response.usnat, campaign == .usnat {
-            state.usnat?.dateCreated = SPDate(string: usnat.dateCreated ?? "")
-            state.usnat?.expirationDate = SPDate(string: usnat.expirationDate ?? "")
-            state.usnat?.consentStatus = usnat.consentStatus.toNative()
-            state.usnat?.GPPData = usnat.gppData.toNative()
-            state.usnat?.consentStrings = usnat.consentStrings.map { $0.toNative() }
-            state.usnat?.consentStatus.consentedToAll = usnat.consentedToAll
-            state.usnat?.consentStatus.rejectedAny = usnat.rejectedAny
-            state.usnat?.consentStatus.granularStatus?.gpcStatus = usnat.gpcEnabled?.boolValue
-        }
-        storage.spState = state
-    }
-
-    func shouldCallGetChoice(for action: SPAction) -> Bool {
-        (action.type == .AcceptAll || action.type == .RejectAll)
-    }
-
-    func getChoiceAll(_ action: SPAction, handler: @escaping (Result<SPMobileCore.ChoiceAllResponse?, SPError>) -> Void) {
-        if shouldCallGetChoice(for: action) {
-            spClient.choiceAll(
-                actionType: action.type.toCore(),
-                campaigns: .init(
-                    gdpr: campaigns.gdpr != nil ? .init(applies: state.gdpr?.applies ?? false) : nil,
-                    ccpa: campaigns.ccpa != nil ? .init(applies: state.ccpa?.applies ?? false) : nil,
-                    usnat: campaigns.usnat != nil ? .init(applies: state.usnat?.applies ?? false) : nil
-                )
-            ) { result in
-                switch result {
-                    case .success(let response):
-                        self.handleGetChoices(response, from: action.campaignType)
-                        handler(Result.success(response))
-
-                    case .failure(let error):
-                        handler(Result.failure(error))
+                self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
+                var messageToDisplay: [MessageToDisplay]
+                if let response = response.toNative() {
+                    messageToDisplay = response
+                } else {
+                    messageToDisplay = []
                 }
+                let result = LoadMessagesReturnType(messageToDisplay)
+                handler(Result.success(result))
             }
-        } else {
-            handler(Result.success(nil))
         }
     }
 
-    func postChoice(
-        _ action: SPAction,
-        postPayloadFromGetCall: SPMobileCore.ChoiceAllResponse.GDPRPostPayload?,
-        handler: @escaping (Result<SPMobileCore.GDPRChoiceResponse, SPError>) -> Void
-    ) {
-        spClient.postGDPRAction(
-            actionType: action.type,
-            request: GDPRChoiceRequest(
-                authId: authId,
-                uuid: state.gdpr?.uuid,
-                messageId: action.messageId,
-                consentAllRef: postPayloadFromGetCall?.consentAllRef,
-                vendorListId: postPayloadFromGetCall?.vendorListId,
-                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
-                pmSaveAndExitVariables: action.pmPayload.toCore(),
-                sendPVData: state.gdprMetaData?.wasSampled ?? false,
-                propertyId: Int32(propertyId),
-                sampleRate: KotlinFloat(float: state.gdprMetaData?.sampleRate),
-                idfaStatus: idfaStatus.toCore(),
-                granularStatus: postPayloadFromGetCall?.granularStatus,
-                includeData: includeData.toCore()
+    func updateStateFromCore(coreUserData: SPMobileCore.SPUserData) {
+        if let gdprData = coreUserData.gdpr?.consents {
+            state.gdpr = SPGDPRConsent(
+                uuid: gdprData.uuid,
+                vendorGrants: gdprData.grants.mapValues { $0.toNative() },
+                euconsent: gdprData.euconsent ?? "",
+                tcfData: gdprData.tcData.toNative(),
+                dateCreated: SPDate(string: gdprData.dateCreated.instantToString()),
+                expirationDate: SPDate(string: gdprData.expirationDate.instantToString()),
+                applies: gdprData.applies,
+                consentStatus: gdprData.consentStatus.toNative(),
+                webConsentPayload: gdprData.webConsentPayload,
+                googleConsentMode: gdprData.gcmStatus?.toNative(),
+                acceptedLegIntCategories: gdprData.legIntCategories,
+                acceptedLegIntVendors: gdprData.legIntVendors,
+                acceptedVendors: gdprData.vendors,
+                acceptedCategories: gdprData.categories,
+                acceptedSpecialFeatures: gdprData.specialFeatures
             )
-        ) { handler($0) }
-    }
-
-    func postChoice(
-        _ action: SPAction,
-        handler: @escaping (Result<SPMobileCore.CCPAChoiceResponse, SPError>) -> Void
-    ) {
-        spClient.postCCPAAction(
-            actionType: action.type,
-            request: CCPAChoiceRequest(
-                authId: authId,
-                uuid: state.ccpa?.uuid,
-                messageId: action.messageId,
-                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
-                pmSaveAndExitVariables: action.pmPayload.toCore(),
-                sendPVData: state.ccpaMetaData?.wasSampled ?? false,
-                propertyId: Int32(propertyId),
-                sampleRate: KotlinFloat(float: state.ccpaMetaData?.sampleRate),
-                includeData: includeData.toCore()
+        }
+        if let ccpaData = coreUserData.ccpa?.consents {
+            state.ccpa = SPCCPAConsent(
+                uuid: ccpaData.uuid,
+                status: ccpaData.status?.toNative() ?? .Unknown,
+                rejectedVendors: ccpaData.rejectedVendors,
+                rejectedCategories: ccpaData.rejectedCategories,
+                signedLspa: ccpaData.signedLspa?.boolValue ?? state.ccpa?.signedLspa ?? false,
+                applies: ccpaData.applies,
+                dateCreated: SPDate(string: ccpaData.dateCreated.instantToString()),
+                expirationDate: SPDate(string: ccpaData.expirationDate.instantToString()),
+                consentStatus: ConsentStatus(consentedAll: ccpaData.consentedAll, rejectedAll: ccpaData.rejectedAll),
+                webConsentPayload: ccpaData.webConsentPayload,
+                GPPData: ccpaData.gppData.toNative() ?? SPJson()
             )
-        ) { handler($0) }
+        }
+        if let usnatData = coreUserData.usnat?.consents {
+            state.usnat = SPUSNatConsent(
+                uuid: usnatData.uuid,
+                applies: usnatData.applies,
+                dateCreated: SPDate(string: usnatData.dateCreated.instantToString()),
+                expirationDate: SPDate(string: usnatData.expirationDate.instantToString()),
+                consentStrings: usnatData.consentStrings.map { $0.toNative() },
+                webConsentPayload: usnatData.webConsentPayload,
+                categories: usnatData.userConsents.categories.map { $0.toNative() },
+                vendors: usnatData.userConsents.vendors.map { $0.toNative() },
+                consentStatus: usnatData.consentStatus.toNative(),
+                GPPData: usnatData.gppData.toNative()
+            )
+        }
     }
 
-    func postChoice(
-        _ action: SPAction,
-        handler: @escaping (Result<SPMobileCore.USNatChoiceResponse, SPError>) -> Void
-    ) {
-        spClient.postUSNatAction(
-            actionType: action.type,
-            request: USNatChoiceRequest(
-                authId: authId,
-                uuid: state.usnat?.uuid,
-                messageId: action.messageId,
-                vendorListId: state.usNatMetaData?.vendorListId,
-                pubData: JsonKt.encodeToJsonObject(action.encodablePubData.toCore()),
-                pmSaveAndExitVariables: action.pmPayload.toCore(),
-                sendPVData: state.usNatMetaData?.wasSampled ?? false,
-                propertyId: Int32(propertyId),
-                sampleRate: KotlinFloat(float: state.usNatMetaData?.sampleRate),
-                idfaStatus: idfaStatus.toCore(),
-                granularStatus: state.usnat?.consentStatus.granularStatus?.toCore(),
-                includeData: includeData.toCore()
-            ),
-            handler: handler
+    func buildChoiceAllCampaigns(action: SPAction) -> ChoiceAllRequest.ChoiceAllCampaigns {
+        var gdprApplies: Bool?
+        var ccpaApplies: Bool?
+        var usnatApplies: Bool?
+        switch action.campaignType {
+        case .gdpr:
+            gdprApplies = state.gdpr?.applies
+
+        case .ccpa:
+            ccpaApplies = state.ccpa?.applies
+
+        case .usnat:
+            usnatApplies = state.usnat?.applies
+
+        case .ios14, .unknown:
+            break
+        }
+        return .init(
+            gdpr: .init(applies: gdprApplies ?? false),
+            ccpa: .init(applies: ccpaApplies ?? false),
+            usnat: .init(applies: usnatApplies ?? false)
         )
-    }
-
-    func handleGPDRPostChoice(
-        _ action: SPAction,
-        _ getResponse: SPMobileCore.ChoiceAllResponse?,
-        _ postResponse: SPMobileCore.GDPRChoiceResponse
-    ) {
-        if action.type == .SaveAndExit {
-            state.gdpr?.tcfData = postResponse.tcData?.toNative()
-        }
-        state.gdpr?.uuid = postResponse.uuid
-        state.gdpr?.dateCreated = SPDate(string: postResponse.dateCreated ?? "")
-        state.gdpr?.expirationDate = SPDate(string: postResponse.expirationDate ?? "")
-        state.gdpr?.consentStatus = postResponse.consentStatus?.toNative() ?? getResponse?.gdpr?.consentStatus.toNative() ?? ConsentStatus()
-        state.gdpr?.euconsent = postResponse.euconsent ?? getResponse?.gdpr?.euconsent ?? ""
-        state.gdpr?.vendorGrants = postResponse.grants?.mapValues { $0.toNative() } ?? getResponse?.gdpr?.grants.mapValues { $0.toNative() } ?? SPGDPRVendorGrants()
-        state.gdpr?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.gdpr?.webConsentPayload
-        state.gdpr?.googleConsentMode = postResponse.gcmStatus?.toNative() ?? getResponse?.gdpr?.gcmStatus?.toNative()
-        state.gdpr?.acceptedLegIntCategories = postResponse.acceptedLegIntCategories ?? getResponse?.gdpr?.acceptedLegIntCategories ?? []
-        state.gdpr?.acceptedLegIntVendors = postResponse.acceptedLegIntVendors ?? getResponse?.gdpr?.acceptedLegIntVendors ?? []
-        state.gdpr?.acceptedVendors = postResponse.acceptedVendors ?? getResponse?.gdpr?.acceptedVendors ?? []
-        state.gdpr?.acceptedCategories = postResponse.acceptedCategories ?? getResponse?.gdpr?.acceptedCategories ?? []
-        state.gdpr?.acceptedSpecialFeatures = postResponse.acceptedSpecialFeatures ?? getResponse?.gdpr?.acceptedSpecialFeatures ?? []
-        storage.spState = state
-    }
-
-    func reportGDPRAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
-        postChoice(action, postPayloadFromGetCall: getResponse?.gdpr?.postPayload) { postResult in
-            switch postResult {
-                case .success(let response):
-                    self.handleGPDRPostChoice(action, getResponse, response)
-                    handler(Result.success(self.userData))
-
-                case .failure(let error):
-                    // flag to sync again later
-                    handler(Result.failure(error))
-            }
-        }
-    }
-
-    func handleCCPAPostChoice(
-        _ action: SPAction,
-        _ getResponse: SPMobileCore.ChoiceAllResponse?,
-        _ postResponse: SPMobileCore.CCPAChoiceResponse
-    ) {
-        if action.type == .SaveAndExit {
-            state.ccpa?.GPPData = postResponse.gppData.toNative() ?? SPJson()
-        }
-        state.ccpa?.uuid = postResponse.uuid
-        state.ccpa?.dateCreated = SPDate(string: postResponse.dateCreated ?? "")
-        state.ccpa?.status = postResponse.status?.toNative() ?? getResponse?.ccpa?.status.toNative() ?? .RejectedAll
-        state.ccpa?.rejectedVendors = postResponse.rejectedVendors ?? getResponse?.ccpa?.rejectedVendors ?? []
-        state.ccpa?.rejectedCategories = postResponse.rejectedCategories ?? getResponse?.ccpa?.rejectedCategories ?? []
-        state.ccpa?.webConsentPayload = postResponse.webConsentPayload ?? getResponse?.ccpa?.webConsentPayload
-        storage.spState = state
-    }
-
-    func reportCCPAAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
-        self.postChoice(action) { postResult in
-            switch postResult {
-                case .success(let response):
-                    self.handleCCPAPostChoice(action, getResponse, response)
-                    handler(Result.success(self.userData))
-
-                case .failure(let error):
-                    // flag to sync again later
-                    handler(Result.failure(error))
-            }
-        }
-    }
-
-    func handleUSNatPostChoice(
-        _ action: SPAction,
-        _ getResponse: SPMobileCore.ChoiceAllResponse?,
-        _ postResponse: SPMobileCore.USNatChoiceResponse
-    ) {
-        state.usnat = SPUSNatConsent(
-            uuid: postResponse.uuid,
-            applies: state.usnat?.applies ?? false,
-            dateCreated: SPDate(string: postResponse.dateCreated ?? ""),
-            expirationDate: SPDate(string: postResponse.expirationDate ?? ""),
-            consentStrings: postResponse.consentStrings.map { $0.toNative() },
-            webConsentPayload: postResponse.webConsentPayload ?? getResponse?.usnat?.webConsentPayload,
-            categories: postResponse.userConsents.categories.map { $0.toNative() },
-            vendors: postResponse.userConsents.vendors.map { $0.toNative() },
-            consentStatus: postResponse.consentStatus.toNative(),
-            GPPData: postResponse.gppData.toNative() ?? getResponse?.usnat?.gppData.toNative()
-        )
-
-        storage.spState = state
-    }
-
-    func reportUSNatAction(_ action: SPAction, _ getResponse: SPMobileCore.ChoiceAllResponse?, _ handler: @escaping ActionHandler) {
-        self.postChoice(action) { postResult in
-            switch postResult {
-                case .success(let response):
-                    self.handleUSNatPostChoice(action, getResponse, response)
-                    handler(Result.success(self.userData))
-
-                case .failure(let error):
-                    // flag to sync again later
-                    handler(Result.failure(error))
-            }
-        }
     }
 
     func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
-        getChoiceAll(action) { getResult in
-            switch getResult {
-                case .success(let getResponse):
-                    switch action.campaignType {
-                        case .gdpr: self.reportGDPRAction(action, getResponse, handler)
-                        case .ccpa: self.reportCCPAAction(action, getResponse, handler)
-                        case .usnat: self.reportUSNatAction(action, getResponse, handler)
-                        default: break
-                    }
-
-                case .failure(let error):
-                    handler(Result.failure(error))
+        coreCoordinator.reportAction(
+            action: action.toCore()
+        ) { _, error in
+            if error != nil {
+                var coreError = SPError()
+                if let nsError = error as? NSError {
+                    coreError = SPError.convertCoreError(error: nsError)
+                }
+                coreError.coreError = error as? CoreSPError
+                handler(Result.failure(coreError))
+            } else {
+                self.updateStateFromCore(coreUserData: self.coreCoordinator.userData)
+                handler(Result.success(self.userData))
             }
         }
     }
 
-    func reportIdfaStatus(status: SPIDFAStatus, osVersion: String) {
-        var uuid = ""
-        var uuidType: SPCampaignType?
-        if let gdprUUID = gdprUUID, gdprUUID.isNotEmpty() {
-            uuid = gdprUUID
-            uuidType = .gdpr
-        }
-        if let ccpaUUID = ccpaUUID, ccpaUUID.isNotEmpty() {
-            uuid = ccpaUUID
-            uuidType = .ccpa
-        }
-        if let usNatUUID = usnatUUID, usNatUUID.isNotEmpty() {
-            uuid = usNatUUID
-            uuidType = .usnat
-        }
-        spClient.reportIdfaStatus(
-            propertyId: propertyId,
-            uuid: uuid,
-            uuidType: uuidType,
-            messageId: Int(state.ios14?.messageId ?? ""),
-            idfaStatus: status,
-            iosVersion: osVersion,
-            partitionUUID: state.ios14?.partitionUUID
-        )
+    func reportIdfaStatus(osVersion: String) {
+        coreCoordinator.reportIdfaStatus(osVersion: osVersion, requestUUID: UUID().uuidString) { _ in }
     }
 
     func logErrorMetrics(_ error: SPError) {
-        spClient.errorMetrics(
-            error,
-            propertyId: propertyId,
-            sdkVersion: SPConsentManager.VERSION,
-            OSVersion: deviceManager.osVersion,
-            deviceFamily: deviceManager.deviceFamily,
-            campaignType: error.campaignType
-        )
+        if let logError = error.coreError {
+            coreCoordinator.logError(error: logError) { _ in }
+        } else {
+            coreCoordinator.logError(error: error.toCore()) { _ in }
+        }
     }
 
-    func handleAddOrDeleteCustomConsentResponse(
-        _ result: Result<SPMobileCore.GDPRConsent, SPError>,
+    func updateAfterCustomConsent(
+        _ error: Error?,
         handler: @escaping GDPRCustomConsentHandler
     ) {
-        switch result {
-            case .success(let consents):
-                state.gdpr?.vendorGrants = consents.toNativeAsAddOrDeleteCustomConsentResponse().grants
-                storage.spState = state
-                handler(Result.success(state.gdpr ?? .empty()))
-
-            case .failure(let error):
-                handler(Result.failure((error)))
+        if error == nil {
+            updateStateFromCore(coreUserData: coreCoordinator.userData)
+            handler(Result.success(state.gdpr ?? .empty()))
+        } else {
+            var coreError = SPError()
+            if let nsError = error as? NSError {
+                coreError = SPError.convertCoreError(error: nsError)
+            }
+            coreError.coreError = error as? CoreSPError
+            handler(Result.failure(coreError))
         }
     }
 
@@ -1149,18 +372,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         legIntCategories: [String],
         handler: @escaping GDPRCustomConsentHandler
     ) {
-        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
-            handler(Result.failure(PostingConsentWithoutConsentUUID()))
-            return
-        }
-        spClient.deleteCustomConsentGDPR(
-            toConsentUUID: gdprUUID,
+        coreCoordinator.deleteCustomConsentGDPR(
             vendors: vendors,
             categories: categories,
-            legIntCategories: legIntCategories,
-            propertyId: propertyId
+            legIntCategories: legIntCategories
         ) {
-            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+            self.updateAfterCustomConsent($0, handler: handler)
         }
     }
 
@@ -1170,18 +387,12 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         legIntCategories: [String],
         handler: @escaping GDPRCustomConsentHandler
     ) {
-        guard let gdprUUID = self.gdprUUID, gdprUUID.isNotEmpty() else {
-            handler(Result.failure(PostingConsentWithoutConsentUUID()))
-        return
-        }
-        spClient.customConsentGDPR(
-            toConsentUUID: gdprUUID,
+        coreCoordinator.customConsentGDPR(
             vendors: vendors,
             categories: categories,
-            legIntCategories: legIntCategories,
-            propertyId: propertyId
+            legIntCategories: legIntCategories
         ) {
-            self.handleAddOrDeleteCustomConsentResponse($0, handler: handler)
+            self.updateAfterCustomConsent($0, handler: handler)
         }
     }
 

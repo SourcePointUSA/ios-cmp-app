@@ -272,10 +272,13 @@ extension XCUIElement {
         expect(self.hasFocus) == true
     }
 
-    func remotePress() {
+    func remotePress(extraMove: XCUIRemote.Button? = nil) {
         if waitForExistence(timeout: 5) {
             remotePressUntilFocus(direction: .down)
             remotePressUntilFocus(direction: .up)
+            if let move = extraMove {
+                remote.press(move)
+            }
             expectToHaveFocus()
             remote.press(.select)
         }

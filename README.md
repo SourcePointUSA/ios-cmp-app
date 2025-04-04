@@ -112,7 +112,6 @@ class ViewController: UIViewController {
 
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: SPMessageViewController) {
-        controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
 
@@ -251,9 +250,11 @@ The SDK will follow the same exact same lifecycle as with the 1st layer consent 
 
 ## Understanding the `SPDelegate` protocol (delegate methods)
 
-### onSPUIReady(\_ controller: UIViewController
+### onSPUIReady(\_ controller: UIViewController)
 
 The SDK will wrap the web message into a `UIViewController` and call the `onSPUIReady` when there is a message to be displayed.
+
+**_NOTE:_** `onSPUIReady` overrides `modalPresentationStyle` of the ViewController to be `.overFullScreen`. We identified some swiping gestures using other types of `modalPresentationStyle` causes the webview rendering the message to be unresponsive. We encourage you to keep using `.overFullScreen` until this issue is fixed.
 
 ### optional onSPNativeMessageReady(\_ message: SPNativeMessage)
 
