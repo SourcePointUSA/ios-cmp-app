@@ -1,6 +1,6 @@
 import Foundation
 // swiftlint:disable line_length
-@objcMembers public class SPError: NSError, LocalizedError {
+@objcMembers public class SPError: NSError, LocalizedError, @unchecked Sendable {
     public var spCode: String { "sp_metric_generic_sdk_error_\(code)" }
 
     override public var description: String { "Something went wrong in the SDK" }
@@ -29,7 +29,7 @@ import Foundation
     }
 }
 
-@objcMembers public class UnableToFindView: SPError {
+@objcMembers public class UnableToFindView: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_unable_to_find_view" }
     override public var description: String { "Unable to find view with id: (\(viewId))" }
 
@@ -44,12 +44,12 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class UnableToLoadJSReceiver: SPError {
+@objcMembers public class UnableToLoadJSReceiver: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_unable_to_load_jsreceiver" }
     override public var description: String { "Unable to load the JSReceiver.js resource." }
 }
 
-@objcMembers public class WebViewError: SPError {
+@objcMembers public class WebViewError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_web_view_error" }
     override public var description: String {
         "Something went wrong in the webview (code: \(errorCode ?? 0), title: \(title ?? "")"
@@ -69,7 +69,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class InvalidPropertyNameError: SPError {
+@objcMembers public class InvalidPropertyNameError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_property_name" }
     override public var description: String { message }
     let message: String
@@ -83,7 +83,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class MissingChildPmIdError: SPError {
+@objcMembers public class MissingChildPmIdError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_log_child_pm_id_custom_metrics" }
     override public var description: String { "SDK was called loadPrivacyManager for \(campaignType) campaign with useGroupPmIfAvailable = true. ID \(usedId) was used. CHILD PM ID is missing!!!" }
     let usedId: String
@@ -98,7 +98,7 @@ import Foundation
 }
 
 /// Invalid Rendering App (JSReceiver) event payloads
-@objcMembers public class InvalidEventPayloadError: SPError {
+@objcMembers public class InvalidEventPayloadError: SPError, @unchecked Sendable {
     override public var failureReason: String { description }
     override public var spCode: String { "sp_metric_invalid_event_payload" }
     override public var description: String {
@@ -117,11 +117,11 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class InvalidOnActionEventPayloadError: InvalidEventPayloadError {
+@objcMembers public class InvalidOnActionEventPayloadError: InvalidEventPayloadError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_onAction_event_payload" }
 }
 
-@objcMembers public class InvalidURLError: SPError {
+@objcMembers public class InvalidURLError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_url" }
     override public var description: String { "Could not parse URL: \(urlString)" }
 
@@ -136,7 +136,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class RenderingAppError: SPError {
+@objcMembers public class RenderingAppError: SPError, @unchecked Sendable {
     override public var spCode: String { renderingAppErrorCode ?? "sp_metric_rendering_app_error" }
     public let renderingAppErrorCode: String?
 
@@ -150,12 +150,12 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class RenderingAppTimeoutError: SPError {
+@objcMembers public class RenderingAppTimeoutError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_rendering_app_timeout" }
     override public var description: String { "Something went wrong while loading the Rendering App. onMessageReady was not called within the specified timeout." }
 }
 
-@objcMembers public class ClientRequestTimeoutError: SPError {
+@objcMembers public class ClientRequestTimeoutError: SPError, @unchecked Sendable {
     let apiSufix: InvalidResponsAPICode
     let timeoutValue: TimeInterval?
 
@@ -179,7 +179,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class GenericNetworkError: SPError {
+@objcMembers public class GenericNetworkError: SPError, @unchecked Sendable {
     let apiSufix: InvalidResponsAPICode
     let error: NSError
 
@@ -198,38 +198,38 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class UnableToInjectMessageIntoRenderingApp: SPError {
+@objcMembers public class UnableToInjectMessageIntoRenderingApp: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_unable_to_stringify_msgJSON" }
     override public var description: String { "The SDK could convert the message into JSON." }
 }
 
-@objcMembers public class InvalidResponseGetMessagesEndpointError: SPError {
+@objcMembers public class InvalidResponseGetMessagesEndpointError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_response_api\(InvalidResponsAPICode.MESSAGES.code)" }
     override public var description: String { return optionalDecription }
     var optionalDecription: String = "The SDK got an unexpected response from /get_messages endpoint"
 }
 
-@objcMembers public class InvalidResponseMessageGDPREndpointError: SPError {
+@objcMembers public class InvalidResponseMessageGDPREndpointError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_response_message_gdpr" }
     override public var description: String { "The SDK got an unexpected response from /message/gdpr endpoint" }
 }
 
-@objcMembers public class InvalidResponseMessageCCPAEndpointError: SPError {
+@objcMembers public class InvalidResponseMessageCCPAEndpointError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_response_message_ccpa" }
     override public var description: String { "The SDK got an unexpected response from /message/ccpa endpoint" }
 }
 
-@objcMembers public class InvalidResponseGDPRPMViewEndpointError: SPError {
+@objcMembers public class InvalidResponseGDPRPMViewEndpointError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_response_privacy_manager_view_gdpr" }
     override public var description: String { "The SDK got an unexpected response from /consent/tcfv2/privacy-manager/privacy-manager-view endpoint" }
 }
 
-@objcMembers public class InvalidResponseCCPAPMViewEndpointError: SPError {
+@objcMembers public class InvalidResponseCCPAPMViewEndpointError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_response_privacy_manager_view_ccpa" }
     override public var description: String { "The SDK got an unexpected response from /ccpa/privacy-manager/privacy-manager-view endpoint" }
 }
 
-@objcMembers public class PostingCustomConsentWithoutConsentUUID: SPError {
+@objcMembers public class PostingCustomConsentWithoutConsentUUID: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_consent_UUID" }
     override public var description: String {
         "Tried to post consent but the stored consentUUID is empty or nil. Make sure to call .loadMessage or .loadGDPRPrivacyManager or loadCCPAPrivacyManager."
@@ -238,25 +238,25 @@ import Foundation
     override public var campaignType: SPCampaignType { get { .gdpr } set {} }
 }
 
-@objcMembers public class InvalidResponseCustomError: SPError {
+@objcMembers public class InvalidResponseCustomError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_response_custom_consent" }
     override public var description: String { return optionalDecription }
     var optionalDecription: String = "The SDK got an unexpected response from /custom-consent endpoint"
 }
 
-@objcMembers public class InvalidResponseDeleteCustomError: SPError {
+@objcMembers public class InvalidResponseDeleteCustomError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_invalid_response_delete_custom_consent" }
     override public var description: String { return optionalDecription }
     var optionalDecription: String = "The SDK got an unexpected response from /consent/tcfv2/consent/v3/custom/ endpoint"
 }
 
 /// Network Errors
-@objcMembers public class NoInternetConnection: SPError {
+@objcMembers public class NoInternetConnection: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_no_internet_connection" }
     override public var description: String { "The device is not connected to the internet." }
 }
 
-@objcMembers public class WebViewConnectionTimeOutError: SPError {
+@objcMembers public class WebViewConnectionTimeOutError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_webview_connection_timeout" }
     override public var description: String { "Timed out when loading \(String(describing: url?.absoluteString)) after \(String(describing: timeout)) seconds" }
 
@@ -274,7 +274,7 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class InvalidResponseAPIError: SPError {
+@objcMembers public class InvalidResponseAPIError: SPError, @unchecked Sendable {
     override public var spCode: String {
         "sp_metric_invalid_response_api\(apiCode.code)_\(statusCode)"
     }
@@ -290,22 +290,22 @@ import Foundation
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
-@objcMembers public class ReportActionError: SPError {
+@objcMembers public class ReportActionError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_report_action_exception" }
     override public var description: String { return optionalDecription }
     var optionalDecription: String = "Unable to report action"
 }
 
 // swiftlint:disable:next type_name
-@objcMembers public class UnableToConvertConsentSnapshotIntoJsonError: SPError {
+@objcMembers public class UnableToConvertConsentSnapshotIntoJsonError: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_error_converting_consent_snapshot_to_json" }
 }
 
-@objcMembers public class InvalidJSONEncodeResult: SPError {
+@objcMembers public class InvalidJSONEncodeResult: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
 }
 
-@objcMembers public class InvalidReportActionEvent: SPError {
+@objcMembers public class InvalidReportActionEvent: SPError, @unchecked Sendable {
     override public var spCode: String { "sp_metric_error_invalid_JSON_encode_result" }
 }
 
