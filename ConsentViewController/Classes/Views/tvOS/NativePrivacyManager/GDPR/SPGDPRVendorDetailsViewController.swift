@@ -122,7 +122,8 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     func loadVendorDataText() {
         if vendor?.iabDataCategories?.isEmpty ?? true {
-            removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 1)
+            categorySlider.isHidden = true
+            addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
             return
         }
         var labels = [String()]
