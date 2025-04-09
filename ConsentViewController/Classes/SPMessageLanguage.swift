@@ -66,7 +66,7 @@ import Foundation
         case .English:
             return "EN"
         case .Basque:
-            return "EUS"
+            return "EU"
         case .Bosnian:
             return "BS"
         case .Bulgarian:
@@ -158,7 +158,7 @@ import Foundation
             self = .English
         case "AR":
             self = .Arabic
-        case "EUS":
+        case "EU":
             self = .Basque
         case "BS":
             self = .Bosnian
