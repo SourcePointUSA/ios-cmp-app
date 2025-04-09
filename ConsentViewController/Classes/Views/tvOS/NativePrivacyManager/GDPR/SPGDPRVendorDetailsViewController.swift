@@ -73,6 +73,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             descriptionTextView.isHidden=true
         }
         loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
+        loadLabelText(forComponentId: "PrivacyPolicyText", label: PolicyQrCodeLabel)
         loadLabelText(forComponentId: "QrInstructions", label: ToScanLabel)
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "OnButton", button: onButton)
