@@ -739,7 +739,7 @@ Upon completion, the sdk will call either `onConsentReady` in case of success or
 
 ### 1. How big is the SDK?
 
-The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `500 Kb`.
+The library adds approximately 2.8 MB to your app’s final binary (measured using Xcode’s Archive in Release mode on arm64). Notice this number may vary depending on your app's minimum iOS deployment target and whether you build it for Debug or Release.
 
 ### 2. What's the lowest iOS version supported?
 
