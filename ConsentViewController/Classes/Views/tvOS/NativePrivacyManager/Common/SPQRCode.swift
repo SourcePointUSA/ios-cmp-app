@@ -7,7 +7,7 @@
 
 import UIKit
 
-class QRCode: UIImage {
+class QRCode: UIImage, @unchecked Sendable {
     convenience init?(from string: String, scale: Int = 1) {
         let data = string.data(using: String.Encoding.ascii)
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
