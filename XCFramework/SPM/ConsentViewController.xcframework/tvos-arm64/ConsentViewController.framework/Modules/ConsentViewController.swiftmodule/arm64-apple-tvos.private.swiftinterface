@@ -191,28 +191,29 @@ extension Foundation.URLSessionDataTask {
   }
 }
 @objc public enum SPMessageLanguage : Swift.Int, Swift.Codable {
+  case Albanian
   case Arabic
   case Basque
-  case Bosnian
-  case BrowserDefault
-  case English
+  case Bosnian_Latin
   case Bulgarian
   case Catalan
-  case Chinese
+  case Chinese_Simplified
+  case Chinese_Traditional
   case Croatian
   case Czech
   case Danish
   case Dutch
+  case English
   case Estonian
   case Finnish
   case French
-  case Gaelic
   case Galician
+  case Georgian
   case German
   case Greek
   case Hebrew
+  case Hindi
   case Hungarian
-  case Icelandic
   case Indonesian
   case Italian
   case Japanese
@@ -224,17 +225,24 @@ extension Foundation.URLSessionDataTask {
   case Maltese
   case Norwegian
   case Polish
-  case Portuguese
+  case Portuguese_Brazil
+  case Portuguese_Portugal
   case Romanian
   case Russian
   case Serbian_Cyrillic
   case Serbian_Latin
-  case Slovakian
+  case Slovak
   case Slovenian
   case Spanish
+  case Swahili
   case Swedish
   case Tagalog
+  case Thai
   case Turkish
+  case Ukrainian
+  case Vietnamese
+  case Welsh
+  case BrowserDefault
   public typealias RawValue = Swift.String
   public var rawValue: ConsentViewController.SPMessageLanguage.RawValue {
     get

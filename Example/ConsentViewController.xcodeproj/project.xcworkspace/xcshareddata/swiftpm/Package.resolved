@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SourcePointUSA/ios-cmp-app",
       "state" : {
-        "branch" : "develop",
-        "revision" : "db28070d163faad253cc188cc4fbd1db5ca804f5"
+        "branch" : "fix_spm_integration",
+        "revision" : "335c0a71195dd5e81be592ddee21d22e629bf7a6"
       }
     }
   ],
