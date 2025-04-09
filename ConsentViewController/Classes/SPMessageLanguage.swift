@@ -5,7 +5,7 @@
 //  Created by Vilas on 01/12/20.
 //
 
-// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable cyclomatic_complexity function_body_length
 
 import Foundation
 
@@ -182,4 +182,4 @@ import Foundation
     }
 }
 
-// swiftlint:enable cyclomatic_complexity
+// swiftlint:enable cyclomatic_complexity function_body_length
