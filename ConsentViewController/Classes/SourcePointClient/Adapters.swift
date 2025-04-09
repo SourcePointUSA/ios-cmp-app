@@ -398,7 +398,7 @@ extension SPAction {
 
 extension SPMessageLanguage {
     func toCore() -> SPMobileCore.SPMessageLanguage {
-        return SPMobileCore.SPMessageLanguage.entries.first { $0.shortCode == self.rawValue} ?? SPMobileCore.SPMessageLanguage.english
+        SPMobileCore.SPMessageLanguage.entries.first { $0.shortCode.lowercased() == rawValue.lowercased() } ?? SPMobileCore.SPMessageLanguage.english
     }
 }
 
