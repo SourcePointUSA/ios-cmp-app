@@ -229,7 +229,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
             cell.isOn = nil
         }
         cell.selectable = true
-        cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
+        cell.isCustom = category.type != .IAB && category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
         cell.loadUI()
         categoryDescription[category._id] = category.friendlyDescription
