@@ -16,7 +16,7 @@
       "location" : "https://github.com/SourcePointUSA/ios-cmp-app",
       "state" : {
         "branch" : "fix_spm_integration",
-        "revision" : "33a4ba1e050b0da575200ff3b4fd79573a050a10"
+        "revision" : "ef8cf06ae8ce1ba42552d900005b9cce984672a6"
       }
     }
   ],
