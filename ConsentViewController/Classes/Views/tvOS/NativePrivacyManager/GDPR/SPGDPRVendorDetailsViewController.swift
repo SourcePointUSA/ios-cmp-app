@@ -68,7 +68,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         setHeader()
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description, bounces: false)
         backgroundForV14(slider: categorySlider, backgroundHex: "#d8d9dd", activeBackground: "#777a7e")
-        loadSliderSegmentFont(style: SPNativeStyle(), slider: categorySlider)
+        loadSliderButtonFromNativeTexts(firstSegmentForComponentId: "PurposesHeaderText", secondSegmentForComponentId: "DataCategoriesHeaderText", slider: categorySlider)
         if vendor?.description==nil {
             descriptionTextView.isHidden=true
         }
