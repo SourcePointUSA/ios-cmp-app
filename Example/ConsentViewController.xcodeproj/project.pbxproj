@@ -5898,7 +5898,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app";
 			requirement = {
-				branch = develop;
+				branch = fix_spm_integration;
 				kind = branch;
 			};
 		};
