@@ -5,6 +5,8 @@
 //  Created by Vilas on 01/12/20.
 //
 
+// swiftlint:disable cyclomatic_complexity
+
 import Foundation
 
 /// Languages supported by Message and PM
@@ -179,3 +181,5 @@ import Foundation
         }
     }
 }
+
+// swiftlint:enable cyclomatic_complexity
