@@ -11,16 +11,19 @@ import UIKit
 class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
+        let definition: SPNativeText?
         var contentConsent: [GDPRCategory]
         var contentLegIntCategory: [GDPRCategory]
 
         init? (
             header: SPNativeText?,
+            definition: SPNativeText?,
             contentConsent: [GDPRCategory]? = nil,
             contentLegIntCategory: [GDPRCategory]? = nil,
             contentFeature: [GDPRCategory]? = nil
         ) {
             self.header = header
+            self.definition = definition
             self.contentConsent = contentConsent ?? []
             self.contentLegIntCategory = contentLegIntCategory ?? []
             if contentFeature != nil {
@@ -44,17 +47,21 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var sections: [Section] {[
         Section(
             header: viewData.byId("PurposesHeader") as? SPNativeText,
+            definition: viewData.byId("PurposesDefinition") as? SPNativeText,
             contentConsent: userConsentCategories,
             contentLegIntCategory: legIntCategories),
         Section(
             header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
+            definition: viewData.byId("SpecialPurposesDefinition") as? SPNativeText,
             contentConsent: Array(consentsSnapshot.specialPurposes),
             contentLegIntCategory: legIntSpecialPurposes),
         Section(
             header: viewData.byId("FeaturesHeader") as? SPNativeText,
+            definition: viewData.byId("FeaturesDefinition") as? SPNativeText,
             contentFeature: Array(consentsSnapshot.features)),
         Section(
             header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText,
+            definition: viewData.byId("SpecialFeaturesDefinition") as? SPNativeText,
             contentFeature: Array(consentsSnapshot.specialFeatures))
     ].compactMap { $0 }}
 
@@ -181,9 +188,10 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionComponent = sections[section].header else { return nil }
-
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        loadLabelText(forComponent: sectionComponent, label: label)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        loadLabelText(forComponent: sectionComponent, addTextForComponent: sections[section].definition, label: label)
         label.isHidden = displayingLegIntCategories ?
             sections[section].contentLegIntCategory.isEmpty : sections[section].contentConsent.isEmpty
         return label
