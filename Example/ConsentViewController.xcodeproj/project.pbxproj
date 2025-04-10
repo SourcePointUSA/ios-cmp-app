@@ -138,6 +138,8 @@
 		820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08B12B6021A6004E77E8 /* Foundation.framework */; };
 		820EF1792A0D28F9009D9941 /* After.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF1782A0D28F9009D9941 /* After.swift */; };
 		820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */; };
+		8212056C2DA7BDC9003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
+		8212056D2DA7BDD0003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
 		8216E2602BB31D8D006FEF11 /* Pods_TVOSExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615BBC646752BDBE2B3F2E7C /* Pods_TVOSExampleAppUITests.framework */; };
 		8216E2612BB31D8D006FEF11 /* Pods_TVOSExampleAppUITests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 615BBC646752BDBE2B3F2E7C /* Pods_TVOSExampleAppUITests.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -182,8 +184,6 @@
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
 		829BD47B2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
 		829BD47C2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
-		829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
-		829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
 		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* SPConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* SPConsentSpec.swift */; };
 		829E851729FA9A6500BE5E65 /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829E851629FA9A6500BE5E65 /* Statuses.swift */; };
@@ -852,6 +852,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8212056C2DA7BDC9003A09A3 /* SPMobileCore.xcframework in Frameworks */,
 				820B08AE2B602177004E77E8 /* Foundation.framework in Frameworks */,
 				820B08B02B60217E004E77E8 /* UIKit.framework in Frameworks */,
 			);
@@ -861,6 +862,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8212056D2DA7BDD0003A09A3 /* SPMobileCore.xcframework in Frameworks */,
 				82CD6F852B59CC3600CAD663 /* Down in Frameworks */,
 				820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */,
 			);
@@ -3665,7 +3667,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F3E2B59CB0600CAD663 /* CampaignConsent.swift in Sources */,
 				82CD6F3F2B59CB0600CAD663 /* ConsentStatus.swift in Sources */,
 				82CD6F402B59CB0600CAD663 /* SPCCPAConsent.swift in Sources */,
@@ -3727,7 +3728,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F1F2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift in Sources */,
 				82CD6EDF2B59CA2C00CAD663 /* SPGPPConfig.swift in Sources */,
 				82CD6F272B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift in Sources */,
