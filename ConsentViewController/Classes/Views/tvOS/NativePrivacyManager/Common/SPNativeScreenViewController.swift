@@ -212,7 +212,7 @@ class FocusGuideDebugView: UIView {
         if let text = text {
             label.attributedText = text.htmlToAttributedString
         } else {
-            let addText = addComponent?.settings.text != nil ? (addComponent?.settings.text)! : ""
+            let addText = addComponent?.settings.text != nil ? "<br>"+(addComponent?.settings.text)! : ""
             label.attributedText = (component.settings.text + addText).htmlToAttributedString
         }
         label.textColor = UIColor(hexString: style.font.color)
