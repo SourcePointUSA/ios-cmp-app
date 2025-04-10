@@ -140,8 +140,8 @@
 		820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08B12B6021A6004E77E8 /* Foundation.framework */; };
 		820EF1792A0D28F9009D9941 /* After.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF1782A0D28F9009D9941 /* After.swift */; };
 		820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */; };
-		8212056E2DA7C599003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
-		8212056F2DA7C5C7003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
+		821205792DA7D365003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
+		8212057A2DA7D370003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
 		8216F2EE29FAB4B400133C69 /* AuthExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2ED29FAB4B400133C69 /* AuthExampleApp.swift */; };
 		8216F2F029FAB60400133C69 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2EF29FAB60400133C69 /* CustomMatchers.swift */; };
@@ -619,6 +619,10 @@
 		820B08B12B6021A6004E77E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS17.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		820EF1782A0D28F9009D9941 /* After.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = After.swift; path = Helpers/After.swift; sourceTree = "<group>"; };
 		820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageUIDelegateMock.swift; sourceTree = "<group>"; };
+		821205702DA7C736003A09A3 /* SPMobileCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SPMobileCore.framework; path = "../../mobile-core/SPMobileCore.xcframework/tvos-arm64/SPMobileCore.framework"; sourceTree = "<group>"; };
+		821205722DA7C761003A09A3 /* SPMobileCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SPMobileCore.framework; path = "../../mobile-core/SPMobileCore.xcframework/tvos-arm64_x86_64-simulator/SPMobileCore.framework"; sourceTree = "<group>"; };
+		821205742DA7C771003A09A3 /* SPMobileCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SPMobileCore.framework; path = "../../mobile-core/SPMobileCore.xcframework/ios-arm64/SPMobileCore.framework"; sourceTree = "<group>"; };
+		821205762DA7C785003A09A3 /* SPMobileCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SPMobileCore.framework; path = "../../mobile-core/SPMobileCore.xcframework/ios-arm64_x86_64-simulator/SPMobileCore.framework"; sourceTree = "<group>"; };
 		8214B277249CC13B00167BFE /* SPGDPRExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPGDPRExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGDPRExampleAppUITests.swift; sourceTree = "<group>"; };
 		8214B27B249CC13B00167BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -821,7 +825,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8212056E2DA7C599003A09A3 /* SPMobileCore.xcframework in Frameworks */,
+				821205792DA7D365003A09A3 /* SPMobileCore.xcframework in Frameworks */,
 				820B08AE2B602177004E77E8 /* Foundation.framework in Frameworks */,
 				820B08B02B60217E004E77E8 /* UIKit.framework in Frameworks */,
 			);
@@ -831,7 +835,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8212056F2DA7C5C7003A09A3 /* SPMobileCore.xcframework in Frameworks */,
+				8212057A2DA7D370003A09A3 /* SPMobileCore.xcframework in Frameworks */,
 				82CD6F852B59CC3600CAD663 /* Down in Frameworks */,
 				820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */,
 			);
@@ -2070,6 +2074,10 @@
 		EEE3CDAB8AFE80647B1E565B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				821205702DA7C736003A09A3 /* SPMobileCore.framework */,
+				821205722DA7C761003A09A3 /* SPMobileCore.framework */,
+				821205742DA7C771003A09A3 /* SPMobileCore.framework */,
+				821205762DA7C785003A09A3 /* SPMobileCore.framework */,
 				8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */,
 				8216E2632BB32B74006FEF11 /* ConsentViewController.framework */,
 				820B08B12B6021A6004E77E8 /* Foundation.framework */,
@@ -4224,7 +4232,6 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4274,7 +4281,6 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4325,7 +4331,7 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4373,7 +4379,7 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
 				PRODUCT_NAME = ConsentViewController;
 				PROVISIONING_PROFILE_SPECIFIER = "";
