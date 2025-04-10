@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 import PackageDescription
 
 
@@ -26,8 +26,9 @@ let package = Package(
             name: "ConsentViewControllerWrapper",
             dependencies: [
                 "ConsentViewController",
-                .product(name: "SPMobileCore", package: "SPMobileCore")
-            ]
+                .product(name: "SPMobileCore", package: "mobile-core")
+            ],
+            path: "./Wrapper",
         )
     ]
 )
