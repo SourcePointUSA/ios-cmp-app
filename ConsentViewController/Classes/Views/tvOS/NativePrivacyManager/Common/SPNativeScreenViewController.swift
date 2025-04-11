@@ -206,7 +206,13 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadLabelText(forComponent component: SPNativeText, addTextForComponent addComponent: SPNativeText? = nil, labelText text: String? = nil, label: UILabel) -> UILabel {
+    func loadLabelText(
+        forComponent component: SPNativeText,
+        addTextForComponent addComponent: SPNativeText? = nil,
+        labelText text: String? = nil,
+        longText: Bool = false,
+        label: UILabel
+    ) -> UILabel {
         let style = component.settings.style
         label.text = ""
         if let text = text {
@@ -217,13 +223,16 @@ class FocusGuideDebugView: UIView {
         }
         label.textColor = UIColor(hexString: style.font.color)
         label.font = UIFont(from: style.font)
+        if longText {
+            label.numberOfLines = 0
+        }
         return label
     }
 
     @discardableResult
-    func loadLabelText(forComponentId id: String, labelText text: String? = nil, label: UILabel) -> UILabel {
+    func loadLabelText(forComponentId id: String, labelText text: String? = nil, longText: Bool = false, label: UILabel) -> UILabel {
         if let textDetails = components.first(where: { $0.id == id }) as? SPNativeText {
-            loadLabelText(forComponent: textDetails, labelText: text, label: label)
+            loadLabelText(forComponent: textDetails, labelText: text, longText: longText, label: label)
         }
         return label
     }
