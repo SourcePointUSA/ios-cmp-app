@@ -38,7 +38,6 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var categories: [GDPRCategory] = []
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
     var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
-    var legIntSpecialPurposes: [GDPRCategory] { consentsSnapshot.specialPurposes.filter { $0.disclosureOnly == true } }
     var categoryDescription = [String: String]()
 
     var sections: [Section] {[
@@ -49,7 +48,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         Section(
             header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
             contentConsent: Array(consentsSnapshot.specialPurposes),
-            contentLegIntCategory: legIntSpecialPurposes),
+            contentLegIntCategory: Array(consentsSnapshot.specialPurposes)),
         Section(
             header: viewData.byId("FeaturesHeader") as? SPNativeText,
             contentFeature: Array(consentsSnapshot.features)),
