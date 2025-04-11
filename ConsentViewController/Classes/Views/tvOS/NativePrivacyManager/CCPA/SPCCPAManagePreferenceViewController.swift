@@ -11,11 +11,16 @@ import UIKit
 class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
+        let definition: SPNativeText?
         let content: [CCPACategory]
 
-        init? (header: SPNativeText?, content: [CCPACategory]?) {
+        init? (header: SPNativeText?,
+               definition: SPNativeText?,
+               content: [CCPACategory]?
+        ) {
             if content == nil || content?.isEmpty == true { return nil }
             self.header = header
+            self.definition = definition
             self.content = content! // swiftlint:disable:this force_unwrapping
         }
     }
@@ -30,7 +35,11 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     var categoryDescription = [String: String]()
 
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: categories)
+        Section(
+            header: viewData.byId("PurposesHeader") as? SPNativeText,
+            definition: viewData.byId("PurposesDefinition") as? SPNativeText,
+            content: categories
+        )
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
@@ -112,7 +121,9 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
         guard let sectionComponent = sections[section].header else { return nil }
 
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        loadLabelText(forComponent: sectionComponent, label: label)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        loadLabelText(forComponent: sectionComponent, addTextForComponent: sections[section].definition, label: label)
         return label
     }
 

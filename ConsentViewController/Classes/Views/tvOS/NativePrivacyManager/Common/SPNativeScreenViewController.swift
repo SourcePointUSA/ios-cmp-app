@@ -206,13 +206,14 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadLabelText(forComponent component: SPNativeText, labelText text: String? = nil, label: UILabel) -> UILabel {
+    func loadLabelText(forComponent component: SPNativeText, addTextForComponent addComponent: SPNativeText? = nil, labelText text: String? = nil, label: UILabel) -> UILabel {
         let style = component.settings.style
         label.text = ""
         if let text = text {
             label.attributedText = text.htmlToAttributedString
         } else {
-            label.attributedText = component.settings.text.htmlToAttributedString
+            let addText = addComponent?.settings.text != nil ? "<br>"+(addComponent?.settings.text)! : ""
+            label.attributedText = (component.settings.text + addText).htmlToAttributedString
         }
         label.textColor = UIColor(hexString: style.font.color)
         label.font = UIFont(from: style.font)
