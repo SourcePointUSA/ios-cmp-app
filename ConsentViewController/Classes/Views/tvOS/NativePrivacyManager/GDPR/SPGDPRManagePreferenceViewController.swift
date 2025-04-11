@@ -41,7 +41,6 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var categories: [GDPRCategory] = []
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
     var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
-    var legIntSpecialPurposes: [GDPRCategory] { consentsSnapshot.specialPurposes.filter { $0.disclosureOnly == true } }
     var categoryDescription = [String: String]()
 
     var sections: [Section] {[
@@ -54,7 +53,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
             definition: viewData.byId("SpecialPurposesDefinition") as? SPNativeText,
             contentConsent: Array(consentsSnapshot.specialPurposes),
-            contentLegIntCategory: legIntSpecialPurposes),
+            contentLegIntCategory: Array(consentsSnapshot.specialPurposes)),
         Section(
             header: viewData.byId("FeaturesHeader") as? SPNativeText,
             definition: viewData.byId("FeaturesDefinition") as? SPNativeText,
@@ -237,7 +236,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
             cell.isOn = nil
         }
         cell.selectable = true
-        cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
+        cell.isCustom = category.type != .IAB && category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
         cell.loadUI()
         categoryDescription[category._id] = category.friendlyDescription
