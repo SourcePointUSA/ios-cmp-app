@@ -66,13 +66,13 @@ class SPConsentManagerSpec: QuickSpec {
             describe("gdpr") {
                 it("build URL with the right parameters") {
                     expect(manager.buildGDPRPmUrl(usedId: usedId, uuid: nil)?.absoluteString)
-                        .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                        .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=es&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
                 }
 
                 describe("when there's uuid") {
                     it("includes the uuid query param") {
                         expect(manager.buildGDPRPmUrl(usedId: usedId, uuid: "gdprUUID")?.absoluteString)
-                            .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=ES&consentUUID=gdprUUID&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                            .to(equal("https://\(self.wrapperHost)/privacy-manager/index.html?consentLanguage=es&consentUUID=gdprUUID&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
                     }
                 }
             }
@@ -80,13 +80,13 @@ class SPConsentManagerSpec: QuickSpec {
             describe("ccpa") {
                 it("build URL with the right parameters") {
                     expect(manager.buildCCPAPmUrl(usedId: "1", uuid: nil)?.absoluteString)
-                        .to(equal("https://\(self.wrapperHost)/ccpa_pm/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                        .to(equal("https://\(self.wrapperHost)/ccpa_pm/index.html?consentLanguage=es&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
                 }
 
                 describe("when there's uuid") {
                     it("includes the uuid query param") {
                         expect(manager.buildCCPAPmUrl(usedId: usedId, uuid: "ccpaUUID")?.absoluteString)
-                            .to(equal("https://\(self.wrapperHost)/ccpa_pm/index.html?ccpaUUID=ccpaUUID&consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                            .to(equal("https://\(self.wrapperHost)/ccpa_pm/index.html?ccpaUUID=ccpaUUID&consentLanguage=es&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
                     }
                 }
             }
@@ -94,13 +94,13 @@ class SPConsentManagerSpec: QuickSpec {
             describe("usnat") {
                 it("build URL with the right parameters") {
                     expect(manager.buildUSNatPmUrl(usedId: "1", uuid: nil)?.absoluteString)
-                        .to(equal("https://\(self.wrapperHost)/us_pm/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
+                        .to(equal("https://\(self.wrapperHost)/us_pm/index.html?consentLanguage=es&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)"))
                 }
 
                 describe("when there's uuid") {
                     it("includes the uuid query param") {
                         expect(manager.buildUSNatPmUrl(usedId: usedId, uuid: "usnatUUID")?.absoluteString)
-                            .to(equal("https://\(self.wrapperHost)/us_pm/index.html?consentLanguage=ES&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)&uuid=usnatUUID"))
+                            .to(equal("https://\(self.wrapperHost)/us_pm/index.html?consentLanguage=es&idfaStatus=\(idfaStatus)&message_id=1&pmTab=&site_id=\(propertyId)&uuid=usnatUUID"))
                     }
                 }
             }

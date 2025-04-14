@@ -36,7 +36,7 @@ struct Constants {
         }
         struct StandartStyle {
             public var backgroundColor: String = "#575757"
-            public var activeBackgroundColor: String = "#ffffff"
+            public var activeBackgroundColor: String = "#707070"
             public var onFocusTextColor: String = "#000000"
             public var onUnfocusTextColor: String = "#ffffff"
             public var onFocusBackgroundColor: String = "#ffffff"

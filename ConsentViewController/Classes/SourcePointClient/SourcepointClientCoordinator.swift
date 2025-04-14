@@ -142,7 +142,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         accountId: Int32(accountId),
         propertyId: Int32(propertyId),
         propertyName: propertyName.coreValue,
-        campaigns: campaigns.toCore()
+        campaigns: campaigns.toCore(),
+        timeoutInSeconds: Int32(5)
     )
     let coreStorage: SPMobileCore.Repository
     var storage: SPLocalStorage
@@ -204,6 +205,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             propertyName: propertyName.coreValue,
             campaigns: campaigns.toCore(),
             repository: coreStorage,
+            timeoutInSeconds: Int32(5),
             spClient: coreClient,
             authId: nil,
             state: {

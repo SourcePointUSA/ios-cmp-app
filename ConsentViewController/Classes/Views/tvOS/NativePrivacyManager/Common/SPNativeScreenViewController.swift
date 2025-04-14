@@ -206,13 +206,14 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadLabelText(forComponent component: SPNativeText, labelText text: String? = nil, label: UILabel) -> UILabel {
+    func loadLabelText(forComponent component: SPNativeText, addTextForComponent addComponent: SPNativeText? = nil, labelText text: String? = nil, label: UILabel) -> UILabel {
         let style = component.settings.style
         label.text = ""
         if let text = text {
             label.attributedText = text.htmlToAttributedString
         } else {
-            label.attributedText = component.settings.text.htmlToAttributedString
+            let addText = addComponent?.settings.text != nil ? "<br>"+(addComponent?.settings.text)! : ""
+            label.attributedText = (component.settings.text + addText).htmlToAttributedString
         }
         label.textColor = UIColor(hexString: style.font.color)
         label.font = UIFont(from: style.font)
@@ -257,6 +258,22 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
+    func loadSliderButtonFromNativeTexts(firstSegmentForComponentId firstId: String, secondSegmentForComponentId secondId: String, slider: UISegmentedControl) -> UISegmentedControl {
+        if let sliderDetails = components.first(where: { $0.id == firstId }) as? SPNativeText {
+            slider.setTitle(sliderDetails.settings.text, forSegmentAt: 0)
+            let style = sliderDetails.settings.style
+            if #available(tvOS 14.0, *) {
+                backgroundForV14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
+            }
+            loadSliderSegmentFont(style: style, slider: slider)
+        }
+        if let sliderDetails = components.first(where: { $0.id == secondId }) as? SPNativeText {
+            slider.setTitle(sliderDetails.settings.text, forSegmentAt: 1)
+        }
+        return slider
+    }
+
+    @discardableResult
     func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == id }) as? SPNativeSlider {
             slider.setTitle(sliderDetails.settings.leftText, forSegmentAt: 0)
@@ -267,7 +284,6 @@ class FocusGuideDebugView: UIView {
             }
             loadSliderSegmentFont(style: style, slider: slider)
         }
-
         return slider
     }
 

@@ -4,6 +4,7 @@
 disabled_rules:
   - switch_case_alignment
   - void_function_in_ternary
+  - vertical_whitespace_between_cases
 analyzer_rules:
   - unused_declaration
   - unused_import

@@ -235,8 +235,7 @@ import WebKit
         if
             let messageBody = try? SPJson(message.body),
             let eventName = RenderingAppEvents(rawValue: messageBody["name"]?.stringValue ?? ""),
-            let body = messageBody["body"]
-        {
+            let body = messageBody["body"] {
             OSLogger.standard.debug("RenderingApp - event: \(eventName.rawValue), payload: \(body)")
             switch eventName {
             case .readyForPreload: handleMessagePreload()
