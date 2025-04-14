@@ -15,12 +15,8 @@
     "tag": "7.8.0"
   },
   "swift_versions": "5.1",
+  "vendored_frameworks": "ConsentViewController/Frameworks/SPMobileCore.xcframework",
   "source_files": "ConsentViewController/Classes/**/*",
-  "dependencies": {
-    "SPMobileCore": [
-      "0.1.4"
-    ]
-  },
   "platforms": {
     "ios": "10.0",
     "tvos": "12.0"

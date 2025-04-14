@@ -38,6 +38,7 @@ archive() {
         -archivePath "$archivePath" \
         -parallelizeTargets \
         -jobs 8 \
+        OTHER_LDFLAGS="$linkerFlags" \
         OTHER_SWIFT_FLAGS="-no-verify-emitted-module-interface" \
         SKIP_INSTALL=NO \
         BUILD_LIBRARY_FOR_DISTRIBUTION=YES > ./build/build.log 2>&1
@@ -47,13 +48,13 @@ archive() {
 
 ########### Creates the binaries which are distributed standalone
 echo "Generating Standalone XCFrameworks"
-archive "_Pods.xcodeproj" "ConsentViewController-iOS" "generic/platform=iOS" "./build/ConsentViewController-iOS.framework-iOS.xcarchive"
+archive "_Pods.xcodeproj" "ConsentViewController-iOS" "generic/platform=iOS" "./build/ConsentViewController-iOS.framework-iOS.xcarchive" "-force_load '../../ConsentViewController/Frameworks/SPMobileCore.xcframework/ios-arm64/SPMobileCore.framework/SPMobileCore'"
 
-archive "_Pods.xcodeproj" "ConsentViewController-iOS" "generic/platform=iOS Simulator" "./build/ConsentViewController-iOS.framework-iphonesimulator.xcarchive"
+archive "_Pods.xcodeproj" "ConsentViewController-iOS" "generic/platform=iOS Simulator" "./build/ConsentViewController-iOS.framework-iphonesimulator.xcarchive" "-force_load '../../ConsentViewController/Frameworks/SPMobileCore.xcframework/ios-arm64_x86_64-simulator/SPMobileCore.framework/SPMobileCore'"
 
-archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS Simulator" "./build/ConsentViewController-tvOS.framework-tvossimulator.xcarchive"
+archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS Simulator" "./build/ConsentViewController-tvOS.framework-tvossimulator.xcarchive" "-force_load '../../ConsentViewController/Frameworks/SPMobileCore.xcframework/tvos-arm64_x86_64-simulator/SPMobileCore.framework/SPMobileCore'"
 
-archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS" "./build/ConsentViewController-tvOS.framework-tvOS.xcarchive"
+archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS" "./build/ConsentViewController-tvOS.framework-tvOS.xcarchive" "-force_load '../../ConsentViewController/Frameworks/SPMobileCore.xcframework/tvos-arm64/SPMobileCore.framework/SPMobileCore'"
 
 rm -r ./XCFramework/ConsentViewController.xcframework &> ./build/build.log 2>&1
 rm -r ./XCFramework/ConsentViewController.xcframework.zip &> ./build/build.log 2>&1
