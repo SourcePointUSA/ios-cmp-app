@@ -1,0 +1,11 @@
+framework module ConsentViewController {
+  umbrella header "ConsentViewController-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module ConsentViewController.Swift {
+  header "ConsentViewController-Swift.h"
+  requires objc
+}

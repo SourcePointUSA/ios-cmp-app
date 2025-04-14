@@ -53,7 +53,7 @@ archive "_Pods.xcodeproj" "ConsentViewController-iOS" "generic/platform=iOS Simu
 
 archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS Simulator" "./build/ConsentViewController-tvOS.framework-tvossimulator.xcarchive"
 
-archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS" "./build/ConsentViewController-tvOS.framework.xcarchive"
+archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS" "./build/ConsentViewController-tvOS.framework-tvOS.xcarchive"
 
 rm -r ./XCFramework/ConsentViewController.xcframework &> ./build/build.log 2>&1
 rm -r ./XCFramework/ConsentViewController.xcframework.zip &> ./build/build.log 2>&1
@@ -77,33 +77,33 @@ echo "✅"
 echo "XCFrameworks created on: ./XCFramework/ConsentViewController.xcframework.zip"
 
 
-# ########### Creates the binaries which are distributed via SPM.
-echo "Generating XCFrameworks for SPM"
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS" "./build/SPM/ConsentViewController-iOS"
+# # ########### Creates the binaries which are distributed via SPM.
+# echo "Generating XCFrameworks for SPM"
+# archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS" "./build/SPM/ConsentViewController-iOS"
 
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS Simulator" "./build/SPM/ConsentViewController-iOS-simulator"
+# archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS Simulator" "./build/SPM/ConsentViewController-iOS-simulator"
 
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS" "./build/SPM/ConsentViewController-tvOS"
+# archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS" "./build/SPM/ConsentViewController-tvOS"
 
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS Simulator" "./build/SPM/ConsentViewController-tvOS-simulator"
+# archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS Simulator" "./build/SPM/ConsentViewController-tvOS-simulator"
 
-echo "Archiving succeeded."
-printf "Creating XCFrameworks"
+# echo "Archiving succeeded."
+# printf "Creating XCFrameworks"
 
-rm -r ./XCFramework/SPM/ConsentViewController.xcframework &> ./build/build.log 2>&1
-rm -r ./XCFramework/SPM/ConsentViewController.xcframework.zip &> ./build/build.log 2>&1
+# rm -r ./XCFramework/SPM/ConsentViewController.xcframework &> ./build/build.log 2>&1
+# rm -r ./XCFramework/SPM/ConsentViewController.xcframework.zip &> ./build/build.log 2>&1
 
-xcodebuild -create-xcframework \
-    -framework './build/SPM/ConsentViewController-iOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
-    -framework './build/SPM/ConsentViewController-iOS-simulator.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
-    -framework './build/SPM/ConsentViewController-tvOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
-    -framework './build/SPM/ConsentViewController-tvOS-simulator.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
-    -output './XCFramework/SPM/ConsentViewController.xcframework' &> ./build/build.log 2>&1
+# xcodebuild -create-xcframework \
+#     -framework './build/SPM/ConsentViewController-iOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
+#     -framework './build/SPM/ConsentViewController-iOS-simulator.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
+#     -framework './build/SPM/ConsentViewController-tvOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
+#     -framework './build/SPM/ConsentViewController-tvOS-simulator.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
+#     -output './XCFramework/SPM/ConsentViewController.xcframework' &> ./build/build.log 2>&1
 
-echo "✅"
-printf "Zipping XCFramework"
+# echo "✅"
+# printf "Zipping XCFramework"
 
-zip -r ./XCFramework/SPM/ConsentViewController.xcframework.zip ./XCFramework/SPM/ConsentViewController.xcframework &> ./build/build.log 2>&1
+# zip -r ./XCFramework/SPM/ConsentViewController.xcframework.zip ./XCFramework/SPM/ConsentViewController.xcframework &> ./build/build.log 2>&1
 
-echo "✅"
-echo "SPM XCFrameworks created on: ./XCFramework/SPM/ConsentViewController.xcframework.zip"
+# echo "✅"
+# echo "SPM XCFrameworks created on: ./XCFramework/SPM/ConsentViewController.xcframework.zip"
