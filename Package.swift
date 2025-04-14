@@ -33,7 +33,7 @@ let package = Package(
     ),
     .target(
       name: "ConsentViewControllerTvOS",
-      dependencies: ["ConsentViewControllerShared"],
+      dependencies: ["ConsentViewController"],
       path: "ConsentViewController/Classes/Views/tvOS"
     )
   ],
