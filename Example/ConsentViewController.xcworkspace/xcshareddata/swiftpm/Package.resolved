@@ -16,7 +16,16 @@
       "location" : "https://github.com/SourcePointUSA/ios-cmp-app",
       "state" : {
         "branch" : "fix_spm_integration",
-        "revision" : "edb8fd2a00c0cb215d7daaf9887e877c1fa49af1"
+        "revision" : "8ff3024b4bb0350c28f4946ef823050b575c6375"
+      }
+    },
+    {
+      "identity" : "mobile-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SourcePointUSA/mobile-core.git",
+      "state" : {
+        "branch" : "add_spm_integration",
+        "revision" : "93ffa38bbf0cf187279f890002cf9ffc321b2985"
       }
     }
   ],
