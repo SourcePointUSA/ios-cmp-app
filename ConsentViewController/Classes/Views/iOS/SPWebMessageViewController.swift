@@ -6,7 +6,17 @@
 //
 
 import Foundation
+#if canImport(WebKit)
 import WebKit
+
+@objcMembers
+class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+
+    }
+}
+
+#else
 
 @objcMembers class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
     var webviewConfig: WKWebViewConfiguration? { nil }
