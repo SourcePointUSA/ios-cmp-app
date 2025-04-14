@@ -7,33 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B312F6C2ABC506700B62E23 /* SPCampaignEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF52ABC504000B62E23 /* SPCampaignEnv.swift */; };
-		0B312F6D2ABC506700B62E23 /* SPMessageLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF42ABC504000B62E23 /* SPMessageLanguage.swift */; };
-		0B312F6E2ABC506700B62E23 /* ConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF22ABC504000B62E23 /* ConnectivityManager.swift */; };
-		0B312F6F2ABC506700B62E23 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF02ABC504000B62E23 /* Constants.swift */; };
-		0B312F702ABC506700B62E23 /* SPIDFAStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF12ABC504000B62E23 /* SPIDFAStatus.swift */; };
-		0B312F712ABC506700B62E23 /* SPConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF32ABC504000B62E23 /* SPConsentManager.swift */; };
-		0B312FAD2ABC507200B62E23 /* SPMessageUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F152ABC504000B62E23 /* SPMessageUIDelegate.swift */; };
-		0B312FAF2ABC507200B62E23 /* SPPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F182ABC504000B62E23 /* SPPropertyName.swift */; };
-		0B312FB12ABC507200B62E23 /* SPCampaigns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F172ABC504000B62E23 /* SPCampaigns.swift */; };
-		0B312FB32ABC507200B62E23 /* SPStringifiedJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F192ABC504000B62E23 /* SPStringifiedJSON.swift */; };
-		0B312FB52ABC507200B62E23 /* SPPrivacyManagerTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F162ABC504000B62E23 /* SPPrivacyManagerTab.swift */; };
-		0B312FBF2ABC507700B62E23 /* SPSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F232ABC504000B62E23 /* SPSDK.swift */; };
-		0B312FC12ABC507700B62E23 /* Bundle+Framework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F202ABC504000B62E23 /* Bundle+Framework.swift */; };
-		0B312FC52ABC507700B62E23 /* SPDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F222ABC504000B62E23 /* SPDeviceManager.swift */; };
-		0B312FC62ABC507700B62E23 /* SPDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F1F2ABC504000B62E23 /* SPDelegate.swift */; };
-		0B312FC72ABC507700B62E23 /* SPNativeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F212ABC504000B62E23 /* SPNativeMessage.swift */; };
-		0B312FCF2ABC507D00B62E23 /* SPCampaignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F272ABC504000B62E23 /* SPCampaignType.swift */; };
-		0B312FD02ABC507D00B62E23 /* SPAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2B2ABC504000B62E23 /* SPAction.swift */; };
-		0B312FD12ABC507D00B62E23 /* SPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F282ABC504000B62E23 /* SPError.swift */; };
-		0B312FD32ABC507D00B62E23 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2A2ABC504000B62E23 /* OSLogger.swift */; };
-		0B312FDA2ABC508600B62E23 /* SPMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F5C2ABC504000B62E23 /* SPMessageViewController.swift */; };
-		0B312FDB2ABC508600B62E23 /* SPJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F5D2ABC504000B62E23 /* SPJson.swift */; };
-		0B3130052ABC50C300B62E23 /* Barcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B312F612ABC504000B62E23 /* Barcode.png */; };
-		0B3130062ABC50C300B62E23 /* SP_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B312F602ABC504000B62E23 /* SP_Icon.png */; };
-		0B3130072ABC50D200B62E23 /* SPJSReceiver.js in Resources */ = {isa = PBXBuildFile; fileRef = 0B312F632ABC504000B62E23 /* SPJSReceiver.js */; };
-		0B31300B2ABC513000B62E23 /* ConsentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B312EED2ABC500200B62E23 /* ConsentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B31300C2ABC513300B62E23 /* ConsentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B312EED2ABC500200B62E23 /* ConsentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		133B3AE4788CB1CC98A5218B /* Pods_Examples_SourcepointFirebaseDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73709C532D5AB6011E9F5665 /* Pods_Examples_SourcepointFirebaseDemo.framework */; };
 		1997B6C6238FDEA10079AF34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1997B675238FDEA00079AF34 /* Assets.xcassets */; };
 		1997B6C7238FDEA10079AF34 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1997B678238FDEA10079AF34 /* DBManager.swift */; };
@@ -133,9 +106,6 @@
 		7B51CFC524FD0B3A0096048F /* MetaAppValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51CFC424FD0B3A0096048F /* MetaAppValidationUITests.swift */; };
 		7D5C2C59A13C16041537D0EE /* Pods_TVOSExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662069000ECAA3A91C599C30 /* Pods_TVOSExampleAppUITests.framework */; };
 		7FAE5FD5D531A71E0FA91F01 /* Pods_Tests_SPGDPRExampleAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E1EE539C427529C76F3B46 /* Pods_Tests_SPGDPRExampleAppUITests.framework */; };
-		820B08AE2B602177004E77E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08AD2B602177004E77E8 /* Foundation.framework */; };
-		820B08B02B60217E004E77E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08AF2B60217E004E77E8 /* UIKit.framework */; };
-		820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820B08B12B6021A6004E77E8 /* Foundation.framework */; };
 		820EF1792A0D28F9009D9941 /* After.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF1782A0D28F9009D9941 /* After.swift */; };
 		820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */; };
 		821205862DA7EBD6003A09A3 /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 821205852DA7EBD6003A09A3 /* ConsentViewController */; };
@@ -150,8 +120,6 @@
 		822BF2CB2657E29800177B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2C92657E29800177B0E /* Main.storyboard */; };
 		822BF2CD2657E29900177B0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CC2657E29900177B0E /* Assets.xcassets */; };
 		822BF2D02657E29900177B0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 822BF2CE2657E29900177B0E /* LaunchScreen.storyboard */; };
-		822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822CF3FE2B975AB000927247 /* SPConsentable.swift */; };
-		822CF4002B975AB000927247 /* SPConsentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822CF3FE2B975AB000927247 /* SPConsentable.swift */; };
 		822FD7E02A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */; };
 		8231B14022BA5A6B00D2669B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B13F22BA5A6B00D2669B /* AppDelegate.swift */; };
 		8231B14222BA5A6B00D2669B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8231B14122BA5A6B00D2669B /* LoginViewController.swift */; };
@@ -178,8 +146,6 @@
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
-		829BD47B2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
-		829BD47C2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
 		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* SPConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* SPConsentSpec.swift */; };
 		829E851729FA9A6500BE5E65 /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829E851629FA9A6500BE5E65 /* Statuses.swift */; };
@@ -188,133 +154,14 @@
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
 		82BA6E642B72980F00E318B3 /* SPGCMDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */; };
-		82BA6E672B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
-		82BA6E682B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
 		82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */; };
 		82BB0E6F28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */; };
 		82BC13812BB2E96100AD346A /* SPGDPRConsentObjcSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13802BB2E96100AD346A /* SPGDPRConsentObjcSpec.m */; };
 		82BC13832BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */; };
 		82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C4935F28F17A2D00898E7A /* CampaignSpec.swift */; };
-		82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */; };
-		82CD6EA12B59CA2C00CAD663 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */; };
-		82CD6EA32B59CA2C00CAD663 /* SPCCPAConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */; };
-		82CD6EA52B59CA2C00CAD663 /* SPGDPRConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */; };
-		82CD6EA72B59CA2C00CAD663 /* SPUSNatConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */; };
-		82CD6EA92B59CA2C00CAD663 /* SPUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E472B59CA2C00CAD663 /* SPUserData.swift */; };
-		82CD6EB72B59CA2C00CAD663 /* MessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */; };
-		82CD6EB92B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */; };
-		82CD6EBB2B59CA2C00CAD663 /* SourcepointClientCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */; };
-		82CD6EC52B59CA2C00CAD663 /* ErrorMetricsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */; };
-		82CD6EC72B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */; };
-		82CD6EC92B59CA2C00CAD663 /* SPPublisherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */; };
-		82CD6ECD2B59CA2C00CAD663 /* PrivacyManagerViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */; };
-		82CD6ECF2B59CA2C00CAD663 /* SPNativeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */; };
-		82CD6ED12B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */; };
-		82CD6ED32B59CA2C00CAD663 /* SimpleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */; };
-		82CD6EDB2B59CA2C00CAD663 /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */; };
-		82CD6EDF2B59CA2C00CAD663 /* SPGPPConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E632B59CA2C00CAD663 /* SPGPPConfig.swift */; };
-		82CD6EE12B59CA2C00CAD663 /* SPUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E652B59CA2C00CAD663 /* SPUIColor.swift */; };
-		82CD6EE72B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E6D2B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift */; };
-		82CD6EE92B59CA2C00CAD663 /* GDPRPMConsentSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E6E2B59CA2C00CAD663 /* GDPRPMConsentSnapshot.swift */; };
-		82CD6EEB2B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E6F2B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.xib */; };
-		82CD6EED2B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E702B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.xib */; };
-		82CD6EEF2B59CA2C00CAD663 /* SPGDPRPartnersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E712B59CA2C00CAD663 /* SPGDPRPartnersViewController.xib */; };
-		82CD6EF12B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E722B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.swift */; };
-		82CD6EF32B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E732B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.swift */; };
-		82CD6EF52B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E742B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.swift */; };
-		82CD6EF72B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E752B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.swift */; };
-		82CD6EF92B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E762B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.xib */; };
-		82CD6EFB2B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E772B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.xib */; };
-		82CD6EFD2B59CA2C00CAD663 /* SPPrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E792B59CA2C00CAD663 /* SPPrivacyPolicyViewController.swift */; };
-		82CD6EFF2B59CA2C00CAD663 /* SPNativeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E7A2B59CA2C00CAD663 /* SPNativeScreenViewController.swift */; };
-		82CD6F012B59CA2C00CAD663 /* SPFocusableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E7B2B59CA2C00CAD663 /* SPFocusableTextView.swift */; };
-		82CD6F032B59CA2C00CAD663 /* SPPMHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E7C2B59CA2C00CAD663 /* SPPMHeader.xib */; };
-		82CD6F052B59CA2C00CAD663 /* LongButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E7D2B59CA2C00CAD663 /* LongButtonViewCell.xib */; };
-		82CD6F072B59CA2C00CAD663 /* SPPMHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E7E2B59CA2C00CAD663 /* SPPMHeader.swift */; };
-		82CD6F092B59CA2C00CAD663 /* SPCustomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E7F2B59CA2C00CAD663 /* SPCustomViewController.xib */; };
-		82CD6F0B2B59CA2C00CAD663 /* SPAppleTVButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E802B59CA2C00CAD663 /* SPAppleTVButton.swift */; };
-		82CD6F0D2B59CA2C00CAD663 /* LongButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E812B59CA2C00CAD663 /* LongButtonViewCell.swift */; };
-		82CD6F0F2B59CA2C00CAD663 /* SPPrivacyPolicyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E822B59CA2C00CAD663 /* SPPrivacyPolicyViewController.xib */; };
-		82CD6F112B59CA2C00CAD663 /* SPCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E832B59CA2C00CAD663 /* SPCustomViewController.swift */; };
-		82CD6F132B59CA2C00CAD663 /* SPQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E842B59CA2C00CAD663 /* SPQRCode.swift */; };
-		82CD6F152B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E862B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.xib */; };
-		82CD6F172B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E872B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.xib */; };
-		82CD6F192B59CA2C00CAD663 /* SPCCPAPartnersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E882B59CA2C00CAD663 /* SPCCPAPartnersViewController.xib */; };
-		82CD6F1B2B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E892B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.swift */; };
-		82CD6F1D2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E8A2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.swift */; };
-		82CD6F1F2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E8B2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift */; };
-		82CD6F212B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E8C2B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.xib */; };
-		82CD6F232B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82CD6E8D2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.xib */; };
-		82CD6F252B59CA2C00CAD663 /* CCPAPMConsentSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E8E2B59CA2C00CAD663 /* CCPAPMConsentSnapshot.swift */; };
-		82CD6F272B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E8F2B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift */; };
-		82CD6F292B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E902B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.swift */; };
-		82CD6F2B2B59CA2C00CAD663 /* PMCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E922B59CA2C00CAD663 /* PMCategoryManager.swift */; };
-		82CD6F2D2B59CA2C00CAD663 /* GDPRPMPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E932B59CA2C00CAD663 /* GDPRPMPayload.swift */; };
-		82CD6F2F2B59CA2C00CAD663 /* PMVendorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E942B59CA2C00CAD663 /* PMVendorManager.swift */; };
-		82CD6F312B59CA2C00CAD663 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E962B59CA2C00CAD663 /* Date.swift */; };
-		82CD6F332B59CA2C00CAD663 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E972B59CA2C00CAD663 /* Collection.swift */; };
-		82CD6F352B59CA2C00CAD663 /* SPURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E982B59CA2C00CAD663 /* SPURLExtensions.swift */; };
-		82CD6F372B59CA2C00CAD663 /* SPString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E992B59CA2C00CAD663 /* SPString.swift */; };
-		82CD6F392B59CA2C00CAD663 /* NSObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9A2B59CA2C00CAD663 /* NSObjectExtensions.swift */; };
-		82CD6F3B2B59CA2C00CAD663 /* SPLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9C2B59CA2C00CAD663 /* SPLocalStorage.swift */; };
-		82CD6F3D2B59CA2C00CAD663 /* SPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */; };
-		82CD6F3E2B59CB0600CAD663 /* CampaignConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */; };
-		82CD6F3F2B59CB0600CAD663 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */; };
-		82CD6F402B59CB0600CAD663 /* SPCCPAConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */; };
-		82CD6F412B59CB0600CAD663 /* SPGDPRConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */; };
-		82CD6F422B59CB0600CAD663 /* SPUSNatConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */; };
-		82CD6F432B59CB0700CAD663 /* SPUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E472B59CA2C00CAD663 /* SPUserData.swift */; };
-		82CD6F452B59CB0700CAD663 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E962B59CA2C00CAD663 /* Date.swift */; };
-		82CD6F462B59CB0700CAD663 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E972B59CA2C00CAD663 /* Collection.swift */; };
-		82CD6F472B59CB0700CAD663 /* SPURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E982B59CA2C00CAD663 /* SPURLExtensions.swift */; };
-		82CD6F482B59CB0700CAD663 /* SPString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E992B59CA2C00CAD663 /* SPString.swift */; };
-		82CD6F492B59CB0700CAD663 /* NSObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9A2B59CA2C00CAD663 /* NSObjectExtensions.swift */; };
-		82CD6F4A2B59CB0700CAD663 /* SPLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9C2B59CA2C00CAD663 /* SPLocalStorage.swift */; };
-		82CD6F4B2B59CB0700CAD663 /* SPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */; };
-		82CD6F512B59CB0700CAD663 /* MessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */; };
-		82CD6F522B59CB0700CAD663 /* QueryParamEncodableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */; };
-		82CD6F532B59CB0700CAD663 /* SourcepointClientCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */; };
-		82CD6F582B59CB0700CAD663 /* ErrorMetricsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */; };
-		82CD6F592B59CB0700CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */; };
-		82CD6F5A2B59CB0700CAD663 /* SPPublisherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */; };
-		82CD6F5C2B59CB0700CAD663 /* PrivacyManagerViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */; };
-		82CD6F5D2B59CB0700CAD663 /* SPNativeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */; };
-		82CD6F5E2B59CB0700CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */; };
-		82CD6F5F2B59CB0700CAD663 /* SimpleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */; };
-		82CD6F632B59CB0700CAD663 /* SourcePointClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */; };
-		82CD6F652B59CB0700CAD663 /* SPGPPConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E632B59CA2C00CAD663 /* SPGPPConfig.swift */; };
-		82CD6F662B59CB0700CAD663 /* SPUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E652B59CA2C00CAD663 /* SPUIColor.swift */; };
-		82CD6F672B59CB0700CAD663 /* SPWebViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E672B59CA2C00CAD663 /* SPWebViewExtensions.swift */; };
-		82CD6F682B59CB0700CAD663 /* SPWebMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E682B59CA2C00CAD663 /* SPWebMessageViewController.swift */; };
-		82CD6F692B59CB0700CAD663 /* SPDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E605332AFB86A10080E782 /* SPDate.swift */; };
-		82CD6F6A2B59CB0700CAD663 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF02ABC504000B62E23 /* Constants.swift */; };
-		82CD6F6B2B59CB0700CAD663 /* SPIDFAStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF12ABC504000B62E23 /* SPIDFAStatus.swift */; };
-		82CD6F6C2B59CB0700CAD663 /* ConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF22ABC504000B62E23 /* ConnectivityManager.swift */; };
-		82CD6F6D2B59CB0700CAD663 /* SPConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF32ABC504000B62E23 /* SPConsentManager.swift */; };
-		82CD6F6E2B59CB0700CAD663 /* SPMessageLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF42ABC504000B62E23 /* SPMessageLanguage.swift */; };
-		82CD6F6F2B59CB0700CAD663 /* SPCampaignEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312EF52ABC504000B62E23 /* SPCampaignEnv.swift */; };
-		82CD6F702B59CB0700CAD663 /* SPMessageUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F152ABC504000B62E23 /* SPMessageUIDelegate.swift */; };
-		82CD6F712B59CB0700CAD663 /* SPPrivacyManagerTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F162ABC504000B62E23 /* SPPrivacyManagerTab.swift */; };
-		82CD6F722B59CB0700CAD663 /* SPCampaigns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F172ABC504000B62E23 /* SPCampaigns.swift */; };
-		82CD6F732B59CB0700CAD663 /* SPPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F182ABC504000B62E23 /* SPPropertyName.swift */; };
-		82CD6F742B59CB0700CAD663 /* SPStringifiedJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F192ABC504000B62E23 /* SPStringifiedJSON.swift */; };
-		82CD6F752B59CB0700CAD663 /* SPDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F1F2ABC504000B62E23 /* SPDelegate.swift */; };
-		82CD6F762B59CB0700CAD663 /* Bundle+Framework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F202ABC504000B62E23 /* Bundle+Framework.swift */; };
-		82CD6F772B59CB0700CAD663 /* SPNativeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F212ABC504000B62E23 /* SPNativeMessage.swift */; };
-		82CD6F782B59CB0700CAD663 /* SPDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F222ABC504000B62E23 /* SPDeviceManager.swift */; };
-		82CD6F792B59CB0700CAD663 /* SPSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F232ABC504000B62E23 /* SPSDK.swift */; };
-		82CD6F7A2B59CB0700CAD663 /* SPCampaignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F272ABC504000B62E23 /* SPCampaignType.swift */; };
-		82CD6F7B2B59CB0700CAD663 /* SPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F282ABC504000B62E23 /* SPError.swift */; };
-		82CD6F7C2B59CB0700CAD663 /* OSLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2A2ABC504000B62E23 /* OSLogger.swift */; };
-		82CD6F7D2B59CB0700CAD663 /* SPAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2B2ABC504000B62E23 /* SPAction.swift */; };
-		82CD6F7E2B59CB0700CAD663 /* SPMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F5C2ABC504000B62E23 /* SPMessageViewController.swift */; };
-		82CD6F7F2B59CB0700CAD663 /* SPJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F5D2ABC504000B62E23 /* SPJson.swift */; };
-		82CD6F852B59CC3600CAD663 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 82CD6F842B59CC3600CAD663 /* Down */; };
 		82CFB3EF2A431D89002B0EF2 /* SPCCPAConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */; };
 		82CFDE312924057500F86A69 /* JSONLocalDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */; };
 		82D6CE222B8CD186004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */; };
-		82D6CE2E2B8CE171004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE2D2B8CE171004677E9 /* PrivacyInfo.xcprivacy */; };
-		82D6CE2F2B8CE171004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE2D2B8CE171004677E9 /* PrivacyInfo.xcprivacy */; };
 		82D8447D2B7AA5AE0069714D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8447C2B7AA5AE0069714D /* AppDelegate.swift */; };
 		82D8447F2B7AA5AE0069714D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D8447E2B7AA5AE0069714D /* SceneDelegate.swift */; };
 		82D844812B7AA5AE0069714D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D844802B7AA5AE0069714D /* ViewController.swift */; };
@@ -332,7 +179,6 @@
 		82E1E3F125D19D0200E96E12 /* MessageResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */; };
 		82E3D60528C64528004B1189 /* MessagesResponseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */; };
 		82E3D60728C8F39B004B1189 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E3D60628C8F39B004B1189 /* CustomMatchers.swift */; };
-		82E605352AFB86A10080E782 /* SPDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E605332AFB86A10080E782 /* SPDate.swift */; };
 		82EA4E302491019900DC01C9 /* HttpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E2F2491019900DC01C9 /* HttpMock.swift */; };
 		82EA4E342491324400DC01C9 /* LocalStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E332491324400DC01C9 /* LocalStorageMock.swift */; };
 		82EA4E362491328A00DC01C9 /* InMemoryStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */; };
@@ -443,36 +289,6 @@
 		02BE2E7103A3477589A4695D /* Pods-Tests-SPGDPRExampleAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-SPGDPRExampleAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		05DE652BB2F7833C4EB7AE63 /* Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		06017E0BBED33604410A02E3 /* Pods_Examples_SourcePointMetaApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Examples_SourcePointMetaApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B312ED92ABC4E2400B62E23 /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConsentViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B312EED2ABC500200B62E23 /* ConsentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConsentViewController.h; sourceTree = "<group>"; };
-		0B312EF02ABC504000B62E23 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		0B312EF12ABC504000B62E23 /* SPIDFAStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPIDFAStatus.swift; sourceTree = "<group>"; };
-		0B312EF22ABC504000B62E23 /* ConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityManager.swift; sourceTree = "<group>"; };
-		0B312EF32ABC504000B62E23 /* SPConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPConsentManager.swift; sourceTree = "<group>"; };
-		0B312EF42ABC504000B62E23 /* SPMessageLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMessageLanguage.swift; sourceTree = "<group>"; };
-		0B312EF52ABC504000B62E23 /* SPCampaignEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignEnv.swift; sourceTree = "<group>"; };
-		0B312F152ABC504000B62E23 /* SPMessageUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMessageUIDelegate.swift; sourceTree = "<group>"; };
-		0B312F162ABC504000B62E23 /* SPPrivacyManagerTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPrivacyManagerTab.swift; sourceTree = "<group>"; };
-		0B312F172ABC504000B62E23 /* SPCampaigns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaigns.swift; sourceTree = "<group>"; };
-		0B312F182ABC504000B62E23 /* SPPropertyName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPropertyName.swift; sourceTree = "<group>"; };
-		0B312F192ABC504000B62E23 /* SPStringifiedJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPStringifiedJSON.swift; sourceTree = "<group>"; };
-		0B312F1F2ABC504000B62E23 /* SPDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDelegate.swift; sourceTree = "<group>"; };
-		0B312F202ABC504000B62E23 /* Bundle+Framework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Framework.swift"; sourceTree = "<group>"; };
-		0B312F212ABC504000B62E23 /* SPNativeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPNativeMessage.swift; sourceTree = "<group>"; };
-		0B312F222ABC504000B62E23 /* SPDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceManager.swift; sourceTree = "<group>"; };
-		0B312F232ABC504000B62E23 /* SPSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPSDK.swift; sourceTree = "<group>"; };
-		0B312F272ABC504000B62E23 /* SPCampaignType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignType.swift; sourceTree = "<group>"; };
-		0B312F282ABC504000B62E23 /* SPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPError.swift; sourceTree = "<group>"; };
-		0B312F2A2ABC504000B62E23 /* OSLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogger.swift; sourceTree = "<group>"; };
-		0B312F2B2ABC504000B62E23 /* SPAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPAction.swift; sourceTree = "<group>"; };
-		0B312F5C2ABC504000B62E23 /* SPMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMessageViewController.swift; sourceTree = "<group>"; };
-		0B312F5D2ABC504000B62E23 /* SPJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPJson.swift; sourceTree = "<group>"; };
-		0B312F602ABC504000B62E23 /* SP_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SP_Icon.png; sourceTree = "<group>"; };
-		0B312F612ABC504000B62E23 /* Barcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Barcode.png; sourceTree = "<group>"; };
-		0B312F632ABC504000B62E23 /* SPJSReceiver.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = SPJSReceiver.js; sourceTree = "<group>"; };
-		0B312F642ABC504000B62E23 /* jest.config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jest.config.json; sourceTree = "<group>"; };
-		0B312F652ABC504000B62E23 /* SPJSReceiver.spec.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = SPJSReceiver.spec.js; sourceTree = "<group>"; };
 		0CF21FF6AF34FC2461F3B4E5 /* Pods-Examples-AuthExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-AuthExample.release.xcconfig"; path = "Target Support Files/Pods-Examples-AuthExample/Pods-Examples-AuthExample.release.xcconfig"; sourceTree = "<group>"; };
 		149573F0442D94850535AC16 /* Pods_Tests_SourcePointMetaAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests_SourcePointMetaAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1997B63A238FDCE80079AF34 /* Unified-MetaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unified-MetaApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -630,7 +446,6 @@
 		822BF2D12657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		822BF2E12657E29900177B0E /* TVOSExampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVOSExampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		822BF2E72657E29900177B0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		822CF3FE2B975AB000927247 /* SPConsentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPConsentable.swift; sourceTree = "<group>"; };
 		822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebMessageViewControllerSpec.swift; sourceTree = "<group>"; };
 		8231B13D22BA5A6B00D2669B /* AuthExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8231B13F22BA5A6B00D2669B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -662,7 +477,6 @@
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignEnvSpec.swift; sourceTree = "<group>"; };
 		828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPAConsentStatusSpec.swift; sourceTree = "<group>"; };
-		829BD47A2DA02E790043B374 /* Adapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapters.swift; sourceTree = "<group>"; };
 		829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
 		829DA56325D5573800612517 /* SPConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPConsentSpec.swift; sourceTree = "<group>"; };
 		829E851629FA9A6500BE5E65 /* Statuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
@@ -671,7 +485,6 @@
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceSpec.swift; sourceTree = "<group>"; };
 		82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGCMDataSpec.swift; sourceTree = "<group>"; };
-		82BA6E662B72AC2300E318B3 /* SPGCMData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGCMData.swift; sourceTree = "<group>"; };
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
 		82BB0E6E28BF4BAB006FBB60 /* QueryParamEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableSpec.swift; sourceTree = "<group>"; };
 		82BC13722BB2DFE300AD346A /* ObjC-ExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ObjC-ExampleAppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -680,75 +493,9 @@
 		82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPUSNatConsentObjcSpec.m; sourceTree = "<group>"; };
 		82C4935F28F17A2D00898E7A /* CampaignSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignSpec.swift; sourceTree = "<group>"; };
 		82C54E84290814C400379259 /* SPSdkStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSdkStatus.h; sourceTree = "<group>"; };
-		82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampaignConsent.swift; sourceTree = "<group>"; };
-		82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentStatus.swift; sourceTree = "<group>"; };
-		82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPAConsent.swift; sourceTree = "<group>"; };
-		82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGDPRConsent.swift; sourceTree = "<group>"; };
-		82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUSNatConsent.swift; sourceTree = "<group>"; };
-		82CD6E472B59CA2C00CAD663 /* SPUserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUserData.swift; sourceTree = "<group>"; };
-		82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesResponse.swift; sourceTree = "<group>"; };
-		82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryParamEncodableProtocol.swift; sourceTree = "<group>"; };
-		82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcepointClientCoordinator.swift; sourceTree = "<group>"; };
-		82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMetricsRequest.swift; sourceTree = "<group>"; };
-		82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDPRPrivacyManagerViewResponse.swift; sourceTree = "<group>"; };
-		82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPublisherData.swift; sourceTree = "<group>"; };
-		82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyManagerViewData.swift; sourceTree = "<group>"; };
-		82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNativeUI.swift; sourceTree = "<group>"; };
-		82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPrivacyManagerRequestResponse.swift; sourceTree = "<group>"; };
-		82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleClient.swift; sourceTree = "<group>"; };
-		82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePointClient.swift; sourceTree = "<group>"; };
-		82CD6E632B59CA2C00CAD663 /* SPGPPConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGPPConfig.swift; sourceTree = "<group>"; };
-		82CD6E652B59CA2C00CAD663 /* SPUIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUIColor.swift; sourceTree = "<group>"; };
-		82CD6E672B59CA2C00CAD663 /* SPWebViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPWebViewExtensions.swift; sourceTree = "<group>"; };
-		82CD6E682B59CA2C00CAD663 /* SPWebMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPWebMessageViewController.swift; sourceTree = "<group>"; };
-		82CD6E6D2B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGDPRPartnersViewController.swift; sourceTree = "<group>"; };
-		82CD6E6E2B59CA2C00CAD663 /* GDPRPMConsentSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDPRPMConsentSnapshot.swift; sourceTree = "<group>"; };
-		82CD6E6F2B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPGDPRCategoryDetailsViewController.xib; sourceTree = "<group>"; };
-		82CD6E702B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPGDPRManagePreferenceViewController.xib; sourceTree = "<group>"; };
-		82CD6E712B59CA2C00CAD663 /* SPGDPRPartnersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPGDPRPartnersViewController.xib; sourceTree = "<group>"; };
-		82CD6E722B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGDPRNativePrivacyManagerViewController.swift; sourceTree = "<group>"; };
-		82CD6E732B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGDPRManagePreferenceViewController.swift; sourceTree = "<group>"; };
-		82CD6E742B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGDPRCategoryDetailsViewController.swift; sourceTree = "<group>"; };
-		82CD6E752B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGDPRVendorDetailsViewController.swift; sourceTree = "<group>"; };
-		82CD6E762B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPGDPRNativePrivacyManagerViewController.xib; sourceTree = "<group>"; };
-		82CD6E772B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPGDPRVendorDetailsViewController.xib; sourceTree = "<group>"; };
-		82CD6E792B59CA2C00CAD663 /* SPPrivacyPolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPrivacyPolicyViewController.swift; sourceTree = "<group>"; };
-		82CD6E7A2B59CA2C00CAD663 /* SPNativeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNativeScreenViewController.swift; sourceTree = "<group>"; };
-		82CD6E7B2B59CA2C00CAD663 /* SPFocusableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFocusableTextView.swift; sourceTree = "<group>"; };
-		82CD6E7C2B59CA2C00CAD663 /* SPPMHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPPMHeader.xib; sourceTree = "<group>"; };
-		82CD6E7D2B59CA2C00CAD663 /* LongButtonViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LongButtonViewCell.xib; sourceTree = "<group>"; };
-		82CD6E7E2B59CA2C00CAD663 /* SPPMHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPMHeader.swift; sourceTree = "<group>"; };
-		82CD6E7F2B59CA2C00CAD663 /* SPCustomViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCustomViewController.xib; sourceTree = "<group>"; };
-		82CD6E802B59CA2C00CAD663 /* SPAppleTVButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAppleTVButton.swift; sourceTree = "<group>"; };
-		82CD6E812B59CA2C00CAD663 /* LongButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongButtonViewCell.swift; sourceTree = "<group>"; };
-		82CD6E822B59CA2C00CAD663 /* SPPrivacyPolicyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPPrivacyPolicyViewController.xib; sourceTree = "<group>"; };
-		82CD6E832B59CA2C00CAD663 /* SPCustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCustomViewController.swift; sourceTree = "<group>"; };
-		82CD6E842B59CA2C00CAD663 /* SPQRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPQRCode.swift; sourceTree = "<group>"; };
-		82CD6E862B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCCPAManagePreferenceViewController.xib; sourceTree = "<group>"; };
-		82CD6E872B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCCPANativePrivacyManagerViewController.xib; sourceTree = "<group>"; };
-		82CD6E882B59CA2C00CAD663 /* SPCCPAPartnersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCCPAPartnersViewController.xib; sourceTree = "<group>"; };
-		82CD6E892B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPAVendorDetailsViewController.swift; sourceTree = "<group>"; };
-		82CD6E8A2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPACategoryDetailsViewController.swift; sourceTree = "<group>"; };
-		82CD6E8B2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPANativePrivacyManagerViewController.swift; sourceTree = "<group>"; };
-		82CD6E8C2B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCCPAVendorDetailsViewController.xib; sourceTree = "<group>"; };
-		82CD6E8D2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCCPACategoryDetailsViewController.xib; sourceTree = "<group>"; };
-		82CD6E8E2B59CA2C00CAD663 /* CCPAPMConsentSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCPAPMConsentSnapshot.swift; sourceTree = "<group>"; };
-		82CD6E8F2B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPAPartnersViewController.swift; sourceTree = "<group>"; };
-		82CD6E902B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPAManagePreferenceViewController.swift; sourceTree = "<group>"; };
-		82CD6E922B59CA2C00CAD663 /* PMCategoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMCategoryManager.swift; sourceTree = "<group>"; };
-		82CD6E932B59CA2C00CAD663 /* GDPRPMPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDPRPMPayload.swift; sourceTree = "<group>"; };
-		82CD6E942B59CA2C00CAD663 /* PMVendorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMVendorManager.swift; sourceTree = "<group>"; };
-		82CD6E962B59CA2C00CAD663 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		82CD6E972B59CA2C00CAD663 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
-		82CD6E982B59CA2C00CAD663 /* SPURLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPURLExtensions.swift; sourceTree = "<group>"; };
-		82CD6E992B59CA2C00CAD663 /* SPString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPString.swift; sourceTree = "<group>"; };
-		82CD6E9A2B59CA2C00CAD663 /* NSObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectExtensions.swift; sourceTree = "<group>"; };
-		82CD6E9C2B59CA2C00CAD663 /* SPLocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLocalStorage.swift; sourceTree = "<group>"; };
-		82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUserDefaults.swift; sourceTree = "<group>"; };
 		82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCCPAConsentSpec.swift; sourceTree = "<group>"; };
 		82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLocalDataViewController.swift; sourceTree = "<group>"; };
 		82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		82D6CE2D2B8CE171004677E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		82D8447A2B7AA5AE0069714D /* SourcepointFirebaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourcepointFirebaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D8447C2B7AA5AE0069714D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82D8447E2B7AA5AE0069714D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -772,7 +519,6 @@
 		82E1E3F025D19D0200E96E12 /* MessageResponseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponseSpec.swift; sourceTree = "<group>"; };
 		82E3D60428C64527004B1189 /* MessagesResponseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesResponseSpec.swift; sourceTree = "<group>"; };
 		82E3D60628C8F39B004B1189 /* CustomMatchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomMatchers.swift; path = Helpers/CustomMatchers.swift; sourceTree = "<group>"; };
-		82E605332AFB86A10080E782 /* SPDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDate.swift; sourceTree = "<group>"; };
 		82EA4E2F2491019900DC01C9 /* HttpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HttpMock.swift; path = Helpers/HttpMock.swift; sourceTree = "<group>"; };
 		82EA4E332491324400DC01C9 /* LocalStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalStorageMock.swift; path = Helpers/LocalStorageMock.swift; sourceTree = "<group>"; };
 		82EA4E352491328A00DC01C9 /* InMemoryStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InMemoryStorageMock.swift; path = Helpers/InMemoryStorageMock.swift; sourceTree = "<group>"; };
@@ -814,24 +560,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0B312ED62ABC4E2400B62E23 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				820B08AE2B602177004E77E8 /* Foundation.framework in Frameworks */,
-				820B08B02B60217E004E77E8 /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0B312EE22ABC4E4000B62E23 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82CD6F852B59CC3600CAD663 /* Down in Frameworks */,
-				820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1997B637238FDCE80079AF34 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -978,90 +706,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0B312EEC2ABC4FE500B62E23 /* SPM */ = {
-			isa = PBXGroup;
-			children = (
-				0B312EED2ABC500200B62E23 /* ConsentViewController.h */,
-				0B312EEE2ABC504000B62E23 /* ConsentViewController */,
-			);
-			path = SPM;
-			sourceTree = "<group>";
-		};
-		0B312EEE2ABC504000B62E23 /* ConsentViewController */ = {
-			isa = PBXGroup;
-			children = (
-				0B312EEF2ABC504000B62E23 /* Classes */,
-				0B312F5E2ABC504000B62E23 /* Assets */,
-			);
-			name = ConsentViewController;
-			path = ../../ConsentViewController;
-			sourceTree = "<group>";
-		};
-		0B312EEF2ABC504000B62E23 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E412B59CA2C00CAD663 /* Consents */,
-				82CD6E952B59CA2C00CAD663 /* Extensions */,
-				82CD6E9B2B59CA2C00CAD663 /* LocalStorage */,
-				82CD6E492B59CA2C00CAD663 /* SourcePointClient */,
-				82CD6E632B59CA2C00CAD663 /* SPGPPConfig.swift */,
-				82CD6E642B59CA2C00CAD663 /* Views */,
-				82E605332AFB86A10080E782 /* SPDate.swift */,
-				0B312EF02ABC504000B62E23 /* Constants.swift */,
-				0B312EF12ABC504000B62E23 /* SPIDFAStatus.swift */,
-				0B312EF22ABC504000B62E23 /* ConnectivityManager.swift */,
-				0B312EF32ABC504000B62E23 /* SPConsentManager.swift */,
-				0B312EF42ABC504000B62E23 /* SPMessageLanguage.swift */,
-				0B312EF52ABC504000B62E23 /* SPCampaignEnv.swift */,
-				0B312F152ABC504000B62E23 /* SPMessageUIDelegate.swift */,
-				0B312F162ABC504000B62E23 /* SPPrivacyManagerTab.swift */,
-				0B312F172ABC504000B62E23 /* SPCampaigns.swift */,
-				0B312F182ABC504000B62E23 /* SPPropertyName.swift */,
-				0B312F192ABC504000B62E23 /* SPStringifiedJSON.swift */,
-				0B312F1F2ABC504000B62E23 /* SPDelegate.swift */,
-				0B312F202ABC504000B62E23 /* Bundle+Framework.swift */,
-				0B312F212ABC504000B62E23 /* SPNativeMessage.swift */,
-				0B312F222ABC504000B62E23 /* SPDeviceManager.swift */,
-				0B312F232ABC504000B62E23 /* SPSDK.swift */,
-				0B312F272ABC504000B62E23 /* SPCampaignType.swift */,
-				0B312F282ABC504000B62E23 /* SPError.swift */,
-				0B312F2A2ABC504000B62E23 /* OSLogger.swift */,
-				0B312F2B2ABC504000B62E23 /* SPAction.swift */,
-				0B312F5C2ABC504000B62E23 /* SPMessageViewController.swift */,
-				0B312F5D2ABC504000B62E23 /* SPJson.swift */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		0B312F5E2ABC504000B62E23 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				82D6CE2D2B8CE171004677E9 /* PrivacyInfo.xcprivacy */,
-				0B312F5F2ABC504000B62E23 /* images */,
-				0B312F622ABC504000B62E23 /* javascript */,
-			);
-			path = Assets;
-			sourceTree = "<group>";
-		};
-		0B312F5F2ABC504000B62E23 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				0B312F602ABC504000B62E23 /* SP_Icon.png */,
-				0B312F612ABC504000B62E23 /* Barcode.png */,
-			);
-			path = images;
-			sourceTree = "<group>";
-		};
-		0B312F622ABC504000B62E23 /* javascript */ = {
-			isa = PBXGroup;
-			children = (
-				0B312F632ABC504000B62E23 /* SPJSReceiver.js */,
-				0B312F642ABC504000B62E23 /* jest.config.json */,
-				0B312F652ABC504000B62E23 /* SPJSReceiver.spec.js */,
-			);
-			path = javascript;
-			sourceTree = "<group>";
-		};
 		1997B63B238FDCE80079AF34 /* SourcePointMetaApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1390,7 +1034,6 @@
 				6D80473325D1AC3E0005002B /* ObjC-ExampleAppUITests */,
 				822BF2C42657E29800177B0E /* TVOSExampleApp */,
 				822BF2E42657E29900177B0E /* TVOSExampleAppUITests */,
-				0B312EEC2ABC4FE500B62E23 /* SPM */,
 				8255B6C927A9661100C9A70D /* SPMBuild */,
 				82D8447B2B7AA5AE0069714D /* SourcepointFirebaseDemo */,
 				82D844922B7AA5B00069714D /* SourcepointFirebaseDemoTests */,
@@ -1421,8 +1064,6 @@
 				822BF2C32657E29800177B0E /* TVOSExampleApp.app */,
 				822BF2E12657E29900177B0E /* TVOSExampleAppUITests.xctest */,
 				8255B6C827A9661100C9A70D /* SPMBuild.app */,
-				0B312ED92ABC4E2400B62E23 /* ConsentViewController.framework */,
-				0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */,
 				82D8447A2B7AA5AE0069714D /* SourcepointFirebaseDemo.app */,
 				82D8448F2B7AA5AF0069714D /* SourcepointFirebaseDemoTests.xctest */,
 				82D844992B7AA5B00069714D /* SourcepointFirebaseDemoUITests.xctest */,
@@ -1766,14 +1407,6 @@
 			path = webserver;
 			sourceTree = "<group>";
 		};
-		82BA6E652B72AC2300E318B3 /* GoogleConsentMode */ = {
-			isa = PBXGroup;
-			children = (
-				82BA6E662B72AC2300E318B3 /* SPGCMData.swift */,
-			);
-			path = GoogleConsentMode;
-			sourceTree = "<group>";
-		};
 		82BC137D2BB2E47000AD346A /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -1789,172 +1422,6 @@
 				82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */,
 			);
 			path = Objc;
-			sourceTree = "<group>";
-		};
-		82CD6E412B59CA2C00CAD663 /* Consents */ = {
-			isa = PBXGroup;
-			children = (
-				822CF3FE2B975AB000927247 /* SPConsentable.swift */,
-				82BA6E652B72AC2300E318B3 /* GoogleConsentMode */,
-				82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */,
-				82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */,
-				82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */,
-				82CD6E452B59CA2C00CAD663 /* SPGDPRConsent.swift */,
-				82CD6E462B59CA2C00CAD663 /* SPUSNatConsent.swift */,
-				82CD6E472B59CA2C00CAD663 /* SPUserData.swift */,
-			);
-			path = Consents;
-			sourceTree = "<group>";
-		};
-		82CD6E492B59CA2C00CAD663 /* SourcePointClient */ = {
-			isa = PBXGroup;
-			children = (
-				829BD47A2DA02E790043B374 /* Adapters.swift */,
-				82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */,
-				82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */,
-				82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */,
-				82CD6E562B59CA2C00CAD663 /* ErrorMetricsRequest.swift */,
-				82CD6E572B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift */,
-				82CD6E582B59CA2C00CAD663 /* SPPublisherData.swift */,
-				82CD6E5A2B59CA2C00CAD663 /* PrivacyManagerViewData.swift */,
-				82CD6E5B2B59CA2C00CAD663 /* SPNativeUI.swift */,
-				82CD6E5C2B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift */,
-				82CD6E5D2B59CA2C00CAD663 /* SimpleClient.swift */,
-				82CD6E612B59CA2C00CAD663 /* SourcePointClient.swift */,
-			);
-			path = SourcePointClient;
-			sourceTree = "<group>";
-		};
-		82CD6E642B59CA2C00CAD663 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E652B59CA2C00CAD663 /* SPUIColor.swift */,
-				82CD6E662B59CA2C00CAD663 /* iOS */,
-				82CD6E692B59CA2C00CAD663 /* tvOS */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		82CD6E662B59CA2C00CAD663 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E672B59CA2C00CAD663 /* SPWebViewExtensions.swift */,
-				82CD6E682B59CA2C00CAD663 /* SPWebMessageViewController.swift */,
-			);
-			path = iOS;
-			sourceTree = "<group>";
-		};
-		82CD6E692B59CA2C00CAD663 /* tvOS */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E6A2B59CA2C00CAD663 /* NativePrivacyManager */,
-			);
-			path = tvOS;
-			sourceTree = "<group>";
-		};
-		82CD6E6A2B59CA2C00CAD663 /* NativePrivacyManager */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E6B2B59CA2C00CAD663 /* xibs */,
-				82CD6E6C2B59CA2C00CAD663 /* GDPR */,
-				82CD6E782B59CA2C00CAD663 /* Common */,
-				82CD6E852B59CA2C00CAD663 /* CCPA */,
-				82CD6E912B59CA2C00CAD663 /* Data */,
-			);
-			path = NativePrivacyManager;
-			sourceTree = "<group>";
-		};
-		82CD6E6B2B59CA2C00CAD663 /* xibs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = xibs;
-			sourceTree = "<group>";
-		};
-		82CD6E6C2B59CA2C00CAD663 /* GDPR */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E6D2B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift */,
-				82CD6E6E2B59CA2C00CAD663 /* GDPRPMConsentSnapshot.swift */,
-				82CD6E6F2B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.xib */,
-				82CD6E702B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.xib */,
-				82CD6E712B59CA2C00CAD663 /* SPGDPRPartnersViewController.xib */,
-				82CD6E722B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.swift */,
-				82CD6E732B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.swift */,
-				82CD6E742B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.swift */,
-				82CD6E752B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.swift */,
-				82CD6E762B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.xib */,
-				82CD6E772B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.xib */,
-			);
-			path = GDPR;
-			sourceTree = "<group>";
-		};
-		82CD6E782B59CA2C00CAD663 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E792B59CA2C00CAD663 /* SPPrivacyPolicyViewController.swift */,
-				82CD6E7A2B59CA2C00CAD663 /* SPNativeScreenViewController.swift */,
-				82CD6E7B2B59CA2C00CAD663 /* SPFocusableTextView.swift */,
-				82CD6E7C2B59CA2C00CAD663 /* SPPMHeader.xib */,
-				82CD6E7D2B59CA2C00CAD663 /* LongButtonViewCell.xib */,
-				82CD6E7E2B59CA2C00CAD663 /* SPPMHeader.swift */,
-				82CD6E7F2B59CA2C00CAD663 /* SPCustomViewController.xib */,
-				82CD6E802B59CA2C00CAD663 /* SPAppleTVButton.swift */,
-				82CD6E812B59CA2C00CAD663 /* LongButtonViewCell.swift */,
-				82CD6E822B59CA2C00CAD663 /* SPPrivacyPolicyViewController.xib */,
-				82CD6E832B59CA2C00CAD663 /* SPCustomViewController.swift */,
-				82CD6E842B59CA2C00CAD663 /* SPQRCode.swift */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		82CD6E852B59CA2C00CAD663 /* CCPA */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E862B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.xib */,
-				82CD6E872B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.xib */,
-				82CD6E882B59CA2C00CAD663 /* SPCCPAPartnersViewController.xib */,
-				82CD6E892B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.swift */,
-				82CD6E8A2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.swift */,
-				82CD6E8B2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift */,
-				82CD6E8C2B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.xib */,
-				82CD6E8D2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.xib */,
-				82CD6E8E2B59CA2C00CAD663 /* CCPAPMConsentSnapshot.swift */,
-				82CD6E8F2B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift */,
-				82CD6E902B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.swift */,
-			);
-			path = CCPA;
-			sourceTree = "<group>";
-		};
-		82CD6E912B59CA2C00CAD663 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E922B59CA2C00CAD663 /* PMCategoryManager.swift */,
-				82CD6E932B59CA2C00CAD663 /* GDPRPMPayload.swift */,
-				82CD6E942B59CA2C00CAD663 /* PMVendorManager.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		82CD6E952B59CA2C00CAD663 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E962B59CA2C00CAD663 /* Date.swift */,
-				82CD6E972B59CA2C00CAD663 /* Collection.swift */,
-				82CD6E982B59CA2C00CAD663 /* SPURLExtensions.swift */,
-				82CD6E992B59CA2C00CAD663 /* SPString.swift */,
-				82CD6E9A2B59CA2C00CAD663 /* NSObjectExtensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		82CD6E9B2B59CA2C00CAD663 /* LocalStorage */ = {
-			isa = PBXGroup;
-			children = (
-				82CD6E9C2B59CA2C00CAD663 /* SPLocalStorage.swift */,
-				82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */,
-			);
-			path = LocalStorage;
 			sourceTree = "<group>";
 		};
 		82D8447B2B7AA5AE0069714D /* SourcepointFirebaseDemo */ = {
@@ -2094,65 +1561,7 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		0B312ED42ABC4E2400B62E23 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0B31300B2ABC513000B62E23 /* ConsentViewController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0B312EE02ABC4E4000B62E23 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0B31300C2ABC513300B62E23 /* ConsentViewController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		0B312ED82ABC4E2400B62E23 /* SPMConsentViewController-iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0B312EDF2ABC4E2400B62E23 /* Build configuration list for PBXNativeTarget "SPMConsentViewController-iOS" */;
-			buildPhases = (
-				0B312ED42ABC4E2400B62E23 /* Headers */,
-				0B312ED52ABC4E2400B62E23 /* Sources */,
-				0B312ED62ABC4E2400B62E23 /* Frameworks */,
-				0B312ED72ABC4E2400B62E23 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SPMConsentViewController-iOS";
-			productName = ConsentViewController;
-			productReference = 0B312ED92ABC4E2400B62E23 /* ConsentViewController.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		0B312EE42ABC4E4000B62E23 /* SPMConsentViewController-tvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0B312EE92ABC4E4000B62E23 /* Build configuration list for PBXNativeTarget "SPMConsentViewController-tvOS" */;
-			buildPhases = (
-				0B312EE02ABC4E4000B62E23 /* Headers */,
-				0B312EE12ABC4E4000B62E23 /* Sources */,
-				0B312EE22ABC4E4000B62E23 /* Frameworks */,
-				0B312EE32ABC4E4000B62E23 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SPMConsentViewController-tvOS";
-			packageProductDependencies = (
-				82CD6F842B59CC3600CAD663 /* Down */,
-			);
-			productName = ConsentViewController;
-			productReference = 0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		1997B639238FDCE80079AF34 /* SourcePointMetaApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1997B65A238FDCF30079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaApp" */;
@@ -2519,12 +1928,6 @@
 				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
-					0B312ED82ABC4E2400B62E23 = {
-						CreatedOnToolsVersion = 14.3.1;
-					};
-					0B312EE42ABC4E4000B62E23 = {
-						CreatedOnToolsVersion = 14.3.1;
-					};
 					1997B639238FDCE80079AF34 = {
 						CreatedOnToolsVersion = 11.1;
 						DevelopmentTeam = 6KYEQLUC5A;
@@ -2638,8 +2041,6 @@
 				822BF2C22657E29800177B0E /* TVOSExampleApp */,
 				822BF2E02657E29900177B0E /* TVOSExampleAppUITests */,
 				8255B6C727A9661100C9A70D /* SPMBuild */,
-				0B312ED82ABC4E2400B62E23 /* SPMConsentViewController-iOS */,
-				0B312EE42ABC4E4000B62E23 /* SPMConsentViewController-tvOS */,
 				82D844792B7AA5AE0069714D /* SourcepointFirebaseDemo */,
 				82D8448E2B7AA5AF0069714D /* SourcepointFirebaseDemoTests */,
 				82D844982B7AA5B00069714D /* SourcepointFirebaseDemoUITests */,
@@ -2649,39 +2050,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0B312ED72ABC4E2400B62E23 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82D6CE2E2B8CE171004677E9 /* PrivacyInfo.xcprivacy in Resources */,
-				0B3130072ABC50D200B62E23 /* SPJSReceiver.js in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0B312EE32ABC4E4000B62E23 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82CD6F092B59CA2C00CAD663 /* SPCustomViewController.xib in Resources */,
-				82CD6EF92B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.xib in Resources */,
-				82CD6EED2B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.xib in Resources */,
-				82CD6EEF2B59CA2C00CAD663 /* SPGDPRPartnersViewController.xib in Resources */,
-				82CD6F0F2B59CA2C00CAD663 /* SPPrivacyPolicyViewController.xib in Resources */,
-				0B3130052ABC50C300B62E23 /* Barcode.png in Resources */,
-				82CD6F212B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.xib in Resources */,
-				82CD6EEB2B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.xib in Resources */,
-				82D6CE2F2B8CE171004677E9 /* PrivacyInfo.xcprivacy in Resources */,
-				82CD6F152B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.xib in Resources */,
-				82CD6F032B59CA2C00CAD663 /* SPPMHeader.xib in Resources */,
-				0B3130062ABC50C300B62E23 /* SP_Icon.png in Resources */,
-				82CD6F232B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.xib in Resources */,
-				82CD6EFB2B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.xib in Resources */,
-				82CD6F172B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.xib in Resources */,
-				82CD6F192B59CA2C00CAD663 /* SPCCPAPartnersViewController.xib in Resources */,
-				82CD6F052B59CA2C00CAD663 /* LongButtonViewCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1997B638238FDCE80079AF34 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2971,9 +2339,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3010,9 +2382,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3093,9 +2469,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ObjC-ExampleAppUITests/Pods-Tests-ObjC-ExampleAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ObjC-ExampleAppUITests/Pods-Tests-ObjC-ExampleAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3110,9 +2490,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3127,9 +2511,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3144,9 +2532,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3224,9 +2616,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3297,9 +2693,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3314,9 +2714,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3331,9 +2735,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3348,9 +2756,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-AuthExampleUITests/Pods-Tests-AuthExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-AuthExampleUITests/Pods-Tests-AuthExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3365,9 +2777,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-AuthExample/Pods-Examples-AuthExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-AuthExample/Pods-Examples-AuthExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3404,9 +2820,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-NativeMessageExample/Pods-Examples-NativeMessageExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-NativeMessageExample/Pods-Examples-NativeMessageExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3443,9 +2863,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3504,9 +2928,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3521,9 +2949,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ConsentViewController_Example/Pods-Examples-ConsentViewController_Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ConsentViewController_Example/Pods-Examples-ConsentViewController_Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3533,149 +2965,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0B312ED52ABC4E2400B62E23 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82CD6F3E2B59CB0600CAD663 /* CampaignConsent.swift in Sources */,
-				82CD6F3F2B59CB0600CAD663 /* ConsentStatus.swift in Sources */,
-				82CD6F402B59CB0600CAD663 /* SPCCPAConsent.swift in Sources */,
-				82CD6F412B59CB0600CAD663 /* SPGDPRConsent.swift in Sources */,
-				82CD6F422B59CB0600CAD663 /* SPUSNatConsent.swift in Sources */,
-				82CD6F432B59CB0700CAD663 /* SPUserData.swift in Sources */,
-				82CD6F452B59CB0700CAD663 /* Date.swift in Sources */,
-				82CD6F462B59CB0700CAD663 /* Collection.swift in Sources */,
-				82CD6F472B59CB0700CAD663 /* SPURLExtensions.swift in Sources */,
-				82CD6F482B59CB0700CAD663 /* SPString.swift in Sources */,
-				82CD6F492B59CB0700CAD663 /* NSObjectExtensions.swift in Sources */,
-				82CD6F4A2B59CB0700CAD663 /* SPLocalStorage.swift in Sources */,
-				82CD6F4B2B59CB0700CAD663 /* SPUserDefaults.swift in Sources */,
-				82CD6F512B59CB0700CAD663 /* MessagesResponse.swift in Sources */,
-				82CD6F522B59CB0700CAD663 /* QueryParamEncodableProtocol.swift in Sources */,
-				82CD6F532B59CB0700CAD663 /* SourcepointClientCoordinator.swift in Sources */,
-				822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */,
-				82CD6F582B59CB0700CAD663 /* ErrorMetricsRequest.swift in Sources */,
-				82CD6F592B59CB0700CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */,
-				82CD6F5A2B59CB0700CAD663 /* SPPublisherData.swift in Sources */,
-				82CD6F5C2B59CB0700CAD663 /* PrivacyManagerViewData.swift in Sources */,
-				829BD47C2DA02E790043B374 /* Adapters.swift in Sources */,
-				82CD6F5D2B59CB0700CAD663 /* SPNativeUI.swift in Sources */,
-				82CD6F5E2B59CB0700CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */,
-				82CD6F5F2B59CB0700CAD663 /* SimpleClient.swift in Sources */,
-				82CD6F632B59CB0700CAD663 /* SourcePointClient.swift in Sources */,
-				82CD6F652B59CB0700CAD663 /* SPGPPConfig.swift in Sources */,
-				82CD6F662B59CB0700CAD663 /* SPUIColor.swift in Sources */,
-				82CD6F672B59CB0700CAD663 /* SPWebViewExtensions.swift in Sources */,
-				82CD6F682B59CB0700CAD663 /* SPWebMessageViewController.swift in Sources */,
-				82CD6F692B59CB0700CAD663 /* SPDate.swift in Sources */,
-				82CD6F6A2B59CB0700CAD663 /* Constants.swift in Sources */,
-				82CD6F6B2B59CB0700CAD663 /* SPIDFAStatus.swift in Sources */,
-				82CD6F6C2B59CB0700CAD663 /* ConnectivityManager.swift in Sources */,
-				82CD6F6D2B59CB0700CAD663 /* SPConsentManager.swift in Sources */,
-				82CD6F6E2B59CB0700CAD663 /* SPMessageLanguage.swift in Sources */,
-				82CD6F6F2B59CB0700CAD663 /* SPCampaignEnv.swift in Sources */,
-				82CD6F702B59CB0700CAD663 /* SPMessageUIDelegate.swift in Sources */,
-				82CD6F712B59CB0700CAD663 /* SPPrivacyManagerTab.swift in Sources */,
-				82CD6F722B59CB0700CAD663 /* SPCampaigns.swift in Sources */,
-				82CD6F732B59CB0700CAD663 /* SPPropertyName.swift in Sources */,
-				82CD6F742B59CB0700CAD663 /* SPStringifiedJSON.swift in Sources */,
-				82CD6F752B59CB0700CAD663 /* SPDelegate.swift in Sources */,
-				82CD6F762B59CB0700CAD663 /* Bundle+Framework.swift in Sources */,
-				82CD6F772B59CB0700CAD663 /* SPNativeMessage.swift in Sources */,
-				82CD6F782B59CB0700CAD663 /* SPDeviceManager.swift in Sources */,
-				82CD6F792B59CB0700CAD663 /* SPSDK.swift in Sources */,
-				82BA6E672B72AC2300E318B3 /* SPGCMData.swift in Sources */,
-				82CD6F7A2B59CB0700CAD663 /* SPCampaignType.swift in Sources */,
-				82CD6F7B2B59CB0700CAD663 /* SPError.swift in Sources */,
-				82CD6F7C2B59CB0700CAD663 /* OSLogger.swift in Sources */,
-				82CD6F7D2B59CB0700CAD663 /* SPAction.swift in Sources */,
-				82CD6F7E2B59CB0700CAD663 /* SPMessageViewController.swift in Sources */,
-				82CD6F7F2B59CB0700CAD663 /* SPJson.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0B312EE12ABC4E4000B62E23 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				82CD6F1F2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift in Sources */,
-				82CD6EDF2B59CA2C00CAD663 /* SPGPPConfig.swift in Sources */,
-				82CD6F272B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift in Sources */,
-				82CD6F012B59CA2C00CAD663 /* SPFocusableTextView.swift in Sources */,
-				82CD6EA12B59CA2C00CAD663 /* ConsentStatus.swift in Sources */,
-				82BA6E682B72AC2300E318B3 /* SPGCMData.swift in Sources */,
-				0B312FC52ABC507700B62E23 /* SPDeviceManager.swift in Sources */,
-				82CD6EE72B59CA2C00CAD663 /* SPGDPRPartnersViewController.swift in Sources */,
-				82CD6F3D2B59CA2C00CAD663 /* SPUserDefaults.swift in Sources */,
-				82CD6EA92B59CA2C00CAD663 /* SPUserData.swift in Sources */,
-				82CD6EFF2B59CA2C00CAD663 /* SPNativeScreenViewController.swift in Sources */,
-				82CD6EA32B59CA2C00CAD663 /* SPCCPAConsent.swift in Sources */,
-				82CD6EBB2B59CA2C00CAD663 /* SourcepointClientCoordinator.swift in Sources */,
-				82CD6EB72B59CA2C00CAD663 /* MessagesResponse.swift in Sources */,
-				82CD6F2F2B59CA2C00CAD663 /* PMVendorManager.swift in Sources */,
-				0B312FC12ABC507700B62E23 /* Bundle+Framework.swift in Sources */,
-				82CD6F292B59CA2C00CAD663 /* SPCCPAManagePreferenceViewController.swift in Sources */,
-				0B312FAF2ABC507200B62E23 /* SPPropertyName.swift in Sources */,
-				0B312F6E2ABC506700B62E23 /* ConnectivityManager.swift in Sources */,
-				82CD6F3B2B59CA2C00CAD663 /* SPLocalStorage.swift in Sources */,
-				82CD6F0D2B59CA2C00CAD663 /* LongButtonViewCell.swift in Sources */,
-				82CD6ED32B59CA2C00CAD663 /* SimpleClient.swift in Sources */,
-				82CD6F132B59CA2C00CAD663 /* SPQRCode.swift in Sources */,
-				0B312F6D2ABC506700B62E23 /* SPMessageLanguage.swift in Sources */,
-				82CD6ECF2B59CA2C00CAD663 /* SPNativeUI.swift in Sources */,
-				0B312FB12ABC507200B62E23 /* SPCampaigns.swift in Sources */,
-				0B312F702ABC506700B62E23 /* SPIDFAStatus.swift in Sources */,
-				0B312FBF2ABC507700B62E23 /* SPSDK.swift in Sources */,
-				0B312FC62ABC507700B62E23 /* SPDelegate.swift in Sources */,
-				0B312FB32ABC507200B62E23 /* SPStringifiedJSON.swift in Sources */,
-				82CD6EB92B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift in Sources */,
-				82CD6EA52B59CA2C00CAD663 /* SPGDPRConsent.swift in Sources */,
-				82CD6EE92B59CA2C00CAD663 /* GDPRPMConsentSnapshot.swift in Sources */,
-				0B312FCF2ABC507D00B62E23 /* SPCampaignType.swift in Sources */,
-				82CD6EF72B59CA2C00CAD663 /* SPGDPRVendorDetailsViewController.swift in Sources */,
-				82CD6EFD2B59CA2C00CAD663 /* SPPrivacyPolicyViewController.swift in Sources */,
-				82CD6EC72B59CA2C00CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */,
-				0B312FD02ABC507D00B62E23 /* SPAction.swift in Sources */,
-				82CD6F2B2B59CA2C00CAD663 /* PMCategoryManager.swift in Sources */,
-				82CD6F372B59CA2C00CAD663 /* SPString.swift in Sources */,
-				0B312FB52ABC507200B62E23 /* SPPrivacyManagerTab.swift in Sources */,
-				82CD6F332B59CA2C00CAD663 /* Collection.swift in Sources */,
-				82CD6EF32B59CA2C00CAD663 /* SPGDPRManagePreferenceViewController.swift in Sources */,
-				0B312F712ABC506700B62E23 /* SPConsentManager.swift in Sources */,
-				82CD6F1B2B59CA2C00CAD663 /* SPCCPAVendorDetailsViewController.swift in Sources */,
-				82CD6EC52B59CA2C00CAD663 /* ErrorMetricsRequest.swift in Sources */,
-				0B312FAD2ABC507200B62E23 /* SPMessageUIDelegate.swift in Sources */,
-				82CD6EA72B59CA2C00CAD663 /* SPUSNatConsent.swift in Sources */,
-				829BD47B2DA02E790043B374 /* Adapters.swift in Sources */,
-				0B312FD12ABC507D00B62E23 /* SPError.swift in Sources */,
-				82CD6EC92B59CA2C00CAD663 /* SPPublisherData.swift in Sources */,
-				0B312FDB2ABC508600B62E23 /* SPJson.swift in Sources */,
-				82CD6F352B59CA2C00CAD663 /* SPURLExtensions.swift in Sources */,
-				82CD6EF52B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.swift in Sources */,
-				82CD6F252B59CA2C00CAD663 /* CCPAPMConsentSnapshot.swift in Sources */,
-				0B312F6C2ABC506700B62E23 /* SPCampaignEnv.swift in Sources */,
-				82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */,
-				82CD6ED12B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */,
-				82CD6F312B59CA2C00CAD663 /* Date.swift in Sources */,
-				82CD6EDB2B59CA2C00CAD663 /* SourcePointClient.swift in Sources */,
-				822CF4002B975AB000927247 /* SPConsentable.swift in Sources */,
-				82CD6F392B59CA2C00CAD663 /* NSObjectExtensions.swift in Sources */,
-				82E605352AFB86A10080E782 /* SPDate.swift in Sources */,
-				82CD6EE12B59CA2C00CAD663 /* SPUIColor.swift in Sources */,
-				82CD6F112B59CA2C00CAD663 /* SPCustomViewController.swift in Sources */,
-				82CD6F072B59CA2C00CAD663 /* SPPMHeader.swift in Sources */,
-				82CD6F0B2B59CA2C00CAD663 /* SPAppleTVButton.swift in Sources */,
-				0B312FD32ABC507D00B62E23 /* OSLogger.swift in Sources */,
-				82CD6F1D2B59CA2C00CAD663 /* SPCCPACategoryDetailsViewController.swift in Sources */,
-				0B312F6F2ABC506700B62E23 /* Constants.swift in Sources */,
-				82CD6ECD2B59CA2C00CAD663 /* PrivacyManagerViewData.swift in Sources */,
-				0B312FC72ABC507700B62E23 /* SPNativeMessage.swift in Sources */,
-				82CD6EF12B59CA2C00CAD663 /* SPGDPRNativePrivacyManagerViewController.swift in Sources */,
-				82CD6F2D2B59CA2C00CAD663 /* GDPRPMPayload.swift in Sources */,
-				0B312FDA2ABC508600B62E23 /* SPMessageViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1997B636238FDCE80079AF34 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4119,204 +3408,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		0B312EDD2ABC4E2400B62E23 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 CocoaPods. All rights reserved.";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
-				PRODUCT_NAME = ConsentViewController;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG SPM";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		0B312EDE2ABC4E2400B62E23 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 CocoaPods. All rights reserved.";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
-				PRODUCT_NAME = ConsentViewController;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SPM;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		0B312EEA2ABC4E4000B62E23 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 CocoaPods. All rights reserved.";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
-				PRODUCT_NAME = ConsentViewController;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = appletvos;
-				SKIP_INSTALL = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG SPM";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		0B312EEB2ABC4E4000B62E23 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 CocoaPods. All rights reserved.";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sourcepoint.ConsentViewController;
-				PRODUCT_NAME = ConsentViewController;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = appletvos;
-				SKIP_INSTALL = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SPM;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 12.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		1997B656238FDCF30079AF34 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE555A6B2B111A4A68B92520 /* Pods-Examples-SourcePointMetaApp.debug.xcconfig */;
@@ -5287,7 +4378,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 77B5AED66E2090489FDCB04B /* Pods-Examples-SourcepointFirebaseDemo.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5332,7 +4422,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F443CF47F8BBED5FBB47F926 /* Pods-Examples-SourcepointFirebaseDemo.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5374,7 +4463,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6B8E2B6DC712089615DBE760 /* Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5409,7 +4497,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E433CCD35C72C4FA6A463685 /* Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -5441,7 +4528,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 05DE652BB2F7833C4EB7AE63 /* Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -5475,7 +4561,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BB9BABF387D49B299944A1E2 /* Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -5634,24 +4719,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0B312EDF2ABC4E2400B62E23 /* Build configuration list for PBXNativeTarget "SPMConsentViewController-iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0B312EDD2ABC4E2400B62E23 /* Debug */,
-				0B312EDE2ABC4E2400B62E23 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0B312EE92ABC4E4000B62E23 /* Build configuration list for PBXNativeTarget "SPMConsentViewController-tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0B312EEA2ABC4E4000B62E23 /* Debug */,
-				0B312EEB2ABC4E4000B62E23 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		1997B65A238FDCF30079AF34 /* Build configuration list for PBXNativeTarget "SourcePointMetaApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -5849,11 +4916,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
 			productName = ConsentViewController;
-		};
-		82CD6F842B59CC3600CAD663 /* Down */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */;
-			productName = Down;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -7,6 +7,7 @@
 // swiftlint:disable line_length
 
 import Foundation
+#if canImport(WebKit)
 import WebKit
 
 @objc public extension WKWebView {
@@ -108,3 +109,4 @@ import WebKit
 }
 
 // swiftlint:enable line_length
+#endif
