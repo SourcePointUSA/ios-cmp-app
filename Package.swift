@@ -17,7 +17,9 @@ let package = Package(
   targets: [
     .target(
       name: "ConsentViewControllerShared",
-      dependencies: [],
+      dependencies: [
+        .product(name: "SPMobileCore", package: "mobile-core")
+      ],
       path: "ConsentViewController",
       exclude: [
         "Assets/javascript/SPJSReceiver.spec.js",
