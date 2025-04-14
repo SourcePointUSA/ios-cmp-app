@@ -1,5 +1,5 @@
 {
-  "originHash" : "4305d3ed4374e884b3e70cd860e01d98b26c42f9fddbf0b86afbee63c0116ae5",
+  "originHash" : "6b6f482ad9f7ef01fcc98d61474c88e8b9b189eaa7aad5224ed076d04e36973d",
   "pins" : [
     {
       "identity" : "down",
@@ -16,16 +16,7 @@
       "location" : "https://github.com/SourcePointUSA/ios-cmp-app",
       "state" : {
         "branch" : "fix_spm_integration",
-        "revision" : "f6eda8073c71751e85dca49d47d5ec6c181c9949"
-      }
-    },
-    {
-      "identity" : "mobile-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SourcePointUSA/mobile-core/",
-      "state" : {
-        "branch" : "add_spm_integration",
-        "revision" : "93ffa38bbf0cf187279f890002cf9ffc321b2985"
+        "revision" : "ed3a980f8f89ac883252dbdb68c7c493770b1009"
       }
     }
   ],

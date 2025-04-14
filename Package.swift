@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "ConsentViewController",
-            path: "./XCFramework/SPM/ConsentViewController.xcframework"
+            path: "./XCFramework/ConsentViewController.xcframework"
         )
     ]
 )
