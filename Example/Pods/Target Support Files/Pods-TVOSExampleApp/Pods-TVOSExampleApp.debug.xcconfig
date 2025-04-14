@@ -1,12 +1,12 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "${PODS_CONFIGURATION_BUILD_DIR}/Down" "${PODS_ROOT}/../../ConsentViewController/Frameworks" "${PODS_XCFRAMEWORKS_BUILD_DIR}/ConsentViewController"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "${PODS_CONFIGURATION_BUILD_DIR}/Down" "${PODS_ROOT}/SPMobileCore" "${PODS_XCFRAMEWORKS_BUILD_DIR}/SPMobileCore"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS/ConsentViewController.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Down/Down.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift '@executable_path/Frameworks' '@loader_path/Frameworks'
 LIBRARY_SEARCH_PATHS = $(inherited) "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
-OTHER_LDFLAGS = $(inherited) -ObjC -framework "ConsentViewController" -framework "Down"
-OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/Down"
+OTHER_LDFLAGS = $(inherited) -l"c++" -framework "ConsentViewController" -framework "Down" -framework "SPMobileCore"
+OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/SPMobileCore-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/Down"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

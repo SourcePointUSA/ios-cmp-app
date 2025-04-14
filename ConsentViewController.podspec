@@ -7,9 +7,9 @@ Pod::Spec.new do |s|
   s.author = { 'SourcePoint' => 'contact@sourcepoint.com' }
   s.source = { :git => 'https://github.com/SourcePointUSA/ios-cmp-app.git', :tag => s.version.to_s }
   s.swift_version = '5.1'
-  s.vendored_frameworks = 'ConsentViewController/Frameworks/SPMobileCore.xcframework'
+#  s.vendored_frameworks = 'ConsentViewController/Frameworks/SPMobileCore.xcframework'
   s.source_files = 'ConsentViewController/Classes/**/*'
-#  s.dependency 'SPMobileCore', '0.1.4'
+  s.dependency 'SPMobileCore', '0.1.4'
   s.ios.deployment_target = '10.0'
   s.ios.exclude_files = 'ConsentViewController/Classes/Views/tvOS'
   s.tvos.deployment_target = '12.0'
