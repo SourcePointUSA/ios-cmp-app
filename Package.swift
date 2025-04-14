@@ -16,7 +16,7 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "ConsentViewControllerShared",
+      name: "ConsentViewController",
       dependencies: [
         .product(name: "SPMobileCore", package: "mobile-core")
       ],
@@ -24,18 +24,12 @@ let package = Package(
       exclude: [
         "Assets/javascript/SPJSReceiver.spec.js",
         "Assets/javascript/jest.config.json",
-        "Classes/Views/tvOS",
-        "Classes/Views/iOS"
+        "Classes/Views/tvOS"
       ],
       resources: [
         .process("Assets/javascript/SPJSReceiver.js"),
         .process("Assets/images")
       ]
-    ),
-    .target(
-      name: "ConsentViewController",
-      dependencies: ["ConsentViewControllerShared"],
-      path: "ConsentViewController/Classes/Views/iOS"
     ),
     .target(
       name: "ConsentViewControllerTvOS",
