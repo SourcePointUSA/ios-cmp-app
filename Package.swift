@@ -1,7 +1,6 @@
 // swift-tools-version:5.5
 import PackageDescription
 
-
 let package = Package(
     name: "ConsentViewController",
     platforms: [
@@ -11,24 +10,13 @@ let package = Package(
     products: [
         .library(
             name: "ConsentViewController",
-            targets: ["ConsentViewControllerWrapper"]
-        )
-    ],
-    dependencies: [
-        .package(url: "https://github.com/SourcePointUSA/mobile-core.git", branch: "add_spm_integration")
+            targets: ["ConsentViewController"]
+        ),
     ],
     targets: [
         .binaryTarget(
             name: "ConsentViewController",
             path: "./XCFramework/SPM/ConsentViewController.xcframework"
-        ),
-        .target(
-            name: "ConsentViewControllerWrapper",
-            dependencies: [
-                "ConsentViewController",
-                .product(name: "SPMobileCore", package: "mobile-core")
-            ],
-            path: "./Wrapper",
         )
     ]
 )

@@ -8,18 +8,6 @@
 		<data>
 		p1QFym1jiRQxmkvZScXjBHhxCu8=
 		</data>
-		<key>Frameworks/SPMobileCore.framework/Info.plist</key>
-		<data>
-		VNVcTYtgLIYO5MMAiJBxjevlg/U=
-		</data>
-		<key>Frameworks/SPMobileCore.framework/SPMobileCore</key>
-		<data>
-		FBVjj5PvypS7vQB26+5/nYCPDfI=
-		</data>
-		<key>Frameworks/SPMobileCore.framework/_CodeSignature/CodeResources</key>
-		<data>
-		1W0XFE5YiWIzZh2eqtUfXSOL+dY=
-		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
 		7epBp6eRukWdtLKnnPr3MDlOat8=
@@ -148,27 +136,6 @@
 			<key>hash2</key>
 			<data>
 			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
-			</data>
-		</dict>
-		<key>Frameworks/SPMobileCore.framework/Info.plist</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			pHcqXTUTfHWm7Nt86QbgDdhS2+UpFj1GmN9sqLyNvFM=
-			</data>
-		</dict>
-		<key>Frameworks/SPMobileCore.framework/SPMobileCore</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			JfW2Gmu6Kvt/zm3VqzVKEL496BcBlokvEdrvoMUqE/I=
-			</data>
-		</dict>
-		<key>Frameworks/SPMobileCore.framework/_CodeSignature/CodeResources</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			7/iaZadRcHemHb5YSLxnUoZKo/+5UzS42/jQDxH+iSI=
 			</data>
 		</dict>
 		<key>Headers/ConsentViewController-Swift.h</key>

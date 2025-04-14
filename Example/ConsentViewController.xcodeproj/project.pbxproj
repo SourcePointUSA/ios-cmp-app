@@ -139,10 +139,6 @@
 		820EF1792A0D28F9009D9941 /* After.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF1782A0D28F9009D9941 /* After.swift */; };
 		820EF17B2A0D296D009D9941 /* MessageUIDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF17A2A0D296D009D9941 /* MessageUIDelegateMock.swift */; };
 		821205862DA7EBD6003A09A3 /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 821205852DA7EBD6003A09A3 /* ConsentViewController */; };
-		821205AA2DA7EECD003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
-		821205AB2DA7EECD003A09A3 /* SPMobileCore.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		821205AD2DA7EED6003A09A3 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
-		821205AE2DA7EED6003A09A3 /* SPMobileCore.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8214B27A249CC13B00167BFE /* SPGDPRExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8214B279249CC13B00167BFE /* SPGDPRExampleAppUITests.swift */; };
 		8216F2EE29FAB4B400133C69 /* AuthExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2ED29FAB4B400133C69 /* AuthExampleApp.swift */; };
 		8216F2F029FAB60400133C69 /* CustomMatchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8216F2EF29FAB60400133C69 /* CustomMatchers.swift */; };
@@ -162,6 +158,8 @@
 		8231B14522BA5A6B00D2669B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14322BA5A6B00D2669B /* Main.storyboard */; };
 		8231B14722BA5A6C00D2669B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14622BA5A6C00D2669B /* Assets.xcassets */; };
 		8231B14A22BA5A6C00D2669B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8231B14822BA5A6C00D2669B /* LaunchScreen.storyboard */; };
+		823ACA1D2DAD31C300F1ED36 /* SPMobileCore in Frameworks */ = {isa = PBXBuildFile; productRef = 823ACA1C2DAD31C300F1ED36 /* SPMobileCore */; };
+		823ACA1F2DAD31DD00F1ED36 /* SPMobileCore in Frameworks */ = {isa = PBXBuildFile; productRef = 823ACA1E2DAD31DD00F1ED36 /* SPMobileCore */; };
 		824796592B7AAD2300D3C4E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 824796582B7AAD2300D3C4E9 /* GoogleService-Info.plist */; };
 		8248A497247D17AA00A7D9AD /* SimpleClientSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A496247D17AA00A7D9AD /* SimpleClientSpec.swift */; };
 		8248A499247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8248A498247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift */; };
@@ -430,28 +428,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		821205AC2DA7EECD003A09A3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				821205AB2DA7EECD003A09A3 /* SPMobileCore.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		821205AF2DA7EED6003A09A3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				821205AE2DA7EED6003A09A3 /* SPMobileCore.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8216E2622BB31D8E006FEF11 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -851,7 +827,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				821205AA2DA7EECD003A09A3 /* SPMobileCore.xcframework in Frameworks */,
+				823ACA1D2DAD31C300F1ED36 /* SPMobileCore in Frameworks */,
 				820B08AE2B602177004E77E8 /* Foundation.framework in Frameworks */,
 				820B08B02B60217E004E77E8 /* UIKit.framework in Frameworks */,
 			);
@@ -861,7 +837,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				821205AD2DA7EED6003A09A3 /* SPMobileCore.xcframework in Frameworks */,
+				823ACA1F2DAD31DD00F1ED36 /* SPMobileCore in Frameworks */,
 				82CD6F852B59CC3600CAD663 /* Down in Frameworks */,
 				820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */,
 			);
@@ -2164,7 +2140,6 @@
 				0B312ED52ABC4E2400B62E23 /* Sources */,
 				0B312ED62ABC4E2400B62E23 /* Frameworks */,
 				0B312ED72ABC4E2400B62E23 /* Resources */,
-				821205AC2DA7EECD003A09A3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2183,7 +2158,6 @@
 				0B312EE12ABC4E4000B62E23 /* Sources */,
 				0B312EE22ABC4E4000B62E23 /* Frameworks */,
 				0B312EE32ABC4E4000B62E23 /* Resources */,
-				821205AF2DA7EED6003A09A3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2192,6 +2166,7 @@
 			name = "SPMConsentViewController-tvOS";
 			packageProductDependencies = (
 				82CD6F842B59CC3600CAD663 /* Down */,
+				823ACA1E2DAD31DD00F1ED36 /* SPMobileCore */,
 			);
 			productName = ConsentViewController;
 			productReference = 0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */;
@@ -2663,6 +2638,7 @@
 			packageReferences = (
 				82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */,
 				827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
+				823ACA1B2DAD31C300F1ED36 /* XCRemoteSwiftPackageReference "mobile-core" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -5934,6 +5910,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		823ACA1B2DAD31C300F1ED36 /* XCRemoteSwiftPackageReference "mobile-core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SourcePointUSA/mobile-core/";
+			requirement = {
+				branch = add_spm_integration;
+				kind = branch;
+			};
+		};
 		827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app";
@@ -5957,6 +5941,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
 			productName = ConsentViewController;
+		};
+		823ACA1C2DAD31C300F1ED36 /* SPMobileCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 823ACA1B2DAD31C300F1ED36 /* XCRemoteSwiftPackageReference "mobile-core" */;
+			productName = SPMobileCore;
+		};
+		823ACA1E2DAD31DD00F1ED36 /* SPMobileCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 823ACA1B2DAD31C300F1ED36 /* XCRemoteSwiftPackageReference "mobile-core" */;
+			productName = SPMobileCore;
 		};
 		82CD6F842B59CC3600CAD663 /* Down */ = {
 			isa = XCSwiftPackageProductDependency;
