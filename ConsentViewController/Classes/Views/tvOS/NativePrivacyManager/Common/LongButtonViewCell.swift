@@ -17,6 +17,7 @@ class LongButtonViewCell: UITableViewCell {
     var selectable = false
     var identifier: String = ""
     var contentType: CategoryContentType?
+    var style: SPNativeStyle?
 
     @IBOutlet var label: UILabel!
     @IBOutlet var customLabel: UILabel!
@@ -33,16 +34,19 @@ class LongButtonViewCell: UITableViewCell {
         customText = isCustom ? nativeCell?.settings.customText : nil
         onText = nativeCell?.settings.onText ?? "On"
         offText = nativeCell?.settings.offText ?? "Off"
+        style = nativeCell?.settings.style
     }
 
     func loadUI() {
         label.text = labelText
+        label.font = UIFont(from: style?.font)
         label.setDefaultTextColorForDarkMode()
         customLabel.setDefaultTextColorForDarkMode()
         stateLabel.setDefaultTextColorForDarkMode()
         if let customText = customText {
             customLabel.isHidden = false
             customLabel.text = customText
+            customLabel.font = UIFont(from: style?.font)
         } else {
             customLabel.isHidden = true
         }
@@ -50,6 +54,7 @@ class LongButtonViewCell: UITableViewCell {
         if let isOn = isOn {
             stateLabel.isHidden = false
             stateLabel.text = isOn ? onText : offText
+            stateLabel.font = UIFont(from: style?.font)
         } else {
             stateLabel.isHidden = true
         }
