@@ -274,12 +274,4 @@ import WebKit
     }
 }
 
-#else
-@objcMembers
-class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-
-    }
-}
-
 #endif
