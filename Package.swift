@@ -12,7 +12,7 @@ let package = Package(
     .library(name: "ConsentViewControllerTvOS", targets: ["ConsentViewControllerTvOS"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/SourcePointUSA/mobile-core", branch: "add_spm_integration")
+    .package(url: "https://github.com/SourcePointUSA/mobile-core.git", branch: "add_spm_integration")
   ],
   targets: [
     .target(
