@@ -6,7 +6,7 @@
 //
 
 import Foundation
-#if canImport(WebKit)
+#if os(iOS)
 import WebKit
 
 @objcMembers
