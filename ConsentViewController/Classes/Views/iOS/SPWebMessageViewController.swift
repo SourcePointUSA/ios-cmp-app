@@ -281,3 +281,5 @@ class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavig
         }
     }
 }
+
+#endif
