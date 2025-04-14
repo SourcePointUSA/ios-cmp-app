@@ -38,7 +38,6 @@ archive() {
         -archivePath "$archivePath" \
         -parallelizeTargets \
         -jobs 8 \
-        # OTHER_LDFLAGS="$linkerFlags" \
         OTHER_SWIFT_FLAGS="-no-verify-emitted-module-interface" \
         SKIP_INSTALL=NO \
         BUILD_LIBRARY_FOR_DISTRIBUTION=YES > ./build/build.log 2>&1
@@ -80,13 +79,13 @@ echo "XCFrameworks created on: ./XCFramework/ConsentViewController.xcframework.z
 
 # ########### Creates the binaries which are distributed via SPM.
 echo "Generating XCFrameworks for SPM"
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS" "./build/SPM/ConsentViewController-iOS" "-forceLoad \"./Example/Pods/SPMobileCore/SPMobileCore.xcframework/ios-arm64/SPMobileCore.framework/SPMobileCore\""
+archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS" "./build/SPM/ConsentViewController-iOS"
 
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS Simulator" "./build/SPM/ConsentViewController-iOS-simulator" "-forceLoad \"./Example/Pods/SPMobileCore/SPMobileCore.xcframework/ios-arm64_x86_64-simulator/SPMobileCore.framework/SPMobileCore\""
+archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS Simulator" "./build/SPM/ConsentViewController-iOS-simulator"
 
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS" "./build/SPM/ConsentViewController-tvOS" "-forceLoad \"./Example/Pods/SPMobileCore/SPMobileCore.xcframework/tvos-arm64/SPMobileCore.framework/SPMobileCore\""
+archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS" "./build/SPM/ConsentViewController-tvOS"
 
-archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS Simulator" "./build/SPM/ConsentViewController-tvOS-simulator" "-forceLoad \"./Example/Pods/SPMobileCore/SPMobileCore.xcframework/tvos-arm64_x86_64-simulator/SPMobileCore.framework/SPMobileCore\""
+archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "generic/platform=tvOS Simulator" "./build/SPM/ConsentViewController-tvOS-simulator"
 
 echo "Archiving succeeded."
 printf "Creating XCFrameworks"
