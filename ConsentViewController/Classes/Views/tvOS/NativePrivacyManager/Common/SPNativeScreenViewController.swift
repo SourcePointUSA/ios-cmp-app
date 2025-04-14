@@ -308,6 +308,14 @@ class FocusGuideDebugView: UIView {
         slider.removeSegment(at: removeSegmentNum, animated: false)
         slider.selectedSegmentIndex = 0
     }
+    
+    func loadGenericTableCell(forComponentId id: String, text: String, cell: UITableViewCell) {
+        cell.textLabel?.text = text
+        cell.textLabel?.setDefaultTextColorForDarkMode()
+        if let cellDetails = components.first(where: { $0.id == id }) as? SPNativeLongButton {
+            cell.textLabel?.font = UIFont(from: cellDetails.settings.style.font)
+        }
+    }
 }
 
 extension UILabel {
