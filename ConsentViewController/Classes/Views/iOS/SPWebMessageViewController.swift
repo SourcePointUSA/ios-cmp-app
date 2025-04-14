@@ -6,17 +6,9 @@
 //
 
 import Foundation
+
 #if os(iOS)
 import WebKit
-
-@objcMembers
-class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-
-    }
-}
-
-#else
 
 @objcMembers class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
     var webviewConfig: WKWebViewConfiguration? { nil }
@@ -279,6 +271,14 @@ class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavig
         } else {
             OSLogger.standard.error("RenderingApp - UnknownBody(\(message.body))")
         }
+    }
+}
+
+#else
+@objcMembers
+class SPWebMessageViewController: SPMessageViewController, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, UIScrollViewDelegate {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+
     }
 }
 
