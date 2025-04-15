@@ -20,7 +20,7 @@ public enum ConsentViewControllerTvOSInitializer {
     public static let initialized: Void = {
         print("ConsentViewControllerTvOSInitializer =====================")
         let bundle = Bundle(for: Wrapper.self)
-        SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: bundle)
+        ConsentViewController.SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: bundle)
     }()
 }
 
