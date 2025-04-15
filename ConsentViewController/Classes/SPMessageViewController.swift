@@ -72,7 +72,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 }
 
 @objcMembers public class SPMessageViewController: UIViewController, SPMessageView {
-    static var bundle = Bundle.framework
+    public static var bundle = Bundle.framework
 
     public weak var messageUIDelegate: SPMessageUIDelegate?
     public var campaignType: SPCampaignType
