@@ -21,6 +21,8 @@ extension UILabel {
 
 @IBDesignable
 class SPPMHeader: UIView {
+    static var nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
+
     var spBackButton: SPAppleTVButton?
 
     var spTitleText: SPNativeText? {
@@ -63,8 +65,7 @@ class SPPMHeader: UIView {
     }
 
     func loadSubViews() {
-        let nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
-        nib.instantiate(withOwner: self, options: nil)
+        Self.nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         titleLabel.accessibilityIdentifier = "Header Title"
         titleLabel.isAccessibilityElement = true

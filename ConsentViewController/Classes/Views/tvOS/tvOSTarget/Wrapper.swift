@@ -9,3 +9,14 @@
 // The actual purpose of this target is to bundle tvOS-only resources (e.g., XIBs).
 
 @_exported import ConsentViewController
+
+private class Wrapper {}
+
+public enum ConsentViewControllerTvOSInitializer {
+    public static let initialized: Void = {
+        print("ConsentViewControllerTvOSInitializer =====================")
+        let bundle = Bundle(for: Wrapper.self)
+        ConsentViewController.SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: bundle)
+    }()
+}
+
