@@ -26,7 +26,7 @@ let package = Package(
       exclude: [
         "Assets/javascript/SPJSReceiver.spec.js",
         "Assets/javascript/jest.config.json",
-        "Classes/Views/tvOS/Xibs"
+        "Classes/Views/tvOS/tvOSTarget"
       ],
       resources: [
         .process("Assets/javascript/SPJSReceiver.js"),
@@ -36,7 +36,8 @@ let package = Package(
     .target(
       name: "ConsentViewControllerTvOS",
       dependencies: ["ConsentViewController"],
-      path: "ConsentViewController/Classes/Views/tvOS/Xibs"
+      path: "ConsentViewController/Classes/Views/tvOS/tvOSTarget",
+      resources: [.process("Xibs")]
     )
   ],
 )
