@@ -21,7 +21,7 @@ extension UILabel {
 
 @IBDesignable
 public class SPPMHeader: UIView {
-    static var nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
+    public static var nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
 
     var spBackButton: SPAppleTVButton?
 
