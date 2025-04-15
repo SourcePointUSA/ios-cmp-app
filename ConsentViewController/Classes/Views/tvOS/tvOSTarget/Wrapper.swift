@@ -8,6 +8,9 @@
 // This file exists to satisfy SwiftPM's requirement for a source file.
 // The actual purpose of this target is to bundle tvOS-only resources (e.g., XIBs).
 
+import Foundation
+import UIKit
+
 @_exported import ConsentViewController
 
 private class Wrapper {}
