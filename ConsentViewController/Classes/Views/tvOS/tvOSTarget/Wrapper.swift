@@ -12,6 +12,7 @@ import Foundation
 import UIKit
 
 @_exported import ConsentViewController
+import ConsentViewController
 
 private class Wrapper {}
 
