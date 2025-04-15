@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UILabel {
     func setup(from spText: SPNativeText?) {
