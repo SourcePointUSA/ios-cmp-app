@@ -20,7 +20,7 @@ extension UILabel {
 }
 
 @IBDesignable
-class SPPMHeader: UIView {
+public class SPPMHeader: UIView {
     static var nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
 
     var spBackButton: SPAppleTVButton?
@@ -34,12 +34,12 @@ class SPPMHeader: UIView {
 
     var onBackButtonTapped: (() -> Void)?
 
-    override var isAccessibilityElement: Bool {
+    public override var isAccessibilityElement: Bool {
         get { false }
         set {}
     }
 
-    override var accessibilityElements: [Any]? {
+    public override var accessibilityElements: [Any]? {
         get { [titleLabel as Any, backButton as Any] }
         set {}
     }

@@ -17,10 +17,12 @@ import ConsentViewController
 private class Wrapper {}
 
 public enum ConsentViewControllerTvOSInitializer {
-    public static let initialized: Void = {
+    static let initialized: Void = {
         print("ConsentViewControllerTvOSInitializer =====================")
         let bundle = Bundle(for: Wrapper.self)
         ConsentViewController.SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: bundle)
     }()
 }
+
+let thing: Void = ConsentViewControllerTvOSInitializer.initialized
 
