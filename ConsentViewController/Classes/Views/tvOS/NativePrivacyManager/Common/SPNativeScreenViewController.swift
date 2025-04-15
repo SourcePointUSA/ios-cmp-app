@@ -7,139 +7,8 @@
 
 import UIKit
 
-#if SPM
-@_implementationOnly import Down
-#else
+#if os(tvOS)
 import Down
-#endif
-
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.alpha = 0
-                        self?.image = image
-                        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
-                            self?.alpha = 1.0
-                        })
-                    }
-                }
-            }
-        }
-    }
-}
-
-enum SPUIRectEdge {
-    case bottomTop, rightLeft, topBottom, leftRight, left, right, top, bottom, all
-
-    init(from edge: UIRectEdge) {
-        switch edge {
-        case .all: self = .all
-        case .top: self = .top
-        case .bottom: self = .bottom
-        case .left: self = .left
-        case .right: self = .right
-
-        default:
-            self = .all
-        }
-    }
-}
-
-extension UIFont {
-    convenience init?(from spFont: SPNativeFont?) {
-        let magicScalingFactor = CGFloat(1.8)
-        let fontSize = spFont?.fontSize != nil ? // swiftlint:disable:next force_unwrapping
-            spFont!.fontSize * magicScalingFactor :
-            UIFont.preferredFont(forTextStyle: .body).pointSize
-        let family = spFont?.fontFamily
-            .split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
-            .first { UIFont.familyNames.map { $0.lowercased() }.contains($0) }
-            ?? UIFont.systemFont(ofSize: fontSize).familyName
-        self.init(name: family, size: fontSize)
-    }
-}
-
-extension UIViewController {
-    @discardableResult
-    func addFocusGuide(from origin: UIView?, to destination: UIView?, direction: SPUIRectEdge, debug: Bool = false) -> [UIFocusGuide?] {
-        switch direction {
-        case .bottomTop:
-            return [
-                addFocusGuide(from: origin, to: [destination], direction: .bottom, debug: debug),
-                addFocusGuide(from: destination, to: [origin], direction: .top, debug: debug)
-            ]
-        case .topBottom: return addFocusGuide(from: destination, to: origin, direction: .bottomTop, debug: debug)
-
-        case .rightLeft:
-            return [
-                addFocusGuide(from: origin, to: [destination], direction: .right, debug: debug),
-                addFocusGuide(from: destination, to: [origin], direction: .left, debug: debug)
-            ]
-        case .leftRight: return addFocusGuide(from: destination, to: origin, direction: .rightLeft, debug: debug)
-
-        default:
-            return [addFocusGuide(from: origin, to: [destination], direction: direction, debug: debug)]
-        }
-    }
-
-    @discardableResult
-    func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: SPUIRectEdge, debug: Bool = false) -> UIFocusGuide? {
-        if let origin = origin {
-            let destinations = maybeDestinations.compactMap { $0 }
-            let focusGuide = UIFocusGuide()
-            view.addLayoutGuide(focusGuide)
-            focusGuide.preferredFocusEnvironments = destinations
-            focusGuide.widthAnchor.constraint(equalTo: origin.widthAnchor).isActive = true
-            focusGuide.heightAnchor.constraint(equalTo: origin.heightAnchor).isActive = true
-
-            switch direction {
-            case .bottom:
-                focusGuide.topAnchor.constraint(equalTo: origin.bottomAnchor).isActive = true
-                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
-
-            case .top:
-                focusGuide.bottomAnchor.constraint(equalTo: origin.topAnchor).isActive = true
-                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
-
-            case .left:
-                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
-                focusGuide.rightAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
-
-            case .right:
-                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
-                focusGuide.leftAnchor.constraint(equalTo: origin.rightAnchor).isActive = true
-
-            default:
-                // Not supported :(
-                break
-            }
-
-            if debug {
-                view.addSubview(FocusGuideDebugView(focusGuide: focusGuide))
-            }
-
-            return focusGuide
-        }
-        return nil
-    }
-}
-
-class FocusGuideDebugView: UIView {
-    init(focusGuide: UIFocusGuide) {
-        super.init(frame: focusGuide.layoutFrame)
-        backgroundColor = UIColor.green.withAlphaComponent(0.15)
-        layer.borderColor = UIColor.green.withAlphaComponent(0.3).cgColor
-        layer.borderWidth = 1
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        nil
-    }
-}
 
 @objcMembers class SPNativeScreenViewController: SPMessageViewController {
     var components: [SPNativeUI] { viewData.children }
@@ -306,6 +175,138 @@ class FocusGuideDebugView: UIView {
     func removeSliderButtonSegment(slider: UISegmentedControl, removeSegmentNum: Int) {
         slider.removeSegment(at: removeSegmentNum, animated: false)
         slider.selectedSegmentIndex = 0
+    }
+}
+
+#else
+@objcMembers class SPNativeScreenViewController: SPMessageViewController {}
+#endif
+
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.alpha = 0
+                        self?.image = image
+                        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
+                            self?.alpha = 1.0
+                        })
+                    }
+                }
+            }
+        }
+    }
+}
+
+enum SPUIRectEdge {
+    case bottomTop, rightLeft, topBottom, leftRight, left, right, top, bottom, all
+
+    init(from edge: UIRectEdge) {
+        switch edge {
+        case .all: self = .all
+        case .top: self = .top
+        case .bottom: self = .bottom
+        case .left: self = .left
+        case .right: self = .right
+
+        default:
+            self = .all
+        }
+    }
+}
+
+extension UIFont {
+    convenience init?(from spFont: SPNativeFont?) {
+        let magicScalingFactor = CGFloat(1.8)
+        let fontSize = spFont?.fontSize != nil ? // swiftlint:disable:next force_unwrapping
+            spFont!.fontSize * magicScalingFactor :
+            UIFont.preferredFont(forTextStyle: .body).pointSize
+        let family = spFont?.fontFamily
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
+            .first { UIFont.familyNames.map { $0.lowercased() }.contains($0) }
+            ?? UIFont.systemFont(ofSize: fontSize).familyName
+        self.init(name: family, size: fontSize)
+    }
+}
+
+extension UIViewController {
+    @discardableResult
+    func addFocusGuide(from origin: UIView?, to destination: UIView?, direction: SPUIRectEdge, debug: Bool = false) -> [UIFocusGuide?] {
+        switch direction {
+        case .bottomTop:
+            return [
+                addFocusGuide(from: origin, to: [destination], direction: .bottom, debug: debug),
+                addFocusGuide(from: destination, to: [origin], direction: .top, debug: debug)
+            ]
+        case .topBottom: return addFocusGuide(from: destination, to: origin, direction: .bottomTop, debug: debug)
+
+        case .rightLeft:
+            return [
+                addFocusGuide(from: origin, to: [destination], direction: .right, debug: debug),
+                addFocusGuide(from: destination, to: [origin], direction: .left, debug: debug)
+            ]
+        case .leftRight: return addFocusGuide(from: destination, to: origin, direction: .rightLeft, debug: debug)
+
+        default:
+            return [addFocusGuide(from: origin, to: [destination], direction: direction, debug: debug)]
+        }
+    }
+
+    @discardableResult
+    func addFocusGuide(from origin: UIView?, to maybeDestinations: [UIView?], direction: SPUIRectEdge, debug: Bool = false) -> UIFocusGuide? {
+        if let origin = origin {
+            let destinations = maybeDestinations.compactMap { $0 }
+            let focusGuide = UIFocusGuide()
+            view.addLayoutGuide(focusGuide)
+            focusGuide.preferredFocusEnvironments = destinations
+            focusGuide.widthAnchor.constraint(equalTo: origin.widthAnchor).isActive = true
+            focusGuide.heightAnchor.constraint(equalTo: origin.heightAnchor).isActive = true
+
+            switch direction {
+            case .bottom:
+                focusGuide.topAnchor.constraint(equalTo: origin.bottomAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+
+            case .top:
+                focusGuide.bottomAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+
+            case .left:
+                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.rightAnchor.constraint(equalTo: origin.leftAnchor).isActive = true
+
+            case .right:
+                focusGuide.topAnchor.constraint(equalTo: origin.topAnchor).isActive = true
+                focusGuide.leftAnchor.constraint(equalTo: origin.rightAnchor).isActive = true
+
+            default:
+                // Not supported :(
+                break
+            }
+
+            if debug {
+                view.addSubview(FocusGuideDebugView(focusGuide: focusGuide))
+            }
+
+            return focusGuide
+        }
+        return nil
+    }
+}
+
+class FocusGuideDebugView: UIView {
+    init(focusGuide: UIFocusGuide) {
+        super.init(frame: focusGuide.layoutFrame)
+        backgroundColor = UIColor.green.withAlphaComponent(0.15)
+        layer.borderColor = UIColor.green.withAlphaComponent(0.3).cgColor
+        layer.borderWidth = 1
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        nil
     }
 }
 
