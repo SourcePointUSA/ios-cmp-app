@@ -37,7 +37,7 @@ class SPCCPAPartnersViewController: SPNativeScreenViewController {
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
         nativeLongButton = viewData.byId("VendorButton") as? SPNativeLongButton
         vendorsTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            LongButtonViewCell.nib,
             forCellReuseIdentifier: cellReuseIdentifier
         )
         vendorsTableView.delegate = self

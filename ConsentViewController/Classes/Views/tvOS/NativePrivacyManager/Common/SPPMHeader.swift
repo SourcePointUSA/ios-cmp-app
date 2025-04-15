@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TVUIKit
+import UIKit
 
 extension UILabel {
     func setup(from spText: SPNativeText?) {
@@ -20,7 +20,9 @@ extension UILabel {
 }
 
 @IBDesignable
-class SPPMHeader: UIView {
+public class SPPMHeader: UIView {
+    public static var nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
+
     var spBackButton: SPAppleTVButton?
 
     var spTitleText: SPNativeText? {
@@ -32,12 +34,12 @@ class SPPMHeader: UIView {
 
     var onBackButtonTapped: (() -> Void)?
 
-    override var isAccessibilityElement: Bool {
+    public override var isAccessibilityElement: Bool {
         get { false }
         set {}
     }
 
-    override var accessibilityElements: [Any]? {
+    public override var accessibilityElements: [Any]? {
         get { [titleLabel as Any, backButton as Any] }
         set {}
     }
@@ -63,8 +65,7 @@ class SPPMHeader: UIView {
     }
 
     func loadSubViews() {
-        let nib = UINib(nibName: "SPPMHeader", bundle: Bundle.framework)
-        nib.instantiate(withOwner: self, options: nil)
+        Self.nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         titleLabel.accessibilityIdentifier = "Header Title"
         titleLabel.isAccessibilityElement = true

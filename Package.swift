@@ -1,22 +1,45 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
-    name: "ConsentViewController",
-    platforms: [
-        .iOS(.v10),
-        .tvOS(.v10)
-    ],
-    products: [
-        .library(
-            name: "ConsentViewController",
-            targets: ["ConsentViewController"]
-        ),
-    ],
-    targets: [
-        .binaryTarget(
-            name: "ConsentViewController",
-            path: "./XCFramework/SPM/ConsentViewController.xcframework"
-        )
-    ]
+  name: "ConsentViewController",
+  platforms: [
+    .iOS(.v10),
+    .tvOS(.v10)
+  ],
+  products: [
+    .library(name: "ConsentViewController", targets: ["ConsentViewController"]),
+    .library(name: "ConsentViewControllerTvOS", targets: ["ConsentViewControllerTvOS"]),
+  ],
+  dependencies: [
+    .package(url: "https://github.com/SourcePointUSA/mobile-core.git", branch: "add_spm_integration"),
+    .package(url: "https://github.com/johnxnguyen/Down.git", .exact("0.11.0")),
+  ],
+  targets: [
+    .target(
+      name: "ConsentViewController",
+      dependencies: [
+        .product(name: "SPMobileCore", package: "mobile-core"),
+        .product(name: "Down", package: "down")
+      ],
+      path: "ConsentViewController",
+      exclude: [
+        "Assets/javascript/SPJSReceiver.spec.js",
+        "Assets/javascript/jest.config.json",
+        "Classes/Views/tvOS/tvOSTarget"
+      ],
+      resources: [
+        .process("Assets/javascript/SPJSReceiver.js"),
+        .process("Assets/images")
+      ]
+    ),
+    .target(
+      name: "ConsentViewControllerTvOS",
+      dependencies: ["ConsentViewController"],
+      path: "ConsentViewController/Classes/Views/tvOS/tvOSTarget",
+      resources: [.process("Xibs")]
+    )
+  ],
 )
+
+

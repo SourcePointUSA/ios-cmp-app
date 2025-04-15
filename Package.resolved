@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Down",
+        "repositoryURL": "https://github.com/johnxnguyen/Down.git",
+        "state": {
+          "branch": null,
+          "revision": "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+          "version": "0.11.0"
+        }
+      },
+      {
+        "package": "SPMobileCore",
+        "repositoryURL": "https://github.com/SourcePointUSA/mobile-core.git",
+        "state": {
+          "branch": "add_spm_integration",
+          "revision": "93ffa38bbf0cf187279f890002cf9ffc321b2985",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

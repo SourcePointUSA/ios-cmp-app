@@ -7,7 +7,10 @@
 
 import UIKit
 
-class LongButtonViewCell: UITableViewCell {
+public class LongButtonViewCell: UITableViewCell {
+
+    public static var nib = UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework)
+
     var labelText: String?
     var isOn: Bool?
     var isCustom = false
@@ -21,13 +24,6 @@ class LongButtonViewCell: UITableViewCell {
     @IBOutlet var label: UILabel!
     @IBOutlet var customLabel: UILabel!
     @IBOutlet var stateLabel: UILabel!
-
-//    override var isAccessibilityElement: Bool { set {} get { false }}
-//    override var accessibilityElements: [Any]? { set {} get {[
-//        label as Any,
-//        customLabel as Any,
-//        stateLabel as Any
-//    ]}}
 
     func setup(from nativeCell: SPNativeLongButton?) {
         customText = isCustom ? nativeCell?.settings.customText : nil
@@ -56,14 +52,14 @@ class LongButtonViewCell: UITableViewCell {
         accessibilityIdentifier = "\(labelText ?? "") \(stateLabel.text ?? "")"
     }
 
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         labelText = nil
         isOn = nil
         selectable = false
         loadUI()
     }
 
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         loadUI()
         selectionStyle = .none
