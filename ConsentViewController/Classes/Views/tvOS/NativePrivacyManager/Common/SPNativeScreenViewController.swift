@@ -7,15 +7,75 @@
 
 import UIKit
 
+protocol SPNativeScreenVC: SPMessageViewController {
+    var viewData: SPNativeView { get }
+    var components: [SPNativeUI] { get }
+    var pmData: PrivacyManagerViewData { get }
+
+    init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String?)
+
+    func setFocusGuides()
+
+    func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView
+
+    func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton
+
+    func loadLabelText(forComponent component: SPNativeText, labelText text: String?, label: UILabel) -> UILabel
+
+    func loadLabelText(forComponent component: SPNativeText, label: UILabel) -> UILabel
+
+    func loadLabelText(forComponentId id: String, labelText text: String?, label: UILabel) -> UILabel
+
+    func loadLabelText(forComponentId id: String, label: UILabel) -> UILabel
+
+    func parseText(_ rawText: String) -> NSAttributedString?
+
+    func loadTextView(forComponentId id: String, textView: UITextView, text: String?, bounces: Bool) -> UITextView
+
+    func loadTextView(forComponentId id: String, textView: UITextView, bounces: Bool) -> UITextView
+
+    func loadTextView(forComponentId id: String, textView: UITextView) -> UITextView
+
+    func loadSliderButtonFromNativeTexts(firstSegmentForComponentId firstId: String, secondSegmentForComponentId secondId: String, slider: UISegmentedControl) -> UISegmentedControl
+
+    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl
+
+    func loadSliderSegmentFont(style: SPNativeStyle, slider: UISegmentedControl)
+
+    func removeSliderButtonSegment(slider: UISegmentedControl, removeSegmentNum: Int)
+}
+
+extension SPNativeScreenVC {
+    init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?) {
+        self.init(messageId: messageId, campaignType: campaignType, viewData: viewData, pmData: pmData, delegate: delegate, nibName: nil)
+    }
+
+    func loadLabelText(forComponent component: SPNativeText, label: UILabel) -> UILabel {
+        loadLabelText(forComponent: component, labelText: nil, label: label)
+    }
+
+    func loadLabelText(forComponentId id: String, label: UILabel) -> UILabel {
+        loadLabelText(forComponentId: id, labelText: nil, label: label)
+    }
+
+    func loadTextView(forComponentId id: String, textView: UITextView, bounces: Bool) -> UITextView {
+        loadTextView(forComponentId: id, textView: textView, text: nil, bounces: bounces)
+    }
+
+    func loadTextView(forComponentId id: String, textView: UITextView) -> UITextView {
+        loadTextView(forComponentId: id, textView: textView, text: nil, bounces: true)
+    }
+}
+
 #if os(tvOS)
 import Down
 
-@objcMembers class SPNativeScreenViewController: SPMessageViewController {
+@objcMembers class SPNativeScreenViewController: SPMessageViewController, SPNativeScreenVC {
     var components: [SPNativeUI] { viewData.children }
     let viewData: SPNativeView
     let pmData: PrivacyManagerViewData
 
-    init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
+    required init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: SPMessageUIDelegate?, nibName: String? = nil) {
         self.viewData = viewData
         self.pmData = pmData
         super.init(
@@ -179,7 +239,57 @@ import Down
 }
 
 #else
-@objcMembers class SPNativeScreenViewController: SPMessageViewController {}
+@objcMembers class SPNativeScreenViewController: SPMessageViewController, SPNativeScreenVC {
+    var components: [SPNativeUI] = []
+    var pmData: PrivacyManagerViewData = PrivacyManagerViewData()
+    let viewData = SPNativeView()
+
+    required init(messageId: String, campaignType: SPCampaignType, viewData: SPNativeView, pmData: PrivacyManagerViewData, delegate: (any SPMessageUIDelegate)?, nibName: String?) {
+        super.init(messageId: messageId, campaignType: campaignType, timeout: 0, delegate: nil)
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        nil
+    }
+    
+    func setFocusGuides() {}
+
+    func loadImage(forComponentId id: String, imageView: UIImageView) -> UIImageView {
+        imageView
+    }
+
+    func loadButton(forComponentId id: String, button: SPAppleTVButton) -> UIButton {
+        UIButton()
+    }
+
+    func loadLabelText(forComponent component: SPNativeText, labelText text: String?, label: UILabel) -> UILabel {
+        UILabel()
+    }
+
+    func loadLabelText(forComponentId id: String, labelText text: String?, label: UILabel) -> UILabel {
+        UILabel()
+    }
+
+    func parseText(_ rawText: String) -> NSAttributedString? {
+        nil
+    }
+
+    func loadTextView(forComponentId id: String, textView: UITextView, text: String?, bounces: Bool) -> UITextView {
+        textView
+    }
+
+    func loadSliderButtonFromNativeTexts(firstSegmentForComponentId firstId: String, secondSegmentForComponentId secondId: String, slider: UISegmentedControl) -> UISegmentedControl {
+        slider
+    }
+
+    func loadSliderButton(forComponentId id: String, slider: UISegmentedControl) -> UISegmentedControl {
+        slider
+    }
+
+    func loadSliderSegmentFont(style: SPNativeStyle, slider: UISegmentedControl) {}
+
+    func removeSliderButtonSegment(slider: UISegmentedControl, removeSegmentNum: Int) {}
+}
 #endif
 
 extension UIImageView {
@@ -312,7 +422,7 @@ class FocusGuideDebugView: UIView {
 
 extension UILabel {
     func setDefaultTextColorForDarkMode() {
-        if #available(tvOS 13.0, *) {
+        if #available(iOS 13.0, tvOS 13.0, *) {
             if UITraitCollection.current.userInterfaceStyle == .dark {
                 self.textColor = Constants.UI.DarkMode.defaultFallbackTextColorForDarkMode
             }

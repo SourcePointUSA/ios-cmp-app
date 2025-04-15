@@ -145,7 +145,7 @@
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
-		82962B1B2DAE718600455E5E /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 82962B1A2DAE718600455E5E /* ConsentViewController */; };
+		82962B1E2DAE72CB00455E5E /* ConsentViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 82962B1D2DAE72CB00455E5E /* ConsentViewController */; };
 		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* SPConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* SPConsentSpec.swift */; };
 		829E851729FA9A6500BE5E65 /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829E851629FA9A6500BE5E65 /* Statuses.swift */; };
@@ -652,7 +652,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82962B1B2DAE718600455E5E /* ConsentViewController in Frameworks */,
+				82962B1E2DAE72CB00455E5E /* ConsentViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1795,7 +1795,7 @@
 			);
 			name = SPMBuild;
 			packageProductDependencies = (
-				82962B1A2DAE718600455E5E /* ConsentViewController */,
+				82962B1D2DAE72CB00455E5E /* ConsentViewController */,
 			);
 			productName = SPMBuild;
 			productReference = 8255B6C827A9661100C9A70D /* SPMBuild.app */;
@@ -2021,7 +2021,7 @@
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
 				82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */,
-				82962B192DAE718600455E5E /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
+				82962B1C2DAE72CB00455E5E /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -4893,7 +4893,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		82962B192DAE718600455E5E /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
+		82962B1C2DAE72CB00455E5E /* XCRemoteSwiftPackageReference "ios-cmp-app" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SourcePointUSA/ios-cmp-app";
 			requirement = {
@@ -4912,9 +4912,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		82962B1A2DAE718600455E5E /* ConsentViewController */ = {
+		82962B1D2DAE72CB00455E5E /* ConsentViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 82962B192DAE718600455E5E /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
+			package = 82962B1C2DAE72CB00455E5E /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
 			productName = ConsentViewController;
 		};
 /* End XCSwiftPackageProductDependency section */

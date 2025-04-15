@@ -119,6 +119,10 @@ class SPNativeUISettings: NSObject, Decodable {
 
     let style: SPNativeStyle
 
+    init(style: SPNativeStyle = SPNativeStyle()) {
+        self.style = style
+    }
+
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         style = try container.decodeIfPresent(SPNativeStyle.self, forKey: .style) ?? SPNativeStyle()
@@ -146,6 +150,11 @@ class SPNativeUI: NSObject, Decodable {
 
     let id: String
     let type: SPNativeUIType
+
+    init(id: String, type: SPNativeUIType) {
+        self.id = id
+        self.type = type
+    }
 }
 
 class SPNativeView: SPNativeUI {
@@ -155,6 +164,11 @@ class SPNativeView: SPNativeUI {
 
     var children: [SPNativeUI] = []
     let settings: SPNativeUISettings
+
+    init() {
+        settings = SPNativeUISettings()
+        super.init(id: "", type: .NativeView)
+    }
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

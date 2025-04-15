@@ -20,6 +20,16 @@ struct PrivacyManagerViewData {
 }
 
 extension PrivacyManagerViewData {
+    init () {
+        homeView = SPNativeView()
+        categoriesView = SPNativeView()
+        vendorsView = SPNativeView()
+        categoryDetailsView = SPNativeView()
+        vendorDetailsView = SPNativeView()
+        privacyPolicyView = nil
+        customView = nil
+    }
+
     init(from rootView: SPNativeView) throws {
         homeView = try findViewBy(id: "HomeView", rootView)
         categoriesView = try findViewBy(id: "CategoriesView", rootView)
