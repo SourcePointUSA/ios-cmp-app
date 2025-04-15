@@ -19,7 +19,8 @@ let package = Package(
     .target(
       name: "ConsentViewController",
       dependencies: [
-        .product(name: "SPMobileCore", package: "mobile-core")
+        .product(name: "SPMobileCore", package: "mobile-core"),
+        .product(name: "Down", package: "down")
       ],
       path: "ConsentViewController",
       exclude: [
@@ -34,10 +35,7 @@ let package = Package(
     ),
     .target(
       name: "ConsentViewControllerTvOS",
-      dependencies: [
-        "ConsentViewController",
-        .product(name: "Down", package: "down")
-      ],
+      dependencies: ["ConsentViewController"],
       path: "ConsentViewController/Classes/Views/tvOS/Xibs"
     )
   ],
