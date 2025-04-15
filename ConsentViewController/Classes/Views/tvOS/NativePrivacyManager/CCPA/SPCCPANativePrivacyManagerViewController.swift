@@ -206,7 +206,7 @@ import UIKit
     func setDoNotSellButton() {
         doNotSellButton = viewData.byId("DoNotSellButton") as? SPNativeLongButton
         doNotSellTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            LongButtonViewCell.nib,
             forCellReuseIdentifier: cellReuseIdentifier
         )
         doNotSellTableView.allowsSelection = true

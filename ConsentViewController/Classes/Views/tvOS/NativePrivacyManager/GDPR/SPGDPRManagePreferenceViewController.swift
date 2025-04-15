@@ -101,7 +101,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
         nativeLongButton = viewData.byId("CategoryButton") as? SPNativeLongButton
         categoriesTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            LongButtonViewCell.nib,
             forCellReuseIdentifier: cellReuseIdentifier
         )
         categoriesTableView.delegate = self

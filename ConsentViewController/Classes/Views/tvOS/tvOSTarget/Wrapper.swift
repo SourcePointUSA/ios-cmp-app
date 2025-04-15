@@ -54,8 +54,12 @@ import ConsentViewController
         campaigns: SPCampaigns,
         language: SPMessageLanguage,
         delegate: (any SPDelegate)?) {
-            let bundle = Bundle(for: Self.self)
-            ConsentViewController.SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: bundle)
+            let url = Bundle(for: Self.self).url(forResource: "ConsentViewController_ConsentViewControllerTvOS", withExtension: "bundle")!
+            let resourceBundle = Bundle(url: url)!
+
+            ConsentViewController.SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: resourceBundle)
+            ConsentViewController.LongButtonViewCell.nib = UINib(nibName: "LongButtonViewCell", bundle: resourceBundle)
+            ConsentViewController.SPMessageViewController.bundle = resourceBundle
 
             wrapped = .init(
                 accountId: accountId,

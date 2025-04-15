@@ -85,7 +85,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            LongButtonViewCell.nib,
             forCellReuseIdentifier: cellReuseIdentifier
         )
         vendorDetailsTableView.delegate = self

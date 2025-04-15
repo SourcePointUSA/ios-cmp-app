@@ -72,6 +72,8 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 }
 
 @objcMembers public class SPMessageViewController: UIViewController, SPMessageView {
+    static var bundle = Bundle.framework
+
     public weak var messageUIDelegate: SPMessageUIDelegate?
     public var campaignType: SPCampaignType
     public var messageId: String = ""
@@ -82,7 +84,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
         self.messageUIDelegate = delegate
         self.messageId = messageId
         self.timeout = timeout
-        super.init(nibName: nibName, bundle: Bundle.framework)
+        super.init(nibName: nibName, bundle: Self.bundle)
     }
 
     required init?(coder: NSCoder) {

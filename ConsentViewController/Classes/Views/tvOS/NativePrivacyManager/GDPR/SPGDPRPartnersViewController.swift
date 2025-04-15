@@ -49,7 +49,7 @@ class SPGDPRPartnersViewController: SPNativeScreenViewController {
         nativeLongButton = viewData.byId("VendorButton") as? SPNativeLongButton
         loadLabelText(forComponentId: "VendorDescription", labelText: "", label: selectedVendorTextLabel)
         vendorsTableView.register(
-            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            LongButtonViewCell.nib,
             forCellReuseIdentifier: cellReuseIdentifier
         )
         vendorsTableView.delegate = self
