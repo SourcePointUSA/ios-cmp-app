@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import TVUIKit
 
 extension UILabel {
     func setup(from spText: SPNativeText?) {
