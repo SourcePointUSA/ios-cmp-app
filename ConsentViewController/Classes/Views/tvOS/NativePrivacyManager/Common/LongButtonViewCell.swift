@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LongButtonViewCell: UITableViewCell {
+public class LongButtonViewCell: UITableViewCell {
 
     public static var nib = UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework)
 
@@ -52,14 +52,14 @@ class LongButtonViewCell: UITableViewCell {
         accessibilityIdentifier = "\(labelText ?? "") \(stateLabel.text ?? "")"
     }
 
-    override func prepareForReuse() {
+    public override func prepareForReuse() {
         labelText = nil
         isOn = nil
         selectable = false
         loadUI()
     }
 
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         loadUI()
         selectionStyle = .none
