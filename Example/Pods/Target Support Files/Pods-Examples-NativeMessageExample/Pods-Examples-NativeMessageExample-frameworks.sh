@@ -176,12 +176,12 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController.common/ConsentViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/SPMobileCore/SPMobileCore.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ConsentViewController.common/ConsentViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Wormholy/Wormholy.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/SPMobileCore/SPMobileCore.framework"
 fi

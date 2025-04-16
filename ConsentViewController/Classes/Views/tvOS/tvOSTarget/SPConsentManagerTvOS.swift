@@ -1,5 +1,5 @@
 //
-//  Wrapper.swift
+//  SPConsentManagerTvOS.swift
 //  Pods
 //
 //  Created by Andre Herculano on 14/4/25.
@@ -11,6 +11,7 @@
 import Foundation
 import UIKit
 
+#if SWIFT_PACKAGE
 @_exported import ConsentViewControllerCore
 
 @objcMembers public class SPConsentManagerTvOS: NSObject, SPSDK {
@@ -122,3 +123,4 @@ import UIKit
     }
 }
 
+#endif

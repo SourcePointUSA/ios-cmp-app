@@ -1,7 +1,14 @@
 PODS:
   - ConsentViewController (7.8.0):
+    - ConsentViewController/ConsentViewController (= 7.8.0)
+  - ConsentViewController/ConsentViewController (7.8.0):
+    - ConsentViewController/ConsentViewControllerCore
+    - ConsentViewController/ConsentViewControllerTvOS
+  - ConsentViewController/ConsentViewControllerCore (7.8.0):
     - Down (~> 0.11.0)
     - SPMobileCore (= 0.1.4)
+  - ConsentViewController/ConsentViewControllerTvOS (7.8.0):
+    - ConsentViewController/ConsentViewControllerCore
   - Down (0.11.0)
   - FirebaseAnalytics (10.23.0):
     - FirebaseAnalytics/AdIdSupport (= 10.23.0)
@@ -128,7 +135,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: ebb5c8668dc781d91e04310d940146450cfd6b3b
+  ConsentViewController: 766931756a8a7c2f35a1fd0a571431a14cb814fe
   Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
   FirebaseAnalytics: 45f6e2e5ef8ccbb90be73ae983c3b20fa78837f7
   FirebaseCore: 63efb128decaebb04c4033ed4e05fb0bb1cccef1

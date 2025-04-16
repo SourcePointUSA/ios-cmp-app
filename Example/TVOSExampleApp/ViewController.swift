@@ -19,7 +19,7 @@ class ViewController: UIViewController {
             gdpr = SPCampaign()
         }
         if UserDefaults.standard.bool(forKey: "app.campaigns.ccpa") {
-            ccpa = SPCampaign()
+//            ccpa = SPCampaign()
         }
         return SPCampaigns(gdpr: gdpr, ccpa: ccpa, environment: .Public)
     }

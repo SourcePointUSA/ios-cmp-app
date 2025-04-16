@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPGDPRVendorDetailsViewController" customModule="ConsentViewControllerCore">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPGDPRVendorDetailsViewController" >
             <connections>
                 <outlet property="LegIntQrCodeImageView" destination="xUZ-MR-Hik" id="PIl-9H-GEE"/>
                 <outlet property="LegIntQrCodeLabel" destination="qt6-QN-kUC" id="1Ga-dc-lTL"/>
@@ -36,7 +36,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="kye-qG-nIB" userLabel="Stack View - Main">
                     <rect key="frame" x="80" y="60" width="1760" height="960"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLv-m7-FYn" customClass="SPPMHeader" customModule="ConsentViewControllerCore">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLv-m7-FYn" customClass="SPPMHeader" >
                             <rect key="frame" x="0.0" y="0.0" width="1760" height="100"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -87,7 +87,7 @@
                                                 <stackView opaque="NO" contentMode="center" axis="vertical" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hd1-ep-WaY" userLabel="Stack View - Actions">
                                                     <rect key="frame" x="240" y="0.0" width="400" height="128"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-FM-mVV" customClass="SPAppleTVButton" customModule="ConsentViewControllerCore">
+                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-FM-mVV" customClass="SPAppleTVButton" >
                                                             <rect key="frame" x="0.0" y="0.0" width="400" height="60"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="60" id="7xL-cG-tqf"/>
@@ -99,7 +99,7 @@
                                                                 <action selector="onOnButtonTap:" destination="-1" eventType="primaryActionTriggered" id="xie-am-TKj"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDo-eE-jhB" customClass="SPAppleTVButton" customModule="ConsentViewControllerCore">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDo-eE-jhB" customClass="SPAppleTVButton" >
                                                             <rect key="frame" x="0.0" y="68" width="400" height="60"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="400" id="7Lr-2u-ULZ"/>
@@ -135,7 +135,7 @@
                                                 <action selector="onCategorySliderTap:" destination="-1" eventType="valueChanged" id="uAX-NT-ZvS"/>
                                             </connections>
                                         </segmentedControl>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQL-uQ-3WW" customClass="SPFocusableTextView" customModule="ConsentViewControllerCore">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQL-uQ-3WW" customClass="SPFocusableTextView" >
                                             <rect key="frame" x="0.0" y="80" width="880" height="200"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>

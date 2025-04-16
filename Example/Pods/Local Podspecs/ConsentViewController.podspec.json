@@ -14,37 +14,71 @@
     "git": "https://github.com/SourcePointUSA/ios-cmp-app.git",
     "tag": "7.8.0"
   },
-  "swift_versions": "5.1",
-  "source_files": "ConsentViewController/Classes/**/*",
-  "dependencies": {
-    "SPMobileCore": [
-      "0.1.4"
-    ]
-  },
+  "swift_versions": "5.9",
   "platforms": {
     "ios": "10.0",
-    "tvos": "12.0"
+    "tvos": "10.0"
   },
-  "ios": {
-    "exclude_files": "ConsentViewController/Classes/Views/tvOS"
-  },
-  "tvos": {
-    "exclude_files": "ConsentViewController/Classes/Views/iOS",
-    "dependencies": {
-      "Down": [
-        "~> 0.11.0"
-      ]
-    }
-  },
-  "resource_bundles": {
-    "ConsentViewController": [
-      "ConsentViewController/Assets/**/*",
-      "Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}"
-    ]
-  },
-  "resources": "ConsentViewController/**/*.{js,json,png}",
+  "default_subspecs": "ConsentViewController",
   "info_plist": {
     "SPEnv": "prod"
   },
-  "swift_version": "5.1"
+  "subspecs": [
+    {
+      "name": "ConsentViewController",
+      "source_files": "Wrapper/**/*.{swift,h,m}",
+      "dependencies": {
+        "ConsentViewController/ConsentViewControllerCore": [
+
+        ]
+      },
+      "tvos": {
+        "dependencies": {
+          "ConsentViewController/ConsentViewControllerTvOS": [
+
+          ]
+        }
+      }
+    },
+    {
+      "name": "ConsentViewControllerCore",
+      "source_files": "ConsentViewController/**/*.{swift,h,m}",
+      "exclude_files": [
+        "Wrapper/**/*",
+        "ConsentViewController/Classes/Views/tvOS/tvOSTarget/**/*",
+        "ConsentViewController/Classes/Views/iOS/**/*",
+        "ConsentViewController/Assets/javascript/SPJSReceiver.spec.js",
+        "ConsentViewController/Assets/javascript/jest.config.json"
+      ],
+      "resources": [
+        "ConsentViewController/Assets/images/**/*",
+        "ConsentViewController/Assets/javascript/SPJSReceiver.js"
+      ],
+      "dependencies": {
+        "SPMobileCore": [
+          "0.1.4"
+        ]
+      },
+      "tvos": {
+        "dependencies": {
+          "Down": [
+            "~> 0.11.0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ConsentViewControllerTvOS",
+      "source_files": "ConsentViewController/Classes/Views/tvOS/tvOSTarget/**/*.{swift,h,m}",
+      "resources": [
+        "ConsentViewController/Classes/Views/tvOS/tvOSTarget/Xibs/**/*.{xib,storyboard}"
+      ],
+      "dependencies": {
+        "ConsentViewController/ConsentViewControllerCore": [
+
+        ]
+      }
+    }
+  ],
+  "swift_version": "5.9"
 }

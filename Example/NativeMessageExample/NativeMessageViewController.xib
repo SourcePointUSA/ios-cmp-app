@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NativeMessageViewController" customModule="ConsentViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NativeMessageViewController" >
             <connections>
                 <outlet property="acceptButton" destination="vgp-Ro-pIn" id="WUI-Wb-o4J"/>
                 <outlet property="descriptionTextView" destination="PhY-p5-mJu" id="PRe-9O-nHs"/>

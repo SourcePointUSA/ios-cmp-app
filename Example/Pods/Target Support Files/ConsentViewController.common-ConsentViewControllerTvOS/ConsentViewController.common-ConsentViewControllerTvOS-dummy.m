@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_ConsentViewController_common_ConsentViewControllerTvOS : NSObject
+@end
+@implementation PodsDummy_ConsentViewController_common_ConsentViewControllerTvOS
+@end
