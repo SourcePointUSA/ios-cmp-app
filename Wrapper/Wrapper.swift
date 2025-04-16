@@ -1,2 +1,4 @@
-@_exported import ConsentViewController
-@_exported import SPMobileCore
+@_exported import ConsentViewControllerCore
+#if os(tvOS)
+@_exported import ConsentViewControllerTvOS
+#endif

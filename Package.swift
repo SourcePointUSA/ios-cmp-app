@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
@@ -9,7 +9,6 @@ let package = Package(
   ],
   products: [
     .library(name: "ConsentViewController", targets: ["ConsentViewController"]),
-    .library(name: "ConsentViewControllerTvOS", targets: ["ConsentViewControllerTvOS"]),
   ],
   dependencies: [
     .package(url: "https://github.com/SourcePointUSA/mobile-core.git", branch: "add_spm_integration"),
@@ -19,8 +18,16 @@ let package = Package(
     .target(
       name: "ConsentViewController",
       dependencies: [
+        "ConsentViewControllerCore",
+        .target(name: "ConsentViewControllerTvOS", condition: .when(platforms: [.tvOS])),
+      ],
+      path: "Wrapper"
+    ),
+    .target(
+      name: "ConsentViewControllerCore",
+      dependencies: [
         .product(name: "SPMobileCore", package: "mobile-core"),
-        .product(name: "Down", package: "down")
+        .product(name: "Down", package: "down", condition: .when(platforms: [.tvOS])),
       ],
       path: "ConsentViewController",
       exclude: [
@@ -35,11 +42,9 @@ let package = Package(
     ),
     .target(
       name: "ConsentViewControllerTvOS",
-      dependencies: ["ConsentViewController"],
+      dependencies: ["ConsentViewControllerCore"],
       path: "ConsentViewController/Classes/Views/tvOS/tvOSTarget",
       resources: [.process("Xibs")]
     )
   ],
 )
-
-

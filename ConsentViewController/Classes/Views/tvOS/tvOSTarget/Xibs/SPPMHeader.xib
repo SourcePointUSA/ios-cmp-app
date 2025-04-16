@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPPMHeader" customModule="ConsentViewController" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPPMHeader" customModule="ConsentViewControllerCore">
             <connections>
                 <outlet property="backButton" destination="481-Kg-Rs6" id="uLx-4n-u2k"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="rsa-Ba-Y0p"/>
@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="481-Kg-Rs6" customClass="SPAppleTVButton" customModule="ConsentViewController" customModuleProvider="target">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="481-Kg-Rs6" customClass="SPAppleTVButton" customModule="ConsentViewControllerCore">
                     <rect key="frame" x="80" y="500" width="240" height="80"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="240" id="OrQ-9Y-xIw"/>

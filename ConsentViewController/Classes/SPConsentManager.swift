@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import SPMobileCore
+@_implementationOnly import SPMobileCore
 
 // swiftlint:disable file_length function_parameter_count
 @objcMembers public class SPConsentManager: NSObject {

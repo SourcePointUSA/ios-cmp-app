@@ -11,8 +11,7 @@
 import Foundation
 import UIKit
 
-@_exported import ConsentViewController
-import ConsentViewController
+@_exported import ConsentViewControllerCore
 
 @objcMembers public class SPConsentManagerTvOS: NSObject, SPSDK {
     public static var VERSION = SPConsentManager.VERSION
@@ -57,9 +56,9 @@ import ConsentViewController
             let url = Bundle(for: Self.self).url(forResource: "ConsentViewController_ConsentViewControllerTvOS", withExtension: "bundle")!
             let resourceBundle = Bundle(url: url)!
 
-            ConsentViewController.SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: resourceBundle)
-            ConsentViewController.LongButtonViewCell.nib = UINib(nibName: "LongButtonViewCell", bundle: resourceBundle)
-            ConsentViewController.SPMessageViewController.bundle = resourceBundle
+            ConsentViewControllerCore.SPPMHeader.nib = UINib(nibName: "SPPMHeader", bundle: resourceBundle)
+            ConsentViewControllerCore.LongButtonViewCell.nib = UINib(nibName: "LongButtonViewCell", bundle: resourceBundle)
+            ConsentViewControllerCore.SPMessageViewController.bundle = resourceBundle
 
             wrapped = .init(
                 accountId: accountId,
