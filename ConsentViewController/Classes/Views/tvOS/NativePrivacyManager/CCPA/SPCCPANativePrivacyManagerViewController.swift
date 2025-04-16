@@ -288,7 +288,9 @@ extension SPCCPANativePrivacyManagerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             let fallBackCell = UITableViewCell()
-            fallBackCell.textLabel?.text = (viewData.byId("DoNotSellButton") as? SPNativeLongButton)?.settings.text
+            let component = (viewData.byId("DoNotSellButton") as? SPNativeLongButton)
+            fallBackCell.textLabel?.text = component?.settings.text
+            fallBackCell.textLabel?.font = UIFont(from: component?.settings.style.font)
             addFocusGuide(from: acceptButton, to: fallBackCell, direction: .rightLeft)
             return fallBackCell
         }
