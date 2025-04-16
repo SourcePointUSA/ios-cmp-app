@@ -89,6 +89,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet var categoriesTableView: UITableView!
     @IBOutlet var header: SPPMHeader!
     @IBOutlet var actionsContainer: UIStackView!
+    @IBOutlet var spacer: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +105,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         if emptyLegIntSection {
             removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 1) }
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
-        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
+        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", longText: true, label: selectedCategoryTextLabel)
         nativeLongButton = viewData.byId("CategoryButton") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
@@ -251,6 +252,11 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
             selectedCategoryTextLabel.text = categoryDescription[cell.identifier]
+            if let description = categoryDescription[cell.identifier], description.isNotEmpty() {
+                spacer.isHidden = true
+            } else {
+                spacer.isHidden = false
+            }
         }
         return true
     }
