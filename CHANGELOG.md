@@ -1,3 +1,12 @@
+# 7.8.1 (Apr, 30, 2025)
+* Fixed several UI issues for tvOS
+  * [DIA-5435](https://sourcepoint.atlassian.net/browse/DIA-5435) added missing category description on categories view [#610](https://github.com/SourcePointUSA/ios-cmp-app/pull/610)
+  * [DIA-5436](https://sourcepoint.atlassian.net/browse/DIA-5436) fixed vendors being incorrectly labeld as "custom" [#609](https://github.com/SourcePointUSA/ios-cmp-app/pull/609)
+  * [DIA-5441](https://sourcepoint.atlassian.net/browse/DIA-5441) fixed purposes name being truncated and illegible [#611](https://github.com/SourcePointUSA/ios-cmp-app/pull/611)
+  * [DIA-5443](https://sourcepoint.atlassian.net/browse/DIA-5443) fixed autosizing causing inconsistent font issues for purpuses/vendor descriptions [#513](https://github.com/SourcePointUSA/ios-cmp-app/pull/513)
+  * [DIA-5445](https://sourcepoint.atlassian.net/browse/DIA-5445) applied translation to a privacy policy label element [#608](https://github.com/SourcePointUSA/ios-cmp-app/pull/608)
+  * [DIA-5446](https://sourcepoint.atlassian.net/browse/DIA-5446) applied translation to the privacy policy QR header [#607](https://github.com/SourcePointUSA/ios-cmp-app/pull/607)
+
 # 7.8.0 (Apr, 04, 2025)
 * [DIA-3501](https://sourcepoint.atlassian.net/browse/DIA-3501) Integrate the (SourcepointUSA/mobile-core)[https://github.com/SourcePointUSA/mobile-core]. This is a major internal change. We moved the majority of our business logic, network, and data layers into our Kotlin Multiplatform library named mobile-core (mobile-core)[https://github.com/SourcePointUSA/mobile-core]. This change not only allows us to move faster when developing new features and addressing issues, but also helps us maintain a standardized approach across multiple platforms. The mobile team did its best to accomplish all of this while keeping the public interface untouched. [#593](https://github.com/SourcePointUSA/ios-cmp-app/pull/593)
 
