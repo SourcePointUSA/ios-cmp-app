@@ -13299,6 +13299,47 @@
         "children": [
           {
             "kind": "Var",
+            "name": "Albanian",
+            "printedName": "Albanian",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageAlbanian",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO8AlbanianyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 0
+          },
+          {
+            "kind": "Var",
             "name": "Arabic",
             "printedName": "Arabic",
             "children": [
@@ -13336,7 +13377,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 0
+            "fixedbinaryorder": 1
           },
           {
             "kind": "Var",
@@ -13377,53 +13418,12 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 1
-          },
-          {
-            "kind": "Var",
-            "name": "Bosnian",
-            "printedName": "Bosnian",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SPMessageLanguage",
-                    "printedName": "ConsentViewController.SPMessageLanguage",
-                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "SPMessageLanguage",
-                        "printedName": "ConsentViewController.SPMessageLanguage",
-                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageBosnian",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO7BosnianyA2CmF",
-            "moduleName": "ConsentViewController",
-            "declAttributes": [
-              "ObjC"
-            ],
             "fixedbinaryorder": 2
           },
           {
             "kind": "Var",
-            "name": "BrowserDefault",
-            "printedName": "BrowserDefault",
+            "name": "Bosnian_Latin",
+            "printedName": "Bosnian_Latin",
             "children": [
               {
                 "kind": "TypeFunc",
@@ -13453,54 +13453,13 @@
               }
             ],
             "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageBrowserDefault",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO14BrowserDefaultyA2CmF",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageBosnian_Latin",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO13Bosnian_LatinyA2CmF",
             "moduleName": "ConsentViewController",
             "declAttributes": [
               "ObjC"
             ],
             "fixedbinaryorder": 3
-          },
-          {
-            "kind": "Var",
-            "name": "English",
-            "printedName": "English",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SPMessageLanguage",
-                    "printedName": "ConsentViewController.SPMessageLanguage",
-                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "SPMessageLanguage",
-                        "printedName": "ConsentViewController.SPMessageLanguage",
-                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageEnglish",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO7EnglishyA2CmF",
-            "moduleName": "ConsentViewController",
-            "declAttributes": [
-              "ObjC"
-            ],
-            "fixedbinaryorder": 4
           },
           {
             "kind": "Var",
@@ -13541,7 +13500,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 5
+            "fixedbinaryorder": 4
           },
           {
             "kind": "Var",
@@ -13582,12 +13541,12 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 6
+            "fixedbinaryorder": 5
           },
           {
             "kind": "Var",
-            "name": "Chinese",
-            "printedName": "Chinese",
+            "name": "Chinese_Simplified",
+            "printedName": "Chinese_Simplified",
             "children": [
               {
                 "kind": "TypeFunc",
@@ -13617,8 +13576,49 @@
               }
             ],
             "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageChinese",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO7ChineseyA2CmF",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageChinese_Simplified",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO18Chinese_SimplifiedyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 6
+          },
+          {
+            "kind": "Var",
+            "name": "Chinese_Traditional",
+            "printedName": "Chinese_Traditional",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageChinese_Traditional",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO19Chinese_TraditionalyA2CmF",
             "moduleName": "ConsentViewController",
             "declAttributes": [
               "ObjC"
@@ -13791,6 +13791,47 @@
           },
           {
             "kind": "Var",
+            "name": "English",
+            "printedName": "English",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageEnglish",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO7EnglishyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 12
+          },
+          {
+            "kind": "Var",
             "name": "Estonian",
             "printedName": "Estonian",
             "children": [
@@ -13828,7 +13869,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 12
+            "fixedbinaryorder": 13
           },
           {
             "kind": "Var",
@@ -13869,7 +13910,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 13
+            "fixedbinaryorder": 14
           },
           {
             "kind": "Var",
@@ -13906,47 +13947,6 @@
             "declKind": "EnumElement",
             "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageFrench",
             "mangledName": "$s21ConsentViewController17SPMessageLanguageO6FrenchyA2CmF",
-            "moduleName": "ConsentViewController",
-            "declAttributes": [
-              "ObjC"
-            ],
-            "fixedbinaryorder": 14
-          },
-          {
-            "kind": "Var",
-            "name": "Gaelic",
-            "printedName": "Gaelic",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SPMessageLanguage",
-                    "printedName": "ConsentViewController.SPMessageLanguage",
-                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "SPMessageLanguage",
-                        "printedName": "ConsentViewController.SPMessageLanguage",
-                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageGaelic",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO6GaelicyA2CmF",
             "moduleName": "ConsentViewController",
             "declAttributes": [
               "ObjC"
@@ -13996,6 +13996,47 @@
           },
           {
             "kind": "Var",
+            "name": "Georgian",
+            "printedName": "Georgian",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageGeorgian",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO8GeorgianyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 17
+          },
+          {
+            "kind": "Var",
             "name": "German",
             "printedName": "German",
             "children": [
@@ -14033,7 +14074,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 17
+            "fixedbinaryorder": 18
           },
           {
             "kind": "Var",
@@ -14074,7 +14115,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 18
+            "fixedbinaryorder": 19
           },
           {
             "kind": "Var",
@@ -14115,7 +14156,48 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 19
+            "fixedbinaryorder": 20
+          },
+          {
+            "kind": "Var",
+            "name": "Hindi",
+            "printedName": "Hindi",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageHindi",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO5HindiyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 21
           },
           {
             "kind": "Var",
@@ -14156,48 +14238,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 20
-          },
-          {
-            "kind": "Var",
-            "name": "Icelandic",
-            "printedName": "Icelandic",
-            "children": [
-              {
-                "kind": "TypeFunc",
-                "name": "Function",
-                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "SPMessageLanguage",
-                    "printedName": "ConsentViewController.SPMessageLanguage",
-                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Metatype",
-                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "SPMessageLanguage",
-                        "printedName": "ConsentViewController.SPMessageLanguage",
-                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageIcelandic",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO9IcelandicyA2CmF",
-            "moduleName": "ConsentViewController",
-            "declAttributes": [
-              "ObjC"
-            ],
-            "fixedbinaryorder": 21
+            "fixedbinaryorder": 22
           },
           {
             "kind": "Var",
@@ -14238,7 +14279,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 22
+            "fixedbinaryorder": 23
           },
           {
             "kind": "Var",
@@ -14279,7 +14320,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 23
+            "fixedbinaryorder": 24
           },
           {
             "kind": "Var",
@@ -14320,7 +14361,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 24
+            "fixedbinaryorder": 25
           },
           {
             "kind": "Var",
@@ -14361,7 +14402,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 25
+            "fixedbinaryorder": 26
           },
           {
             "kind": "Var",
@@ -14402,7 +14443,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 26
+            "fixedbinaryorder": 27
           },
           {
             "kind": "Var",
@@ -14443,7 +14484,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 27
+            "fixedbinaryorder": 28
           },
           {
             "kind": "Var",
@@ -14484,7 +14525,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 28
+            "fixedbinaryorder": 29
           },
           {
             "kind": "Var",
@@ -14525,7 +14566,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 29
+            "fixedbinaryorder": 30
           },
           {
             "kind": "Var",
@@ -14566,7 +14607,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 30
+            "fixedbinaryorder": 31
           },
           {
             "kind": "Var",
@@ -14607,7 +14648,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 31
+            "fixedbinaryorder": 32
           },
           {
             "kind": "Var",
@@ -14648,12 +14689,12 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 32
+            "fixedbinaryorder": 33
           },
           {
             "kind": "Var",
-            "name": "Portuguese",
-            "printedName": "Portuguese",
+            "name": "Portuguese_Brazil",
+            "printedName": "Portuguese_Brazil",
             "children": [
               {
                 "kind": "TypeFunc",
@@ -14683,13 +14724,54 @@
               }
             ],
             "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguagePortuguese",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO10PortugueseyA2CmF",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguagePortuguese_Brazil",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO17Portuguese_BrazilyA2CmF",
             "moduleName": "ConsentViewController",
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 33
+            "fixedbinaryorder": 34
+          },
+          {
+            "kind": "Var",
+            "name": "Portuguese_Portugal",
+            "printedName": "Portuguese_Portugal",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguagePortuguese_Portugal",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO19Portuguese_PortugalyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 35
           },
           {
             "kind": "Var",
@@ -14730,7 +14812,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 34
+            "fixedbinaryorder": 36
           },
           {
             "kind": "Var",
@@ -14771,7 +14853,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 35
+            "fixedbinaryorder": 37
           },
           {
             "kind": "Var",
@@ -14812,7 +14894,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 36
+            "fixedbinaryorder": 38
           },
           {
             "kind": "Var",
@@ -14853,12 +14935,12 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 37
+            "fixedbinaryorder": 39
           },
           {
             "kind": "Var",
-            "name": "Slovakian",
-            "printedName": "Slovakian",
+            "name": "Slovak",
+            "printedName": "Slovak",
             "children": [
               {
                 "kind": "TypeFunc",
@@ -14888,13 +14970,13 @@
               }
             ],
             "declKind": "EnumElement",
-            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageSlovakian",
-            "mangledName": "$s21ConsentViewController17SPMessageLanguageO9SlovakianyA2CmF",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageSlovak",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO6SlovakyA2CmF",
             "moduleName": "ConsentViewController",
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 38
+            "fixedbinaryorder": 40
           },
           {
             "kind": "Var",
@@ -14935,7 +15017,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 39
+            "fixedbinaryorder": 41
           },
           {
             "kind": "Var",
@@ -14976,7 +15058,48 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 40
+            "fixedbinaryorder": 42
+          },
+          {
+            "kind": "Var",
+            "name": "Swahili",
+            "printedName": "Swahili",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageSwahili",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO7SwahiliyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 43
           },
           {
             "kind": "Var",
@@ -15017,7 +15140,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 41
+            "fixedbinaryorder": 44
           },
           {
             "kind": "Var",
@@ -15058,7 +15181,48 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 42
+            "fixedbinaryorder": 45
+          },
+          {
+            "kind": "Var",
+            "name": "Thai",
+            "printedName": "Thai",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageThai",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO4ThaiyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 46
           },
           {
             "kind": "Var",
@@ -15099,7 +15263,171 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 43
+            "fixedbinaryorder": 47
+          },
+          {
+            "kind": "Var",
+            "name": "Ukrainian",
+            "printedName": "Ukrainian",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageUkrainian",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO9UkrainianyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 48
+          },
+          {
+            "kind": "Var",
+            "name": "Vietnamese",
+            "printedName": "Vietnamese",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageVietnamese",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO10VietnameseyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 49
+          },
+          {
+            "kind": "Var",
+            "name": "Welsh",
+            "printedName": "Welsh",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageWelsh",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO5WelshyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 50
+          },
+          {
+            "kind": "Var",
+            "name": "BrowserDefault",
+            "printedName": "BrowserDefault",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPMessageLanguage.Type) -> ConsentViewController.SPMessageLanguage",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPMessageLanguage",
+                    "printedName": "ConsentViewController.SPMessageLanguage",
+                    "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPMessageLanguage.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPMessageLanguage",
+                        "printedName": "ConsentViewController.SPMessageLanguage",
+                        "usr": "c:@M@ConsentViewController@E@SPMessageLanguage"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPMessageLanguage@SPMessageLanguageBrowserDefault",
+            "mangledName": "$s21ConsentViewController17SPMessageLanguageO14BrowserDefaultyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 51
           },
           {
             "kind": "Var",
@@ -15172,8 +15500,7 @@
             "mangledName": "$s21ConsentViewController17SPMessageLanguageO8rawValueACSgSS_tcfc",
             "moduleName": "ConsentViewController",
             "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
+              "AccessControl"
             ],
             "init_kind": "Designated"
           }
@@ -38092,6 +38419,13 @@
       "value": "[]"
     },
     {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 4644,
+      "length": 1,
+      "value": "5"
+    },
+    {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPConsentable.swift",
       "kind": "StringLiteral",
       "offset": 324,
@@ -38537,7 +38871,7 @@
       "kind": "StringLiteral",
       "offset": 1890,
       "length": 9,
-      "value": "\"#ffffff\""
+      "value": "\"#707070\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Constants.swift",
@@ -38712,7 +39046,7 @@
       "kind": "StringLiteral",
       "offset": 8515,
       "length": 7,
-      "value": "\"7.8.0\""
+      "value": "\"7.8.1\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
@@ -38773,303 +39107,359 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 234,
+      "offset": 301,
       "length": 6,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 250,
-      "length": 7,
+      "offset": 317,
+      "length": 6,
       "value": "2"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 267,
-      "length": 14,
+      "offset": 333,
+      "length": 13,
       "value": "3"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 291,
-      "length": 7,
+      "offset": 356,
+      "length": 9,
       "value": "4"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 308,
-      "length": 9,
+      "offset": 375,
+      "length": 7,
       "value": "5"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 327,
-      "length": 7,
+      "offset": 392,
+      "length": 18,
       "value": "6"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 344,
-      "length": 7,
+      "offset": 420,
+      "length": 19,
       "value": "7"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 361,
+      "offset": 449,
       "length": 8,
       "value": "8"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 379,
+      "offset": 467,
       "length": 5,
       "value": "9"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 394,
+      "offset": 482,
       "length": 6,
       "value": "10"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 410,
+      "offset": 498,
       "length": 5,
       "value": "11"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 425,
-      "length": 8,
+      "offset": 513,
+      "length": 7,
       "value": "12"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 443,
-      "length": 7,
+      "offset": 530,
+      "length": 8,
       "value": "13"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 460,
-      "length": 6,
+      "offset": 548,
+      "length": 7,
       "value": "14"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 476,
+      "offset": 565,
       "length": 6,
       "value": "15"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 492,
+      "offset": 581,
       "length": 8,
       "value": "16"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 510,
-      "length": 6,
+      "offset": 599,
+      "length": 8,
       "value": "17"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 526,
-      "length": 5,
+      "offset": 617,
+      "length": 6,
       "value": "18"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 541,
-      "length": 6,
+      "offset": 633,
+      "length": 5,
       "value": "19"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 557,
-      "length": 9,
+      "offset": 648,
+      "length": 6,
       "value": "20"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 576,
-      "length": 9,
+      "offset": 664,
+      "length": 5,
       "value": "21"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 595,
-      "length": 10,
+      "offset": 679,
+      "length": 9,
       "value": "22"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 615,
-      "length": 7,
+      "offset": 698,
+      "length": 10,
       "value": "23"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 632,
-      "length": 8,
+      "offset": 718,
+      "length": 7,
       "value": "24"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 650,
-      "length": 6,
+      "offset": 735,
+      "length": 8,
       "value": "25"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 666,
-      "length": 7,
+      "offset": 753,
+      "length": 6,
       "value": "26"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 683,
-      "length": 10,
+      "offset": 769,
+      "length": 7,
       "value": "27"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 703,
+      "offset": 786,
       "length": 10,
       "value": "28"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 723,
-      "length": 5,
+      "offset": 806,
+      "length": 10,
       "value": "29"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 738,
-      "length": 7,
+      "offset": 826,
+      "length": 5,
       "value": "30"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 755,
-      "length": 9,
+      "offset": 841,
+      "length": 7,
       "value": "31"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 774,
-      "length": 6,
+      "offset": 858,
+      "length": 9,
       "value": "32"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 790,
-      "length": 10,
+      "offset": 877,
+      "length": 6,
       "value": "33"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 810,
-      "length": 8,
+      "offset": 893,
+      "length": 17,
       "value": "34"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 828,
-      "length": 7,
+      "offset": 920,
+      "length": 19,
       "value": "35"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 845,
-      "length": 16,
+      "offset": 949,
+      "length": 8,
       "value": "36"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 871,
-      "length": 13,
+      "offset": 967,
+      "length": 7,
       "value": "37"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 894,
-      "length": 9,
+      "offset": 984,
+      "length": 16,
       "value": "38"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 913,
-      "length": 9,
+      "offset": 1010,
+      "length": 13,
       "value": "39"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 932,
-      "length": 7,
+      "offset": 1033,
+      "length": 6,
       "value": "40"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 949,
-      "length": 7,
+      "offset": 1049,
+      "length": 9,
       "value": "41"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 966,
+      "offset": 1068,
       "length": 7,
       "value": "42"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
       "kind": "IntegerLiteral",
-      "offset": 983,
+      "offset": 1085,
       "length": 7,
       "value": "43"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1102,
+      "length": 7,
+      "value": "44"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1119,
+      "length": 7,
+      "value": "45"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1136,
+      "length": 4,
+      "value": "46"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1150,
+      "length": 7,
+      "value": "47"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1167,
+      "length": 9,
+      "value": "48"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1186,
+      "length": 10,
+      "value": "49"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1206,
+      "length": 5,
+      "value": "50"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageLanguage.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1221,
+      "length": 14,
+      "value": "51"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaignEnv.swift",
