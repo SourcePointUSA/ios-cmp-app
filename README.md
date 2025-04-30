@@ -7,7 +7,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.8.0'
+pod 'ConsentViewController', '7.8.1'
 ```
 
 ### Carthage
@@ -38,7 +38,7 @@ let package = Package(
         .package(
             name: "ConsentViewController",
             url: "https://github.com/SourcePointUSA/ios-cmp-app",
-                .upToNextMinor(from: "7.8.0")
+                .upToNextMinor(from: "7.8.1")
         ),
     ],
     targets: [
