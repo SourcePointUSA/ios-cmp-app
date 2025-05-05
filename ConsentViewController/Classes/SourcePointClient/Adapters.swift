@@ -161,6 +161,8 @@ extension SPMobileCore.SPCampaignType {
             return .usnat
         case "IOS14":
             return .ios14
+        case "Preferences":
+            return .preferences
 
         default:
             return .unknown
@@ -453,6 +455,7 @@ extension SPCampaignType {
         case .ccpa: return .ccpa
         case .usnat: return .usnat
         case .ios14: return .ios14
+        case .preferences: return .preferences
         case .unknown: return .unknown
         }
     }
@@ -501,6 +504,7 @@ extension SourcepointClientCoordinator.State {
             ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
             usNat: self.usnat.toCore(metaData: self.usNatMetaData),
             ios14: self.ios14.toCore(),
+            preferences: emptyPreferencesCampaign(),
             authId: self.storedAuthId,
             propertyId: Int32(propertyId),
             accountId: Int32(accountId),
@@ -593,6 +597,23 @@ extension SourcepointClientCoordinator.State.AttCampaign? {
     }
 }
 
+func emptyPreferencesCampaign() -> SPMobileCore.State.PreferencesState {
+    return SPMobileCore.State.PreferencesState(
+        metaData: SPMobileCore.State.PreferencesStatePreferencesMetaData(
+            configurationId: "",
+            additionsChangeDate: SPDate(date: Date.distantPast).toCore(),
+            legalDocLiveDate: nil
+        ),
+        consents: SPMobileCore.PreferencesConsent(
+            dateCreated: nil,
+            messageId: nil,
+            status: nil,
+            rejectedStatus: nil,
+            uuid: nil
+        )
+    )
+}
+
 extension SourcepointClientCoordinator.State.GDPRMetaData? {
     func toCore() -> SPMobileCore.State.GDPRStateGDPRMetaData {
         return SPMobileCore.State.GDPRStateGDPRMetaData.init(
@@ -662,7 +683,14 @@ extension SPCampaigns {
             gdpr: gdpr.toCore(),
             ccpa: ccpa.toCore(),
             usnat: usnat.toCore(),
-            ios14: ios14.toCore()
+            ios14: ios14.toCore(),
+            preferences: SPMobileCore.SPCampaign(
+                targetingParams: [:],
+                groupPmId: nil,
+                gppConfig: nil,
+                transitionCCPAAuth: nil,
+                supportLegacyUSPString: nil
+            )
         )
     }
 }
