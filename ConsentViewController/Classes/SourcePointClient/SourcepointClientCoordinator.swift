@@ -297,30 +297,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
         }
     }
 
-    func buildChoiceAllCampaigns(action: SPAction) -> ChoiceAllRequest.ChoiceAllCampaigns {
-        var gdprApplies: Bool?
-        var ccpaApplies: Bool?
-        var usnatApplies: Bool?
-        switch action.campaignType {
-        case .gdpr:
-            gdprApplies = state.gdpr?.applies
-
-        case .ccpa:
-            ccpaApplies = state.ccpa?.applies
-
-        case .usnat:
-            usnatApplies = state.usnat?.applies
-
-        case .ios14, .unknown:
-            break
-        }
-        return .init(
-            gdpr: .init(applies: gdprApplies ?? false),
-            ccpa: .init(applies: ccpaApplies ?? false),
-            usnat: .init(applies: usnatApplies ?? false)
-        )
-    }
-
     func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
         coreCoordinator.reportAction(
             action: action.toCore()
