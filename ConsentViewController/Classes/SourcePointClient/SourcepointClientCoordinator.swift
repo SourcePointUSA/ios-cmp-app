@@ -4,7 +4,7 @@
 //
 //  Created by Andre Herculano on 14.09.22.
 //
-// swiftlint:disable type_body_length file_length
+// swiftlint:disable type_body_length
 
 import Foundation
 import SPMobileCore
