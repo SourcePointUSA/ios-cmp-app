@@ -4,7 +4,7 @@
 //
 //  Created by Andre Herculano on 14.09.22.
 //
-// swiftlint:disable type_body_length file_length
+// swiftlint:disable type_body_length
 
 import Foundation
 import SPMobileCore
@@ -295,30 +295,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 GPPData: usnatData.gppData.toNative()
             )
         }
-    }
-
-    func buildChoiceAllCampaigns(action: SPAction) -> ChoiceAllRequest.ChoiceAllCampaigns {
-        var gdprApplies: Bool?
-        var ccpaApplies: Bool?
-        var usnatApplies: Bool?
-        switch action.campaignType {
-        case .gdpr:
-            gdprApplies = state.gdpr?.applies
-
-        case .ccpa:
-            ccpaApplies = state.ccpa?.applies
-
-        case .usnat:
-            usnatApplies = state.usnat?.applies
-
-        case .ios14, .unknown:
-            break
-        }
-        return .init(
-            gdpr: .init(applies: gdprApplies ?? false),
-            ccpa: .init(applies: ccpaApplies ?? false),
-            usnat: .init(applies: usnatApplies ?? false)
-        )
     }
 
     func reportAction(_ action: SPAction, handler: @escaping ActionHandler) {
