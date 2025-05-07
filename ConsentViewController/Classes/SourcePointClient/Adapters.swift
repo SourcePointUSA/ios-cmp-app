@@ -257,6 +257,48 @@ extension SPMobileCore.USNatConsent {
     }
 }
 
+extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
+    func toNative() -> SPPreferencesConsent.PreferencesSubType {
+        switch self {
+        case .aipolicy: return .AIPolicy
+        case .legalpolicy: return .LegalPolicy
+        case .privacypolicy: return .PrivacyPolicy
+        case .termsandconditions: return .TermsAndConditions
+        case .termsofsale: return .TermsOfSale
+        case .unknown: return .Unknown
+        default: return .Unknown
+        }
+    }
+}
+
+extension SPMobileCore.PreferencesConsent.PreferencesStatusPreferencesChannels {
+    func toNative() -> SPPreferencesConsent.PreferencesChannels { return .init(channelId: Int(self.channelId), status: self.status) }
+}
+
+extension SPMobileCore.PreferencesConsent.PreferencesStatus {
+    func toNative() -> SPPreferencesConsent.PreferencesStatus {
+        return .init(
+            categoryId: Int(self.categoryId),
+            channels: self.channels?.map { $0.toNative() },
+            changed: self.changed?.boolValue,
+            dateConsented: SPDate(string: self.dateConsented?.instantToString() ?? SPDate.now().originalDateString),
+            subType: self.subType.toNative()
+        )
+    }
+}
+
+extension SPMobileCore.PreferencesConsent {
+    func toNative() -> SPPreferencesConsent {
+        return .init(
+            uuid: self.uuid,
+            dateCreated: SPDate(string: self.dateCreated?.instantToString() ?? SPDate.now().originalDateString),
+            status: self.status?.map { $0.toNative() },
+            rejectedStatus: self.rejectedStatus?.map { $0.toNative() },
+            messageId: String(Int(truncating: self.messageId ?? 0))
+        )
+    }
+}
+
 extension SPUserDataSPConsent<GDPRConsent>? {
     func toNative() -> SPConsent<SPGDPRConsent>? {
         return SPConsent<SPGDPRConsent>.init(
@@ -284,12 +326,22 @@ extension SPUserDataSPConsent<USNatConsent>? {
     }
 }
 
+extension SPUserDataSPConsent<PreferencesConsent>? {
+    func toNative() -> SPConsent<SPPreferencesConsent>? {
+        return SPConsent<SPPreferencesConsent>.init(
+            consents: self?.consents?.toNative(),
+            applies: true
+        )
+    }
+}
+
 extension SPMobileCore.SPUserData {
     func toNative() -> SPUserData {
         return SPUserData(
             gdpr: self.gdpr.toNative(),
             ccpa: self.ccpa.toNative(),
-            usnat: self.usnat.toNative()
+            usnat: self.usnat.toNative(),
+            preferences: self.preferences.toNative()
         )
     }
 }
@@ -684,13 +736,7 @@ extension SPCampaigns {
             ccpa: ccpa.toCore(),
             usnat: usnat.toCore(),
             ios14: ios14.toCore(),
-            preferences: SPMobileCore.SPCampaign(
-                targetingParams: [:],
-                groupPmId: nil,
-                gppConfig: nil,
-                transitionCCPAAuth: nil,
-                supportLegacyUSPString: nil
-            )
+            preferences: preferences.toCore()
         )
     }
 }
