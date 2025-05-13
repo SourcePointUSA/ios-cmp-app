@@ -60,7 +60,8 @@ extension Config {
             usnat: usnatArg == nil ? defaults.campaigns.usnat :
                 usnatArg == true ? SPCampaign() : nil,
             ios14: attArg == nil ? defaults.campaigns.ios14 :
-                attArg == true ? SPCampaign() : nil
+                attArg == true ? SPCampaign() : nil,
+            preferences: defaults.campaigns.preferences
         )
     }
 }
