@@ -9,23 +9,24 @@ import Foundation
 
 @objcMembers public class SPPreferencesConsent: NSObject, Codable, CampaignConsent, NSCopying {
     var applies: Bool = true
-    public var uuid: String?
-    public var status, rejectedStatus: [PreferencesStatus]?
     var dateCreated: SPDate
     var messageId: String?
+    public var uuid: String?
+    public var status, rejectedStatus: [PreferencesStatus]?
+
 
     init(
-        uuid: String? = nil,
         dateCreated: SPDate,
+        messageId: String? = nil,
+        uuid: String? = nil,
         status: [PreferencesStatus]?,
         rejectedStatus: [PreferencesStatus]?,
-        messageId: String? = nil
     ) {
         self.uuid = uuid
-        self.dateCreated = dateCreated
         self.status = status
-        self.rejectedStatus = rejectedStatus
         self.messageId = messageId
+        self.dateCreated = dateCreated
+        self.rejectedStatus = rejectedStatus
     }
 }
 
@@ -33,10 +34,11 @@ extension SPPreferencesConsent {
     override open var description: String {
         """
         SPPreferencesConsent(
+            - dateCreated: \(dateCreated.originalDateString)
+            - messageId: \(messageId ?? "")
             - uuid: \(uuid ?? "")
             - status: \(status ?? [])
             - rejectedStatus: \(rejectedStatus ?? [])
-            - dateCreated: \(dateCreated)
         )
         """
     }
@@ -49,11 +51,11 @@ extension SPPreferencesConsent {
 
     public func copy(with zone: NSZone? = nil) -> Any {
         SPPreferencesConsent(
-            uuid: uuid,
             dateCreated: dateCreated,
+            messageId: messageId,
+            uuid: uuid,
             status: status,
             rejectedStatus: rejectedStatus,
-            messageId: messageId
         )
     }
 }
