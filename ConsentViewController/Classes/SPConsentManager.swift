@@ -197,7 +197,7 @@ import SPMobileCore
     func report(action: SPAction) {
         responsesToReceive += 1
         switch action.campaignType {
-            case .ccpa, .gdpr, .usnat:
+            case .ccpa, .gdpr, .usnat, .preferences:
                 spCoordinator.reportAction(action) { [weak self] result in
                     self?.responsesToReceive -= 1
                     switch result {

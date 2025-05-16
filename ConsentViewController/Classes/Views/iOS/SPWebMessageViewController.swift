@@ -242,6 +242,7 @@ import WebKit
 
             case .onMessageReady:
                 timeoutWorkItem.cancel()
+                self.webview?.evaluateJavaScript("window.spLegislation=\"\(self.campaignType.rawValue)\"")
                 messageUIDelegate?.loaded(self)
 
             case .onAction:
