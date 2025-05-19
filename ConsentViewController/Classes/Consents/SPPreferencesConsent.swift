@@ -55,7 +55,7 @@ extension SPPreferencesConsent {
             messageId: messageId,
             uuid: uuid,
             status: status,
-            rejectedStatus: rejectedStatus,
+            rejectedStatus: rejectedStatus
         )
     }
 }
