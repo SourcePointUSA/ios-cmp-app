@@ -20,7 +20,7 @@ import Foundation
         messageId: String? = nil,
         uuid: String? = nil,
         status: [PreferencesStatus]?,
-        rejectedStatus: [PreferencesStatus]?,
+        rejectedStatus: [PreferencesStatus]?
     ) {
         self.uuid = uuid
         self.status = status
