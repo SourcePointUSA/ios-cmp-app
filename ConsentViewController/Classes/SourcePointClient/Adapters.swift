@@ -290,11 +290,11 @@ extension SPMobileCore.PreferencesConsent.PreferencesStatus {
 extension SPMobileCore.PreferencesConsent {
     func toNative() -> SPPreferencesConsent {
         return .init(
-            uuid: self.uuid,
             dateCreated: SPDate(string: self.dateCreated?.instantToString() ?? SPDate.now().originalDateString),
+            messageId: String(Int(truncating: self.messageId ?? 0)),
+            uuid: self.uuid,
             status: self.status?.map { $0.toNative() },
-            rejectedStatus: self.rejectedStatus?.map { $0.toNative() },
-            messageId: String(Int(truncating: self.messageId ?? 0))
+            rejectedStatus: self.rejectedStatus?.map { $0.toNative() }
         )
     }
 }
