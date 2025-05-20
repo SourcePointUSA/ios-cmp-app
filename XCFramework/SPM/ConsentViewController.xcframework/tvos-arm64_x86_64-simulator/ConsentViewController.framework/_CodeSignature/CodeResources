@@ -8,14 +8,6 @@
 		<data>
 		p1QFym1jiRQxmkvZScXjBHhxCu8=
 		</data>
-		<key>Frameworks/SPMobileCore.framework/Info.plist</key>
-		<data>
-		VNVcTYtgLIYO5MMAiJBxjevlg/U=
-		</data>
-		<key>Frameworks/SPMobileCore.framework/SPMobileCore</key>
-		<data>
-		9XeEHSu/mpKg7YUqQeMhUs/G7Hc=
-		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
 		7epBp6eRukWdtLKnnPr3MDlOat8=
@@ -144,20 +136,6 @@
 			<key>hash2</key>
 			<data>
 			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
-			</data>
-		</dict>
-		<key>Frameworks/SPMobileCore.framework/Info.plist</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			pHcqXTUTfHWm7Nt86QbgDdhS2+UpFj1GmN9sqLyNvFM=
-			</data>
-		</dict>
-		<key>Frameworks/SPMobileCore.framework/SPMobileCore</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			lY01caWEOisHfHBxb5CbtroAQMU9CU460c0NNkPxy0E=
 			</data>
 		</dict>
 		<key>Headers/ConsentViewController-Swift.h</key>

@@ -180,9 +180,7 @@
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
 		828ACD662DDC835F002435D2 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
-		828ACD672DDC835F002435D2 /* SPMobileCore.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		828ACD692DDC8363002435D2 /* SPMobileCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
-		828ACD6A2DDC8363002435D2 /* SPMobileCore.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
 		829BD47B2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
 		829BD47C2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
@@ -440,28 +438,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				8216E2612BB31D8D006FEF11 /* Pods_TVOSExampleAppUITests.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		828ACD682DDC835F002435D2 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				828ACD672DDC835F002435D2 /* SPMobileCore.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		828ACD6B2DDC8363002435D2 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				828ACD6A2DDC8363002435D2 /* SPMobileCore.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2214,7 +2190,6 @@
 				0B312ED52ABC4E2400B62E23 /* Sources */,
 				0B312ED62ABC4E2400B62E23 /* Frameworks */,
 				0B312ED72ABC4E2400B62E23 /* Resources */,
-				828ACD682DDC835F002435D2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2233,7 +2208,6 @@
 				0B312EE12ABC4E4000B62E23 /* Sources */,
 				0B312EE22ABC4E4000B62E23 /* Frameworks */,
 				0B312EE32ABC4E4000B62E23 /* Resources */,
-				828ACD6B2DDC8363002435D2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
