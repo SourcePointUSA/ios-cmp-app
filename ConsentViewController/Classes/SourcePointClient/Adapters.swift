@@ -504,7 +504,7 @@ extension SourcepointClientCoordinator.State {
             preferences: State.PreferencesState(
                 metaData: State.PreferencesStatePreferencesMetaData(
                     configurationId: "",
-                    additionsChangeDate: InstantKt.toInstant(""),
+                    additionsChangeDate: InstantKt.toInstant("2025-03-25T18:38:50.090Z"),
                     legalDocLiveDate: nil
                 ),
                 consents: PreferencesConsent(dateCreated: nil, messageId: nil, status: nil, rejectedStatus: nil, uuid: nil)
