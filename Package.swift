@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "ConsentViewController",
-            targets: ["ConsentViewController"]
+            targets: ["ConsentViewController", "SPMobileCore"]
         ),
     ],
     targets: [
