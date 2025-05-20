@@ -501,6 +501,14 @@ extension SourcepointClientCoordinator.State {
             ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
             usNat: self.usnat.toCore(metaData: self.usNatMetaData),
             ios14: self.ios14.toCore(),
+            preferences: State.PreferencesState(
+                metaData: State.PreferencesStatePreferencesMetaData(
+                    configurationId: "",
+                    additionsChangeDate: InstantKt.toInstant(""),
+                    legalDocLiveDate: nil
+                ),
+                consents: PreferencesConsent(dateCreated: nil, messageId: nil, status: nil, rejectedStatus: nil, uuid: nil)
+            ),
             authId: self.storedAuthId,
             propertyId: Int32(propertyId),
             accountId: Int32(accountId),
@@ -662,7 +670,8 @@ extension SPCampaigns {
             gdpr: gdpr.toCore(),
             ccpa: ccpa.toCore(),
             usnat: usnat.toCore(),
-            ios14: ios14.toCore()
+            ios14: ios14.toCore(),
+            preferences: nil
         )
     }
 }

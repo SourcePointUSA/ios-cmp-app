@@ -53,7 +53,7 @@ SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2020 Realm Inc.
+Copyright (c) 2025 The SwiftLint Contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -721,10 +721,6 @@ Copyright 2022 Google
    See the License for the specific language governing permissions and
    limitations under the License.
 
-
-## GoogleAppMeasurement
-
-Copyright 2022 Google
 
 ## GoogleUtilities
 
