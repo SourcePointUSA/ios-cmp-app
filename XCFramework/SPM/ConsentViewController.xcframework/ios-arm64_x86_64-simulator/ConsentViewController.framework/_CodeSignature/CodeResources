@@ -4,6 +4,14 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Frameworks/SPMobileCore.framework/Info.plist</key>
+		<data>
+		PV/LChkcGYOuDVxa/X5yfsGt1J8=
+		</data>
+		<key>Frameworks/SPMobileCore.framework/SPMobileCore</key>
+		<data>
+		YX6W53L++N/GMIUkfBTRM6GaXU4=
+		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
 		vicGxDO4O3ItpoE50ZEh+ByfT9s=
@@ -71,6 +79,28 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Frameworks/SPMobileCore.framework/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			PV/LChkcGYOuDVxa/X5yfsGt1J8=
+			</data>
+			<key>hash2</key>
+			<data>
+			hal5G96YxTwrLArH+JhyN8vIhAB7CoUusYaNm4wjouM=
+			</data>
+		</dict>
+		<key>Frameworks/SPMobileCore.framework/SPMobileCore</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YX6W53L++N/GMIUkfBTRM6GaXU4=
+			</data>
+			<key>hash2</key>
+			<data>
+			qG+jhMeKXo5+awe0GFxrxi9wPJUZSuFuTYwDu44To68=
+			</data>
+		</dict>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<dict>
 			<key>hash</key>
