@@ -44,6 +44,10 @@ class FirstLayerMessage: XCUIApplication {
     var showOptionsButton: XCUIElement { buttons["Show Options"].firstMatch }
 }
 
+class PreferencesFirstLayerMessage: FirstLayerMessage {
+    override var acceptButton: XCUIElement { buttons["Accept"].firstMatch }
+}
+
 class ExampleApp: XCUIApplication {
     class GDPRPrivacyManager: XCUIApplication {
         private var container: XCUIElement {
@@ -97,6 +101,12 @@ class ExampleApp: XCUIApplication {
         }
     }
 
+    class PreferencesMessage: PreferencesFirstLayerMessage {
+        override var messageTitle: XCUIElement {
+            staticTexts["We've updated our terms"].firstMatch
+        }
+    }
+
     class ATTPrePrompt: XCUIApplication {
         private let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
 
@@ -119,6 +129,7 @@ class ExampleApp: XCUIApplication {
 
     let gdprMessage = GDPRMessage()
     let ccpaMessage = CCPAMessage()
+    let preferencesMessage = PreferencesMessage()
     let gdprPM = GDPRPrivacyManager()
     let attPrePrompt = ATTPrePrompt()
 

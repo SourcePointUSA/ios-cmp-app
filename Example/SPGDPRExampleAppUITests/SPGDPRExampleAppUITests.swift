@@ -33,6 +33,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
         self.app.ccpaMessage.acceptButton.tap()
     }
 
+    func acceptPreferencesMessage() {
+        expect(self.app.preferencesMessage.messageTitle).toEventually(showUp())
+        self.app.preferencesMessage.acceptButton.tap()
+    }
+
     func showGDPRPMViaFirstLayerMessage() {
         expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         self.app.gdprMessage.showOptionsButton.tap()
@@ -69,6 +74,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
+            self.acceptPreferencesMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
@@ -78,6 +84,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         it("Accepting All toggles all toggles on PM") {
             self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false])
             self.acceptGDPRMessage()
+            self.acceptPreferencesMessage()
 
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
@@ -100,6 +107,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             ])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
+            self.acceptPreferencesMessage()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
@@ -122,6 +130,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             ])
             self.runAttScenario()
             self.acceptGDPRMessage()
+            self.acceptPreferencesMessage()
 
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
