@@ -12,15 +12,15 @@ import Foundation
     var dateCreated: SPDate
     var messageId: String?
     public var uuid: String?
-    public var status, rejectedStatus: [PreferencesStatus]?
+    public var status, rejectedStatus: [PreferencesStatus]
 
 
     init(
         dateCreated: SPDate,
         messageId: String? = nil,
         uuid: String? = nil,
-        status: [PreferencesStatus]?,
-        rejectedStatus: [PreferencesStatus]?
+        status: [PreferencesStatus] = [],
+        rejectedStatus: [PreferencesStatus] = []
     ) {
         self.uuid = uuid
         self.status = status
@@ -37,16 +37,14 @@ extension SPPreferencesConsent {
             - dateCreated: \(dateCreated.originalDateString)
             - messageId: \(messageId ?? "")
             - uuid: \(uuid ?? "")
-            - status: \(status ?? [])
-            - rejectedStatus: \(rejectedStatus ?? [])
+            - status: \(status)
+            - rejectedStatus: \(rejectedStatus)
         )
         """
     }
 
     public static func empty() -> SPPreferencesConsent { SPPreferencesConsent(
-        dateCreated: .now(),
-        status: [],
-        rejectedStatus: []
+        dateCreated: .now()
     )}
 
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -63,9 +61,9 @@ extension SPPreferencesConsent {
 extension SPPreferencesConsent {
     public struct PreferencesStatus: Codable {
         var categoryId: Int
-        var channels: [PreferencesChannels]?
-        var changed: Bool?
-        var dateConsented: SPDate?
+        var channels: [PreferencesChannels] = []
+        var changed: Bool? = nil
+        var dateConsented: SPDate? = nil
         var subType: PreferencesSubType? = PreferencesSubType.Unknown
     }
 

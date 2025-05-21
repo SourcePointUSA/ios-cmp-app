@@ -279,7 +279,7 @@ extension SPMobileCore.PreferencesConsent.PreferencesStatus {
     func toNative() -> SPPreferencesConsent.PreferencesStatus {
         return .init(
             categoryId: Int(self.categoryId),
-            channels: self.channels?.map { $0.toNative() },
+            channels: self.channels?.map { $0.toNative() } ?? [],
             changed: self.changed?.boolValue,
             dateConsented: SPDate(string: self.dateConsented?.instantToString() ?? SPDate.now().originalDateString),
             subType: self.subType.toNative()
@@ -291,10 +291,10 @@ extension SPMobileCore.PreferencesConsent {
     func toNative() -> SPPreferencesConsent {
         return .init(
             dateCreated: SPDate(string: self.dateCreated?.instantToString() ?? SPDate.now().originalDateString),
-            messageId: String(Int(truncating: self.messageId ?? 0)),
+            messageId: self.messageId != nil ? String(Int(truncating: self.messageId ?? 0)) : nil,
             uuid: self.uuid,
-            status: self.status?.map { $0.toNative() },
-            rejectedStatus: self.rejectedStatus?.map { $0.toNative() }
+            status: self.status?.map { $0.toNative() } ?? [],
+            rejectedStatus: self.rejectedStatus?.map { $0.toNative() } ?? []
         )
     }
 }
@@ -556,7 +556,7 @@ extension SourcepointClientCoordinator.State {
             ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
             usNat: self.usnat.toCore(metaData: self.usNatMetaData),
             ios14: self.ios14.toCore(),
-            preferences: emptyPreferencesCampaign(),
+            preferences: emptyPreferencesState(),
             authId: self.storedAuthId,
             propertyId: Int32(propertyId),
             accountId: Int32(accountId),
@@ -649,7 +649,7 @@ extension SourcepointClientCoordinator.State.AttCampaign? {
     }
 }
 
-func emptyPreferencesCampaign() -> SPMobileCore.State.PreferencesState {
+func emptyPreferencesState() -> SPMobileCore.State.PreferencesState {
     return SPMobileCore.State.PreferencesState(
         metaData: SPMobileCore.State.PreferencesStatePreferencesMetaData(
             configurationId: "",
