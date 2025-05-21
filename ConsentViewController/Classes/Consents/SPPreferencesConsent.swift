@@ -12,8 +12,8 @@ import Foundation
     var dateCreated: SPDate
     var messageId: String?
     public var uuid: String?
-    public var status, rejectedStatus: [PreferencesStatus]
-
+    public var status: [PreferencesStatus] = []
+    public var rejectedStatus: [PreferencesStatus] = []
 
     init(
         dateCreated: SPDate,
@@ -62,8 +62,8 @@ extension SPPreferencesConsent {
     public struct PreferencesStatus: Codable {
         var categoryId: Int
         var channels: [PreferencesChannels] = []
-        var changed: Bool? = nil
-        var dateConsented: SPDate? = nil
+        var changed: Bool?
+        var dateConsented: SPDate?
         var subType: PreferencesSubType? = PreferencesSubType.Unknown
     }
 
