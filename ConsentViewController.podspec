@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
       'ConsentViewController' => [
           'ConsentViewController/Assets/**/*',
+          'ConsentViewController/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}',
           'Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}'
       ]
   }
