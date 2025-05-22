@@ -63,7 +63,7 @@ extension Config {
             ios14: attArg == nil ? defaults.campaigns.ios14 :
                 attArg == true ? SPCampaign() : nil,
             preferences: preferencesArg == nil ? defaults.campaigns.preferences :
-                preferencesArg == true ? SPCampaign() : nil,
+                preferencesArg == true ? SPCampaign() : nil
         )
     }
 }

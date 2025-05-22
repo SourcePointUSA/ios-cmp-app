@@ -74,7 +74,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
-            //self.acceptPreferencesMessage()
+            //self.acceptPreferencesMessage()  TODO: Uncoment once in develop
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
