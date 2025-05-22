@@ -10,7 +10,6 @@
 import Foundation
 import Nimble
 import Quick
-import SPMobileCore
 
 // swiftlint:disable force_unwrapping force_try function_body_length file_length type_body_length cyclomatic_complexity
 
