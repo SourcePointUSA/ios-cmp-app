@@ -1,0 +1,7 @@
+${PODS_ROOT}/Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests-resources.sh
+${PODS_ROOT}/../../ConsentViewController/Assets/images/Barcode.png
+${PODS_ROOT}/../../ConsentViewController/Assets/images/SP_Icon.png
+${PODS_ROOT}/../../ConsentViewController/Assets/javascript/jest.config.json
+${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.js
+${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.spec.js
+${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-iOS/ConsentViewController.bundle
