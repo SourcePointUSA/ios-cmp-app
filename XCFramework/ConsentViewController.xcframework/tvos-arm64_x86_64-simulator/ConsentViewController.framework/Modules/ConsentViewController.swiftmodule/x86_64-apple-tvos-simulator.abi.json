@@ -37832,6 +37832,20 @@
   },
   "ConstValues": [
     {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Bundle+Framework.swift",
+      "kind": "StringLiteral",
+      "offset": 373,
+      "length": 23,
+      "value": "\"ConsentViewController\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Bundle+Framework.swift",
+      "kind": "StringLiteral",
+      "offset": 413,
+      "length": 8,
+      "value": "\"bundle\""
+    },
+    {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/ConsentStatus.swift",
       "kind": "BooleanLiteral",
       "offset": 663,

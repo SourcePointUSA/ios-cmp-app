@@ -4,58 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Barcode.png</key>
-		<data>
-		p1QFym1jiRQxmkvZScXjBHhxCu8=
-		</data>
-		<key>ConsentViewController.bundle/Barcode.png</key>
-		<data>
-		p1QFym1jiRQxmkvZScXjBHhxCu8=
-		</data>
-		<key>ConsentViewController.bundle/Info.plist</key>
-		<data>
-		9rdmtkcXY0PvUgO+Nrcfp42DYyA=
-		</data>
-		<key>ConsentViewController.bundle/PrivacyInfo.xcprivacy</key>
-		<data>
-		BSsy0C4u6z5SkMpJ7zUrXWv4tpM=
-		</data>
-		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
-		<data>
-		FzUVGh1/JJ2Dpw0GqX9q5gu7T48=
-		</data>
-		<key>ConsentViewController.bundle/SPJSReceiver.spec.js</key>
-		<data>
-		+4WHti4rYU1VZ79338GbucDYS3Q=
-		</data>
-		<key>ConsentViewController.bundle/SP_Icon.png</key>
-		<data>
-		r/5tTMB88qlCRvp2iNHzoOqA4pg=
-		</data>
-		<key>ConsentViewController.bundle/images/Barcode.png</key>
-		<data>
-		TGc1xIxg34ROBoXDuq+aPSc9KeE=
-		</data>
-		<key>ConsentViewController.bundle/images/SP_Icon.png</key>
-		<data>
-		ruvWGvX+YD27aU7jQNTekEQnbeU=
-		</data>
-		<key>ConsentViewController.bundle/javascript/SPJSReceiver.js</key>
-		<data>
-		FzUVGh1/JJ2Dpw0GqX9q5gu7T48=
-		</data>
-		<key>ConsentViewController.bundle/javascript/SPJSReceiver.spec.js</key>
-		<data>
-		+4WHti4rYU1VZ79338GbucDYS3Q=
-		</data>
-		<key>ConsentViewController.bundle/javascript/jest.config.json</key>
-		<data>
-		SqMNvDh2PQ9nUDqCYTy2EMU+Nqs=
-		</data>
-		<key>ConsentViewController.bundle/jest.config.json</key>
-		<data>
-		SqMNvDh2PQ9nUDqCYTy2EMU+Nqs=
-		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
 		vicGxDO4O3ItpoE50ZEh+ByfT9s=
@@ -70,7 +18,7 @@
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		VSIpXDkAsBZG8WTn+CLtYtllB/s=
+		CZMnQk5SPXgOHjAsJvTThy+HZlo=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -86,11 +34,11 @@
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		C9dQwfsVuHPq35APoK1N4t/O1As=
+		VpN81LcGUhAshNFRAKQDQlykcIc=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		VSIpXDkAsBZG8WTn+CLtYtllB/s=
+		CZMnQk5SPXgOHjAsJvTThy+HZlo=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -106,174 +54,15 @@
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		LEETnLBb/7zNHCiOqN5HePqfpd4=
+		8j4c1+lWkykuKGtBjFWGgKhzbD4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		vpeViLW2yUqKzrhQR39PaWl1sfo=
 		</data>
-		<key>SPJSReceiver.js</key>
-		<data>
-		FzUVGh1/JJ2Dpw0GqX9q5gu7T48=
-		</data>
-		<key>SPJSReceiver.spec.js</key>
-		<data>
-		+4WHti4rYU1VZ79338GbucDYS3Q=
-		</data>
-		<key>SP_Icon.png</key>
-		<data>
-		r/5tTMB88qlCRvp2iNHzoOqA4pg=
-		</data>
-		<key>jest.config.json</key>
-		<data>
-		SqMNvDh2PQ9nUDqCYTy2EMU+Nqs=
-		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Barcode.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			p1QFym1jiRQxmkvZScXjBHhxCu8=
-			</data>
-			<key>hash2</key>
-			<data>
-			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/Barcode.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			p1QFym1jiRQxmkvZScXjBHhxCu8=
-			</data>
-			<key>hash2</key>
-			<data>
-			FGkjnDfFu2e+4a8YrIamZUbqDL98gOtlPf7481BCHsc=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9rdmtkcXY0PvUgO+Nrcfp42DYyA=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZdvkHQ/1Acb4830nJ9+fdyhsYt6v9uJKT0nRlTrlm1k=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/PrivacyInfo.xcprivacy</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			BSsy0C4u6z5SkMpJ7zUrXWv4tpM=
-			</data>
-			<key>hash2</key>
-			<data>
-			UWufHnouhL0ZdAyDyXVGBxSnwNT9S5yk3dvOQnkcPYs=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/SPJSReceiver.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			FzUVGh1/JJ2Dpw0GqX9q5gu7T48=
-			</data>
-			<key>hash2</key>
-			<data>
-			w2kZfreVNrRCyvx06QK7GdyfWbpqWTYc4fk8hk8Vgd0=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/SPJSReceiver.spec.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+4WHti4rYU1VZ79338GbucDYS3Q=
-			</data>
-			<key>hash2</key>
-			<data>
-			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/SP_Icon.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			r/5tTMB88qlCRvp2iNHzoOqA4pg=
-			</data>
-			<key>hash2</key>
-			<data>
-			UTjb3KdhvO5fNSvs7e7haUzRbCsGAr1TFObGFmQkSLs=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/images/Barcode.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			TGc1xIxg34ROBoXDuq+aPSc9KeE=
-			</data>
-			<key>hash2</key>
-			<data>
-			GZEWod/T80y1U0nklTPc/TUVp6+hiJddREgh3SvIOIs=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/images/SP_Icon.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ruvWGvX+YD27aU7jQNTekEQnbeU=
-			</data>
-			<key>hash2</key>
-			<data>
-			WyofguidIhczvwLT6X1o7bFicp1RVdTCn6zsR7iT4Pk=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/javascript/SPJSReceiver.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			FzUVGh1/JJ2Dpw0GqX9q5gu7T48=
-			</data>
-			<key>hash2</key>
-			<data>
-			w2kZfreVNrRCyvx06QK7GdyfWbpqWTYc4fk8hk8Vgd0=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/javascript/SPJSReceiver.spec.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+4WHti4rYU1VZ79338GbucDYS3Q=
-			</data>
-			<key>hash2</key>
-			<data>
-			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/javascript/jest.config.json</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			SqMNvDh2PQ9nUDqCYTy2EMU+Nqs=
-			</data>
-			<key>hash2</key>
-			<data>
-			jMTzzVBaz2GZ8L3CwBi6M/evPoSGsz8HtwbYOjR6Qc8=
-			</data>
-		</dict>
-		<key>ConsentViewController.bundle/jest.config.json</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			SqMNvDh2PQ9nUDqCYTy2EMU+Nqs=
-			</data>
-			<key>hash2</key>
-			<data>
-			jMTzzVBaz2GZ8L3CwBi6M/evPoSGsz8HtwbYOjR6Qc8=
-			</data>
-		</dict>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<dict>
 			<key>hash</key>
@@ -300,11 +89,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VSIpXDkAsBZG8WTn+CLtYtllB/s=
+			CZMnQk5SPXgOHjAsJvTThy+HZlo=
 			</data>
 			<key>hash2</key>
 			<data>
-			uMm1TAQM7rYr89ObVaSPEjxJkF/YgKu2nIsVSyi/Sec=
+			61vtvAC1i8NGIOLGJG2oB01tTGYF6pfXoqHA/EvmRoM=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -344,22 +133,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			C9dQwfsVuHPq35APoK1N4t/O1As=
+			VpN81LcGUhAshNFRAKQDQlykcIc=
 			</data>
 			<key>hash2</key>
 			<data>
-			xte0lh7NPKEOoVVZW5vdAnQx1tJsJ9B5Mpomp7lo3Q0=
+			L7WnR/5Ilbs5JdwIb9zAlu+348J++9VuvZJJy+tl350=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VSIpXDkAsBZG8WTn+CLtYtllB/s=
+			CZMnQk5SPXgOHjAsJvTThy+HZlo=
 			</data>
 			<key>hash2</key>
 			<data>
-			uMm1TAQM7rYr89ObVaSPEjxJkF/YgKu2nIsVSyi/Sec=
+			61vtvAC1i8NGIOLGJG2oB01tTGYF6pfXoqHA/EvmRoM=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
@@ -399,11 +188,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			LEETnLBb/7zNHCiOqN5HePqfpd4=
+			8j4c1+lWkykuKGtBjFWGgKhzbD4=
 			</data>
 			<key>hash2</key>
 			<data>
-			8VjKRKHdk2fjq76rzHzLm5rWnhFESbutRRFvEKBeS7c=
+			xL7RTVpxTozzRB1rW1HEDD5OEBWmF+Is781LO1fFCAQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -415,50 +204,6 @@
 			<key>hash2</key>
 			<data>
 			/4q8unB/8rECPTcQCeEJn0fzlu5fcsVjTkeRQ3tm/Ws=
-			</data>
-		</dict>
-		<key>SPJSReceiver.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			FzUVGh1/JJ2Dpw0GqX9q5gu7T48=
-			</data>
-			<key>hash2</key>
-			<data>
-			w2kZfreVNrRCyvx06QK7GdyfWbpqWTYc4fk8hk8Vgd0=
-			</data>
-		</dict>
-		<key>SPJSReceiver.spec.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+4WHti4rYU1VZ79338GbucDYS3Q=
-			</data>
-			<key>hash2</key>
-			<data>
-			il3yxyRKclSoU1TkdJfh7/wPndyTOCyg5z0pOhfyGFE=
-			</data>
-		</dict>
-		<key>SP_Icon.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			r/5tTMB88qlCRvp2iNHzoOqA4pg=
-			</data>
-			<key>hash2</key>
-			<data>
-			UTjb3KdhvO5fNSvs7e7haUzRbCsGAr1TFObGFmQkSLs=
-			</data>
-		</dict>
-		<key>jest.config.json</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			SqMNvDh2PQ9nUDqCYTy2EMU+Nqs=
-			</data>
-			<key>hash2</key>
-			<data>
-			jMTzzVBaz2GZ8L3CwBi6M/evPoSGsz8HtwbYOjR6Qc8=
 			</data>
 		</dict>
 	</dict>

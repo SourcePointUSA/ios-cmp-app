@@ -161,6 +161,8 @@ extension SPMobileCore.SPCampaignType {
             return .usnat
         case "IOS14":
             return .ios14
+        case "Preferences":
+            return .preferences
 
         default:
             return .unknown
@@ -255,6 +257,48 @@ extension SPMobileCore.USNatConsent {
     }
 }
 
+extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
+    func toNative() -> SPPreferencesConsent.PreferencesSubType {
+        switch self {
+        case .aipolicy: return .AIPolicy
+        case .legalpolicy: return .LegalPolicy
+        case .privacypolicy: return .PrivacyPolicy
+        case .termsandconditions: return .TermsAndConditions
+        case .termsofsale: return .TermsOfSale
+        case .unknown: return .Unknown
+        default: return .Unknown
+        }
+    }
+}
+
+extension SPMobileCore.PreferencesConsent.PreferencesStatusPreferencesChannels {
+    func toNative() -> SPPreferencesConsent.PreferencesChannels { return .init(channelId: Int(self.channelId), status: self.status) }
+}
+
+extension SPMobileCore.PreferencesConsent.PreferencesStatus {
+    func toNative() -> SPPreferencesConsent.PreferencesStatus {
+        return .init(
+            categoryId: Int(self.categoryId),
+            channels: self.channels?.map { $0.toNative() } ?? [],
+            changed: self.changed?.boolValue,
+            dateConsented: SPDate(string: self.dateConsented?.instantToString() ?? SPDate.now().originalDateString),
+            subType: self.subType.toNative()
+        )
+    }
+}
+
+extension SPMobileCore.PreferencesConsent {
+    func toNative() -> SPPreferencesConsent {
+        return .init(
+            dateCreated: SPDate(string: self.dateCreated?.instantToString() ?? SPDate.now().originalDateString),
+            messageId: self.messageId != nil ? String(Int(truncating: self.messageId ?? 0)) : nil,
+            uuid: self.uuid,
+            status: self.status?.map { $0.toNative() } ?? [],
+            rejectedStatus: self.rejectedStatus?.map { $0.toNative() } ?? []
+        )
+    }
+}
+
 extension SPUserDataSPConsent<GDPRConsent>? {
     func toNative() -> SPConsent<SPGDPRConsent>? {
         return SPConsent<SPGDPRConsent>.init(
@@ -282,12 +326,22 @@ extension SPUserDataSPConsent<USNatConsent>? {
     }
 }
 
+extension SPUserDataSPConsent<PreferencesConsent>? {
+    func toNative() -> SPConsent<SPPreferencesConsent>? {
+        return SPConsent<SPPreferencesConsent>.init(
+            consents: self?.consents?.toNative(),
+            applies: true
+        )
+    }
+}
+
 extension SPMobileCore.SPUserData {
     func toNative() -> SPUserData {
         return SPUserData(
             gdpr: self.gdpr.toNative(),
             ccpa: self.ccpa.toNative(),
-            usnat: self.usnat.toNative()
+            usnat: self.usnat.toNative(),
+            preferences: self.preferences.toNative()
         )
     }
 }
@@ -453,6 +507,7 @@ extension SPCampaignType {
         case .ccpa: return .ccpa
         case .usnat: return .usnat
         case .ios14: return .ios14
+        case .preferences: return .preferences
         case .unknown: return .unknown
         }
     }
@@ -501,6 +556,7 @@ extension SourcepointClientCoordinator.State {
             ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
             usNat: self.usnat.toCore(metaData: self.usNatMetaData),
             ios14: self.ios14.toCore(),
+            preferences: emptyPreferencesState(),
             authId: self.storedAuthId,
             propertyId: Int32(propertyId),
             accountId: Int32(accountId),
@@ -593,6 +649,23 @@ extension SourcepointClientCoordinator.State.AttCampaign? {
     }
 }
 
+func emptyPreferencesState() -> SPMobileCore.State.PreferencesState {
+    return SPMobileCore.State.PreferencesState(
+        metaData: SPMobileCore.State.PreferencesStatePreferencesMetaData(
+            configurationId: "",
+            additionsChangeDate: SPDate(date: Date.distantPast).toCore(),
+            legalDocLiveDate: nil
+        ),
+        consents: SPMobileCore.PreferencesConsent(
+            dateCreated: nil,
+            messageId: nil,
+            status: nil,
+            rejectedStatus: nil,
+            uuid: nil
+        )
+    )
+}
+
 extension SourcepointClientCoordinator.State.GDPRMetaData? {
     func toCore() -> SPMobileCore.State.GDPRStateGDPRMetaData {
         return SPMobileCore.State.GDPRStateGDPRMetaData.init(
@@ -662,7 +735,8 @@ extension SPCampaigns {
             gdpr: gdpr.toCore(),
             ccpa: ccpa.toCore(),
             usnat: usnat.toCore(),
-            ios14: ios14.toCore()
+            ios14: ios14.toCore(),
+            preferences: preferences.toCore()
         )
     }
 }

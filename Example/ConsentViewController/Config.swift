@@ -46,6 +46,7 @@ extension Config {
         let ccpaArg = (values["ccpa"] as? NSString)?.boolValue
         let usnatArg = (values["usnat"] as? NSString)?.boolValue
         let attArg = (values["att"] as? NSString)?.boolValue
+        let preferencesArg = (values["preferences"] as? NSString)?.boolValue
 
         campaigns = SPCampaigns(
             gdpr: gdprArg == nil ? defaults.campaigns.gdpr :
@@ -60,7 +61,9 @@ extension Config {
             usnat: usnatArg == nil ? defaults.campaigns.usnat :
                 usnatArg == true ? SPCampaign() : nil,
             ios14: attArg == nil ? defaults.campaigns.ios14 :
-                attArg == true ? SPCampaign() : nil
+                attArg == true ? SPCampaign() : nil,
+            preferences: preferencesArg == nil ? defaults.campaigns.preferences :
+                preferencesArg == true ? SPCampaign() : nil
         )
     }
 }

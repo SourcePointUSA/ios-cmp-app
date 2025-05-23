@@ -1,5 +1,5 @@
-use_frameworks!
-platform :ios, '10.0'
+use_frameworks! :linkage => :static
+platform :ios, '13.0'
 install! 'cocoapods', :share_schemes_for_development_pods => true
 
 pod 'ConsentViewController', :path => '../'
