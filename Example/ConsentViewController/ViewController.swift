@@ -25,7 +25,7 @@ class ViewController: UIViewController {
             ccpa: SPCampaign(),
             usnat: SPCampaign(),
             ios14: SPCampaign(),
-            //preferences: SPCampaign(),  TODO: Uncoment once in develop
+            preferences: SPCampaign(),
             environment: .Public
         ),
         gdprPmId: "488393",
