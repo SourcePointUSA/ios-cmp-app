@@ -1,5 +1,0 @@
-${PODS_ROOT}/Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests-frameworks.sh
-${BUILT_PRODUCTS_DIR}/ConsentViewController-iOS/ConsentViewController.framework
-${BUILT_PRODUCTS_DIR}/Nimble-iOS/Nimble.framework
-${BUILT_PRODUCTS_DIR}/Quick-iOS/Quick.framework
-${PODS_XCFRAMEWORKS_BUILD_DIR}/SPMobileCore/SPMobileCore.framework/SPMobileCore

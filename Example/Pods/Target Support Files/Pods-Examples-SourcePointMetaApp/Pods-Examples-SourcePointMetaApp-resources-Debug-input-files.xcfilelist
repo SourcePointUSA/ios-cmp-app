@@ -6,3 +6,11 @@ ${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.js
 ${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.spec.js
 ${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-iOS/ConsentViewController.bundle
 ${PODS_CONFIGURATION_BUILD_DIR}/Wormholy/Wormholy.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardCore/IQKeyboardCore.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardNotification/IQKeyboardNotification.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardReturnManager/IQKeyboardReturnManager.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardToolbar/IQKeyboardToolbar.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardToolbarManager/IQKeyboardToolbarManager.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQTextInputViewNotification/IQTextInputViewNotification.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/IQTextView/IQTextView.bundle

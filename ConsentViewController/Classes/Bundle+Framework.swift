@@ -13,7 +13,12 @@ extension Foundation.Bundle {
         #if SWIFT_PACKAGE
         return Bundle.module
         #else
-        return Bundle(for: SPConsentManager.self)
+        if let url = main.url(forResource: "ConsentViewController", withExtension: "bundle"),
+            let bundle = Bundle(url: url){
+            return bundle
+        } else {
+            return Bundle(for: SPConsentManager.self)
+        }
         #endif
     }()
 }

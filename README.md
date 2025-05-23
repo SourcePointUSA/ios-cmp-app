@@ -10,6 +10,12 @@ In your `Podfile` add the following line to your app target:
 pod 'ConsentViewController', '7.8.1'
 ```
 
+The SDK has a static dependency. Make sure to have the following on your Podfile as well:
+
+```
+use_frameworks! :linkage => :static
+```
+
 ### Carthage
 
 We also support [Carthage](https://github.com/Carthage/Carthage). It requires a couple more steps to install so we dedicated a whole [wiki page](https://github.com/SourcePointUSA/ios-cmp-app/wiki/SDK-integration-using-Carthage) for it.
