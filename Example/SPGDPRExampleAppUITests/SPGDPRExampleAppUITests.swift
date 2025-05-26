@@ -74,7 +74,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
-            //self.acceptPreferencesMessage()  TODO: Uncoment once in develop
+            self.acceptPreferencesMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
@@ -84,6 +84,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
         it("Accepting All toggles all toggles on PM") {
             self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false, "preferences": false])
             self.acceptGDPRMessage()
+            self.acceptPreferencesMessage()
 
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
@@ -107,6 +108,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             ])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
+            self.acceptPreferencesMessage()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
@@ -131,6 +133,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             ])
             self.runAttScenario()
             self.acceptGDPRMessage()
+            self.acceptPreferencesMessage()
 
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
